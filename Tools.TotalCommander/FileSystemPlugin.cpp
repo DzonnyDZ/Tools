@@ -442,6 +442,9 @@ namespace Tools{namespace TotalCommanderT{
 
     int FileSystemPlugin::FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap){
         BitmapResult^ bmp = this->GetPreviewBitmap(gcnew String(RemoteName), width, height);
+        if(bmp == nullptr){
+            return (int)BitmapHandling::None;
+        }
         if(bmp->ImageKey != nullptr){
             StringCopy(bmp->ImageKey,RemoteName,FindData::MaxPath);
         }
@@ -589,7 +592,11 @@ namespace Tools{namespace TotalCommanderT{
         this->ImageKey = ImagePath;
         this->Temporary = Temporary;
     }
-   inline BitmapResult::BitmapResult(Drawing::Bitmap^ Bitmap) {BitmapResult(Bitmap,nullptr);}
+   BitmapResult::BitmapResult(Drawing::Bitmap^ Bitmap) {
+        if(Bitmap == nullptr)  throw gcnew ArgumentNullException("Bitmap"); 
+        this->Image = Bitmap;
+        this->ImageKey = nullptr;
+   }
    BitmapResult::BitmapResult(Drawing::Bitmap^ Bitmap, String^ ImageKey){
         if(Bitmap == nullptr)  throw gcnew ArgumentNullException("Bitmap"); 
         this->Image = Bitmap;

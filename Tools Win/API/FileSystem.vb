@@ -1,4 +1,4 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices, Tools.ExtensionsT
 Imports System.ComponentModel
 Imports Microsoft.Win32.SafeHandles
 Imports System.Text
@@ -24,10 +24,80 @@ Namespace API
             <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=80)> _
             Public szTypeName As String
         End Structure
+        ''' <summary>Contains information used by <see cref="ShellExecuteEx"/>.</summary>
+        <StructLayout(LayoutKind.Sequential)> _
+        Public Structure SHELLEXECUTEINFO
+            ''' <summary>The size of the structure, in bytes.</summary>
+            Dim cbSize As Integer
+            ''' <summary>An array of flags that indicate the content and validity of the other structure members.</summary>
+            Dim fMask As ShellExecuteInfoFlags
+            ''' <summary>A window handle to any message boxes that the system might produce while executing this function.</summary>
+            Dim hwnd As Integer
+            ''' <summary>A string, referred to as a verb, that specifies the action to be performed. The set of available verbs depends on the particular file or folder. Generally, the actions available from an object's shortcut menu are available verbs. If you set this parameter to NULL:
+            ''' <list type="bullet"><item>For systems prior to Windows 2000, the default verb is used if it is valid and available in the registry. If not, the "open" verb is used.</item>
+            ''' <item>For Windows 2000 and later systems, the default verb is used if available. If not, the "open" verb is used. If neither verb is available, the system uses the first verb listed in the registry.</item></list></summary>
+            ''' <remarks>The following verbs are commonly used.
+            ''' <list type="table"><item><term>edit</term><description>Launches an editor and opens the document for editing. If lpFile is not a document file, the function will fail.</description></item>
+            ''' <item><term>explore</term><description>Explores the folder specified by lpFile.</description></item>
+            ''' <item><term>find</term><description>Initiates a search starting from the specified directory.</description></item>
+            ''' <item><term>open</term><description>Opens the file specified by the lpFile parameter. The file can be an executable file, a document file, or a folder.</description></item>
+            ''' <item><term>print</term><description>Prints the document file specified by lpFile. If lpFile is not a document file, the function will fail.</description></item>
+            ''' <item><term>properties</term><description>Displays the file or folder's properties.</description></item></list></remarks>
+            <MarshalAs(UnmanagedType.LPTStr)> _
+            Dim lpVerb As String
+            ''' <summary>The address of a null-terminated string that specifies the name of the file or object on which <see cref="ShellExecuteEx"/> will perform the action specified by the lpVerb parameter. The system registry verbs that are supported by the <see cref="ShellExecuteEx"/> function include "open" for executable files and document files and "print" for document files for which a print handler has been registered. Other applications might have added Shell verbs through the system registry, such as "play" for .avi and .wav files. To specify a Shell namespace object, pass the fully qualified parse name and set the <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/> flag in the <see cref="fMask"/> parameter.</summary>
+            ''' <remarks><note>Note If the <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/> flag is set, you can use either lpFile or lpIDList to identify the item by its file system path or its PIDL respectively.</note><note>Note If the path is not included with the name, the current directory is assumed.</note></remarks>
+            <MarshalAs(UnmanagedType.LPTStr)> _
+            Dim lpFile As String
+            ''' <summary>The address of a null-terminated string that contains the application parameters. The parameters must be separated by spaces. If the <see cref="lpFile"/> member specifies a document file, <see cref="lpParameters"/> should be NULL.</summary>
+            <MarshalAs(UnmanagedType.LPTStr)> _
+            Dim lpParameters As String
+            ''' <summary>The address of a null-terminated string that specifies the name of the working directory. If this member is not specified, the current directory is used as the working directory.</summary>
+            <MarshalAs(UnmanagedType.LPTStr)> _
+            Dim lpDirectory As String
+            ''' <summary>Flags that specify how an application is to be shown when it is opened. It can be one of the SW_ values listed for the ShellExecute function. If lpFile specifies a document file, the flag is simply passed to the associated application. It is up to the application to decide how to handle it.</summary>
+            Dim nShow As Integer
+            ''' <summary>If the function succeeds, it sets this member to a value greater than 32. If the function fails, it is set to an <see cref="ShellExecuteErrors"/> error value that indicates the cause of the failure. Although <see cref="hInstApp"/> is declared as an HINSTANCE for compatibility with 16-bit Windows applications, it is not a true HINSTANCE. It can be cast only to an int and compared to either 32 or the <see cref="ShellExecuteErrors"/>.</summary>
+            Dim hInstApp As ShellExecuteErrors
+            ''' <summary>The address of an ITEMIDLIST structure to contain an item identifier list uniquely identifying the file to execute. This member is ignored if the <see cref="fMask"/> member does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_IDLIST"/> or <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/>.</summary>
+            Dim lpIDList As Integer
+            ''' <summary>The address of a null-terminated string that specifies the name of a file class or a GUID. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_CLASSNAME"/>.</summary>
+            <MarshalAs(UnmanagedType.LPTStr)> _
+            Dim lpClass As String
+            ''' <summary>A handle to the registry key for the file class. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_CLASSKEY"/>.</summary>
+            Dim hkeyClass As Integer
+            ''' <summary>A keyboard shortcut to associate with the application. The low-order word is the virtual key code, and the high-order word is a modifier flag (HOTKEYF_). For a list of modifier flags, see the description of the <see cref="Messages.WindowMessages.WM_SETHOTKEY"/> message. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_HOTKEY"/>.</summary>
+            Dim dwHotKey As Integer
+            ''' <summary>A handle to the icon for the file class. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_ICON"/>.</summary>
+            ''' <remarks>This value is same as <see cref="hMonitor"/></remarks>
+            Dim hIcon As Integer
+            ''' <summary>A handle to the monitor upon which the document is to be displayed. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_HMONITOR"/>.</summary>
+            ''' <remarks>This value is same as <see cref="hIcon"/></remarks>
+            Public Property hMonitor() As Integer
+                Get
+                    Return hIcon
+                End Get
+                Set(ByVal value As Integer)
+                    hIcon = value
+                End Set
+            End Property
+            ''' <summary>A handle to the newly started application. This member is set on return and is always NULL unless <see cref="fMask"/> is set to <see cref="ShellExecuteInfoFlags.SEE_MASK_NOCLOSEPROCESS"/>. Even if <see cref="fMask"/> is set to <see cref="ShellExecuteInfoFlags.SEE_MASK_NOCLOSEPROCESS"/>, <see cref="hProcess"/> will be NULL if no process was launched. For example, if a document to be launched is a URL and an instance of Internet Explorer is already running, it will display the document. No new process is launched, and <see cref="hProcess"/> will be NULL.</summary>
+            ''' <remarks><note><see cref="ShellExecuteEx"/> does not always return an <see cref="hProcess"/>, even if a process is launched as the result of the call. For example, an <see cref="hProcess"/> does not return when you use <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/> to invoke IContextMenu.</note></remarks>
+            Dim hProcess As Integer
+        End Structure
+        ''' <summary>contains the name of the shared resource</summary>
+        <StructLayout(LayoutKind.Sequential)> _
+        Public Structure SHARE_INFO_0
+            ''' <summary>Pointer to a Unicode string specifying the share name of a resource.</summary>
+            <MarshalAs(UnmanagedType.LPWStr)> _
+            Public shi0_netname As String
+        End Structure
 #End Region
 #Region "Constants"
         ''' <summary>Maximum length of path for the <see cref="SHGetFileInfo"/> function</summary>
         Public Const MAX_PATH As Int32 = 260
+        ''' <summary>Maximum value for prefferred data length of the <see cref="NetShareEnum"/> function</summary>
+        Public Const MAX_PREFERRED_LENGTH% = &HFFFFFFFF
 #End Region
 #Region "Functions"
         ''' <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
@@ -235,7 +305,31 @@ Namespace API
         Public Function SHGetLocalizedName(ByVal pszPath As String, ByVal pszResModule As StringBuilder, ByRef cch%, <Out()> ByRef pidsRes As Integer) As Integer
         End Function
         Public Delegate Function dSHGetLocalizedName(ByVal pszPath As String, ByVal pszResModule As StringBuilder, ByRef cch%, ByRef pidsRes As Integer) As Integer
+        ''' <summary>Performs an operation on a specified file.</summary>
+        ''' <param name="lpExecInfo">The address of a <see cref="SHELLEXECUTEINFO"/> structure that contains and receives information about the application being executed. </param>
+        ''' <returns>Returns TRUE if successful, or FALSE otherwise. Call GetLastError for error information. </returns>
+        Public Declare Auto Function ShellExecuteEx Lib "shell32.dll" (ByRef lpExecInfo As SHELLEXECUTEINFO) As Integer
 
+
+        ''' <summary>retrieves information about each shared resource on a server.</summary>
+        ''' <param name="servername">Pointer to a string that specifies the DNS or NetBIOS name of the remote server on which the function is to execute. If this parameter is NULL, the local computer is used.</param>
+        ''' <param name="level">Specifies the information level of the data.</param>
+        ''' <param name="bufptr">Pointer to the buffer that receives the data. The format of this data depends on the value of the <paramref name="level"/> parameter. 
+        ''' <para>This buffer is allocated by the system and must be freed using the <see cref="NetApiBufferFree"/> function. Note that you must free the buffer even if the function fails with ERROR_MORE_DATA.</para></param>
+        ''' <param name="prefmaxlen">Specifies the preferred maximum length of returned data, in bytes. If you specify <see cref="MAX_PREFERRED_LENGTH"/>, the function allocates the amount of memory required for the data. If you specify another value in this parameter, it can restrict the number of bytes that the function returns. If the buffer size is insufficient to hold all entries, the function returns ERROR_MORE_DATA. For more information, see Network Management Function Buffers and Network Management Function Buffer Lengths.</param>
+        ''' <param name="entriesread">Pointer to a value that receives the count of elements actually enumerated.</param>
+        ''' <param name="totalentries">Pointer to a value that receives the total number of entries that could have been enumerated. Note that applications should consider this value only as a hint.</param>
+        ''' <param name="resume_handle">Pointer to a value that contains a resume handle which is used to continue an existing share search. The handle should be zero on the first call and left unchanged for subsequent calls. If resume_handle is NULL, then no resume handle is stored.</param>
+        ''' <returns>If the function succeeds, the return value is NERR_Success. If the function fails, the return value is a system error code.</returns>
+        Public Declare Unicode Function NetShareEnum Lib "netapi32.dll" ( _
+            <MarshalAs(UnmanagedType.LPWStr)> ByVal servername As String, _
+            ByVal level As NetShareLevel, _
+            ByRef bufptr As IntPtr, _
+            ByVal prefmaxlen As Integer, _
+            ByRef entriesread As Integer, _
+            ByRef totalentries As Integer, _
+            ByRef resume_handle As Integer _
+            ) As Integer
 #End Region
 #Region "Enumerations"
         ''' <summary>The flags that specify the file information to retrieve. USed by <see cref="SHGetFileInfo"/>.</summary>
@@ -400,75 +494,20 @@ Namespace API
             ''' <summary>When specified as input, SFGAO_VALIDATE instructs the folder to validate that the items pointed to by the contents of apidl exist. If one or more of those items do not exist, IShellFolder::GetAttributesOf returns a failure code. When used with the file system folder, SFGAO_VALIDATE instructs the folder to discard cached properties retrieved by clients of IShellFolder2::GetDetailsEx that may have accumulated for the specified items.</summary>
             SFGAO_VALIDATE = &H1000000UI
         End Enum
-#End Region
-
-
-        'ASAP:MSDN, Sort to regions
-        ''' <summary>Performs an operation on a specified file.</summary>
-        ''' <param name="lpExecInfo">The address of a <see cref="SHELLEXECUTEINFO"/> structure that contains and receives information about the application being executed. </param>
-        ''' <returns>Returns TRUE if successful, or FALSE otherwise. Call GetLastError for error information. </returns>
-        Public Declare Auto Function ShellExecuteEx Lib "shell32.dll" (ByRef lpExecInfo As SHELLEXECUTEINFO) As Integer
-        ''' <summary>Contains information used by <see cref="ShellExecuteEx"/>.</summary>
-        <StructLayout(LayoutKind.Sequential)> _
-        Public Structure SHELLEXECUTEINFO
-            ''' <summary>The size of the structure, in bytes.</summary>
-            Dim cbSize As Integer
-            ''' <summary>An array of flags that indicate the content and validity of the other structure members.</summary>
-            Dim fMask As ShellExecuteInfoFlags
-            ''' <summary>A window handle to any message boxes that the system might produce while executing this function.</summary>
-            Dim hwnd As Integer
-            ''' <summary>A string, referred to as a verb, that specifies the action to be performed. The set of available verbs depends on the particular file or folder. Generally, the actions available from an object's shortcut menu are available verbs. If you set this parameter to NULL:
-            ''' <list type="bullet"><item>For systems prior to Windows 2000, the default verb is used if it is valid and available in the registry. If not, the "open" verb is used.</item>
-            ''' <item>For Windows 2000 and later systems, the default verb is used if available. If not, the "open" verb is used. If neither verb is available, the system uses the first verb listed in the registry.</item></list></summary>
-            ''' <remarks>The following verbs are commonly used.
-            ''' <list type="table"><item><term>edit</term><description>Launches an editor and opens the document for editing. If lpFile is not a document file, the function will fail.</description></item>
-            ''' <item><term>explore</term><description>Explores the folder specified by lpFile.</description></item>
-            ''' <item><term>find</term><description>Initiates a search starting from the specified directory.</description></item>
-            ''' <item><term>open</term><description>Opens the file specified by the lpFile parameter. The file can be an executable file, a document file, or a folder.</description></item>
-            ''' <item><term>print</term><description>Prints the document file specified by lpFile. If lpFile is not a document file, the function will fail.</description></item>
-            ''' <item><term>properties</term><description>Displays the file or folder's properties.</description></item></list></remarks>
-            <MarshalAs(UnmanagedType.LPTStr)> _
-            Dim lpVerb As String
-            ''' <summary>The address of a null-terminated string that specifies the name of the file or object on which <see cref="ShellExecuteEx"/> will perform the action specified by the lpVerb parameter. The system registry verbs that are supported by the <see cref="ShellExecuteEx"/> function include "open" for executable files and document files and "print" for document files for which a print handler has been registered. Other applications might have added Shell verbs through the system registry, such as "play" for .avi and .wav files. To specify a Shell namespace object, pass the fully qualified parse name and set the <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/> flag in the <see cref="fMask"/> parameter.</summary>
-            ''' <remarks><note>Note If the <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/> flag is set, you can use either lpFile or lpIDList to identify the item by its file system path or its PIDL respectively.</note><note>Note If the path is not included with the name, the current directory is assumed.</note></remarks>
-            <MarshalAs(UnmanagedType.LPTStr)> _
-            Dim lpFile As String
-            ''' <summary>The address of a null-terminated string that contains the application parameters. The parameters must be separated by spaces. If the <see cref="lpFile"/> member specifies a document file, <see cref="lpParameters"/> should be NULL.</summary>
-            <MarshalAs(UnmanagedType.LPTStr)> _
-            Dim lpParameters As String
-            ''' <summary>The address of a null-terminated string that specifies the name of the working directory. If this member is not specified, the current directory is used as the working directory.</summary>
-            <MarshalAs(UnmanagedType.LPTStr)> _
-            Dim lpDirectory As String
-            ''' <summary>Flags that specify how an application is to be shown when it is opened. It can be one of the SW_ values listed for the ShellExecute function. If lpFile specifies a document file, the flag is simply passed to the associated application. It is up to the application to decide how to handle it.</summary>
-            Dim nShow As Integer
-            ''' <summary>If the function succeeds, it sets this member to a value greater than 32. If the function fails, it is set to an <see cref="ShellExecuteErrors"/> error value that indicates the cause of the failure. Although <see cref="hInstApp"/> is declared as an HINSTANCE for compatibility with 16-bit Windows applications, it is not a true HINSTANCE. It can be cast only to an int and compared to either 32 or the <see cref="ShellExecuteErrors"/>.</summary>
-            Dim hInstApp As ShellExecuteErrors
-            ''' <summary>The address of an ITEMIDLIST structure to contain an item identifier list uniquely identifying the file to execute. This member is ignored if the <see cref="fMask"/> member does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_IDLIST"/> or <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/>.</summary>
-            Dim lpIDList As Integer
-            ''' <summary>The address of a null-terminated string that specifies the name of a file class or a GUID. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_CLASSNAME"/>.</summary>
-            <MarshalAs(UnmanagedType.LPTStr)> _
-            Dim lpClass As String
-            ''' <summary>A handle to the registry key for the file class. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_CLASSKEY"/>.</summary>
-            Dim hkeyClass As Integer
-            ''' <summary>A keyboard shortcut to associate with the application. The low-order word is the virtual key code, and the high-order word is a modifier flag (HOTKEYF_). For a list of modifier flags, see the description of the <see cref="Messages.WindowMessages.WM_SETHOTKEY"/> message. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_HOTKEY"/>.</summary>
-            Dim dwHotKey As Integer
-            ''' <summary>A handle to the icon for the file class. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_ICON"/>.</summary>
-            ''' <remarks>This value is same as <see cref="hMonitor"/></remarks>
-            Dim hIcon As Integer
-            ''' <summary>A handle to the monitor upon which the document is to be displayed. This member is ignored if <see cref="fMask"/> does not include <see cref="ShellExecuteInfoFlags.SEE_MASK_HMONITOR"/>.</summary>
-            ''' <remarks>This value is same as <see cref="hIcon"/></remarks>
-            Public Property hMonitor() As Integer
-                Get
-                    Return hIcon
-                End Get
-                Set(ByVal value As Integer)
-                    hIcon = value
-                End Set
-            End Property
-            ''' <summary>A handle to the newly started application. This member is set on return and is always NULL unless <see cref="fMask"/> is set to <see cref="ShellExecuteInfoFlags.SEE_MASK_NOCLOSEPROCESS"/>. Even if <see cref="fMask"/> is set to <see cref="ShellExecuteInfoFlags.SEE_MASK_NOCLOSEPROCESS"/>, <see cref="hProcess"/> will be NULL if no process was launched. For example, if a document to be launched is a URL and an instance of Internet Explorer is already running, it will display the document. No new process is launched, and <see cref="hProcess"/> will be NULL.</summary>
-            ''' <remarks><note><see cref="ShellExecuteEx"/> does not always return an <see cref="hProcess"/>, even if a process is launched as the result of the call. For example, an <see cref="hProcess"/> does not return when you use <see cref="ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST"/> to invoke IContextMenu.</note></remarks>
-            Dim hProcess As Integer
-        End Structure
+        ''' <summary>Levels for the <see cref="NetShareEnum"/> function</summary>
+        Public Enum NetShareLevel As Integer
+            ''' <summary>Return share names. The bufptr parameter points to an array of SHARE_INFO_0 structures.</summary>
+            Names = 0
+            ''' <summary>Return information about shared resources, including the name and type of the resource, and a comment associated with the resource. The bufptr parameter points to an array of SHARE_INFO_1 structures. </summary>
+            Resources = 1
+            ''' <summary>Return information about shared resources, including name of the resource, type and permissions, password, and number of connections. The bufptr parameter points to an array of SHARE_INFO_2 structures.</summary>
+            ResourecesEx = 502
+            ''' <summary>Return information about shared resources, including name of the resource, type and permissions, number of connections, and other pertinent information. The bufptr parameter points to an array of SHARE_INFO_502 structures. Shares from different scopes are not returned. For more information about scoping, see the Remarks section of the documentation for the NetServerTransportAddEx function.</summary>
+            ResourecesSingleScope = 503
+            ''' <summary>Return information about shared resources, including the name of the resource, type and permissions, number of connections, and other pertinent information. The bufptr parameter points to an array of SHARE_INFO_503 structures. Shares from all scopes are returned. If the shi503_servername member of this structure is "*", there is no configured server name and the NetShareEnum function enumerates shares for all the unscoped names.</summary>
+            ''' <remarks>Windows Server 2003, Windows XP, Windows 2000 Server, and Windows 2000 Professional:  This information level is not supported.</remarks>
+            ResourcesAllScopes
+        End Enum
         ''' <summary><see cref="SHELLEXECUTEINFO"/> errors</summary>
         Public Enum ShellExecuteErrors As Integer
             ''' <summary>File not found.</summary>
@@ -495,6 +534,7 @@ Namespace API
             SE_ERR_NOASSOC = 31
         End Enum
         ''' <summary><see cref="SHELLEXECUTEINFO"/> flags</summary>
+        <Flags()> _
         Public Enum ShellExecuteInfoFlags As Integer
             ''' <summary>Use the class name given by the lpClass member. If both <see cref="SEE_MASK_CLASSKEY"/> and <see cref="SEE_MASK_CLASSNAME"/> are set, the class key is used.</summary>
             SEE_MASK_CLASSNAME = &H1
@@ -541,48 +581,112 @@ Namespace API
             ''' <summary>Windows XP and later. Keep track of the number of times this application has been launched. Applications with sufficiently high counts appear in the Start Menu's list of most frequently used programs.</summary>
             SEE_MASK_FLAG_LOG_USAGE = &H4000000
         End Enum
-        ''' <summary>retrieves information about each shared resource on a server.</summary>
-        ''' <param name="servername">Pointer to a string that specifies the DNS or NetBIOS name of the remote server on which the function is to execute. If this parameter is NULL, the local computer is used.</param>
-        ''' <param name="level">Specifies the information level of the data.</param>
-        ''' <param name="bufptr">Pointer to the buffer that receives the data. The format of this data depends on the value of the <paramref name="level"/> parameter. 
-        ''' <para>This buffer is allocated by the system and must be freed using the <see cref="NetApiBufferFree"/> function. Note that you must free the buffer even if the function fails with ERROR_MORE_DATA.</para></param>
-        ''' <param name="prefmaxlen">Specifies the preferred maximum length of returned data, in bytes. If you specify <see cref="MAX_PREFERRED_LENGTH"/>, the function allocates the amount of memory required for the data. If you specify another value in this parameter, it can restrict the number of bytes that the function returns. If the buffer size is insufficient to hold all entries, the function returns ERROR_MORE_DATA. For more information, see Network Management Function Buffers and Network Management Function Buffer Lengths.</param>
-        ''' <param name="entriesread">Pointer to a value that receives the count of elements actually enumerated.</param>
-        ''' <param name="totalentries">Pointer to a value that receives the total number of entries that could have been enumerated. Note that applications should consider this value only as a hint.</param>
-        ''' <param name="resume_handle">Pointer to a value that contains a resume handle which is used to continue an existing share search. The handle should be zero on the first call and left unchanged for subsequent calls. If resume_handle is NULL, then no resume handle is stored.</param>
-        ''' <returns>If the function succeeds, the return value is NERR_Success. If the function fails, the return value is a system error code.</returns>
-        Public Declare Unicode Function NetShareEnum Lib "netapi32.dll" ( _
-            <MarshalAs(UnmanagedType.LPWStr)> ByVal servername As String, _
-            ByVal level As NetShareLevel, _
-            ByRef bufptr As IntPtr, _
-            ByVal prefmaxlen As Integer, _
-            ByRef entriesread As Integer, _
-            ByRef totalentries As Integer, _
-            ByRef resume_handle As Integer _
-            ) As Integer
-        ''' <summary>Maximum value for prefferred data length of the <see cref="NetShareEnum"/> function</summary>
-        Public Const MAX_PREFERRED_LENGTH% = &HFFFFFFFF
-        ''' <summary>Levels for the <see cref="NetShareEnum"/> function</summary>
-        Public Enum NetShareLevel As Integer
-            ''' <summary>Return share names. The bufptr parameter points to an array of SHARE_INFO_0 structures.</summary>
-            Names = 0
-            ''' <summary>Return information about shared resources, including the name and type of the resource, and a comment associated with the resource. The bufptr parameter points to an array of SHARE_INFO_1 structures. </summary>
-            Resources = 1
-            ''' <summary>Return information about shared resources, including name of the resource, type and permissions, password, and number of connections. The bufptr parameter points to an array of SHARE_INFO_2 structures.</summary>
-            ResourecesEx = 502
-            ''' <summary>Return information about shared resources, including name of the resource, type and permissions, number of connections, and other pertinent information. The bufptr parameter points to an array of SHARE_INFO_502 structures. Shares from different scopes are not returned. For more information about scoping, see the Remarks section of the documentation for the NetServerTransportAddEx function.</summary>
-            ResourecesSingleScope = 503
-            ''' <summary>Return information about shared resources, including the name of the resource, type and permissions, number of connections, and other pertinent information. The bufptr parameter points to an array of SHARE_INFO_503 structures. Shares from all scopes are returned. If the shi503_servername member of this structure is "*", there is no configured server name and the NetShareEnum function enumerates shares for all the unscoped names.</summary>
-            ''' <remarks>Windows Server 2003, Windows XP, Windows 2000 Server, and Windows 2000 Professional:  This information level is not supported.</remarks>
-            ResourcesAllScopes
-        End Enum
-        ''' <summary>contains the name of the shared resource</summary>
-        <StructLayout(LayoutKind.Sequential)> _
-        Public Structure SHARE_INFO_0
-            ''' <summary>Pointer to a Unicode string specifying the share name of a resource.</summary>
-            <MarshalAs(UnmanagedType.LPWStr)> _
-            Public shi0_netname As String
-        End Structure
+#End Region
+        '        ''' <summary>Copies, moves, renames, or deletes a file system object.</summary>
+        '        ''' <param name="lpFileOp">[in] A pointer to an <see cref="SHFILEOPSTRUCT"/> structure that contains information this function needs to carry out the specified operation. This parameter must contain a valid value that is not NULL. You are responsible for validating the value. If you do not validate it, you will experience unexpected results.</param>
+        '        ''' <returns><para>Returns zero if successful; otherwise nonzero. Applications normally should simply check for zero or nonzero.</para>
+        '        ''' <para>It is good practice to examine the value of the <see cref="SHFILEOPSTRUCT.fAnyOperationsAborted"/> member of the <see cref="SHFILEOPSTRUCT"/>. <see cref="SHFileOperation"/> can return 0 for success if the user cancels the operation. If you do not check <see cref="SHFILEOPSTRUCT.fAnyOperationsAborted"/> as well as the return value, you cannot know that the function accomplished the full task you asked of it and you might proceed under incorrect assumptions.</para>
+        '        ''' <para>Do not use GetLastError with the return values of this function.</para></returns>
+        '        Public Declare Auto Function SHFileOperation Lib "shell32.dll" (ByRef lpFileOp As SHFILEOPSTRUCT) As Int32
+        '        ''' <summary></summary>
+        '        <StructLayout(LayoutKind.Sequential)> _
+        '        Public Structure SHFILEOPSTRUCT
+        '            ''' <summary>A window handle to the dialog box to display information about the status of the file operation.</summary>
+        '            Public hWnd As Int32
+        '            ''' <summary>A value that indicates which operation to perform.</summary>
+        '            Public wFunc As FileSystemOperation
+        '            ''' <summary>Contains value of the <see cref="pFrom"/> property</summary>
+        '            ''' <remarks>Although this member is declared as a single null-terminated string, it is actually a buffer that can hold multiple null-delimited file names. Each file name is terminated by a single NULL character. The last file name is terminated with a double NULL character ("\0\0") to indicate the end of the buffer.</remarks>
+        '            <MarshalAs(UnmanagedType.LPTStr)> _
+        '            Private _pFrom As String
+        '            ''' <summary>A pointer to one or more source file names. These names should be fully-qualified paths to prevent unexpected results.</summary>
+        '            ''' <remarks><note>Note  This string must be double-null terminated.</note>
+        '            ''' <para>Standard Microsoft MS-DOS wildcard characters, such as "*", are permitted only in the file-name position. Using a wildcard character elsewhere in the string will lead to unpredictable results.</para></remarks>
+        '            Public Property pFrom() As String()
+        '                Get
+        '                    Return _pFrom.TrimEnd(ChrW(0)).Split(ChrW(0))
+        '                End Get
+        '                Set(ByVal value As String())
+        '                    _pFrom = value.Join(ChrW(0)) & ChrW(0) & ChrW(0)
+        '                End Set
+        '            End Property
+        '            ''' <summary>Contains value of the <see cref="pTo"/> property</summary>
+        '            ''' <remarks><note>Note  This string must be double-null terminated.</note>
+        '            ''' <para>Although this member is declared as a single null-terminated string, it is actually a buffer that can hold multiple null-delimited file names. Each file name is terminated by a single NULL character. The last file name is terminated with a double NULL character ("\0\0") to indicate the end of the buffer.</para></remarks>
+        '            Private _pTo As String
+        '            ''' <summary>A pointer to one or more source file names. These names should be fully-qualified paths to prevent unexpected results.</summary>
+        '            ''' <remarks>Standard Microsoft MS-DOS wildcard characters, such as "*", are permitted only in the file-name position. Using a wildcard character elsewhere in the string will lead to unpredictable results.</remarks>
+        '            Public Property pTo() As String()
+        '                Get
+        '                    Return _pTo.TrimEnd(ChrW(0)).Split(ChrW(0))
+        '                End Get
+        '                Set(ByVal value As String())
+        '                    _pTo = value.Join(ChrW(0)) & ChrW(0) & ChrW(0)
+        '                End Set
+        '            End Property
+        '            ''' <summary>Flags that control the file operation. </summary>
+        '            Public fFlags As FileOperationFlags
+        '            ''' <summary>When the function returns, this member contains TRUE if any file operations were aborted before they were completed; otherwise, FALSE. An operation can be manually aborted by the user through UI or it can be silently aborted by the system if the <see cref="FileOperationFlags.FOF_NOERRORUI"/> or <see cref="FileOperationFlags.FOF_NOCONFIRMATION"/> flags were set.</summary>
+        '            Public fAnyOperationsAborted As Int32
+        '            ''' <summary>When the function returns, this member contains a handle to a name mapping object that contains the old and new names of the renamed files. This member is used only if the <see cref="fFlags"/> member includes the <see cref="FileOperationFlags.FOF_WANTMAPPINGHANDLE"/> flag.</summary>
+        '            Public hNameMaps As IntPtr
+        '            ''' <summary>A pointer to the title of a progress dialog box. This is a null-terminated string. This member is used only if <see cref="fFlags"/> includes the <see cref="FileOperationFlags.FOF_SIMPLEPROGRESS"/> flag.</summary>
+        '            Public sProgress As String
+        '#Region "Enums"
+        '            ''' <summary>File system operations</summary>
+        '            Public Enum FileSystemOperation As Integer
+        '                ''' <summary>Copy the files specified in the <see cref="pFrom"/> member to the location specified in the <see cref="pTo"/> member.</summary>
+        '                FO_COPY = &H2
+        '                ''' <summary>Delete the files specified in <see cref="pFrom"/>.</summary>
+        '                FO_DELETE = &H3
+        '                ''' <summary>Move the files specified in <see cref="pFrom"/> to the location specified in <see cref="pTo"/>.</summary>
+        '                FO_MOVE = &H1
+        '                ''' <summary>Rename the file specified in <see cref="pFrom"/>. You cannot use this flag to rename multiple files with a single function call. Use <see cref="FO_MOVE"/> instead.</summary>
+        '                FO_RENAME = &H4
+        '            End Enum
+        '            ''' <summary>File operation flags</summary>
+        '            <Flags()> _
+        '            Public Enum FileOperationFlags As UInt16
+        '                ''' <summary>Preserve undo information, if possible. Prior to Windows Vista, operations could be undone only from the same process that performed the original operation. In Windows Vista and later systems, the scope of the undo is a user session. Any process running in the user session can undo another operation. The undo state is held in the Explorer.exe process, and as long as that process is running, it can coordinate the undo functions. If the source file parameter does not contain fully qualified path and file names, this flag is ignored.</summary>
+        '                FOF_ALLOWUNDO = &H40
+        '                ''' <summary>Not used.</summary>
+        '                <EditorBrowsable(EditorBrowsableState.Never)> _
+        '                FOF_CONFIRMMOUSE = &H2
+        '                ''' <summary>Perform the operation only on files (not on folders) if a wildcard file name (*.*) is specified.</summary>
+        '                FOF_FILESONLY = &H80
+        '                ''' <summary>The pTo member specifies multiple destination files (one for each source file in pFrom) rather than one directory where all source files are to be deposited.</summary>
+        '                FOF_MULTIDESTFILES = &H1
+        '                ''' <summary>Respond with Yes to All for any dialog box that is displayed.</summary>
+        '                FOF_NOCONFIRMATION = &H10
+        '                ''' <summary>Do not ask the user to confirm the creation of a new directory if the operation requires one to be created.</summary>
+        '                FOF_NOCONFIRMMKDIR = &H200
+        '                ''' <summary>Version 5.0. Do not move connected files as a group. Only move the specified files.</summary>
+        '                FOF_NO_CONNECTED_ELEMENTS = &H2000
+        '                ''' <summary>Version 4.71. Do not copy the security attributes of the file. The destination file receives the security attributes of its new folder.</summary>
+        '                FOF_NOCOPYSECURITYATTRIBS = &H800
+        '                ''' <summary>Do not display a dialog to the user if an error occurs.</summary>
+        '                FOF_NOERRORUI = &H400
+        '                ''' <summary>Not used.</summary>
+        '                FOF_NORECURSEREPARSE = &H8000
+        '                ''' <summary>Only perform the operation in the local directory. Don't operate recursively into subdirectories, which is the default behavior.</summary>
+        '                FOF_NORECURSION = &H1000
+        '                ''' <summary>Version 6.0.6060 (Windows Vista). Perform the operation silently, presenting no user interface (UI) to the user. This is equivalent to FOF_SILENT | FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_NOCONFIRMMKDIR.</summary>
+        '                FOF_NO_UI
+        '                ''' <summary>Give the file being operated on a new name in a move, copy, or rename operation if a file with the target name already exists at the destination.</summary>
+        '                FOF_RENAMEONCOLLISION = &H8
+        '                ''' <summary>Do not display a progress dialog box.</summary>
+        '                FOF_SILENT = &H4
+        '                ''' <summary>Display a progress dialog box but do not show individual file names as they are operated on.</summary>
+        '                FOF_SIMPLEPROGRESS = &H100
+        '                ''' <summary>If FOF_RENAMEONCOLLISION is specified and any files were renamed, assign a name mapping object that contains their old and new names to the hNameMappings member. This object must be freed using SHFreeNameMappings when it is no longer needed.</summary>
+        '                FOF_WANTMAPPINGHANDLE = &H20
+        '                ''' <summary>Version 5.0. Send a warning if a file is being permanently destroyed during a delete operation rather than recycled. This flag partially overrides FOF_NOCONFIRMATION.</summary>
+        '                FOF_WANTNUKEWARNING = &H4000
+        '            End Enum
+        '#End Region
+        '        End Structure
+        
+
     End Module
 End Namespace
 #End If

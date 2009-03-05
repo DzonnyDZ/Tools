@@ -1335,4 +1335,13 @@
   <data name="MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated" xml:space="preserve">
     <value>Method declaring type and type to get method of must be created from the same generic type.</value>
   </data>
+  <data name="OperationWasCancelled" xml:space="preserve">
+    <value>Operation was cancelled.</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File not found.</value>
+  </data>
+  <data name="Retuned1" xml:space="preserve">
+    <value>{0} retuned {1}</value>
+  </data>
 </root>

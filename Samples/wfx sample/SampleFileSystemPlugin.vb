@@ -1,4 +1,6 @@
-﻿Imports Tools.ExtensionsT
+﻿Imports Tools.ExtensionsT, Tools.DrawingT
+Imports Tools.IOt
+
 ''' <summary>Sample Total Commander file system plugin (just works over local file system)</summary>
 <TotalCommanderPlugin("wfxSample")> _
 Public Class SampleFileSystemPlugin
@@ -110,7 +112,7 @@ Public Class SampleFileSystemPlugin
     End Function
     ''' <summary>Retrieves the next file in a directory of the plugin's file system</summary>
     ''' <param name="Status">The object returned by <see cref="FindFirst"/>; null when Total Commander supplied handle that is  not in <see cref="HandleDictionary"/></param>
-    ''' <param name="FindData">A <see cref="FindData"/> struct (mimics WIN32_FIND_DATA as defined in the Windows SDK) to be pupulated with the file or directory details. Use the <see cref="FindData.Attributes"/> field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the <see cref="FindData.Attributes"/> field with 0x80000000 and set the <see cref="FindData.ReparsePointTag"/> parameter to the Unix file mode (permissions).</param>
+    ''' <param name="FindData">A <see cref="FindData"/> struct (mimics WIN32_FIND_DATA as defined in the Windows SDK) to be pupulated with the file or directory details. Use the <see cref="FindData.Attributes"/> field set to <see cref="Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the <see cref="FindData.Attributes"/> field with 0x80000000 and set the <see cref="FindData.ReparsePointTag"/> parameter to the Unix file mode (permissions).</param>
     ''' <returns>Return false if there are no more files, and true otherwise. SetLastError() does not need to be called.</returns>
     ''' <exception cref="IO.DirectoryNotFoundException">Directory does not exists</exception>
     ''' <exception cref="UnauthorizedAccessException">The user does not have access to the directory</exception>
@@ -208,12 +210,15 @@ Public Class SampleFileSystemPlugin
         End Try
         Return True
     End Function
+
+
+
 #Region "Exec"
     ''' <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
     ''' <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
     ''' <param name="RemoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData.MaxPath"/>-1 or uncatchable <see cref="IO.PathTooLongException"/> will be thrown.</param>
     ''' <param name="Verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" commandline (case-insensitive).</param>
-    ''' <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
+    ''' <returns>Return <see cref="Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see cref="Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see cref="Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see cref="Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
     ''' <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
     ''' <exception cref="Security.SecurityException">Security error detected</exception>
     ''' <exception cref="IO.IOException">An IO error occured</exception>
@@ -223,13 +228,13 @@ Public Class SampleFileSystemPlugin
     ''' <list type="table"><listheader><term>verb</term><description>meaning</description></listheader>
     ''' <item><term>open</term><description>This is called when the user presses ENTER on a file. There are three ways to handle it:
     ''' <list type="bulet">
-    ''' <item>For internal commands like "Add new connection", execute it in the plugin and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/></item>
-    ''' <item>Let Total Commander download the file and execute it locally: return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/></item>
-    ''' <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is <see cref="FindData.MaxPath"/>-1 (= 259) characters!</item>
+    ''' <item>For internal commands like "Add new connection", execute it in the plugin and return <see cref="Tools.TotalCommanderT.ExecExitCode.OK"/> or <see cref="Tools.TotalCommanderT.ExecExitCode.Error"/></item>
+    ''' <item>Let Total Commander download the file and execute it locally: return <see cref="Tools.TotalCommanderT.ExecExitCode.Yourself"/></item>
+    ''' <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see cref="Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is <see cref="FindData.MaxPath"/>-1 (= 259) characters!</item>
     ''' </list></description></item>
-    ''' <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
+    ''' <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see cref="Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
     ''' <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FindFirst"/>/<see cref="FindNext"/></description></item>
-    ''' <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max 259 characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
+    ''' <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max 259 characters), and give <see cref="Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see cref="Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
     ''' </list>
     ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
@@ -238,9 +243,9 @@ Public Class SampleFileSystemPlugin
     End Function
     ''' <summary>Opens or executes given file.</summary>
     ''' <param name="hMainWin">Handle to Total Commander window.</param>
-    ''' <param name="RemoteName">Full path of file to be opened or executed. In case the file is link (like *.lnk files in Windows) method should assignt link target path to this argument and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. It will make Total Commander navigate to a new path.
+    ''' <param name="RemoteName">Full path of file to be opened or executed. In case the file is link (like *.lnk files in Windows) method should assignt link target path to this argument and return <see cref="Tools.TotalCommanderT.ExecExitCode.Symlink"/>. It will make Total Commander navigate to a new path.
     ''' <para>Do not assign string longer than <see cref="FindData.MaxPath"/>-1 or uncatchable <see cref="IO.PathTooLongException"/> will be thrown.</para></param>
-    ''' <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
+    ''' <returns>Return <see cref="Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see cref="Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see cref="Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see cref="Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
     ''' <remarks><note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note></remarks>
     ''' <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
     ''' <exception cref="Security.SecurityException">Security error detected</exception>
@@ -300,7 +305,7 @@ ExecFile:   Dim p As New Process
                     Dim dirpath = If(Path.Length = 3 AndAlso Path.EndsWith(":\"), Path, IO.Path.GetDirectoryName(Path))
                     newPath = IO.Path.GetFullPath(IO.Path.Combine(dirpath, CDPath))
                 End If
-                If Not IO.Directory.Exists(newPath) Then Return ExecExitCode.Error
+                If Not (newPath.StartsWith("\\") AndAlso newPath.IndexOf("\", 2) = -1) AndAlso Not IO.Directory.Exists(newPath) Then Return ExecExitCode.Error
                 RemoteName = "\" & newPath
                 Return ExecExitCode.Symlink
             Else
@@ -352,4 +357,295 @@ ExecFile:   Dim p As New Process
         Return ExecExitCode.OK
     End Function
 #End Region
+#Region "Copy/move"
+    ''' <summary>Called to transfer (copy or move) a file within the plugin's file system.</summary>
+    ''' <param name="OldName">Name of the remote source file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
+    ''' <param name="NewName">Name of the remote destination file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
+    ''' <param name="Move">If true, the file needs to be moved to the new location and name. Many file systems allow to rename/move a file without actually moving any of its data, only the pointer to it.</param>
+    ''' <param name="OverWrite">Tells the function whether it should overwrite the target file or not. See notes below on how this parameter is used.</param>
+    ''' <param name="info">A structure of type <see cref="RemoteInfo"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <see cref="RemoteInfo.SizeLow"/>=0, <see cref="RemoteInfo.SizeHigh"/>=0xFFFFFFFF</param>
+    ''' <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
+    ''' <remarks>Total Commander usually calls this function twice:
+    ''' <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
+    ''' <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
+    ''' <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
+    ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+    ''' </remarks>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
+    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
+    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+    Public Overrides Function RenMovFile(ByVal OldName As String, ByVal NewName As String, ByVal Move As Boolean, ByVal OverWrite As Boolean, ByVal info As RemoteInfo) As FileSystemExitCode
+        Dim SourceName = GetRealPath(OldName)
+        Dim TargetName = GetRealPath(NewName)
+        If Not OverWrite AndAlso IO.File.Exists(TargetName) OrElse IO.Directory.Exists(TargetName) Then Return FileSystemExitCode.FileExists
+        If Not IO.File.Exists(SourceName) Then Return FileSystemExitCode.FileNotFound
+        If Not IO.Directory.Exists(IO.Path.GetDirectoryName(TargetName)) Then Return FileSystemExitCode.WriteError
+        Dim KnownError As FileSystemExitCode?
+        Try
+            IOt.Copy(SourceName, TargetName, _
+                    Function(SourceFileName, TotalSize, BytesCopyed, TargetFileName) _
+                        If(Me.ProgressProc(OldName, NewName, BytesCopyed / TotalSize * 100), PathCopyCallbackResult.Abort, PathCopyCallbackResult.Ignore), _
+                    Function(SourceFileName, TargetFileName, Stage, Exception) _
+                        If(Stage = PathCopyStages.CheckTagretFileExists AndAlso TypeOf Exception Is FileAlreadyExistsException AndAlso OverWrite, _
+                           PathCopyCallbackResult.Retry, _
+                        If( _
+                            If(Stage = PathCopyStages.Read OrElse Stage = PathCopyStages.OpenSourceFile, _
+                                Write(Of FileSystemExitCode?)(FileSystemExitCode.ReadError, KnownError), _
+                            If(Stage = PathCopyStages.Write OrElse Stage = PathCopyStages.OpenTargetFile, _
+                               Write(Of FileSystemExitCode?)(FileSystemExitCode.WriteError, KnownError), _
+                               FileSystemExitCode.OK)) = FileSystemExitCode.OK, _
+                            PathCopyCallbackResult.Abort, PathCopyCallbackResult.Abort)), _
+                     Move)
+        Catch ex As OperationCanceledException
+            Return FileSystemExitCode.UserAbort
+        Catch ex As Exception When TypeOf ex Is IO.IOException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException
+            If KnownError.HasValue Then Return KnownError
+            Throw
+        Catch ex As Exception
+            If KnownError.HasValue Then Return KnownError
+            Throw New IO.IOException(ex.Message, ex)
+        End Try
+        If Move Then
+            Try
+                IO.File.Delete(SourceName)
+            Catch ex As Exception When TypeOf ex Is IO.IOException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException
+                Throw
+            Catch ex As Exception
+                Throw New IO.IOException(ex.Message, ex)
+            End Try
+        End If
+        Return FileSystemExitCode.OK
+    End Function
+    ''' <summary>Writes value to target and returns it</summary>
+    ''' <param name="Value">Value to be written</param>
+    ''' <param name="Target">Target to write <paramref name="Value"/> to</param>
+    ''' <typeparam name="T">Type of value</typeparam>
+    ''' <returns><paramref name="Value"/></returns>
+    ''' <remarks><note>This is helper function</note></remarks>
+    Private Function Write(Of T)(ByVal Value As T, ByRef Target As T) As T
+        Target = Value
+        Return Value
+    End Function
+
+    ''' <summary>Transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
+    ''' <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
+    ''' <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData.MaxPath"/> or uncatchable <see cref="IO.PathTooLOngExceptioin"/> will be thrown.</param>
+    ''' <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
+    ''' <param name="info">This parameter contains information about the remote file which was previously retrieved via <see cref="FindFirst"/>/<see cref="FindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
+    ''' <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
+    ''' <remarks>Total Commander usually calls this function twice:
+    ''' <list type="bullet">
+    ''' <item>once with <paramref name="CopyFlags"/>==0 or <paramref name="CopyFlags"/>==<see cref="Tools.TotalCommanderT.CopyFlags.Move"/>. If the local file exists and resume is supported, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
+    ''' <item>a second time with <see cref="Tools.TotalCommanderT.CopyFlags.[Resume]"/> or <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+    ''' <item><see cref="Tools.TotalCommanderT.CopyFlags.SameCase"/> and <see cref="Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are NEVER passed to this function, because the plugin can easily determine whether a local file exists or not.</item>
+    ''' <item><see cref="Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the remote file after a successful download.</item>
+    ''' </list>
+    ''' <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
+    ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+    ''' </remarks>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
+    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
+    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+    Public Overrides Function GetFile(ByVal RemoteName As String, ByRef LocalName As String, ByVal CopyFlags As CopyFlags, ByVal info As RemoteInfo) As FileSystemExitCode
+        Dim SourcePath = GetRealPath(RemoteName)
+        Try
+            Return FileOperation(LocalName, SourcePath, LocalName, RemoteName, CopyFlags)
+        Catch ex As Exception When Not TypeOf ex Is UnauthorizedAccessException AndAlso Not TypeOf ex Is IO.IOException AndAlso Not TypeOf ex Is Security.SecurityException
+            Throw New IO.IOException(ex.Message, ex)
+        End Try
+    End Function
+    ''' <summary>Copies file with possible resume</summary>
+    ''' <param name="TargetPath">Copy file here</param>
+    ''' <param name="SourcePath">Copy this file</param>
+    ''' <param name="TargetPathDisplay">Display this as target</param>
+    ''' <param name="SourcePathDisplay">Display this as stource</param>
+    ''' <param name="CopyFlags">Operation configuration</param>
+    ''' <returns>Operation result</returns>
+    Private Function FileOperation(ByVal TargetPath As String, ByVal SourcePath As String, ByRef TargetPathDisplay As String, ByVal SourcePathDisplay As String, ByVal CopyFlags As CopyFlags) As FileSystemExitCode
+        If Not (CopyFlags And TotalCommanderT.CopyFlags.Overwrite) = TotalCommanderT.CopyFlags.Overwrite AndAlso Not (CopyFlags And TotalCommanderT.CopyFlags.Resume) = TotalCommanderT.CopyFlags.Resume AndAlso IO.File.Exists(TargetPath) Then Return FileSystemExitCode.ExistsResumeAllowed
+        If IO.File.Exists(TargetPath) AndAlso (CopyFlags And TotalCommanderT.CopyFlags.Resume) = TotalCommanderT.CopyFlags.Resume Then
+            Using TargetFile = IO.File.Open(TargetPath, IO.FileMode.Append, IO.FileAccess.Write, IO.FileShare.Read), _
+                  SourceFile = IO.File.Open(SourcePath, IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.Read)
+                If SourceFile.Length <= TargetFile.Length Then Return FileSystemExitCode.ReadError
+                SourceFile.Position = TargetFile.Length
+                Dim buff(1024) As Byte
+                Dim BRead As Integer
+                Dim Total As Long = TargetFile.Length
+                Do
+                    Try : BRead = SourceFile.Read(buff, 0, buff.Length)
+                    Catch : Return FileSystemExitCode.ReadError : End Try
+                    If BRead > 0 Then
+                        Try : TargetFile.Write(buff, 0, BRead)
+                        Catch : Return FileSystemExitCode.WriteError : End Try
+                        Total += BRead
+                        If Me.ProgressProc(SourcePathDisplay, TargetPathDisplay, Total / SourceFile.Length * 100) Then Return FileSystemExitCode.UserAbort
+                    End If
+                Loop While BRead <> 0
+            End Using
+            If CopyFlags And TotalCommanderT.CopyFlags.Move Then IO.File.Delete(SourcePath)
+        Else
+            Using TargetFile = IO.File.Open(TargetPath, If(CopyFlags And TotalCommanderT.CopyFlags.Overwrite, IO.FileMode.Create, IO.FileMode.CreateNew), IO.FileAccess.Write, IO.FileShare.Read), _
+                  SourceFile = IO.File.Open(SourcePath, IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.Read)
+                Dim buff(1024) As Byte
+                Dim BRead As Integer
+                Dim Total As Long = 0
+                Do
+                    Try : BRead = SourceFile.Read(buff, 0, buff.Length)
+                    Catch : Return FileSystemExitCode.ReadError : End Try
+                    If BRead > 0 Then
+                        Try : TargetFile.Write(buff, 0, BRead)
+                        Catch : Return FileSystemExitCode.WriteError : End Try
+                        Total += BRead
+                        If Me.ProgressProc(SourcePathDisplay, TargetPathDisplay, Total / SourceFile.Length * 100) Then Return FileSystemExitCode.UserAbort
+                    End If
+                Loop While BRead <> 0
+            End Using
+            If CopyFlags And TotalCommanderT.CopyFlags.Move Then IO.File.Delete(SourcePath)
+        End If
+        Return Nothing
+    End Function
+    ''' <summary>Transfers a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
+    ''' <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
+    ''' <param name="RemoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign string longer than <see cref="FindData.MaxPath"/> to this parameter or uncatchable <see cref="IO.PathTooLongException"/> will be thrown.</param>
+    ''' <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
+    ''' <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
+    ''' <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
+    ''' <list type="bullet">
+    ''' <item>once with neither <see cref="Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
+    ''' <item>a second time with <see cref="Tools.TotalCommanderT.CopyFlags.Resume"/> or <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+    ''' <item>The flags <see cref="Tools.TotalCommanderT.CopyFlags.SameCase"/> or <see cref="Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are added to CopyFlags when the remote file exists and needs to be overwritten. This is a hint to the plugin to allow optimizations: Depending on the plugin type, it may be very slow to check the server for every single file when uploading.</item>
+    ''' <item>If the flag <see cref="Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the local file after a successful upload.</item>
+    ''' </list>
+    ''' <para>While copying the file, but at least at the beginning and the end, call ProgressProc to show the copy progress and allow the user to abort the operation.</para>
+    ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+    ''' </remarks>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
+    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
+    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+    Public Overrides Function PutFile(ByVal LocalName As String, ByRef RemoteName As String, ByVal CopyFlags As CopyFlags) As FileSystemExitCode
+        Dim TargetPath = GetRealPath(RemoteName)
+        Try
+            Return FileOperation(TargetPath, LocalName, RemoteName, LocalName, CopyFlags)
+        Catch ex As Exception When Not TypeOf ex Is UnauthorizedAccessException AndAlso Not TypeOf ex Is IO.IOException AndAlso Not TypeOf ex Is Security.SecurityException
+            Throw New IO.IOException(ex.Message, ex)
+        End Try
+    End Function
+#End Region
+    ''' <summary>Sets the (Windows-Style) file times of a file/dir.</summary>
+    ''' <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
+    ''' <param name="CreationTime">Creation time of the file. May be NULL to leave it unchanged.</param>
+    ''' <param name="LastAccessTime">Last access time of the file. May be NULL to leave it unchanged.</param>
+    ''' <param name="LastWriteTime">Last write time of the file. May be NULL to leave it unchanged. If your file system only supports one time, use this parameter!</param>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected</exception>
+    ''' <exception cref="IO.IOException">An IO error occured</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+    ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+    Public Overrides Sub SetTime(ByVal RemoteName As String, ByVal CreationTime As Date?, ByVal LastAccessTime As Date?, ByVal LastWriteTime As Date?)
+        Dim path = GetRealPath(RemoteName)
+        If IO.File.Exists(path) Then
+            If CreationTime.HasValue Then IO.File.SetCreationTime(path, CreationTime)
+            If LastAccessTime.HasValue Then IO.File.SetLastAccessTime(path, LastAccessTime)
+            If LastWriteTime.HasValue Then IO.File.SetLastWriteTime(path, LastWriteTime)
+        Else
+            If CreationTime.HasValue Then IO.Directory.SetCreationTime(path, CreationTime)
+            If LastAccessTime.HasValue Then IO.Directory.SetLastAccessTime(path, LastAccessTime)
+            If LastWriteTime.HasValue Then IO.Directory.SetLastWriteTime(path, LastWriteTime)
+        End If
+    End Sub
+    ''' <summary>Sets the (Windows-Style) file attributes of a file/dir. <see cref="ExecuteFile"/> is called for Unix-style attributes.</summary>
+    ''' <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
+    ''' <param name="NewAttr">New file attributes</param>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected</exception>
+    ''' <exception cref="IO.IOException">An IO error occured</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+    ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+    Public Overrides Sub SetAttr(ByVal RemoteName As String, ByVal NewAttr As StandardFileAttributes)
+        Dim path = GetRealPath(RemoteName)
+        If IO.File.Exists(path) Then
+            IO.File.SetAttributes(path, NewAttr)
+        Else
+            Dim di As New IO.DirectoryInfo(path)
+            di.Attributes = NewAttr
+        End If
+    End Sub
+    ''' <summary>Called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
+    ''' <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData.MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO.PathTooLongException"/> will be thrown by <see cref="M:Tools.TotalCommanderT.FileSystemPlugin.FsExctractCustomIcon(System.SByte*,System.Int32,HICON__**)"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
+    ''' <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
+    ''' <param name="TheIcon">Here you need to return the icon, unless return value is <see cref="Tools.TotalCommanderT.IconExtractResult.Delayed"/> or <see cref="Tools.TotalCommanderT.IconExtractResult.UseDefault"/></param>
+    ''' <returns>One of the <see cref="IconExtractResult"/> values</returns> 
+    ''' <remarks>If you return <see cref="Tools.TotalCommanderT.IconExtractResult.Delayed"/>, <see cref="ExctractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="ExctractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see cref="Tools.TotalCommanderT.IconExtractFlags.BackgroundThread"/> flag.
+    ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+    Public Overrides Function ExctractCustomIcon(ByRef RemoteName As String, ByVal ExtractFlags As IconExtractFlags, ByRef TheIcon As System.Drawing.Icon) As IconExtractResult
+        If RemoteName.EndsWith("\..\") Then Return IconExtractResult.UseDefault
+        Static OnStack As Boolean
+        If OnStack Then Return IconExtractResult.UseDefault
+        OnStack = True
+        Try
+            Dim Path As Path = GetRealPath(RemoteName)
+            Try
+                TheIcon = Path.GetIcon((ExtractFlags And IconExtractFlags.SmallIcon) <> IconExtractFlags.SmallIcon)
+            Catch
+                Return IconExtractResult.UseDefault
+            End Try
+            Return IconExtractResult.ExtractedDestroy
+        Finally
+            OnStack = False
+        End Try
+    End Function
+    ''' <summary>Called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
+    ''' <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
+    ''' <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
+    ''' <returns>The <see cref="BitmapResult"/> indicating where to obtain the bitmap or the bitmap itself; null when default image shuld be used.</returns>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+    ''' <remarks>
+    ''' <para>Inportant notes</para>
+    ''' <list type="numbered">
+    ''' <item>This function is only called in Total Commander 7.0 and later. The reported plugin version will be >= 1.4.</item>
+    ''' <item>The bitmap handle goes into possession of Total Commander, which will delete it after using it. The plugin must not delete the bitmap handle! (when <see2 cref2="F:Tools.TotalCommanderT.BitmapResult.Bitmap"/> is set.</item>
+    ''' <item>Make sure you scale your image correctly to the desired maximum width+height! Do not fill the rest of the bitmap - instead, create a bitmap which is SMALLER than requested! This way, Total Commander can center your image and fill the rest with the default background color.</item>
+    ''' </list>
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+    Public Overrides Function GetPreviewBitmap(ByVal RemoteName As String, ByVal width As Integer, ByVal height As Integer) As BitmapResult
+        Dim Path = GetRealPath(RemoteName)
+        Dim ext = IO.Path.GetExtension(Path)
+        Try
+            Select Case ext.ToLowerInvariant
+                Case ".jpg", ".jpeg", ".bmp", ".dib", ".tiff", ".tif", ".gif", ".png"
+                    Dim bmp = New Drawing.Bitmap(Path)
+                    Return New BitmapResult(bmp.GetThumbnail(New Drawing.Size(width, height)))
+                Case ".wmf", ".emf"
+                    Dim metafile = New Drawing.Imaging.Metafile(Path)
+                    Return New BitmapResult(metafile.GetThumbnail(New Drawing.Size(width, height)))
+                Case ".ico", ".cur"
+                    Dim icon = New Drawing.Icon(Path)
+                    Return New BitmapResult(icon.ToBitmap.GetThumbnail(New Drawing.Size(width, height)))
+                Case Else
+                    Return New BitmapResult(Path, False)
+            End Select
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
 End Class

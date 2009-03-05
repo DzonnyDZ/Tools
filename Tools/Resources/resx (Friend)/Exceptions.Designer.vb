@@ -1077,6 +1077,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'File not found.'.
+        '''</summary>
+        Friend Shared ReadOnly Property FileNotFound() As String
+            Get
+                Return ResourceManager.GetString("FileNotFound", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Finnishig is not allowed in state {0}'.
         '''</summary>
         Friend Shared ReadOnly Property FinnishigIsNotAllowedInState0() As String
@@ -2143,6 +2152,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Operation was cancelled.'.
+        '''</summary>
+        Friend Shared ReadOnly Property OperationWasCancelled() As String
+            Get
+                Return ResourceManager.GetString("OperationWasCancelled", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'or'.
         '''</summary>
         Friend Shared ReadOnly Property Or_() As String
@@ -2310,6 +2328,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ResultCannotBeNone() As String
             Get
                 Return ResourceManager.GetString("ResultCannotBeNone", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to '{0} retuned {1}'.
+        '''</summary>
+        Friend Shared ReadOnly Property Retuned1() As String
+            Get
+                Return ResourceManager.GetString("Retuned1", _resourceCulture)
             End Get
         End Property
         
@@ -4717,6 +4744,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the FileNotFound property value.
+        '''</summary>
+        '''<returns>The FileNotFound property value.</returns>
+        Friend Shared Function FileNotFoundFormat() As String
+            Return FileNotFound
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Finnishig is not allowed in state {0}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -5754,6 +5789,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the OperationWasCancelled property value.
+        '''</summary>
+        '''<returns>The OperationWasCancelled property value.</returns>
+        Friend Shared Function OperationWasCancelledFormat() As String
+            Return OperationWasCancelled
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the Or_ property value.
         '''</summary>
         '''<returns>The Or_ property value.</returns>
@@ -5909,6 +5952,16 @@ Namespace ResourcesT
         '''<returns>The ResultCannotBeNone property value.</returns>
         Friend Shared Function ResultCannotBeNoneFormat() As String
             Return ResultCannotBeNone
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} retuned {1}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function Retuned1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, Retuned1, arg0, arg1)
         End Function
         
         '''<summary>

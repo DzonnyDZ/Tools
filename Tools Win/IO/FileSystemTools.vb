@@ -1,4 +1,4 @@
-﻿Imports Tools.IOt, Tools.API, System.Drawing, Tools.ExtensionsT.StringExtensions
+﻿Imports Tools.IOt, Tools.API, System.Drawing, Tools.ExtensionsT
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
@@ -19,7 +19,7 @@ Namespace IOt
         <Extension()> _
         Public Function GetIcon(ByVal PathP As IPathProvider, Optional ByVal Large As Boolean = False, Optional ByVal Overlays As Boolean = True) As Drawing.Icon
             If PathP Is Nothing Then Throw New ArgumentNullException("PathP")
-            Dim Path = New Path(PathP.Path)
+            Dim Path = New Path(PathP.Path.TrimEnd("\"))
             If Not Path.Exists Then Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.Path0DoesNotExist, Path))
             Dim shInfo As New SHFILEINFO
             Dim ret = SHGetFileInfo(Path, 0, shInfo, Marshal.SizeOf(shInfo), _
@@ -96,5 +96,6 @@ Namespace IOt
             End If
         End Sub
     End Module
+
 End Namespace
 #End If

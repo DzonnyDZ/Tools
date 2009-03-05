@@ -39,7 +39,7 @@
     TCPLUGF BOOL FUNC_MODIF FsSetAttr(char* RemoteName,int NewAttr){return FUNCTION_TARGET->FsSetAttr(RemoteName,NewAttr);}
 #endif
 #ifdef TC_FS_SETTIME
-    TCPLUGF BOOL FUNC_MODIF FsSetTime(char* RemoteName,FILETIME *CreationTime,FILETIME *LastAccessTime,FILETIME *LastWriteTime){return FUNCTION_TARGET->FsSetTime(RemoteName, CreationTime, LastAccessTime, LastWriteTime);}
+    TCPLUGF BOOL FUNC_MODIF FsSetTime(char* RemoteName,::FILETIME *CreationTime,::FILETIME *LastAccessTime,::FILETIME *LastWriteTime){return FUNCTION_TARGET->FsSetTime(RemoteName, CreationTime, LastAccessTime, LastWriteTime);}
 #endif
 #ifdef TC_FS_STATUSINFO
     TCPLUGF void FUNC_MODIF FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation){FUNCTION_TARGET->FsStatusInfo(RemoteDir, InfoStartEnd, InfoOperation);}

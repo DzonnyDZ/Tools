@@ -43,7 +43,7 @@ Namespace IOt
             Set(ByVal value As String)
                 If value Is Nothing Then Throw New ArgumentNullException("value", ResourcesT.Exceptions.PathCannotBeBasedOnNullString)
                 If value.Trim = "" Then Throw New ArgumentException(ResourcesT.Exceptions.PathCannotBeBasedOnAnEmptyStringOrStringContainingOnlyWhitespaces)
-                For Each ch As Char In System.IO.Path.GetInvalidPathChars
+                For Each ch As Char In System.IO.Path.GetInvalidPathChars()
                     If value.Contains(ch) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.PathStringContainsInvalidCharacter0, ch))
                 Next ch
                 _Path = value
