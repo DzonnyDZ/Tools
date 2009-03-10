@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -143,6 +144,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\PseudoZip.exe" a "$(ProjectDir)Resources\Template.pseudozip" "$(ProjectDir)..\Plugin" *.h *.cpp *.vcproj *.def *.rc</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\PseudoZip.exe" a "$(ProjectDir)Resources\Template.pseudozip" "$(ProjectDir)..\Plugin" *.h *.cpp *.vcproj *.def *.rc *.ico</PreBuildEvent>
   </PropertyGroup>
 </Project>

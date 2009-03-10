@@ -410,7 +410,7 @@ Public Class Generator
             End If
         End Try
     End Function
-    ''' <summary>Prepares files for wfx plugin</summary>
+    ''' <summary>Prepares files for plugin</summary>
     ''' <param name="Type">Type to prepare project for</param>
     ''' <param name="ProjectDirectory">Directory peoject is stored in</param>
     ''' <param name="PluginType">Plugin base class</param>
@@ -446,6 +446,18 @@ Public Class Generator
             w.WriteLine("#using ""{0}""", Assembly.Load("Tools.TotalCommander, PublicKeyToken=373c02ac923768e6").Location)
             w.WriteLine("#define PLUGIN_NAME ""{0}""", Assembly.GetName.Name.Replace("\", "\\").Replace("""", "\"""))
         End Using
+        Dim ia = Type.GetAttribute(Of PluginIconBaseAttribute)()
+        If ia IsNot Nothing Then
+            Log("Extracting icon")
+            Try
+                Using pIcon = ia.getIcon(Type), IconFile = IO.File.Open(IO.Path.Combine(ProjectDirectory, "Icon.ico"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read)
+                    pIcon.Save(IconFile)
+                End Using
+            Catch ex As Exception
+                Log("Error while extracting icon using {0}: {1}: {2}", ia.GetType.Name, ex.GetType.Name, ex.Message)
+                Throw
+            End Try
+        End If
     End Sub
     ''' <summary>Writes the AssemblyInfo2.cpp file</summary>
     ''' <param name="Type">Plugin type</param>

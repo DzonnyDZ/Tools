@@ -60,7 +60,7 @@ namespace Tools{namespace TotalCommanderT{
         if(TypeInAssembly == nullptr) throw gcnew ArgumentNullException("TypeInAssembly");
         this->assembly = TypeInAssembly->Assembly;
         this->resourceName = ResourceName;
-        this->itemName = ItemName;
+        this->itemName = ResourceItem;
     }
     Drawing::Icon^ ResourcePluginIconAttribute::getIcon(Type^ AttributeTarget){
         try{

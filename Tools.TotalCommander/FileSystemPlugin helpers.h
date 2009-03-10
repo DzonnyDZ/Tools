@@ -73,7 +73,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Same casing</summary>
         SameCase = FS_COPYFLAGS_EXISTS_SAMECASE,
         /// <summary>Different casing</summary>
-        DiferentCase = FS_COPYFLAGS_EXISTS_DIFFERENTCASE
+        DifferentCase = FS_COPYFLAGS_EXISTS_DIFFERENTCASE
     };
     /// <summary>File attributes</summary>
     [FlagsAttribute]

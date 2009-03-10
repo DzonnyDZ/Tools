@@ -249,7 +249,7 @@ namespace Tools{namespace TotalCommanderT{
         BOOL FsMkDir(char* Path);
     public:
         /// <summary>When overriden in derived class creates a directory on the plugin's file system.</summary>
-        /// <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
+        /// <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
         /// <returns>Return true if the directory could be created, false if not.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
@@ -314,12 +314,12 @@ namespace Tools{namespace TotalCommanderT{
         /// <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
         /// <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FindFirst"/>/<see cref="FindNext"/></description></item>
         /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="FindData::MaxPath"/>-1 (= 259) characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
-        /// <item><term>mode X<pterm><description>Sends information to plugin about FTP transfer mode set up in Total Commander. Plugin can safelly ignore it. X is I for binary, A for text and X*.txt *.log *.php etc. (X followed by list of masks separated by space) fro text mode.</description></item>
+        /// <item><term>mode X</term><description>Sends information to plugin about FTP transfer mode set up in Total Commander. Plugin can safelly ignore it. X is I for binary, A for text and X*.txt *.log *.php etc. (X followed by list of masks separated by space) fro text mode.</description></item>
         /// </list>
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// <note type="inheritinfo">Plugin must implement this method and call base class method to <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/> and <see cref="ExecuteCommand"/> to be called. Method implementation contained in <see cref="FileSystemPlugin"/> must be overriden.
-        /// <para>Authors of <see cref="FileSystemPlugin"/>-derived classes can chose either to implement <see cref="ExecuteFile"/> functionality on theri own directly in this method or call base class method and implement functionality in methods mentioned above.</para<</note></remarks>
+        /// <para>Authors of <see cref="FileSystemPlugin"/>-derived classes can chose either to implement <see cref="ExecuteFile"/> functionality on theri own directly in this method or call base class method and implement functionality in methods mentioned above.</para></note></remarks>
         [MethodNotSupportedAttribute]
         virtual ExecExitCode ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb);
 #pragma region "ExecuteFile helper methods"
@@ -396,7 +396,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="ri">A structure of type <see cref="RemoteInfoStruct"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <see cref="RemoteInfoStruct::SizeLow"/>=0, <see cref="RemoteInfoStruct::SizeHigh"/>=0xFFFFFFFF</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
-        /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
+        /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
         /// <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
         /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
@@ -413,19 +413,19 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="info">A structure of type <see cref="RemoteInfo"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <see cref="RemoteInfo::SizeLow"/>=0, <see cref="RemoteInfo::SizeHigh"/>=0xFFFFFFFF</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
-        /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
+        /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
         /// <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
         /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// </remarks>
-        /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
-        /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
-        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+        /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileNotFound"/>.</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
+        /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode RenMovFile(String^ OldName, String^ NewName, bool Move, bool OverWrite, RemoteInfo info);
     public:
@@ -437,8 +437,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
         /// <list type="bullet">
-        /// <item>once with <paramref name="CopyFlags"/>==0 or <paramref name="CopyFlags"/>==<see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/>. If the local file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
-        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+        /// <item>once with <paramref name="CopyFlags"/>==0 or <paramref name="CopyFlags"/>==<see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/>. If the local file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
+        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
         /// <item><see2 cref2="F:Tools.TotalCommanderT.CopyFlags.SameCase"/> and <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are NEVER passed to this function, because the plugin can easily determine whether a local file exists or not.</item>
         /// <item><see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the remote file after a successful download.</item>
         /// </list>
@@ -451,14 +451,14 @@ namespace Tools{namespace TotalCommanderT{
     public:
         /// <summary>When overriden in derived class transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
-        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData::MaxPath"/> or uncatchable <see cref="IO::PathTooLOngExceptioin"/> will be thrown.</param>
+        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData::MaxPath"/> or uncatchable <see cref="System::IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
         /// <param name="info">This parameter contains information about the remote file which was previously retrieved via <see cref="FindFirst"/>/<see cref="FindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
         /// <list type="bullet">
-        /// <item>once with <paramref name="CopyFlags"/>==0 or <paramref name="CopyFlags"/>==<see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/>. If the local file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
-        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+        /// <item>once with <paramref name="CopyFlags"/>==0 or <paramref name="CopyFlags"/>==<see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/>. If the local file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
+        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
         /// <item><see2 cref2="F:Tools.TotalCommanderT.CopyFlags.SameCase"/> and <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are NEVER passed to this function, because the plugin can easily determine whether a local file exists or not.</item>
         /// <item><see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the remote file after a successful download.</item>
         /// </list>
@@ -466,13 +466,13 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// </remarks>
-        /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
-        /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
-        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+        /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileNotFound"/>.</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
+        /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode GetFile(String^ RemoteName, String^% LocalName, CopyFlags CopyFlags, RemoteInfo info);
     public:
@@ -483,8 +483,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
         /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
         /// <list type="bullet">
-        /// <item>once with neither <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
-        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+        /// <item>once with neither <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
+        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
         /// <item>The flags <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.SameCase"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are added to CopyFlags when the remote file exists and needs to be overwritten. This is a hint to the plugin to allow optimizations: Depending on the plugin type, it may be very slow to check the server for every single file when uploading.</item>
         /// <item>If the flag <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the local file after a successful upload.</item>
         /// </list>
@@ -502,8 +502,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
         /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
         /// <list type="bullet">
-        /// <item>once with neither <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
-        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+        /// <item>once with neither <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
+        /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
         /// <item>The flags <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.SameCase"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are added to CopyFlags when the remote file exists and needs to be overwritten. This is a hint to the plugin to allow optimizations: Depending on the plugin type, it may be very slow to check the server for every single file when uploading.</item>
         /// <item>If the flag <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the local file after a successful upload.</item>
         /// </list>
@@ -511,13 +511,13 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// </remarks>
-        /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
-        /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
-        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+        /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileNotFound"/>.</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
+        /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode PutFile(String^ LocalName, String^% RemoteName, CopyFlags CopyFlags);
     public:
@@ -702,7 +702,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
         /// <param name="TheIcon">Here you need to return the icon, unless return value is <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/> or <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.UseDefault"/></param>
         /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
-        /// <remarks>If you return <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/>, <see cref="ExtractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="ExtractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see2 cref2="F:Tools.TotalCommanderT.IconExtractFlags.BackgroundThread"/> flag.
+        /// <remarks>If you return <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/>, <see cref="ExctractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="ExctractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see2 cref2="F:Tools.TotalCommanderT.IconExtractFlags.BackgroundThread"/> flag.
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>

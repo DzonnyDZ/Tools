@@ -26,7 +26,7 @@ namespace Tools{namespace TotalCommanderT{
         String^ definedBy;
         /// <summary>Contains value of the <see cref="ImplementedBy"/> property</summary>
         String^ implementedBy;
-        /// <summary>Initializes newly created instance</sumary>
+        /// <summary>Initializes newly created instance</summary>
         /// <param name="DefinedBy">Name of macro to be set method to be compiled into plugin wrapper. Generator must define this macro always.</param>
         /// <exception cref="ArgumentNullException"><paramref name="DefinedBy"/> is null</exception>
         /// <exception cref="FormatException"><paramref name="DefinedBy"/> has invalid format for macro name</exception>
@@ -63,7 +63,12 @@ namespace Tools{namespace TotalCommanderT{
         Packer = 8
     };
     
+    ref class PluginIconBaseAttribute;
+    ref class FilePluginIconAttribute;
+    ref class ResourcePluginIconAttribute;
+
     /// <summary>Apply this attribute to class implementing Total Commander plugin to precise how the plugin is generated.</summary>
+    /// <remarks>To set plugin icon use one of <see cref="PluginIconBaseAttribute"/>-derived classes such as <see cref="FilePluginIconAttribute"/> or <see cref="ResourcePluginIconAttribute"/>.</remarks>
     [AttributeUsageAttribute(AttributeTargets::Class, Inherited=false)]
     public ref class TotalCommanderPluginAttribute : Attribute{
     private:
@@ -75,14 +80,14 @@ namespace Tools{namespace TotalCommanderT{
         TotalCommanderPluginAttribute(String^ Name);
         /// <summary>Gets name (without extension) of plugin when it is generated. Ignored when null.</summary>
         property String^ Name{String^ get();}
-        /// <summary>When set to non-null value serves as value of the <see cref="AssemblyDescriptionAttribute"/> applied to plugin wrapper assembly.</summary>
-        /// <remarks>When null, <see cref="AssemblyDescriptionAttribute"/> from type's assembly is used.</remarks> 
+        /// <summary>When set to non-null value serves as value of the <see cref="System::Reflection::AssemblyDescriptionAttribute"/> applied to plugin wrapper assembly.</summary>
+        /// <remarks>When null, <see cref="System::Reflection::AssemblyDescriptionAttribute"/> from type's assembly is used.</remarks> 
         property String^ AssemblyDescription;
-        /// <summary>When set to non-null value serves as value of the <see cref="AssemblyTitleAttribute"/> applied to plugin wrapper assembly.</summary>
-        /// <remarks>When null, <see cref="AssemblyTitleAttribute"/> from type's assembly is used.</remarks>
+        /// <summary>When set to non-null value serves as value of the <see cref="System::Reflection::AssemblyTitleAttribute"/> applied to plugin wrapper assembly.</summary>
+        /// <remarks>When null, <see cref="System::Reflection::AssemblyTitleAttribute"/> from type's assembly is used.</remarks>
         property String^ AssemblyTitle;
-        /// <summary>When set to non-null value serves as value of the <see cref="AssemblyGuidAttribute"/> applied to plugin wrapper assembly.</summary>
-        /// <remarks>When null, no  <see cref="AssemblyGuidAttribute"/> is attached</remarks>
+        /// <summary>When set to non-null value serves as value of the <see2 cref2="System::Runtime::InteropServices::GuidAttribute"/> applied to plugin wrapper assembly.</summary>
+        /// <remarks>When null, no  <see2 cref2="System::Runtime::InteropServices::GuidAttributte"/> is attached</remarks>
         property String^ AssemblyGuid;
     };
 
@@ -139,15 +144,15 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Contains value of the <see cref="ItemName"/> property</summary>
         String^ itemName;
     public:
-        /// <summary>CTor for embdeded resource</summary>
+        /// <summary>CTor for embdeded ico resource</summary>
         /// <param name="TypeInAssembly">Any type in assembly resource is defined in</param>
         /// <param name="ResourceName">Name of embdeded resource of type icon</param>
         /// <exception cref="ArgumentNullException"><paramref name="TypeInAssembly"/> is null</exception>
         ResourcePluginIconAttribute(Type^ TypeInAssembly, String^ ResourceName);
-        /// <summary>CTor for localizable resource</summary>
+        /// <summary>CTor for embdeded resx resource</summary>
         /// <param name="TypeInAssembly">Any type in assembly resource is defined in</param>
         /// <param name="ResourceName">Name of resource of type resx</param>
-        /// <param name="ResourceItem">Name of item in resource. The type of item must be <see cref="System::Icon"/>.</param>
+        /// <param name="ResourceItem">Name of item in resource. The type of item must be <see cref="System::Drawing::Icon"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="TypeInAssembly"/> is null</exception>
         ResourcePluginIconAttribute(Type^ TypeInAssembly, String^ ResourceName, String^ ResourceItem);
         /// <summary>Gets the icon</summary>

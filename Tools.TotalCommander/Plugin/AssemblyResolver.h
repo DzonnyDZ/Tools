@@ -12,7 +12,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="sender">The source of the event</param>
         /// <param name="args">Event arguments</param>
         /// <returns>When <paramref name="args"/> requests executing assembly returns executing assembly; otherwise null</returns>
-        /// <remarks>This class is necessary in because plugins are typically not plced in teh same directory as TOTALCMD.EXE, where .NET looky by plugin dependencies by default.<remarks>
+        /// <remarks>This class is necessary in because plugins are typically not plced in teh same directory as TOTALCMD.EXE, where .NET looky by plugin dependencies by default.</remarks>
         static Assembly^ OnResolveAssembly(Object^ sender, ResolveEventArgs^ args);
     internal:
         /// <summary>Setups the assembly loader</summary>

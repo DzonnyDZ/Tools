@@ -3,6 +3,7 @@ Imports Tools.IOt
 
 ''' <summary>Sample Total Commander file system plugin (just works over local file system)</summary>
 <TotalCommanderPlugin("wfxSample")> _
+<ResourcePluginIcon(GetType(SampleFileSystemPlugin), "Tools.TotalCommanderT.WfxSample.VisualBasic.ico")> _
 Public Class SampleFileSystemPlugin
     Inherits FileSystemPlugin
 
@@ -192,7 +193,7 @@ Public Class SampleFileSystemPlugin
         Return True
     End Function
     ''' <summary>Creates a directory on the plugin's file system.</summary>
-    ''' <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
+    ''' <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
     ''' <returns>Return true if the directory could be created, false if not.</returns>
     ''' <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
     ''' <exception cref="Security.SecurityException">Security error detected</exception>
@@ -366,19 +367,19 @@ ExecFile:   Dim p As New Process
     ''' <param name="info">A structure of type <see cref="RemoteInfo"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <see cref="RemoteInfo.SizeLow"/>=0, <see cref="RemoteInfo.SizeHigh"/>=0xFFFFFFFF</param>
     ''' <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
     ''' <remarks>Total Commander usually calls this function twice:
-    ''' <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
+    ''' <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see cref="Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
     ''' <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
     ''' <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
     ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
     ''' </remarks>
-    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
-    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
-    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.FileNotFound"/>.</exception>
+    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
+    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function RenMovFile(ByVal OldName As String, ByVal NewName As String, ByVal Move As Boolean, ByVal OverWrite As Boolean, ByVal info As RemoteInfo) As FileSystemExitCode
         Dim SourceName = GetRealPath(OldName)
         Dim TargetName = GetRealPath(NewName)
@@ -434,14 +435,14 @@ ExecFile:   Dim p As New Process
 
     ''' <summary>Transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
     ''' <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
-    ''' <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData.MaxPath"/> or uncatchable <see cref="IO.PathTooLOngExceptioin"/> will be thrown.</param>
+    ''' <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData.MaxPath"/> or uncatchable <see cref="IO.PathTooLongException"/> will be thrown.</param>
     ''' <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
     ''' <param name="info">This parameter contains information about the remote file which was previously retrieved via <see cref="FindFirst"/>/<see cref="FindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
     ''' <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
     ''' <remarks>Total Commander usually calls this function twice:
     ''' <list type="bullet">
-    ''' <item>once with <paramref name="CopyFlags"/>==0 or <paramref name="CopyFlags"/>==<see cref="Tools.TotalCommanderT.CopyFlags.Move"/>. If the local file exists and resume is supported, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
-    ''' <item>a second time with <see cref="Tools.TotalCommanderT.CopyFlags.[Resume]"/> or <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+    ''' <item>once with <paramref name="CopyFlags"/>==0 or <paramref name="CopyFlags"/>==<see cref="Tools.TotalCommanderT.CopyFlags.Move"/>. If the local file exists and resume is supported, return <see cref="Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see cref="Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
+    ''' <item>a second time with <see cref="Tools.TotalCommanderT.CopyFlags.[Resume]"/> or <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see cref="Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
     ''' <item><see cref="Tools.TotalCommanderT.CopyFlags.SameCase"/> and <see cref="Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are NEVER passed to this function, because the plugin can easily determine whether a local file exists or not.</item>
     ''' <item><see cref="Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the remote file after a successful download.</item>
     ''' </list>
@@ -449,13 +450,13 @@ ExecFile:   Dim p As New Process
     ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
     ''' </remarks>
-    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
-    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
-    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.FileNotFound"/>.</exception>
+    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
+    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function GetFile(ByVal RemoteName As String, ByRef LocalName As String, ByVal CopyFlags As CopyFlags, ByVal info As RemoteInfo) As FileSystemExitCode
         Dim SourcePath = GetRealPath(RemoteName)
         Try
@@ -521,8 +522,8 @@ ExecFile:   Dim p As New Process
     ''' <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
     ''' <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
     ''' <list type="bullet">
-    ''' <item>once with neither <see cref="Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileExists"/></item>
-    ''' <item>a second time with <see cref="Tools.TotalCommanderT.CopyFlags.Resume"/> or <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
+    ''' <item>once with neither <see cref="Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see cref="Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see cref="Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
+    ''' <item>a second time with <see cref="Tools.TotalCommanderT.CopyFlags.Resume"/> or <see cref="Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see cref="Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
     ''' <item>The flags <see cref="Tools.TotalCommanderT.CopyFlags.SameCase"/> or <see cref="Tools.TotalCommanderT.CopyFlags.DifferentCase"/> are added to CopyFlags when the remote file exists and needs to be overwritten. This is a hint to the plugin to allow optimizations: Depending on the plugin type, it may be very slow to check the server for every single file when uploading.</item>
     ''' <item>If the flag <see cref="Tools.TotalCommanderT.CopyFlags.Move"/> is set, the plugin needs to delete the local file after a successful upload.</item>
     ''' </list>
@@ -530,13 +531,13 @@ ExecFile:   Dim p As New Process
     ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
     ''' </remarks>
-    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
-    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
-    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.IOException">An IO error occured. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.ReadError"/>.</exception>
+    ''' <exception cref="IO.FileNotFoundException">Source file was not found. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.FileNotFound"/>.</exception>
+    ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
+    ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function PutFile(ByVal LocalName As String, ByRef RemoteName As String, ByVal CopyFlags As CopyFlags) As FileSystemExitCode
         Dim TargetPath = GetRealPath(RemoteName)
         Try

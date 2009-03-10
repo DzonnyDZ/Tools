@@ -7,7 +7,7 @@ namespace Tools{namespace TotalCommanderT{
 
     /// <summary>Common base class for all Total Commander plugins</summary>
     /// <remarks><note type="inheritinfo">Do not derive directly from this class as it does not represent any concrete plugin</note>
-    /// <para>See <see2 cref2="T:Tools.TotalCommanderT.PluginBuilder.Generator"/> for more information about how to generate Total Commander plugin from .NET.</remarks>
+    /// <para>See <see2 cref2="T:Tools.TotalCommanderT.PluginBuilder.Generator"/> for more information about how to generate Total Commander plugin from .NET.</para></remarks>
     public ref class PluginBase abstract{
     internal:
         /// <summary>CTor - creates new instance of the <see cref="PluginBase"/> class</summary>
