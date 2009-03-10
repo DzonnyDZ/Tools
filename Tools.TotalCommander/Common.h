@@ -94,4 +94,72 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>CTor - creates new instance of the <see cref="NotAPluginAttribute"/> class</summary>
         NotAPluginAttribute();
     };
+    /// <summary>Base class for plugin icon attributes</summary>
+    [AttributeUsage(AttributeTargets::Class, Inherited=false)]
+    public ref class PluginIconBaseAttribute abstract : Attribute{
+    protected:
+        /// <summary>CTor</summary>
+        PluginIconBaseAttribute();
+    public:
+        /// <summary>When overriden in derived class gets the icon</summary>
+        /// <param name="AttributeTarget">Type attribute is applied onto. May be ignored by actual implementation.</param>
+        /// <returns>The icon</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="AttributeTarget"/> is null</exception>
+        /// <exception cref="InvalidOperationException">The icon referenced by this attribute cannot be found</exception>
+        virtual Drawing::Icon^ getIcon(Type^ AttributeTarget) abstract;
+    };
+    /// <summary>Specifies plugin icon stored in ICO file</summary>
+    [AttributeUsage(AttributeTargets::Class, Inherited=false)]
+    public ref class FilePluginIconAttribute : PluginIconBaseAttribute{
+    private:
+        /// <summary>Contains value of the <see cref="IconPath"/> property</summary>
+        String^ iconPath;
+    public:
+        /// <summary>CTor</summary>
+        /// <param name="IconPath">Path of ICO file that contains icon of plugin. Absolute or relative to assembly where type attribute si applied onto is declared.</param>
+        FilePluginIconAttribute(String^ IconPath);
+        /// <summary>Gets the icon</summary>
+        /// <param name="AttributeTarget">Type attribute is applied onto.</param>
+        /// <returns>The icon</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="AttributeTarget"/> is null</exception>
+        /// <exception cref="InvalidOperationException">The icon referenced by this attribute cannot be found. i.e. the file cannot be found.</exception>
+        virtual Drawing::Icon^ getIcon(Type^ AttributeTarget) override;
+        /// <summary>Gets path of ICO file that contains icon of plugin.</summary>
+        /// <returns>Path of ICO file that contains icon of plugin. Absolute or relative to assembly where type attribute si applied onto is declared.</returns>
+        property String^ IconPath{String^ get();}
+    };
+    /// <summary>Specifies plugin icon stored in resource</summary>
+    [AttributeUsage(AttributeTargets::Class, Inherited=false)]
+    public ref class ResourcePluginIconAttribute : PluginIconBaseAttribute{
+    private:
+        /// <summary>Contains value of the <see cref="Assembly"/> property</summary>
+        Reflection::Assembly^ assembly;
+        /// <summary>Contains value of the <see cref="ResourceName"/> property</summary>
+        String^ resourceName;
+        /// <summary>Contains value of the <see cref="ItemName"/> property</summary>
+        String^ itemName;
+    public:
+        /// <summary>CTor for embdeded resource</summary>
+        /// <param name="TypeInAssembly">Any type in assembly resource is defined in</param>
+        /// <param name="ResourceName">Name of embdeded resource of type icon</param>
+        /// <exception cref="ArgumentNullException"><paramref name="TypeInAssembly"/> is null</exception>
+        ResourcePluginIconAttribute(Type^ TypeInAssembly, String^ ResourceName);
+        /// <summary>CTor for localizable resource</summary>
+        /// <param name="TypeInAssembly">Any type in assembly resource is defined in</param>
+        /// <param name="ResourceName">Name of resource of type resx</param>
+        /// <param name="ResourceItem">Name of item in resource. The type of item must be <see cref="System::Icon"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="TypeInAssembly"/> is null</exception>
+        ResourcePluginIconAttribute(Type^ TypeInAssembly, String^ ResourceName, String^ ResourceItem);
+        /// <summary>Gets the icon</summary>
+        /// <param name="AttributeTarget">Ignored, may be null.</param>
+        /// <returns>The icon</returns>
+        /// <exception cref="InvalidOperationException">The icon referenced by this attribute cannot be found. I.e. the resource name is invalid.</exception>
+        virtual Drawing::Icon^ getIcon(Type^ AttributeTarget) override;
+        /// <summary>Gets assembly icon resource is defined in</summary>
+        property Reflection::Assembly^ Assembly{Reflection::Assembly^ get();}
+        /// <summary>Get name of embdeded resource that contains the icon</summary>
+        property String^ ResourceName{String^ get();}
+        /// <summary>Gets name of item of resource of type resx that contains the icon. If null resource <see cref="ResourceName"/> must be icon itself. If not null resource <see cref="ResourceName"/> must be resx resource.</summary>
+        property String^ ItemName{String^ get();}
+    };
 }}

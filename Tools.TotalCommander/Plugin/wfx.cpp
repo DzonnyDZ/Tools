@@ -27,7 +27,7 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 //};
 /// <summary>Backs the <see cref="FsGetDefRootName"/> method</summary>
 void GetDefRootName(char* DefRootName,int maxlen);
-/// <summary>Bactsk the <see ctef="FsInit"/> function</summary>
+/// <summary>Backs the <see ctef="FsInit"/> function</summary>
 int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc);
 
 #ifdef TC_FS_INIT

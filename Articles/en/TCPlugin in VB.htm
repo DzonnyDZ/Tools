@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us" >
+<head>
+    <title>Writing Total Commander plugin in Visual Basic (or C#)</title>
+</head>
+<body lang="en-us" xml:lang="en-us">
+<h1>Writing Total Commander Plugin in Visual Basic (or C#)</h1>
+<p>Windows Explorer is not enough. People who have the same feeling 
+as me can choose of several alternative file managers. One of the most popular 
+is Total Commander - shareware file manager for Microsoft Windows. It has 
+classic 2-panes view known from Norton Commander from old DOS times and supports 
+many file operations. One of important features of Total Commander is ability to 
+be extended via plugins. This article describes how to write Total Commander 
+plugin in managed language (Visual Basic or C#) in general and with special 
+focus on File System plugin (wfx).</p>
+<h2>Plugin architecture</h2>
+<p>Total Commander itself is written in Delphi (Object Pascal) language (unmanaged). Delphi compiler produces C-style executables and libraries. Plugin interface is designed for 
+plugins written in C/C++. Author provides C header files for plugin authors. There are 4 plugin types:</p>
+<dl>
+<dt>Content plugin (wdx)</dt><dd>Allows Total Commander to show additional details of files (like ID3 track name or Exif camera model) and use them for search or renaming.</dd>
+<dt>File System plugin (wfx)</dt><dd>Allows Total Commander to access another file systems like Linux-formatted partitions, device file systems or FTP servers.</dd>
+<dt>Lister plugins (wlx)</dt><dd>Allows Total Commander to show content of files of various types (like MP3, HTML etc.).</dd>
+<dt>Packer plugins (wcx)</dt><dd>Allows Total Commander to access - show, extract, pack and manipulate content of various types of archives (like CAB or MSI).</dd>
+</dl>
+<p>Each plugin is created as a C DLL library which exports defined set of functions. Library has extension wdx/wfx/wlx/wcx instead of dll depending on which type of plugin it 
+represents. Set of functions that plugin must export is defined by Total Commander plugin interface. There are only a few compulsory functions for each type of plugin and then 
+there are plenty optional functions. Compulsory functions provide very basic necessary functionality of plugin. For file system plugin only 4 functions providing initialization and 
+list of files and directories are compulsory. Then there are optional functions for downloading, uploading, deleting, renaming etc. Of course there are no limitations on 
+Total-Commander-unrecognized functions plugin can export. As newer and newer versions of Total Commander are developed set of supported plugin functions grows. So, when using 
+plugin designed for newer version of TC with older one, some functions are never called.</p>
+<p>So, writing Total Commander plugin in C++ is easy task. It's an easy task in any language that can export functions in C-like way, like Delphi or PowerBasic. But managed .NET 
+languages (like Visual Basic or C#) cannot export functions in this way. .NET can export COM objects, but not those Win32-API-like functions, even though .NET can import them using 
+<code>DllImportAttribute</code> and Visual Basic has special syntax for importing DLL functions. As far as I know it is even technically impossible to export those functions from 
+managed assembly because .NET does not provide way how to place function on static address - .NET functions got its addresses when they are JIT-compiled. Another limitation, 
+especially for Visual Basic, is lack of support or pointers widely used in TC plugin functions. OK, simple answer to question &quot;Can I write Total Commander plugin in Visual Basic 
+(C#)?&quot; is &quot;No.&quot;. As you probably guess, &quot;No&quot; is not the answer I put up with.</p>
+<p>There is one a little bit special language in .NET that can combine managed and unmanaged code in one assembly, that can export Win32-style functions, that can define global 
+functions, that can work with pointers - it&#39;s C++/CLI. So, my solution how to write managed Total Commander plugin is:</p>
+<ol><li>Write interface between Total Commander and managed code in C++/CLI.</li>
+<li>Write plugin in any managed language.</li></ol>
+<p>The C++/CLI interface is being called by Total Commander, converts all that <em>ugly</em> data types from C++ like <code>char*</code> to nice managed types like <code>String</code>. 
+Managed plugin then do its work and returns what is should return. C++/CLI interface converts managed return value to unmanaged one and passes it back to Total Commander in 
+requested way.</p>
+<p>If interface is implemented simply as written above, you must write (copy &amp; paste) the interface again and again for each plugin you&#39;ll write. What I wanted was some general 
+purpose solution. So, I&#39;ve created C++/CLI assembly that contains some support classes and structures for passing data between managed and unmanaged code and above all it contains 
+plugin base class actual plugin implementations are derived from. So, the way hot the plugin is implemented is fully object oriented as it is common in .NET. Basic parts of Total 
+Commander plugin managed framework are:</p>
+<dl>
+<dt>C++/CLI umnanaged ↔ managed interface (the <code>Tools.TotalCommander</code> assembly)</dt>
+<dd>Plugin base class and support classes and structures are contained in this assembly.</dd>
+<dt>Plugin implementation</dt>
+<dd>The managed assembly (dll) that implements the plugin. It can even implement more than one plugin or plugins of different types. It can be written in any managed language that can derive from plugin base class.</dd>
+    <dt>Plugin assembly</dt>
+    <dd>Small assembly written in C++/CLI. This assembly represents the plugin from Total Commander point of view. It has the required extension (wdx/wfx/wlx/wcx) and it exports 
+    all the necessary functions. It initializes the plugin instance and then it simply calls plugin instance function whenever Total Commander calls plugin function. This assembly 
+    is generated by Total Commander Plugin Builder from plugin implementation.</dd>
+    <dt>Total Commander Plugin Builder</dt>
+    <dd>Command line tool that builds plugin assembly from predefined template using information from plugin implementation. Especially it ensures that right type of plugin is 
+    built and that only functions implemented by plugin-implementing class are exported by plugin library.</dd>
+</dl>
+<h2>Interface between Total Commander and managed code</h2>
+<p>As written above this assembly is written in C++/CLI and performs marshaling between unmanaged (Total Commander) and managed (plugin implementation) code. It contains some 
+support classes and structures, some of them are visible from managed code. It also defines several attributes used to specify way how Plugin Builder builds the plugin assembly. In 
+fact this assembly contains only very little portion of unmanaged code - only definition of unmanaged structures imported from Christian-Ghisler-provided header files (and those 
+header files include a few Windows SDK header files). But code in this assembly deals with those unmanaged types and with pointers and C++-like strings (<code>char*</code>). It&#39;s 
+something we avoid in C# and can&#39;t do in Visual Basic.</p>
+<p>The plugin (abstract) base class simply contains non-virtual (not overridable in VB) functions accepting and returning unmanaged types and then it contains virtual (overridable 
+in VB) functions overriden by actual plugin implementation. Virtual functions accept and return managed and CLS-compliant types. Non-virtual function converts its parameters from 
+unmanaged to managed types and passes them to virtual function. When the virtual function returns its return value (and out parameters&#39; values) is converted from managed to 
+unmanaged types and passed to caller. The caller is actually global function in plugin assembly which passes the values back to Total Commander. Virtual function differs in 
+behavior from non-virtual ones. For example exceptions are used instead of error return codes and return value instead of output parameters (sometimes output parameters cannot be 
+avoided - multiple return values).</p>
+<p>In File System plugin the mapping between non-virtual and virtual functions is usually 1:1. For almost each non-virtual function (starting with the <code>FS</code> prefix) 
+corresponding virtual function exists. Virtual functions for compulsory functions have no implementation which effectively makes plugin author to implement them in derived class. 
+Optional functions have default implementation throwing <code>NotSupportedException</code>. It is ensured that Total Commander never calls optional function which is not overriden 
+in plugin class because such function is not exported by plugin assembly (Total Commander Plugin Builder does not generate export for it). From object oriented point of view it can 
+be determined that actual implementation of optional function does nothing but throws <code>NotSupportedException</code> by <code>MethodNotSupportedAttribute</code> applied on the method.</p>
+<p>Sometimes the interface provides a little bit higher level of abstraction than unmanaged Total Commander plugin interface. It does not use handles but actual objects - bitmaps 
+and icons.</p>
+<h2>The plugin assembly</h2>
+<p>Plugin assembly contains code responsible for creating instance of plugin and it actually exports the functions to unmanaged environments and passes function calls from Total 
+Commander to plugin abstract base class. As the plugin assembly is generated by Total Commander Plugin Builder from template using information from plugin implementation, it is 
+customized for actual plugin it represents - and it always represents only one plugin. In case plugin implementation assembly contains more plugins, more plugin assembles are 
+generated.</p>
+<p>The most tricky part of work of plugin assembly is assembly binding. The plugin assembly has references to <code>Tools.TotalCommander</code> and to plugin implementing assembly. 
+<code>Tools.TotalCommander</code> refers to <code>Tools</code> and plugin implementing assembly may refer to any assembly - locally copied or GAC. Total Commander plugins usually 
+resides in subfolders of subfolder plugins of Total Commander installation folder. And now problems arise: Plugin assembly is loaded to the totalcmd.exe process. Totalcmd.exe 
+resides 2 or more folders above plugin assembly. Plugin assembly refers to plugin implementation assembly and <code>Tools.TotalCommander</code>, neither of them is in GAC. By 
+default .NET looks for references in the same directory as the process was stared in. Subfolders are not examined. So, references are not found and plugin crashes. Total Commander 
+can recover from it, but plugin is not loaded and it does not work. The only assembly that is correctly loaded is plugin assembly, because it is loaded as part of something that 
+seems to be unmanaged Win32-API-style DLL. So, the plugin assembly must ensure that references will be searched where they lie. We can solve the issue in several ways:</p>
+<dl>
+<dt>Place all the assemblies in same directory as totalcmd.exe.</dt>
+<dd>It is not good idea as many, possibly conflicting, files will be in Total Commander installation directory. This may lead to chaos problems.</dd>
+    <dt>Place all necessary assemblies in GAC</dt>
+    <dd>This is also not very good solution. First it puts additional demands to plugin installation process and requires administrator privileges. It prevents plugin from being 
+    carried with Total Commander when it is installed on flash drive. And single-purpose assemblies as Total Commander plugin implementation assembly should not be in GAC.</dd>
+    <dt>Intercept assembly resolution</dt>
+    <dd>We can handle event <code>AppDomain.AssemblyResolve</code> which is raised when assembly resolution fails. Handler of this event can load the assembly and return it. 
+    Problems will arise when multiple managed plugins are used with Total Commander. Plugins can use different versions of <code>Tools.TotalCommander</code> or plugins have not to 
+    be based on this framework. This assembly resolution can effectively destroy other managed plugins.</dd>
+    <dt>Load each plugin into separate application domain</dt>
+    <dd>This is the way I&#39;ve finally chosen. Only the plugin assembly is loaded to default domain. It creates another domain and sets its base directory to directory it is located 
+    in. Then it creates instance of helper class in newly created application domain. The class creates instance of plugin class - it is resolved correctly, because all references 
+    are in its base directory. Assemblies loaded by plugin does not interfere with other&nbsp; plugins because application domains are separated. There is only some overhead 
+    because TC calls global function in plugin assembly, it calls function in assembly domain helper, it calls function in plugin helper, it calls non-virtual function in plugin 
+    class and it finally calls virtual function in plugin class.</dd>
+</dl>
+<h2>Total Commander Plugin Builder</h2>
+<p>A command line tool that creates plugin assembly for each plugin class in plugin implementation assembly. It can be invoked from command line or it can be used programmatically. 
+It needs access to C++/CLI compiler vcbuild.exe. It is written in Visual Basic. The best way of using Total Commander Plugin Builder is to have it in post-build event in Visual 
+Studio.</p>
+<p>It enumerates all types in plugin implementation assembly and for those that represent Total Commander plugin generates plugin assembly. While generating plugin assembly, the 
+plugin class is examined to determine which plugin functions are implemented (overriden) by plugin class. Methods that are not implemented are not generated in plugin assembly. It 
+is achieved simply by writing several C++ preprocessor <code>#define</code>s to control how the plugin assembly will be compiled. Same way the name of class to create instance of is specified. 
+Reference to plugin implementation assembly is set by the <code>#using</code> C++ directive. Total Commander Plugin Builder also examines certain attributes of plugin 
+implementation assembly and plugin class to set plugin assembly attributes and to refine generation behavior.</p>
+<h2>The Code</h2>
+<p>OK, I'm not gonna to re-type all the code here. Lets download attached example. Only a few interesting parts of the code:</p>
+<h3>Creation of application domain</h3>
+<p>Following code snippet in C++/CLI shows how the application domain is created:</p>
+<pre><code>namespace Tools{namespace TotalCommanderT{
+    extern bool RequireInitialize;
+    extern gcroot&lt;AppDomainHolder^> holder;
+    //PluginInstanceHolder class keeps plugin instance
+    PluginInstanceHolder::PluginInstanceHolder(){
+        this->instance = TC_WFX; //TC_WFX ide C++ preprocessor macro defined to somethig like gcnew MyPluginClass()
+    }
+    //AppDomainHolder keeps AppDomain instance
+    AppDomainHolder::AppDomainHolder(){
+        this->holder = gcnew PluginInstanceHolder();
+    }
+    //Global function initialize is called by plugin functions FsInit and FsGetDefRootName which can be called as first call to plugin by Total Commander
+    void Initialize(){
+        if(!RequireInitialize) return;
+        RequireInitialize = false;
+        PluginSelfAssemblyResolver::Setup();
+        AppDomainSetup^ setup = gcnew AppDomainSetup();
+        Assembly^ currentAssembly = Assembly::GetExecutingAssembly();
+        setup->ApplicationBase = IO::Path::GetDirectoryName(currentAssembly->Location);
+        AppDomain^ pluginDomain = AppDomain::CreateDomain(PLUGIN_NAME,nullptr,setup);
+        AppDomainHolder^ iholder = (AppDomainHolder^)pluginDomain->CreateInstanceFromAndUnwrap(currentAssembly->CodeBase,AppDomainHolder::typeid->FullName);
+        Tools::TotalCommanderT::holder = iholder;
+    }
+}}</code></pre>
+<p><code>PluginSelfAssemblyResolver</code> is simple helper class that allows resolution of assembly itself when it cannot be found by .NET. It contains only two functions:</p>
+<pre><code>namespace Tools{namespace TotalCommanderT{
+    Assembly^ PluginSelfAssemblyResolver::OnResolveAssembly(Object^ sender, ResolveEventArgs^ args){
+        AssemblyName^ name = gcnew AssemblyName(args->Name);
+        if(AssemblyName::ReferenceMatchesDefinition(name,thisAssembly->GetName())) return thisAssembly;
+        else return nullptr;
+    }
+    inline void PluginSelfAssemblyResolver::Setup(){
+        AppDomain::CurrentDomain->AssemblyResolve += gcnew ResolveEventHandler( PluginSelfAssemblyResolver::OnResolveAssembly );
+    }
+}}</code></pre>
+<h3>Definition of plugin functions</h3>
+<p>Optional as well as compulsory Total Commander plugin functions are wrapped in <code>#ifdef</code>-<code>#endif</code> blocks. Corresponding <code>#define</code>s for that blocks are writen by Total Commander Plugin Builder to the define.h file.
+Because, due to the architecture using application domains, those functions are in plugin assembly 3 times with identical signature and similar body, I've extracted them to separate file wfxFunctionCalls.h.
+This file is included at 3 different places with several C++ preprocessor <code>#define</code>s to control how it is compiled. Each function is defined like this:</p>
+<pre><code>#ifdef TC_FS_INIT
+    TCPLUGF int FUNC_MODIF FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+        return FUNCTION_TARGET->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);
+    }
+#endif</code></pre>
+<p><code>TCPLUGF</code> is defined as empty (not used). Once I thought about using <code>__declspec(dllexport)</code>to export functions. Lately I've switched to seperate Exports.def file.<br/>
+<code>FUNC_MODIF</code> is either <code>__stdcall</code> or class name (<code>AppDomainHolder::</code> or <code>PluginInstanceHolder::</code>). <code>__stdcall</code> is used for exported functions, internal calls use managed calling convention.<br/>
+Finally <code>FUNCTION_TARGET</code> is instance to call function on. It is <code>Tools::TotalCommanderT::holder</code> in exported (global) functions, <code>this->holder</code> in <code>AppDomainHolder</code> and <code>this->instance</code> in <code>PluginInstanceHolder</code>.</p>
+<p>WfxFunctionCalls.h is included like this:</p>
+<pre><code>#define TCPLUGF
+#define FUNC_MODIF AppDomainHolder::
+#define FUNCTION_TARGET this->holder
+#include "FunctionCalls.h"</code></pre>
+<p>I now, it may be more comprehensible typing it 3 times. But so many functions typed 3 times - I&#39;m really lazy and besides when some change is needed it is done only once (in 
+plugin assembly template; then in plugin base class and in common header file and ...).</p>
+<h3>Marshalling</h3>
+<p>Marshalling from unmanaged to managed code is quite simple. Total Commander plugin interface uses several structures and constants. For structures I've created managed counterparts 
+and before passing object to managed code structure is converted to managed one. Before structure is returned to unmanaged code it is converted back. Constant values are 
+represented by managed enumeration values and are simply cast. Something very often passed between Total Commander and plugin are strings. Total Commander passes and accepts 
+strings as <code>char*</code> (sometimes <code>char[MAX_PATH]</code>) - always null-terminated. Marshaling those values from unmanaged to managed code is easy, because <code>System.String</code> has constructor
+that accepts <code>char*</code> (<code>System.SByte*</code>).</p>
+<p><strong>Note:</strong> In current version Total Commander neither passes to plugins nor accepts from them Unicode strings (<code>wchar_t*</code>) although a few Win32 API structures used by Total Commander are declared as Unicode. 
+Total Commander uses current system encoding. Unicode support will be in next one of future versions of Total Commander. This is not limitation of my framework but of Total Commander itself.</p>
+<p>Passing string to unmanaged code is little more tricky. It is possible to enumerate all the characters of string easilly i .NET. But those characters are Unicode code points. They must be converted to default system encoding values.
+Finally, I've created my own <code>StringCopy</code> functions:</p>
+<pre><code>namespace Tools{namespace TotalCommanderT{
+    void StringCopy(String^ source, char* target, int maxlen){
+        if(source == nullptr)
+            target[0]=0;
+        else{
+            System::Text::Encoding^ enc = System::Text::Encoding::Default;
+            cli::array&lt;unsigned char>^ bytes = enc->GetBytes(source);
+            for(int i = 0; i &lt; bytes->Length && i &lt; maxlen-1; i++)
+                target[i]= bytes[i];
+            target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
+        }
+    }
+    void StringCopy(String^ source, wchar_t* target, int maxlen){
+        StringCopy(source,(char*)(void*)target,maxlen);
+    }
+}}</code></pre>
+<p>The second function simply treats <code>wchar_t*</code> as <code>char*</code>, see note above.</p>
+<p>Function encodes string using default system encoding and then copies encoded bytes to unmanaged buffer (maximally <code>maxlen - 1</code> characters). Character after last used 
+character is set to nullchar.</p>
+<p><strong>Note:</strong> I&#39;m not sure if the default encoding will behave correctly in systems where default encoding is multibyte (e.g. Chinese). I hope for soon implementation 
+of Unicode in TC.</p>
+<h2>Sample plugin</h2>
+<p>Sample plugin is IMHO the simplies that can be written. It simply accesses local file system. Christian Ghisler provides such example plugin in C++. Mine is written in Visual Basic. It shows hot to utilize Managed Total Commander Plugin Framework.</p>
+<h2>Notes</h2>
+<ul><li>Both, <code>Tools.TotalCommander</code> and sample plugin uses (not very extensively) my open source library Tools. It can be downloaded from <a href="http://codeplex.com/Tools">codeplex.com/Tools</a> as well as latest version of plugin framework.</li>
+    <li>Edit Post Build Event and debug command line of wfx sample project to reflect actual location of Total Commander before building. You need to run Visual Studio with 
+    elevated privileges on vista or have write rights to target directory (C:\Program Files\totalcmd\plugins\Test\wfx sample\Debug\).</li>
+    <li>The example source code is only example source code. The project has commented out several pre-build and post-build events needed when larger modifications are done! 
+    Uncommenting the events requires several utilities to perform the events. Download full source from Codeplex.</li></ul>
+<h3>Known issues</h3>
+<ul>
+<li>Current version of framework supports only File System plugins (wfx). Another types of plugins will be supported in future.</li>
+<li>Current version of framework does not support Unicode. This is due to Total Commander limitation for plugins. It will be hopefully removed in one of near-future versions of 
+Total Commander.</li>
+    <li>The only way the sample plugin can access UNC paths is when user manually changes to UNC directory from Total Commander command line.</li>
+    <li>Properties window of file/folder in sample plugin is not modal to Total Commander main window. This is not limitation of plugin framework. I use Win32 API to show the 
+    properties dialog and I have no idea how to make it modal.</li>
+</ul>
+<h2>License</h2>
+<p>Plugin framework, plugin builder, sample plugin as well as any other code in this article is released under Open Source license at <a href="http://codeplex.com/Tools">codeplex.com/Tools</a>.</p>
+</body>
+</html>

@@ -107,6 +107,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to '{0} was null.'.
+        /// </summary>
+        internal: static property System::String^  PropertyWasNull {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Formats a localized string similar to '{0} cannot be represented as {1}, use {2} and {3} instead.'.
         /// </summary>
         /// <param name="arg0">An object (0) to format.</param>
@@ -157,6 +164,13 @@ namespace Tools {
         /// </summary>
         /// <returns>The PluginNotInitialized property value.</returns>
         internal: static System::String^  PluginNotInitializedFormat();
+        
+        /// <summary>
+        /// Formats a localized string similar to '{0} was null.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  PropertyWasNullFormat(System::Object^  arg0);
     };
         }
     }
