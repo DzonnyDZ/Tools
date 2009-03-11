@@ -1,11 +1,59 @@
 ﻿Imports Tools.ExtensionsT, Tools.DrawingT
-Imports Tools.IOt
+Imports Tools.IOt, System.Xml.Linq
+Imports <xmlns:ws="http://dzonny.cz/xml/schemas/WfxSampleSettings.xsd">
 
 ''' <summary>Sample Total Commander file system plugin (just works over local file system)</summary>
 <TotalCommanderPlugin("wfxSample")> _
 <ResourcePluginIcon(GetType(SampleFileSystemPlugin), "Tools.TotalCommanderT.WfxSample.VisualBasic.ico")> _
 Public Class SampleFileSystemPlugin
     Inherits FileSystemPlugin
+    ''' <summary>Represents file system favorite item</summary>
+    Private Class FavoriteItem
+        ''' <summary>Contains value of the <see cref="Name"/> property</summary>
+        Private _Name As String
+        ''' <summary>Contains value of the <see cref="Target"/> property</summary>
+        Private _Target As String
+        ''' <summary>Gets or sets name of item</summary>
+        Public Property Name() As String
+            Get
+                Return _Name
+            End Get
+            Set(ByVal value As String)
+                _Name = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets target path of item</summary>
+        Public Property Target() As String
+            Get
+                Return _Target
+            End Get
+            Set(ByVal value As String)
+                _Target = value
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="CreateTime"/> property</summary>
+        Private _CreateTime As Date
+        ''' <summary>Date and time when item was created</summary>
+        Public Property CreateTime() As Date
+            Get
+                Return _CreateTime
+            End Get
+            Set(ByVal value As Date)
+                _CreateTime = value
+            End Set
+        End Property
+        ''' <summary>CTor</summary>
+        ''' <param name="Name">Item name</param>
+        ''' <param name="Target">Item target path</param>
+        ''' <param name="Created">Item creation date and time</param>
+        Public Sub New(ByVal Name$, ByVal Target$, ByVal Created As Date)
+            Me.Name = Name
+            Me.Target = Target
+            Me.CreateTime = Created
+        End Sub
+    End Class
+    ''' <summary>Favorite items</summary>
+    Private FavoriteItems As New List(Of FavoriteItem)
 
     ''' <summary>Retrieves the first file in a directory of the plugin's file system.</summary>
     ''' <param name="Path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
@@ -24,9 +72,12 @@ Public Class SampleFileSystemPlugin
     Public Overrides Function FindFirst(ByVal Path As String, ByRef FindData As FindData) As Object
         Dim RealPath = GetRealPath(Path)
         If Path = "\" Then
-            Dim ContentEnumerator = (From drv In IO.DriveInfo.GetDrives).GetEnumerator
+            Dim ContentEnumerator = (From drv In IO.DriveInfo.GetDrives Select CObj(drv)) _
+                .Union(New Object() {My.Resources.AddNewFavoriteItem}) _
+                .Union(From fi In FavoriteItems Select CObj(fi)) _
+            .GetEnumerator()
             If ContentEnumerator.MoveNext Then
-                FindData = GetFindData(ContentEnumerator.Current.Name)
+                FindData = GetObjItemInfo(ContentEnumerator.Current)
                 Return ContentEnumerator
             Else
                 Return Nothing
@@ -62,14 +113,60 @@ Public Class SampleFileSystemPlugin
             End If
         End If
     End Function
+    ''' <summary>Gets <see cref="FindData"/> for top-level item</summary>
+    ''' <param name="objItem">Top-level item - either <see cref="IO.DriveInfo"/>, <see cref="String"/> or <see cref="FavoriteItem"/></param>
+    Private Function GetObjItemInfo(ByVal objItem As Object) As FindData
+        If TypeOf objItem Is IO.DriveInfo Then
+            Return GetFindData(DirectCast(objItem, IO.DriveInfo).Name)
+        ElseIf TypeOf objItem Is String Then
+            Dim ret As New FindData
+            ret.Attributes = FileAttributes.ReadOnly Or FileAttributes.Virtual
+            ret.FileName = My.Resources.AddNewFavoriteItem
+            Return ret
+        ElseIf TypeOf objItem Is FavoriteItem Then
+            Dim ret As New FindData
+            Dim Item As FavoriteItem = objItem
+            If IO.File.Exists(Item.Target) OrElse IO.Directory.Exists(Item.Target) Then
+                ret.Attributes = FileAttributes.Normal Or FileAttributes.Virtual
+                ret.FileName = Item.Name
+                ret.CreationTime = Item.CreateTime
+                If IO.File.Exists(Item.Target) Then ret.FileSize = New IO.FileInfo(Item.Target).Length
+            Else
+                ret.Attributes = FileAttributes.Normal Or FileAttributes.Virtual
+                ret.FileName = Item.Name
+            End If
+            Return ret
+        Else 'Never happens
+            Throw New ApplicationException
+        End If
+    End Function
     ''' <summary>Gets real local path from path reported by Total Commander</summary>
     ''' <param name="Path">UNC path corresponding to geiven Total Commander plugin rooted (\-starting) path</param>
     Private Function GetRealPath(ByVal Path$) As String
         If Path = "\" Then Return ""
         If Path = "" Then Return ""
+        If IsFavoriteAdd(Path) Then Return Path
+        If IsFavorite(Path) Then
+            For Each fi In FavoriteItems
+                If fi.Name = Path.Substring(1) Then Return fi.Target
+            Next
+            Return Path
+        End If
         Dim ret = Path.Substring(1)
         If ret.Length = 2 AndAlso ret.EndsWith(":") Then ret &= "\"
         Return ret
+    End Function
+    ''' <summary>Gets value indicating if path of an item is add favorite</summary>
+    ''' <param name="Path">Path to examine (in TC plugin format - with leading \)</param>
+    ''' <returns>True if path represents add favorite item; false othervise</returns>
+    Private Function IsFavoriteAdd(ByVal Path$) As Boolean
+        Return Path = "\" & My.Resources.AddNewFavoriteItem
+    End Function
+    ''' <summary>Gets value indicating if path of an item is path of favorite item</summary>
+    ''' <param name="Path">Path to examine (in TC plugin format - with leading \)</param>
+    ''' <returns>True if path represents path of favorite item; false othervise</returns>
+    Private Function IsFavorite(ByVal Path As String) As Boolean
+        Return Path.StartsWith("\"c) AndAlso Path.IndexOf("\"c, 1) < 0 AndAlso (Path.Length < 3 OrElse Path(2) <> ":"c)
     End Function
     ''' <summary>Gets <see cref="FindData"/> for given file or directory</summary>
     ''' <param name="Path">Path to get data for</param>
@@ -121,10 +218,10 @@ Public Class SampleFileSystemPlugin
     ''' <exception cref="IO.IOException">Another error occured</exception>
     ''' <remarks><note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function FindNext(ByVal Status As Object, ByRef FindData As FindData) As Boolean
-        If TypeOf Status Is IEnumerator(Of IO.DriveInfo) Then
-            Dim en As IEnumerator(Of IO.DriveInfo) = Status
+        If TypeOf Status Is IEnumerator(Of Object) Then
+            Dim en As IEnumerator(Of Object) = Status
             If en.MoveNext Then
-                FindData = GetFindData(en.Current.Name)
+                FindData = GetObjItemInfo(en.Current)
                 Return True
             Else
                 Return False
@@ -138,7 +235,7 @@ Public Class SampleFileSystemPlugin
                 Return False
             End If
         Else
-            Throw New InvalidOperationException 'Should be enver thrown cause nothing else should be passed here
+            Throw New InvalidOperationException 'Should be never thrown cause nothing else should be passed here
         End If
     End Function
     ''' <summary>Performs custom clenup at end of a <see cref="FindFirst"/>/<see cref="FindNext"/> loop, either after retrieving all files, or when the user aborts it.</summary>
@@ -164,6 +261,17 @@ Public Class SampleFileSystemPlugin
     ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function DeleteFile(ByVal RemoteName As String) As Boolean
+        If IsFavoriteAdd(RemoteName) Then Return False
+        If IsFavorite(RemoteName) Then
+            For Each item In FavoriteItems
+                If item.Name = RemoteName.Substring(1) Then
+                    FavoriteItems.Remove(item)
+                    SaveSettings()
+                    Return True
+                End If
+            Next
+            Return True
+        End If
         Try
             IO.File.Delete(GetRealPath(RemoteName))
             Return True
@@ -183,6 +291,7 @@ Public Class SampleFileSystemPlugin
     ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function RemoveDir(ByVal RemoteName As String) As Boolean
+        If IsFavoriteAdd(RemoteName) OrElse IsFavorite(RemoteName) Then Return False
         Try
             IO.Directory.Delete(GetRealPath(RemoteName), True)
         Catch ex As Exception When TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is IO.IOException
@@ -202,6 +311,7 @@ Public Class SampleFileSystemPlugin
     ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function MkDir(ByVal Path As String) As Boolean
+        If Path.IndexOf("\", 1) < 0 Then Return False
         Try
             IO.Directory.CreateDirectory(GetRealPath(Path))
         Catch ex As Exception When TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is IO.IOException
@@ -211,7 +321,6 @@ Public Class SampleFileSystemPlugin
         End Try
         Return True
     End Function
-
 
 
 #Region "Exec"
@@ -255,7 +364,29 @@ Public Class SampleFileSystemPlugin
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
     Protected Overrides Function OpenFile(ByVal hMainWin As System.IntPtr, ByRef RemoteName As String) As ExecExitCode
         Dim Path = GetRealPath(RemoteName)
-        If IO.Path.GetExtension(Path).ToLower = ".lnk" Then 'Follow link
+        If IsFavoriteAdd(RemoteName) Then
+            Dim dlg As New AddFavoriteItemDialog
+            If dlg.ShowDialog(New WindowsT.NativeT.Win32Window(hMainWin)) = Windows.Forms.DialogResult.OK Then
+                FavoriteItems.Add(New FavoriteItem(dlg.ItemName, dlg.Target, Now))
+            End If
+            Return ExecExitCode.OK
+        ElseIf IsFavorite(RemoteName) Then
+            For Each fi In FavoriteItems
+                If fi.Name = RemoteName.Substring(1) Then
+                    If IO.File.Exists(fi.Target) Then
+                        Path = fi.Target
+                        GoTo Normal
+                    ElseIf IO.Directory.Exists(fi.Target) Then
+                        RemoteName = "\" & fi.Target
+                        Return ExecExitCode.Symlink
+                    Else
+                        Return ExecExitCode.Error
+                    End If
+                End If
+            Next
+            Return ExecExitCode.Error
+        End If
+Normal: If IO.Path.GetExtension(Path).ToLower = ".lnk" Then 'Follow link
             Try
                 Dim lnk As IOt.ShellLink
                 Try : lnk = New IOt.ShellLink(Path)
@@ -349,6 +480,7 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
     Protected Overrides Function ShowFileInfo(ByVal hMainWin As System.IntPtr, ByVal RemoteName As String) As ExecExitCode
+        If IsFavoriteAdd(RemoteName) OrElse IsFavorite(RemoteName) Then Return ExecExitCode.Error
         Dim Path = GetRealPath(RemoteName)
         Try
             IOt.FileSystemTools.ShowProperties(Path, New WindowsT.NativeT.Win32Window(hMainWin))
@@ -381,6 +513,8 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function RenMovFile(ByVal OldName As String, ByVal NewName As String, ByVal Move As Boolean, ByVal OverWrite As Boolean, ByVal info As RemoteInfo) As FileSystemExitCode
+        If IsFavoriteAdd(OldName) Then Return FileSystemExitCode.ReadError
+        If NewName.IndexOf("\"c, 1) < 0 Then Return FileSystemExitCode.WriteError
         Dim SourceName = GetRealPath(OldName)
         Dim TargetName = GetRealPath(NewName)
         If Not OverWrite AndAlso IO.File.Exists(TargetName) OrElse IO.Directory.Exists(TargetName) Then Return FileSystemExitCode.FileExists
@@ -458,6 +592,7 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function GetFile(ByVal RemoteName As String, ByRef LocalName As String, ByVal CopyFlags As CopyFlags, ByVal info As RemoteInfo) As FileSystemExitCode
+        If IsFavoriteAdd(RemoteName) Then Return FileSystemExitCode.ReadError
         Dim SourcePath = GetRealPath(RemoteName)
         Try
             Return FileOperation(LocalName, SourcePath, LocalName, RemoteName, CopyFlags)
@@ -539,6 +674,7 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function PutFile(ByVal LocalName As String, ByRef RemoteName As String, ByVal CopyFlags As CopyFlags) As FileSystemExitCode
+        If RemoteName.IndexOf("\"c, 1) < 0 Then Return FileSystemExitCode.WriteError
         Dim TargetPath = GetRealPath(RemoteName)
         Try
             Return FileOperation(TargetPath, LocalName, RemoteName, LocalName, CopyFlags)
@@ -599,6 +735,10 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
     Public Overrides Function ExctractCustomIcon(ByRef RemoteName As String, ByVal ExtractFlags As IconExtractFlags, ByRef TheIcon As System.Drawing.Icon) As IconExtractResult
         If RemoteName.EndsWith("\..\") Then Return IconExtractResult.UseDefault
+        If IsFavoriteAdd(RemoteName) Then
+            TheIcon = My.Resources.Favorites
+            Return IconExtractResult.ExtractedDestroy
+        End If
         Static OnStack As Boolean
         If OnStack Then Return IconExtractResult.UseDefault
         OnStack = True
@@ -629,6 +769,7 @@ ExecFile:   Dim p As New Process
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
     Public Overrides Function GetPreviewBitmap(ByVal RemoteName As String, ByVal width As Integer, ByVal height As Integer) As BitmapResult
+        If IsFavoriteAdd(RemoteName) Then Return Nothing
         Dim Path = GetRealPath(RemoteName)
         Dim ext = IO.Path.GetExtension(Path)
         Try
@@ -649,4 +790,34 @@ ExecFile:   Dim p As New Process
             Return Nothing
         End Try
     End Function
+    ''' <summary>Called immediately after <see cref="OnInit"/>.</summary>
+    ''' <param name="dps">This structure curently contains version number of the Total Commander plugin interface (not this managed interface) and suggested location of settings file. It is recommended to store any plugin-specific information either directly in that file or in that directory under a different name.</param>
+    ''' <remarks>Make sure to use a unique header when storing data in this file, because it is shared by other file system plugins! If your plugin needs more than 1kbyte of data, you should use your own ini file because ini files are limited to 64k.
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+    ''' <note type="inheritinfo">Always call base class method. When base class method is not called, the <see cref="PluginParams"/> property does not have valid value.</note></remarks>
+    ''' <exception cref="InvalidOperationException">This method is called when it was already called. This method can be called only once on each instance.</exception>
+    Public Overrides Sub SetDefaultParams(ByVal dps As DefaultParams)
+        MyBase.SetDefaultParams(dps)
+        If IO.File.Exists(ConfigPath) Then
+            Dim doc = XDocument.Load(ConfigPath)
+            FavoriteItems = New List(Of FavoriteItem)( _
+                From favel In doc.<ws:settings>.<ws:fav> Select New FavoriteItem(favel.@name, favel.@target, CType(favel.@created, Date)))
+        End If
+    End Sub
+    ''' <summary>Saves settings</summary>
+    Private Sub SaveSettings()
+        Dim doc = <?xml version="1.0" encoding="utf-8"?>
+                  <ws:settings>
+                      <%= From fi In FavoriteItems Select <ws:faw name=<%= fi.Name %> target=<%= fi.Target %> created=<%= fi.CreateTime %>/> %>
+                  </ws:settings>
+        doc.Save(ConfigPath)
+    End Sub
+
+    ''' <summary>Gets path of configuration file</summary>
+    ''' <exception cref="InvalidOperationException">Value is being got before <see cref="FileSystemPlugin.SetDefaultParams"/> was called</exception>
+    Private ReadOnly Property ConfigPath() As String
+        Get
+            Return IO.Path.Combine(IO.Path.GetDirectoryName(PluginParams.DefaultIniName), "wfxSample.config")
+        End Get
+    End Property
 End Class

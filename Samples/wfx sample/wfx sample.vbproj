@@ -74,6 +74,12 @@
     <Compile Include="..\..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="AddFavoriteItemDialog.Designer.vb">
+      <DependentUpon>AddFavoriteItemDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AddFavoriteItemDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SampleFileSystemPlugin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -112,6 +118,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="WfxSampleSettings.xsd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj">
@@ -128,7 +135,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AddFavoriteItemDialog.resx">
+      <DependentUpon>AddFavoriteItemDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\VisualBasic.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Favorites.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DocumentHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

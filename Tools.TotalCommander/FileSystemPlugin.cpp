@@ -438,7 +438,15 @@ namespace Tools{namespace TotalCommanderT{
     inline void FileSystemPlugin::FsSetDefaultParams(FsDefaultParamStruct* dps){
         this->SetDefaultParams(DefaultParams(*dps));
     }
-    inline void FileSystemPlugin::SetDefaultParams(DefaultParams dps){throw gcnew NotSupportedException();}
+    void FileSystemPlugin::SetDefaultParams(DefaultParams dps){
+        if(this->pluginParams.HasValue) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PropertyWasInitializedFormat("PluginParams"));
+        this->pluginParams = dps;
+    }
+    
+    DefaultParams FileSystemPlugin::PluginParams::get(){
+        if(!this->pluginParams.HasValue) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PropertyWasNotInitializedFormat("PluginParams")); 
+        return this->pluginParams.Value;
+    }
 
     int FileSystemPlugin::FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap){
         BitmapResult^ bmp = this->GetPreviewBitmap(gcnew String(RemoteName), width, height);

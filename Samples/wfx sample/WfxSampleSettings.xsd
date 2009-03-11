@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="WfxSampleSettings"
+    targetNamespace="http://dzonny.cz/xml/schemas/WfxSampleSettings.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://dzonny.cz/xml/schemas/WfxSampleSettings.xsd"
+    xmlns:ws="http://dzonny.cz/xml/schemas/WfxSampleSettings.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+    <xs:element name="settings">
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element name="fav" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="xs:string"/>
+                        <xs:attribute name="target" type="xs:string"/>
+                        <xs:attribute name="created" type="xs:dateTime"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

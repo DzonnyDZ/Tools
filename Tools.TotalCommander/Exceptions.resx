@@ -138,6 +138,12 @@
   <data name="PluginNotInitialized" xml:space="preserve">
     <value>Plugin was not initialized.</value>
   </data>
+  <data name="PropertyWasInitialized" xml:space="preserve">
+    <value>The {0} property have already been initialized.</value>
+  </data>
+  <data name="PropertyWasNotInitialized" xml:space="preserve">
+    <value>The {0} property have not been initialized yet.</value>
+  </data>
   <data name="PropertyWasNull" xml:space="preserve">
     <value>{0} was null.</value>
   </data>

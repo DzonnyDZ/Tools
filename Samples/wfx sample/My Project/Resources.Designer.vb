@@ -59,5 +59,71 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Add new favorite item.
+        '''</summary>
+        Friend ReadOnly Property AddNewFavoriteItem() As String
+            Get
+                Return ResourceManager.GetString("AddNewFavoriteItem", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Characters \, : and nullchar are not allowed in item names..
+        '''</summary>
+        Friend ReadOnly Property CharactersNotAllowed() As String
+            Get
+                Return ResourceManager.GetString("CharactersNotAllowed", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property DocumentHS() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("DocumentHS", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enter name, please..
+        '''</summary>
+        Friend ReadOnly Property EnterName() As String
+            Get
+                Return ResourceManager.GetString("EnterName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error.
+        '''</summary>
+        Friend ReadOnly Property Error_() As String
+            Get
+                Return ResourceManager.GetString("Error_", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Favorites() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Favorites", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property openHS() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("openHS", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Select valid file or directory, plase..
+        '''</summary>
+        Friend ReadOnly Property SelectValidFileOrDirectoryPlase() As String
+            Get
+                Return ResourceManager.GetString("SelectValidFileOrDirectoryPlase", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

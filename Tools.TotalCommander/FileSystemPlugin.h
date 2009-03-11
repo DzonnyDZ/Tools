@@ -716,15 +716,25 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("SetDefaultParams","TC_FS_SETDEFAULTPARAMS")]
+        [PluginMethod("TC_FS_SETDEFAULTPARAMS")]
         void FsSetDefaultParams(FsDefaultParamStruct* dps);
-        /// <summary>When overriden in derived class called immediately after <see cref="OnInit"/>.</summary>
-        /// <param name="dps">This sctructure curently contains version number of the Total Commander plugin interface (not this managed interface) and suggested location of settings file. It is recommended to store any plugin-specific information either directly in that file or in that directory under a different name.</param>
+    private:
+        /// <summary>Contains value of the <see cref="PluginParams"/> property</summary>
+        Nullable<DefaultParams> pluginParams;
+    protected:
+        /// <summary>Gets default parameters of the plugin</summary>
+        /// <returns>Default parameters of the plugin</returns>
+        /// <remarks>Value of this property is only valid after the <see cref="SetDefaultParams"/> method was called</remarks>
+        /// <sealso cref="SetDefaultParams"/>
+        /// <exception cref="InvalidOperationException">Property have not been initialized yet. This property can be initialized by calling <see cref="SetDefaultParams"/></exception>
+        property DefaultParams PluginParams {DefaultParams get();}
+    public:
+        /// <summary>Called immediately after <see cref="OnInit"/>.</summary>
+        /// <param name="dps">This structure curently contains version number of the Total Commander plugin interface (not this managed interface) and suggested location of settings file. It is recommended to store any plugin-specific information either directly in that file or in that directory under a different name.</param>
         /// <remarks>Make sure to use a unique header when storing data in this file, because it is shared by other file system plugins! If your plugin needs more than 1kbyte of data, you should use your own ini file because ini files are limited to 64k.
-        /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
-        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
-        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
-        [MethodNotSupportedAttribute]
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// <note type="inheritinfo">Always call base class method. When base class method is not called, the <see cref="PluginParams"/> property does not have valid value.</note></remarks>
+        /// <exception cref="InvalidOperationException">This method is called when it was already called. This method can be called only once on each instance.</exception>
         virtual void SetDefaultParams(DefaultParams dps);
         /// <summary>Called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
         /// <param name="RemoteName">This is the full path to the file or directory whose bitmap is to be retrieved. When extracting a bitmap, you can return a bitmap name here - this ensures that the icon is only cached once in the calling program. The returned bitmap name must not be longer than <see cref="FindData::MaxPath"/> characters (including terminating 0!). The bitmap handle must still be returned in <paramref name="ReturnedBitmap"/>!</param>

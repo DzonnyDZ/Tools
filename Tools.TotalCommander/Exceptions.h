@@ -107,6 +107,20 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'The {0} property have already been initialized.'.
+        /// </summary>
+        internal: static property System::String^  PropertyWasInitialized {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'The {0} property have not been initialized yet.'.
+        /// </summary>
+        internal: static property System::String^  PropertyWasNotInitialized {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to '{0} was null.'.
         /// </summary>
         internal: static property System::String^  PropertyWasNull {
@@ -164,6 +178,20 @@ namespace Tools {
         /// </summary>
         /// <returns>The PluginNotInitialized property value.</returns>
         internal: static System::String^  PluginNotInitializedFormat();
+        
+        /// <summary>
+        /// Formats a localized string similar to 'The {0} property have already been initialized.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  PropertyWasInitializedFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formats a localized string similar to 'The {0} property have not been initialized yet.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  PropertyWasNotInitializedFormat(System::Object^  arg0);
         
         /// <summary>
         /// Formats a localized string similar to '{0} was null.'.
