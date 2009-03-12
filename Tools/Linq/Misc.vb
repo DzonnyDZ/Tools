@@ -33,6 +33,24 @@ Namespace LinqT
                 Target.Add(item.Value1, item.Value2)
             Next item
         End Sub
+        ''' <summary>Gets value indicating if given object is contained among givenobjects</summary>
+        ''' <param name="Obj">Object to search in <paramref name="List"/> for</param>
+        ''' <param name="List">Objects to search for <paramref name="Obj"/> among</param>
+        ''' <typeparam name="T">Type of object</typeparam>
+        ''' <returns>True if <paramref name="Obj"/> is contained in <paramref name="List"/>; false otherwise</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Function [In](Of T)(ByVal Obj As T, ByVal ParamArray List As T()) As Boolean
+            Return Obj.In(DirectCast(List, IEnumerable(Of T)))
+        End Function
+        ''' <summary>Gets value indicating if given object is contained among givenobjects</summary>
+        ''' <param name="Obj">Object to search in <paramref name="List"/> for</param>
+        ''' <param name="List">Objects to search for <paramref name="Obj"/> among</param>
+        ''' <typeparam name="T">Type of object</typeparam>
+        ''' <returns>True if <paramref name="Obj"/> is contained in <paramref name="List"/>; false otherwise</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Function [In](Of T)(ByVal Obj As T, ByVal List As IEnumerable(Of T)) As Boolean
+            Return List.Contains(Obj)
+        End Function
     End Module
 #End If
 End Namespace

@@ -586,6 +586,34 @@ Namespace IOt
                 Return Directory.Exists(Path)
             End Get
         End Property
+        ''' <summary>Gets value indicatiing if path represents volume</summary>
+        ''' <returns>True when this path consists only of root part and it is not UNC path.</returns>
+        ''' <remarks>Volume is considered to be top-level directory like C:\ on Windows or /vol on Linux. UNC paths are not volumes.</remarks>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public ReadOnly Property IsVolume() As Boolean
+            Get
+                Return IsRooted AndAlso (PathRoot = Path OrElse PathRoot & IO.Path.DirectorySeparatorChar = Path OrElse PathRoot & IO.Path.AltDirectorySeparatorChar = Path) AndAlso Not IsUNC
+            End Get
+        End Property
+        ''' <summary>Windows-specific: Gets value indicating if this path is an UNC path</summary>
+        ''' <returns>True if path starts with doubled <see cref="IO.Path.DirectorySeparatorChar"/> or <see cref="IO.Path.AltDirectorySeparatorChar"/></returns>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public ReadOnly Property IsUNC() As Boolean
+            Get
+                Return Path.StartsWith(IO.Path.DirectorySeparatorChar & IO.Path.DirectorySeparatorChar) OrElse Path.StartsWith(IO.Path.AltDirectorySeparatorChar & IO.Path.AltDirectorySeparatorChar)
+            End Get
+        End Property
+        ''' <summary>Windows-specific: Gets value indicating if current path represents path to UNC server</summary>
+        ''' <returns>True when path <see cref="IsUNC">is UNC path</see> and it has only one segment; false otherwise</returns>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public ReadOnly Property IsUNCServer() As Boolean
+            Get
+                Return IsUNC AndAlso ( _
+                    (Path.EndsWith(IO.Path.DirectorySeparatorChar) AndAlso Path.IndexOf(IO.Path.DirectorySeparatorChar, 2, Path.Length - 3) < 0) OrElse _
+                    (Path.EndsWith(IO.Path.AltDirectorySeparatorChar) AndAlso Path.IndexOf(IO.Path.AltDirectorySeparatorChar, 2, Path.Length - 3) < 0) OrElse _
+                    (Path.IndexOf(IO.Path.DirectorySeparatorChar, 2) < 0 AndAlso Path.IndexOf(IO.Path.AltDirectorySeparatorChar, 2) < 0))
+            End Get
+        End Property
         ''' <summary>Gets directory represented by current instance (if exists)</summary>
         ''' <exception cref="System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters. The specified path, file name, or both are too long.</exception>
         ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> contains invalid characters such as ", &lt;, >, or |. This exception should not occure because invalid characters are filtered by the <see cref="Path.Path"/> setter</exception>
@@ -617,6 +645,17 @@ Namespace IOt
                 Return IsFile OrElse IsDirectory
             End Get
         End Property
+        ''' <summary>Gets value indicating if file or directory represented by this path exists</summary>
+        ''' <param name="TrueForEmptyDrive">True to return true when return true for empty drives</param>
+        ''' <returns>True if <see cref="IsFile"/>, <see cref="IsDirectory"/> or <paramref name="TrueForEmptyDrive"/> and <see cref="IsVolume"/> and the volume exists in <see cref="Microsoft.VisualBasic.MyServices.FileSystemProxy.Drives"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function ExistsPath(ByVal TrueForEmptyDrive As Boolean) As Boolean
+            If Not TrueForEmptyDrive OrElse Not IsVolume Then
+                Return Me.Exists
+            Else
+                Return Not (From drv In My.Computer.FileSystem.Drives Where drv.Name = Path OrElse drv.Name & IO.Path.DirectorySeparatorChar = Path OrElse drv.Name & IO.Path.AltDirectorySeparatorChar = Path OrElse drv.Name = Path & IO.Path.DirectorySeparatorChar OrElse drv.Name = Path & IO.Path.AltDirectorySeparatorChar).IsEmpty
+            End If
+        End Function
 #End Region
 #Region "Manipulation"
         ''' <summary>Deletes item represented by <see cref="IO.Path"/> Directories are deleted recursivelly</summary>

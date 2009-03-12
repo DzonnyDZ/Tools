@@ -1,26 +1,29 @@
 ﻿Imports Tools.IOt, Tools.API, System.Drawing, Tools.ExtensionsT
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports System.Text
+Imports System.Text, System.Linq
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace IOt
     ''' <summary>Contains file system-related methods and extension methods</summary>
     ''' <version version="1.5.2">Renamed from FileTystemTools to FileSystemTools</version>
     Public Module FileSystemTools
-        ''' <summary>Gets icon for given file or folder</summary>
+        ''' <summary>Gets icon for given file or folder (including drive and UNC share or server)</summary>
         ''' <param name="PathP">Provides path to get icon for</param>
         ''' <param name="Large">True to get large icon (false to get small icon)</param>
         ''' <returns>Icon that represents given file or folder in operating system. Null if icon obtainment failed.</returns>
         ''' <param name="Overlays">True to add all applicable overlay icons</param>
         ''' <seelaso cref="Drawing.Icon.ExtractAssociatedIcon"/>
-        ''' <exception cref="IO.FileNotFoundException">File <paramref name="Path"/> does not exists.</exception>
+        ''' <exception cref="IO.FileNotFoundException">File or folder <paramref name="Path"/> does not exists.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Path"/> is null</exception>
+        ''' <version version="1.5.2">Can get icon for empty removable drive (like CD-ROM without CD in it) and for UNC computer in format \\servername)</version>
         <Extension()> _
         Public Function GetIcon(ByVal PathP As IPathProvider, Optional ByVal Large As Boolean = False, Optional ByVal Overlays As Boolean = True) As Drawing.Icon
             If PathP Is Nothing Then Throw New ArgumentNullException("PathP")
             Dim Path = New Path(PathP.Path.TrimEnd("\"))
-            If Not Path.Exists Then Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.Path0DoesNotExist, Path))
+            If Not (PathP.Path.StartsWith("\\") AndAlso PathP.Path.Length > 2 AndAlso PathP.Path.IndexOf("\"c, 2) < 0 AndAlso (From ch In PathP.Path.Substring(2) Where IO.Path.GetInvalidFileNameChars.Contains(ch)).Count = 0) AndAlso _
+                Not Path.Exists AndAlso (From di In My.Computer.FileSystem.Drives Where di.Name = PathP.Path Select di.Name).FirstOrDefault Is Nothing _
+                Then Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.Path0DoesNotExist, Path))
             Dim shInfo As New SHFILEINFO
             Dim ret = SHGetFileInfo(Path, 0, shInfo, Marshal.SizeOf(shInfo), _
                 FileInformationFlags.SHGFI_ICON Or If(Large, FileInformationFlags.SHGFI_LARGEICON, FileInformationFlags.SHGFI_SMALLICON) Or If(Overlays, FileInformationFlags.SHGFI_ADDOVERLAYS, CType(0, FileInformationFlags)))

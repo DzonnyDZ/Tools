@@ -31,12 +31,22 @@ Friend Class AddFavoriteItemDialog
             MsgBox(My.Resources.EnterName, MsgBoxStyle.Critical, My.Resources.Error_)
             Exit Sub
         End If
-        If IO.File.Exists(txtPath.Text) OrElse IO.Directory.Exists(txtPath.Text) Then
+        txtPath.Text = txtPath.Text.TrimEnd("\"c)
+        If txtPath.Text.StartsWith("\\") AndAlso txtPath.Text.Length > 2 AndAlso txtPath.Text.IndexOf("\"c, 2) < 0 AndAlso (From ch In txtPath.Text.Substring(2) Where IO.Path.GetInvalidFileNameChars.Contains(ch)).Count = 0 Then
             Me.DialogResult = Windows.Forms.DialogResult.OK
             Me.Close()
-        Else
-            MsgBox(My.Resources.SelectValidFileOrDirectoryPlase, MsgBoxStyle.Critical, My.Resources.Error_)
+            Exit Sub
         End If
+        Try
+            If IO.File.Exists(txtPath.Text) OrElse IO.Directory.Exists(txtPath.Text) Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+                Me.Close()
+            Else
+                MsgBox(My.Resources.SelectValidFileOrDirectoryPlase, MsgBoxStyle.Critical, My.Resources.Error_)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+        End Try
     End Sub
     ''' <summary>Gets or sets target path</summary>
     Public Property Target() As String

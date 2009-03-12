@@ -126,7 +126,11 @@ Public Class SampleFileSystemPlugin
         ElseIf TypeOf objItem Is FavoriteItem Then
             Dim ret As New FindData
             Dim Item As FavoriteItem = objItem
-            If IO.File.Exists(Item.Target) OrElse IO.Directory.Exists(Item.Target) Then
+            If Item.Target.StartsWith("\\") AndAlso Item.Target.IndexOf("\"c, 2) < 0 Then
+                ret.Attributes = FileAttributes.Normal Or FileAttributes.Virtual
+                ret.FileName = Item.Name
+                ret.CreationTime = Item.CreateTime
+            ElseIf IO.File.Exists(Item.Target) OrElse IO.Directory.Exists(Item.Target) Then
                 ret.Attributes = FileAttributes.Normal Or FileAttributes.Virtual
                 ret.FileName = Item.Name
                 ret.CreationTime = Item.CreateTime
@@ -147,9 +151,8 @@ Public Class SampleFileSystemPlugin
         If Path = "" Then Return ""
         If IsFavoriteAdd(Path) Then Return Path
         If IsFavorite(Path) Then
-            For Each fi In FavoriteItems
-                If fi.Name = Path.Substring(1) Then Return fi.Target
-            Next
+            Dim fi = GetFavoriteItem(Path.Substring(1))
+            If fi IsNot Nothing Then Return fi.Target
             Return Path
         End If
         Dim ret = Path.Substring(1)
@@ -263,13 +266,8 @@ Public Class SampleFileSystemPlugin
     Public Overrides Function DeleteFile(ByVal RemoteName As String) As Boolean
         If IsFavoriteAdd(RemoteName) Then Return False
         If IsFavorite(RemoteName) Then
-            For Each item In FavoriteItems
-                If item.Name = RemoteName.Substring(1) Then
-                    FavoriteItems.Remove(item)
-                    SaveSettings()
-                    Return True
-                End If
-            Next
+            Dim fi = GetFavoriteItem(RemoteName.Substring(1))
+            If fi IsNot Nothing Then FavoriteItems.Remove(fi) : SaveSettings()
             Return True
         End If
         Try
@@ -367,52 +365,60 @@ Public Class SampleFileSystemPlugin
         If IsFavoriteAdd(RemoteName) Then
             Dim dlg As New AddFavoriteItemDialog
             If dlg.ShowDialog(New WindowsT.NativeT.Win32Window(hMainWin)) = Windows.Forms.DialogResult.OK Then
+                Dim fi = GetFavoriteItem(dlg.Name)
+                If fi IsNot Nothing OrElse dlg.Name = My.Resources.AddNewFavoriteItem Then
+                    WindowsT.IndependentT.MessageBox.Modal_PTWBIO(My.Resources.ItemAlreadyExists, My.Resources.Error_, New WindowsT.NativeT.Win32Window(hMainWin), , Tools.WindowsT.IndependentT.MessageBox.GetIcon(WindowsT.IndependentT.MessageBox.MessageBoxIcons.Error))
+                    Return ExecExitCode.OK
+                End If
                 FavoriteItems.Add(New FavoriteItem(dlg.ItemName, dlg.Target, Now))
+                SaveSettings()
             End If
             Return ExecExitCode.OK
         ElseIf IsFavorite(RemoteName) Then
-            For Each fi In FavoriteItems
-                If fi.Name = RemoteName.Substring(1) Then
-                    If IO.File.Exists(fi.Target) Then
-                        Path = fi.Target
-                        GoTo Normal
-                    ElseIf IO.Directory.Exists(fi.Target) Then
-                        RemoteName = "\" & fi.Target
-                        Return ExecExitCode.Symlink
-                    Else
-                        Return ExecExitCode.Error
-                    End If
+            Dim fi = GetFavoriteItem(RemoteName.Substring(1))
+            If fi IsNot Nothing Then
+                If (fi.Target.StartsWith("\\") AndAlso fi.Target.IndexOf("\"c, 2) < 0) Then
+                    RemoteName = "\" & fi.Target
+                    Return ExecExitCode.Symlink
+                ElseIf IO.File.Exists(fi.Target) Then
+                    Path = fi.Target
+                    GoTo Normal
+                ElseIf IO.Directory.Exists(fi.Target) Then
+                    RemoteName = "\" & fi.Target
+                    Return ExecExitCode.Symlink
+                Else
+                    Return ExecExitCode.Error
                 End If
-            Next
-            Return ExecExitCode.Error
-        End If
-Normal: If IO.Path.GetExtension(Path).ToLower = ".lnk" Then 'Follow link
-            Try
-                Dim lnk As IOt.ShellLink
-                Try : lnk = New IOt.ShellLink(Path)
-                Catch : GoTo ExecFile : End Try
-                Dim newPath = lnk.TargetPath
-                If Not IO.Directory.Exists(newPath) Then GoTo ExecFile
-                RemoteName = "\" & newPath
-                Return ExecExitCode.Symlink
-            Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
-                Throw
-            Catch
+            End If
                 Return ExecExitCode.Error
-            End Try
-        Else 'Open/execute file
-ExecFile:   Dim p As New Process
-            p.StartInfo.FileName = Path
-            p.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(Path)
-            Try
-                p.Start()
-            Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
-                Throw
-            Catch
-                Return ExecExitCode.Error
-            End Try
-            Return ExecExitCode.OK
-        End If
+            End If
+Normal:     If IO.Path.GetExtension(Path).ToLower = ".lnk" Then 'Follow link
+                Try
+                    Dim lnk As IOt.ShellLink
+                    Try : lnk = New IOt.ShellLink(Path)
+                    Catch : GoTo ExecFile : End Try
+                    Dim newPath = lnk.TargetPath
+                    If Not IO.Directory.Exists(newPath) Then GoTo ExecFile
+                    RemoteName = "\" & newPath
+                    Return ExecExitCode.Symlink
+                Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
+                    Throw
+                Catch
+                    Return ExecExitCode.Error
+                End Try
+            Else 'Open/execute file
+ExecFile:       Dim p As New Process
+                p.StartInfo.FileName = Path
+                p.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(Path)
+                Try
+                    p.Start()
+                Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
+                    Throw
+                Catch
+                    Return ExecExitCode.Error
+                End Try
+                Return ExecExitCode.OK
+            End If
     End Function
     ''' <summary>Executes command in plugin space</summary>
     ''' <param name="hMainWin">Handle to Total Commander window.</param>
@@ -724,6 +730,13 @@ ExecFile:   Dim p As New Process
             di.Attributes = NewAttr
         End If
     End Sub
+    ''' <summary>Gets favorite item by name</summary>
+    ''' <param name="Name">Name of titem to get</param>
+    ''' <returns>Favorite item with <see cref="FavoriteItem.Name"/> <paramref name="Name"/> or null</returns>
+    Private Function GetFavoriteItem(ByVal Name As String) As FavoriteItem
+        Return (From fi In FavoriteItems Select fi Where fi.Name = Name).FirstOrDefault
+    End Function
+
     ''' <summary>Called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
     ''' <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData.MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO.PathTooLongException"/> will be thrown by <see cref="M:Tools.TotalCommanderT.FileSystemPlugin.FsExctractCustomIcon(System.SByte*,System.Int32,HICON__**)"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
     ''' <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
@@ -739,12 +752,18 @@ ExecFile:   Dim p As New Process
             TheIcon = My.Resources.Favorites
             Return IconExtractResult.ExtractedDestroy
         End If
+        'If (RemoteName.Length = 2 OrElse (RemoteName.Length > 2 And RemoteName(2) <> "C"c)) AndAlso RemoteName.IndexOf("\", 1) < 0 Then
+        '    'UNC computer
+        '    TheIcon = My.Resources.computer
+        '    Return IconExtractResult.ExtractedDestroy
+        'End If
         Static OnStack As Boolean
         If OnStack Then Return IconExtractResult.UseDefault
         OnStack = True
         Try
             Dim Path As Path = GetRealPath(RemoteName)
             Try
+                If Not Path.IsUNC AndAlso Not Path.ExistsPath(True) Then Return IconExtractResult.UseDefault
                 TheIcon = Path.GetIcon((ExtractFlags And IconExtractFlags.SmallIcon) <> IconExtractFlags.SmallIcon)
             Catch
                 Return IconExtractResult.UseDefault
@@ -808,7 +827,7 @@ ExecFile:   Dim p As New Process
     Private Sub SaveSettings()
         Dim doc = <?xml version="1.0" encoding="utf-8"?>
                   <ws:settings>
-                      <%= From fi In FavoriteItems Select <ws:faw name=<%= fi.Name %> target=<%= fi.Target %> created=<%= fi.CreateTime %>/> %>
+                      <%= From fi In FavoriteItems Select <ws:fav name=<%= fi.Name %> target=<%= fi.Target %> created=<%= fi.CreateTime %>/> %>
                   </ws:settings>
         doc.Save(ConfigPath)
     End Sub

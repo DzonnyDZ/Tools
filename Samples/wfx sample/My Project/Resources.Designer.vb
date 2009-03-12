@@ -78,6 +78,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property computer() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("computer", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
         Friend ReadOnly Property DocumentHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("DocumentHS", resourceCulture)
@@ -107,6 +114,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Favorites", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Item already exists..
+        '''</summary>
+        Friend ReadOnly Property ItemAlreadyExists() As String
+            Get
+                Return ResourceManager.GetString("ItemAlreadyExists", resourceCulture)
             End Get
         End Property
         

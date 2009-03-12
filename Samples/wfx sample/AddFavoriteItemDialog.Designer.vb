@@ -74,7 +74,7 @@ Partial Class AddFavoriteItemDialog
         Me.lblPath.Location = New System.Drawing.Point(3, 62)
         Me.lblPath.Name = "lblPath"
         Me.lblPath.Size = New System.Drawing.Size(29, 13)
-        Me.lblPath.TabIndex = 0
+        Me.lblPath.TabIndex = 2
         Me.lblPath.Text = "Path"
         '
         'txtPath
@@ -85,7 +85,7 @@ Partial Class AddFavoriteItemDialog
         Me.txtPath.Location = New System.Drawing.Point(3, 80)
         Me.txtPath.Name = "txtPath"
         Me.txtPath.Size = New System.Drawing.Size(288, 20)
-        Me.txtPath.TabIndex = 1
+        Me.txtPath.TabIndex = 3
         '
         'cmdFolder
         '
@@ -97,7 +97,7 @@ Partial Class AddFavoriteItemDialog
         Me.cmdFolder.Name = "cmdFolder"
         Me.cmdFolder.Padding = New System.Windows.Forms.Padding(1)
         Me.cmdFolder.Size = New System.Drawing.Size(24, 24)
-        Me.cmdFolder.TabIndex = 2
+        Me.cmdFolder.TabIndex = 4
         Me.totToolTip.SetToolTip(Me.cmdFolder, "Select folder")
         Me.cmdFolder.UseVisualStyleBackColor = True
         '
@@ -111,7 +111,7 @@ Partial Class AddFavoriteItemDialog
         Me.cmdFile.Name = "cmdFile"
         Me.cmdFile.Padding = New System.Windows.Forms.Padding(1)
         Me.cmdFile.Size = New System.Drawing.Size(24, 24)
-        Me.cmdFile.TabIndex = 3
+        Me.cmdFile.TabIndex = 5
         Me.totToolTip.SetToolTip(Me.cmdFile, "Select file")
         Me.cmdFile.UseVisualStyleBackColor = True
         '
@@ -126,7 +126,7 @@ Partial Class AddFavoriteItemDialog
         Me.flpButtons.Location = New System.Drawing.Point(130, 127)
         Me.flpButtons.Name = "flpButtons"
         Me.flpButtons.Size = New System.Drawing.Size(94, 29)
-        Me.flpButtons.TabIndex = 4
+        Me.flpButtons.TabIndex = 6
         '
         'cmdOK
         '
