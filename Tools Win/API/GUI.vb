@@ -297,6 +297,10 @@ Namespace API
         ''' <para>If the function fails, the return value is NULL. To get extended error information, call GetLastError.</para></returns>
         ''' <remarks>If the lpWindowName parameter is not NULL, FindWindow calls the GetWindowText function to retrieve the window name for comparison. For a description of a potential problem that can arise, see the Remarks for GetWindowText. </remarks>
         Public Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As Int32
+        ''' <summary>The GetCaretBlinkTime function returns the elapsed time, in milliseconds, required to invert the caret's pixels. The user can set this value using the Control Panel.</summary>
+        ''' <returns>If the function succeeds, the return value is the blink time, in milliseconds. 
+        ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
+        Public Declare Function GetCaretBlinkTime Lib "user32.dll" () As Int32
     End Module
 End Namespace
 

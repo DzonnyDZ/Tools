@@ -16,6 +16,7 @@ Namespace WindowsT.FormsT
     ''' Violating these rules can lead to uncatchable <see cref="InvalidOperationException"/> being thrown when event occurs.
     ''' </remarks>
     ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
+    ''' <version version="1.5.2"><see cref="Button.DialogResult"/> is no longer set (it caused dialog to be closed even when event was cancelled).</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public Class MessageBoxForm : Inherits Form
         ''' <summary>Form overrides dispose to clean up the component list.</summary>
@@ -303,7 +304,7 @@ Namespace WindowsT.FormsT
         Private Function CreateButton(ByVal Button As MessageBox.MessageBoxButton) As Button
             Dim text As String = If(Button.Text IsNot Nothing, Button.Text.Replace("&", "&&"), "")
             If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then text = text.Insert(text.IndexOf(Button.AccessKey), "&")
-            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .Anchor = AnchorStyles.None}
+            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .Tag = Button, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .Anchor = AnchorStyles.None} '.DialogResult = Button.Result
             If Button.ToolTip <> "" Then totToolTip.SetToolTip(CmdButton, Button.ToolTip)
             Button.Control = CmdButton
             AddHandler CmdButton.Click, AddressOf Button_Click
@@ -729,7 +730,8 @@ Namespace WindowsT.FormsT
     ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
     ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) derived from <see cref="Windows.UIElement"/> are not shown.</version>
     ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) get disposed when message box is closed.</version>
-    ''' <version version="1.5.2">Fixed: Whrn custom control (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) is replaced wne message box is shown, the change does not take effect.</version>
+    ''' <version version="1.5.2">Fixed: When custom control (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) is replaced wne message box is shown, the change does not take effect.</version>
+    ''' <version version="1.5.2">Fixed: Dialog closes even when button click operation is cancelled (see <see cref="iMsg.MessageBoxButton.ClickPreview"/>)</version>
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
        Public Class MessageBox
         Inherits iMsg

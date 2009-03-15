@@ -79,6 +79,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'The path {0} has invalid format.'.
+        /// </summary>
+        internal: static property System::String^  InvalidPathFormat {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'Name too long. Mamximum allowed length is {0}'.
         /// </summary>
         internal: static property System::String^  NameTooLong {
@@ -151,6 +158,13 @@ namespace Tools {
         /// <param name="arg0">An object (0) to format.</param>
         /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         internal: static System::String^  InvalidMacroNameFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formats a localized string similar to 'The path {0} has invalid format.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  InvalidPathFormatFormat(System::Object^  arg0);
         
         /// <summary>
         /// Formats a localized string similar to 'Name too long. Mamximum allowed length is {0}'.

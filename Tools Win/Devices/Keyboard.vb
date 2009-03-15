@@ -7,6 +7,18 @@ Imports System.Threading
 Namespace DevicesT
     ''' <summary>Contains methods for working with keyboard</summary>
     Public Class Keyboard
+        ''' <summary>Gets carret (text cursor) blink time in milliseconds</summary>
+        ''' <returns>Carret blink time in milliseconds</returns>
+        ''' <exception cref="API.Win32APIException">API call failed</exception>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public Shared ReadOnly Property CarretBlinkTime() As Integer
+            Get
+                Dim ret = API.GetCaretBlinkTime()
+                If ret = 0 Then Throw New API.Win32APIException
+                Return ret
+            End Get
+        End Property
+
 
         ''' <summary>There is no CTor</summary>
         Partial Private Sub New()

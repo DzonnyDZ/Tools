@@ -148,89 +148,166 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
-    <Compile Include="EOS\CSV\FileDialogWithEncoding.vb">
+    <Compile Include="Work\CSV\FileDialogWithEncoding.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\CSV\ToolStripCheckBox.vb">
+    <Compile Include="Work\CSV\ToolStripCheckBox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\DayView\BlackHoleQueue.vb" />
-    <Compile Include="EOS\CM-EDL\OrderByEditor.designer.vb">
+    <Compile Include="Work\DayView\BlackHoleQueue.vb" />
+    <Compile Include="Work\CM-EDL\OrderByEditor.designer.vb">
       <DependentUpon>OrderByEditor.vb</DependentUpon>
     </Compile>
-    <Compile Include="EOS\CM-EDL\OrderByEditor.vb">
+    <Compile Include="Work\CM-EDL\OrderByEditor.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EOS\DayView\DayView - DataBinding support.vb">
+    <Compile Include="Work\DayView\DayView - DataBinding support.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EOS\DayView\DayView - DataBinding.vb">
+    <Compile Include="Work\DayView\DayView - DataBinding.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EOS\DayView\DayView.designer.vb">
+    <Compile Include="Work\DayView\DayView.designer.vb">
       <DependentUpon>DayView.vb</DependentUpon>
     </Compile>
-    <Compile Include="EOS\DayView\DayView.vb">
+    <Compile Include="Work\DayView\DayView.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EOS\DayView\DayViewItem.vb" />
-    <Compile Include="EOS\DayView\DayViewRow.vb" />
-    <Compile Include="EOS\DayView\EventArgs.vb">
+    <Compile Include="Work\DayView\DayViewItem.vb" />
+    <Compile Include="Work\DayView\DayViewRow.vb" />
+    <Compile Include="Work\DayView\EventArgs.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EOS\DayView\IDayViewDataItem.vb" />
-    <Compile Include="EOS\DayView\ItemToolStrip.vb">
+    <Compile Include="Work\DayView\IDayViewDataItem.vb" />
+    <Compile Include="Work\DayView\ItemToolStrip.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EOS\DayView\Misc.vb" />
-    <Compile Include="EOS\DayView\ToolStripLabelLabel.vb">
+    <Compile Include="Work\DayView\Misc.vb" />
+    <Compile Include="Work\DayView\ToolStripLabelLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\CSV.vb" />
-    <Compile Include="EOS\EOSTools\DateTools.vb" />
-    <Compile Include="EOS\EOSTools\Deploy\ClickOnceUninstall.vb" />
-    <Compile Include="EOS\EOSTools\GUI\CloseButton.vb">
+    <Compile Include="Work\Fawn\clog.vb" />
+    <Compile Include="Work\Fawn\cSQLString.vb" />
+    <Compile Include="Work\Lookup\DiTextBox.Designer.vb">
+      <DependentUpon>DiTextBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Work\Lookup\DiTextBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Work\Lookup\MultiControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Work\Lookup\MultiControlBase.Designer.vb">
+      <DependentUpon>MultiControlBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Work\Lookup\MultiControlBase.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Work\Lookup\MultiDiTextBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Work\Lookup\MultiTexBoxAndComboBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Work\Lookup\MultiTextBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Work\Lookup\TextBoxAndComboBox.Designer.vb">
+      <DependentUpon>TextBoxAndComboBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Work\Lookup\TextBoxAndComboBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\Classes\cCSV.vb" />
+    <Compile Include="Work\Tools\Classes\NaturalComparer.vb" />
+    <Compile Include="Work\Tools\Classes\PropertyChangingEventArgs.vb" />
+    <Compile Include="Work\Tools\ComponentModel\SingleTypeDescriptionProvider.vb" />
+    <Compile Include="Work\Tools\ComponentModel\TypeDescriptor.vb" />
+    <Compile Include="Work\Tools\CSV.vb" />
+    <Compile Include="Work\Tools\DateTools.vb" />
+    <Compile Include="Work\Tools\Deploy\ClickOnceUninstall.vb" />
+    <Compile Include="Work\Tools\GUI\CloseButton.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\GUI\NullableDateTimePicker.vb">
+    <Compile Include="Work\Tools\GUI\CustomizableProfessionalRenderereColorTable.vb" />
+    <Compile Include="Work\Tools\GUI\ExtendedForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\GUI%28module%29.vb" />
+    <Compile Include="Work\Tools\GUI\LinkProperties.vb" />
+    <Compile Include="Work\Tools\GUI\ListBoxWithDisabledItems.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\GUI\OverflowProgressBar.vb">
+    <Compile Include="Work\Tools\GUI\Misc.vb" />
+    <Compile Include="Work\Tools\GUI\NullableDateTimePicker.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\GUI\ToolStripComboBox.vb" />
-    <Compile Include="EOS\EOSTools\GUI\Wizard.Designer.vb">
+    <Compile Include="Work\Tools\GUI\OverflowProgressBar.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\ProgressMonitor.Designer.vb">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\ProgressMonitor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\PropertyGridEditor.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\SelectEncodingDialog.Designer.vb">
+      <DependentUpon>SelectEncodingDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\SelectEncodingDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\TabControlEx.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\ToolStripCheckBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\ToolStripComboBox.vb" />
+    <Compile Include="Work\Tools\GUI\ToolStripLabelLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\ToolStripNumericUpDown.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\TransMenuLib.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\VersionHistory.Designer.vb">
+      <DependentUpon>VersionHistory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\VersionHistory.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Work\Tools\GUI\WinTrayButton.vb" />
+    <Compile Include="Work\Tools\GUI\Wizard.Designer.vb">
       <DependentUpon>Wizard.vb</DependentUpon>
     </Compile>
-    <Compile Include="EOS\EOSTools\GUI\Wizard.vb">
+    <Compile Include="Work\Tools\GUI\Wizard.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\Login\ActiveDirectory\ADUser.vb" />
-    <Compile Include="EOS\EOSTools\Login\ActiveDirectory\frmGroupOverride.Designer.vb">
+    <Compile Include="Work\Tools\Login\ActiveDirectory\ADHelpers.vb" />
+    <Compile Include="Work\Tools\Login\ActiveDirectory\ADUser.vb" />
+    <Compile Include="Work\Tools\Login\ActiveDirectory\frmGroupOverride.Designer.vb">
       <DependentUpon>frmGroupOverride.vb</DependentUpon>
     </Compile>
-    <Compile Include="EOS\EOSTools\Login\ActiveDirectory\frmGroupOverride.vb">
+    <Compile Include="Work\Tools\Login\ActiveDirectory\frmGroupOverride.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\Login\IUser.vb" />
-    <Compile Include="EOS\EOSTools\Login\Old\frmLogin.Designer.vb">
+    <Compile Include="Work\Tools\Login\IUser.vb" />
+    <Compile Include="Work\Tools\Login\Old\frmLogin.Designer.vb">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </Compile>
-    <Compile Include="EOS\EOSTools\Login\Old\frmLogin.vb">
+    <Compile Include="Work\Tools\Login\Old\frmLogin.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\Login\Old\Login.vb" />
-    <Compile Include="EOS\EOSTools\Login\Old\LoginDialog.vb">
+    <Compile Include="Work\Tools\Login\Old\LoginDialog.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\Login\Old\User.vb" />
-    <Compile Include="eĐit\Tools\Container.Designer.vb">
-      <DependentUpon>Container.vb</DependentUpon>
-    </Compile>
-    <Compile Include="eĐit\Tools\Container.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="eĐit\Tools\Utils.vb" />
+    <Compile Include="Work\Tools\Login\Old\User.vb" />
     <Compile Include="Joystick\IChair.vb" />
     <Compile Include="Joystick\JoyAxe.Designer.vb">
       <DependentUpon>JoyAxe.vb</DependentUpon>
@@ -265,21 +342,56 @@
     <Compile Include="TWAIN\TWAIN structures.vb" />
     <Compile Include="Web\Numberings.vb" />
     <Compile Include="Web\Pager.vb" />
+    <Compile Include="Work\Tools\Math.vb" />
+    <Compile Include="Work\Tools\Resources\SystemResources.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EOS\CM-EDL\OrderByEditor.resx">
+    <EmbeddedResource Include="Work\CM-EDL\OrderByEditor.resx">
       <DependentUpon>OrderByEditor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EOS\DayView\DayView.resx">
+    <EmbeddedResource Include="Work\DayView\DayView.resx">
       <DependentUpon>DayView.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EOS\EOSTools\GUI\Wizard.resx">
+    <EmbeddedResource Include="Work\Lookup\DiTextBox.resx">
+      <DependentUpon>DiTextBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Lookup\MultiControlBase.resx">
+      <DependentUpon>MultiControlBase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Lookup\TextBoxAndComboBox.resx">
+      <DependentUpon>TextBoxAndComboBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\ExtendedForm.resx">
+      <DependentUpon>ExtendedForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\ProgressMonitor.en.resx">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\ProgressMonitor.resx">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\PropertyGridEditor.resx">
+      <DependentUpon>PropertyGridEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\SelectEncodingDialog.resx">
+      <DependentUpon>SelectEncodingDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\TransMenuLib.resx">
+      <DependentUpon>TransMenuLib.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\VersionHistory.resx">
+      <DependentUpon>VersionHistory.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\WinTrayButton.resx">
+      <DependentUpon>WinTrayButton.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Work\Tools\GUI\Wizard.resx">
       <DependentUpon>Wizard.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EOS\EOSTools\Login\ActiveDirectory\frmGroupOverride.resx">
+    <EmbeddedResource Include="Work\Tools\Login\ActiveDirectory\frmGroupOverride.resx">
       <DependentUpon>frmGroupOverride.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EOS\EOSTools\Login\Old\frmLogin.resx">
+    <EmbeddedResource Include="Work\Tools\Login\Old\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Joystick\JoyAxe.resx">
@@ -323,12 +435,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\SharedFiles\VersionHistory.xsd">
+      <Link>Resources\VersionHistory.xsd</Link>
+    </None>
     <None Include="Resources\DeleteHS.png" />
     <None Include="TWAIN\GdiPlusLib.cs" />
     <None Include="TWAIN\TwainDefs.cs" />
     <None Include="TWAIN\TwainLib.cs" />
+    <None Include="Work\Tools\GUI\CustomizableProfessionalRenderereColorTable.xso" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\SharedFiles\VersionHistory.xslt">
+      <Link>Resources\VersionHistory.xslt</Link>
+    </Content>
     <Content Include="Resources\error.ico" />
     <Content Include="Resources\RefreshDocViewHS.png" />
     <Content Include="Web\Pager.bmp" />

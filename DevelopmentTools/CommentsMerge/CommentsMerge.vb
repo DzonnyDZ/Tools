@@ -4,10 +4,8 @@ Imports System.Xml.Linq, System.Xml.Xsl, System.Xml
 Friend Module CommentsMerge
     ''' <summary>Entry point. Reads command line arguments and performs operation</summary>
     Public Sub Main()
-        If My.Application.CommandLineArgs.Count <> 3 Then
-            Console.WriteLine(My.Resources.CommentsMergeMergesXMLCommentFiles)
-            Console.WriteLine(My.Resources.UsageCommenstMergePrimaryFileSecondaryFileOutputFile)
-            Console.WriteLine(My.Resources.FilesShouldBeNamespaceLessOrHaveHttpDzonnyCzXmlSchemasIntellisenseNamespace)
+        If My.Application.CommandLineArgs.Count < 3 Then
+            Console.WriteLine(My.Resources.Usage)
             Return
         End If
         Console.WriteLine("{0} {1} {2}", My.Application.Info.Title, My.Application.Info.Version, My.Application.Info.Copyright)
@@ -19,24 +17,26 @@ Friend Module CommentsMerge
             Environment.Exit(1)
             Exit Sub
         End Try
-        Dim Sec As XDocument
+        Dim mg As XDocument = Nothing
+        For i As Integer = 1 To My.Application.CommandLineArgs.Count - 2
+            Dim Sec As XDocument
+            Try
+                Sec = XDocument.Load(My.Application.CommandLineArgs(i))
+            Catch ex As Exception
+                Console.Error.WriteLine(My.Resources.SecondaryFile01, ex.GetType.Name, ex.Message)
+                Environment.Exit(2)
+                Exit Sub
+            End Try
+            Try
+                mg = Merge(Pri, Sec)
+            Catch ex As Exception
+                Console.Error.WriteLine(My.Resources.Transformation01, ex.GetType.Name, ex.Message)
+                Environment.Exit(3)
+                Exit Sub
+            End Try
+        Next
         Try
-            Sec = XDocument.Load(My.Application.CommandLineArgs(1))
-        Catch ex As Exception
-            Console.Error.WriteLine(My.Resources.SecondaryFile01, ex.GetType.Name, ex.Message)
-            Environment.Exit(2)
-            Exit Sub
-        End Try
-        Dim mg As XDocument
-        Try
-            mg = Merge(Pri, Sec)
-        Catch ex As Exception
-            Console.Error.WriteLine(My.Resources.Transformation01, ex.GetType.Name, ex.Message)
-            Environment.Exit(3)
-            Exit Sub
-        End Try
-        Try
-            mg.Save(My.Application.CommandLineArgs(2))
+            mg.Save(My.Application.CommandLineArgs(My.Application.CommandLineArgs.Count - 1))
         Catch ex As Exception
             Console.Error.WriteLine(My.Resources.Save01, ex.GetType.Name, ex.Message)
             Environment.Exit(4)

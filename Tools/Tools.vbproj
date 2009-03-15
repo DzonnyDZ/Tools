@@ -484,6 +484,7 @@
     </Compile>
     <Compile Include="Collections\Generic\PriorityQueue.vb" />
     <Compile Include="DataStructures\Graph.vb" />
+    <Compile Include="Extensions\StringFormatting.vb" />
     <Compile Include="Globalization\NumberingSystem.vb" />
     <Compile Include="Globalization\NumberingSystems\ExcelColumnNumberingSystem.vb" />
     <Compile Include="Globalization\NumberingSystems\PositionalNumberingSystem.vb" />

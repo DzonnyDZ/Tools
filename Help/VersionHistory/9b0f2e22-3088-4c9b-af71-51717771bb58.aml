@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="9b0f2e22-3088-4c9b-af71-51717771bb58" revisionNumber="1" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+    <introduction>
+      <autoOutline />
+      <para>
+                        Here you can see version history (beginning with version 1.5.2.0) of the ĐTools project.
+                        This file contain only main changes.
+                        All changes are registered with single classes and members.
+                    </para>
+    </introduction>
+    <section address="v1.5.2."><title>1.5.2</title><content><list class="bullet">
+        <listItem>
+            <codeEntityReference qualifyHint="true">T:Tools.InternalT.VersionAttribute</codeEntityReference>, <codeEntityReference qualifyHint="true">T:Tools.InternalT.AuthorAttribute</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.InternalT.FirstVersionAttribute</codeEntityReference> marked as obsoltele. Use XML ocumentation tags instead.
+            These atributes were replaced with appropriate XML comments.
+        </listItem>
+        <listItem>Tools.InternalT.FirstVersion renamed to <codeEntityReference qualifyHint="true">T:Tools.InternalT.FirstVersionAttribute</codeEntityReference></listItem>
+        <listItem><codeEntityReference qualifyHint="true">T:Tools.ExtensionsT.DelegateExtensions</codeEntityReference> module: Visubility changed from Private to Public.</listItem>
+        <listItem>Build state of constants <codeEntityReference qualifyHint="true">F:Tools.VisualBasicT.Interaction.Null</codeEntityReference> and <codeEntityReference qualifyHint="true">F:Tools.VisualBasicT.Interaction.Nothing</codeEntityReference> changed from Nightly to Release</listItem>
+        <listItem>Created new assemblies Tools.Windows (for Windows Forms and WPF) and Tools.Metadata (for (image) metadata). Namespaces <codeEntityReference qualifyHint="true">N:Tools.DrawingT.DrawingIOt</codeEntityReference> and <codeEntityReference qualifyHint="true">N:Tools.DrawingT.MetadataT</codeEntityReference> (<codeEntityReference qualifyHint="true">N:Tools.MetadataT</codeEntityReference>) relocated to assembly Tools.Metadata; <codeEntityReference qualifyHint="true">N:Tools.WindowsT</codeEntityReference> relocated to assembly Tools.Windows with exception of <codeEntityReference qualifyHint="true">T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues</codeEntityReference>.</listItem>
+        <listItem>A few methods from <codeEntityReference qualifyHint="true">T:Tools.CollectionsT.SpecializedT.CollectionTools</codeEntityReference> relocated to <codeEntityReference qualifyHint="true">T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions</codeEntityReference>.</listItem>
+        <listItem>Namespace Tools.DrawingT.MetadataT renamed to <codeEntityReference qualifyHint="true">N:Tools.MetadataT</codeEntityReference></listItem>
+        <listItem>Added namespace <codeEntityReference qualifyHint="true">N:Tools.Experimental.DevicesT.JoystickT</codeEntityReference></listItem>
+        <listItem>Added extension method <codeEntityReference qualifyHint="true">M:Tools.CollectionsT.SpecializedT.CollectionTools.Import(System.Windows.Forms.ImageList.ImageCollection,System.Windows.Forms.ImageList.ImageCollection)</codeEntityReference>.</listItem>
+        <listItem>Added namespace <codeEntityReference qualifyHint="true">N:Tools.WindowsT.InteropT</codeEntityReference>.</listItem>
+        <listItem>Fixed: <codeEntityReference qualifyHint="true">M:Tools.TypeTools.CanAutomaticallyCreateInstance(System.Type)</codeEntityReference> always returns null.</listItem>
+        <listItem>Added namespace <codeEntityReference qualifyHint="true">N:Tools.WindowsT.FormsT.VisualStylesT</codeEntityReference>.</listItem>
+        <listItem><codeEntityReference qualifyHint="true">T:Tools.MetadataT.ExifT.URational</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.MetadataT.ExifT.SRational</codeEntityReference> now have Parse and TryParse methods, implement <codeEntityReference qualifyHint="true">T:System.IFormatable</codeEntityReference> and has <codeEntityReference qualifyHint="true">T:System.ComponentModel.TypeConverterAttribute</codeEntityReference>.</listItem>
+        <listItem>Added several <codeEntityReference qualifyHint="true">T:System.ComponentModel.BrowsableAttribute</codeEntityReference>(false) and <codeEntityReference qualifyHint="true">T:System.ComponentMode.TypeConverterAttribute</codeEntityReference>(<codeEntityReference qualifyHint="true">T:System.ComponentModel.ExpandableObjectConverter</codeEntityReference>)  for <codeEntityReference qualifyHint="true">T:Tools.MetadataT.ExifT.Ifd</codeEntityReference>'s properties and derived classes' properties.</listItem>
+        <listItem><codeEntityReference qualifyHint="true">T:Tools.CollectionsT.GenericT.DictionaryWithEvents`2</codeEntityReference> implements <codeEntityReference qualifyHint="true">T:System.COllections.Generic.IEnumerable`1</codeEntityReference>[<codeInline>TValue</codeInline>].</listItem>
+        <listItem>Fixed: Exif <codeEntityReference qualifyHint="true">T:Tools.MetadataT.ExifT.SRational</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.MetadataT.ExifT.URrational</codeEntityReference> are incorrectly read from image files (2×16 bits instead of 2×32 bits).</listItem>
+        <listItem><codeEntityReference qualifyHint="true">T:Tools.Metadata.ExifT.ExifWriter</codeEntityReference> made public and Exif saving capability added to <codeEntityReference qualifyHint="true">T:Tools.Metadata.ExifT.Exif</codeEntityReference>.</listItem>
+        <listItem>Added <codeEntityReference qualifyHint="true">M:Tools.ReflectionT.ReflectionTools.GetOperators</codeEntityReference> overloaed function.</listItem>
+        <listItem>Added <codeEntityReference qualifyHint="true">M:Tools.TypeTools.DynamiCast(System.Object,System.Type)</codeEntityReference> method</listItem>
+        <listItem><codeEntityReference qualifyHint="true">T:Tools.WindowsT.FormsT.ObjectBrowser</codeEntityReference> now has <codeEntityReference qualifyHint="true">P:Tools.WindowsT.FormsT.ObjectBrowser.SelectedItem</codeEntityReference> property</listItem>
+        <listItem>Fixed: Check box on <codeEntityReference qualifyHint="true">T:Tools.WindowsT.FormsT.MessageBox</codeEntityReference> does not autosize.</listItem>
+        <listItem><codeEntityReference qualifyHint="true">T:Tools.IReportsChange.ValueChangedEventArgsBase</codeEntityReference> now derives <codeEntityReference qualifyHint="true">T:System.ComponentModel.PropertyChangedEventArgs</codeEntityReference></listItem>
+        <listItem>Null and <codeEntityReference qualifyHint="true">T:System.Nullable`1</codeEntityReference> support in <codeEntityReference qualifyHint="true">T:Tools.WindowsT.WPF.ConvertersT.StronglyTypedConverter`2</codeEntityReference>.</listItem>
+        <listItem>New attribute class <codeEntityReference qualifyHint="true">T:Tools.ComponentModel.EnumDefaultValueAttribute</codeEntityReference> for better working with defualt values of enumerated types.</listItem>
+        <listItem>New <codeEntityReference qualifyHint="true">T:Tools.ComponentModelT.MultipleException</codeEntityReference> class for throwing multiple exceptions at once.</listItem>
+        <listItem>Several new converters for WPF.</listItem>
+        <listItem>A way to create instance of generic type in XAML: <codeEntityReference qualifyHint="true">T:Tools.WindowsT.WPF.MarkupT.GenericExtension</codeEntityReference>.</listItem>
+        <listItem>Minor enhancements in <codeEntityReference qualifyHint="true">T:Tools.CollectionsT.GenericT.ListWithEvents`1</codeEntityReference>.</listItem>
+        <listItem>Common base class for all <codeEntityReference qualifyHint="true">T:Tools.CollectionsT.GenericT.ListWithEvents`1</codeEntityReference> - <codeEntityReference qualifyHint="true">T:Tools.CollectionsT.GenericT.ListWithEventsBase</codeEntityReference>.</listItem>
+        <listItem>Minor enhancements in <codeEntityReference qualifyHint="true">T:Tools.WindowsT.IndependentT.MessageBox</codeEntityReference>.</listItem>
+        <listItem><codeEntityReference qualifyHint="true">T:Tools.CollectionsT.GenericT.ICollectionNotifyItem</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.CollectionsT.GenericT.ICollectionCancelItem</codeEntityReference> interfaces introduced.</listItem>
+        <listItem>Fixed some resources-localization-related issues.</listItem>
+        <listItem>New class <codeEntityReference qualifyHint="true">T:Tools.TestsT.StaticPropertiesTest</codeEntityReference>.</listItem>
+        <listItem>WPF implementation of message box.</listItem>
+        <listItem>New metadata querying interfaces <codeEntityReference qualifyHint="true">T:Tools.MetadataT.IMetadataProvider</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.MetadataT.IMetadata</codeEntityReference> implemented by <codeEntityReference qualifyHint="true">T:Tools.MetadataT.ExifT.Exif</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.MetadataT.IptcT.IPTC</codeEntityReference>.</listItem>
+        <listItem>Assembly Tools Win renamed to Tools.Win</listItem>
+        <listItem>Assembly Tools IL renamed to Tols.IL</listItem>
+        <listItem>New class <codeEntityReference qualifyHint="true">T:Tools.CollectionsT.GenericT.PriorityQueue</codeEntityReference></listItem>
+        <listItem>New class <codeEntityReference qualifyHint="true">T:Tools.DataStructuresT.GenericT.Graph</codeEntityReference></listItem>
+        <listItem>Added project XsdGenerator - generates classes from XSD files.</listItem>
+        <listItem>New project Tools.TotalCommander (see <codeEntityReference qualifyHint="true">N:Tools.TotalCommanderT</codeEntityReference>) for creating Total Commander plugins.</listItem>
+    </list></content></section>
+</developerConceptualDocument>
+</topic>

@@ -3,7 +3,7 @@
     .publickeytoken = (B7 7A 5C 56 19 34 E0 89)
 }
 .assembly 'Tools.IL'{
-    .ver 1:5:1:2
+    .ver 1:5:2:0
     .custom instance void [mscorlib]System.CLSCompliantAttribute::.ctor(bool) = { bool(true) }
 }
 .assembly extern System.Core{

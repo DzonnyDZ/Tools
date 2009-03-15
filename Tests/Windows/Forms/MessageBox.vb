@@ -226,5 +226,39 @@ Namespace WindowsT.FormsT
         Private Sub optBottom_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optBottom.CheckedChanged
             If optBottom.Checked Then prgControlProperties.SelectedObject = Box.BottomControl
         End Sub
+
+
+        Private Sub cmdNoCloseTest_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdNoCloseTest.Click
+            Dim box As Tools.WindowsT.IndependentT.MessageBox
+            If optWinForms.Checked Then
+                Log("Creating WF")
+                box = New fMsg
+            Else
+                Log("Creating WPF")
+                box = New wMsg
+            End If
+            box.Buttons.Clear()
+            box.Buttons.Add(IndependentT.MessageBox.MessageBoxButton.OK)
+            box.Buttons(0).Text = "Close"
+            box.Buttons.Add(IndependentT.MessageBox.MessageBoxButton.Cancel)
+            box.Buttons(1).Text = "Do nothing"
+            box.Buttons(1).Result = 723854
+            AddHandler box.Buttons(1).ClickPreview, AddressOf Button1_ClickPreview
+            Try
+                Log("Showing")
+                box.ShowDialog(Me)
+                Log("Closed")
+            Catch ex As Exception
+                Log("Error {0}", ex.Message)
+                MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+            Finally
+                RemoveHandler box.Buttons(1).ClickPreview, AddressOf Button1_ClickPreview
+            End Try
+        End Sub
+        Private Sub Button1_ClickPreview(ByVal sender As iMsg.MessageBoxButton, ByVal e As System.ComponentModel.CancelEventArgs)
+            Log("Cancelling click event")
+            e.Cancel = True
+        End Sub
+
     End Class
 End Namespace

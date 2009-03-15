@@ -147,6 +147,7 @@
     <Compile Include="API\HelpersU.vb" />
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />
+    <Compile Include="Extensions\StringFormatting.vb" />
     <Compile Include="Extensions\StringExtensions.vb" />
     <Compile Include="General\GeneralTestsU.vb" />
     <Compile Include="Globalization\NumberingSystems\ExcelColumnNumberingSystemUT.vb" />

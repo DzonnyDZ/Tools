@@ -232,6 +232,16 @@ namespace Tools{namespace TotalCommanderT{
             this->dLogProc(this, MsgType, LogString);
         }
     }
+    void FileSystemPlugin::LogProcConnect(String^ FileSystem){
+        if(FileSystem == nullptr) throw gcnew ArgumentNullException("FileSystem");
+        if(!FileSystem->StartsWith("\\") || FileSystem->StartsWith("\\\\")) throw gcnew ArgumentException(Exceptions::InvalidPathFormatFormat(FileSystem),"FileSystem");
+        this->LogProc(LogKind::Connect, "CONNECT " + FileSystem);
+    }
+    void FileSystemPlugin::LogProcTransferComplete(String^ Source, String^ Target){
+        if(Source == nullptr) throw gcnew ArgumentNullException("Source");
+        if(Target == nullptr) throw gcnew ArgumentNullException("Target");
+        this->LogProc(LogKind::TransferComplete,String::Format("{0} -> {1}",Source,Target));
+    }
     String^ FileSystemPlugin::RequestProc(InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
         if(this->IsInTotalCommander){

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="VersionHistory"
+    targetNamespace="http://dzonny.cz/xml/Schemas/VersionHistory"
+    elementFormDefault="qualified"
+    xmlns="http://dzonny.cz/xml/Schemas/VersionHistory"
+    xmlns:vh="http://dzonny.cz/xml/Schemas/VersionHistory"
+    xmlns:html="http://www.w3.org/1999/xhtml" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:i="http://dzonny.cz/xml/schemas/intellisense"
+>
+    <xs:import namespace="http://www.w3.org/1999/xhtml"/>
+    <xs:import namespace="http://dzonny.cz/xml/schemas/intellisense"/>
+    <xs:element name="VersionHistory">
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Version">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="1">
+                            <xs:element minOccurs="1" maxOccurs="unbounded" name="i">
+                                <xs:complexType mixed="true">
+                                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                        <xs:group ref="html:inline" />
+                                        <xs:group ref="html:misc" />
+                                        <xs:group ref="html:block"/>
+                                        <xs:group ref="i:tbels"/>
+                                    </xs:choice>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Major" type="xs:nonNegativeInteger" use="required"/>
+                        <xs:attribute name="Minor" type="xs:nonNegativeInteger" use="required"/>
+                        <xs:attribute name="Build" type="xs:nonNegativeInteger" use="required"/>
+                        <xs:attribute name="Revision" type="xs:nonNegativeInteger" use="optional"/>
+                        <xs:attribute name="Date" type="xs:date" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1344,4 +1344,31 @@
   <data name="Retuned1" xml:space="preserve">
     <value>{0} retuned {1}</value>
   </data>
+  <data name="IncompleteFormatString" xml:space="preserve">
+    <value>Incomplete format string.</value>
+  </data>
+  <data name="InvalidFormatStringInvalidUnicodeCodePoint0x0X" xml:space="preserve">
+    <value>Invalid format string. Invalid unicode code point 0x{0:x}.</value>
+  </data>
+  <data name="InvalidFormatStringInvalidUnicodeCodePoint0D" xml:space="preserve">
+    <value>Invalid format string. Invalid unicode code point {0:D}.</value>
+  </data>
+  <data name="InvalidFormatStringNumeralOrExpected" xml:space="preserve">
+    <value>Invalid format string. Numeral ":" or "}" expected.</value>
+  </data>
+  <data name="InvalidFormatStringExpectedWidthNumber" xml:space="preserve">
+    <value>Invalid format string. Expected width number.</value>
+  </data>
+  <data name="InvalidFormatStringExpectedWidthNumberOr" xml:space="preserve">
+    <value>Invalid format string. Expected width number or "-".</value>
+  </data>
+  <data name="InvalidFormatStringNumeralOrExpected2" xml:space="preserve">
+    <value>Invalid format string. Numeral, ",", ":" or "}" expected.</value>
+  </data>
+  <data name="InvalidFormatStringArgumentNumberExpected" xml:space="preserve">
+    <value>Invalid format string. Argument number expected.</value>
+  </data>
+  <data name="InvalidFormatStringInvalidHexadecimalEscapeSequence" xml:space="preserve">
+    <value>Invalid format string. Invalid hexadecimal escape sequence</value>
+  </data>
 </root>

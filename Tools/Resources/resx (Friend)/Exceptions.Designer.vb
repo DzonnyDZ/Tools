@@ -1259,6 +1259,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Incomplete format string.'.
+        '''</summary>
+        Friend Shared ReadOnly Property IncompleteFormatString() As String
+            Get
+                Return ResourceManager.GetString("IncompleteFormatString", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Index must be in range defined by counf of IFDs'.
         '''</summary>
         Friend Shared ReadOnly Property IndexMustBeInRangeDefinedByCounfOfIFDs() As String
@@ -1318,6 +1327,78 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property InvalidFormatSpecifier() As String
             Get
                 Return ResourceManager.GetString("InvalidFormatSpecifier", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Argument number expected.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringArgumentNumberExpected() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringArgumentNumberExpected", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Expected width number.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringExpectedWidthNumber() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringExpectedWidthNumber", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Expected width number or &quot;-&quot;.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringExpectedWidthNumberOr() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringExpectedWidthNumberOr", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Invalid hexadecimal escape sequence'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringInvalidHexadecimalEscapeSequence() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringInvalidHexadecimalEscapeSequence", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Invalid unicode code point {0:D}.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringInvalidUnicodeCodePoint0D() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringInvalidUnicodeCodePoint0D", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Invalid unicode code point 0x{0:x}.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringInvalidUnicodeCodePoint0x0X() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringInvalidUnicodeCodePoint0x0X", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Numeral &quot;:&quot; or &quot;}&quot; expected.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringNumeralOrExpected() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringNumeralOrExpected", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Invalid format string. Numeral, &quot;,&quot;, &quot;:&quot; or &quot;}&quot; expected.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFormatStringNumeralOrExpected2() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatStringNumeralOrExpected2", _resourceCulture)
             End Get
         End Property
         
@@ -4907,6 +4988,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the IncompleteFormatString property value.
+        '''</summary>
+        '''<returns>The IncompleteFormatString property value.</returns>
+        Friend Shared Function IncompleteFormatStringFormat() As String
+            Return IncompleteFormatString
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the IndexMustBeInRangeDefinedByCounfOfIFDs property value.
         '''</summary>
         '''<returns>The IndexMustBeInRangeDefinedByCounfOfIFDs property value.</returns>
@@ -4962,6 +5051,56 @@ Namespace ResourcesT
         '''<returns>The InvalidFormatSpecifier property value.</returns>
         Friend Shared Function InvalidFormatSpecifierFormat() As String
             Return InvalidFormatSpecifier
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the InvalidFormatStringArgumentNumberExpected property value.
+        '''</summary>
+        '''<returns>The InvalidFormatStringArgumentNumberExpected property value.</returns>
+        Friend Shared Function InvalidFormatStringArgumentNumberExpectedFormat() As String
+            Return InvalidFormatStringArgumentNumberExpected
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the InvalidFormatStringExpectedWidthNumber property value.
+        '''</summary>
+        '''<returns>The InvalidFormatStringExpectedWidthNumber property value.</returns>
+        Friend Shared Function InvalidFormatStringExpectedWidthNumberFormat() As String
+            Return InvalidFormatStringExpectedWidthNumber
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the InvalidFormatStringExpectedWidthNumberOr property value.
+        '''</summary>
+        '''<returns>The InvalidFormatStringExpectedWidthNumberOr property value.</returns>
+        Friend Shared Function InvalidFormatStringExpectedWidthNumberOrFormat() As String
+            Return InvalidFormatStringExpectedWidthNumberOr
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the InvalidFormatStringInvalidHexadecimalEscapeSequence property value.
+        '''</summary>
+        '''<returns>The InvalidFormatStringInvalidHexadecimalEscapeSequence property value.</returns>
+        Friend Shared Function InvalidFormatStringInvalidHexadecimalEscapeSequenceFormat() As String
+            Return InvalidFormatStringInvalidHexadecimalEscapeSequence
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Invalid format string. Invalid unicode code point {0:D}.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function InvalidFormatStringInvalidUnicodeCodePoint0DFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, InvalidFormatStringInvalidUnicodeCodePoint0D, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Invalid format string. Invalid unicode code point 0x{0:x}.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function InvalidFormatStringInvalidUnicodeCodePoint0x0XFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, InvalidFormatStringInvalidUnicodeCodePoint0x0X, arg0)
         End Function
         
         '''<summary>

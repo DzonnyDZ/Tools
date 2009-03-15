@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CommentsMergeMergesXMLCommentFiles" xml:space="preserve">
-    <value>CommentsMerge: Merges XML comment files</value>
-  </data>
-  <data name="UsageCommenstMergePrimaryFileSecondaryFileOutputFile" xml:space="preserve">
-    <value>Usage: CommenstMerge PrimaryFile SecondaryFile OutputFile</value>
-  </data>
-  <data name="FilesShouldBeNamespaceLessOrHaveHttpDzonnyCzXmlSchemasIntellisenseNamespace" xml:space="preserve">
-    <value>Files should be namespace-less or have http://dzonny.cz/xml/schemas/intellisense namespace</value>
-  </data>
   <data name="PrimaryFile01" xml:space="preserve">
     <value>Primary file: {0}: {1}</value>
   </data>
@@ -137,5 +128,9 @@
   </data>
   <data name="Save01" xml:space="preserve">
     <value>Save: {0}: {1}</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Usage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\usage.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

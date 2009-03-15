@@ -136,6 +136,19 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect! If you call it with <paramref name="MsgType"/> <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the function <see cref="Disconnect"/> will be called (if defined) when the user presses the Disconnect button.</remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         void LogProc(LogKind MsgType,String^ LogString);
+        /// <summary>Specialized version of the <see cref="LogProc"/> function used for logging conection open.</summary>
+        /// <param name="FileSystem">Name of the filesystem plugin has connected to. The name must start with a backslash.</param>
+        /// <remarks>Do not call this function when file system implemeneted by the plugin does not reguire connection</remarks>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="FileSystem"/> is null</exception>
+        /// <exception cref="ArgumentException"><paramref name="FileSystem"/> either starts with \\ or it does not start with \</exception>
+        void LogProcConnect(String^ Fileystem);
+        /// <summary>Specialized version of the <see cref="LogProc"/> function used for transfer completion advertisement.</summary>
+        /// <param name="Source">Path of source file. It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
+        /// <param name="Target">Path of destination file.  It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        void LogProcTransferComplete(String^ Source, String^ Target);
         /// <summary>callback function, which the plugin can call to request input from the user. When using one of the standard parameters, the request will be in the selected language.</summary>
         /// <param name="RequestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
         /// <param name="CustomTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>

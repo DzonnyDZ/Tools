@@ -886,6 +886,7 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Event arguments. Can be used to cancel the event. <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> false means tha message box will be closed; false means the message box will remain open.</param>
             ''' <param name="sender">Instance of <see cref="MessageBoxButton"/> that have raised the event</param>
             ''' <remarks>If <see cref="Result"/> is <see cref="HelpDialogResult"/> <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> is pre-set to true. That means that if it is not set to false, message box is not closed when help button is clicked.</remarks>
+            ''' <version version="1.5.2">Fixed: Using <see cref="WindowsT.FormsT.MessageBox"/> dialog closes even when event is cancelled.</version>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
             <LDescription(GetType(ResourcesT.Components), "ClickPreview_d")> _
             Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs)

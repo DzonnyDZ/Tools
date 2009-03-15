@@ -9,6 +9,17 @@
     <Extension()> Public Function self(Of T)(ByVal obj As T) As T
         Return obj
     End Function
+    ''' <summary>Swaps values of given variables</summary>
+    ''' <typeparam name="T">Type of variables</typeparam>
+    ''' <param name="a">Variable 1</param>
+    ''' <param name="b">Variable 2</param>
+    ''' <version version="1.5.2">Method moved from <c>Tools.Experimantal.Utils</c> to <see cref="misc_"/>.</version>
+    Public Sub Swap(Of T)(ByRef a As T, ByRef b As T)
+        Dim tmp As T
+        tmp = a
+        a = b
+        b = tmp
+    End Sub
 #Region "Switch"
 #Region "General"
     ''' <summary>Returns one of results depending on boolean conditions</summary>

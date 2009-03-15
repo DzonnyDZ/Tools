@@ -49,6 +49,7 @@ Namespace WindowsT.FormsT
             Me.optTop = New System.Windows.Forms.RadioButton
             Me.optMiddle = New System.Windows.Forms.RadioButton
             Me.optBottom = New System.Windows.Forms.RadioButton
+            Me.cmdNoCloseTest = New System.Windows.Forms.Button
             Me.flpCommands.SuspendLayout()
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
@@ -201,8 +202,9 @@ Namespace WindowsT.FormsT
             '
             'splMain
             '
-            Me.splMain.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splMain.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.splMain.Location = New System.Drawing.Point(0, 0)
+            Me.splMain.Margin = New System.Windows.Forms.Padding(0)
             Me.splMain.Name = "splMain"
             '
             'splMain.Panel1
@@ -389,11 +391,25 @@ Namespace WindowsT.FormsT
             Me.optBottom.Text = "Bottom"
             Me.optBottom.UseVisualStyleBackColor = True
             '
+            'cmdNoCloseTest
+            '
+            Me.cmdNoCloseTest.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.cmdNoCloseTest.AutoSize = True
+            Me.cmdNoCloseTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdNoCloseTest.Location = New System.Drawing.Point(799, 0)
+            Me.cmdNoCloseTest.Margin = New System.Windows.Forms.Padding(0)
+            Me.cmdNoCloseTest.Name = "cmdNoCloseTest"
+            Me.cmdNoCloseTest.Size = New System.Drawing.Size(112, 23)
+            Me.cmdNoCloseTest.TabIndex = 8
+            Me.cmdNoCloseTest.Text = "No-close button test"
+            Me.cmdNoCloseTest.UseVisualStyleBackColor = True
+            '
             'frmMessageBox
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(911, 593)
+            Me.Controls.Add(Me.cmdNoCloseTest)
             Me.Controls.Add(Me.splMain)
             Me.MaximizeBox = False
             Me.MinimizeBox = False
@@ -415,6 +431,7 @@ Namespace WindowsT.FormsT
             Me.flpSelectControl.ResumeLayout(False)
             Me.flpSelectControl.PerformLayout()
             Me.ResumeLayout(False)
+            Me.PerformLayout()
 
         End Sub
         Friend WithEvents flpCommands As System.Windows.Forms.FlowLayoutPanel
@@ -442,6 +459,7 @@ Namespace WindowsT.FormsT
         Friend WithEvents optMiddle As System.Windows.Forms.RadioButton
         Friend WithEvents optBottom As System.Windows.Forms.RadioButton
         Friend WithEvents prgControlProperties As System.Windows.Forms.PropertyGrid
+        Friend WithEvents cmdNoCloseTest As System.Windows.Forms.Button
     End Class
 
 End Namespace

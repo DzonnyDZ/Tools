@@ -1,0 +1,11 @@
+﻿dl.version-history{
+}
+dl.version-history > dt{
+    font-weight:bold;
+}
+dl.version-history > dd{
+    margin-left:2EM;
+}
+dl.version-history > dd > ul{
+    list-style-type:square;
+}
