@@ -120,14 +120,32 @@
   <data name="CannotBeRepresented" xml:space="preserve">
     <value>{0} cannot be represented as {1}, use {2} and {3} instead.</value>
   </data>
+  <data name="CannotCompare" xml:space="preserve">
+    <value>Value of type {0} cannot be compared to {1}.</value>
+  </data>
   <data name="DefaultTextTooLong" xml:space="preserve">
     <value>Default text is too long.</value>
+  </data>
+  <data name="FieldNameTooLong" xml:space="preserve">
+    <value>{0} returned fields which's name is longer than {1}</value>
+  </data>
+  <data name="InvalidFieldIndex" xml:space="preserve">
+    <value>{0} returned field at index {1} that has FieldIndex set to {2}</value>
+  </data>
+  <data name="InvalidFieldNameCharacter" xml:space="preserve">
+    <value>Field name contain invalid character.</value>
+  </data>
+  <data name="InvalidFieldType" xml:space="preserve">
+    <value>{0:f} is not valid type of field.</value>
   </data>
   <data name="InvalidMacroName" xml:space="preserve">
     <value>Macor name "{0}" is invalid.</value>
   </data>
   <data name="InvalidPathFormat" xml:space="preserve">
     <value>The path {0} has invalid format.</value>
+  </data>
+  <data name="InvalidUnitNameCharacter" xml:space="preserve">
+    <value>Unit name contains invalid character.</value>
   </data>
   <data name="NameTooLong" xml:space="preserve">
     <value>Name too long. Mamximum allowed length is {0}</value>
@@ -149,5 +167,17 @@
   </data>
   <data name="PropertyWasNull" xml:space="preserve">
     <value>{0} was null.</value>
+  </data>
+  <data name="ReturnedArrayToLong" xml:space="preserve">
+    <value>Array returned by {0} is too long.</value>
+  </data>
+  <data name="ReturnedStringTooLongForChoice" xml:space="preserve">
+    <value>The string returned by {0} for the {1} type is too long.</value>
+  </data>
+  <data name="UnexpectedType" xml:space="preserve">
+    <value>Unexteced type {0} retunrned by {1}</value>
+  </data>
+  <data name="UnitNamesTooLong" xml:space="preserve">
+    <value>{0} returned unit names sum of which's length plus number of them minus 1 is more than {1}</value>
   </data>
 </root>

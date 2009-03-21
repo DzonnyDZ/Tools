@@ -102,7 +102,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&quot;$(SolutionDir)DevelopmentTools\msxsl.exe&quot; &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)FixComments.xslt&quot; -o &quot;$(TargetDir)$(TargetName).2.xml&quot;&#x0D;&#x0A;move /Y &quot;$(TargetDir)$(TargetName).2.xml&quot; &quot;$(TargetDir)$(TargetName).xml&quot;&#x0D;&#x0A;REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en&#x0D;&#x0A;&quot;$(SolutionDir)Latest.bat&quot; &quot;$(TargetDir).&quot; &quot;$(SolutionDir)bin\Latest&quot;&#x0D;&#x0A;"
+				CommandLine="&quot;$(SolutionDir)DevelopmentTools\msxsl.exe&quot; &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)FixComments.xslt&quot; -o &quot;$(TargetDir)$(TargetName).2.xml&quot;&#x0D;&#x0A;move /Y &quot;$(TargetDir)$(TargetName).2.xml&quot; &quot;$(TargetDir)$(TargetName).xml&quot;&#x0D;&#x0A;&quot;$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe&quot; &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(SolutionDir)Created doc\Namespaces.xml&quot; &quot;$(TargetDir)$(TargetName).xml&quot;&#x0D;&#x0A;REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en&#x0D;&#x0A;&quot;$(SolutionDir)Latest.bat&quot; &quot;$(TargetDir).&quot; &quot;$(SolutionDir)bin\Latest&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -449,11 +449,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ContentPluginBase helpers.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ContentPluginBase.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\Date.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Exceptions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FileSystemPlugin helpers.cpp"
 				>
 			</File>
 			<File
@@ -475,7 +487,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ContentPluginBase helpers.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ContentPluginBase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Date.h"
 				>
 			</File>
 			<File
@@ -491,13 +511,25 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Plugin\fsplugin.h"
-				>
-			</File>
-			<File
 				RelativePath=".\PluginBase.h"
 				>
 			</File>
+			<Filter
+				Name="Plugin"
+				>
+				<File
+					RelativePath=".\Plugin\contplug.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Plugin\fsplugin.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Plugin\plug_common.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Doc"

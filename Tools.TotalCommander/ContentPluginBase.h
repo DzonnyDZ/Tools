@@ -1,6 +1,8 @@
 #pragma once
 #include "Common.h"
 #include "PluginBase.h"
+#include "Plugin/contplug.h"
+#include "ContentPluginBase helpers.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -8,18 +10,147 @@ namespace Tools{namespace TotalCommanderT{
 
     /// <summary>Common base class for plugins tha can provide custom columns</summary>
     /// <remarks><note type="inheritinfo">Do not derive directly from this class as it does not represent any concrete plugin</note></remarks>
+    /// <version version="1.5.3">Added necessary functions and properties. Before 1.5.3 this class was empty, it had no members not derived from <see cref="PluginBase"/>.</version>.
     public ref class ContentPluginBase abstract : PluginBase{
     internal:
         /// <summary>CTor - creates new instance of the <see cref="ContentPluginBase"/> class</summary>
         ContentPluginBase();
     public:
-        /*int FsContentGetSupportedField(int FieldIndex,char* FieldName, char* Units,int maxlen);
-        int FsContentGetValue(char* FileName,int FieldIndex,int UnitIndex, void* FieldValue,int maxlen,int flags);
-        void FsContentStopGetValue(char* FileName);
-        int FsContentGetDefaultSortOrder(int FieldIndex);
-        void FsContentPluginUnloading(void);
-        int FsContentGetSupportedFieldFlags(int FieldIndex);
-        int FsContentSetValue(char* FileName,int FieldIndex,int UnitIndex,int FieldType, void* FieldValue,int flags);
-        BOOL FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);*/
+        /// <summary>Called to enumerate all supported fields. <paramref name="FieldIndex"/> is increased by 1 starting from 0 until the plugin returns <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.NoMoreFields"/>.</summary>
+        /// <param name="FieldIndex">The index of the field for which TC requests information. Starting with 0, the <paramref name="FieldIndex"/> is increased until the plugin returns an error.</param>
+        /// <param name="FieldName">Here the plugin has to return the name of the field with index <paramref name="FieldIndex"/>. The field may not contain the following chars: . (dot) | (vertical line) : (colon). You may return a maximum of <paramref name="maxlen"/> characters, including the trailing 0.</param>
+        /// <param name="Units">When a field supports several units like bytes, kbytes, Mbytes etc, they need to be specified here in the following form: bytes|kbytes|Mbytes . The separator is the vertical dash (Alt+0124). As field names, unit names may not contain a vertical dash, a dot, or a colon. You may return a maximum of <paramref name="maxlen"/> characters, including the trailing 0.
+        /// <para>If the field type is <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/>, the plugin needs to return all possible values here. Example: The field "File Type" of the built-in content plugin can have the values "File", "Folder" and "Reparse point". The available choices need to be returned in the following form: File|Folder|Reparse point . The same separator is used as for Units. You may return a maximum of <paramref name="maxlen"/> characters, including the trailing 0. The field type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/> does NOT support any units.</para></param>
+        /// <param name="maxlen">The maximum number of characters, including the trailing 0, which may be returned in each of the fields.</param>
+        /// <returns>One of the <see cref="ContentFieldType"/> values</returns>
+        /// <remarks>Please note that fields of type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> only show up in the search function, not in the multi-rename tool or the file lists. All fields of this type MUST be placed at the END of the field list, otherwise you will get errors in Total Commander! This is necessary because these fields will be removed from field lists e.g. in the "configure custom column view" dialog. You should use the <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.String"/> type for shorter one line texts suitable for displaying in file lists and for renaming.
+        /// <note>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> is not supported by file system plugin.</note>
+        /// <para>This function is called by Total Commander and is not intended for direct use</para>
+        /// <para>Unlike majority of Total Commander content plugin functions, this function is not implemented by function with same name but without the "<c>Content</c>" prefix. This function is implemented by getter of the <see cref="SupportedFields"/> property.</para></remarks>
+        /// <exception cref="InvalidOperationException">Uncatchable exception is thrown when: Item at index <paramref name="FieldIndex"/> in array returned by <see cref="SupportedFields"/> contains diallowed characters in <see cref="ContentFieldSpecification::Units"/> -or- Length of <see cref="ContentFieldSpecification::FieldName"/> is greater than <paramref name="maxlen"/>-1 -or- Sum of lenghts of <see cref="ContentFieldSpecification::Units"/> plus number of them, minus 1 is greater than <paramref name="maxlen"/>-1 -or- Value of the <see cref="ContentFieldSpecification::FieldIndex"/> property differs form index at which the instance was retuned.</exception>
+        /// <version version="1.5.3">This function is new in version 1.5.3</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("get_SupportedFields","TC_C_GETSUPPORTEDFIELD")]
+        int ContentGetSupportedField(int FieldIndex,char* FieldName, char* Units,int maxlen);
+        /// <summary>When overriden in derived class gets all supported custom fields.</summary>
+        /// <returns>Array columns specifications supported by this plugin. Null or an empty array where there are no plugin-specified columns.
+        /// <note>When array returned contains columns of type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> there shall be no non-<see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> columns at higher index than column of type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/>. This is required for Total Commander by way it handles fulltext columns.</note>
+        /// </returns>
+        /// <exception cref="NotSupportedException">The actual implementation of property getter is marked with <see cref="MethodNotSupportedAttribute"/>.</exception>
+        /// <remarks>Custom fields are custom columns provided by plugin for details view.
+        /// <para>When most derived implementation of property getter is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the property.</para>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// <note type="inheritinfo">Items of array retuned by this property must fullfill several constraints:
+        /// <list type="bullet">
+        /// <item><see cref="ContentFieldSpecification::FieldName"/> shall not contain dot (.), pipe (|), colon (:) or nullchar.</item>
+        /// <item><see cref="ContentFieldSpecification::FieldName"/> shall not be onger than <see cref="FieldNameMaxLen"/>.</item>
+        /// <item><see cref="ContentFieldSpecification::Units"/> shall not contain item containing dot (.), pipe (|), colon (:) or nullchar.</item>
+        /// <item>Sum of lenghts of items of <see cref="ContentFieldSpecification::Units"/> plus number of them minus one shall not be greater than <see cref="FieldNameMaxLen"/>.
+        /// <para>This is because how Total Commander handles units: Unit names are concatenated to single string separated by pipes (|). And length of the string shall not be greater than <see cref="FieldNameMaxLen"/>.</para></item>
+        /// <item>All fields that are not of type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> must be at indexes lower than index of any item of type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/>.</item>
+        /// <item>Value of the <see cref="ContentFieldSpecification::FieldIndex"/> property shall be the same as index at which it is retuned.</item>
+        /// </list>Violation of any of these rules may leed to uncatchable exceptin being thrown or to unpredictable behavior of Total Commander.</note></remarks>
+        /// <version version="1.5.3">This property is new in version 1.5.3</version>
+        virtual property cli::array<ContentFieldSpecification^>^ SupportedFields{
+            [MethodNotSupported]
+            virtual cli::array<ContentFieldSpecification^>^ get();
+        }
+    private:
+        /// <summary>Contains value of the <see cref="FieldNameMaxLen"/> property</summary>
+        int fieldNameMaxLen;
+    protected:
+        /// <summary>Gets maximal length of string that can be passed to <see cref="ContentFieldSpecification::FieldName"/>.</summary>
+        /// <returns>Maximal length of string that can be passed to <see cref="ContentFieldSpecification::FieldName"/></returns>
+        /// <remarks>Value of this property is valid only when accessed from within code of getter of the <see cref="SupportedFields"/> property (or methods it calls).</remarks>
+        /// <version version="1.5.3">This property is new in version 1.5.3</version>
+        property int FieldNameMaxLen{int get();}
+    public:
+        /// <summary>Called to retrieve the value of a specific field for a given file, e.g. the date field of a file.</summary>
+        /// <param name="FileName">The name of the file (in case of file system plugin in plugin namespace) for which the plugin needs to return the field data.</param>
+        /// <param name="FieldIndex">The index of the field for which the content has to be returned. This is the same index as the FieldIndex value in <see cref="ContentGetSupportedField"/>.</param>
+        /// <param name="UnitIndex">The index of the unit used. If no unit string was returned, UnitIndex is 0. For <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/>, <paramref name="UnitIndex"/> contains the offset of the data to be read.</param>
+        /// <param name="FieldValue">Here the plugin needs to return the requested data. The data format depends on the field type. ft_delayed, ft_ondemand: You may return a zero-terminated string as in ft_string, which will be shown until the actual value has been extracted. Requires plugin version>=1.4.</param>
+        /// <param name="maxlen">The maximum number of bytes fitting into the <paramref name="FieldValue"/> variable.</param>
+        /// <param name="flags">Flags controlling function behavior</param>
+        /// <returns>Return the field type in case of success, or one of the error values otherwise</returns>
+        /// <exception cref="InvalidOperationException"><see cref="GetValue"/> returned string that is longer than <paramref name="maxlen"/>-1.</exception>
+        /// <exception cref="Tools::TypeMismatchException"><see cref="GetValue"/> returned value of unexpected type.</exception>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para>
+        /// <para>Excptions thrown by this function are usually uncatchable, because it is called by Total Commander, which cannot handle managed exceptions. So, do not return valus causeing exceptions from your <see cref="GetValue"/>!</para></remarks>
+        /// <version version="1.5.3">This function is new in version 1.5.3</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]                                                        
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("GetValue","TC_C_GETVALUE")]
+        int ContentGetValue(char* FileName,int FieldIndex,int UnitIndex, void* FieldValue,int maxlen,int flags);
+    private:
+        /// <summary>Caches streams retuned by <see cref="GetValue"/></summary>
+        System::Collections::Generic::Dictionary<String^,IO::Stream^>^ StreamCache;
+        /// <summary>Gets portion of full text filed value from cached stream</summary>
+        /// <param name="StreamKey">Key in form "<c>path|index</c>" of stream inside <see cref="StreamCache"/></param>
+        /// <param name="offset">Offset to stream to start reading at; -1 to remove stream from cache.</param>
+        /// <param name="FieldValue">Target to copy stream data to</param>
+        /// <param name="maxlen">Maximum number of bytes to be read from stream to <paramref name="FieldValue"/> (including terminating 0)</param>
+        /// <returns><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> when data fron stream was read or <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/> when <paramref name="offset"/> is beyond the end of the stream. Returns <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.NoSuchField"/> when stream with key <paramref name="StreamKey"/> does not exist in <see cref="StreamCache"/>.</returns> 
+        int GetCachedStreamData(String^ StreamKey, int offset, Byte* FieldValue, int maxlen);
+    public:
+        /// <summary>When overriden in derived class called to retrieve the value of a specific field for a given file, e.g. the date field of a file.</summary>
+        /// <param name="FileName">The name of the file (in case of file system plugin in plugin namespace) for which the plugin needs to return the field data.</param>
+        /// <param name="FieldIndex">The index of the field for which the content has to be returned. This correspond to index of field retuned by <see cref="SupportedFields"/>.</param>
+        /// <param name="UnitIndex">The index of the unit used. If no unit string was returned, UnitIndex is 0. For <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/>, <paramref name="UnitIndex"/> contains the offset of the data to be read.</param>
+        /// <param name="maxlen">The maximum length of returned data (in bytes)</param>
+        /// <param name="flags">Flags controlling function behavior</param>
+        /// <param name="FieldValueOriginal">Used only when <paramref name="flags"/> contains <see2 cref2="F:Tools.TotalCommanderT.GetFieldValueFlags.PassThrough"/> (otherwise null). It contains field value as <see cref="Double"/>. The value is file size. You then need to apply the appropriate unit, and set the additional string field. This option is used to display the size even in locations where the plugin doesn't work, e.g. on ftp connections or inside archives.</param> 
+        /// <returns>Field value in one of recognized data types or return code. Possible return values are:
+        /// <list type="table"><listheader><term>Type of value retuned</term><description>How it is treated</description></listheader>
+        /// <item><term><see cref="Int32"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Integer32"/></description></item>
+        /// <item><term><see cref="Int64"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Integer64"/></description></item>
+        /// <item><term><see cref="Double"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Double"/></description></item>
+        /// <item><term><see2 cref2="T:Tools.DataStructuresT.GenericT.IPair`2{System.Double,System.String}"/> (pair of <see cref="Double"/> and <see cref="String"/>)</term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Double"/>. This allows to pass number and its string representation. Use it in case when you don't like the Total Commander represents your numeric values to the user (loss of precission, rounding etc.). Numberic value will be used for sorting and searching while string value will be show to user. Empty string or null string is ignored. The length of string value must be less than or equal to <paramref name="maxlen"/> - 4 (4 bytes are reserved for <see cref="Double"/> part), or it will be cropped.</description></item>
+        /// <item><term><see cref="Date"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Date"/></description></item>
+        /// <item><term><see cref="TimeSpan"/> or <see cref="Tools::TimeSpanFormattable"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Time"/></description></item>
+        /// <item><term><see cref="Boolean"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Boolean"/></description></item>
+        /// <item><term>Array of <see cref="String"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/>. The array should contain exactly one value. If more values are retuned, they are concatenated using ", " as separator. If the array is empty it is treated as when null is returned. Total length of resulting string must be maximally <paramref name="maxlen"/> or uncatchable exception will be thrown.</description></item>
+        /// <item><term><see cref="String"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.String"/>. String shall not be longer than <paramref name="maxlen"/>.</description></item>
+        /// <item><term>Array of <see cref="Byte"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/>. The array contains only part requested by <paramref name="UnitIndex"/> (start offset) and <paramref name="maxlen"/> (maximum number of bytes). Function is called multiple times in order to get all the data until it returns <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/> (alternativelly an empty array can be returned instead of <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/>). Bytes are treated as string by Total Commander. When Total Commander terminates reading of particular fulltext filed before function returns <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/> (or an empty array), it calls the function with <paramref name="UnitIndex"/> -1 to signal plugin to free any possibly cached data. The call with <paramref name="UnitIndex"/> -1 does not occur when function returns <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/> (or an empty array), the function should free cached data when it returns <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/> (or an empty array). Do not return this value when it is not expected by column type! The array should not contain 0, because Total Commander will treat 0 as end of array. The lenght of returned array must be maximally <paramref name="maxlen"/> or uncatchable exception will be thrown.</description></item>
+        /// <item><term><see cref="IO::Stream"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/>. Stream must be readable and seekable. This is alternative to above (array of <see cref="Byte"/>). Managed plugin interface reads data from the stream and passes byte arrays to Total Commander. When eading is finished, it closes the stream. When the function returns <see cref="IO::Stream"/> it is not called again (as the stream must contain all the fulltext data). Managed plugin interface itself responds to subsequent calls. Function returning <see cref="IO::Stream"/> shall ignore <paramref name="UnitIndex"/> (start offset) and <paramref name="maxlen"/> (number of bytes). Do not return this value when it is not expected by column type! The stream should not contain 0, because Total Commander will treat 0 as end of array.</description></item>
+        /// <item><term><see cref="DateTime"/></term><description>Type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.DateAndTime"/></description></item>
+        /// <item><term><see cref="GetContentFieldValueReturnCode"/></term><description>Means that value was not extracted. Actual <see cref="GetContentFieldValueReturnCode"/>-enumerated value describes the reason why.</description></item>
+        /// <item><term>null</term><description>The field is empty for given file or the filed is fulltext and all previous call retuned las chiunk of fulltext data (when returning fulltext data as array of <see cref="Byte"/>). Returning null has same effect as returning <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/>.</description></item>
+        /// </list>
+        /// <note type="inheritinfo">Type of value returned should correspond to type of field with index <paramref name="FieldIndex"/> as returned by <see cref="SupportedFields"/>.</note>
+        /// <note type="inheritinfo">Do not return any other types, or uncatchable <se cref="Tools::TypeMismatchException"/> will be thrown.</note></returns>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Field with requestend index does not exist. Has same effect as returning <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.NoSuchField"/>.</exception>
+        /// <exception cref="IO::IOException">Error accessing given file. Has same effect as returning <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FileError"/>.</exception>
+        /// <remarks><para>When most derived implementation of the function is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the function.</para>4
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.3">This function is new in version 1.5.3</version>
+        [MethodNotSupported]
+        virtual Object^ GetValue(String^ FileName, int FieldIndex, int UnitIndex, int maxlen, GetFieldValueFlags flags, Nullable<Double> FieldValueOriginal);
+        /*[EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("StopGetValue","TC_C_STOPGETVALUE")]
+        void ContentStopGetValue(char* FileName);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("GetDefaultSortOrder","TC_C_GETDEFAULTSORTORDER")]
+        int ContentGetDefaultSortOrder(int FieldIndex);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("PluginUnloading","TC_C_PLUGINUNLOADING")]
+        void ContentPluginUnloading(void);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("GetSupportedFieldFlags","TC_C_GETSUPPORTEDFIELDFLAGS")]
+        int ContentGetSupportedFieldFlags(int FieldIndex);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("SetValue","TC_C_SETVALUE")]
+        int ContentSetValue(char* FileName,int FieldIndex,int UnitIndex,int FieldType, void* FieldValue,int flags);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("GetDefaultView","TC_C_GETDEFAULTVIEW")]
+        BOOL ContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);*/
     };
 }}

@@ -6,6 +6,7 @@
 using namespace ::System;
 using namespace ::System::Text::RegularExpressions;
 using namespace ::Tools::TotalCommanderT::ResourcesT;
+using namespace Tools::ExtensionsT;
 
 namespace Tools{namespace TotalCommanderT{
     inline MethodNotSupportedAttribute::MethodNotSupportedAttribute(){/*Do nothing*/}
@@ -78,4 +79,50 @@ namespace Tools{namespace TotalCommanderT{
     inline String^ ResourcePluginIconAttribute::ResourceName::get(){return this->resourceName;}
     inline String^ ResourcePluginIconAttribute::ItemName::get(){return this->itemName;}
 #pragma endregion
+    //Global functions
+#pragma region "Global functions"
+    Nullable<DateTime> FileTimeToDateTime(::FILETIME value){
+        if(value.dwHighDateTime == 0xFFFFFFFF && value.dwLowDateTime == 0xFFFFFFFE) return Nullable<DateTime>();
+        return DateTime(1601,1,1).AddTicks(*(__int64*)(void*)&value);
+    }
+    ::FILETIME DateTimeToFileTime(Nullable<DateTime> value){
+        ::FILETIME ret;
+        if(value.HasValue){
+            ret.dwLowDateTime = Numbers::Low(value.Value.ToFileTime());
+            ret.dwHighDateTime = Numbers::High(value.Value.ToFileTime());
+        }else{
+            ret.dwLowDateTime = 0xFFFFFFFE;
+            ret.dwHighDateTime = 0xFFFFFFFF;
+        }
+        return ret;
+    }
+    void StringCopy(String^ source, char* target, int maxlen){
+        /*if(source == nullptr)
+            target[0]=0;
+        else{
+            for(int i = 0; i < source->Length && i < maxlen-1; i++)
+                target[i]=source[i];
+            target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
+        }*/
+        if(source == nullptr)
+            target[0]=0;
+        else{
+            System::Text::Encoding^ enc = System::Text::Encoding::Default;
+            cli::array<unsigned char>^ bytes = enc->GetBytes(source);
+            for(int i = 0; i < bytes->Length && i < maxlen-1; i++)
+                target[i]= bytes[i];
+            target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
+        }
+    }
+    void StringCopy(String^ source, wchar_t* target, int maxlen){
+        StringCopy(source,(char*)(void*)target,maxlen);
+    }
+#pragma endregion
+
+    void PopulateWith(ptimeformat target, TimeSpan source){
+        if(target==NULL) throw gcnew ArgumentNullException("target");
+        target->wHour = (WORD)Math::Floor(source.TotalHours);
+        target->wMinute = source.Minutes;
+        target->wSecond = source.Seconds;
+    }
 }}

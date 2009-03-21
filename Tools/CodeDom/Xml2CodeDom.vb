@@ -4,7 +4,8 @@ Imports <xmlns="http://dzonny.cz/xml/schemas/CodeDom">
 Imports <xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 Imports System.Reflection
 
-#If Config <= Nightly Then 'Stage:Nightly
+'#If Config <= Nightly Then 'Stage of this file set in Tools.vbproj
+'Stage:Nightly
 Namespace CodeDomT
     ''' <summary>Contains methods for converting various elements form the http://dzonny.cz/xml/schemas/CodeDom XML namespace to objects from <see cref="CodeDom"/> namespace.</summary>
     Public Class Xml2CodeDom
@@ -2695,4 +2696,4 @@ NonXml:         Xml = _
 #End Region
     End Class
 End Namespace
-#End If
+'#End If

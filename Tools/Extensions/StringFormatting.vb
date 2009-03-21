@@ -40,7 +40,8 @@ Namespace ExtensionsT
     ''' <para>In format string escaping is done in same way as described above.</para>
     ''' </remarks>
     ''' <version version="1.5.2">Module introduced</version>
-    Module StringFormatting
+    ''' <version version="1.5.3">In 1.5.2 the module was not made public by mistake - so, accessibility changed from Friend (internal) to Public.</version>
+    Public Module StringFormatting
         ''' <summary>Formats and escape string according to rules described for <see cref="StringFormatting"/></summary>
         ''' <param name="str">Formatting string</param>
         ''' <param name="Args">Objects to format</param>

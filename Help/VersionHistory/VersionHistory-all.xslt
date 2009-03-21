@@ -26,37 +26,38 @@
                         This file describe all the changes in version <xsl:value-of select="$version"/>. For brief description of changes see <c:link xlink:href="9b0f2e22-3088-4c9b-af71-51717771bb58"/>.
                     </c:para>
                 </c:introduction>
-                <xsl:apply-templates select="/doc/members/member[version/@version=$version]">
-                    <xsl:sort select="substring-after(@name,':')" data-type="text" lang="en-US"/>
-                </xsl:apply-templates>
+                <c:section address="ChangeList">
+                    <c:title>Changes in version <xsl:value-of select="$version"/></c:title>
+                    <c:content>
+                        <xsl:apply-templates select="/doc/members/member[version/@version=$version]">
+                            <xsl:sort select="substring-after(@name,':')" data-type="text" lang="en-US"/>
+                        </xsl:apply-templates>
+                    </c:content>
+                </c:section>
             </c:developerConceptualDocument>
         </topic>
     </xsl:template>
     <xsl:template match="member">
-        <c:section address="{translate(@name,':#,()[]*!`','__________')}">
             <c:title>
                 <c:codeEntityReference qualifyHint="true">
                     <xsl:value-of select="@name"/>
                 </c:codeEntityReference>
             </c:title>
-            <c:content>
-                <xsl:if test="version[@version=$version][@stage]">
-                    <c:para>
-                        <c:legacyBold>Development stage:</c:legacyBold>
-                        <xsl:text xml:space="preserve"> </xsl:text>
-                        <xsl:choose>
-                            <xsl:when test="version[@version=$version][@stage][1]/@stage = 'RC'">Release Candidate</xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="version[@version=$version][@stage][1]/@stage"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </c:para>
-                </xsl:if>
-                <c:list class="bullet">
-                    <xsl:apply-templates select="version[@version=$version]"/>
-                </c:list>
-            </c:content>
-        </c:section>
+            <xsl:if test="version[@version=$version][@stage]">
+                <c:para>
+                    <c:legacyBold>Development stage:</c:legacyBold>
+                    <xsl:text xml:space="preserve"> </xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="version[@version=$version][@stage][1]/@stage = 'RC'">Release Candidate</xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="version[@version=$version][@stage][1]/@stage"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </c:para>
+            </xsl:if>
+            <c:list class="bullet">
+                <xsl:apply-templates select="version[@version=$version]"/>
+            </c:list>
     </xsl:template>
 
     <xsl:template match="version">

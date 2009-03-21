@@ -1,10 +1,40 @@
 typedef unsigned __int64 QWORD; 
 #pragma once
 #include "Plugin\fsplugin.h"
-#include "Common.h"
+#include "Plugin\contplug.h"
+#include "Date.h"
+
+#pragma make_public(WIN32_FIND_DATA)
+#pragma make_public(RemoteInfoStruct)
+#pragma make_public(FILETIME)
+#pragma make_public(HICON__)
+#pragma make_public(FsDefaultParamStruct)
+#pragma make_public(HBITMAP__)
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
+
+    /// <summary>Converts <see cref="FILETIME"/> to <see cref="DateTime"/></summary>
+    /// <param name="value">A <see cref="FILETIME"/></param>
+    /// <returns>Corresponding <see cref="DateTime"/></returns>
+    Nullable<DateTime> FileTimeToDateTime(FILETIME value);
+    /// <summary>Converts <see cref="DateTime"/> to <see cref="FILETIME"/></summary>
+    /// <param name="value">A <see cref="DateTime"/></param>
+    /// <returns>Corresponding <see cref="FILETIME"/></returns>
+    FILETIME DateTimeToFileTime(Nullable<DateTime> value);
+    /// <summary>Copies ANSI characters from string to character array</summary>
+    /// <param name="source"><see cref="String"/> to copy characters from</param>
+    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to</param>
+    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char</param>
+    /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
+    void StringCopy(String^ source, char* target, int maxlen);
+    /// <summary>Copies Unicode characters from string to character array</summary>
+    /// <param name="source"><see cref="String"/> to copy characters from</param>
+    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to</param>
+    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char</param>
+    /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
+    void StringCopy(String^ source, wchar_t* target, int maxlen);
+
     /// <summary>When applied onto method identifies method as not implemented by current implementation of class.</summary>
     /// <remarks>Use this attribute to indicate that your plugin does not implement certain optional method.
     /// <para>By default this attribute is applied on all optional methods, so there is not need to use it if you do not derived your plugin from existing plugin and you want to remove certain functionality.</para>
@@ -167,4 +197,14 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Gets name of item of resource of type resx that contains the icon. If null resource <see cref="ResourceName"/> must be icon itself. If not null resource <see cref="ResourceName"/> must be resx resource.</summary>
         property String^ ItemName{String^ get();}
     };
+#pragma warning (push)
+#pragma warning(disable : 4290)
+    /// <summary>Populates given <see cref="ptimeformat"/> pointer with values of given <see cref="TimeSpan"/></summary>
+    /// <param name="target">Pointer to populate values of</param>
+    /// <param name="source">Instance to populate <paramref name="target"/> with values of</param>
+    /// <exception cref="ArgumentNullException"><paramref name="target"/> is null pointer</exception>
+    void PopulateWith(ptimeformat target, TimeSpan source) throw(ArgumentNullException);
+#pragma warning(default : 4290)
+#pragma warning (pop)
+
 }}

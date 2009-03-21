@@ -65,9 +65,44 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'Value of type {0} cannot be compared to {1}.'.
+        /// </summary>
+        internal: static property System::String^  CannotCompare {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'Default text is too long.'.
         /// </summary>
         internal: static property System::String^  DefaultTextTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to '{0} returned fields which&apos;s name is longer than {1}'.
+        /// </summary>
+        internal: static property System::String^  FieldNameTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to '{0} returned field at index {1} that has FieldIndex set to {2}'.
+        /// </summary>
+        internal: static property System::String^  InvalidFieldIndex {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'Field name contain invalid character.'.
+        /// </summary>
+        internal: static property System::String^  InvalidFieldNameCharacter {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to '{0:f} is not valid type of field.'.
+        /// </summary>
+        internal: static property System::String^  InvalidFieldType {
             System::String^  get();
         }
         
@@ -82,6 +117,13 @@ namespace Tools {
         /// Looks up a localized string similar to 'The path {0} has invalid format.'.
         /// </summary>
         internal: static property System::String^  InvalidPathFormat {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'Unit name contains invalid character.'.
+        /// </summary>
+        internal: static property System::String^  InvalidUnitNameCharacter {
             System::String^  get();
         }
         
@@ -135,6 +177,34 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'Array returned by {0} is too long.'.
+        /// </summary>
+        internal: static property System::String^  ReturnedArrayToLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'The string returned by {0} for the {1} type is too long.'.
+        /// </summary>
+        internal: static property System::String^  ReturnedStringTooLongForChoice {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'Unexteced type {0} retunrned by {1}'.
+        /// </summary>
+        internal: static property System::String^  UnexpectedType {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to '{0} returned unit names sum of which&apos;s length plus number of them minus 1 is more than {1}'.
+        /// </summary>
+        internal: static property System::String^  UnitNamesTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Formats a localized string similar to '{0} cannot be represented as {1}, use {2} and {3} instead.'.
         /// </summary>
         /// <param name="arg0">An object (0) to format.</param>
@@ -147,10 +217,48 @@ namespace Tools {
                     System::Object^  arg3);
         
         /// <summary>
+        /// Formats a localized string similar to 'Value of type {0} cannot be compared to {1}.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  CannotCompareFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
         /// The stub formatting method returning the DefaultTextTooLong property value.
         /// </summary>
         /// <returns>The DefaultTextTooLong property value.</returns>
         internal: static System::String^  DefaultTextTooLongFormat();
+        
+        /// <summary>
+        /// Formats a localized string similar to '{0} returned fields which&apos;s name is longer than {1}'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  FieldNameTooLongFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formats a localized string similar to '{0} returned field at index {1} that has FieldIndex set to {2}'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <param name="arg2">An object (2) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  InvalidFieldIndexFormat(System::Object^  arg0, System::Object^  arg1, System::Object^  arg2);
+        
+        /// <summary>
+        /// The stub formatting method returning the InvalidFieldNameCharacter property value.
+        /// </summary>
+        /// <returns>The InvalidFieldNameCharacter property value.</returns>
+        internal: static System::String^  InvalidFieldNameCharacterFormat();
+        
+        /// <summary>
+        /// Formats a localized string similar to '{0:f} is not valid type of field.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  InvalidFieldTypeFormat(System::Object^  arg0);
         
         /// <summary>
         /// Formats a localized string similar to 'Macor name &quot;{0}&quot; is invalid.'.
@@ -165,6 +273,12 @@ namespace Tools {
         /// <param name="arg0">An object (0) to format.</param>
         /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         internal: static System::String^  InvalidPathFormatFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// The stub formatting method returning the InvalidUnitNameCharacter property value.
+        /// </summary>
+        /// <returns>The InvalidUnitNameCharacter property value.</returns>
+        internal: static System::String^  InvalidUnitNameCharacterFormat();
         
         /// <summary>
         /// Formats a localized string similar to 'Name too long. Mamximum allowed length is {0}'.
@@ -213,6 +327,37 @@ namespace Tools {
         /// <param name="arg0">An object (0) to format.</param>
         /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         internal: static System::String^  PropertyWasNullFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formats a localized string similar to 'Array returned by {0} is too long.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  ReturnedArrayToLongFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formats a localized string similar to 'The string returned by {0} for the {1} type is too long.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  ReturnedStringTooLongForChoiceFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formats a localized string similar to 'Unexteced type {0} retunrned by {1}'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  UnexpectedTypeFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formats a localized string similar to '{0} returned unit names sum of which&apos;s length plus number of them minus 1 is more than {1}'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  UnitNamesTooLongFormat(System::Object^  arg0, System::Object^  arg1);
     };
         }
     }

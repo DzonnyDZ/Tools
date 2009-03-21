@@ -20,6 +20,7 @@ Friend Module CommentsMerge
         Dim mg As XDocument = Nothing
         For i As Integer = 1 To My.Application.CommandLineArgs.Count - 2
             Dim Sec As XDocument
+            Console.WriteLine(My.Application.CommandLineArgs(i))
             Try
                 Sec = XDocument.Load(My.Application.CommandLineArgs(i))
             Catch ex As Exception

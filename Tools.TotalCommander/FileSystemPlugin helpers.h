@@ -7,27 +7,6 @@
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
     using namespace System::ComponentModel;
-
-    /// <summary>Converts <see cref="FILETIME"/> to <see cref="DateTime"/></summary>
-    /// <param name="value">A <see cref="FILETIME"/></param>
-    /// <returns>Corresponding <see cref="DateTime"/></returns>
-    Nullable<DateTime> FileTimeToDateTime(FILETIME value);
-    /// <summary>Converts <see cref="DateTime"/> to <see cref="FILETIME"/></summary>
-    /// <param name="value">A <see cref="DateTime"/></param>
-    /// <returns>Corresponding <see cref="FILETIME"/></returns>
-    FILETIME DateTimeToFileTime(Nullable<DateTime> value);
-    /// <summary>Copies ANSI characters from string to character array</summary>
-    /// <param name="source"><see cref="String"/> to copy characters from</param>
-    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to</param>
-    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char</param>
-    /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
-    void StringCopy(String^ source, char* target, int maxlen);
-    /// <summary>Copies Unicode characters from string to character array</summary>
-    /// <param name="source"><see cref="String"/> to copy characters from</param>
-    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to</param>
-    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char</param>
-    /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
-    void StringCopy(String^ source, wchar_t* target, int maxlen);
    
     /// <summary>Result of file system operation</summary>
     public enum class FileSystemExitCode{
@@ -209,7 +188,10 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>This property is not CLS-copliant. CLS-copliant alternatives are <see cref="GetReserved1"/> and <see cref="SetReserved1"/>.</remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        property DWORD Reserved1{DWORD get(); void set(DWORD);}
+        property DWORD Reserved1{
+            [EditorBrowsableAttribute(EditorBrowsableState::Never)] DWORD get();
+            void set(DWORD);
+        }
         /// <summary>The name of the file.</summary>
         /// <remarks>Currently all string are marshalled between plugin and Total Commander using <see cref="System::Text::Encoding::Default"/>, so not all the Unicode characters are supported.</remarks>
         /// <exception cref="ArgumentException">Value being set is longer than <see cref="MaxPath"/> characters</exception>
@@ -513,7 +495,7 @@ namespace Tools{namespace TotalCommanderT{
         Cache = FS_BITMAP_CACHE
     };
 
-    /// <summary>Implements tha += operator for <see cref="BitmapHandling"/> enumeration</summary>
+    /// <summary>Implements the += operator for <see cref="BitmapHandling"/> enumeration</summary>
     /// <param name="a">Reference to <see cref="BitmapHandling"/> to be updated</param>
     /// <param name="b">Value to be added to <paramref name="b"/></param>
     /// <returns>a + b</returns>

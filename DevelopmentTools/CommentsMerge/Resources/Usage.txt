@@ -1,0 +1,4 @@
+﻿CommentsMerge: Merges XML comment files
+Usage: CommenstMerge InFile1 InFile2 ... InFileN OutputFile
+    At least 2 input files must must be specified
+Files should be namespace-less or have http://dzonny.cz/xml/schemas/intellisense namespace

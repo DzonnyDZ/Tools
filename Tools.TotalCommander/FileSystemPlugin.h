@@ -5,13 +5,6 @@
 #include "ContentPluginBase.h"
 #include "FileSystemPlugin helpers.h"
 
-#pragma make_public(WIN32_FIND_DATA)
-#pragma make_public(RemoteInfoStruct)
-#pragma make_public(FILETIME)
-#pragma make_public(HICON__)
-#pragma make_public(FsDefaultParamStruct)
-#pragma make_public(HBITMAP__)
-
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
     using namespace System::ComponentModel;
@@ -142,7 +135,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <exception cref="ArgumentNullException"><paramref name="FileSystem"/> is null</exception>
         /// <exception cref="ArgumentException"><paramref name="FileSystem"/> either starts with \\ or it does not start with \</exception>
-        void LogProcConnect(String^ Fileystem);
+        void LogProcConnect(String^ FileSystem);
         /// <summary>Specialized version of the <see cref="LogProc"/> function used for transfer completion advertisement.</summary>
         /// <param name="Source">Path of source file. It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
         /// <param name="Target">Path of destination file.  It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
@@ -406,7 +399,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="NewName">Name of the remote destination file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
         /// <param name="Move">If true, the file needs to be moved to the new location and name. Many file systems allow to rename/move a file without actually moving any of its data, only the pointer to it.</param>
         /// <param name="OverWrite">Tells the function whether it should overwrite the target file or not. See notes below on how this parameter is used.</param>
-        /// <param name="ri">A structure of type <see cref="RemoteInfoStruct"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <see cref="RemoteInfoStruct::SizeLow"/>=0, <see cref="RemoteInfoStruct::SizeHigh"/>=0xFFFFFFFF</param>
+        /// <param name="ri">A structure of type <see cref="RemoteInfoStruct"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <c>RemoteInfoStruct::SizeLow = 0</c>, <c>RemoteInfoStruct::SizeHigh = 0xFFFFFFFF</c></param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
         /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>

@@ -9,6 +9,7 @@
 #ifndef TCPLUGF
 #define TCPLUGF 
 #endif
+#include "plug_common.h"
 
 // ids for FsGetFile
 
@@ -204,7 +205,7 @@ TCPLUGF BOOL __stdcall FsGetLocalName(char* RemoteName,int maxlen);
 // ************************** content plugin extension ****************************
 
 // 
-#define ft_nomorefields 0
+/*#define ft_nomorefields 0
 #define ft_numeric_32 1
 #define ft_numeric_64 2
 #define ft_numeric_floating 3
@@ -245,26 +246,25 @@ TCPLUGF BOOL __stdcall FsGetLocalName(char* RemoteName,int maxlen);
 
 
 #define CONTENT_DELAYIFSLOW 1  // ContentGetValue called in foreground
-
-typedef struct {
+*/
+/*typedef struct {
     int size;
     DWORD PluginInterfaceVersionLow;
     DWORD PluginInterfaceVersionHi;
     char DefaultIniName[MAX_PATH];
-} ContentDefaultParamStruct;
+} ContentDefaultParamStruct;*/
 
-typedef struct {
+/*typedef struct {
 	WORD wYear;
 	WORD wMonth;
 	WORD wDay;
-} tdateformat,*pdateformat;
+} tdateformat,*pdateformat;*/
 
-typedef struct {
+/*typedef struct {
 	WORD wHour;
-
-WORD wMinute;
+    WORD wMinute;
 	WORD wSecond;
-} ttimeformat,*ptimeformat;
+} ttimeformat,*ptimeformat;*/
 
 TCPLUGF int __stdcall FsContentGetSupportedField(int FieldIndex,char* FieldName,char* Units,int maxlen);
 TCPLUGF int __stdcall FsContentGetValue(char* FileName,int FieldIndex,int UnitIndex,void* FieldValue,int maxlen,int flags);

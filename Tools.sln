@@ -73,6 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		SharedFiles\Tools.snk = SharedFiles\Tools.snk
 		SharedFiles\Version.cpp = SharedFiles\Version.cpp
 		SharedFiles\Version.cs = SharedFiles\Version.cs
+		SharedFiles\Version.il = SharedFiles\Version.il
 		SharedFiles\Version.vb = SharedFiles\Version.vb
 		SharedFiles\VersionHistory.xsd = SharedFiles\VersionHistory.xsd
 		SharedFiles\VersionHistory.xslt = SharedFiles\VersionHistory.xslt
