@@ -827,7 +827,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>True if the name points to a local file, which is returned in <paramref name="RemoteName"/>. False if the name does not point to a local file, <paramref name="RemoteName"/> is left unchanged.</returns>
         /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
         /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToLocalFiles"/> property.</para></remarks>
-        /// <seelaso cref="FsLinksToLocalFiles"/>
+        /// <seelaso cref="FsLinksToLocalFiles"/><seealso cref="GetLocalName"/>
         /// <exception cref="IO::PathTooLongException">String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
@@ -842,7 +842,28 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual String^ GetLocalName(String^ RemoteName, int maxlen);
-        //TODO: custom columns
+        /// <summary>Called to get the default view to which Total Commander should switch when this file system plugin is entered.</summary>
+        /// <param name="ViewContents">Return the default fields for this plugin here, e.g. "<c>[=&lt;fs>.size.bkM2]\n[=fs.writetime]</c>"        /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note></param>
+        /// <param name="ViewHeaders">Return the default headers shown in the sorting header bar, e.g. "<c>Size\nDate/Time</c>"</param>
+        /// <param name="ViewWidths">Return the default column widths shown in the sorting header bar, e.g. "<c>148,23,-35,-35</c>" Negative values mean that the field is right-aligned. The first two widths are for name and extension</param>
+        /// <param name="ViewOptions">The two values, separated by a vertical line, mean:        /// <list type="number">        /// <item><c>auto-adjust-width</c>, or <c>-1</c> for no adjust</item>        /// <item>horizontal scrollbar flag</item></list></param>
+        /// <returns>Return true if you returned a default view, false if no default view should be shown.</returns>
+        /// <remarks>It's best to create a custom columns view in Total Commander, save it, and then copy the definitions from the Wincmd.ini to your plugin. The values in <paramref name="ViewContents"/> and <paramref name="ViewHeaders"/> are separated by a backslash and lowercase 'n' character.
+        /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note>
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para></remarks>
+        /// <version version="1.5.3">This function is new in version 1.5.3</version>
+        /// <seealso cref="GetDefaultView"/>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("GetDefaultView","TC_FS_GETDEFAULTVIEW")]
+        BOOL FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);
+        /// <summary>When overriden in derived class called to get the default view to which Total Commander should switch when this file system plugin is entered.</summary>
+        /// <param name="maxlen">Maximum length if sting accepted by total commander. Lenghts of <see cref="ViewDefinition::GetColumnSourcesString"/>, <see cref="ViewDefinition::GetNamesString"/>, <see cref="ViewDefinition::GetWidthsString"/> and <see cref="ViewDefinition::GetOptionsString"/> returned shall not exceed this lenght or uncatchable exception will be thrown.</param>
+        /// <returns>A <see cref="ViewDefinition"/> specifying default view to be used. Null not to show any specific view</returns>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <remarks><note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        [MethodNotSupportedAttribute]
+        virtual ViewDefinition^ GetDefaultView(int maxlen);
 #pragma endregion
     };
 }}

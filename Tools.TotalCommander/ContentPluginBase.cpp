@@ -107,6 +107,7 @@ namespace Tools{namespace TotalCommanderT{
             *(::FILETIME*)FieldValue = DateTimeToFileTime((DateTime)result);
             return (int)ContentFieldType::DateAndTime;
         }else if(GetContentFieldValueReturnCode::typeid->IsAssignableFrom(result->GetType())){
+            ((Byte*)FieldValue)[0]=0;
             return (int)(GetContentFieldValueReturnCode)result;
         }else{
             throw gcnew Tools::TypeMismatchException(ResourcesT::Exceptions::UnexpectedTypeFormat(result->GetType()->Name,"GetValue"),result);
@@ -136,4 +137,77 @@ namespace Tools{namespace TotalCommanderT{
         }
     }
     inline Object^ ContentPluginBase::GetValue(String^ FileName, int FieldIndex, int UnitIndex, int maxlen, GetFieldValueFlags flags, Nullable<Double> FieldValueOriginal){throw gcnew NotSupportedException();}
+    inline void ContentPluginBase::ContentStopGetValue(char* FileName){
+        StopGetValue(gcnew String(FileName));
+    }
+    inline void ContentPluginBase::StopGetValue(String^ FileName){throw gcnew NotSupportedException();}
+    int ContentPluginBase::ContentGetDefaultSortOrder(int FieldIndex){
+        try{
+            switch(GetDefaultSortOrder(FieldIndex)){
+                case Windows::Forms::SortOrder::Descending:
+                    return -1;
+                default: return 1;
+            }
+        }catch(ArgumentOutOfRangeException^){return 1;}
+    }
+    inline Windows::Forms::SortOrder ContentPluginBase::GetDefaultSortOrder(int FieldIndex){throw gcnew NotSupportedException();}
+    inline void ContentPluginBase::ContentPluginUnloading(){OnContentPluginUnloading();}
+    inline void ContentPluginBase::OnContentPluginUnloading(){}
+    int ContentPluginBase::ContentGetSupportedFieldFlags(int FieldIndex){
+        try{
+            return (int)GetSupportedFieldFlags(FieldIndex);
+        }catch(ArgumentOutOfRangeException^){ return 0;}
+    }
+    FieldFlags ContentPluginBase::GetSupportedFieldFlags(int FieldIndex){
+        if(FieldIndex < 0){
+            bool Subst=false;
+            bool Edit=false;
+            for each(ContentFieldSpecification^ col in SupportedFields){
+                if((col->Flags & FieldFlags::FieldEdit) == FieldFlags::FieldEdit) Edit = true;
+                if((col->Flags & FieldFlags::SubstMask) != (FieldFlags)0) Subst = true;
+            }
+            return (Subst ? FieldFlags::SubstMask : (FieldFlags)0) | (Edit ? FieldFlags::FieldEdit : (FieldFlags)0);
+        }else if(FieldIndex < SupportedFields->Length)
+            return SupportedFields[FieldIndex]->Flags;
+        else throw gcnew ArgumentOutOfRangeException("FieldIndex");
+    }
+    int ContentPluginBase::ContentSetValue(char* FileName,int FieldIndex,int UnitIndex,int FieldType, void* FieldValue,int flags){
+        if(FileName == NULL){
+            try{
+                SetValue(nullptr,FieldIndex, UnitIndex,nullptr,(SetValueFlags)flags);
+                return ContentSetValueSuccess;
+            }catch(IO::IOException^) {return (int)GetContentFieldValueReturnCode::FileError;}
+             catch(ArgumentOutOfRangeException^){return (int)GetContentFieldValueReturnCode::NoSuchField;}
+        }else{
+            Object^ value;
+            switch(FieldType){
+                case ContentFieldType::Boolean: value = *(Boolean*)FieldValue; break;
+                case ContentFieldType::Date: value = Date((pdateformat)FieldValue); break;
+                case ContentFieldType::DateAndTime: value = FileTimeToDateTime(*(::FILETIME*)FieldValue); break;
+                case ContentFieldType::Double: value = *(Double*)FieldValue; break;
+                case ContentFieldType::Enum:{ 
+                    array<String^>^ comma = gcnew array<String^>(1);
+                    comma[0] = ", ";
+                    value = (gcnew String((char*)FieldValue))->Split(comma,StringSplitOptions::None);
+                }break;
+                case ContentFieldType::FullText:{ 
+                    int i;
+                    System::Collections::Generic::List<Byte>^ buff = gcnew System::Collections::Generic::List<Byte>();
+                    for(i=0;((Byte*)FieldValue)[i]!=0;i++) buff->Add(((Byte*)FieldValue)[i]);
+                    value = buff->ToArray();
+                }break;
+                case ContentFieldType::Integer32: value = *(Int32*)FieldValue; break;
+                case ContentFieldType::Integer64: value = *(Int64*)FieldValue; break;
+                case ContentFieldType::String: value = gcnew String((char*)FieldValue);
+                case ContentFieldType::Time: value = TimeToTimeSpan((ptimeformat)FieldValue);
+                default: value = (IntPtr)FieldValue;
+            }
+            try{
+                SetValue(gcnew String(FileName),FieldIndex, UnitIndex, value, (SetValueFlags)flags);
+                return ContentSetValueSuccess;
+            }catch(IO::IOException^) {return (int)GetContentFieldValueReturnCode::FileError;}
+             catch(ArgumentOutOfRangeException^){return (int)GetContentFieldValueReturnCode::NoSuchField;}
+        }
+    }
+    inline void ContentPluginBase::SetValue(String^ FileName, int FieldIndex, int UnitIndex, Object^ value, SetValueFlags flags){throw gcnew NotSupportedException();}
 }}

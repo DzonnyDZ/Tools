@@ -72,6 +72,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'Column definition string returned by {0} is too long.'.
+        /// </summary>
+        internal: static property System::String^  ColumnDefinitionStringTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'Default text is too long.'.
         /// </summary>
         internal: static property System::String^  DefaultTextTooLong {
@@ -82,6 +89,13 @@ namespace Tools {
         /// Looks up a localized string similar to '{0} returned fields which&apos;s name is longer than {1}'.
         /// </summary>
         internal: static property System::String^  FieldNameTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'Value &quot;{0}&quot; contains invalid character.'.
+        /// </summary>
+        internal: static property System::String^  InvalidCharacter {
             System::String^  get();
         }
         
@@ -225,6 +239,13 @@ namespace Tools {
         internal: static System::String^  CannotCompareFormat(System::Object^  arg0, System::Object^  arg1);
         
         /// <summary>
+        /// Formats a localized string similar to 'Column definition string returned by {0} is too long.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  ColumnDefinitionStringTooLongFormat(System::Object^  arg0);
+        
+        /// <summary>
         /// The stub formatting method returning the DefaultTextTooLong property value.
         /// </summary>
         /// <returns>The DefaultTextTooLong property value.</returns>
@@ -237,6 +258,13 @@ namespace Tools {
         /// <param name="arg1">An object (1) to format.</param>
         /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         internal: static System::String^  FieldNameTooLongFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formats a localized string similar to 'Value &quot;{0}&quot; contains invalid character.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  InvalidCharacterFormat(System::Object^  arg0);
         
         /// <summary>
         /// Formats a localized string similar to '{0} returned field at index {1} that has FieldIndex set to {2}'.

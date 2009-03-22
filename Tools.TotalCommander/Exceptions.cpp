@@ -46,12 +46,20 @@ namespace Tools {
         return ResourceManager->GetString(L"CannotCompare", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::ColumnDefinitionStringTooLong::get() {
+        return ResourceManager->GetString(L"ColumnDefinitionStringTooLong", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::DefaultTextTooLong::get() {
         return ResourceManager->GetString(L"DefaultTextTooLong", _resourceCulture);
     }
     
     inline System::String^  Exceptions::FieldNameTooLong::get() {
         return ResourceManager->GetString(L"FieldNameTooLong", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::InvalidCharacter::get() {
+        return ResourceManager->GetString(L"InvalidCharacter", _resourceCulture);
     }
     
     inline System::String^  Exceptions::InvalidFieldIndex::get() {
@@ -131,12 +139,20 @@ namespace Tools {
         return System::String::Format(_resourceCulture, CannotCompare, arg0, arg1);
     }
     
+    inline System::String^  Exceptions::ColumnDefinitionStringTooLongFormat(System::Object^  arg0) {
+        return System::String::Format(_resourceCulture, ColumnDefinitionStringTooLong, arg0);
+    }
+    
     inline System::String^  Exceptions::DefaultTextTooLongFormat() {
         return DefaultTextTooLong;
     }
     
     inline System::String^  Exceptions::FieldNameTooLongFormat(System::Object^  arg0, System::Object^  arg1) {
         return System::String::Format(_resourceCulture, FieldNameTooLong, arg0, arg1);
+    }
+    
+    inline System::String^  Exceptions::InvalidCharacterFormat(System::Object^  arg0) {
+        return System::String::Format(_resourceCulture, InvalidCharacter, arg0);
     }
     
     inline System::String^  Exceptions::InvalidFieldIndexFormat(System::Object^  arg0, System::Object^  arg1, System::Object^  arg2) {

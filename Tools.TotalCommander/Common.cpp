@@ -125,4 +125,8 @@ namespace Tools{namespace TotalCommanderT{
         target->wMinute = source.Minutes;
         target->wSecond = source.Seconds;
     }
+    TimeSpan TimeToTimeSpan(ptimeformat source){
+        if(source==NULL) throw gcnew ArgumentNullException("source");
+        return TimeSpan(source->wHour,source->wMinute,source->wSecond);
+    }
 }}

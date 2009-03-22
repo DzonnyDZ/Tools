@@ -123,11 +123,17 @@
   <data name="CannotCompare" xml:space="preserve">
     <value>Value of type {0} cannot be compared to {1}.</value>
   </data>
+  <data name="ColumnDefinitionStringTooLong" xml:space="preserve">
+    <value>Column definition string returned by {0} is too long.</value>
+  </data>
   <data name="DefaultTextTooLong" xml:space="preserve">
     <value>Default text is too long.</value>
   </data>
   <data name="FieldNameTooLong" xml:space="preserve">
     <value>{0} returned fields which's name is longer than {1}</value>
+  </data>
+  <data name="InvalidCharacter" xml:space="preserve">
+    <value>Value "{0}" contains invalid character.</value>
   </data>
   <data name="InvalidFieldIndex" xml:space="preserve">
     <value>{0} returned field at index {1} that has FieldIndex set to {2}</value>

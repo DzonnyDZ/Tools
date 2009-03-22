@@ -203,8 +203,16 @@ namespace Tools{namespace TotalCommanderT{
     /// <param name="target">Pointer to populate values of</param>
     /// <param name="source">Instance to populate <paramref name="target"/> with values of</param>
     /// <exception cref="ArgumentNullException"><paramref name="target"/> is null pointer</exception>
+    /// <version version="1.5.3">This method is new in version 1.5.3</version>
     void PopulateWith(ptimeformat target, TimeSpan source) throw(ArgumentNullException);
+    /// <summary>Converts <see cref="ptimeformat"/> to <see cref="TimeSpan"/></summary>
+    /// <param name="source">A <see cref="ptimeformat"/></param>
+    /// <returns><see cref="TimeSpan"/> populated from <paramref name="source"/></returns>
+    /// <exception cref="ArgumentNullException"><paramref name="source"/> is null pointer</exception>
+    /// <version version="1.5.3">This cast operator is new in version 1.5.3</version>
+    TimeSpan TimeToTimeSpan(ptimeformat source) throw(ArgumentNullException);
 #pragma warning(default : 4290)
 #pragma warning (pop)
+    
 
 }}
