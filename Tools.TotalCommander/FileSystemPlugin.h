@@ -843,10 +843,14 @@ namespace Tools{namespace TotalCommanderT{
         [MethodNotSupportedAttribute]
         virtual String^ GetLocalName(String^ RemoteName, int maxlen);
         /// <summary>Called to get the default view to which Total Commander should switch when this file system plugin is entered.</summary>
-        /// <param name="ViewContents">Return the default fields for this plugin here, e.g. "<c>[=&lt;fs>.size.bkM2]\n[=fs.writetime]</c>"        /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note></param>
+        /// <param name="ViewContents">Return the default fields for this plugin here, e.g. "<c>[=&lt;fs>.size.bkM2]\n[=fs.writetime]</c>"
+        /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note></param>
         /// <param name="ViewHeaders">Return the default headers shown in the sorting header bar, e.g. "<c>Size\nDate/Time</c>"</param>
         /// <param name="ViewWidths">Return the default column widths shown in the sorting header bar, e.g. "<c>148,23,-35,-35</c>" Negative values mean that the field is right-aligned. The first two widths are for name and extension</param>
-        /// <param name="ViewOptions">The two values, separated by a vertical line, mean:        /// <list type="number">        /// <item><c>auto-adjust-width</c>, or <c>-1</c> for no adjust</item>        /// <item>horizontal scrollbar flag</item></list></param>
+        /// <param name="ViewOptions">The two values, separated by a vertical line, mean:
+        /// <list type="number">
+        /// <item><c>auto-adjust-width</c>, or <c>-1</c> for no adjust</item>
+        /// <item>horizontal scrollbar flag</item></list></param>
         /// <returns>Return true if you returned a default view, false if no default view should be shown.</returns>
         /// <remarks>It's best to create a custom columns view in Total Commander, save it, and then copy the definitions from the Wincmd.ini to your plugin. The values in <paramref name="ViewContents"/> and <paramref name="ViewHeaders"/> are separated by a backslash and lowercase 'n' character.
         /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note>

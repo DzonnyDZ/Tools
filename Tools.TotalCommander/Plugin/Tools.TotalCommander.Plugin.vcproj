@@ -31,6 +31,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="copy &quot;$(InputDir)Exports.def&quot; &quot;$(InputDir)Exports.h&quot; /Y&#x0D;&#x0A;&quot;$(VCInstallDir)bin\CL&quot; /EP &quot;$(InputDir)Exports.h&quot; &gt; &quot;$(InputDir)Exports2.def&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -72,7 +73,7 @@
 				AdditionalDependencies="$(NoInherit)"
 				OutputFile="$(OutDir)\$(PluginOutputName).$(PluginOutputExtension)"
 				LinkIncremental="1"
-				ModuleDefinitionFile="Exports.def"
+				ModuleDefinitionFile="$(InputDir)Exports2.def"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(TargetDir)$(PluginOutputName).pdb"
 				ProfileGuidedDatabase=""
@@ -131,7 +132,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Exports.def"
+				RelativePath=".\CommonWfxWdxCalls.h"
 				>
 			</File>
 			<File
@@ -161,7 +162,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CommonWfxWdxPrototypes.h"
+				>
+			</File>
+			<File
 				RelativePath=".\define.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Exports.def"
 				>
 			</File>
 			<File
@@ -178,6 +187,10 @@
 			</File>
 			<File
 				RelativePath=".\Misc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\plug_common.h"
 				>
 			</File>
 			<File

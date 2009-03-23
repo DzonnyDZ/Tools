@@ -30,10 +30,13 @@ namespace Tools{namespace TotalCommanderT{
 #define TCPLUGF
 #define FUNC_MODIF AppDomainHolder::
 #define FUNCTION_TARGET this->holder
+#undef TC_LAST_CALL
 #include "FunctionCalls.h"
+
 #undef FUNC_MODIF
 #define FUNC_MODIF PluginInstanceHolder::
 #undef FUNCTION_TARGET
 #define FUNCTION_TARGET this->instance
+#define TC_LAST_CALL
 #include "FunctionCalls.h"
 }}

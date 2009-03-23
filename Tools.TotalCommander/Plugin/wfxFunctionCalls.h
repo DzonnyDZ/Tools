@@ -62,4 +62,8 @@
 #ifdef TC_FS_GETLOCALNAME
     TCPLUGF BOOL FUNC_MODIF FsGetLocalName(char* RemoteName,int maxlen){return FUNCTION_TARGET->FsGetLocalName(RemoteName, maxlen);}
 #endif
+#include "CommonWfxWdxCalls.h"
+#ifdef TC_FS_GETDEFAULTVIEW
+    TCPLUGF BOOL FUNC_MODIF FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen){return FUNCTION_TARGET->FsContentGetDefaultView(ViewContents, ViewHeaders, ViewWidths, ViewOptions, maxlen);}
+#endif
 #endif

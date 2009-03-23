@@ -364,7 +364,7 @@ Public Class Generator
             If GetType(FileSystemPlugin).IsAssignableFrom(Type) Then
                 ext = "wfx"
                 Log(My.Resources.i_PluginType_wfx)
-                PreparePlugin(Type, ProjectDirectory, GetType(FileSystemPlugin), "TC_WFX")
+                PreparePlugin(Type, ProjectDirectory, GetType(FileSystemPlugin), "TC_WFX", PluginType.FileSystem)
             Else 'TODO: Support all plugin types
                 Throw New ArgumentException(My.Resources.e_NotAPluginType.f(Type.FullName))
             End If
@@ -415,14 +415,19 @@ Public Class Generator
     ''' <param name="ProjectDirectory">Directory peoject is stored in</param>
     ''' <param name="PluginType">Plugin base class</param>
     ''' <param name="DefinedBy">C++ #define to define call of CTOr of plugin</param>
+    ''' <param name="EnumeratedPluginType">Identifies plugin type being created</param>
     ''' <exception cref="MissingMethodException"><paramref name="PluginType"/> has method decorated with <see cref="PluginMethodAttribute"/> with <see cref="PluginMethodAttribute.ImplementedBy"/> pointing to method that is not member of <paramref name="PluginType"/>.</exception>
     ''' <exception cref="AmbiguousMatchException"><paramref name="PluginType"/> has method decorated with <see cref="PluginMethodAttribute"/> with <see cref="PluginMethodAttribute.ImplementedBy"/> pointing to method that is overloaded on <paramref name="PluginType"/>.</exception>
-    Private Sub PreparePlugin(ByVal Type As Type, ByVal ProjectDirectory$, ByVal PluginType As Type, ByVal DefinedBy As String)
+    Private Sub PreparePlugin(ByVal Type As Type, ByVal ProjectDirectory$, ByVal PluginType As Type, ByVal DefinedBy As String, ByVal EnumeratedPluginType As PluginType)
         Using defineh = IO.File.Open(IO.Path.Combine(ProjectDirectory, "define.h"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
+              defineh2 = IO.File.Open(IO.Path.Combine(ProjectDirectory, "define2.h"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
                 w As New IO.StreamWriter(defineh, System.Text.Encoding.Default), _
+                w2 As New IO.StreamWriter(defineh2, System.Text.Encoding.Default), _
                 exports = IO.File.Open(IO.Path.Combine(ProjectDirectory, "Exports.def"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
                 ew As New IO.StreamWriter(exports, System.Text.Encoding.Default)
             w.WriteLine("#define {0} {1}", DefinedBy, GetTypeSignature(Type))
+            w2.WriteLine("#define {0} {1}", DefinedBy, GetTypeSignature(Type))
+            ew.WriteLine("#include ""define2.h""")
             ew.WriteLine("EXPORTS")
             For Each method In PluginType.GetMethods(BindingFlags.Instance Or BindingFlags.Public)
                 Dim attr = method.GetAttribute(Of PluginMethodAttribute)(False)
@@ -431,7 +436,8 @@ Public Class Generator
                 If attr.ImplementedBy Is Nothing Then
                     Define = True
                 Else
-                    Dim ImplementingMethod = PluginType.GetMethod(attr.ImplementedBy)
+                    Dim ImplementingMethod = PluginType.GetMethod(attr.ImplementedBy, BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.NonPublic)
+                    If ImplementingMethod IsNot Nothing AndAlso (Not ImplementingMethod.IsPublic AndAlso Not ImplementingMethod.IsFamily AndAlso Not ImplementingMethod.IsFamilyOrAssembly) Then ImplementingMethod = Nothing
                     If ImplementingMethod Is Nothing Then Throw New MissingMethodException(My.Resources.e_MissingPluginMethod.f(PluginType.FullName, attr.ImplementedBy, attr.GetType.FullName, method.Name))
                     Dim DerivedMethod = ImplementingMethod.GetOverridingMethod(Type)
                     Dim NotSupported = DerivedMethod.GetAttribute(Of MethodNotSupportedAttribute)()
@@ -439,7 +445,12 @@ Public Class Generator
                 End If
                 If Define Then
                     w.WriteLine("#define " & attr.DefinedBy)
-                    ew.WriteLine(vbTab & method.Name)
+                    w2.WriteLine("#define " & attr.DefinedBy)
+                    If attr.AdditionalCondition IsNot Nothing Then ew.WriteLine("#if {0}", attr.AdditionalCondition)
+                    ew.WriteLine("#ifdef " & attr.DefinedBy)
+                    ew.WriteLine(vbTab & attr.GetExportedAs(EnumeratedPluginType, method.Name))
+                    ew.WriteLine("#endif")
+                    If attr.AdditionalCondition IsNot Nothing Then ew.WriteLine("#endif")
                 End If
             Next
             w.WriteLine("#using ""{0}""", Assembly.Location)

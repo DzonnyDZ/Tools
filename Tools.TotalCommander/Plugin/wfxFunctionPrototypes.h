@@ -62,4 +62,8 @@
 #ifdef TC_FS_GETLOCALNAME
     BOOL FsGetLocalName(char* RemoteName,int maxlen);
 #endif
+#include "CommonWfxWdxPrototypes.h"
+#ifdef TC_FS_GETDEFAULTVIEW
+    BOOL FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);
+#endif
 #endif

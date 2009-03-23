@@ -49,21 +49,23 @@ int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestPro
     }
 #endif
 #ifdef TC_FS_INIT
-#define TC_FS_INIT_2
+    #define TC_FS_INIT_2
 #endif
 #ifdef TC_FS_GETDEFROOTNAME
-#define TC_FS_GETDEFROOTNAME_2
+    #define TC_FS_GETDEFROOTNAME_2
 #endif
 #undef TC_FS_INIT
 
 #undef TC_FS_GETDEFROOTNAME
-#define FUNC_MODIF __stdcall 
+#define FUNC_MODIF __stdcall
+#undef TC_LAST_CALL
 #include "wfxFunctionCalls.h"
 
 #ifdef TC_FS_INIT_2
-#define TC_FS_INIT
+    #define TC_FS_INIT
 #endif
 #ifdef TC_FS_GETDEFROOTNAME_2
-#define TC_FS_GETDEFROOTNAME
+    #define TC_FS_GETDEFROOTNAME
 #endif
+
 #endif
