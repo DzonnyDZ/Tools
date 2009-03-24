@@ -80,7 +80,7 @@
 	WORD wSecond;
 } ttimeformat,*ptimeformat;*/
 
-TCPLUGF int __stdcall ContentGetDetectString(char* DetectString,int maxlen);
+/*TCPLUGF int __stdcall ContentGetDetectString(char* DetectString,int maxlen);
 TCPLUGF int __stdcall ContentGetSupportedField(int FieldIndex,char* FieldName,char* Units,int maxlen);
 TCPLUGF int __stdcall ContentGetValue(char* FileName,int FieldIndex,int UnitIndex,void* FieldValue,int maxlen,int flags);
 TCPLUGF void __stdcall ContentSetDefaultParams(ContentDefaultParamStruct* dps);
@@ -93,4 +93,4 @@ TCPLUGF int __stdcall ContentSetValue(char* FileName,int FieldIndex,int UnitInde
 TCPLUGF int __stdcall ContentEditValue(HWND ParentWin,int FieldIndex,int UnitIndex,int FieldType,
                 void* FieldValue,int maxlen,int flags,char* langidentifier);
 
-TCPLUGF void __stdcall ContentSendStateInformation(int state,char* path);
+TCPLUGF void __stdcall ContentSendStateInformation(int state,char* path);*/

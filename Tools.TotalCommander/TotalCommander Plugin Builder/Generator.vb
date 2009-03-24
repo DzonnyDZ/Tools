@@ -420,15 +420,15 @@ Public Class Generator
     ''' <exception cref="AmbiguousMatchException"><paramref name="PluginType"/> has method decorated with <see cref="PluginMethodAttribute"/> with <see cref="PluginMethodAttribute.ImplementedBy"/> pointing to method that is overloaded on <paramref name="PluginType"/>.</exception>
     Private Sub PreparePlugin(ByVal Type As Type, ByVal ProjectDirectory$, ByVal PluginType As Type, ByVal DefinedBy As String, ByVal EnumeratedPluginType As PluginType)
         Using defineh = IO.File.Open(IO.Path.Combine(ProjectDirectory, "define.h"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
-              defineh2 = IO.File.Open(IO.Path.Combine(ProjectDirectory, "define2.h"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
-                w As New IO.StreamWriter(defineh, System.Text.Encoding.Default), _
-                w2 As New IO.StreamWriter(defineh2, System.Text.Encoding.Default), _
-                exports = IO.File.Open(IO.Path.Combine(ProjectDirectory, "Exports.def"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
-                ew As New IO.StreamWriter(exports, System.Text.Encoding.Default)
+                w As New IO.StreamWriter(defineh, System.Text.Encoding.Default)
+            'defineh2 = IO.File.Open(IO.Path.Combine(ProjectDirectory, "define2.h"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
+            'w2 As New IO.StreamWriter(defineh2, System.Text.Encoding.Default), _
+            'exports = IO.File.Open(IO.Path.Combine(ProjectDirectory, "Exports.def"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
+            'ew As New IO.StreamWriter(exports, System.Text.Encoding.Default)
             w.WriteLine("#define {0} {1}", DefinedBy, GetTypeSignature(Type))
-            w2.WriteLine("#define {0} {1}", DefinedBy, GetTypeSignature(Type))
-            ew.WriteLine("#include ""define2.h""")
-            ew.WriteLine("EXPORTS")
+            'w2.WriteLine("#define {0} {1}", DefinedBy, GetTypeSignature(Type))
+            'ew.WriteLine("#include ""define2.h""")
+            'ew.WriteLine("EXPORTS")
             For Each method In PluginType.GetMethods(BindingFlags.Instance Or BindingFlags.Public)
                 Dim attr = method.GetAttribute(Of PluginMethodAttribute)(False)
                 If attr Is Nothing Then Continue For
@@ -445,17 +445,19 @@ Public Class Generator
                 End If
                 If Define Then
                     w.WriteLine("#define " & attr.DefinedBy)
-                    w2.WriteLine("#define " & attr.DefinedBy)
-                    If attr.AdditionalCondition IsNot Nothing Then ew.WriteLine("#if {0}", attr.AdditionalCondition)
-                    ew.WriteLine("#ifdef " & attr.DefinedBy)
-                    ew.WriteLine(vbTab & attr.GetExportedAs(EnumeratedPluginType, method.Name))
-                    ew.WriteLine("#endif")
-                    If attr.AdditionalCondition IsNot Nothing Then ew.WriteLine("#endif")
+                    'w2.WriteLine("#define " & attr.DefinedBy)
+                    'If attr.AdditionalCondition IsNot Nothing Then ew.WriteLine("#if {0}", attr.AdditionalCondition)
+                    'ew.WriteLine("#ifdef " & attr.DefinedBy)
+                    'ew.WriteLine(vbTab & attr.GetExportedAs(EnumeratedPluginType, method.Name))
+                    'ew.WriteLine("#endif")
+                    'If attr.AdditionalCondition IsNot Nothing Then ew.WriteLine("#endif")
                 End If
             Next
+            w.WriteLine("#ifdef PLUGIN_COMPILATION", Assembly.Location)
             w.WriteLine("#using ""{0}""", Assembly.Location)
             w.WriteLine("#using ""{0}""", Assembly.Load("Tools.TotalCommander, PublicKeyToken=373c02ac923768e6").Location)
             w.WriteLine("#define PLUGIN_NAME ""{0}""", Assembly.GetName.Name.Replace("\", "\\").Replace("""", "\"""))
+            w.WriteLine("#endif", Assembly.Location)
         End Using
         Dim ia = Type.GetAttribute(Of PluginIconBaseAttribute)()
         If ia IsNot Nothing Then

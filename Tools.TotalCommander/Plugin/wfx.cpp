@@ -1,17 +1,22 @@
 #include "define.h"
 #include "Helper.h"
 #ifdef TC_WFX
-#define TCPLUGF 
 
 #include "fsplugin.h"
 #include <vcclr.h>
 #include "AssemblyResolver.h"
 #include "Misc.h"
+#include "Export.h"
 
 using namespace System;
 using namespace Tools::TotalCommanderT;
 
-#define FUNCTION_TARGET Tools::TotalCommanderT::holder 
+#undef TC_NAME_PREFIX 
+#undef TC_FUNCTION_TARGET 
+#undef TC_LINE_PREFIX
+#undef TC_FUNC_MEMBEROF
+#undef TC_FUNC_PREFIX_A Fs
+#undef TC_FUNC_PREFIX_B
 
 #pragma unmanaged
 /// <summary>Inmanaged DLL entry point. This method canot contain calls to managed code.</summary>
@@ -30,22 +35,29 @@ void GetDefRootName(char* DefRootName,int maxlen);
 /// <summary>Backs the <see ctef="FsInit"/> function</summary>
 int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc);
 
+#define TC_NAME_PREFIX __stdcall
+#define TC_FUNCTION_TARGET Tools::TotalCommanderT::holder 
+#define TC_LINE_PREFIX
+#define TC_FUNC_MEMBEROF
+#define TC_FUNC_PREFIX_A Fs
+#define TC_FUNC_PREFIX_B
+
 #ifdef TC_FS_INIT
-    TCPLUGF int __stdcall FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
         Initialize();
         return Init(PluginNr,pProgressProc,pLogProc,pRequestProc);
     }
     int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
-        return FUNCTION_TARGET->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);
+        return TC_FUNCTION_TARGET->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);
     }
 #endif
 #ifdef TC_FS_GETDEFROOTNAME
-    TCPLUGF void __stdcall FsGetDefRootName(char* DefRootName,int maxlen){
+    TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF FsGetDefRootName(char* DefRootName,int maxlen){
         Initialize();
         return GetDefRootName(DefRootName,maxlen);
     }
     void GetDefRootName(char* DefRootName,int maxlen){
-        return FUNCTION_TARGET->FsGetDefRootName(DefRootName, maxlen);    
+        return TC_FUNCTION_TARGET->FsGetDefRootName(DefRootName, maxlen);    
     }
 #endif
 #ifdef TC_FS_INIT
@@ -55,11 +67,9 @@ int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestPro
     #define TC_FS_GETDEFROOTNAME_2
 #endif
 #undef TC_FS_INIT
-
 #undef TC_FS_GETDEFROOTNAME
-#define FUNC_MODIF __stdcall
-#undef TC_LAST_CALL
-#include "wfxFunctionCalls.h"
+
+#include "AllTCFunctions.h"
 
 #ifdef TC_FS_INIT_2
     #define TC_FS_INIT

@@ -6,6 +6,14 @@ using namespace System;
 using namespace System::Reflection;
 using namespace System::Runtime::Remoting;
 
+#undef TC_FNC_HEADER
+#undef TC_FNC_BODY
+#undef TC_LINE_PREFIX
+#undef TC_NAME_PREFIX
+#undef TC_FUNC_MEMBEROF
+#undef TC_FUNC_PREFIX_A
+#undef TC_FUNC_PREFIX_B
+
 namespace Tools{namespace TotalCommanderT{
     extern bool RequireInitialize;
     extern gcroot<AppDomainHolder^> holder;
@@ -25,18 +33,20 @@ namespace Tools{namespace TotalCommanderT{
         AppDomain^ pluginDomain = AppDomain::CreateDomain(PLUGIN_NAME,nullptr,setup);
         AppDomainHolder^ iholder = (AppDomainHolder^)pluginDomain->CreateInstanceFromAndUnwrap(currentAssembly->CodeBase,AppDomainHolder::typeid->FullName);
         Tools::TotalCommanderT::holder = iholder;
-        //InitializePlugin();
     }
-#define TCPLUGF
-#define FUNC_MODIF AppDomainHolder::
-#define FUNCTION_TARGET this->holder
-#undef TC_LAST_CALL
-#include "FunctionCalls.h"
+#define TC_FNC_HEADER
+#define TC_FNC_BODY
+#define TC_LINE_PREFIX
+#define TC_NAME_PREFIX
+#define TC_FUNC_MEMBEROF AppDomainHolder::
+#define TC_FUNC_PREFIX_A
+#define TC_FUNC_PREFIX_B
+#define TC_FUNCTION_TARGET this->holder
+#include "AllTCFunctions.h"
 
-#undef FUNC_MODIF
-#define FUNC_MODIF PluginInstanceHolder::
-#undef FUNCTION_TARGET
-#define FUNCTION_TARGET this->instance
-#define TC_LAST_CALL
-#include "FunctionCalls.h"
+#undef TC_FUNC_MEMBEROF
+#define TC_FUNC_MEMBEROF PluginInstanceHolder::
+#undef TC_FUNCTION_TARGET
+#define TC_FUNCTION_TARGET this->instance
+#include "AllTCFunctions.h"
 }}

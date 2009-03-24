@@ -49,7 +49,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				PreprocessorDefinitions="WIN32;NDEBUG;_DEBUG;_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_DEBUG;_WINDOWS;_USRDLL;PLUGIN_COMPILATION"
 				GeneratePreprocessedFile="0"
 				KeepComments="false"
 				RuntimeLibrary="2"
@@ -73,7 +73,7 @@
 				AdditionalDependencies="$(NoInherit)"
 				OutputFile="$(OutDir)\$(PluginOutputName).$(PluginOutputExtension)"
 				LinkIncremental="1"
-				ModuleDefinitionFile="$(InputDir)Exports2.def"
+				ModuleDefinitionFile="Exports2.def"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(TargetDir)$(PluginOutputName).pdb"
 				ProfileGuidedDatabase=""
@@ -120,6 +120,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\AllTCFunctions.h"
+				>
+			</File>
+			<File
 				RelativePath=".\AssemblyInfo.cpp"
 				>
 			</File>
@@ -132,23 +136,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CommonWfxWdxCalls.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FunctionCalls.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Helper.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\wfx.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\wfxFunctionCalls.h"
 				>
 			</File>
 		</Filter>
@@ -162,11 +154,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CommonWfxWdxPrototypes.h"
+				RelativePath=".\contplug.h"
 				>
 			</File>
 			<File
 				RelativePath=".\define.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Export.h"
 				>
 			</File>
 			<File
@@ -175,10 +171,6 @@
 			</File>
 			<File
 				RelativePath=".\fsplugin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FunctionPrototypes.h"
 				>
 			</File>
 			<File
@@ -199,10 +191,6 @@
 			</File>
 			<File
 				RelativePath=".\TCHeaders.h"
-				>
-			</File>
-			<File
-				RelativePath=".\wfxFunctionPrototypes.h"
 				>
 			</File>
 		</Filter>

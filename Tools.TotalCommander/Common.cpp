@@ -29,7 +29,7 @@ namespace Tools{namespace TotalCommanderT{
     }
     inline String^ PluginMethodAttribute::DefinedBy::get(){return this->definedBy;}
     inline String^ PluginMethodAttribute::ImplementedBy::get(){return this->implementedBy;}
-    inline String^ PluginMethodAttribute::ExportedAs::get(){return this->exportedAs;}
+    /*inline String^ PluginMethodAttribute::ExportedAs::get(){return this->exportedAs;}
     inline void PluginMethodAttribute::ExportedAs::set(String^ value){this->exportedAs = value;}
     String^ PluginMethodAttribute::GetExportedAs(PluginType pluginType, String^ functionName){
         if(functionName == nullptr) throw gcnew ArgumentNullException("functionName");
@@ -55,7 +55,7 @@ namespace Tools{namespace TotalCommanderT{
             ret = ExportedAs;
         }
         return ret->Replace("#",functionName);
-    }
+    }*/
 
     inline NotAPluginAttribute::NotAPluginAttribute(){/*do nothing*/}
 

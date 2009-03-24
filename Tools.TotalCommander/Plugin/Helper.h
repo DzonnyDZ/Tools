@@ -7,6 +7,12 @@ using namespace Tools::TotalCommanderT;
 using namespace System::Reflection;
 using namespace System::Runtime::Remoting;
 
+#undef TC_FNC_HEADER
+#undef TC_LINE_PREFIX
+#undef TC_NAME_PREFIX
+#undef TC_FUNC_MEMBEROF
+#undef TC_FNC_BODY
+
 namespace Tools{namespace TotalCommanderT{
     /// <summary>Holds plugin Application domain. Instantiated in plugin application domain.</summary>
     ref struct AppDomainHolder;
@@ -22,17 +28,43 @@ namespace Tools{namespace TotalCommanderT{
     private ref struct PluginInstanceHolder{
         /// <summary>CTor</summary>
         PluginInstanceHolder();
-        #ifdef TC_WFX
+        #if defined(TC_WFX)
             /// <summary>Holds instance of File System plugin (WFX)</summary>
             FileSystemPlugin^ instance;
-        #endif//TODO:Other plugin types
-        #include "FunctionPrototypes.h"
+        #elif defined(TC_WDX)
+            /// <summary>Holds instance of Content plugin (WDX)</summary>
+            ContentPlugin^ instance;
+        #elif defined(TC_WLX)
+            /// <summary>Holds instance of Lister plugin (WLX)</summary>
+            ListerPlugin^ instance;
+        #elif defined(TC_WDX)
+            /// <summary>Holds instance of Packer plugin (WCX)</summary>
+            PackerPlugin^ instance;
+        #endif
+        #define TC_FNC_HEADER
+        #define TC_LINE_PREFIX
+        #define TC_NAME_PREFIX
+        #define TC_FUNC_MEMBEROF
+        #undef TC_FNC_BODY
+        #include "AllTCFunctions.h"
     };
+
+#undef TC_FNC_HEADER
+#undef TC_LINE_PREFIX
+#undef TC_NAME_PREFIX
+#undef TC_FUNC_MEMBEROF
+#undef TC_FNC_BODY
+
     private ref struct AppDomainHolder : MarshalByRefObject {
         /// <summary>CTor</summary>
         AppDomainHolder();
         /// <summary>Holds instance of the <see cref="PluginInstanceHolder"/> class</summary>
         PluginInstanceHolder^ holder;
-        #include "FunctionPrototypes.h"
+        #define TC_FNC_HEADER
+        #define TC_LINE_PREFIX
+        #define TC_NAME_PREFIX
+        #define TC_FUNC_MEMBEROF
+        #undef TC_FNC_BODY
+        #include "AllTCFunctions.h"
     };
 }}

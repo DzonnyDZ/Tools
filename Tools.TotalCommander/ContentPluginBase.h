@@ -33,7 +33,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="SupportedFields"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("get_SupportedFields","TC_C_GETSUPPORTEDFIELD", ExportedAs="[*Content]GetSupportedField", AdditionalCondition="defined(TC_C_GETVALUE)")]
+        [PluginMethod("get_SupportedFields","TC_C_GETSUPPORTEDFIELD")]
         int ContentGetSupportedField(int FieldIndex,char* FieldName, char* Units,int maxlen);
         /// <summary>When overriden in derived class gets all supported custom fields.</summary>
         /// <returns>Array columns specifications supported by this plugin. Null or an empty array where there are no plugin-specified columns.
@@ -84,7 +84,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="GetValue"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]                                                        
         [CLSCompliantAttribute(false)]
-        [PluginMethod("GetValue","TC_C_GETVALUE", ExportedAs="[*Content]GetValue", AdditionalCondition="defined(TC_C_GETSUPPORTEDFIELD)")]
+        [PluginMethod("GetValue","TC_C_GETVALUE")]
         int ContentGetValue(char* FileName,int FieldIndex,int UnitIndex, void* FieldValue,int maxlen,int flags);
     private:
         /// <summary>Caches streams retuned by <see cref="GetValue"/></summary>
@@ -139,7 +139,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="StopGetValue"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("StopGetValue","TC_C_STOPGETVALUE", ExportedAs="[*Content]StopGetValue", AdditionalCondition="defined(TC_C_GETSUPPORTEDFIELD) && defined(TC_C_GETVALUE)")]
+        [PluginMethod("StopGetValue","TC_C_STOPGETVALUE")]
         void ContentStopGetValue(char* FileName);
         /// <summary>When overriden in derived class, called to tell a plugin that a directory change has occurred, and the plugin should stop loading a value.</summary>
         /// <param name="FileName">The name of the file for which <see cref="GetValue"/> is currently being called.</param>
@@ -159,7 +159,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="GetDefaultSortOrder"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("GetDefaultSortOrder","TC_C_GETDEFAULTSORTORDER", ExportedAs="[*Content]GetDefaultSortOrder", AdditionalCondition="defined(TC_C_GETSUPPORTEDFIELD) && defined(TC_C_GETVALUE)")]
+        [PluginMethod("GetDefaultSortOrder","TC_C_GETDEFAULTSORTORDER")]
         int ContentGetDefaultSortOrder(int FieldIndex);
         /// <summary>When overriden in derived class, called when the user clicks on the sorting header above the columns.</summary>
         /// <param name="FieldIndex">The index of the field for which the sort order should be returne</param>
@@ -180,7 +180,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="OnContentPluginUnloading"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("OnContentPluginUnloading","TC_C_PLUGINUNLOADING", ExportedAs="[*Content]PluginUnloading", AdditionalCondition="defined(TC_C_GETSUPPORTEDFIELD) && defined(TC_C_GETVALUE)")]
+        [PluginMethod("OnContentPluginUnloading","TC_C_PLUGINUNLOADING")]
         void ContentPluginUnloading(void);
     protected:
         /// <summary>Called just before the plugin is unloaded, e.g. to close buffers, abort operations etc.</summary>
@@ -205,7 +205,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seelaso cref="GetSupportedFieldFlags"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("GetSupportedFieldFlags","TC_C_GETSUPPORTEDFIELDFLAGS", ExportedAs="[*Content]GetSupportedFieldFlags", AdditionalCondition="defined(TC_C_GETSUPPORTEDFIELD) && defined(TC_C_GETVALUE)")]
+        [PluginMethod("GetSupportedFieldFlags","TC_C_GETSUPPORTEDFIELDFLAGS")]
         int ContentGetSupportedFieldFlags(int FieldIndex);
         /// <summary>Called to get various information about a plugin variable. It's first called with <paramref name="FieldIndex"/>=-1 to find out whether the plugin supports any special flags at all, and then for each field separately.</summary>
         /// <param name="FieldIndex">The index of the field for which flags should be returned.
@@ -241,7 +241,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seelaso cref="SetValue"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("SetValue","TC_C_SETVALUE", ExportedAs="[*Content]SetValue", AdditionalCondition="defined(TC_C_GETSUPPORTEDFIELD) && defined(TC_C_GETVALUE)")]
+        [PluginMethod("SetValue","TC_C_SETVALUE")]
         int ContentSetValue(char* FileName,int FieldIndex,int UnitIndex,int FieldType, void* FieldValue,int flags);
         /// <summary>When overriden in derived class called to set the value of a specific field for a given file, e.g. to change the date field of a file.</summary>
         /// <param name="FileName">The name of the file (for File System plugins in plugin namespace) for which the plugin needs to change the field data.

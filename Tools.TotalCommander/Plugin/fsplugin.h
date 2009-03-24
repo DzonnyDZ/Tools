@@ -179,7 +179,7 @@ typedef BOOL (__stdcall *tRequestProc)(int PluginNr,int RequestType,char* Custom
               char* CustomText,char* ReturnedText,int maxlen);
 
 // Function prototypes
-TCPLUGF int __stdcall FsInit(int PluginNr,tProgressProc pProgressProc,tLogProc pLogProc,tRequestProc pRequestProc);
+/*TCPLUGF int __stdcall FsInit(int PluginNr,tProgressProc pProgressProc,tLogProc pLogProc,tRequestProc pRequestProc);
 TCPLUGF HANDLE __stdcall FsFindFirst(char* Path,WIN32_FIND_DATA *FindData);
 TCPLUGF BOOL __stdcall FsFindNext(HANDLE Hdl,WIN32_FIND_DATA *FindData);
 TCPLUGF int __stdcall FsFindClose(HANDLE Hdl);
@@ -200,7 +200,7 @@ TCPLUGF int __stdcall FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICO
 TCPLUGF void __stdcall FsSetDefaultParams(FsDefaultParamStruct* dps);
 TCPLUGF int __stdcall FsGetPreviewBitmap(char* RemoteName,int width,int height,HBITMAP* ReturnedBitmap);
 TCPLUGF BOOL __stdcall FsLinksToLocalFiles(void);
-TCPLUGF BOOL __stdcall FsGetLocalName(char* RemoteName,int maxlen);
+TCPLUGF BOOL __stdcall FsGetLocalName(char* RemoteName,int maxlen);*/
 
 // ************************** content plugin extension ****************************
 
@@ -266,7 +266,7 @@ TCPLUGF BOOL __stdcall FsGetLocalName(char* RemoteName,int maxlen);
 	WORD wSecond;
 } ttimeformat,*ptimeformat;*/
 
-TCPLUGF int __stdcall FsContentGetSupportedField(int FieldIndex,char* FieldName,char* Units,int maxlen);
+/*TCPLUGF int __stdcall FsContentGetSupportedField(int FieldIndex,char* FieldName,char* Units,int maxlen);
 TCPLUGF int __stdcall FsContentGetValue(char* FileName,int FieldIndex,int UnitIndex,void* FieldValue,int maxlen,int flags);
 
 TCPLUGF void __stdcall FsContentStopGetValue(char* FileName);
@@ -275,4 +275,4 @@ TCPLUGF void __stdcall FsContentPluginUnloading(void);
 TCPLUGF int __stdcall FsContentGetSupportedFieldFlags(int FieldIndex);
 
 TCPLUGF int __stdcall FsContentSetValue(char* FileName,int FieldIndex,int UnitIndex,int FieldType,void* FieldValue,int flags);
-TCPLUGF BOOL __stdcall FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);
+TCPLUGF BOOL __stdcall FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);*/

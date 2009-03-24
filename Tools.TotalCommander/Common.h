@@ -69,9 +69,9 @@ namespace Tools{namespace TotalCommanderT{
         initonly String^ definedBy;
         /// <summary>Contains value of the <see cref="ImplementedBy"/> property</summary>
         initonly String^ implementedBy;
-        /// <summary>Contains value of the <see cref="ExportedAs"/> property</summary>
+        /*/// <summary>Contains value of the <see cref="ExportedAs"/> property</summary>
         String^ exportedAs;
-       /* /// <summary>Initializes newly created instance</summary>
+        /// <summary>Initializes newly created instance</summary>
         /// <param name="DefinedBy">Name of macro to be set method to be compiled into plugin wrapper. Generator must define this macro always.</param>
         /// <exception cref="ArgumentNullException"><paramref name="DefinedBy"/> is null</exception>
         /// <exception cref="FormatException"><paramref name="DefinedBy"/> has invalid format for macro name</exception>
@@ -93,7 +93,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Gets name of corresponding derived-class implemeneted method, to check for <see cref="MethodNotSupportedAttribute"/> to identify if this method should be included in plugin (by definin macro which name is defined by <see cref="DefinedBy"/>.</summary>
         /// <remarks>The method with this name must exist. It must not be overloaded in plugin abstract base class. When null, method will be compiled always.</remarks>
         property String^ ImplementedBy{String^ get();}
-        /// <summary>Gets or sets name of the function under which it is exported to unmanaged code</summary>
+        /*/// <summary>Gets or sets name of the function under which it is exported to unmanaged code</summary>
         /// <returns>Name to export function under. This name is written by Total Commander Plugin Generator to the *.def file. If null actual name of fuction is used.</returns>
         /// <value>Name of function to write to the *.def file. This property must be se directly, it cannot be set via CTor. Default value is null</value>
         /// <remarks>If function name starts with "<c>*</c>", * is replaced with plugin name perfix acorting to actual plugin type being generated:
@@ -121,7 +121,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <value>Default value is null which mean the condition is always true</value>
         /// <remarks>The condition id any <c>constant-expression</c> that fan be used as parameter of the C++ <c>#if</c> directive. The directive is issued with this condition. If this property is null, no directive is issued.</remarks>
         /// <version version="1.5.3">This property is new in version 1.5.3</version>
-        property String^ AdditionalCondition;
+        property String^ AdditionalCondition;*/
     };
 
     ref class PluginIconBaseAttribute;
