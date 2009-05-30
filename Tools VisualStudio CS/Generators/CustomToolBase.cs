@@ -249,17 +249,17 @@ namespace Tools.VisualStudioT.GeneratorsT {
             return new Guid[] { CSharpCategoryGuid, VBCategoryGuid };
         }
         /// <summary>When overriden in derived class, gets array of srings identifying versions of Visual Studio this custom tool will be registered for</summary>
-        /// <returns>String representing versions of Visual Stuido and keys under HKLM\Software\Microsoft\VisualStudio <see cref="RegisterCustomTool(System.Type,bool)"/> will register/unregister this tool for. This implementation returns "8.0" and "9.0".</returns>
+        /// <returns>String representing versions of Visual Stuido and keys under HKLM\Software\Microsoft\VisualStudio <see cref="RegisterCustomTool(System.Type,bool)"/> will register/unregister this tool for. This implementation returns "8.0", "9.0" and "10.0".</returns>
         /// <seealso cref="RegisterCustomTool(System.Type,bool)"/>
         /// <seealso cref="GetLanguages()"/>
         public virtual string[] GetVisualStudioVersions() {
-            return new string[] { "8.0", "9.0" };
+            return new string[] { "8.0", "9.0", "10.0" };
         }
         #endregion
 
         #region Tools enumeration
         /// <summary>Gets all languages which have custom tools in given Visual Studio version (from Software\Microsoft\VisualStudio\&lt;version>\Generators)</summary>
-        /// <param name="version">Version of visual studio to get languages for. Typical values are 8.0, 9.0</param>
+        /// <param name="version">Version of visual studio to get languages for. Typical values are 8.0, 9.0, 10.0</param>
         /// <returns>Array of objects representing languages</returns>
         /// <exception cref="ArgumentNullException"><paramref name="version"/> is null</exception>
         /// <exception cref="ArgumentException"><paramref name="version"/> is too long (so total lenght of registry key name exceds 255 characters)</exception>

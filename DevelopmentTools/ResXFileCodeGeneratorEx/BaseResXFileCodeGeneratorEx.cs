@@ -26,7 +26,9 @@ namespace DMKSoftware.CodeGenerators
 			[Description("8.0")]
 			V80,
 			[Description("9.0")]
-			V90
+			V90,
+            [Description("10.0")]
+            V100
 		}
 
         private enum LanguageSpecifier

@@ -217,4 +217,7 @@
   <data name="e_ExitCode" xml:space="preserve">
     <value>Process {0} exited with code {1}.</value>
   </data>
+  <data name="EnvironmentalVariables" xml:space="preserve">
+    <value>Environmental variables:</value>
+  </data>
 </root>

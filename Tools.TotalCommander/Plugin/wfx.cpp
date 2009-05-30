@@ -17,9 +17,10 @@ using namespace Tools::TotalCommanderT;
 #undef TC_FUNC_MEMBEROF
 #undef TC_FUNC_PREFIX_A Fs
 #undef TC_FUNC_PREFIX_B
+#define TC_FNC_BODY
 
 #pragma unmanaged
-/// <summary>Inmanaged DLL entry point. This method canot contain calls to managed code.</summary>
+/// <summary>Unmanaged DLL entry point. This method canot contain calls to managed code.</summary>
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved){return TRUE;}
 #pragma managed
 ///// <summary>Contains value indicationg if it is necessary to initialize runtime environment and plugin instance</summary>

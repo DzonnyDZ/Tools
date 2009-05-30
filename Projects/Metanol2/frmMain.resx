@@ -217,7 +217,7 @@
     <value>lvwImages</value>
   </data>
   <data name="&gt;&gt;lvwImages.Type" xml:space="preserve">
-    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.1.37496, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
+    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.1.37686, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
   </data>
   <data name="&gt;&gt;lvwImages.Parent" xml:space="preserve">
     <value>splBrowser.Panel2</value>
@@ -1099,7 +1099,7 @@
     <value>kweKeywords</value>
   </data>
   <data name="&gt;&gt;kweKeywords.Type" xml:space="preserve">
-    <value>Tools.WindowsT.FormsT.KeyWordsEditor, Tools.Windows, Version=1.5.1.23900, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
+    <value>Tools.WindowsT.FormsT.KeyWordsEditor, Tools.Windows, Version=1.5.2.0, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
   </data>
   <data name="&gt;&gt;kweKeywords.Parent" xml:space="preserve">
     <value>fraKeywords</value>
@@ -1747,7 +1747,7 @@
     <value>3, 3</value>
   </data>
   <data name="prgExifExif.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
+    <value>457, 361</value>
   </data>
   <data name="prgExifExif.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1771,7 +1771,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tapExifExif.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
+    <value>463, 367</value>
   </data>
   <data name="tapExifExif.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1798,7 +1798,7 @@
     <value>3, 3</value>
   </data>
   <data name="prgExifGPS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
+    <value>457, 361</value>
   </data>
   <data name="prgExifGPS.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1822,7 +1822,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tapExifGPS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
+    <value>463, 367</value>
   </data>
   <data name="tapExifGPS.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1849,7 +1849,7 @@
     <value>3, 3</value>
   </data>
   <data name="prgExifInterop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
+    <value>457, 361</value>
   </data>
   <data name="prgExifInterop.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1873,7 +1873,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tapExifInterop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
+    <value>463, 367</value>
   </data>
   <data name="tapExifInterop.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1900,7 +1900,7 @@
     <value>3, 3</value>
   </data>
   <data name="prgExifThumbnail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
+    <value>457, 361</value>
   </data>
   <data name="prgExifThumbnail.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1924,7 +1924,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tapExifThumbnail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
+    <value>463, 367</value>
   </data>
   <data name="tapExifThumbnail.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2169,6 +2169,75 @@
   <data name="tscMain.Text" xml:space="preserve">
     <value>ToolStripContainer1</value>
   </data>
+  <metadata name="tosMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>3, 24</value>
+  </metadata>
+  <data name="tosMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="tsbBack.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tsbBack.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbBack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="tsbBack.Text" xml:space="preserve">
+    <value>Navigate backward</value>
+  </data>
+  <data name="tsbForward.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tsbForward.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbForward.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="tsbForward.Text" xml:space="preserve">
+    <value>Navigate forward</value>
+  </data>
+  <data name="tsbRefresh.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="tsbRefresh.Text" xml:space="preserve">
+    <value>Refresh folder</value>
+  </data>
+  <data name="tsbSaveAll.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tsbSaveAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="tsbSaveAll.Text" xml:space="preserve">
+    <value>Save all</value>
+  </data>
+  <data name="tosMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 24</value>
+  </data>
+  <data name="tosMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 25</value>
+  </data>
+  <data name="tosMain.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tosMain.Name" xml:space="preserve">
+    <value>tosMain</value>
+  </data>
+  <data name="&gt;&gt;tosMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tosMain.Parent" xml:space="preserve">
+    <value>tscMain.TopToolStripPanel</value>
+  </data>
+  <data name="&gt;&gt;tosMain.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="msnMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>0, 0</value>
   </metadata>
@@ -2311,75 +2380,6 @@
     <value>tscMain.TopToolStripPanel</value>
   </data>
   <data name="&gt;&gt;msnMain.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="tosMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>3, 24</value>
-  </metadata>
-  <data name="tosMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="tsbBack.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="tsbBack.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="tsbBack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="tsbBack.Text" xml:space="preserve">
-    <value>Navigate backward</value>
-  </data>
-  <data name="tsbForward.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="tsbForward.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="tsbForward.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="tsbForward.Text" xml:space="preserve">
-    <value>Navigate forward</value>
-  </data>
-  <data name="tsbRefresh.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="tsbRefresh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="tsbRefresh.Text" xml:space="preserve">
-    <value>Refresh folder</value>
-  </data>
-  <data name="tsbSaveAll.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="tsbSaveAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="tsbSaveAll.Text" xml:space="preserve">
-    <value>Save all</value>
-  </data>
-  <data name="tosMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 24</value>
-  </data>
-  <data name="tosMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 25</value>
-  </data>
-  <data name="tosMain.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tosMain.Name" xml:space="preserve">
-    <value>tosMain</value>
-  </data>
-  <data name="&gt;&gt;tosMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tosMain.Parent" xml:space="preserve">
-    <value>tscMain.TopToolStripPanel</value>
-  </data>
-  <data name="&gt;&gt;tosMain.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="&gt;&gt;tscMain.TopToolStripPanel.Name" xml:space="preserve">
@@ -2785,30 +2785,6 @@
   <data name="&gt;&gt;tslNoFiles.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tsbBack.Name" xml:space="preserve">
-    <value>tsbBack</value>
-  </data>
-  <data name="&gt;&gt;tsbBack.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbForward.Name" xml:space="preserve">
-    <value>tsbForward</value>
-  </data>
-  <data name="&gt;&gt;tsbForward.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbRefresh.Name" xml:space="preserve">
-    <value>tsbRefresh</value>
-  </data>
-  <data name="&gt;&gt;tsbRefresh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbSaveAll.Name" xml:space="preserve">
-    <value>tsbSaveAll</value>
-  </data>
-  <data name="&gt;&gt;tsbSaveAll.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;tmiFile.Name" xml:space="preserve">
     <value>tmiFile</value>
   </data>
@@ -2904,6 +2880,30 @@
   </data>
   <data name="&gt;&gt;tmiVersionHistory.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbBack.Name" xml:space="preserve">
+    <value>tsbBack</value>
+  </data>
+  <data name="&gt;&gt;tsbBack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbForward.Name" xml:space="preserve">
+    <value>tsbForward</value>
+  </data>
+  <data name="&gt;&gt;tsbForward.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Name" xml:space="preserve">
+    <value>tsbRefresh</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbSaveAll.Name" xml:space="preserve">
+    <value>tsbSaveAll</value>
+  </data>
+  <data name="&gt;&gt;tsbSaveAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bgwImages.Name" xml:space="preserve">
     <value>bgwImages</value>

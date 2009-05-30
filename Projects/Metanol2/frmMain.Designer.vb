@@ -93,11 +93,6 @@ Partial Class frmMain
         Me.tpbLoading = New System.Windows.Forms.ToolStripProgressBar
         Me.tslFolder = New System.Windows.Forms.ToolStripStatusLabel
         Me.tslNoFiles = New System.Windows.Forms.ToolStripStatusLabel
-        Me.tosMain = New System.Windows.Forms.ToolStrip
-        Me.tsbBack = New System.Windows.Forms.ToolStripButton
-        Me.tsbForward = New System.Windows.Forms.ToolStripButton
-        Me.tsbRefresh = New System.Windows.Forms.ToolStripButton
-        Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
         Me.msnMain = New System.Windows.Forms.MenuStrip
         Me.tmiFile = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiBrowse = New System.Windows.Forms.ToolStripMenuItem
@@ -115,6 +110,11 @@ Partial Class frmMain
         Me.tmiHelp = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiAbout = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiVersionHistory = New System.Windows.Forms.ToolStripMenuItem
+        Me.tosMain = New System.Windows.Forms.ToolStrip
+        Me.tsbBack = New System.Windows.Forms.ToolStripButton
+        Me.tsbForward = New System.Windows.Forms.ToolStripButton
+        Me.tsbRefresh = New System.Windows.Forms.ToolStripButton
+        Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
         Me.bgwImages = New System.ComponentModel.BackgroundWorker
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
         Me.bgwSave = New System.ComponentModel.BackgroundWorker
@@ -153,8 +153,8 @@ Partial Class frmMain
         Me.tscMain.TopToolStripPanel.SuspendLayout()
         Me.tscMain.SuspendLayout()
         Me.stsStatus.SuspendLayout()
-        Me.tosMain.SuspendLayout()
         Me.msnMain.SuspendLayout()
+        Me.tosMain.SuspendLayout()
         Me.SuspendLayout()
         '
         'splMain
@@ -622,8 +622,8 @@ Partial Class frmMain
         '
         'tscMain.TopToolStripPanel
         '
-        Me.tscMain.TopToolStripPanel.Controls.Add(Me.msnMain)
         Me.tscMain.TopToolStripPanel.Controls.Add(Me.tosMain)
+        Me.tscMain.TopToolStripPanel.Controls.Add(Me.msnMain)
         '
         'stsStatus
         '
@@ -646,40 +646,6 @@ Partial Class frmMain
         '
         Me.tslNoFiles.Name = "tslNoFiles"
         resources.ApplyResources(Me.tslNoFiles, "tslNoFiles")
-        '
-        'tosMain
-        '
-        resources.ApplyResources(Me.tosMain, "tosMain")
-        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
-        Me.tosMain.Name = "tosMain"
-        '
-        'tsbBack
-        '
-        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        resources.ApplyResources(Me.tsbBack, "tsbBack")
-        Me.tsbBack.Image = Global.Tools.Metanol.My.Resources.Resources.NavBack
-        Me.tsbBack.Name = "tsbBack"
-        '
-        'tsbForward
-        '
-        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        resources.ApplyResources(Me.tsbForward, "tsbForward")
-        Me.tsbForward.Image = Global.Tools.Metanol.My.Resources.Resources.NavForward
-        Me.tsbForward.Name = "tsbForward"
-        '
-        'tsbRefresh
-        '
-        Me.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
-        resources.ApplyResources(Me.tsbRefresh, "tsbRefresh")
-        Me.tsbRefresh.Name = "tsbRefresh"
-        '
-        'tsbSaveAll
-        '
-        Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
-        resources.ApplyResources(Me.tsbSaveAll, "tsbSaveAll")
-        Me.tsbSaveAll.Name = "tsbSaveAll"
         '
         'msnMain
         '
@@ -775,6 +741,40 @@ Partial Class frmMain
         Me.tmiVersionHistory.Name = "tmiVersionHistory"
         resources.ApplyResources(Me.tmiVersionHistory, "tmiVersionHistory")
         '
+        'tosMain
+        '
+        resources.ApplyResources(Me.tosMain, "tosMain")
+        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
+        Me.tosMain.Name = "tosMain"
+        '
+        'tsbBack
+        '
+        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.tsbBack, "tsbBack")
+        Me.tsbBack.Image = Global.Tools.Metanol.My.Resources.Resources.NavBack
+        Me.tsbBack.Name = "tsbBack"
+        '
+        'tsbForward
+        '
+        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.tsbForward, "tsbForward")
+        Me.tsbForward.Image = Global.Tools.Metanol.My.Resources.Resources.NavForward
+        Me.tsbForward.Name = "tsbForward"
+        '
+        'tsbRefresh
+        '
+        Me.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
+        resources.ApplyResources(Me.tsbRefresh, "tsbRefresh")
+        Me.tsbRefresh.Name = "tsbRefresh"
+        '
+        'tsbSaveAll
+        '
+        Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
+        resources.ApplyResources(Me.tsbSaveAll, "tsbSaveAll")
+        Me.tsbSaveAll.Name = "tsbSaveAll"
+        '
         'bgwImages
         '
         Me.bgwImages.WorkerReportsProgress = True
@@ -841,10 +841,10 @@ Partial Class frmMain
         Me.tscMain.PerformLayout()
         Me.stsStatus.ResumeLayout(False)
         Me.stsStatus.PerformLayout()
-        Me.tosMain.ResumeLayout(False)
-        Me.tosMain.PerformLayout()
         Me.msnMain.ResumeLayout(False)
         Me.msnMain.PerformLayout()
+        Me.tosMain.ResumeLayout(False)
+        Me.tosMain.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

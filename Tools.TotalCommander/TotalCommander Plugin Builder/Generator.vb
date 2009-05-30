@@ -377,6 +377,9 @@ Public Class Generator
             dic.Add("PluginOutputExtension", ext)
             dic.Add("PluginOutputName", name)
             Log(My.Resources.i_InvokingCompiler, IO.Path.GetFileName(VCBuild))
+            Log(My.Resources.EnvironmentalVariables)
+            Log(vbTab & "PluginOutputExtension = {0}", ext)
+            Log(vbTab & "PluginOutputName = {0}", name)
             ec = Exec(VCBuild, String.Format("/r ""{0}""", ProjectFile), dic)
             If ec <> 0 Then Throw New ExitCodeException(ec, IO.Path.GetFileName(VCBuild))
             'Sign
@@ -546,6 +549,7 @@ Public Class Generator
     ''' <summary>Executes a process and waits for it to terminate</summary>
     ''' <param name="Program">Program to execute</param>
     ''' <param name="CommandLine">Program arguments</param>
+    ''' <param name="Env">Environmentl variables for the process</param>
     ''' <returns>Program exit code</returns>
     Private Function Exec%(ByVal Program$, ByVal CommandLine$, Optional ByVal Env As Dictionary(Of String, String) = Nothing) ', ByVal setenv As Boolean, ByVal objDir$) As Integer
         Dim p As New Process

@@ -1,5 +1,5 @@
 ﻿''' <summary>Builds a plugin</summary>
-Module Builder
+Friend Module Builder
     ''' <summary>Builds a plugin</summary>
     Sub Main()
         If My.Application.CommandLineArgs.Count < 0 Then

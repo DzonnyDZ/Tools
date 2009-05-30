@@ -149,7 +149,6 @@ Namespace CodeDomT
             w.Flush()
             txtRight.Text = b.ToString
         End Sub
-
         Private Sub cmdInLanguage_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdInLanguage.Click
             cmsLanguages.Show(sender, 0, sender.ClientSize.Height)
         End Sub
