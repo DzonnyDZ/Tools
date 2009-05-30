@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C3B940DA-5325-43D8-94E1-CF87255DA471}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -22,6 +22,8 @@
     <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>0</FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +33,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>wfx sample.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,6 +43,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>wfx sample.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -125,7 +129,7 @@
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
       <Name>Tools.Win</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcproj">
+    <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcxproj">
       <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
       <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
     </ProjectReference>
@@ -133,7 +137,7 @@
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Tools\Tools.vbproj">
+    <ProjectReference Include="..\..\Tools\Tools.Core.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>

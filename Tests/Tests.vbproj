@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{79B67251-D837-4367-B571-AB806C2C7C74}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -23,7 +23,7 @@
     <Config>1</Config>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -41,6 +41,7 @@
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
     <Config>1</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,7 @@
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
     <Config>5</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,6 +66,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 3.5</DefineConstants>
     <Config>2</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,6 +79,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 3.5</DefineConstants>
     <Config>3</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +92,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 3.5</DefineConstants>
     <Config>4</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CppCodeProvider, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -721,7 +726,7 @@
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools IL\Tools IL.vcproj">
+    <ProjectReference Include="..\Tools IL\Tools IL.vcxproj">
       <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
       <Name>Tools.IL</Name>
     </ProjectReference>
@@ -737,7 +742,7 @@
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
       <Name>Tools.Win</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.vbproj">
+    <ProjectReference Include="..\Tools\Tools.Core.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
@@ -758,8 +763,12 @@
     <Page Include="Windows\WPF\SystemTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\WPF\Controls\winNumericUpDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

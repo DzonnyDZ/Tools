@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 10
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{847298BA-D4D1-4EBD-AF69-0193A77DC90C}"
 	ProjectSection(SolutionItems) = preProject
 		Latest.bat = Latest.bat
@@ -42,30 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cz", "cz", "{97FEC59D-58AC-
 		Articles\cz\XPathObjectNavigator.htm = Articles\cz\XPathObjectNavigator.htm
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
-	ProjectSection(ProjectDependencies) = postProject
-		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC} = {268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}
-	EndProjectSection
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
-	ProjectSection(ProjectDependencies) = postProject
-		{EC883124-C0D6-4349-B3D7-22A688CE6BA2} = {EC883124-C0D6-4349-B3D7-22A688CE6BA2}
-	EndProjectSection
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Win", "Tools Win\Tools.Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.VisualStudio", "Tools Visual Studio\Tools.VisualStudio.vbproj", "{DCD6658E-6008-4668-BBDF-CCB0F0267759}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol Screen Saver", "Projects\Metanol Screen Saver\Metanol Screen Saver.vbproj", "{88FEE481-A97F-4DD6-B206-5B33F777AD4D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformCodeGenerator", "DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj", "{43599321-D767-4BF7-A725-34850D057B4E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.VisualStudio.CS", "Tools VisualStudio CS\Tools.VisualStudio.CS.csproj", "{6904C0F4-0535-48EB-AFC1-CE1396418D00}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.IL", "Tools IL\Tools IL.vcproj", "{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Experimental", "Experimental\Experimental.vbproj", "{088CB10C-E5D3-4537-979F-F5BED401DB25}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{B1BD67A4-BEC2-442D-8F70-DAEB27735602}"
 	ProjectSection(SolutionItems) = preProject
 		SharedFiles\AssemblyStage.cs = SharedFiles\AssemblyStage.cs
@@ -86,6 +62,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intellisense", "Intellisens
 		DevelopmentTools\Intellisense\VBXMLDoc.Xml = DevelopmentTools\Intellisense\VBXMLDoc.Xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{8129B61A-3FCE-4012-8013-377A87D4132B}"
+	ProjectSection(SolutionItems) = preProject
+		DLLs\VJSharpCodeProvider.DLL = DLLs\VJSharpCodeProvider.DLL
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools.TotalCommander", "Tools.TotalCommander", "{708C9420-4676-4314-B690-7A887F8CC992}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}"
+	ProjectSection(SolutionItems) = preProject
+		Articles\en\TCPlugin in VB.htm = Articles\en\TCPlugin in VB.htm
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EC883124-C0D6-4349-B3D7-22A688CE6BA2} = {EC883124-C0D6-4349-B3D7-22A688CE6BA2}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Win", "Tools Win\Tools.Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.VisualStudio", "Tools Visual Studio\Tools.VisualStudio.vbproj", "{DCD6658E-6008-4668-BBDF-CCB0F0267759}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol Screen Saver", "Projects\Metanol Screen Saver\Metanol Screen Saver.vbproj", "{88FEE481-A97F-4DD6-B206-5B33F777AD4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformCodeGenerator", "DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj", "{43599321-D767-4BF7-A725-34850D057B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.VisualStudio.CS", "Tools VisualStudio CS\Tools.VisualStudio.CS.csproj", "{6904C0F4-0535-48EB-AFC1-CE1396418D00}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.IL", "Tools IL\Tools IL.vcxproj", "{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Experimental", "Experimental\Experimental.vbproj", "{088CB10C-E5D3-4537-979F-F5BED401DB25}"
+EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CommentsMerge", "DevelopmentTools\CommentsMerge\CommentsMerge.vbproj", "{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol2", "Projects\Metanol2\Metanol2.vbproj", "{DC459772-7889-47B1-9471-7F9ABA3C3FC4}"
@@ -93,11 +100,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResXFileCodeGeneratorEx", "DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj", "{A8636D77-B876-4E6A-863D-8C924E40955C}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.VisualStudio.Macros", "DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj", "{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{8129B61A-3FCE-4012-8013-377A87D4132B}"
-	ProjectSection(SolutionItems) = preProject
-		DLLs\VJSharpCodeProvider.DLL = DLLs\VJSharpCodeProvider.DLL
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Windows", "Tools.Windows\Tools.Windows.vbproj", "{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -110,11 +112,9 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VersionCorrector", "Develop
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UnitTests", "UnitTests\UnitTests.vbproj", "{4038CE43-6F12-4DC1-AE48-D0444A56BE41}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.TotalCommander", "Tools.TotalCommander\Tools.TotalCommander.vcproj", "{7F278F32-47B4-4F4E-85B2-BAEAA406951B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.TotalCommander", "Tools.TotalCommander\Tools.TotalCommander.vcxproj", "{7F278F32-47B4-4F4E-85B2-BAEAA406951B}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ResXFileGenerator", "DevelopmentTools\ResXFileGenerator\ResXFileGenerator.vbproj", "{833877EA-2CEA-46EE-B475-14051B77D9F0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools.TotalCommander", "Tools.TotalCommander", "{708C9420-4676-4314-B690-7A887F8CC992}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TotalCommander Plugin Builder", "Tools.TotalCommander\TotalCommander Plugin Builder\TotalCommander Plugin Builder.vbproj", "{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}"
 EndProject
@@ -123,105 +123,158 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "wfx sample", "Samples\wfx s
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF} = {D8000EE2-BBD5-4E10-97E2-B1CF562753EF}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.TotalCommander.Plugin", "Tools.TotalCommander\Plugin\Tools.TotalCommander.Plugin.vcproj", "{97FA3B48-FA55-43A0-9B86-82415A1E29F3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.TotalCommander.Plugin", "Tools.TotalCommander\Plugin\Tools.TotalCommander.Plugin.vcxproj", "{97FA3B48-FA55-43A0-9B86-82415A1E29F3}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PseudoZip", "DevelopmentTools\PseudoZip\PseudoZip.vbproj", "{FE543F37-B717-412E-98A1-4EA3DDE2EF34}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}"
-	ProjectSection(SolutionItems) = preProject
-		Articles\en\TCPlugin in VB.htm = Articles\en\TCPlugin in VB.htm
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XsdGenerator", "DevelopmentTools\XsdGenerator\XsdGenerator.csproj", "{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Core", "Tools\Tools.Core.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 24
+		SccNumberOfProjects = 40
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccProjectUniqueName0 = Experimental\\Experimental.vbproj
-		SccProjectName0 = Experimental
-		SccLocalPath0 = Experimental
-		SccLocalPath1 = .
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tests\\Tests.vbproj
-		SccProjectName3 = Tests
-		SccLocalPath3 = Tests
-		SccProjectUniqueName4 = Tools\u0020Win\\Tools.Win.vbproj
-		SccProjectName4 = Tools\u0020Win
-		SccLocalPath4 = Tools\u0020Win
-		SccProjectUniqueName5 = Tools\u0020Visual\u0020Studio\\Tools.VisualStudio.vbproj
-		SccProjectName5 = Tools\u0020Visual\u0020Studio
-		SccLocalPath5 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName6 = DevelopmentTools\\TransformCodeGenerator\\TransformCodeGenerator.csproj
-		SccProjectTopLevelParentUniqueName6 = Tools.sln
-		SccProjectName6 = DevelopmentTools/TransformCodeGenerator
-		SccLocalPath6 = DevelopmentTools\\TransformCodeGenerator
-		SccProjectUniqueName7 = Tools\u0020VisualStudio\u0020CS\\Tools.VisualStudio.CS.csproj
-		SccProjectName7 = Tools\u0020VisualStudio\u0020CS
-		SccLocalPath7 = Tools\u0020VisualStudio\u0020CS
-		SccProjectUniqueName8 = Tools\u0020IL\\Tools\u0020IL.vcproj
-		SccProjectName8 = Tools\u0020IL
-		SccLocalPath8 = Tools\u0020IL
-		SccProjectUniqueName9 = DevelopmentTools\\CommentsMerge\\CommentsMerge.vbproj
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Tests\\Tests.vbproj
+		SccProjectName1 = Tests
+		SccLocalPath1 = Tests
+		SccProjectUniqueName2 = Tools\u0020Win\\Tools.Win.vbproj
+		SccProjectName2 = Tools\u0020Win
+		SccLocalPath2 = Tools\u0020Win
+		SccProjectUniqueName3 = Tools\u0020Visual\u0020Studio\\Tools.VisualStudio.vbproj
+		SccProjectName3 = Tools\u0020Visual\u0020Studio
+		SccLocalPath3 = Tools\u0020Visual\u0020Studio
+		SccProjectUniqueName4 = DevelopmentTools\\TransformCodeGenerator\\TransformCodeGenerator.csproj
+		SccProjectTopLevelParentUniqueName4 = Tools.sln
+		SccProjectName4 = DevelopmentTools/TransformCodeGenerator
+		SccLocalPath4 = DevelopmentTools\\TransformCodeGenerator
+		SccProjectUniqueName5 = Tools\u0020VisualStudio\u0020CS\\Tools.VisualStudio.CS.csproj
+		SccProjectName5 = Tools\u0020VisualStudio\u0020CS
+		SccLocalPath5 = Tools\u0020VisualStudio\u0020CS
+		SccProjectUniqueName6 = Experimental\\Experimental.vbproj
+		SccProjectName6 = Experimental
+		SccLocalPath6 = Experimental
+		SccProjectUniqueName7 = DevelopmentTools\\CommentsMerge\\CommentsMerge.vbproj
+		SccProjectTopLevelParentUniqueName7 = Tools.sln
+		SccProjectName7 = DevelopmentTools/CommentsMerge
+		SccLocalPath7 = DevelopmentTools\\CommentsMerge
+		SccProjectUniqueName8 = Projects\\Metanol2\\Metanol2.vbproj
+		SccProjectTopLevelParentUniqueName8 = Tools.sln
+		SccProjectName8 = Projects/Metanol2
+		SccLocalPath8 = Projects\\Metanol2
+		SccProjectUniqueName9 = DevelopmentTools\\ResXFileCodeGeneratorEx\\ResXFileCodeGeneratorEx.csproj
 		SccProjectTopLevelParentUniqueName9 = Tools.sln
-		SccProjectName9 = DevelopmentTools/CommentsMerge
-		SccLocalPath9 = DevelopmentTools\\CommentsMerge
-		SccProjectUniqueName10 = Projects\\Metanol2\\Metanol2.vbproj
+		SccProjectName9 = DevelopmentTools/ResXFileCodeGeneratorEx
+		SccLocalPath9 = DevelopmentTools\\ResXFileCodeGeneratorEx
+		SccProjectUniqueName10 = DevelopmentTools\\Macros\\Tools.VisualStudio.Macros.vbproj
 		SccProjectTopLevelParentUniqueName10 = Tools.sln
-		SccProjectName10 = Projects/Metanol2
-		SccLocalPath10 = Projects\\Metanol2
-		SccProjectUniqueName11 = DevelopmentTools\\ResXFileCodeGeneratorEx\\ResXFileCodeGeneratorEx.csproj
-		SccProjectTopLevelParentUniqueName11 = Tools.sln
-		SccProjectName11 = DevelopmentTools/ResXFileCodeGeneratorEx
-		SccLocalPath11 = DevelopmentTools\\ResXFileCodeGeneratorEx
-		SccProjectUniqueName12 = DevelopmentTools\\Macros\\Tools.VisualStudio.Macros.vbproj
-		SccProjectTopLevelParentUniqueName12 = Tools.sln
-		SccProjectName12 = DevelopmentTools/Macros
-		SccLocalPath12 = DevelopmentTools\\Macros
-		SccProjectUniqueName13 = Tools.Windows\\Tools.Windows.vbproj
-		SccProjectName13 = Tools.Windows
-		SccLocalPath13 = Tools.Windows
-		SccProjectUniqueName14 = Tools.Metadata\\Tools.Metadata.vbproj
-		SccProjectName14 = Tools.Metadata
-		SccLocalPath14 = Tools.Metadata
-		SccProjectUniqueName15 = DevelopmentTools\\VersionCorrector\\VersionCorrector.vbproj
+		SccProjectName10 = DevelopmentTools/Macros
+		SccLocalPath10 = DevelopmentTools\\Macros
+		SccProjectUniqueName11 = Tools.Windows\\Tools.Windows.vbproj
+		SccProjectName11 = Tools.Windows
+		SccLocalPath11 = Tools.Windows
+		SccProjectUniqueName12 = Tools.Metadata\\Tools.Metadata.vbproj
+		SccProjectName12 = Tools.Metadata
+		SccLocalPath12 = Tools.Metadata
+		SccProjectUniqueName13 = DevelopmentTools\\VersionCorrector\\VersionCorrector.vbproj
+		SccProjectTopLevelParentUniqueName13 = Tools.sln
+		SccProjectName13 = DevelopmentTools/VersionCorrector
+		SccLocalPath13 = DevelopmentTools\\VersionCorrector
+		SccProjectUniqueName14 = UnitTests\\UnitTests.vbproj
+		SccProjectName14 = UnitTests
+		SccLocalPath14 = UnitTests
+		SccProjectUniqueName15 = DevelopmentTools\\ResXFileGenerator\\ResXFileGenerator.vbproj
 		SccProjectTopLevelParentUniqueName15 = Tools.sln
-		SccProjectName15 = DevelopmentTools/VersionCorrector
-		SccLocalPath15 = DevelopmentTools\\VersionCorrector
-		SccProjectUniqueName16 = UnitTests\\UnitTests.vbproj
-		SccProjectName16 = UnitTests
-		SccLocalPath16 = UnitTests
-		SccProjectUniqueName17 = Tools.TotalCommander\\Tools.TotalCommander.vcproj
+		SccProjectName15 = DevelopmentTools/ResXFileGenerator
+		SccLocalPath15 = DevelopmentTools\\ResXFileGenerator
+		SccProjectUniqueName16 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder\\TotalCommander\u0020Plugin\u0020Builder.vbproj
+		SccProjectTopLevelParentUniqueName16 = Tools.sln
+		SccProjectName16 = Tools.TotalCommander/TotalCommander\u0020Plugin\u0020Builder
+		SccLocalPath16 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder
+		SccProjectUniqueName17 = Samples\\wfx\u0020sample\\wfx\u0020sample.vbproj
 		SccProjectTopLevelParentUniqueName17 = Tools.sln
-		SccProjectName17 = Tools.TotalCommander
-		SccLocalPath17 = Tools.TotalCommander
-		SccProjectUniqueName18 = DevelopmentTools\\ResXFileGenerator\\ResXFileGenerator.vbproj
+		SccProjectName17 = Samples/wfx\u0020sample
+		SccLocalPath17 = Samples\\wfx\u0020sample
+		SccProjectUniqueName18 = DevelopmentTools\\PseudoZip\\PseudoZip.vbproj
 		SccProjectTopLevelParentUniqueName18 = Tools.sln
-		SccProjectName18 = DevelopmentTools/ResXFileGenerator
-		SccLocalPath18 = DevelopmentTools\\ResXFileGenerator
-		SccProjectUniqueName19 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder\\TotalCommander\u0020Plugin\u0020Builder.vbproj
+		SccProjectName18 = DevelopmentTools/PseudoZip
+		SccLocalPath18 = DevelopmentTools\\PseudoZip
+		SccProjectUniqueName19 = DevelopmentTools\\XsdGenerator\\XsdGenerator.csproj
 		SccProjectTopLevelParentUniqueName19 = Tools.sln
-		SccProjectName19 = Tools.TotalCommander/TotalCommander\u0020Plugin\u0020Builder
-		SccLocalPath19 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder
-		SccProjectUniqueName20 = Samples\\wfx\u0020sample\\wfx\u0020sample.vbproj
-		SccProjectTopLevelParentUniqueName20 = Tools.sln
-		SccProjectName20 = Samples/wfx\u0020sample
-		SccLocalPath20 = Samples\\wfx\u0020sample
-		SccProjectUniqueName21 = Tools.TotalCommander\\Plugin\\Tools.TotalCommander.Plugin.vcproj
-		SccProjectTopLevelParentUniqueName21 = Tools.sln
-		SccProjectName21 = Tools.TotalCommander/Plugin
-		SccLocalPath21 = Tools.TotalCommander\\Plugin
-		SccProjectUniqueName22 = DevelopmentTools\\PseudoZip\\PseudoZip.vbproj
-		SccProjectTopLevelParentUniqueName22 = Tools.sln
-		SccProjectName22 = DevelopmentTools/PseudoZip
-		SccLocalPath22 = DevelopmentTools\\PseudoZip
-		SccProjectUniqueName23 = DevelopmentTools\\XsdGenerator\\XsdGenerator.csproj
-		SccProjectTopLevelParentUniqueName23 = Tools.sln
-		SccProjectName23 = DevelopmentTools/XsdGenerator
-		SccLocalPath23 = DevelopmentTools\\XsdGenerator
+		SccProjectName19 = DevelopmentTools/XsdGenerator
+		SccLocalPath19 = DevelopmentTools\\XsdGenerator
+		SccProjectUniqueName20 = Tools\\Tools.Core.vbproj
+		SccProjectName20 = Tools
+		SccLocalPath20 = Tools
+		SccProjectUniqueName21 = Tools\u0020IL\\Tools\u0020IL.vcxproj
+		SccProjectName21 = Tools\u0020IL
+		SccLocalPath21 = Tools\u0020IL
+		SccProjectUniqueName22 = Tools\u0020VisualStudio\u0020CS\\Tools.VisualStudio.CS.csproj
+		SccProjectName22 = Tools\u0020VisualStudio\u0020CS
+		SccLocalPath22 = Tools\u0020VisualStudio\u0020CS
+		SccProjectUniqueName23 = Tools\u0020Visual\u0020Studio\\Tools.VisualStudio.vbproj
+		SccProjectName23 = Tools\u0020Visual\u0020Studio
+		SccLocalPath23 = Tools\u0020Visual\u0020Studio
+		SccProjectUniqueName24 = DevelopmentTools\\CommentsMerge\\CommentsMerge.vbproj
+		SccProjectTopLevelParentUniqueName24 = Tools.sln
+		SccProjectName24 = DevelopmentTools/CommentsMerge
+		SccLocalPath24 = DevelopmentTools\\CommentsMerge
+		SccProjectUniqueName25 = DevelopmentTools\\PseudoZip\\PseudoZip.vbproj
+		SccProjectTopLevelParentUniqueName25 = Tools.sln
+		SccProjectName25 = DevelopmentTools/PseudoZip
+		SccLocalPath25 = DevelopmentTools\\PseudoZip
+		SccProjectUniqueName26 = DevelopmentTools\\VersionCorrector\\VersionCorrector.vbproj
+		SccProjectTopLevelParentUniqueName26 = Tools.sln
+		SccProjectName26 = DevelopmentTools/VersionCorrector
+		SccLocalPath26 = DevelopmentTools\\VersionCorrector
+		SccProjectUniqueName27 = DevelopmentTools\\TransformCodeGenerator\\TransformCodeGenerator.csproj
+		SccProjectTopLevelParentUniqueName27 = Tools.sln
+		SccProjectName27 = DevelopmentTools/TransformCodeGenerator
+		SccLocalPath27 = DevelopmentTools\\TransformCodeGenerator
+		SccProjectUniqueName28 = DevelopmentTools\\XsdGenerator\\XsdGenerator.csproj
+		SccProjectTopLevelParentUniqueName28 = Tools.sln
+		SccProjectName28 = DevelopmentTools/XsdGenerator
+		SccLocalPath28 = DevelopmentTools\\XsdGenerator
+		SccProjectUniqueName29 = DevelopmentTools\\ResXFileGenerator\\ResXFileGenerator.vbproj
+		SccProjectTopLevelParentUniqueName29 = Tools.sln
+		SccProjectName29 = DevelopmentTools/ResXFileGenerator
+		SccLocalPath29 = DevelopmentTools\\ResXFileGenerator
+		SccProjectUniqueName30 = Projects\\Metanol2\\Metanol2.vbproj
+		SccProjectTopLevelParentUniqueName30 = Tools.sln
+		SccProjectName30 = Projects/Metanol2
+		SccLocalPath30 = Projects\\Metanol2
+		SccProjectUniqueName31 = Tools.TotalCommander\\Tools.TotalCommander.vcxproj
+		SccProjectTopLevelParentUniqueName31 = Tools.sln
+		SccProjectName31 = Tools.TotalCommander
+		SccLocalPath31 = Tools.TotalCommander
+		SccProjectUniqueName32 = Tools.TotalCommander\\Plugin\\Tools.TotalCommander.Plugin.vcxproj
+		SccProjectTopLevelParentUniqueName32 = Tools.sln
+		SccProjectName32 = Tools.TotalCommander/Plugin
+		SccLocalPath32 = Tools.TotalCommander\\Plugin
+		SccProjectUniqueName33 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder\\TotalCommander\u0020Plugin\u0020Builder.vbproj
+		SccProjectTopLevelParentUniqueName33 = Tools.sln
+		SccProjectName33 = Tools.TotalCommander/TotalCommander\u0020Plugin\u0020Builder
+		SccLocalPath33 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder
+		SccProjectUniqueName34 = Samples\\wfx\u0020sample\\wfx\u0020sample.vbproj
+		SccProjectTopLevelParentUniqueName34 = Tools.sln
+		SccProjectName34 = Samples/wfx\u0020sample
+		SccLocalPath34 = Samples\\wfx\u0020sample
+		SccProjectUniqueName35 = Tests\\Tests.vbproj
+		SccProjectName35 = Tests
+		SccLocalPath35 = Tests
+		SccProjectUniqueName36 = UnitTests\\UnitTests.vbproj
+		SccProjectName36 = UnitTests
+		SccLocalPath36 = UnitTests
+		SccProjectUniqueName37 = Experimental\\Experimental.vbproj
+		SccProjectName37 = Experimental
+		SccLocalPath37 = Experimental
+		SccProjectUniqueName38 = DevelopmentTools\\Macros\\Tools.VisualStudio.Macros.vbproj
+		SccProjectTopLevelParentUniqueName38 = Tools.sln
+		SccProjectName38 = DevelopmentTools/Macros
+		SccLocalPath38 = DevelopmentTools\\Macros
+		SccLocalPath39 = .
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Tools.vsmdi
@@ -236,6 +289,9 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|Win32 = Debug|Win32
+		Nightly|Any CPU = Nightly|Any CPU
+		Nightly|Mixed Platforms = Nightly|Mixed Platforms
+		Nightly|Win32 = Nightly|Win32
 		RC|Any CPU = RC|Any CPU
 		RC|Mixed Platforms = RC|Mixed Platforms
 		RC|Win32 = RC|Win32
@@ -245,27 +301,6 @@ Global
 		Description = ĐTools
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Mixed Platforms.ActiveCfg = Alpha|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Win32.ActiveCfg = Alpha|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Any CPU.ActiveCfg = Beta|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Any CPU.Build.0 = Beta|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Mixed Platforms.ActiveCfg = Beta|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Win32.ActiveCfg = Beta|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Any CPU.ActiveCfg = Nightly|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Any CPU.Build.0 = Nightly|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Win32.ActiveCfg = Nightly|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Any CPU.ActiveCfg = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Any CPU.Build.0 = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Win32.ActiveCfg = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Win32.ActiveCfg = Release|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Alpha|Mixed Platforms.ActiveCfg = Alpha|Any CPU
@@ -279,6 +314,9 @@ Global
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{79B67251-D837-4367-B571-AB806C2C7C74}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{79B67251-D837-4367-B571-AB806C2C7C74}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{79B67251-D837-4367-B571-AB806C2C7C74}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.RC|Any CPU.Build.0 = RC|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
@@ -300,6 +338,9 @@ Global
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Any CPU.Build.0 = RC|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
@@ -321,6 +362,9 @@ Global
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.RC|Any CPU.Build.0 = RC|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
@@ -338,6 +382,9 @@ Global
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.Debug|Any CPU.ActiveCfg = Nightly|Any CPU
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D}.RC|Win32.ActiveCfg = RC|Any CPU
@@ -357,6 +404,9 @@ Global
 		{43599321-D767-4BF7-A725-34850D057B4E}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{43599321-D767-4BF7-A725-34850D057B4E}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
 		{43599321-D767-4BF7-A725-34850D057B4E}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{43599321-D767-4BF7-A725-34850D057B4E}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{43599321-D767-4BF7-A725-34850D057B4E}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{43599321-D767-4BF7-A725-34850D057B4E}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{43599321-D767-4BF7-A725-34850D057B4E}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{43599321-D767-4BF7-A725-34850D057B4E}.RC|Any CPU.Build.0 = RC|Any CPU
 		{43599321-D767-4BF7-A725-34850D057B4E}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
@@ -378,6 +428,9 @@ Global
 		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
 		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.RC|Any CPU.Build.0 = RC|Any CPU
 		{6904C0F4-0535-48EB-AFC1-CE1396418D00}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
@@ -400,6 +453,9 @@ Global
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|Mixed Platforms.Build.0 = Nightly|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|Win32.ActiveCfg = Nightly|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|Win32.Build.0 = Nightly|Win32
+		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Nightly|Any CPU.ActiveCfg = Nightly|Win32
+		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Win32
+		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Nightly|Win32.ActiveCfg = Nightly|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.RC|Any CPU.ActiveCfg = RC|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.RC|Any CPU.Build.0 = RC|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.RC|Mixed Platforms.ActiveCfg = RC|Win32
@@ -417,6 +473,9 @@ Global
 		{088CB10C-E5D3-4537-979F-F5BED401DB25}.Debug|Any CPU.ActiveCfg = Nightly|Any CPU
 		{088CB10C-E5D3-4537-979F-F5BED401DB25}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{088CB10C-E5D3-4537-979F-F5BED401DB25}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{088CB10C-E5D3-4537-979F-F5BED401DB25}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{088CB10C-E5D3-4537-979F-F5BED401DB25}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{088CB10C-E5D3-4537-979F-F5BED401DB25}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{088CB10C-E5D3-4537-979F-F5BED401DB25}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{088CB10C-E5D3-4537-979F-F5BED401DB25}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
 		{088CB10C-E5D3-4537-979F-F5BED401DB25}.RC|Win32.ActiveCfg = RC|Any CPU
@@ -434,6 +493,9 @@ Global
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.Nightly|Any CPU.ActiveCfg = Debug|Any CPU
+		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.Nightly|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.Nightly|Win32.ActiveCfg = Debug|Any CPU
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.RC|Any CPU.ActiveCfg = Debug|Any CPU
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.RC|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.RC|Win32.ActiveCfg = Debug|Any CPU
@@ -454,6 +516,9 @@ Global
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Debug|Win32.ActiveCfg = Release|Any CPU
+		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Nightly|Any CPU.ActiveCfg = Release|Any CPU
+		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Nightly|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Nightly|Win32.ActiveCfg = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.RC|Any CPU.ActiveCfg = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.RC|Any CPU.Build.0 = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -474,6 +539,9 @@ Global
 		{A8636D77-B876-4E6A-863D-8C924E40955C}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A8636D77-B876-4E6A-863D-8C924E40955C}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
 		{A8636D77-B876-4E6A-863D-8C924E40955C}.Debug|Win32.ActiveCfg = Release|Any CPU
+		{A8636D77-B876-4E6A-863D-8C924E40955C}.Nightly|Any CPU.ActiveCfg = Release|Any CPU
+		{A8636D77-B876-4E6A-863D-8C924E40955C}.Nightly|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A8636D77-B876-4E6A-863D-8C924E40955C}.Nightly|Win32.ActiveCfg = Release|Any CPU
 		{A8636D77-B876-4E6A-863D-8C924E40955C}.RC|Any CPU.ActiveCfg = Release|Any CPU
 		{A8636D77-B876-4E6A-863D-8C924E40955C}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A8636D77-B876-4E6A-863D-8C924E40955C}.RC|Mixed Platforms.Build.0 = Release|Any CPU
@@ -494,6 +562,9 @@ Global
 		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
 		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.Debug|Win32.ActiveCfg = Release|Any CPU
+		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.Nightly|Any CPU.ActiveCfg = Release|Any CPU
+		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.Nightly|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.Nightly|Win32.ActiveCfg = Release|Any CPU
 		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.RC|Any CPU.ActiveCfg = Release|Any CPU
 		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}.RC|Mixed Platforms.Build.0 = Release|Any CPU
@@ -517,6 +588,9 @@ Global
 		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
 		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.RC|Any CPU.Build.0 = RC|Any CPU
 		{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
@@ -542,6 +616,9 @@ Global
 		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
 		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
 		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.Debug|Win32.ActiveCfg = Nightly|Any CPU
+		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.RC|Any CPU.Build.0 = RC|Any CPU
 		{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
@@ -567,6 +644,9 @@ Global
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.Debug|Win32.ActiveCfg = Release|Any CPU
+		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.Nightly|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.Nightly|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.Nightly|Win32.ActiveCfg = Debug|Any CPU
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.RC|Any CPU.ActiveCfg = Release|Any CPU
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.RC|Any CPU.Build.0 = Release|Any CPU
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -592,6 +672,9 @@ Global
 		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
 		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.Debug|Win32.ActiveCfg = Release|Any CPU
+		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
 		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.RC|Any CPU.ActiveCfg = RC|Any CPU
 		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.RC|Any CPU.Build.0 = RC|Any CPU
 		{4038CE43-6F12-4DC1-AE48-D0444A56BE41}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -620,6 +703,9 @@ Global
 		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.Debug|Mixed Platforms.Build.0 = Release|Win32
 		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.Debug|Win32.ActiveCfg = Release|Win32
 		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.Debug|Win32.Build.0 = Release|Win32
+		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.Nightly|Any CPU.ActiveCfg = Nightly|Win32
+		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Win32
+		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.Nightly|Win32.ActiveCfg = Nightly|Win32
 		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.RC|Any CPU.ActiveCfg = RC|Win32
 		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.RC|Any CPU.Build.0 = RC|Win32
 		{7F278F32-47B4-4F4E-85B2-BAEAA406951B}.RC|Mixed Platforms.ActiveCfg = Release|Win32
@@ -644,6 +730,9 @@ Global
 		{833877EA-2CEA-46EE-B475-14051B77D9F0}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{833877EA-2CEA-46EE-B475-14051B77D9F0}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
 		{833877EA-2CEA-46EE-B475-14051B77D9F0}.Debug|Win32.ActiveCfg = Release|Any CPU
+		{833877EA-2CEA-46EE-B475-14051B77D9F0}.Nightly|Any CPU.ActiveCfg = Release|Any CPU
+		{833877EA-2CEA-46EE-B475-14051B77D9F0}.Nightly|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{833877EA-2CEA-46EE-B475-14051B77D9F0}.Nightly|Win32.ActiveCfg = Release|Any CPU
 		{833877EA-2CEA-46EE-B475-14051B77D9F0}.RC|Any CPU.ActiveCfg = Debug|Any CPU
 		{833877EA-2CEA-46EE-B475-14051B77D9F0}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{833877EA-2CEA-46EE-B475-14051B77D9F0}.RC|Mixed Platforms.Build.0 = Release|Any CPU
@@ -667,6 +756,9 @@ Global
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.Nightly|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.Nightly|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.Nightly|Win32.ActiveCfg = Debug|Any CPU
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.RC|Any CPU.ActiveCfg = Release|Any CPU
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.RC|Any CPU.Build.0 = Release|Any CPU
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -692,6 +784,9 @@ Global
 		{C3B940DA-5325-43D8-94E1-CF87255DA471}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{C3B940DA-5325-43D8-94E1-CF87255DA471}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{C3B940DA-5325-43D8-94E1-CF87255DA471}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{C3B940DA-5325-43D8-94E1-CF87255DA471}.Nightly|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3B940DA-5325-43D8-94E1-CF87255DA471}.Nightly|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C3B940DA-5325-43D8-94E1-CF87255DA471}.Nightly|Win32.ActiveCfg = Debug|Any CPU
 		{C3B940DA-5325-43D8-94E1-CF87255DA471}.RC|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B940DA-5325-43D8-94E1-CF87255DA471}.RC|Any CPU.Build.0 = Release|Any CPU
 		{C3B940DA-5325-43D8-94E1-CF87255DA471}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -717,6 +812,9 @@ Global
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.Debug|Mixed Platforms.Build.0 = general|Win32
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.Debug|Win32.ActiveCfg = general|Win32
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.Debug|Win32.Build.0 = general|Win32
+		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.Nightly|Any CPU.ActiveCfg = general|Win32
+		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.Nightly|Mixed Platforms.ActiveCfg = general|Win32
+		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.Nightly|Win32.ActiveCfg = general|Win32
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.RC|Any CPU.ActiveCfg = general|Win32
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.RC|Mixed Platforms.ActiveCfg = general|Win32
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3}.RC|Mixed Platforms.Build.0 = general|Win32
@@ -742,6 +840,9 @@ Global
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.Nightly|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.Nightly|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.Nightly|Win32.ActiveCfg = Debug|Any CPU
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.RC|Any CPU.ActiveCfg = Release|Any CPU
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.RC|Any CPU.Build.0 = Release|Any CPU
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -767,6 +868,9 @@ Global
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Nightly|Any CPU.ActiveCfg = Debug|Any CPU
+		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Nightly|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Nightly|Win32.ActiveCfg = Debug|Any CPU
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.RC|Any CPU.ActiveCfg = Debug|Any CPU
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.RC|Any CPU.Build.0 = Debug|Any CPU
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.RC|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -777,6 +881,36 @@ Global
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}.Release|Win32.ActiveCfg = Debug|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Mixed Platforms.ActiveCfg = Alpha|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Mixed Platforms.Build.0 = Alpha|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Win32.ActiveCfg = Alpha|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Any CPU.ActiveCfg = Beta|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Any CPU.Build.0 = Beta|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Mixed Platforms.ActiveCfg = Beta|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Mixed Platforms.Build.0 = Beta|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Win32.ActiveCfg = Beta|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Any CPU.ActiveCfg = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Any CPU.Build.0 = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Mixed Platforms.ActiveCfg = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Mixed Platforms.Build.0 = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Win32.ActiveCfg = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Any CPU.Build.0 = Nightly|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Mixed Platforms.Build.0 = Nightly|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Any CPU.ActiveCfg = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Any CPU.Build.0 = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Mixed Platforms.Build.0 = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.RC|Win32.ActiveCfg = RC|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -787,8 +921,8 @@ Global
 		{982F36B7-A3E5-4782-96B0-9979A95610F1} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{B1BD67A4-BEC2-442D-8F70-DAEB27735602} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{8129B61A-3FCE-4012-8013-377A87D4132B} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
-		{43599321-D767-4BF7-A725-34850D057B4E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
+		{43599321-D767-4BF7-A725-34850D057B4E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{A8636D77-B876-4E6A-863D-8C924E40955C} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
@@ -804,166 +938,5 @@ Global
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF} = {708C9420-4676-4314-B690-7A887F8CC992}
 		{C3B940DA-5325-43D8-94E1-CF87255DA471} = {708C9420-4676-4314-B690-7A887F8CC992}
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3} = {708C9420-4676-4314-B690-7A887F8CC992}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 45
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tools\\Tools.vbproj
-		SccProjectName1 = Tools
-		SccLocalPath1 = Tools
-		SccProjectUniqueName2 = Tests\\Tests.vbproj
-		SccProjectName2 = Tests
-		SccLocalPath2 = Tests
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools.Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccProjectUniqueName4 = Tools\u0020Visual\u0020Studio\\Tools.VisualStudio.vbproj
-		SccProjectName4 = Tools\u0020Visual\u0020Studio
-		SccLocalPath4 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName5 = DevelopmentTools\\TransformCodeGenerator\\TransformCodeGenerator.csproj
-		SccProjectTopLevelParentUniqueName5 = Tools.sln
-		SccProjectName5 = DevelopmentTools/TransformCodeGenerator
-		SccLocalPath5 = DevelopmentTools\\TransformCodeGenerator
-		SccProjectUniqueName6 = Tools\u0020VisualStudio\u0020CS\\Tools.VisualStudio.CS.csproj
-		SccProjectName6 = Tools\u0020VisualStudio\u0020CS
-		SccLocalPath6 = Tools\u0020VisualStudio\u0020CS
-		SccProjectUniqueName7 = Tools\u0020IL\\Tools\u0020IL.vcproj
-		SccProjectName7 = Tools\u0020IL
-		SccLocalPath7 = Tools\u0020IL
-		SccProjectUniqueName8 = Experimental\\Experimental.vbproj
-		SccProjectName8 = Experimental
-		SccLocalPath8 = Experimental
-		SccProjectUniqueName9 = DevelopmentTools\\CommentsMerge\\CommentsMerge.vbproj
-		SccProjectTopLevelParentUniqueName9 = Tools.sln
-		SccProjectName9 = DevelopmentTools/CommentsMerge
-		SccLocalPath9 = DevelopmentTools\\CommentsMerge
-		SccProjectUniqueName10 = Projects\\Metanol2\\Metanol2.vbproj
-		SccProjectTopLevelParentUniqueName10 = Tools.sln
-		SccProjectName10 = Projects/Metanol2
-		SccLocalPath10 = Projects\\Metanol2
-		SccProjectUniqueName11 = DevelopmentTools\\ResXFileCodeGeneratorEx\\ResXFileCodeGeneratorEx.csproj
-		SccProjectTopLevelParentUniqueName11 = Tools.sln
-		SccProjectName11 = DevelopmentTools/ResXFileCodeGeneratorEx
-		SccLocalPath11 = DevelopmentTools\\ResXFileCodeGeneratorEx
-		SccProjectUniqueName12 = DevelopmentTools\\Macros\\Tools.VisualStudio.Macros.vbproj
-		SccProjectTopLevelParentUniqueName12 = Tools.sln
-		SccProjectName12 = DevelopmentTools/Macros
-		SccLocalPath12 = DevelopmentTools\\Macros
-		SccProjectUniqueName13 = Tools.Windows\\Tools.Windows.vbproj
-		SccProjectName13 = Tools.Windows
-		SccLocalPath13 = Tools.Windows
-		SccProjectUniqueName14 = Tools.Metadata\\Tools.Metadata.vbproj
-		SccProjectName14 = Tools.Metadata
-		SccLocalPath14 = Tools.Metadata
-		SccProjectUniqueName15 = DevelopmentTools\\VersionCorrector\\VersionCorrector.vbproj
-		SccProjectTopLevelParentUniqueName15 = Tools.sln
-		SccProjectName15 = DevelopmentTools/VersionCorrector
-		SccLocalPath15 = DevelopmentTools\\VersionCorrector
-		SccProjectUniqueName16 = UnitTests\\UnitTests.vbproj
-		SccProjectName16 = UnitTests
-		SccLocalPath16 = UnitTests
-		SccProjectUniqueName17 = DevelopmentTools\\ResXFileGenerator\\ResXFileGenerator.vbproj
-		SccProjectTopLevelParentUniqueName17 = Tools.sln
-		SccProjectName17 = DevelopmentTools/ResXFileGenerator
-		SccLocalPath17 = DevelopmentTools\\ResXFileGenerator
-		SccProjectUniqueName18 = Tools.TotalCommander\\Tools.TotalCommander.vcproj
-		SccProjectTopLevelParentUniqueName18 = Tools.sln
-		SccProjectName18 = Tools.TotalCommander
-		SccLocalPath18 = Tools.TotalCommander
-		SccProjectUniqueName19 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder\\TotalCommander\u0020Plugin\u0020Builder.vbproj
-		SccProjectTopLevelParentUniqueName19 = Tools.sln
-		SccProjectName19 = Tools.TotalCommander/TotalCommander\u0020Plugin\u0020Builder
-		SccLocalPath19 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder
-		SccProjectUniqueName20 = Samples\\wfx\u0020sample\\wfx\u0020sample.vbproj
-		SccProjectTopLevelParentUniqueName20 = Tools.sln
-		SccProjectName20 = Samples/wfx\u0020sample
-		SccLocalPath20 = Samples\\wfx\u0020sample
-		SccProjectUniqueName21 = Tools.TotalCommander\\Plugin\\Tools.TotalCommander.Plugin.vcproj
-		SccProjectTopLevelParentUniqueName21 = Tools.sln
-		SccProjectName21 = Tools.TotalCommander/Plugin
-		SccLocalPath21 = Tools.TotalCommander\\Plugin
-		SccProjectUniqueName22 = DevelopmentTools\\PseudoZip\\PseudoZip.vbproj
-		SccProjectTopLevelParentUniqueName22 = Tools.sln
-		SccProjectName22 = DevelopmentTools/PseudoZip
-		SccLocalPath22 = DevelopmentTools\\PseudoZip
-		SccProjectUniqueName23 = DevelopmentTools\\XsdGenerator\\XsdGenerator.csproj
-		SccProjectTopLevelParentUniqueName23 = Tools.sln
-		SccProjectName23 = DevelopmentTools/XsdGenerator
-		SccLocalPath23 = DevelopmentTools\\XsdGenerator
-		SccProjectUniqueName24 = Tools\\Tools.vbproj
-		SccProjectName24 = Tools
-		SccLocalPath24 = Tools
-		SccProjectUniqueName25 = Tests\\Tests.vbproj
-		SccProjectName25 = Tests
-		SccLocalPath25 = Tests
-		SccProjectUniqueName26 = Tools\u0020Win\\Tools.Win.vbproj
-		SccProjectName26 = Tools\u0020Win
-		SccLocalPath26 = Tools\u0020Win
-		SccProjectUniqueName27 = Tools\u0020Visual\u0020Studio\\Tools.VisualStudio.vbproj
-		SccProjectName27 = Tools\u0020Visual\u0020Studio
-		SccLocalPath27 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName28 = DevelopmentTools\\TransformCodeGenerator\\TransformCodeGenerator.csproj
-		SccProjectTopLevelParentUniqueName28 = Tools.sln
-		SccProjectName28 = DevelopmentTools/TransformCodeGenerator
-		SccLocalPath28 = DevelopmentTools\\TransformCodeGenerator
-		SccProjectUniqueName29 = Tools\u0020VisualStudio\u0020CS\\Tools.VisualStudio.CS.csproj
-		SccProjectName29 = Tools\u0020VisualStudio\u0020CS
-		SccLocalPath29 = Tools\u0020VisualStudio\u0020CS
-		SccProjectUniqueName30 = DevelopmentTools\\CommentsMerge\\CommentsMerge.vbproj
-		SccProjectTopLevelParentUniqueName30 = Tools.sln
-		SccProjectName30 = DevelopmentTools/CommentsMerge
-		SccLocalPath30 = DevelopmentTools\\CommentsMerge
-		SccProjectUniqueName31 = Projects\\Metanol2\\Metanol2.vbproj
-		SccProjectTopLevelParentUniqueName31 = Tools.sln
-		SccProjectName31 = Projects/Metanol2
-		SccLocalPath31 = Projects\\Metanol2
-		SccProjectUniqueName32 = DevelopmentTools\\Macros\\Tools.VisualStudio.Macros.vbproj
-		SccProjectTopLevelParentUniqueName32 = Tools.sln
-		SccProjectName32 = DevelopmentTools/Macros
-		SccLocalPath32 = DevelopmentTools\\Macros
-		SccProjectUniqueName33 = Tools.Windows\\Tools.Windows.vbproj
-		SccProjectName33 = Tools.Windows
-		SccLocalPath33 = Tools.Windows
-		SccProjectUniqueName34 = Tools.Metadata\\Tools.Metadata.vbproj
-		SccProjectName34 = Tools.Metadata
-		SccLocalPath34 = Tools.Metadata
-		SccProjectUniqueName35 = DevelopmentTools\\VersionCorrector\\VersionCorrector.vbproj
-		SccProjectTopLevelParentUniqueName35 = Tools.sln
-		SccProjectName35 = DevelopmentTools/VersionCorrector
-		SccLocalPath35 = DevelopmentTools\\VersionCorrector
-		SccProjectUniqueName36 = UnitTests\\UnitTests.vbproj
-		SccProjectName36 = UnitTests
-		SccLocalPath36 = UnitTests
-		SccProjectUniqueName37 = DevelopmentTools\\ResXFileGenerator\\ResXFileGenerator.vbproj
-		SccProjectTopLevelParentUniqueName37 = Tools.sln
-		SccProjectName37 = DevelopmentTools/ResXFileGenerator
-		SccLocalPath37 = DevelopmentTools\\ResXFileGenerator
-		SccProjectUniqueName38 = Tools.TotalCommander\\Tools.TotalCommander.vcproj
-		SccProjectTopLevelParentUniqueName38 = Tools.sln
-		SccProjectName38 = Tools.TotalCommander
-		SccLocalPath38 = Tools.TotalCommander
-		SccProjectUniqueName39 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder\\TotalCommander\u0020Plugin\u0020Builder.vbproj
-		SccProjectTopLevelParentUniqueName39 = Tools.sln
-		SccProjectName39 = Tools.TotalCommander/TotalCommander\u0020Plugin\u0020Builder
-		SccLocalPath39 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder
-		SccProjectUniqueName40 = Samples\\wfx\u0020sample\\wfx\u0020sample.vbproj
-		SccProjectTopLevelParentUniqueName40 = Tools.sln
-		SccProjectName40 = Samples/wfx\u0020sample
-		SccLocalPath40 = Samples\\wfx\u0020sample
-		SccProjectUniqueName41 = Tools.TotalCommander\\Plugin\\Tools.TotalCommander.Plugin.vcproj
-		SccProjectTopLevelParentUniqueName41 = Tools.sln
-		SccProjectName41 = Tools.TotalCommander/Plugin
-		SccLocalPath41 = Tools.TotalCommander\\Plugin
-		SccProjectUniqueName42 = DevelopmentTools\\PseudoZip\\PseudoZip.vbproj
-		SccProjectTopLevelParentUniqueName42 = Tools.sln
-		SccProjectName42 = DevelopmentTools/PseudoZip
-		SccLocalPath42 = DevelopmentTools\\PseudoZip
-		SccProjectUniqueName43 = DevelopmentTools\\XsdGenerator\\XsdGenerator.csproj
-		SccProjectTopLevelParentUniqueName43 = Tools.sln
-		SccProjectName43 = DevelopmentTools/XsdGenerator
-		SccLocalPath43 = DevelopmentTools\\XsdGenerator
-		SccLocalPath44 = .
 	EndGlobalSection
 EndGlobal

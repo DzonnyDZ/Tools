@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Migrated rules for Tools.Win (2).ruleset" Description="This rule set was created from the CodeAnalysisRules property for the &quot;Alpha (Any CPU)&quot; configuration in project &quot;D:\Users\Honza\Documents\Programy\ĐTools\Tools Win\Tools.Win.vbproj&quot;." ToolsVersion="10.0">
+  <RuleHintPaths>
+    <Path>\rules</Path>
+  </RuleHintPaths>
+</RuleSet>

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{088CB10C-E5D3-4537-979F-F5BED401DB25}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -18,7 +18,7 @@
     <Config>1</Config>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -38,6 +38,7 @@
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
     <Config>1</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,6 +50,7 @@
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
     <Config>5</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,6 +63,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 3.5</DefineConstants>
     <Config>2</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,6 +76,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 3.5</DefineConstants>
     <Config>3</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,6 +89,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 3.5</DefineConstants>
     <Config>4</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
@@ -429,7 +434,7 @@
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.vbproj">
+    <ProjectReference Include="..\Tools\Tools.Core.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
