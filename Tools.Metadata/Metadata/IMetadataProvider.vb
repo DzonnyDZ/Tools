@@ -45,7 +45,7 @@
         ''' <returns>Keys in metadata-specific format of all the metadata present in curent instance. Never returns null; may return anempt enumeration.</returns>
         Function GetContainedKeys() As IEnumerable(Of String)
         ''' <summary>Gets all keys predefined for curent metadata format</summary>
-        ''' <returns>Eumeration containing all predefined (well-known) keys of metadata for this metadata format. Returns always the same enumeration event when values for some keys are not present. Never returns null; may return an empty enumeration.</returns>
+        ''' <returns>Eumeration containing all predefined (well-known) keys of metadata for this metadata format. Returns always the same enumeration even when values for some keys are not present. Never returns null; may return an empty enumeration.</returns>
         ''' <remarks>Not all predefined keys are required to have corresponding names obtainable via <see cref="GetNameOfKey"/>.</remarks>
         Function GetPredefinedKeys() As IEnumerable(Of String)
         ''' <summary>Gets all predefined names for metadata keys</summary>

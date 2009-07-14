@@ -3,36 +3,36 @@
 Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Data.Sql
 
-' General Information about an assembly is controlled through the following 
+' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Metanol")> 
+<Assembly: AssemblyTitle("Tools.SqlServer")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Metanol")> 
-<Assembly: AssemblyCopyright("Copyright © Đonny 2007÷2008")> 
+<Assembly: AssemblyProduct("ĐTools")> 
+<Assembly: AssemblyCopyright("Copyright © Đonny 2009")> 
 <Assembly: AssemblyTrademark("")> 
-
+<Assembly: CLSCompliant(True)> 
 <Assembly: ComVisible(False)> 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("8afbdad4-1010-4849-8c90-aab436f9b982")> 
+<Assembly: Guid("25ee137a-2eb1-4394-abcc-b924b807548c")> 
 
 ' Version information for an assembly consists of the following four values:
 '
 '      Major Version
-'      Minor Version 
+'      Minor Version
 '      Build Number
 '      Revision
 '
 ' You can specify all the values or you can default the Build and Revision Numbers 
 ' by using the '*' as shown below:
-' <Assembly: AssemblyVersion("1.0.*")> 
 
 
-<Assembly: NeutralResourcesLanguageAttribute("en-US")> 
-<Assembly: AssemblyVersionAttribute("2.0.2.*")> 
+
+<Assembly: NeutralResourcesLanguageAttribute("en")> 

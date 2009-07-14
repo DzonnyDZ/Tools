@@ -3297,7 +3297,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
         Public Shared Function ModalF_Pa(ByVal Prompt$, ByVal ParamArray arguments As Object()) As DialogResult
-            Return Modal_PTWBIO(Prompt, CType(Nothing, String), arguments)
+            Return Modal_PTWBIO(String.Format(Prompt, arguments), CType(Nothing, String), Nothing)
         End Function
         ''' <summary>Displays modal message box with formated prompt and given title</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>

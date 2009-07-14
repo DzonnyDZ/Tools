@@ -726,10 +726,6 @@
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools IL\Tools IL.vcxproj">
-      <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
-      <Name>Tools.IL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Tools Visual Studio\Tools.VisualStudio.vbproj">
       <Project>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</Project>
       <Name>Tools.VisualStudio</Name>
@@ -742,9 +738,9 @@
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
       <Name>Tools.Win</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.Core.vbproj">
+    <ProjectReference Include="..\Tools\Tools _.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
+      <Name>Tools _</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

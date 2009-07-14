@@ -18,7 +18,8 @@ Namespace CodeDomT
             tmiCS.Tag = New Microsoft.CSharp.CSharpCodeProvider
             tmiCPPStandard.Tag = New Microsoft.VisualC.CppCodeProvider
             tmiCPP7.Tag = New Microsoft.VisualC.CppCodeProvider7
-            tmiCPPVS.Tag = New Microsoft.VisualC.VSCodeProvider
+            'ASAP: Uncomment and remove activator
+            tmiCPPVS.Tag = Activator.CreateInstance(Type.GetType("Microsoft.VisualC.VSCodeProvider,Microsoft.VisualC.VSCodeProvider")) '  New Global.Microsoft.VisualC.VSCodeProvider
             tmiJSP.Tag = New Microsoft.VJSharp.VJSharpCodeProvider
             tmiJS.Tag = New Microsoft.JScript.JScriptCodeProvider
         End Sub

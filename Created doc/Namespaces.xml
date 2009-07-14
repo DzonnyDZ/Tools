@@ -300,5 +300,13 @@
             <summary>Contains specialized classes for rendeting controls without visual styles</summary>
             <version version="1.5.2">Namespace introduced</version>
         </member>
+        <member name="N:DataT">
+            <summary>Contains various classes for deling with databases and database data including data access and types to load to database engines.</summary>
+            <version version="1.5.3">Namespaces introduced to contain assemby Tools.SqlServer to be loaded to Microsoft SQL Server</version>
+        </member>
+        <member name="N:DataT.SqlServerT">
+            <summary>Contains classes and tools related to Micosoft SQL Server</summary>
+            <version version="1.5.3">Namespaces introduced to contain assemby Tools.SqlServer to be loaded to Microsoft SQL Server</version>
+        </member>
     </members>    
 </doc>

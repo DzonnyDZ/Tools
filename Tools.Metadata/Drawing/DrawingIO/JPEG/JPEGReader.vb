@@ -2,11 +2,15 @@ Imports System.IO, Tools.IOt, Tools.MetadataT
 Namespace DrawingT.DrawingIOt.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
-    ''' <remarks>This <see cref="IMetadataProvider"/> provides Exif and IPTC metadata.</remarks>
+    ''' <remarks>
+    ''' This <see cref="IMetadataProvider"/> provides Exif (<see cref="ExifT.Exif"/>), IPTC (<see cref="IptcT.Iptc"/>), image (<see cref="ImageMetadata"/>) and system (<see cref="SystemMetadata"/>) metadata.
+    ''' In order system and image metadata to be available instance must be constructed from <see cref="FileStream"/> or form file path.
+    ''' </remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Added implementation of <see cref="MetadataT.ExifT.IExifWriter"/></version>
     ''' <version version="1.5.2">Implemented the <see cref="IMetadataProvider"/> interface</version>
+    ''' <version version="1.5.3">Added support for <see cref="SystemMetadata"/> and <see cref="ImageMetadata"/> for <see cref="IMetadataProvider"/>.</version>
     Public Class JPEGReader
         Implements MetadataT.ExifT.IExifGetter, MetadataT.IptcT.IIptcGetter
         Implements MetadataT.IptcT.IIptcWriter, MetadataT.ExifT.IExifWriter
@@ -36,6 +40,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' JPEG stream doesn't start with corect SOI marker -or-
         ''' JPEG stream doesn't end with corect EOI marker
         ''' </exception>
+        ''' <remarks>When using this contructor system (<see cref="SystemMetadata"/>) and image (<see cref="ImageMetadata"/>) will be available.</remarks>
         Public Sub New(ByVal Path As String, Optional ByVal Write As Boolean = False)
             '#If VBC_VER >= 9 Then
             Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, If(Write, System.IO.FileAccess.ReadWrite, System.IO.FileAccess.Read), System.IO.FileShare.Read)
@@ -53,7 +58,8 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' JPEG stream doesn't start with corect SOI marker -or-
         ''' JPEG stream doesn't end with corect EOI marker
         ''' </exception>
-        ''' <remarks>The <paramref name="Stream"/> is not automatically closed when instance is disposed</remarks>
+        ''' <remarks>The <paramref name="Stream"/> is not automatically closed when instance is disposed.
+        ''' <para>When using this contructor system (<see cref="SystemMetadata"/>) and image (<see cref="ImageMetadata"/>) will be available.</remarks> only when <paramref name="Stream"/> is <see cref="IO.FileStream"/>.</para></remarks>
         Public Sub New(ByVal Stream As System.IO.Stream)
             If Stream.CanRead AndAlso Stream.CanSeek Then
                 Me.Stream = Stream
@@ -539,10 +545,12 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' <param name="MetadataName">Name of metadata type</param>
         ''' <returns>True if this provider contains metadata with given name</returns>
         ''' <version version="1.5.2">Function added</version>
+        ''' <version version="1.5.3">Added support for <see cref="SystemMetadata"/> and <see cref="ImageMetadata"/></version>
         Public Function Contains(ByVal MetadataName As String) As Boolean Implements MetadataT.IMetadataProvider.Contains
             Select Case MetadataName
                 Case ExifT.Exif.ExifName : Return ContainsExif
                 Case IptcT.Iptc.IptcName : Return ContainsIptc
+                Case ImageMetadata.ImageName, SystemMetadata.SystemName : Return TypeOf Me.JPEGStream Is FileStream
                 Case Else : Return False
             End Select
         End Function
@@ -550,29 +558,38 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' <summary>Gets names of metadata actually contained in metadata source represented by this provider</summary>
         ''' <returns>Names of metadata usefull with the <see cref="Metadata"/> function. Never returns null; may return an empty enumeration.</returns>
         ''' <version version="1.5.2">Function added</version>
+        ''' <version version="1.5.3">Added support for <see cref="SystemMetadata"/> and <see cref="ImageMetadata"/></version>
         Public Function GetContainedMetadataNames() As System.Collections.Generic.IEnumerable(Of String) Implements MetadataT.IMetadataProvider.GetContainedMetadataNames
             Dim ret As New List(Of String)
             If Me.ContainsExif Then ret.Add(ExifT.Exif.ExifName)
             If Me.ContainsIptc Then ret.Add(IptcT.Iptc.IptcName)
+            If Contains(ImageMetadata.ImageName) Then ret.Add(ImageMetadata.ImageName)
+            If Contains(SystemMetadata.SystemName) Then ret.Add(SystemMetadata.SystemName)
             Return ret
         End Function
 
         ''' <summary>Get all the names of metadata supported by this provider (even when some of the metadata cannot be provided by current instance)</summary>
-        ''' <returns>An array containing <see cref="ExifT.Exif.ExifName"/> and <see cref="IptcT.Iptc.IptcName"/>.</returns>
+        ''' <returns>An array containing <see cref="ExifT.Exif.ExifName"/>, <see cref="IptcT.Iptc.IptcName"/>, <see cref="SystemMetadata.SystemName"/> and <see cref="ImageMetadata.ImageName"/>.</returns>
         ''' <version version="1.5.2">Function added</version>
+        ''' <version version="1.5.3">Added <see cref="SystemMetadata.SystemName"/> and <see cref="ImageMetadata.ImageName"/></version>
         Public Function GetSupportedMetadataNames() As System.Collections.Generic.IEnumerable(Of String) Implements MetadataT.IMetadataProvider.GetSupportedMetadataNames
-            Return New String() {ExifT.Exif.ExifName, IptcT.Iptc.IptcName}
+            Return New String() {ExifT.Exif.ExifName, IptcT.Iptc.IptcName, SystemMetadata.SystemName, ImageMetadata.ImageName}
         End Function
         ''' <summary>Gets metadata of particular type</summary>
         ''' <param name="MetadataName">Name of metadata to get (see <see cref="GetSupportedMetadataNames"/> for possible values)</param>
         ''' <returns>Metadata of requested type; or null if metadata of type <paramref name="MetadataName"/> are not contained in this instance or are not supported by this provider.</returns>
-        ''' <remarks>Supported types are Exif (<see cref="ExifT.Exif.ExifName"/>) and IPTC (<see cref="IptcT.Iptc.IptcName"/>)</remarks>
+        ''' <remarks>Supported types are Exif (<see cref="ExifT.Exif.ExifName"/>), IPTC (<see cref="IptcT.Iptc.IptcName"/>), <see cref="SystemMetadata"/> and <see cref="ImageMetadata"/>.</remarks>
         ''' <version version="1.5.2">Property added</version>
+        ''' <version version="1.5.3">Added support for <see cref="SystemMetadata"/> and <see cref="ImageMetadata"/></version>
         Public ReadOnly Property Metadata(ByVal MetadataName As String) As MetadataT.IMetadata Implements MetadataT.IMetadataProvider.Metadata
             Get
                 Select Case MetadataName
                     Case ExifT.Exif.ExifName : Return GetExif()
                     Case IptcT.Iptc.IptcName : Return GetIptc()
+                    Case SystemMetadata.SystemName
+                        If TypeOf Me.Stream Is IO.FileStream Then Return New SystemMetadata(DirectCast(Me.Stream, IO.FileStream).Name) Else Return Nothing
+                    Case ImageMetadata.ImageName
+                        If TypeOf Me.Stream Is IO.FileStream Then Return New ImageMetadata(DirectCast(Me.Stream, IO.FileStream).Name) Else Return Nothing
                     Case Else : Return Nothing
                 End Select
             End Get

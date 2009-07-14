@@ -175,6 +175,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Metadata\Exif\IExifGetter.vb" />
+    <Compile Include="Metadata\ImageMetadata.vb" />
     <Compile Include="Metadata\IPTC\Groups.vb" />
     <Compile Include="Metadata\IPTC\IPTC.vb" />
     <Compile Include="Metadata\IPTC\IPTCReader.vb" />
@@ -187,6 +188,7 @@
     </Compile>
     <Compile Include="Metadata\IPTC\IPTCTypedValues.vb" />
     <Compile Include="Metadata\IPTC\IPTCTypes helpers.vb" />
+    <Compile Include="Metadata\SystemMetadata.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -256,9 +258,9 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tools\Tools.Core.vbproj">
+    <ProjectReference Include="..\Tools\Tools _.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
+      <Name>Tools _</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

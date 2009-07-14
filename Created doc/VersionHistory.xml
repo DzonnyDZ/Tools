@@ -49,4 +49,7 @@
         <vh:i>Added project XsdGenerator - generates classes from XSD files.</vh:i>
         <vh:i>New project Tools.TotalCommander (see <see cref="N:Tools.TotalCommanderT"/>) for creating Total Commander plugins.</vh:i>
     </vh:Version>
+    <vh:Version Major="1" Minor="5" Build="3">
+        <vh:i>Added assembly Tools.SqlServer. This assembly should be loaded to SQL Sever.</vh:i>
+    </vh:Version>
 </vh:VersionHistory>
