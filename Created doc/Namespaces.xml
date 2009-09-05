@@ -265,12 +265,29 @@
         <member name="N:Tools.VisualStudioT">
             <summary>Contains classes specific to Microsft Visual Studio sach as Visual Studio enhancements, custom tools, visualizers etc.</summary>
         </member>
-        <member name="N:Tools.VisualStudioT">
+        <member name="N:Tools.VisualStudioT.MacrosT">
             <summary>Visual Studio macros</summary>
             <remarks>
-                Classes in this namespace are not provided as assembly. You can download source code from /DevelopmentTools/Macros and load file Tools.VisualStudio.Macros.vsmproj to Microsft Visual Studio Macros IDE to utilize the functionality implemented in this namespace.
+                Classes in this namespace are not provided as assembly.
+                You can download source code from /DevelopmentTools/Macros and load *.vsmproj files to Microsft Visual Studio Macros IDE to utilize the functionality implemented in this namespace.
                 <para>The Tools.VisualStudio.Macros.dll assemnly is not publicly available and is not intended to be used as compiled assembly.</para>
+                <note>
+                    To workaround a bug in Visual Studio 2010 which prevents Macro Explorer from seeing macros in nested namespaces (see <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968</a>)
+                    this namespace has different name in Macro projects - <see cref="N:Tools_VisualStudioT_MacrosT"/>.
+                </note>
             </remarks>
+            <version version="1.5.3">Namespace name in macro projects changed from <see cref="N:Tools.VisualStudioT.MacrosT"/> to <see cref="N:Tools_VisualStudioT_MacrosT"/> to workaround Visual Studio 2010 bug <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968">464968</a>. This change does not affect this documentation and (publicly not available) binary DLL with macros.</version>
+        </member>
+        <member name="N:Tools_VisualStudioT_MacrosT">
+            <summary>Placeholder namespace for Visual Studio Macros to workaround Visual Studio bug.</summary>
+            <remarks>
+                This namespace is used in Visual Studio Macro projects (vsmproj) instead of <see cref="N:Tools.VisualStudioT.MacrosT"/> because there is a bug in Visual Studio that prevents Macro Explorer from seeing macros in nested namespaces.
+                This namespace is not used in this documentation and (publicly not available) binary macros DLL.
+                For details of classes in the <see cref="N:Tools_VisualStudioT_MacrosT"/> reffer to the <see cref="N:Tools.VisualStudioT.MacrosT"/>, please.
+                <para>In case Microsft will ever fix this stupid bug (as of VS 2010 Beta 1 closed Won't Fix), this namespace will be renamed back to <see cref="N:Tools.VisualStudioT.MacrosT"/>.</para>
+                <para>You can see bug details at <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968</a>.</para>
+            </remarks>
+            <version version="1.5.3">Namespace introduced as workaround of Visual Studio bug <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968">464968</a>. This namespace is not used in this documentation and in (publicly not available) binary macros DLL.</version>
         </member>
         <member name="N:Tools.DevicesT.RawInputT">
             <summary>Contains classes allowing consumption of raw input events from keyboard, mouse and other HID devices.</summary>
