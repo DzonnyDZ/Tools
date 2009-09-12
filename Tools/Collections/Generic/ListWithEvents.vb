@@ -1,13 +1,16 @@
 ﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModelT, Tools.VisualBasicT, Tools.ExtensionsT
+Imports System.Collections.Specialized
+
 #If Config <= Release Then
 Namespace CollectionsT.GenericT
     ''' <summary>Common non-generic base class for all instance of <see cref="ListWithEvents(Of T)"/></summary>
     ''' <remarks>This class is not intended to be inherited by anything else than <see cref="ListWithEvents(Of T)"/>.
     ''' <para>Althought members f this abstract class are provided with documentation, it may be misleading. ALways study cocumentation of derived class <see cref="ListWithEvents(Of T)"/>.</para></remarks>
     ''' <version version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.3">Added implementation for the <see cref="INotifyCollectionChanged"/> interface</version>
     <EditorBrowsable(EditorBrowsableState.Advanced), Serializable()> _
     Public MustInherit Class ListWithEventsBase
-        Implements IList, IReportsChange, IBindingList, IEnumerable, INotifyPropertyChanged
+        Implements IList, IReportsChange, IBindingList, IEnumerable, INotifyPropertyChanged, INotifyCollectionChanged
         ''' <summary>CTor</summary>
         Friend Sub New()
         End Sub
@@ -234,6 +237,19 @@ Namespace CollectionsT.GenericT
         ''' <summary>When overiden in derived class sets the <see cref="Locked"/> to False</summary>
         Protected MustOverride Sub Unlock()
 #End Region
+
+        ''' <summary>Occurs when the collection changes. Implements the <see cref="INotifyCollectionChanged.CollectionChanged"/> event. This event is provided for compatibility with <see cref="INotifyCollectionChanged"/> interface. <see cref="ListWithEvents"/> provides <see cref="ListWithEvents.CollectionChanged"/> event which provides detailed information about what has with the collection.</summary>
+        ''' <version version="1.5.3">Event introduced</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Event INotifyCollectionChanged_CollectionChanged As System.Collections.Specialized.NotifyCollectionChangedEventHandler Implements System.Collections.Specialized.INotifyCollectionChanged.CollectionChanged
+        ''' <summary>Raises the <see cref="INotifyCollectionChanged_CollectionChanged"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>This method shall be called whenever <see cref="ListWithEvents.OnCOllectionChanged"/> is called.</remarks>
+        ''' <version version="1.5.3">Method introduced</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Overridable Sub OnINotifyCollectionChanged_CollectionChanged(ByVal e As NotifyCollectionChangedEventArgs)
+            RaiseEvent INotifyCollectionChanged_CollectionChanged(Me, e)
+        End Sub
     End Class
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
@@ -251,6 +267,7 @@ Namespace CollectionsT.GenericT
     ''' <version version="1.5.2">Added support for <see cref="ICollectionNotifyItem"/> and <see cref="ICollectionCancelItem"/></version>
     ''' <version version="1.5.2">Base class <see cref="ListWithEventsBase"/> introduced</version>
     ''' <version version="1.5.2">Added implementation of the <see cref="INotifyPropertyChanged"/> interface</version>
+    ''' <version version="1.5.3">Added implementation for the <see cref="INotifyCollectionChanged"/> interface</version>
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
@@ -572,7 +589,7 @@ Namespace CollectionsT.GenericT
             If exceptions.Count > 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-            exceptions.Add(Err.GetException)
+exceptions.Add(Err.GetException)
             Resume Next
         End Sub
 #End Region
@@ -663,7 +680,7 @@ erh:
             If exceptions.Count > 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-            exceptions.Add(Err.GetException())
+exceptions.Add(Err.GetException())
             Resume Next
         End Sub
 #End Region
@@ -772,7 +789,7 @@ erh:
             If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-            exceptions.Add(Err.GetException)
+exceptions.Add(Err.GetException)
             Resume Next
         End Sub
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="ListWithEvents(Of T)"/>.</summary>
@@ -964,7 +981,7 @@ erh:
             If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-            exceptions.Add(Err.GetException)
+exceptions.Add(Err.GetException)
             Resume Next
         End Sub
         ''' <summary>Gets or sets the element at the specified index.</summary>
@@ -1063,7 +1080,7 @@ erh:
             If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-            exceptions.Add(Err.GetException)
+exceptions.Add(Err.GetException)
             Resume Next
         End Sub
         ''' <summary>Raised when any of items that is of type <see cref="IReportsChange"/> raises <see cref="IReportsChange.Changed"/> event</summary>
@@ -1398,10 +1415,20 @@ erh:
         ''' <summary>Raises the <see cref="CollectionChanged"/> event.</summary>
         ''' <param name="e">Event argument. The <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> should always contain event argument of preceding call of <see cref="OnChanged"/></param>
         ''' <remarks>You should call one of overloaded <see cref="OnChanged"/> methods after all calls of <see cref="OnChanged"/>.
-        ''' This overridable overload is always called by the other overloads.</remarks>
+        ''' This overridable overload is always called by the other overloads.
+        ''' <para>This method calls <see cref="OnINotifyCollectionChanged_CollectionChanged"/> and thus raises the <see cref="INotifyCollectionChanged_CollectionChanged"/> event.</para></remarks>
+        ''' <version version="1.5.3">Added call to <see cref="OnINotifyCollectionChanged_CollectionChanged"/> to support the <see cref="INotifyCollectionChanged"/> interface</version>
         ''' <filterpriority>2</filterpriority>
         Protected Overridable Sub OnCollectionChanged(ByVal e As ListChangedEventArgs)
             RaiseEvent CollectionChanged(Me, e)
+            Dim operationkind As NotifyCollectionChangedAction
+            Select Case e.Action
+                Case CollectionChangeAction.Add : operationkind = NotifyCollectionChangedAction.Add
+                Case CollectionChangeAction.Clear, CollectionChangeAction.Other : operationkind = NotifyCollectionChangedAction.Reset
+                Case CollectionChangeAction.Replace : operationkind = NotifyCollectionChangedAction.Replace
+                Case CollectionChangeAction.Remove : operationkind = NotifyCollectionChangedAction.Remove
+            End Select
+            OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(operationkind))
         End Sub
         ''' <summary>Raises the <see cref="CollectionChanged"/> event via calling <see cref="M:Tools.CollectionsT.GenericT.ListWithEvents`1.OnChanged(Tools.CollectionsT.GenericT.ListChangedEventArgs)"/></summary>
         ''' <param name="e">Argument of preceding call of <see cref="OnChanged"/></param>
