@@ -1421,14 +1421,12 @@ exceptions.Add(Err.GetException)
         ''' <filterpriority>2</filterpriority>
         Protected Overridable Sub OnCollectionChanged(ByVal e As ListChangedEventArgs)
             RaiseEvent CollectionChanged(Me, e)
-            Dim operationkind As NotifyCollectionChangedAction
             Select Case e.Action
-                Case CollectionChangeAction.Add : operationkind = NotifyCollectionChangedAction.Add
-                Case CollectionChangeAction.Clear, CollectionChangeAction.Other : operationkind = NotifyCollectionChangedAction.Reset
-                Case CollectionChangeAction.Replace : operationkind = NotifyCollectionChangedAction.Replace
-                Case CollectionChangeAction.Remove : operationkind = NotifyCollectionChangedAction.Remove
+                Case CollectionChangeAction.Add : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewValue, e.Index))
+                Case CollectionChangeAction.Clear, CollectionChangeAction.Other : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))
+                Case CollectionChangeAction.Replace : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewValue, e.OldValue, e.Index))
+                Case CollectionChangeAction.Remove : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.NewValue, e.Index))
             End Select
-            OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(operationkind))
         End Sub
         ''' <summary>Raises the <see cref="CollectionChanged"/> event via calling <see cref="M:Tools.CollectionsT.GenericT.ListWithEvents`1.OnChanged(Tools.CollectionsT.GenericT.ListChangedEventArgs)"/></summary>
         ''' <param name="e">Argument of preceding call of <see cref="OnChanged"/></param>
