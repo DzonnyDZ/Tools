@@ -1425,7 +1425,7 @@ exceptions.Add(Err.GetException)
                 Case CollectionChangeAction.Add : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewValue, e.Index))
                 Case CollectionChangeAction.Clear, CollectionChangeAction.Other : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))
                 Case CollectionChangeAction.Replace : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewValue, e.OldValue, e.Index))
-                Case CollectionChangeAction.Remove : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.NewValue, e.Index))
+                Case CollectionChangeAction.Remove : OnINotifyCollectionChanged_CollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldValue, e.Index))
             End Select
         End Sub
         ''' <summary>Raises the <see cref="CollectionChanged"/> event via calling <see cref="M:Tools.CollectionsT.GenericT.ListWithEvents`1.OnChanged(Tools.CollectionsT.GenericT.ListChangedEventArgs)"/></summary>
