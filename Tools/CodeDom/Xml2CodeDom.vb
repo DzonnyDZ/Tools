@@ -9,8 +9,8 @@ Imports System.Reflection
 Namespace CodeDomT
     ''' <summary>Contains methods for converting various elements form the http://dzonny.cz/xml/schemas/CodeDom XML namespace to objects from <see cref="CodeDom"/> namespace.</summary>
     Public Class Xml2CodeDom
-        Implements Compiler.ICodeGenerator
-        Implements Compiler.ICodeParser
+        Implements CodeDom.Compiler.ICodeGenerator
+        Implements CodeDom.Compiler.ICodeParser
         ''' <summary>Name of namespace which is used for validation XML documents</summary>
         ''' <remarks>Value of this field is always http://dzonny.cz/xml/schemas/CodeDom</remarks>
         Public Shared ReadOnly CodeDomXmlNamespace$ = GetXmlNamespace().NamespaceName

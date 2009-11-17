@@ -60,7 +60,7 @@
     ''' <returns>Item from <paramref name="results"/> at position of first condition from <paramref name="conditions"/> which equals to <paramref name="Value"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="results"/> contains less items than is orinar number of firts condtition which is true (simply: enumeration of <paramref name="results"/> reaches the end of collection before first condition which equals to <paramref name="value"/> is found) =or= None of <paramref name="conditions"/> equals to <paramref name="value"/>.</exception>
     Public Function Switch(Of T, TC)(ByVal value As TC, ByVal results As IEnumerable(Of T), ByVal ParamArray conditions As TC()) As T
-        Return Switch(Of T, TC)(value, DirectCast(conditions, IEnumerable(Of T)), results, True)
+        Return Switch(Of T, TC)(value, DirectCast(conditions, IEnumerable(Of TC)), results, True)
     End Function
     ''' <summary>Returns one of results depending on boolean conditions</summary>
     ''' <param name="conditions">Conditions to test</param>
@@ -69,7 +69,7 @@
     ''' <returns>Item from <paramref name="results"/> at position of first condition from <paramref name="conditions"/> which is true</returns>
     ''' <exception cref="ArgumentException"><paramref name="results"/> contains less items than is orinar number of firts condtition which is true (simply: enumeration of <paramref name="results"/> reaches the end of collection before first true condition is found) =or= None of <paramref name="conditions"/> evaluates to true.</exception>
     Public Function Switch(Of T)(ByVal results As IEnumerable(Of T), ByVal ParamArray conditions As Boolean()) As T
-        Return Switch(Of T)(DirectCast(conditions, IEnumerable(Of T)), results, True)
+        Return Switch(Of T)(DirectCast(conditions, IEnumerable(Of Boolean)), results, True)
     End Function
     ''' <summary>Returns one of results depending on boolean conditions</summary>
     ''' <param name="conditions">Conditions to test</param>

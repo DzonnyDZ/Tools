@@ -70,7 +70,15 @@ Module ResXFileGenerator
             Case "cpp.7" : Provider = New Microsoft.VisualC.CppCodeProvider7
             Case "cpp.vs" : Provider = New Microsoft.VisualC.VSCodeProvider
             Case "js" : Provider = New Microsoft.JScript.JScriptCodeProvider
-            Case "jsl", "java" : Provider = New Microsoft.VJSharp.VJSharpCodeProvider
+            Case "jsl", "java"
+                Try
+                    Dim asm = Reflection.Assembly.Load("VJSharpCodeProvider,Version=2.0.0.0, Culture=neutral,PublicKeyToken=b03f5f7f11d50a3a", Nothing)
+                    Provider = Activator.CreateInstance(asm.GetType("Microsoft.VJSharp.VJSharpCodeProvider"))
+                Catch ex As Exception
+                    Console.WriteLine("Failed to initialize J# code provider. Install J# runtime or copy VJSharpCodeProvider.dll to application directory")
+                    Environment.Exit(6)
+                    Return
+                End Try
             Case Else
                 Console.WriteLine(My.Resources.UnknownLanguage0)
                 Environment.Exit(4)
