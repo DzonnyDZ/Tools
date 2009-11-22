@@ -42,32 +42,32 @@
             <inheritdoc cref="" select=""/>
         </CompletionList>
     </CodeElement>
-    <CodeElement type="Class">
-        <Template>
-            <summary />
-            <typeparam />
-        </Template>
-        <CompletionList>
-            <include file="" path="" />
-            <permission cref="" />
-            <PermissionSet>
-                <IPermission class="" version="" Flags=""/>
-            </PermissionSet>
-            <remarks />
-            <summary />
-            <completionlist cref=""/>
-            <seelaso cref=""/>
-            <exclude/>
-            <preliminary/>
-            <threadsafety/>
-            <version version="" stage=""/>
-            <author www="" mail=""/>
-            <inheritdoc cref="" select=""/>
-            <typeparam name="" />
-            <filterpriority/>
-            <threadsafety/>
-        </CompletionList>
-    </CodeElement>
+<CodeElement type="Class">
+    <Template>
+        <summary />
+        <typeparam />
+    </Template>
+    <CompletionList>
+        <include file="" path="" />
+        <permission cref="" />
+        <PermissionSet>
+            <IPermission class="" version="" Flags=""/>
+        </PermissionSet>
+        <remarks />
+        <summary />
+        <completionlist cref=""/>
+        <seelaso cref=""/>
+        <exclude/>
+        <preliminary/>
+        <threadsafety/>
+        <version version="" stage=""/>
+        <author www="" mail=""/>
+        <inheritdoc cref="" select=""/>
+        <typeparam name="" />
+        <filterpriority/>
+        <threadsafety/>
+    </CompletionList>
+</CodeElement>
     <CodeElement type="Structure">
         <Template>
             <summary />
@@ -379,25 +379,25 @@
             </overloads>
         </CompletionList>
     </CodeElement>
-    <ChildCompletionList>
-        <c />
-        <code lang="" />
-        <example />
-        <list type="bullet number table">
-            <listheader>
-                <term />
-                <description />
-            </listheader>
-            <item>
-                <term />
-                <description />
-            </item>
-        </list>
-        <para />
-        <paramref name="" />
-        <see cref="" langword="null sealed static abstract virtual true false other_key_word" />
-        <IPermission class="" version="" Flags=""/>
-        <typeparamref name=""/>
-        <note type="caution inheritinfo implementnotes"/>
-    </ChildCompletionList>
+<ChildCompletionList>
+    <c />
+    <code lang="" />
+    <example />
+    <list type="bullet number table">
+        <listheader>
+            <term />
+            <description />
+        </listheader>
+        <item>
+            <term />
+            <description />
+        </item>
+    </list>
+    <para />
+    <paramref name="" />
+    <see cref="" langword="null sealed static abstract virtual true false other_key_word" />
+    <IPermission class="" version="" Flags=""/>
+    <typeparamref name=""/>
+    <note type="caution inheritinfo implementnotes"/>
+</ChildCompletionList>
 </XMLDocCommentSchema>

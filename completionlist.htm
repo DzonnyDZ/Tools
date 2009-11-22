@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>&lt;completionlist></title>
+</head>
+<body>
+      <p>This article was originally published by Đonny as <em>&lt;completionlist></em> community content 
+      contribution on MSDN page <a href="http://msdn.microsoft.com/en-us/library/ms172653.aspx">Recommended XML Tags for Documentation Comments (Visual Basic)</a>.</p>
+  <h1>&lt;completionlist&gt;</h1>
+    <p>
+    Have you ever wondered how it is possible that class System.Drawing.Color 
+    behaves in Visual Basic editor like enumeration though it is not enumeration? I 
+    mean - when you have code like this: </p>
+    <pre>Dim col As Color
+Col = <b>|</b></pre>
+    When you type 2nd line and you are at place of | list of known colors 
+    appears.This nice undocumented feature of Visual Studio is not achieved via 
+    custom attributes as you may guess but via XML Docummentation. When you look for
+    <i>&lt;member name=&quot;T:System.Drawing.Color&quot;&gt;</i> in 
+    c:\Windows\Microsoft.net\Framework\v2.0.50727\en\System.Drawing.xml you can see 
+    tag applied on it you probably have never seen before:<blockquote>
+        <pre>&lt;completionlist cref=&quot;T:System.Drawing.Color&quot; /&gt;</pre>
+    </blockquote>
+    The tag &lt;completionlist&gt; specifies that whenever value of type it is applied 
+    onto is required all public static (Shared in Visual Basic) properties (with 
+    getter, no index) and fields of type specified in cref attribute are offered as 
+    if type specified in cref is enum and those properties and fields are enum 
+    members.
+    <h3>
+        Example</h3>
+    <pre>&#39;&#39;&#39; &lt;completionlist cref=&quot;KnownCssAttributes&quot;/&gt;
+Public Class CssAttribute
+    Public Sub New (ByVal Name$)
+    End Sub
+    Public Shared Widening Operator CType(ByVal cssName$) As CssAttribute
+        Return New CssAttribute(cssName)
+    End Operator
+End Class
+
+Public Module KnownCssAttributes
+    Public ReadOnly BackgroundColor As CssAttribute = New CssAttribute(&quot;background-color&quot;)
+    Public ReadOnly Property Padding As CssAttribute
+        Get
+            Return New CssAttribute(&quot;padding&quot;)
+        End Get
+    End Property
+    Public Const MozBorderRadius$ = &quot;-moz-border-radius&quot;
+End Module</pre>
+    <p>
+        Now when you type something like</p>
+    <p>
+    </p>
+    <pre>Dim h As CssAttribute = <b>|</b></pre>
+    And your cusror is in position of | you are offered BackgroundColor, Padding and 
+    MozBorderRadius.
+    <h3>
+        Remarks</h3>
+    <ul>
+        <li>Type in cref attribute of &lt;completionlist&gt; may be or may be not same type as 
+            type &lt;completionlist&gt; is applied onto.</li>
+        <li>Type in cref attribute of &lt;completionlist&gt; can be any kind of type - Structure, 
+            Class, Enumeration, built-in type like Integer (delegates and interfaces do not 
+            apply since they cannot have public static fields/properties).</li>
+        <li>IntelliSense offers all accessible static (Shared) members of type specified in 
+            cref, even such members type of which is not suitable for target. You there is 
+            not CType in example above, error occurs for MozBorderRadius though IntelliSense 
+            still offers it.</li>
+        <li>When &lt;completionlist&gt; is applied on certain type, IntelliSense offers only 
+            members of type specified in cref (as described above) and programmer has 
+            difficulties typing other values like locals of target type.</li>
+    </ul>
+
+</body>
+</html>

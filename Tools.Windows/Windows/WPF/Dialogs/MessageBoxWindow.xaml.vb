@@ -1,6 +1,7 @@
 ﻿#If Config <= Nightly Then  'Stage: Nightly
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Window that impements WPF message box</summary>
+    ''' <version version="1.5.3." stage="Nightly">Added ability to copy all text of message box using Ctrl+C</version>
     Partial Friend NotInheritable Class MessageBoxWindow
 
         ''' <summary>Raises the <see cref="E:System.Windows.FrameworkElement.SizeChanged" /> event, using the specified information as part of the eventual event data.                 </summary>
@@ -34,6 +35,14 @@ Namespace WindowsT.WPF.DialogsT
                 Exit Sub
             End If
             MyBase.OnClosing(e)
+        End Sub
+
+        Private Sub Copy_Executed(ByVal sender As System.Object, ByVal e As System.Windows.Input.ExecutedRoutedEventArgs)
+            My.Computer.Clipboard.SetText(MsgBoxControl.GetCopyText, Windows.Forms.TextDataFormat.UnicodeText)
+        End Sub
+
+        Private Sub Copy_CanExecute(ByVal sender As System.Object, ByVal e As System.Windows.Input.CanExecuteRoutedEventArgs)
+            e.CanExecute = True
         End Sub
     End Class
 End Namespace

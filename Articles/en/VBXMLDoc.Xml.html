@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>VBXMLDoc.Xml</title>
+</head>
+<body>
+  <p>This article was originally published by Đonny as <em>IntelliSense for custom tags</em> community content 
+      contribution on MSDN page <a href="http://msdn.microsoft.com/en-us/library/ms172653.aspx">Recommended XML Tags for Documentation Comments (Visual Basic)</a>.</p>
+        <h1>IntelliSense for custom tags</h1>
+    <p>
+    Tools for processing XML comments like SandCastle can benefit from more tags 
+    than official tags mentioned in this article. You may even force the tool to 
+    process you own tags.<br />
+    If you want Visual Studio to offer you your own set of tags when typing XML 
+    comments in Visual Basic or if you want your custom tags to appear when you type 
+    &#39;&#39;&#39; in front of member, it is possible to setup your configuration.</p>
+    <h3>
+        Definition file<br />
+    </h3>
+    <p>
+        To override set of Visual Basic XML Doc Comments tags known to IntelliSense it 
+        is necessary to create special XML file, that defines for each type of member</p>
+    <ul>
+        <li>Default comment to appear when &#39;&#39;&#39; is typed.</li>
+        <li>Tags suggested for that type member by IntelliSense</li>
+    </ul>
+    Additionally it also defines set of generl purpose tags to be used inside 
+    another tags.<br />
+    The file is located in user profile folder:<br />
+    <ul>
+        <li>C:\Documents and Settings\<i>&lt;user&gt;</i>\Application Data\Microsoft\VisualStudio\<i>&lt;version&gt;</i>\VBXMLDoc.Xml 
+            (for Windows XP)</li>
+        <li>C:\Users\<i>&lt;user&gt;</i>\AppData\Roaming\Microsoft\VisualStudio\<i>&lt;version&gt;</i>\VBXMLDoc.xml 
+            (for Windows Vista and later)</li>
+    </ul>
+    <i>Version </i>is 8.0 for Visual Studio 2005, 9.0 for 2008 and 10.0 for 2010.<br />
+    Bear in mind that by specifying this file original built in set of XML comments 
+    is entirely replaced by the one specified in it.<br />
+    <h3>
+        File structure</h3>
+    <p>
+        The file is ordinary XML file (no XML-Schema or something like that). File 
+        defines for each type of code element default XML Doc template and set of 
+        allowed tags with their parameters. Visual Basic IntelliSense treats some tags 
+        and attributes in special way. This logic is built-in in Visual Basic 
+        IntelliSense provider and cannot be redefined in the XML file. For example 
+        element &lt;param name=&quot;&quot;/&gt; is offered for each parameter of member with 
+        parameters. &lt;typeparam name=&quot;&quot;/&gt; is offered for generic parameters. Attribute 
+        name of &lt;paramref&gt; element offers name of parameters of actual element. cref 
+        attribute of any element offers references to other types and members. And it 
+        seems that cref attribute of any element is also processed by Visual Basic 
+        compiler, so context-relative reference is turned to fully qualified reference 
+        with member type specifier.</p>
+    <p>
+        The file does not use XML namespaces.</p>
+    <p>
+        <br />
+    </p>
+    <p>
+        <b>&lt;XMLDocCommentSchema&gt;</b></p>
+    <blockquote>
+        <p>
+            Root element of VBXMLDoc.Xml</p>
+        <p>
+            <b>Attributes:</b> <i>none</i><br />
+        </p>
+        <p>
+            <b>Children:</b> &lt;CodeElement&gt;{0,∞}; &lt;ChildCompletionList&gt;{1}</p>
+    </blockquote>
+    <p>
+        <b>&lt;CodeElement&gt;</b></p>
+    <blockquote>
+        <p>
+            Defines template and available tags for specified code element (as class, 
+            property, delegate etc.)</p>
+        <p>
+            <b>Parents:</b> &lt;XMLDocCommentsSchema&gt;</p>
+        <p>
+            <b>Attributes:</b> type - type of code element this tag defines XML tags for 
+            (see below for list of values)</p>
+        <p>
+            <b>Children:</b> &lt;Template&gt;{1}, &lt;CompletionList&gt;{1}</p>
+        <p>
+            Types of elements:</p>
+        <ul>
+            <li><b>Module</b> Visual Basic [Standard] Module (static class; Module keyword)</li>
+            <li><b>Namespace</b> <i>not used</i></li>
+            <li><b>Class</b> Class (reference type; Class keyword)</li>
+            <li><b>Structure</b> Structure (value type; Structure keyword)</li>
+            <li><b>Interface</b> Interface (Interface keyword)</li>
+            <li><b>Enum</b> Enumeration (Enum keyword)</li>
+            <li><b>Property</b> Property (Property keyword)</li>
+            <li><b>Sub</b> Procedure - method without return value and type initializers and 
+                constructors (Sub keyword)</li>
+            <li><b>Function</b> Function - method with return value (Function keyword)</li>
+            <li><b>Operator</b> Operator - special function used for operations like adding, 
+                multiplying or type conversions (Operator keyword))</li>
+            <li><b>Declare</b> Visual Basic import of native procedure or function (Declare 
+                keyword)</li>
+            <li><b>Field</b> Field (instance/type variable; Dim keyword)</li>
+            <li><b>Delegate</b> Delegate declaration both - Sub and Function (Delegate keyword)</li>
+            <li><b>Event</b> Event - all 3 possible syntaxes (Event keyword)</li>
+        </ul>
+    </blockquote>
+    <b>&lt;Template&gt;</b><br />
+    <blockquote>
+        Defines template of XML documentation as it appears when &#39;&#39;&#39; is typed on line 
+        preceding member header.<br />
+        <b>Parents:</b> &lt;CodeElement&gt;<br />
+        <b>Attributes:</b> <i>none<br />
+        </i><b>Children:</b> <i>any</i>{0,∞}<br />
+        Child elements of this element specify XML content to appear when &#39;&#39;&#39; is typed 
+        on line preceding member header. This is really template rather than exact 
+        comment. Elements are specified as empty elements with empty attributes. For 
+        example &lt;summary /&gt; or &lt;param name=&quot;&quot;/&gt;. &lt;summary&gt; element is always expanded to 
+        3 lines. &lt;param&gt; and &lt;typeparam&gt; elements are placed as many times as necessary 
+        and their name attributes are filled with names of arguments / type parameters 
+        of given member.<br />
+    </blockquote>
+    <b>&lt;CompletionList&gt;<br />
+    </b>
+    <blockquote>
+        Defines list of top-level elements and their attributes to be offered by 
+        IntelliSense when typing XML Doc comments for particular member.<br />
+        <b>Parents:</b> &lt;CodeElement&gt;<br />
+        <b>Attributes:</b> <i>none</i><br />
+        <b>Children:</b> <i>any</i>{0,∞}<br />
+        Child elements of this element specify top-level elements offered by Visual 
+        Basic IntelliSense when typing XML Doc Comments for particular kind of member. 
+        Elements are specified as empty with empty attributes. Any possible children of 
+        child elements are ignored as well as attribute values.<br />
+    </blockquote>
+    <b>&lt;ChildCompletionList&gt;</b><br />
+    <blockquote>
+        Defines list of generl-purpose elements offered by Visual Basic IntelliSense 
+        when typing content of top-level elements in XML Doc Comments.<br />
+        <b>Parents:</b> &lt;XmlDocCommentSchema&gt;<br />
+        <b>Attributes:</b> <i>none</i><br />
+        <b>Children:</b> <i>any</i>{0,∞}<br />
+        Child elements of this element specify elements offered by Visual Basic 
+        IntelliSense when typing content of top-level elements. Thos elements should be 
+        general-purpose as there is now way how to specify that e.g. element &lt;note&gt; can 
+        appear only in &lt;remarks&gt; top-level element. Elements are usually specified as 
+        empty with empty attributes. Any attribute values are ignored.<br />
+        Child elements of child elements specify elements that can appear inside their 
+        parents in addition to general-purpose ones. Same rules apply as with 
+        general-purpose elements and children of children of children are allowed as 
+        well.<br />
+    </blockquote>
+    <h3>
+        Examples</h3>
+    <p>
+        Following example shows definition suitable for Class member:</p>
+    <p>
+        <br />
+    </p>
+    <pre>&lt;CodeElement type=&quot;Class&quot;&gt;
+    &lt;Template&gt;
+        &lt;summary /&gt;
+        &lt;typeparam /&gt;
+    &lt;/Template&gt;
+    &lt;CompletionList&gt;
+        &lt;include file=&quot;&quot; path=&quot;&quot; /&gt;
+        &lt;permission cref=&quot;&quot; /&gt;
+        &lt;remarks /&gt;
+        &lt;summary /&gt;
+        &lt;completionlist cref=&quot;&quot;/&gt;
+        &lt;seelaso cref=&quot;&quot;/&gt;
+        &lt;exclude/&gt;
+        &lt;preliminary/&gt;
+        &lt;threadsafety/&gt;
+        &lt;inheritdoc cref=&quot;&quot; select=&quot;&quot;/&gt;
+        &lt;typeparam name=&quot;&quot; /&gt;
+        &lt;filterpriority/&gt;
+    &lt;/CompletionList&gt;
+&lt;/CodeElement&gt;
+</pre>
+    <p>
+        Following example shows foll code of &lt;ChildCompletionList&gt; section:</p>
+    <p>
+    </p>
+    <pre>&lt;ChildCompletionList&gt;
+    &lt;c /&gt;
+    &lt;code lang=&quot;&quot; /&gt;
+    &lt;example /&gt;
+    &lt;list type=&quot;&quot;&gt;
+        &lt;listheader&gt;
+            &lt;term /&gt;
+            &lt;description /&gt;
+        &lt;/listheader&gt;
+        &lt;item&gt;
+            &lt;term /&gt;
+            &lt;description /&gt;
+        &lt;/item&gt;
+    &lt;/list&gt;
+    &lt;para /&gt;
+    &lt;paramref name=&quot;&quot; /&gt;
+    &lt;see cref=&quot;&quot; langword=&quot;&quot; /&gt;
+    &lt;IPermission class=&quot;&quot; version=&quot;&quot; Flags=&quot;&quot;/&gt;
+    &lt;typeparamref name=&quot;&quot;/&gt;
+    &lt;note type=&quot;&quot;/&gt;
+&lt;/ChildCompletionList&gt;</pre>
+    </p>
+
+</body>
+</html>

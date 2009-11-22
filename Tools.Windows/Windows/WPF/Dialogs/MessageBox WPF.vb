@@ -11,6 +11,7 @@ Namespace WindowsT.WPF.DialogsT
     ''' Teplate parts are panels for additional controls that can be placed on message box and are optional. When not pressent additional control will not be visible! But use of additional controls is rare.
     ''' <para>This control is disposable. When it disposes it should not be used. It disposes automatically wehn message box window closes.</para></remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
+    ''' <version version="1.5.3." stage="Nightly">Added ability to copy all text of message box using Ctrl+C</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_TopControlPlaceholder, Type:=GetType(Controls.Panel))> _
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_MiddleControlPlaceholder, Type:=GetType(Controls.Panel))> _
@@ -286,6 +287,69 @@ Namespace WindowsT.WPF.DialogsT
             Dispose(True)
         End Sub
 #End Region
+        'TODO: Test
+        ''' <summary>Gets full textual representation of message box</summary>
+        ''' <returns>Textual representation of messagesbox including <see cref="MessageBox.Title"/>, <see cref="MessageBox.Prompt"/>, <see cref="MessageBox.ComboBox"/>, <see cref="MessageBox.CheckBoxes"/>, <see cref="MessageBox.Radios"/> and <see cref="MessageBox.Buttons"/></returns>
+        ''' <remarks>Custom controls - <see cref="MessageBox.TopControl"/>, <see cref="MessageBox.MidControl"/> and <see cref="MessageBox.BottomControl"/> are not included in text</remarks>
+        ''' <vertion version="1.5.3" stage="Nightly">This function is new in version 1.5.3</vertion>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Overridable Function GetCopyText() As String
+            If Me.IsDisposed Then Throw New ObjectDisposedException(Me.Name)
+            Dim text As New System.Text.StringBuilder
+            If MessageBox.Title = "" Then
+                text.AppendLine("========================================")
+            Else
+                text.AppendLine("================= " & MessageBox.Title & " =================")
+            End If
+            If MessageBox.Prompt <> "" Then text.AppendLine(MessageBox.Prompt)
+            If MessageBox.ComboBox IsNot Nothing Then
+                Dim i As Integer = 0
+                For Each item In MessageBox.ComboBox.Items
+                    Dim ch As Char = If(i = MessageBox.ComboBox.SelectedIndex, "»"c, ">"c)
+                    Try
+                        If item Is Nothing Then text.AppendLine(ch) : Continue For
+                        If MessageBox.ComboBox.DisplayMember = "" Then text.AppendLine(ch & " " & item.ToString) : Continue For
+                        Try
+                            For Each prd As PropertyDescriptor In TypeDescriptor.GetProperties(item)
+                                If prd.Name = MessageBox.ComboBox.DisplayMember Then
+                                    Dim value = prd.GetValue(item)
+                                    If value Is Nothing Then
+                                        text.AppendLine(ch)
+                                    Else
+                                        text.AppendLine(ch & " " & value.ToString)
+                                    End If
+                                    Exit For
+                                End If
+                            Next
+                        Catch ex As Exception
+                            text.AppendLine(ch & " " & item.ToString)
+                        End Try
+                    Finally
+                        i += 1
+                    End Try
+                Next
+            End If
+            If MessageBox.CheckBoxes.Count > 0 Then
+                For Each chk In MessageBox.CheckBoxes
+                    text.AppendLine(If(chk.State = Forms.CheckState.Checked, "☑", If(chk.State = Forms.CheckState.Unchecked, "☐", "▣")) & " " &
+                                    chk.Text)
+                Next
+            End If
+            If MessageBox.Radios.Count > 0 Then
+                For Each rad In MessageBox.Radios
+                    text.AppendLine(If(rad.Checked, "◉", "◯") & " " & rad.Text)
+                Next
+            End If
+            If MessageBox.Buttons.Count > 0 Then
+                Dim ButtonsText As String = ""
+                For Each button In MessageBox.Buttons
+                    If ButtonsText <> "" Then ButtonsText &= " "
+                    ButtonsText &= String.Format("[{0}]", button.Text)
+                Next
+                text.AppendLine(ButtonsText)
+            End If
+            Return text.ToString
+        End Function
     End Class
 
     ''' <summary>Implements <see cref="iMsg"/> for Windows Presentation Foundation</summary>
