@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="sn" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\sn.exe</Value>
+      <Value Profile="(Default)">c:\Program Files\Microsoft SDKs\Windows\v7.0\Bin\x64\sn.exe</Value>
     </Setting>
   </Settings>
 </SettingsFile>

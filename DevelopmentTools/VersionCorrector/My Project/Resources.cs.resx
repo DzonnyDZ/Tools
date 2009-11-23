@@ -139,7 +139,7 @@
     <value>• {0} {1}</value>
   </data>
   <data name="LookingFor" xml:space="preserve">
-    <value>Hledám {0}, hanrazuji za {1}</value>
+    <value>Hledám {0}, nahrazuji za {1}</value>
   </data>
   <data name="CannotUpdate" xml:space="preserve">
     <value>    Nemohu aktualizovat sestavení. Verze mají různou délku. Zkus rebuild. Původní {2}.{3}.{0}, nové {2}.{3}.{1}</value>

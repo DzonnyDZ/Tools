@@ -3,7 +3,7 @@
  *       cnjs@mweb.co.za
  * I've foundthis great tool dunno where on the Internet and I hope I'm not violating any rights when I'v included it as development tool in ÐTools and tweaked it a little.      
  */
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
     using System;
     using System.IO;
     using System.Reflection;
@@ -17,6 +17,7 @@ namespace Tools.GeneratorsT {
     /// This is a transform code generator. It performs XSL transform as custom tool in Visual Studio.
     /// </summary>
     /// <seealso cref="XsltCustomTool"/>
+    /// <version version="1.5.3">Class moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     [Guid("2F8B768B-DBEA-407d-9A43-416BE87FA6A5")]
     [CustomTool("TransformCodeGenerator", "Transform Code Generator")]
     public class TransformCodeGenerator:CustomToolBase {

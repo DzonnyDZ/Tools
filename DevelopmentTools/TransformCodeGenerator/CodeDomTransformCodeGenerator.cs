@@ -1,4 +1,4 @@
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
     using System;
     using System.IO;
     using System.Reflection;
@@ -15,6 +15,7 @@ namespace Tools.GeneratorsT {
     /// <seealso cref="Tools.CodeDomT.Xml2CodeDom"/>
     /// <seealso cref="CodeDomXsltCustomTool"/>
     /// <see cref="CodeDOMGenerator"/>
+    /// <version version="1.5.3">Class moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     [Guid("3BB200B4-37B4-48d8-B611-A033EED4E647")]
     [CustomTool("CodeDomTransformCodeGenerator", "Code DOM Transform Code Generator")]
     public class CodeDomTransformCodeGenerator:CustomToolBase {

@@ -2,7 +2,7 @@
  * Copyright (C) 2006 Chris Stefano
  *       cnjs@mweb.co.za
   */
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
     using System;
     using System.IO;
     using System.Reflection;
@@ -17,6 +17,7 @@ namespace Tools.GeneratorsT {
     /// </summary>
     /// <remarks>Unlike <see cref="TransformCodeGenerator"/> this tool should be attached to XSLT file, not to XML file.</remarks>
     /// <seealso cref="TransformCodeGenerator"/>
+    /// <version version="1.5.3">Class moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     [Guid("D6CC6AA7-6B02-4e5c-98EA-847725A020D1")]
     [CustomTool("XsltCustomTool", "XSLT custom tool")]
     public class XsltCustomTool:CustomToolBase {

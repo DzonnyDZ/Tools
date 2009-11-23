@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Tools.GeneratorsT;
 using System.Xml.Linq;
 using System.CodeDom;
 using Tools.CodeDomT;
@@ -10,11 +9,12 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Tools.VisualStudioT.GeneratorsT;
 
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
     /// <summary>This is Code DOM generator. It performs code generation from XML-serialized Code DOM.</summary>
     /// <seealso cref="Xml2CodeDom"/>
     /// <seealso cref="CodeDomTransformCodeGenerator"/>
     /// <seealso cref="CodeDomXsltCustomTool"/>
+    /// <version version="1.5.3">Class moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     [Guid("577A80C1-701B-4484-8277-9C6D03D04FFD")]
     [CustomTool("CodeDOMGenerator", "Code DOM generator")]
     public class CodeDOMGenerator:CustomToolBase {

@@ -2,7 +2,7 @@
  * Copyright (C) 2006 Chris Stefano
  *       cnjs@mweb.co.za
   */
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
     using System;
     using System.IO;
     using System.Reflection;
@@ -20,6 +20,7 @@ namespace Tools.GeneratorsT {
     /// <seealso cref="Tools.CodeDomT.Xml2CodeDom"/>
     /// <seealso cref="CodeDomTransformCodeGenerator"/>
     /// <see cref="CodeDOMGenerator"/>
+    /// <version version="1.5.3">Class moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     [Guid("88185642-6CBD-45a6-9447-3D6C19AAE4B6")]
     [CustomTool("CodeDomXsltCustomTool", "Code DOM XSLT custom tool")]
     public class CodeDomXsltCustomTool:CustomToolBase {
