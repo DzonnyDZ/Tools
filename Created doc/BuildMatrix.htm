@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 <head>
     <title>Build Matrix</title>
     <style type="text/css">
         h1{
             text-align:center;
-            font-family:Sans-Serif;
+            font-family:sans-serif;
         }
         table{
             border-collapse:collapse;
             border:solid thick Gray;
             empty-cells:show;
+            margin-top:1ex;
+            margin-bottom:1ex;
         }
-        thead{
-            border-bottom:solid medium Gray;
-        }
+        thead{border-bottom:solid medium Gray;}
         th{
-            font-family:Sans-Serif;
+            font-family:sans-serif;
             font-weight:bold;
         }
         td, th {
@@ -34,7 +34,7 @@
         tbody > tr > td[colspan="26"], tbody > tr:hover > td[colspan="26"]{
             background-color:Orange;
             font-weight:bold;
-            font-family:Sans-Serif;
+            font-family:sans-serif;
             text-align:left !important;
         }
         tbody > tr:hover{
@@ -44,13 +44,40 @@
             font-weight:bold;
             text-align:center;
         }
+        p{
+            margin:0;
+            padding:0;
+        }
+        .float-left{ float:left;}
+        .float-right{ float:right;}
+        .clear{clear:both;}
+        div.charlist{padding-left:3EM;}
+        div.charlist > p {display:list-item; list-style-type:none;}
+        div.charlist > p > span:first-child{position:relative; left:-1EM;}
+        tbody > tr > td:nth-child(6) ~ td:not(:nth-last-child(2)):not(:last-child) {text-align:center;}
+        a img{border:none;} 
+        tr.segment-header:hover ~ tr:not(.segment-header){background-color:#ffffbb}
+        tr.segment-header:hover ~ tr.segment-header:not(:hover) ~ tr{background-color:inherit;}
+        tr.segment-header:hover > td{background-color:#ffcc00 !important;}
+        a[href]{text-decoration:none;}
+        a[href]:hover{text-decoration:underline;}
+        tbody > tr > td:nth-child(5){font-size:small;}
+        tbody > tr > td:nth-child(2), tbody > tr > td:last-child:not(:first-child){
+            font-size:small;
+            font-family:Consolas, monospace;
+        }
+        tbody > tr > td:nth-child(3){
+            font-family:sans-serif;
+            text-align:center;
+        }
     </style>
 </head>  
 <body>     
     <h1>Build Matrix</h1>
-    <dl>
+    <dl class="float-left">
         <dt>Output Directory pattern</dt>
         <dd>Config\Platform</dd>
+        <dd>Examples: Debug\AnyCPU, Latest\x86, Release\x64</dd>
         <dt>Abbreviations</dt>
         <dd><strong>D</strong> = Debug</dd>
         <dd><strong>A</strong> = Alpha</dd>
@@ -61,8 +88,14 @@
         <dd><strong>3</strong> = x86</dd>
         <dd><strong>6</strong> = x64</dd>
     </dl>
-     <table>
-        <thead>
+    <div class="float-left charlist">
+        <p><span>✔</span>Project is build</p>
+        <p><span>☐</span>Project is not build</p>        
+        <p><span>☒</span>Project is not build, but can be build manually</p>
+        <p><span>→</span>Project is build using appropriate configuration form Any CPU</p>
+    </div>
+     <table class="clear">
+        <thead>                                                                       
             <tr>
                 <th scope="col" rowspan="3">Project name</th>
                 <th scope="col" rowspan="3">Assembly name</th>
@@ -71,8 +104,8 @@
                 <th scope="col" rowspan="3">Project directory</th>
                 <th scope="col" rowspan="3">Output directory</th>
                 <th scope="colgroup" colspan="18">Solution Configuration</th>
-                 <th scope="col" rowspan="3">Type</th>
-                 <th scope="col" rowspan="3">Root namespace</th>
+                <th scope="col" rowspan="3">Type</th>
+                <th scope="col" rowspan="3">Root namespace</th>
             </tr>
             <tr>
                 <th scope="colgroup" colspan="6">AnyCPU</th>
@@ -80,26 +113,26 @@
                 <th scope="colgroup" colspan="6">x64</th>
             </tr>
             <tr>
-                <th scope="colgroup">Debug</th>
-                <th scope="colgroup">Alpha</th>
-                <th scope="colgroup">Beta</th>
-                <th scope="colgroup">RC</th>
-                <th scope="colgroup">Release</th>
-                <th scope="colgroup">Latest</th>
+                <th scope="col">Debug</th>
+                <th scope="col">Alpha</th>
+                <th scope="col">Beta</th>
+                <th scope="col">RC</th>
+                <th scope="col">Release</th>
+                <th scope="col">Latest</th>
                 
-                <th scope="colgroup">Debug</th>
-                <th scope="colgroup">Alpha</th>
-                <th scope="colgroup">Beta</th>
-                <th scope="colgroup">RC</th>
-                <th scope="colgroup">Release</th>
-                <th scope="colgroup">Latest</th>
+                <th scope="col">Debug</th>
+                <th scope="col">Alpha</th>
+                <th scope="col">Beta</th>
+                <th scope="col">RC</th>
+                <th scope="col">Release</th>
+                <th scope="col">Latest</th>
                 
-                <th scope="colgroup">Debug</th>
-                <th scope="colgroup">Alpha</th>
-                <th scope="colgroup">Beta</th>
-                <th scope="colgroup">RC</th>
-                <th scope="colgroup">Release</th>
-                <th scope="colgroup">Latest</th>
+                <th scope="col">Debug</th>
+                <th scope="col">Alpha</th>
+                <th scope="col">Beta</th>
+                <th scope="col">RC</th>
+                <th scope="col">Release</th>
+                <th scope="col">Latest</th>
             </tr>
         </thead>
         <tbody>
@@ -108,9 +141,9 @@
                 <td>Tools.Experimental.dll</td >
                 <td>VB</td >
                 <td>Various classes to be integrated to solution in future</td>
-                <td>Experimental</td><td>..\bin</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>
-                ☐DA</td><td>☐</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>
-                ☐</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>☐DA</td><td>☐</td>
+                <td><a href="../Experimental">Experimental</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>☒</td><td>☒DA</td><td>☒DA</td><td>☒DA</td><td>☒DA</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools.Experimental</td>
             </tr>
@@ -119,8 +152,9 @@
                 <td>Tools.Tests.exe</td>
                 <td>VB</td>
                 <td>Clickable tests</td>
-                <td>Tests</td><td>bin</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>
-                ☐</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☐</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☐</td>
+                <td><a href="../Tests">Tests</a></td>
+                <td><a href="../Tests/bin">bin</a></td>
+                <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td>
                 <td>WinEXE</td>
                 <td>Tools.Tests</td>
             </tr>
@@ -129,8 +163,9 @@
                 <td>Tools.dll</td>
                 <td>VB</td>
                 <td>General</td>
-                <td>Tools</td><td>..\bin</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>
-                ☑</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☐</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☑DA</td><td>☐</td>
+                <td><a href="../Experimental">Tools</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools</td>
             </tr>
@@ -139,7 +174,9 @@
                 <td>Tools.IL.dll</td>
                 <td>CIL</td>
                 <td>Strange stuff that must be  written in IL</td>
-                <td>Tools IL</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools%20IL">Tools IL</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>✔D3*</td><td>✔A3*</td><td>✔B3*</td><td>✔C3*</td><td>✔R3*</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools</td>
             </tr>
@@ -148,7 +185,9 @@
                 <td>Tools.Metadata.dll</td>
                 <td>VB</td>
                 <td>File metadata like  Exif, ID3, etc.</td>
-                <td>Tools.Metadata</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools.Metadata">Tools.Metadata</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools</td>
             </tr>
@@ -157,15 +196,19 @@
                 <td>Tools.SqlServer.dll</td>
                 <td>VB</td>
                 <td>SQL-CLR</td>
-                <td>Tools.SqlServer</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools.SqlServer">Tools.SqlServer</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools<em>.DataT.SqlServerT</em></td></tr>
             <tr>
                 <td>Tools.VisualStudio</td>
                 <td>Tools.VisualStudio.dll</td>
                 <td>VB</td>
-                <td>Visual  Studio general</td>
-                <td>Tools Visual Studio</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>Visual Studio general</td>
+                <td><a href="../Tools%20Visual%20Studio">Tools Visual Studio</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools<em>.VisualStudioT</em></td></tr>
             <tr>
@@ -173,7 +216,9 @@
                 <td>Tools.VisualStudio.CS.dll</td>
                 <td>C#</td>
                 <td>Visual  Studio general</td>
-                <td>Tools VisualStudio CS</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools%20VisualStudio%20CS">Tools VisualStudio CS</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools.VisualStudioT</td>
             </tr>
@@ -182,7 +227,9 @@
                 <td>Tools.Win.dll</td>
                 <td>VB</td>
                 <td>Windows API wrappers</td>
-                <td>Tools Win</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools%20Win">Tools Win</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools</td>
             </tr>
@@ -191,7 +238,9 @@
                 <td>Tools.Windows.dll</td>
                 <td>VB</td>
                 <td>WPF a WinForms</td>
-                <td>Tools.Windows</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools.Windows">Tools.Windows</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools<em>.WindowsT</em></td></tr>
             <tr>
@@ -199,18 +248,20 @@
                 <td>Tools.UnitTests.exe</td>
                 <td>VB</td>
                 <td>Unit tests</td>
-                <td>UnitTests</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../UnitTests">UnitTests</a></td>
+                <td><a href="../UnitTests/bin">bin</a></td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td>
                 <td>Unit test</td>
                 <td>Tools.Tests.UnitTests</td>
             </tr>
-            <tr><td colspan="26">Development Tools</td>
-            </tr>
+            <tr class="segment-header"><td colspan="26">Development Tools</td></tr>
             <tr>
                 <td>CommentsMerge</td>
                 <td>CommentsMerge.exe</td>
                 <td>VB</td>
                 <td>Merges XML Doc  comments files</td>
-                <td>DevelopmentTools\CommentsMerge</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/CommentsMerge">DevelopmentTools\CommentsMerge</a></td>
+                <td><a href="../DevelopmentTools/CommentsMerge/bin">bin</a></td>
+                <td>✔</td><td>✔DA</td><td>✔DA</td><td>✔DA</td><td>✔DA</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>ConEXE</td>
                 <td>Tools.CommentsMerge</td>
             </tr>
@@ -219,7 +270,9 @@
                 <td>PseudoZip.exe</td>
                 <td>VB</td>
                 <td>Packs file using  System.IO.Packaging.ZipPackage</td>
-                <td>DevelopmentTools\PseudoZip</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/PseudoZip">DevelopmentTools\PseudoZip</a></td>
+                <td><a href="../DevelopmentTools/PseudoZip/bin">bin</a></td>
+                <td>✔</td><td>✔DA</td><td>✔DA</td><td>✔DA</td><td>✔DA</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>ConEXE</td>
                 <td>Tools.IOt.PackagingT</td>
             </tr>
@@ -228,7 +281,9 @@
                 <td>ResXFileCodeGeneratorEx.dll</td>
                 <td>CS</td>
                 <td>Extended resource generator Custom Tool for Visual Studio</td>
-                <td>DevelopmentTools\ResXFileCodeGeneratorEx</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/ResXFileCodeGeneratorEx">DevelopmentTools\ResXFileCodeGeneratorEx</a></td>
+                <td><a href="../DevelopmentTools/ResXFileCodeGeneratorEx/bin">bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔D3</td><td>✔D3</td><td>✔D3</td><td>✔R3</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td>DMKSoftware.CodeGenerators</td>
             </tr>
@@ -237,7 +292,9 @@
                 <td>ResXFileGenerator.exe</td>
                 <td>VB</td>
                 <td>Wraps  ResXFileCodeGeneratorEx as console EXE</td>
-                <td>DevelopmentTools\ResXFileGenerator</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/ResXFileGenerator">DevelopmentTools\ResXFileGenerator</a></td>
+                <td><a href="../DevelopmentTools/ResXFileGenerator/bin">bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔D3</td><td>✔D3</td><td>✔D3</td><td>✔R3</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>ConEXE</td>
                 <td>Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</td>
             </tr>
@@ -246,7 +303,9 @@
                 <td>Tools.VisualStudio.Macros</td>
                 <td>VB</td>
                 <td>Macros for Visual Studio</td>
-                <td>DevelopmentTools\Macros</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/Macros">DevelopmentTools\Macros</a></td>
+                <td><a href="../DevelopmentTools/Macros/bin">bin</a></td>
+                <td>☒</td><td>☒DA</td><td>☒DA</td><td>☒DA</td><td>☒DA</td><td>☒</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools.VisualStudioT.MacrosT</td>
             </tr>
@@ -255,7 +314,9 @@
                 <td>TransformCodeGenerator</td>
                 <td>C#</td>
                 <td>XSLT-based code generator custom tool for Visual Studio</td>
-                <td>DevelopmentTools\TransformCodeGenerator</td><td>..\..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/TransformCodeGenerator">DevelopmentTools\TransformCodeGenerator</a></td>
+                <td><a href="../bin">..\..\bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools.GeneratorsT</td>
             </tr>
@@ -264,7 +325,9 @@
                 <td>VersionCorrector</td>
                 <td>VB</td>
                 <td>Repairs bad  versions in XAML resources</td>
-                <td>DevelopmentTools\VersionCorrector</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/VersionCorrector">DevelopmentTools\VersionCorrector</a></td>
+                <td><a href="../DevelopmentTools/VersionCorrector/bin">bin</a></td>
+                <td>✔</td><td>✔DA</td><td>✔DA</td><td>✔DA</td><td>✔</td><td>✔</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>ConEXE</td>
                 <td>Tools.VersionCorrector</td>
             </tr>
@@ -273,18 +336,21 @@
                 <td>XsdGenerator</td>
                 <td>CS</td>
                 <td>XSD classes generator  custom tool for Visual Studio</td>
-                <td>DevelopmentTools\XsdGenerator</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../DevelopmentTools/XsdGenerator">DevelopmentTools\XsdGenerator</a></td>
+                <td><a href="../DevelopmentTools/XsdGenerator/bin">bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools.VisualStudioT.GeneratorsT.XsdGenerator</td>
             </tr>
-            <tr><td colspan="26">Projects</td>
-            </tr>
+            <tr class="segment-header"><td colspan="26">Projects</td></tr>
             <tr>
                 <td>Metanol Screen Saver</td>
                 <td>Metanol Screen Saver.exe</td>
                 <td>VB</td>
                 <td>Pictures + metadata screen saver</td>
-                <td>Projects\Metanol Screen Saver</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Projects/Metanol%20Screen%20Saver">Projects\Metanol Screen Saver</a></td>
+                <td><a href="../Projects/Metanol%20Screen%20Saver/bin">bin</a></td>
+                <td>☒</td><td>☒DA</td><td>☒DA</td><td>☒DA</td><td>☒</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>WinEXE</td>
                 <td>Metanol.SSaver</td>
             </tr>
@@ -293,18 +359,21 @@
                 <td>Metanol</td>
                 <td>VB</td>
                 <td>IPTC metadata editor &amp; manager</td>
-                <td>Projects\Metanol2</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Projects/Metanol2">Projects\Metanol2</a></td>
+                <td><a href="../Projects/Metanol2/bin">bin</a></td>
+                <td>✔</td><td>✔DA</td><td>✔DA</td><td>✔DA</td><td>✔</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td><td>→</td><td>→</td><td>→</td><td>→</td><td>→</td><td>☐</td>
                 <td>WinEXE</td>
                 <td>Tools.Metanol</td>
             </tr>
-            <tr><td colspan="26">Tools.TotalCommander</td>
-            </tr>
+            <tr class="segment-header"><td colspan="26">Tools.TotalCommander</td></tr>
             <tr>
                 <td>Tools.TotalCommander</td>
                 <td>Tools.TotalCommander.dll</td>
                 <td>C++/CLI</td>
                 <td>Total Commander plugins framework</td>
-                <td>Tools.TotalCommander</td><td>..\bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools.TotalCommander">Tools.TotalCommander</a></td>
+                <td><a href="../bin">..\bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools.TotalCommanderT</td>
             </tr>
@@ -313,7 +382,9 @@
                 <td>-</td>
                 <td>C++/CLI</td>
                 <td>Total Commander  plugin template</td>
-                <td>Tools.TotalCommander\Plugin</td><td>-</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools.TotalCommander/Plugin">Tools.TotalCommander\Plugin</a></td>
+                <td>-</td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td><em>Tools.TotalCommanderT.Plugin</em></td>
             </tr>
@@ -322,7 +393,9 @@
                 <td>TCPluginBuilder</td>
                 <td>VB</td>
                 <td>Compiles Total Commander plugin from plugin DLL and plugin template</td>
-                <td>Tools.TotalCommander\TotalCommander Plugin Builder</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Tools.TotalCommander/TotalCommander%20Plugin%20Builder">Tools.TotalCommander\TotalCommander Plugin Builder</a></td>
+                <td><a href="../Tools.TotalCommander/TotalCommander%20Plugin%20Builder/bin">bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>ConEXE</td>
                 <td>Tools.TotalCommanderT.PluginBuilder</td>
             </tr>
@@ -331,11 +404,21 @@
                 <td>wfx sample</td>
                 <td>VB</td>
                 <td>Total  Commander file system plugin (wfx) sample</td>
-                <td>Samples\wfx sample</td><td>bin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><a href="../Samples/wfx%20sample">Samples\wfx sample</a></td>
+                <td><a href="../Samples/wfx%20sample/bin">bin</a></td>
+                <td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>✔</td><td>✔D3</td><td>✔D3</td><td>✔D3</td><td>✔D3</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td>
                 <td>DLL</td>
                 <td>Tools.TotalCommanderT.WfxSample</td>
             </tr>
         </tbody>
      </table>
+     <p class="float-right">
+        <a href="http://validator.w3.org/check?uri=referer">
+            <img src="http://www.w3.org/Icons/valid-xhtml11-blue" alt="Valid XHTML 1.1" height="31" width="88" />
+        </a>
+     </p>
+     <p>
+        * - Despite being named Win32, the configuration is Any CPU.
+     </p>
 </body>
 </html>
