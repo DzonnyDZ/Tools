@@ -2,18 +2,18 @@
 Imports System.Runtime.CompilerServices
 Imports System.Windows
 Imports System.Runtime.InteropServices
-Imports System.Windows.Interop
 
-#If Config <= Nightly Then 'Stage nightly
+#If Config <= Alpha Then 'Stage: Alpha
 Namespace WindowsT.InteropT
     ''' <summary>Contains extension methods for WPF - WinForms interoperability</summary>
+    ''' <version version="1.5.3." stage="Alpha">Introduced new overloads to <see cref="InteropExtensions.Show"/> and <see cref="InteropExtensions.ShowDialog"/> methods to support <see cref="Interop.IWin32Window"/>.</version>
     Public Module InteropExtensions
         ''' <summary>Converts <see cref="Drawing.Image"/> to WPF <see cref="BitmapSource"/></summary>
         ''' <param name="Image">An <see cref="Drawing.Image"/></param>
         ''' <returns><see cref="BitmapSource"/> created from <paramref name="Image"/>; null when <paramref name="Image"/> is null.</returns>
         ''' <seelaso cref="Interop.Imaging.CreateBitmapSourceFromHBitmap"/>
         <Extension()> _
-       Public Function ToBitmapSource(ByVal Image As Drawing.Bitmap) As BitmapSource
+        Public Function ToBitmapSource(ByVal Image As Drawing.Bitmap) As BitmapSource
             If Image Is Nothing Then Return Nothing
             'Return Interop.Imaging.CreateBitmapSourceFromHBitmap(Image.GetHbitmap, IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions())  'TODO: This may lead to memory leak
             Dim str As New IO.MemoryStream
@@ -61,7 +61,7 @@ Namespace WindowsT.InteropT
             If Owner Is Nothing Then
                 Form.Show()
             Else
-                Form.Show(Forms.NativeWindow.FromHandle(New WindowInteropHelper(Owner).Handle))
+                Form.Show(Forms.NativeWindow.FromHandle(New Interop.WindowInteropHelper(Owner).Handle))
             End If
         End Sub
         ''' <summary>Shows <see cref="Forms.Form"/> modally for given <see cref="Window"/></summary>
@@ -75,7 +75,7 @@ Namespace WindowsT.InteropT
             If Owner Is Nothing Then
                 Return Form.ShowDialog()
             Else
-                Return Form.ShowDialog(Forms.NativeWindow.FromHandle(New WindowInteropHelper(Owner).Handle))
+                Return Form.ShowDialog(Forms.NativeWindow.FromHandle(New Interop.WindowInteropHelper(Owner).Handle))
             End If
         End Function
         ''' <summary>Shows <see cref="Window"/> floating over given native window such as <see cref="Forms.Form"/></summary>
@@ -83,30 +83,69 @@ Namespace WindowsT.InteropT
         ''' <param name="Owner">Owner form or other native window. Can be null.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
         ''' <version version="1.5.2">Method instroduced</version>
-        <Extension()> Public Sub Show(ByVal Window As Window, ByVal Owner As IWin32Window)
+        <Extension()> Public Sub Show(ByVal Window As Window, ByVal Owner As Forms.IWin32Window)
             If Window Is Nothing Then Throw New ArgumentException("Window")
             Forms.Integration.ElementHost.EnableModelessKeyboardInterop(Window)
             If Owner Is Nothing Then
                 Window.Show()
             Else
-                Dim ioh As New WindowInteropHelper(Window)
+                Dim ioh As New Interop.WindowInteropHelper(Window)
                 ioh.Owner = Owner.Handle
                 Window.Show()
             End If
         End Sub
+        ''' <summary>Shows <see cref="Forms.Form"/> floating over <see cref="Windows.Interop.IWin32Window"/></summary>
+        ''' <param name="Form"><see cref="Forms.Form"/> to be shown</param>
+        ''' <param name="Owner">Owner <see cref="Windows.Interop.IWin32Window"/>; can be null</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Form"/> is null</exception>
+        ''' <version version="1.5.3">Method instroduced</version>
+        <Extension()> Public Sub Show(ByVal Form As Forms.Form, ByVal Owner As Windows.Interop.IWin32Window)
+            If Form Is Nothing Then Throw New ArgumentException("Form")
+            If Owner IsNot Nothing Then Form.Show(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Form.Show()
+        End Sub
+        ''' <summary>Shows <see cref="Window"/> floating over given native window such as <see cref="Forms.Form"/></summary>
+        ''' <param name="Window"><see cref="Window"/> to be shown</param>
+        ''' <param name="Owner">Owner form or other native window. Can be null.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
+        ''' <version version="1.5.3">Method instroduced</version>
+        <Extension()> Public Sub Show(ByVal Window As Window, ByVal Owner As Windows.Interop.IWin32Window)
+            If Window Is Nothing Then Throw New ArgumentException("Window")
+            If Owner IsNot Nothing Then Window.Show(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Window.Show()
+        End Sub
+        ''' <summary>Shows <see cref="Forms.Form"/> modally for given <see cref="Windows.Interop.IWin32Window"/></summary>
+        ''' <param name="Form"><see cref="Forms.Form"/> to be shown</param>
+        ''' <param name="Owner">Owner <see cref="Windows.Interop.IWin32Window"/>. Can be null.</param>
+        ''' <returns>One of <see cref="forms.DialogResult"/> values</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Form"/> is null</exception>
+        ''' <version version="1.5.3">Method instroduced</version>
+        <Extension()> Public Function ShowDialog(ByVal Form As Forms.Form, ByVal Owner As Windows.Interop.IWin32Window) As Forms.DialogResult
+            If Form Is Nothing Then Throw New ArgumentException("Form")
+            If Owner IsNot Nothing Then Return Form.ShowDialog(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Return Form.ShowDialog()
+        End Function
+        ''' <summary>Shows <see cref="Window"/> modally to given native window such as <see cref="Forms.Form"/></summary>
+        ''' <param name="Window"><see cref="Window"/> to be shown</param>
+        ''' <param name="Owner">Owner form or other native window. Can be null.</param>
+        ''' <returns>A <see cref="System.Nullable(Of T)"/> value of type <see cref="System.Boolean"/> that signifies how <paramref name="Window"/> was closed by the user.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
+        ''' <version version="1.5.3">Method instroduced</version>
+        <Extension()> Public Function ShowDialog(ByVal Window As Window, ByVal Owner As Windows.Interop.IWin32Window) As Boolean?
+            If Window Is Nothing Then Throw New ArgumentException("Window")
+            If Owner IsNot Nothing Then Return Window.ShowDialog(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Return Window.ShowDialog()
+        End Function
+
         ''' <summary>Shows <see cref="Window"/> modally to given native window such as <see cref="Forms.Form"/></summary>
         ''' <param name="Window"><see cref="Window"/> to be shown</param>
         ''' <param name="Owner">Owner form or other native window. Can be null.</param>
         ''' <returns>A <see cref="System.Nullable(Of T)"/> value of type <see cref="System.Boolean"/> that signifies how <paramref name="Window"/> was closed by the user.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
         ''' <version version="1.5.2">Method instroduced</version>
-        <Extension()> Public Function ShowDialog(ByVal Window As Window, ByVal Owner As IWin32Window) As Boolean?
+        <Extension()> Public Function ShowDialog(ByVal Window As Window, ByVal Owner As Forms.IWin32Window) As Boolean?
             If Window Is Nothing Then Throw New ArgumentException("Window")
             Forms.Integration.ElementHost.EnableModelessKeyboardInterop(Window)
             If Owner Is Nothing Then
                 Return Window.ShowDialog()
             Else
-                Dim ioh As New WindowInteropHelper(Window)
+                Dim ioh As New Interop.WindowInteropHelper(Window)
                 ioh.Owner = Owner.Handle
                 Return Window.ShowDialog()
             End If
@@ -118,27 +157,37 @@ Namespace WindowsT.InteropT
         ''' <version version="1.5.2">Method instroduced</version>
         <Extension()> Public Function GetHandle(ByVal Window As Window) As IntPtr
             If Window Is Nothing Then Throw New ArgumentException("Window")
-            Return New WindowInteropHelper(Window).Handle
+            Return New Interop.WindowInteropHelper(Window).Handle
         End Function
         ''' <summary>Gets owner of <see cref="Window"/> as native <see cref="IWin32Window"/></summary>
         ''' <param name="Window">Window to get owner of</param>
         ''' <returns><see cref="Forms.Control"/> such as <see cref="Forms.Form"/> that is owner of <paramref name="Window"/> or <see cref="Forms.NativeWindow"/> when owner of <paramref name="Window"/> is not <see cref="Forms.Control"/>; <see langword="null"/> when <paramref name="Window"/> has no owner.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
         ''' <version version="1.5.2">Method instroduced</version>
-        <Extension()> Public Function GetOwner(ByVal Window As Window) As IWin32Window
+        <Extension()> Public Function GetOwner(ByVal Window As Window) As Forms.IWin32Window
             If Window Is Nothing Then Throw New ArgumentException("Window")
-            Dim ohwnd As IntPtr = New WindowInteropHelper(Window).Owner
+            Dim ohwnd As IntPtr = New Interop.WindowInteropHelper(Window).Owner
             If ohwnd = IntPtr.Zero Then Return Nothing
-            Return If(TryCast(Forms.Control.FromHandle(ohwnd), IWin32Window), DirectCast(Forms.NativeWindow.FromHandle(ohwnd), IWin32Window))
+            Return If(TryCast(Forms.Control.FromHandle(ohwnd), Forms.IWin32Window), DirectCast(Forms.NativeWindow.FromHandle(ohwnd), Forms.IWin32Window))
         End Function
         ''' <summary>Sest owner of <see cref="Window"/> to native window such as <see cref="Forms.Form"/></summary>
         ''' <param name="Window"><see cref="Window"/> to set owner of</param>
         ''' <param name="Owner">New owner of <paramref name="Window"/>; null to remove parent of <paramref name="Window"/></param>
         ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
         ''' <version version="1.5.2">Method instroduced</version>
-        <Extension()> Public Sub SetOwner(ByVal Window As Window, ByVal Owner As IWin32Window)
+        <Extension()> Public Sub SetOwner(ByVal Window As Window, ByVal Owner As Forms.IWin32Window)
             If Window Is Nothing Then Throw New ArgumentException("Window")
-            Dim ioh As New WindowInteropHelper(Window)
+            Dim ioh As New Interop.WindowInteropHelper(Window)
+            ioh.Owner = If(Owner IsNot Nothing, Owner.Handle, IntPtr.Zero)
+        End Sub
+        ''' <summary>Sest owner of <see cref="Window"/> to native window such as <see cref="Forms.Form"/></summary>
+        ''' <param name="Window"><see cref="Window"/> to set owner of</param>
+        ''' <param name="Owner">New owner of <paramref name="Window"/>; null to remove parent of <paramref name="Window"/></param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
+        ''' <version version="1.5.3">Method instroduced</version>
+        <Extension()> Public Sub SetOwner(ByVal Window As Window, ByVal Owner As Interop.IWin32Window)
+            If Window Is Nothing Then Throw New ArgumentException("Window")
+            Dim ioh As New Interop.WindowInteropHelper(Window)
             ioh.Owner = If(Owner IsNot Nothing, Owner.Handle, IntPtr.Zero)
         End Sub
     End Module

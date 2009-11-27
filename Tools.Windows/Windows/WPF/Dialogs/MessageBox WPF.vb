@@ -4,14 +4,14 @@ Imports Tools.WindowsT.WPF.ConvertersT, Tools.WindowsT.IndependentT
 Imports Tools.ComponentModelT, Tools.ExtensionsT
 Imports System.Windows.Input
 
-#If Config <= Nightly Then  'Stage: Nightly
+#If Config <= Beta Then  'Stage: Beta
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Control that implements WPF <see cref="MessageBox"/></summary>
     ''' <remarks>This control is not intended to be used separately, to be placed on yopur window. This control implements WPF <see cref="MessageBox"/> and can be styled/templated.
     ''' Teplate parts are panels for additional controls that can be placed on message box and are optional. When not pressent additional control will not be visible! But use of additional controls is rare.
     ''' <para>This control is disposable. When it disposes it should not be used. It disposes automatically wehn message box window closes.</para></remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
-    ''' <version version="1.5.3." stage="Nightly">Added ability to copy all text of message box using Ctrl+C</version>
+    ''' <version version="1.5.3." stage="Beta">Added ability to copy all text of message box using Ctrl+C</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_TopControlPlaceholder, Type:=GetType(Controls.Panel))> _
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_MiddleControlPlaceholder, Type:=GetType(Controls.Panel))> _
@@ -355,6 +355,7 @@ Namespace WindowsT.WPF.DialogsT
     ''' <summary>Implements <see cref="iMsg"/> for Windows Presentation Foundation</summary>
     ''' <remarks>Message box user interface is implemented by <see cref="MessageBoxImplementationControl"/>. To change style or template of message box, use that control.</remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
+    ''' <version version="1.5.3" stage="Beta">Added support for <see cref="Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
     Public Class MessageBox : Inherits iMsg
         Implements INotifyPropertyChanged
         ''' <summary>Format of title with timer</summary>
@@ -411,21 +412,27 @@ Namespace WindowsT.WPF.DialogsT
 
         ''' <summary>Shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        ''' <param name="Owner">Parent window of dialog (may be null).  This implementation recognizes values of type <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="Windows.Window"/>. Unrecognized owners are treated as null.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
-        Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As System.Windows.Forms.IWin32Window)
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="Forms.IWin32Window"/> to <see cref="Object"/> to support <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
             If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Window = New MessageBoxWindow()
             Control = DirectCast(Window, MessageBoxWindow).MsgBoxControl
             Control.MessageBox = Me
-            If Owner IsNot Nothing Then
+            If TypeOf Owner Is Forms.IWin32Window Then
                 Dim hlp As New Interop.WindowInteropHelper(Window)
-                hlp.Owner = Owner.Handle
+                hlp.Owner = DirectCast(Owner, Forms.IWin32Window).Handle
+            ElseIf TypeOf Owner Is Interop.IWin32Window Then
+                Dim hlp As New Interop.WindowInteropHelper(Window)
+                hlp.Owner = DirectCast(Owner, Interop.IWin32Window).Handle
+            ElseIf TypeOf Owner Is Window Then
+                Window.Owner = Owner
             End If
             If Modal Then
                 Window.ShowDialog()
             Else
-                Forms.Integration.ElementHost.EnableModelessKeyboardInterop(Window)
+                If TypeOf Owner Is Forms.IWin32Window OrElse TypeOf Owner Is Interop.IWin32Window Then Forms.Integration.ElementHost.EnableModelessKeyboardInterop(Window)
                 Window.Show()
             End If
         End Sub

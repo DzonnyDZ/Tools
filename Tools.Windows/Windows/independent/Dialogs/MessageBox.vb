@@ -8,7 +8,7 @@ Imports System.Reflection, System.Drawing
 Imports Icons = Tools.ResourcesT.Icons, Tools.TypeTools
 Imports Tools.DrawingT
 
-#If Config <= Nightly Then 'Stage Nightly
+#If Config <= Beta Then 'Stage Beta
 Imports System.Windows.Forms
 
 Namespace WindowsT.IndependentT
@@ -41,6 +41,7 @@ Namespace WindowsT.IndependentT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Fixed: Some static functions throws exception when icon is not set or when default button is used (even implicitly)</version>
+    ''' <version version="1.5.3">All owner parameters changed form <see cref="Windows.Forms.IWin32Window"/> to <see cref="Object"/> to support more types of owners - <see cref="Windows.Forms.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.Interop.IWin32Window"/>. Changes are required in derived classes to support this change and those new owners.</version>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
         ''' <summary>Recomended format for displaying timer.</summary>
@@ -1855,10 +1856,11 @@ Namespace WindowsT.IndependentT
             Return Me.ShowDialog(Nothing)
         End Function
         ''' <summary>Show modal dialog (and waits until the dialog is closed)</summary>
-        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        ''' <param name="Owner">Parent window of dialog (may be null) Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
-        Public Function ShowDialog(ByVal Owner As IWin32Window) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Function ShowDialog(ByVal Owner As Object) As DialogResult
             PrePerformDialog(True, Owner)
             Return Me.DialogResult
         End Function
@@ -1868,21 +1870,24 @@ Namespace WindowsT.IndependentT
             Me.DisplayBox(Nothing)
         End Sub
         ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
-        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
-        Public Sub DisplayBox(ByVal Owner As IWin32Window)
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Sub DisplayBox(ByVal Owner As Object)
             PrePerformDialog(False, Owner)
         End Sub
         ''' <summary>If overriden in derived class shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/>. If implementation does not recognize type of owner it shall treat it as null.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
-        Protected MustOverride Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As IWin32Window)
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>. This requires changes in all derived classes!</version>
+        Protected MustOverride Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
         ''' <summary>Calls <see cref="Recycle"/> if necessary, then calls <see cref="PerformDialog"/></summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        ''' <param name="Owner">Parent window of dialog (may be null) Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
-        Private Sub PrePerformDialog(ByVal Modal As Boolean, ByVal Owner As IWin32Window)
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Private Sub PrePerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
             If State <> States.Created Then Recycle()
             PerformDialog(Modal, Owner)
         End Sub
@@ -2015,7 +2020,7 @@ Namespace WindowsT.IndependentT
             End Get
         End Property
         ''' <summary>Timer that performs count downs</summary>
-        Private WithEvents CountDownTimer As New Timer With {.interval = 1000}
+        Private WithEvents CountDownTimer As New Timer With {.Interval = 1000}
         ''' <summary>Raises the <see cref="CountDown"/> event</summary>
         ''' <param name="e">Event argument</param>
         ''' <remarks>Derived class should override this method in order to catch change of count down remaining time and call base class method.</remarks>
@@ -2166,10 +2171,11 @@ Namespace WindowsT.IndependentT
             End Sub
             ''' <summary>If overriden in derived class shows the dialog</summary>
             ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-            ''' <param name="Owner">Parent window of dialog (may be null)</param>
+            ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
             ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
             ''' <exception cref="NotImplementedException">Always</exception>
-            Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As System.Windows.Forms.IWin32Window)
+            ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+            Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
                 Throw New NotImplementedException(ResourcesT.Exceptions.ClassCannotBeUsedAsMessageBox)
             End Sub
             ''' <summary>Default CTor</summary>
@@ -2230,14 +2236,15 @@ Namespace WindowsT.IndependentT
         ''' <summary>Shows given modal message box initialized with given instance of <see cref="MessageBox"/></summary>
         ''' <param name="Instance">Instance to be show</param>
         ''' <param name="InitializeFrom">Instance to initialize <paramref name="Instance"/> with</param>
-        ''' <param name="Owner">Owner window (can be null)</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
         ''' <returns>Message box result</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="InitializeFrom"/> is null</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Shared Function ShowTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
+        Protected Shared Function ShowTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
             If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
             If InitializeFrom Is Nothing Then Throw New ArgumentNullException("InitializeFrom")
             Instance.InitializeFrom(InitializeFrom)
@@ -2248,13 +2255,14 @@ Namespace WindowsT.IndependentT
         ''' <summary>Display given message box initialized with given instance of <see cref="MessageBox"/> modeless</summary>
         ''' <param name="Instance">Instance to be show</param>
         ''' <param name="InitializeFrom">Instance to initialize <paramref name="Instance"/> with</param>
-        ''' <param name="Owner">Owner window (can be null)</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="InitializeFrom"/> is null</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Shared Function DisplayTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
+        Protected Shared Function DisplayTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
             If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
             If InitializeFrom Is Nothing Then Throw New ArgumentNullException("InitializeFrom")
             Instance.InitializeFrom(InitializeFrom)
@@ -2265,15 +2273,16 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Shows default (<see cref="GetDefault"/>) modal message box initialized with given instance of <see cref="MessageBox"/></summary>
         ''' <param name="InitializeFrom">Instance to initialize default message box with</param>
-        ''' <param name="Owner">Owner window (can be null)</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Message box result</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="InitializeFrom"/> is null</exception>
         ''' <exception cref="TargetInvocationException">Ther was an error obtainin default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function ShowTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
+        Public Shared Function ShowTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
             Dim lGetDefault As Tools.WindowsT.IndependentT.MessageBox
             Try
                 lGetDefault = GetDefault()
@@ -2284,14 +2293,15 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Display default (<see cref="GetDefault"/>) message box initialized with given instance of <see cref="MessageBox"/> modeless</summary>
         ''' <param name="InitializeFrom">Instance to initialize default message box with</param>
-        ''' <param name="Owner">Owner window (can be null)</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="InitializeFrom"/> is null</exception>
         ''' <exception cref="TargetInvocationException">Ther was an error obtainin default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function DisplayTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
+        Public Shared Function DisplayTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
             Dim lGetDefault As Tools.WindowsT.IndependentT.MessageBox
             Try
                 lGetDefault = GetDefault()
@@ -2361,7 +2371,7 @@ Namespace WindowsT.IndependentT
         ''' <returns>Appropriate <see cref="MessageBoxIcons"/> value. If <paramref name="code"/> is not member of <see cref="Windows.Forms.MessageBoxIcon"/> returns <see cref="MessageBoxIcons.None"/></returns>
         ''' <remarks>Several <see cref="Windows.MessageBoxImage"/> values are converted to the same <see cref="MessageBoxIcons"/> value because they have same numerical values and it is not possible to distinguish between them. You'd better using <see cref="MessageBoxIcons"/> directly</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-         Public Shared Function ConvertIconConstant(ByVal code As Windows.MessageBoxImage) As MessageBoxIcons
+        Public Shared Function ConvertIconConstant(ByVal code As Windows.MessageBoxImage) As MessageBoxIcons
             Select Case code
                 Case Windows.MessageBoxImage.Information : Return MessageBoxIcons.Information
                 Case Windows.MessageBoxImage.Asterisk : Return MessageBoxIcons.Asterisk
@@ -2453,7 +2463,7 @@ Namespace WindowsT.IndependentT
 
 #Region "System.Windows"
 #Region "Helpers"
-        ''' <summary>The simplies possible implementation of <see cref="IWin32Window"/></summary>
+        ''' <summary>The simpliest possible implementation of <see cref="IWin32Window"/></summary>
         Private Class WPFWindow : Implements IWin32Window
             ''' <summary>CTor</summary>
             ''' <param name="handle">Handle new instance will point to</param>
@@ -2512,7 +2522,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <remarks>This function is provided for compatibility with <see cref="Windows.MessageBox"/></remarks>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.MessageBoxResult
+        Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, String.Empty, Windows.MessageBoxButton.OK, Windows.MessageBoxImage.None, Windows.MessageBoxResult.None, Windows.MessageBoxOptions.None)
         End Function
 
@@ -2877,18 +2887,19 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
         <EditorBrowsable(EditorBrowsableState.Always)> _
-         Public Shared Function Show(ByVal [text] As String, ByVal caption As String) As DialogResult
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box in front of the specified object and with the specified text.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box. </param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Always)> _
-         Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String) As DialogResult
             Return MessageBox.ShowCore(owner, [text], String.Empty, MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
@@ -2903,19 +2914,20 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-           Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons) As DialogResult
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box in front of the specified object and with the specified text and caption.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="caption">The text to display in the title bar of the message box. </param>
         ''' <param name="text">The text to display in the message box. </param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Always)> _
-           Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
@@ -2949,12 +2961,12 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-         Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons) As DialogResult
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, MessageBoxDefaultButton.Button1, 0)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, and buttons.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
         ''' <param name="text">The text to display in the message box. </param>
@@ -2963,8 +2975,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-           Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
@@ -3002,7 +3015,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-           Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, defaultButton, 0)
         End Function
 
@@ -3010,7 +3023,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
         ''' <exception cref="InvalidEnumArgumentException">
@@ -3020,15 +3033,16 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, MessageBoxDefaultButton.Button1, 0)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, and icon.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
         ''' <exception cref="InvalidEnumArgumentException">
@@ -3037,8 +3051,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-         Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, MessageBoxDefaultButton.Button1, 0)
         End Function
 
@@ -3078,14 +3093,14 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-           Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, defaultButton, options)
         End Function
 
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, and default button.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values that specifies the default button for the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3098,14 +3113,15 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons,System.Windows.Forms.MessageBoxDefaultButton)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-         Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, 0)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, and default button.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values that specifies the default button for the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3117,8 +3133,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-          Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, 0)
         End Function
 
@@ -3127,7 +3144,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3139,8 +3156,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons,System.Windows.Forms.MessageBoxDefaultButton,System.Windows.Forms.MessageBoxOptions)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-         Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, options)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, default button, and options.</summary>
@@ -3148,7 +3166,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3159,8 +3177,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-          Public Shared Function Show(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, options)
         End Function
 #End Region
@@ -3169,7 +3188,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3179,7 +3198,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        Private Shared Function ShowCore(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Private Shared Function ShowCore(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
             If Not InEnum(buttons) Then _
                 Throw New InvalidEnumArgumentException("buttons", buttons, GetType(MessageBoxButtons))
             If Not InEnum(icon) Then _
@@ -3217,7 +3237,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3227,7 +3247,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error worink working with customized static properties such as <see cref="DefaultImplementation"/></exception>
-        Private Shared Function ShowCore(ByVal owner As IWin32Window, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Private Shared Function ShowCore(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
             Return ShowCore(owner, text, caption, buttons, ConvertIconConstant(icon), defaultButton, options)
         End Function
 #End Region
@@ -3565,33 +3586,38 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
-        Public Shared Function Modal_PTWBIO(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <version version="1.5.3" stage="Beta">Fixed: This function always returns <see cref="DialogResult.None"/></version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function Modal_PTWBIO(ByVal Prompt$, ByVal Title$, ByVal Owner As Object, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
             Dim box As New FakeBox With { _
-                .Prompt = Prompt, .title = Title, _
-                .Options = Options, .icon = Icon}
+                .Prompt = Prompt, .Title = Title, _
+                .Options = Options, .Icon = Icon}
             box.SetButtons(Buttons)
-            ShowTemplate(box, Owner)
+            Return ShowTemplate(box, Owner)
         End Function
         ''' <summary>Display modal message box with formated promt, given title, owner, buttons, icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF_PTWBIa(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalF_PTWBIa(ByVal Prompt$, ByVal Title$, ByVal Owner As Object, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
             Return Modal_PTWBIO(String.Format(Prompt, arguments), Title, Owner, Buttons, Icon)
         End Function
         ''' <summary>Dsiplays modal message box with formated prompt, given title and owner</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF_PTWa(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, ByVal ParamArray arguments As Object()) As DialogResult
-            ModalF_PTWBIa(Prompt, Title, Owner, MessageBoxButton.Buttons.OK, CType(Nothing, Image), arguments)
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Fix: This function always returns <see cref="DialogResult.None"/>.</version>
+        Public Shared Function ModalF_PTWa(ByVal Prompt$, ByVal Title$, ByVal Owner As Object, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTWBIa(Prompt, Title, Owner, MessageBoxButton.Buttons.OK, CType(Nothing, Image), arguments)
         End Function
         ''' <summary>Displays autoclosing modal message box</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3600,14 +3626,16 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As TimeSpan, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Fixed: This function always returns <see cref="DialogResult.None"/></version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As TimeSpan, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing) As DialogResult
             Dim box As New FakeBox With { _
-                .Prompt = Prompt, .title = Title, _
-                .Options = Options, .icon = Icon, .Timer = Timer}
+                .Prompt = Prompt, .Title = Title, _
+                .Options = Options, .Icon = Icon, .Timer = Timer}
             box.SetButtons(Buttons)
-            ShowTemplate(box, Owner)
+            Return ShowTemplate(box, Owner)
         End Function
         ''' <summary>Displays autoclosing modal message box</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3616,9 +3644,10 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As Integer, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As Integer, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing) As DialogResult
             Return Modal_PTMBIOW(Prompt, Title, TimeSpan.FromSeconds(Timer), Buttons, Icon, Options, Owner)
         End Function
 #End Region
@@ -3629,12 +3658,13 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <param name="Sound">Sound to be played whne message box is shown.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx_PTEIOWMHS(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalEx_PTEIOWMHS(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
             Dim box As New FakeBox With {.Options = Options, .Prompt = Prompt, .Title = Title, .Timer = TimeSpan.FromSeconds(Timer), .PlayOnShow = Sound}
             box.Buttons.Clear()
             box.Buttons.AddRange(Items.OfType(Of MessageBoxButton))
@@ -3656,11 +3686,12 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx_PTIOWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalEx_PTIOWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],[Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, Options, Owner, Timer, ShownHandler)
         End Function
@@ -3669,11 +3700,12 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx_PTIWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalEx_PTIWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
         End Function
@@ -3683,11 +3715,12 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx_PTIWMHB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalEx_PTIWMHB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
@@ -3697,9 +3730,10 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx_PTIWS(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Items As Object()) As MessageBox
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalEx_PTIWS(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
         End Function
@@ -3709,9 +3743,10 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx_PTIWB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalEx_PTIWB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
@@ -3756,9 +3791,10 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <summary>Displays modal message box with information about <see cref="Exception"/> with given title and owner</summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
         ''' <param name="Title">Message box title</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function [Error_XTW](ByVal ex As Exception, ByVal Title$, ByVal Owner As IWin32Window) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function [Error_XTW](ByVal ex As Exception, ByVal Title$, ByVal Owner As Object) As DialogResult
             Return Modal_PTWBIO(ex.Message, Title, Owner, MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
@@ -3783,8 +3819,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
-        Public Shared Function [Error_XBWI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As IWin32Window, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function [Error_XBWI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return ModalF_PTWa(ex.Message, ex.GetType.Name, Owner, Buttons, MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
@@ -3793,8 +3830,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
-        Public Shared Function [Error_XTBWI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As IWin32Window, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function [Error_XTBWI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return ModalF_PTWa(ex.Message, Title, Owner, Buttons, MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
@@ -3803,9 +3841,10 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Prompt">Prompt to be shown</param>
-        Public Shared Function [Error_XPTIBWO](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function [Error_XPTIBWO](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As Object = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
             Return ModalF_PTWa(Prompt & vbCrLf & ex.Message, Title, Owner, Buttons, Icon, Options)
         End Function
 #End Region
@@ -3851,10 +3890,11 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
 #Region "Modal sync"
         ''' <summary>Displays modal messagebox in sync with given control</summary>
         ''' <param name="Control">Control to diplay dialog in thread control was created by</param>
-        ''' <param name="Owner">Optional owner of dialog (the window dialog will be modal to)</param>
+        ''' <param name="Owner">Optional owner of dialog (the window dialog will be modal to). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Result of diloag identifiing pressed button</returns>
         ''' <remarks>This function can be used to display dialogs from background worker thread</remarks>
-        Public Function ModalSync(ByVal Control As Control, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Function ModalSync(ByVal Control As Control, Optional ByVal Owner As Object = Nothing) As DialogResult
             If Control.InvokeRequired Then
                 Dim shd As Func(Of IWin32Window, DialogResult) = AddressOf Me.ShowDialog
                 Return Control.Invoke(shd, Owner)
@@ -3867,13 +3907,14 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Template">Instance to initialize default message box with</param>
         ''' <param name="Prompt">If not null specified different prompt of messagebox</param>
         ''' <param name="Title">If not null specifies different title of messagebox</param>
-        ''' <param name="Owner">Optional owner of messagebox - the window messagebox will be modal to</param>
+        ''' <param name="Owner">Optional owner of messagebox - the window messagebox will be modal to. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Result of messagebox which identified button that was pressed</returns>
         ''' <seelaso cref="FakeBox"/>
         ''' <seelaso cref="ShowTemplate"/>
         ''' <seelaso cref="DisplayTemplate"/>
         ''' <seelaso cref="ModalSync"/>
-        Public Shared Function ModalSyncTemplate(ByVal Control As Control, ByVal Template As MessageBox, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        Public Shared Function ModalSyncTemplate(ByVal Control As Control, ByVal Template As MessageBox, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing, Optional ByVal Owner As Object = Nothing) As DialogResult
             Dim Instance As Tools.WindowsT.IndependentT.MessageBox
             Try
                 Instance = GetDefault()
