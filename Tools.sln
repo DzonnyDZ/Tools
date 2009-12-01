@@ -141,6 +141,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ildoc", "ildoc", "{10C22CD7
 		Articles\en\ildoc\ildoc.xsd = Articles\en\ildoc\ildoc.xsd
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLI", "CLI", "{3469B02D-8F18-4333-94F7-0DD3D240C7A1}"
+	ProjectSection(SolutionItems) = preProject
+		Used doc\CLI\Ecma-335.pdf = Used doc\CLI\Ecma-335.pdf
+		Used doc\CLI\MS Partition I.pdf = Used doc\CLI\MS Partition I.pdf
+		Used doc\CLI\MS Partition II.pdf = Used doc\CLI\MS Partition II.pdf
+		Used doc\CLI\MS Partition III.pdf = Used doc\CLI\MS Partition III.pdf
+		Used doc\CLI\Partition I Architecture.doc = Used doc\CLI\Partition I Architecture.doc
+		Used doc\CLI\Partition II Metadata.doc = Used doc\CLI\Partition II Metadata.doc
+		Used doc\CLI\Partition III CIL.doc = Used doc\CLI\Partition III CIL.doc
+		Used doc\CLI\Partition IV Library.doc = Used doc\CLI\Partition IV Library.doc
+		Used doc\CLI\Partition V Binary Formats.doc = Used doc\CLI\Partition V Binary Formats.doc
+		Used doc\CLI\Partition VI - Annexes.doc = Used doc\CLI\Partition VI - Annexes.doc
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 20
@@ -824,6 +838,7 @@ Global
 		{833877EA-2CEA-46EE-B475-14051B77D9F0} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
+		{3469B02D-8F18-4333-94F7-0DD3D240C7A1} = {677A518E-909C-414F-AC5E-528AB32023AF}
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE} = {982F36B7-A3E5-4782-96B0-9979A95610F1}
