@@ -134,6 +134,13 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.SqlServer", "Tools.Sq
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools _", "Tools\Tools _.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ildoc", "ildoc", "{10C22CD7-1CB7-4E4D-8422-F9C589A3F743}"
+	ProjectSection(SolutionItems) = preProject
+		Articles\en\ildoc\ildoc.xml = Articles\en\ildoc\ildoc.xml
+		Articles\en\ildoc\ildoc.xml.css = Articles\en\ildoc\ildoc.xml.css
+		Articles\en\ildoc\ildoc.xsd = Articles\en\ildoc\ildoc.xsd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 20
@@ -825,5 +832,6 @@ Global
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF} = {708C9420-4676-4314-B690-7A887F8CC992}
 		{C3B940DA-5325-43D8-94E1-CF87255DA471} = {708C9420-4676-4314-B690-7A887F8CC992}
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3} = {708C9420-4676-4314-B690-7A887F8CC992}
+		{10C22CD7-1CB7-4E4D-8422-F9C589A3F743} = {F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,93 @@
+﻿@namespace "http://dzonny.cz/xml/ildoc";
+ildoc{
+	display:block;
+	color:Black;
+	background-color:White;
+	font-family:serif;
+	padding:0 .5EM .5EM .5EM;
+}
+header{
+	display:block;
+	font-family:sans-serif;
+	font-weight:bold;
+	margin-top:.5EM;
+}
+ildoc > header{
+	font-size:225%;
+	margin-bottom:.5EM;
+	text-align:center;
+}
+ildoc > formatting > header, ildoc > section > header {font-size:200%;}
+ildoc > section > section > header {font-size:175%;}
+ildoc > section > section > section > header {font-size:150%;}
+ildoc > section > section > section > section > header {font-size:125%;}
+section > section > header {padding-left:0;}
+section > section > * {padding-left:4EM;}
+section > section > dl{padding-left:6EM;}
+introduction{
+	display:block;
+	text-align:justify;
+	margin-bottom:1EM;
+}
+p{
+    display:block;
+    text-align:justify;
+}
+dl{
+	display:block;
+	padding-left:2EM;
+   }
+dt,dt-code,dt-var,dt-ref,dt-code-ref{
+	display:block;
+}
+dd{
+	display:block;
+	padding-left:2EM;
+}
+code, dt-code, dt-code-ref, code-ref,
+see{
+	font-family:monospace;
+}
+dt-code-ref, code-ref, ref, dt-ref, code-ref{
+	font-style:italic;
+}
+header + *{
+	margin-top:1EM;
+}
+ref[ref], dt-ref[ref],
+link, internal-link, see{
+	cursor:pointer;
+}
+code-ref[ref]:hover, ref[ref]:hover, 
+link, internal-link, see{
+	color:Blue;
+	text-decoration:underline;
+}
+b{font-weight:bold;}
+break{
+	display:block;
+	border-top:solid Gray thin;
+}
+note-ref{
+    font-family:serif;
+    font-weight:normal;
+    color:Black;
+    text-decoration:none;
+}
+ms-specific{
+    background-color:Aqua;
+}
+ms-specific:after{
+    content:"*";
+    font-family:serif;
+    font-weight:normal;
+    color:Black;
+    text-decoration:none;
+    background-color:white;
+}
+undocumented{
+    background-color:Gray;
+}
+see:empty:after{
+    content:attr(cref);
+}

@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://dzonny.cz/xml/ildoc"
+    elementFormDefault="qualified"
+    xmlns="http://dzonny.cz/xml/ildoc"
+    xmlns:ild="http://dzonny.cz/xml/ildoc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:annotation>
+        <xs:documentation></xs:documentation>
+    </xs:annotation>
+	<!--root-->
+	<xs:element name="ildoc">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="section-base">
+					<xs:sequence minOccurs="1" maxOccurs="1">
+						<xs:element ref="header" minOccurs="1" maxOccurs="1"/>
+						<xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="formatting" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:complexContent>
+                                    <xs:restriction base="section">
+                                        <xs:sequence minOccurs="1" maxOccurs="1">
+                                            <xs:element ref="header" minOccurs="1" maxOccurs="1"/>
+                                            <xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
+                                            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                                                <xs:element ref="dl" minOccurs="1" maxOccurs="1"/>
+                                                <xs:element ref="break" minOccurs="0" maxOccurs="1"/>
+                                            </xs:sequence>
+                                         </xs:sequence>
+                                    </xs:restriction>
+                                </xs:complexContent>
+                            </xs:complexType>
+                        </xs:element>
+						<xs:element ref="section" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!--dl-->
+	<xs:element name="dl" type="dl"/>
+	<xs:complexType name="dl">
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+            <xs:choice minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="dt" type="dt" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="dt-code" type="dt-code" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="dt-ref" type="dt-ref" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="dt-code-ref" type="dt-code-ref" minOccurs="1" maxOccurs="1"/>
+            </xs:choice>
+            <xs:choice minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="dd" minOccurs="1" maxOccurs="1">
+                    <xs:complexType mixed="true">
+                        <xs:complexContent mixed="true">
+                            <xs:extension base="text">
+                                <xs:attribute name="rel" use="optional" fixed="summary"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="dl" minOccurs="1" maxOccurs="1"/>
+            </xs:choice>
+            <xs:element ref="break" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="dt" mixed="true">
+		<xs:complexContent mixed="true">
+            <xs:extension base="text">
+                <xs:attribute name="id" type="xs:ID" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+	</xs:complexType>
+    <xs:complexType name="dt-code" mixed="true">
+        <xs:complexContent mixed="true">
+            <xs:restriction base="dt">
+                <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="dt-ref" mixed="true">
+        <xs:complexContent mixed="true">
+            <xs:restriction base="dt">
+                <xs:group ref="ref-group" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="dt-code-ref" mixed="true">
+        <xs:complexContent mixed="true">
+            <xs:restriction base="dt">
+                <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+	<!--boxes-->
+    <xs:element name="header">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="ms-specific" type="simple-content" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="undocumented" type="simple-content" minOccurs="1" maxOccurs="1"/>
+                <xs:group ref="simple-elements" minOccurs="1" maxOccurs="1"/> 
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="simple-content" mixed="true">
+        <xs:group ref="simple-elements" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:complexType>
+    <xs:group name="simple-elements">
+        <xs:choice>
+            <xs:element name="ref">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name ="ref" type="xs:IDREF" use="optional"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="code" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="code-ref" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name ="ref" type="xs:IDREF" use="optional"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:group>
+	<xs:element name="introduction" type="text"/>
+	<xs:element name="section" type="section"/>
+	<xs:complexType name="section">
+		<xs:complexContent>
+			<xs:extension base="section-base">
+				<xs:sequence minOccurs="1" maxOccurs="1">
+					<xs:element ref="header" minOccurs="1" maxOccurs="1"/>
+					<xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:choice minOccurs="1" maxOccurs="1">
+                            <xs:element ref="dl" minOccurs="1" maxOccurs="1"/>
+                            <xs:element ref="p" minOccurs="1" maxOccurs="1"/>
+                        </xs:choice>
+                        <xs:element ref="break" minOccurs="0" maxOccurs="1"/>
+                    </xs:sequence>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element ref="section" minOccurs="1" maxOccurs="1"/>
+                        <xs:element ref="break" minOccurs="0" maxOccurs="1"/>
+                    </xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="break">
+		<xs:complexType/>
+	</xs:element>
+	<xs:complexType name="section-base" abstract="true">
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+	    <xs:attribute name="guid" type="guid" use="required"/>
+	</xs:complexType>
+	<!--text-->
+	<xs:complexType name="text" mixed="true">
+	    <xs:group minOccurs="0" maxOccurs="unbounded" ref="text-group"/>
+	</xs:complexType>
+    <xs:element name="p" type="text"/>
+    
+    <xs:group name="text-group">
+        <xs:choice>
+            <xs:element ref="code" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="code-ref" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="ref" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="link" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="b" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="i" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="note-ref" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="internal-link" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="ms-specific" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="undocumented" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="see" minOccurs="1" maxOccurs="1"/>
+        </xs:choice>
+    </xs:group>
+    <xs:group name="code-group">
+        <xs:choice>
+            <xs:element name="ref" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="ref">
+                            <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="link" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="link">
+                            <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="b" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="i" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="note-ref" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="internal-link" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="internal-link">
+                            <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ms-specific" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="undocumented" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="see" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="see">
+                            <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:group>
+    <xs:group name="code-ref-group">
+        <xs:choice>
+            <!--<xs:element ref="b" minOccurs="1" maxOccurs="1"/>-->
+            <xs:element name="b" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <!--<xs:element ref="i" minOccurs="1" maxOccurs="1"/>-->
+            <xs:element name="i" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:group>
+    <xs:group name="ref-group">
+        <xs:choice>
+            <!--<xs:element ref="code" minOccurs="1" maxOccurs="1"/>-->
+            <xs:element name="code" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="code">
+                            <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <!--<xs:element ref="b" minOccurs="1" maxOccurs="1"/>-->
+            <xs:element name="b" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <!--<xs:element ref="i" minOccurs="1" maxOccurs="1"/>-->
+            <xs:element name="i" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:group>
+	
+    <xs:element name="code" type="code"/>
+	<xs:complexType name="code" mixed="true">
+		<xs:complexContent>
+			<xs:restriction base="text">
+                <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	
+    <xs:element name="code-ref" type="code-ref"/>
+    <xs:complexType name="code-link-content-base" mixed="true">
+        <xs:complexContent mixed="true">
+            <xs:restriction base="text">
+                <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+	<xs:complexType name="code-ref" mixed="true">
+		<xs:complexContent>
+            <xs:extension base="code-link-content-base">
+                <xs:attribute name="ref" use="optional" type="xs:IDREF"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+   
+  	<xs:element name="ref" type="ref"/>
+    <xs:complexType name="link-content-base" mixed="true">
+        <xs:complexContent mixed="true">
+            <xs:restriction base="text">
+                <xs:group ref="ref-group" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+	<xs:complexType name="ref" mixed="true">
+		<xs:complexContent>
+			<xs:extension base="link-content-base">
+                <xs:attribute name="ref" use="optional" type="xs:IDREF"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+    
+	<xs:element name="link" type="link"/>
+	<xs:complexType name="link" mixed="true">
+		<xs:complexContent>
+            <xs:extension base="link-content-base">
+                 <xs:attribute name="href" type="xs:anyURI" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+    <xs:element name="internal-link" type="internal-link"/>
+    <xs:complexType name="internal-link" mixed="true">
+        <xs:complexContent>
+            <xs:extension base="link-content-base">
+                <xs:attribute name="ref" use="required" type="xs:IDREF"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="see" type="see"/>
+    <xs:complexType name="see" mixed="true">
+        <xs:complexContent>
+            <xs:extension base="link-content-base">
+                <xs:attribute name="cref" use="required" type="cref"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+	<xs:element name="b" type="text"/>
+	<xs:element name="i" type="text"/>
+    <xs:element name="note-ref" type="char"/>
+    <xs:element name="ms-specific" type="text"/>
+    <xs:element name="undocumented" type="text"/>
+	<!--Simple types-->
+	<xs:simpleType name="guid">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9A-F-a-f]{8}(-[0-9A-F-a-f]{4}){3}-[0-9A-F-a-f]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+            <xs:whiteSpace value="preserve"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="cref">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[NTPEMF]\:.+"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

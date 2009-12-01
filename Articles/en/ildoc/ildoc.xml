@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="ildoc.xml.css" type="text/css"?>
+<ildoc xmlns="http://dzonny.cz/xml/ildoc" id="ildoc" guid="25e7bd25-3621-4b5b-bc3e-5f9b6ba848d4">
+	<header>CIL Quick referecne</header>
+	<introduction>
+		This guide describes various low-level parts of .NET framework.
+		Big attension is given to Common Inermediate Language syntax, metadata and instruction-set.
+	</introduction>
+	<formatting id="formatting" guid="0bf4d96b-2001-4d76-b7dc-511a1b3810e2">
+		<header>Formatting and regular expressions</header>
+		<introduction>This section describes formatting and regular expressions (syntax grammar) used in this CLI Quick reference guide.</introduction>
+		<dl>
+			<dt-code>Code</dt-code>
+			<dd>Code is anything that originates from the CIL language including regular expressions (syntax definitions) and .NET type names.</dd>
+            <dt-code-ref>Reference in code</dt-code-ref>
+			<dd>
+				This is used in regular expressions (syntax definitions) to mark element (terminal or non-terminal) being declared elsewhere.
+				It is also used to mark variables explained immediatelly below.
+			</dd>
+            <dt>note reference</dt>
+			<dd>
+				Reference to note is never formated as code.
+				This way it is possible to distinguish when asterisk (*) is part of regular expression and when it is reference to note.
+				Compare <code>*</code> and <note-ref>*</note-ref>.
+			</dd>
+			<dt>Regular expressions</dt>
+			<dd>
+				Regular expressions for syntax definitions are losely based on .NET reguler expressions and grammar used for CLI grammas pecification.
+				These expressions are not meant to be machine-readable, so some improvements towards human readability have been done possibly preventing those expressions from beingin machine-interpretable or unambignously defined.
+			</dd>
+			<dd>
+				Any text which appears in regular expression is treated as string-literal (as-is) with exception of <code>*</code>, <code>+</code>, <code>?</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>\</code>, <code>|</code>.
+				Dot (<code>.</code>) is treated as special character only when followed by <code>*</code>, <code>?</code>, <code>+</code> or <code>{</code> or inside <code>[]</code>.
+				<code>{</code> and <code>}</code> are treated as special characters only if used as specified below.
+				<code>,</code>, <code>-</code> and <code>^</code> are treated as special character only in contexts specified below.
+				Whitespaces in expressions are ignored or not depending on context. Usually sequnce of whitespaces is treated as any number opf any whitespaces. Sometimes whitespaces can be used instead of braces - see below.
+			</dd>
+			<dl>
+				<dt-code>*</dt-code>
+				<dd>Any number of occurences</dd>
+				<dd><code>a*</code> matches <code>''</code>, <code>'a'</code>, <code>'aa'</code>, <code>'aaa'</code> etc.</dd>
+				<dt-code>+</dt-code>
+				<dd>Any number of occurences other than no occurence.</dd>
+				<dd><code>a+</code> matches <code>'a'</code>, <code>'aa'</code>, <code>'aaa'</code> etc.</dd>
+				<dt-code>?</dt-code>
+				<dd>Zero or one occurence</dd>
+				<dd><code>a?</code> matches <code>''</code> and <code>'a'</code></dd>
+				<dt-code>{<ref>n</ref>}</dt-code>
+				<dd>Exactly <code-ref>n</code-ref> occurences</dd>
+				<dd><code>a{3}</code> matches <code>'aaa'</code></dd>
+				<dt-code>{<ref>m</ref>,<ref>n</ref>}</dt-code>
+				<dd>Mininally <code-ref>m</code-ref>, maximally <code-ref>n</code-ref> occurences</dd>
+				<dd><code>a{1,3}</code> matches <code>'a'</code>, <code>'aa'</code> and <code>'aaa'</code></dd>
+				<dt-code>{}</dt-code>
+				<dd>Matches block of CIL code enclosed in <code>{}</code>. Allowd code in block is specified in this guide.</dd>
+				<dt-code>{|}</dt-code>
+				<dd>Flag-or. One or more elements of set can be used any any order without repetitions.</dd>
+				<dd><code>{a|b|c}</code> matches <code>''</code>, <code>'a'</code>, <code>'b'</code>, <code>'c'</code>, <code>'ab'</code>, <code>'ba'</code>, <code>'ac'</code>, <code>'ca'</code>, <code>'bc'</code>, <code>'cb'</code>, <code>'abc'</code>, <code>'acb'</code>, <code>'bac'</code>, <code>'cab'</code>, <code>'cba'</code>.</dd>
+				<dt-code>()</dt-code>
+				<dd>Classical braces</dd>
+				<dd><code>(ab)+</code> matches <code>'ab'</code>, <code>'abab'</code> etc.</dd>
+				<dt-code>[]</dt-code>
+				<dd>More meanings:</dd>
+				<dl>
+					<dt>Group specifier</dt>
+					<dd>Trated this way only when cointains not-escaped <code>-</code> and does not contain not-escaped <code>|</code>.</dd>
+					<dd>Inside group specifier only <code>-</code>, <code>]</code>, <code>|</code> and <code>^</code> are treated as special characters.</dd>
+					<dd><code>[A-Zů]</code> matches <code>'A'</code>, <code>'B'</code>, <code>'C'</code>, ..., <code>'Z'</code> and <code>'ů'</code>.</dd>
+					<dd><code>[A-Z]+</code> matches <code>'A'</code>, <code>'B'</code>, <code>'AB'</code>, <code>'GAG'</code>, <code>'HUIGG'</code>.</dd>
+					<dt>Inverted group specifier</dt>
+					<dd>
+						In case <code>[</code> is immediatelly followed by <code>^</code>.
+						Does not have to contain not-escaped <code>-</code> and can contain not-escaped <code>|</code>.
+						Only <code>-</code>, <code>]</code> and <code>^</code> are treated as special-characters inside inverted group specifier.
+					</dd>
+					<dd><code>[^c-ek]</code> does <b>not</b> match <code>'c'</code>, <code>'d'</code>, <code>'e'</code>, <code>'k'</code>.</dd>
+					<dt>Normal braces (just like <code>()</code>)</dt>
+					<dd>In case it does not contain not-escaped <code>-</code>, does not begin with <code>^</code> and is followed by one of quantifiers <code>*</code>, <code>+</code>, <code>?</code>, <code>{}</code>.</dd>
+					<dd><code>[a]*</code> matches <code>''</code>, <code>'a'</code>, <code>'aa'</code> etc.</dd>
+					<dt>Or</dt>
+					<dd>In case it does not start with <code>^</code> and contains non-escaped <code>|</code>.</dd>
+					<dd>
+						Note that usage of <code>|</code> inside <code>[]</code> slightly differs from its usage outside it or inside <code>()</code>.
+						In <code>[]</code> it behaves like if it has whitespace on both sides even if it does not have them.
+					</dd>
+					<dd>
+						<code>[aaa|bbb]</code> has same meaning as <code>(aaa | bbb)</code> what has same meaning as <code>((aaa)|(bbb))</code> and it has same meaning as <code>[aaa | bbb]</code>.
+						It matches <code>'aaa'</code> or <code>'bbb'</code>.
+					</dd>
+					<dt>Zero or one occurence quantifier</dt>
+					<dd>In all other cases</dd>
+					<dd><code>[ab]</code> matches <code>''</code> or <code>'ab'</code>.</dd>
+				</dl>
+				<dt-code>\</dt-code>
+				<dd>Escape character</dd>
+				<dd><code>\*</code> matches <code>'*'</code>, <code>\\</code> matches <code>\</code>, <code>\a</code> matches <code>a</code></dd>
+				<dt-code>.</dt-code>
+				<dd>Universal character - matches any single character, but onyl when followed by one of quantifiers <code>*</code>, <code>?</code>, <code>+</code> or <code>{}</code>.</dd>
+				<dd><code>.?</code> matches <code>''</code>, <code>'.'</code>, <code>'a'</code>, <code>'Ω'</code> etc.</dd>
+				<dt-code>|</dt-code>
+				<dd>Or - matches contruct on left side or construct on right side.</dd>
+				<dd>When specified withoud whitespaces minimal contruct on side without whitespace is taken (typically one letter).</dd>
+				<dd>
+                    When specified with whitespace maximal construct on site eith whitespace is take.
+                    Maximal construct lookup is broken only by reaching scope boundary from inside at same level where <code>|</code> was used.
+                    Scope boundaries are introduced by whole expression itself, <code>()</code>, <code>[]</code> and <code>{|}</code> but <code>{|}</code> is irrelevant because <code>|</code> inside <code>{}</code> has slightly different meaning.
+                </dd>
+				<dd>Note that inside <code>[]</code> <code>|</code> has different behavior (regarding whitespaces around it) then when not in <code>[]</code> - inside <code>[]</code> it always behaves like having whitespace on each side.</dd>
+				<dd><code>bye|hi</code> matches <code>'byei'</code> or <code>'byhi'</code>.</dd>
+				<dd><code>bye | hi</code> matches <code>'bye'</code> or <code>'hi'</code>.</dd>
+			</dl>
+		</dl>
+	</formatting>
+	<section id="general-syntax" guid="630e459c-215c-4ee8-9015-f1ca5356751b">
+		<header>General syntactical constructs</header>
+		<introduction>This section describes syntactical elements used in CIL code.</introduction>
+		<dl>
+			<dt-ref id="Int32">Int32</dt-ref>
+			<dt-ref id="Int64">Int64</dt-ref>
+			<dd><code>([+|-][0-9]+)|(0x[0-9A-Fa-f]+)</code></dd>
+			<dd>Inegral number in decimal or hexadecimal format. CIL recognizes only 32-bit and 64-bit integral literals. In case 8-bit or 16-bit literal is required, appropriate high part of 32-bit literal is used.</dd>
+			<dt-ref id="RealNumber">RealNumber</dt-ref>
+			<dd><code>[+|-]([0-9]+\.[0-9]+)|([0-9]+(E|e)[0-9]+)|([0-9]+\.[0-9]+(E|e)[+|-]][0-9]+)</code></dd>
+			<dd>Real number literal differes from integer literal by having decimal point and/or exponent.</dd>
+			<dt-ref id="Float32">Float32</dt-ref>
+			<dt-ref id="Float64">Float64</dt-ref>
+			<dd><code><ref ref="RealNumber">RealNumber</ref> | float32 \(<ref ref="Int32">Int32</ref>\) | \(<ref ref="Bytes">Bytes</ref>\)</code></dd>
+			<dd><code><ref ref="RealNumber">RealNumber</ref> | float64 \(<ref ref="Int32">Int64</ref>\) | \(<ref ref="Bytes">Bytes</ref>\)</code></dd>
+			<dd>
+				Additionally real number can by entered by static cast from integral number or by byte representation.
+				Byte representation is useful for values NaN, +∞ and -∞ when ilasm implementation does not support entering <code>NaN</code>, <code>Inf</code> and <code>-Inf</code> directly.
+			</dd>
+			<break/>
+            <dt-ref id="QSTRING">QSTRING</dt-ref>
+            <dd><code>"([^"] | \\")*"</code></dd>
+            <dd>String value in double quotes (<code>"</code>). Exact behavior of excape character <code>\</code> is implementation-dependent. Used for string literals.</dd>
+            <dt-ref id="SQSTRING">SQSTRING</dt-ref>
+            <dd><code>'([^'] | \\')*'</code></dd>
+            <dd>String value in single quotes (<code>'</code>). Exact behavior of escape character <code>\</code> is implementation dependent. Used for indentifiers containign special characters.</dd>
+            <dt-ref id="ID">ID</dt-ref>
+            <dd><code>[A-Za-z_$@`?][A-Za-z_$@`?0-9]*</code></dd>
+            <dd>Identifier without special characters. <code>_</code>, <code>$</code>, <code>@</code>, <code>`</code> and <code>@</code> are not considered special characters.</dd>
+            <dt-ref id="Id">Id</dt-ref>
+            <dd><code><ref ref="ID">ID</ref> | <ref ref="SQSTRING">SQSTRING</ref></code></dd>
+            <dd>Identifier can be either <ref ref="ID">ID</ref> or <ref ref="SQSTRING">SQSTRING</ref>.</dd>
+            <dt-ref id="DottedName">DottedName</dt-ref>
+            <dd><code><ref ref="Id">Id</ref>[.<ref ref="Id">Id</ref>]*</code></dd>
+            <dd>Syntactical shortcut allowing to use names containing dots (<code>.</code>) without single quotes (<code>'</code>).</dd>
+            <break/>
+            <dt-ref id="HexByte">HexByte</dt-ref>
+            <dd><code>[0-9A-Fa-f]{2}</code></dd>
+            <dd>One byte represented by hexadecimal number (without leading hexa-specifier)</dd>
+            <dt-ref id="Bytes">Bytes</dt-ref>
+            <dd><code><ref ref="HexByte">HexByte</ref> [<ref ref="HexByte">HexByte</ref>]*</code></dd>
+            <dd>Byte array is list of hexadecimally writtent bytes seperated by spaces.</dd>
+            <break/>
+            <dt><ref ref="GenPar">GenPar</ref></dt>
+            <dd><code>{+|-|class|valuetype|.ctor} [\(<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]*\)] <ref ref="Id">Id</ref></code></dd>
+            <dd>Generic parameter specification</dd>
+            <dt><ref ref="TypeSpec">TypeSpec</ref></dt>
+            <dd><code>\[[.module] <ref ref="DottedName">DottedName</ref>\] | <ref ref="TypeReference">TypeReference</ref> | <ref ref="Type">Type</ref></code></dd>
+            <dd>Simplified reference to type. E.g. allows use <code>System.GC</code> instead of <code>.class System.GC</code></dd>
+            <dt><ref ref="Typereference">TypeReference</ref></dt>
+            <dd><code>(\[.module <ref ref="DottedName">DottedName</ref>\] | \[<ref ref="DottedName">DottedName</ref>\]) <ref ref="DottedName">DottedName</ref> [/ <ref ref="DottedName">DottedName</ref>]*</code></dd>
+            <dd>Reference to user-defined type</dd>
+            <dt><ref ref="Type">Type</ref></dt>
+            <dd>
+                <code>
+                    !<ref ref="Int32">Int32</ref> | !!<ref ref="Int32">Int32</ref> | bool | char |
+                    class <ref ref="TypeReference">TypeReference</ref> |
+                    floa32 | float64 | int8 | int16 | int32 | int64 |
+                    method <ref ref="CallConv">CallConv</ref> <ref ref="Type">Type</ref> \* \([<ref ref="Param">Param</ref> [, <ref ref="Param">Param</ref>]*]\) |
+                    native int | native unsigned int | object | string | <ref ref="Type">Type</ref>&amp; | <ref ref="Type">Type</ref>\* |
+                    <ref ref="Type">Type</ref>&lt;<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]* [,]*> |
+                    <ref ref="Type">Type</ref> \[[(... | <ref ref="Int32">Int32</ref> | <ref ref="Int32">Int32</ref> ... | <ref ref="Int32">Int32</ref> ... <ref ref="Int32">Int32</ref>) [, (... | <ref ref="Int32">Int32</ref> | <ref ref="Int32">Int32</ref> ... | <ref ref="Int32">Int32</ref> ... <ref ref="Int32">Int32</ref>)]*]\] |
+                    <ref ref="Type">Type</ref> modopt \(<ref ref="TypeReference">TypeReference</ref>\) | <ref ref="Type">Type</ref> modreq \(<ref ref="TypeReference">TypeReference</ref>\) |
+                    <ref ref="Type">Type</ref> pinned | typedref | valuetype <ref ref="TypeReference">TypeReference</ref> |
+                    unsigned int8 | unsigned int16 | unsigned int32 | unsigned int64 | void
+                </code>
+            </dd>
+            <dd>Complex type reference</dd>
+            <dt><ref ref="NativeType">NativeType</ref></dt>
+            <dd>
+                <code>
+                    \[\] | bool | float32 | float64 | [unsigned] int | [unsigned] int8 | [unsigned] int16 | [unsigned] int32 | [unsigned] int64 | lpstr | lpwstr | method |
+                    <ref ref="NativeType">NativeType</ref> \[\] | <ref ref="NativeType">NativeType</ref>\[<ref ref="Int32">Int32</ref>\] | 
+                    <ref ref="NativeType">NativeType</ref> \[\+ <ref ref="Int32">Int32</ref>\] | <ref ref="NativeType">NativeType</ref> \[<ref ref="Int32">Int32</ref> \+ <ref ref="Int32">Int32</ref>\] |
+                    <ms-specific>
+                        (as any | byvalstr | custom \(<ref ref="QSTRING">QSTRING</ref>,<ref ref="QSTRING">QSTRING</ref>\) | fixed array [<ref ref="Int32">Int32</ref>] | fixed sysstring [<ref ref="Int32">Int32</ref>] | lpstruct | lpstr | struct)                            
+                    </ms-specific>
+                </code>
+            </dd>
+            <break/>
+            <dt><ref ref="CallConv">CallConv</ref></dt>
+            <dd><code>[instance [explicit]] (default | unmanaged cdecl | unmanaged fastcall | unmanaged stdcall | unmanaged thiscall | vararg)</code></dd>
+            <dd>Manner of method calling</dd>
+            <dt><ref ref="Param">Param</ref></dt>
+            <dd><code>{\[int\] | \[opt\] | \[out\]} <ref ref="Type">Type</ref> [marshal \([<ref ref="NativeType">NativeType</ref>]\)] [<ref ref="Id">Id</ref>]</code></dd>
+            <dd>Method parameter definition</dd>
+		</dl>
+	</section>
+    <section id="general-semantic" guid="d603f693-9349-49ae-a10e-fb0b4aa5e200">
+        <header>Semantics of general constructs</header>
+        <introduction>
+            This section describes semantics of some elements introduced in <ref ref="general-syntax">General syntactical constructs</ref>.
+            Selected non-trivial elements are described in-dept and single parts of those elements are discussed.
+        </introduction>
+        <section id="Type" guid="cc8ddf5a-246d-45e7-a842-3b1a2a0c315b">
+            <header><ref>Type</ref></header>
+            <introduction>Complex reference to type.</introduction>
+            <p>Can be one of following values:</p>
+            <dl>
+                <dt-code>!<ref ref="Int32">Int32</ref></dt-code>
+                <dd>Reffres generic parameter from type declaration accessible by 0-based index.</dd>
+                <dt-code>!!<ref ref="Int32">Int32</ref></dt-code>
+                <dd>Reffres generic parameter from method declaration accessible by 0-based index.</dd>
+                <break/>
+                <dt-code>bool</dt-code>
+                <dt-code>char</dt-code>
+                <dt-code>float32</dt-code>
+                <dt-code>float64</dt-code>
+                <dt-code>int8</dt-code>
+                <dt-code>int16</dt-code>
+                <dt-code>int32</dt-code>
+                <dt-code>int64</dt-code>
+                <dt-code>object</dt-code>
+                <dt-code>string</dt-code>
+                <dt-code>unsigned int8</dt-code>
+                <dt-code>unsigned int16</dt-code>
+                <dt-code>unsigned int32</dt-code>
+                <dt-code>unsigned int64</dt-code>
+                <dt-code>native int</dt-code>
+                <dt-code>native unsigned int</dt-code>
+                <dd>Built-in types</dd>
+                <break/>
+                <dt-code>class <ref ref="TypeReference">TypeReference</ref></dt-code>
+                <dd>Reference to user*defined type. See <ref ref="TypeReference">TypeReference</ref>.</dd>
+                <break/>
+                <dt-code>method <ref ref="CallConv">CallConv</ref> <ref ref="Type">Type</ref> \* \([<ref ref="Param">Param</ref> [, <ref ref="Param">Param</ref>]*]\)</dt-code>
+                <dd>Method pointer. See <ref ref="CallConv">CallConv</ref>.</dd>
+                <break/>
+                <dt-code><ref ref="Type">Type</ref>&amp;</dt-code>
+                <dd>Managed pointer to given type. Type cannot be managed pointer or <code>typedref</code>. Managed pointer is reported to garbage collector.</dd>
+                <dt-code><ref ref="Type">Type</ref>*</dt-code>
+                <dd>Unmanaged pointer to given type. Unmanaged pointer is not reported to garbage collector and behaves like unsigned integral number.</dd>
+                <break/>
+                <dt-code><ref ref="Type">Type</ref>&lt;<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]* [,]*></dt-code>
+                <dd>
+                    Generic type instance.
+                    Generic parameter cannot be: Managed pointer (<code>ByRef</code>); type field of which points to CIL evaluation stack (like <see cref="T:System.RuntimeArgumentHandle"/>); <code>void</code>.
+                    Partial instantiation is not allowed.
+                </dd>
+                <dt-code><ref ref="Type">Type</ref> \[[(... | <ref ref="Int32">Int32</ref> | <ref ref="Int32">Int32</ref> ... | <ref ref="Int32">Int32</ref> ... <ref ref="Int32">Int32</ref>) [, (... | <ref ref="Int32">Int32</ref> | <ref ref="Int32">Int32</ref> ... | <ref ref="Int32">Int32</ref> ... <ref ref="Int32">Int32</ref>)]*]\]</dt-code>
+                <dd>Array. Several array declarations are possible.</dd>
+                <dl>
+                    <dt-code><ref ref="Type">type</ref> \[\]</dt-code>
+                    <dd>
+                        So-called vactor - one dimensional 0-based array
+                        Vectors have special support in CIL - structrions <code-ref ref="newarr">newarr</code-ref>, <code-ref ref="ldelem">ldelem</code-ref>, <code-ref ref="stelem">stelem</code-ref> or <code-ref ref="stelema">stelema</code-ref>.
+                        Vectors are subclasses of the <see cref="T:System.Array"/> class.
+                    </dd>
+                    <break/>
+                    <dt-code><ref ref="Type">type</ref> \[<ref>Bound</ref> [, <ref>Bound</ref>]*\]</dt-code>
+                    <dd>Array are defined by number of its dimensions. Each dimension is defined by boundaries <code-ref>Bound</code-ref> - it can be:</dd>
+                    <dl>
+                        <dt-code>...</dt-code>
+                        <dd>Lower bound and upper bound undefined.</dd>
+                        <dt-code><ref ref="Int32">Int32</ref></dt-code>
+                        <dd>Lower bound 0 and uppper bound given number.</dd>
+                        <dt-code><ref ref="Int32">Int32</ref> ...</dt-code>
+                        <dd>Only lowe bound specified</dd>
+                       <dt-code><ref ref="Int32">Int32</ref> ... <ref ref="Int32">Int32</ref></dt-code>
+                        <dd>Both bounds specified</dd>
+                    </dl>
+                    <dd>Those arrays are supported by VES as subclasses of the <see cref="T:System.Array"/> class.</dd>
+                    <dd>It as possible to created arrays of arrays, too.</dd>
+                </dl>
+                <break/>
+                <dt-code><ref ref="Type">Type</ref> modopt \(<ref ref="TypeReference">TypeReference</ref>\)</dt-code>
+                <dd>User modifier (optional modifier) which is not required to be understood by caller.</dd>
+                <dt-code><ref ref="Type">Type</ref> modreq \(<ref ref="TypeReference">TypeReference</ref>\)</dt-code>
+                <dd>User modifier (required modifier) which is required to be understood by caller.</dd>
+                <dd rel="summary">
+                    Modifiers are something like user-attributes, but are part of signature.
+                    Each modifier associates reference to type with signature item.
+                    CLI treats required and optional modifiers same way.
+                    Two signatures that differ only by user modifiers are considered to be different.
+                    User modifiers has no meaning for VES.
+                    The fact that modifier is required or optional is meaningful to tools other than CLI (like alalyzers or compilers), which decides wheather modifier has any semantics they have to understand to.
+                </dd>
+                <break/>
+                <dt-code><ref ref="Type">Type</ref> pinned</dt-code>
+                <dd>Can be used only with local variables of methods.</dd>
+                <dd>In case method in which variable of pinned type is declared is being executed, VES cannot move the object which variable is reference to.</dd>
+                <dd>In case unmanaged pointers to managed objects are used, such object should be declared as pinned.</dd>
+                <break/>
+                <dt-code>typedref</dt-code>
+                <dd>
+                    Reference to type (i.e. <see cref="T:System.TypedReference"/>) created by <code-ref ref="mkrefany">mkrefany</code-ref>.
+                    Used by instructions <code-ref ref="refanytype">refanytype</code-ref> and <code-ref ref="refanyval">refanyval</code-ref>.
+                </dd>
+                <break/>
+                <dt-code>valuetype <ref ref="TypeReference">TypeReference</ref></dt-code>
+                <dd>User-defined value-type (structure) - not boxed.</dd>
+                <break/>
+                <dt-code>void</dt-code>
+                <dd>No type. Allowed only as return type of method or as part of definition opf unmanaged pointer <code>void*</code>.</dd>
+            </dl>
+        </section>
+        <section id="TypeReference" guid="babaf4d8-f217-4265-a3ca-e64f2c1a5e77">
+            <header><ref>TypeReference</ref></header>
+            <introduction>Reference to user-defined type.</introduction>
+        </section>
+    </section>
+</ildoc>
