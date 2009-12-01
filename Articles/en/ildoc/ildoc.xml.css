@@ -4,17 +4,17 @@ ildoc{
 	color:Black;
 	background-color:White;
 	font-family:serif;
-	padding:0 .5EM .5EM .5EM;
+	padding:0 12pt 12pt 12pt;
 }
 header{
 	display:block;
 	font-family:sans-serif;
 	font-weight:bold;
-	margin-top:.5EM;
+	margin-top:12pt;
 }
 ildoc > header{
 	font-size:225%;
-	margin-bottom:.5EM;
+	margin-bottom:12pt;
 	text-align:center;
 }
 ildoc > formatting > header, ildoc > section > header {font-size:200%;}
@@ -22,12 +22,12 @@ ildoc > section > section > header {font-size:175%;}
 ildoc > section > section > section > header {font-size:150%;}
 ildoc > section > section > section > section > header {font-size:125%;}
 section > section > header {padding-left:0;}
-section > section > * {padding-left:4EM;}
-section > section > dl{padding-left:6EM;}
+section > section > * {padding-left:32pt;}
+section > section > dl{padding-left:56pt;}
 introduction{
 	display:block;
 	text-align:justify;
-	margin-bottom:1EM;
+	margin-bottom:12pt;
 }
 p{
     display:block;
@@ -35,24 +35,31 @@ p{
 }
 dl{
 	display:block;
-	padding-left:2EM;
+	padding-left:24pt;
    }
 dt,dt-code,dt-var,dt-ref,dt-code-ref{
 	display:block;
 }
 dd{
 	display:block;
-	padding-left:2EM;
+	padding-left:24pt;
 }
+dd[rel="summary"]{
+     padding-left:18pt;
+ }
 code, dt-code, dt-code-ref, code-ref,
+syntax,
 see{
 	font-family:monospace;
 }
 dt-code-ref, code-ref, ref, dt-ref, code-ref{
 	font-style:italic;
 }
+ref, dt-ref{
+	font-family:serif;
+}
 header + *{
-	margin-top:1EM;
+	margin-top:12pt;
 }
 ref[ref], dt-ref[ref],
 link, internal-link, see{
@@ -67,12 +74,6 @@ b{font-weight:bold;}
 break{
 	display:block;
 	border-top:solid Gray thin;
-}
-note-ref{
-    font-family:serif;
-    font-weight:normal;
-    color:Black;
-    text-decoration:none;
 }
 ms-specific{
     background-color:Aqua;
@@ -91,3 +92,50 @@ undocumented{
 see:empty:after{
     content:attr(cref);
 }
+code-ref, dt-code-ref, code ref, ref code, dt-code ref, dt-ref code{
+	font-style:italic;
+	font-family:monospace;
+}
+syntax{display:block; text-align:left;}
+
+example{ 
+    display:block;
+    background-color:#DDDDDD;
+    padding:4pt;
+ }
+ example > title{
+     display:block;
+     font-weight:bold;
+     border-bottom:solid medium Gray;
+     text-align:left;
+ }
+ code-ml{
+     display:block;
+     font-family:monospace;
+     text-align:left;
+     white-space:pre;
+     max-width:100%;
+     overflow-x:auto;
+ }
+ dl > example{
+     margin-left:24pt;
+ }
+r{
+    font-size:10pt;
+    font-family:sans-serif;
+    font-style:normal;
+} 
+r:before{content:"(";}
+r:after{content:")";}
+header > r,
+dd > r, dd-code > r, dd-ref > r, dd-code-rer > r,
+dt > r:last-child, dt > r:first-child,
+p > r:first-child, p > r:last-child,
+title > r:first-child, title > r:last-child,
+introduction > r:first-child, introduction > r:last-child,
+*[r]:before{
+    float:right;
+}
+*[r]:before{
+    content:"(" attr(r) ")";
+} 

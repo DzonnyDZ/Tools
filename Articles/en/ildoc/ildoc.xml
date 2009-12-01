@@ -6,6 +6,7 @@
 		This guide describes various low-level parts of .NET framework.
 		Big attension is given to Common Inermediate Language syntax, metadata and instruction-set.
 	</introduction>
+    <!--Formatting-->
 	<formatting id="formatting" guid="0bf4d96b-2001-4d76-b7dc-511a1b3810e2">
 		<header>Formatting and regular expressions</header>
 		<introduction>This section describes formatting and regular expressions (syntax grammar) used in this CLI Quick reference guide.</introduction>
@@ -21,7 +22,7 @@
 			<dd>
 				Reference to note is never formated as code.
 				This way it is possible to distinguish when asterisk (*) is part of regular expression and when it is reference to note.
-				Compare <code>*</code> and <note-ref>*</note-ref>.
+				Compare <code>*</code> and *.
 			</dd>
 			<dt>Regular expressions</dt>
 			<dd>
@@ -111,15 +112,48 @@
 			</dl>
 		</dl>
 	</formatting>
+    <!--Terms-->
+    <section id="terms" guid="769c30f5-a581-4199-b99a-4cb64860af64">
+        <header>Terms</header>
+        <introduction>This section describes common terms and abbreviations used in connection with .NET Framework.</introduction>
+        <dl>
+            <dt r="I.5">CIL</dt>
+            <dt>Common Intermediate Language</dt>
+            <dd>The instruction set understood by the VES.</dd>
+            <dt r="I.5">CLI</dt>
+            <dt>Common Language Infrastructure</dt>
+            <dd>A specification for the format of executable code and runtime environment that can execute the code.</dd>
+            <dt r="I.5">CLS</dt>
+            <dt>Common Language Specification</dt>
+            <dt>An agreement between language designers and framework (class library) designers. It specifies subset of the CTS and set of usage conventions.</dt>
+            <dt r="I.5">CTS</dt>
+            <dt>Common Type Systme</dt>
+            <dd>
+                A unified type system that is shared by compilers, tools, and the CLI itself. It
+                is the model that defines the rules the CLI follows when declaring, using, and managing types. The CTS
+                establishes a framework that enables cross-language integration, type safety, and high performance code
+                execution.
+            </dd>
+            <dt r="I.5">VES</dt>
+            <dt>Virtual Execution System</dt>
+            <dd>
+                This system implements and enforces the CTS model. The VES is
+                responsible for loading and running programs written for the CLI. It provides the services needed to execute
+                managed code and data using the metadata to connect separately generated modules together at runtime. The
+                VES is also known as the Execution Engine.
+            </dd>
+        </dl>
+    </section>
+    <!--General syntax-->
 	<section id="general-syntax" guid="630e459c-215c-4ee8-9015-f1ca5356751b">
 		<header>General syntactical constructs</header>
 		<introduction>This section describes syntactical elements used in CIL code.</introduction>
 		<dl>
-			<dt-ref id="Int32">Int32</dt-ref>
-			<dt-ref id="Int64">Int64</dt-ref>
+			<dt-ref id="Int32" r="II.5.2">Int32</dt-ref>
+			<dt-ref id="Int64" r="II.5.2">Int64</dt-ref>
 			<dd><code>([+|-][0-9]+)|(0x[0-9A-Fa-f]+)</code></dd>
 			<dd>Inegral number in decimal or hexadecimal format. CIL recognizes only 32-bit and 64-bit integral literals. In case 8-bit or 16-bit literal is required, appropriate high part of 32-bit literal is used.</dd>
-			<dt-ref id="RealNumber">RealNumber</dt-ref>
+			<dt-ref id="RealNumber" r="II.5.2">RealNumber</dt-ref>
 			<dd><code>[+|-]([0-9]+\.[0-9]+)|([0-9]+(E|e)[0-9]+)|([0-9]+\.[0-9]+(E|e)[+|-]][0-9]+)</code></dd>
 			<dd>Real number literal differes from integer literal by having decimal point and/or exponent.</dd>
 			<dt-ref id="Float32">Float32</dt-ref>
@@ -131,39 +165,39 @@
 				Byte representation is useful for values NaN, +∞ and -∞ when ilasm implementation does not support entering <code>NaN</code>, <code>Inf</code> and <code>-Inf</code> directly.
 			</dd>
 			<break/>
-            <dt-ref id="QSTRING">QSTRING</dt-ref>
+            <dt-ref id="QSTRING" r="II.5.2">QSTRING</dt-ref>
             <dd><code>"([^"] | \\")*"</code></dd>
             <dd>String value in double quotes (<code>"</code>). Exact behavior of excape character <code>\</code> is implementation-dependent. Used for string literals.</dd>
-            <dt-ref id="SQSTRING">SQSTRING</dt-ref>
+            <dt-ref id="SQSTRING" r="II.5.2">SQSTRING</dt-ref>
             <dd><code>'([^'] | \\')*'</code></dd>
             <dd>String value in single quotes (<code>'</code>). Exact behavior of escape character <code>\</code> is implementation dependent. Used for indentifiers containign special characters.</dd>
-            <dt-ref id="ID">ID</dt-ref>
+            <dt-ref id="ID" r="II.5.2">ID</dt-ref>
             <dd><code>[A-Za-z_$@`?][A-Za-z_$@`?0-9]*</code></dd>
             <dd>Identifier without special characters. <code>_</code>, <code>$</code>, <code>@</code>, <code>`</code> and <code>@</code> are not considered special characters.</dd>
-            <dt-ref id="Id">Id</dt-ref>
+            <dt-ref id="Id" r="II.5.3">Id</dt-ref>
             <dd><code><ref ref="ID">ID</ref> | <ref ref="SQSTRING">SQSTRING</ref></code></dd>
             <dd>Identifier can be either <ref ref="ID">ID</ref> or <ref ref="SQSTRING">SQSTRING</ref>.</dd>
-            <dt-ref id="DottedName">DottedName</dt-ref>
+            <dt-ref id="DottedName" r="II.5.3">DottedName</dt-ref>
             <dd><code><ref ref="Id">Id</ref>[.<ref ref="Id">Id</ref>]*</code></dd>
             <dd>Syntactical shortcut allowing to use names containing dots (<code>.</code>) without single quotes (<code>'</code>).</dd>
             <break/>
-            <dt-ref id="HexByte">HexByte</dt-ref>
+            <dt-ref id="HexByte" r="II.5.2">HexByte</dt-ref>
             <dd><code>[0-9A-Fa-f]{2}</code></dd>
             <dd>One byte represented by hexadecimal number (without leading hexa-specifier)</dd>
-            <dt-ref id="Bytes">Bytes</dt-ref>
+            <dt-ref id="Bytes" r="II.5.5">Bytes</dt-ref>
             <dd><code><ref ref="HexByte">HexByte</ref> [<ref ref="HexByte">HexByte</ref>]*</code></dd>
             <dd>Byte array is list of hexadecimally writtent bytes seperated by spaces.</dd>
             <break/>
-            <dt><ref ref="GenPar">GenPar</ref></dt>
+            <dt r="II.10.1.7"><ref ref="GenPar">GenPar</ref></dt>
             <dd><code>{+|-|class|valuetype|.ctor} [\(<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]*\)] <ref ref="Id">Id</ref></code></dd>
             <dd>Generic parameter specification</dd>
-            <dt><ref ref="TypeSpec">TypeSpec</ref></dt>
+            <dt r="II.7.1"><ref ref="TypeSpec">TypeSpec</ref></dt>
             <dd><code>\[[.module] <ref ref="DottedName">DottedName</ref>\] | <ref ref="TypeReference">TypeReference</ref> | <ref ref="Type">Type</ref></code></dd>
             <dd>Simplified reference to type. E.g. allows use <code>System.GC</code> instead of <code>.class System.GC</code></dd>
-            <dt><ref ref="Typereference">TypeReference</ref></dt>
+            <dt r="II.7.3"><ref ref="TypeReference">TypeReference</ref></dt>
             <dd><code>(\[.module <ref ref="DottedName">DottedName</ref>\] | \[<ref ref="DottedName">DottedName</ref>\]) <ref ref="DottedName">DottedName</ref> [/ <ref ref="DottedName">DottedName</ref>]*</code></dd>
             <dd>Reference to user-defined type</dd>
-            <dt><ref ref="Type">Type</ref></dt>
+            <dt r="II.7.1"><ref ref="Type">Type</ref></dt>
             <dd>
                 <code>
                     !<ref ref="Int32">Int32</ref> | !!<ref ref="Int32">Int32</ref> | bool | char |
@@ -179,7 +213,7 @@
                 </code>
             </dd>
             <dd>Complex type reference</dd>
-            <dt><ref ref="NativeType">NativeType</ref></dt>
+            <dt r="II.7.4"><ref ref="NativeType">NativeType</ref></dt>
             <dd>
                 <code>
                     \[\] | bool | float32 | float64 | [unsigned] int | [unsigned] int8 | [unsigned] int16 | [unsigned] int32 | [unsigned] int64 | lpstr | lpwstr | method |
@@ -191,21 +225,22 @@
                 </code>
             </dd>
             <break/>
-            <dt><ref ref="CallConv">CallConv</ref></dt>
+            <dt r="II.15.3"><ref ref="CallConv">CallConv</ref></dt>
             <dd><code>[instance [explicit]] (default | unmanaged cdecl | unmanaged fastcall | unmanaged stdcall | unmanaged thiscall | vararg)</code></dd>
             <dd>Manner of method calling</dd>
-            <dt><ref ref="Param">Param</ref></dt>
+            <dt r="II.15.4"><ref ref="Param">Param</ref></dt>
             <dd><code>{\[int\] | \[opt\] | \[out\]} <ref ref="Type">Type</ref> [marshal \([<ref ref="NativeType">NativeType</ref>]\)] [<ref ref="Id">Id</ref>]</code></dd>
             <dd>Method parameter definition</dd>
 		</dl>
 	</section>
+    <!--General semantics-->
     <section id="general-semantic" guid="d603f693-9349-49ae-a10e-fb0b4aa5e200">
         <header>Semantics of general constructs</header>
         <introduction>
             This section describes semantics of some elements introduced in <ref ref="general-syntax">General syntactical constructs</ref>.
             Selected non-trivial elements are described in-dept and single parts of those elements are discussed.
         </introduction>
-        <section id="Type" guid="cc8ddf5a-246d-45e7-a842-3b1a2a0c315b">
+        <section id="Type" guid="cc8ddf5a-246d-45e7-a842-3b1a2a0c315b" r="II.7.1">
             <header><ref>Type</ref></header>
             <introduction>Complex reference to type.</introduction>
             <p>Can be one of following values:</p>
@@ -310,6 +345,120 @@
         <section id="TypeReference" guid="babaf4d8-f217-4265-a3ca-e64f2c1a5e77">
             <header><ref>TypeReference</ref></header>
             <introduction>Reference to user-defined type.</introduction>
+			<syntax>[<ref>ResolutionScope</ref>] <ref ref="DottedName">DottedName</ref> [/ <ref ref="DottedName">DottedName</ref>]*</syntax>
+			<dl>
+				<dt><code-ref>ResolutionScope</code-ref> (<ref>ResolutionScope</ref>)</dt>
+				<dd>If absent this reference is reference to same module of same assembly.</dd>
+				<dl>
+					<dt-code>\[.module <ref ref="FileName">FileName</ref>\]</dt-code>
+					<dd>Reference to another module of same assembly.</dd>
+					<dl>
+						<dt><code-ref>FileName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+						<dd>Name of file containing the module. It must be module of same assembly.</dd>
+					</dl>
+					<dt-code>\[AssemblyRefName\]</dt-code>
+					<dd>Reference to another assembly</dd>
+					<dl>
+						<dt><code-ref>AssemblyName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+						<dd>Name of referenced assembly defined using <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>.</dd>
+					</dl>
+				</dl>
+				<dt-code><ref ref="DottedName">DottedName</ref> / <ref ref="DottedName">DottedName</ref></dt-code>
+				<dd>Type name. Slash is used to delimit name of containing type and nested type.</dd>
+			</dl>
+        </section>
+		<section id="TypeSpec" guid="f86debe4-aec0-4361-9ac9-c21a93ff4e8c">
+			<header><ref>TypeSpec</ref></header>
+			<introduction>Simplified type reference</introduction>
+			<p>
+				<ref ref="TypeSpec">TypeSpec</ref> allows to use <ref ref="Type">Type</ref>, <ref ref="TypeReference">TypeReference</ref> and syntactical shortcut <code>\[[.module] <ref ref="DottedName">DottedName</ref>\]</code> in same place.
+				So, it is possible e.g. instead of <code>class System.GC</code> use only <code>System.GC</code>.
+			</p>
+		</section>
+		<section id="GenPar" guid="35f0f3eb-c612-4400-ba82-83532012bb0d">
+			<header><ref>GenPar</ref></header>
+			<introduction>Specifies a generic parameter.</introduction>
+			<syntax>{[\+|-] | (class | valuetype) | .ctor} [\([<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]*\)] <ref ref="Id">Id</ref></syntax>
+			<dl>
+				<dt-code>+</dt-code>
+				<dd>Covariant generic parameter</dd>
+				<dd>
+					Covariance means that when we have type <code>IA&lt;+T></code>, value of type <code>IA`&lt;A></code> can be assigned to target of type <code>IA`&lt;B></code> as long as it is possible to assgn value of type <code>A</code> to target of type <code>B</code>.
+					For example following pseudo-code would be OK:			
+				</dd>
+                <example><code-ml><![CDATA[interface IA<+T>;
+IA`1<System.String> var1;
+IA`1<System.Object> var2;
+var1 := var2;]]></code-ml></example>
+                <dd>Covariant generic parameters can be used as method return types and can be used for creating covariant method return types.</dd>
+                <example><code-ml><![CDATA[interface IEnumerator<+T> { T Current {get;} bool MoveNext(); }
+interface IEnumerable<+T> { IEnumerator<T> GetEnumerator(); }]]></code-ml></example>
+                <dt-code>-</dt-code>
+                <dd>Contravariant generic parameter</dd>
+                <dd>
+                    Contravariance if compagnon to covariance. Having type <code>IB&lt;-T></code> we can do assignment <code>IB`1&lt;B> := IB`1&lt;A></code> as long as assignment <code>A := B</code> is possible.
+                </dd>
+                <example><code-ml><![CDATA[Interface IB<-T>;
+IB`1<System.String> var1;
+IB`1<System.Object> var2;
+var2 := var1;]]></code-ml></example>
+                <dd>Contravarian generic parameters can be used as method parameters types and can be used for constructing contravariant interfaces.</dd>
+                <example><code-ml><![CDATA[interface IComparer<-T> { bool Compare(T x, T y); }
+interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashCode(T obj); }]]></code-ml></example>
+                <dd>Contravariant generic parameter can be used only in place of <i>producer</i>, <i>reader</i> or <i>getter</i>.</dd>
+                <dd rel="summary"><b>Summary:</b></dd>
+                <dd rel="summary">B → A ⇒ I&lt;+B> → I&lt;+A></dd>
+                <dd rel="summary">B → A ⇒ I&lt;-A> → I&lt;-B></dd>
+                <dd rel="summary">
+                    <code>+</code> and <code>-</code> cannot be used simultaneously. In case none of them is used generic parameter is called non-variant.
+                    There are no restrictions for using non-variant generic parameters.
+                </dd>
+                <dd rel="summary">Covariance and contravariance can be used only with delegates and interfaces.</dd>
+                <break/>
+                <dt-code>class</dt-code>
+                <dd>Generic parameter must be of type class (reference) not structure (value).</dd>
+                <dt-code>valuetype</dt-code>
+                <dd>Generic parameter must be of value type (structure, not class - reference type), but cannot be <see cref="T:System.Nullable`1">System.Nullable&lt;T></see>.</dd>
+                <dd rel="summary">Restrictions <code>class</code> and <code>valuetype</code> shall not be combined.</dd>
+                <dt-code>.ctor</dt-code>
+                <dd>Type parameter must be non-abstract class (reference type) with public constructor without parameters (default constructor) or it must be structure (value type).</dd>
+                <dd rel="summary">Each of attributes <code>+</code>, <code>-</code>, <code>class</code>, <code>valuetype</code> and <code>.ctor</code> can be used maximally once.</dd>
+                <break/>
+                <dt><code-ref ref="Type">Type</code-ref> (<ref ref="Type">Type</ref>)</dt>
+                <dd>Specifies restriction types for generic parameter. Type passed to generic parameter have to implement or inherit all listed types (so it makes sence to list maximally one class and several interfaces - no structures or delegates). Type passed to generic parameter might also be constraint type itself.</dd>
+                <break/>
+                <dt><code-ref ref="Id">Id</code-ref> (<ref ref="Id">Id</ref>)</dt>
+                <dd>Name of generic parameter.</dd>
+			</dl>
+		</section>
+        <section id="CallConv" guid="a190d1ff-f658-4705-91f4-cc0f171bd1f3">
+            <header><ref>CallConv</ref></header>
+            <introduction>Defines which way the method is called.</introduction>
+            <syntax>[instance [explicit]] [default | unmanaged cdecl | unmanaged fastcalll | unmanaged stdcall | unmanaged thiscall | vararg]</syntax>
+            <dl>
+                <dt-code>instance</dt-code>
+                <dd>This call is call of instance method (other possibility is static method). Pointer to current instance (so-called this-pointer) is passed to method.</dd>
+                <dt-code>explicit</dt-code>
+                <dd>
+                    This class of instance method uses explicitly passed this-pointer.
+                    Normally this-pointer is not part of argument list of method call, because it can be obtained from context.
+                    In case of explicit call first item of parameter list is this pointer.
+                </dd>
+                <break />
+                <dt-code>default</dt-code>
+                <dd>Default way of calling managed methods. It shall be used always for managed method, unless <code>vararg</code> is required.</dd>
+                <dt-code>unmanaged cdecl</dt-code>
+                <dd>Call used by standard C language.</dd>
+                <dt-code>unmanaged stdcall</dt-code>
+                <dd>Call used by standard C++ language.</dd>
+                <dt-code>unmanaged fastcall</dt-code>
+                <dd>Special optimized way of calling used by C++.</dd>
+                <dt-code>unmanaged thiscall</dt-code>
+                <dd>C++ call with this-pointer.</dd>
+                <break/>
+                <dt-code>vararg</dt-code>
+                <dd>Method accepts more arguments</dd>
+            </dl>
         </section>
     </section>
 </ildoc>
