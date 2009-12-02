@@ -3555,6 +3555,26 @@ Namespace WindowsT.IndependentT
         Public Shared Function Modal_PTI(ByVal Prompt$, ByVal Title$, ByVal Icon As Image) As DialogResult
             Return Modal_PTBI(Prompt, Title, MessageBoxButton.Buttons.OK, Icon)
         End Function
+        ''' <summary>Displays modal messagebox with given prompt, title and custom icon. Message box is modal to given owner.</summary>
+        ''' <param name="Prompt">Prompt to be shown</param>
+        ''' <param name="Title">Message box title</param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <returns>Indicates button clicked by user</returns>
+        ''' <version version="1.5.3" stage="Beta">This function is new in 1.5.3</version>
+        Public Shared Function Modal_PTIW(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object) As DialogResult
+            Return Modal_PTWBIO(Prompt, Title, Owner, , Icon)
+        End Function
+        ''' <summary>Displays modal messagebox with given prompt, title and icon. Message box is modal to given owner.</summary>
+        ''' <param name="Prompt">Prompt to be shown</param>
+        ''' <param name="Title">Message box title</param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <returns>Indicates button clicked by user</returns>
+        ''' <version version="1.5.3" stage="Beta">This function is new in 1.5.3</version>
+        Public Shared Function Modal_PTIW(ByVal Prompt$, ByVal Title$, ByVal Icon As MessageBoxIcons, ByVal Owner As Object) As DialogResult
+            Return Modal_PTWBIO(Prompt, Title, Owner, , GetIconDelegate.Invoke(Icon))
+        End Function
 #End Region
         ''' <summary>Displays modal message box with given prompt, title, custom icon and custom buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>

@@ -45,12 +45,12 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\bin\Nightly\</OutputPath>
+    <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
     <DocumentationFile>Tools.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
@@ -214,19 +214,25 @@
     </Compile>
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
     <Compile Include="Drawing\Design\NewEditor.vb" />
-    <Compile Include="Drawing\Design\UITypeEditor.vb" />
+    <Compile Include="Drawing\Design\UITypeEditor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Drawing\IconOrBitmap.vb" />
     <Compile Include="Extensions\DelegateExtensions.vb" />
     <Compile Include="IO\BinaryWriter.vb" />
     <Compile Include="IO\OverflowStream.vb" />
-    <Compile Include="IO\SyncFSWatcher.vb" />
+    <Compile Include="IO\SyncFSWatcher.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IO\UnionReadOnlyStream.vb" />
     <Compile Include="misc.vb" />
     <Compile Include="Reflection\VisualBasicSignatureProvider.vb" />
     <Compile Include="Tests\AttributeTest.vb" />
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues .vb" />
     <Compile Include="Xml\Linq\Extensions.vb" />
-    <Compile Include="Media\Sound.vb" />
+    <Compile Include="Media\Sound.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Drawing\ImageTools.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Extensions\Char.vb" />
@@ -545,10 +551,10 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>
-            "$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
+            "$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\AnyCPU\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
             REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
             "$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"
-        </PostBuildEvent>
+</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
