@@ -3262,7 +3262,9 @@ Namespace WindowsT.IndependentT
         ''' <returns>The result of message box indicatin pressed button.</returns>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimisc behaviour of the <see cref="Microsoft.VisualBasic.Interaction.MsgBox"/> function</remarks>
-        Public Shared Function MsgBox(ByVal Prompt As Object, Optional ByVal Buttons As MsgBoxStyle = 0, Optional ByVal Title As Object = Nothing) As MsgBoxResult
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <version version="1.5.3" stage="Beta">Added parameter <paramref name="owner"/> because using <see cref="MsgBox"/> without pwner caused bad behavior in WPF applications.</version>
+        Public Shared Function MsgBox(ByVal Prompt As Object, Optional ByVal Buttons As MsgBoxStyle = 0, Optional ByVal Title As Object = Nothing, Optional ByVal owner As Object = Nothing) As MsgBoxResult
             Try
                 Dim box As New FakeBox With {.Prompt = Prompt.ToString, .Title = Title.ToString}
                 box.Buttons.Clear()
@@ -3282,7 +3284,7 @@ Namespace WindowsT.IndependentT
                 If (Buttons And MsgBoxStyle.MsgBoxSetForeground) = MsgBoxStyle.MsgBoxSetForeground Then box.Options = box.Options Or MessageBoxOptions.BringToFront
                 If (Buttons And MsgBoxStyle.MsgBoxRight) = MsgBoxStyle.MsgBoxRight Then box.Options = box.Options Or MessageBoxOptions.AlignRight
                 If (Buttons And MsgBoxStyle.MsgBoxRtlReading) = MsgBoxStyle.MsgBoxRtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
-                Dim result As DialogResult = ShowTemplate(box)
+                Dim result As DialogResult = ShowTemplate(box, owner)
                 Select Case result
                     Case Windows.Forms.DialogResult.Abort : Return MsgBoxResult.Abort
                     Case Windows.Forms.DialogResult.Cancel : Return MsgBoxResult.Cancel
