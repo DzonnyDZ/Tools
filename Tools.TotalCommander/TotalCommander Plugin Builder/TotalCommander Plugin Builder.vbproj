@@ -132,7 +132,7 @@
     <None Include="Resources\Usage.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Tools\Tools.Core.vbproj">
+    <ProjectReference Include="..\..\Tools\Tools _.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
