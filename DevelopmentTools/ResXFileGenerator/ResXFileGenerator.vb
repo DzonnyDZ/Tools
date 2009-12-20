@@ -68,7 +68,7 @@ Module ResXFileGenerator
             Case "cs" : Provider = New Microsoft.CSharp.CSharpCodeProvider
             Case "h", "c", "cpp" : Provider = New Microsoft.VisualC.CppCodeProvider
             Case "cpp.7" : Provider = New Microsoft.VisualC.CppCodeProvider7
-            Case "cpp.vs" : Provider = New Microsoft.VisualC.VSCodeProvider
+                'Case "cpp.vs" : Provider = New Microsoft.VisualC.VSCodeProvider
             Case "js" : Provider = New Microsoft.JScript.JScriptCodeProvider
             Case "jsl", "java"
                 Try
