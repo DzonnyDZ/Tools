@@ -72,7 +72,7 @@ Module ResXFileGenerator
             Case "js" : Provider = New Microsoft.JScript.JScriptCodeProvider
             Case "jsl", "java"
                 Try
-                    Dim asm = Reflection.Assembly.Load("VJSharpCodeProvider,Version=2.0.0.0, Culture=neutral,PublicKeyToken=b03f5f7f11d50a3a", Nothing)
+                    Dim asm = Reflection.Assembly.Load("VJSharpCodeProvider,Version=2.0.0.0, Culture=neutral,PublicKeyToken=b03f5f7f11d50a3a")
                     Provider = Activator.CreateInstance(asm.GetType("Microsoft.VJSharp.VJSharpCodeProvider"))
                 Catch ex As Exception
                     Console.WriteLine("Failed to initialize J# code provider. Install J# runtime or copy VJSharpCodeProvider.dll to application directory")
