@@ -34,7 +34,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\AnyCPU\</OutputPath>
     <DocumentationFile>PseudoZip.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -44,7 +44,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\AnyCPU\</OutputPath>
     <DocumentationFile>PseudoZip.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>

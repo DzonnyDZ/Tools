@@ -22,102 +22,102 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Me.splMain = New System.Windows.Forms.SplitContainer
-        Me.splBrowser = New System.Windows.Forms.SplitContainer
-        Me.lvwFolders = New System.Windows.Forms.ListView
+        Me.splMain = New System.Windows.Forms.SplitContainer()
+        Me.splBrowser = New System.Windows.Forms.SplitContainer()
+        Me.lvwFolders = New System.Windows.Forms.ListView()
         Me.imlFolders = New System.Windows.Forms.ImageList(Me.components)
-        Me.lvwImages = New Tools.Metanol.TotalCommanderListView
+        Me.lvwImages = New Tools.Metanol.TotalCommanderListView()
         Me.cmsImages = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.tmiMerge = New System.Windows.Forms.ToolStripMenuItem
+        Me.tmiMerge = New System.Windows.Forms.ToolStripMenuItem()
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
-        Me.tabInfo = New System.Windows.Forms.TabControl
-        Me.tapCommon = New System.Windows.Forms.TabPage
-        Me.flpCommon = New System.Windows.Forms.FlowLayoutPanel
-        Me.panImage = New System.Windows.Forms.Panel
-        Me.picPreview = New System.Windows.Forms.PictureBox
-        Me.llbLarge = New System.Windows.Forms.LinkLabel
-        Me.cmdErrInfo = New System.Windows.Forms.Button
-        Me.sptImage = New System.Windows.Forms.Splitter
-        Me.fraTitle = New System.Windows.Forms.GroupBox
-        Me.tlpTitle = New System.Windows.Forms.TableLayoutPanel
-        Me.lblObjectName = New System.Windows.Forms.Label
-        Me.txtObjectName = New System.Windows.Forms.TextBox
-        Me.lblCaption = New System.Windows.Forms.Label
-        Me.txtCaption = New System.Windows.Forms.TextBox
-        Me.sptTitle = New System.Windows.Forms.Splitter
-        Me.fraLocation = New System.Windows.Forms.GroupBox
-        Me.tlpLocation = New System.Windows.Forms.TableLayoutPanel
-        Me.lblCity = New System.Windows.Forms.Label
-        Me.txtCity = New System.Windows.Forms.TextBox
-        Me.lblCountryCode = New System.Windows.Forms.Label
-        Me.cmbCountryCode = New System.Windows.Forms.ComboBox
-        Me.lblCountry = New System.Windows.Forms.Label
-        Me.txtCountry = New System.Windows.Forms.TextBox
-        Me.lblProvince = New System.Windows.Forms.Label
-        Me.txtProvince = New System.Windows.Forms.TextBox
-        Me.lblSublocation = New System.Windows.Forms.Label
-        Me.txtSublocation = New System.Windows.Forms.TextBox
-        Me.fraKeywords = New System.Windows.Forms.GroupBox
-        Me.kweKeywords = New Tools.WindowsT.FormsT.KeyWordsEditor
-        Me.sptKeywords = New System.Windows.Forms.Splitter
-        Me.fraAuthor = New System.Windows.Forms.GroupBox
-        Me.tlpAuthor = New System.Windows.Forms.TableLayoutPanel
-        Me.lblCopyright = New System.Windows.Forms.Label
-        Me.txtCopyright = New System.Windows.Forms.TextBox
-        Me.lblCredit = New System.Windows.Forms.Label
-        Me.txtCredit = New System.Windows.Forms.TextBox
-        Me.fraStatus = New System.Windows.Forms.GroupBox
-        Me.tlpStatus = New System.Windows.Forms.TableLayoutPanel
-        Me.lblEditStatus = New System.Windows.Forms.Label
-        Me.txtEditStatus = New System.Windows.Forms.TextBox
-        Me.lblUrgency = New System.Windows.Forms.Label
-        Me.nudUrgency = New System.Windows.Forms.NumericUpDown
-        Me.tapIPTC = New System.Windows.Forms.TabPage
-        Me.prgIPTC = New System.Windows.Forms.PropertyGrid
-        Me.tapExif = New System.Windows.Forms.TabPage
-        Me.tabExif = New System.Windows.Forms.TabControl
-        Me.tapExifMain = New System.Windows.Forms.TabPage
-        Me.prgExifMain = New System.Windows.Forms.PropertyGrid
-        Me.tapExifExif = New System.Windows.Forms.TabPage
-        Me.prgExifExif = New System.Windows.Forms.PropertyGrid
-        Me.tapExifGPS = New System.Windows.Forms.TabPage
-        Me.prgExifGPS = New System.Windows.Forms.PropertyGrid
-        Me.tapExifInterop = New System.Windows.Forms.TabPage
-        Me.prgExifInterop = New System.Windows.Forms.PropertyGrid
-        Me.tapExifThumbnail = New System.Windows.Forms.TabPage
-        Me.prgExifThumbnail = New System.Windows.Forms.PropertyGrid
-        Me.tscMain = New System.Windows.Forms.ToolStripContainer
-        Me.stsStatus = New System.Windows.Forms.StatusStrip
-        Me.tpbLoading = New System.Windows.Forms.ToolStripProgressBar
-        Me.tslFolder = New System.Windows.Forms.ToolStripStatusLabel
-        Me.tslNoFiles = New System.Windows.Forms.ToolStripStatusLabel
-        Me.msnMain = New System.Windows.Forms.MenuStrip
-        Me.tmiFile = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiBrowse = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiGoTo = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiSaveAll = New System.Windows.Forms.ToolStripMenuItem
-        Me.tssFileSep1 = New System.Windows.Forms.ToolStripSeparator
-        Me.tmiExit = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiView = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiRefresh = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiNext = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiPrevious = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiTools = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiOptions = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiSynchronizeWithDatabase = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiHelp = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiAbout = New System.Windows.Forms.ToolStripMenuItem
-        Me.tmiVersionHistory = New System.Windows.Forms.ToolStripMenuItem
-        Me.tosMain = New System.Windows.Forms.ToolStrip
-        Me.tsbBack = New System.Windows.Forms.ToolStripButton
-        Me.tsbForward = New System.Windows.Forms.ToolStripButton
-        Me.tsbRefresh = New System.Windows.Forms.ToolStripButton
-        Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
-        Me.bgwImages = New System.ComponentModel.BackgroundWorker
-        Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
-        Me.bgwSave = New System.ComponentModel.BackgroundWorker
+        Me.tabInfo = New System.Windows.Forms.TabControl()
+        Me.tapCommon = New System.Windows.Forms.TabPage()
+        Me.flpCommon = New System.Windows.Forms.FlowLayoutPanel()
+        Me.panImage = New System.Windows.Forms.Panel()
+        Me.picPreview = New System.Windows.Forms.PictureBox()
+        Me.llbLarge = New System.Windows.Forms.LinkLabel()
+        Me.cmdErrInfo = New System.Windows.Forms.Button()
+        Me.sptImage = New System.Windows.Forms.Splitter()
+        Me.fraTitle = New System.Windows.Forms.GroupBox()
+        Me.tlpTitle = New System.Windows.Forms.TableLayoutPanel()
+        Me.lblObjectName = New System.Windows.Forms.Label()
+        Me.txtObjectName = New System.Windows.Forms.TextBox()
+        Me.lblCaption = New System.Windows.Forms.Label()
+        Me.txtCaption = New System.Windows.Forms.TextBox()
+        Me.sptTitle = New System.Windows.Forms.Splitter()
+        Me.fraLocation = New System.Windows.Forms.GroupBox()
+        Me.tlpLocation = New System.Windows.Forms.TableLayoutPanel()
+        Me.lblCity = New System.Windows.Forms.Label()
+        Me.txtCity = New System.Windows.Forms.TextBox()
+        Me.lblCountryCode = New System.Windows.Forms.Label()
+        Me.cmbCountryCode = New System.Windows.Forms.ComboBox()
+        Me.lblCountry = New System.Windows.Forms.Label()
+        Me.txtCountry = New System.Windows.Forms.TextBox()
+        Me.lblProvince = New System.Windows.Forms.Label()
+        Me.txtProvince = New System.Windows.Forms.TextBox()
+        Me.lblSublocation = New System.Windows.Forms.Label()
+        Me.txtSublocation = New System.Windows.Forms.TextBox()
+        Me.fraKeywords = New System.Windows.Forms.GroupBox()
+        Me.kweKeywords = New Tools.WindowsT.FormsT.KeyWordsEditor()
+        Me.sptKeywords = New System.Windows.Forms.Splitter()
+        Me.fraAuthor = New System.Windows.Forms.GroupBox()
+        Me.tlpAuthor = New System.Windows.Forms.TableLayoutPanel()
+        Me.lblCopyright = New System.Windows.Forms.Label()
+        Me.txtCopyright = New System.Windows.Forms.TextBox()
+        Me.lblCredit = New System.Windows.Forms.Label()
+        Me.txtCredit = New System.Windows.Forms.TextBox()
+        Me.fraStatus = New System.Windows.Forms.GroupBox()
+        Me.tlpStatus = New System.Windows.Forms.TableLayoutPanel()
+        Me.lblEditStatus = New System.Windows.Forms.Label()
+        Me.txtEditStatus = New System.Windows.Forms.TextBox()
+        Me.lblUrgency = New System.Windows.Forms.Label()
+        Me.nudUrgency = New System.Windows.Forms.NumericUpDown()
+        Me.tapIPTC = New System.Windows.Forms.TabPage()
+        Me.prgIPTC = New System.Windows.Forms.PropertyGrid()
+        Me.tapExif = New System.Windows.Forms.TabPage()
+        Me.tabExif = New System.Windows.Forms.TabControl()
+        Me.tapExifMain = New System.Windows.Forms.TabPage()
+        Me.prgExifMain = New System.Windows.Forms.PropertyGrid()
+        Me.tapExifExif = New System.Windows.Forms.TabPage()
+        Me.prgExifExif = New System.Windows.Forms.PropertyGrid()
+        Me.tapExifGPS = New System.Windows.Forms.TabPage()
+        Me.prgExifGPS = New System.Windows.Forms.PropertyGrid()
+        Me.tapExifInterop = New System.Windows.Forms.TabPage()
+        Me.prgExifInterop = New System.Windows.Forms.PropertyGrid()
+        Me.tapExifThumbnail = New System.Windows.Forms.TabPage()
+        Me.prgExifThumbnail = New System.Windows.Forms.PropertyGrid()
+        Me.tscMain = New System.Windows.Forms.ToolStripContainer()
+        Me.stsStatus = New System.Windows.Forms.StatusStrip()
+        Me.tpbLoading = New System.Windows.Forms.ToolStripProgressBar()
+        Me.tslFolder = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.tslNoFiles = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.tosMain = New System.Windows.Forms.ToolStrip()
+        Me.tsbBack = New System.Windows.Forms.ToolStripButton()
+        Me.tsbForward = New System.Windows.Forms.ToolStripButton()
+        Me.tsbRefresh = New System.Windows.Forms.ToolStripButton()
+        Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton()
+        Me.msnMain = New System.Windows.Forms.MenuStrip()
+        Me.tmiFile = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiBrowse = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiGoTo = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiSaveAll = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tssFileSep1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tmiExit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiView = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiRefresh = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiNext = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiPrevious = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiTools = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiOptions = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiSynchronizeWithDatabase = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiHelp = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiAbout = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiVersionHistory = New System.Windows.Forms.ToolStripMenuItem()
+        Me.bgwImages = New System.ComponentModel.BackgroundWorker()
+        Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog()
+        Me.bgwSave = New System.ComponentModel.BackgroundWorker()
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
         Me.splMain.SuspendLayout()
@@ -153,8 +153,8 @@ Partial Class frmMain
         Me.tscMain.TopToolStripPanel.SuspendLayout()
         Me.tscMain.SuspendLayout()
         Me.stsStatus.SuspendLayout()
-        Me.msnMain.SuspendLayout()
         Me.tosMain.SuspendLayout()
+        Me.msnMain.SuspendLayout()
         Me.SuspendLayout()
         '
         'splMain
@@ -435,7 +435,6 @@ Partial Class frmMain
         Me.kweKeywords.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         Me.kweKeywords.Name = "kweKeywords"
         Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-        Me.kweKeywords.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         '
         'sptKeywords
         '
@@ -622,8 +621,8 @@ Partial Class frmMain
         '
         'tscMain.TopToolStripPanel
         '
-        Me.tscMain.TopToolStripPanel.Controls.Add(Me.tosMain)
         Me.tscMain.TopToolStripPanel.Controls.Add(Me.msnMain)
+        Me.tscMain.TopToolStripPanel.Controls.Add(Me.tosMain)
         '
         'stsStatus
         '
@@ -646,6 +645,40 @@ Partial Class frmMain
         '
         Me.tslNoFiles.Name = "tslNoFiles"
         resources.ApplyResources(Me.tslNoFiles, "tslNoFiles")
+        '
+        'tosMain
+        '
+        resources.ApplyResources(Me.tosMain, "tosMain")
+        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
+        Me.tosMain.Name = "tosMain"
+        '
+        'tsbBack
+        '
+        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.tsbBack, "tsbBack")
+        Me.tsbBack.Image = Global.Tools.Metanol.My.Resources.Resources.NavBack
+        Me.tsbBack.Name = "tsbBack"
+        '
+        'tsbForward
+        '
+        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.tsbForward, "tsbForward")
+        Me.tsbForward.Image = Global.Tools.Metanol.My.Resources.Resources.NavForward
+        Me.tsbForward.Name = "tsbForward"
+        '
+        'tsbRefresh
+        '
+        Me.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
+        resources.ApplyResources(Me.tsbRefresh, "tsbRefresh")
+        Me.tsbRefresh.Name = "tsbRefresh"
+        '
+        'tsbSaveAll
+        '
+        Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
+        resources.ApplyResources(Me.tsbSaveAll, "tsbSaveAll")
+        Me.tsbSaveAll.Name = "tsbSaveAll"
         '
         'msnMain
         '
@@ -741,40 +774,6 @@ Partial Class frmMain
         Me.tmiVersionHistory.Name = "tmiVersionHistory"
         resources.ApplyResources(Me.tmiVersionHistory, "tmiVersionHistory")
         '
-        'tosMain
-        '
-        resources.ApplyResources(Me.tosMain, "tosMain")
-        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
-        Me.tosMain.Name = "tosMain"
-        '
-        'tsbBack
-        '
-        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        resources.ApplyResources(Me.tsbBack, "tsbBack")
-        Me.tsbBack.Image = Global.Tools.Metanol.My.Resources.Resources.NavBack
-        Me.tsbBack.Name = "tsbBack"
-        '
-        'tsbForward
-        '
-        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        resources.ApplyResources(Me.tsbForward, "tsbForward")
-        Me.tsbForward.Image = Global.Tools.Metanol.My.Resources.Resources.NavForward
-        Me.tsbForward.Name = "tsbForward"
-        '
-        'tsbRefresh
-        '
-        Me.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
-        resources.ApplyResources(Me.tsbRefresh, "tsbRefresh")
-        Me.tsbRefresh.Name = "tsbRefresh"
-        '
-        'tsbSaveAll
-        '
-        Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
-        resources.ApplyResources(Me.tsbSaveAll, "tsbSaveAll")
-        Me.tsbSaveAll.Name = "tsbSaveAll"
-        '
         'bgwImages
         '
         Me.bgwImages.WorkerReportsProgress = True
@@ -841,10 +840,10 @@ Partial Class frmMain
         Me.tscMain.PerformLayout()
         Me.stsStatus.ResumeLayout(False)
         Me.stsStatus.PerformLayout()
-        Me.msnMain.ResumeLayout(False)
-        Me.msnMain.PerformLayout()
         Me.tosMain.ResumeLayout(False)
         Me.tosMain.PerformLayout()
+        Me.msnMain.ResumeLayout(False)
+        Me.msnMain.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
