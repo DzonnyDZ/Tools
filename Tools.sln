@@ -2,28 +2,71 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{847298BA-D4D1-4EBD-AF69-0193A77DC90C}"
+	ProjectSection(SolutionItems) = preProject
+		Latest.bat = Latest.bat
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		Tools.vsmdi = Tools.vsmdi
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentTools", "DevelopmentTools", "{FEA4635F-E0AE-4562-A292-1B6ABCF4444F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{677A518E-909C-414F-AC5E-528AB32023AF}"
+	ProjectSection(SolutionItems) = preProject
+		Used doc\EXIF.pdf = Used doc\EXIF.pdf
+		Used doc\FlashPix.pdf = Used doc\FlashPix.pdf
+		Used doc\IPTC IIM Record No 3.pdf = Used doc\IPTC IIM Record No 3.pdf
+		Used doc\IPTC IIM.pdf = Used doc\IPTC IIM.pdf
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Created doc", "Created doc", "{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD}"
+	ProjectSection(SolutionItems) = preProject
+		Created doc\BuildMatrix.htm = Created doc\BuildMatrix.htm
+		Created doc\ISO 2022.xlsx = Created doc\ISO 2022.xlsx
+		Created doc\JPEG, EXIF, IPTC.doc = Created doc\JPEG, EXIF, IPTC.doc
+		Created doc\Namespaces.xml = Created doc\Namespaces.xml
+		Created doc\VersionHistory.xml = Created doc\VersionHistory.xml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Articles", "Articles", "{982F36B7-A3E5-4782-96B0-9979A95610F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cz", "cz", "{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE}"
+	ProjectSection(SolutionItems) = preProject
+		Articles\cz\Macros XMLDoc 9.htm = Articles\cz\Macros XMLDoc 9.htm
+		Articles\cz\XPathObjectNavigator.htm = Articles\cz\XPathObjectNavigator.htm
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{B1BD67A4-BEC2-442D-8F70-DAEB27735602}"
+	ProjectSection(SolutionItems) = preProject
+		SharedFiles\AssemblyStage.cs = SharedFiles\AssemblyStage.cs
+		SharedFiles\AssemblyStage.vb = SharedFiles\AssemblyStage.vb
+		SharedFiles\Tools.snk = SharedFiles\Tools.snk
+		SharedFiles\Version.cpp = SharedFiles\Version.cpp
+		SharedFiles\Version.cs = SharedFiles\Version.cs
+		SharedFiles\Version.il = SharedFiles\Version.il
+		SharedFiles\Version.vb = SharedFiles\Version.vb
+		SharedFiles\VersionHistory.xsd = SharedFiles\VersionHistory.xsd
+		SharedFiles\VersionHistory.xslt = SharedFiles\VersionHistory.xslt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intellisense", "Intellisense", "{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{8129B61A-3FCE-4012-8013-377A87D4132B}"
+	ProjectSection(SolutionItems) = preProject
+		DLLs\FL_VJSharpCodeProvider_DLL_____I64..dll = DLLs\FL_VJSharpCodeProvider_DLL_____I64..dll
+		DLLs\VJSharpCodeProvider.DLL = DLLs\VJSharpCodeProvider.DLL
+		DLLs\VJSharpCodeProvider64.DLL = DLLs\VJSharpCodeProvider64.DLL
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools.TotalCommander", "Tools.TotalCommander", "{708C9420-4676-4314-B690-7A887F8CC992}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}"
+	ProjectSection(SolutionItems) = preProject
+		Articles\en\completionlist.htm = Articles\en\completionlist.htm
+		Articles\en\TCPlugin in VB.htm = Articles\en\TCPlugin in VB.htm
+		Articles\en\VBXMLDoc.Xml.html = Articles\en\VBXMLDoc.Xml.html
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -85,8 +128,25 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools _", "Tools\Tools _.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ildoc", "ildoc", "{10C22CD7-1CB7-4E4D-8422-F9C589A3F743}"
+	ProjectSection(SolutionItems) = preProject
+		Articles\en\ildoc\ildoc.xml = Articles\en\ildoc\ildoc.xml
+		Articles\en\ildoc\ildoc.xml.css = Articles\en\ildoc\ildoc.xml.css
+		Articles\en\ildoc\ildoc.xsd = Articles\en\ildoc\ildoc.xsd
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLI", "CLI", "{3469B02D-8F18-4333-94F7-0DD3D240C7A1}"
+	ProjectSection(SolutionItems) = preProject
+		Used doc\CLI\Ecma-335.pdf = Used doc\CLI\Ecma-335.pdf
+		Used doc\CLI\MS Partition I.pdf = Used doc\CLI\MS Partition I.pdf
+		Used doc\CLI\MS Partition II.pdf = Used doc\CLI\MS Partition II.pdf
+		Used doc\CLI\MS Partition III.pdf = Used doc\CLI\MS Partition III.pdf
+		Used doc\CLI\Partition I Architecture.doc = Used doc\CLI\Partition I Architecture.doc
+		Used doc\CLI\Partition II Metadata.doc = Used doc\CLI\Partition II Metadata.doc
+		Used doc\CLI\Partition III CIL.doc = Used doc\CLI\Partition III CIL.doc
+		Used doc\CLI\Partition IV Library.doc = Used doc\CLI\Partition IV Library.doc
+		Used doc\CLI\Partition V Binary Formats.doc = Used doc\CLI\Partition V Binary Formats.doc
+		Used doc\CLI\Partition VI - Annexes.doc = Used doc\CLI\Partition VI - Annexes.doc
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
