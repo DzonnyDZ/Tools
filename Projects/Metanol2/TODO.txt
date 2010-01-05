@@ -19,4 +19,4 @@
 * Search by typing using common prefix
 * Version history
 
-(done) Thesautust button in keyword editor missing
+(done) Thesaurus button in keyword editor missing
