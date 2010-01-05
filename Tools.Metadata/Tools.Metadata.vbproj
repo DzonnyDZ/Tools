@@ -258,9 +258,9 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tools\Tools _.vbproj">
+    <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools _</Name>
+      <Name>Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

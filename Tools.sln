@@ -59,7 +59,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{8129B61A-3
 		DLLs\VJSharpCodeProvider64.DLL = DLLs\VJSharpCodeProvider64.DLL
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools.TotalCommander", "Tools.TotalCommander", "{708C9420-4676-4314-B690-7A887F8CC992}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools.TotalCommander.folder", "Tools.TotalCommander.folder", "{708C9420-4676-4314-B690-7A887F8CC992}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}"
 	ProjectSection(SolutionItems) = preProject
@@ -125,7 +125,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XsdGenerator", "Development
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.SqlServer", "Tools.SqlServer\Tools.SqlServer.vbproj", "{850AAA8C-49CC-476F-B871-53EBDE85E679}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools _", "Tools\Tools _.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ildoc", "ildoc", "{10C22CD7-1CB7-4E4D-8422-F9C589A3F743}"
 	ProjectSection(SolutionItems) = preProject
@@ -214,35 +214,35 @@ Global
 		SccProjectUniqueName17 = Tools.SqlServer\\Tools.SqlServer.vbproj
 		SccProjectName17 = Tools.SqlServer
 		SccLocalPath17 = Tools.SqlServer
-		SccProjectUniqueName18 = Tools\\Tools\u0020_.vbproj
-		SccProjectName18 = Tools
-		SccLocalPath18 = Tools
-		SccProjectUniqueName19 = Tools\u0020IL\\Tools\u0020IL.vcxproj
-		SccProjectName19 = Tools\u0020IL
-		SccLocalPath19 = Tools\u0020IL
-		SccProjectUniqueName20 = Tools.TotalCommander\\Tools.TotalCommander.vcxproj
+		SccProjectUniqueName18 = Tools\u0020IL\\Tools\u0020IL.vcxproj
+		SccProjectName18 = Tools\u0020IL
+		SccLocalPath18 = Tools\u0020IL
+		SccProjectUniqueName19 = Tools.TotalCommander\\Tools.TotalCommander.vcxproj
+		SccProjectTopLevelParentUniqueName19 = Tools.sln
+		SccProjectName19 = Tools.TotalCommander
+		SccLocalPath19 = Tools.TotalCommander
+		SccProjectUniqueName20 = Samples\\wfx\u0020sample\\wfx\u0020sample.vbproj
 		SccProjectTopLevelParentUniqueName20 = Tools.sln
-		SccProjectName20 = Tools.TotalCommander
-		SccLocalPath20 = Tools.TotalCommander
-		SccProjectUniqueName21 = Samples\\wfx\u0020sample\\wfx\u0020sample.vbproj
+		SccProjectName20 = Samples/wfx\u0020sample
+		SccLocalPath20 = Samples\\wfx\u0020sample
+		SccProjectUniqueName21 = Tools.TotalCommander\\Plugin\\Tools.TotalCommander.Plugin.vcxproj
 		SccProjectTopLevelParentUniqueName21 = Tools.sln
-		SccProjectName21 = Samples/wfx\u0020sample
-		SccLocalPath21 = Samples\\wfx\u0020sample
-		SccProjectUniqueName22 = Tools.TotalCommander\\Plugin\\Tools.TotalCommander.Plugin.vcxproj
+		SccProjectName21 = Tools.TotalCommander/Plugin
+		SccLocalPath21 = Tools.TotalCommander\\Plugin
+		SccProjectUniqueName22 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder\\TotalCommander\u0020Plugin\u0020Builder.vbproj
 		SccProjectTopLevelParentUniqueName22 = Tools.sln
-		SccProjectName22 = Tools.TotalCommander/Plugin
-		SccLocalPath22 = Tools.TotalCommander\\Plugin
-		SccProjectUniqueName23 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder\\TotalCommander\u0020Plugin\u0020Builder.vbproj
-		SccProjectTopLevelParentUniqueName23 = Tools.sln
-		SccProjectName23 = Tools.TotalCommander/TotalCommander\u0020Plugin\u0020Builder
-		SccLocalPath23 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder
-		SccProjectUniqueName24 = Experimental\\Experimental.vbproj
-		SccProjectName24 = Experimental
-		SccLocalPath24 = Experimental
-		SccProjectUniqueName25 = Projects\\Metanol\u0020Screen\u0020Saver\\Metanol\u0020Screen\u0020Saver.vbproj
-		SccProjectTopLevelParentUniqueName25 = Tools.sln
-		SccProjectName25 = Projects/Metanol\u0020Screen\u0020Saver
-		SccLocalPath25 = Projects\\Metanol\u0020Screen\u0020Saver
+		SccProjectName22 = Tools.TotalCommander/TotalCommander\u0020Plugin\u0020Builder
+		SccLocalPath22 = Tools.TotalCommander\\TotalCommander\u0020Plugin\u0020Builder
+		SccProjectUniqueName23 = Experimental\\Experimental.vbproj
+		SccProjectName23 = Experimental
+		SccLocalPath23 = Experimental
+		SccProjectUniqueName24 = Projects\\Metanol\u0020Screen\u0020Saver\\Metanol\u0020Screen\u0020Saver.vbproj
+		SccProjectTopLevelParentUniqueName24 = Tools.sln
+		SccProjectName24 = Projects/Metanol\u0020Screen\u0020Saver
+		SccLocalPath24 = Projects\\Metanol\u0020Screen\u0020Saver
+		SccProjectUniqueName25 = Tools\\Tools.vbproj
+		SccProjectName25 = Tools
+		SccLocalPath25 = Tools
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Tools.vsmdi

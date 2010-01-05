@@ -221,9 +221,9 @@
       <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
       <Name>Tools.VisualStudio.CS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Tools\Tools _.vbproj">
+    <ProjectReference Include="..\..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools _</Name>
+      <Name>Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
