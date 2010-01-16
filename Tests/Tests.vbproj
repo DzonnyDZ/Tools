@@ -738,7 +738,7 @@
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
       <Name>Tools.Win</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools _.vbproj">
+    <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools _</Name>
     </ProjectReference>
