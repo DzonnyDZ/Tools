@@ -117,6 +117,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\SharedFiles\Version.il">
+      <Link>Version.il</Link>
+    </None>
+    <None Include="..\..\SharedFiles\VersionHistory.xsd">
+      <Link>VersionHistory.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -131,6 +138,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\SharedFiles\Version.cpp">
+      <Link>Version.cpp</Link>
+    </Content>
+    <Content Include="..\..\SharedFiles\VersionHistory.xslt">
+      <Link>VersionHistory.xslt</Link>
+    </Content>
     <Content Include="Resources\Legend.cs.txt" />
     <Content Include="Resources\Legend.txt" />
     <Content Include="Resources\resx.ico" />

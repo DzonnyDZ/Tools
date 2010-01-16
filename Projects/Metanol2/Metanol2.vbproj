@@ -187,6 +187,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\SharedFiles\Version.il">
+      <Link>Version.il</Link>
+    </None>
+    <None Include="..\..\SharedFiles\VersionHistory.xsd">
+      <Link>VersionHistory.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Database\DatabaseAccess.dbml.layout">
       <DependentUpon>DatabaseAccess.dbml</DependentUpon>
     </None>
@@ -304,6 +311,12 @@
     <None Include="Resources\Files\VersionHistory_3.htm" />
     <None Include="Resources\Files\VersionHistory_2.htm" />
     <None Include="Resources\Files\VersionHistory_1.htm" />
+    <Content Include="..\..\SharedFiles\Version.cpp">
+      <Link>Version.cpp</Link>
+    </Content>
+    <Content Include="..\..\SharedFiles\VersionHistory.xslt">
+      <Link>VersionHistory.xslt</Link>
+    </Content>
     <Content Include="Database\Metanol.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -173,6 +173,12 @@
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\SharedFiles\Version.cpp">
+      <Link>Version.cpp</Link>
+    </Content>
+    <Content Include="..\SharedFiles\VersionHistory.xslt">
+      <Link>VersionHistory.xslt</Link>
+    </Content>
     <Content Include="AuthoringTests.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +216,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\SharedFiles\Version.il">
+      <Link>Version.il</Link>
+    </None>
+    <None Include="..\SharedFiles\VersionHistory.xsd">
+      <Link>VersionHistory.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Tools.snk" />
   </ItemGroup>
   <ItemGroup>

@@ -110,6 +110,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\SharedFiles\Version.il">
+      <Link>Version.il</Link>
+    </None>
+    <None Include="..\..\SharedFiles\VersionHistory.xsd">
+      <Link>VersionHistory.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -140,6 +147,14 @@
       <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
       <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\SharedFiles\Version.cpp">
+      <Link>Version.cpp</Link>
+    </Content>
+    <Content Include="..\..\SharedFiles\VersionHistory.xslt">
+      <Link>VersionHistory.xslt</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

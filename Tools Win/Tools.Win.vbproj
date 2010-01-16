@@ -148,6 +148,13 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <None Include="..\SharedFiles\Version.il">
+      <Link>Version.il</Link>
+    </None>
+    <None Include="..\SharedFiles\VersionHistory.xsd">
+      <Link>VersionHistory.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
       <Link>Resources\Exceptions.Designer.vb</Link>
       <AutoGen>True</AutoGen>
@@ -264,6 +271,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\SharedFiles\Version.cpp">
+      <Link>Version.cpp</Link>
+    </Content>
+    <Content Include="..\SharedFiles\VersionHistory.xslt">
+      <Link>VersionHistory.xslt</Link>
+    </Content>
     <Content Include="Resources\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -3843,8 +3843,9 @@ Namespace WindowsT.IndependentT
         ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
         Public Shared Function [Error_XBWI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
-            Return ModalF_PTWa(ex.Message, ex.GetType.Name, Owner, Buttons, MessageBoxIcons.Error)
+            Return [Error_XTBWI](ex, ex.GetType.Name, Owner:=Owner, Buttons:=Buttons, Icon:=MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
@@ -3854,8 +3855,12 @@ Namespace WindowsT.IndependentT
         ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
         Public Shared Function [Error_XTBWI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
-            Return ModalF_PTWa(ex.Message, Title, Owner, Buttons, MessageBoxIcons.Error)
+            Return ModalEx_PTEIOWMHS(ex.Message, Title,
+                                     Owner:=Owner, Icon:=GetIconDelegate(Icon),
+                                     Items:=New Wrapper(Of Object)(MessageBoxButton.GetButtons(Buttons))
+            ).DialogResult
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
@@ -3866,8 +3871,13 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
         Public Shared Function [Error_XPTIBWO](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As Object = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
-            Return ModalF_PTWa(Prompt & vbCrLf & ex.Message, Title, Owner, Buttons, Icon, Options)
+            Return ModalEx_PTEIOWMHS(Prompt & vbCrLf & ex.Message, Title,
+                                     Owner:=Owner, Icon:=GetIconDelegate(Icon),
+                                     Options:=Options,
+                                     Items:=New Wrapper(Of Object)(MessageBoxButton.GetButtons(Buttons))
+            ).DialogResult
         End Function
 #End Region
 #End Region
