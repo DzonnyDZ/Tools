@@ -42,11 +42,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Nightly\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Nightly</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\bin\Nightly\Tools.VisualStudio.CS.XML</DocumentationFile>
+    <DocumentationFile>..\bin\Debug\Tools.VisualStudio.CS.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -232,7 +232,5 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
-"$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"</PostBuildEvent>
   </PropertyGroup>
 </Project>

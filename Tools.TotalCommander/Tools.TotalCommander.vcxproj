@@ -23,7 +23,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectGUID>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</ProjectGUID>
     <RootNamespace>Tools.TotalCommanderT</RootNamespace>
     <SccProjectName>SAK</SccProjectName>
@@ -71,7 +71,7 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutinDir)bin\$(ConfigurationName);$(ReferencePath)</ReferencePath>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\bin\$(Configuration)\x86</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\bin\$(Configuration)\x86\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutinDir)bin\$(ConfigurationName);$(ReferencePath)</ReferencePath>
@@ -93,7 +93,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>"$(SolutionDir)DevelopmentTools\ResXFileGenerator\bin\x86\Debug\ResXFileGenerator.exe" /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name ToolsTotalCommander.Exceptions.resources /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</Command>
+      <Command>"$(SolutionDir)DevelopmentTools\ResXFileGenerator\bin\Debug\x86\ResXFileGenerator.exe" /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name ToolsTotalCommander.Exceptions.resources /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -127,10 +127,7 @@
     <PostBuildEvent>
       <Command>
                 "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(ProjectDir)FixComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
-                move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
-                "$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
-                REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
-                "$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"
+                move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"                
             </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -274,7 +271,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tools\Tools._.vbproj">
+    <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{fcf346ac-d1c3-42db-9026-9144240fb766}</Project>
     </ProjectReference>
   </ItemGroup>
