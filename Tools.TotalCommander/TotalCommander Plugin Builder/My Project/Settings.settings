@@ -1,12 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
   <Profiles />
-  <Settings>
-    <Setting Name="vcbuild" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Program Files\Microsoft Visual Studio 10.0\VC\vcpackages\vcbuild.exe</Value>
-    </Setting>
-    <Setting Name="sn" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\sn.exe</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

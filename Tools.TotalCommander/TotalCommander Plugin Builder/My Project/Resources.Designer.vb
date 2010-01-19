@@ -106,6 +106,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Failed to build project {0}.
+        '''</summary>
+        Friend ReadOnly Property e_FailedToBuildProject() As String
+            Get
+                Return ResourceManager.GetString("e_FailedToBuildProject", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Error while generating plugins: {0}.
         '''</summary>
         Friend ReadOnly Property e_Generating() As String
@@ -295,7 +304,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Invoking compiler {0}.
+        '''  Looks up a localized string similar to Invoking compiler.
         '''</summary>
         Friend ReadOnly Property i_InvokingCompiler() As String
             Get

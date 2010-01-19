@@ -1,5 +1,8 @@
 ﻿Imports System.Reflection, Tools.ExtensionsT, Tools.ReflectionT, System.CodeDom
-Imports System.IO.Packaging
+Imports System.IO.Packaging, System.Xml.Linq
+Imports <xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+Imports Microsoft.Build.Evaluation
+Imports Microsoft.Build.Utilities
 
 ''' <summary>Generates a plugin</summary>
 ''' <remarks>
@@ -46,6 +49,8 @@ Imports System.IO.Packaging
 ''' <item>Restart Total Commander in order to test a new version of your plugin.</item>
 ''' </list>
 ''' </remarks>
+''' <version version="1.5.3">Property <c>VCBuild</c> removed. Class now use MSBuild which is referenced as assembly. Reference to VCBuild.exe removed from settings as well.</version>
+''' <version version="1.5.3">Property <c>SN</c> removed. Class now use MSBuild task to sign resulting assembly. Reference to SN.exe removed from settings as well.</version>
 Public Class Generator
     ''' <summary>Name of resource that contains embdeded template</summary>
     Public Const TemplateResourcename$ = "Tools.TotalCommanderT.PluginBuilder.Template.pseudozip"
@@ -223,34 +228,39 @@ Public Class Generator
         End Set
     End Property
 #Region "Paths"
-    ''' <summary>Contains value of the <see cref="VCBuild"/></summary>
-    Private _vcbuild$ = My.Settings.vcbuild
-    ''' <summary>Gets to sets path to vcbuild.exe</summary>
-    ''' <remarks>Default value is stored in settings</remarks>
-    Public Property VCBuild$()
-        <DebuggerStepThrough()> Get
-            Return _vcbuild
-        End Get
-        <DebuggerStepThrough()> Set(ByVal value$)
-            _vcbuild = value
-        End Set
-    End Property
-    ''' <summary>Contains value of the <see cref="SN"/> property</summary>
-    Private _SN$ = My.Settings.sn
-    ''' <summary>Gets or sets path to the sn.exe utility used fro signing assemblies</summary>
-    ''' <remarks>Used only when <see cref="SnkPath"/> is non-null</remarks>
-    Public Property SN$()
-        <DebuggerStepThrough()> Get
-            Return _SN
-        End Get
-        <DebuggerStepThrough()> Set(ByVal value$)
-            _SN = value
-        End Set
-    End Property
+    ' ''' <summary>Contains value of the <see cref="MSBuild"/></summary>
+    'Private _msbuild$ = My.Settings.MSBuild
+    ' ''' <summary>Gets to sets path to msbuild.exe</summary>
+    ' ''' <remarks>Default value is stored in settings</remarks>
+    'Public Property MSBuild$()
+    '    <DebuggerStepThrough()> Get
+    '        Return _msbuild
+    '    End Get
+    '    <DebuggerStepThrough()> Set(ByVal value$)
+    '        _msbuild = value
+    '    End Set
+    'End Property
+    ' ''' <summary>Contains value of the <see cref="SN"/> property</summary>
+    'Private _SN$ = My.Settings.sn
+    ' ''' <summary>Gets or sets path to the sn.exe utility used fro signing assemblies</summary>
+    ' ''' <remarks>Used only when <see cref="SnkPath"/> is non-null</remarks>
+    'Public Property SN$()
+    '    <DebuggerStepThrough()> Get
+    '        Return _SN
+    '    End Get
+    '    <DebuggerStepThrough()> Set(ByVal value$)
+    '        _SN = value
+    '    End Set
+    'End Property
 #End Region
 #End Region
 #Region "Generation"
     ''' <summary>Generates plugins</summary>
+    ''' <exception cref="MissingMethodException">Plugin base type declares method with <see cref="PluginMethodAttribute"/> pointing to method that is not member of that type.</exception>
+    ''' <exception cref="AmbiguousMatchException">Plugin base type declares method with <see cref="PluginMethodAttribute"/> pointing to method that is overloaded on that type.</exception>
+    ''' <exception cref="BuildException">Plugin template project failed to build.</exception>
+    ''' <version version="1.5.3"><see cref="BuildException"/> can be thrown</version>
+    ''' <version version="1.5.3"><c>ExitCodeException</c> is no longer thrown</version>
     Public Sub Generate()
         If Types Is Nothing Then
             Dim iTypes As New List(Of Type)
@@ -278,6 +288,9 @@ Public Class Generator
     ''' <exception cref="ArgumentException"><paramref name="Type"/> is open generic type -or- <paramref name="Type"/> is abstract -or- <paramref name="Type"/> has not acessible default CTor -or- <paramref name="Type"/> is not public</exception>
     ''' <exception cref="MissingMethodException">Plugin base type declares method with <see cref="PluginMethodAttribute"/> pointing to method that is not member of that type.</exception>
     ''' <exception cref="AmbiguousMatchException">Plugin base type declares method with <see cref="PluginMethodAttribute"/> pointing to method that is overloaded on that type.</exception>
+    ''' <exception cref="BuildException">Plugin template project failed to build.</exception>
+    ''' <version version="1.5.3"><see cref="BuildException"/> can be thrown</version>
+    ''' <version version="1.5.3"><c>ExitCodeException</c> is no longer thrown</version>
     Private Function Generate(ByVal Type As Type) As String
         Dim Thrown As Exception = Nothing
         Log(My.Resources.i_CreatingPluginForType, Type.Name)
@@ -330,7 +343,7 @@ Public Class Generator
         Try
             'Copy template
             Dim ProjectDirectory = IO.Path.Combine(IntermediateDirectory, "Project")
-            Dim ProjectFile = IO.Path.Combine(ProjectDirectory, "Tools.TotalCommander.Plugin.vcproj")
+            Dim ProjectFile = IO.Path.Combine(ProjectDirectory, "Tools.TotalCommander.Plugin.vcxproj")
             Dim binDirectory = IO.Path.Combine(ProjectDirectory, "bin")
             Dim objDirectory = IO.Path.Combine(ProjectDirectory, "obj")
             Log(My.Resources.I_CreateProjectDir, ProjectDirectory)
@@ -372,21 +385,29 @@ Public Class Generator
             Log(My.Resources.i_GeneratingAssemblyInfo)
             MakeAssemblyInfo(Type, ProjectDirectory)
             'Excute compiler
-            Dim ec%
+
             Dim dic As New Dictionary(Of String, String)
-            dic.Add("PluginOutputExtension", ext)
-            dic.Add("PluginOutputName", name)
-            Log(My.Resources.i_InvokingCompiler, IO.Path.GetFileName(VCBuild))
+            Log(My.Resources.i_InvokingCompiler)
             Log(My.Resources.EnvironmentalVariables)
             Log(vbTab & "PluginOutputExtension = {0}", ext)
             Log(vbTab & "PluginOutputName = {0}", name)
-            ec = Exec(VCBuild, String.Format("/r ""{0}""", ProjectFile), dic)
-            If ec <> 0 Then Throw New ExitCodeException(ec, IO.Path.GetFileName(VCBuild))
-            'Sign
-            If SnkPath IsNot Nothing Then
-                Log("Sign wrapper assembly")
-                Exec(SN, String.Format("-q -Ra ""{0}"" ""{1}""", OutFile, SnkPath))
+
+            'ec = Exec(MSBuild, String.Format("/r ""{0}""", ProjectFile), dic)
+            'If ec <> 0 Then Throw New ExitCodeException(ec, IO.Path.GetFileName(MSBuild))
+
+            Dim projectDoc = XDocument.Load(ProjectFile)
+            If SnkPath <> "" Then
+                projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.SetElementValue(GetXmlNamespace().GetName("KeyFile"), SnkPath)
+                'projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.Add(<KeyFile><%= SnkPath %></KeyFile>)
             End If
+            Dim Project As New Project(projectDoc.CreateReader)
+            Project.SetGlobalProperty("PluginOutputExtension", ext)
+            Project.SetGlobalProperty("PluginOutputName", name)
+            If Not Project.Build(New CommandLineLogger) Then
+                Throw New BuildException(My.Resources.e_FailedToBuildProject.f(ProjectFile))
+            End If
+
+
             'Copy result
             Dim TargetFile = IO.Path.Combine(Me.OutputDirectory, name & "." & ext)
             Log(My.Resources.i_CopyOutput, OutFile, TargetFile)
@@ -620,30 +641,30 @@ Public Class Generator
 #End Region
 End Class
 
-''' <summary>Exception thrown when process exited with unecpedted exit code</summary>
-Public Class ExitCodeException : Inherits Exception
-    ''' <summary>CTor</summary>
-    ''' <param name="ExitCode">Process exit code</param>
-    ''' <param name="process">Process name</param>
-    Public Sub New(ByVal ExitCode As Integer, ByVal process As String)
-        MyBase.New(My.Resources.e_ExitCode.f(process, ExitCode))
-        _Process = process
-        _ExicTode = ExitCode
+''' <summary>Exception thrown when build failed</summary>
+''' <version version="1.5.3">This class is new in version 1.5.3</version>
+Public Class BuildException
+    Inherits Exception
+    ''' <summary>Initializes a new instance of the <see cref="BuildException"/> class with a specified error message.</summary>
+    ''' <param name="message">The message that describes the error.</param>
+    Public Sub New(ByVal message$)
+        MyBase.New(message)
     End Sub
-    ''' <summary>Contains value of the <see cref="Process"/> property</summary>
-    Private ReadOnly _Process$
-    ''' <summary>Contains value of the <see cref="ExicTode"/> property</summary>
-    Private ReadOnly _ExicTode%
-    ''' <summary>Gets process that returned exit code</summary>
-    Public ReadOnly Property Process$()
-        Get
-            Return _Process
-        End Get
-    End Property
-    ''' <summary>Gets exitcode returned by process</summary>
-    Public ReadOnly Property ExicTode%()
-        Get
-            Return _ExicTode
-        End Get
-    End Property
+End Class
+
+Friend Class CommandLineLogger
+    Inherits Logger
+
+
+
+
+    Public Overrides Sub Initialize(ByVal eventSource As Microsoft.Build.Framework.IEventSource)
+
+    End Sub
+    Public Overrides Function FormatErrorEvent(ByVal args As Microsoft.Build.Framework.BuildErrorEventArgs) As String
+        Return MyBase.FormatErrorEvent(args)
+    End Function
+    Public Overrides Function FormatWarningEvent(ByVal args As Microsoft.Build.Framework.BuildWarningEventArgs) As String
+        Return MyBase.FormatWarningEvent(args)
+    End Function
 End Class

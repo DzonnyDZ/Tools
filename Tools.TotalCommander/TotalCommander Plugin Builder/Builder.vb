@@ -87,8 +87,8 @@ Friend Module Builder
         Generator.LogToConsole = True
         Generator.SnkPath = Snk
         Generator.CopyPDB = My.Application.CommandLineArgs.Contains("/pdb")
-        Dim vcbuild% = My.Application.CommandLineArgs.IndexOf("/vcbuild")
-        If vcbuild >= 0 AndAlso vcbuild < My.Application.CommandLineArgs.Count - 1 Then Generator.VCBuild = My.Application.CommandLineArgs(vcbuild + 1)
+        'Dim vcbuild% = My.Application.CommandLineArgs.IndexOf("/vcbuild")
+        'If vcbuild >= 0 AndAlso vcbuild < My.Application.CommandLineArgs.Count - 1 Then Generator.MSBuild = My.Application.CommandLineArgs(vcbuild + 1)
         'Generate
         Try
             Generator.Generate()

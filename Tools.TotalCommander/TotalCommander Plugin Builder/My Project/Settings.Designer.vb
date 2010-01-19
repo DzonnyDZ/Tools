@@ -53,24 +53,6 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\Program Files\Microsoft Visual Studio 10.0\VC\vcpackages\vcbuild.exe")>  _
-        Public ReadOnly Property vcbuild() As String
-            Get
-                Return CType(Me("vcbuild"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\sn.exe")>  _
-        Public ReadOnly Property sn() As String
-            Get
-                Return CType(Me("sn"),String)
-            End Get
-        End Property
     End Class
 End Namespace
 

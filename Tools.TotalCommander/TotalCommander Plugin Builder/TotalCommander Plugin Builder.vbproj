@@ -54,18 +54,16 @@
     <Reference Include="CppCodeProvider">
       <HintPath>C:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\PublicAssemblies\CppCodeProvider.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsBase">
@@ -77,7 +75,6 @@
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
@@ -168,6 +165,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Resources\Template.pseudozip" "$(ProjectDir)..\Plugin" *.h *.cpp *.vcproj *.def *.rc *.ico</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Resources\Template.pseudozip" "$(ProjectDir)..\Plugin" *.h *.cpp *.vcxproj *.def *.rc *.ico *.filters</PreBuildEvent>
   </PropertyGroup>
 </Project>
