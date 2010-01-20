@@ -7,5 +7,5 @@ using namespace System::Runtime::InteropServices;
 using namespace System::Security::Permissions;
 
 [assembly:CLSCompliantAttribute(false)];
-
+                               
 [assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];

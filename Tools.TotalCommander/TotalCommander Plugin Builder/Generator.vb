@@ -397,16 +397,15 @@ Public Class Generator
 
             Dim projectDoc = XDocument.Load(ProjectFile)
             If SnkPath <> "" Then
-                projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.SetElementValue(GetXmlNamespace().GetName("KeyFile"), SnkPath)
-                'projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.Add(<KeyFile><%= SnkPath %></KeyFile>)
+                'projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.SetElementValue(GetXmlNamespace().GetName("KeyFile"), SnkPath)
+                projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.Add(<KeyFile><%= SnkPath %></KeyFile>)
             End If
-            Dim Project As New Project(projectDoc.CreateReader)
+            Dim Project As New Project(projectDoc.CreateReader(ReaderOptions.OmitDuplicateNamespaces))
             Project.SetGlobalProperty("PluginOutputExtension", ext)
             Project.SetGlobalProperty("PluginOutputName", name)
             If Not Project.Build(New CommandLineLogger) Then
                 Throw New BuildException(My.Resources.e_FailedToBuildProject.f(ProjectFile))
             End If
-
 
             'Copy result
             Dim TargetFile = IO.Path.Combine(Me.OutputDirectory, name & "." & ext)
