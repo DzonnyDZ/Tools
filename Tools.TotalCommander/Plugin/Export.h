@@ -3,7 +3,7 @@
 
 #undef TC_FNC_HEADER
 #undef TC_LINE_PREFIX
-#undef TC_NAME_PREFIX __stdcall
+#undef TC_NAME_PREFIX
 #undef TC_FUNC_MEMBEROF
 
 #undef TC_FNC_BODY

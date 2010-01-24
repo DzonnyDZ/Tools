@@ -15,7 +15,7 @@ using namespace Tools::TotalCommanderT;
 #undef TC_FUNCTION_TARGET 
 #undef TC_LINE_PREFIX
 #undef TC_FUNC_MEMBEROF
-#undef TC_FUNC_PREFIX_A Fs
+#undef TC_FUNC_PREFIX_A
 #undef TC_FUNC_PREFIX_B
 #define TC_FNC_BODY
 

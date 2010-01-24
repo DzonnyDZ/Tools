@@ -202,6 +202,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "c:\Program Files\totalcmd\plugins\Test\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "c:\Program Files\totalcmd\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

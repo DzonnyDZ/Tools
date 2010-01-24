@@ -67,7 +67,7 @@ Namespace COM.ShellLink
         Public dwReserved1 As Integer
         ''' <summary>The name of the file.</summary>
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=API.MAX_PATH)> Public cFileName As String
-        ''' <summary>    An alternative name for the file. This name is in the classic 8.3 (filename.ext) file name format.</summary>
+        ''' <summary>An alternative name for the file. This name is in the classic 8.3 (filename.ext) file name format.</summary>
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=14)> Public cAlternateFileName As String
     End Structure
 
@@ -247,6 +247,8 @@ Namespace COM.ShellLink
         ''' <summary>Implements <see cref="IPersistFile.GetCurFile"/></summary>
         Private Sub GetCurFile(ByRef ppszFileName As System.IntPtr) Implements IPersistFile.GetCurFile
         End Sub
+        ''' <summary>Implements <see cref="IPersistFile.IsDirty"/></summary>
+        ''' <returns>This method returns nonzero to indicate that the object has changed. Otherwise, it returns zero.</returns>
         Private Function IsDirty() As Integer Implements IPersistFile.IsDirty
         End Function
         ''' <summary>Implements <see cref="IPersistFile.Load"/></summary>

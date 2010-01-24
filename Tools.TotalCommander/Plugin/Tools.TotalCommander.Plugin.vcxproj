@@ -45,8 +45,8 @@
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='general|Win32'">$(SolutionDir)bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='general|Win32'">$(SolutionDir)obj\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='general|Win32'" />
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='general|Win32'">$(PluginOutputName).$(PluginOutputExtension)</TargetExt>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='general|Win32'">$(PluginOutputName)</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='general|Win32'">.$(PluginOutputExtension)</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='general|Win32'">false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='general|Win32'">

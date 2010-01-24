@@ -13,7 +13,7 @@ Imports Microsoft.Build.Utilities
 ''' <list type="number">
 ''' <item>Prepare wrapper template - Template is copied to intermediate directory (either from specified template directory or from built-in template)</item>
 ''' <item>Configure tamplate - Type wraper is being generated for is inspected to detect plugin type and which methods the plugin implements. Appropriate settings are generated to template files. Namely: Conditional compilation is set up to generate only those functions supported by plugin; Module export definition is written; Assembly info is generated.</item>
-''' <item>Invoke compiler - C++ compiler vcbuild.exe is executed to compile the wrapper. You need to have Visual Studio with C++ support to be installed on your machine. See <see cref="Generator.VCBuild"/>.</item>
+''' <item>Invoke compiler - C++ compiler invoked via MSBuild to compile the wrapper. MSBuild and C++ compiler must be installled on your machine.</item>
 ''' </list>
 ''' Following rules apply to plugin being generated:
 ''' <list type="bullet">
@@ -396,13 +396,17 @@ Public Class Generator
             'If ec <> 0 Then Throw New ExitCodeException(ec, IO.Path.GetFileName(MSBuild))
 
             Dim projectDoc = XDocument.Load(ProjectFile)
+            projectDoc.AddAnnotation(SaveOptions.OmitDuplicateNamespaces)
             If SnkPath <> "" Then
                 'projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.SetElementValue(GetXmlNamespace().GetName("KeyFile"), SnkPath)
                 projectDoc.<Project>.<ItemDefinitionGroup>.<Link>.First.Add(<KeyFile><%= SnkPath %></KeyFile>)
             End If
-            Dim Project As New Project(projectDoc.CreateReader(ReaderOptions.OmitDuplicateNamespaces))
+            Dim Project As New Project(projectDoc.CreateReader) '(ReaderOptions.OmitDuplicateNamespaces))
+            Project.FullPath = ProjectFile
             Project.SetGlobalProperty("PluginOutputExtension", ext)
             Project.SetGlobalProperty("PluginOutputName", name)
+            Project.SetGlobalProperty("Configuration", "general")
+            Project.SetGlobalProperty("Platform", "Win32")
             If Not Project.Build(New CommandLineLogger) Then
                 Throw New BuildException(My.Resources.e_FailedToBuildProject.f(ProjectFile))
             End If
@@ -658,12 +662,29 @@ Friend Class CommandLineLogger
 
 
     Public Overrides Sub Initialize(ByVal eventSource As Microsoft.Build.Framework.IEventSource)
-
+        'Register for the ProjectStarted, TargetStarted, and ProjectFinished events
+        AddHandler eventSource.ProjectStarted, Sub(sender As Object, e As Microsoft.Build.Framework.ProjectStartedEventArgs)
+                                                   Console.WriteLine("Project Started: " + e.ProjectFile)
+                                               End Sub
+        AddHandler eventSource.TargetStarted, Sub(sender As Object, e As Microsoft.Build.Framework.TargetStartedEventArgs)
+                                                  If Verbosity = Microsoft.Build.Framework.LoggerVerbosity.Detailed Then _
+                                                        Console.WriteLine("Target Started: " + e.TargetName)
+                                              End Sub
+        AddHandler eventSource.ProjectFinished, Sub(sender As Object, e As Microsoft.Build.Framework.ProjectFinishedEventArgs)
+                                                    Console.WriteLine("Project Finished: " + e.ProjectFile)
+                                                End Sub
+        AddHandler eventSource.ErrorRaised, Sub(sender As Object, e As Microsoft.Build.Framework.BuildErrorEventArgs)
+                                                Console.WriteLine(FormatErrorEvent(e))
+                                            End Sub
+        AddHandler eventSource.WarningRaised, Sub(sender As Object, e As Microsoft.Build.Framework.BuildWarningEventArgs)
+                                                  Console.WriteLine(FormatWarningEvent(e))
+                                              End Sub
     End Sub
-    Public Overrides Function FormatErrorEvent(ByVal args As Microsoft.Build.Framework.BuildErrorEventArgs) As String
-        Return MyBase.FormatErrorEvent(args)
-    End Function
-    Public Overrides Function FormatWarningEvent(ByVal args As Microsoft.Build.Framework.BuildWarningEventArgs) As String
-        Return MyBase.FormatWarningEvent(args)
-    End Function
+
+
+
+
+
+
+
 End Class

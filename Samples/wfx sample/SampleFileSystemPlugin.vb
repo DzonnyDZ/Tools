@@ -221,7 +221,7 @@ Public Class SampleFileSystemPlugin
     ''' <exception cref="IO.IOException">Another error occured</exception>
     ''' <remarks><note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function FindNext(ByVal Status As Object, ByRef FindData As FindData) As Boolean
-        If TypeOf Status Is IEnumerator(Of Object) Then
+        If TypeOf Status Is IEnumerator(Of Object) AndAlso Not TypeOf Status Is IEnumerator(Of String) Then
             Dim en As IEnumerator(Of Object) = Status
             If en.MoveNext Then
                 FindData = GetObjItemInfo(en.Current)
@@ -229,7 +229,7 @@ Public Class SampleFileSystemPlugin
             Else
                 Return False
             End If
-        ElseIf TypeOf Status Is IEnumerable(Of String) Then
+        ElseIf TypeOf Status Is IEnumerator(Of String) Then
             Dim en As IEnumerator(Of String) = Status
             If en.MoveNext Then
                 FindData = GetFindData(en.Current)
