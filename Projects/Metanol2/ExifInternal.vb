@@ -21,7 +21,7 @@ Public Class ExifInternal
     ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
     ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
     Friend Sub New(ByVal Path As String)
-        MyBase.New(New ExifReader(New JPEG.JPEGReader(Path, False)))
+        MyBase.New(New ExifReader(New JPEG.JPEGReader(Path, False), New ExifReaderSettings() With {.ErrorRecovery = ErrorRecoveryModes.Recover}))
     End Sub
 
 End Class
