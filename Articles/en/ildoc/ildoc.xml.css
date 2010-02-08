@@ -6,6 +6,7 @@ ildoc{
 	font-family:serif;
 	padding:0 12pt 12pt 12pt;
 }
+section{display:block;}
 header{
 	display:block;
 	font-family:sans-serif;
@@ -75,10 +76,10 @@ break{
 	display:block;
 	border-top:solid Gray thin;
 }
-ms-specific{
+ms-specific, section[special='ms-specific']{
     background-color:Aqua;
 }
-ms-specific:after{
+ms-specific:after, section[special='ms-specific'] > header:after{
     content:"*";
     font-family:serif;
     font-weight:normal;
@@ -86,7 +87,11 @@ ms-specific:after{
     text-decoration:none;
     background-color:white;
 }
-undocumented{
+section[special='ms-specific'] > header:after{
+    color:inherit;
+    background-color:inherit;
+}
+undocumented, section[special='undocumented']{
     background-color:Gray;
 }
 see:empty:after{
@@ -138,4 +143,33 @@ introduction > r:first-child, introduction > r:last-child,
 }
 *[r]:before{
     content:"(" attr(r) ")";
+}
+
+table{
+    display:table;
+    border-collapse:collapse;
+    empty-cells:show;
+    border:solid Black thick;
+}
+table > header{
+    display:table-header-group;
+    border-bottom:solid Black medium;
+}
+table > row{
+    display:table-row;
+    border-top:solid Black thin;
+    border-bottom:solid Black thin;
+}
+table > row:hover{
+    background-color:Yellow;
+}
+table > row > c, table > header > c {
+    display:table-cell;
+    border:solid thin Black;
+    padding:0 .5ex 0 .5ex;
 } 
+table > header > c{
+    text-align:center;
+    font-family:sans-serif;
+    font-weight:bold;
+}

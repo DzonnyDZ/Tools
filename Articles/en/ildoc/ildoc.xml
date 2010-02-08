@@ -459,6 +459,321 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <dt-code>vararg</dt-code>
                 <dd>Method accepts more arguments</dd>
             </dl>
+            <p>
+                Theoretically 16 different calling conventions can be encoded. 2 of them are used for managed calling kinds, 4 are resrved with defined meaning across platforms (as specified above).
+                4 more are reserved for existing calling conventions which are not maximally portable, 4 are reserved for future use by the standard and 2 are available for non-standard or experimental use.
+            </p>
+        </section>
+        <section id="Param" guid="13a2e9a8-1758-41bc-8635-ff7e8d70cf9f" r="II.15.4">
+            <header><ref>Param</ref></header>
+            <introduction>Represents parameter of method.</introduction>
+            <syntax>[\[in\] | \[opt\] | \[out\]]* <ref ref="Type">Type</ref> [marshall \([<ref ref="NativeType">NativeType</ref>]\)] [<ref ref="Id">Id</ref>]</syntax>
+            <dl>
+                <dt><code-ref ref="Id">Id</code-ref> (<ref ref="Id">Id</ref>)</dt>
+                <dd>Optinal name of the parameter. Parameters can be referenced by their names or 0-based indexes. To binary code the reference is lways translated using the index.</dd>
+                <break/>
+                <dt-code>in</dt-code>
+                <dd>Marks parameter as input</dd>
+                <dt-code>out</dt-code>
+                <dd>Marks parameter as output</dd>
+                <dd rel="summary">
+                    <code>in</code> and <code>out</code> can be used only for pointer types (both - managed and unmanaged).
+                    If neither of them is specified, <code>in</code> is assumed.
+                    CLI does not verify if parameters are used in declared direction only.
+                </dd>
+                <dt-code>opt</dt-code>
+                <dd>Marks parameter as optional (from end-user point-of-view). Default value is stored using the <code-ref ref="_param">.param</code-ref> directive.</dd>
+                <dd rel="summary">Parameters <code>in</code>, <code>out</code> and <code>opt</code> are not part of method signature.</dd>
+                <break/>
+                <dt><code-ref ref="Type">Type</code-ref> (<ref ref="Type">Type</ref>)</dt>
+                <dd>Type of the parameter</dd>
+                <dt><code-ref ref="NativeType">NativeType</code-ref> (<ref ref="NativeType">NativeType</ref>)</dt>
+                <dd>Type used when passing the parameter to unmanaged code.</dd>
+            </dl>
+        </section>
+        <section id="NativeType" guid="c837a3fa-39dd-4327-8ad0-791e4d706053" r="II.7.4">
+            <header><ref>NativeType</ref></header>
+            <introduction>Describes platform-native types of platform .NET runs on.</introduction>
+            <syntax>
+                \[\] | bool | float32 | float64 | [unsigned] int | [unsigned] int8 | [unsigned] int16 | [unsigned] int32 | [unsigned] int64 | lpstr | lpwstr | method | 
+                <ref ref="NativeType">NativeType</ref>\[\] | <ref ref="NativeType">NativeType</ref>\[<ref ref="Int32">Int32</ref>\] |
+                <ref ref="NativeType">NativeType</ref>\[+<ref ref="Int32">Int32</ref>\] | <ref ref="NativeType">NativeType</ref>\[+<ref ref="Int32">Int32</ref>\+<ref ref="Int32">Int32</ref>\]
+                <ms-specific>| ( as any | byvalstr | custom \(<ref ref="QSTRING">QSTRING</ref>,<ref ref="QSTRING">QSTRING</ref>\) | fixed array [<ref ref="Int32">Int32</ref>] | fixed sysstring [<ref ref="Int32">Int32</ref>] | lpstruct | lpstr | struct )</ms-specific>
+            </syntax>
+            <p>Those are native types of platforms where .NET framework runs. In description below, in braces, value from the <see cref="T:System.Runtime.InteropServices.UnmanagedType"/> enumeration.</p>
+            <dl>
+                <dt><code>\[\]</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPArray">LPArray</see></code>)</dt>
+                <dd>Native array. Type and size are determined in runtime.</dd>
+                <dt><code>bool</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.Bool">Bool</see></code>)</dt>
+                <dd>Boolean - 4B integer, where 0 means <code>false</code> and anything else <code>true</code>.</dd>
+                <dt><code>float32</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.R4">R4</see></code>)</dt>
+                <dd>4-byte floating point number</dd>
+                <dt><code>float64</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.R8">R8</see></code>)</dt>
+                <dd>8-byte floating point number</dd>
+                <dt><code>[unsigned] int</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.SysInt">SysInt</see></code> or <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.SysUInt">SysUInt</see></code>)</dt>
+                <dd>(Un)signed iteger as big as native pointer of current platform.</dd>
+                <dt><code>[unsigned] int[8|16|32|64]</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.I1">I1</see></code>, <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.U1">U1</see></code>, <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.I2">I2</see></code>, <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.U2">U2</see></code>, <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.I4">I4</see></code>, <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.U4">U4</see></code>, <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.I8">I8</see></code>, <code><see cref="F:System.Runtime.InteropServices.UnmanagedType.U8">U8</see></code>)</dt>
+                <dd>(Un) signed integer of given size.</dd>
+                <dt><code>lpstr</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPStr">LPStr</see></code>)</dt>
+                <dd>Pointer to nullchar-terminated string of ANSI characters. Codepage is implementation-dependent.</dd>
+                <dt><code>lpwstr</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPWstr">LPWStr</see></code>)</dt>
+                <dd>Pointer to nullchar-terminated string of Unicode characters. Encoding is implementation-dependent.</dd>
+                <dt><code>method</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.FunctionPtr">FunctionPtr</see></code>)</dt>
+                <dd>Pointer to function</dd>
+                <dt><code><ref ref="NativeType">NativeType</ref>\[\]</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPArray">LPArray</see></code>)</dt>
+                <dd>Array of native type, size is determined in runtime.</dd>
+                <dt><code><ref ref="NativeType">NativeType</ref>\[<ref ref="Int32">Int32</ref>\]</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPArray">LPArray</see></code>)</dt>
+                <dd>Array of native type with specified lenght</dd>
+                <dt><code><ref ref="NativeType">NativeType</ref>\[+<ref ref="Int32">Int32</ref>\]</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPArray">LPArray</see></code>)</dt>
+                <dd>Array of native type with item lenght specified in runtime. <ref ref="Int32">Int32</ref> specifies 0-based index of parameter of current method, which in runtime contains size of array element in bytes. This can be applied only onto methods (not noto fields).</dd>
+                <dd><ms-specific>In case the method has <code>PreserveSig</code> bit set to 1, parameter index is 1-based.</ms-specific></dd>
+                <dt><code><ref ref="NativeType">NativeType</ref>\[<ref ref="Int32">Int32</ref>\+<ref ref="Int32">Int32</ref>\]</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPArray">LPArray</see></code>)</dt>
+                <dd>
+                    Array of native type with item lenght specified in runtime.
+                    1st <ref ref="Int32">Int32</ref> specifies number of array elements,
+                    2nd <ref ref="Int32">Int32</ref> specifies 0-based index of parameter of current method, which in runtime contains size of array element in bytes.
+                    This can be applied only onto methods (not noto fields).</dd>
+                <dd><ms-specific>In case the method has <code>PreserveSig</code> bit set to 1, parameter index is 1-based.</ms-specific></dd>
+                <dt><ms-specific><code>as any</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.AsAny">AsAny</see></code>)</ms-specific></dt>
+                <dd><ms-specific>Type of the object is determined at runtime</ms-specific></dd>
+                <dt><ms-specific><code>byvalstr</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.VBByRefStr">VBByRefStr</see></code>)</ms-specific></dt>
+                <dd><ms-specific>String stored in fixed-size buffer</ms-specific></dd>
+                <dt><ms-specific><code>custom \(<ref ref="QSTRING">QSTRING</ref>,<ref ref="QSTRING">QSTRING</ref>\)</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.CustomMarshaler">CustomMarshaler</see></code>)</ms-specific></dt>
+                <dd><ms-specific>
+                    Custom marshaling.
+                    1st <ref ref="QSTRING">QSTRING</ref> is name of class of marshaller (uses the same convention as <see cref="N:System.Reflection.Emit">Reflection.Emit</see> to determine assembly and/or module).
+                    2nd <ref ref="QSTRING">QSTRING</ref> is string passed to the marshaler in runtime to identify way of marshaling.
+                </ms-specific></dd>
+                <dt><ms-specific><code>fixed array [<ref ref="Int32">Int32</ref></code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.ByValArray">ByValArray</see></code>)</ms-specific></dt>
+                <dd><ms-specific>Array of given fixed size</ms-specific></dd>
+                <dt><ms-specific><code>fixed systring [<ref ref="Int32">Int32</ref>]</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.ByValTStr">ByValTStr</see></code>)</ms-specific></dt>
+                <dd><ms-specific>System-specific fixed-size string. Can be used only onto fields. Encoding is determined by special attribute.</ms-specific></dd>
+                <dt><ms-specific><code>lpstruct</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPStruct">LPStruct</see></code>)</ms-specific></dt>
+                <dd><ms-specific>Pointer to C-style structure. Used to marshal managed formatted types.</ms-specific></dd>
+                <dt><ms-specific><code>lpstr</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPTStr">LPTStr</see></code>)</ms-specific></dt>
+                <dd><ms-specific>Pointer to nulllchar-terminated platform-specific. (ANSI or Unicode) characters. Codepage is platform-dependent.</ms-specific></dd>
+                <dt><ms-specific><code>struct</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.Struct">Struct</see></code>)</ms-specific></dt>
+                <dd><ms-specific>C-style strucrure. Used for marshaling managed formatted types.</ms-specific></dd>
+            </dl>
+        </section>
+    </section>
+    <section id="directive-cross-reference" guid="1fef50af-cd6e-49f6-9bd3-50922ea39231">
+        <header>Directive cross-reference</header>
+        <introduction>Shows all the CIL metadata directives and way they relate one to each other.</introduction>
+        <table>
+            <header>
+                <c>Directive</c><c>Parents</c><c>Content</c>
+            </header>
+            <row>
+                <c><code><internal-link ref="_addon">.addon</internal-link></code></c>
+                <c><code><internal-link ref="_event">.event</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_assemblyB">.assembly{}</internal-link></code></c>
+                <c>File</c>
+                <c>
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link></code>,
+                    <code><internal-link ref="_culture">.culture</internal-link></code>,
+                    <code><internal-link ref="_publickey">.publickey</internal-link></code>,
+                    <code><internal-link ref="_ver">.ver</internal-link></code>,
+                    <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_locale">.locale</internal-link></code></ms-specific>
+                </c>
+            </row>
+        </table>
+    </section>
+    <section id="block-directives" guid="c2f081a5-9394-45d8-ae4a-6ec1a79df574">
+        <header>Block directives</header>
+        <introduction>Describes directives which can contain another directives or code.</introduction>
+        <section id="_assemblyB" guid="38191f92-bcd0-4baa-bb26-bc2920835cee">
+            <header><code>.assembly {}</code></header>
+        </section>
+        <section id="_assembly_externB" guid="67776952-b6dc-4c87-86a0-214e4dfcc6c9">
+            <header><code>.assembly {}</code></header>
+        </section>
+        <section id="_classB" guid="72c29029-fd4b-4a0f-8e48-8512bf174aa1">
+            <header><code>.class {}</code></header>
+        </section>
+        <section id="_class_externB" guid="64f89792-5f6e-4725-a562-a2470e5c30a8">
+            <header><code>.assembly extern {}</code></header>
+        </section>
+        <section id="_dataB" guid="f32ac5f8-850c-4bd5-83fb-36d525cfd335">
+            <header><code>.data {}</code></header>
+        </section>
+        <section id="_eventB" guid="f2f4cd46-66fe-451e-877e-83acd0739280">
+            <header><code>.event {}</code></header>
+        </section>
+        <section id="_methodB" guid="98c22e4f-42be-47be-8c90-90dab6ade593">
+            <header><code>.method {}</code></header>
+        </section>
+        <section id="_mresourceB" guid="9e4a0be1-b517-42c5-a5b3-915a427c1a30">
+            <header><code>.mresource {}</code></header>
+        </section>
+        <section id="_propertyB" guid="1f1e1094-1887-4b78-ac30-748ee0970899">
+            <header><code>.property {}</code></header>
+        </section>
+        <section id="B" guid="ca3fd78c-49e4-4128-accd-62e6000a5b02">
+            <header><code>{}</code></header>
+        </section>
+    </section>
+    <section id="line-directives" guid="f10e0e48-2b07-4b5e-97f2-24a4087488db">
+        <header>Line directives</header>
+        <introduction>Describes directives single-line directives.</introduction>
+        <section id="_addon" guid="">
+            <header><code>.addon</code></header>
+        </section>
+        <section id="_assembly_extern" guid="">
+            <header><code>.assembly extern</code></header>
+        </section>
+         <section id="catch" guid="">
+            <header><code>catch</code></header>
+        </section>
+        <section id="_class_extern" guid="">
+            <header><code>.class extern</code></header>
+        </section>
+        <section id="_corflags" guid="">
+            <header><code>.corflags</code></header>
+        </section>
+        <section id="_culture" guid="">
+            <header><code>.culture</code></header>
+        </section>
+        <section id="_custom" guid="">
+            <header><code>.custom</code></header>
+        </section>
+        <section id="_data" guid="">
+            <header><code>.data</code></header>
+        </section>
+        <section id="_emitbyte" guid="">
+            <header><code>.emitbyte</code></header>
+        </section>
+        <section id="_entrypoint" guid="">
+            <header><code>.entrypoint</code></header>
+        </section>
+        <section special="undocumented" id="_export" guid="">
+            <header><code>.export</code></header>
+        </section>
+        <section id="fault" guid="">
+            <header><code>fault</code></header>
+        </section>
+        <section id="_field" guid="">
+            <header><code>.field</code></header>
+        </section>
+        <section id="_file" guid="">
+            <header><code>.file</code></header>
+        </section>
+        <section special="ms-specific" id="_file_alignment" guid="">
+            <header><code>.file alignment</code></header>
+        </section>
+        <section id="filter" guid="">
+            <header><code>filter</code></header>
+        </section>
+        <section id="finally" guid="">
+            <header><code>finally</code></header>
+        </section>
+        <section id="_fire" guid="">
+            <header><code>.fire</code></header>
+        </section>
+        <section id="_get" guid="">
+            <header><code>.get</code></header>
+        </section>
+        <section id="handler" guid="">
+            <header><code>handler</code></header>
+        </section>
+        <section id="_hash" guid="">
+            <header><code>.hash</code></header>
+        </section>
+        <section id="_hash_alghoritm" guid="">
+            <header><code>.hash alghoritm</code></header>
+        </section>
+        <section special="ms-specific" id="_imagebase" guid="">
+            <header><code>.imagebase</code></header>
+        </section>
+        <section special="ms-specific" id="_language" guid="">
+            <header><code>.language</code></header>
+        </section>
+        <section id="_line" guid="">
+            <header><code>.line</code> (<code>#line</code>)</header>
+        </section>
+        <section special="ms-specific" id="_locale" guid="">
+            <header><code>.locale</code></header>
+        </section>
+        <section id="_locals" guid="">
+            <header><code>.locals</code></header>
+        </section>
+        <section id="_maxstack" guid="">
+            <header><code>.maxstack</code></header>
+        </section>
+        <section id="_module" guid="">
+            <header><code>.module</code></header>
+        </section>
+        <section id="_module_extern" guid="">
+            <header><code>.module extern</code></header>
+        </section>
+        <section special="ms-specific" id="_namespace" guid="">
+            <header><code>.namespace</code></header>
+        </section>
+        <section id="_other" guid="">
+            <header><code>.other</code></header>
+        </section>
+        <section id="_override" guid="">
+            <header><code>.override</code></header>
+        </section>
+        <section id="_override_method" guid="">
+            <header><code>.override method</code></header>
+        </section>
+        <section id="_pack" guid="">
+            <header><code>.pack</code></header>
+        </section>
+        <section id="_param" guid="">
+            <header><code>.param</code></header>
+        </section>
+        <section id="_param_type" guid="">
+            <header><code>.param type</code></header>
+        </section>
+        <section id="_permission" guid="">
+            <header><code>.permission</code></header>
+        </section>
+        <section id="_permissionset" guid="">
+            <header><code>.permissionset</code></header>
+        </section>
+        <section id="_publickey" guid="">
+            <header><code>.publickey</code></header>
+        </section>
+        <section id="_publickeytoken" guid="">
+            <header><code>.publickeytoken</code></header>
+        </section>
+        <section id="_removeon" guid="">
+            <header><code>.removeon</code></header>
+        </section>
+        <section id="_set" guid="">
+            <header><code>.set</code></header>
+        </section>
+        <section id="_size" guid="">
+            <header><code>.size</code></header>
+        </section>
+        <section special="undocumented" id="_stackreserve" guid="">
+            <header><code>.stackreserve</code></header>
+        </section>
+        <section id="_try" guid="">
+            <header><code>.try</code></header>
+        </section>
+        <section id="_subsystem" guid="">
+            <header><code>.subsystem</code></header>
+        </section>
+        <section id="_ver" guid="">
+            <header><code>.ver</code>
+            </header>
+        </section>
+        <section special="undocumented" id="_vtentry" guid="">
+            <header><code>.vtentry</code></header>
+        </section>
+        <section id="_vtfixup" guid="">
+            <header><code>.vtfixup</code></header>
+        </section>
+        <section id="Label" guid="">
+            <header>Label</header>
         </section>
     </section>
 </ildoc>
