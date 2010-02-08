@@ -342,7 +342,7 @@
                 <dd>No type. Allowed only as return type of method or as part of definition opf unmanaged pointer <code>void*</code>.</dd>
             </dl>
         </section>
-        <section id="TypeReference" guid="babaf4d8-f217-4265-a3ca-e64f2c1a5e77">
+        <section id="TypeReference" guid="babaf4d8-f217-4265-a3ca-e64f2c1a5e77" r="II.7.3">
             <header><ref>TypeReference</ref></header>
             <introduction>Reference to user-defined type.</introduction>
 			<syntax>[<ref>ResolutionScope</ref>] <ref ref="DottedName">DottedName</ref> [/ <ref ref="DottedName">DottedName</ref>]*</syntax>
@@ -367,7 +367,7 @@
 				<dd>Type name. Slash is used to delimit name of containing type and nested type.</dd>
 			</dl>
         </section>
-		<section id="TypeSpec" guid="f86debe4-aec0-4361-9ac9-c21a93ff4e8c">
+		<section id="TypeSpec" guid="f86debe4-aec0-4361-9ac9-c21a93ff4e8c" r="II.7.1">
 			<header><ref>TypeSpec</ref></header>
 			<introduction>Simplified type reference</introduction>
 			<p>
@@ -375,7 +375,7 @@
 				So, it is possible e.g. instead of <code>class System.GC</code> use only <code>System.GC</code>.
 			</p>
 		</section>
-		<section id="GenPar" guid="35f0f3eb-c612-4400-ba82-83532012bb0d">
+		<section id="GenPar" guid="35f0f3eb-c612-4400-ba82-83532012bb0d" r="II.10.1.7">
 			<header><ref>GenPar</ref></header>
 			<introduction>Specifies a generic parameter.</introduction>
 			<syntax>{[\+|-] | (class | valuetype) | .ctor} [\([<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]*\)] <ref ref="Id">Id</ref></syntax>
@@ -431,7 +431,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <dd>Name of generic parameter.</dd>
 			</dl>
 		</section>
-        <section id="CallConv" guid="a190d1ff-f658-4705-91f4-cc0f171bd1f3">
+        <section id="CallConv" guid="a190d1ff-f658-4705-91f4-cc0f171bd1f3" r="II.15.3">
             <header><ref>CallConv</ref></header>
             <introduction>Defines which way the method is called.</introduction>
             <syntax>[instance [explicit]] [default | unmanaged cdecl | unmanaged fastcalll | unmanaged stdcall | unmanaged thiscall | vararg]</syntax>
