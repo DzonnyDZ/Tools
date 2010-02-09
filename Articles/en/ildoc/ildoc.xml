@@ -570,7 +570,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c/>
             </row>
             <row>
-                <c><code><internal-link ref="_assemblyB">.assembly{}</internal-link></code></c>
+                <c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
                 <c>File</c>
                 <c>
                     <code><internal-link ref="_custom">.custom</internal-link></code>,
@@ -581,6 +581,63 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
                     <ms-specific><code><internal-link ref="_locale">.locale</internal-link></code></ms-specific>
                 </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
+                <c>File</c>
+                <c>
+                    <code><internal-link ref="_hash">.hash</internal-link></code>
+                    <code><internal-link ref="_custom">.custom</internal-link></code>
+                    <code><internal-link ref="_culture">.culture</internal-link></code>
+                    <code><internal-link ref="_publickeytoken">.publickeytoken</internal-link></code>
+                    <code><internal-link ref="_publickey">.publickey</internal-link></code>
+                    <code><internal-link ref="_ver">.ver</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code></c>
+                <c><code><internal-link ref="_mresource">.mresource</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="catch">catch</internal-link></code></c>
+                <c><code><internal-link ref="_try">.try</internal-link></code></c>
+                <c><code><internal-link ref="handler">handler</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_data">.data</internal-link></code>,
+                    <code><internal-link ref="_eventB">.event {}</internal-link></code>,
+                    <code><internal-link ref="_field">.field</internal-link></code>,
+                    <code><internal-link ref="_method">.method {}</internal-link></code>,
+                    <code><internal-link ref="_override">.override</internal-link></code>,
+                    <code><internal-link ref="_pack">.pack</internal-link></code>,
+                    <code><internal-link ref="_param">.param</internal-link></code>,
+                    <code><internal-link ref="_param_type">.param type</internal-link></code>,
+                    <code><internal-link ref="_propertyB">.property {}</internal-link></code>,
+                    <code><internal-link ref="_size">.size</internal-link></code>,
+                    <code><internal-link ref="_line">.line</internal-link></code>,
+                    <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+                    <code><internal-link ref="_permission">.permission</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
+                <c>File</c>
+                <c>
+                    <code><internal-link ref="_file">.file</internal-link></code>,
+                    <code><internal-link ref="_class_exten">.class extern</internal-link></code>
+                    <code><internal-link ref="_custom">.custom</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_class_extern">.class extern</internal-link></code></c>
+                <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
+                <c/>
             </row>
         </table>
     </section>

@@ -676,7 +676,7 @@
         <xs:annotation>
             <xs:documentation>Represents tabulary organized data</xs:documentation>
         </xs:annotation>
-        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:sequence minOccurs="1" maxOccurs="1">
             <xs:element name="header" minOccurs="0" maxOccurs="1" type="table-row">
                 <xs:annotation>
                     <xs:documentation>Table row containing table headers</xs:documentation>
