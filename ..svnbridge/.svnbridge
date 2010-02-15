@@ -3,4 +3,5 @@ TestResults
 bin
 obj
 Tools.opensdf
+Tools.sdf
 </Value></Property></Properties></ItemProperties>

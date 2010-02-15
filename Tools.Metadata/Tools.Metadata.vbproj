@@ -10,10 +10,14 @@
     <RootNamespace>Tools</RootNamespace>
     <AssemblyName>Tools.Metadata</AssemblyName>
     <MyType>Windows</MyType>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <Nightly>1</Nightly>
     <Alpha>2</Alpha>
     <Beta>3</Beta>
@@ -317,5 +321,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
- 
 </Project>

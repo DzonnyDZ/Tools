@@ -26,10 +26,14 @@
     <ProjectName>Tools.IL</ProjectName>
     <ProjectGuid>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</ProjectGuid>
     <RootNamespace>Tools</RootNamespace>
-    <SccProjectName>$/DTools/Tools IL</SccProjectName>
-    <SccAuxPath>https://tfs01.codeplex.com</SccAuxPath>
-    <SccLocalPath>.</SccLocalPath>
-    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
     <Keyword>MakeFileProj</Keyword>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>

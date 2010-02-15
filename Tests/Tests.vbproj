@@ -11,10 +11,14 @@
     <RootNamespace>Tools.Tests</RootNamespace>
     <AssemblyName>Tools.Tests</AssemblyName>
     <MyType>WindowsForms</MyType>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <Nightly>1</Nightly>
     <Alpha>2</Alpha>
     <Beta>3</Beta>
