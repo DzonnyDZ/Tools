@@ -32,7 +32,7 @@ Namespace WindowsT.WPF.MarkupT
         ''' <summary>Default CTor</summary>
         Public Sub New()
         End Sub
-        ''' <summary>CTof ffrom type name</summary>
+        ''' <summary>CTof from type name</summary>
         ''' <param name="typeName">The generic type name (e.g. Dictionary, for the Dictionary`2 case)</param>
         Public Sub New(ByVal typeName$)
             typeName = typeName
