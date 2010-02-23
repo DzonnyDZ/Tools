@@ -127,6 +127,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
@@ -216,6 +217,7 @@
     <Compile Include="DataStructures\Generic\Pair.vb" />
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />
     <Compile Include="DataStructures\Generic\Tree.vb" />
+    <Compile Include="Data\LinqToSql\LinqToSqlExtensions.vb" />
     <Compile Include="Data\Metadata\MetadataConnection.vb">
     </Compile>
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
@@ -233,6 +235,11 @@
     <Compile Include="IO\UnionReadOnlyStream.vb" />
     <Compile Include="misc.vb" />
     <Compile Include="Reflection\VisualBasicSignatureProvider.vb" />
+    <Compile Include="Resources\resx %28Friend%29\Exceptions.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tests\AttributeTest.vb" />
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues .vb" />
     <Compile Include="Xml\Linq\Extensions.vb" />
@@ -298,11 +305,6 @@
     </Compile>
     <Compile Include="Reflection\ReflectionTools.vb" />
     <Compile Include="Reflection\ISignatureProvider.vb" />
-    <Compile Include="Resources\resx %28Friend%29\Exceptions.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Exceptions.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\resx %28Friend%29\Helpers.vb" />
     <Compile Include="Resources\Tools\Resources.vb" />
     <Compile Include="Resources\Tools\SystemResources.vb" />
@@ -470,9 +472,9 @@
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
-      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
       <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Encoding\ISO2022.xsd">
       <DependentUpon>ISO2022.vb</DependentUpon>

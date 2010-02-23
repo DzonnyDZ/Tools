@@ -1371,4 +1371,8 @@
   <data name="InvalidFormatStringInvalidHexadecimalEscapeSequence" xml:space="preserve">
     <value>Invalid format string. Invalid hexadecimal escape sequence</value>
   </data>
+    <data name="MustNotBeNull" xml:space="preserve">
+    <value>{0} must not be null</value>
+    <comment>Inner exception message</comment>
+  </data>
 </root>

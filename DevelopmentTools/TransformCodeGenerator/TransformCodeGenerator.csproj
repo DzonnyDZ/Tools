@@ -36,7 +36,7 @@
     <SccProvider>
     </SccProvider>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <PublishUrl>http://localhost/TransformCodeGenerator/</PublishUrl>
     <Install>true</Install>
@@ -52,6 +52,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>

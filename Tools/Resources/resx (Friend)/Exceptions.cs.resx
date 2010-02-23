@@ -1323,4 +1323,7 @@
   <data name="ParentTypeOf0MustBe1" xml:space="preserve">
     <value>Rodič typu {0} musí být {1}</value>
   </data>
+    <data name="MustNotBeNull" xml:space="preserve">
+    <value>{0} nesmí být null</value>
+  </data>
 </root>

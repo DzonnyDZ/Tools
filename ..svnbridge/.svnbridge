@@ -4,4 +4,11 @@ bin
 obj
 Tools.opensdf
 Tools.sdf
+</Value></Property><Property><Name>svn:ignore</Name><Value>*.suo
+TestResults
+bin
+obj
+Tools.opensdf
+Tools.sdf
+Debug
 </Value></Property></Properties></ItemProperties>

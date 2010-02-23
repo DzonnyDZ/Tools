@@ -30,7 +30,7 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <OptionInfer>On</OptionInfer>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
@@ -211,18 +211,18 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tools\Tools.vbproj">
-      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools _</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\SharedFiles\Version.cpp">
       <Link>Version.cpp</Link>
     </Content>
     <Content Include="..\SharedFiles\VersionHistory.xslt">
       <Link>VersionHistory.xslt</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -233,7 +233,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>COPY "$(TargetPath)" "$(DevEnvDir)..\Packages\Debugger\Visualizers\$(TargetFileName)"
-COPY "$(TargetDir)Tools.dll"  "$(DevEnvDir)..\Packages\Debugger\Visualizers\Tools.dll"</PostBuildEvent>
+    <PostBuildEvent>REM COPY "$(TargetPath)" "$(DevEnvDir)..\Packages\Debugger\Visualizers\$(TargetFileName)"
+REM COPY "$(TargetDir)Tools.dll"  "$(DevEnvDir)..\Packages\Debugger\Visualizers\Tools.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>

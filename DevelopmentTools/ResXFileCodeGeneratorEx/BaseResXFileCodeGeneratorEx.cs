@@ -139,7 +139,7 @@ namespace DMKSoftware.CodeGenerators
                 base.CodeGeneratorProgress.Progress(0x4b, 100);
             
             ICodeGenerator codeGenerator = this.CodeProvider.CreateGenerator();
-            BeforeGenerateText(codeGenerator);
+            if (BeforeGenerateText != null) BeforeGenerateText(codeGenerator);
             codeGenerator.GenerateCodeFromCompileUnit(codeCompileUnit, streamWriter, null);
             if (base.CodeGeneratorProgress != null)
                 NativeMethods.ThrowOnFailure(base.CodeGeneratorProgress.Progress(100, 100));

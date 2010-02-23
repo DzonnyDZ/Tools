@@ -287,7 +287,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="InvalidOperationException">This instance was not created using <see cref="LoadForUpdating"/>. 
         ''' -or- Length of stream this instance was created from and length of <paramref name="Stream"/> differs.
         ''' -or- The <see cref="ExifWriter.Save"/> method failed. Seee <see cref="InvalidOperationException.InnerException"/> for details.</exception>
-        ''' <exception cref="Data.DBConcurrencyException">Content of stream this instance was created from differs from content of <paramref name="Stream"/>.</exception>
+        ''' <exception cref="System.Data.DBConcurrencyException">Content of stream this instance was created from differs from content of <paramref name="Stream"/>.</exception>
         ''' <version version="1.5.2">Method introduced</version>
         Public Sub Update(ByVal Stream As IO.Stream)
             If Stream Is Nothing Then Throw New ArgumentNullException("Stream")
@@ -295,7 +295,7 @@ Namespace MetadataT.ExifT
             If OriginalData.Length <> Stream.Length Then Throw New InvalidOperationException(ResourcesT.Exceptions.StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom)
             Stream.Position = 0 : OriginalData.Position = 0
             For i As Integer = 0 To OriginalData.Length - 1
-                If Stream.ReadByte <> OriginalData.ReadByte Then Throw New Data.DBConcurrencyException(ResourcesT.Exceptions.StreamCannotBeUpdatedBecauseItsContentDiffersFromContent)
+                If Stream.ReadByte <> OriginalData.ReadByte Then Throw New System.Data.DBConcurrencyException(ResourcesT.Exceptions.StreamCannotBeUpdatedBecauseItsContentDiffersFromContent)
             Next
             Dim OriginalReaderSettings As New ExifReaderSettings
             Dim OriginalMapGenerator As New ExifMapGenerator(OriginalReaderSettings)

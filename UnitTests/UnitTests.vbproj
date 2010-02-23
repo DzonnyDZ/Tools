@@ -13,7 +13,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -23,7 +23,7 @@
     <RootNamespace>Tools.Tests.UnitTests</RootNamespace>
     <AssemblyName>Tools.UnitTests</AssemblyName>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
@@ -38,7 +38,7 @@
     <SccProvider>
     </SccProvider>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Config>1</Config>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -132,19 +132,19 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="UIAutomationTypes">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsFormsIntegration">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +233,9 @@
     <Folder Include="DataStructures\" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+    <BootstrapperPackage Include="Microsoft.Net.Framework.4.0">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <ProductName>.NET Framework 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
