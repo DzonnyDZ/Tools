@@ -734,6 +734,7 @@ Namespace WindowsT.FormsT
     ''' <version version="1.5.2">Fixed: When custom control (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) is replaced wne message box is shown, the change does not take effect.</version>
     ''' <version version="1.5.2">Fixed: Dialog closes even when button click operation is cancelled (see <see cref="iMsg.MessageBoxButton.ClickPreview"/>)</version>
     ''' <version version="1.5.3" stage="Beta">Added support for <see cref="Windows.Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
+    ''' <version version="1.5.4" stage="Beta">Owner of dialog now can be any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/>.</version>
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
     Public Class MessageBox
         Inherits iMsg
@@ -772,10 +773,11 @@ Namespace WindowsT.FormsT
 
         ''' <summary>Shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null). This implementation recognizes values of type <see cref="IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/> and <see cref="Windows.Window"/>. Unrecognized owners are treated as null.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null). This implementation recognizes values of type <see cref="IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.DependencyObject"/> (if hosted in <see cref="Windows.Window"/>). Unrecognized owners are treated as null.</param>
         ''' <remarks>Note for inheritors: If you override thie method and do not call base class method, you must set value of the <see cref="Form"/> property</remarks>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/></exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support <see cref="IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.4" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="Windows.DependencyObject"/> for which <see cref="Windows.Window.GetWindow"/> returns non-null value.</version>
         Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
             If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Form = New MessageBoxForm(Me)
@@ -785,6 +787,11 @@ Namespace WindowsT.FormsT
                 If Modal Then Form.ShowDialog(DirectCast(Owner, Windows.Interop.IWin32Window)) Else Form.Show(DirectCast(Owner, Windows.Interop.IWin32Window))
             ElseIf TypeOf Owner Is Windows.Window Then
                 If Modal Then Form.ShowDialog(DirectCast(Owner, Windows.Window)) Else Form.Show(DirectCast(Owner, Windows.Window))
+            ElseIf TypeOf Owner Is Windows.DependencyObject Then
+                Dim owningWindow = Windows.Window.GetWindow(Owner)
+                If owningWindow IsNot Nothing Then
+                    If Modal Then Form.ShowDialog(owningWindow) Else Form.Show(owningWindow)
+                End If
             Else
                 If Modal Then Form.ShowDialog() Else Form.Show()
             End If

@@ -370,6 +370,7 @@
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
       <DependentUpon>KeyWordsEditor.vb</DependentUpon>

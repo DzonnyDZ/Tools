@@ -42,6 +42,8 @@ Namespace WindowsT.IndependentT
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Fixed: Some static functions throws exception when icon is not set or when default button is used (even implicitly)</version>
     ''' <version version="1.5.3">All owner parameters changed form <see cref="Windows.Forms.IWin32Window"/> to <see cref="Object"/> to support more types of owners - <see cref="Windows.Forms.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.Interop.IWin32Window"/>. Changes are required in derived classes to support this change and those new owners.</version>
+    ''' <version version="1.5.4">WPF (<see cref="WPF.DialogsT.MessageBox"/>) and WinForms (<see cref="FormsT.MessageBox"/>) implementations changed to support any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/> as owner.</version>
+    ''' <version version="1.5.4">Fix: Bug in <see cref="MessageBox.ModalEx_PTEIOWMHS"/> caused that some functions rendered messagebox without buttons (or checkboxes/radios/combobox items).</version>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
         ''' <summary>Recomended format for displaying timer.</summary>
@@ -3686,17 +3688,19 @@ Namespace WindowsT.IndependentT
         ''' <param name="Sound">Sound to be played whne message box is shown.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.4" stage="Beta">Fixed: Values in <paramref name="Items"/> are not processed. This bug affected may methods depending on this one.</version>
         Public Shared Function ModalEx_PTEIOWMHS(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
             Dim box As New FakeBox With {.Options = Options, .Prompt = Prompt, .Title = Title, .Timer = TimeSpan.FromSeconds(Timer), .PlayOnShow = Sound}
             box.Buttons.Clear()
-            box.Buttons.AddRange(Items.OfType(Of MessageBoxButton))
-            box.CheckBoxes.AddRange(Items.OfType(Of MessageBoxCheckBox))
-            box.Radios.AddRange(Items.OfType(Of MessageBoxRadioButton))
-            Dim Strings = Items.OfType(Of String)()
-            If Not Strings.IsEmpty Then
-                box.ComboBox = New MessageBoxComboBox
-                box.ComboBox.Items.AddRange(Strings)
-            End If
+            For Each item In Items
+                If TypeOf item Is MessageBoxButton Then : box.Buttons.Add(DirectCast(item, MessageBoxButton))
+                ElseIf TypeOf item Is MessageBoxCheckBox Then : box.CheckBoxes.Add(DirectCast(item, MessageBoxCheckBox))
+                ElseIf TypeOf item Is MessageBoxRadioButton Then : box.Radios.Add(DirectCast(item, MessageBoxRadioButton))
+                ElseIf TypeOf item Is String Then
+                    If box.ComboBox Is Nothing Then box.ComboBox = New MessageBoxComboBox
+                    DirectCast(box.ComboBox.Items, IList(Of Object)).Add(item)
+                End If
+            Next
             Dim ret = InitializeDafault(box)
             If ShownHandler IsNot Nothing Then AddHandler ret.Shown, ShownHandler
             ret.ShowDialog(Owner)
@@ -3713,6 +3717,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIOWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],[Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, Options, Owner, Timer, ShownHandler)
@@ -3727,6 +3732,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
@@ -3742,10 +3748,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWMHB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Buttons, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon, owner and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3755,6 +3762,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWS(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
@@ -3768,16 +3776,18 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Buttons, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
         End Function
         ''' <summary>Displays modal message box with given prompt, title and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTS(ByVal Prompt$, ByVal Title$, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
@@ -3788,10 +3798,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTB(ByVal Prompt$, ByVal Title$, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Buttons, IEnumerable(Of Object)), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
         End Function
 #End Region
 #Region "Error"
@@ -3844,6 +3855,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that that messagebox was rendered without buttons.</version>
         Public Shared Function [Error_XBWI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return [Error_XTBWI](ex, ex.GetType.Name, Owner:=Owner, Buttons:=Buttons, Icon:=MessageBoxIcons.Error)
         End Function
@@ -3856,10 +3868,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was shown without buttons.</version>
         Public Shared Function [Error_XTBWI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return ModalEx_PTEIOWMHS(ex.Message, Title,
                                      Owner:=Owner, Icon:=GetIconDelegate(Icon),
-                                     Items:=New Wrapper(Of Object)(MessageBoxButton.GetButtons(Buttons))
+                                     Items:=MessageBoxButton.GetButtons(Buttons)
             ).DialogResult
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
@@ -3872,11 +3885,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
+        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was rendered without buttons.</version>
         Public Shared Function [Error_XPTIBWO](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As Object = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
             Return ModalEx_PTEIOWMHS(Prompt & vbCrLf & ex.Message, Title,
                                      Owner:=Owner, Icon:=GetIconDelegate(Icon),
                                      Options:=Options,
-                                     Items:=New Wrapper(Of Object)(MessageBoxButton.GetButtons(Buttons))
+                                     Items:=MessageBoxButton.GetButtons(Buttons)
             ).DialogResult
         End Function
 #End Region
