@@ -59,6 +59,44 @@ Namespace WindowsT.WPF
             End If
             Return Window.ShowDialog()
         End Function
+
+        ''' <summary>Finds first visual child of given <see cref="DependencyObject"/> which conforms to given condition</summary>
+        ''' <param name="parent">A <see cref="DependencyObject"/> to search for visual child of</param>
+        ''' <param name="condition">Function evaluated for each visual child of <paramref name="parent"/> until conforming child is found</param>
+        ''' <returns>First visual child of <paramref name="parent"/> for which <paramref name="condition"/> returns true; null when no such child can be found</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null -or- <paramref name="condition"/> is null</exception>
+        ''' <version version="1.3.5" stage="Nightly">This function is new in version 1.3.5</version>
+        <Extension()> Public Function FindVisualChild(ByVal parent As DependencyObject, ByVal condition As Func(Of DependencyObject, Boolean)) As DependencyObject
+            If parent Is Nothing Then Throw New ArgumentNullException("parent")
+            If condition Is Nothing Then Throw New ArgumentNullException("condition")
+            For i = 0 To VisualTreeHelper.GetChildrenCount(parent) - 1
+                If condition(VisualTreeHelper.GetChild(parent, i)) Then Return VisualTreeHelper.GetChild(parent, i)
+            Next
+            For i = 0 To VisualTreeHelper.GetChildrenCount(parent) - 1
+                Dim ret = VisualTreeHelper.GetChild(parent, i).FindVisualChild(condition)
+                If ret IsNot Nothing Then Return ret
+            Next
+            Return Nothing
+        End Function
+        ''' <summary>Finds first visual child of given <see cref="DependencyObject"/> of specific type</summary>
+        ''' <param name="parent">A <see cref="DependencyObject"/> to search for visual child of</param>
+        ''' <typeparam name="T">Type of child to search for</typeparam>
+        ''' <returns>First visual child of <paramref name="parent"/> which is of type <typeparamref name="T"/>; null when no such child can be found</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null</exception>
+        ''' <version version="1.3.5" stage="Nightly">This function is new in version 1.3.5</version>
+        <Extension()> Public Function FindVisualChild(Of T As DependencyObject)(ByVal parent As DependencyObject) As T
+            Return parent.FindVisualChild(Function(a) TypeOf a Is T)
+        End Function
+        ''' <summary>Finds first visual child of given <see cref="DependencyObject"/> of specific type which conforms to given condition</summary>
+        ''' <param name="parent">A <see cref="DependencyObject"/> to search for visual child of</param>
+        ''' <param name="condition">Function evaluated for each visual child of <paramref name="parent"/> which is of type <typeparamref name="T"/> until conforming child is found</param>
+        ''' <typeparam name="T">Type of child to search for</typeparam>
+        ''' <returns>First visual child of <paramref name="parent"/> which is of type <typeparamref name="T"/> and which conforms to <paramref name="condition"/>; null when no such child can be found</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null -or- <paramref name="condition"/> is null</exception>
+        ''' <version version="1.3.5" stage="Nightly">This function is new in version 1.3.5</version>
+        <Extension()> Public Function FindVisualChild(Of T As DependencyObject)(ByVal parent As DependencyObject, ByVal condition As Func(Of T, Boolean)) As T
+            Return parent.FindVisualChild(Function(a) If(TypeOf a Is T, condition(a), False))
+        End Function
     End Module
 End Namespace
 #End If
