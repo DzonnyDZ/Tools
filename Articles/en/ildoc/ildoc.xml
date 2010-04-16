@@ -350,7 +350,7 @@
 				<dt><code-ref>ResolutionScope</code-ref> (<ref>ResolutionScope</ref>)</dt>
 				<dd>If absent this reference is reference to same module of same assembly.</dd>
 				<dl>
-					<dt-code>\[.module <ref ref="FileName">FileName</ref>\]</dt-code>
+					<dt-code>\[.module <ref>FileName</ref>\]</dt-code>
 					<dd>Reference to another module of same assembly.</dd>
 					<dl>
 						<dt><code-ref>FileName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
@@ -557,7 +557,8 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </dl>
         </section>
     </section>
-    <section id="directive-cross-reference" guid="1fef50af-cd6e-49f6-9bd3-50922ea39231">
+	<!--Directive cross-reference-->
+	<section id="directive-cross-reference" guid="1fef50af-cd6e-49f6-9bd3-50922ea39231">
         <header>Directive cross-reference</header>
         <introduction>Shows all the CIL metadata directives and way they relate one to each other.</introduction>
         <table>
@@ -566,7 +567,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </header>
             <row>
                 <c><code><internal-link ref="_addon">.addon</internal-link></code></c>
-                <c><code><internal-link ref="_event">.event</internal-link></code></c>
+                <c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
                 <c/>
             </row>
             <row>
@@ -596,7 +597,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code></c>
-                <c><code><internal-link ref="_mresource">.mresource</internal-link></code></c>
+                <c><code><internal-link ref="_mresourceB">.mresource {}</internal-link></code></c>
                 <c/>
             </row>
             <row>
@@ -613,7 +614,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_data">.data</internal-link></code>,
                     <code><internal-link ref="_eventB">.event {}</internal-link></code>,
                     <code><internal-link ref="_field">.field</internal-link></code>,
-                    <code><internal-link ref="_method">.method {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
                     <code><internal-link ref="_override">.override</internal-link></code>,
                     <code><internal-link ref="_pack">.pack</internal-link></code>,
                     <code><internal-link ref="_param">.param</internal-link></code>,
@@ -626,211 +627,796 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 </c>
             </row>
             <row>
-                <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
-                <c>File</c>
-                <c>
-                    <code><internal-link ref="_file">.file</internal-link></code>,
-                    <code><internal-link ref="_class_exten">.class extern</internal-link></code>
-                    <code><internal-link ref="_custom">.custom</internal-link></code>
-                </c>
-            </row>
-            <row>
                 <c><code><internal-link ref="_class_extern">.class extern</internal-link></code></c>
                 <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
                 <c/>
             </row>
+			<row>
+                <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
+                <c>File</c>
+                <c>
+                    <code><internal-link ref="_file">.file</internal-link></code>,
+                    <code><internal-link ref="_class_extern">.class extern</internal-link></code>,
+                    <code><internal-link ref="_custom">.custom</internal-link></code>
+                </c>
+            </row>
+			<row>
+				<c><code><internal-link ref="_corflags">.corflags</internal-link></code></c>
+				<c>File</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="_culture">.culture</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_custom">.custom</internal-link></code></c>
+				<c>
+					File,
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+					<code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>,
+					<code><internal-link ref="_propertyB">.property {}</internal-link></code>,
+					<code><internal-link ref="_eventB">.event {}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_data">.data</internal-link></code>, <code><internal-link ref="_dataB">.data {}</internal-link></code></c>
+				<c>
+					File,
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+				<c>Data</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="_emitbyte">.emitbyte</internal-link></code></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_entrypoint">.entrypoint</internal-link></code></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
+				<c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_addon">.addon</internal-link></code>,
+					<code><internal-link ref="_custom">.custom</internal-link></code>,
+					<code><internal-link ref="_fire">.fire</internal-link></code>,
+					<code><internal-link ref="_other">.other</internal-link></code>,
+					<code><internal-link ref="_removeon">.removeon</internal-link></code>,
+					<code><internal-link ref="_line">.line</internal-link></code>
+				</c>
+			</row>
+			<row special="undocumented">
+				<c><code><internal-link ref="_export">.export</internal-link></code></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="fault">fault</internal-link></code></c>
+				<c><code><internal-link ref="_try">.try</internal-link></code></c>
+				<c>
+					<code><internal-link ref="handler">handler</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="_field">.field</internal-link></code></c>
+				<c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_file">.file</internal-link></code></c>
+				<c>
+					File,
+					<code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+					<code><internal-link ref="_class_externB">.class extern {}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row special="ms-specific">
+				<c><code><internal-link ref="_file_alignment">.file alignment</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="filter">filter</internal-link></code></c>
+				<c><code><internal-link ref="_try">.try</internal-link></code></c>
+				<c>
+					<code><internal-link ref="handler">handler</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="finally">finally</internal-link></code></c>
+				<c><code><internal-link ref="_try">.try</internal-link></code></c>
+				<c>
+					<code><internal-link ref="handler">handler</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="_fire">.fire</internal-link></code></c>
+				<c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_get">.get</internal-link></code></c>
+				<c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="handler">handler</internal-link></code></c>
+				<c>
+					<code><internal-link ref="catch">catch</internal-link></code>,
+					<code><internal-link ref="fault">fault</internal-link></code>,
+					<code><internal-link ref="filter">filter</internal-link></code>,
+					<code><internal-link ref="finally">finally</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_hash">.hash</internal-link></code></c>
+				<c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link></code></c>
+				<c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row special="ms-specific">
+				<c><code><internal-link ref="_imagebase">.imagebase</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row special="ms-specific">
+				<c><code><internal-link ref="_language">.language</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_line">.line</internal-link></code> (<code><internal-link ref="_line">#line</internal-link></code>)</c>
+				<c>
+					File,
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>,
+					<code><internal-link ref="_propertyB">.property {}</internal-link></code>,
+					<code><internal-link ref="_eventB">.event {}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row special="ms-specific">
+				<c><code><internal-link ref="_locale">.locale</internal-link></code></c>
+				<c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_locals">.locals</internal-link></code></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_maxstack">.mackstack</internal-link></code></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
+				<c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_custom">.custom</internal-link></code>,
+					<code><internal-link ref="_data">.data</internal-link></code>,
+					<code><internal-link ref="_emitbyte">.emitbyte</internal-link></code>,
+					<code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
+					<code><internal-link ref="_locals">.locals</internal-link></code>,
+					<code><internal-link ref="_maxstack">.maxstack</internal-link></code>,
+					<code><internal-link ref="_override">.override</internal-link></code>,
+					<code><internal-link ref="_override_method">.override method</internal-link></code>,
+					<code><internal-link ref="_param">.param</internal-link></code>,
+					<code><internal-link ref="_param_type">.param type</internal-link></code>,
+					<code><internal-link ref="_line">.line</internal-link></code>,
+					<internal-link ref="instructions">instruction</internal-link>,
+					<internal-link ref="label">label</internal-link>,
+					<code><internal-link ref="_permission">.permission</internal-link></code>,
+					<code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>,
+					<code><internal-link ref="_try">.try</internal-link></code>,
+					<undocumented><code><internal-link ref="_export">.export</internal-link></code></undocumented>,
+					<undocumented><code><internal-link ref="_vtentry">.vtentry</internal-link></code></undocumented>
+				</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="_module">.module</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_module_extern">.module extern</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_mresourceB">.mresource {}</internal-link></code></c>
+				<c>File</c>
+				<c>
+					<code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code>,
+					<code><internal-link ref="_custom">.custom</internal-link></code>,
+					<code><internal-link ref="_file">.file</internal-link></code>
+				</c>
+			</row>
+			<row special="ms-specific">
+				<c><code><internal-link ref="_namespace">.namespace</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_other">.other</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_propertyB">.property</internal-link></code>,
+					<code><internal-link ref="_eventB">.event</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_override">.override</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_override_method">.override method</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_pack">.pack</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_param">.param</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_param_type">.param type</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_permission">.permission</internal-link></code></c>
+				<c>
+					File,
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,					
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_permissionset">.permissionset</internal-link></code></c>
+				<c>
+					File,
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,					
+					<code><internal-link ref="B">{}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
+				<c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_custom">.custom</internal-link></code>,
+					<code><internal-link ref="_get">.get</internal-link></code>,
+					<code><internal-link ref="_other">.other</internal-link></code>,
+					<code><internal-link ref="_set">.set</internal-link></code>,
+					<code><internal-link ref="_line">.line</internal-link></code>
+				</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="_publickey">.publickey</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_publickeytoken">.publickeytoken</internal-link></code></c>
+				<c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_removeon">.removeon</internal-link></code></c>
+				<c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_set">.set</internal-link></code></c>
+				<c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_size">.size</internal-link></code></c>
+				<c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row special="undocumented">
+				<c><code><internal-link ref="_stackreserve">.stackreserve</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_subsystem">.subsystem</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_try">.try</internal-link></code></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+				<c>
+					<code><internal-link ref="B">{}</internal-link></code>,
+					<code><internal-link ref="fault">fault</internal-link></code>,
+					<code><internal-link ref="filter">filter</internal-link></code>,
+					<code><internal-link ref="finally">finally</internal-link></code>,
+					<code><internal-link ref="catch">catch</internal-link></code>
+				</c>
+			</row>
+			<row>
+				<c><code><internal-link ref="_ver">.ver</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
+				</c>
+				<c/>
+			</row>
+			<row special="undocumented">
+				<c><code><internal-link ref="_vtentry">.vtentry</internal-link></code></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="_vtfixup">.vtfixup</internal-link></code></c>
+				<c>File</c>
+				<c/>
+			</row>
+			<row>
+				<c><code><internal-link ref="B">{}</internal-link></code></c>
+				<c>
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>,
+					<code><internal-link ref="_try">.try</internal-link></code>,
+					<code><internal-link ref="catch">catch</internal-link></code>,
+					<code><internal-link ref="fault">fault</internal-link></code>,
+					<code><internal-link ref="finally">finally</internal-link></code>,
+					<code><internal-link ref="filter">filter</internal-link></code>
+				</c>
+				<c>
+					<code><internal-link ref="_custom">.custom</internal-link></code>,
+					<code><internal-link ref="_data">.data</internal-link></code>,
+					<code><internal-link ref="_emitbyte">.emitbyte</internal-link></code>,
+					<code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
+					<code><internal-link ref="_locals">.locals</internal-link></code>,
+					<code><internal-link ref="_maxstack">.maxstack</internal-link></code>,
+					<code><internal-link ref="_override">.override</internal-link></code>,
+					<code><internal-link ref="_override_method">.override method</internal-link></code>,
+					<code><internal-link ref="_param">.param</internal-link></code>,
+					<code><internal-link ref="_param_type">.param type</internal-link></code>,
+					<code><internal-link ref="_line">.line</internal-link></code>,
+					<internal-link ref="instructions">instruction</internal-link>,
+					<internal-link ref="label">label</internal-link>,
+					<code><internal-link ref="_permission">.permission</internal-link></code>,
+					<code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+					<code><internal-link ref="B">{}</internal-link></code>,
+					<code><internal-link ref="_try">.try</internal-link></code>
+				</c>
+			</row>
+			<row>
+				<c>Data</c>
+				<c><code><internal-link ref="_data">data</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><internal-link ref="instructions">instruction</internal-link></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c><internal-link ref="label">label</internal-link></c>
+				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+				<c/>
+			</row>
+			<row>
+				<c>File</c>
+				<c/>
+				<c>
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
+					<code><internal-link ref="_classB">.class {}</internal-link></code>,
+					<code><internal-link ref="_class_externB">.class extern {}</internal-link></code>,
+					<code><internal-link ref="_corflags">.corflags</internal-link></code>,
+					<code><internal-link ref="_custom">.custom</internal-link></code>,
+					<code><internal-link ref="_data">.data</internal-link></code>,
+					<code><internal-link ref="_field">.field</internal-link></code>,
+					<code><internal-link ref="_file">.file</internal-link></code>,
+					<ms-specific><code><internal-link ref="_file_alignment">.file alignment</internal-link></code></ms-specific>,
+					<ms-specific><code><internal-link ref="_imagebase">.imagebase</internal-link></code></ms-specific>,
+					<ms-specific><code><internal-link ref="_language">.language</internal-link></code></ms-specific>,
+					<code><internal-link ref="_line">.line</internal-link></code>,
+					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
+					<code><internal-link ref="_module">.module</internal-link></code>,
+					<code><internal-link ref="_module_extern">.module extern</internal-link></code>,
+					<code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+					<ms-specific><code><internal-link ref="_namespace">.namespace</internal-link></code></ms-specific>,
+					<code><internal-link ref="_permission">.permission</internal-link></code>,
+					<code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+					<code><internal-link ref="_subsystem">.subsystem</internal-link></code>,
+					<undocumented><code><internal-link ref="_stackreserve">.stackreserve</internal-link></code></undocumented>,
+					<code><internal-link ref="_vtfixup">.vtfixup</internal-link></code>,
+				</c>
+			</row>
         </table>
     </section>
-    <section id="block-directives" guid="c2f081a5-9394-45d8-ae4a-6ec1a79df574">
+    <!--Block directives-->
+	<section id="block-directives" guid="c2f081a5-9394-45d8-ae4a-6ec1a79df574">
         <header>Block directives</header>
         <introduction>Describes directives which can contain another directives or code.</introduction>
-        <section id="_assemblyB" guid="38191f92-bcd0-4baa-bb26-bc2920835cee">
+
+		<section id="_assemblyB" guid="38191f92-bcd0-4baa-bb26-bc2920835cee" r="II.6.2">
             <header><code>.assembly {}</code></header>
+			<introduction>Defines an assembly.</introduction>
+			<syntax>.assembly <ref>Name</ref> {}</syntax>
+			<syntax-dl>
+				<dt>
+					<code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)
+				</dt>
+				<dd>The name of the assembly</dd>
+			</syntax-dl>
+			<parents>
+				<li>File</li>
+			</parents>
+			<children>
+				<internal-link ref="_custom">.custom</internal-link>
+				<internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link>
+				<internal-link ref="_culture">.culture</internal-link>
+				<internal-link ref="_publickey">.publickey</internal-link>
+				<internal-link ref="_ver">.ver</internal-link>
+				<internal-link ref="_permission">.permission</internal-link>
+				<internal-link ref="_permissionset">.permissionset</internal-link>
+				<li><ms-specific><internal-link ref="_locale">.locale</internal-link></ms-specific></li>
+			</children>
+			<p><ms-specific>
+				ilasm nepodporuje <code><internal-link ref="_culture">.culture</internal-link></code>,
+				použijte <ms-specific><code><internal-link ref="_locale">.locale</internal-link></code></ms-specific>.
+			</ms-specific></p>
+			<p>
+				An assembly is specified as module that contains a manifest metadata. Manifest information is composed from
+				<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+				<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
+				<code><internal-link ref="_corflags">.corflags</internal-link></code>,
+				<code><internal-link ref="_file">.file</internal-link></code>,
+				<code><internal-link ref="_hash">.hash</internal-link></code>,
+				<code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
+				<code><internal-link ref="_mresource">.mresource</internal-link></code> and
+				<code><internal-link ref="_subsystem">.subsystem</internal-link></code>.
+				The <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive declares the manifest and
+				specifies the assembly the current module belongs to. Module shall contain maximally one
+				<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive.
+			</p>
+			<p>Since some platforms treat names in a case-insensitive manner, two assemblies that have names that differ only in case should not be declared.</p>
+			<seealso>
+				<internal-link ref="_assembly_externB">.asssembly extern {}</internal-link>
+				<internal-link ref="_assembly_extern">.asssembly extern</internal-link>
+				<internal-link ref="_module">.module</internal-link>
+			</seealso>
         </section>
-        <section id="_assembly_externB" guid="67776952-b6dc-4c87-86a0-214e4dfcc6c9">
-            <header><code>.assembly {}</code></header>
+		
+        <section id="_assembly_externB" guid="67776952-b6dc-4c87-86a0-214e4dfcc6c9" r="II.6.3">
+            <header><code>.assembly extern {}</code></header>
+			<introduction>Defines a reference to another assembly.</introduction>
+			<syntax>.assembly extern <ref>Name</ref> [as <ref>Alias</ref>] {}</syntax>
+			<syntax-dl>
+				<dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+				<dd>
+					A name of a referenced assembly. It must equal to the name of referenced assembly as specified in that assembly using the
+					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive.
+				</dd>
+				<dt><code-ref>Alias</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+				<dd>
+					A name of a referenced assembly uased when referenced from current assembly.
+					This allows to reference more assemblies with same name but different version or culture.
+				</dd>
+			</syntax-dl>
+			<parents><li>File</li></parents>
+			<children>
+				<internal-link ref="_hash">.hash</internal-link>
+				<internal-link ref="_custom">.custom</internal-link>
+				<internal-link ref="_culture">.culture</internal-link>
+				<internal-link ref="_publickeytoken">.publickeytoken</internal-link>
+				<internal-link ref="_publickey">.publickey</internal-link>
+				<internal-link ref="_ver">.ver</internal-link>
+			</children>
+			<p>Assembly names (for this purpose) are case-seinsitive even under OS with case-insensitive file system.</p>
+			<p><ms-specific>ilasm does not require <code>.assembly extern mscorlib</code>. It inserts in automatically.</ms-specific></p>
         </section>
         <section id="_classB" guid="72c29029-fd4b-4a0f-8e48-8512bf174aa1">
             <header><code>.class {}</code></header>
+			<introduction/>
         </section>
         <section id="_class_externB" guid="64f89792-5f6e-4725-a562-a2470e5c30a8">
-            <header><code>.assembly extern {}</code></header>
+            <header><code>.class extern {}</code></header>
+			<introduction/>
         </section>
         <section id="_dataB" guid="f32ac5f8-850c-4bd5-83fb-36d525cfd335">
             <header><code>.data {}</code></header>
+			<introduction/>
         </section>
         <section id="_eventB" guid="f2f4cd46-66fe-451e-877e-83acd0739280">
             <header><code>.event {}</code></header>
+			<introduction/>
         </section>
         <section id="_methodB" guid="98c22e4f-42be-47be-8c90-90dab6ade593">
             <header><code>.method {}</code></header>
+			<introduction/>
         </section>
         <section id="_mresourceB" guid="9e4a0be1-b517-42c5-a5b3-915a427c1a30">
             <header><code>.mresource {}</code></header>
+			<introduction/>
         </section>
         <section id="_propertyB" guid="1f1e1094-1887-4b78-ac30-748ee0970899">
             <header><code>.property {}</code></header>
+			<introduction/>
         </section>
         <section id="B" guid="ca3fd78c-49e4-4128-accd-62e6000a5b02">
             <header><code>{}</code></header>
+			<introduction/>
         </section>
     </section>
-    <section id="line-directives" guid="f10e0e48-2b07-4b5e-97f2-24a4087488db">
+    <!--Line directives-->
+	<section id="line-directives" guid="f10e0e48-2b07-4b5e-97f2-24a4087488db">
         <header>Line directives</header>
         <introduction>Describes directives single-line directives.</introduction>
-        <section id="_addon" guid="">
+        <section id="_addon" guid="99ea7f76-b428-49da-9349-5a48c06298ff">
             <header><code>.addon</code></header>
+			<introduction/>
         </section>
-        <section id="_assembly_extern" guid="">
+        <section id="_assembly_extern" guid="5a648710-1ab1-40cf-a057-c2b0217fb166">
             <header><code>.assembly extern</code></header>
+			<introduction/>
         </section>
-         <section id="catch" guid="">
+         <section id="catch" guid="a149a1d6-8ac4-45c0-b729-4a8ef142f27d">
             <header><code>catch</code></header>
+			 <introduction/>
         </section>
-        <section id="_class_extern" guid="">
+        <section id="_class_extern" guid="7eff8b3a-6950-495a-b1e1-883561e32883">
             <header><code>.class extern</code></header>
+			<introduction/>
         </section>
-        <section id="_corflags" guid="">
+        <section id="_corflags" guid="bbd06bf5-809c-448b-ba57-bd06266a1a97">
             <header><code>.corflags</code></header>
+			<introduction/>
         </section>
-        <section id="_culture" guid="">
+        <section id="_culture" guid="4eef6475-af48-4fc0-b4fd-4258567e872c">
             <header><code>.culture</code></header>
+			<introduction/>
         </section>
-        <section id="_custom" guid="">
+        <section id="_custom" guid="42f510fb-4882-4df0-a585-9837067a66df">
             <header><code>.custom</code></header>
+			<introduction/>
         </section>
-        <section id="_data" guid="">
+        <section id="_data" guid="3197f08e-4cb5-481d-a148-92258b2d100f">
             <header><code>.data</code></header>
+			<introduction/>
         </section>
-        <section id="_emitbyte" guid="">
+        <section id="_emitbyte" guid="4b82a665-3a04-4010-8e23-c52177722399">
             <header><code>.emitbyte</code></header>
+			<introduction/>
         </section>
-        <section id="_entrypoint" guid="">
+        <section id="_entrypoint" guid="cf7ff248-2a57-4032-8a54-a945990ce622">
             <header><code>.entrypoint</code></header>
+			<introduction/>
         </section>
-        <section special="undocumented" id="_export" guid="">
+        <section special="undocumented" id="_export" guid="7d5de718-9958-415b-971d-0fea3c5dd73c">
             <header><code>.export</code></header>
+			<introduction/>
         </section>
-        <section id="fault" guid="">
+        <section id="fault" guid="2c2df25b-8820-4e30-ab10-4a3522ce12dc">
             <header><code>fault</code></header>
+			<introduction/>
         </section>
-        <section id="_field" guid="">
+        <section id="_field" guid="5131b0e1-eceb-47e4-b99e-5b6de0a8c1dd">
             <header><code>.field</code></header>
+			<introduction/>
         </section>
-        <section id="_file" guid="">
+        <section id="_file" guid="155f5a74-40b6-43ee-8164-a58ad46b36aa">
             <header><code>.file</code></header>
+			<introduction/>
         </section>
-        <section special="ms-specific" id="_file_alignment" guid="">
+        <section special="ms-specific" id="_file_alignment" guid="b4a471a4-cc6b-4853-b9bf-71be385dcf6f">
             <header><code>.file alignment</code></header>
+			<introduction/>
         </section>
-        <section id="filter" guid="">
+        <section id="filter" guid="dd0a85e1-8294-419d-a858-2f36bc4ecb75">
             <header><code>filter</code></header>
+			<introduction/>
         </section>
-        <section id="finally" guid="">
+        <section id="finally" guid="14114e50-b11a-410b-990c-cd664071226e">
             <header><code>finally</code></header>
+			<introduction/>
         </section>
-        <section id="_fire" guid="">
+        <section id="_fire" guid="12a975ab-853b-4eff-a652-f9c4043f1c1a">
             <header><code>.fire</code></header>
+			<introduction/>
         </section>
-        <section id="_get" guid="">
+        <section id="_get" guid="aa99b7ec-83a4-42fa-8023-6200f1d61ebd">
             <header><code>.get</code></header>
+			<introduction/>
         </section>
-        <section id="handler" guid="">
+        <section id="handler" guid="9adc75e3-e399-44d5-9a61-cf7cc6fe8cd1">
             <header><code>handler</code></header>
+			<introduction/>
         </section>
-        <section id="_hash" guid="">
+        <section id="_hash" guid="e482d889-b6f5-4247-9555-442a0d860bd9">
             <header><code>.hash</code></header>
+			<introduction/>
         </section>
-        <section id="_hash_alghoritm" guid="">
+        <section id="_hash_alghoritm" guid="70da21dd-092c-48c5-8b66-f84510cbc668">
             <header><code>.hash alghoritm</code></header>
+			<introduction/>
         </section>
-        <section special="ms-specific" id="_imagebase" guid="">
+        <section special="ms-specific" id="_imagebase" guid="c4e3bc53-89e8-4464-b4a9-f93dd1fb3d24">
             <header><code>.imagebase</code></header>
+			<introduction/>
         </section>
-        <section special="ms-specific" id="_language" guid="">
+        <section special="ms-specific" id="_language" guid="27d2766f-ba22-45f8-867c-b6b20172d3cb">
             <header><code>.language</code></header>
+			<introduction/>
         </section>
-        <section id="_line" guid="">
+        <section id="_line" guid="bef239b4-0a82-47db-8906-53c4a12a931e">
             <header><code>.line</code> (<code>#line</code>)</header>
+			<introduction/>
         </section>
-        <section special="ms-specific" id="_locale" guid="">
+        <section special="ms-specific" id="_locale" guid="b7409e19-9c6c-45dc-a869-ee53b533047f">
             <header><code>.locale</code></header>
+			<introduction/>
         </section>
-        <section id="_locals" guid="">
+        <section id="_locals" guid="31043c83-08b1-4432-b87d-cbda65e8483d">
             <header><code>.locals</code></header>
+			<introduction/>
         </section>
-        <section id="_maxstack" guid="">
+        <section id="_maxstack" guid="0d65bf77-ba02-4285-9a66-f5a2c50dd058">
             <header><code>.maxstack</code></header>
+			<introduction/>
         </section>
-        <section id="_module" guid="">
+        <section id="_module" guid="4bfc275e-6e3a-4fbf-ab12-940abe610ec6">
             <header><code>.module</code></header>
+			<introduction/>
         </section>
-        <section id="_module_extern" guid="">
+        <section id="_module_extern" guid="94c52bb2-020b-40cb-8f74-bf7026cf17a5">
             <header><code>.module extern</code></header>
+			<introduction/>
         </section>
-        <section special="ms-specific" id="_namespace" guid="">
+        <section special="ms-specific" id="_namespace" guid="c7846447-c88f-444b-9e88-26ba00384886">
             <header><code>.namespace</code></header>
+			<introduction/>
         </section>
-        <section id="_other" guid="">
+        <section id="_other" guid="9e7d2dbc-aaa0-49a6-b729-d8d675add705">
             <header><code>.other</code></header>
+			<introduction/>
         </section>
-        <section id="_override" guid="">
+        <section id="_override" guid="992b3bc2-52ca-45f8-bb36-68a1dd2657db">
             <header><code>.override</code></header>
+			<introduction/>
         </section>
-        <section id="_override_method" guid="">
+        <section id="_override_method" guid="8f711996-58aa-4c4f-838b-0b8618ff6cbe">
             <header><code>.override method</code></header>
+			<introduction/>
         </section>
-        <section id="_pack" guid="">
+        <section id="_pack" guid="94f1b99c-3a49-4109-9dbf-4fa8d66807e7">
             <header><code>.pack</code></header>
+			<introduction/>
         </section>
-        <section id="_param" guid="">
+        <section id="_param" guid="e5808673-535d-4dec-a4f5-3520cf700be4">
             <header><code>.param</code></header>
+			<introduction/>
         </section>
-        <section id="_param_type" guid="">
+        <section id="_param_type" guid="4b9ab2a8-4653-4af1-974f-dfbb07af08ff">
             <header><code>.param type</code></header>
+			<introduction/>
         </section>
-        <section id="_permission" guid="">
+        <section id="_permission" guid="26047966-4043-4e28-9cb0-843ae3385797">
             <header><code>.permission</code></header>
+			<introduction/>
         </section>
-        <section id="_permissionset" guid="">
+        <section id="_permissionset" guid="ebf17d31-1fe9-404f-bd88-c9975425a241">
             <header><code>.permissionset</code></header>
+			<introduction/>
         </section>
-        <section id="_publickey" guid="">
+        <section id="_publickey" guid="acf601a2-56e8-4422-9d99-2cb0e3f896b9">
             <header><code>.publickey</code></header>
+			<introduction/>
         </section>
-        <section id="_publickeytoken" guid="">
+        <section id="_publickeytoken" guid="053b910e-96d3-49be-b10f-ae9309885fbd">
             <header><code>.publickeytoken</code></header>
+			<introduction/>
         </section>
-        <section id="_removeon" guid="">
+        <section id="_removeon" guid="7eaad505-87fd-43d0-a944-98220d1d6eaf">
             <header><code>.removeon</code></header>
+			<introduction/>
         </section>
-        <section id="_set" guid="">
+        <section id="_set" guid="77d435f2-ec68-4e80-bff7-29ff9ce45ad5">
             <header><code>.set</code></header>
+			<introduction/>
         </section>
-        <section id="_size" guid="">
+        <section id="_size" guid="4e407480-d0f3-42a5-9095-72acefdbc8af">
             <header><code>.size</code></header>
+			<introduction/>
         </section>
-        <section special="undocumented" id="_stackreserve" guid="">
+        <section special="undocumented" id="_stackreserve" guid="53aaab03-5a5d-4039-b84e-d6d8b76a25a5">
             <header><code>.stackreserve</code></header>
+			<introduction/>
         </section>
-        <section id="_try" guid="">
+        <section id="_try" guid="094b8227-82c2-4ce7-bfac-f892b8fe2780">
             <header><code>.try</code></header>
+			<introduction/>
         </section>
-        <section id="_subsystem" guid="">
+        <section id="_subsystem" guid="fe5d32d1-c45f-4cb4-b07e-129c46208e10">
             <header><code>.subsystem</code></header>
+			<introduction/>
         </section>
-        <section id="_ver" guid="">
-            <header><code>.ver</code>
-            </header>
+        <section id="_ver" guid="270893db-17ab-412a-8a80-1678aa35475e">
+            <header><code>.ver</code></header>
+			<introduction/>
         </section>
-        <section special="undocumented" id="_vtentry" guid="">
+        <section special="undocumented" id="_vtentry" guid="6932c4b6-6b86-436e-ba90-61e6d78602d9">
             <header><code>.vtentry</code></header>
+			<introduction/>
         </section>
-        <section id="_vtfixup" guid="">
+        <section id="_vtfixup" guid="471534a4-c10c-4eca-a828-26786a676f12">
             <header><code>.vtfixup</code></header>
+			<introduction/>
         </section>
-        <section id="Label" guid="">
+        <section id="Label" guid="3bd656e8-8bd1-46bb-b93b-159ced4ebb8b">
             <header>Label</header>
+			<introduction/>
         </section>
     </section>
+	<!--Instructions-->
+	<section id="instructions" guid="9DE21037-C6E2-4515-9D60-A55E6343AF3C" r="III">
+		<header>Instructions</header>
+		<introduction/>
+	</section>
 </ildoc>

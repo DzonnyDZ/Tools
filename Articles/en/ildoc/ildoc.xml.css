@@ -6,7 +6,10 @@ ildoc{
 	font-family:serif;
 	padding:0 12pt 12pt 12pt;
 }
-section{display:block;}
+section{
+	display:block;
+	clear:both;
+}
 header{
 	display:block;
 	font-family:sans-serif;
@@ -24,7 +27,8 @@ ildoc > section > section > section > header {font-size:150%;}
 ildoc > section > section > section > section > header {font-size:125%;}
 section > section > header {padding-left:0;}
 section > section > * {padding-left:32pt;}
-section > section > dl{padding-left:56pt;}
+section > section > dl, section > section > syntax-dl
+{padding-left:56pt;}
 introduction{
 	display:block;
 	text-align:justify;
@@ -34,7 +38,7 @@ p{
     display:block;
     text-align:justify;
 }
-dl{
+dl, syntax-dl{
 	display:block;
 	padding-left:24pt;
    }
@@ -76,10 +80,10 @@ break{
 	display:block;
 	border-top:solid Gray thin;
 }
-ms-specific, section[special='ms-specific']{
+ms-specific, *[special='ms-specific']{
     background-color:Aqua;
 }
-ms-specific:after, section[special='ms-specific'] > header:after{
+ms-specific:after, section[special='ms-specific'] > header:after, row[special='ms-specific'] > c:first-child:after{
     content:"*";
     font-family:serif;
     font-weight:normal;
@@ -87,12 +91,12 @@ ms-specific:after, section[special='ms-specific'] > header:after{
     text-decoration:none;
     background-color:white;
 }
-section[special='ms-specific'] > header:after{
+section[special='ms-specific'] > header:after, row[special='ms-specific'] > c:first-child:after{
     color:inherit;
     background-color:inherit;
 }
-undocumented, section[special='undocumented']{
-    background-color:Gray;
+undocumented, *[special='undocumented'] {
+	background-color: #FFFF99;
 }
 see:empty:after{
     content:attr(cref);
@@ -122,7 +126,7 @@ example{
      max-width:100%;
      overflow-x:auto;
  }
- dl > example{
+ dl > example, syntax-dl > example{
      margin-left:24pt;
  }
 r{
@@ -172,4 +176,52 @@ table > header > c{
     text-align:center;
     font-family:sans-serif;
     font-weight:bold;
+}
+
+parents, children{
+	display:block;
+	margin-left:2EM;
+	margin-top:1ex;
+	margin-bottom:1ex;
+}
+parents:before, children:before{
+	font-weight:bold;
+	display:block;
+	margin-left:-2EM;
+	font-family:Sans-Serif;
+}
+parents:before{
+	content:'Parents:';
+}
+children:before{
+	content:'Children:';
+}
+parents > *:before, children > *:before{
+	content: ', ';
+	text-decoration:none;
+	color:Black;
+}
+parents > *:first-child:before, children > *:first-child:before{
+	content:'';
+}
+seealso{
+	display:inline-block;
+	max-width:15%;
+	text-align:center;
+	float:right;
+}
+seealso:before{
+	content:'See also:';
+	display:block;
+	text-align:center;
+	font-weight:bold;
+	font-family:Sans-Serif;
+}
+seealso > *:before{
+	content: ' | ';
+	text-decoration:none;
+	color:Black;
+}
+seealso > *:first-child:before{
+	content:'';
 }

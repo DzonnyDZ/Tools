@@ -213,9 +213,29 @@
 				<xs:sequence minOccurs="1" maxOccurs="1">
 					<xs:element ref="header" minOccurs="1" maxOccurs="1"/>
 					<xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
-					<xs:element type="code" name="syntax" minOccurs="0" maxOccurs="1">
+					<xs:sequence minOccurs="0" maxOccurs="1">
+						<xs:element type="code" name="syntax" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Shows syntax of element described in this section.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="syntax-dl" type="dl" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									Defintition list which defines parts of syntax mentioned above.
+									Normal &lt;dl> can be used as well, when you don't plane to use &lt;parents> and/or &lt;children>.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:element name="parents" minOccurs="0" maxOccurs="1" type="links">
 						<xs:annotation>
-							<xs:documentation>Shows syntax of element described in this section.</xs:documentation>
+							<xs:documentation>For code element contains list of code elements this element can be contained in.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="children" minOccurs="0" maxOccurs="1" type="links">
+						<xs:annotation>
+							<xs:documentation>For code element contains list of code elements this element can contain.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -227,29 +247,20 @@
                         </xs:choice>
                         <xs:element ref="break" minOccurs="0" maxOccurs="1"/>
                     </xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="seealso" type="links">
+						<xs:annotation>
+							<xs:documentation>List of links to content related to this section</xs:documentation>
+						</xs:annotation>
+					</xs:element>					
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
                         <xs:element ref="section" minOccurs="1" maxOccurs="1"/>
                         <xs:element ref="break" minOccurs="0" maxOccurs="1"/>
                     </xs:sequence>
 				</xs:sequence>
-                <xs:attribute name="special">
+                <xs:attribute name="special" type="special">
                     <xs:annotation>
                         <xs:documentation>Special features of the section</xs:documentation>
                     </xs:annotation>
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="ms-specific">
-                                <xs:annotation>
-                                    <xs:documentation>Section is related to Microsoft-specific feature</xs:documentation>
-                                </xs:annotation>
-                            </xs:enumeration>
-                            <xs:enumeration value="undocumented">
-                                <xs:annotation>
-                                    <xs:documentation>Section is related to undocumented feature</xs:documentation>
-                                </xs:annotation>
-                            </xs:enumeration>
-                        </xs:restriction>
-                    </xs:simpleType>
                 </xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
@@ -264,6 +275,30 @@
 		<xs:attributeGroup ref="id-req"/>
 		<xs:attributeGroup ref="guid-req"/>
         <xs:attributeGroup ref="r"/>
+	</xs:complexType>
+	<xs:complexType name="links">
+		<xs:choice minOccurs="1" maxOccurs="unbounded">
+			<xs:element minOccurs="1" maxOccurs="1" ref="internal-link">
+				<xs:annotation>
+					<xs:documentation>Link to content in this documentation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="1" maxOccurs="1" ref="link">
+				<xs:annotation>
+					<xs:documentation>Link to content in the Internet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="see" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Link to .NET member</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element type="text" name="li" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A text item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
 	</xs:complexType>
 	<!--text-->
 	<xs:complexType name="text" mixed="true">
@@ -616,9 +651,23 @@
     </xs:simpleType>
     <xs:simpleType name="r">
         <xs:restriction base="xs:string">
-            <xs:pattern value="(I{1,3}|(I?V)|(VI))(\.[1-9][0-9]*)+"/>
+            <xs:pattern value="(I{1,3}|(I?V)|(VI))(\.[1-9][0-9]*)*"/>
         </xs:restriction>
     </xs:simpleType>
+	<xs:simpleType name="special">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ms-specific">
+				<xs:annotation>
+					<xs:documentation>Section is related to Microsoft-specific feature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="undocumented">
+				<xs:annotation>
+					<xs:documentation>Section is related to undocumented feature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
 	<!--Attributes-->
 	<xs:attributeGroup name="id-req">
 		<xs:attribute name="id" type="xs:ID" use="required">
@@ -700,5 +749,6 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
+		<xs:attribute name="special" use="optional" type="special"/>
     </xs:complexType>
 </xs:schema>
