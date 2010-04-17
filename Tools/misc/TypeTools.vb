@@ -16,6 +16,24 @@ Public Module TypeTools
     Public Function InEnum(Of T As {IConvertible, Structure})(ByVal value As T) As Boolean
         Return Array.IndexOf([Enum].GetValues(GetType(T)), value) >= 0
     End Function
+
+    ''' <summary>Gets value indicating if given type <see cref="Type.IsEnum">is enum</see> and has <see cref="FlagsAttribute"/> applied</summary>
+    ''' <param name="enumType">Type to check if it's flags enum or not</param>
+    ''' <returns>True if <paramref name="enumType"/> <see cref="Type.IsEnum">is enum</see> and has <see cref="FlagsAttribute"/> applied; false otherwise</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="enumType"/> is null</exception>
+    ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+    <Extension()> Public Function IsFlags(ByVal enumType As Type) As Boolean
+        If enumType Is Nothing Then Throw New ArgumentNullException("enumType")
+        Return enumType.IsEnum AndAlso enumType.GetAttribute(Of FlagsAttribute)(False) IsNot Nothing
+    End Function
+    ''' <summary>Gets value indicating if given value is of enum type which has <see cref="FlagsAttribute"/> applied</summary>
+    ''' <param name="enumValue">Value of type <see cref="[Enum]"/></param>
+    ''' <returns>True if type of <paramref name="enumValue"/> has <see cref="FlagsAttribute"/> applied; false otherwise</returns>
+    ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+    <Extension()> Public Function IsFlags(ByVal enumValue As [Enum]) As Boolean
+        Return IsFlags(enumValue.GetType)
+    End Function
+
     ''' <summary>Gets <see cref="Reflection.FieldInfo"/> that represent given constant within an enum</summary>
     ''' <param name="value">Constant to be found</param>
     ''' <returns><see cref="Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <paramref name="T"/></returns>
@@ -314,6 +332,7 @@ Public Module TypeTools
         If Type.IsGenericTypeDefinition Then Return False
         If Type.IsValueType Then Return True
         If Type.HasDefaultCTor Then Return True
+        Return False
     End Function
     ''' <summary>Creates an instance of the specified type using that type's default constructor.</summary>
     ''' <param name="type">The type of object to create.</param>
@@ -343,7 +362,7 @@ Public Module TypeTools
     ''' <remarks>See <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type"/> non-generic method fro details on how casting is done.</remarks>
     ''' <seealso cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type)"/>
     ''' <version version="1.5.2">Function introduced</version>
-    <Extension()> _
+    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longe extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
     Public Function DynamicCast(Of T)(ByVal obj As Object) As T
         Return DynamicCast(obj, GetType(T))
     End Function
@@ -385,7 +404,7 @@ Public Module TypeTools
     ''' There is no specific support for <see cref="Nullable(Of T)"/></para></remarks>
     ''' <seealso cref="M:Tools.TypeTools.DynamicCast`1(System.Object)"/>
     ''' <version version="1.5.2">Function introduced</version>
-    <Extension()> _
+    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longe extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
     Public Function DynamicCast(ByVal obj As Object, ByVal Type As Type) As Object
         If obj Is Nothing Then
             If Type Is Nothing Then Return Nothing
@@ -628,6 +647,7 @@ Public Module TypeTools
         If TypeOf obj Is Decimal AndAlso Type.Equals(GetType(Boolean)) Then Return CBool(DirectCast(obj, Decimal))
         Throw New InvalidCastException(ResourcesT.Exceptions.UnableToCastType0ToType1.f(ObjType.FullName, Type.FullName))
     End Function
+
     ''' <summary>Gets value indicating if given type is generic type definition from which another given type was created</summary>
     ''' <param name="Parent">Generic type definition to test if <paramref name="Child"/> is created from</param>
     ''' <param name="Child">Generic type to test if it is created from <paramref name="Parent"/></param>
