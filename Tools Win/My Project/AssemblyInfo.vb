@@ -12,9 +12,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Tools Win")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("ĐTools team")> 
+<Assembly: AssemblyCompany("Đonny")> 
 <Assembly: AssemblyProduct("ĐTools")> 
-<Assembly: AssemblyCopyright("Copyright © ĐTools team 2007")> 
+<Assembly: AssemblyCopyright("Copyright © Đonny team 2007-2010")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 

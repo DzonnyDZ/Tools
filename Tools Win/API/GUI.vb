@@ -75,6 +75,12 @@ Namespace API
         ''' </returns>
         ''' <remarks>The application must call the <see cref="DrawMenuBar"/> function whenever a menu changes, whether or not the menu is in a displayed window.</remarks>
         Public Declare Function RemoveMenu Lib "user32.dll" (ByVal hMenu As IntPtr, ByVal nPosition As Int32, ByVal wFlags As enmSelectMenuMethod) As Int32
+        ''' <summary>Deletes an item from the specified menu. If the menu item opens a menu or submenu, this function destroys the handle to the menu or submenu and frees the memory used by the menu or submenu.</summary>
+        ''' <param name="hMenu">Handle to the menu to be changed. </param>
+        ''' <param name="uPosition">Specifies the menu item to be deleted, as determined by the <paramref name="uFlags"/> parameter. </param>
+        ''' <param name="uFlags">Specifies how the <paramref name="uPosition"/> parameter is interpreted. This parameter must be one of the <see cref="enmSelectMenuMethod"/> values. </param>
+        ''' <returns>If the function succeeds, the return value is True. If the function fails, the return value is False.</returns>
+        Public Declare Function DeleteMenu Lib "user32" (ByVal hMenu As IntPtr, ByVal uPosition As Integer, ByVal uFlags As enmSelectMenuMethod) As Boolean
         ''' <summary>Values for <see cref="EnableMenuItem"/>'s enable parameter</summary>
         Public Enum enmSelectMenuMethod As Integer
             ''' <summary>Indicates that uIDEnableItem gives the identifier of the menu item. If neither the MF_BYCOMMAND nor MF_BYPOSITION flag is specified, the MF_BYCOMMAND flag is the default flag.</summary>

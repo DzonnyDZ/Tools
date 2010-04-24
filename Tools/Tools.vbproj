@@ -234,6 +234,7 @@
     </Compile>
     <Compile Include="IO\UnionReadOnlyStream.vb" />
     <Compile Include="misc.vb" />
+    <Compile Include="ComponentModel\HandledException.vb" />
     <Compile Include="Reflection\VisualBasicSignatureProvider.vb" />
     <Compile Include="Resources\resx %28Friend%29\Exceptions.Designer.vb">
       <AutoGen>True</AutoGen>

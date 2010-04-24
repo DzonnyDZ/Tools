@@ -171,6 +171,21 @@ Public Class ConsoleT
         ''' <remarks>It is not indicated which user is being logging-off.</remarks>
         LogOff = API.Console.ControlType.CTRL_LOGOFF_EVENT
     End Enum
+
+    ''' <summary>Permanently prevents console window from being closed by user (removes/dsiables the close button)</summary>
+    ''' <remarks>This change cannot be easily reverted.
+    ''' <para>This method uses approch descriped here: <a href="http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&x=10&y=12">http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&x=10&y=12</a>.</para>
+    ''' <para>User still can close console window via task manager or via taskbar context menu in Windows 7.</para>
+    ''' </remarks>
+    ''' <exception cref="API.Win32APIException">An error occured</exception>
+    ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+    Shared Sub PreventClose()
+        'http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&x=10&y=12
+        Dim hMenu As Integer = API.GetSystemMenu(GetHandle.Handle, False)
+        If Not API.DeleteMenu(hMenu, 6, API.enmSelectMenuMethod.MF_BYPOSITION) Then
+            Throw New API.Win32APIException
+        End If
+    End Sub
 End Class
 
 
