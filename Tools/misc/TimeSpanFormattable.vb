@@ -102,6 +102,13 @@ Public Structure TimeSpanFormattable
     Public Shared Function TryParse(ByVal s As String, ByRef result As TimeSpanFormattable) As Boolean
         Return TimeSpan.TryParse(s, result.Inner)
     End Function
+    ''' <summary>Constructs a new <see cref="TimeSpanFormattable"/> object from a time interval specified in a string. Parameters specify the time interval and the variable where the new <see cref="TimeSpanFormattable"/> object is returned.</summary>
+    ''' <param name="s">A string that specifies a time interval.</param>
+    ''' <param name="result">When this method returns, contains an object that represents the time interval specified by s, or <see cref="System.TimeSpan.Zero"/> if the conversion failed. This parameter is passed uninitialized.</param>
+    ''' <returns>true if s was converted successfully; otherwise, false. This operation returns false if the s parameter is null, has an invalid format,represents a time interval less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/>, or has at least one days, hours, minutes, or seconds component outside its valid range.</returns>
+    Public Shared Function TryParse(ByVal s As String, ByVal formatProvider As IFormatProvider, ByRef result As TimeSpanFormattable) As Boolean
+        Return TimeSpan.TryParse(s, formatProvider, result.Inner)
+    End Function
 #End Region
 #Region "Properties"
     ''' <summary>Gets the number of ticks that represent the value of the current <see cref="TimeSpanFormattable"/> structure.</summary>

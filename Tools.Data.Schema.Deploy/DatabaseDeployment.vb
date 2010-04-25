@@ -39,9 +39,9 @@ Public Class DatabaseDeployment
         If connectionString Is Nothing Then Throw New ArgumentNullException("connectionString")
         If databaseName Is Nothing Then Throw New ArgumentNullException("databaseName")
         If manifestPath Is Nothing Then Throw New ArgumentNullException("manifestPath")
-        If connectionString = "" Then Throw New ArgumentException("connectionString cannot be an empty string", "connectionString")
-        If databaseName = "" Then Throw New ArgumentException("databaseName cannot be an empty string", "databaseName")
-        If manifestPath = "" Then Throw New ArgumentException("manifestPath cannot be an empty string", "manifestPath")
+        If connectionString = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "connectionString"), "connectionString")
+        If databaseName = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "databaseName"), "databaseName")
+        If manifestPath = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "manifestPath"), "manifestPath")
         _ConnectionString = connectionString
         _DatabaseName = databaseName
         _ManifestPath = manifestPath
@@ -67,7 +67,7 @@ Public Class DatabaseDeployment
     ''' <seelaso cref="SqlConnectionStringBuilder.InitialCatalog"/>
     Public Sub New(ByVal connectionString$, ByVal manifestPath$)
         If connectionString Is Nothing Then Throw New ArgumentNullException("connectionString")
-        If connectionString = "" Then Throw New ArgumentException("connectionString cannot be an empty string", "connectionString")
+        If connectionString = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "connectionString"), "connectionString")
         Init(connectionString, New SqlConnectionStringBuilder(connectionString).InitialCatalog, manifestPath)
     End Sub
 #End Region
@@ -116,7 +116,7 @@ Public Class DatabaseDeployment
             Return _DeployScriptPath
         End Get
         Set(ByVal value$)
-            If Deployed Then Throw New ObjectDisposedException("Value of the DeployScriptPath property cannot be changed once deployment attempt has been done.")
+            If Deployed Then Throw New ObjectDisposedException(String.Format(My.Resources.err_CannotChangeValueOnceDeployed, "DeployScriptPath"))
             _DeployScriptPath = value
         End Set
     End Property
@@ -131,7 +131,7 @@ Public Class DatabaseDeployment
     ''' <exception cref="ObjectDisposedException">This instance has been already disposed</exception>
     Public ReadOnly Property Errors() As ReadOnlyCollection(Of DataSchemaError)
         Get
-            If disposedValue Then Throw New ObjectDisposedException("This object has already been disposed")
+            If disposedValue Then Throw New ObjectDisposedException(My.Resources.err_ObjectDisposed)
             Return _Errors.AsReadOnly
         End Get
     End Property
@@ -161,8 +161,8 @@ Public Class DatabaseDeployment
     ''' <exception cref="DeploymentFailedException">An error ocuured while deploying schema to database</exception>
     ''' <remarks>The <see cref="Deploy"/> method can be called only once for each instance of the <see cref="DatabaseDeployment"/> class</remarks>
     Public Sub Deploy()
-        If Deployed Then Throw New InvalidOperationException("This instance has already been used to deploy a database.")
-        If Not IO.File.Exists(ManifestPath) Then Throw New InvalidOperationException("Manifest file not found", New IO.FileNotFoundException("Manifest file not found", ManifestPath))
+        If Deployed Then Throw New InvalidOperationException(My.Resources.err_UsedInstanceUsedAgain)
+        If Not IO.File.Exists(ManifestPath) Then Throw New InvalidOperationException(My.Resources.err_ManifestFileNotFound, New IO.FileNotFoundException(My.Resources.err_ManifestFileNotFound, ManifestPath))
 
         'Initialize error handling
         Dim handler As EventHandler(Of DeploymentContributorEventArgs) = Nothing
@@ -195,7 +195,7 @@ Public Class DatabaseDeployment
             If Not String.IsNullOrEmpty(propertyValue) Then
                 dbSchemaFile = New IO.FileInfo(IO.Path.Combine(manifestFile.DirectoryName, propertyValue))
                 If Not dbSchemaFile.Exists Then
-                    Throw New IO.FileNotFoundException(String.Format("The database schema file {0} does not exist", dbSchemaFile.FullName))
+                    Throw New IO.FileNotFoundException(String.Format(My.Resources.err_DatabaseSchemaFileDoesNotExist, dbSchemaFile.FullName))
                     dbSchemaFile = Nothing
                 End If
             End If
@@ -241,7 +241,7 @@ Public Class DatabaseDeployment
                     If unsetB.Length > 0 Then unsetB.Append(", ")
                     unsetB.Append([property])
                 Next
-                Throw New InvalidOperationException(String.Format("Failed to set some properties - {0}", unsetB))
+                Throw New InvalidOperationException(String.Format(My.Resources.err_FailedSetProperties, unsetB))
             End If
 
             'Final setup
@@ -272,7 +272,7 @@ Public Class DatabaseDeployment
             Next
         Next
         If errorCount > 0 Then
-            Throw New DeploymentFailedException("An error occured while deploying the database." & vbCrLf & GetErrorLog())
+            Throw New DeploymentFailedException(My.Resources.err_Deploy & vbCrLf & GetErrorLog())
         End If
     End Sub
 
@@ -286,7 +286,7 @@ Public Class DatabaseDeployment
             Dim header As DataSchemaModelHeader = DataSchemaModel.ReadDataSchemaModelHeader(input.FullName, True)
             Dim manager As New ExtensionManager(header.DatabaseSchemaProviderName)
             If Not manager.DatabaseSchemaProvider.SchemaVersionSupported(header.SchemaVersion) Then
-                Throw New DeploymentFailedException(String.Format("Database schema provider {0} does not support schema file version '{1}'.", manager.DatabaseSchemaProvider.GetType.Name, header.SchemaVersion)) 'ModelSchema_NotSupportedDbSchemaVersionError
+                Throw New DeploymentFailedException(String.Format(My.Resources.err_ProviderVsSchemaVersionConflict, manager.DatabaseSchemaProvider.GetType.Name, header.SchemaVersion)) 'ModelSchema_NotSupportedDbSchemaVersionError
             End If
             eManager = manager
         Catch ex As XmlException

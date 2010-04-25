@@ -9,6 +9,18 @@
         <member name="N:Tools">
             <summary>Root namespace for all tools in the ĐTools project</summary>
         </member>
+        <member name="N:Tools.DataT">
+            <summary>Contains classes related to databse access</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
+        <member name="N:Tools.DataT.SchemaT">
+            <summary>Contains classes related to database schemas</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
+        <member name="N:Tools.DataT.SchemaT.DeployT">
+            <summary>Contains classes that can be uded to deploy database schemas</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
         <member name="N:Tools.Experimental">
             <summary>This namespace contains tools that are in very unstable stage of development. Those tools come from the Experimental.dll assembly.</summary>
             <remarks>Everything in this namespace may be changed without noticing.

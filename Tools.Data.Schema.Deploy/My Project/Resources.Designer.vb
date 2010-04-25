@@ -59,5 +59,86 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} cannot be an empty string.
+        '''</summary>
+        Friend ReadOnly Property err_CannotBeEmptyString() As String
+            Get
+                Return ResourceManager.GetString("err_CannotBeEmptyString", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Value of the {0} property cannot be changed once deployment attempt has been done..
+        '''</summary>
+        Friend ReadOnly Property err_CannotChangeValueOnceDeployed() As String
+            Get
+                Return ResourceManager.GetString("err_CannotChangeValueOnceDeployed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The database schema file {0} does not exist.
+        '''</summary>
+        Friend ReadOnly Property err_DatabaseSchemaFileDoesNotExist() As String
+            Get
+                Return ResourceManager.GetString("err_DatabaseSchemaFileDoesNotExist", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to An error occured while deploying the database..
+        '''</summary>
+        Friend ReadOnly Property err_Deploy() As String
+            Get
+                Return ResourceManager.GetString("err_Deploy", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Failed to set some properties - {0}.
+        '''</summary>
+        Friend ReadOnly Property err_FailedSetProperties() As String
+            Get
+                Return ResourceManager.GetString("err_FailedSetProperties", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Manifest file not found.
+        '''</summary>
+        Friend ReadOnly Property err_ManifestFileNotFound() As String
+            Get
+                Return ResourceManager.GetString("err_ManifestFileNotFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This object has already been disposed.
+        '''</summary>
+        Friend ReadOnly Property err_ObjectDisposed() As String
+            Get
+                Return ResourceManager.GetString("err_ObjectDisposed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Database schema provider {0} does not support schema file version &apos;{1}&apos;..
+        '''</summary>
+        Friend ReadOnly Property err_ProviderVsSchemaVersionConflict() As String
+            Get
+                Return ResourceManager.GetString("err_ProviderVsSchemaVersionConflict", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This instance has already been used to deploy a database..
+        '''</summary>
+        Friend ReadOnly Property err_UsedInstanceUsedAgain() As String
+            Get
+                Return ResourceManager.GetString("err_UsedInstanceUsedAgain", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace
