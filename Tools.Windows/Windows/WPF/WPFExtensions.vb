@@ -1,13 +1,15 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Windows
 Imports System.Windows.Media
+Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF
     ''' <summary>Contains varios extenstion functions related to Windows Presentation Foundation</summary>
     ''' <version version="1.5.2">Module introduced</version>
     Public Module WpfExtensions
-        ''' <summary>Gets parent of given <see cref="DependencyObject"/></summary>
+#Region "Visual Tree"
+        ''' <summary>Gets parent (in visual tree) of given <see cref="DependencyObject"/></summary>
         ''' <param name="obj"><see cref="DependencyObject"/> to get parent of</param>
         ''' <returns>Parent of given dependency object; null when <paramref name="obj"/> is null or no parent can be found</returns>
         ''' <remarks>Parent is obtained either via <see cref="ContentOperations.GetParent"/> for <see cref="ContentElement">ContentElement</see> or via <see cref="VisualTreeHelper.GetParent"/>.</remarks>
@@ -23,11 +25,11 @@ Namespace WindowsT.WPF
             End If
             Return VisualTreeHelper.GetParent(obj)
         End Function
-        ''' <summary>Looks for ancestor of givenm <see cref="DependencyObject"/> of given type</summary>
+        ''' <summary>Looks for visual tree ancestor of given <see cref="DependencyObject"/> of given type</summary>
         ''' <param name="obj">A <see cref="DependencyObject"/> to get ancestor of</param>
         ''' <typeparam name="TParent">Type of ancestor to get</typeparam>
         ''' <returns>Nearest ancestor of <paramref name="obj"/> which of type <typeparamref name="TParent"/>; null when such ancestor cannot be found.</returns>
-        ''' <remarks>This function uses <see cref="GetParent"/> to get parents of investigated <see cref="DependencyObject"´>DependencyObjects</see>.</remarks>
+        ''' <remarks>This function uses <see cref="GetParent"/> to get parents of investigated <see cref="DependencyObject">DependencyObjects</see>.</remarks>
         ''' <seelaso cref="GetParent"/>
         ''' <version stage="Nightly" version="1.5.3">This function is new in version 1.5.3</version> 
         <Extension()> Public Function GetParent(Of TParent As DependencyObject)(ByVal obj As DependencyObject) As TParent
@@ -97,6 +99,86 @@ Namespace WindowsT.WPF
         <Extension()> Public Function FindVisualChild(Of T As DependencyObject)(ByVal parent As DependencyObject, ByVal condition As Func(Of T, Boolean)) As T
             Return parent.FindVisualChild(Function(a) If(TypeOf a Is T, condition(a), False))
         End Function
+#End Region
+
+#Region "Logical Tree"
+        ''' <summary>Searches for ancestor of given WPF object of given type in logical tree</summary>
+        ''' <param name="obj">Object to find ancestor of</param>
+        ''' <typeparam name="TAncestor">Type of ancestor to find. This type must be or derive from <see cref="DependencyObject"/>.</typeparam>
+        ''' <returns>The closest ancestor of object <paramref name="obj"/> which's type is <typeparamref name="TAncestor"/>. Null where there is no such ancestor.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="obj"/> is null</exception>
+        ''' <remarks>
+        ''' This function uses <see cref="ContentOperations.GetParent"/> to walk visual tree upwards from <paramref name="obj"/>.
+        ''' <para>If <typeparamref name="TAncestor"/> is <see cref="Window"/> (not type derived from <see cref="Window"/>) <see cref="Window.GetWindow"/> is used instead.</para>
+        ''' </remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function FindAncestor(Of TAncestor As DependencyObject)(ByVal obj As DependencyObject) As TAncestor
+            If obj Is Nothing Then Throw New ArgumentNullException("obj")
+            If GetType(TAncestor).Equals(GetType(Window)) Then Return CObj(Window.GetWindow(obj))
+            Dim currobj As DependencyObject = obj
+            Do
+                currobj = LogicalTreeHelper.GetParent(obj)
+                If currobj Is Nothing Then Return Nothing
+                If TypeOf currobj Is TAncestor Then Return currobj
+            Loop
+            Return Nothing
+        End Function
+#End Region
+
+#Region "Windows"
+        ''' <summary>Sets windows position and size. Prevents window from leaking out of screen.</summary>
+        ''' <param name="Window">Window to set position of</param>
+        ''' <param name="Position">Proposed position and size of <paramref name="Window"/> in window client coordinates</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
+        ''' <remarks>If <paramref name="Position"/> <see cref="System.Drawing.Rectangle.IsEmpty">is empty</see>, neither window position nor size is set, but off-screen prevention alghoritm is run for window current position.</remarks>
+        <Extension()>
+        Public Sub SetWindowPosition(ByVal Window As Window, ByVal Position As System.Drawing.Rectangle)
+            If Window Is Nothing Then Throw New ArgumentNullException("Window")
+            If Not Position.IsEmpty Then
+                Window.Left = Position.Left
+                Window.Top = Position.Top
+                Window.Height = Position.Height
+                Window.Width = Position.Width
+            End If
+
+            Dim winTopLeft = PresentationSource.FromVisual(Window).CompositionTarget.TransformToDevice.Transform(New Point(Window.Left, Window.Top))
+            Dim winBottomRight = PresentationSource.FromVisual(Window).CompositionTarget.TransformToDevice.Transform(New Point(Window.Left + Window.ActualWidth, Window.Top + Window.ActualHeight))
+            Dim winRect = System.Drawing.Rectangle.FromLTRB(winTopLeft.X, winTopLeft.Y, winBottomRight.X, winBottomRight.Y)
+
+            Dim winScreen = Forms.Screen.FromRectangle(winRect)
+
+            If winScreen.WorkingArea.Contains(winRect) Then Exit Sub
+
+            Dim Left = winScreen.GetNeighbourScreen(Direction.Left)
+            Dim Right = winScreen.GetNeighbourScreen(Direction.Right)
+            Dim Top = winScreen.GetNeighbourScreen(Direction.Top)
+            Dim Bottom = winScreen.GetNeighbourScreen(Direction.Bottom)
+
+            Dim MoveRight = 0%
+            Dim MoveDown = 0%
+
+            If winRect.Left < winScreen.WorkingArea.Left AndAlso Left Is Nothing Then MoveRight = winScreen.WorkingArea.Left - winRect.Left
+            If winRect.Top < winScreen.WorkingArea.Top AndAlso Top Is Nothing Then MoveDown = winScreen.WorkingArea.Top - winRect.Top
+            If winRect.Bottom > winScreen.WorkingArea.Bottom AndAlso Bottom Is Nothing Then MoveDown = winScreen.WorkingArea.Bottom - winRect.Bottom
+            If winRect.Right > winScreen.WorkingArea.Right AndAlso Right Is Nothing Then MoveRight = winScreen.WorkingArea.Right - winRect.Right
+
+            If MoveRight <> 0 OrElse MoveDown <> 0 Then
+                Dim newloc = PresentationSource.FromVisual(Window).CompositionTarget.TransformFromDevice.Transform(New Point(winRect.Left + MoveRight, winRect.Top + MoveDown))
+                Window.Left = newloc.X
+                Window.Top = newloc.Y
+            End If
+        End Sub
+        ''' <summary>Gtes size and location of the <see cref="Window"/></summary>
+        ''' <param name="Window">A <see cref="Window"/> to get size and location of</param>
+        ''' <returns>Rectangle of <paramref name="Window"/> in window coordinates</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
+        <Extension()> Public Function GetWindowPosition(ByVal Window As Window) As System.Drawing.Rectangle
+            If Window Is Nothing Then Throw New ArgumentNullException("Window")
+            Return New System.Drawing.Rectangle(Window.Left, Window.Top, Window.ActualWidth, Window.ActualHeight)
+        End Function
+
+#End Region
     End Module
 End Namespace
 #End If

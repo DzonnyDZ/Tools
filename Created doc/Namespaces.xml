@@ -9,6 +9,10 @@
         <member name="N:Tools">
             <summary>Root namespace for all tools in the ĐTools project</summary>
         </member>
+        <member name="N:Tools.ApplicationServicesT">
+            <summary>Contains classes providing functionality related to application development</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
         <member name="N:Tools.DataT">
             <summary>Contains classes related to databse access</summary>
             <version version="1.5.3">This namespace is new in version 1.5.3</version>
@@ -19,6 +23,10 @@
         </member>
         <member name="N:Tools.DataT.SchemaT.DeployT">
             <summary>Contains classes that can be uded to deploy database schemas</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
+        <member name="N:Tools.DataT.ObjectsT">
+            <summary>Contains classes related to Entity Framework</summary>
             <version version="1.5.3">This namespace is new in version 1.5.3</version>
         </member>
         <member name="N:Tools.Experimental">

@@ -127,6 +127,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Deployment" />
@@ -175,6 +176,7 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="ApplicationServices\ApplicationServices.vb" />
     <Compile Include="CodeDom\CodeDom.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -220,6 +222,7 @@
     <Compile Include="Data\LinqToSql\LinqToSqlExtensions.vb" />
     <Compile Include="Data\Metadata\MetadataConnection.vb">
     </Compile>
+    <Compile Include="Data\Objects\EntityFrameworkExtensions.vb" />
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
     <Compile Include="Drawing\Design\NewEditor.vb" />
     <Compile Include="Drawing\Design\UITypeEditor.vb">

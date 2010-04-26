@@ -8,6 +8,7 @@ Namespace WindowsT.InteropT
     ''' <summary>Contains extension methods for WPF - WinForms interoperability</summary>
     ''' <version version="1.5.3." stage="Alpha">Introduced new overloads to <see cref="InteropExtensions.Show"/> and <see cref="InteropExtensions.ShowDialog"/> methods to support <see cref="Interop.IWin32Window"/>.</version>
     Public Module InteropExtensions
+#Region "Images"
         ''' <summary>Converts <see cref="Drawing.Image"/> to WPF <see cref="BitmapSource"/></summary>
         ''' <param name="Image">An <see cref="Drawing.Image"/></param>
         ''' <returns><see cref="BitmapSource"/> created from <paramref name="Image"/>; null when <paramref name="Image"/> is null.</returns>
@@ -51,6 +52,65 @@ Namespace WindowsT.InteropT
             Return New Drawing.Bitmap(ms)
         End Function
 
+#Region "Color"
+        ''' <summary>Gets the 32-bit ARGB value of given <see cref="Media.Color"/> structure.</summary>
+        ''' <param name="Color">Color to get ARGB value of</param>
+        ''' <returns>The 32-bit ARGB value of <paramref name="Color"/>.</returns>
+        ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
+        <Extension()> _
+        Public Function ToArgb(ByVal Color As Media.Color) As Integer
+            Return System.Drawing.Color.FromArgb(Color.A, Color.R, Color.G, Color.B).ToArgb
+        End Function
+        ''' <summary>Gets the 32-bit ARGB value of given <see cref="Media.Color"/> structure.</summary>
+        ''' <param name="Color">COlor to get ARGB value of or null</param>
+        ''' <returns>The 32-bit ARGB value of <paramref name="Color"/>, or null when <paramref name="Color"/> is null.</returns>
+        ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
+        <Extension()> _
+        Public Function ToArgb(ByVal Color As Media.Color?) As Integer?
+            If Color.HasValue Then
+                Return Color.Value.ToArgb
+            Else
+                Return Nothing
+            End If
+        End Function
+        ''' <summary>Gets <see cref="System.Drawing.Color"/> equivalent to given <see cref="Windows.Media.Color"/></summary>
+        ''' <param name="Color"><see cref="Windows.Media.Color"/> to get <see cref="System.Drawing.Color"/> for</param>
+        ''' <returns><see cref="System.Drawing.Color"/> initialized to same ARGB as <paramref name="Color"/></returns>
+        ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
+        <Extension()>
+        Function ToColor(ByVal Color As Windows.Media.Color) As System.Drawing.Color
+            Return System.Drawing.Color.FromArgb(Color.A, Color.R, Color.G, Color.B)
+        End Function
+        ''' <summary>Gets <see cref="System.Drawing.Color"/> equivalent to given <see cref="Windows.Media.Color"/></summary>
+        ''' <param name="Color"><see cref="Windows.Media.Color"/> to get <see cref="System.Drawing.Color"/> for</param>
+        ''' <returns><see cref="System.Drawing.Color"/> initialized to same ARGB as <paramref name="Color"/>; null when <paramref name="Color"/> is null</returns>
+        ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
+        <Extension()>
+        Function ToColor(ByVal Color As Windows.Media.Color?) As System.Drawing.Color?
+            If Color Is Nothing Then Return Nothing
+            Return System.Drawing.Color.FromArgb(Color.Value.A, Color.Value.R, Color.Value.G, Color.Value.B)
+        End Function
+        ''' <summary>Gets <see cref="Windows.Media.Color"/> equivalent to given <see cref="System.Drawing.Color"/></summary>
+        ''' <param name="Color"><see cref="System.Drawing.Color"/> to get <see cref="Windows.Media.Color"/> for</param>
+        ''' <returns><see cref="Windows.Media.Color"/> initialized to same ARGB as <paramref name="Color"/></returns>
+        ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
+        <Extension()>
+        Function ToColor(ByVal Color As System.Drawing.Color) As Windows.Media.Color
+            Return Windows.Media.Color.FromArgb(Color.A, Color.R, Color.G, Color.B)
+        End Function
+        ''' <summary>Gets <see cref="Windows.Media.Color"/> equivalent to given <see cref="System.Drawing.Color"/></summary>
+        ''' <param name="Color"><see cref="System.Drawing.Color"/> to get <see cref="Windows.Media.Color"/> for</param>
+        ''' <returns><see cref="Windows.Media.Color"/> initialized to same ARGB as <paramref name="Color"/>; null when <paramref name="Color"/> is null</returns>
+        ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
+        <Extension()>
+        Function ToColor(ByVal Color As System.Drawing.Color?) As Windows.Media.Color?
+            If Color Is Nothing Then Return Nothing
+            Return Windows.Media.Color.FromArgb(Color.Value.A, Color.Value.R, Color.Value.G, Color.Value.B)
+        End Function
+#End Region
+#End Region
+
+#Region "Windows"
         ''' <summary>Shows <see cref="Forms.Form"/> floating over <see cref="Window"/></summary>
         ''' <param name="Form"><see cref="Forms.Form"/> to be shown</param>
         ''' <param name="Owner">Owner <see cref="Window"/>; can be null</param>
@@ -190,6 +250,7 @@ Namespace WindowsT.InteropT
             Dim ioh As New Interop.WindowInteropHelper(Window)
             ioh.Owner = If(Owner IsNot Nothing, Owner.Handle, IntPtr.Zero)
         End Sub
+#End Region
     End Module
 End Namespace
 #End If

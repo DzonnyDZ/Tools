@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices, System.Linq, Tools.ExtensionsT
-Namespace Data.LinqToSql
+Namespace DataT.LinqToSql
 #If Config <= Nightly Then
     ''' <summary>Contains extension methods related to LINQ-to-SQL technology</summary>
     ''' <version version="1.5.3" stage="Nightly">This module is new in version 1.5.3</version>
