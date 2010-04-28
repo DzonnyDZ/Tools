@@ -551,7 +551,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <dt><ms-specific><code>lpstruct</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPStruct">LPStruct</see></code>)</ms-specific></dt>
                 <dd><ms-specific>Pointer to C-style structure. Used to marshal managed formatted types.</ms-specific></dd>
                 <dt><ms-specific><code>lpstr</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.LPTStr">LPTStr</see></code>)</ms-specific></dt>
-                <dd><ms-specific>Pointer to nulllchar-terminated platform-specific. (ANSI or Unicode) characters. Codepage is platform-dependent.</ms-specific></dd>
+                <dd><ms-specific>Pointer to nullchar-terminated platform-specific. (ANSI or Unicode) characters. Codepage is platform-dependent.</ms-specific></dd>
                 <dt><ms-specific><code>struct</code> (<code><see cref="F:System.Runtime.InteropServices.UnmanagedType.Struct">Struct</see></code>)</ms-specific></dt>
                 <dd><ms-specific>C-style strucrure. Used for marshaling managed formatted types.</ms-specific></dd>
             </dl>
@@ -1172,9 +1172,211 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
 			<p>Assembly names (for this purpose) are case-seinsitive even under OS with case-insensitive file system.</p>
 			<p><ms-specific>ilasm does not require <code>.assembly extern mscorlib</code>. It inserts in automatically.</ms-specific></p>
         </section>
-        <section id="_classB" guid="72c29029-fd4b-4a0f-8e48-8512bf174aa1">
+     
+		<section id="_classB" guid="72c29029-fd4b-4a0f-8e48-8512bf174aa1">
             <header><code>.class {}</code></header>
-			<introduction/>
+			<introduction>Defines a class (or a structure or a delegate or an interface)</introduction>
+			<syntax>.class <ref>Attrs</ref> <ref>Name</ref> [&lt;<ref>GenericSpec</ref>&gt;] [extends <ref>ExtendedType</ref>  [implements <ref>ImplementedTypes</ref>]] {}</syntax>
+			<syntax-dl>
+				<dt><code-ref>Attrs</code-ref> (whitespace-separetd list of <ref>ClassAttr</ref>s)</dt>
+				<dd>Class attributes sepeared with whitespaces. From syntactical point-of-view it's possible to use same attribute more than once.</dd>
+				<dl>
+					<dt-code id="_classB-abstract">abstract</dt-code>
+					<dd>
+						Abstract (VB: <code>MustInherit</code>) class.
+						It's impossible to create instance of abstract class.
+						In case the class contains an abstract method it must be declared abstract.
+					</dd>
+					<dt-code id="_classB-sealed">sealed</dt-code>
+					<dd>The class that canno be derived (VB: <code>NotInheritable</code>).</dd>
+					<dd>The class that is <code>abstract</code> and <code>sealed</code> at same time should contain only static members (like standard modules in VB).</dd>
+					<break/>
+					<dt-code id="_classB-ansi">ansi</dt-code>
+					<dd>Use ANSI encoding for passing strings between managed and unmanaged code.</dd>
+					<dt-code id="_classB-autochar">autochar</dt-code>
+					<dd>Automatically select encoding (according to platform) to be used when passing strings between managed and unmanaged code.</dd>
+					<dt-code id="_classB-unicode">unicode</dt-code>
+					<dd>Use Unicode encoding when passing strings between managed and unmanaged code.</dd>
+					<dd rel="summary">
+						<code>ansi</code>, <code>autochar</code> and <code>unicode</code> define string marshaling from/to unmanaged code.
+						Cannot be combined. Default value is <code>ansi</code>.
+					</dd>
+					<break/>
+					<dt-code id="_classB-auto">auto</dt-code>
+					<dd>Let CLI to align instance fields in memory as it wishes.</dd>
+					<dt-code id="_classB-explicit">explicit</dt-code>
+					<dd>CLI will align instance fields in memory as stated for individual fields. Not allowed for generic types.</dd>
+					<dt-code id="_classB-sequential">sequential</dt-code>
+					<dd>CLI will align instance fields sequentially as they appear in metadata table.</dd>
+					<dd rel ="summary">
+						<code>auto</code>, <code>explicit</code> and <code>sequential</code> define alignment of instance fields of the class in memory.
+						Cannot be combined. Default value is <code>auto</code>.
+					</dd>
+					<break/>
+					<dt-code id="_classB-interface">interface</dt-code>
+					<dd>Defines that the class is an <internal-link ref="Interface">interface</internal-link>.</dd>
+					<break/>
+					<dt-code id="_classB-nested_assembly">nested assembly</dt-code>
+					<dd>Nested type acessible only from the assembly it's defined in (VB: <code>Friend</code>).</dd>
+					<dt-code id="_classB-nested_famandassem">nested famandassem</dt-code>
+					<dd>
+						Nested type acessible only from the assembly it's defined in and within that assembly only from types derived from containing typ.
+						This is AND-combination of <code>nested assembly</code> and <code>nested familly</code>.
+						(VB: not available).
+					</dd>
+					<dt-code id="_classB-nested_family">nested family</dt-code>
+					<dd>Netsed type accessible only from types derived from containing type (VB: <code>Protected</code>).</dd>
+					<dt-code id="_classB-nested_famorassem">nested famorassem</dt-code>
+					<dd>
+						Nested type accessible from assembly where it is defined or from types derived from containing type.
+						This is OR-combination of <code>nested assembly</code> and <code>nested family</code> (VB: <code>Protected Friend</code>).
+					</dd>
+					<dt-code id="_classB-nested_private">nested private</dt-code>
+					<dd>Nested type accessible only from containing type (VB: <code>Private</code>)</dd>
+					<dt-code id="_classB-nested_public">nested public</dt-code>
+					<dd>Nested type accessible everywhere where containing type is accessible (VB: <code>Public</code>)</dd>
+					<dt  id="_classB-private">private</dt>
+					<dd>Non-nested type accessible only from assembly it's defined in (VB: <code>Friend</code>)</dd>
+					<dt-code  id="_classB-public">public</dt-code>
+					<dd>Non-nested type visible from anywhere.</dd>
+					<dd rel="summary">
+						<code>nested</code> ..., <code>private</code> and <code>public</code> defines class visibility (accessibility).
+						Only one of them can be used.
+						In case of classes defined inside classes one of <code>nested</code> ... modifiers must be used.
+						In case of classes defined at assembly level (top-level) <code>private</code> or <code>public</code> must be used.
+						Default visibility for top-level classes is <code>public</code>.
+						Default visibility for nested classes is <code>nested private</code>.
+					</dd>
+					<break/>
+					<dt-code id="_classB-beforefieldinit">beforefieldinit</dt-code>
+					<dd>Instructs CLI to initialize static fields of type before first call to any static method of that type.</dd>
+					<dt-code id="_classB-rtspecialname">rtspecialname</dt-code>
+					<dd>
+						Indicates that type name has special meaning for CLI. Currently there are no special names of types defined.
+						In case <code>rtspecialname</code> is used <code>specialname</code> must be used as well.
+					</dd>
+					<dd>reserved for future use.</dd>
+					<dt-code id="_classB-serializable">serializable</dt-code>
+					<dd>Reserved for future use. It'll mean that fields are serialised to data stream. Serialization support will provided by CLI implementation.</dd>
+					<dd><ms-specific>Supported.</ms-specific></dd>
+					<dt-code id="_classB-specialname">specialname</dt-code>
+					<dd>Indicates that type name has special meaning for tools other than CLI.</dd>
+					<dt-code  id="_classB-import"><ms-specific>import</ms-specific></dt-code>
+					<dd><ms-specific>The type is imported from COM library</ms-specific></dd>
+				</dl>
+				<dt><code-ref>Name</code-ref> (<ref ref="Id">Id</ref>)</dt>
+				<dd>The name of the class</dd>
+				<dt><code-ref>GenericSpecs</code-ref> (comma-seperated list of <ref ref="GenPar">GenPar</ref>s)</dt>
+				<dd>Specifies generic parameters</dd>
+				<dt><code-ref>ExtendedType</code-ref> (<ref ref="TypeSpec">TypeSpec</ref>)</dt>
+				<dd>The type this the class derives from. When ommited <see cref="T:System.Object"/> is assumed.</dd>
+				<dt><code-ref>ImplementedTypes</code-ref> (comma-seperated list of <ref ref="TypeSpec">TypeSpec</ref>s).</dt>
+				<dd>Comma-separeted list ot types (interfaces) this class implements</dd>
+			</syntax-dl>
+			<parents>
+				<li>File</li>
+				<internal-link ref="_classB">.class {}</internal-link>
+			</parents>
+			<children>
+				<internal-link ref="_classB">.class {}</internal-link>
+				<internal-link ref="_custom">.custom</internal-link>
+				<internal-link ref="_data">.data</internal-link>
+				<internal-link ref="_eventB">.event {}</internal-link>
+				<internal-link ref="_field">.field</internal-link>
+				<internal-link ref="_methodB">.method {}</internal-link>
+				<internal-link ref="_override">.override</internal-link>
+				<internal-link ref="_pack">.pack</internal-link>
+				<internal-link ref="_param_type">.param type</internal-link>
+				<internal-link ref="_propertyB">.property {}</internal-link>
+				<internal-link ref="_isze">.size</internal-link>
+				<internal-link ref="_line">.line</internal-link>
+				<internal-link ref="_permissionset">.permissionset</internal-link>
+				<internal-link ref="_permission">.permission</internal-link>
+			</children>
+			<section guid="8ae835a1-4caa-420e-a8c9-6cd4b7bc65e4" id="Types-of-types" r="II.11">
+				<header>Types of types</header>
+				<introduction>
+					New types are defined by defining custom classes.
+					New types can be also defined as generic instances, arrays, vectors or pointers.
+					This sub-chapter describes types declared using the <internal-link ref="_classB">.class {}</internal-link> directive.
+				</introduction>
+				<dl>
+					<dt id="Reference-types"><b>Reference types</b></dt>
+					<dd>
+						Reference types are basic kind of types in CLI.
+						Each reference type derives from <see cref="T:System.Object"/> or from class derived from <see cref="T:System.Object"/> (with exception of special-purpose classes - see below).
+						No additional restrictions applies for reference types.
+					</dd>
+					<dd>Reference types are passed by reference when passed to methods, returned from methods or assigned to fields.</dd>
+					<dt id="Interfaces" r="II.12"><b>Interfaces</b></dt>
+					<dd>
+						Interface is special abstract type defined by the <internal-link ref="_classB-interface"><code>interface</code></internal-link> attribute.
+						An interface can be implemebted by either reference or value type.
+						To implement an interface a class must implement all abstract methods of the interface or derive from a class which implements them.
+						An exception is an abstract class which don't need to implement (all) those abstract methods, because instance of an abstract class cannot be created.
+						Interface methods not implemented by an abstract class must be implemented in a non-abstract class derived from such abstract class.
+					</dd>
+					<dd>
+						An interface can contain any static members (fields, methods etc.).
+						All instance methods of interfaces must be virtual and abstract. Interfaces cannot have instance fields.
+					</dd>
+					<dd>
+						It's not enough for an interface to be implemented by a type to implement all interface methods.
+						It must be explicitly stated for the type that it implements the interface (the <code>implements</code> clause of the <internal-link ref="_classB">.class {}</internal-link> directive.
+						In case a class implements an interface which requires implementation of another interface it's enough for class to specify implementation of of the more-specific of both interfaces (the derived one).
+					</dd>
+					<dd>
+						Interface can specify that it requires implementation of other interface(s) - derives from it/them.
+						(Technically it's not that an interface derives other interface(s) - it implements them.)
+					</dd>
+					<dd>For a method to implement a method of an interface following options are available:</dd>
+					<dl>
+						<dt>By signature</dt>
+						<dd>Class method has same name and signature as interface method.</dd>
+						<dt>By inheritance</dt>
+						<dd>Existing implementation of an interface is derived from base class.</dd>
+						<dt>Explict implementation</dt>
+						<dd>Uisng <code>MethodImpl</code> - the <internal-link ref="_override">.override</internal-link> directive.</dd>
+					</dl>
+					<dd>
+						The documentation does not deal with interface-level properties and events.
+						From practical usage we can deduce that same rules as for method applies.
+						Also note that properties and events are in fact only groups of related methods.
+					</dd>
+					<dt id="Value-types" r="II.13"><b>Value types</b></dt>
+					<dd>
+						Value types are not passed as reference but as contents of memory (they are copied when passed!).
+						Value types should be used for storing small amount of data.
+						Higher languages represents them as structures (while reference types are represented as classes).
+						Relation between value and reference type in CLI is similat to relation between structure and pointer to structure in C++.
+						Typical value types are complex number, date etc. 
+					</dd>
+					<dd>
+						Each value type can be easily transformed to corresponding reference type by a process called boxing.
+						Such boxed value type can be converted back to value type by a process of unboxing.
+					</dd>
+					<dd>Each value type must be <code-ref ref="_classB-sealed">sealed</code-ref> (it cannot be derived from) and it's base class must be either <see cref="T:System.ValueType"/> or <see cref="T:System.Enum"/>.</dd>
+					<dd>A value type can implement interfaces(s), but such implementation can be utilized only in boxed form.</dd>
+					<dd>
+						Value of non-boxed value type cannot be <code>null</code> and cannot be compared to <code>null</code>.
+						Value types are not treated as instances of other types, so the <internal-link ref="isints">isints</internal-link> instruction cannot be used with them (it can be used with boxed value type).
+					</dd>
+					<dd>
+						Item layout of value types can be controlled in the same way as in reference types.
+						It's usefull when comunicationg with native code.
+					</dd>
+					<dd>Value type can contain neither field of type of itself nor field of type of value type which contains field of that type (value type cannot directly or indirectly contain field of type itself - it would lead to allocation of infinite memory).</dd>
+					<dd>
+						Instance methods of value types obtains managed pointer to current instance to the <code>this</code> variable (while in reference types the <code>this</code> variable contains directly tha value of the refernce type - so a reference).
+					</dd>
+					<dt><b>Enumerations (enums)</b></dt>
+					<dd>
+						Enumerations are used to define set of symbols of the same value type.
+						CLI does not guarantee that value of variable of enum type is one of enum items.
+					</dd>
+					<dd>A type can be an enumeration only when it derives form <see cref="T:System.Enum"/>.</dd>
+				</dl>
+			</section>
         </section>
         <section id="_class_externB" guid="64f89792-5f6e-4725-a562-a2470e5c30a8">
             <header><code>.class extern {}</code></header>

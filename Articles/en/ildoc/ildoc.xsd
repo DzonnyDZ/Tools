@@ -435,7 +435,7 @@
             <!--<xs:element ref="code" minOccurs="1" maxOccurs="1"/>-->
             <xs:element name="code" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
-                    <xs:complexContent>
+                    <xs:complexContent mixed="true">
                         <xs:restriction base="code">
                             <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:restriction>
