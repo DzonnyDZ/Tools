@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Windows
 Imports System.Runtime.InteropServices
+Imports System.Windows.Interop
 
 #If Config <= Alpha Then 'Stage: Alpha
 Namespace WindowsT.InteropT
@@ -250,6 +251,60 @@ Namespace WindowsT.InteropT
             Dim ioh As New Interop.WindowInteropHelper(Window)
             ioh.Owner = If(Owner IsNot Nothing, Owner.Handle, IntPtr.Zero)
         End Sub
+#End Region
+
+#Region "CommonDialogs"
+        ''' <summary>Runs a common dialog box with the specified owner (<see cref="Windows.Window"/>).</summary>
+        ''' <param name="dlg">A dialog to be shown</param>
+        ''' <param name="owner">A <see cref="Windows.Window"/> that will own modal dialog. If null modal dialog is shown without explicit parent.</param>
+        ''' <returns>True if the user clicks OK in the dialog box; otherwise, False.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="dlg"/> is null</exception>
+        ''' <version version="1.3.5">This function is new in version 1.3.5</version>
+        <Extension()>
+        Public Function ShowDialog(ByVal dlg As System.Windows.Forms.CommonDialog, ByVal owner As System.Windows.Window) As Boolean
+            If owner Is Nothing Then Return dlg.ShowDialog() = Forms.DialogResult.OK
+            Return dlg.ShowDialog(New Win32WindowHelper(owner)) = Forms.DialogResult.OK
+        End Function
+        ''' <summary>Runs a common dialog box with the specified owner (<see cref="Interop.IWin32Window"/>).</summary>
+        ''' <param name="owner">An <see cref="Interop.IWin32Window"/> that will own modal dialog. If null modal dialog is shown without explicit parent.</param>
+        ''' <param name="dlg">A dialog to be shown</param>
+        ''' <returns>True if the user clicks OK in the dialog box; otherwise, False.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="dlg"/> is null</exception>
+        ''' <version version="1.3.5">This function is new in version 1.3.5</version>
+        <Extension()>
+        Public Function ShowDialog(ByVal dlg As System.Windows.Forms.CommonDialog, ByVal owner As Interop.IWin32Window) As Boolean
+            If owner Is Nothing Then Return dlg.ShowDialog() = Forms.DialogResult.OK
+            Return dlg.ShowDialog(New Win32WindowHelper(owner)) = Forms.DialogResult.OK
+        End Function
+#Region "Helpers"
+        ''' <summary>Helper class which implements <see cref="Forms.IWin32Window"/> and <see cref="Interop.IWin32Window"/> interfaces for various purposes</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Private Class Win32WindowHelper
+            Implements Forms.IWin32Window, Interop.IWin32Window
+            ''' <summary>CTor - creates a new instance of the <see cref="Win32WindowHelper"/> class from <see cref="Windows.Window"/></summary>
+            ''' <param name="window">A <see cref="Windows.Window"/></param>
+            ''' <exception cref="ArgumentNullException"><paramref name="window"/> is null</exception>
+            Public Sub New(ByVal window As System.Windows.Window)
+                If window Is Nothing Then Throw New ArgumentNullException("window")
+                _Handle = New Windows.Interop.WindowInteropHelper(window).Handle
+            End Sub
+            ''' <summary>CTor - creates a new instance of the <see cref="Win32WindowHelper"/> class from <see cref="Interop.IWin32Window"/></summary>
+            ''' <param name="window">A <see cref="Interop.IWin32Window"/></param>
+            ''' <exception cref="ArgumentNullException"><paramref name="window"/> is null</exception>
+            Public Sub New(ByVal window As Interop.IWin32Window)
+                If window Is Nothing Then Throw New ArgumentNullException("window")
+                _Handle = window.Handle
+            End Sub
+            Private ReadOnly _Handle As IntPtr
+            ''' <summary>Gets the handle to the window represented by the implementer.</summary>
+            ''' <returns>A handle to the window represented by the implementer.</returns>
+            Public ReadOnly Property Handle As System.IntPtr Implements System.Windows.Forms.IWin32Window.Handle, Interop.IWin32Window.Handle
+                Get
+                    Return _Handle
+                End Get
+            End Property
+        End Class
+#End Region
 #End Region
     End Module
 End Namespace
