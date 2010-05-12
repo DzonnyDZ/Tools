@@ -356,7 +356,7 @@ Namespace WindowsT.WPF.DialogsT
     ''' <remarks>Message box user interface is implemented by <see cref="MessageBoxImplementationControl"/>. To change style or template of message box, use that control.</remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     ''' <version version="1.5.3" stage="Beta">Added support for <see cref="Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
-    ''' <version version="1.5.4" stage="Beta">Owner of dialog now can be any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/>.</version>
+    ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/>.</version>
     Public Class MessageBox : Inherits iMsg
         Implements INotifyPropertyChanged
         ''' <summary>Format of title with timer</summary>
@@ -416,7 +416,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <param name="Owner">Parent window of dialog (may be null).  This implementation recognizes values of type <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.DependencyObject"/> (if hosted in <see cref="Windows.Window"/>). Unrecognized owners are treated as null.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="Forms.IWin32Window"/> to <see cref="Object"/> to support <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="Windows.DependencyObject"/> for which <see cref="Windows.Window.GetWindow"/> returns non-null value.</version>
+        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="Windows.DependencyObject"/> for which <see cref="Windows.Window.GetWindow"/> returns non-null value.</version>
         Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
             If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Window = New MessageBoxWindow()

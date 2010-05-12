@@ -42,9 +42,9 @@ Namespace WindowsT.IndependentT
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Fixed: Some static functions throws exception when icon is not set or when default button is used (even implicitly)</version>
     ''' <version version="1.5.3">All owner parameters changed form <see cref="Windows.Forms.IWin32Window"/> to <see cref="Object"/> to support more types of owners - <see cref="Windows.Forms.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.Interop.IWin32Window"/>. Changes are required in derived classes to support this change and those new owners.</version>
-    ''' <version version="1.5.4">WPF (<see cref="WPF.DialogsT.MessageBox"/>) and WinForms (<see cref="FormsT.MessageBox"/>) implementations changed to support any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/> as owner.</version>
-    ''' <version version="1.5.4">Fix: Bug in <see cref="MessageBox.ModalEx_PTEIOWMHS"/> caused that some functions rendered messagebox without buttons (or checkboxes/radios/combobox items).</version>
-    ''' <version version="1.5.4">The <c>Error_xxx</c> methods now show inner exception message as well and throw <see cref="ArgumentNullException"/> (instead of <see cref="NullReferenceException"/>) when exception is null.</version>
+    ''' <version version="1.5.3">WPF (<see cref="WPF.DialogsT.MessageBox"/>) and WinForms (<see cref="FormsT.MessageBox"/>) implementations changed to support any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/> as owner.</version>
+    ''' <version version="1.5.3">Fix: Bug in <see cref="MessageBox.ModalEx_PTEIOWMHS"/> caused that some functions rendered messagebox without buttons (or checkboxes/radios/combobox items).</version>
+    ''' <version version="1.5.3">The <c>Error_xxx</c> methods now show inner exception message as well and throw <see cref="ArgumentNullException"/> (instead of <see cref="NullReferenceException"/>) when exception is null.</version>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
         ''' <summary>Recomended format for displaying timer.</summary>
@@ -3714,7 +3714,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Sound">Sound to be played whne message box is shown.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4" stage="Beta">Fixed: Values in <paramref name="Items"/> are not processed. This bug affected may methods depending on this one.</version>
+        ''' <version version="1.5.3" stage="Beta">Fixed: Values in <paramref name="Items"/> are not processed. This bug affected may methods depending on this one.</version>
         Public Shared Function ModalEx_PTEIOWMHS(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
             Dim box As New FakeBox With {.Options = Options, .Prompt = Prompt, .Title = Title, .Timer = TimeSpan.FromSeconds(Timer), .PlayOnShow = Sound}
             box.Buttons.Clear()
@@ -3743,7 +3743,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIOWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],[Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, Options, Owner, Timer, ShownHandler)
@@ -3758,7 +3758,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
@@ -3774,7 +3774,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWMHB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
@@ -3788,7 +3788,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWS(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
@@ -3802,7 +3802,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
@@ -3813,7 +3813,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTS(ByVal Prompt$, ByVal Title$, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
             Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
@@ -3824,7 +3824,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTB(ByVal Prompt$, ByVal Title$, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
@@ -3836,19 +3836,27 @@ Namespace WindowsT.IndependentT
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <remarks>Title will contain <see cref="Type.Name"/> of exception</remarks>
-        ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is null</exception>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_X](ByVal ex As Exception) As DialogResult
             Return Modal_PTI(GetErrorMessage(ex), ex.GetType.Name, MessageBoxIcons.Error)
+        End Function
+        ''' <summary>Displays modal message box with information about given <see cref="Exception"/> modal to giwen owner</summary>
+        ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is null</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Shared Function Error_XW(ByVal ex As Exception, ByVal owner As Object) As DialogResult
+            Return Modal_PTIW(GetErrorMessage(ex), ex.GetType.Name, MessageBoxIcons.Error, owner)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/> and custom title</summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
         ''' <param name="Title">Message box title</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XT](ByVal ex As Exception, ByVal Title$) As DialogResult
             Return Modal_PTI(GetErrorMessage(ex), Title, MessageBoxIcons.Error)
         End Function
@@ -3860,8 +3868,8 @@ Namespace WindowsT.IndependentT
         ''' <returns>Indicates button clicked by user</returns>   
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XTW](ByVal ex As Exception, ByVal Title$, ByVal Owner As Object) As DialogResult
             Return Modal_PTWBIO(GetErrorMessage(ex), Title, Owner, MessageBoxIcons.Error)
         End Function
@@ -3871,8 +3879,8 @@ Namespace WindowsT.IndependentT
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XBI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return Modal_PTOBIS(GetErrorMessage(ex), ex.GetType.Name, Buttons, Buttons, MessageBoxIcons.Error)
         End Function
@@ -3883,8 +3891,8 @@ Namespace WindowsT.IndependentT
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XTBI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return Modal_PTI(GetErrorMessage(ex), Title, MessageBoxIcons.Error)
         End Function
@@ -3897,9 +3905,9 @@ Namespace WindowsT.IndependentT
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is null</exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that that messagebox was rendered without buttons.</version>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that that messagebox was rendered without buttons.</version>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XBWI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return [Error_XTBWI](ex, ex.GetType.Name, Owner:=Owner, Buttons:=Buttons, Icon:=MessageBoxIcons.Error)
         End Function
@@ -3913,9 +3921,9 @@ Namespace WindowsT.IndependentT
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was shown without buttons.</version>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was shown without buttons.</version>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XTBWI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As Object, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
             Return ModalEx_PTEIOWMHS(GetErrorMessage(ex), Title,
                                      Owner:=Owner, Icon:=GetIconDelegate(Icon),
@@ -3934,9 +3942,9 @@ Namespace WindowsT.IndependentT
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is null</exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
-        ''' <version version="1.5.4">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was rendered without buttons.</version>
-        ''' <version version="1.5.4">Message from inner exceptions is shown as well</version>
-        ''' <version version="1.5.4"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
+        ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was rendered without buttons.</version>
+        ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
+        ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XPTIBWO](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As Object = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
             Return ModalEx_PTEIOWMHS(Prompt & vbCrLf & GetErrorMessage(ex), Title,
                                      Owner:=Owner, Icon:=GetIconDelegate(Icon),

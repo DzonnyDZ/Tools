@@ -104,6 +104,14 @@ Namespace LinqT
             Dim enumerator = collection.GetEnumerator
             Return Not enumerator.MoveNext
         End Function
+        ''' <summary>Gets value indicating if given collection is non-empty</summary>
+        ''' <param name="collection">Collection to check non-emptyness of</param>
+        ''' <returns>True if first element of collection can be enumerated using <paramref name="collection"/>.<see cref="System.Collections.Generic.IEnumerable.GetEnumerator">GetEnumerator</see>.<see cref="IEnumerator.MoveNext">MoveNext</see>.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="collection"/> is null</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Public Function Exists(ByVal collection As IEnumerable) As Boolean
+            Return Not collection.IsEmpty
+        End Function
     End Module
 End Namespace
 #End If
