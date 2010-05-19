@@ -1,4 +1,5 @@
 ﻿''' <summary>Builds a plugin</summary>
+''' <version version="1.5.3">The /cou parameter recognizes %TOTALCMD% as current install directory of Total Commander</version>
 Friend Module Builder
     ''' <summary>Builds a plugin</summary>
     Sub Main()
@@ -101,11 +102,25 @@ Friend Module Builder
         Dim _cou = My.Application.CommandLineArgs.IndexOf("/cou")
         If _cou >= 0 AndAlso _cou < My.Application.CommandLineArgs.Count - 1 Then
             Try
-                Console.WriteLine("Clean copy directory {0}", My.Application.CommandLineArgs(_cou + 1))
-                If IO.Directory.Exists(My.Application.CommandLineArgs(_cou + 1)) Then Generator.DeleteDir(My.Application.CommandLineArgs(_cou + 1), Generator, True)
-                Console.WriteLine("Copy output to {0}", My.Application.CommandLineArgs(_cou + 1))
-                If Not IO.Directory.Exists(My.Application.CommandLineArgs(_cou + 1)) Then IO.Directory.CreateDirectory(My.Application.CommandLineArgs(_cou + 1))
-                My.Computer.FileSystem.CopyDirectory(Generator.OutputDirectory, My.Application.CommandLineArgs(_cou + 1))
+                Dim copyToDir As String = My.Application.CommandLineArgs(_cou + 1)
+                If copyToDir.StartsWith("%TOTALCMD%") Then
+                    Dim installlDir = Nothing
+                    Try
+                        Using key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\Ghisler\Total Commander", False)
+                            installlDir = key.GetValue("InstallDir")
+                        End Using
+                    Catch ex As Exception
+                        Console.Error.WriteLine(My.Resources.e_CannotExpand, "%TOTALCMD%", ex.Message)
+                        Environment.Exit(12)
+                        End
+                    End Try
+                    copyToDir = copyToDir.Replace("%TOTALCMD%", installlDir)
+                End If
+                Console.WriteLine(My.Resources.i_CleanCopyDirectory, copyToDir)
+                If IO.Directory.Exists(copyToDir) Then Generator.DeleteDir(copyToDir, Generator, True)
+                Console.WriteLine(My.Resources.i_CopyOutputTo, copyToDir)
+                If Not IO.Directory.Exists(copyToDir) Then IO.Directory.CreateDirectory(copyToDir)
+                My.Computer.FileSystem.CopyDirectory(Generator.OutputDirectory, copyToDir)
             Catch ex As Exception
                 Console.Error.WriteLine(ex.Message)
                 Environment.Exit(11)

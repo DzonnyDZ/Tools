@@ -9,9 +9,9 @@ using System.Windows.Forms;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace DMKSoftware.CodeGenerators
+namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 {
-    public static class NativeMethods
+    internal static class NativeMethods
     {
         static NativeMethods()
         {

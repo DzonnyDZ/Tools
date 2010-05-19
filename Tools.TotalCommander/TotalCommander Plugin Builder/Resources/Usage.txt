@@ -21,7 +21,8 @@ parameters:
 /pdb          Copy plugin pdb file to outdir. Optional.
 /key <path>   Sign wrapper assembly. Optional. Path to snk file.
               You must generate plugin from strongly named assembly if /key is used.
-/cou <path>   Copies all the output from outdir to another dir, clearing it first. Optional.              
+/cou <path>   Copies all the output from outdir to another dir, clearing it first. Optional.
+              When starts with %TOTALCMD%, it's replaced with current Total Commander installation diractory as specified in 32-bit registry (HKEY_LOCAL_MACHINE\SOFTWARE\Ghisler\Total Commander\InstallDir)
 
 All the operations can be done programatically as well. {0} as reference to your project.
 Fore more informations about how to create managed Total Commander plugin see documentation of the Tools.TotalCommanderT.PluginBuilder.Generator class.

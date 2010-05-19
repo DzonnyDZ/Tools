@@ -1,5 +1,4 @@
 ﻿Imports System.Linq
-Imports DMKSoftware.CodeGenerators
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualStudio.Designer.Interfaces
 Imports System.CodeDom.Compiler
@@ -92,7 +91,7 @@ Module ResXFileGenerator
         Dim ip As New InternalProvider(Provider)
         generator.SetSite(ip)
         generator.ResourceNamespace = rname
-        Dim pOutput(0) As IntPtr
+        Dim pOutput As IntPtr
         Dim OutputSize As UInteger
         Dim Progress As New ProgressMonitor
         Try
@@ -111,13 +110,13 @@ Module ResXFileGenerator
             Environment.Exit(51)
         End Try
         'Alter result
-        If pOutput(0) = IntPtr.Zero Then
+        If pOutput = IntPtr.Zero Then
             Console.WriteLine(My.Resources.NoOutputWasGenerated)
             Environment.Exit(101)
         End If
         Dim bytes(OutputSize) As Byte
-        Marshal.Copy(pOutput(0), bytes, 0, OutputSize)
-        Marshal.FreeCoTaskMem(pOutput(0))
+        Marshal.Copy(pOutput, bytes, 0, OutputSize)
+        Marshal.FreeCoTaskMem(pOutput)
         Dim str = System.Text.Encoding.UTF8.GetString(bytes)
         str = str.TrimStart(ChrW(65279))
         Dim NL As String

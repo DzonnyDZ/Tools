@@ -2,28 +2,20 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace DMKSoftware.CodeGenerators
+namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 {
-	[Guid("AC0A9CFD-1B0A-4e4a-86A1-AB7854A33E23")]
+    /// <summary>RESX file code generator which generates internal (Friend in Visual Basic) classes</summary>
+    /// <version version="1.5.3">This class is new in version 1.5.3. It was moved from namespace <c>DMKSoftware.CodeGenerators</c>.</version>
+    /// <version version="1.5.3">When &lt;LogicalName> is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</version>
+	[Guid("26e153bc-81cf-41cf-a8aa-fe2969b4fde3")]
 	[Description("Extended ResX Internal File Code Generator")]
 	public class InternalResXFileCodeGeneratorEx : BaseResXFileCodeGeneratorEx
     {
-		/// <summary>
-		/// Initializes a new instance of the InternalResXFileCodeGeneratorEx class.
-		/// </summary>
-		public InternalResXFileCodeGeneratorEx()
-		{
-		}
+		/// <summary>CTor - initializes a new instance of the <see cref="InternalResXFileCodeGeneratorEx"/> class.</summary>
+        public InternalResXFileCodeGeneratorEx() { }
 
-		/// <summary>
-		/// Gets the boolean flag indicating whether the internal class is generated.
-		/// </summary>
-		protected override bool GenerateInternalClass
-		{
-			get
-			{
-				return true;
-			}
-		}
+        /// <summary>Gets the boolean flag indicating whether the internal class is generated.</summary>
+        /// <returns>This implementation always returns true.</returns>
+        protected override bool GenerateInternalClass { get { return true; } }
     }
 }

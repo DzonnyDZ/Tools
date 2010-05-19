@@ -1,12 +1,16 @@
 ﻿Imports System.Windows.Forms
 Imports Tools.ComponentModelT
+Imports Tools.WindowsT.IndependentT
 
 '#If Config <= Nightly Then Set in project file
 'Stage: Nightly
 Namespace WindowsT.FormsT
     ''' <summary>This <see cref="Form"/> serves as predefined progress monitor with <see cref="ProgressBar"/> for <see cref="BackgroundWorker"/></summary>
     ''' <remarks>See documentation of the <see cref="ProgressMonitor.OnProgressChanged"/> method in order to see rich options for reporting progress.</remarks>
+    ''' <version version="1.5.3">This class implements <see cref="IProgressMonitorUI"/> interface</version>
     Public Class ProgressMonitor
+        Implements IProgressMonitorUI
+#Region "CTors"
         ''' <summary>Default CTor</summary>
         ''' <remarks>Value of the <see cref="BackgroundWorker"/> property is populated with new instance of <see cref="System.ComponentModel.BackgroundWorker"/></remarks>
         ''' <filterpriority>3</filterpriority>
@@ -33,19 +37,37 @@ Namespace WindowsT.FormsT
             Me.Text = Text
             Me.Prompt = Prompt
         End Sub
+#End Region
         ''' <summary>Shows progress form and runs worker</summary>
         ''' <param name="bgw">Worker to run</param>
         ''' <param name="Text">Title text of window (see <see  cref="Text"/>)</param>
         ''' <param name="Prompt">Text prompt (see <see cref="Prompt"/>)</param>
-        ''' <param name="Owner">Any object that implements <see cref="System.Windows.Forms.IWin32Window"/> that represents the top-level window that will own the modal dialog box.</param>
+        ''' <param name="Owner">Any object that implements <see cref="System.Windows.Forms.IWin32Window"/> or <see cref="Windows.Interop.IWin32Window"/>, or <see cref="Windows.Window"/> that represents the top-level window that will own the modal dialog box.</param>
         ''' <param name="WorkerArgument">Optional parameter for background worker</param>
         ''' <returns>Result of work of <paramref name="bgw"/></returns>
-        Public Overloads Shared Function Show(ByVal bgw As BackgroundWorker, ByVal Text As String, ByVal Prompt As String, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal WorkerArgument As Object = Nothing) As RunWorkerCompletedEventArgs
+        ''' <version version="1.5.3">Type of parameter <paramref name="Owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support WPF owners.</version>
+        Public Overloads Shared Function Show(ByVal bgw As BackgroundWorker, ByVal Text As String, ByVal Prompt As String, Optional ByVal Owner As Object = Nothing, Optional ByVal WorkerArgument As Object = Nothing) As RunWorkerCompletedEventArgs
             Using frm As New ProgressMonitor(bgw, Text, Prompt)
                 frm.WorkerArgument = WorkerArgument
                 frm.ShowDialog(Owner)
                 Return frm.WorkerResult
             End Using
+        End Function
+
+        ''' <summary>Shows window modally</summary>
+        ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
+        ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Private Overloads Function IProgressMonitorUI_ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean Implements IProgressMonitorUI.ShowDialog
+            If TypeOf owner Is Windows.Window Then
+                Return Tools.WindowsT.InteropT.InteropExtensions.ShowDialog(Me, DirectCast(owner, Windows.Window)) = Windows.Forms.DialogResult.OK
+            ElseIf TypeOf owner Is Windows.Forms.IWin32Window Then
+                Return Me.ShowDialog(DirectCast(owner, Windows.Forms.IWin32Window)) = Windows.Forms.DialogResult.OK
+            ElseIf TypeOf owner Is Windows.Interop.IWin32Window Then
+                Return Tools.WindowsT.InteropT.InteropExtensions.ShowDialog(Me, DirectCast(owner, Windows.Interop.IWin32Window)) = Windows.Forms.DialogResult.OK
+            Else
+                Return Me.ShowDialog = Windows.Forms.DialogResult.OK
+            End If
         End Function
         ''' <summary>Raises the <see cref="E:System.Windows.Forms.Form.Shown" /> event.</summary>
         ''' <param name="e">A <see cref="T:System.EventArgs" /> that contains the event data. </param>
@@ -58,7 +80,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets <see cref="BackgroundWorker"/> this form repports progress of</summary>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        Public Property BackgroundWorker() As BackgroundWorker
+        Public Property BackgroundWorker() As BackgroundWorker Implements IProgressMonitorUI.BackgroundWorker
             <DebuggerStepThrough()> Get
                 Return bgw
             End Get
@@ -84,10 +106,22 @@ Namespace WindowsT.FormsT
                 pgbProgress.Style = value
             End Set
         End Property
+        ''' <summary>Gets or sets current style of progress bar</summary>
+        ''' <value>True to show progressbar which indicates percentage progress of operation, false to show progressbar which only indicates that something is going on but does not indicate actual progress</value>
+        ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+        Private Property IProgressMonitorUI_ProgressBarShowsProgress As Boolean Implements IProgressMonitorUI.ProgressBarShowsProgress
+            Get
+                Return ProgressBarStyle = Windows.Forms.ProgressBarStyle.Blocks OrElse ProgressBarStyle = Windows.Forms.ProgressBarStyle.Continuous
+            End Get
+            Set(ByVal value As Boolean)
+                ProgressBarStyle = If(value, ProgressBarStyle.Blocks, ProgressBarStyle.Marquee)
+            End Set
+        End Property
+
         ''' <summary>Gets or sets current value of <see cref="ProgressBar"/> that reports progress</summary>
         ''' <exception cref="ArgumentException">Value being set is smaller than 0 or greater than 100.</exception>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        Public Property Progress() As Integer
+        Public Property Progress() As Integer Implements IProgressMonitorUI.Progress
             <DebuggerStepThrough()> Get
                 Return pgbProgress.Value
             End Get
@@ -103,7 +137,7 @@ Namespace WindowsT.FormsT
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <LDescription(GetType(CompositeControls), "CloseOnFinish_d")> _
-        Public Property CloseOnFinish() As Boolean
+        Public Property CloseOnFinish() As Boolean Implements IProgressMonitorUI.CloseOnFinish
             Get
                 Return _CloseOnFinish
             End Get
@@ -154,7 +188,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets result of <see cref="BackgroundWorker"/> work</summary>
         ''' <returns>Null until <see cref="BackgroundWorker.RunWorkerCompleted"/> event occures. That returns its e parameter.</returns>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        Public Property WorkerResult() As RunWorkerCompletedEventArgs
+        Public Property WorkerResult() As RunWorkerCompletedEventArgs Implements IProgressMonitorUI.WorkerResult
             <DebuggerStepThrough()> Get
                 Return _WorkerResult
             End Get
@@ -166,7 +200,7 @@ Namespace WindowsT.FormsT
         <DefaultValue(GetType(String), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <LDescription(GetType(CompositeControls), "Prompt_d")> _
-        Public Property Prompt$()
+        Public Property Prompt$() Implements IProgressMonitorUI.Prompt
             <DebuggerStepThrough()> Get
                 Return lblMainInfo.Text
             End Get
@@ -178,7 +212,7 @@ Namespace WindowsT.FormsT
         <DefaultValue(GetType(String), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <LDescription(GetType(CompositeControls), "Information_d")> _
-        Public Property Information$()
+        Public Property Information$() Implements IProgressMonitorUI.Information
             <DebuggerStepThrough()> Get
                 Return lblI.Text
             End Get
@@ -192,7 +226,7 @@ Namespace WindowsT.FormsT
         ''' <value>Default value depends on <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.WorkerSupportsCancellation">WorkerSupportsCancellation</see> in time when it is passed to CTor.</value>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <LDescription(GetType(CompositeControls), "CanCancel_d")> _
-        Public Property CanCancel() As Boolean
+        Public Property CanCancel() As Boolean Implements IProgressMonitorUI.CanCancel
             <DebuggerStepThrough()> Get
                 Return _CanCancel
             End Get
@@ -222,7 +256,7 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Resets the dialog</summary>
         ''' <remarks>In case you want to use the dialog from multiple runs of <see cref="BackgroundWorker"/>, you should call this method before each (excluding first, but you can to) runs of <see cref="BackgroundWorker"/>. Alternativly you can report new run using <see cref="BackgroundWorker.ReportProgress"/> - see <see cref="OnProgressChanged"/>.</remarks>
-        Public Overridable Sub Reset()
+        Public Overridable Sub Reset() Implements IProgressMonitorUI.Reset
             cmdCancel.Enabled = CanCancel
             pgbProgress.Value = 0
             WorkerResult = Nothing
@@ -235,7 +269,7 @@ Namespace WindowsT.FormsT
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <LDescription(GetType(CompositeControls), "DoWorkOnShow_d")> _
         <DefaultValue(True)> _
-        Public Property DoWorkOnShow() As Boolean
+        Public Property DoWorkOnShow() As Boolean Implements IProgressMonitorUI.DoWorkOnShow
             <DebuggerStepThrough()> Get
                 Return _DoWorkOnShow
             End Get
@@ -249,12 +283,25 @@ Namespace WindowsT.FormsT
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         <DefaultValue(GetType(Object), Nothing)> _
         <LDescription(GetType(CompositeControls), "WorkerArgument_d")> _
-        Public Property WorkerArgument() As Object
+        Public Property WorkerArgument() As Object Implements IProgressMonitorUI.WorkerArgument
             <DebuggerStepThrough()> Get
                 Return _WorkerArgument
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Object)
                 _WorkerArgument = value
+            End Set
+        End Property
+
+        ''' <summary>Implements <see cref="IndependentT.IProgressMonitorUI.Title"/></summary>
+        ''' <value>Title of window showing the progress. Default value is localized word "Progress"</value>
+        ''' <returns>Current title of window showing progress</returns>
+        ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+        Private Property IProgressMonitorUI_Title As String Implements IndependentT.IProgressMonitorUI.Title
+            <DebuggerStepThrough()> Get
+                Return Text
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As String)
+                Text = value
             End Set
         End Property
     End Class

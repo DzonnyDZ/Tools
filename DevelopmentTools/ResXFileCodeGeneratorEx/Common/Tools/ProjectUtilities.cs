@@ -6,9 +6,9 @@ using System.Threading;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace DMKSoftware.CodeGenerators.Tools
+namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 {
-    public sealed class ProjectUtilities
+    internal  sealed class ProjectUtilities
     {
         public static bool IsCriticalException(Exception ex)
         {

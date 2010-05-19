@@ -13,124 +13,21 @@ namespace Tools.VisualStudioT.GeneratorsT {
     /// and provide a compilable code file as output.
     /// </summary>
     /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to Tools.VisualStudioT.GeneratorsT</version>
-    public abstract class BaseCodeGenerator:IVsSingleFileGenerator {
-        /// <summary>Contains value of the <see cref="CodeGeneratorProgress"/> property</summary>
-        private IVsGeneratorProgress codeGeneratorProgress;
-        /// <summary>Contains value of the <see cref="FileNameSpace"/> property</summary>
-        private string codeFileNameSpace = String.Empty;
-        /// <summary>Contains value of the <see cref="InputFilePath"/> property</summary>
-        private string codeFilePath = String.Empty;
+    /// <version version="1.5.3">Base class changed from <see cref="Object"/> to <see cref="Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGenerator"/>. Methods implemented by <see cref="Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGenerator"/> removed from this class.</version>
+    public abstract class BaseCodeGenerator : Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGenerator {
 
-        /// <summary>
-        /// namespace for the file.
-        /// </summary>
-        protected string FileNameSpace {
-            get {
-                return codeFileNameSpace;
-            }
-        }
-
-        /// <summary>
-        /// file-path for the input file.
-        /// </summary>
-        protected string InputFilePath {
-            get {
-                return codeFilePath;
-            }
-        }
-
-        /// <summary>
-        /// interface to the VS shell object we use to tell our
-        /// progress while we are generating.
-        /// </summary>
+        /// <summary>Interface to the VS shell object we use to tell our progress while we are generating.</summary>
         protected internal IVsGeneratorProgress CodeGeneratorProgress {
             get {
-                return codeGeneratorProgress;
+                return (IVsGeneratorProgress)typeof(Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGenerator).GetProperty("CodeGeneratorProgress").GetValue(this, null);
             }
         }
 
-        /// <summary>
-        /// gets the default extension for this generator
-        /// </summary>
-        /// <returns>string with the default extension for this generator</returns>
-        public abstract string GetDefaultExtension();
-
-        /// <summary>
-        /// the method that does the actual work of generating code given the input
-        /// file.
-        /// </summary>
-        /// <param name="inputFileName">input file name</param>
-        /// <param name="inputFileContent">file contents as a string</param>
-        /// <returns>the generated code file as a byte-array</returns>
-        protected abstract byte[] GenerateCode(string inputFileName, string inputFileContent);
-
-        /// <summary>
-        /// method that will communicate an error via the shell callback mechanism.
-        /// </summary>
-        /// <param name="warning">true if this is a warning</param>
-        /// <param name="level">level or severity</param>
-        /// <param name="message">text displayed to the user</param>
-        /// <param name="line">line number of error/warning</param>
-        /// <param name="column">column number of error/warning</param>
-        protected virtual void GeneratorErrorCallback(bool warning, int level, string message, int line, int column) {
-            IVsGeneratorProgress progress = CodeGeneratorProgress;
-            if(progress != null) {
-                progress.GeneratorError(warning?1:0, (uint)level, message,(uint) line,(uint) column);
-            }
-        }
-
-        /// <summary>
-        /// main method that the VS shell calls to do the generation
-        /// </summary>
-        /// <param name="wszInputFilePath">path to the input file</param>
-        /// <param name="bstrInputFileContents">contents of the input file as a string ( shell handles UTF-8 to Unicode &amp; those types of conversions )</param>
-        /// <param name="wszDefaultNamespace">default namespace for the generated code file</param>
-        /// <param name="rgbOutputFileContents">byte-array of output file contents</param>
-        /// <param name="pcbOutput">count of bytes in the output byte-array</param>
-        /// <param name="pGenerateProgress">interface to send progress updates to the shell</param>
-        public int Generate(string wszInputFilePath,
-          string bstrInputFileContents,
-          string wszDefaultNamespace,
-          IntPtr[] rgbOutputFileContents,
-          out uint pcbOutput,
-          IVsGeneratorProgress pGenerateProgress) {
-            //_codeGeneratorProgress = pGenerateProgress;
-            if(bstrInputFileContents == null) {
-                throw new ArgumentNullException(bstrInputFileContents);
-            }
-
-            codeFilePath = wszInputFilePath;
-            codeFileNameSpace = wszDefaultNamespace;
-            codeGeneratorProgress = pGenerateProgress;
-
-            byte[] bytes = GenerateCode(wszInputFilePath, bstrInputFileContents);
-
-            if(bytes == null) {
-                rgbOutputFileContents[0] = IntPtr.Zero;
-                pcbOutput = 0;
-            } else {
-                pcbOutput =(uint)bytes.Length;
-                rgbOutputFileContents[0] = Marshal.AllocCoTaskMem((int)pcbOutput);
-                Marshal.Copy(bytes, 0, rgbOutputFileContents[0],(int) pcbOutput);
-            }
-            return Microsoft.VisualStudio.VSConstants.S_OK;
-        }
-
-        ///// <summary>Allows reporting progress of the generator</summary>
-        //public IVsGeneratorProgress CodeGeneratorProgress {
-        //    get {
-        //        return this._codeGeneratorProgress;
-        //        }
-        //    }
-        ///// <summary>Cobtains value of the <see cref="CodeGeneratorProgress"/> property</summary>
-        //private IVsGeneratorProgress _codeGeneratorProgress;
-
-        /// <summary>
-        /// method to return a byte-array given a Stream
-        /// </summary>
+        /// <summary>Method to return a byte-array given a Stream</summary>
         /// <param name="stream">stream to convert to a byte-array</param>
         /// <returns>the stream's contents as a byte-array</returns>
-        protected byte[] StreamToBytes(Stream stream) {
+        /// <version version="1.5.3">Method changed from instance to static</version>
+        protected internal static byte[] StreamToBytes(Stream stream) {
 
             if(stream.Length == 0) {
                 return new byte[] { };
@@ -143,14 +40,6 @@ namespace Tools.VisualStudioT.GeneratorsT {
             stream.Position = position;
 
             return bytes;
-        }
-
-        /// <summary>Retrieves the file extension that is given to the output file name. </summary>
-        /// <param name="pbstrDefaultExtension">[out, retval] Returns the file extension that is to be given to the output file name. The returned extension must include a leading period.</param>
-        /// <remarks><see cref="Microsoft.VisualStudio.VSConstants.S_OK"/></remarks>
-        int IVsSingleFileGenerator.DefaultExtension(out string pbstrDefaultExtension) {
-            pbstrDefaultExtension = GetDefaultExtension();
-            return Microsoft.VisualStudio.VSConstants.S_OK;
         }
     }
 }

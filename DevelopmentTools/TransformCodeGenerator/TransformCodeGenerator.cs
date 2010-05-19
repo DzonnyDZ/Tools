@@ -79,7 +79,7 @@ namespace Tools.VisualStudioT.GeneratorsT {
                 args.AddParam("filename", String.Empty, fi.Name);
                 args.AddParam("date-created", String.Empty, DateTime.Today.ToLongDateString());
                 args.AddParam("created-by", String.Empty, String.Format("{0}\\{1}", Environment.UserDomainName, Environment.UserName));
-                args.AddParam("namespace", String.Empty, base.FileNameSpace);
+                args.AddParam("namespace", String.Empty, FileNamespace );
                 args.AddParam("classname", String.Empty, fi.Name.Substring(0, fi.Name.LastIndexOf(".")));
 
                 // do the transform

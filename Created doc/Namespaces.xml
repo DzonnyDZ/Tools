@@ -45,8 +45,14 @@
         <member name="N:Tools.Experimental.My.Resources">
             <summary>Contains resources for the Experimental.dll assembly.</summary>
         </member>
-        <member name="N:Tools.GeneratorsT">
+        <member name="N:Tools.VisualStudioT.GeneratorsT">
             <summary>Contains various code generators.</summary>
+            <version version="1.5.2">Renamed from <c>Tools.GeneratorsT</c> to <see cref="N:Tools.VisualStudioT.GeneratorsT"/></version>
+            <version version="1.5.3">Class <c>ServiceProvider</c> removed. Use <see cref="T:Microsoft.VisualStudio.OLE.Interop.IServiceProvider"/> instead.</version>
+        </member>
+        <member name="N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator">
+            <summary>Contains classes implementing advanced RESX file generator</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3. Previously it was used only by ResXFileGenerator.exe assembly. Classes from <c>DMKSoftware.CodeGenerators</c> were moved there.</version>
         </member>
         <member name="N:Tools.Tests">
             <summary>Root namespace for the Tests.exe assemly which servers as test center for another tools.</summary>

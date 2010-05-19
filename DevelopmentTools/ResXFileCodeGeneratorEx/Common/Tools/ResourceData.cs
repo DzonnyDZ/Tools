@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DMKSoftware.CodeGenerators.Tools
+namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 {
     internal sealed class ResourceData
     {

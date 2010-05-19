@@ -1,10 +1,8 @@
 using System;
 
-namespace DMKSoftware.CodeGenerators
+namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 {
-	/// <summary>
-	/// Specifies the VS.NET language GUID.
-	/// </summary>
+	/// <summary>Specifies the VS.NET language GUID.</summary>
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
 	internal class LanguageGuidAttribute : Attribute
 	{

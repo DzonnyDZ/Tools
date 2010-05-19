@@ -160,7 +160,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcxproj">
       <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
-      <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
+      <Name>Tools.TotalCommander</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj">
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
@@ -206,6 +206,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "c:\Program Files\totalcmd\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "%25TOTALCMD%25\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

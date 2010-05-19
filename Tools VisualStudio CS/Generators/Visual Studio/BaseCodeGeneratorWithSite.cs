@@ -12,87 +12,38 @@ namespace Tools.VisualStudioT.GeneratorsT {
     using Microsoft.VisualStudio.Designer.Interfaces;
     using Microsoft.VisualStudio.OLE.Interop;
 
-    /// <summary>
-    ///     This class exists to be cocreated a in a preprocessor build step.
-    /// </summary>
-    /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to Tools.VisualStudioT.GeneratorsT</version>
-    public abstract class BaseCodeGeneratorWithSite:BaseCodeGenerator, IObjectWithSite {
-        /// <summary>Error HRESULT for a generic failure.</summary>
-        private const int E_FAIL = unchecked((int)0x80004005);
-        /// <summary>Error HRESULT for the request of a not implemented interface.</summary>
-        private const int E_NOINTERFACE = unchecked((int)0x80004002);
-        /// <summary>Contains value of the <see cref="Site"/> property</summary>
-        private object site = null;
-        /// <summary>Provider for code generation</summary>
-        private CodeDomProvider codeDomProvider = null;
+    /// <summary>This class exists to be cocreated a in a preprocessor build step.</summary>
+    /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
+    /// <version version="1.5.3">Base class changed from <see cref="Tools.VisualStudioT.GeneratorsT.BaseCodeGenerator"/> to <see cref="Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGeneratorWithSite"/>. Methods implemented by <see cref="Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGeneratorWithSite"/> removed from this class.</version>
+    public abstract class BaseCodeGeneratorWithSite : Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGeneratorWithSite {
         /// <summary>Guid of dom interface</summary>
         private static Guid CodeDomInterfaceGuid = new Guid("{73E59688-C7C4-4a85-AF64-A538754784C5}");
         /// <summary>Same as <see cref="CodeDomInterfaceGuid"/></summary>
         private static Guid CodeDomServiceGuid = CodeDomInterfaceGuid;
-        /// <summary>Service provider</summary>
-        private ServiceProvider serviceProvider = null;
-
-        /// <summary>
-        /// demand-creates a CodeDomProvider
-        /// </summary>
+        /// <summary>Caches value of the <see cref="CodeProvider"/> property</summary>
+        private CodeDomProvider codeProvider;
+        /// <summary>demand-creates a <see cref="CodeDomProvider"/></summary>
         protected virtual CodeDomProvider CodeProvider {
             get {
-                if(codeDomProvider == null) {
+                if(codeProvider == null) {
                     IVSMDCodeDomProvider vsmdCodeDomProvider = (IVSMDCodeDomProvider)GetService(CodeDomServiceGuid);
                     if(vsmdCodeDomProvider != null) {
-                        codeDomProvider = (CodeDomProvider)vsmdCodeDomProvider.CodeDomProvider;
+                        codeProvider = (CodeDomProvider)vsmdCodeDomProvider.CodeDomProvider;
                     }
-                    Debug.Assert(codeDomProvider != null, Tools.ResourcesT.ExceptionsVsCs.GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull);
+                    Debug.Assert(codeProvider != null, Tools.ResourcesT.ExceptionsVsCs.GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull);
                 }
-                return codeDomProvider;
+                return codeProvider;
             }
             set {
                 if(value == null) {
                     throw new ArgumentNullException();
                 }
 
-                codeDomProvider = value;
+                codeProvider = value;
             }
         }
-
-        /// <summary>
-        /// demand-creates a ServiceProvider given an IOleServiceProvider
-        /// </summary>
-        private ServiceProvider SiteServiceProvider {
-            get {
-                if(serviceProvider == null) {
-                    IOleServiceProvider oleServiceProvider = site as IOleServiceProvider;
-                    Debug.Assert(oleServiceProvider != null, Tools.ResourcesT.ExceptionsVsCs.UnableToGetIOleServiceProviderFromSiteObject);
-
-                    serviceProvider = new ServiceProvider(oleServiceProvider);
-                }
-                return serviceProvider;
-            }
-        }
-
-        /// <summary>
-        /// method to get a service by its GUID
-        /// </summary>
-        /// <param name="serviceGuid">GUID of service to retrieve</param>
-        /// <returns>an object that implements the requested service</returns>
-        protected object GetService(Guid serviceGuid) {
-            return SiteServiceProvider.GetService(serviceGuid);
-        }
-
-        /// <summary>
-        /// method to get a service by its Type
-        /// </summary>
-        /// <param name="serviceType">Type of service to retrieve</param>
-        /// <returns>an object that implements the requested service</returns>
-        protected object GetService(Type serviceType) {
-            return SiteServiceProvider.GetService(serviceType);
-        }
-
-        /// <summary>
-        /// gets the default extension of the output file by asking the CodeDomProvider
-        /// what its default extension is.
-        /// </summary>
-        /// <returns></returns>
+                          
+        /// <summary>Gets the default extension of the output file by asking the <see cref="CodeDomProvider"/> what its default extension is.</summary>
         public override string GetDefaultExtension() {
             CodeDomProvider codeDom = CodeProvider;
             Debug.Assert(codeDom != null, Tools.ResourcesT.ExceptionsVsCs.CodeDomProviderIsNULL);
@@ -105,70 +56,10 @@ namespace Tools.VisualStudioT.GeneratorsT {
 
             return extension;
         }
-
-        /// <summary>
-        /// Method to get an ICodeGenerator with which this class can create code.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("This is obsolete, because System.CodeDom.Compiler.CodeDomProvider.CreateGenerator() is obsolete")]
-        protected virtual ICodeGenerator GetCodeWriter() {
-            CodeDomProvider codeDom = CodeProvider;
-            if(codeDom != null) {
-                return codeDom.CreateGenerator();
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// SetSite method of IOleObjectWithSite
-        /// </summary>
-        /// <param name="pUnkSite">site for this object to use</param>
-        public virtual void SetSite(object pUnkSite) {
-            site = pUnkSite;
-            codeDomProvider = null;
-            serviceProvider = null;
-        }
-        /// <summary>Gets the last site set with <see cref="IObjectWithSite.SetSite"/>.</summary>
-        protected object Site {
-            get { return site; }
-        }
-
-        /// <summary>
-        /// GetSite method of IOleObjectWithSite
-        /// </summary>
-        /// <param name="riid">interface to get</param>
-        /// <param name="ppvSite">array in which to stuff return value</param>
-        /// <exception cref="COMException"><see cref="Site"/> is null -or- cannot get interface from <paramref name="riid"/>.</exception>
-        public virtual void GetSite(ref Guid riid, out IntPtr ppvSite) {
-
-            /*if(ppvSite == IntPtr.Zero) {
-                throw new ArgumentNullException("ppvSite");
-            }
-            if(ppvSite.Length < 1) {
-                throw new ArgumentException(String.Format(Tools.ResourcesT.ExceptionsVsCs.ArrayMustHaveAtLeast1Member, "ppvSite"), "ppvSite");
-            }*/
-
-            if(site == null) {
-                throw new COMException(Tools.ResourcesT.ExceptionsVsCs.ObjectIsNotSited, E_FAIL);
-            }
-
-            IntPtr pUnknownPointer = Marshal.GetIUnknownForObject(site);
-            IntPtr intPointer = IntPtr.Zero;
-            Marshal.QueryInterface(pUnknownPointer, ref riid, out intPointer);
-
-            if(intPointer == IntPtr.Zero) {
-                throw new COMException(Tools.ResourcesT.ExceptionsVsCs.SiteDoesNotSupportRequestedInterface, E_NOINTERFACE);
-            }
-
-            ppvSite=intPointer;
-        }
-
-        /// <summary>
-        /// gets a string containing the DLL names to add.
-        /// </summary>
-        /// <param name="DLLToAdd"></param>
-        /// <returns></returns>
+       
+        /// <summary>Gets a string containing the DLL names to add.</summary>
+        /// <param name="DLLToAdd">DLLs to be added</param>
+        /// <returns>Names of DLLs</returns>
         private string GetDLLNames(string[] DLLToAdd) {
 
             if(DLLToAdd == null || DLLToAdd.Length == 0) {
@@ -182,10 +73,8 @@ namespace Tools.VisualStudioT.GeneratorsT {
             return dllNames;
         }
 
-        /// <summary>
-        /// adds a reference to the project for each required DLL
-        /// </summary>
-        /// <param name="referenceDLL"></param>
+        /// <summary>Adds a reference to the project for each required DLL</summary>
+        /// <param name="referenceDLL">DLLs to add references to</param>
         protected void AddReferenceDLLToProject(string[] referenceDLL) {
 
             if(referenceDLL.Length == 0) {
@@ -229,37 +118,29 @@ namespace Tools.VisualStudioT.GeneratorsT {
             }
         }
 
-        /// <summary>
-        /// method to create an exception message given an exception
-        /// </summary>
-        /// <param name="e">exception caught</param>
-        /// <returns>message to display to the user</returns>
-        protected virtual string CreateExceptionMessage(Exception e) {
-
-            string message = (e.Message != null ? e.Message : string.Empty);
-
-            Exception innerException = e.InnerException;
-            while(innerException != null) {
-                string innerMessage = innerException.Message;
-                if(innerMessage != null && innerMessage.Length > 0) {
-                    message = message + " " + innerMessage;
-                }
-                innerException = innerException.InnerException;
-            }
-
-            return message;
-        }
-
-        /// <summary>
-        /// method to create a version comment
-        /// </summary>
-        /// <param name="codeNamespace"></param>
+        /// <summary>Method to create a version comment</summary>
+        /// <param name="codeNamespace">CodeDOM unit to place comments inside</param>
         protected virtual void GenerateVersionComment(System.CodeDom.CodeNamespace codeNamespace) {
             codeNamespace.Comments.Add(new CodeCommentStatement(string.Empty));
             codeNamespace.Comments.Add(new CodeCommentStatement(String.Format(Tools.ResourcesT.ResourcesVsCs.ThisSourceCodeWasAutoGeneratedBy0Version1,
               System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
               System.Environment.Version.ToString())));
             codeNamespace.Comments.Add(new CodeCommentStatement(string.Empty));
+        }
+
+        /// <summary>Interface to the VS shell object we use to tell our progress while we are generating.</summary>
+        /// <version version="1.5.3">Method copyied from <see cref="BaseCodeGenerator"/></version>
+        protected internal Microsoft.VisualStudio.Shell.Interop.IVsGeneratorProgress CodeGeneratorProgress {
+            get {
+                return (Microsoft.VisualStudio.Shell.Interop.IVsGeneratorProgress)typeof(Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGenerator).GetProperty("CodeGeneratorProgress", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic).GetValue(this, null);
+            }
+        }
+        /// <summary>Method to return a byte-array given a Stream</summary>
+        /// <param name="stream">stream to convert to a byte-array</param>
+        /// <returns>the stream's contents as a byte-array</returns>
+        /// <version version="1.5.3">Method copied from <see cref="BaseCodeGenerator"/> and changed from instance to static</version>
+        protected internal static byte[] StreamToBytes(System.IO.Stream stream) {
+            return BaseCodeGenerator.StreamToBytes(stream);
         }
     }
 }

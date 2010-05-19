@@ -8,10 +8,10 @@
     <ProjectGuid>{A8636D77-B876-4E6A-863D-8C924E40955C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DMKSoftware.CodeGenerators</RootNamespace>
+    <RootNamespace>Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</RootNamespace>
     <AssemblyName>ResXFileCodeGeneratorEx</AssemblyName>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ResXFileCodeGenerator.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
@@ -26,7 +26,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -105,6 +105,10 @@
       <HintPath>..\Dependencies\microsoft.visualstudio.shell.interop.8.0.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.VSHost.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.VisualStudio.TextTemplating.VSHost.10.0\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.TextTemplating.VSHost.10.0.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -113,9 +117,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SharedFiles\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="BaseResXFileCodeGeneratorEx.cs" />
-    <Compile Include="Common\BaseCodeGenerator.cs" />
-    <Compile Include="Common\BaseCodeGeneratorWithSite.cs" />
     <Compile Include="Common\NativeMethods.cs" />
     <Compile Include="Common\Tools\FormatValidator.cs" />
     <Compile Include="Common\Tools\ProjectUtilities.cs" />
@@ -125,11 +130,18 @@
     <Compile Include="InternalResXFileCodeGeneratorEx.cs" />
     <Compile Include="LanguageGuidAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResXFileCodeGeneratorEx.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\SharedFiles\Tools.snk">
+      <Link>Tools.snk</Link>
+    </None>
     <None Include="License.rtf" />
-    <None Include="ResXFileCodeGenerator.snk" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -162,6 +174,18 @@
     <Content Include="ResXFileCodeGeneratorEx readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Tools VisualStudio CS\Tools.VisualStudio.CS.csproj">
+      <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
+      <Name>Tools.VisualStudio.CS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

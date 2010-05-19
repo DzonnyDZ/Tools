@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace DMKSoftware.CodeGenerators.Tools
+namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 {
-    public static class FormatValidator
+    internal static class FormatValidator
     {
         private const string FormatInvalidString = "Input string was not in a correct format.";
         private const string FormatIndexOutOfRange = "Index (zero based) must be greater than or equal to zero and less than the size of the argument list.";

@@ -655,23 +655,22 @@ Public Class BuildException
     End Sub
 End Class
 
+''' <summary>Logs events to command line</summary>
 Friend Class CommandLineLogger
     Inherits Logger
-
-
-
-
+    ''' <summary>Subscribes the logger to specific events.</summary>
+    ''' <param name="eventSource">The available events that a logger can subscribe to.</param>
     Public Overrides Sub Initialize(ByVal eventSource As Microsoft.Build.Framework.IEventSource)
         'Register for the ProjectStarted, TargetStarted, and ProjectFinished events
         AddHandler eventSource.ProjectStarted, Sub(sender As Object, e As Microsoft.Build.Framework.ProjectStartedEventArgs)
-                                                   Console.WriteLine("Project Started: " + e.ProjectFile)
+                                                   Console.WriteLine(My.Resources.i_ProjectStarted + e.ProjectFile)
                                                End Sub
         AddHandler eventSource.TargetStarted, Sub(sender As Object, e As Microsoft.Build.Framework.TargetStartedEventArgs)
                                                   If Verbosity = Microsoft.Build.Framework.LoggerVerbosity.Detailed Then _
-                                                        Console.WriteLine("Target Started: " + e.TargetName)
+                                                      Console.WriteLine(My.Resources.i_TargetStarted + e.TargetName)
                                               End Sub
         AddHandler eventSource.ProjectFinished, Sub(sender As Object, e As Microsoft.Build.Framework.ProjectFinishedEventArgs)
-                                                    Console.WriteLine("Project Finished: " + e.ProjectFile)
+                                                    Console.WriteLine(My.Resources.i_ProjectFinished + e.ProjectFile)
                                                 End Sub
         AddHandler eventSource.ErrorRaised, Sub(sender As Object, e As Microsoft.Build.Framework.BuildErrorEventArgs)
                                                 Console.WriteLine(FormatErrorEvent(e))
@@ -680,11 +679,4 @@ Friend Class CommandLineLogger
                                                   Console.WriteLine(FormatWarningEvent(e))
                                               End Sub
     End Sub
-
-
-
-
-
-
-
 End Class

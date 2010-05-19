@@ -301,7 +301,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
                 try                { */
                 // Process the file.
                 CodeDomProvider Provider = CodeProvider;
-                CodeNamespace ns = Processor.Process(inputFileName, FileNameSpace,Provider);
+                CodeNamespace ns = Processor.Process(inputFileName, FileNamespace ,Provider);
                 /*}                finally                {
                     System.Environment.CurrentDirectory = OldPath; 
                 }*/
