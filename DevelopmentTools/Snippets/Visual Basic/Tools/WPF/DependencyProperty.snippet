@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Add a DependencyProperty Registration</Title>
+            <Author>Microsoft Corporation</Author>
+            <Description>Adds code to register a read-write DependencyProperty. This snippet must be added to a class that derives from DependencyObject.</Description>
+            <Shortcut>wpfdp</Shortcut>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <References>
+                <Reference>
+                    <Assembly>WindowsBase</Assembly>
+                </Reference>
+                <Reference>
+                    <Assembly>PresentationCore</Assembly>
+                </Reference>
+                <Reference>
+                    <Assembly>PresentationFramework</Assembly>
+                </Reference>
+            </References>
+            <Imports>
+                <Import>
+                    <Namespace>System.Windows</Namespace>
+                </Import>
+            </Imports>
+            <Declarations>
+                <Literal>
+                    <ID>propertyType</ID>
+                    <ToolTip>Replace with the type of the property.</ToolTip>
+                    <Default>string</Default>
+                </Literal>
+                <Literal>
+                    <ID>propertyName</ID>
+                    <ToolTip>Replace with the name of the property.</ToolTip>
+                    <Default>Prop1</Default>
+                </Literal>
+                <Object>
+                    <ID>ownertype</ID>
+                    <Type>Control</Type>
+                    <ToolTip>Replace with the name of the class this snippet is being added to.</ToolTip>
+                    <Default>Window1</Default>
+                </Object>
+                <Literal>
+                    <ID>defaultValue</ID>
+                    <ToolTip>Replace with the default value of the property.</ToolTip>
+                    <Default>Nothing</Default>
+                </Literal>
+                <Literal>
+                    <ID>summary</ID>
+                    <ToolTip>Summary documentation of the property.</ToolTip>
+                    <Default>value of the property</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="VB">
+                <![CDATA[
+          #Region "$propertyName$"
+          ''' <summary>Gets or sets $summary$</summary>      
+          Public Property $propertyName$ As $propertyType$
+              Get
+                Return GetValue($propertyName$Property)
+              End Get
+              Set(ByVal value As $propertyType$)
+                  SetValue($propertyName$Property, value)
+              End Set
+          End Property
+          ''' <summary>Metadata of the <see cref="$propertyName$"/> property</summary>                                                   
+          Public Shared ReadOnly $propertyName$Property As DependencyProperty = DependencyProperty.Register(
+              "$propertyName$", GetType($propertyType$), GetType($ownerType$), New FrameworkPropertyMetadata($defaultValue$))
+          #End Region
+          ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
+

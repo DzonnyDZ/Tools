@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>DependencyProperty + OnChanged + CoerceValue</Title>
+            <Author>Đonny</Author>
+            <Description>Adds code to register a read-write DependencyProperty witn OnChanged instance procedure.</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <References>
+                <Reference>
+                    <Assembly>WindowsBase</Assembly>
+                </Reference>
+                <Reference>
+                    <Assembly>PresentationCore</Assembly>
+                </Reference>
+                <Reference>
+                    <Assembly>PresentationFramework</Assembly>
+                </Reference>
+                <Reference>
+                    <Assembly>Tools</Assembly>
+                </Reference>
+            </References>
+            <Imports>
+                <Import>
+                    <Namespace>System.Windows</Namespace>
+                </Import>
+            </Imports>
+            <Declarations>
+                <Literal>
+                    <ID>propertyType</ID>
+                    <ToolTip>Replace with the type of the property.</ToolTip>
+                    <Default>string</Default>
+                </Literal>
+                <Literal>
+                    <ID>propertyName</ID>
+                    <ToolTip>Replace with the name of the property.</ToolTip>
+                    <Default>Prop1</Default>
+                </Literal>
+                <Object>
+                    <ID>ownertype</ID>
+                    <Type>Control</Type>
+                    <ToolTip>Replace with the name of the class this snippet is being added to.</ToolTip>
+                    <Default>Window1</Default>
+                </Object>
+                <Literal>
+                    <ID>defaultValue</ID>
+                    <ToolTip>Replace with the default value of the property.</ToolTip>
+                    <Default>Nothing</Default>
+                </Literal>
+                <Literal>
+                    <ID>propertySummary</ID>
+                    <ToolTip>Summeray description of property</ToolTip>
+                    <Default>value of the property</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="VB">
+                <![CDATA[
+#Region "$propertyName$"
+    ''' <summary>Gets or sets $propertySummary$</summary>
+    Public Property $propertyName$() As $propertyType$
+        <DebuggerStepThrough()> Get
+            Return GetValue($propertyName$Property)
+        End Get
+        <DebuggerStepThrough()> Set(ByVal value As $propertyType$)
+            SetValue($propertyName$Property, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="$propertyName$"/> property</summary>
+    Public Shared ReadOnly $propertyName$Property As DependencyProperty = _
+                           DependencyProperty.Register("$propertyName$", GetType($propertyType$), GetType($ownertype$), _
+                           New FrameworkPropertyMetadata($defaultValue$, AddressOf On$propertyName$Changed, AddressOf Coerce$propertyName$Value))
+    ''' <summary>Called when value of the <see cref="$propertyName$"/> property changes for any <see cref="$ownertype$"/></summary>
+    ''' <param name="d">A <see cref="$ownertype$"/> <see cref="$propertyName$"/> has changed for</param>
+    ''' <param name="e">Event arguments</param>
+    ''' <exception cref="Tools.TypeMismatchException"><paramref name="d"/> is not <see cref="$ownertype$"/></exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="d"/> is null</exception>
+    <DebuggerStepThrough()> _
+    Private Shared Sub On$propertyName$Changed(ByVal d As System.Windows.DependencyObject, ByVal e As System.Windows.DependencyPropertyChangedEventArgs)
+        If d Is Nothing Then Throw New ArgumentNullException("d")
+        If Not TypeOf d Is $ownertype$ Then Throw New Tools.TypeMismatchException("d", d, GetType($ownertype$))
+        DirectCast(d, $ownertype$).On$propertyName$Changed(e)
+    End Sub
+    ''' <summary>Called whan value of the <see cref="$propertyName$"/> property changes</summary>
+    ''' <param name="e">Event arguments</param>
+    Protected Overridable Sub On$propertyName$Changed(ByVal e As System.Windows.DependencyPropertyChangedEventArgs)
+
+    End Sub
+    ''' <summary>Called whenever a value of the <see cref="$propertyName$"/> dependency property is being re-evaluated, or coercion is specifically requested.</summary>
+    ''' <param name="d">The object that the property exists on. When the callback is invoked, the property system passes this value.</param>
+    ''' <param name="baseValue">The new value of the property, prior to any coercion attempt.</param>
+    ''' <returns>The coerced value (with appropriate type).</returns>
+    ''' <exception cref="Tools.TypeMismatchException"><paramref name="d"/> is not of type <see cref="$ownertype$"/> -or- <paramref name="baseValue"/> is not of type <see cref="$propertyType$"/></exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="d"/> is null</exception>
+    Private Shared Function Coerce$propertyName$Value(ByVal d As System.Windows.DependencyObject, ByVal baseValue As Object) As Object
+        If d Is Nothing Then Throw New ArgumentNullException("d")
+        If Not TypeOf d Is $ownertype$ Then Throw New Tools.TypeMismatchException("d", d, GetType($ownertype$))
+        If Not TypeOf baseValue Is $propertyType$ AndAlso Not baseValue Is Nothing Then Throw New Tools.TypeMismatchException("baseValue", baseValue, GetType($propertyType$))
+        Return DirectCast(d, $ownertype$).Coerce$propertyName$Value(baseValue)
+    End Function
+    ''' <summary>Called whenever a value of the <see cref="$propertyName$"/> dependency property is being re-evaluated, or coercion is specifically requested.</summary>
+    ''' <param name="baseValue">The new value of the property, prior to any coercion attempt, but ensured to be of correct type.</param>
+    ''' <returns>The coerced value (with appropriate type).</returns>
+    Protected Overridable Function Coerce$propertyName$Value(ByVal baseValue As $propertyType$) As $propertyType$
+
+    End Function
+#End Region
+          ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
+

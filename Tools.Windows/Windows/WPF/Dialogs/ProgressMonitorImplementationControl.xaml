@@ -2,8 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:WPF="clr-namespace:Tools.WindowsT.WPF"
                     xmlns:local="clr-namespace:Tools.WindowsT.WPF.DialogsT"
+                    xmlns:c="clr-namespace:Tools.WindowsT.WPF.ConvertersT"
      >
     <ControlTemplate TargetType="{x:Type local:ProgressMonitorImplementationControl}" x:Key="ProgressMonitorImplementationControlDefaultTemplate">
+        <ControlTemplate.Resources>
+            <c:NotBooleanValueConverter x:Key="NotBooleanValueConverter"/>            
+        </ControlTemplate.Resources>
         <Grid Width="auto" Height="auto" Margin="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -14,10 +18,10 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Name="PART_MainInfo" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextAlignment="Left" TextWrapping="Wrap" />
-            <ProgressBar Name="PART_ProgressBar" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Horizontal" />
-            <TextBlock Name="PART_Info" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextAlignment="Center" TextWrapping="Wrap" />
-            <Button Name="PART_Cancel" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static WPF:Dialogs.Cancel}" />
+            <TextBlock Name="PART_MainInfo" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextAlignment="Left" TextWrapping="Wrap" Text="{Binding Prompt, Mode=OneWay}" />
+            <ProgressBar Name="PART_ProgressBar" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Horizontal" Value="{Binding Progress, Mode=OneWay}" Minimum="0" Maximum="100" IsIndeterminate="{Binding ProgressBarShowsProgress, Mode=OneWay, Converter={StaticResource NotBooleanValueConverter}}" />
+            <TextBlock Name="PART_Info" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding Information, Mode=OneWay}" />
+            <Button Name="PART_Cancel" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{x:Static WPF:Dialogs.Cancel}" Command="local:ProgressMonitorImplementationControl.Cancel" IsEnabled="{Binding CancelEnabled}" />
         </Grid>        
     </ControlTemplate>
 </ResourceDictionary>

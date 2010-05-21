@@ -208,6 +208,7 @@
     <Compile Include="ComponentModel\CustomTypeDescriptorBase.vb" />
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
+    <Compile Include="Threading\IInvoke.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\ReadOnlyObject.vb" />

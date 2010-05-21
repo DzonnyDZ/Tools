@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports System.Runtime.CompilerServices
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.IndependentT
@@ -6,6 +7,7 @@ Namespace WindowsT.IndependentT
     ''' <version version="1.5.3" stage="Nightly">This interface is new in version 1.5.3</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Interface IProgressMonitorUI
+        Inherits ThreadingT.IInvoke
         ''' <summary>Gets <see cref="BackgroundWorker"/> this form repports progress of</summary>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
         Property BackgroundWorker() As BackgroundWorker
@@ -49,6 +51,10 @@ Namespace WindowsT.IndependentT
         ''' <param name="owner">Owner object of dialog. Each implementation should support at least objects of type <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> and <see cref="Windows.Window"/>. When owner is not of recognized type (or is null, it's ignored.</param>
         ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
         Function ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean
+        ''' <summary>Gets an object that can be used as owner for modal windows</summary>
+        ''' <returns>Depending on implementation this method returns either <see cref="Windows.Forms.IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. Null when owner object was not created yet or if it was already closed or destroyed.</returns>
+        ReadOnly Property OwnerObject As Object
     End Interface
+
 End Namespace
 #End If

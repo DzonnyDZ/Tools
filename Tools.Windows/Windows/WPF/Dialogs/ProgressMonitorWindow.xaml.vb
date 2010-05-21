@@ -13,6 +13,29 @@ Namespace WindowsT.WPF.DialogsT
             Me.progressMonitor = progressMonitor
             Me.DataContext = progressMonitor
         End Sub
+
+        ''' <summary>When true window can be closed without check if <see cref="ProgressMonitorImplementationControl.CancelCommand"/> can be executed</summary>
+        Private allowClose As Boolean
+        ''' <summary>Closes the window without check if <see cref="ProgressMonitorImplementationControl.CancelCommand"/> can be executed</summary>
+        Public Sub ForceClose()
+            Try
+                allowClose = True
+                Me.Close()
+            Catch ex As Exception
+                allowClose = False
+            End Try
+        End Sub
+
+        Private Sub Window_Closing(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs)
+            If allowClose Then Exit Sub
+            If ProgressMonitorImplementationControl.CancelCommand.CanExecute(e, Control) Then
+                ProgressMonitorImplementationControl.CancelCommand.Execute(e, Control)
+                e.Cancel = True
+            Else
+                Media.SystemSounds.Beep.Play()
+                e.Cancel = True
+            End If
+        End Sub
     End Class
 End Namespace
 #End If

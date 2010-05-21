@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports Tools.ComponentModelT
 Imports Tools.WindowsT.IndependentT
+Imports Tools.ThreadingT
 
 '#If Config <= Nightly Then Set in project file
 'Stage: Nightly
@@ -303,6 +304,29 @@ Namespace WindowsT.FormsT
             <DebuggerStepThrough()> Set(ByVal value As String)
                 Text = value
             End Set
+        End Property
+
+        ''' <summary>Synchronously invokes a delegate in UI thread</summary>
+        ''' <param name="delegate">A delegate to be invoked</param>
+        ''' <param name="params">Delegate parameters</param>
+        ''' <returns>Result of delegate call</returns>
+        ''' <remarks>This function invokes <paramref name="delegate"/> in UI thread when <see cref="InvokeRequired"/> denotes it as necessary.</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        ''' <seelaso cref="Invoke"/><seelaso cref="InvokeRequired"/><seelaso cref="IInvokeExtensions"/>
+        Private Function IInvoke_Invoke(ByVal [delegate] As System.Delegate, ByVal ParamArray params() As Object) As Object Implements IInvoke.Invoke
+            If Me.InvokeRequired Then
+                Return Me.Invoke([delegate], params)
+            Else
+                Return [delegate].DynamicInvoke(params)
+            End If
+        End Function
+
+        ''' <summary>Gets an object that can be used as owner for modal windows</summary>
+        ''' <returns>This instance of <see cref="ProgressMonitor"/></returns>
+        Private ReadOnly Property IProgressMonitorUI_OwnerObject As Object Implements IndependentT.IProgressMonitorUI.OwnerObject
+            Get
+                Return Me
+            End Get
         End Property
     End Class
 End Namespace

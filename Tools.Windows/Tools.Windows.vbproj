@@ -191,6 +191,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Windows\WPF\Threading\DispatcherExtensions.vb" />
     <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
       <DependentUpon>HTMLDialog.vb</DependentUpon>
     </Compile>
