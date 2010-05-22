@@ -73,38 +73,23 @@ Namespace WindowsT.WPF.DialogsT
 #End Region
 #End Region
 #Region "Events"
-#Region "Cancel"
         ''' <summary>Raised when user requests operation to be cancelled</summary>
-        Public Custom Event Cancel As RoutedEventHandler
-            AddHandler(ByVal value As RoutedEventHandler)
-                Me.AddHandler(CancelEvent, value)
-            End AddHandler
-            RemoveHandler(ByVal value As RoutedEventHandler)
-                Me.RemoveHandler(CancelEvent, value)
-            End RemoveHandler
-            RaiseEvent(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs)
-                Me.RaiseEvent(e)
-            End RaiseEvent
-        End Event
-        ''' <summary>Metadata of the <see cref="Cancel"/> event</summary>
-        Public Shared ReadOnly CancelEvent As RoutedEvent = EventManager.RegisterRoutedEvent("Cancel", RoutingStrategy.Bubble,
-                          GetType(RoutedEventHandler), GetType(ProgressMonitorImplementationControl))
-#End Region
+        Public Event Cancel As EventHandler(Of ExecutedRoutedEventArgs)
 #End Region
 #Region "Properties"
 #Region "ProgressBarShowsProgress"
         ''' <summary>Gets or sets current style of progress bar</summary>
         ''' <value>True to show progressbar which indicates percentage progress of operation, false to show progressbar which only indicates that something is going on but does not indicate actual progress</value>
-        Public Property ProgressBarShowsProgress As Boolean
+        Public Property ProgressBarStyle As ProgressBarStyle
             Get
-                Return GetValue(ProgressBarShowsProgressProperty)
+                Return GetValue(ProgressBarStyleProperty)
             End Get
-            Set(ByVal value As Boolean)
-                SetValue(ProgressBarShowsProgressProperty, value)
+            Set(ByVal value As ProgressBarStyle)
+                SetValue(ProgressBarStyleProperty, value)
             End Set
         End Property
-        ''' <summary>Metadata of the <see cref="ProgressBarShowsProgress"/> property</summary>
-        Public Shared ReadOnly ProgressBarShowsProgressProperty As DependencyProperty = DependencyProperty.Register("ProgressBarShowsProgress", GetType(Boolean), GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(True))
+        ''' <summary>Metadata of the <see cref="ProgressBarStyle"/> property</summary>
+        Public Shared ReadOnly ProgressBarStyleProperty As DependencyProperty = DependencyProperty.Register("ProgressBarStyle", GetType(ProgressBarStyle), GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(ProgressBarStyle.Definite))
 #End Region
 #Region "Progress"
         ''' <summary>Gets or sets current progress shown by progressbar</summary>
@@ -247,12 +232,14 @@ Namespace WindowsT.WPF.DialogsT
         End Function
 
         ''' <summary>Window being currently shown</summary>
-        Private WithEvents window As ProgressMonitorWindow = New ProgressMonitorWindow(Me)
+        Private WithEvents window As ProgressMonitorWindow
+        'Private WithEvents control As ProgressMonitorImplementationControl
 
         ''' <summary>Shows window modally</summary>
         ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Windows.Forms.Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
         ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
         Public Overloads Function ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean Implements IProgressMonitorUI.ShowDialog
+            window = New ProgressMonitorWindow(Me)
             If TypeOf owner Is Windows.Window Then
                 Return window.ShowDialog(DirectCast(owner, Window))
             ElseIf TypeOf owner Is Windows.Forms.IWin32Window Then
@@ -270,8 +257,15 @@ Namespace WindowsT.WPF.DialogsT
         Private Sub window_Loaded(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles window.Loaded
             If DoWorkOnShow Then BackgroundWorker.RunWorkerAsync(WorkerArgument)
         End Sub
+        Private Sub window_ImplementationControl_Cancel(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs) Handles window.ImplementationControl.Cancel
+            If CanCancel Then
+                CancelPending = True
+
+            End If
+        End Sub
 #End Region
 #Region "Properties"
+        ''' <summary>A background worker which does the work</summary>
         Private WithEvents bgw As BackgroundWorker
         ''' <summary>Gets <see cref="BackgroundWorker"/> this form repports progress of</summary>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
@@ -285,25 +279,24 @@ Namespace WindowsT.WPF.DialogsT
                 If value IsNot bgw Then
                     bgw = value
                     CanCancel = bgw.WorkerSupportsCancellation
-                    ProgressBarShowsProgress = bgw.WorkerReportsProgress
+                    ProgressBarStyle = If(bgw.WorkerReportsProgress, ProgressBarStyle.Definite, ProgressBarStyle.Indefinite)
                     OnPropertyChanged("BackgroundWorker")
                 End If
             End Set
         End Property
-
-        Private _ProgressBarShowsProgress As Boolean = True
+        Private _ProgressBarStyle As ProgressBarStyle = IndependentT.ProgressBarStyle.Definite
         ''' <summary>Gets or sets current style of progress bar</summary>
-        ''' <value>True to show progressbar which indicates percentage progress of operation, false to show progressbar which only indicates that something is going on but does not indicate actual progress</value>
-        <DefaultValue(True)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        Public Property ProgressBarShowsProgress() As Boolean Implements IProgressMonitorUI.ProgressBarShowsProgress
-            <DebuggerStepThrough()> Get
-                Return _ProgressBarShowsProgress
+        ''' <remarks>When value of this property is not one of values defined in the <see cref="IndependentT.ProgressBarStyle"/> enumeration, it means the prograss bar reports current status in an implementation-specific way. When property is set to unrecognized value this implementation does not corce it and treats it as <see cref="ProgressBarStyle.Definite"/>. Custom control style can take benefit of such value.</remarks>
+        <DefaultValue(GetType(ProgressBarStyle), "Definite")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+        Public Property ProgressBarStyle As IndependentT.ProgressBarStyle Implements IndependentT.IProgressMonitorUI.ProgressBarStyle
+            Get
+                Return _ProgressBarStyle
             End Get
-            Set(ByVal value As Boolean)
-                If ProgressBarShowsProgress <> value Then
-                    _ProgressBarShowsProgress = value
-                    OnPropertyChanged("ProgressBarShowsProgress")
+            Set(ByVal value As IndependentT.ProgressBarStyle)
+                If value <> ProgressBarStyle Then
+                    _ProgressBarStyle = value
+                    OnPropertyChanged("ProgressBarStyle")
                 End If
             End Set
         End Property
@@ -502,8 +495,8 @@ Namespace WindowsT.WPF.DialogsT
         ''' <exception cref="ArgumentException"><paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than 100.</exception>
         Protected Overridable Sub OnProgressChanged(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgw.ProgressChanged
             If e.ProgressPercentage >= 0 Then Progress = e.ProgressPercentage
-            If TypeOf e.UserState Is Forms.ProgressBarStyle Then
-                ProgressBarShowsProgress = DirectCast(e.UserState, Forms.ProgressBarStyle) = Forms.ProgressBarStyle.Blocks OrElse DirectCast(e.UserState, Forms.ProgressBarStyle) = Forms.ProgressBarStyle.Continuous
+            If TypeOf e.UserState Is Forms.ProgressBarStyle OrElse TypeOf e.UserState Is ProgressBarStyle Then
+                ProgressBarStyle = e.UserState
             ElseIf TypeOf e.UserState Is String Then
                 Information = e.UserState
             ElseIf TypeOf e.UserState Is Boolean Then
@@ -515,7 +508,6 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Handles <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.RunWorkerCompleted">RunWorkerCompleted</see> event.</summary>
         ''' <param name="sender"><see cref="BackgroundWorker"/></param>
         ''' <param name="e">event arguments</param>
-        ''' <remarks>This implementation sets <see cref="DialogResult"/> to <see cref="DialogResult.Cancel"/> when <paramref name="e"/>.<see cref="RunWorkerCompletedEventArgs.Cancelled">Cancelled</see> is true; to <see cref="DialogResult.Abort"/> when <paramref name="e"/>.<see cref="RunWorkerCompletedEventArgs.[Error]"/> isnot nothing and to <see cref="DialogResult.OK"/> in all other cases. Then sets <see cref="WorkerResult"/>. If <see cref="CloseOnFinish"/> is true, closes the form.</remarks>
         Protected Overridable Sub OnRunWorkerCompleted(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
             If e.Cancelled Then : window.DialogResult = False
             ElseIf e.Error IsNot Nothing Then : window.DialogResult = False

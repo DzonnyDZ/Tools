@@ -10,11 +10,12 @@ Namespace WindowsT.IndependentT
         Inherits ThreadingT.IInvoke
         ''' <summary>Gets <see cref="BackgroundWorker"/> this form repports progress of</summary>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
+        ''' <remarks></remarks>
         Property BackgroundWorker() As BackgroundWorker
         ''' <summary>Gets or sets current style of progress bar</summary>
-        ''' <value>True to show progressbar which indicates percentage progress of operation, false to show progressbar which only indicates that something is going on but does not indicate actual progress</value>
-        <DefaultValue(True)> _
-        Property ProgressBarShowsProgress() As Boolean
+        ''' <remarks>When value of this property is not one of values defined in the <see cref="IndependentT.ProgressBarStyle"/> enumeration, it means the prograss bar reports current status in an implementation-specific way. When property is set to unrecognized value, implementation may corce it to one of recognized values.</remarks>
+        <DefaultValue(GetType(ProgressBarStyle), "Definite")> _
+        Property ProgressBarStyle() As ProgressBarStyle
         ''' <summary>Gets or sets current value of <see cref="ProgressBar"/> that reports progress</summary>
         ''' <exception cref="ArgumentException">Value being set is smaller than 0 or greater than 100.</exception>
         Property Progress() As Integer
@@ -55,6 +56,18 @@ Namespace WindowsT.IndependentT
         ''' <returns>Depending on implementation this method returns either <see cref="Windows.Forms.IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. Null when owner object was not created yet or if it was already closed or destroyed.</returns>
         ReadOnly Property OwnerObject As Object
     End Interface
+
+    ''' <summary>Defines different progressbar styles</summary>
+    ''' <seelaso cref="Windows.Forms.ProgressBarStyle"/>
+    ''' <remarks>Any value different from <see cref="ProgressBarStyle.Indefinite"/> means that progressbar indicates actual progress. When value differes from <see cref="ProgressBarStyle.Definite"/> the style is implementation dependent.</remarks>
+    Public Enum ProgressBarStyle
+        ''' <summary>Progressbar does not show actual progresss. It only indicates that something is going on.</summary>
+        ''' <seelaso cref="Windows.Forms.ProgressBarStyle.Marquee"/>
+        Indefinite = Windows.Forms.ProgressBarStyle.Marquee
+        ''' <summary>Progressbar indicates actual progress in form of bar or otherwise</summary>
+        ''' <seelaso cref="Windows.Forms.ProgressBarStyle.Blocks"/>
+        Definite = Windows.Forms.ProgressBarStyle.Blocks
+    End Enum
 
 End Namespace
 #End If

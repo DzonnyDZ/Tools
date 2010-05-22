@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Tools.Windows;Component/Windows/WPF/Controls/NumericUpDown.xaml"/>
-        <ResourceDictionary Source="Tools.WIndows;Component/Windows/WPF/Dialogs/MessageBoxImplementationControl.xaml"/>
+        <ResourceDictionary Source="Tools.Windows;Component/Windows/WPF/Dialogs/MessageBoxImplementationControl.xaml"/>
+        <ResourceDictionary Source="Tools.Windows;Component/Windows/WPF/Dialogs/ProgressMonitorImplementationControl.xaml"/>
     </ResourceDictionary.MergedDictionaries>    
 </ResourceDictionary>

@@ -95,27 +95,30 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Gets or sets style of <see cref="ProgressBar"/> that indicates progress of process</summary>
+        ''' <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value is not a member of the <see cref="System.Windows.Forms.ProgressBarStyle"/> enumeration.</exception>
         ''' <seelaso cref="ProgressBar.Style"/>
-        <DefaultValue(GetType(ProgressBarStyle), "Blocks")> _
+        <DefaultValue(GetType(Windows.Forms.ProgressBarStyle), "Blocks")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <LDescription(GetType(CompositeControls), "ProgressBarStyle_d")> _
-        Public Property ProgressBarStyle() As ProgressBarStyle
+        Public Property ProgressBarStyle() As Windows.Forms.ProgressBarStyle
             <DebuggerStepThrough()> Get
                 Return pgbProgress.Style
             End Get
-            <DebuggerStepThrough()> Set(ByVal value As ProgressBarStyle)
+            <DebuggerStepThrough()> Set(ByVal value As Windows.Forms.ProgressBarStyle)
                 pgbProgress.Style = value
             End Set
         End Property
+
         ''' <summary>Gets or sets current style of progress bar</summary>
-        ''' <value>True to show progressbar which indicates percentage progress of operation, false to show progressbar which only indicates that something is going on but does not indicate actual progress</value>
+        ''' <remarks>This implementation supports all values defined in the <see cref="Windows.Forms.ProgressBarStyle"/> enumeration. Other values are corced to <see cref="IndependentT.ProgressBarStyle.Definite"/>.</remarks>
         ''' <version version="1.5.3">This property is new in version 1.5.3</version>
-        Private Property IProgressMonitorUI_ProgressBarShowsProgress As Boolean Implements IProgressMonitorUI.ProgressBarShowsProgress
+        Private Property IProgressMonitorUI_ProgressBarStyle As IndependentT.ProgressBarStyle Implements IProgressMonitorUI.ProgressBarStyle
             Get
-                Return ProgressBarStyle = Windows.Forms.ProgressBarStyle.Blocks OrElse ProgressBarStyle = Windows.Forms.ProgressBarStyle.Continuous
+                Return ProgressBarStyle
             End Get
-            Set(ByVal value As Boolean)
-                ProgressBarStyle = If(value, ProgressBarStyle.Blocks, ProgressBarStyle.Marquee)
+            Set(ByVal value As IndependentT.ProgressBarStyle)
+                If Not CType(value, Windows.Forms.ProgressBarStyle).IsDefined Then value = IndependentT.ProgressBarStyle.Definite
+                ProgressBarStyle = value
             End Set
         End Property
 
@@ -161,7 +164,7 @@ Namespace WindowsT.FormsT
         ''' <exception cref="ArgumentException"><paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than 100.</exception>
         Protected Overridable Sub OnProgressChanged(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgw.ProgressChanged
             If e.ProgressPercentage >= 0 Then Progress = e.ProgressPercentage
-            If TypeOf e.UserState Is ProgressBarStyle Then
+            If TypeOf e.UserState Is Windows.Forms.ProgressBarStyle OrElse TypeOf e.UserState Is IndependentT.ProgressBarStyle Then
                 ProgressBarStyle = e.UserState
             ElseIf TypeOf e.UserState Is String Then
                 Information = e.UserState

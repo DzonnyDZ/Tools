@@ -186,11 +186,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Resources\resx %28Friend%29\ResourcesWPF.Designer.vb">
+      <DependentUpon>ResourcesWPF.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\resx %28Friend%29\DialogsWPF.Designer.vb">
       <DependentUpon>DialogsWPF.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Windows\WPF\Converters\CompareConverter.vb" />
     <Compile Include="Windows\WPF\Threading\DispatcherExtensions.vb" />
     <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
       <DependentUpon>HTMLDialog.vb</DependentUpon>
@@ -304,6 +310,13 @@
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\ResourcesWPF.resx">
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>ResourcesWPF.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LogicalName>Tools.WindowsT.WPF.Resources.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DialogsWPF.cs.resx">
       <DependentUpon>DialogsWPF.resx</DependentUpon>
       <SubType>Designer</SubType>

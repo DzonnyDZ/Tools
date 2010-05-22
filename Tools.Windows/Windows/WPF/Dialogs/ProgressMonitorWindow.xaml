@@ -3,12 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:local="clr-namespace:Tools.WindowsT.WPF.DialogsT"
     ResizeMode="NoResize"  WindowStyle="SingleBorderWindow" ShowInTaskbar="False" IsTabStop="False" Focusable="False"
-    MinWidth="256px" MinHeight="150px" SizeToContent="Height" Width="256px" Closing="Window_Closing"
+    MinWidth="256px" MinHeight="150px" SizeToContent="Height" Width="256px" Closing="Window_Closing" Height="150px"
         Title="{Binding ElementName=Control, Path=Title}"
         >
     <local:ProgressMonitorImplementationControl x:Name="Control" x:FieldModifier="Protected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                 Prompt="{Binding Prompt, Mode=OneWay}" Information="{Binding Information, Mode=OneWay}"
                                                 Title="{Binding Title, Mode=OneWay}" Progress="{Binding Progress, Mode=OneWay}"
-                                                ProgressBarShowsProgress="{Binding ProgressBarShowsProgress, Mode=OneWay}"
+                                                ProgressBarStyle="{Binding ProgressBarStyle, Mode=OneWay}"
                                                 CancelEnabled="{Binding CancelEnabled, Mode=OneWay}"/>
 </Window>

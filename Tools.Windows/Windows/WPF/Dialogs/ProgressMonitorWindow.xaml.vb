@@ -36,6 +36,15 @@ Namespace WindowsT.WPF.DialogsT
                 e.Cancel = True
             End If
         End Sub
+
+        ''' <summary>Gets control implementing progress monitor UI</summary>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)>
+        Public ReadOnly Property ImplementationControl As ProgressMonitorImplementationControl
+            Get
+                Return Control
+            End Get
+        End Property
+
     End Class
 End Namespace
 #End If
