@@ -86,7 +86,7 @@ Namespace WindowsT.WPF
         '''<summary>
         '''Looks up a localized string similar to '_Cancel'.
         '''</summary>
-        Friend Shared ReadOnly Property Cancel() As String
+        Public Shared ReadOnly Property Cancel() As String
             Get
                 Return ResourceManager.GetString("Cancel", _resourceCulture)
             End Get

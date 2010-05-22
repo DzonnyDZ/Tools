@@ -24,7 +24,7 @@
                        VerticalAlignment="Top" TextAlignment="Left" TextWrapping="Wrap"
                        Text="{Binding Prompt, Mode=OneWay, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
             <ProgressBar Name="PART_ProgressBar" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                         Orientation="Horizontal" Minimum="0" Maximum="100" 
+                         Orientation="Horizontal" Minimum="0" Maximum="100" Height="32" 
                          Value="{Binding Progress, Mode=OneWay, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" 
                          IsIndeterminate="{Binding ProgressBarStyle, Mode=OneWay, Converter={StaticResource CompareConverter}, ConverterParameter={StaticResource Indefinite}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
             <TextBlock Name="PART_Info" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"
@@ -32,8 +32,22 @@
                        Text="{Binding Information, Mode=OneWay, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
             <Button Name="PART_Cancel" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Content="{x:Static WPF:Dialogs.Cancel}"
-                    Command="local:ProgressMonitorImplementationControl.Cancel"
-                    IsEnabled="{Binding CancelEnabled, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
+                    Command="{x:Static local:ProgressMonitorImplementationControl.CancelCommand}"
+                    IsEnabled="{Binding CancelEnabled, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
         </Grid>        
     </ControlTemplate>
+
+    <Style TargetType="{x:Type local:ProgressMonitorImplementationControl}">
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Template" Value="{StaticResource ProgressMonitorImplementationControlDefaultTemplate}"/>
+        <Setter Property="Prompt" Value="{Binding Prompt, Mode=OneWay}"/>
+        <Setter Property="Information" Value="{Binding Information, Mode=OneWay}"/>
+        <Setter Property="Title" Value="{Binding Title, Mode=OneWay}"/>
+        <Setter Property="Progress" Value="{Binding Progress, Mode=OneWay}"/>
+        <Setter Property="ProgressBarStyle" Value="{Binding ProgressBarStyle, Mode=OneWay}"/>
+        <Setter Property="CancelEnabled" Value="{Binding CancelEnabled, Mode=OneWay}"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+    </Style>
 </ResourceDictionary>

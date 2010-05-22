@@ -183,6 +183,9 @@ Namespace WindowsT.WPF.DialogsT
             "CancelEnabled", GetType(Boolean), GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(True))
 #End Region
 #End Region
+
+   
+
     End Class
 
     ''' <summary>This class provides predefined progress monitor with <see cref="ProgressBar"/> for <see cref="BackgroundWorker"/></summary>
@@ -232,35 +235,35 @@ Namespace WindowsT.WPF.DialogsT
         End Function
 
         ''' <summary>Window being currently shown</summary>
-        Private WithEvents window As ProgressMonitorWindow
+        Private WithEvents _window As ProgressMonitorWindow
         'Private WithEvents control As ProgressMonitorImplementationControl
 
         ''' <summary>Shows window modally</summary>
         ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Windows.Forms.Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
         ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
         Public Overloads Function ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean Implements IProgressMonitorUI.ShowDialog
-            window = New ProgressMonitorWindow(Me)
+            _window = New ProgressMonitorWindow(Me)
             If TypeOf owner Is Windows.Window Then
-                Return window.ShowDialog(DirectCast(owner, Window))
+                Return _window.ShowDialog(DirectCast(owner, Window))
             ElseIf TypeOf owner Is Windows.Forms.IWin32Window Then
-                Return WindowsT.InteropT.InteropExtensions.ShowDialog(window, DirectCast(owner, Forms.IWin32Window))
+                Return WindowsT.InteropT.InteropExtensions.ShowDialog(_window, DirectCast(owner, Forms.IWin32Window))
             ElseIf TypeOf owner Is Windows.Interop.IWin32Window Then
-                Return WindowsT.InteropT.InteropExtensions.ShowDialog(window, DirectCast(owner, Interop.IWin32Window))
+                Return WindowsT.InteropT.InteropExtensions.ShowDialog(_window, DirectCast(owner, Interop.IWin32Window))
             Else
-                Return window.ShowDialog
+                Return _window.ShowDialog
             End If
         End Function
 
-        Private Sub window_Closed(ByVal sender As Object, ByVal e As System.EventArgs) Handles window.Closed
-            window = Nothing
+        Private Sub window_Closed(ByVal sender As Object, ByVal e As System.EventArgs) Handles _window.Closed
+            _window = Nothing
         End Sub
-        Private Sub window_Loaded(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles window.Loaded
+        Private Sub window_Loaded(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles _window.Loaded
             If DoWorkOnShow Then BackgroundWorker.RunWorkerAsync(WorkerArgument)
         End Sub
-        Private Sub window_ImplementationControl_Cancel(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs) Handles window.ImplementationControl.Cancel
-            If CanCancel Then
+        Private Sub window_ImplementationControl_Cancel(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs) Handles _window.ImplementationControl.Cancel
+            If CancelEnabled Then
                 CancelPending = True
-
+                BackgroundWorker.CancelAsync()
             End If
         End Sub
 #End Region
@@ -451,9 +454,9 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Gets value indicating if Cancle button is enabled</summary>
         ''' <returns>True when both - <see cref="CanCancel"/> and <see cref="CancelPending"/> are enabled</returns>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public ReadOnly Property CancelEnanled As Boolean
+        Public ReadOnly Property CancelEnabled As Boolean
             Get
-                Return CanCancel AndAlso Not CancelPending
+                Return CanCancel AndAlso Not CancelPending AndAlso Not WorkerFinished
             End Get
         End Property
         Private _CancelPending As Boolean = False
@@ -473,10 +476,24 @@ Namespace WindowsT.WPF.DialogsT
         End Property
         ''' <summary>Gets an object that can be used as owner for modal windows</summary>
         ''' <returns>When progress monitor dialog is currently shown, returns a <see cref="Windows.Window"/> representing the dialog; otherwise null.</returns>
-        Public ReadOnly Property IProgressMonitorUI_OwnerObject As Object Implements IndependentT.IProgressMonitorUI.OwnerObject
+        Public ReadOnly Property Window As Object Implements IndependentT.IProgressMonitorUI.OwnerObject
             Get
-                Return window
+                Return _window
             End Get
+        End Property
+        Private _WorkerFinished As Boolean = False
+        ''' <summary>Gets or sets value indicating if worker has finished it's work</summary>
+        Public Property WorkerFinished As Boolean
+            Get
+                Return _WorkerFinished
+            End Get
+            Protected Set(ByVal value As Boolean)
+                If WorkerFinished <> value Then
+                    _WorkerFinished = value
+                    OnPropertyChanged("WorkerFinished")
+                    OnPropertyChanged("CancelEnabled")
+                End If
+            End Set
         End Property
 #End Region
 #Region "Worker events"
@@ -486,7 +503,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <remarks>Default implementation works in following way:
         ''' <list type="bullet">
         ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than or equal to zero then sets this value to the <see cref="Progress"/> property. Values smaller than zero are ignored.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Windows.Forms.ProgressBarStyle"/> sets <see cref="ProgressBarShowsProgress"/> to true or false</item>
+        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Windows.Forms.ProgressBarStyle"/> sets <see cref="ProgressBarStyle"/> to given value</item>
         ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="String"/> passes that value to the <see cref="Information"/> property.</item>
         ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Boolean"/> passes that value to the <see cref="CanCancel"/> property.</item>
         ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="BackgroundWorker"/> (same instance) than <see cref="Reset"/> method is called.</item>
@@ -513,6 +530,7 @@ Namespace WindowsT.WPF.DialogsT
             ElseIf e.Error IsNot Nothing Then : window.DialogResult = False
             Else : window.DialogResult = True : End If
             WorkerResult = e
+            WorkerFinished = True
             If CloseOnFinish Then
                 window.Close()
             End If
@@ -525,6 +543,7 @@ Namespace WindowsT.WPF.DialogsT
             CancelPending = False
             Progress = 0
             WorkerResult = Nothing
+            WorkerFinished = False
         End Sub
 
 #Region "INotifyPropertyChanged"

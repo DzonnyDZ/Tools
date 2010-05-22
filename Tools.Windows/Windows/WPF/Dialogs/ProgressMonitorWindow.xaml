@@ -6,9 +6,5 @@
     MinWidth="256px" MinHeight="150px" SizeToContent="Height" Width="256px" Closing="Window_Closing" Height="150px"
         Title="{Binding ElementName=Control, Path=Title}"
         >
-    <local:ProgressMonitorImplementationControl x:Name="Control" x:FieldModifier="Protected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                                Prompt="{Binding Prompt, Mode=OneWay}" Information="{Binding Information, Mode=OneWay}"
-                                                Title="{Binding Title, Mode=OneWay}" Progress="{Binding Progress, Mode=OneWay}"
-                                                ProgressBarStyle="{Binding ProgressBarStyle, Mode=OneWay}"
-                                                CancelEnabled="{Binding CancelEnabled, Mode=OneWay}"/>
+    <local:ProgressMonitorImplementationControl x:Name="Control" x:FieldModifier="Protected"/>
 </Window>

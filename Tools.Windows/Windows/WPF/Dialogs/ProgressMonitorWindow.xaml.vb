@@ -27,7 +27,7 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
 
         Private Sub Window_Closing(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs)
-            If allowClose Then Exit Sub
+            If allowClose OrElse progressMonitor.WorkerFinished Then Exit Sub
             If ProgressMonitorImplementationControl.CancelCommand.CanExecute(e, Control) Then
                 ProgressMonitorImplementationControl.CancelCommand.Execute(e, Control)
                 e.Cancel = True
