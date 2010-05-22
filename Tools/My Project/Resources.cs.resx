@@ -180,4 +180,22 @@
     <value>A</value>
     <comment>Ano</comment>
   </data>
+  <data name="Start0End1" xml:space="preserve">
+    <value>začátek {0}, konec {1}</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Vložit</value>
+  </data>
+  <data name="Object0Type1" xml:space="preserve">
+    <value>Objekt "{0}" typ {1}</value>
+  </data>
+  <data name="Property0" xml:space="preserve">
+    <value>Vlastnost {0}</value>
+  </data>
+  <data name="Index0" xml:space="preserve">
+    <value>index {0}</value>
+  </data>
+  <data name="Type0" xml:space="preserve">
+    <value>typ {0}</value>
+  </data>
 </root>

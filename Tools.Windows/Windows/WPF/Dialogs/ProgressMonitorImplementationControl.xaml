@@ -34,7 +34,12 @@
                     Content="{x:Static WPF:Dialogs.Cancel}"
                     Command="{x:Static local:ProgressMonitorImplementationControl.CancelCommand}"
                     IsEnabled="{Binding CancelEnabled, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
-        </Grid>        
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="CancelPending" Value="True">
+                <Setter Property="Content" TargetName="PART_Cancel" Value="{x:Static WPF:Dialogs.PleaseWait}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type local:ProgressMonitorImplementationControl}">
@@ -47,6 +52,7 @@
         <Setter Property="Progress" Value="{Binding Progress, Mode=OneWay}"/>
         <Setter Property="ProgressBarStyle" Value="{Binding ProgressBarStyle, Mode=OneWay}"/>
         <Setter Property="CancelEnabled" Value="{Binding CancelEnabled, Mode=OneWay}"/>
+        <Setter Property="CancelPending" Value="{Binding CancelPending, Mode=OneWay}"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Focusable" Value="False"/>
     </Style>

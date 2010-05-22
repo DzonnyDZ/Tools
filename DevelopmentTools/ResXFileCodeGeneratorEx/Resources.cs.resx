@@ -117,31 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CommentsMergeMergesXMLCommentFiles" xml:space="preserve">
-    <value>CommentsMerge: Spojuje XML soubory s komentáři</value>
+  <data name="MismatchedResourceName" xml:space="preserve">
+    <value>Při předávání ResXDataNodů jako hodnot v IDictionary do StronglyTypedResourceBuilderEx.Create se musí klíče shodovat s odpovídajícími hodnotami pro ResXDataNode.Name. Název klíče: '{0}', ResXDataNode.Name: '{1}'.</value>
   </data>
-  <data name="UsageCommenstMergePrimaryFileSecondaryFileOutputFile" xml:space="preserve">
-    <value>Použití: CommentsMerge PrimárníSoubor SekundárníSoubor VýstupníSoubor</value>
+  <data name="StringTruncatedComment" xml:space="preserve">
+    <value>{0} [zbytek řetězce byl oříznut]";</value>
   </data>
-  <data name="FilesShouldBeNamespaceLessOrHaveHttpDzonnyCzXmlSchemasIntellisenseNamespace" xml:space="preserve">
-    <value>Soubory by měly být bez jmeného prostoru nebo používat jmenný prostor http://dzonny.cz/xml/schemas/intellisense</value>
+  <data name="StringPropertyComment" xml:space="preserve">
+    <value>Najde lokalizivaný řetězec podobný '{0}'.</value>
   </data>
-  <data name="PrimaryFile01" xml:space="preserve">
-    <value>Prmární soubor: {0}: {1}</value>
+  <data name="NonStringPropertyComment" xml:space="preserve">
+    <value>Najde řetězec '{0}'.</value>
   </data>
-  <data name="SecondaryFile01" xml:space="preserve">
-    <value>Sekundární soubor: {0}: {1}</value>
+  <data name="FormatMethodComment" xml:space="preserve">
+    <value>Formátuje lokalizovaný řetězec podobný '{0}'.</value>
   </data>
-  <data name="Transformation01" xml:space="preserve">
-    <value>Transformace: {0}: {1}</value>
+  <data name="FormatStubMethodComment" xml:space="preserve">
+    <value>Pahýl formátovací metody vracející hodnotu vlastnosti {0}.</value>
   </data>
-  <data name="Save01" xml:space="preserve">
-    <value>Uložit: {0}: {1}</value>
+  <data name="ClassComments1Format" xml:space="preserve">
+    <value>Tato třída byla automaticky vygenerována pomocí třídy StronglyTypedResourceVuildeEx přes custom tool {0}.</value>
   </data>
-  <data name="Usage" xml:space="preserve">
-    <value>CommentsMerge: Slučuje soubory s XML kometáři
-Použití: CommenstMerge VstupníSOubor1 VstupníSoubor2 ... VstupníSouborN VýstupníSoubor
-    Je potřeba specifikovat nejméně dva vstupní soubory
-Soubory by měly být bez jmenného prostoru nebo používat jmenný prostor http://dzonny.cz/xml/schemas/intellisense</value>
+  <data name="ClassComments2Format" xml:space="preserve">
+    <value>Pro přidání nebo odebrání člena editujte váš .resx soubor a pak spusťte custom tool {0} nebo přebuildujte váš projek ve VS.NET.</value>
+  </data>
+  <data name="ClassCommentsCopyright" xml:space="preserve">
+    <value>Copyright © Dmytro Kryvko 2006-{0} (http://dmytro.kryvko.googlepages.com/); Đonny 2008-{0} (http://tools.codeplex.com)</value>
+  </data>
+  <data name="ResMgrPropertyComment" xml:space="preserve">
+    <value>Vrací nacacheovanou instanci ResourceManageru používanou touto třídou.</value>
+  </data>
+  <data name="ParamCommentStatement" xml:space="preserve">
+    <value>&lt;param name="arg{0}"&gt;Objekt ({0}) pro formátování.&lt;/param&gt;</value>
+  </data>
+  <data name="MethodReturnValueComment" xml:space="preserve">
+    <value>&lt;returns&gt;Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.&lt;/returns&gt;</value>
+  </data>
+  <data name="StubMethodReturnValueComment" xml:space="preserve">
+    <value>&lt;returns&gt;Hodnota vlastnosti {0}.&lt;/returns&gt;</value>
+  </data>
+  <data name="CulturePropertyComment1" xml:space="preserve">
+    <value>Přepisuje hodnoty vlastnosti CurrentUICulture aktuálního vlákna pro všechna</value>
+  </data>
+  <data name="CulturePropertyComment2" xml:space="preserve">
+    <value>vyhledávání resourců pomocí této silně typové třídy.</value>
+  </data>
+  <data name="InvalidIdentifier" xml:space="preserve">
+    <value>Identifikátor '{0}' není platný.</value>
+  </data>
+  <data name="ClassDocComment" xml:space="preserve">
+    <value>Třída silně typovaných zdrojů pro vyhledávání, formátování atd. lokalizačních řetězců.</value>
+  </data>
+  <data name="CannotCreatePropertyForResource" xml:space="preserve">
+    <value>Nemohu vytvořit vlastnost pro zdroj nazvaný '{0}'.</value>
+  </data>
+  <data name="ErrorInFormatPropertyForResource" xml:space="preserve">
+    <value>{0} Název vlastnosti: {1}.</value>
+  </data>
+  <data name="CannotCreateFormatMethod" xml:space="preserve">
+    <value>Nemohu vytvořit formátovací metodu s názvem '{0}' pro klíč zdrojů '{1}'.</value>
+  </data>
+  <data name="InternalSyncObjectPropertyComment" xml:space="preserve">
+    <value>Vláknově bezpešný zamykací objekt používaný touto třídou.</value>
   </data>
 </root>

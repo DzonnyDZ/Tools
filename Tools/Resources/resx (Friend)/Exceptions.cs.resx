@@ -1323,7 +1323,61 @@
   <data name="ParentTypeOf0MustBe1" xml:space="preserve">
     <value>Rodič typu {0} musí být {1}</value>
   </data>
-    <data name="MustNotBeNull" xml:space="preserve">
+  <data name="MustNotBeNull" xml:space="preserve">
     <value>{0} nesmí být null</value>
+  </data>
+  <data name="MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe" xml:space="preserve">
+    <value>MessageBox musí tuto instanci vlastnit aby s ní mohl být asociován.</value>
+  </data>
+  <data name="CannotGetDerivedClassMethodForGlobalMethod" xml:space="preserve">
+    <value>Nemohu získat zděděnou metodu třídy pro globání metodu.</value>
+  </data>
+  <data name="DerivedTypeDoesNotDeriveFromMethodDeclaringType" xml:space="preserve">
+    <value>Zděděný typ nedědí od typu deklarujícího metodu</value>
+  </data>
+  <data name="DeclaringTypeOfMethodIsNotGeneric" xml:space="preserve">
+    <value>Dklarující typ metody není generický.</value>
+  </data>
+  <data name="TypeIsNotGeneric" xml:space="preserve">
+    <value>Typ není generický.</value>
+  </data>
+  <data name="MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated" xml:space="preserve">
+    <value>Metoda deklarující typ a typ, jehož metodu chcete získat, musí být vytvořeny ze stejného generického typu.</value>
+  </data>
+  <data name="OperationWasCancelled" xml:space="preserve">
+    <value>Operace byla stornována.</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Soubor nenalezen.</value>
+  </data>
+  <data name="Retuned1" xml:space="preserve">
+    <value>{0} vrátila {1}</value>
+  </data>
+  <data name="IncompleteFormatString" xml:space="preserve">
+    <value>Nekompletní formátovací řetězec.</value>
+  </data>
+  <data name="InvalidFormatStringInvalidUnicodeCodePoint0x0X" xml:space="preserve">
+    <value>Neplatný formátovací řetězec: Neplatný kódový bod Unicode 0x{0:x}.</value>
+  </data>
+  <data name="InvalidFormatStringInvalidUnicodeCodePoint0D" xml:space="preserve">
+    <value>Neplatný formátovací řetězec: Neplatný kódový bod Unicode {0:D}.</value>
+  </data>
+  <data name="InvalidFormatStringNumeralOrExpected" xml:space="preserve">
+    <value>Neplatný formátovací řetězec: Očekávána číslice, ":" nebo "}".</value>
+  </data>
+  <data name="InvalidFormatStringExpectedWidthNumber" xml:space="preserve">
+    <value>Neplatný formátovací řetězec. Očekáváno číslo šířky.</value>
+  </data>
+  <data name="InvalidFormatStringExpectedWidthNumberOr" xml:space="preserve">
+    <value>Neplatný formátovací řetězec. Očekáváno číslo šířky nebo "-".</value>
+  </data>
+  <data name="InvalidFormatStringNumeralOrExpected2" xml:space="preserve">
+    <value>Neplatný formátovací řetězec. Očekáváno číslo, ",", ":" nebo "}".</value>
+  </data>
+  <data name="InvalidFormatStringArgumentNumberExpected" xml:space="preserve">
+    <value>Neplatný formátovací řetězec. Očekáváno číslo argumentu.</value>
+  </data>
+  <data name="InvalidFormatStringInvalidHexadecimalEscapeSequence" xml:space="preserve">
+    <value>Neplatný formátovací řetězec. Neplatná hexadecimální escape sekvence</value>
   </data>
 </root>

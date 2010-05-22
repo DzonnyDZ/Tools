@@ -1,0 +1,14 @@
+﻿Použití: {0} příkaz archiv složka [-r] [masky]
+Příkazy:
+    a - vytvořit archiv
+    e - rozbalit archiv
+Archiv: Cesta k pseudozip souboru, do něhož mají být soubory zabaleny | z něhož mají být extrahovány
+Složka: Cesta ke složce, soubory z níž mají být zabaleny | do níž mají být soubory extrahovány
+-r  Jen s příkazem a.
+    Komprimovat složku rekurzivně.
+Masky: Jen s příkazem a.
+       Masky názvů souborů pro začlenění do archivu. Pokud vynechány, použije se *.
+       
+Poznámka: Tento nástroj používá ZIP kompresi, ale ne ZIP formát.
+Vytvořený archiv je možno přečíst jakýmkoliv nástrojem pro práci se ZIP soubory, ale tentor nástroj může číst jen soubory archivů vytvořené nástroji postavenými na System.IO.Packaging.ZipPackage.
+Tento nástroj je jen tak stupidní jako System.IO.Packaging.ZipPackage, neviňte mě. Já jsme porsttě potřeboval jednoduchý pakovací nástroj použitelný jak z příkazového řádku tak z kódu.       

@@ -310,6 +310,11 @@
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\ResourcesWPF.cs.resx">
+      <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <DependentUpon>ResourcesWPF.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\ResourcesWPF.resx">
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>ResourcesWPF.Designer.vb</LastGenOutput>

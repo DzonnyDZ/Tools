@@ -162,4 +162,7 @@
   <data name="PropertyChanged_d" xml:space="preserve">
     <value>Vyvolána, když se změní hodnota vlastnosti</value>
   </data>
+  <data name="InnerException" xml:space="preserve">
+    <value>Vnitřní chyba:</value>
+  </data>
 </root>

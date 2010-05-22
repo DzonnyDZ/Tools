@@ -6,7 +6,7 @@ Archive: Path to pseudo zip file to compress files to | extract files from
 Folder: Path to folder to compres files from | extract files to
 -r  Only with command a.
     Pack files recursivelly from folder.
-Macks: Only with command a.
+Masks: Only with command a.
        Masks of files to include in archive. When ommitted * is used.
        
 Note: This tool uses ZIP compresion, but does not use ZIP format.

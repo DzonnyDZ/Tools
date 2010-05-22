@@ -121,6 +121,10 @@
     <value>_Cancel</value>
     <comment>WPF button text</comment>
   </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Please wait ...</value>
+    <comment>Disabled button text</comment>
+  </data>
   <data name="Progress" xml:space="preserve">
     <value>Progress</value>
     <comment>Window title</comment>

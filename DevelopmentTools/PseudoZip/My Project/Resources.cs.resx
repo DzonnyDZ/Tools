@@ -117,31 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CommentsMergeMergesXMLCommentFiles" xml:space="preserve">
-    <value>CommentsMerge: Spojuje XML soubory s komentáři</value>
+  <data name="FilesPacked" xml:space="preserve">
+    <value>{0} souborů zapakováno.</value>
   </data>
-  <data name="UsageCommenstMergePrimaryFileSecondaryFileOutputFile" xml:space="preserve">
-    <value>Použití: CommentsMerge PrimárníSoubor SekundárníSoubor VýstupníSoubor</value>
+  <data name="FilesExtracted" xml:space="preserve">
+    <value>{0} souborů extrahováno.</value>
   </data>
-  <data name="FilesShouldBeNamespaceLessOrHaveHttpDzonnyCzXmlSchemasIntellisenseNamespace" xml:space="preserve">
-    <value>Soubory by měly být bez jmeného prostoru nebo používat jmenný prostor http://dzonny.cz/xml/schemas/intellisense</value>
+  <data name="UnknownCommand0" xml:space="preserve">
+    <value>Neznámý příkaz {0}</value>
   </data>
-  <data name="PrimaryFile01" xml:space="preserve">
-    <value>Prmární soubor: {0}: {1}</value>
+  <data name="Error0" xml:space="preserve">
+    <value>Chyba: {0}</value>
   </data>
-  <data name="SecondaryFile01" xml:space="preserve">
-    <value>Sekundární soubor: {0}: {1}</value>
-  </data>
-  <data name="Transformation01" xml:space="preserve">
-    <value>Transformace: {0}: {1}</value>
-  </data>
-  <data name="Save01" xml:space="preserve">
-    <value>Uložit: {0}: {1}</value>
-  </data>
-  <data name="Usage" xml:space="preserve">
-    <value>CommentsMerge: Slučuje soubory s XML kometáři
-Použití: CommenstMerge VstupníSOubor1 VstupníSoubor2 ... VstupníSouborN VýstupníSoubor
-    Je potřeba specifikovat nejméně dva vstupní soubory
-Soubory by měly být bez jmenného prostoru nebo používat jmenný prostor http://dzonny.cz/xml/schemas/intellisense</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Usage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\usage.cs.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

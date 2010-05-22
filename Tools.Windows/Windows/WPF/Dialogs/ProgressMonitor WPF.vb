@@ -182,10 +182,21 @@ Namespace WindowsT.WPF.DialogsT
         Public Shared ReadOnly CancelEnabledProperty As DependencyProperty = DependencyProperty.Register(
             "CancelEnabled", GetType(Boolean), GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(True))
 #End Region
+#Region "CancelPending"
+        ''' <summary>Gets or sets value idicating if user clicked the cance button and we are waiting for background process to terminate</summary>      
+        Public Property CancelPending As Boolean
+            Get
+                Return GetValue(CancelPendingProperty)
+            End Get
+            Set(ByVal value As Boolean)
+                SetValue(CancelPendingProperty, value)
+            End Set
+        End Property
+        ''' <summary>Metadata of the <see cref="CancelPending"/> property</summary>                                                   
+        Public Shared ReadOnly CancelPendingProperty As DependencyProperty = DependencyProperty.Register(
+            "CancelPending", GetType(Boolean), GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(False))
 #End Region
-
-   
-
+#End Region
     End Class
 
     ''' <summary>This class provides predefined progress monitor with <see cref="ProgressBar"/> for <see cref="BackgroundWorker"/></summary>

@@ -19,6 +19,8 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 {
     /// <summary>Provides support for strongly-typed resources. This class cannot be inherited.</summary>
     /// <version version="1.5.3.">This class is new in version 1.5.3. It was mooved from namespace <c>DMKSoftware.CodeGenerators</c>.</version>
+    /// <version version="1.5.3">Modules are generated for Visual Basic. For other languages class constructor is made <see langword="private"/> (previously <see langword="internal"/>).</version>
+    /// <version version="1.5.3">Members of resource class (module for VB) are always <see langword="public"/>, even when the class (module) is <see langword="internal"/>.</version>
     public static class StronglyTypedResourceBuilderEx
     {
         private const string CultureInfoFieldName = "_resourceCulture";
@@ -81,10 +83,11 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
         /// <param name="internalClass">true to generate an internal class; false to generate a public class.</param>
         /// <param name="unmatchable">A list that contains each resource name for which a property cannot be generated. Typically, a property cannot be generated because the resource name is not a valid identifier.</param>
         /// <param name="generatedCodeNamespace">The namespace of the class to be generated.</param>
-        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see>  class that provides the language in which the class will be generated.</param>
+        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see>  class that provides the language in which the class will be generated. When langauge is Visual Basic (<see cref="System.CodeDom.Compiler.CodeDomProvider.FileExtension"/> is vb (case insensitive)) modle is generated instead of class.</param>
         /// <param name="resourceList">An <see cref="T:System.Collections.IDictionary"></see> collection where each dictionary entry key/value pair is the name of a resource and the value of the resource.</param>
         /// <exception cref="T:System.ArgumentNullException">resourceList, basename, or codeProvider is null.</exception>
         /// <param name="logicalName">Name of resource stream in assembly</param>
+        /// <version version="1.5.3">Since version 1.5.3 modules are generated for Visual Basic.</version>
         public static CodeCompileUnit Create(Type callerType, IDictionary resourceList, string baseName, string generatedCodeNamespace,
             CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable, string logicalName)
         { //logicalName added by Ðonny
@@ -97,11 +100,12 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
         /// <param name="baseName">The name of the class to be generated.</param>
         /// <param name="internalClass">true to generate an internal class; false to generate a public class.</param>
         /// <param name="unmatchable">A list that contains each resource name for which a property cannot be generated. Typically, a property cannot be generated because the resource name is not a valid identifier.</param>
-        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see>  class that provides the language in which the class will be generated.</param>
+        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see>  class that provides the language in which the class will be generated. When langauge is Visual Basic (<see cref="System.CodeDom.Compiler.CodeDomProvider.FileExtension"/> is vb (case insensitive)) modle is generated instead of class.</param>
         /// <param name="generatedCodeNamespace">The namespace of the class to be generated.</param>
         /// <param name="resxFile">The name of a .resx file used as input.</param>
         /// <exception cref="T:System.ArgumentNullException">basename or codeProvider is null.</exception>
         /// <param name="logicalName">Name of resource stream in assembly</param>
+        /// <version version="1.5.3">Since version 1.5.3 modules are generated for Visual Basic.</version>
         public static CodeCompileUnit Create(Type callerType, string resxFile, string baseName, string generatedCodeNamespace,
             CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable, string logicalName)
         {//logicalName added by Ðonny
@@ -115,10 +119,11 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
         /// <param name="internalClass">true to generate an internal class; false to generate a public class.</param>
         /// <param name="resourcesNamespace">The namespace of the resource to be generated. </param>
         /// <param name="generatedCodeNamespace">The namespace of the class to be generated.</param>
-        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see> object that provides the language in which the class will be generated.</param>
+        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see> object that provides the language in which the class will be generated. When langauge is Visual Basic (<see cref="System.CodeDom.Compiler.CodeDomProvider.FileExtension"/> is vb (case insensitive)) modle is generated instead of class.</param>
         /// <param name="resourceList">An <see cref="T:System.Collections.IDictionary"></see> collection where each dictionary entry key/value pair is the name of a resource and the value of the resource.</param>
         /// <param name="unmatchable">A list that contains each resource name for which a property cannot be generated. Typically, a property cannot be generated because the resource name is not a valid identifier.</param>
         /// <exception cref="T:System.ArgumentNullException">resourceList, basename, or codeProvider is null.</exception>
+        /// <version version="1.5.3">Since version 1.5.3 modules are generated for Visual Basic.</version>
         public static CodeCompileUnit Create(Type callerType, IDictionary resourceList, string baseName,
             string generatedCodeNamespace, string resourcesNamespace, CodeDomProvider codeProvider,
             bool internalClass, List<ResourceErrorData> unmatchable,string logicalName)
@@ -166,12 +171,13 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
         /// <param name="baseName">The name of the class to be generated.</param>
         /// <param name="internalClass">true to generate an internal class; false to generate a public class.</param>
         /// <param name="resourcesNamespace">The namespace of the resource to be generated. </param>
-        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see>  class that provides the language in which the class will be generated.</param>
+        /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see> class that provides the language in which the class will be generated. When langauge is Visual Basic (<see cref="System.CodeDom.Compiler.CodeDomProvider.FileExtension"/> is vb (case insensitive)) modle is generated instead of class.</param>
         /// <param name="unmatchable">A list that contains each resource name for which a property cannot be generated. Typically, a property cannot be generated because the resource name is not a valid identifier.</param>
         /// <param name="generatedCodeNamespace">The namespace of the class to be generated.</param>
         /// <param name="resxFile">The name of a .resx file used as input.</param>
         /// <exception cref="T:System.ArgumentNullException">basename or codeProvider is null.</exception>
         /// <param name="logicalName">Name of resource stream in assembly</param>
+        /// <version version="1.5.3">Since version 1.5.3 modules are generated for Visual Basic.</version>
 		public static CodeCompileUnit Create(Type callerType, string resxFile, string baseName, string generatedCodeNamespace,
             string resourcesNamespace, CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable, string logicalName)
         {   //logicalName added by Ðonny
@@ -223,9 +229,9 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 
             CodeTypeReference resourceDataTypeReference = new CodeTypeReference(resourceDataType);
             resourceProperty.Type = resourceDataTypeReference;
-            if (internalClass)
+            /*if (internalClass)
                 resourceProperty.Attributes = MemberAttributes.Assembly;
-            else
+            else*///Ð
                 resourceProperty.Attributes = MemberAttributes.Public;
 
             if (useStatic)
@@ -317,9 +323,9 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
             
             CodeTypeReference stringTypeReference = new CodeTypeReference(stringType);
             resourceFormatMethod.ReturnType = stringTypeReference;
-            if (internalClass)
+            /*if (internalClass)
                 resourceFormatMethod.Attributes = MemberAttributes.Assembly;
-            else
+            else*///Ð
                 resourceFormatMethod.Attributes = MemberAttributes.Public;
 
             if (useStatic)
@@ -379,7 +385,7 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
         }
 
         private static void EmitBasicClassMembers(Type callerType, CodeTypeDeclaration resourceClass, string nameSpace, string baseName,
-            string resourcesNamespace, bool internalClass, bool useStatic, bool supportsTryCatch, string logicalName)
+            string resourcesNamespace, bool internalClass, bool useStatic, bool supportsTryCatch, string logicalName, bool generateCTor)
         {    //logicalName added by Ðonny
 			// Full class name generation
             string fullClassName;
@@ -413,10 +419,12 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
             suppressAttributeDeclaration.Arguments.Add(new CodeAttributeArgument(new CodePrimitiveExpression("CA1811:AvoidUncalledPrivateCode")));
             
 			// Generation of the constructor
-            CodeConstructor codeConstructor = new CodeConstructor();
-			codeConstructor.CustomAttributes.Add(suppressAttributeDeclaration);
-			codeConstructor.Attributes = MemberAttributes.Assembly;
-            resourceClass.Members.Add(codeConstructor);
+            if (generateCTor) {
+                CodeConstructor codeConstructor = new CodeConstructor();
+                codeConstructor.CustomAttributes.Add(suppressAttributeDeclaration);
+                codeConstructor.Attributes = MemberAttributes.Private;
+                resourceClass.Members.Add(codeConstructor);
+            }
 
 			// Generation of the _resourceManager field
             CodeTypeReference resourceManagerTypeReference = new CodeTypeReference(typeof(ResourceManager), CodeTypeReferenceOptions.GlobalReference);
@@ -449,9 +457,9 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 			internalSyncObjectProperty.HasGet = true;
 			internalSyncObjectProperty.HasSet = false;
 			internalSyncObjectProperty.Type = objectTypeReference;
-			if (internalClass)
+			/*if (internalClass)
 				internalSyncObjectProperty.Attributes = MemberAttributes.Assembly;
-			else
+			else*///Ð
 				internalSyncObjectProperty.Attributes = MemberAttributes.Public;
 
 			if (useStatic)
@@ -483,9 +491,9 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
             resourceManagerProperty.HasGet = true;
             resourceManagerProperty.HasSet = false;
             resourceManagerProperty.Type = resourceManagerTypeReference;
-            if (internalClass)
+            /*if (internalClass)
                 resourceManagerProperty.Attributes = MemberAttributes.Assembly;
-            else
+            else*///Ð
                 resourceManagerProperty.Attributes = MemberAttributes.Public;
 
             if (useStatic)
@@ -543,9 +551,9 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
             cultureProperty.HasGet = true;
             cultureProperty.HasSet = true;
             cultureProperty.Type = cultureInfoTypeReference;
-            if (internalClass)
+            /*if (internalClass)
                 cultureProperty.Attributes = MemberAttributes.Assembly;
-            else
+            else*///Ð
                 cultureProperty.Attributes = MemberAttributes.Public;
 
             if (useStatic)
@@ -612,6 +620,8 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
 				typeAttributes |= TypeAttributes.Public;
             codeTypeDeclaration.TypeAttributes = typeAttributes;
 			AddComments(codeTypeDeclaration, ClassDocComment);
+            if (codeProvider.FileExtension.ToLowerInvariant() == "vb")//Visual Basic - generate module
+                codeTypeDeclaration.UserData.Add("Module", true);
 
             CodeTypeReference debuggerNonUserCodeTypeReference = new CodeTypeReference(typeof(DebuggerNonUserCodeAttribute),
 				CodeTypeReferenceOptions.GlobalReference);
@@ -626,7 +636,7 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
             bool useStatic = internalClass || codeProvider.Supports(GeneratorSupport.PublicStaticMembers);
             bool supportsTryCatch = codeProvider.Supports(GeneratorSupport.TryCatchStatements);
             EmitBasicClassMembers(callerType, codeTypeDeclaration, generatedCodeNamespace, baseName,
-                resourcesNamespace, internalClass, useStatic, supportsTryCatch, logicalName);  //logicalName added by Ðonny
+                resourcesNamespace, internalClass, useStatic, supportsTryCatch, logicalName, codeProvider.FileExtension.ToLowerInvariant() != "vb");  //logicalName added by Ðonny
 
 			SortedList<string, ResourceData> formatMethods = new SortedList<string, ResourceData>(validResources.Count,
 				StringComparer.InvariantCultureIgnoreCase);

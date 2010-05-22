@@ -24,23 +24,18 @@ Namespace WindowsT.WPF
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx", "1.5.3.1"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")>  _
-    Friend Class Dialogs
+    Friend Module Dialogs
         
-        Private Shared _resourceManager As Global.System.Resources.ResourceManager
+        Private _resourceManager As Global.System.Resources.ResourceManager
         
-        Private Shared _internalSyncObject As Object
+        Private _internalSyncObject As Object
         
-        Private Shared _resourceCulture As Global.System.Globalization.CultureInfo
-        
-        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
-        Friend Sub New()
-            MyBase.New
-        End Sub
+        Private _resourceCulture As Global.System.Globalization.CultureInfo
         
         '''<summary>
         '''Thread safe lock object used by this class.
         '''</summary>
-        Friend Shared ReadOnly Property InternalSyncObject() As Object
+        Public ReadOnly Property InternalSyncObject() As Object
             Get
                 If Object.ReferenceEquals(_internalSyncObject, Nothing) Then
                     Global.System.Threading.Interlocked.CompareExchange(_internalSyncObject, New Object(), Nothing)
@@ -53,7 +48,7 @@ Namespace WindowsT.WPF
         '''Returns the cached ResourceManager instance used by this class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
+        Public ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(_resourceManager, Nothing) Then
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
@@ -74,7 +69,7 @@ Namespace WindowsT.WPF
         '''resource lookups using this strongly typed resource class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Shared Property Culture() As Global.System.Globalization.CultureInfo
+        Public Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return _resourceCulture
             End Get
@@ -86,16 +81,25 @@ Namespace WindowsT.WPF
         '''<summary>
         '''Looks up a localized string similar to '_Cancel'.
         '''</summary>
-        Public Shared ReadOnly Property Cancel() As String
+        Public ReadOnly Property Cancel() As String
             Get
                 Return ResourceManager.GetString("Cancel", _resourceCulture)
             End Get
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Please wait ...'.
+        '''</summary>
+        Public ReadOnly Property PleaseWait() As String
+            Get
+                Return ResourceManager.GetString("PleaseWait", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Progress'.
         '''</summary>
-        Friend Shared ReadOnly Property Progress() As String
+        Public ReadOnly Property Progress() As String
             Get
                 Return ResourceManager.GetString("Progress", _resourceCulture)
             End Get
@@ -105,16 +109,24 @@ Namespace WindowsT.WPF
         '''The stub formatting method returning the Cancel property value.
         '''</summary>
         '''<returns>The Cancel property value.</returns>
-        Friend Shared Function CancelFormat() As String
+        Public Function CancelFormat() As String
             Return Cancel
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the PleaseWait property value.
+        '''</summary>
+        '''<returns>The PleaseWait property value.</returns>
+        Public Function PleaseWaitFormat() As String
+            Return PleaseWait
         End Function
         
         '''<summary>
         '''The stub formatting method returning the Progress property value.
         '''</summary>
         '''<returns>The Progress property value.</returns>
-        Friend Shared Function ProgressFormat() As String
+        Public Function ProgressFormat() As String
             Return Progress
         End Function
-    End Class
+    End Module
 End Namespace

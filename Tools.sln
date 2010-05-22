@@ -170,6 +170,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{D99EA3E2-E52
 	ProjectSection(SolutionItems) = preProject
 		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged Coerce.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged Coerce.snippet
 		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet
+		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet
 	EndProjectSection
 EndProject
 Global

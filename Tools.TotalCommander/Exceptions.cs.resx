@@ -129,4 +129,61 @@
   <data name="PluginNotInitialized" xml:space="preserve">
     <value>Plugin nebyl inicializován.</value>
   </data>
+  <data name="CannotCompare" xml:space="preserve">
+    <value>Hodnota typu {0} nemůže být porovnána s {1}.</value>
+  </data>
+  <data name="ColumnDefinitionStringTooLong" xml:space="preserve">
+    <value>Řetězec s definicí sloupce vrácený {0} je příliš dlouhý.</value>
+  </data>
+  <data name="FieldNameTooLong" xml:space="preserve">
+    <value>{0} vrátilo položky, jejichž jméno je delší než {1}</value>
+  </data>
+  <data name="InvalidCharacter" xml:space="preserve">
+    <value>Hodnota "{0}" obsahuje neplatný znak.</value>
+  </data>
+  <data name="InvalidFieldIndex" xml:space="preserve">
+    <value>{0} vrátila položku na indexu {1}, která má FieldIndex nastavený na {2}</value>
+  </data>
+  <data name="InvalidFieldNameCharacter" xml:space="preserve">
+    <value>Název položky obsahuje neplatný znak.</value>
+  </data>
+  <data name="InvalidFieldType" xml:space="preserve">
+    <value>{0:f} není platný typ položky.</value>
+  </data>
+  <data name="InvalidMacroName" xml:space="preserve">
+    <value>Název makra "{0}" je neplatný.</value>
+  </data>
+  <data name="InvalidPathFormat" xml:space="preserve">
+    <value>Cesta {0} má neplatný formát.</value>
+  </data>
+  <data name="InvalidUnitNameCharacter" xml:space="preserve">
+    <value>Název jednotky obsahuje neplatný znak.</value>
+  </data>
+  <data name="ParamAssignedTooLong" xml:space="preserve">
+    <value>Parametru {0} metody {1} byl přiřazen příliš dlouhý řetězec.</value>
+  </data>
+  <data name="PathTooLong" xml:space="preserve">
+    <value>Řetězec vrácený puginem je delší než maximální povolená délka cesty.</value>
+  </data>
+  <data name="PropertyWasInitialized" xml:space="preserve">
+    <value>Vlastnost {0} již byla inicializována.</value>
+  </data>
+  <data name="PropertyWasNotInitialized" xml:space="preserve">
+    <value>Vlastnost {0} jěště nebyla inicializována.</value>
+  </data>
+  <data name="PropertyWasNull" xml:space="preserve">
+    <value>{0} bylo null.</value>
+  </data>
+  <data name="ReturnedArrayToLong" xml:space="preserve">
+    <value>Pole vrácené {0} je příliš dlouhé.</value>
+  </data>
+  <data name="ReturnedStringTooLongForChoice" xml:space="preserve">
+    <value>řetězec vrácený {0} pro typ {1} je příliš dlouhý.</value>
+  </data>
+  <data name="UnexpectedType" xml:space="preserve">
+    <value>Neočekávaný typ {0} vrácený {1}</value>
+  </data>
+  <data name="UnitNamesTooLong" xml:space="preserve">
+    <value>{0} vrátilo názvy jednotek součet jeichž délky plus jejich počet mínus 1 je více než {1}</value>
+  </data>
 </root>

@@ -24,23 +24,18 @@ Namespace WindowsT.WPF
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx", "1.5.3.1"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")>  _
-    Friend Class Resources
+    Friend Module Resources
         
-        Private Shared _resourceManager As Global.System.Resources.ResourceManager
+        Private _resourceManager As Global.System.Resources.ResourceManager
         
-        Private Shared _internalSyncObject As Object
+        Private _internalSyncObject As Object
         
-        Private Shared _resourceCulture As Global.System.Globalization.CultureInfo
-        
-        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
-        Friend Sub New()
-            MyBase.New
-        End Sub
+        Private _resourceCulture As Global.System.Globalization.CultureInfo
         
         '''<summary>
         '''Thread safe lock object used by this class.
         '''</summary>
-        Friend Shared ReadOnly Property InternalSyncObject() As Object
+        Public ReadOnly Property InternalSyncObject() As Object
             Get
                 If Object.ReferenceEquals(_internalSyncObject, Nothing) Then
                     Global.System.Threading.Interlocked.CompareExchange(_internalSyncObject, New Object(), Nothing)
@@ -53,7 +48,7 @@ Namespace WindowsT.WPF
         '''Returns the cached ResourceManager instance used by this class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
+        Public ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(_resourceManager, Nothing) Then
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
@@ -74,7 +69,7 @@ Namespace WindowsT.WPF
         '''resource lookups using this strongly typed resource class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Shared Property Culture() As Global.System.Globalization.CultureInfo
+        Public Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return _resourceCulture
             End Get
@@ -86,7 +81,7 @@ Namespace WindowsT.WPF
         '''<summary>
         '''Looks up a localized string similar to '{0} cannot convert back.'.
         '''</summary>
-        Friend Shared ReadOnly Property ex_CannotConvertBack() As String
+        Public ReadOnly Property ex_CannotConvertBack() As String
             Get
                 Return ResourceManager.GetString("ex_CannotConvertBack", _resourceCulture)
             End Get
@@ -97,8 +92,8 @@ Namespace WindowsT.WPF
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Friend Shared Function ex_CannotConvertBackFormat(ByVal arg0 As Object) As String
+        Public Function ex_CannotConvertBackFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, ex_CannotConvertBack, arg0)
         End Function
-    End Class
+    End Module
 End Namespace

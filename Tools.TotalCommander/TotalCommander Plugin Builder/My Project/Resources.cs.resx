@@ -117,31 +117,124 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CommentsMergeMergesXMLCommentFiles" xml:space="preserve">
-    <value>CommentsMerge: Spojuje XML soubory s komentáři</value>
+  <data name="e_LoadAssembly" xml:space="preserve">
+    <value>Chyba při načítání sestavení: {0}.</value>
   </data>
-  <data name="UsageCommenstMergePrimaryFileSecondaryFileOutputFile" xml:space="preserve">
-    <value>Použití: CommentsMerge PrimárníSoubor SekundárníSoubor VýstupníSoubor</value>
+  <data name="e_LoadType" xml:space="preserve">
+    <value>Namohu načíst typ {0}: {1}</value>
   </data>
-  <data name="FilesShouldBeNamespaceLessOrHaveHttpDzonnyCzXmlSchemasIntellisenseNamespace" xml:space="preserve">
-    <value>Soubory by měly být bez jmeného prostoru nebo používat jmenný prostor http://dzonny.cz/xml/schemas/intellisense</value>
+  <data name="e_Generating" xml:space="preserve">
+    <value>Chyba při generování pluginů: {0}</value>
   </data>
-  <data name="PrimaryFile01" xml:space="preserve">
-    <value>Prmární soubor: {0}: {1}</value>
+  <data name="e_DuplicitRenameName" xml:space="preserve">
+    <value>Duplicitní název {0} specifikovaný pro přejmenování.</value>
   </data>
-  <data name="SecondaryFile01" xml:space="preserve">
-    <value>Sekundární soubor: {0}: {1}</value>
+  <data name="e_DuplicitRenameType" xml:space="preserve">
+    <value>Duplicitní typ {0} specifikovaný pro přejmenování.</value>
   </data>
-  <data name="Transformation01" xml:space="preserve">
-    <value>Transformace: {0}: {1}</value>
+  <data name="XcannotbeYwhenZisW" xml:space="preserve">
+    <value>{0} nemůže být {1}, když {2} je {3}</value>
   </data>
-  <data name="Save01" xml:space="preserve">
-    <value>Uložit: {0}: {1}</value>
+  <data name="e_NotAPluginType" xml:space="preserve">
+    <value>Nemohu vygenerovat plugin pro typ {0}, který nedědí od podporovaného typu pluginů.</value>
   </data>
-  <data name="Usage" xml:space="preserve">
-    <value>CommentsMerge: Slučuje soubory s XML kometáři
-Použití: CommenstMerge VstupníSOubor1 VstupníSoubor2 ... VstupníSouborN VýstupníSoubor
-    Je potřeba specifikovat nejméně dva vstupní soubory
-Soubory by měly být bez jmenného prostoru nebo používat jmenný prostor http://dzonny.cz/xml/schemas/intellisense</value>
+  <data name="e_OpenGeneric" xml:space="preserve">
+    <value>Nemohu vegenerovat plugin pro otevřený generický typ {0}.</value>
+  </data>
+  <data name="e_Abstract" xml:space="preserve">
+    <value>Nemohu vygenerovat plugin pro abstraktní typ {0}.</value>
+  </data>
+  <data name="e_NoDefaultCTor" xml:space="preserve">
+    <value>Nemohu vygenerovat plugin pro typ {0}, který nemů výchozí konstruktor.</value>
+  </data>
+  <data name="e_NotPublic" xml:space="preserve">
+    <value>Nemohu vygenerovat plugin pro neveřejný typ {0}.</value>
+  </data>
+  <data name="i_CreatingPluginForType" xml:space="preserve">
+    <value>Vytvářím plugin pro typ {0}.</value>
+  </data>
+  <data name="i_TempIntermediateDir" xml:space="preserve">
+    <value>Vytvářím dočasnou přechodnou složku {0}</value>
+  </data>
+  <data name="i_PredefinedIntermediateDir" xml:space="preserve">
+    <value>Používám předdefinovanou přechodnou složku {0}.</value>
+  </data>
+  <data name="e_CleanIntermediate" xml:space="preserve">
+    <value>Chzyba při čištění přechodné složky.</value>
+  </data>
+  <data name="i_CeateUserDefinedIntermediateDir" xml:space="preserve">
+    <value>Vytvářím uživatelem definovanou přechodnou složku {0}</value>
+  </data>
+  <data name="I_CreateProjectDir" xml:space="preserve">
+    <value>Vytvářím složku projektu {0}</value>
+  </data>
+  <data name="i_CopyTemplate" xml:space="preserve">
+    <value>Kopíruji šablonu z {0}</value>
+  </data>
+  <data name="i_ExtractTemplate" xml:space="preserve">
+    <value>Extrahuje vestavěnou šablonu</value>
+  </data>
+  <data name="i_CopyAssembly" xml:space="preserve">
+    <value>Kopíruji soubor sestavení {0}</value>
+  </data>
+  <data name="i_PluginType_wfx" xml:space="preserve">
+    <value>Typ pluginu: Plugin souborového systému (wfx)</value>
+  </data>
+  <data name="i_GeneratingAssemblyInfo" xml:space="preserve">
+    <value>Vytvářím informace o sestavení</value>
+  </data>
+  <data name="i_InvokingCompiler" xml:space="preserve">
+    <value>Spouštím kompilátor</value>
+  </data>
+  <data name="i_CopyOutput" xml:space="preserve">
+    <value>Kopírují výstup z {0} do {1}</value>
+  </data>
+  <data name="i_CopyPDB" xml:space="preserve">
+    <value>Kopíruji pdb soubor z {0} do {1}</value>
+  </data>
+  <data name="i_RemoveIntermediate" xml:space="preserve">
+    <value>Odstraňuji přechodnou složku {0}</value>
+  </data>
+  <data name="e_RemoveIntermediate" xml:space="preserve">
+    <value>Chyba při odstraňování přechodné složky {0}</value>
+  </data>
+  <data name="e_MissingPluginMethod" xml:space="preserve">
+    <value>Typ {0} neimplementuje metodu {1} požadovanou {2} aplikovaným na metodu {3}.</value>
+  </data>
+  <data name="i_Executing" xml:space="preserve">
+    <value>Spouštím {0} {1}</value>
+  </data>
+  <data name="i_ExitCode" xml:space="preserve">
+    <value>{0}&gt; návratový kód {1}.</value>
+  </data>
+  <data name="w_DelDir" xml:space="preserve">
+    <value>Varování: Nemoho odstranit složku {0}: {1}</value>
+  </data>
+  <data name="e_ExitCode" xml:space="preserve">
+    <value>Process {0} skončil s kódem {1}.</value>
+  </data>
+  <data name="EnvironmentalVariables" xml:space="preserve">
+    <value>Proměnné prostředí:</value>
+  </data>
+  <data name="e_FailedToBuildProject" xml:space="preserve">
+    <value>Kompilace projektu {0} se nezdařila</value>
+  </data>
+  <data name="i_ProjectStarted" xml:space="preserve">
+    <value>Projekt započat:</value>
+  </data>
+  <data name="i_TargetStarted" xml:space="preserve">
+    <value>Cíl započat:</value>
+  </data>
+  <data name="i_ProjectFinished" xml:space="preserve">
+    <value>Projek skončen:</value>
+  </data>
+  <data name="e_CannotExpand" xml:space="preserve">
+    <value>Nemohu expandovat {0}: {1}</value>
+  </data>
+  <data name="i_CleanCopyDirectory" xml:space="preserve">
+    <value>Nemohu zkopírovat složku {0}</value>
+  </data>
+  <data name="i_CopyOutputTo" xml:space="preserve">
+    <value>Kopírování výstupu do {0}</value>
   </data>
 </root>
