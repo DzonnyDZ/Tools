@@ -3658,6 +3658,18 @@ Namespace WindowsT.IndependentT
         Public Shared Function ModalF_PTWBIa(ByVal Prompt$, ByVal Title$, ByVal Owner As Object, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
             Return Modal_PTWBIO(String.Format(Prompt, arguments), Title, Owner, Buttons, Icon)
         End Function
+        ''' <summary>Display modal message box with formated promt, given title, owner, buttons, one of predefined icons</summary>
+        ''' <param name="prompt">Format string for promt to be shown to user</param>
+        ''' <param name="title">Message box title</param>
+        ''' <param name="owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="buttons">Defines which buttons will be available to user</param>
+        ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
+        ''' <param name="icon">Icon that will be shown on messagebox.</param>
+        ''' <returns>Indicates button clicked by user</returns>
+        ''' <version version="1.5.3" stage="Beta">This overload is new in bersion 1.5.3</version>
+        Public Shared Function ModalF_PTWBIa(ByVal prompt$, ByVal title$, ByVal owner As Object, ByVal buttons As MessageBoxButton.Buttons, ByVal icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
+            Return Modal_PTWBIO(String.Format(Prompt, arguments), Title, Owner, Buttons, GetIcon(Icon))
+        End Function
         ''' <summary>Dsiplays modal message box with formated prompt, given title and owner</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
