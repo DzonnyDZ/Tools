@@ -14,6 +14,7 @@ Namespace DataT.ObjectsT
         ''' <param name="objects">Entities to be deleted</param>
         ''' <typeparam name="TEntity">Type of entities</typeparam>
         ''' <exception cref="ArgumentNullException"><paramref name="objectSet"/> is null</exception>
+        ''' <exception cref="InvalidOperationException">Removing member object of <paramref name="objects"/> from <paramref name="objectSet"/> reszlted in change in the <paramref name="objects"/> collection. Especially it's invalid to make call like <c>context.Orders.DeleteObjects(customer.Orders)</c> - use somethink like <c>context.Orders.DeleteObjects(customer.Orders.<see cref="Enumerable.ToArray">ToArray</see>)</c> (<see cref="Enumerable.AsEnumerable">AsEnumerable</see> may not be enough).</exception>
         <Extension()>
         Public Sub DeleteObjects(Of TEntity As Class)(ByVal objectSet As IObjectSet(Of TEntity), ByVal objects As IEnumerable(Of TEntity))
             If objectSet Is Nothing Then Throw New ArgumentNullException("objectSet")

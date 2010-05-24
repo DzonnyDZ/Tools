@@ -238,7 +238,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <param name="Owner">Any object that implements <see cref="System.Windows.Forms.IWin32Window"/> or <see cref="Windows.Interop.IWin32Window"/>, or <see cref="Windows.Window"/> that represents the top-level window that will own the modal dialog box.</param>
         ''' <param name="WorkerArgument">Optional parameter for background worker</param>
         ''' <returns>Result of work of <paramref name="bgw"/></returns>
-        Public Overloads Shared Function Show(ByVal bgw As BackgroundWorker, ByVal text As String, ByVal prompt As String, Optional ByVal owner As Object = Nothing, Optional ByVal workerArgument As Object = Nothing) As RunWorkerCompletedEventArgs
+        Public Overloads Shared Function ShowDialog(ByVal bgw As BackgroundWorker, ByVal text As String, ByVal prompt As String, Optional ByVal owner As Object = Nothing, Optional ByVal workerArgument As Object = Nothing) As RunWorkerCompletedEventArgs
             Dim mon As New ProgressMonitor(bgw, text, prompt)
             mon.WorkerArgument = workerArgument
             mon.ShowDialog(owner)
@@ -314,7 +314,7 @@ Namespace WindowsT.WPF.DialogsT
                 End If
             End Set
         End Property
-        Private _progress As Boolean = 0
+        Private _progress As Integer = 0
         ''' <summary>Gets or sets current value of <see cref="ProgressBar"/> that reports progress</summary>
         ''' <exception cref="ArgumentOutOfRangeException">Value being set is smaller than 0 or greater than 100.</exception>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
@@ -537,13 +537,13 @@ Namespace WindowsT.WPF.DialogsT
         ''' <param name="sender"><see cref="BackgroundWorker"/></param>
         ''' <param name="e">event arguments</param>
         Protected Overridable Sub OnRunWorkerCompleted(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
-            If e.Cancelled Then : window.DialogResult = False
-            ElseIf e.Error IsNot Nothing Then : window.DialogResult = False
-            Else : window.DialogResult = True : End If
+            If e.Cancelled Then : _window.DialogResult = False
+            ElseIf e.Error IsNot Nothing Then : _window.DialogResult = False
+            Else : _window.DialogResult = True : End If
             WorkerResult = e
             WorkerFinished = True
             If CloseOnFinish Then
-                window.Close()
+                _window.Close()
             End If
         End Sub
 #End Region
