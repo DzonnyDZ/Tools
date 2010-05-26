@@ -1,117 +1,117 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="ildoc.xml.css" type="text/css"?>
 <ildoc xmlns="http://dzonny.cz/xml/ildoc" id="ildoc" guid="25e7bd25-3621-4b5b-bc3e-5f9b6ba848d4">
-	<header>CIL Quick referecne</header>
-	<introduction>
-		This guide describes various low-level parts of .NET framework.
-		Big attension is given to Common Inermediate Language syntax, metadata and instruction-set.
-	</introduction>
+    <header>CIL Quick referecne</header>
+    <introduction>
+        This guide describes various low-level parts of .NET framework.
+        Big attension is given to Common Inermediate Language syntax, metadata and instruction-set.
+    </introduction>
     <!--Formatting-->
-	<formatting id="formatting" guid="0bf4d96b-2001-4d76-b7dc-511a1b3810e2">
-		<header>Formatting and regular expressions</header>
-		<introduction>This section describes formatting and regular expressions (syntax grammar) used in this CLI Quick reference guide.</introduction>
-		<dl>
-			<dt-code>Code</dt-code>
-			<dd>Code is anything that originates from the CIL language including regular expressions (syntax definitions) and .NET type names.</dd>
+    <formatting id="formatting" guid="0bf4d96b-2001-4d76-b7dc-511a1b3810e2">
+        <header>Formatting and regular expressions</header>
+        <introduction>This section describes formatting and regular expressions (syntax grammar) used in this CLI Quick reference guide.</introduction>
+        <dl>
+            <dt-code>Code</dt-code>
+            <dd>Code is anything that originates from the CIL language including regular expressions (syntax definitions) and .NET type names.</dd>
             <dt-code-ref>Reference in code</dt-code-ref>
-			<dd>
-				This is used in regular expressions (syntax definitions) to mark element (terminal or non-terminal) being declared elsewhere.
-				It is also used to mark variables explained immediatelly below.
-			</dd>
+            <dd>
+                This is used in regular expressions (syntax definitions) to mark element (terminal or non-terminal) being declared elsewhere.
+                It is also used to mark variables explained immediatelly below.
+            </dd>
             <dt>note reference</dt>
-			<dd>
-				Reference to note is never formated as code.
-				This way it is possible to distinguish when asterisk (*) is part of regular expression and when it is reference to note.
-				Compare <code>*</code> and *.
-			</dd>
-			<dt>Regular expressions</dt>
-			<dd>
-				Regular expressions for syntax definitions are losely based on .NET reguler expressions and grammar used for CLI grammas pecification.
-				These expressions are not meant to be machine-readable, so some improvements towards human readability have been done possibly preventing those expressions from beingin machine-interpretable or unambignously defined.
-			</dd>
-			<dd>
-				Any text which appears in regular expression is treated as string-literal (as-is) with exception of <code>*</code>, <code>+</code>, <code>?</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>\</code>, <code>|</code>.
-				Dot (<code>.</code>) is treated as special character only when followed by <code>*</code>, <code>?</code>, <code>+</code> or <code>{</code> or inside <code>[]</code>.
-				<code>{</code> and <code>}</code> are treated as special characters only if used as specified below.
-				<code>,</code>, <code>-</code> and <code>^</code> are treated as special character only in contexts specified below.
-				Whitespaces in expressions are ignored or not depending on context. Usually sequnce of whitespaces is treated as any number opf any whitespaces. Sometimes whitespaces can be used instead of braces - see below.
-			</dd>
-			<dl>
-				<dt-code>*</dt-code>
-				<dd>Any number of occurences</dd>
-				<dd><code>a*</code> matches <code>''</code>, <code>'a'</code>, <code>'aa'</code>, <code>'aaa'</code> etc.</dd>
-				<dt-code>+</dt-code>
-				<dd>Any number of occurences other than no occurence.</dd>
-				<dd><code>a+</code> matches <code>'a'</code>, <code>'aa'</code>, <code>'aaa'</code> etc.</dd>
-				<dt-code>?</dt-code>
-				<dd>Zero or one occurence</dd>
-				<dd><code>a?</code> matches <code>''</code> and <code>'a'</code></dd>
-				<dt-code>{<ref>n</ref>}</dt-code>
-				<dd>Exactly <code-ref>n</code-ref> occurences</dd>
-				<dd><code>a{3}</code> matches <code>'aaa'</code></dd>
-				<dt-code>{<ref>m</ref>,<ref>n</ref>}</dt-code>
-				<dd>Mininally <code-ref>m</code-ref>, maximally <code-ref>n</code-ref> occurences</dd>
-				<dd><code>a{1,3}</code> matches <code>'a'</code>, <code>'aa'</code> and <code>'aaa'</code></dd>
-				<dt-code>{}</dt-code>
-				<dd>Matches block of CIL code enclosed in <code>{}</code>. Allowd code in block is specified in this guide.</dd>
-				<dt-code>{|}</dt-code>
-				<dd>Flag-or. One or more elements of set can be used any any order without repetitions.</dd>
-				<dd><code>{a|b|c}</code> matches <code>''</code>, <code>'a'</code>, <code>'b'</code>, <code>'c'</code>, <code>'ab'</code>, <code>'ba'</code>, <code>'ac'</code>, <code>'ca'</code>, <code>'bc'</code>, <code>'cb'</code>, <code>'abc'</code>, <code>'acb'</code>, <code>'bac'</code>, <code>'cab'</code>, <code>'cba'</code>.</dd>
-				<dt-code>()</dt-code>
-				<dd>Classical braces</dd>
-				<dd><code>(ab)+</code> matches <code>'ab'</code>, <code>'abab'</code> etc.</dd>
-				<dt-code>[]</dt-code>
-				<dd>More meanings:</dd>
-				<dl>
-					<dt>Group specifier</dt>
-					<dd>Trated this way only when cointains not-escaped <code>-</code> and does not contain not-escaped <code>|</code>.</dd>
-					<dd>Inside group specifier only <code>-</code>, <code>]</code>, <code>|</code> and <code>^</code> are treated as special characters.</dd>
-					<dd><code>[A-Zů]</code> matches <code>'A'</code>, <code>'B'</code>, <code>'C'</code>, ..., <code>'Z'</code> and <code>'ů'</code>.</dd>
-					<dd><code>[A-Z]+</code> matches <code>'A'</code>, <code>'B'</code>, <code>'AB'</code>, <code>'GAG'</code>, <code>'HUIGG'</code>.</dd>
-					<dt>Inverted group specifier</dt>
-					<dd>
-						In case <code>[</code> is immediatelly followed by <code>^</code>.
-						Does not have to contain not-escaped <code>-</code> and can contain not-escaped <code>|</code>.
-						Only <code>-</code>, <code>]</code> and <code>^</code> are treated as special-characters inside inverted group specifier.
-					</dd>
-					<dd><code>[^c-ek]</code> does <b>not</b> match <code>'c'</code>, <code>'d'</code>, <code>'e'</code>, <code>'k'</code>.</dd>
-					<dt>Normal braces (just like <code>()</code>)</dt>
-					<dd>In case it does not contain not-escaped <code>-</code>, does not begin with <code>^</code> and is followed by one of quantifiers <code>*</code>, <code>+</code>, <code>?</code>, <code>{}</code>.</dd>
-					<dd><code>[a]*</code> matches <code>''</code>, <code>'a'</code>, <code>'aa'</code> etc.</dd>
-					<dt>Or</dt>
-					<dd>In case it does not start with <code>^</code> and contains non-escaped <code>|</code>.</dd>
-					<dd>
-						Note that usage of <code>|</code> inside <code>[]</code> slightly differs from its usage outside it or inside <code>()</code>.
-						In <code>[]</code> it behaves like if it has whitespace on both sides even if it does not have them.
-					</dd>
-					<dd>
-						<code>[aaa|bbb]</code> has same meaning as <code>(aaa | bbb)</code> what has same meaning as <code>((aaa)|(bbb))</code> and it has same meaning as <code>[aaa | bbb]</code>.
-						It matches <code>'aaa'</code> or <code>'bbb'</code>.
-					</dd>
-					<dt>Zero or one occurence quantifier</dt>
-					<dd>In all other cases</dd>
-					<dd><code>[ab]</code> matches <code>''</code> or <code>'ab'</code>.</dd>
-				</dl>
-				<dt-code>\</dt-code>
-				<dd>Escape character</dd>
-				<dd><code>\*</code> matches <code>'*'</code>, <code>\\</code> matches <code>\</code>, <code>\a</code> matches <code>a</code></dd>
-				<dt-code>.</dt-code>
-				<dd>Universal character - matches any single character, but onyl when followed by one of quantifiers <code>*</code>, <code>?</code>, <code>+</code> or <code>{}</code>.</dd>
-				<dd><code>.?</code> matches <code>''</code>, <code>'.'</code>, <code>'a'</code>, <code>'Ω'</code> etc.</dd>
-				<dt-code>|</dt-code>
-				<dd>Or - matches contruct on left side or construct on right side.</dd>
-				<dd>When specified withoud whitespaces minimal contruct on side without whitespace is taken (typically one letter).</dd>
-				<dd>
+            <dd>
+                Reference to note is never formated as code.
+                This way it is possible to distinguish when asterisk (*) is part of regular expression and when it is reference to note.
+                Compare <code>*</code> and *.
+            </dd>
+            <dt>Regular expressions</dt>
+            <dd>
+                Regular expressions for syntax definitions are losely based on .NET reguler expressions and grammar used for CLI grammas pecification.
+                These expressions are not meant to be machine-readable, so some improvements towards human readability have been done possibly preventing those expressions from beingin machine-interpretable or unambignously defined.
+            </dd>
+            <dd>
+                Any text which appears in regular expression is treated as string-literal (as-is) with exception of <code>*</code>, <code>+</code>, <code>?</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>\</code>, <code>|</code>.
+                Dot (<code>.</code>) is treated as special character only when followed by <code>*</code>, <code>?</code>, <code>+</code> or <code>{</code> or inside <code>[]</code>.
+                <code>{</code> and <code>}</code> are treated as special characters only if used as specified below.
+                <code>,</code>, <code>-</code> and <code>^</code> are treated as special character only in contexts specified below.
+                Whitespaces in expressions are ignored or not depending on context. Usually sequnce of whitespaces is treated as any number opf any whitespaces. Sometimes whitespaces can be used instead of braces - see below.
+            </dd>
+            <dl>
+                <dt-code>*</dt-code>
+                <dd>Any number of occurences</dd>
+                <dd><code>a*</code> matches <code>''</code>, <code>'a'</code>, <code>'aa'</code>, <code>'aaa'</code> etc.</dd>
+                <dt-code>+</dt-code>
+                <dd>Any number of occurences other than no occurence.</dd>
+                <dd><code>a+</code> matches <code>'a'</code>, <code>'aa'</code>, <code>'aaa'</code> etc.</dd>
+                <dt-code>?</dt-code>
+                <dd>Zero or one occurence</dd>
+                <dd><code>a?</code> matches <code>''</code> and <code>'a'</code></dd>
+                <dt-code>{<ref>n</ref>}</dt-code>
+                <dd>Exactly <code-ref>n</code-ref> occurences</dd>
+                <dd><code>a{3}</code> matches <code>'aaa'</code></dd>
+                <dt-code>{<ref>m</ref>,<ref>n</ref>}</dt-code>
+                <dd>Mininally <code-ref>m</code-ref>, maximally <code-ref>n</code-ref> occurences</dd>
+                <dd><code>a{1,3}</code> matches <code>'a'</code>, <code>'aa'</code> and <code>'aaa'</code></dd>
+                <dt-code>{}</dt-code>
+                <dd>Matches block of CIL code enclosed in <code>{}</code>. Allowd code in block is specified in this guide.</dd>
+                <dt-code>{|}</dt-code>
+                <dd>Flag-or. One or more elements of set can be used any any order without repetitions.</dd>
+                <dd><code>{a|b|c}</code> matches <code>''</code>, <code>'a'</code>, <code>'b'</code>, <code>'c'</code>, <code>'ab'</code>, <code>'ba'</code>, <code>'ac'</code>, <code>'ca'</code>, <code>'bc'</code>, <code>'cb'</code>, <code>'abc'</code>, <code>'acb'</code>, <code>'bac'</code>, <code>'cab'</code>, <code>'cba'</code>.</dd>
+                <dt-code>()</dt-code>
+                <dd>Classical braces</dd>
+                <dd><code>(ab)+</code> matches <code>'ab'</code>, <code>'abab'</code> etc.</dd>
+                <dt-code>[]</dt-code>
+                <dd>More meanings:</dd>
+                <dl>
+                    <dt>Group specifier</dt>
+                    <dd>Trated this way only when cointains not-escaped <code>-</code> and does not contain not-escaped <code>|</code>.</dd>
+                    <dd>Inside group specifier only <code>-</code>, <code>]</code>, <code>|</code> and <code>^</code> are treated as special characters.</dd>
+                    <dd><code>[A-Zů]</code> matches <code>'A'</code>, <code>'B'</code>, <code>'C'</code>, ..., <code>'Z'</code> and <code>'ů'</code>.</dd>
+                    <dd><code>[A-Z]+</code> matches <code>'A'</code>, <code>'B'</code>, <code>'AB'</code>, <code>'GAG'</code>, <code>'HUIGG'</code>.</dd>
+                    <dt>Inverted group specifier</dt>
+                    <dd>
+                        In case <code>[</code> is immediatelly followed by <code>^</code>.
+                        Does not have to contain not-escaped <code>-</code> and can contain not-escaped <code>|</code>.
+                        Only <code>-</code>, <code>]</code> and <code>^</code> are treated as special-characters inside inverted group specifier.
+                    </dd>
+                    <dd><code>[^c-ek]</code> does <b>not</b> match <code>'c'</code>, <code>'d'</code>, <code>'e'</code>, <code>'k'</code>.</dd>
+                    <dt>Normal braces (just like <code>()</code>)</dt>
+                    <dd>In case it does not contain not-escaped <code>-</code>, does not begin with <code>^</code> and is followed by one of quantifiers <code>*</code>, <code>+</code>, <code>?</code>, <code>{}</code>.</dd>
+                    <dd><code>[a]*</code> matches <code>''</code>, <code>'a'</code>, <code>'aa'</code> etc.</dd>
+                    <dt>Or</dt>
+                    <dd>In case it does not start with <code>^</code> and contains non-escaped <code>|</code>.</dd>
+                    <dd>
+                        Note that usage of <code>|</code> inside <code>[]</code> slightly differs from its usage outside it or inside <code>()</code>.
+                        In <code>[]</code> it behaves like if it has whitespace on both sides even if it does not have them.
+                    </dd>
+                    <dd>
+                        <code>[aaa|bbb]</code> has same meaning as <code>(aaa | bbb)</code> what has same meaning as <code>((aaa)|(bbb))</code> and it has same meaning as <code>[aaa | bbb]</code>.
+                        It matches <code>'aaa'</code> or <code>'bbb'</code>.
+                    </dd>
+                    <dt>Zero or one occurence quantifier</dt>
+                    <dd>In all other cases</dd>
+                    <dd><code>[ab]</code> matches <code>''</code> or <code>'ab'</code>.</dd>
+                </dl>
+                <dt-code>\</dt-code>
+                <dd>Escape character</dd>
+                <dd><code>\*</code> matches <code>'*'</code>, <code>\\</code> matches <code>\</code>, <code>\a</code> matches <code>a</code></dd>
+                <dt-code>.</dt-code>
+                <dd>Universal character - matches any single character, but onyl when followed by one of quantifiers <code>*</code>, <code>?</code>, <code>+</code> or <code>{}</code>.</dd>
+                <dd><code>.?</code> matches <code>''</code>, <code>'.'</code>, <code>'a'</code>, <code>'Ω'</code> etc.</dd>
+                <dt-code>|</dt-code>
+                <dd>Or - matches contruct on left side or construct on right side.</dd>
+                <dd>When specified withoud whitespaces minimal contruct on side without whitespace is taken (typically one letter).</dd>
+                <dd>
                     When specified with whitespace maximal construct on site eith whitespace is take.
                     Maximal construct lookup is broken only by reaching scope boundary from inside at same level where <code>|</code> was used.
                     Scope boundaries are introduced by whole expression itself, <code>()</code>, <code>[]</code> and <code>{|}</code> but <code>{|}</code> is irrelevant because <code>|</code> inside <code>{}</code> has slightly different meaning.
                 </dd>
-				<dd>Note that inside <code>[]</code> <code>|</code> has different behavior (regarding whitespaces around it) then when not in <code>[]</code> - inside <code>[]</code> it always behaves like having whitespace on each side.</dd>
-				<dd><code>bye|hi</code> matches <code>'byei'</code> or <code>'byhi'</code>.</dd>
-				<dd><code>bye | hi</code> matches <code>'bye'</code> or <code>'hi'</code>.</dd>
-			</dl>
-		</dl>
-	</formatting>
+                <dd>Note that inside <code>[]</code> <code>|</code> has different behavior (regarding whitespaces around it) then when not in <code>[]</code> - inside <code>[]</code> it always behaves like having whitespace on each side.</dd>
+                <dd><code>bye|hi</code> matches <code>'byei'</code> or <code>'byhi'</code>.</dd>
+                <dd><code>bye | hi</code> matches <code>'bye'</code> or <code>'hi'</code>.</dd>
+            </dl>
+        </dl>
+    </formatting>
     <!--Terms-->
     <section id="terms" guid="769c30f5-a581-4199-b99a-4cb64860af64">
         <header>Terms</header>
@@ -145,26 +145,26 @@
         </dl>
     </section>
     <!--General syntax-->
-	<section id="general-syntax" guid="630e459c-215c-4ee8-9015-f1ca5356751b">
-		<header>General syntactical constructs</header>
-		<introduction>This section describes syntactical elements used in CIL code.</introduction>
-		<dl>
-			<dt-ref id="Int32" r="II.5.2">Int32</dt-ref>
-			<dt-ref id="Int64" r="II.5.2">Int64</dt-ref>
-			<dd><code>([+|-][0-9]+)|(0x[0-9A-Fa-f]+)</code></dd>
-			<dd>Inegral number in decimal or hexadecimal format. CIL recognizes only 32-bit and 64-bit integral literals. In case 8-bit or 16-bit literal is required, appropriate high part of 32-bit literal is used.</dd>
-			<dt-ref id="RealNumber" r="II.5.2">RealNumber</dt-ref>
-			<dd><code>[+|-]([0-9]+\.[0-9]+)|([0-9]+(E|e)[0-9]+)|([0-9]+\.[0-9]+(E|e)[+|-]][0-9]+)</code></dd>
-			<dd>Real number literal differes from integer literal by having decimal point and/or exponent.</dd>
-			<dt-ref id="Float32">Float32</dt-ref>
-			<dt-ref id="Float64">Float64</dt-ref>
-			<dd><code><ref ref="RealNumber">RealNumber</ref> | float32 \(<ref ref="Int32">Int32</ref>\) | \(<ref ref="Bytes">Bytes</ref>\)</code></dd>
-			<dd><code><ref ref="RealNumber">RealNumber</ref> | float64 \(<ref ref="Int32">Int64</ref>\) | \(<ref ref="Bytes">Bytes</ref>\)</code></dd>
-			<dd>
-				Additionally real number can by entered by static cast from integral number or by byte representation.
-				Byte representation is useful for values NaN, +∞ and -∞ when ilasm implementation does not support entering <code>NaN</code>, <code>Inf</code> and <code>-Inf</code> directly.
-			</dd>
-			<break/>
+    <section id="general-syntax" guid="630e459c-215c-4ee8-9015-f1ca5356751b">
+        <header>General syntactical constructs</header>
+        <introduction>This section describes syntactical elements used in CIL code.</introduction>
+        <dl>
+            <dt-ref id="Int32" r="II.5.2">Int32</dt-ref>
+            <dt-ref id="Int64" r="II.5.2">Int64</dt-ref>
+            <dd><code>([+|-][0-9]+)|(0x[0-9A-Fa-f]+)</code></dd>
+            <dd>Inegral number in decimal or hexadecimal format. CIL recognizes only 32-bit and 64-bit integral literals. In case 8-bit or 16-bit literal is required, appropriate high part of 32-bit literal is used.</dd>
+            <dt-ref id="RealNumber" r="II.5.2">RealNumber</dt-ref>
+            <dd><code>[+|-]([0-9]+\.[0-9]+)|([0-9]+(E|e)[0-9]+)|([0-9]+\.[0-9]+(E|e)[+|-]][0-9]+)</code></dd>
+            <dd>Real number literal differes from integer literal by having decimal point and/or exponent.</dd>
+            <dt-ref id="Float32">Float32</dt-ref>
+            <dt-ref id="Float64">Float64</dt-ref>
+            <dd><code><ref ref="RealNumber">RealNumber</ref> | float32 \(<ref ref="Int32">Int32</ref>\) | \(<ref ref="Bytes">Bytes</ref>\)</code></dd>
+            <dd><code><ref ref="RealNumber">RealNumber</ref> | float64 \(<ref ref="Int32">Int64</ref>\) | \(<ref ref="Bytes">Bytes</ref>\)</code></dd>
+            <dd>
+                Additionally real number can by entered by static cast from integral number or by byte representation.
+                Byte representation is useful for values NaN, +∞ and -∞ when ilasm implementation does not support entering <code>NaN</code>, <code>Inf</code> and <code>-Inf</code> directly.
+            </dd>
+            <break/>
             <dt-ref id="QSTRING" r="II.5.2">QSTRING</dt-ref>
             <dd><code>"([^"] | \\")*"</code></dd>
             <dd>String value in double quotes (<code>"</code>). Exact behavior of excape character <code>\</code> is implementation-dependent. Used for string literals.</dd>
@@ -231,8 +231,8 @@
             <dt r="II.15.4"><ref ref="Param">Param</ref></dt>
             <dd><code>{\[int\] | \[opt\] | \[out\]} <ref ref="Type">Type</ref> [marshal \([<ref ref="NativeType">NativeType</ref>]\)] [<ref ref="Id">Id</ref>]</code></dd>
             <dd>Method parameter definition</dd>
-		</dl>
-	</section>
+        </dl>
+    </section>
     <!--General semantics-->
     <section id="general-semantic" guid="d603f693-9349-49ae-a10e-fb0b4aa5e200">
         <header>Semantics of general constructs</header>
@@ -345,47 +345,47 @@
         <section id="TypeReference" guid="babaf4d8-f217-4265-a3ca-e64f2c1a5e77" r="II.7.3">
             <header><ref>TypeReference</ref></header>
             <introduction>Reference to user-defined type.</introduction>
-			<syntax>[<ref>ResolutionScope</ref>] <ref ref="DottedName">DottedName</ref> [/ <ref ref="DottedName">DottedName</ref>]*</syntax>
-			<dl>
-				<dt><code-ref>ResolutionScope</code-ref> (<ref>ResolutionScope</ref>)</dt>
-				<dd>If absent this reference is reference to same module of same assembly.</dd>
-				<dl>
-					<dt-code>\[.module <ref>FileName</ref>\]</dt-code>
-					<dd>Reference to another module of same assembly.</dd>
-					<dl>
-						<dt><code-ref>FileName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
-						<dd>Name of file containing the module. It must be module of same assembly.</dd>
-					</dl>
-					<dt-code>\[AssemblyRefName\]</dt-code>
-					<dd>Reference to another assembly</dd>
-					<dl>
-						<dt><code-ref>AssemblyName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
-						<dd>Name of referenced assembly defined using <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>.</dd>
-					</dl>
-				</dl>
-				<dt-code><ref ref="DottedName">DottedName</ref> / <ref ref="DottedName">DottedName</ref></dt-code>
-				<dd>Type name. Slash is used to delimit name of containing type and nested type.</dd>
-			</dl>
+            <syntax>[<ref>ResolutionScope</ref>] <ref ref="DottedName">DottedName</ref> [/ <ref ref="DottedName">DottedName</ref>]*</syntax>
+            <dl>
+                <dt><code-ref>ResolutionScope</code-ref> (<ref>ResolutionScope</ref>)</dt>
+                <dd>If absent this reference is reference to same module of same assembly.</dd>
+                <dl>
+                    <dt-code>\[.module <ref>FileName</ref>\]</dt-code>
+                    <dd>Reference to another module of same assembly.</dd>
+                    <dl>
+                        <dt><code-ref>FileName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                        <dd>Name of file containing the module. It must be module of same assembly.</dd>
+                    </dl>
+                    <dt-code>\[AssemblyRefName\]</dt-code>
+                    <dd>Reference to another assembly</dd>
+                    <dl>
+                        <dt><code-ref>AssemblyName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                        <dd>Name of referenced assembly defined using <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>.</dd>
+                    </dl>
+                </dl>
+                <dt-code><ref ref="DottedName">DottedName</ref> / <ref ref="DottedName">DottedName</ref></dt-code>
+                <dd>Type name. Slash is used to delimit name of containing type and nested type.</dd>
+            </dl>
         </section>
-		<section id="TypeSpec" guid="f86debe4-aec0-4361-9ac9-c21a93ff4e8c" r="II.7.1">
-			<header><ref>TypeSpec</ref></header>
-			<introduction>Simplified type reference</introduction>
-			<p>
-				<ref ref="TypeSpec">TypeSpec</ref> allows to use <ref ref="Type">Type</ref>, <ref ref="TypeReference">TypeReference</ref> and syntactical shortcut <code>\[[.module] <ref ref="DottedName">DottedName</ref>\]</code> in same place.
-				So, it is possible e.g. instead of <code>class System.GC</code> use only <code>System.GC</code>.
-			</p>
-		</section>
-		<section id="GenPar" guid="35f0f3eb-c612-4400-ba82-83532012bb0d" r="II.10.1.7">
-			<header><ref>GenPar</ref></header>
-			<introduction>Specifies a generic parameter.</introduction>
-			<syntax>{[\+|-] | (class | valuetype) | .ctor} [\([<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]*\)] <ref ref="Id">Id</ref></syntax>
-			<dl>
-				<dt-code>+</dt-code>
-				<dd>Covariant generic parameter</dd>
-				<dd>
-					Covariance means that when we have type <code>IA&lt;+T></code>, value of type <code>IA`&lt;A></code> can be assigned to target of type <code>IA`&lt;B></code> as long as it is possible to assgn value of type <code>A</code> to target of type <code>B</code>.
-					For example following pseudo-code would be OK:			
-				</dd>
+        <section id="TypeSpec" guid="f86debe4-aec0-4361-9ac9-c21a93ff4e8c" r="II.7.1">
+            <header><ref>TypeSpec</ref></header>
+            <introduction>Simplified type reference</introduction>
+            <p>
+                <ref ref="TypeSpec">TypeSpec</ref> allows to use <ref ref="Type">Type</ref>, <ref ref="TypeReference">TypeReference</ref> and syntactical shortcut <code>\[[.module] <ref ref="DottedName">DottedName</ref>\]</code> in same place.
+                So, it is possible e.g. instead of <code>class System.GC</code> use only <code>System.GC</code>.
+            </p>
+        </section>
+        <section id="GenPar" guid="35f0f3eb-c612-4400-ba82-83532012bb0d" r="II.10.1.7">
+            <header><ref>GenPar</ref></header>
+            <introduction>Specifies a generic parameter.</introduction>
+            <syntax>{[\+|-] | (class | valuetype) | .ctor} [\([<ref ref="Type">Type</ref> [, <ref ref="Type">Type</ref>]*\)] <ref ref="Id">Id</ref></syntax>
+            <dl>
+                <dt-code>+</dt-code>
+                <dd>Covariant generic parameter</dd>
+                <dd>
+                    Covariance means that when we have type <code>IA&lt;+T></code>, value of type <code>IA`&lt;A></code> can be assigned to target of type <code>IA`&lt;B></code> as long as it is possible to assgn value of type <code>A</code> to target of type <code>B</code>.
+                    For example following pseudo-code would be OK:			
+                </dd>
                 <example><code-ml><![CDATA[interface IA<+T>;
 IA`1<System.String> var1;
 IA`1<System.Object> var2;
@@ -429,8 +429,8 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <break/>
                 <dt><code-ref ref="Id">Id</code-ref> (<ref ref="Id">Id</ref>)</dt>
                 <dd>Name of generic parameter.</dd>
-			</dl>
-		</section>
+            </dl>
+        </section>
         <section id="CallConv" guid="a190d1ff-f658-4705-91f4-cc0f171bd1f3" r="II.15.3">
             <header><ref>CallConv</ref></header>
             <introduction>Defines which way the method is called.</introduction>
@@ -557,8 +557,8 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </dl>
         </section>
     </section>
-	<!--Directive cross-reference-->
-	<section id="directive-cross-reference" guid="1fef50af-cd6e-49f6-9bd3-50922ea39231">
+    <!--Directive cross-reference-->
+    <section id="directive-cross-reference" guid="1fef50af-cd6e-49f6-9bd3-50922ea39231">
         <header>Directive cross-reference</header>
         <introduction>Shows all the CIL metadata directives and way they relate one to each other.</introduction>
         <table>
@@ -631,7 +631,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
                 <c/>
             </row>
-			<row>
+            <row>
                 <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
                 <c>File</c>
                 <c>
@@ -640,985 +640,1155 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_custom">.custom</internal-link></code>
                 </c>
             </row>
-			<row>
-				<c><code><internal-link ref="_corflags">.corflags</internal-link></code></c>
-				<c>File</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="_culture">.culture</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_custom">.custom</internal-link></code></c>
-				<c>
-					File,
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-					<code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
-					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>,
-					<code><internal-link ref="_propertyB">.property {}</internal-link></code>,
-					<code><internal-link ref="_eventB">.event {}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_data">.data</internal-link></code>, <code><internal-link ref="_dataB">.data {}</internal-link></code></c>
-				<c>
-					File,
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-				<c>Data</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="_emitbyte">.emitbyte</internal-link></code></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_entrypoint">.entrypoint</internal-link></code></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
-				<c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_addon">.addon</internal-link></code>,
-					<code><internal-link ref="_custom">.custom</internal-link></code>,
-					<code><internal-link ref="_fire">.fire</internal-link></code>,
-					<code><internal-link ref="_other">.other</internal-link></code>,
-					<code><internal-link ref="_removeon">.removeon</internal-link></code>,
-					<code><internal-link ref="_line">.line</internal-link></code>
-				</c>
-			</row>
-			<row special="undocumented">
-				<c><code><internal-link ref="_export">.export</internal-link></code></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="fault">fault</internal-link></code></c>
-				<c><code><internal-link ref="_try">.try</internal-link></code></c>
-				<c>
-					<code><internal-link ref="handler">handler</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="_field">.field</internal-link></code></c>
-				<c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_file">.file</internal-link></code></c>
-				<c>
-					File,
-					<code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
-					<code><internal-link ref="_class_externB">.class extern {}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row special="ms-specific">
-				<c><code><internal-link ref="_file_alignment">.file alignment</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="filter">filter</internal-link></code></c>
-				<c><code><internal-link ref="_try">.try</internal-link></code></c>
-				<c>
-					<code><internal-link ref="handler">handler</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="finally">finally</internal-link></code></c>
-				<c><code><internal-link ref="_try">.try</internal-link></code></c>
-				<c>
-					<code><internal-link ref="handler">handler</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="_fire">.fire</internal-link></code></c>
-				<c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_get">.get</internal-link></code></c>
-				<c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="handler">handler</internal-link></code></c>
-				<c>
-					<code><internal-link ref="catch">catch</internal-link></code>,
-					<code><internal-link ref="fault">fault</internal-link></code>,
-					<code><internal-link ref="filter">filter</internal-link></code>,
-					<code><internal-link ref="finally">finally</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_hash">.hash</internal-link></code></c>
-				<c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link></code></c>
-				<c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row special="ms-specific">
-				<c><code><internal-link ref="_imagebase">.imagebase</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row special="ms-specific">
-				<c><code><internal-link ref="_language">.language</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_line">.line</internal-link></code> (<code><internal-link ref="_line">#line</internal-link></code>)</c>
-				<c>
-					File,
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>,
-					<code><internal-link ref="_propertyB">.property {}</internal-link></code>,
-					<code><internal-link ref="_eventB">.event {}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row special="ms-specific">
-				<c><code><internal-link ref="_locale">.locale</internal-link></code></c>
-				<c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_locals">.locals</internal-link></code></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_maxstack">.mackstack</internal-link></code></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
-				<c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_custom">.custom</internal-link></code>,
-					<code><internal-link ref="_data">.data</internal-link></code>,
-					<code><internal-link ref="_emitbyte">.emitbyte</internal-link></code>,
-					<code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
-					<code><internal-link ref="_locals">.locals</internal-link></code>,
-					<code><internal-link ref="_maxstack">.maxstack</internal-link></code>,
-					<code><internal-link ref="_override">.override</internal-link></code>,
-					<code><internal-link ref="_override_method">.override method</internal-link></code>,
-					<code><internal-link ref="_param">.param</internal-link></code>,
-					<code><internal-link ref="_param_type">.param type</internal-link></code>,
-					<code><internal-link ref="_line">.line</internal-link></code>,
-					<internal-link ref="instructions">instruction</internal-link>,
-					<internal-link ref="label">label</internal-link>,
-					<code><internal-link ref="_permission">.permission</internal-link></code>,
-					<code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>,
-					<code><internal-link ref="_try">.try</internal-link></code>,
-					<undocumented><code><internal-link ref="_export">.export</internal-link></code></undocumented>,
-					<undocumented><code><internal-link ref="_vtentry">.vtentry</internal-link></code></undocumented>
-				</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="_module">.module</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_module_extern">.module extern</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_mresourceB">.mresource {}</internal-link></code></c>
-				<c>File</c>
-				<c>
-					<code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code>,
-					<code><internal-link ref="_custom">.custom</internal-link></code>,
-					<code><internal-link ref="_file">.file</internal-link></code>
-				</c>
-			</row>
-			<row special="ms-specific">
-				<c><code><internal-link ref="_namespace">.namespace</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_other">.other</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_propertyB">.property</internal-link></code>,
-					<code><internal-link ref="_eventB">.event</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_override">.override</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_override_method">.override method</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_pack">.pack</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_param">.param</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_param_type">.param type</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_permission">.permission</internal-link></code></c>
-				<c>
-					File,
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,					
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_permissionset">.permissionset</internal-link></code></c>
-				<c>
-					File,
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,					
-					<code><internal-link ref="B">{}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
-				<c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_custom">.custom</internal-link></code>,
-					<code><internal-link ref="_get">.get</internal-link></code>,
-					<code><internal-link ref="_other">.other</internal-link></code>,
-					<code><internal-link ref="_set">.set</internal-link></code>,
-					<code><internal-link ref="_line">.line</internal-link></code>
-				</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="_publickey">.publickey</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_publickeytoken">.publickeytoken</internal-link></code></c>
-				<c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_removeon">.removeon</internal-link></code></c>
-				<c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_set">.set</internal-link></code></c>
-				<c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_size">.size</internal-link></code></c>
-				<c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row special="undocumented">
-				<c><code><internal-link ref="_stackreserve">.stackreserve</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_subsystem">.subsystem</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_try">.try</internal-link></code></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
-				<c>
-					<code><internal-link ref="B">{}</internal-link></code>,
-					<code><internal-link ref="fault">fault</internal-link></code>,
-					<code><internal-link ref="filter">filter</internal-link></code>,
-					<code><internal-link ref="finally">finally</internal-link></code>,
-					<code><internal-link ref="catch">catch</internal-link></code>
-				</c>
-			</row>
-			<row>
-				<c><code><internal-link ref="_ver">.ver</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
-				</c>
-				<c/>
-			</row>
-			<row special="undocumented">
-				<c><code><internal-link ref="_vtentry">.vtentry</internal-link></code></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="_vtfixup">.vtfixup</internal-link></code></c>
-				<c>File</c>
-				<c/>
-			</row>
-			<row>
-				<c><code><internal-link ref="B">{}</internal-link></code></c>
-				<c>
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>,
-					<code><internal-link ref="_try">.try</internal-link></code>,
-					<code><internal-link ref="catch">catch</internal-link></code>,
-					<code><internal-link ref="fault">fault</internal-link></code>,
-					<code><internal-link ref="finally">finally</internal-link></code>,
-					<code><internal-link ref="filter">filter</internal-link></code>
-				</c>
-				<c>
-					<code><internal-link ref="_custom">.custom</internal-link></code>,
-					<code><internal-link ref="_data">.data</internal-link></code>,
-					<code><internal-link ref="_emitbyte">.emitbyte</internal-link></code>,
-					<code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
-					<code><internal-link ref="_locals">.locals</internal-link></code>,
-					<code><internal-link ref="_maxstack">.maxstack</internal-link></code>,
-					<code><internal-link ref="_override">.override</internal-link></code>,
-					<code><internal-link ref="_override_method">.override method</internal-link></code>,
-					<code><internal-link ref="_param">.param</internal-link></code>,
-					<code><internal-link ref="_param_type">.param type</internal-link></code>,
-					<code><internal-link ref="_line">.line</internal-link></code>,
-					<internal-link ref="instructions">instruction</internal-link>,
-					<internal-link ref="label">label</internal-link>,
-					<code><internal-link ref="_permission">.permission</internal-link></code>,
-					<code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
-					<code><internal-link ref="B">{}</internal-link></code>,
-					<code><internal-link ref="_try">.try</internal-link></code>
-				</c>
-			</row>
-			<row>
-				<c>Data</c>
-				<c><code><internal-link ref="_data">data</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><internal-link ref="instructions">instruction</internal-link></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c><internal-link ref="label">label</internal-link></c>
-				<c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
-				<c/>
-			</row>
-			<row>
-				<c>File</c>
-				<c/>
-				<c>
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-					<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
-					<code><internal-link ref="_classB">.class {}</internal-link></code>,
-					<code><internal-link ref="_class_externB">.class extern {}</internal-link></code>,
-					<code><internal-link ref="_corflags">.corflags</internal-link></code>,
-					<code><internal-link ref="_custom">.custom</internal-link></code>,
-					<code><internal-link ref="_data">.data</internal-link></code>,
-					<code><internal-link ref="_field">.field</internal-link></code>,
-					<code><internal-link ref="_file">.file</internal-link></code>,
-					<ms-specific><code><internal-link ref="_file_alignment">.file alignment</internal-link></code></ms-specific>,
-					<ms-specific><code><internal-link ref="_imagebase">.imagebase</internal-link></code></ms-specific>,
-					<ms-specific><code><internal-link ref="_language">.language</internal-link></code></ms-specific>,
-					<code><internal-link ref="_line">.line</internal-link></code>,
-					<code><internal-link ref="_methodB">.method {}</internal-link></code>,
-					<code><internal-link ref="_module">.module</internal-link></code>,
-					<code><internal-link ref="_module_extern">.module extern</internal-link></code>,
-					<code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
-					<ms-specific><code><internal-link ref="_namespace">.namespace</internal-link></code></ms-specific>,
-					<code><internal-link ref="_permission">.permission</internal-link></code>,
-					<code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
-					<code><internal-link ref="_subsystem">.subsystem</internal-link></code>,
-					<undocumented><code><internal-link ref="_stackreserve">.stackreserve</internal-link></code></undocumented>,
-					<code><internal-link ref="_vtfixup">.vtfixup</internal-link></code>,
-				</c>
-			</row>
+            <row>
+                <c><code><internal-link ref="_corflags">.corflags</internal-link></code></c>
+                <c>File</c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_culture">.culture</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_custom">.custom</internal-link></code></c>
+                <c>
+                    File,
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+                    <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>,
+                    <code><internal-link ref="_propertyB">.property {}</internal-link></code>,
+                    <code><internal-link ref="_eventB">.event {}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_data">.data</internal-link></code>, <code><internal-link ref="_dataB">.data {}</internal-link></code></c>
+                <c>
+                    File,
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+                <c>Data</c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_emitbyte">.emitbyte</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_entrypoint">.entrypoint</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
+                <c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_addon">.addon</internal-link></code>,
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_fire">.fire</internal-link></code>,
+                    <code><internal-link ref="_other">.other</internal-link></code>,
+                    <code><internal-link ref="_removeon">.removeon</internal-link></code>,
+                    <code><internal-link ref="_line">.line</internal-link></code>
+                </c>
+            </row>
+            <row special="undocumented">
+                <c><code><internal-link ref="_export">.export</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="fault">fault</internal-link></code></c>
+                <c><code><internal-link ref="_try">.try</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="handler">handler</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_field">.field</internal-link></code></c>
+                <c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_file">.file</internal-link></code></c>
+                <c>
+                    File,
+                    <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+                    <code><internal-link ref="_class_externB">.class extern {}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row special="ms-specific">
+                <c><code><internal-link ref="_file_alignment">.file alignment</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="filter">filter</internal-link></code></c>
+                <c><code><internal-link ref="_try">.try</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="handler">handler</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="finally">finally</internal-link></code></c>
+                <c><code><internal-link ref="_try">.try</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="handler">handler</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_fire">.fire</internal-link></code></c>
+                <c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_get">.get</internal-link></code></c>
+                <c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="handler">handler</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="catch">catch</internal-link></code>,
+                    <code><internal-link ref="fault">fault</internal-link></code>,
+                    <code><internal-link ref="filter">filter</internal-link></code>,
+                    <code><internal-link ref="finally">finally</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_hash">.hash</internal-link></code></c>
+                <c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link></code></c>
+                <c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row special="ms-specific">
+                <c><code><internal-link ref="_imagebase">.imagebase</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row special="ms-specific">
+                <c><code><internal-link ref="_language">.language</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_line">.line</internal-link></code> (<code><internal-link ref="_line">#line</internal-link></code>)</c>
+                <c>
+                    File,
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>,
+                    <code><internal-link ref="_propertyB">.property {}</internal-link></code>,
+                    <code><internal-link ref="_eventB">.event {}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row special="ms-specific">
+                <c><code><internal-link ref="_locale">.locale</internal-link></code></c>
+                <c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_locals">.locals</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_maxstack">.mackstack</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
+                <c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_data">.data</internal-link></code>,
+                    <code><internal-link ref="_emitbyte">.emitbyte</internal-link></code>,
+                    <code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
+                    <code><internal-link ref="_locals">.locals</internal-link></code>,
+                    <code><internal-link ref="_maxstack">.maxstack</internal-link></code>,
+                    <code><internal-link ref="_override">.override</internal-link></code>,
+                    <code><internal-link ref="_override_method">.override method</internal-link></code>,
+                    <code><internal-link ref="_param">.param</internal-link></code>,
+                    <code><internal-link ref="_param_type">.param type</internal-link></code>,
+                    <code><internal-link ref="_line">.line</internal-link></code>,
+                    <internal-link ref="instructions">instruction</internal-link>,
+                    <internal-link ref="label">label</internal-link>,
+                    <code><internal-link ref="_permission">.permission</internal-link></code>,
+                    <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>,
+                    <code><internal-link ref="_try">.try</internal-link></code>,
+                    <undocumented><code><internal-link ref="_export">.export</internal-link></code></undocumented>,
+                    <undocumented><code><internal-link ref="_vtentry">.vtentry</internal-link></code></undocumented>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_module">.module</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_module_extern">.module extern</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_mresourceB">.mresource {}</internal-link></code></c>
+                <c>File</c>
+                <c>
+                    <code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code>,
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_file">.file</internal-link></code>
+                </c>
+            </row>
+            <row special="ms-specific">
+                <c><code><internal-link ref="_namespace">.namespace</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_other">.other</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_propertyB">.property</internal-link></code>,
+                    <code><internal-link ref="_eventB">.event</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_override">.override</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_override_method">.override method</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_pack">.pack</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_param">.param</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_param_type">.param type</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_permission">.permission</internal-link></code></c>
+                <c>
+                    File,
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,					
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_permissionset">.permissionset</internal-link></code></c>
+                <c>
+                    File,
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,					
+                    <code><internal-link ref="B">{}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
+                <c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_get">.get</internal-link></code>,
+                    <code><internal-link ref="_other">.other</internal-link></code>,
+                    <code><internal-link ref="_set">.set</internal-link></code>,
+                    <code><internal-link ref="_line">.line</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_publickey">.publickey</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_publickeytoken">.publickeytoken</internal-link></code></c>
+                <c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_removeon">.removeon</internal-link></code></c>
+                <c><code><internal-link ref="_eventB">.event {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_set">.set</internal-link></code></c>
+                <c><code><internal-link ref="_propertyB">.property {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_size">.size</internal-link></code></c>
+                <c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row special="undocumented">
+                <c><code><internal-link ref="_stackreserve">.stackreserve</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_subsystem">.subsystem</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_try">.try</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="B">{}</internal-link></code>,
+                    <code><internal-link ref="fault">fault</internal-link></code>,
+                    <code><internal-link ref="filter">filter</internal-link></code>,
+                    <code><internal-link ref="finally">finally</internal-link></code>,
+                    <code><internal-link ref="catch">catch</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c><code><internal-link ref="_ver">.ver</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>
+                </c>
+                <c/>
+            </row>
+            <row special="undocumented">
+                <c><code><internal-link ref="_vtentry">.vtentry</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="_vtfixup">.vtfixup</internal-link></code></c>
+                <c>File</c>
+                <c/>
+            </row>
+            <row>
+                <c><code><internal-link ref="B">{}</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>,
+                    <code><internal-link ref="_try">.try</internal-link></code>,
+                    <code><internal-link ref="catch">catch</internal-link></code>,
+                    <code><internal-link ref="fault">fault</internal-link></code>,
+                    <code><internal-link ref="finally">finally</internal-link></code>,
+                    <code><internal-link ref="filter">filter</internal-link></code>
+                </c>
+                <c>
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_data">.data</internal-link></code>,
+                    <code><internal-link ref="_emitbyte">.emitbyte</internal-link></code>,
+                    <code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
+                    <code><internal-link ref="_locals">.locals</internal-link></code>,
+                    <code><internal-link ref="_maxstack">.maxstack</internal-link></code>,
+                    <code><internal-link ref="_override">.override</internal-link></code>,
+                    <code><internal-link ref="_override_method">.override method</internal-link></code>,
+                    <code><internal-link ref="_param">.param</internal-link></code>,
+                    <code><internal-link ref="_param_type">.param type</internal-link></code>,
+                    <code><internal-link ref="_line">.line</internal-link></code>,
+                    <internal-link ref="instructions">instruction</internal-link>,
+                    <internal-link ref="label">label</internal-link>,
+                    <code><internal-link ref="_permission">.permission</internal-link></code>,
+                    <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+                    <code><internal-link ref="B">{}</internal-link></code>,
+                    <code><internal-link ref="_try">.try</internal-link></code>
+                </c>
+            </row>
+            <row>
+                <c>Data</c>
+                <c><code><internal-link ref="_data">data</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><internal-link ref="instructions">instruction</internal-link></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c><internal-link ref="label">label</internal-link></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
+                <c/>
+            </row>
+            <row>
+                <c>File</c>
+                <c/>
+                <c>
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_class_externB">.class extern {}</internal-link></code>,
+                    <code><internal-link ref="_corflags">.corflags</internal-link></code>,
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_data">.data</internal-link></code>,
+                    <code><internal-link ref="_field">.field</internal-link></code>,
+                    <code><internal-link ref="_file">.file</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_file_alignment">.file alignment</internal-link></code></ms-specific>,
+                    <ms-specific><code><internal-link ref="_imagebase">.imagebase</internal-link></code></ms-specific>,
+                    <ms-specific><code><internal-link ref="_language">.language</internal-link></code></ms-specific>,
+                    <code><internal-link ref="_line">.line</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="_module">.module</internal-link></code>,
+                    <code><internal-link ref="_module_extern">.module extern</internal-link></code>,
+                    <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_namespace">.namespace</internal-link></code></ms-specific>,
+                    <code><internal-link ref="_permission">.permission</internal-link></code>,
+                    <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+                    <code><internal-link ref="_subsystem">.subsystem</internal-link></code>,
+                    <undocumented><code><internal-link ref="_stackreserve">.stackreserve</internal-link></code></undocumented>,
+                    <code><internal-link ref="_vtfixup">.vtfixup</internal-link></code>,
+                </c>
+            </row>
         </table>
     </section>
     <!--Block directives-->
-	<section id="block-directives" guid="c2f081a5-9394-45d8-ae4a-6ec1a79df574">
+    <section id="block-directives" guid="c2f081a5-9394-45d8-ae4a-6ec1a79df574">
         <header>Block directives</header>
         <introduction>Describes directives which can contain another directives or code.</introduction>
 
-		<section id="_assemblyB" guid="38191f92-bcd0-4baa-bb26-bc2920835cee" r="II.6.2">
+        <section id="_assemblyB" guid="38191f92-bcd0-4baa-bb26-bc2920835cee" r="II.6.2">
             <header><code>.assembly {}</code></header>
-			<introduction>Defines an assembly.</introduction>
-			<syntax>.assembly <ref>Name</ref> {}</syntax>
-			<syntax-dl>
-				<dt>
-					<code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)
-				</dt>
-				<dd>The name of the assembly</dd>
-			</syntax-dl>
-			<parents>
-				<li>File</li>
-			</parents>
-			<children>
-				<internal-link ref="_custom">.custom</internal-link>
-				<internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link>
-				<internal-link ref="_culture">.culture</internal-link>
-				<internal-link ref="_publickey">.publickey</internal-link>
-				<internal-link ref="_ver">.ver</internal-link>
-				<internal-link ref="_permission">.permission</internal-link>
-				<internal-link ref="_permissionset">.permissionset</internal-link>
-				<li><ms-specific><internal-link ref="_locale">.locale</internal-link></ms-specific></li>
-			</children>
-			<p><ms-specific>
-				ilasm nepodporuje <code><internal-link ref="_culture">.culture</internal-link></code>,
-				použijte <ms-specific><code><internal-link ref="_locale">.locale</internal-link></code></ms-specific>.
-			</ms-specific></p>
-			<p>
-				An assembly is specified as module that contains a manifest metadata. Manifest information is composed from
-				<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-				<code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
-				<code><internal-link ref="_corflags">.corflags</internal-link></code>,
-				<code><internal-link ref="_file">.file</internal-link></code>,
-				<code><internal-link ref="_hash">.hash</internal-link></code>,
-				<code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
-				<code><internal-link ref="_mresource">.mresource</internal-link></code> and
-				<code><internal-link ref="_subsystem">.subsystem</internal-link></code>.
-				The <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive declares the manifest and
-				specifies the assembly the current module belongs to. Module shall contain maximally one
-				<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive.
-			</p>
-			<p>Since some platforms treat names in a case-insensitive manner, two assemblies that have names that differ only in case should not be declared.</p>
-			<seealso>
-				<internal-link ref="_assembly_externB">.asssembly extern {}</internal-link>
-				<internal-link ref="_assembly_extern">.asssembly extern</internal-link>
-				<internal-link ref="_module">.module</internal-link>
-			</seealso>
+            <introduction>Defines an assembly.</introduction>
+            <syntax>.assembly <ref>Name</ref> {}</syntax>
+            <syntax-dl>
+                <dt>
+                    <code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)
+                </dt>
+                <dd>The name of the assembly</dd>
+            </syntax-dl>
+            <parents>
+                <li>File</li>
+            </parents>
+            <children>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link>
+                <internal-link ref="_culture">.culture</internal-link>
+                <internal-link ref="_publickey">.publickey</internal-link>
+                <internal-link ref="_ver">.ver</internal-link>
+                <internal-link ref="_permission">.permission</internal-link>
+                <internal-link ref="_permissionset">.permissionset</internal-link>
+                <li><ms-specific><internal-link ref="_locale">.locale</internal-link></ms-specific></li>
+            </children>
+            <p><ms-specific>
+                ilasm nepodporuje <code><internal-link ref="_culture">.culture</internal-link></code>,
+                použijte <ms-specific><code><internal-link ref="_locale">.locale</internal-link></code></ms-specific>.
+            </ms-specific></p>
+            <p>
+                An assembly is specified as module that contains a manifest metadata. Manifest information is composed from
+                <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
+                <code><internal-link ref="_corflags">.corflags</internal-link></code>,
+                <code><internal-link ref="_file">.file</internal-link></code>,
+                <code><internal-link ref="_hash">.hash</internal-link></code>,
+                <code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
+                <code><internal-link ref="_mresource">.mresource</internal-link></code> and
+                <code><internal-link ref="_subsystem">.subsystem</internal-link></code>.
+                The <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive declares the manifest and
+                specifies the assembly the current module belongs to. Module shall contain maximally one
+                <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive.
+            </p>
+            <p>Since some platforms treat names in a case-insensitive manner, two assemblies that have names that differ only in case should not be declared.</p>
+            <seealso>
+                <internal-link ref="_assembly_externB">.asssembly extern {}</internal-link>
+                <internal-link ref="_assembly_extern">.asssembly extern</internal-link>
+                <internal-link ref="_module">.module</internal-link>
+            </seealso>
         </section>
-		
+        
         <section id="_assembly_externB" guid="67776952-b6dc-4c87-86a0-214e4dfcc6c9" r="II.6.3">
             <header><code>.assembly extern {}</code></header>
-			<introduction>Defines a reference to another assembly.</introduction>
-			<syntax>.assembly extern <ref>Name</ref> [as <ref>Alias</ref>] {}</syntax>
-			<syntax-dl>
-				<dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
-				<dd>
-					A name of a referenced assembly. It must equal to the name of referenced assembly as specified in that assembly using the
-					<code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive.
-				</dd>
-				<dt><code-ref>Alias</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
-				<dd>
-					A name of a referenced assembly uased when referenced from current assembly.
-					This allows to reference more assemblies with same name but different version or culture.
-				</dd>
-			</syntax-dl>
-			<parents><li>File</li></parents>
-			<children>
-				<internal-link ref="_hash">.hash</internal-link>
-				<internal-link ref="_custom">.custom</internal-link>
-				<internal-link ref="_culture">.culture</internal-link>
-				<internal-link ref="_publickeytoken">.publickeytoken</internal-link>
-				<internal-link ref="_publickey">.publickey</internal-link>
-				<internal-link ref="_ver">.ver</internal-link>
-			</children>
-			<p>Assembly names (for this purpose) are case-seinsitive even under OS with case-insensitive file system.</p>
-			<p><ms-specific>ilasm does not require <code>.assembly extern mscorlib</code>. It inserts in automatically.</ms-specific></p>
+            <introduction>Defines a reference to another assembly.</introduction>
+            <syntax>.assembly extern <ref>Name</ref> [as <ref>Alias</ref>] {}</syntax>
+            <syntax-dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>
+                    A name of a referenced assembly. It must equal to the name of referenced assembly as specified in that assembly using the
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive.
+                </dd>
+                <dt><code-ref>Alias</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>
+                    A name of a referenced assembly uased when referenced from current assembly.
+                    This allows to reference more assemblies with same name but different version or culture.
+                </dd>
+            </syntax-dl>
+            <parents><li>File</li></parents>
+            <children>
+                <internal-link ref="_hash">.hash</internal-link>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_culture">.culture</internal-link>
+                <internal-link ref="_publickeytoken">.publickeytoken</internal-link>
+                <internal-link ref="_publickey">.publickey</internal-link>
+                <internal-link ref="_ver">.ver</internal-link>
+            </children>
+            <p>Assembly names (for this purpose) are case-seinsitive even under OS with case-insensitive file system.</p>
+            <p><ms-specific>ilasm does not require <code>.assembly extern mscorlib</code>. It inserts in automatically.</ms-specific></p>
         </section>
      
-		<section id="_classB" guid="72c29029-fd4b-4a0f-8e48-8512bf174aa1">
+        <section id="_classB" guid="72c29029-fd4b-4a0f-8e48-8512bf174aa1">
             <header><code>.class {}</code></header>
-			<introduction>Defines a class (or a structure or a delegate or an interface)</introduction>
-			<syntax>.class <ref>Attrs</ref> <ref>Name</ref> [&lt;<ref>GenericSpec</ref>&gt;] [extends <ref>ExtendedType</ref>  [implements <ref>ImplementedTypes</ref>]] {}</syntax>
-			<syntax-dl>
-				<dt><code-ref>Attrs</code-ref> (whitespace-separetd list of <ref>ClassAttr</ref>s)</dt>
-				<dd>Class attributes sepeared with whitespaces. From syntactical point-of-view it's possible to use same attribute more than once.</dd>
-				<dl>
-					<dt-code id="_classB-abstract">abstract</dt-code>
-					<dd>
-						Abstract (VB: <code>MustInherit</code>) class.
-						It's impossible to create instance of abstract class.
-						In case the class contains an abstract method it must be declared abstract.
-					</dd>
-					<dt-code id="_classB-sealed">sealed</dt-code>
-					<dd>The class that canno be derived (VB: <code>NotInheritable</code>).</dd>
-					<dd>The class that is <code>abstract</code> and <code>sealed</code> at same time should contain only static members (like standard modules in VB).</dd>
-					<break/>
-					<dt-code id="_classB-ansi">ansi</dt-code>
-					<dd>Use ANSI encoding for passing strings between managed and unmanaged code.</dd>
-					<dt-code id="_classB-autochar">autochar</dt-code>
-					<dd>Automatically select encoding (according to platform) to be used when passing strings between managed and unmanaged code.</dd>
-					<dt-code id="_classB-unicode">unicode</dt-code>
-					<dd>Use Unicode encoding when passing strings between managed and unmanaged code.</dd>
-					<dd rel="summary">
-						<code>ansi</code>, <code>autochar</code> and <code>unicode</code> define string marshaling from/to unmanaged code.
-						Cannot be combined. Default value is <code>ansi</code>.
-					</dd>
-					<break/>
-					<dt-code id="_classB-auto">auto</dt-code>
-					<dd>Let CLI to align instance fields in memory as it wishes.</dd>
-					<dt-code id="_classB-explicit">explicit</dt-code>
-					<dd>CLI will align instance fields in memory as stated for individual fields. Not allowed for generic types.</dd>
-					<dt-code id="_classB-sequential">sequential</dt-code>
-					<dd>CLI will align instance fields sequentially as they appear in metadata table.</dd>
-					<dd rel ="summary">
-						<code>auto</code>, <code>explicit</code> and <code>sequential</code> define alignment of instance fields of the class in memory.
-						Cannot be combined. Default value is <code>auto</code>.
-					</dd>
-					<break/>
-					<dt-code id="_classB-interface">interface</dt-code>
-					<dd>Defines that the class is an <internal-link ref="Interface">interface</internal-link>.</dd>
-					<break/>
-					<dt-code id="_classB-nested_assembly">nested assembly</dt-code>
-					<dd>Nested type acessible only from the assembly it's defined in (VB: <code>Friend</code>).</dd>
-					<dt-code id="_classB-nested_famandassem">nested famandassem</dt-code>
-					<dd>
-						Nested type acessible only from the assembly it's defined in and within that assembly only from types derived from containing typ.
-						This is AND-combination of <code>nested assembly</code> and <code>nested familly</code>.
-						(VB: not available).
-					</dd>
-					<dt-code id="_classB-nested_family">nested family</dt-code>
-					<dd>Netsed type accessible only from types derived from containing type (VB: <code>Protected</code>).</dd>
-					<dt-code id="_classB-nested_famorassem">nested famorassem</dt-code>
-					<dd>
-						Nested type accessible from assembly where it is defined or from types derived from containing type.
-						This is OR-combination of <code>nested assembly</code> and <code>nested family</code> (VB: <code>Protected Friend</code>).
-					</dd>
-					<dt-code id="_classB-nested_private">nested private</dt-code>
-					<dd>Nested type accessible only from containing type (VB: <code>Private</code>)</dd>
-					<dt-code id="_classB-nested_public">nested public</dt-code>
-					<dd>Nested type accessible everywhere where containing type is accessible (VB: <code>Public</code>)</dd>
-					<dt  id="_classB-private">private</dt>
-					<dd>Non-nested type accessible only from assembly it's defined in (VB: <code>Friend</code>)</dd>
-					<dt-code  id="_classB-public">public</dt-code>
-					<dd>Non-nested type visible from anywhere.</dd>
-					<dd rel="summary">
-						<code>nested</code> ..., <code>private</code> and <code>public</code> defines class visibility (accessibility).
-						Only one of them can be used.
-						In case of classes defined inside classes one of <code>nested</code> ... modifiers must be used.
-						In case of classes defined at assembly level (top-level) <code>private</code> or <code>public</code> must be used.
-						Default visibility for top-level classes is <code>public</code>.
-						Default visibility for nested classes is <code>nested private</code>.
-					</dd>
-					<break/>
-					<dt-code id="_classB-beforefieldinit">beforefieldinit</dt-code>
-					<dd>Instructs CLI to initialize static fields of type before first call to any static method of that type.</dd>
-					<dt-code id="_classB-rtspecialname">rtspecialname</dt-code>
-					<dd>
-						Indicates that type name has special meaning for CLI. Currently there are no special names of types defined.
-						In case <code>rtspecialname</code> is used <code>specialname</code> must be used as well.
-					</dd>
-					<dd>reserved for future use.</dd>
-					<dt-code id="_classB-serializable">serializable</dt-code>
-					<dd>Reserved for future use. It'll mean that fields are serialised to data stream. Serialization support will provided by CLI implementation.</dd>
-					<dd><ms-specific>Supported.</ms-specific></dd>
-					<dt-code id="_classB-specialname">specialname</dt-code>
-					<dd>Indicates that type name has special meaning for tools other than CLI.</dd>
-					<dt-code  id="_classB-import"><ms-specific>import</ms-specific></dt-code>
-					<dd><ms-specific>The type is imported from COM library</ms-specific></dd>
-				</dl>
-				<dt><code-ref>Name</code-ref> (<ref ref="Id">Id</ref>)</dt>
-				<dd>The name of the class</dd>
-				<dt><code-ref>GenericSpecs</code-ref> (comma-seperated list of <ref ref="GenPar">GenPar</ref>s)</dt>
-				<dd>Specifies generic parameters</dd>
-				<dt><code-ref>ExtendedType</code-ref> (<ref ref="TypeSpec">TypeSpec</ref>)</dt>
-				<dd>The type this the class derives from. When ommited <see cref="T:System.Object"/> is assumed.</dd>
-				<dt><code-ref>ImplementedTypes</code-ref> (comma-seperated list of <ref ref="TypeSpec">TypeSpec</ref>s).</dt>
-				<dd>Comma-separeted list ot types (interfaces) this class implements</dd>
-			</syntax-dl>
-			<parents>
-				<li>File</li>
-				<internal-link ref="_classB">.class {}</internal-link>
-			</parents>
-			<children>
-				<internal-link ref="_classB">.class {}</internal-link>
-				<internal-link ref="_custom">.custom</internal-link>
-				<internal-link ref="_data">.data</internal-link>
-				<internal-link ref="_eventB">.event {}</internal-link>
-				<internal-link ref="_field">.field</internal-link>
-				<internal-link ref="_methodB">.method {}</internal-link>
-				<internal-link ref="_override">.override</internal-link>
-				<internal-link ref="_pack">.pack</internal-link>
-				<internal-link ref="_param_type">.param type</internal-link>
-				<internal-link ref="_propertyB">.property {}</internal-link>
-				<internal-link ref="_isze">.size</internal-link>
-				<internal-link ref="_line">.line</internal-link>
-				<internal-link ref="_permissionset">.permissionset</internal-link>
-				<internal-link ref="_permission">.permission</internal-link>
-			</children>
-			<section guid="8ae835a1-4caa-420e-a8c9-6cd4b7bc65e4" id="Types-of-types" r="II.11">
-				<header>Types of types</header>
-				<introduction>
-					New types are defined by defining custom classes.
-					New types can be also defined as generic instances, arrays, vectors or pointers.
-					This sub-chapter describes types declared using the <internal-link ref="_classB">.class {}</internal-link> directive.
-				</introduction>
-				<dl>
-					<dt id="Reference-types"><b>Reference types</b></dt>
-					<dd>
-						Reference types are basic kind of types in CLI.
-						Each reference type derives from <see cref="T:System.Object"/> or from class derived from <see cref="T:System.Object"/> (with exception of special-purpose classes - see below).
-						No additional restrictions applies for reference types.
-					</dd>
-					<dd>Reference types are passed by reference when passed to methods, returned from methods or assigned to fields.</dd>
-					<dt id="Interfaces" r="II.12"><b>Interfaces</b></dt>
-					<dd>
-						Interface is special abstract type defined by the <internal-link ref="_classB-interface"><code>interface</code></internal-link> attribute.
-						An interface can be implemebted by either reference or value type.
-						To implement an interface a class must implement all abstract methods of the interface or derive from a class which implements them.
-						An exception is an abstract class which don't need to implement (all) those abstract methods, because instance of an abstract class cannot be created.
-						Interface methods not implemented by an abstract class must be implemented in a non-abstract class derived from such abstract class.
-					</dd>
-					<dd>
-						An interface can contain any static members (fields, methods etc.).
-						All instance methods of interfaces must be virtual and abstract. Interfaces cannot have instance fields.
-					</dd>
-					<dd>
-						It's not enough for an interface to be implemented by a type to implement all interface methods.
-						It must be explicitly stated for the type that it implements the interface (the <code>implements</code> clause of the <internal-link ref="_classB">.class {}</internal-link> directive.
-						In case a class implements an interface which requires implementation of another interface it's enough for class to specify implementation of of the more-specific of both interfaces (the derived one).
-					</dd>
-					<dd>
-						Interface can specify that it requires implementation of other interface(s) - derives from it/them.
-						(Technically it's not that an interface derives other interface(s) - it implements them.)
-					</dd>
-					<dd>For a method to implement a method of an interface following options are available:</dd>
-					<dl>
-						<dt>By signature</dt>
-						<dd>Class method has same name and signature as interface method.</dd>
-						<dt>By inheritance</dt>
-						<dd>Existing implementation of an interface is derived from base class.</dd>
-						<dt>Explict implementation</dt>
-						<dd>Uisng <code>MethodImpl</code> - the <internal-link ref="_override">.override</internal-link> directive.</dd>
-					</dl>
-					<dd>
-						The documentation does not deal with interface-level properties and events.
-						From practical usage we can deduce that same rules as for method applies.
-						Also note that properties and events are in fact only groups of related methods.
-					</dd>
-					<dt id="Value-types" r="II.13"><b>Value types</b></dt>
-					<dd>
-						Value types are not passed as reference but as contents of memory (they are copied when passed!).
-						Value types should be used for storing small amount of data.
-						Higher languages represents them as structures (while reference types are represented as classes).
-						Relation between value and reference type in CLI is similat to relation between structure and pointer to structure in C++.
-						Typical value types are complex number, date etc. 
-					</dd>
-					<dd>
-						Each value type can be easily transformed to corresponding reference type by a process called boxing.
-						Such boxed value type can be converted back to value type by a process of unboxing.
-					</dd>
-					<dd>Each value type must be <code-ref ref="_classB-sealed">sealed</code-ref> (it cannot be derived from) and it's base class must be either <see cref="T:System.ValueType"/> or <see cref="T:System.Enum"/>.</dd>
-					<dd>A value type can implement interfaces(s), but such implementation can be utilized only in boxed form.</dd>
-					<dd>
-						Value of non-boxed value type cannot be <code>null</code> and cannot be compared to <code>null</code>.
-						Value types are not treated as instances of other types, so the <internal-link ref="isints">isints</internal-link> instruction cannot be used with them (it can be used with boxed value type).
-					</dd>
-					<dd>
-						Item layout of value types can be controlled in the same way as in reference types.
-						It's usefull when comunicationg with native code.
-					</dd>
-					<dd>Value type can contain neither field of type of itself nor field of type of value type which contains field of that type (value type cannot directly or indirectly contain field of type itself - it would lead to allocation of infinite memory).</dd>
-					<dd>
-						Instance methods of value types obtains managed pointer to current instance to the <code>this</code> variable (while in reference types the <code>this</code> variable contains directly tha value of the refernce type - so a reference).
-					</dd>
-					<dt><b>Enumerations (enums)</b></dt>
-					<dd>
-						Enumerations are used to define set of symbols of the same value type.
-						CLI does not guarantee that value of variable of enum type is one of enum items.
-					</dd>
-					<dd>A type can be an enumeration only when it derives form <see cref="T:System.Enum"/>.</dd>
-				</dl>
-			</section>
+            <introduction>Defines a class (or a structure or a delegate or an interface)</introduction>
+            <syntax>.class <ref>Attrs</ref> <ref>Name</ref> [&lt;<ref>GenericSpec</ref>&gt;] [extends <ref>ExtendedType</ref>  [implements <ref>ImplementedTypes</ref>]] {}</syntax>
+            <syntax-dl>
+                <dt><code-ref>Attrs</code-ref> (whitespace-separetd list of <ref>ClassAttr</ref>s)</dt>
+                <dd>Class attributes sepeared with whitespaces. From syntactical point-of-view it's possible to use same attribute more than once.</dd>
+                <dl>
+                    <dt-code id="_classB-abstract">abstract</dt-code>
+                    <dd>
+                        Abstract (VB: <code>MustInherit</code>) class.
+                        It's impossible to create instance of abstract class.
+                        In case the class contains an abstract method it must be declared abstract.
+                    </dd>
+                    <dt-code id="_classB-sealed">sealed</dt-code>
+                    <dd>The class that canno be derived (VB: <code>NotInheritable</code>).</dd>
+                    <dd>The class that is <code>abstract</code> and <code>sealed</code> at same time should contain only static members (like standard modules in VB).</dd>
+                    <break/>
+                    <dt-code id="_classB-ansi">ansi</dt-code>
+                    <dd>Use ANSI encoding for passing strings between managed and unmanaged code.</dd>
+                    <dt-code id="_classB-autochar">autochar</dt-code>
+                    <dd>Automatically select encoding (according to platform) to be used when passing strings between managed and unmanaged code.</dd>
+                    <dt-code id="_classB-unicode">unicode</dt-code>
+                    <dd>Use Unicode encoding when passing strings between managed and unmanaged code.</dd>
+                    <dd rel="summary">
+                        <code>ansi</code>, <code>autochar</code> and <code>unicode</code> define string marshaling from/to unmanaged code.
+                        Cannot be combined. Default value is <code>ansi</code>.
+                    </dd>
+                    <break/>
+                    <dt-code id="_classB-auto">auto</dt-code>
+                    <dd>Let CLI to align instance fields in memory as it wishes.</dd>
+                    <dt-code id="_classB-explicit">explicit</dt-code>
+                    <dd>CLI will align instance fields in memory as stated for individual fields. Not allowed for generic types.</dd>
+                    <dt-code id="_classB-sequential">sequential</dt-code>
+                    <dd>CLI will align instance fields sequentially as they appear in metadata table.</dd>
+                    <dd rel ="summary">
+                        <code>auto</code>, <code>explicit</code> and <code>sequential</code> define alignment of instance fields of the class in memory.
+                        Cannot be combined. Default value is <code>auto</code>.
+                    </dd>
+                    <break/>
+                    <dt-code id="_classB-interface">interface</dt-code>
+                    <dd>Defines that the class is an <internal-link ref="Interface">interface</internal-link>.</dd>
+                    <break/>
+                    <dt-code id="_classB-nested_assembly">nested assembly</dt-code>
+                    <dd>Nested type acessible only from the assembly it's defined in (VB: <code>Friend</code>).</dd>
+                    <dt-code id="_classB-nested_famandassem">nested famandassem</dt-code>
+                    <dd>
+                        Nested type acessible only from the assembly it's defined in and within that assembly only from types derived from containing typ.
+                        This is AND-combination of <code>nested assembly</code> and <code>nested familly</code>.
+                        (VB: not available).
+                    </dd>
+                    <dt-code id="_classB-nested_family">nested family</dt-code>
+                    <dd>Netsed type accessible only from types derived from containing type (VB: <code>Protected</code>).</dd>
+                    <dt-code id="_classB-nested_famorassem">nested famorassem</dt-code>
+                    <dd>
+                        Nested type accessible from assembly where it is defined or from types derived from containing type.
+                        This is OR-combination of <code>nested assembly</code> and <code>nested family</code> (VB: <code>Protected Friend</code>).
+                    </dd>
+                    <dt-code id="_classB-nested_private">nested private</dt-code>
+                    <dd>Nested type accessible only from containing type (VB: <code>Private</code>)</dd>
+                    <dt-code id="_classB-nested_public">nested public</dt-code>
+                    <dd>Nested type accessible everywhere where containing type is accessible (VB: <code>Public</code>)</dd>
+                    <dt  id="_classB-private">private</dt>
+                    <dd>Non-nested type accessible only from assembly it's defined in (VB: <code>Friend</code>)</dd>
+                    <dt-code  id="_classB-public">public</dt-code>
+                    <dd>Non-nested type visible from anywhere.</dd>
+                    <dd rel="summary">
+                        <code>nested</code> ..., <code>private</code> and <code>public</code> defines class visibility (accessibility).
+                        Only one of them can be used.
+                        In case of classes defined inside classes one of <code>nested</code> ... modifiers must be used.
+                        In case of classes defined at assembly level (top-level) <code>private</code> or <code>public</code> must be used.
+                        Default visibility for top-level classes is <code>public</code>.
+                        Default visibility for nested classes is <code>nested private</code>.
+                    </dd>
+                    <break/>
+                    <dt-code id="_classB-beforefieldinit">beforefieldinit</dt-code>
+                    <dd>Instructs CLI to initialize static fields of type before first call to any static method of that type.</dd>
+                    <dt-code id="_classB-rtspecialname">rtspecialname</dt-code>
+                    <dd>
+                        Indicates that type name has special meaning for CLI. Currently there are no special names of types defined.
+                        In case <code>rtspecialname</code> is used <code>specialname</code> must be used as well.
+                    </dd>
+                    <dd>reserved for future use.</dd>
+                    <dt-code id="_classB-serializable">serializable</dt-code>
+                    <dd>Reserved for future use. It'll mean that fields are serialised to data stream. Serialization support will provided by CLI implementation.</dd>
+                    <dd><ms-specific>Supported.</ms-specific></dd>
+                    <dt-code id="_classB-specialname">specialname</dt-code>
+                    <dd>Indicates that type name has special meaning for tools other than CLI.</dd>
+                    <dt-code  id="_classB-import"><ms-specific>import</ms-specific></dt-code>
+                    <dd><ms-specific>The type is imported from COM library</ms-specific></dd>
+                </dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="Id">Id</ref>)</dt>
+                <dd>The name of the class</dd>
+                <dt><code-ref>GenericSpecs</code-ref> (comma-seperated list of <ref ref="GenPar">GenPar</ref>s)</dt>
+                <dd>Specifies generic parameters</dd>
+                <dt><code-ref>ExtendedType</code-ref> (<ref ref="TypeSpec">TypeSpec</ref>)</dt>
+                <dd>The type this the class derives from. When ommited <see cref="T:System.Object"/> is assumed.</dd>
+                <dt><code-ref>ImplementedTypes</code-ref> (comma-seperated list of <ref ref="TypeSpec">TypeSpec</ref>s).</dt>
+                <dd>Comma-separeted list ot types (interfaces) this class implements</dd>
+            </syntax-dl>
+            <parents>
+                <li>File</li>
+                <internal-link ref="_classB">.class {}</internal-link>
+            </parents>
+            <children>
+                <internal-link ref="_classB">.class {}</internal-link>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_data">.data</internal-link>
+                <internal-link ref="_eventB">.event {}</internal-link>
+                <internal-link ref="_field">.field</internal-link>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <internal-link ref="_override">.override</internal-link>
+                <internal-link ref="_pack">.pack</internal-link>
+                <internal-link ref="_param_type">.param type</internal-link>
+                <internal-link ref="_propertyB">.property {}</internal-link>
+                <internal-link ref="_isze">.size</internal-link>
+                <internal-link ref="_line">.line</internal-link>
+                <internal-link ref="_permissionset">.permissionset</internal-link>
+                <internal-link ref="_permission">.permission</internal-link>
+            </children>
+            <seealso>
+                <internal-link ref="_class_externB">.class extern {}</internal-link>
+            </seealso>
+            <section guid="8ae835a1-4caa-420e-a8c9-6cd4b7bc65e4" id="Types-of-types" r="II.11">
+                <header>Types of types</header>
+                <introduction>
+                    New types are defined by defining custom classes.
+                    New types can be also defined as generic instances, arrays, vectors or pointers.
+                    This sub-chapter describes types declared using the <internal-link ref="_classB">.class {}</internal-link> directive.
+                </introduction>
+                <dl>
+                    <dt id="Reference-types"><b>Reference types</b></dt>
+                    <dd>
+                        Reference types are basic kind of types in CLI.
+                        Each reference type derives from <see cref="T:System.Object"/> or from class derived from <see cref="T:System.Object"/> (with exception of special-purpose classes - see below).
+                        No additional restrictions applies for reference types.
+                    </dd>
+                    <dd>Reference types are passed by reference when passed to methods, returned from methods or assigned to fields.</dd>
+                    <dt id="Interfaces" r="II.12"><b>Interfaces</b></dt>
+                    <dd>
+                        Interface is special abstract type defined by the <internal-link ref="_classB-interface"><code>interface</code></internal-link> attribute.
+                        An interface can be implemebted by either reference or value type.
+                        To implement an interface a class must implement all abstract methods of the interface or derive from a class which implements them.
+                        An exception is an abstract class which don't need to implement (all) those abstract methods, because instance of an abstract class cannot be created.
+                        Interface methods not implemented by an abstract class must be implemented in a non-abstract class derived from such abstract class.
+                    </dd>
+                    <dd>
+                        An interface can contain any static members (fields, methods etc.).
+                        All instance methods of interfaces must be virtual and abstract. Interfaces cannot have instance fields.
+                    </dd>
+                    <dd>
+                        It's not enough for an interface to be implemented by a type to implement all interface methods.
+                        It must be explicitly stated for the type that it implements the interface (the <code>implements</code> clause of the <internal-link ref="_classB">.class {}</internal-link> directive.
+                        In case a class implements an interface which requires implementation of another interface it's enough for class to specify implementation of of the more-specific of both interfaces (the derived one).
+                    </dd>
+                    <dd>
+                        Interface can specify that it requires implementation of other interface(s) - derives from it/them.
+                        (Technically it's not that an interface derives other interface(s) - it implements them.)
+                    </dd>
+                    <dd>For a method to implement a method of an interface following options are available:</dd>
+                    <dl>
+                        <dt>By signature</dt>
+                        <dd>Class method has same name and signature as interface method.</dd>
+                        <dt>By inheritance</dt>
+                        <dd>Existing implementation of an interface is derived from base class.</dd>
+                        <dt>Explict implementation</dt>
+                        <dd>Uisng <code>MethodImpl</code> - the <internal-link ref="_override">.override</internal-link> directive.</dd>
+                    </dl>
+                    <dd>
+                        The documentation does not deal with interface-level properties and events.
+                        From practical usage we can deduce that same rules as for method applies.
+                        Also note that properties and events are in fact only groups of related methods.
+                    </dd>
+                    <dt id="Value-types" r="II.13"><b>Value types</b></dt>
+                    <dd>
+                        Value types are not passed as reference but as contents of memory (they are copied when passed!).
+                        Value types should be used for storing small amount of data.
+                        Higher languages represents them as structures (while reference types are represented as classes).
+                        Relation between value and reference type in CLI is similat to relation between structure and pointer to structure in C++.
+                        Typical value types are complex number, date etc. 
+                    </dd>
+                    <dd>
+                        Each value type can be easily transformed to corresponding reference type by a process called boxing.
+                        Such boxed value type can be converted back to value type by a process of unboxing.
+                    </dd>
+                    <dd>Each value type must be <code-ref ref="_classB-sealed">sealed</code-ref> (it cannot be derived from) and it's base class must be either <see cref="T:System.ValueType"/> or <see cref="T:System.Enum"/>.</dd>
+                    <dd>A value type can implement interfaces(s), but such implementation can be utilized only in boxed form.</dd>
+                    <dd>
+                        Value of non-boxed value type cannot be <code>null</code> and cannot be compared to <code>null</code>.
+                        Value types are not treated as instances of other types, so the <internal-link ref="isints">isints</internal-link> instruction cannot be used with them (it can be used with boxed value type).
+                    </dd>
+                    <dd>
+                        Item layout of value types can be controlled in the same way as in reference types.
+                        It's usefull when comunicationg with native code.
+                    </dd>
+                    <dd>Value type can contain neither field of type of itself nor field of type of value type which contains field of that type (value type cannot directly or indirectly contain field of type itself - it would lead to allocation of infinite memory).</dd>
+                    <dd>
+                        Instance methods of value types obtains managed pointer to current instance to the <code>this</code> variable (while in reference types the <code>this</code> variable contains directly tha value of the refernce type - so a reference).
+                    </dd>
+                    <dt r="II.14.3"><b>Enumerations (enums)</b></dt>
+                    <dd>
+                        Enumerations are used to define set of symbols of the same value type.
+                        CLI does not guarantee that value of variable of enum type is one of enum items.
+                    </dd>
+                    <dd>A type can be an enumeration only when it derives form <see cref="T:System.Enum"/>.</dd>
+                    <dd>
+                        Only fields are allowed as members of enumerations. An enumeration cannot implement any interface and must have <code>auto</code> layout.
+                        An enumeration must have exactly one instance member field whose type determines enumeration sub-type.
+                        The other member fields must be static literals not initialized using the <internal-link ref="initobj">initobj</internal-link> instruction.
+                        Type of these variables is the enumeration itself and their values are stored in metadata using <ref>FieldInit</ref>
+                        (see <code><internal-link ref="_field">.field</internal-link></code>).
+                    </dd>
+                    <dd>There is a direct conversion in both directions between enumerated type and its subtype.</dd>
+                    <dt r="II.14.6"><b>Delegates</b></dt>
+                    <dd>A delegate is managed equivalent of method pointer (CLI supports method pointers as well).</dd>
+                    <dd>
+                        A delegate is a <code>sealed</code> reference type, which directly or indirectly derives from <see cref="T:System.Delegate"/>
+                        <ms-specific>(delegates derive from <see cref="T:System.MulticastDelegate"/>)</ms-specific>
+                    </dd>
+                    <dd>
+                        Delegate can contain only first two or all four of methods below.
+                        These methods are <code>runtime</code> and <code>managed</code> and don't have body specified - it's provided automatically by VES.
+                        Other method which can be called on delegate types are inherited from base class.
+                    </dd>
+                    <dl>
+                        <dt-code>.ctor</dt-code>
+                        <dd>
+                            Delegate instance constructor. It has exactly two parameters - <code><see cref="T:System.Object"/></code> and <code><see cref="T:System.IntPtr"/></code>.
+                            The first one represents instance of class declaring the method delegate points to (pass null for static methods) and the other is pointer to that method.
+                        </dd>
+                        <dt-code>Invoke</dt-code>
+                        <dd>A virtual method used to invoke method represented by this delegate. The signature of this method is same as signature of the delegate points to.</dd>
+                        <dt-code>BeginInvoke</dt-code>
+                        <dd>Optional. Compulsory when <code>EndInvoke</code> is present.</dd>
+                        <dd>
+                            A virtual method used to call the delegate asynchronously. It has signature similar to <code>Invoke</code>.
+                            It's return type is <see cref="T:System.IAsyncResult"/>.
+                            It has all the parameters <code>Invoke</code> has plus two more of types <see cref="T:System.AsyncCallback"/> and <see cref="T:System.Object"/>.
+                        </dd>
+                        <dt-code>EndInvopke</dt-code>
+                        <dd>Optional. Compulsory when <code>BeginInvoke</code> is present.</dd>
+                        <dd>
+                            A virtual method with the same return type as <code>Invoke</code>.
+                            It contains those of parameters of <code>Invoke</code> method which are of type managed pointer (in same order)
+                            and after them last parameter of type <see cref="T:System.IAsyncResult"/>.
+                        </dd>
+                    </dl>
+                    <dd>Unless stated otherwise, a standard delegates provide all four methods.</dd>
+                    <dd><ms-specific>
+                        Delegates can contain additional methods, in case programmer provides their implementation (i.e. methods are not <code>runtime</code>).
+                        In such case the assembly is not portable.
+                    </ms-specific></dd>
+                </dl>
+            </section>
         </section>
-        <section id="_class_externB" guid="64f89792-5f6e-4725-a562-a2470e5c30a8">
+        <section id="_class_externB" guid="64f89792-5f6e-4725-a562-a2470e5c30a8" r="II.6.7">
             <header><code>.class extern {}</code></header>
-			<introduction/>
+            <introduction>
+                Used in manifest module (note: there can be only one manifest module in each assembly).
+                This directive defines a type exported (visible from) outside the assembly which is actually defined in different module of the assembly.
+                Types defined in same module as assembly manifest are not required to be exported this way.
+            </introduction>
+            <syntax>.class extern (public | nested public) <ref>Name</ref> {}</syntax>
+            <syntax-dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>The name of the class</dd>
+                <dt-code>public | nested public</dt-code>
+                <dd>Visibility attribute of the export. It must be same as visibility of type being exported.</dd>
+            </syntax-dl>
+            <parents><li>File</li></parents>
+            <children>
+                <internal-link ref="_file">.file</internal-link>
+                <internal-link ref="_class_extern">.class extern</internal-link>
+                <internal-link ref="_custom">.custom</internal-link>
+            </children>
+            <seealso>
+                <internal-link ref="_assembly_extern">.assembly extern</internal-link>
+                <internal-link ref="_assembly_externB">.assembly extern {}</internal-link>
+                <internal-link ref="_classB">.class {}</internal-link>
+                <internal-link ref="_class_extern">.class extern</internal-link>
+                <internal-link ref="_module_extern">.module extern</internal-link>
+            </seealso>
         </section>
-        <section id="_dataB" guid="f32ac5f8-850c-4bd5-83fb-36d525cfd335">
+        <section id="_dataB" guid="f32ac5f8-850c-4bd5-83fb-36d525cfd335" r="II.16.3.1">
             <header><code>.data {}</code></header>
-			<introduction/>
+            <introduction>Represents data inserted to PE file.</introduction>
+            <p>See <internal-link ref="_data"><code>.data</code></internal-link>.</p>
+            <seealso>
+                <internal-link ref="_data">.data</internal-link>
+            </seealso>
         </section>
-        <section id="_eventB" guid="f2f4cd46-66fe-451e-877e-83acd0739280">
+        <section id="_eventB" guid="f2f4cd46-66fe-451e-877e-83acd0739280" r="II.18">
             <header><code>.event {}</code></header>
-			<introduction/>
+            <introduction>Defines an event.</introduction>
+            <syntax>.event [specialname] [rtspecialname] [<ref>Type</ref>] <ref>Name</ref> {}</syntax>
+            <syntax-dl>
+                <dt-code>specialname</dt-code>
+                <dd>When specified means that name of the event has special meaning to tools other than CLI.</dd>
+                <dt-code>rtspecialname</dt-code>
+                <dd>When specified means that name of the event has special meaning to CLI.</dd>
+                <dd>There are currently no names with special meaning to CLI defined.</dd>
+                <dt><code-ref>Type</code-ref> (<ref ref="TypeSpec">TypeSpec</ref>)</dt>
+                <dd>If present identifies the delegate type whose signature is same as signature of method for firing the event (fire).</dd>
+                <dt><code-ref>Name</code-ref> (<ref ref="Id">Id</ref>)</dt>
+                <dd>The name of the event.</dd>
+            </syntax-dl>
+            <parents>
+                <internal-link ref="_classB">.class {}</internal-link>
+            </parents>
+            <children>
+                <internal-link ref="_addon">.addon</internal-link>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_fire">.fire</internal-link>
+                <internal-link ref="_line">.line</internal-link>
+                <internal-link ref="_other">.other</internal-link>
+                <internal-link ref="_removeon">.removeon</internal-link>
+            </children>
+            <seealso>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <internal-link ref="_propertyB">.property {}</internal-link>
+            </seealso>
         </section>
-        <section id="_methodB" guid="98c22e4f-42be-47be-8c90-90dab6ade593">
+        <section id="_methodB" guid="98c22e4f-42be-47be-8c90-90dab6ade593" r="II.15.4">
             <header><code>.method {}</code></header>
-			<introduction/>
+            <introduction>Defines a method (function, procedure, constructor, accessor, operator, etc.)</introduction>
+            <syntax>
+                .method <ref>MethAttr*</ref> [<ref>CallingConvention</ref>] <ms-specific>[\[in\] | \[opt\] | \[out\]]*</ms-specific> <ref>ReturnType</ref> [marshall \([<ref>ReturnMarshalling</ref>]\)] <ref>Name</ref> [&lt;<ref>GenPar</ref> [, <ref>GenPar</ref>]*>] \([<ref>Parameter</ref> [, <ref>Parameter</ref>]*]\) <ref>ImplAttr</ref>* {}
+            </syntax>
+            <syntax-dl>
+                <dt><code-ref>MethAttr</code-ref> (<ref>MethAttr</ref>)</dt>
+                <dd>Attributes of the method. Following values are possible:</dd>
+                <dl>
+                    <dt-code>abstract</dt-code>
+                    <dd>
+                        An abstract method. An abstract method must be virtual as well.
+                        An abstract method does not contain implementation - it's provided by derived type.
+                        Only abstract types can contain abstract methods. (VB: <code>MustOverride</code>)
+                    </dd>
+                    <dt-code id="_methodB-newslot">newslot</dt-code>
+                    <dd>
+                        The method gets a new slot in virtual methods table. It gets it always, even where there is method with same name and signature in a base class.
+                        In case this attribute is not specified a method gets a new slot in virtual methods table only in case there's not method with same name and signature in a base class.
+                        (VB: <code>Shadows</code>, not specified - <code>Overrides</code>; C#: <code>new</code>)
+                    </dd>
+                    <break/>
+                    <dt-code>final</dt-code>
+                    <dd>Indicates that virtual method cannot be overriden in derived class (VB: <code>NotOverridable</code>). Final method must be virtual.</dd>
+                    <dt-code>hidebysig</dt-code>
+                    <dd>
+                        The method hides method with same name and signature from base class.
+                        In case this attribute is ommited current method hides all methods of base class(es) with same name not comparing signature.
+                        VES does not control or verify this. This is feature for tools (i.e. compilers).
+                    </dd>
+                    <dd>
+                        VB: In case this attribute is ommited and the method is virtual it's marked as <code>Shadows</code> in Visual Basic,
+                        but <code>Shadows</code> in Visual Basic hides also members of different type than method (fields, events, types, etc.).
+                    </dd>
+                    <dd>See also <code><internal-link ref="_methodB-newslot">newslot</internal-link></code>.</dd>
+                    <dt-code>static</dt-code>
+                    <dd>A method is static (not instance) (VB: <code>Shared</code>)</dd>
+                    <dt-code>virtual</dt-code>
+                    <dd>A method is virtual (can be overriden in derived class) (VB: <code>Overridable</code>)</dd>
+                    <dt-code>strict</dt-code>
+                    <dd>Check method accessibility when overriding it. Must be virtual.</dd>
+                    <break/>
+                </dl>
+            </syntax-dl>
+            <parents>
+                <li>File</li>
+                <internal-link ref="_classB">.class {}</internal-link>
+            </parents>
+            <children>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_data">.data</internal-link>
+                <internal-link ref="_emitbyte">.emitbyte</internal-link>
+                <internal-link ref="_entrypoint">.entrypoint</internal-link>
+                <internal-link ref="_locals">.locals</internal-link>
+                <internal-link ref="_maxstack">.maxstack</internal-link>
+                <internal-link ref="_override">.override</internal-link>
+                <internal-link ref="_override_method">.override method</internal-link>
+                <internal-link ref="_param">.param</internal-link>
+                <internal-link ref="_param_type">.param type</internal-link>
+                <internal-link ref="_line">.line</internal-link>
+                <internal-link ref="Instructions">Instruction</internal-link>
+                <internal-link ref="Label">Label</internal-link>
+                <internal-link ref="_permission">.permission</internal-link>
+                <internal-link ref="_permissionset">_permissionset</internal-link>
+                <internal-link ref="_try">.try</internal-link>
+                <internal-link ref="B">{}</internal-link>
+            </children>
         </section>
         <section id="_mresourceB" guid="9e4a0be1-b517-42c5-a5b3-915a427c1a30">
             <header><code>.mresource {}</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_propertyB" guid="1f1e1094-1887-4b78-ac30-748ee0970899">
             <header><code>.property {}</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="B" guid="ca3fd78c-49e4-4128-accd-62e6000a5b02">
             <header><code>{}</code></header>
-			<introduction/>
+            <introduction/>
         </section>
     </section>
     <!--Line directives-->
-	<section id="line-directives" guid="f10e0e48-2b07-4b5e-97f2-24a4087488db">
+    <section id="line-directives" guid="f10e0e48-2b07-4b5e-97f2-24a4087488db">
         <header>Line directives</header>
         <introduction>Describes directives single-line directives.</introduction>
         <section id="_addon" guid="99ea7f76-b428-49da-9349-5a48c06298ff">
             <header><code>.addon</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_assembly_extern" guid="5a648710-1ab1-40cf-a057-c2b0217fb166">
             <header><code>.assembly extern</code></header>
-			<introduction/>
+            <introduction/>
         </section>
          <section id="catch" guid="a149a1d6-8ac4-45c0-b729-4a8ef142f27d">
             <header><code>catch</code></header>
-			 <introduction/>
+             <introduction/>
         </section>
         <section id="_class_extern" guid="7eff8b3a-6950-495a-b1e1-883561e32883">
             <header><code>.class extern</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_corflags" guid="bbd06bf5-809c-448b-ba57-bd06266a1a97">
             <header><code>.corflags</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_culture" guid="4eef6475-af48-4fc0-b4fd-4258567e872c">
             <header><code>.culture</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_custom" guid="42f510fb-4882-4df0-a585-9837067a66df">
             <header><code>.custom</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_data" guid="3197f08e-4cb5-481d-a148-92258b2d100f">
             <header><code>.data</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_emitbyte" guid="4b82a665-3a04-4010-8e23-c52177722399">
             <header><code>.emitbyte</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_entrypoint" guid="cf7ff248-2a57-4032-8a54-a945990ce622">
             <header><code>.entrypoint</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="undocumented" id="_export" guid="7d5de718-9958-415b-971d-0fea3c5dd73c">
             <header><code>.export</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="fault" guid="2c2df25b-8820-4e30-ab10-4a3522ce12dc">
             <header><code>fault</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_field" guid="5131b0e1-eceb-47e4-b99e-5b6de0a8c1dd">
             <header><code>.field</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_file" guid="155f5a74-40b6-43ee-8164-a58ad46b36aa">
             <header><code>.file</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="ms-specific" id="_file_alignment" guid="b4a471a4-cc6b-4853-b9bf-71be385dcf6f">
             <header><code>.file alignment</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="filter" guid="dd0a85e1-8294-419d-a858-2f36bc4ecb75">
             <header><code>filter</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="finally" guid="14114e50-b11a-410b-990c-cd664071226e">
             <header><code>finally</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_fire" guid="12a975ab-853b-4eff-a652-f9c4043f1c1a">
             <header><code>.fire</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_get" guid="aa99b7ec-83a4-42fa-8023-6200f1d61ebd">
             <header><code>.get</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="handler" guid="9adc75e3-e399-44d5-9a61-cf7cc6fe8cd1">
             <header><code>handler</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_hash" guid="e482d889-b6f5-4247-9555-442a0d860bd9">
             <header><code>.hash</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_hash_alghoritm" guid="70da21dd-092c-48c5-8b66-f84510cbc668">
             <header><code>.hash alghoritm</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="ms-specific" id="_imagebase" guid="c4e3bc53-89e8-4464-b4a9-f93dd1fb3d24">
             <header><code>.imagebase</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="ms-specific" id="_language" guid="27d2766f-ba22-45f8-867c-b6b20172d3cb">
             <header><code>.language</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_line" guid="bef239b4-0a82-47db-8906-53c4a12a931e">
             <header><code>.line</code> (<code>#line</code>)</header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="ms-specific" id="_locale" guid="b7409e19-9c6c-45dc-a869-ee53b533047f">
             <header><code>.locale</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_locals" guid="31043c83-08b1-4432-b87d-cbda65e8483d">
             <header><code>.locals</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_maxstack" guid="0d65bf77-ba02-4285-9a66-f5a2c50dd058">
             <header><code>.maxstack</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_module" guid="4bfc275e-6e3a-4fbf-ab12-940abe610ec6">
             <header><code>.module</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_module_extern" guid="94c52bb2-020b-40cb-8f74-bf7026cf17a5">
             <header><code>.module extern</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="ms-specific" id="_namespace" guid="c7846447-c88f-444b-9e88-26ba00384886">
             <header><code>.namespace</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_other" guid="9e7d2dbc-aaa0-49a6-b729-d8d675add705">
             <header><code>.other</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_override" guid="992b3bc2-52ca-45f8-bb36-68a1dd2657db">
             <header><code>.override</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_override_method" guid="8f711996-58aa-4c4f-838b-0b8618ff6cbe">
             <header><code>.override method</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_pack" guid="94f1b99c-3a49-4109-9dbf-4fa8d66807e7">
             <header><code>.pack</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_param" guid="e5808673-535d-4dec-a4f5-3520cf700be4">
             <header><code>.param</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_param_type" guid="4b9ab2a8-4653-4af1-974f-dfbb07af08ff">
             <header><code>.param type</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_permission" guid="26047966-4043-4e28-9cb0-843ae3385797">
             <header><code>.permission</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_permissionset" guid="ebf17d31-1fe9-404f-bd88-c9975425a241">
             <header><code>.permissionset</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_publickey" guid="acf601a2-56e8-4422-9d99-2cb0e3f896b9">
             <header><code>.publickey</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_publickeytoken" guid="053b910e-96d3-49be-b10f-ae9309885fbd">
             <header><code>.publickeytoken</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_removeon" guid="7eaad505-87fd-43d0-a944-98220d1d6eaf">
             <header><code>.removeon</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_set" guid="77d435f2-ec68-4e80-bff7-29ff9ce45ad5">
             <header><code>.set</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_size" guid="4e407480-d0f3-42a5-9095-72acefdbc8af">
             <header><code>.size</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="undocumented" id="_stackreserve" guid="53aaab03-5a5d-4039-b84e-d6d8b76a25a5">
             <header><code>.stackreserve</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_try" guid="094b8227-82c2-4ce7-bfac-f892b8fe2780">
             <header><code>.try</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_subsystem" guid="fe5d32d1-c45f-4cb4-b07e-129c46208e10">
             <header><code>.subsystem</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_ver" guid="270893db-17ab-412a-8a80-1678aa35475e">
             <header><code>.ver</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section special="undocumented" id="_vtentry" guid="6932c4b6-6b86-436e-ba90-61e6d78602d9">
             <header><code>.vtentry</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="_vtfixup" guid="471534a4-c10c-4eca-a828-26786a676f12">
             <header><code>.vtfixup</code></header>
-			<introduction/>
+            <introduction/>
         </section>
         <section id="Label" guid="3bd656e8-8bd1-46bb-b93b-159ced4ebb8b">
             <header>Label</header>
-			<introduction/>
+            <introduction/>
         </section>
     </section>
-	<!--Instructions-->
-	<section id="instructions" guid="9DE21037-C6E2-4515-9D60-A55E6343AF3C" r="III">
-		<header>Instructions</header>
-		<introduction/>
-	</section>
+    <!--Instructions-->
+    <section id="instructions" guid="9DE21037-C6E2-4515-9D60-A55E6343AF3C" r="III">
+        <header>Instructions</header>
+        <introduction/>
+    </section>
 </ildoc>

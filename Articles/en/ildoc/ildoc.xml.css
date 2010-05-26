@@ -101,7 +101,7 @@ undocumented, *[special='undocumented'] {
 see:empty:after{
     content:attr(cref);
 }
-code-ref, dt-code-ref, code ref, ref code, dt-code ref, dt-ref code{
+code-ref, dt-code-ref, code ref, ref code, dt-code ref, dt-ref code, syntax ref{
 	font-style:italic;
 	font-family:monospace;
 }
@@ -137,16 +137,16 @@ r{
 r:before{content:"(";}
 r:after{content:")";}
 header > r,
-dd > r, dd-code > r, dd-ref > r, dd-code-rer > r,
+dd > r, dd-code > r, dd-ref > r, dd-code-ref > r,
 dt > r:last-child, dt > r:first-child,
 p > r:first-child, p > r:last-child,
 title > r:first-child, title > r:last-child,
 introduction > r:first-child, introduction > r:last-child,
 *[r]:before{
     float:right;
-}
-*[r]:before{
     content:"(" attr(r) ")";
+    font-family:serif;
+    font-size:11pt;
 }
 
 table{
@@ -184,17 +184,23 @@ parents, children{
 	margin-top:1ex;
 	margin-bottom:1ex;
 }
-parents:before, children:before{
-	font-weight:bold;
-	display:block;
-	margin-left:-2EM;
-	font-family:Sans-Serif;
+parents:before, children:before, syntax:before {
+    font-weight: bold;
+    display: block;
+    margin-left: -2EM;
+    font-family: Sans-Serif;
+    font-size: 90%;
+    color: #000080;
 }
 parents:before{
 	content:'Parents:';
 }
 children:before{
 	content:'Children:';
+}
+syntax:before{
+    content:'Syntax:';
+    margin-left:inherit;
 }
 parents > *:before, children > *:before{
 	content: ', ';
@@ -216,6 +222,8 @@ seealso:before{
 	text-align:center;
 	font-weight:bold;
 	font-family:Sans-Serif;
+	font-size: 90%;
+    color: #000080;
 }
 seealso > *:before{
 	content: ' | ';
