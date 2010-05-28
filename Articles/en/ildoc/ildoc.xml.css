@@ -96,7 +96,14 @@ section[special='ms-specific'] > header:after, row[special='ms-specific'] > c:fi
     background-color:inherit;
 }
 undocumented, *[special='undocumented'] {
-	background-color: #FFFF99;
+    background-color: #F0F0F0;
+}
+new, *[special='new']{
+    background-color:Yellow;
+}
+ms-specific > new:only-child, new > ms-specific:only-child, *[special='new'] > ms-specific:only-child, *[special='ms-specific'] > new:only-child, ms-specific > *[special='new']:only-child, new > *[special='ms-specific']:only-child, *[special='new'] > *[special='ms-specific']:only-child, *[special='ms-specific'] > *[special='new']:only-child {
+    background-color: #99FF99;
+    background-image: -moz-linear-gradient(-90deg,Yellow,Aqua);
 }
 see:empty:after{
     content:attr(cref);
@@ -164,8 +171,8 @@ table > row{
     border-top:solid Black thin;
     border-bottom:solid Black thin;
 }
-table > row:hover{
-    background-color:Yellow;
+table > row:hover {
+    background-color: #FFFF99;
 }
 table > row > c, table > header > c {
     display:table-cell;
@@ -176,6 +183,9 @@ table > header > c{
     text-align:center;
     font-family:sans-serif;
     font-weight:bold;
+}
+c code, c internal-link{
+    white-space:nowrap;
 }
 
 parents, children{

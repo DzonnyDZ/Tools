@@ -44,10 +44,10 @@
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
-        <xs:key name="guid">
-            <xs:selector xpath="*"/>
+        <xs:unique name="guid">
+            <xs:selector xpath=".//*"/>
             <xs:field xpath="@guid"/>
-        </xs:key>
+        </xs:unique>
 	</xs:element>
 	<!--dl-->
 	<xs:element name="dl" type="dl"/>
@@ -145,6 +145,11 @@
 						<xs:documentation>Header text for section describing undocumented item</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+                <xs:element name="new" type="simple-content" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Header text fo section describing new functionality considered fro next version.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
                 <xs:group ref="simple-elements" minOccurs="1" maxOccurs="1"/> 
             </xs:choice>
         </xs:complexType>
@@ -324,6 +329,7 @@
             <xs:element ref="internal-link" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="ms-specific" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="undocumented" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="new" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="see" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="r" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
@@ -385,6 +391,15 @@
                 </xs:complexType>
             </xs:element>
             <xs:element name="undocumented" minOccurs="1" maxOccurs="1">
+                <xs:complexType mixed="true">
+                    <xs:complexContent mixed="true">
+                        <xs:restriction base="text">
+                            <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="new" minOccurs="1" maxOccurs="1">
                 <xs:complexType mixed="true">
                     <xs:complexContent mixed="true">
                         <xs:restriction base="text">
@@ -604,6 +619,11 @@
 			<xs:documentation>text related to undocumented feature.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+    <xs:element name="new" type="text">
+        <xs:annotation>
+            <xs:documentation>Text related to new functionality considered fro next version.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
 
 	<xs:element name="example" type="example">
 		<xs:annotation>
@@ -666,6 +686,11 @@
 					<xs:documentation>Section is related to undocumented feature</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+            <xs:enumeration value="new">
+                <xs:annotation>
+                    <xs:documentation>Section is related to new functionality considered for next version</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<!--Attributes-->

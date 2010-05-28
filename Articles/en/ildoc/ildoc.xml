@@ -248,7 +248,7 @@
                 <dt-code>!<ref ref="Int32">Int32</ref></dt-code>
                 <dd>Reffres generic parameter from type declaration accessible by 0-based index.</dd>
                 <dt-code>!!<ref ref="Int32">Int32</ref></dt-code>
-                <dd>Reffres generic parameter from method declaration accessible by 0-based index.</dd>
+                <dd>Refferes generic parameter from method declaration accessible by 0-based index.</dd>
                 <break/>
                 <dt-code>bool</dt-code>
                 <dt-code>char</dt-code>
@@ -484,6 +484,10 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <dt-code>opt</dt-code>
                 <dd>Marks parameter as optional (from end-user point-of-view). Default value is stored using the <code-ref ref="_param">.param</code-ref> directive.</dd>
                 <dd rel="summary">Parameters <code>in</code>, <code>out</code> and <code>opt</code> are not part of method signature.</dd>
+                <dd rel="summary"><ms-specific>
+                    In addition to <code>[in]</code>, <code>[opt]</code>, and <code>[out]</code> implementation allows 4th option - <ref ref="Int32">Int32</ref> -
+                    16-bit set of flags with unspecified meaning.
+                </ms-specific></dd>
                 <break/>
                 <dt><code-ref ref="Type">Type</code-ref> (<ref ref="Type">Type</ref>)</dt>
                 <dd>Type of the parameter</dd>
@@ -587,17 +591,20 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
                 <c>File</c>
                 <c>
-                    <code><internal-link ref="_hash">.hash</internal-link></code>
-                    <code><internal-link ref="_custom">.custom</internal-link></code>
-                    <code><internal-link ref="_culture">.culture</internal-link></code>
-                    <code><internal-link ref="_publickeytoken">.publickeytoken</internal-link></code>
-                    <code><internal-link ref="_publickey">.publickey</internal-link></code>
+                    <code><internal-link ref="_hash">.hash</internal-link></code>,
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_culture">.culture</internal-link></code>,
+                    <code><internal-link ref="_publickeytoken">.publickeytoken</internal-link></code>,
+                    <code><internal-link ref="_publickey">.publickey</internal-link></code>,
                     <code><internal-link ref="_ver">.ver</internal-link></code>
                 </c>
             </row>
             <row>
                 <c><code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code></c>
-                <c><code><internal-link ref="_mresourceB">.mresource {}</internal-link></code></c>
+                <c>
+                    <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+                    <new><code><internal-link ref="_class_extern_forwarder">.class extern forwarder {}</internal-link></code></new>
+                </c>
                 <c/>
             </row>
             <row>
@@ -639,6 +646,11 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_class_extern">.class extern</internal-link></code>,
                     <code><internal-link ref="_custom">.custom</internal-link></code>
                 </c>
+            </row>
+            <row special="new">
+                <c><code><internal-link ref="_class_extern_forwarderB">.class extern forwarder {}</internal-link></code></c>
+                <c>File</c>
+                <c><code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code></c>
             </row>
             <row>
                 <c><code><internal-link ref="_corflags">.corflags</internal-link></code></c>
@@ -830,7 +842,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_param_type">.param type</internal-link></code>,
                     <code><internal-link ref="_line">.line</internal-link></code>,
                     <internal-link ref="instructions">instruction</internal-link>,
-                    <internal-link ref="label">label</internal-link>,
+                    <internal-link ref="Label">label</internal-link>,
                     <code><internal-link ref="_permission">.permission</internal-link></code>,
                     <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
                     <code><internal-link ref="B">{}</internal-link></code>,
@@ -1037,7 +1049,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_param_type">.param type</internal-link></code>,
                     <code><internal-link ref="_line">.line</internal-link></code>,
                     <internal-link ref="instructions">instruction</internal-link>,
-                    <internal-link ref="label">label</internal-link>,
+                    <internal-link ref="Label">label</internal-link>,
                     <code><internal-link ref="_permission">.permission</internal-link></code>,
                     <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
                     <code><internal-link ref="B">{}</internal-link></code>,
@@ -1055,7 +1067,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c/>
             </row>
             <row>
-                <c><internal-link ref="label">label</internal-link></c>
+                <c><internal-link ref="Label">label</internal-link></c>
                 <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <code><internal-link ref="B">{}</internal-link></code></c>
                 <c/>
             </row>
@@ -1130,7 +1142,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <code><internal-link ref="_file">.file</internal-link></code>,
                 <code><internal-link ref="_hash">.hash</internal-link></code>,
                 <code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
-                <code><internal-link ref="_mresource">.mresource</internal-link></code> and
+                <code><internal-link ref="_mresourceB">.mresource</internal-link></code> and
                 <code><internal-link ref="_subsystem">.subsystem</internal-link></code>.
                 The <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code> directive declares the manifest and
                 specifies the assembly the current module belongs to. Module shall contain maximally one
@@ -1288,7 +1300,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <internal-link ref="_pack">.pack</internal-link>
                 <internal-link ref="_param_type">.param type</internal-link>
                 <internal-link ref="_propertyB">.property {}</internal-link>
-                <internal-link ref="_isze">.size</internal-link>
+                <internal-link ref="_size">.size</internal-link>
                 <internal-link ref="_line">.line</internal-link>
                 <internal-link ref="_permissionset">.permissionset</internal-link>
                 <internal-link ref="_permission">.permission</internal-link>
@@ -1381,6 +1393,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <dd>
                         Only fields are allowed as members of enumerations. An enumeration cannot implement any interface and must have <code>auto</code> layout.
                         An enumeration must have exactly one instance member field whose type determines enumeration sub-type.
+                        By convention the field is named <code>value__</code> and marked <code>rtspecialname</code>.
                         The other member fields must be static literals not initialized using the <internal-link ref="initobj">initobj</internal-link> instruction.
                         Type of these variables is the enumeration itself and their values are stored in metadata using <ref>FieldInit</ref>
                         (see <code><internal-link ref="_field">.field</internal-link></code>).
@@ -1502,12 +1515,12 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 .method <ref>MethAttr*</ref> [<ref>CallingConvention</ref>] <ms-specific>[\[in\] | \[opt\] | \[out\]]*</ms-specific> <ref>ReturnType</ref> [marshall \([<ref>ReturnMarshalling</ref>]\)] <ref>Name</ref> [&lt;<ref>GenPar</ref> [, <ref>GenPar</ref>]*>] \([<ref>Parameter</ref> [, <ref>Parameter</ref>]*]\) <ref>ImplAttr</ref>* {}
             </syntax>
             <syntax-dl>
-                <dt><code-ref>MethAttr</code-ref> (<ref>MethAttr</ref>)</dt>
+                <dt r="II.15.4.2"><code-ref>MethAttr</code-ref> (<ref>MethAttr</ref>)</dt>
                 <dd>Attributes of the method. Following values are possible:</dd>
                 <dl>
                     <dt-code>abstract</dt-code>
                     <dd>
-                        An abstract method. An abstract method must be virtual as well.
+                        An abstract method. An abstract method must be <code>virtual</code> as well.
                         An abstract method does not contain implementation - it's provided by derived type.
                         Only abstract types can contain abstract methods. (VB: <code>MustOverride</code>)
                     </dd>
@@ -1517,6 +1530,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                         In case this attribute is not specified a method gets a new slot in virtual methods table only in case there's not method with same name and signature in a base class.
                         (VB: <code>Shadows</code>, not specified - <code>Overrides</code>; C#: <code>new</code>)
                     </dd>
+                    <dd>Can be only used with <code>virtual</code> methods.</dd>
                     <break/>
                     <dt-code>final</dt-code>
                     <dd>Indicates that virtual method cannot be overriden in derived class (VB: <code>NotOverridable</code>). Final method must be virtual.</dd>
@@ -1536,9 +1550,194 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <dt-code>virtual</dt-code>
                     <dd>A method is virtual (can be overriden in derived class) (VB: <code>Overridable</code>)</dd>
                     <dt-code>strict</dt-code>
-                    <dd>Check method accessibility when overriding it. Must be virtual.</dd>
+                    <dd>Check method accessibility when overriding it. Must be virtual. Means that virtual method can only be overriden when it's accessible.</dd>
+                    <dd rel="summary">
+                        <code>final</code>, <code>hidebysig</code>, <code>static</code>, <code>virtual</code> and <code>strict</code> are calle Method contract attributes.
+                        These attributes can be combined with exceptions that mathod cannot be <code>static</code> and <code>virtual</code> at the same time,
+                        and only <code>virtual</code> methods can be <code>final</code> or <code>strict</code>, and <code>abstract</code> methods cannot be <code>final</code>.
+                    </dd>
                     <break/>
+                    <dt-code>assembly</dt-code>
+                    <dd>The method is accessible only from assembly it's defined in (not widening accessibility of declaring type). (VB: <code>Friend</code>, C#: <code>internal</code>)</dd>
+                    <dt-code>famandassem</dt-code>
+                    <dd>Comines accessibilities <code>family</code> and <code>assembly</code> using AND operator. (VB/C#: No equivalent)</dd>
+                    <dt-code>family</dt-code>
+                    <dd>The method is accessible from type it's defined in and from types derived from it. (VB: <code>Protected</code>, C#: <code>protected</code>)</dd>
+                    <dt-code>famorassem</dt-code>
+                    <dd>Combines accessibilities <code>family</code> and <code>assembly</code> uisng OR operator. (VB: <code>Protected Friend</code>, C#: <code>protected internal</code>)</dd>
+                    <dt-code>private</dt-code>
+                    <dd>The method is accessible only from type it's defined in (VB: <code>Private</code>)</dd>
+                    <dt-code>public</dt-code>
+                    <dd>The method is accessible from everywhere where declaring type is accessible (VB: <code>Public</code>)</dd>
+                    <dt-code>compilercontrolled</dt-code>
+                    <dd>
+                        Method accessiblity is verified by a compiler. <ms-specific>Not supported by ilasm.
+                        Use <code><internal-link ref="_methodB-privatescope">privatescope</internal-link></code> instead.</ms-specific></dd>
+                    <dd rel="summary">Only one of accessibility parameters can be specified</dd>
+                    <break/>
+                    <dt-code>pinvokeimpl \(<ref ref="QSTRING">QSTRING1</ref> [as <ref ref="QSTRING">QSTRING2</ref>] <ref>PinvAttr</ref>*\)</dt-code>
+                    <dd>
+                        The method is actually implemented by native code of current platform.
+                        The method shall have attributes <code>native</code> and <code>unmabaged</code> and shall be static and defined in global scope (i.e. outside any type).
+                        The method also shall have no body specified.
+                    </dd>
+                    <dl>
+                        <dt><code-ref>QSTRING1</code-ref> (<ref ref="QSTRING">QSTRING</ref>)</dt>
+                        <dd>
+                            First <ref ref="QSTRING">QSTRING</ref> is platform-specific description indicating where the implementation of the method is located.
+                            For example on Windows this is the name of the DLL containing method implementation.
+                        </dd>
+                        <dt><code-ref>QSTRING2</code-ref> (<ref ref="QSTRING">QSTRING</ref>)</dt>
+                        <dd>
+                            Optionsl. Second <ref ref="QSTRING">QSTRING</ref> is the name of the method as it exists on that platform.
+                            Note: Platform ca use name-mangling rules to make the method to appear differently to managed code from it's name in original language.
+                            Typical for native code generated by C++ compiler.
+                        </dd>
+                        <dt-code-ref r="II.15.5.2">PinvAttr</dt-code-ref>
+                        <dd>P/Invoke parameters. These parameters are platform-specific and their meanings are only suggestions.</dd>
+                        <dl>
+                            <dt-code>ansi</dt-code>
+                            <dd>ANSI character set - typical for C/C++ string</dd>
+                            <dt-code>autochar</dt-code>
+                            <dd>Character set id determined automatically - there representation which is natural to the platform is used (e.g. ANSI on Windows 95 and Unicode on Windows 7).</dd>
+                            <dt-code>unicode</dt-code>
+                            <dd>Unicode character set - platform-specific representation of Unicode.</dd>
+                            <dd rel="summary">
+                                Character set attributes <code>ansi</code>, <code>autochar</code>, <code>unicode</code> are mutually exlusive.
+                                These attributes govern how strings are marshaled to and from unmanaged code.
+                            </dd>
+                            <break/>
+                            <dt-code>cdecl</dt-code>
+                            <dd>Standard C-style call</dd>
+                            <dt-code>fastcall</dt-code>
+                            <dd>C-style fastcall</dd>
+                            <dt-code>stdcall</dt-code>
+                            <dd>Standard C++-style call</dd>
+                            <dt-code>thiscall</dt-code>
+                            <dd>The method accepts an implicit this-pointer.</dd>
+                            <dt-code>platformapi</dt-code>
+                            <dd>Use call convention appropriate for target platform.</dd>
+                            <dd><ms-specific>Not recognized by ilasm, use <code>winapi</code> instead.</ms-specific></dd>
+                            <dd><ms-specific>Indicates that name of cunction in the DLL should be precisely the same as specified - rather than attempting to add A (for ASCII) or W (for widechar) to find platform-specific variants based on marshalling type requested.</ms-specific></dd>
+                            <dt-code><ms-specific>winapi</ms-specific></dt-code>
+                            <dd rel="summary">Calling method attributes are mutually exclusive. They are platform-specific and define calling convention for native code.</dd>
+                            <dd rel="summary"><ms-specific><new>
+                                When none of <code>cdecl</code>, <code>fastcall</code>, <code>stdcall</code>, <code>thiscall</code> or <code>winapi</code> are specified calling convention defaults to <code>winapi</code>.
+                            </new></ms-specific></dd>
+                            <break/>
+                            <dt-code><ms-specific>lasterr</ms-specific></dt-code>
+                            <dd><ms-specific>Indicates that native method supports C-style last error querying.</ms-specific></dd>
+                            <dt-code><ms-specific>nomangle</ms-specific></dt-code>
+                            <dd><ms-specific>Use on Microsft platfrom instead on <code>platformapi</code> which is not recognized by ilasm.</ms-specific></dd>
+                        </dl>
+                    </dl>
+                    <break/>
+                    <dt-code r="II.15.4.2.6">rtspecialname</dt-code>
+                    <dd>The name of the method has special meaning to CIL. Predefined special names are:</dd>
+                    <dl>
+                        <dt-code>.ctor</dt-code>
+                        <dd>Class constructor</dd>
+                        <dt-code>.cctor</dt-code>
+                        <dd>Type initializer (static constructor)</dd>
+                    </dl>
+                    <dt-code r="II.15.4.2.6">specialname</dt-code>
+                    <dd>Indicates that name of this method have special meaning to tools other than CIL.</dd>
+                    <break/>
+                    <dt-code><ms-specific>unmanagedexp</ms-specific></dt-code>
+                    <dd><ms-specific>Indicates that the method is exported to unmanaged code using COM-interop.</ms-specific></dd>
+                    <dt-code><ms-specific>reqsecobj</ms-specific></dt-code>
+                    <dd><ms-specific>Indicates that method calls another method with security attributes.</ms-specific></dd>
+                    <dt-code id="_methodB-privatescope"><ms-specific>privatescope</ms-specific></dt-code>
+                    <dd><ms-specific>ilasm does not recognize <code>compilercontrolled</code>, use <code>privatescope</code> instead.</ms-specific></dd>
                 </dl>
+                <dd>
+                    Some combinations of method attributes are invalid:
+                    <code>static</code> combined with any of <code>final</code>, <code>newslot</code>, or <code>virtual</code>;
+                    <code>abstract</code> combined with any of <code>final</code> or <code>pinvokeimpl</code>;
+                    <code>compilercontrolled</code> combined with any of <code>final</code>, <code>rtspecialname</code>, <code>specialname</code>, or <code>virtual</code>.
+                </dd>
+                <dt><code-ref>CallingConvention</code-ref> (<ref ref="CallConv">CallConv</ref>)</dt>
+                <dd>Determines method calling convention - how paremeters are passed and how this-pointer is passed (if applicable).</dd>
+                <dt><code-ref>ReturnType</code-ref> (<ref ref="Type">Type</ref>)</dt>
+                <dd>Return type of method. In case the method returns no value use <code>void</code>.</dd>
+                <dt><code-ref>ReturnMarshalling</code-ref> (<ref ref="NativeType">NativeType</ref>)</dt>
+                <dd>Defines how return value is passed from unmanaged code.</dd>
+                <dt><code-ref>Name</code-ref> (<ref>MethodName</ref>)</dt>
+                <dd>Name of the method. It can be 'normal' name or special name.</dd>
+                <dd><code>.cctor | .ctor | <ref ref="DottedName">DottedName</ref></code></dd>
+                <dl>
+                    <dt-code>.cctor</dt-code>
+                    <dd>The method is type initializer. <code>rtspecialname</code> attribute is required.</dd>
+                    <dt-code>.ctor</dt-code>
+                    <dd>The method is object constructor. <code>rtspecialname</code> attribute is required.</dd>
+                    <dt><code-ref>DottedName</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                    <dd>Name of normal (not special) method.</dd>
+                </dl>
+                <dt><code-ref>GenPar</code-ref> (<ref ref="GenPar">GenPar</ref>)</dt>
+                <dd>Specifies generic parameters of a method (in case the method is generic).</dd>
+                <dt><code-ref>Parameter</code-ref> (<ref ref="Param">Param</ref>)</dt>
+                <dd>Method parameters define method signature.</dd>
+                <dt r="II.15.4.3"><code-ref>ImplAttr</code-ref> (<ref>ImplAttr</ref>)</dt>
+                <dd>Method implementation attributes.</dd>
+                <dl>
+                    <dt-code>cil</dt-code>
+                    <dd>The method contains 'normal' (managed) CIL code. In cate the method is not abstract method body must be specified.</dd>
+                    <dt-code>native</dt-code>
+                    <dd>
+                        The method contains native code. Native methods don't have a body. They reffer to native method instead.
+                        Body of native method is typically provided by P/Invoke.
+                    </dd>
+                    <dt-code>runtime</dt-code>
+                    <dd>Method body is not specified - it's provided by runtime. This option is used primarily for delegates.</dd>
+                    <dd rel="summary">Only one of <code>cil</code>, <code>native</code>, and <code>runtime</code> attributes can be specified.</dd>
+                    <break/>
+                    <dt-code>managed</dt-code>
+                    <dd>The method is managed - the imlementation is in CIL.</dd>
+                    <dt-code>unmanaged</dt-code>
+                    <dd>The method is unmanaged - typically it's called via P/Invoke.</dd>
+                    <dd rel="summary"><code>managed</code> and <code>unmanaged</code> cannot be combined.</dd>
+                    <break/>
+                    <dt-code>forwardref</dt-code>
+                    <dd>
+                        The declaration does not specify method body (i.e. method body is specified elsewhere).
+                        This attribute cannot be present in assembly when it's loaded to VES.
+                        The attribute is used by tools like linker when combining an assembly from more separately compiled modules to resulver forward references.
+                    </dd>
+                    <dt-code>internalcall</dt-code>
+                    <dd>The body of the method is provided by CLI itself. The attribute shall not be used for methods intended to be used across implementations of CLI.</dd>
+                    <dd>
+                        This attribute is typically used by low-level methods in BCL.
+                        <ms-specific>It allows the lowest-level parts of BCL to wrap unmanaged code into the CLI.</ms-specific>
+                    </dd>
+                    <dt-code>noinlining</dt-code>
+                    <dd>
+                        Prevents runtime from in-line expansion of the method (replacement of methad call instruction with method body).
+                        That means that method body shall not become part of place the method is called from (when JIT converting CIL code to native code).
+                        The method must be kept as separate rutine.
+                        This allows for the method to be visible for debuggers and allows to change default heuristic of CIL-to-native compiler.
+                    </dd>
+                    <dt-code><new>nooptimization</new></dt-code>
+                    <dd><new>The runtime (CIL-to-native compiler) shall not optimize the method when generating native code.</new></dd>
+                    <dt-code>synchronized</dt-code>
+                    <dd>
+                        Specifies that whole body of the method must be single-threaded.
+                        In case the method is instance or virtual method lock on this-object shall be obtained prior execution.
+                        For static lock on declaring type (closed in case of generic type) shall be obtained.
+                        If a lock cannot be obtained the requesting thread cannot proceed untill its granted the lock.
+                        The lock is released when the method exists (through normal return or exception).
+                    </dd>
+                    <break/>
+                    <dt-code><ms-specific>preservesig</ms-specific></dt-code>
+                    <dd>
+                        <ms-specific>Specifies that the method signature is mangled to return HRESULT, with the return value as parameter.</ms-specific>
+                    </dd>
+                </dl>
+                <dt-code><ms-specific>\[in\] | \[opt\] | \[out\]</ms-specific></dt-code>
+                <dd><ms-specific>
+                    Documentation allows to use <code>[<ref>ParamAttr</ref>]*</code> between <code>[<ref>CallingConvention</ref>]</code> and <code-ref>ReturnType</code-ref>,
+                    but it does not state what it is good for. (Probably for retuern value or with connection with <code>preservesig</code>.)
+                    Meaning of modifiers when used for method parameter is described in <ref ref="Param">Param</ref> section.
+                </ms-specific></dd>
             </syntax-dl>
             <parents>
                 <li>File</li>
@@ -1556,46 +1755,227 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <internal-link ref="_param">.param</internal-link>
                 <internal-link ref="_param_type">.param type</internal-link>
                 <internal-link ref="_line">.line</internal-link>
-                <internal-link ref="Instructions">Instruction</internal-link>
+                <internal-link ref="instructions">Instruction</internal-link>
                 <internal-link ref="Label">Label</internal-link>
                 <internal-link ref="_permission">.permission</internal-link>
                 <internal-link ref="_permissionset">_permissionset</internal-link>
                 <internal-link ref="_try">.try</internal-link>
                 <internal-link ref="B">{}</internal-link>
             </children>
+            <seealso>
+                <internal-link ref="_propertyB">.property {}</internal-link>
+                <internal-link ref="_eventB">.event {}</internal-link>
+                <internal-link ref="_field">.field</internal-link>
+            </seealso>
         </section>
-        <section id="_mresourceB" guid="9e4a0be1-b517-42c5-a5b3-915a427c1a30">
+        <section id="_mresourceB" guid="9e4a0be1-b517-42c5-a5b3-915a427c1a30" r="II.6.2.2">
             <header><code>.mresource {}</code></header>
-            <introduction/>
+            <introduction>Manifest resource is named item of data associated with an assembly.</introduction>
+            <syntax>.mresource [public | private] <ref>Name</ref> {}</syntax>
+            <syntax-dl>
+                <dt-code>private</dt-code>
+                <dd>The resource is not exported, so it's accessible only within declarring assembly.</dd>
+                <dt-code>public</dt-code>
+                <dd>The resource is exported, so it's accessible from other assemblies.</dd>
+                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>Name of the resource.</dd>
+            </syntax-dl>
+            <parents><li>File</li></parents>
+            <children>
+                <internal-link ref="_assembly_extern">.assembly extern</internal-link>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_file">.file</internal-link>
+            </children>
+            <seealso><internal-link ref="_data">.data</internal-link></seealso>
         </section>
-        <section id="_propertyB" guid="1f1e1094-1887-4b78-ac30-748ee0970899">
+        <section id="_propertyB" guid="1f1e1094-1887-4b78-ac30-748ee0970899" r="II.17">
             <header><code>.property {}</code></header>
-            <introduction/>
+            <introduction>Defines a property. Property is pair of methods for getting and setting it's value. One method is optional. Additional methods may be added to property.</introduction>
+            <syntax>.property [specialname] [rtspecialname] <ref>CallingConvention</ref> <ref>Type</ref> <ref>Name</ref> \([<ref>Param</ref> [, <ref>Param</ref>]*]\)</syntax>
+            <syntax-dl>
+                <dt-code>specialname</dt-code>
+                <dd>Indicates that name of the property has special meaning to tools other than CLI.</dd>
+                <dt-code>rtspecialname</dt-code>
+                <dd>Indicate sthat name of the property has special meaning to CLI. Currently there are not runtime special names of properties defined.</dd>
+                <break/>
+                <dt><code-ref>CallingConvention</code-ref> (<ref ref="CallConv">CallConv</ref>)</dt>
+                <dd>Property calling convention</dd>
+                <dt><code-ref>Type</code-ref> (<ref ref="Type">Type</ref>)</dt>
+                <dd>The type of the property</dd>
+                <dt><code-ref>Param</code-ref> (<ref ref="Param">Param</ref>)</dt>
+                <dd>Property parameters - in case the property is so-called indexer.</dd>
+                <dd rel="summary">Signature of the property (parameters and return type) must be same as signature of get method.</dd>
+            </syntax-dl>
+            <parents><internal-link ref="_classB">.class {}</internal-link></parents>
+            <children>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_get">.get</internal-link>
+                <internal-link ref="_other">.other</internal-link>
+                <internal-link ref="_set">.set</internal-link>
+                <internal-link ref="_line">.line</internal-link>
+            </children>
+            <seealso>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <internal-link ref="_eventB">.event {}</internal-link>
+            </seealso>
         </section>
         <section id="B" guid="ca3fd78c-49e4-4128-accd-62e6000a5b02">
             <header><code>{}</code></header>
-            <introduction/>
+            <introduction>A code block is used to group method body elements together. It's also used as exception handler body.</introduction>
+            <syntax>{}</syntax>
+            <parents>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <internal-link ref="B">{}</internal-link>
+            </parents>
+            <children>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_data">.data</internal-link>
+                <internal-link ref="_emitbyte">.emitbyte</internal-link>
+                <internal-link ref="_entrypoint">.entrypoint</internal-link>
+                <internal-link ref="instructions">Instruction</internal-link>
+                <internal-link ref="Label">Label</internal-link>
+                <internal-link ref="_line">.line</internal-link>
+                <internal-link ref="_locals">.locals</internal-link>
+                <internal-link ref="_maxstack">.maxstack</internal-link>
+                <internal-link ref="_override">.override</internal-link>
+                <internal-link ref="_override_method">.override method</internal-link>
+                <internal-link ref="_param">.param</internal-link>
+                <internal-link ref="_param_type">.param type</internal-link>
+                <internal-link ref="_permission">.permission</internal-link>
+                <internal-link ref="_permissionset">.permissionset</internal-link>
+                <internal-link ref="_try">.try</internal-link>
+                <internal-link ref="B">{}</internal-link>
+            </children>
+            <p><ms-specific>
+                The code block (also called scope) defines a scope where local variables are accessible by their name.
+                Because it's possible to nest blocks, variable reference will be determined from inner-most block (from reference point-of-view).
+                The declaration in nested block hides declaration from parent block.
+                In case of duplicate declarations (not recomended) there reference will resolve to tirst variable with given name.
+                By-name visisbility scopes don't affect variable life-cycle - all local variables are created (and possibly initialized) when a method is entered and are kept alive until the method exits.
+                Local variables can be accessed using 0-based indexes everywhere inside method body.
+                Indexes are assigned to variables in order of their declarations (if the index is not explicitly set).
+            </ms-specific></p>
+            <seealso>
+                <internal-link ref="_try">.try</internal-link>
+                <internal-link ref="catch">catch</internal-link>
+                <internal-link ref="fault">fault</internal-link>
+                <internal-link ref="filter">filter</internal-link>
+                <internal-link ref="finally">finally</internal-link>
+            </seealso>
         </section>
     </section>
     <!--Line directives-->
     <section id="line-directives" guid="f10e0e48-2b07-4b5e-97f2-24a4087488db">
         <header>Line directives</header>
-        <introduction>Describes directives single-line directives.</introduction>
-        <section id="_addon" guid="99ea7f76-b428-49da-9349-5a48c06298ff">
+        <introduction>Describes single-line directives.</introduction>
+        <section id="_addon" guid="99ea7f76-b428-49da-9349-5a48c06298ff" r="II.18">
             <header><code>.addon</code></header>
-            <introduction/>
+            <introduction>Defines add method for event. This method is used for adding handler to an event.</introduction>
+            <syntax>.addon <ref>CallingConvention</ref> <ref>Type</ref> [<ref>TypeSpec</ref>::] <ref>MethodName</ref> \([<ref>Param</ref> [, <ref>Param</ref>]]\)</syntax>
+            <syntax-dl>
+                <dt><code-ref>CallingConvention</code-ref> (<ref ref="CallConv">CallConv</ref>)</dt>
+                <dd>Method calling convention</dd>
+                <dt><code-ref>Type</code-ref> (<ref ref="Type">Type</ref>)</dt>
+                <dd>Method return type</dd>
+                <dt><code-ref>TypeSpec</code-ref> (<ref ref="TypeSpec">TypeSpec</ref>)</dt>
+                <dd>The type where the method is declared. Defaults to same type the event is declared in.</dd>
+                <dt><code-ref>MethodName</code-ref> (<ref ref="MethodName">MethodName</ref>)</dt>
+                <dd><code>.cctor | .ctor | <ref>DottedName</ref></code></dd>
+                <dd>The name of referenced method. Theoretically <code>.cctor</code> and <code>.ctor</code> are possible, practically it cannot work.</dd>
+                <dt><code-ref>Param</code-ref> (<ref ref="Param">Param</ref>)</dt>
+                <dd>Parameters define signature of refereced method.</dd>
+            </syntax-dl>
+            <parents><internal-link ref="_eventB">.event {}</internal-link></parents>
+            <p>CLS specifies naming conventions and consistency constraints for event methods and requires the add method to be marked with <code>specialname</code>.</p>
+            <seealso>
+                <internal-link ref="_fire">.fire</internal-link>
+                <internal-link ref="_get">.get</internal-link>
+                <internal-link ref="_other">.other</internal-link>
+                <internal-link ref="_removeon">.removeon</internal-link>
+                <internal-link ref="_set">.set</internal-link>
+            </seealso>
         </section>
         <section id="_assembly_extern" guid="5a648710-1ab1-40cf-a057-c2b0217fb166">
             <header><code>.assembly extern</code></header>
-            <introduction/>
+            <introduction>
+                Used in manifest resource to point to different assembly. That means that manifest resource is external assembly with given name.
+                <new>Used in class extern forwarders to point to assembly tybe has been moved (forwarded) to.</new>
+            </introduction>
+            <syntax>.assembly extern <ref>Name</ref></syntax>
+            <syntax-dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>Name of external assembly taht is source of manifest resource.</dd>
+            </syntax-dl>
+            <parents>
+                <internal-link ref="_mresourceB">.mresource {}</internal-link>
+                <li><new><internal-link ref="_class_extern_forwarderB">.class extern forwarder {}</internal-link></new></li>
+            </parents>
+            <p>See also <internal-link ref="_assembly_externB">.assembly extern {}</internal-link>.</p>
+            <seealso>
+                <internal-link ref="_assembly_externB">.assembly extern {}</internal-link>
+                <internal-link ref="_class_externB">.class extern {}</internal-link>
+                <internal-link ref="_class_extern">.class extern</internal-link>
+                <internal-link ref="_module_extern">.module extern</internal-link>
+            </seealso>
         </section>
-         <section id="catch" guid="a149a1d6-8ac4-45c0-b729-4a8ef142f27d">
+         <section id="catch" guid="a149a1d6-8ac4-45c0-b729-4a8ef142f27d" r="II.19.3">
             <header><code>catch</code></header>
-             <introduction/>
+             <introduction>Catches an exception. The block defines type of exception to be caught and the code to be launched when it is caught.</introduction>
+             <syntax>catch <ref>ExceptionType</ref> (handler <ref>Label</ref> to <ref>Label</ref> | {})</syntax>
+             <syntax-dl>
+                 <dt><code-ref>ExceptionType</code-ref> (<ref ref="TypeReference">TypeReference</ref>)</dt>
+                 <dd>The type of exception to be caught.</dd>
+                 <dt-code>handler <ref>Label</ref> to <ref>Label</ref></dt-code>
+                 <dd>Defines range of labels the code to handle exception caught lies between.</dd>
+                 <dd>See also <internal-link ref="handler">handler</internal-link></dd>
+                 <dt><code>{}</code> (<ref ref="B">ScopeBlock</ref>)</dt>
+                 <dd>Contains the code used to handle exception caught.</dd>
+                 <dd>See also <internal-link ref="B">{}</internal-link></dd>
+             </syntax-dl>
+             <parents><internal-link ref="_try">.try</internal-link></parents>
+             <children>
+                 <internal-link ref="handler">handler</internal-link>
+                 <internal-link ref="B">{}</internal-link>
+             </children>
+             <seealso>
+                 <internal-link ref="fault">fault</internal-link>
+                 <internal-link ref="filter">filter</internal-link>
+                 <internal-link ref="finally">finally</internal-link>
+                 <internal-link ref="Label">Label</internal-link>
+             </seealso> 
         </section>
         <section id="_class_extern" guid="7eff8b3a-6950-495a-b1e1-883561e32883">
             <header><code>.class extern</code></header>
-            <introduction/>
+            <introduction>N/A</introduction>
+            <syntax>.class extern <ref>Name</ref></syntax>
+            <syntax-dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>Name of the class</dd>
+            </syntax-dl>
+            <parents><internal-link ref="_class_externB">.class extern {}</internal-link></parents>
+            <p>The documentation does not describe this directive.</p>
+            <seealso>
+                <internal-link ref="_assembly_externB">.assembly extern {}</internal-link>
+                <internal-link ref="_assembly_extern">.assembly extern</internal-link>
+                <internal-link ref="_class_externB">.class extern {}</internal-link>
+                <internal-link ref="_module_extern">.module extern {}</internal-link>
+            </seealso>
+        </section>
+        <section id="_class_extern_forwarder" guid="bbd06bf5-809c-448b-ba57-bd06266a1a98" special="new">
+            <header><code>.class extern forwarder {}</code></header>
+            <introduction>A type forwarder indicates that type originally defined in current assembly is now located in a different assembly.</introduction>
+            <syntax>.class extern forwarder <ref>Name</ref></syntax>
+            <syntax-dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>Name of class originally defined in this assembly being forwarded to different assembly.</dd>
+            </syntax-dl>
+            <parents><li>File</li></parents>
+            <children><internal-link ref="_assembly_extern">.assembly extern</internal-link></children>
+            <p>
+                VES shall resolve all references to that type to current assembly to type in assembly the type is forwarded to.
+                Type forwarders allows assemblies copiled against original assembly to work correctly without recompilation when type is moved from original assembly to another assembly.
+            </p>
+            <seealso><internal-link ref="_class_externB">.class extern {}</internal-link></seealso>
         </section>
         <section id="_corflags" guid="bbd06bf5-809c-448b-ba57-bd06266a1a97">
             <header><code>.corflags</code></header>
@@ -1632,6 +2012,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         <section id="_field" guid="5131b0e1-eceb-47e4-b99e-5b6de0a8c1dd">
             <header><code>.field</code></header>
             <introduction/>
+            <!--TODO: See section 16.1.4 in MS Partition II.pdf-->
         </section>
         <section id="_file" guid="155f5a74-40b6-43ee-8164-a58ad46b36aa">
             <header><code>.file</code></header>
@@ -1651,7 +2032,34 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         </section>
         <section id="_fire" guid="12a975ab-853b-4eff-a652-f9c4043f1c1a">
             <header><code>.fire</code></header>
-            <introduction/>
+            <introduction>Defines fire method for event. This method is used for firing the event.</introduction>
+            <syntax>
+                .removeon <ref>CallingConvention</ref> <ref>Type</ref> [<ref>TypeSpec</ref>::] <ref>MethodName</ref> \([<ref>Param</ref> [, <ref>Param</ref>]]\)
+            </syntax>
+            <syntax-dl>
+                <dt><code-ref>CallingConvention</code-ref> (<ref ref="CallConv">CallConv</ref>)</dt>
+                <dd>Method calling convention</dd>
+                <dt><code-ref>Type</code-ref> (<ref ref="Type">Type</ref>)</dt>
+                <dd>Method return type</dd>
+                <dt><code-ref>TypeSpec</code-ref> (<ref ref="TypeSpec">TypeSpec</ref>)</dt>
+                <dd>The type where the method is declared. Defaults to same type the event is declared in.</dd>
+                <dt><code-ref>MethodName</code-ref> (<ref ref="MethodName">MethodName</ref>)</dt>
+                <dd><code>.cctor | .ctor | <ref>DottedName</ref></code></dd>
+                <dd>The name of referenced method. Theoretically <code>.cctor</code> and <code>.ctor</code> are possible, practically it cannot work.</dd>
+                <dt><code-ref>Param</code-ref> (<ref ref="Param">Param</ref>)</dt>
+                <dd>Parameters define signature of refereced method.</dd>
+            </syntax-dl>
+            <parents><internal-link ref="_eventB">.event {}</internal-link></parents>
+            <p>
+                CLS specifies naming conventions and consistency constraints for event methods and requires the fire method to be marked with <code>specialname</code>.
+            </p>
+            <seealso>
+                <internal-link ref="_addon">.addon</internal-link>
+                <internal-link ref="_get">.get</internal-link>
+                <internal-link ref="_other">.other</internal-link>
+                <internal-link ref="_removeon">.removeon</internal-link>
+                <internal-link ref="_set">.set</internal-link>
+            </seealso>
         </section>
         <section id="_get" guid="aa99b7ec-83a4-42fa-8023-6200f1d61ebd">
             <header><code>.get</code></header>
@@ -1745,9 +2153,36 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             <header><code>.publickeytoken</code></header>
             <introduction/>
         </section>
-        <section id="_removeon" guid="7eaad505-87fd-43d0-a944-98220d1d6eaf">
+        <section id="_removeon" guid="7eaad505-87fd-43d0-a944-98220d1d6eaf" r="II.18">
             <header><code>.removeon</code></header>
-            <introduction/>
+            <introduction>Defines remove method for event. This method is used for removing handler from an event.</introduction>
+            <syntax>
+                .removeon <ref>CallingConvention</ref> <ref>Type</ref> [<ref>TypeSpec</ref>::] <ref>MethodName</ref> \([<ref>Param</ref> [, <ref>Param</ref>]]\)
+            </syntax>
+            <syntax-dl>
+                <dt><code-ref>CallingConvention</code-ref> (<ref ref="CallConv">CallConv</ref>)</dt>
+                <dd>Method calling convention</dd>
+                <dt><code-ref>Type</code-ref> (<ref ref="Type">Type</ref>)</dt>
+                <dd>Method return type</dd>
+                <dt><code-ref>TypeSpec</code-ref> (<ref ref="TypeSpec">TypeSpec</ref>)</dt>
+                <dd>The type where the method is declared. Defaults to same type the event is declared in.</dd>
+                <dt><code-ref>MethodName</code-ref> (<ref ref="MethodName">MethodName</ref>)</dt>
+                <dd><code>.cctor | .ctor | <ref>DottedName</ref></code></dd>
+                <dd>The name of referenced method. Theoretically <code>.cctor</code> and <code>.ctor</code> are possible, practically it cannot work.</dd>
+                <dt><code-ref>Param</code-ref> (<ref ref="Param">Param</ref>)</dt>
+                <dd>Parameters define signature of refereced method.</dd>
+            </syntax-dl>
+            <parents><internal-link ref="_eventB">.event {}</internal-link></parents>
+            <p>
+                CLS specifies naming conventions and consistency constraints for event methods and requires the remove method to be marked with <code>specialname</code>.
+            </p>
+            <seealso>
+                <internal-link ref="_addon">.addon</internal-link>
+                <internal-link ref="_fire">.fire</internal-link>
+                <internal-link ref="_get">.get</internal-link>
+                <internal-link ref="_other">.other</internal-link>
+                <internal-link ref="_set">.set</internal-link>
+            </seealso>
         </section>
         <section id="_set" guid="77d435f2-ec68-4e80-bff7-29ff9ce45ad5">
             <header><code>.set</code></header>
