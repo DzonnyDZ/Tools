@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:Tools.WindowsT.WPF.DialogsT"
     ResizeMode="NoResize"  WindowStyle="SingleBorderWindow" ShowInTaskbar="False" IsTabStop="False" Focusable="False"
     MinWidth="256px" MinHeight="150px" SizeToContent="Height" Width="256px" Closing="Window_Closing" Height="150px"
-        Title="{Binding ElementName=Control, Path=Title}"
+        Title="{Binding ElementName=Control, Path=Title}" Icon="{x:Null}"
         >
     <local:ProgressMonitorImplementationControl x:Name="Control" x:FieldModifier="Protected"/>
 </Window>

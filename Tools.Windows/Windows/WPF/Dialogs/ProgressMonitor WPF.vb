@@ -6,21 +6,31 @@ Imports Tools.ThreadingT
 
 #If Config <= Nightly Then  'Stage: Nightly
 Namespace WindowsT.WPF.DialogsT
+    ''' <summary>Implements user interface for <see cref="ProgressMonitor"/></summary>
+    ''' <remarks>You shuld not use this class/control directly unless you are styling it.</remarks>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
-    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_MainInfo, Type:=GetType(TextBlock))> _
-    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_ProgressBar, Type:=GetType(ProgressBar))> _
-    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_Info, Type:=GetType(TextBlock))> _
-    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_Cancel, Type:=GetType(Button))> _
+    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_MainInfo, Type:=GetType(TextBlock))>
+    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_ProgressBar, Type:=GetType(ProgressBar))>
+    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_Info, Type:=GetType(TextBlock))>
+    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_Cancel, Type:=GetType(Button))>
+    <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_ProgressInfo, Type:=GetType(TextBlock))>
     Public Class ProgressMonitorImplementationControl
         Inherits Windows.Controls.Control
-        ''' <summary>Identifies placeholder for main information text block</summary>
+        ''' <summary>Identifies template part representing main information text block</summary>
+        ''' <remarks>This template part is optional. If present must be of type <see cref="TextBlock"/> and <see cref="TextBlock.Text"/> should be bound to <see cref="Prompt"/> property.</remarks>
         Public Const PART_MainInfo As String = "PART_MainInfo"
-        ''' <summary>Identifies placeholder for progress bar</summary>
+        ''' <summary>Identifies template part representing progress bar</summary>
+        ''' <remarks>This template part is optional. If present must be of type <see cref="ProgressBar"/> and <see cref="ProgressBar.Value"/> should be bound to <see cref="Progress"/> property and <see cref="ProgressBar.IsIndeterminate"/> should be bound to <see cref="ProgressBarStyle"/>.</remarks>
         Public Const PART_ProgressBar As String = "PART_ProgressBar"
-        ''' <summary>Identifies placeholder for secondary information text block</summary>
+        ''' <summary>Identifies template part representing secondary information text block</summary>
+        ''' <remarks>This template part is optional. If present must be of type <see cref="TextBlock"/> and <see cref="TextBlock.Text"/> should be bound to <see cref="Information"/> property.</remarks>
         Public Const PART_Info As String = "PART_Info"
-        ''' <summary>Identifies placeholder for cancel button</summary>
+        ''' <summary>Identifies template part representing cancel button</summary>
+        ''' <remarks>This template part is optional. If present must be of type <see cref="Button"/> and should be bound to <see cref="CancelCommand"/>.</remarks>
         Public Const PART_Cancel As String = "PART_Cancel"
+        ''' <summary>Identifies template part representing texttual information about current progress</summary>
+        ''' <remarks>This template part is optional. If present must be of type <see cref="TextBlock"/> and <see cref="TextBlock.Text"/> should be bound to <see cref="ProgressInfo"/> property.</remarks>
+        Public Const PART_ProgressInfo$ = "PART_ProgressInfo"
         ''' <summary>Initializer</summary>
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(GetType(ProgressMonitorImplementationControl)))
@@ -77,7 +87,7 @@ Namespace WindowsT.WPF.DialogsT
         Public Event Cancel As EventHandler(Of ExecutedRoutedEventArgs)
 #End Region
 #Region "Properties"
-#Region "ProgressBarShowsProgress"
+#Region "ProgressBarStyle"
         ''' <summary>Gets or sets current style of progress bar</summary>
         ''' <value>True to show progressbar which indicates percentage progress of operation, false to show progressbar which only indicates that something is going on but does not indicate actual progress</value>
         Public Property ProgressBarStyle As ProgressBarStyle
@@ -196,6 +206,20 @@ Namespace WindowsT.WPF.DialogsT
         Public Shared ReadOnly CancelPendingProperty As DependencyProperty = DependencyProperty.Register(
             "CancelPending", GetType(Boolean), GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(False))
 #End Region
+#Region "ProgressInfo"
+        ''' <summary>Gets or sets textual information about current progress</summary>      
+        Public Property ProgressInfo As String
+            Get
+                Return GetValue(ProgressInfoProperty)
+            End Get
+            Set(ByVal value As String)
+                SetValue(ProgressInfoProperty, value)
+            End Set
+        End Property
+        ''' <summary>Metadata of the <see cref="ProgressInfo"/> property</summary>                                                   
+        Public Shared ReadOnly ProgressInfoProperty As DependencyProperty = DependencyProperty.Register(
+            "ProgressInfo", GetType(String), GetType(ProgressMonitorImplementationControl), New FrameworkPropertyMetadata(Nothing))
+#End Region
 #End Region
     End Class
 
@@ -268,8 +292,11 @@ Namespace WindowsT.WPF.DialogsT
         Private Sub window_Closed(ByVal sender As Object, ByVal e As System.EventArgs) Handles _window.Closed
             _window = Nothing
         End Sub
+        ''' <summary>Raised when window showing progress is shown</summary>
+        Public Event WindowLoaded As RoutedEventHandler
         Private Sub window_Loaded(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles _window.Loaded
             If DoWorkOnShow Then BackgroundWorker.RunWorkerAsync(WorkerArgument)
+            RaiseEvent WindowLoaded(Me, e)
         End Sub
         Private Sub window_ImplementationControl_Cancel(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs) Handles _window.ImplementationControl.Cancel
             If CancelEnabled Then
@@ -310,6 +337,13 @@ Namespace WindowsT.WPF.DialogsT
             Set(ByVal value As IndependentT.ProgressBarStyle)
                 If value <> ProgressBarStyle Then
                     _ProgressBarStyle = value
+                    If progressInfoAuto Then
+                        If ProgressBarStyle = IndependentT.ProgressBarStyle.Indefinite Then
+                            SetProgressInfo(Nothing)
+                        Else
+                            SetProgressInfo((Progress / 100).ToString("p0"))
+                        End If
+                    End If
                     OnPropertyChanged("ProgressBarStyle")
                 End If
             End Set
@@ -322,10 +356,13 @@ Namespace WindowsT.WPF.DialogsT
             <DebuggerStepThrough()> Get
                 Return _progress
             End Get
-            <DebuggerStepThrough()> Protected Set(ByVal value As Integer)
+            Protected Set(ByVal value As Integer)
                 If value <> Progress Then
                     If value < 0 OrElse value > 100 Then Throw New ArgumentOutOfRangeException("value")
                     _progress = value
+                    If progressInfoAuto AndAlso ProgressBarStyle <> IndependentT.ProgressBarStyle.Indefinite Then
+                        SetProgressInfo((Progress / 100).ToString("p0"))
+                    End If
                     OnPropertyChanged("Progress")
                 End If
             End Set
@@ -487,7 +524,15 @@ Namespace WindowsT.WPF.DialogsT
         End Property
         ''' <summary>Gets an object that can be used as owner for modal windows</summary>
         ''' <returns>When progress monitor dialog is currently shown, returns a <see cref="Windows.Window"/> representing the dialog; otherwise null.</returns>
-        Public ReadOnly Property Window As Object Implements IndependentT.IProgressMonitorUI.OwnerObject
+        ''' <seelaso cref="Window"/>
+        Private ReadOnly Property IProgressMonitorUI_OwnerObject As Object Implements IndependentT.IProgressMonitorUI.OwnerObject
+            Get
+                Return _window
+            End Get
+        End Property
+        ''' <summary>Gets an object that can be used as owner for modal windows</summary>
+        ''' <returns>When progress monitor dialog is currently shown, returns a <see cref="Windows.Window"/> representing the dialog; otherwise null.</returns>
+        Public ReadOnly Property Window As Window
             Get
                 Return _window
             End Get
@@ -506,6 +551,47 @@ Namespace WindowsT.WPF.DialogsT
                 End If
             End Set
         End Property
+        Private _ProgressInfoAuto As Boolean = True
+        ''' <summary>Indicates if value of the <see cref="ProgressInfo"/> property is being changed automatically or manually</summary>
+        Public Property ProgressInfoAuto() As Boolean
+            Get
+                Return _ProgressInfoAuto
+            End Get
+            Set(ByVal value As Boolean)
+                If value <> ProgressInfoAuto Then
+                    If ProgressInfoAuto Then
+                        If ProgressBarStyle = IndependentT.ProgressBarStyle.Indefinite Then
+                            SetProgressInfo(Nothing)
+                        Else
+                            SetProgressInfo((Progress / 100).ToString("p0"))
+                        End If
+                    End If
+                    OnPropertyChanged("ProgressInfoAuto")
+                End If
+            End Set
+        End Property
+        Private _ProgressInfo$ = Nothing
+        ''' <summary>Gets or sets value describing current progress in textual form</summary>
+        ''' <remarks>
+        ''' By default value of this property changes automatically depending on <see cref="Progress"/> and <see cref="ProgressBarStyle"/>.
+        ''' Once you set value of this property manually this automatic behavior is suspended. It can be reset by changing <see cref="ProgressInfoAuto"/> property.
+        ''' </remarks>
+        Public Property ProgressInfo$
+            Get
+                Return _ProgressInfo
+            End Get
+            Set(ByVal value$)
+                SetProgressInfo(value)
+                ProgressInfoAuto = False
+            End Set
+        End Property
+        ''' <summary>Sets value of the <see cref="ProgressInfo"/> property without setting <see cref="ProgressInfoAuto"/> to false.</summary>
+        Protected Sub SetProgressInfo(ByVal value$)
+            If ProgressInfo <> value Then
+                _ProgressInfo = value
+                OnPropertyChanged("ProgressInfo")
+            End If
+        End Sub
 #End Region
 #Region "Worker events"
         ''' <summary>Handles <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.ProgressChanged">ProgressChanged</see> event</summary>
@@ -581,10 +667,10 @@ Namespace WindowsT.WPF.DialogsT
         ''' <para>This function is named <c>IInvoke_Invoke</c> to make extension functions in <see cref="IInvokeExtensions"/> to be always called instead of this function whan used with <see cref="ProgressMonitor"/>.</para></remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Function IInvoke_Invoke(ByVal [delegate] As System.Delegate, ByVal ParamArray params() As Object) As Object Implements IInvoke.Invoke
-            If window Is Nothing OrElse window.Dispatcher.CheckAccess Then
+            If Window Is Nothing OrElse Window.Dispatcher.CheckAccess Then
                 Return [delegate].DynamicInvoke(params)
             Else
-                Return window.Dispatcher.Invoke([delegate], params)
+                Return Window.Dispatcher.Invoke([delegate], params)
             End If
         End Function
     End Class

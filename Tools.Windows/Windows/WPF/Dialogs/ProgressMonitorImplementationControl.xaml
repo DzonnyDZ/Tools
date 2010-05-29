@@ -24,9 +24,13 @@
                        VerticalAlignment="Top" TextAlignment="Left" TextWrapping="Wrap"
                        Text="{Binding Prompt, Mode=OneWay, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
             <ProgressBar Name="PART_ProgressBar" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                         Orientation="Horizontal" Minimum="0" Maximum="100" Height="32" 
+                         Orientation="Horizontal" Minimum="0" Maximum="100" Height="32" Panel.ZIndex="0"
                          Value="{Binding Progress, Mode=OneWay, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" 
                          IsIndeterminate="{Binding ProgressBarStyle, Mode=OneWay, Converter={StaticResource CompareConverter}, ConverterParameter={StaticResource Indefinite}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
+            <TextBlock Name="PART_ProgressInfo" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       TextAlignment="Center" TextWrapping="NoWrap"  Background="Transparent" Panel.ZIndex="1"
+                       Text="{Binding ProgressInfo, Mode=OneWay, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}"
+            />
             <TextBlock Name="PART_Info" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                        TextAlignment="Center" TextWrapping="Wrap"
                        Text="{Binding Information, Mode=OneWay, RelativeSource={RelativeSource FindAncestor,  AncestorType={x:Type local:ProgressMonitorImplementationControl}}}" />
@@ -53,6 +57,7 @@
         <Setter Property="ProgressBarStyle" Value="{Binding ProgressBarStyle, Mode=OneWay}"/>
         <Setter Property="CancelEnabled" Value="{Binding CancelEnabled, Mode=OneWay}"/>
         <Setter Property="CancelPending" Value="{Binding CancelPending, Mode=OneWay}"/>
+        <Setter Property="ProgressInfo" Value="{Binding ProgressInfo, Mode=OneWay}"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Focusable" Value="False"/>
     </Style>

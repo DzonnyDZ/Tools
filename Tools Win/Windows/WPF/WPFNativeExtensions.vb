@@ -14,9 +14,10 @@ Namespace WindowsT.WPF
         ''' <seelaso cref="Win32Window.HideIcon"/>
         <Extension()> Public Sub HideIcon(ByVal window As Window)
             If window Is Nothing Then Throw New ArgumentNullException("window")
+            window.Icon = Nothing
             Dim nw As New Win32Window(window)
-            API.Messages.WindowMessage.Send(nw,API.Messages.WindowMessages.WM_SETICON, API.Messages.wParam.WM_GETICON.ICON_BIG, 0)
-            API.Messages.WindowMessage.Send(nw, API.Messages.WindowMessages.WM_SETICON, API.Messages.wParam.WM_GETICON.ICON_SMALL, 0)
+            'API.Messages.WindowMessage.Send(nw, API.Messages.WindowMessages.WM_SETICON, 0, 0)
+            'API.Messages.WindowMessage.Send(nw, API.Messages.WindowMessages.WM_SETICON, API.Messages.wParam.WM_GETICON.ICON_SMALL, 0)
             nw.HideIcon()
         End Sub
 

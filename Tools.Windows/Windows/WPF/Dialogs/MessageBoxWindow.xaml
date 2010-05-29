@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:local="clr-namespace:Tools.WindowsT.WPF.DialogsT"
     ResizeMode="NoResize"  WindowStyle="SingleBorderWindow" ShowInTaskbar="False" IsTabStop="False" Focusable="False"
-    MinWidth="256px" MinHeight="150px" SizeToContent="Height" Width="256px" 
+    MinWidth="256px" MinHeight="150px" SizeToContent="Height" Width="256px"   Icon="{x:Null}"
         >
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Copy" Executed="Copy_Executed" CanExecute="Copy_CanExecute"/>
