@@ -153,6 +153,7 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="Windows\WPF\WPFNativeExtensions.vb" />
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
       <Link>Resources\Exceptions.Designer.vb</Link>
       <AutoGen>True</AutoGen>

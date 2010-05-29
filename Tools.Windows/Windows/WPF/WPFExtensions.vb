@@ -169,7 +169,7 @@ Namespace WindowsT.WPF
                 Window.Top = newloc.Y
             End If
         End Sub
-        ''' <summary>Gtes size and location of the <see cref="Window"/></summary>
+        ''' <summary>Gets size and location of the <see cref="Window"/></summary>
         ''' <param name="Window">A <see cref="Window"/> to get size and location of</param>
         ''' <returns>Rectangle of <paramref name="Window"/> in window coordinates</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>

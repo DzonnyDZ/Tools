@@ -9,7 +9,8 @@ Namespace WindowsT.WPF.DialogsT
     ''' <summary>Control that implements WPF <see cref="MessageBox"/></summary>
     ''' <remarks>This control is not intended to be used separately, to be placed on yopur window. This control implements WPF <see cref="MessageBox"/> and can be styled/templated.
     ''' Teplate parts are panels for additional controls that can be placed on message box and are optional. When not pressent additional control will not be visible! But use of additional controls is rare.
-    ''' <para>This control is disposable. When it disposes it should not be used. It disposes automatically wehn message box window closes.</para></remarks>
+    ''' <para>This control is disposable. When it disposes it should not be used. It disposes automatically wehn message box window closes.</para>
+    ''' <para>Due to WPF limitations message box always displays an ugly icon. If you want to hide the icon set <see cref="P:Tools.WindowsT.WPF.NativeExtensions.GloballyHideNullIconsOfWindows"/> to true.</para></remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     ''' <version version="1.5.3." stage="Beta">Added ability to copy all text of message box using Ctrl+C</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _

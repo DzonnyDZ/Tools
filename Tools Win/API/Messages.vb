@@ -7,7 +7,7 @@ Namespace API.Messages
     ''' <param name="wParam">Specifies additional message information. The contents of this parameter depend on the value of the <paramref name="uMsg"/> parameter.</param>
     ''' <param name="lParam">Specifies additional message information. The contents of this parameter depend on the value of the <paramref name="uMsg"/> parameter.</param>
     ''' <returns>The return value is the result of the message processing and depends on the message sent.</returns>
-    Public Delegate Function WndProc(ByVal hWnd As IntPtr, ByVal msg As Messages.WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
+    Public Delegate Function WndProc(ByVal hWnd As IntPtr, ByVal msg As WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
     ''' <summary>Window messages</summary>
     Public Enum WindowMessages As Integer
         ''' <summary>The WM_ACTIVATE message is sent to both the window being activated and the window being deactivated. If the windows use the same input queue, the message is sent synchronously, first to the window procedure of the top-level window being deactivated, then to the window procedure of the top-level window being activated. If the windows use different input queues, the message is sent asynchronously, so the window is activated immediately.</summary>
@@ -3818,6 +3818,7 @@ Namespace API.Messages
 
     ''' <summary>Implements windows message as reference type</summary>
     ''' <seelaso cref="Message"/>
+    ''' <version version="1.5.3">Methods for sending messages</version>
     Public Class WindowMessage
         Inherits EventArgs
         Implements IEquatable(Of WindowMessage), IEquatable(Of Message), ICloneable(Of WindowMessage)
@@ -4062,6 +4063,66 @@ Namespace API.Messages
             End Get
         End Property
 #End Region
+
+#Region "Sending"
+        ''' <summary>Sends the message to specified window identified by handle</summary>
+        ''' <param name="hWnd">Hande of window to send message to</param>
+        ''' <returns>Result of message</returns>
+        ''' <remarks>This method sets <see cref="ReturnValue"/> to result of message</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Function Send(ByVal hWnd As IntPtr) As Integer
+            Me.ReturnValue = Messages.SendMessage(hWnd, Me.Message, Me.wParam, Me.lParam)
+            Return ReturnValue
+        End Function
+        ''' <summary>Broadcasts message to all top-level windows</summary>
+        ''' <returns>Result of message</returns>
+        ''' <remarks>This method sets <see cref="ReturnValue"/> to result of message</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Function Broadcast() As Integer
+            Return Me.Send(GUI.SpecialWindowHandles.HWND_BROADCAST)
+        End Function
+        ''' <summary>Sends the message to specified window</summary>
+        ''' <param name="window">A window to send message to</param>
+        ''' <returns>Result of message</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="window"/> is null</exception>
+        ''' <remarks>This method sets <see cref="ReturnValue"/> to result of message</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Function Send(ByVal window As IWin32Window) As Integer
+            If window Is Nothing Then Throw New ArgumentNullException("window")
+            Return Send(window.Handle)
+        End Function
+        ''' <summary>Sends a message to given window</summary>
+        ''' <param name="window">A window to send message to</param>
+        ''' <param name="message">A message to be sent</param>
+        ''' <param name="wParam">Message wParam parameter</param>
+        ''' <param name="lParam">Message lParam parameter</param>
+        ''' <returns>Message call result</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="window"/> is null</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Shared Function Send(ByVal window As IWin32Window, ByVal message As WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
+            If window Is Nothing Then Throw New ArgumentNullException("window")
+            Dim msg As New WindowMessage(window.Handle, message, wParam, lParam)
+            Return msg.Send()
+        End Function
+        ''' <summary>Sends a message to given window</summary>
+        ''' <param name="hWnd">Hande of window to send message to</param>
+        ''' <param name="message">A message to be sent</param>
+        ''' <param name="wParam">Message wParam parameter</param>
+        ''' <param name="lParam">Message lParam parameter</param>
+        ''' <returns>Message call result</returns>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Shared Function Send(ByVal hWnd As IntPtr, ByVal message As WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
+            Dim msg As New WindowMessage(hWnd, message, wParam, lParam)
+            Return msg.Send()
+        End Function
+        ''' <summary>Sends the message to window specified in the <see cref="hWnd"/> property</summary>
+        ''' <returns>Result of message</returns>
+        ''' <remarks>This method sets <see cref="ReturnValue"/> to result of message</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Function Send() As Integer
+            Return Me.Send(Me.hWnd)
+        End Function
+#End Region
     End Class
 
     ''' <summary>Delegate of procedure that serves as event handler for <see cref="IWindowsMessagesProviderRef.WndProc"/></summary>
@@ -4074,6 +4135,18 @@ Namespace API.Messages
     ''' <typeparam name="T">Type of message</typeparam>
     Public Delegate Sub WndProcEventArgs(Of T As WindowMessage)(ByVal sender As Object, ByVal Message As T)
 #End Region
+
+    ''' <summary>Defines API functions to worki with windows messages</summary>
+    ''' <version version="1.5.3">This module is new in version 1.5.3</version>
+    Friend Module Messages
+        ''' <summary>Sends the specified message to a window or windows. The <see cref="SendMessage"/>  function calls the window procedure for the specified window and does not return until the window procedure has processed the message.</summary>
+        ''' <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see cref="GUI.SpecialWindowHandles.HWND_BROADCAST"/>, the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child windows.</param>
+        ''' <param name="msg">The message to be sent.</param>
+        ''' <param name="wParam">Additional message-specific information.</param>
+        ''' <param name="lParam">Additional message-specific information.</param>
+        ''' <returns>The return value specifies the result of the message processing; it depends on the message sent.</returns>
+        Public Declare Auto Function SendMessage Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal msg As WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
+    End Module
 End Namespace
 #End If
 

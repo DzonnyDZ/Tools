@@ -500,6 +500,26 @@ Namespace WindowsT.NativeT
                 Return ret
             End Get
         End Property
+        ''' <summary>Gets or sest window extended style</summary>
+        ''' <returns>Current value of <see cref="API.[Public].WindowLongs.ExStyle"/> window long</returns>
+        ''' <value>A new value for window long <see cref="API.[Public].WindowExtendedStyles"/></value>
+        ''' <seelaso cref="WindowLong"/><seelaso cref="API.[Public].WindowLongs.ExStyle"/>
+        ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+        ''' <exception cref="API.Win32APIException">Getting or setting of value failed (i.e. <see cref="Handle"/> is invalid)</exception>
+        Public Property ExtendedStyle As API.Public.WindowExtendedStyles
+            Get
+                Return WindowLong(API.Public.WindowLongs.ExStyle)
+            End Get
+            Set(ByVal value As API.Public.WindowExtendedStyles)
+                WindowLong(API.Public.WindowLongs.ExStyle) = value
+            End Set
+        End Property
+        ''' <summary>Hides an icon of window</summary>
+        ''' <remarks>This method sets window <see cref="ExtendedStyle"/> flag <see cref="API.Public.WindowExtendedStyles.DialogModalFrame"/> and updates windo non-client area</remarks>
+        Public Sub HideIcon()
+            ExtendedStyle = ExtendedStyle Or API.Public.WindowExtendedStyles.DialogModalFrame
+            API.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, API.SetWindowPosFlags.SWP_NOMOVE Or API.SetWindowPosFlags.SWP_NOSIZE Or API.SetWindowPosFlags.SWP_NOZORDER Or API.SetWindowPosFlags.SWP_FRAMECHANGED) 'Error ignored
+        End Sub
 #Region "Equals"
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
         ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>
