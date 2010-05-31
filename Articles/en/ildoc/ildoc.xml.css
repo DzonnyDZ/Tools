@@ -1,25 +1,25 @@
 ﻿@namespace "http://dzonny.cz/xml/ildoc";
 ildoc{
-	display:block;
-	color:Black;
-	background-color:White;
-	font-family:serif;
-	padding:0 12pt 12pt 12pt;
+    display:block;
+    color:Black;
+    background-color:White;
+    font-family:serif;
+    padding:0 12pt 12pt 12pt;
 }
 section{
-	display:block;
-	clear:both;
+    display:block;
+    clear:both;
 }
 header{
-	display:block;
-	font-family:sans-serif;
-	font-weight:bold;
-	margin-top:12pt;
+    display:block;
+    font-family:sans-serif;
+    font-weight:bold;
+    margin-top:12pt;
 }
 ildoc > header{
-	font-size:225%;
-	margin-bottom:12pt;
-	text-align:center;
+    font-size:225%;
+    margin-bottom:12pt;
+    text-align:center;
 }
 ildoc > formatting > header, ildoc > section > header {font-size:200%;}
 ildoc > section > section > header {font-size:175%;}
@@ -30,24 +30,24 @@ section > section > * {padding-left:32pt;}
 section > section > dl, section > section > syntax-dl
 {padding-left:56pt;}
 introduction{
-	display:block;
-	text-align:justify;
-	margin-bottom:12pt;
+    display:block;
+    text-align:justify;
+    margin-bottom:12pt;
 }
 p{
     display:block;
     text-align:justify;
 }
 dl, syntax-dl{
-	display:block;
-	padding-left:24pt;
+    display:block;
+    padding-left:24pt;
    }
 dt,dt-code,dt-var,dt-ref,dt-code-ref{
-	display:block;
+    display:block;
 }
 dd{
-	display:block;
-	padding-left:24pt;
+    display:block;
+    padding-left:24pt;
 }
 dd[rel="summary"]{
      padding-left:18pt;
@@ -55,30 +55,30 @@ dd[rel="summary"]{
 code, dt-code, dt-code-ref, code-ref,
 syntax,
 see{
-	font-family:monospace;
+    font-family:monospace;
 }
 dt-code-ref, code-ref, ref, dt-ref, code-ref{
-	font-style:italic;
+    font-style:italic;
 }
 ref, dt-ref{
-	font-family:serif;
+    font-family:serif;
 }
 header + *{
-	margin-top:12pt;
+    margin-top:12pt;
 }
 ref[ref], dt-ref[ref],
 link, internal-link, see{
-	cursor:pointer;
+    cursor:pointer;
 }
 code-ref[ref]:hover, ref[ref]:hover, 
 link, internal-link, see{
-	color:Blue;
-	text-decoration:underline;
+    color:Blue;
+    text-decoration:underline;
 }
 b{font-weight:bold;}
 break{
-	display:block;
-	border-top:solid Gray thin;
+    display:block;
+    border-top:solid Gray thin;
 }
 ms-specific, *[special='ms-specific']{
     background-color:Aqua;
@@ -109,8 +109,8 @@ see:empty:after{
     content:attr(cref);
 }
 code-ref, dt-code-ref, code ref, ref code, dt-code ref, dt-ref code, syntax ref{
-	font-style:italic;
-	font-family:monospace;
+    font-style:italic;
+    font-family:monospace;
 }
 syntax{display:block; text-align:left;}
 
@@ -189,10 +189,10 @@ c code, c internal-link{
 }
 
 parents, children{
-	display:block;
-	margin-left:2EM;
-	margin-top:1ex;
-	margin-bottom:1ex;
+    display:block;
+    margin-left:2EM;
+    margin-top:1ex;
+    margin-bottom:1ex;
 }
 parents:before, children:before, syntax:before {
     font-weight: bold;
@@ -203,43 +203,43 @@ parents:before, children:before, syntax:before {
     color: #000080;
 }
 parents:before{
-	content:'Parents:';
+    content:'Parents:';
 }
 children:before{
-	content:'Children:';
+    content:'Children:';
 }
 syntax:before{
     content:'Syntax:';
     margin-left:inherit;
 }
 parents > *:before, children > *:before{
-	content: ', ';
-	text-decoration:none;
-	color:Black;
+    content: ', ';
+    text-decoration:none;
+    color:Black;
 }
 parents > *:first-child:before, children > *:first-child:before{
-	content:'';
+    content:'';
 }
 seealso{
-	display:inline-block;
-	max-width:15%;
-	text-align:center;
-	float:right;
+    display:inline-block;
+    max-width:15%;
+    text-align:center;
+    float:right;
 }
 seealso:before{
-	content:'See also:';
-	display:block;
-	text-align:center;
-	font-weight:bold;
-	font-family:Sans-Serif;
-	font-size: 90%;
+    content:'See also:';
+    display:block;
+    text-align:center;
+    font-weight:bold;
+    font-family:Sans-Serif;
+    font-size: 90%;
     color: #000080;
 }
 seealso > *:before{
-	content: ' | ';
-	text-decoration:none;
-	color:Black;
+    content: ' | ';
+    text-decoration:none;
+    color:Black;
 }
 seealso > *:first-child:before{
-	content:'';
+    content:'';
 }

@@ -110,6 +110,24 @@
                 <dd><code>bye|hi</code> matches <code>'byei'</code> or <code>'byhi'</code>.</dd>
                 <dd><code>bye | hi</code> matches <code>'bye'</code> or <code>'hi'</code>.</dd>
             </dl>
+            <dt>Color coding</dt>
+            <dl>
+                <dt><ms-specific>Microsft-specific</ms-specific></dt>
+                <dd><ms-specific>
+                    Documents functionality or feature that's not part of standard, but is specific to Microsft implementation of .NET Framework.
+                    This may be either that Microsft extends CLI with custom fetures, Microsoft clarifies some behavior of .NET Framework or Microsft violates their own standard.
+                </ms-specific></dd>
+                <dt><undocumented>Undocumented</undocumented></dt>
+                <dd><undocumented>
+                    Documents undocumented functionality.
+                    Such block only simply mentions that there is some undocumented possibility of ilasm or .NET framework or explains the functionality based on explanation found in various sources such as blogs and discussions.
+                    This undocumented functionality is usually specific to Microsft implementation of .NET Framework and ilasm.
+                </undocumented></dd>
+                <dt><new>New</new></dt>
+                <dd><new>
+                    Documents new functionality of .NET Framework 4.0 (Microsft-specific) which is not yet part of the standard but will be considered for next version.
+                </new></dd>
+            </dl>
         </dl>
     </formatting>
     <!--Terms-->
@@ -603,7 +621,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c><code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code></c>
                 <c>
                     <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
-                    <new><code><internal-link ref="_class_extern_forwarder">.class extern forwarder {}</internal-link></code></new>
+                    <new><code><internal-link ref="_class_extern_forwarderB">.class extern forwarder {}</internal-link></code></new>
                 </c>
                 <c/>
             </row>
@@ -1469,6 +1487,22 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <internal-link ref="_module_extern">.module extern</internal-link>
             </seealso>
         </section>
+        <section id="_class_extern_forwarderB" guid="bbd06bf5-809c-448b-ba57-bd06266a1a98" special="new">
+            <header><code>.class extern forwarder {}</code></header>
+            <introduction>A type forwarder indicates that type originally defined in current assembly is now located in a different assembly.</introduction>
+            <syntax>.class extern forwarder <ref>Name</ref></syntax>
+            <syntax-dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
+                <dd>Name of class originally defined in this assembly being forwarded to different assembly.</dd>
+            </syntax-dl>
+            <parents><li>File</li></parents>
+            <children><internal-link ref="_assembly_extern">.assembly extern</internal-link></children>
+            <p>
+                VES shall resolve all references to that type to current assembly to type in assembly the type is forwarded to.
+                Type forwarders allows assemblies copiled against original assembly to work correctly without recompilation when type is moved from original assembly to another assembly.
+            </p>
+            <seealso><internal-link ref="_class_externB">.class extern {}</internal-link></seealso>
+        </section>
         <section id="_dataB" guid="f32ac5f8-850c-4bd5-83fb-36d525cfd335" r="II.16.3.1">
             <header><code>.data {}</code></header>
             <introduction>Represents data inserted to PE file.</introduction>
@@ -1961,29 +1995,59 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <internal-link ref="_module_extern">.module extern {}</internal-link>
             </seealso>
         </section>
-        <section id="_class_extern_forwarder" guid="bbd06bf5-809c-448b-ba57-bd06266a1a98" special="new">
-            <header><code>.class extern forwarder {}</code></header>
-            <introduction>A type forwarder indicates that type originally defined in current assembly is now located in a different assembly.</introduction>
-            <syntax>.class extern forwarder <ref>Name</ref></syntax>
+        <section id="_corflags" guid="bbd06bf5-809c-448b-ba57-bd06266a1a97" r="II.25.3.3.1">
+            <header><code>.corflags</code></header>
+            <introduction>
+                Sets a field in CLI header of resulting PE file. CLI expects value 1 there. Because of backward compatibility 3 LSBs are reserved.
+                Future versions may define meaning of values from 8 to 65535. Values higher than 65535 are intended for experimental and non-standard use.
+            </introduction>
+            <syntax>.corflags <ref>Value</ref></syntax>
             <syntax-dl>
-                <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
-                <dd>Name of class originally defined in this assembly being forwarded to different assembly.</dd>
+                <dt><code-ref>Value</code-ref> (<ref ref="Int32">Int32</ref>)</dt>
+                <dd>Value for runtime flags field. Each flag means mask in 32-bit number (not a value). Each flag can have value 0 or 1.</dd>
+                <dd>Default value of entire field is 1.</dd>
+                <dl>
+                    <dt-code>COMIMAGE_FLAGS_ILONLY = 0x1</dt-code>
+                    <dd>Always 1.</dd>
+                    <dt-code>COMIMAGE_FLAGS_32BITREQUIRED = 0x2</dt-code>
+                    <dd>Image can be loaded only to 32-bit process. CLI implementation with 64-bit native integer refuses to load such binary file.</dd>
+                    <dd>Assembly may require this from various reasons - e.g. it contains 32-bit vtablefixups or casts from native integer to 32-bit integer.</dd>
+                    <dt-code>COMIMAGE_FLAGS_STRONGNAMESIGNED = 0x8</dt-code>
+                    <dd>Image has strong name signature.</dd>
+                    <dt-code>COMIMAGE_FLAGS_TRACKDEBUGDATA = 0x10000</dt-code>
+                    <dd>Always 0.</dd>
+                    <dt-code><new>COMIMAGE_FLAGS_NATIVE_ENTRYPOINT = 0x0000001</new></dt-code>
+                    <dd><new>Always 0.</new></dd>
+                    <dd><new><ms-specific>
+                        The flag can be 1 in case RVA references the native function which is real entry point of assembly.
+                        In such case <code>COMIMAGE_FLAGS_ILONLY</code> must be 0.
+                    </ms-specific></new></dd>
+                </dl>
+                <dd><new>All unspecified bits should be zero.</new></dd>
             </syntax-dl>
             <parents><li>File</li></parents>
-            <children><internal-link ref="_assembly_extern">.assembly extern</internal-link></children>
-            <p>
-                VES shall resolve all references to that type to current assembly to type in assembly the type is forwarded to.
-                Type forwarders allows assemblies copiled against original assembly to work correctly without recompilation when type is moved from original assembly to another assembly.
-            </p>
-            <seealso><internal-link ref="_class_externB">.class extern {}</internal-link></seealso>
+            <seealso><internal-link ref="_emitbyte">.emitbyte</internal-link></seealso>
         </section>
-        <section id="_corflags" guid="bbd06bf5-809c-448b-ba57-bd06266a1a97">
-            <header><code>.corflags</code></header>
-            <introduction/>
-        </section>
-        <section id="_culture" guid="4eef6475-af48-4fc0-b4fd-4258567e872c">
+        <section id="_culture" guid="4eef6475-af48-4fc0-b4fd-4258567e872c" r="II.6.2.1.2">
             <header><code>.culture</code></header>
-            <introduction/>
+            <introduction>Indicates that the assembly has been customized for certain culture.</introduction>
+            <syntax>.culture <ref>Culture</ref></syntax>
+            <syntax-dl>
+                <dt><code-ref>Culture</code-ref> (<ref ref="QSTRING">QSTRING</ref>)</dt>
+                <dd>
+                    A culture. Accepts same strings as <see cref="T:System.Globalization.CultureInfo"/>.
+                    Culture names follow IETF RFC 1766 format <code><ref>language2</ref>-<ref>REGION2</ref></code>,
+                    where <code-ref>language2</code-ref> is lowercase two-letter ISO 639-1 language code
+                    and <code-ref>REGION2</code-ref> is uppercase two-letter ISO 3166 country code.
+                </dd>
+                <dd>When used for comrarison between assembly reference and assembly comparison shall be done in case-insensitive manner.</dd>
+            </syntax-dl>
+            <parents>
+                <internal-link ref="_assemblyB">.assembly {}</internal-link>
+                <internal-link ref="_assembly_externB">.assembly extern {}</internal-link>
+            </parents>
+            <p><ms-specific>ilasm does not support <code>.culture</code>, use <code><internal-link ref="_locale">.locale</internal-link></code> instead.</ms-specific></p>
+            <seealso><li><ms-specific><internal-link ref="_locale">.locale</internal-link></ms-specific></li></seealso>
         </section>
         <section id="_custom" guid="42f510fb-4882-4df0-a585-9837067a66df">
             <header><code>.custom</code></header>
