@@ -1,10 +1,13 @@
 ﻿@namespace "http://dzonny.cz/xml/ildoc";
+@namespace svg http://www.w3.org/2000/svg;
 ildoc{
     display:block;
     color:Black;
     background-color:White;
     font-family:serif;
     padding:0 12pt 12pt 12pt;
+    overflow-x:hidden;
+    min-width:100%;
 }
 section{
     display:block;
@@ -242,4 +245,18 @@ seealso > *:before{
 }
 seealso > *:first-child:before{
     content:'';
+}
+
+svg {
+    border: thin dashed #C0C0C0;
+    display: block;
+    background-color: #CCFFCC;
+    padding:15px;
+}
+svg > svg:svg{
+    display: block;
+    background-color:transparent;
+    border:none;
+    padding:0;
+    margin:0;
 }

@@ -9,21 +9,21 @@
     <xs:annotation>
         <xs:documentation>This is single-purpose XML schema introduced for documentation of various features of Common Intermediate Language.</xs:documentation>
     </xs:annotation>
-	<!--root-->
-	<xs:element name="ildoc">
-		<xs:annotation>
-			<xs:documentation>Root element of document describing Common Intermediate Language.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:complexContent>
-				<xs:extension base="section-base">
-					<xs:sequence minOccurs="1" maxOccurs="1">
-						<xs:element ref="header" minOccurs="1" maxOccurs="1"/>
-						<xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
+    <!--root-->
+    <xs:element name="ildoc">
+        <xs:annotation>
+            <xs:documentation>Root element of document describing Common Intermediate Language.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="section-base">
+                    <xs:sequence minOccurs="1" maxOccurs="1">
+                        <xs:element ref="header" minOccurs="1" maxOccurs="1"/>
+                        <xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
                         <xs:element name="formatting" minOccurs="1" maxOccurs="1">
-							<xs:annotation>
-								<xs:documentation>Describes formatting used in this documment</xs:documentation>
-							</xs:annotation>
+                            <xs:annotation>
+                                <xs:documentation>Describes formatting used in this documment</xs:documentation>
+                            </xs:annotation>
                             <xs:complexType>
                                 <xs:complexContent>
                                     <xs:restriction base="section">
@@ -39,22 +39,22 @@
                                 </xs:complexContent>
                             </xs:complexType>
                         </xs:element>
-						<xs:element ref="section" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:extension>
-			</xs:complexContent>
-		</xs:complexType>
+                        <xs:element ref="section" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
         <xs:unique name="guid">
             <xs:selector xpath=".//*"/>
             <xs:field xpath="@guid"/>
         </xs:unique>
-	</xs:element>
-	<!--dl-->
-	<xs:element name="dl" type="dl"/>
-	<xs:complexType name="dl">
-		<xs:annotation>
-			<xs:documentation>Generic definition list contaning terms and deffinitions</xs:documentation>
-		</xs:annotation>
+    </xs:element>
+    <!--dl-->
+    <xs:element name="dl" type="dl"/>
+    <xs:complexType name="dl">
+        <xs:annotation>
+            <xs:documentation>Generic definition list contaning terms and deffinitions</xs:documentation>
+        </xs:annotation>
         <xs:sequence minOccurs="1" maxOccurs="unbounded">
             <xs:choice minOccurs="1" maxOccurs="unbounded">
                 <xs:element name="dt" type="dt" minOccurs="1" maxOccurs="1"/>
@@ -64,44 +64,44 @@
             </xs:choice>
             <xs:choice minOccurs="1" maxOccurs="unbounded">
                 <xs:element name="dd" minOccurs="1" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>Definition - defines or explains a term. Can contain syntax or regular expression.</xs:documentation>
-					</xs:annotation>
+                    <xs:annotation>
+                        <xs:documentation>Definition - defines or explains a term. Can contain syntax or regular expression.</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType mixed="true">
                         <xs:complexContent mixed="true">
                             <xs:extension base="text">
-								<xs:attribute name="rel" use="optional" fixed="summary">
-									<xs:annotation>
-										<xs:documentation>Specifies which &lt;dt>s this &lt;dd> relates to. Value summary means to all above after last &lt;break>. If not specified relates to nearest &lt;dt above.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
+                                <xs:attribute name="rel" use="optional" fixed="summary">
+                                    <xs:annotation>
+                                        <xs:documentation>Specifies which &lt;dt>s this &lt;dd> relates to. Value summary means to all above after last &lt;break>. If not specified relates to nearest &lt;dt above.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
                 </xs:element>
                 <xs:element ref="dl" minOccurs="1" maxOccurs="1"/>
-				<xs:element ref="ref" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="ref" minOccurs="1" maxOccurs="1"/>
                 <xs:element name="example" type="example" minOccurs="1" maxOccurs="1"/>
             </xs:choice>
             <xs:element ref="break" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-		<xs:attributeGroup ref="id-opt"/>
-	</xs:complexType>
-	<xs:complexType name="dt" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Generic defined term - term to be explained.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent mixed="true">
+        <xs:attributeGroup ref="id-opt"/>
+    </xs:complexType>
+    <xs:complexType name="dt" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Generic defined term - term to be explained.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="true">
             <xs:extension base="text">
-				<xs:attributeGroup ref="id-opt"/>
+                <xs:attributeGroup ref="id-opt"/>
                 <xs:attributeGroup ref="r"/>
             </xs:extension>
         </xs:complexContent>
-	</xs:complexType>
+    </xs:complexType>
     <xs:complexType name="dt-code" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Defined term containing code. Shortcut for &lt;dt>&lt;code>&lt;/code>&lt;/dt>.</xs:documentation>
-		</xs:annotation>
+        <xs:annotation>
+            <xs:documentation>Defined term containing code. Shortcut for &lt;dt>&lt;code>&lt;/code>&lt;/dt>.</xs:documentation>
+        </xs:annotation>
         <xs:complexContent mixed="true">
             <xs:restriction base="dt">
                 <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
@@ -109,9 +109,9 @@
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="dt-ref" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Defined term containing variable or other part of code that can vary. Shortcut for &lt;dt>&lt;ref>&lt;/ref>&lt;/dt> but does not have the @ref attribute.</xs:documentation>
-		</xs:annotation>
+        <xs:annotation>
+            <xs:documentation>Defined term containing variable or other part of code that can vary. Shortcut for &lt;dt>&lt;ref>&lt;/ref>&lt;/dt> but does not have the @ref attribute.</xs:documentation>
+        </xs:annotation>
         <xs:complexContent mixed="true">
             <xs:restriction base="dt">
                 <xs:group ref="ref-group" minOccurs="0" maxOccurs="unbounded"/>
@@ -119,32 +119,32 @@
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="dt-code-ref" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Defined term containing variable in code. Shortcut for &lt;dt>&lt;code-ref>&lt;/code-ref>&lt;/dt> but does not have the @ref attribute.</xs:documentation>
-		</xs:annotation>
+        <xs:annotation>
+            <xs:documentation>Defined term containing variable in code. Shortcut for &lt;dt>&lt;code-ref>&lt;/code-ref>&lt;/dt> but does not have the @ref attribute.</xs:documentation>
+        </xs:annotation>
         <xs:complexContent mixed="true">
             <xs:restriction base="dt">
                 <xs:group ref="code-ref-group" minOccurs="0" maxOccurs="unbounded"/>
             </xs:restriction>
         </xs:complexContent>
     </xs:complexType>
-	<!--boxes-->
+    <!--boxes-->
     <xs:element name="header">
-		<xs:annotation>
-			<xs:documentation>Section header</xs:documentation>
-		</xs:annotation>
+        <xs:annotation>
+            <xs:documentation>Section header</xs:documentation>
+        </xs:annotation>
         <xs:complexType mixed="true">
             <xs:choice minOccurs="0" maxOccurs="unbounded">
-				<xs:element name="ms-specific" type="simple-content" minOccurs="1" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>Header text for section describing Microsoft-specific item</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="undocumented" type="simple-content" minOccurs="1" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>Header text for section describing undocumented item</xs:documentation>
-					</xs:annotation>
-				</xs:element>
+                <xs:element name="ms-specific" type="simple-content" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Header text for section describing Microsoft-specific item</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="undocumented" type="simple-content" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Header text for section describing undocumented item</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
                 <xs:element name="new" type="simple-content" minOccurs="1" maxOccurs="1">
                     <xs:annotation>
                         <xs:documentation>Header text fo section describing new functionality considered fro next version.</xs:documentation>
@@ -160,38 +160,38 @@
     <xs:group name="simple-elements">
         <xs:choice>
             <xs:element name="ref">
-				<xs:annotation>
-					<xs:documentation>Header text containing reference or variable</xs:documentation>
-				</xs:annotation>
+                <xs:annotation>
+                    <xs:documentation>Header text containing reference or variable</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base="xs:string">
-							<xs:attribute name ="ref" type="xs:IDREF" use="optional">
-								<xs:annotation>
-									<xs:documentation>Optional ID this reference reffers to</xs:documentation>
-								</xs:annotation>
-							</xs:attribute>
+                            <xs:attribute name ="ref" type="xs:IDREF" use="optional">
+                                <xs:annotation>
+                                    <xs:documentation>Optional ID this reference reffers to</xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
-			<xs:element name="code" type="xs:string" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Header text containing code</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+            <xs:element name="code" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Header text containing code</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="code-ref" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Header text containgi reference in code. This is shortcut for &lt;code>&lt;ref>&lt;/ref>&lt;code> which cannot be used in headers.</xs:documentation>
-				</xs:annotation>
+                <xs:annotation>
+                    <xs:documentation>Header text containgi reference in code. This is shortcut for &lt;code>&lt;ref>&lt;/ref>&lt;code> which cannot be used in headers.</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base="xs:string">
-							<xs:attribute name ="ref" type="xs:IDREF" use="optional">
-								<xs:annotation>
-									<xs:documentation>Optional ID this reference reffers to</xs:documentation>
-								</xs:annotation>
-							</xs:attribute>
+                            <xs:attribute name ="ref" type="xs:IDREF" use="optional">
+                                <xs:annotation>
+                                    <xs:documentation>Optional ID this reference reffers to</xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -199,124 +199,125 @@
             <xs:element ref="r" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
     </xs:group>
-	<xs:element name="introduction" type="text">
-		<xs:annotation>
-			<xs:documentation>Introcuctory text for section</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="section" type="section">
-		<xs:annotation>
-			<xs:documentation>Documentation section. In certain presentation scenarios this is rendered as single HTML page.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="section">
-		<xs:annotation>
-			<xs:documentation>Documentation section. In certain presentation scenarios this is rendered as single HTML page.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="section-base">
-				<xs:sequence minOccurs="1" maxOccurs="1">
-					<xs:element ref="header" minOccurs="1" maxOccurs="1"/>
-					<xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
-					<xs:sequence minOccurs="0" maxOccurs="1">
-						<xs:element type="code" name="syntax" minOccurs="1" maxOccurs="1">
-							<xs:annotation>
-								<xs:documentation>Shows syntax of element described in this section.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="syntax-dl" type="dl" minOccurs="0" maxOccurs="1">
-							<xs:annotation>
-								<xs:documentation>
-									Defintition list which defines parts of syntax mentioned above.
-									Normal &lt;dl> can be used as well, when you don't plane to use &lt;parents> and/or &lt;children>.
-								</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-					<xs:element name="parents" minOccurs="0" maxOccurs="1" type="links">
-						<xs:annotation>
-							<xs:documentation>For code element contains list of code elements this element can be contained in.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="children" minOccurs="0" maxOccurs="1" type="links">
-						<xs:annotation>
-							<xs:documentation>For code element contains list of code elements this element can contain.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
+    <xs:element name="introduction" type="text">
+        <xs:annotation>
+            <xs:documentation>Introcuctory text for section</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="section" type="section">
+        <xs:annotation>
+            <xs:documentation>Documentation section. In certain presentation scenarios this is rendered as single HTML page.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="section">
+        <xs:annotation>
+            <xs:documentation>Documentation section. In certain presentation scenarios this is rendered as single HTML page.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="section-base">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element ref="header" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="introduction" minOccurs="1" maxOccurs="1"/>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element type="code" name="syntax" minOccurs="1" maxOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>Shows syntax of element described in this section.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="syntax-dl" type="dl" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    Defintition list which defines parts of syntax mentioned above.
+                                    Normal &lt;dl> can be used as well, when you don't plane to use &lt;parents> and/or &lt;children>.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element name="parents" minOccurs="0" maxOccurs="1" type="links">
+                        <xs:annotation>
+                            <xs:documentation>For code element contains list of code elements this element can be contained in.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="children" minOccurs="0" maxOccurs="1" type="links">
+                        <xs:annotation>
+                            <xs:documentation>For code element contains list of code elements this element can contain.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
                         <xs:choice minOccurs="1" maxOccurs="1">
                             <xs:element ref="dl" minOccurs="1" maxOccurs="1"/>
                             <xs:element ref="p" minOccurs="1" maxOccurs="1"/>
-							<xs:element ref="example" minOccurs="1" maxOccurs="1"/>
+                            <xs:element ref="svg" minOccurs="1" maxOccurs="1"/>
+                            <xs:element ref="example" minOccurs="1" maxOccurs="1"/>
                             <xs:element ref="table" minOccurs="1" maxOccurs="1"/>
                         </xs:choice>
                         <xs:element ref="break" minOccurs="0" maxOccurs="1"/>
                     </xs:sequence>
-					<xs:element minOccurs="0" maxOccurs="1" name="seealso" type="links">
-						<xs:annotation>
-							<xs:documentation>List of links to content related to this section</xs:documentation>
-						</xs:annotation>
-					</xs:element>					
+                    <xs:element minOccurs="0" maxOccurs="1" name="seealso" type="links">
+                        <xs:annotation>
+                            <xs:documentation>List of links to content related to this section</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>					
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
                         <xs:element ref="section" minOccurs="1" maxOccurs="1"/>
                         <xs:element ref="break" minOccurs="0" maxOccurs="1"/>
                     </xs:sequence>
-				</xs:sequence>
+                </xs:sequence>
                 <xs:attribute name="special" type="special">
                     <xs:annotation>
                         <xs:documentation>Special features of the section</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:element name="break">
-		<xs:annotation>
-			<xs:documentation>Boundary of logical groups inside single list or section</xs:documentation>
-		</xs:annotation>
-		<xs:complexType/>
-	</xs:element>
-	<xs:complexType name="section-base" abstract="true">
-		<xs:attributeGroup ref="id-req"/>
-		<xs:attributeGroup ref="guid-req"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="break">
+        <xs:annotation>
+            <xs:documentation>Boundary of logical groups inside single list or section</xs:documentation>
+        </xs:annotation>
+        <xs:complexType/>
+    </xs:element>
+    <xs:complexType name="section-base" abstract="true">
+        <xs:attributeGroup ref="id-req"/>
+        <xs:attributeGroup ref="guid-req"/>
         <xs:attributeGroup ref="r"/>
-	</xs:complexType>
-	<xs:complexType name="links">
-		<xs:choice minOccurs="1" maxOccurs="unbounded">
-			<xs:element minOccurs="1" maxOccurs="1" ref="internal-link">
-				<xs:annotation>
-					<xs:documentation>Link to content in this documentation</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element minOccurs="1" maxOccurs="1" ref="link">
-				<xs:annotation>
-					<xs:documentation>Link to content in the Internet</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="see" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Link to .NET member</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element type="text" name="li" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>A text item</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:choice>
-	</xs:complexType>
-	<!--text-->
-	<xs:complexType name="text" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Represents text with a few formatting features.</xs:documentation>
-		</xs:annotation>
-	    <xs:group minOccurs="0" maxOccurs="unbounded" ref="text-group"/>
-	</xs:complexType>
-	<xs:element name="p" type="text">
-		<xs:annotation>
-			<xs:documentation>Paragraph of text</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+    </xs:complexType>
+    <xs:complexType name="links">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element minOccurs="1" maxOccurs="1" ref="internal-link">
+                <xs:annotation>
+                    <xs:documentation>Link to content in this documentation</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" maxOccurs="1" ref="link">
+                <xs:annotation>
+                    <xs:documentation>Link to content in the Internet</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="see" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Link to .NET member</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="text" name="li" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>A text item</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <!--text-->
+    <xs:complexType name="text" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Represents text with a few formatting features.</xs:documentation>
+        </xs:annotation>
+        <xs:group minOccurs="0" maxOccurs="unbounded" ref="text-group"/>
+    </xs:complexType>
+    <xs:element name="p" type="text">
+        <xs:annotation>
+            <xs:documentation>Paragraph of text</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     
     <xs:group name="text-group">
         <xs:choice>
@@ -332,6 +333,7 @@
             <xs:element ref="new" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="see" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="r" minOccurs="1" maxOccurs="1"/>
+            <!--<xs:element ref="svg" minOccurs="1" maxOccurs="1"/>-->
         </xs:choice>
     </xs:group>
     <xs:group name="code-group">
@@ -481,27 +483,27 @@
         </xs:choice>
     </xs:group>
 
-	<xs:element name="code" type="code">
-		<xs:annotation>
-			<xs:documentation>Inline piece of code or regular expression</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="code" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Inline piece of code or regular expression</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="text">
+    <xs:element name="code" type="code">
+        <xs:annotation>
+            <xs:documentation>Inline piece of code or regular expression</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="code" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Inline piece of code or regular expression</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="text">
                 <xs:group ref="code-group" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
 
-	<xs:element name="code-ref" type="code-ref">
-		<xs:annotation>
-			<xs:documentation>Inline piece of code referencing something. This is shortcut to &lt;code>&lt;ref>&lt;/ref>&lt;/code> or &lt;ref>&lt;code>&lt;/code>&lt;/ref>.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+    <xs:element name="code-ref" type="code-ref">
+        <xs:annotation>
+            <xs:documentation>Inline piece of code referencing something. This is shortcut to &lt;code>&lt;ref>&lt;/ref>&lt;/code> or &lt;ref>&lt;code>&lt;/code>&lt;/ref>.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:complexType name="code-link-content-base" mixed="true">
         <xs:complexContent mixed="true">
             <xs:restriction base="text">
@@ -509,22 +511,22 @@
             </xs:restriction>
         </xs:complexContent>
     </xs:complexType>
-	<xs:complexType name="code-ref" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Inline piece of code referencing something. This is shortcut to &lt;code>&lt;ref>&lt;/ref>&lt;/code> or &lt;ref>&lt;code>&lt;/code>&lt;/ref>.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
+    <xs:complexType name="code-ref" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Inline piece of code referencing something. This is shortcut to &lt;code>&lt;ref>&lt;/ref>&lt;/code> or &lt;ref>&lt;code>&lt;/code>&lt;/ref>.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
             <xs:extension base="code-link-content-base">
-				<xs:attributeGroup ref="ref-opt"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+                <xs:attributeGroup ref="ref-opt"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 
-	<xs:element name="ref" type="ref">
-		<xs:annotation>
-			<xs:documentation>Reference to variable or another term that can vary or is about to be defined later.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+    <xs:element name="ref" type="ref">
+        <xs:annotation>
+            <xs:documentation>Reference to variable or another term that can vary or is about to be defined later.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:complexType name="link-content-base" mixed="true">
         <xs:complexContent mixed="true">
             <xs:restriction base="text">
@@ -532,132 +534,132 @@
             </xs:restriction>
         </xs:complexContent>
     </xs:complexType>
-	<xs:complexType name="ref" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Reference to variable or another term that can vary or is about to be defined later.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="link-content-base">
-				<xs:attributeGroup ref="ref-opt"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-
-	<xs:element name="link" type="link">
-		<xs:annotation>
-			<xs:documentation>External link</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="link" mixed="true">
-		<xs:annotation>
-			<xs:documentation>External link</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-            <xs:extension base="link-content-base">
-				<xs:attribute name="href" type="xs:anyURI" use="required">
-					<xs:annotation>
-						<xs:documentation>URI of link target</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-
-	<xs:element name="internal-link" type="internal-link">
-		<xs:annotation>
-			<xs:documentation>Internal link inside this documentation. From &lt;ref> differs only by graphical representation.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="internal-link" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Internal link inside this documentation. From &lt;ref> differs only by graphical representation.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:restriction base="ref">
-				<xs:group ref="ref-group" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:attributeGroup ref="ref-req"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:element name="see" type="see">
-		<xs:annotation>
-			<xs:documentation>Link to .NET namespace, type or member</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-    <xs:complexType name="see" mixed="true">
-		<xs:annotation>
-			<xs:documentation>Link to .NET namespace, type or member</xs:documentation>
-		</xs:annotation>
+    <xs:complexType name="ref" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Reference to variable or another term that can vary or is about to be defined later.</xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="link-content-base">
-				<xs:attribute name="cref" use="required" type="cref">
-					<xs:annotation>
-						<xs:documentation>Classified name of target namespace, type or member. Starts with 'X:', where X is type classifier.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
+                <xs:attributeGroup ref="ref-opt"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
-	<xs:element name="b" type="text">
-		<xs:annotation>
-			<xs:documentation>Important text. When converting to HTML rendered as &lt;strong>.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="i" type="text">
-		<xs:annotation>
-			<xs:documentation>Important text, but not as important as &lt;b>. When converting to HTML rendered as &lt;em>.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="ms-specific" type="text">
-		<xs:annotation>
-			<xs:documentation>Text related to Microsoft-specific feature.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="undocumented" type="text">
-		<xs:annotation>
-			<xs:documentation>text related to undocumented feature.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+    <xs:element name="link" type="link">
+        <xs:annotation>
+            <xs:documentation>External link</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="link" mixed="true">
+        <xs:annotation>
+            <xs:documentation>External link</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="link-content-base">
+                <xs:attribute name="href" type="xs:anyURI" use="required">
+                    <xs:annotation>
+                        <xs:documentation>URI of link target</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="internal-link" type="internal-link">
+        <xs:annotation>
+            <xs:documentation>Internal link inside this documentation. From &lt;ref> differs only by graphical representation.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="internal-link" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Internal link inside this documentation. From &lt;ref> differs only by graphical representation.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="ref">
+                <xs:group ref="ref-group" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:attributeGroup ref="ref-req"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="see" type="see">
+        <xs:annotation>
+            <xs:documentation>Link to .NET namespace, type or member</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="see" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Link to .NET namespace, type or member</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="link-content-base">
+                <xs:attribute name="cref" use="required" type="cref">
+                    <xs:annotation>
+                        <xs:documentation>Classified name of target namespace, type or member. Starts with 'X:', where X is type classifier.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="b" type="text">
+        <xs:annotation>
+            <xs:documentation>Important text. When converting to HTML rendered as &lt;strong>.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="i" type="text">
+        <xs:annotation>
+            <xs:documentation>Important text, but not as important as &lt;b>. When converting to HTML rendered as &lt;em>.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="ms-specific" type="text">
+        <xs:annotation>
+            <xs:documentation>Text related to Microsoft-specific feature.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="undocumented" type="text">
+        <xs:annotation>
+            <xs:documentation>text related to undocumented feature.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:element name="new" type="text">
         <xs:annotation>
             <xs:documentation>Text related to new functionality considered fro next version.</xs:documentation>
         </xs:annotation>
     </xs:element>
 
-	<xs:element name="example" type="example">
-		<xs:annotation>
-			<xs:documentation>Multiline code example</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="example">
-		<xs:annotation>
-			<xs:documentation>Multiline code example</xs:documentation>
-		</xs:annotation>
-		<xs:sequence minOccurs="1" maxOccurs="1">
-			<xs:element name="title" type="text" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Short title of the example</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="code-ml" type="code" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Code of the example</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
+    <xs:element name="example" type="example">
+        <xs:annotation>
+            <xs:documentation>Multiline code example</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="example">
+        <xs:annotation>
+            <xs:documentation>Multiline code example</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element name="title" type="text" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Short title of the example</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="code-ml" type="code" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Code of the example</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <xs:element name="r" type="r">
         <xs:annotation>
             <xs:documentation>Reference to .NET Framework standard in form like II.5.3.9.</xs:documentation>
         </xs:annotation>
     </xs:element>
-	<!--Simple types-->
-	<xs:simpleType name="guid">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="[0-9A-F-a-f]{8}(-[0-9A-F-a-f]{4}){3}-[0-9A-F-a-f]{12}"/>
-		</xs:restriction>
-	</xs:simpleType>
+    <!--Simple types-->
+    <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-F-a-f]{8}(-[0-9A-F-a-f]{4}){3}-[0-9A-F-a-f]{12}"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:simpleType name="char">
         <xs:restriction base="xs:string">
             <xs:length value="1"/>
@@ -674,68 +676,68 @@
             <xs:pattern value="(I{1,3}|(I?V)|(VI))(\.[1-9][0-9]*)*"/>
         </xs:restriction>
     </xs:simpleType>
-	<xs:simpleType name="special">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="ms-specific">
-				<xs:annotation>
-					<xs:documentation>Section is related to Microsoft-specific feature</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="undocumented">
-				<xs:annotation>
-					<xs:documentation>Section is related to undocumented feature</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
+    <xs:simpleType name="special">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ms-specific">
+                <xs:annotation>
+                    <xs:documentation>Section is related to Microsoft-specific feature</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="undocumented">
+                <xs:annotation>
+                    <xs:documentation>Section is related to undocumented feature</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="new">
                 <xs:annotation>
                     <xs:documentation>Section is related to new functionality considered for next version</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--Attributes-->
-	<xs:attributeGroup name="id-req">
-		<xs:attribute name="id" type="xs:ID" use="required">
-			<xs:annotation>
-				<xs:documentation>Unique ID of this element. Used for referencing it.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
-	<xs:attributeGroup name="id-opt">
-		<xs:attribute name="id" type="xs:ID" use="optional">
-			<xs:annotation>
-				<xs:documentation>Unique ID of this element. Used for referencing it.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
-	<xs:attributeGroup name="guid-req">
-		<xs:attribute name="guid" type="guid" use="required">
-			<xs:annotation>
-				<xs:documentation>Unigue GUID of the section. Used by SandCastle.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
-	<xs:attributeGroup name="guid-opt">
-		<xs:attribute name="guid" type="guid" use="optional">
-			<xs:annotation>
-				<xs:documentation>Unigue GUID of the section. Used by SandCastle.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
-	<xs:attributeGroup name="ref-req">
-		<xs:attribute name="ref" type="xs:IDREF" use="required">
-			<xs:annotation>
-				<xs:documentation>Reference to unigue ID of another element</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
-	<xs:attributeGroup name="ref-opt">
-		<xs:attribute name="ref" type="xs:IDREF" use="optional">
-			<xs:annotation>
-				<xs:documentation>Reference to unigue ID of another element</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:attributeGroup>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--Attributes-->
+    <xs:attributeGroup name="id-req">
+        <xs:attribute name="id" type="xs:ID" use="required">
+            <xs:annotation>
+                <xs:documentation>Unique ID of this element. Used for referencing it.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="id-opt">
+        <xs:attribute name="id" type="xs:ID" use="optional">
+            <xs:annotation>
+                <xs:documentation>Unique ID of this element. Used for referencing it.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="guid-req">
+        <xs:attribute name="guid" type="guid" use="required">
+            <xs:annotation>
+                <xs:documentation>Unigue GUID of the section. Used by SandCastle.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="guid-opt">
+        <xs:attribute name="guid" type="guid" use="optional">
+            <xs:annotation>
+                <xs:documentation>Unigue GUID of the section. Used by SandCastle.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ref-req">
+        <xs:attribute name="ref" type="xs:IDREF" use="required">
+            <xs:annotation>
+                <xs:documentation>Reference to unigue ID of another element</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ref-opt">
+        <xs:attribute name="ref" type="xs:IDREF" use="optional">
+            <xs:annotation>
+                <xs:documentation>Reference to unigue ID of another element</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
     <xs:attributeGroup name="r">
         <xs:attribute name="r" type="r" use="optional">
             <xs:annotation>
@@ -774,6 +776,15 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-		<xs:attribute name="special" use="optional" type="special"/>
+        <xs:attribute name="special" use="optional" type="special"/>
     </xs:complexType>
+    
+    <!--svg helper-->
+    <xs:element name="svg">
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:any minOccurs="1" maxOccurs="1" namespace="http://www.w3.org/2000/svg" processContents="lax"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>
