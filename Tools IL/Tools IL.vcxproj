@@ -1,158 +1,164 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Alpha|Win32">
-      <Configuration>Alpha</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Beta|Win32">
-      <Configuration>Beta</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="RC|Win32">
-      <Configuration>RC</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectName>Tools.IL</ProjectName>
-    <ProjectGuid>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</ProjectGuid>
-    <RootNamespace>Tools</RootNamespace>
-    <SccProjectName>
-    </SccProjectName>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccProvider>
-    </SccProvider>
-    <Keyword>MakeFileProj</Keyword>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RC|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <CLRSupport>true</CLRSupport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <CLRSupport>true</CLRSupport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <CLRSupport>true</CLRSupport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <CLRSupport>true</CLRSupport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Makefile</ConfigurationType>
-    <CLRSupport>true</CLRSupport>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='RC|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <_ProjectFileVersion>10.0.21006.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\$(Configuration)\AnyCPU</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\$(Configuration)\</IntDir>
-    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Make.cmd $(OutDir) /DEBUG</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Make.cmd $(OutDir) /DEBUG</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">del $(OutDir)\Tools.IL.*</NMakeCleanCommandLine>
-    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)\Tools.IL.dll</NMakeOutput>
-    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
-    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
-    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
-    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Make.cmd $(OutDir)</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Make.cmd $(OutDir)</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
-    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
-    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
-    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
-    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">..\bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(Configuration)\</IntDir>
-    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
-    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
-    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
-    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
-    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">..\bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(Configuration)\</IntDir>
-    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
-    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
-    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
-    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
-    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">..\bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(Configuration)\</IntDir>
-    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
-    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
-    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
-    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
-    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
-    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
-  </PropertyGroup>
-  <ItemDefinitionGroup>
-  </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="AssemblyInfo.il">
-      <FileType>Script</FileType>
-    </None>
-    <None Include="Make.cmd" />
-    <None Include="Delegate.il">
-      <FileType>Script</FileType>
-    </None>
-    <None Include="Tools.IL.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Type.il">
-      <FileType>Script</FileType>
-    </None>
-  </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+    <ItemGroup Label="ProjectConfigurations">
+        <ProjectConfiguration Include="Alpha|Win32">
+            <Configuration>Alpha</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Beta|Win32">
+            <Configuration>Beta</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Debug|Win32">
+            <Configuration>Debug</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="RC|Win32">
+            <Configuration>RC</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Release|Win32">
+            <Configuration>Release</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    </ItemGroup>
+    <PropertyGroup Label="Globals">
+        <ProjectName>Tools.IL</ProjectName>
+        <ProjectGuid>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</ProjectGuid>
+        <RootNamespace>Tools</RootNamespace>
+        <SccProjectName>
+        </SccProjectName>
+        <SccAuxPath>
+        </SccAuxPath>
+        <SccLocalPath>
+        </SccLocalPath>
+        <SccProvider>
+        </SccProvider>
+        <Keyword>MakeFileProj</Keyword>
+        <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RC|Win32'" Label="Configuration">
+        <ConfigurationType>Makefile</ConfigurationType>
+        <CLRSupport>true</CLRSupport>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'" Label="Configuration">
+        <ConfigurationType>Makefile</ConfigurationType>
+        <CLRSupport>true</CLRSupport>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'" Label="Configuration">
+        <ConfigurationType>Makefile</ConfigurationType>
+        <CLRSupport>true</CLRSupport>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+        <ConfigurationType>Makefile</ConfigurationType>
+        <CLRSupport>true</CLRSupport>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+        <ConfigurationType>Makefile</ConfigurationType>
+        <CLRSupport>true</CLRSupport>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+    <ImportGroup Label="ExtensionSettings">
+    </ImportGroup>
+    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='RC|Win32'" Label="PropertySheets">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    </ImportGroup>
+    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'" Label="PropertySheets">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    </ImportGroup>
+    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'" Label="PropertySheets">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    </ImportGroup>
+    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    </ImportGroup>
+    <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    </ImportGroup>
+    <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+        <_ProjectFileVersion>10.0.21006.1</_ProjectFileVersion>
+        <OutDir >$(ProjectDir)..\bin\$(Configuration)\AnyCPU\</OutDir>
+        <IntDir >$(ProjectDir)obj\$(Configuration)\AnyCPU\</IntDir>
+        <NMakeBuildCommandLine >Make.cmd "$(OutDir)" /DEBUG</NMakeBuildCommandLine>
+        <NMakeReBuildCommandLine >Make.cmd "$(OutDir)" /DEBUG</NMakeReBuildCommandLine>
+        <NMakeCleanCommandLine >del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
+        <NMakeOutput >$(OutDir)Tools.IL.dll</NMakeOutput>
+        <NMakePreprocessorDefinitions >WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+        <NMakeIncludeSearchPath >$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+        <NMakeForcedIncludes >$(NMakeForcedIncludes)</NMakeForcedIncludes>
+        <NMakeAssemblySearchPath >$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+        <NMakeForcedUsingAssemblies >$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+        
+        <!--<OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\$(Configuration)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+        <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Make.cmd $(OutDir)</NMakeBuildCommandLine>
+        <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Make.cmd $(OutDir)</NMakeReBuildCommandLine>
+        <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
+        <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
+        <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+        <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+        <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+        <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+        <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+       
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">..\bin\$(Configuration)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(Configuration)\</IntDir>
+        <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeBuildCommandLine>
+        <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeReBuildCommandLine>
+        <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
+        <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
+        <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+        <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+        <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+        <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+        <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+       
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">..\bin\$(Configuration)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(Configuration)\</IntDir>
+        <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeBuildCommandLine>
+        <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeReBuildCommandLine>
+        <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
+        <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
+        <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+        <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+        <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+        <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+        <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+        
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">..\bin\$(Configuration)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(Configuration)\</IntDir>
+        <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeBuildCommandLine>
+        <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">Make.cmd "$(OutDir)" /DEBUG</NMakeReBuildCommandLine>
+        <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">del "$(OutDir)Tools.IL.*"</NMakeCleanCommandLine>
+        <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(OutDir)Tools.IL.dll</NMakeOutput>
+        <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+        <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+        <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+        <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+        <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>-->
+    </PropertyGroup>
+    <ItemDefinitionGroup>
+    </ItemDefinitionGroup>
+    <ItemGroup>
+        <None Include="AssemblyInfo.il">
+            <FileType>Script</FileType>
+        </None>
+        <None Include="Make.cmd">
+            <FileType>Text</FileType>
+        </None>
+        <None Include="Delegate.il">
+            <FileType>Script</FileType>
+        </None>
+        <None Include="Tools.IL.xml">
+            <SubType>Designer</SubType>
+        </None>
+        <None Include="Type.il">
+            <FileType>Script</FileType>
+        </None>
+    </ItemGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+    <ImportGroup Label="ExtensionTargets">
+    </ImportGroup>
 </Project>

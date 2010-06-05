@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Add Custom Event</Title>
+            <Author>Đonny</Author>
+            <Description>Adds code of manually implemented event and On... method</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>delegateType</ID>
+                    <ToolTip>Replace with event delegate type.</ToolTip>
+                    <Default>System.EventHandler</Default>
+                </Literal>
+                <Literal>
+                    <ID>eventName</ID>
+                    <ToolTip>Replace with the name of the event.</ToolTip>
+                    <Default>SomethingHappened</Default>
+                </Literal>
+                <Literal>
+                    <ID>summary</ID>
+                    <ToolTip>Replace with summary description of the event.</ToolTip>
+                    <Default>Occurs when something happens.</Default>
+                </Literal>
+                <Literal>
+                    <ID>senderType</ID>
+                    <ToolTip>Replace with type of sender.</ToolTip>
+                    <Default>Object</Default>
+                </Literal>
+                <Literal>
+                    <ID>eventArgs</ID>
+                    <ToolTip>Replace with event arguments type.</ToolTip>
+                    <Default>System.EventArgs</Default>
+                </Literal>
+                <Literal >
+                    <ID>notSerialized</ID>
+                    <ToolTip>When your object is serializable you probably want event handlers not to be serialized.</ToolTip>
+                    <Default><![CDATA['<System.NotSerialized()>]]></Default>
+                </Literal>
+            </Declarations>
+            <Code Language="VB">
+                <![CDATA[
+#Region "$eventName$"
+        $notSerialized$
+        Private _$eventName$ As $delegateType$
+        ''' <summary>$summary$</summary>
+        Public Custom Event $eventName$ As $delegateType$
+            AddHandler(ByVal value As $delegateType$)
+                _$eventName$ = System.Delegate.Combine(_$eventName$, value)
+            End AddHandler
+            RemoveHandler(ByVal value As $delegateType$)
+                _$eventName$ = System.Delegate.Remove(_$eventName$, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As $senderType$, ByVal e As $eventArgs$)
+                If _$eventName$ IsNot Nothing Then _$eventName$(sender, e)
+            End RaiseEvent
+        End Event
+        ''' <summary>Raises the <see cref="$eventName$"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        Protected Overridable Sub On$eventName$(ByVal e As $eventArgs$)
+            RaiseEvent $eventName$(Me, e)
+        End Sub
+#End Region '$eventName$
+          ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
+

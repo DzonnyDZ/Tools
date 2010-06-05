@@ -4,6 +4,7 @@
     ''' <typeparam name="T">Type of value stored in singleton container</typeparam>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
     <Serializable()>
+    <DebuggerDisplay("Value = {Value}")>
     Public Class ValueContainer(Of T As Structure)
         Implements INotifyPropertyChanged, IStructuralComparable, IComparable, IStructuralEquatable
         Private _value As T

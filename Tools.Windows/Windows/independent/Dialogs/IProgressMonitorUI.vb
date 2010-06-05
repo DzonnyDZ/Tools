@@ -15,15 +15,17 @@ Namespace WindowsT.IndependentT
         ''' <remarks>
         ''' Background worker can report status of background process in several ways. In most cases the <see cref="BackgroundWorker.ReportProgress"/> method is used.
         ''' <list type="table"><listheader><term>UI change requested</term><description>Data to be passed</description></listheader>
-        ''' <item><term>Report percentage progress</term><description>Pass number from range 0÷100 to first parameter of <see cref="BackgroundWorker.ReportProgress"/>.</description></item>
+        ''' <item><term>Report percentage progress</term><description>Pass number from range 0÷100 to first parameter of <see cref="BackgroundWorker.ReportProgress"/>. Or pass <see cref="Integer"/> from range 0÷100 to user state.</description></item>
         ''' <item><term>Make progress monitor UI ignore reported percentage progress</term><description>Pass number lower than zero to first parameter of <see cref="BackgroundWorker.ReportProgress"/>.</description></item>
         ''' <item><term>Change style of progress bar</term><description>Pass value of type <see cref="IndependentT.ProgressBarStyle"/> to user data. <note>Some implementations of <see cref="IProgressMonitorUI"/> may also support values of type <see cref="Windows.Forms.ProgressBarStyle"/> or may support values which are not explicitly specified for either of these types.</note></description></item>
         ''' <item><term>Show textual description of current status to user (set the <see cref="Information"/> property)</term><description>Pass <see cref="String"/> to user state.</description></item>
         ''' <item><term>Allow or disallow process cancelllation (set the <see cref="CanCancel"/> property)</term><description>Pass <see cref="Boolean"/> to user state. <note>When passing <c>True</c>, <see cref="BackgroundWorker.WorkerSupportsCancellation"/> must be <c>True</c> as well.</note></description></item>
         ''' <item><term>Call the <see cref="Reset"/> method</term><see>Pass <see cref="BackgroundWorker"/> (same instance) to user data.</see></item>
         ''' <item><term>Show message box or perform another operation which shall be performed in UI thread.</term><description>Use the <see cref="Invoke"/> function - or better, use one of generic type-safe extension overloads provided by the <see cref="ThreadingT.IInvokeExtensions"/> module.</description></item>
+        ''' <item><term>Perform multiple actions</term><description>Pass <see cref="Array"/> to user state. Array items are evaluated according to rules stated above.</description></item>
         ''' </list>
-        ''' Actual implementation of <see cref="IProgressMonitorUI"/> may support additional types passed to <see cref="ProgressChangedEventArgs.UserState"/> and shall ignore any types it does not support. See documentation of <see cref="IProgressMonitorUI"/> implementations such as <see cref="FormsT.ProgressMonitor"/> or <see cref="WPF.DialogsT.ProgressMonitor"/>.
+        ''' Individual implementations of the <see cref="IProgressMonitorUI"/> interface may support additional types passed to <see cref="ProgressChangedEventArgs.UserState"/> and shall ignore any types they does not support.
+        ''' See documentation of <see cref="IProgressMonitorUI"/> implementations such as <see cref="FormsT.ProgressMonitor"/> or <see cref="WPF.DialogsT.ProgressMonitor"/>.
         ''' </remarks>
         Property BackgroundWorker() As BackgroundWorker
         ''' <summary>Gets or sets current style of progress bar</summary>

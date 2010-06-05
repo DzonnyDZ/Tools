@@ -224,9 +224,19 @@ Namespace WindowsT.WPF.DialogsT
     End Class
 
     ''' <summary>This class provides predefined progress monitor with <see cref="ProgressBar"/> for <see cref="BackgroundWorker"/></summary>
-    ''' <remarks>See documentation of the <see cref="ProgressMonitor.OnProgressChanged"/> method in order to see rich options for reporting progress.</remarks>
+    ''' <remarks>See documentation of the <see cref="ProgressMonitor.ApplyUserState"/> method in order to review rich options for reporting progress.</remarks>
+    ''' <seelaso cref="FormsT.ProgressMonitor"/>
     Public Class ProgressMonitor
-        Implements IProgressMonitorUI, INotifyPropertyChanged
+        Implements IProgressMonitorUI, INotifyPropertyChanged, IDisposable
+        'Private instanceID% = GetInstanceId()
+        'Private Shared instanceIDCounter% = 0
+        'Private Shared instanceIdLock As New Object
+        'Private Shared Function GetInstanceId%()
+        '    SyncLock instanceIdLock
+        '        instanceIDCounter += 1
+        '        Return instanceIDCounter
+        '    End SyncLock
+        'End Function
 #Region "CTors"
         ''' <summary>Default CTor</summary>
         ''' <remarks>Value of the <see cref="BackgroundWorker"/> property is populated with new instance of <see cref="System.ComponentModel.BackgroundWorker"/></remarks>
@@ -276,7 +286,9 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Shows window modally</summary>
         ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Windows.Forms.Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
         ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
+        ''' <exception cref="ObjectDisposedException">This instance has already been dispose (<see cref="IsDisposed"/> is true).</exception>
         Public Overloads Function ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean Implements IProgressMonitorUI.ShowDialog
+            If IsDisposed Then Throw New ObjectDisposedException([GetType].Name)
             _window = New ProgressMonitorWindow(Me)
             If TypeOf owner Is Windows.Window Then
                 Return _window.ShowDialog(DirectCast(owner, Window))
@@ -292,12 +304,34 @@ Namespace WindowsT.WPF.DialogsT
         Private Sub window_Closed(ByVal sender As Object, ByVal e As System.EventArgs) Handles _window.Closed
             _window = Nothing
         End Sub
-        ''' <summary>Raised when window showing progress is shown</summary>
-        Public Event WindowLoaded As RoutedEventHandler
-        Private Sub window_Loaded(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles _window.Loaded
-            If DoWorkOnShow Then BackgroundWorker.RunWorkerAsync(WorkerArgument)
+
+#Region "WindowLoaded"
+
+        Private _WindowLoaded As RoutedEventHandler
+        ''' <summary>Raised when window showing progress is shown.</summary>
+        Public Custom Event WindowLoaded As RoutedEventHandler
+            AddHandler(ByVal value As RoutedEventHandler)
+                _WindowLoaded = System.Delegate.Combine(_WindowLoaded, value)
+            End AddHandler
+            RemoveHandler(ByVal value As RoutedEventHandler)
+                _WindowLoaded = System.Delegate.Remove(_WindowLoaded, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RoutedEventArgs)
+                If _WindowLoaded IsNot Nothing Then _WindowLoaded(sender, e)
+            End RaiseEvent
+        End Event
+        ''' <summary>Raises the <see cref="WindowLoaded"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        Protected Overridable Sub OnWindowLoaded(ByVal e As RoutedEventArgs)
             RaiseEvent WindowLoaded(Me, e)
         End Sub
+        Private Sub window_Loaded(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles _window.Loaded
+            WorkerFinished = False
+            If DoWorkOnShow Then BackgroundWorker.RunWorkerAsync(WorkerArgument)
+            OnWindowLoaded(e)
+        End Sub
+#End Region 'WindowLoaded
+
         Private Sub window_ImplementationControl_Cancel(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs) Handles _window.ImplementationControl.Cancel
             If CancelEnabled Then
                 CancelPending = True
@@ -337,7 +371,7 @@ Namespace WindowsT.WPF.DialogsT
             Set(ByVal value As IndependentT.ProgressBarStyle)
                 If value <> ProgressBarStyle Then
                     _ProgressBarStyle = value
-                    If progressInfoAuto Then
+                    If ProgressInfoAuto Then
                         If ProgressBarStyle = IndependentT.ProgressBarStyle.Indefinite Then
                             SetProgressInfo(Nothing)
                         Else
@@ -360,7 +394,7 @@ Namespace WindowsT.WPF.DialogsT
                 If value <> Progress Then
                     If value < 0 OrElse value > 100 Then Throw New ArgumentOutOfRangeException("value")
                     _progress = value
-                    If progressInfoAuto AndAlso ProgressBarStyle <> IndependentT.ProgressBarStyle.Indefinite Then
+                    If ProgressInfoAuto AndAlso ProgressBarStyle <> IndependentT.ProgressBarStyle.Indefinite Then
                         SetProgressInfo((Progress / 100).ToString("p0"))
                     End If
                     OnPropertyChanged("Progress")
@@ -598,49 +632,70 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Handles <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.ProgressChanged">ProgressChanged</see> event</summary>
         ''' <param name="sender"><see cref="BackgroundWorker"/></param>
         ''' <param name="e">Event erguments</param>
-        ''' <remarks>Default implementation works in following way:
-        ''' <list type="bullet">
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than or equal to zero then sets this value to the <see cref="Progress"/> property. Values smaller than zero are ignored.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Windows.Forms.ProgressBarStyle"/> sets <see cref="ProgressBarStyle"/> to given value</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="String"/> passes that value to the <see cref="Information"/> property.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Boolean"/> passes that value to the <see cref="CanCancel"/> property.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="BackgroundWorker"/> (same instance) than <see cref="Reset"/> method is called.</item>
-        ''' <item>if <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="NumericsT.SRational"/> or <see cref="NumericsT.URational"/> passes that value to the <see cref="ProgressInfo"/> property.</item>
-        ''' </list>
-        ''' </remarks>
+        ''' <remarks>
+        ''' When <paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than or equal to zero its passed to the <see cref="Progress"/> property. Values less than zero are ignored.
+        ''' For information on how this implementation handles <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> see <see cref="ApplyUserState"/>.</remarks>
         ''' <exception cref="ArgumentException"><paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than 100.</exception>
         Protected Overridable Sub OnProgressChanged(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgw.ProgressChanged
             If e.ProgressPercentage >= 0 Then Progress = e.ProgressPercentage
-            If TypeOf e.UserState Is Forms.ProgressBarStyle OrElse TypeOf e.UserState Is ProgressBarStyle Then
-                ProgressBarStyle = e.UserState
-            ElseIf TypeOf e.UserState Is String Then
-                Information = e.UserState
-            ElseIf TypeOf e.UserState Is Boolean Then
-                CanCancel = e.UserState
-            ElseIf TypeOf e.UserState Is BackgroundWorker AndAlso BackgroundWorker Is e.UserState Then
+            ApplyUserState(e.UserState)
+        End Sub
+        ''' <summary>Applies user state passed to <see cref="ProgressChangedEventArgs.UserState"/></summary>
+        ''' <param name="userState">User state originally passed to <see cref="ProgressChangedEventArgs.UserState"/>.</param>
+        ''' <remarks>This impementation handles <paramref name="userState"/> following way depending on its type:
+        ''' <list type="table">
+        ''' <listheader><term>Type of <paramref name="userState"/></term><description>Action taken</description></listheader>
+        ''' <item><term><see cref="Windows.Forms.ProgressBarStyle"/> or <see cref="ProgressBarStyle"/></term><description>Value is passsed to the <see cref="ProgressBarStyle"/> property.</description></item>
+        ''' <item><term><see cref="String"/></term><description>Value is passed to the <see cref="Information"/> property.</description></item>
+        ''' <item><term><see cref="Integer"/> (from range 0÷100)</term><description>Value is passed to the <see cref="Progress"/> property (same as passing the value to the <see cref="ProgressChangedEventArgs.ProgressPercentage"/>)</description></item>
+        ''' <item><term><see cref="Boolean"/></term><description>Value is passed to the <see cref="CanCancel"/> property.</description></item>
+        ''' <item><term><see cref="ComponentModel.BackgroundWorker"/> (same instance as <see cref="BackgroundWorker"/>)</term><description>The <see cref="Reset"/> method is called.</description></item>
+        ''' <item><term><see cref="NumericsT.SRational"/> or <see cref="NumericsT.URational"/></term><description>String representation of value is passed to the <see cref="ProgressInfo"/> property and automatic percent showing based on <see cref="Progress"/> is suspended.</description></item>
+        ''' <item><term><see cref="Array"/> (any type)</term><description>Calls <see cref="ApplyUserState"/> with individual items of the array.</description></item>
+        ''' <item><term>Null or any other type</term><description>Ignored</description></item>
+        ''' </list></remarks>
+        Protected Overridable Sub ApplyUserState(ByVal userState As Object)
+            If TypeOf userState Is Forms.ProgressBarStyle OrElse TypeOf userState Is ProgressBarStyle Then
+                ProgressBarStyle = userState
+            ElseIf TypeOf userState Is String Then
+                Information = userState
+            ElseIf TypeOf userState Is Integer AndAlso DirectCast(userState, Integer) >= 0 AndAlso DirectCast(userState, Integer) <= 100 Then
+                Progress = userState
+            ElseIf TypeOf userState Is Boolean Then
+                CanCancel = userState
+            ElseIf TypeOf userState Is BackgroundWorker AndAlso BackgroundWorker Is userState Then
                 Reset()
-            ElseIf TypeOf e.UserState Is NumericsT.URational OrElse TypeOf e.UserState Is NumericsT.SRational Then
-                ProgressInfo = e.UserState.ToString
+            ElseIf TypeOf userState Is NumericsT.URational OrElse TypeOf userState Is NumericsT.SRational Then
+                ProgressInfo = userState.ToString
+            ElseIf TypeOf userState Is Array Then
+                For Each item In DirectCast(userState, Array)
+                    ApplyUserState(item)
+                Next
             End If
         End Sub
         ''' <summary>Handles <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.RunWorkerCompleted">RunWorkerCompleted</see> event.</summary>
         ''' <param name="sender"><see cref="BackgroundWorker"/></param>
         ''' <param name="e">event arguments</param>
         Protected Overridable Sub OnRunWorkerCompleted(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
-            If e.Cancelled Then : _window.DialogResult = False
-            ElseIf e.Error IsNot Nothing Then : _window.DialogResult = False
-            Else : _window.DialogResult = True : End If
+            If Me.IsDisposed Then Exit Sub
+            If CloseOnFinish Then
+                If e.Cancelled Then : _window.DialogResult = False
+                ElseIf e.Error IsNot Nothing Then : _window.DialogResult = False
+                Else : _window.DialogResult = True : End If
+            End If
             WorkerResult = e
             WorkerFinished = True
             If CloseOnFinish Then
-                _window.Close()
+                _window.ForceClose()
             End If
         End Sub
 #End Region
 
         ''' <summary>Resets the dialog</summary>
         ''' <remarks>In case you want to use the dialog from multiple runs of <see cref="BackgroundWorker"/>, you should call this method before each (excluding first, but you can to) runs of <see cref="BackgroundWorker"/>. Alternativly you can report new run using <see cref="BackgroundWorker.ReportProgress"/> - see <see cref="OnProgressChanged"/>.</remarks>
+        ''' <exception cref="ObjectDisposedException">This instance has already been disposed (<see cref="IsDisposed"/> is true)</exception>
         Public Overridable Sub Reset() Implements IProgressMonitorUI.Reset
+            If IsDisposed Then Throw New ObjectDisposedException([GetType].Name)
             CancelPending = False
             Progress = 0
             WorkerResult = Nothing
@@ -658,9 +713,19 @@ Namespace WindowsT.WPF.DialogsT
         Protected Sub OnPropertyChanged(ByVal propertyName$)
             OnPropertyChanged(New PropertyChangedEventArgs(propertyName))
         End Sub
-
-        ''' <summary>Occurs when a property value changes.</summary>
-        Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        Private _PropertyChanged As PropertyChangedEventHandler
+        ''' <summary>Occurs when value of a property changes.</summary>
+        Public Custom Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+            AddHandler(ByVal value As PropertyChangedEventHandler)
+                _PropertyChanged = System.Delegate.Combine(_PropertyChanged, value)
+            End AddHandler
+            RemoveHandler(ByVal value As PropertyChangedEventHandler)
+                _PropertyChanged = System.Delegate.Remove(_PropertyChanged, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As PropertyChangedEventArgs)
+                If _PropertyChanged IsNot Nothing Then _PropertyChanged(sender, e)
+            End RaiseEvent
+        End Event
 #End Region
 
         ''' <summary>Synchronously invokes a delegate in UI thread. Implements <see cref="IInvoke.Invoke"/>.</summary>
@@ -677,6 +742,45 @@ Namespace WindowsT.WPF.DialogsT
                 Return Window.Dispatcher.Invoke([delegate], params)
             End If
         End Function
+
+#Region "IDisposable Support"
+        ''' <summary>Gest value indicating if this object has already been disposed</summary>
+        Public Property IsDisposed As Boolean
+            Get
+                Return _IsDisposed
+            End Get
+            Private Set(ByVal value As Boolean)
+                If IsDisposed <> value Then
+                    _IsDisposed = value
+                    OnPropertyChanged("IsDisposed")
+                End If
+            End Set
+        End Property
+        Private _IsDisposed As Boolean
+
+        ''' <summary>Implements <see cref="IDisposable.Dispose"/></summary>
+        ''' <param name="disposing">True bif object is being disposed, falsse when object is being finalized</param>
+        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+            If Not Me.IsDisposed Then
+                If disposing Then
+                    Me.bgw = Nothing
+                    Me._window = Nothing
+                    Me._PropertyChanged = Nothing
+                    Me._WindowLoaded = Nothing
+                End If
+            End If
+            Me.IsDisposed = True
+        End Sub
+
+        ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        ''' <remarks><note type="inheritinfo">To override <see cref="IDisposable"/> behavior override <see cref="M:Tools.WindowsT.WPF.DialogsT.ProgressMonitor.Dispose(System.Boolean)"/> overload instead.</note></remarks>
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+            Dispose(True)
+            GC.SuppressFinalize(Me)
+        End Sub
+#End Region
+
     End Class
 End Namespace
 #End If

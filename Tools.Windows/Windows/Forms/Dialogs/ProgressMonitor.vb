@@ -7,8 +7,10 @@ Imports Tools.ThreadingT
 'Stage: Nightly
 Namespace WindowsT.FormsT
     ''' <summary>This <see cref="Form"/> serves as predefined progress monitor with <see cref="ProgressBar"/> for <see cref="BackgroundWorker"/></summary>
-    ''' <remarks>See documentation of the <see cref="ProgressMonitor.OnProgressChanged"/> method in order to see rich options for reporting progress.</remarks>
+    ''' <remarks>See documentation of the <see cref="ProgressMonitor.ApplyUserState"/> method in order to see rich options for reporting progress.</remarks>
+    ''' <seelaso cref="WPF.DialogsT.ProgressMonitor"/>
     ''' <version version="1.5.3">This class implements <see cref="IProgressMonitorUI"/> interface</version>
+    ''' <version version="1.5.3">Added support fro <see cref="Integer"/>, <see cref="Array"/> and <see cref="IndependentT.ProgressBarStyle"/> passed in user state of background worker <see cref="BackgroundWorker.ProgressChanged"/> event.</version>
     Public Class ProgressMonitor
         Implements IProgressMonitorUI
 #Region "CTors"
@@ -152,26 +154,46 @@ Namespace WindowsT.FormsT
         ''' <summary>Handles <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.ProgressChanged">ProgressChanged</see> event</summary>
         ''' <param name="sender"><see cref="BackgroundWorker"/></param>
         ''' <param name="e">Event erguments</param>
-        ''' <remarks>Default implementation works in following way:
-        ''' <list type="bullet">
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than or equal to zero then sets this value to the <see cref="Progress"/> property. Values smaller than zero are ignored.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Windows.Forms.ProgressBarStyle"/> passes that value to the <see cref="ProgressBarStyle"/> property.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="String"/> passes that value to the <see cref="Information"/> property.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Boolean"/> passes that value to the <see cref="CanCancel"/> property.</item>
-        ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="BackgroundWorker"/> (same instance) than <see cref="Reset"/> method is called.</item>
-        ''' </list>
+        ''' <remarks>
+        ''' This implementation takes value of <paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> and if it is greater than or equal to zero passes it to the <see cref="Progress"/> property.
+        ''' For details how thios implementation deals with <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> see <see cref="ApplyUserState"/>.
         ''' </remarks>
         ''' <exception cref="ArgumentException"><paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than 100.</exception>
+        ''' <version version="1.5.3">Major part of functionality of this method - user state application - extracted to a new method - <see cref="ApplyUserState"/>.</version>
+        ''' <version version="1.5.3">Added support for <see cref="Integer"/>, <see cref="IndependentT.ProgressBarStyle"/> and <see cref="Array"/> in <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see>.</version>
         Protected Overridable Sub OnProgressChanged(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgw.ProgressChanged
             If e.ProgressPercentage >= 0 Then Progress = e.ProgressPercentage
-            If TypeOf e.UserState Is Windows.Forms.ProgressBarStyle OrElse TypeOf e.UserState Is IndependentT.ProgressBarStyle Then
-                ProgressBarStyle = e.UserState
-            ElseIf TypeOf e.UserState Is String Then
-                Information = e.UserState
-            ElseIf TypeOf e.UserState Is Boolean Then
-                CanCancel = e.UserState
-            ElseIf TypeOf e.UserState Is BackgroundWorker AndAlso BackgroundWorker Is e.UserState Then
+            ApplyUserState(e.UserState)
+        End Sub
+        ''' <summary>Applies value passed to <see cref="ProgressChangedEventArgs.UserState"/></summary>
+        ''' <param name="userState">Value to apply</param>
+        ''' <remarks>This implementation treats values of some types in a special way:
+        ''' <list type="table">
+        ''' <listheader><term>Type</term><description>Action taken</description></listheader>
+        ''' <item><term><see cref="Windows.Forms.ProgressBarStyle"/> or <see cref="IndependentT.ProgressBarStyle"/></term><description>The value is passedto the <see cref="ProgressBarStyle"/> property.</description></item>
+        ''' <item><term><see cref="String"/></term><description>The value is passed to the <see cref="Information"/> property.</description></item>
+        ''' <item><term><see cref="Boolean"/></term><description>The value is passed to the <see cref="CanCancel"/> property.</description></item>
+        ''' <item><term><see cref="System.ComponentModel.BackgroundWorker"/> (same instance as <see cref="BackgroundWorker"/>)</term><description>The <see cref="Reset"/> method is called.</description></item>
+        ''' <item><term><see cref="Integer"/> (only when form range 0÷100)</term><description>The value is passed to the <see cref="Progress"/> property (same as passing value greater than or equal to zero to <see cref="ProgressChangedEventArgs.ProgressPercentage"/>).</description></item>
+        ''' <item><term><see cref="Array"/> (any type)</term><description>Individual items of the array are passed to the <see cref="ApplyUserState"/> method.</description></item>
+        ''' </list>
+        ''' Null values and values of unsupported types are ignored.</remarks>
+        ''' <version version="1.5.3">This method is new in version 1.5.3 (it extracts user state application logic from <see cref="OnProgressChanged"/>.</version>
+        Protected Overridable Sub ApplyUserState(ByVal userState As Object)
+            If TypeOf userState Is Windows.Forms.ProgressBarStyle OrElse TypeOf userState Is IndependentT.ProgressBarStyle Then
+                ProgressBarStyle = userState
+            ElseIf TypeOf userState Is String Then
+                Information = userState
+            ElseIf TypeOf userState Is Integer AndAlso DirectCast(userState, Integer) >= 0 AndAlso DirectCast(userState, Integer) <= 100 Then
+                Progress = userState
+            ElseIf TypeOf userState Is Boolean Then
+                CanCancel = userState
+            ElseIf TypeOf userState Is BackgroundWorker AndAlso BackgroundWorker Is userState Then
                 Reset()
+            ElseIf TypeOf userState Is Array Then
+                For Each item In DirectCast(userState, Array)
+                    ApplyUserState(item)
+                Next
             End If
         End Sub
         ''' <summary>Handles <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.RunWorkerCompleted">RunWorkerCompleted</see> event.</summary>
