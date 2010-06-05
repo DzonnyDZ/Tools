@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TypeMustInheritFromMessageBox" xml:space="preserve">
     <value>Type must inherit from MessageBox</value>
@@ -1371,8 +1371,17 @@
   <data name="InvalidFormatStringInvalidHexadecimalEscapeSequence" xml:space="preserve">
     <value>Invalid format string. Invalid hexadecimal escape sequence</value>
   </data>
-    <data name="MustNotBeNull" xml:space="preserve">
+  <data name="MustNotBeNull" xml:space="preserve">
     <value>{0} must not be null</value>
     <comment>Inner exception message</comment>
+  </data>
+  <data name="OnlyValuesOfFollowingTypesAreAcceptable" xml:space="preserve">
+    <value>Only values of following types are acceptable:</value>
+  </data>
+  <data name="ValueOfUnexpectedType0ExpectedOneOfFollowingTypes" xml:space="preserve">
+    <value>Value of unexpected type {0}, expected one of following types:</value>
+  </data>
+  <data name="CollectionCannotContainNullValue" xml:space="preserve">
+    <value>Collection cannot contain null value</value>
   </data>
 </root>

@@ -4,8 +4,9 @@ Imports System.Runtime.CompilerServices
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.IndependentT
     ''' <summary>Represents progress monitor dialog with progress description, progress bar and cancel button</summary>
-    ''' <version version="1.5.3" stage="Nightly">This interface is new in version 1.5.3</version>
     ''' <remarks>For details how background process can report it's state see <see cref="IProgressMonitorUI.BackgroundWorker"/> property</remarks>
+    ''' <version version="1.5.3" stage="Nightly">This interface is new in version 1.5.3</version>
+    ''' <seelaso cref="FormsT.ProgressMonitor"/><seelaso cref="WPF.DialogsT.ProgressMonitor"/>
     <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Interface IProgressMonitorUI
         Inherits ThreadingT.IInvoke
@@ -22,6 +23,7 @@ Namespace WindowsT.IndependentT
         ''' <item><term>Call the <see cref="Reset"/> method</term><see>Pass <see cref="BackgroundWorker"/> (same instance) to user data.</see></item>
         ''' <item><term>Show message box or perform another operation which shall be performed in UI thread.</term><description>Use the <see cref="Invoke"/> function - or better, use one of generic type-safe extension overloads provided by the <see cref="ThreadingT.IInvokeExtensions"/> module.</description></item>
         ''' </list>
+        ''' Actual implementation of <see cref="IProgressMonitorUI"/> may support additional types passed to <see cref="ProgressChangedEventArgs.UserState"/> and shall ignore any types it does not support. See documentation of <see cref="IProgressMonitorUI"/> implementations such as <see cref="FormsT.ProgressMonitor"/> or <see cref="WPF.DialogsT.ProgressMonitor"/>.
         ''' </remarks>
         Property BackgroundWorker() As BackgroundWorker
         ''' <summary>Gets or sets current style of progress bar</summary>

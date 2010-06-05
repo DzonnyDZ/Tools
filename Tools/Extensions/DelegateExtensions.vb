@@ -4,6 +4,7 @@ Namespace ExtensionsT
     ''' <summary>Contains <see cref="[Delegate]"/>-related extension functions</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed. Accessibility changed to public.</version>
+    ''' <seealso cref="N:Tools.SpecialT.DelegateTools"/>
     Public Module DelegateExtensions
 #Region "Function"
         ''' <summary>Wraps given procedure delegate as delegate of function returning always null</summary>

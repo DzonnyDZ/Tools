@@ -1,15 +1,20 @@
 Imports Tools.ExtensionsT
-Namespace MetadataT.ExifT
+Imports System.Runtime.InteropServices
+
+Namespace NumericsT
 #If Config <= Alpha Then 'Stage: Alpha
-    ''' <summary>Represents unsigned rational number with numerator and denominator as used in Exif</summary>
+    ''' <summary>Represents unsigned rational number with numerator and denominator</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Added <see cref="URational.Parse"/>, <see cref="URational.TryParse"/> and <see cref="IFormattable"/> implementation.</version>
     ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/> added.</version>
     ''' <version version="1.5.2"><see cref="DebuggerDisplayAttribute"/> added</version>
     ''' <version version="1.5.2">Structure updated to use <see cref="UInt32"/> instead of <see cref="UInt16"/>.</version>
-    <CLSCompliant(False), TypeConverter(GetType(URational.URationalConverter))> _
-    <DebuggerDisplay("{Numerator}/{Denominator}")> _
+    ''' <version version="1.5.3">Structure renamed from <c>Tools.MetadataT.ExifT.URational</c> to <see cref="URational"/>.</version>
+    ''' <version version="1.5.3">Added <see cref="StructLayoutAttribute"/> (<see cref="LayoutKind.Sequential"/>)</version>
+    <CLSCompliant(False), TypeConverter(GetType(URational.URationalConverter))>
+    <DebuggerDisplay("{Numerator}/{Denominator}")>
+    <StructLayout(LayoutKind.Sequential)>
     Public Structure URational : Implements IFormattable
         Implements DataStructuresT.GenericT.IPair(Of UInt32, UInt32)
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
@@ -350,15 +355,18 @@ Namespace MetadataT.ExifT
         End Class
     End Structure
 
-    ''' <summary>Represents signed rational number with numerator and denominator as used in Exif</summary>
+    ''' <summary>Represents signed rational number with numerator and denominator</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2" stage="Alpha">Added <see cref="SRational.Parse"/>, <see cref="SRational.TryParse"/> and <see cref="IFormattable"/> implementation.</version>
     ''' <version stage="Alpha" version="1.5.2"><see cref="TypeConverterAttribute"/> added.</version>
     ''' <version version="1.5.2"><see cref="DebuggerDisplayAttribute"/> added</version>
     ''' <version version="1.5.2">Structure updated to use <see cref="Int32"/> instead of <see cref="Int16"/></version>
-    <DebuggerDisplay("{Numerator}/{Denominator}")> _
-    <TypeConverter(GetType(URational.URationalConverter))> _
+    ''' <version version="1.5.3">Structure renamed from <c>Tools.MetadataT.ExifT.SRational</c> to <see cref="SRational"/>.</version>
+    ''' <version version="1.5.3">Added <see cref="StructLayoutAttribute"/> (<see cref="LayoutKind.Sequential"/>)</version>
+    <DebuggerDisplay("{Numerator}/{Denominator}")>
+    <TypeConverter(GetType(URational.URationalConverter))>
+     <StructLayout(LayoutKind.Sequential)>
     Public Structure SRational
         Implements DataStructuresT.GenericT.IPair(Of Int32, Int32), IFormattable
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
@@ -709,6 +717,6 @@ Namespace MetadataT.ExifT
         End Class
     End Structure
 
-    
+
 #End If
 End Namespace

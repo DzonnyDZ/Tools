@@ -224,6 +224,7 @@
         </member>
         <member name="N:Tools.MetadataT.ExifT">
             <summary>Contains classes related to reading and manipulating Exif metadata.</summary>
+            <version version="1.5.3">Types <c>URational</c> and <c>SRational</c> moved to namespace <see cref="N:Tools.NumericsT"/>.</version>
         </member>
         <member name="N:Tools.MetadataT.IptcT">
             <summary>Contains classes realetd to reading and manipulating Iptc metadata.</summary>
@@ -234,6 +235,11 @@
         <!--Metanol-->
         <member name="N:Tools.Metanol">
             <summary>Root namespace of the Metanol project - and Win exe application for manipulating IPTC data.</summary>
+        </member>
+        <!--NumericsT-->
+        <member name="N:Tools.NumericsT">
+            <summary>Contains numeric types that complement the numeric primitives</summary>
+            <version version="1.5.3" stage="Alpha">This namespace is new in version 1.5.3</version>
         </member>
         <!--ReflectionT-->
         <member name="N:Tools.ReflectionsT">

@@ -26,6 +26,7 @@
         <xsl:call-template name="nl"/>
         <xsl:text>#Region "Generated code"&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.ComponentModelT&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.NumericsT&#xD;&#xA;</xsl:text>
         <xsl:if test="$namespace!=''">
             <xsl:text>Namespace </xsl:text>
             <xsl:value-of select="$namespace"/>

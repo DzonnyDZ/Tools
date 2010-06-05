@@ -1,4 +1,6 @@
 Imports System.IO
+Imports Tools.NumericsT
+
 Namespace MetadataT.ExifT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>

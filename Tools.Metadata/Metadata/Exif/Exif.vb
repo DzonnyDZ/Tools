@@ -5,6 +5,7 @@ Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.Metadat
 Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.SubIfd)
 Imports Tools.ComponentModelT, Tools.IOt.StreamTools, Tools.ExtensionsT
 Imports System.Runtime.InteropServices
+Imports Tools.NumericsT
 
 Namespace MetadataT.ExifT
 #If Config <= Nightly Then
@@ -667,7 +668,7 @@ Namespace MetadataT.ExifT
         End Function
 #End Region
 
-        
+
     End Class
 
     ''' <summary>Describes one Exif record</summary>
@@ -910,7 +911,7 @@ Namespace MetadataT.ExifT
         ''' <param name="fixed">Determines if length of data can be changed</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Data"/> is null</exception>
         <CLSCompliant(False)> _
-         Public Sub New(ByVal Data As Object, ByVal Type As ExifDataTypes, Optional ByVal NumberOfComponents As UShort = 1, Optional ByVal Fixed As Boolean = False)
+        Public Sub New(ByVal Data As Object, ByVal Type As ExifDataTypes, Optional ByVal NumberOfComponents As UShort = 1, Optional ByVal Fixed As Boolean = False)
             Me.New(New ExifRecordDescription(Type, NumberOfComponents), Data, Fixed)
         End Sub
         ''' <summary>Raises the <see cref="Changed"/> event</summary>

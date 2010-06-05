@@ -1,18 +1,19 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.5.0.25116, Culture=neutral, PublicKeyToken=373c02ac923768e6
-' Version: 1.5.0.25116
+' Generator: TransformCodeGenerator, Version=1.5.3.1, Culture=neutral, PublicKeyToken=373c02ac923768e6
+' Version: 1.5.3.1
 '
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 8. ledna 2009
-' By:BigBook\Honza
+' Created: 30. května 2010
+' By:BiggerBook\Honza
 '
 'Localize: This auto-generated file was skipped during localization
 #If Config <= Nightly 'Stage: Nightly
 #Region "Generated code"
 Imports Tools.ComponentModelT
+Imports Tools.NumericsT
 Namespace MetadataT.ExifT
 		Partial Public Class IfdMain
 			''' <summary>Tag numbers used in IFD0 and IFD1</summary>

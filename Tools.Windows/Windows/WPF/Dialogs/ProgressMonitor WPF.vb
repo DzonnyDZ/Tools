@@ -559,6 +559,7 @@ Namespace WindowsT.WPF.DialogsT
             End Get
             Set(ByVal value As Boolean)
                 If value <> ProgressInfoAuto Then
+                    _ProgressInfoAuto = value
                     If ProgressInfoAuto Then
                         If ProgressBarStyle = IndependentT.ProgressBarStyle.Indefinite Then
                             SetProgressInfo(Nothing)
@@ -604,6 +605,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="String"/> passes that value to the <see cref="Information"/> property.</item>
         ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="Boolean"/> passes that value to the <see cref="CanCancel"/> property.</item>
         ''' <item>If <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="BackgroundWorker"/> (same instance) than <see cref="Reset"/> method is called.</item>
+        ''' <item>if <paramref name="e"/>.<see cref="ProgressChangedEventArgs.UserState">UserState</see> is <see cref="NumericsT.SRational"/> or <see cref="NumericsT.URational"/> passes that value to the <see cref="ProgressInfo"/> property.</item>
         ''' </list>
         ''' </remarks>
         ''' <exception cref="ArgumentException"><paramref name="e"/>.<see cref="ProgressChangedEventArgs.ProgressPercentage">ProgressPercentage</see> is greater than 100.</exception>
@@ -617,6 +619,8 @@ Namespace WindowsT.WPF.DialogsT
                 CanCancel = e.UserState
             ElseIf TypeOf e.UserState Is BackgroundWorker AndAlso BackgroundWorker Is e.UserState Then
                 Reset()
+            ElseIf TypeOf e.UserState Is NumericsT.URational OrElse TypeOf e.UserState Is NumericsT.SRational Then
+                ProgressInfo = e.UserState.ToString
             End If
         End Sub
         ''' <summary>Handles <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.RunWorkerCompleted">RunWorkerCompleted</see> event.</summary>

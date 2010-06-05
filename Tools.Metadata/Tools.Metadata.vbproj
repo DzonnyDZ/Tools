@@ -177,7 +177,6 @@
     <Compile Include="Metadata\Exif\ExifReader helpers.vb" />
     <Compile Include="Metadata\Exif\ExifWriter.vb" />
     <Compile Include="Metadata\Exif\IFD.vb" />
-    <Compile Include="Metadata\Exif\Rational.vb" />
     <Compile Include="Metadata\Exif\Exif.vb" />
     <Compile Include="Metadata\Exif\ExifIFDReader.vb" />
     <Compile Include="Metadata\Exif\ExifReader.vb" />
@@ -236,6 +235,7 @@
     </None>
     <None Include="Metadata\Exif\ExifTags.xslt">
       <DependentUpon>ExifTags.xml</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

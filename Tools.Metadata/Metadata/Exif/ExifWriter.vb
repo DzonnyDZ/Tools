@@ -1,4 +1,5 @@
 ﻿Imports Tools.MetadataT.ExifT.ExifReader, Tools.ExtensionsT.StringExtensions
+Imports Tools.NumericsT
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace MetadataT.ExifT
