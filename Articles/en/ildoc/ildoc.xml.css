@@ -99,7 +99,7 @@ section[special='ms-specific'] > header:after, row[special='ms-specific'] > c:fi
     background-color:inherit;
 }
 undocumented, *[special='undocumented'] {
-    background-color: #F0F0F0;
+    background-color: #C0C0C0;
 }
 new, *[special='new']{
     background-color:Yellow;

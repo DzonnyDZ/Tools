@@ -218,7 +218,9 @@
             <dt r="II.7.1"><ref ref="Type">Type</ref></dt>
             <dd>
                 <code>
-                    !<ref ref="Int32">Int32</ref> | !!<ref ref="Int32">Int32</ref> | bool | char |
+                    !<ref ref="Int32">Int32</ref> | <undocumented>!<ref ref="Id">Id</ref></undocumented> | 
+                    !!<ref ref="Int32">Int32</ref> | <undocumented>!!<ref ref="Id">Id</ref></undocumented> | 
+                    bool | char |
                     class <ref ref="TypeReference">TypeReference</ref> |
                     floa32 | float64 | int8 | int16 | int32 | int64 |
                     method <ref ref="CallConv">CallConv</ref> <ref ref="Type">Type</ref> \* \([<ref ref="Param">Param</ref> [, <ref ref="Param">Param</ref>]*]\) |
@@ -264,9 +266,13 @@
             <p>Can be one of following values:</p>
             <dl>
                 <dt-code>!<ref ref="Int32">Int32</ref></dt-code>
-                <dd>Reffres generic parameter from type declaration accessible by 0-based index.</dd>
+                <dd>Reffers to generic parameter from type declaration accessible by 0-based index.</dd>
+                <dt-code><undocumented>!<ref ref="Id">Id</ref></undocumented></dt-code>
+                <dd><undocumented>Reffers to generic parameter from type declaration by its name.</undocumented></dd>
                 <dt-code>!!<ref ref="Int32">Int32</ref></dt-code>
-                <dd>Refferes generic parameter from method declaration accessible by 0-based index.</dd>
+                <dd>Reffers to generic parameter from method declaration accessible by 0-based index.</dd>
+                <dt-code><undocumented>!!<ref ref="Id">Id</ref></undocumented></dt-code>
+                <dd><undocumented>Reffers to generic parameter from method declaration by its name.</undocumented></dd>
                 <break/>
                 <dt-code>bool</dt-code>
                 <dt-code>char</dt-code>
@@ -594,7 +600,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_assemblyB">.assembly {}</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c>
                     <code><internal-link ref="_custom">.custom</internal-link></code>,
                     <code><internal-link ref="_hash_alghoritm">.hash alghoritm</internal-link></code>,
@@ -607,7 +613,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c>
                     <code><internal-link ref="_hash">.hash</internal-link></code>,
                     <code><internal-link ref="_custom">.custom</internal-link></code>,
@@ -632,7 +638,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_classB">.class {}</internal-link></code></c>
-                <c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c>File, <code><internal-link ref="_classB">.class {}</internal-link></code>, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c>
                     <code><internal-link ref="_classB">.class {}</internal-link></code>,
                     <code><internal-link ref="_custom">.custom</internal-link></code>,
@@ -658,7 +664,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_class_externB">.class extern {}</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c>
                     <code><internal-link ref="_file">.file</internal-link></code>,
                     <code><internal-link ref="_class_extern">.class extern</internal-link></code>,
@@ -672,7 +678,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_corflags">.corflags</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
             </row>
             <row>
                 <c><code><internal-link ref="_culture">.culture</internal-link></code></c>
@@ -687,13 +693,16 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c>
                     File,
                     <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
-                    <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
                     <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
                     <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_eventB">.event {}</internal-link></code>,
                     <code><internal-link ref="_methodB">.method {}</internal-link></code>,
-                    <code><internal-link ref="B">{}</internal-link></code>,
+                    <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>,
                     <code><internal-link ref="_propertyB">.property {}</internal-link></code>,
-                    <code><internal-link ref="_eventB">.event {}</internal-link></code>
+                    <code><internal-link ref="B">{}</internal-link></code>,
+                    
+                    
                 </c>
                 <c/>
             </row>
@@ -703,6 +712,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     File,
                     <code><internal-link ref="_classB">.class {}</internal-link></code>,
                     <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>,
                     <code><internal-link ref="B">{}</internal-link></code>
                 </c>
                 <c>Data</c>
@@ -744,7 +754,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_field">.field</internal-link></code></c>
-                <c>File, <code><internal-link ref="_classB">.class {}</internal-link></code></c>
+                <c>File, <code><internal-link ref="_classB">.class {}</internal-link></code>, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c/>
             </row>
             <row>
@@ -752,7 +762,8 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c>
                     File,
                     <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
-                    <code><internal-link ref="_class_externB">.class extern {}</internal-link></code>
+                    <code><internal-link ref="_class_externB">.class extern {}</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>
                 </c>
                 <c/>
             </row>
@@ -809,11 +820,11 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row special="ms-specific">
                 <c><code><internal-link ref="_imagebase">.imagebase</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c/>
             </row>
             <row special="ms-specific">
-                <c><code><internal-link ref="_language">.language</internal-link></code></c>
+                <c><code><internal-link ref="_language">.language</internal-link></code>, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c>File</c>
                 <c/>
             </row>
@@ -852,36 +863,38 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_data">.data</internal-link></code>,
                     <code><internal-link ref="_emitbyte">.emitbyte</internal-link></code>,
                     <code><internal-link ref="_entrypoint">.entrypoint</internal-link></code>,
+                    <undocumented><code><internal-link ref="_export">.export</internal-link></code></undocumented>,
+                    <code><internal-link ref="_line">.line</internal-link></code>,
                     <code><internal-link ref="_locals">.locals</internal-link></code>,
                     <code><internal-link ref="_maxstack">.maxstack</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>,
                     <code><internal-link ref="_override">.override</internal-link></code>,
                     <code><internal-link ref="_override_method">.override method</internal-link></code>,
                     <code><internal-link ref="_param">.param</internal-link></code>,
                     <code><internal-link ref="_param_type">.param type</internal-link></code>,
-                    <code><internal-link ref="_line">.line</internal-link></code>,
-                    <internal-link ref="instructions">instruction</internal-link>,
-                    <internal-link ref="Label">label</internal-link>,
                     <code><internal-link ref="_permission">.permission</internal-link></code>,
                     <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
-                    <code><internal-link ref="B">{}</internal-link></code>,
                     <code><internal-link ref="_try">.try</internal-link></code>,
-                    <undocumented><code><internal-link ref="_export">.export</internal-link></code></undocumented>,
-                    <undocumented><code><internal-link ref="_vtentry">.vtentry</internal-link></code></undocumented>
+                    <undocumented><code><internal-link ref="_vtentry">.vtentry</internal-link></code></undocumented>,
+                    <undocumented><code><internal-link ref="_zeroinit">.zeroinit</internal-link></code></undocumented>,
+                    <internal-link ref="instructions">instruction</internal-link>,
+                    <internal-link ref="Label">label</internal-link>,
+                    <code><internal-link ref="B">{}</internal-link></code>
                 </c>
             </row>
             <row>
                 <c><code><internal-link ref="_module">.module</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c/>
             </row>
             <row>
                 <c><code><internal-link ref="_module_extern">.module extern</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c/>
             </row>
             <row>
                 <c><code><internal-link ref="_mresourceB">.mresource {}</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c>
                     <code><internal-link ref="_assembly_extern">.assembly extern</internal-link></code>,
                     <code><internal-link ref="_custom">.custom</internal-link></code>,
@@ -889,9 +902,32 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 </c>
             </row>
             <row special="ms-specific">
-                <c><code><internal-link ref="_namespace">.namespace</internal-link></code></c>
-                <c>File</c>
-                <c/>
+                <c><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
+                <c>
+                    <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
+                    <code><internal-link ref="_assembly_externB">.assembly extern {}</internal-link></code>,
+                    <code><internal-link ref="_classB">.class {}</internal-link></code>,
+                    <code><internal-link ref="_class_externB">.class extern {}</internal-link></code>,
+                    <code><internal-link ref="_corflags">.corflags</internal-link></code>,
+                    <code><internal-link ref="_custom">.custom</internal-link></code>,
+                    <code><internal-link ref="_data">.data</internal-link></code>,
+                    <code><internal-link ref="_dataB">.data {}</internal-link></code>,
+                    <code><internal-link ref="_field">.field</internal-link></code>,
+                    <code><internal-link ref="_file">.file</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_imagebase">.imagebase</internal-link></code></ms-specific>,
+                    <code><internal-link ref="_language">.language</internal-link></code>,
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <code><internal-link ref="_module">.module</internal-link></code>,
+                    <code><internal-link ref="_module_extern">.module extern</internal-link></code>,
+                    <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>,
+                    <code><internal-link ref="_permission">.permission</internal-link></code>,
+                    <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+                    <code><internal-link ref="_subsystem">.subsystem</internal-link></code>,
+                    <undocumented><code><internal-link ref="_vtable">.vtable</internal-link></code></undocumented>,
+                    <code><internal-link ref="_vtfixup">.vtfixup</internal-link></code>
+                </c>
             </row>
             <row>
                 <c><code><internal-link ref="_other">.other</internal-link></code></c>
@@ -950,6 +986,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
                     <code><internal-link ref="_classB">.class {}</internal-link></code>,
                     <code><internal-link ref="_methodB">.method {}</internal-link></code>,					
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>,
                     <code><internal-link ref="B">{}</internal-link></code>
                 </c>
                 <c/>
@@ -960,7 +997,8 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     File,
                     <code><internal-link ref="_assemblyB">.assembly {}</internal-link></code>,
                     <code><internal-link ref="_classB">.class {}</internal-link></code>,
-                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,					
+                    <code><internal-link ref="_methodB">.method {}</internal-link></code>,
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>,
                     <code><internal-link ref="B">{}</internal-link></code>
                 </c>
                 <c/>
@@ -1011,7 +1049,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </row>
             <row>
                 <c><code><internal-link ref="_subsystem">.subsystem</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
                 <c/>
             </row>
             <row>
@@ -1034,13 +1072,23 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <c/>
             </row>
             <row special="undocumented">
+                <c><code><internal-link ref="_vtable">.vtable</internal-link></code></c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
+                <c/>
+            </row>
+            <row special="undocumented">
                 <c><code><internal-link ref="_vtentry">.vtentry</internal-link></code></c>
                 <c><code><internal-link ref="_methodB">.method {}</internal-link></code></c>
                 <c/>
             </row>
             <row>
                 <c><code><internal-link ref="_vtfixup">.vtfixup</internal-link></code></c>
-                <c>File</c>
+                <c>File, <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific></c>
+                <c/>
+            </row>
+            <row special="undocumented">
+                <c><code><internal-link ref="_zeroinit">.zeroinit</internal-link></code></c>
+                <c><code><internal-link ref="_methodB">.method {}</internal-link></code>, <internal-link ref="B">{}</internal-link></c>
                 <c/>
             </row>
             <row>
@@ -1070,6 +1118,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <internal-link ref="Label">label</internal-link>,
                     <code><internal-link ref="_permission">.permission</internal-link></code>,
                     <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
+                    <undocumented><code><internal-link ref="_zeroinit">.zeroinit</internal-link></code></undocumented>,
                     <code><internal-link ref="B">{}</internal-link></code>,
                     <code><internal-link ref="_try">.try</internal-link></code>
                 </c>
@@ -1110,7 +1159,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     <code><internal-link ref="_module">.module</internal-link></code>,
                     <code><internal-link ref="_module_extern">.module extern</internal-link></code>,
                     <code><internal-link ref="_mresourceB">.mresource {}</internal-link></code>,
-                    <ms-specific><code><internal-link ref="_namespace">.namespace</internal-link></code></ms-specific>,
+                    <ms-specific><code><internal-link ref="_namespaceB">.namespace {}</internal-link></code></ms-specific>,
                     <code><internal-link ref="_permission">.permission</internal-link></code>,
                     <code><internal-link ref="_permissionset">.permissionset</internal-link></code>,
                     <code><internal-link ref="_subsystem">.subsystem</internal-link></code>,
@@ -1137,6 +1186,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             </syntax-dl>
             <parents>
                 <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
             </parents>
             <children>
                 <internal-link ref="_custom">.custom</internal-link>
@@ -1190,7 +1240,10 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                     This allows to reference more assemblies with same name but different version or culture.
                 </dd>
             </syntax-dl>
-            <parents><li>File</li></parents>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
             <children>
                 <internal-link ref="_hash">.hash</internal-link>
                 <internal-link ref="_custom">.custom</internal-link>
@@ -1306,6 +1359,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             <parents>
                 <li>File</li>
                 <internal-link ref="_classB">.class {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
             </parents>
             <children>
                 <internal-link ref="_classB">.class {}</internal-link>
@@ -1473,7 +1527,10 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <dt-code>public | nested public</dt-code>
                 <dd>Visibility attribute of the export. It must be same as visibility of type being exported.</dd>
             </syntax-dl>
-            <parents><li>File</li></parents>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
             <children>
                 <internal-link ref="_file">.file</internal-link>
                 <internal-link ref="_class_extern">.class extern</internal-link>
@@ -1776,6 +1833,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             <parents>
                 <li>File</li>
                 <internal-link ref="_classB">.class {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
             </parents>
             <children>
                 <internal-link ref="_custom">.custom</internal-link>
@@ -1814,13 +1872,60 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <dt><code-ref>Name</code-ref> (<ref ref="DottedName">DottedName</ref>)</dt>
                 <dd>Name of the resource.</dd>
             </syntax-dl>
-            <parents><li>File</li></parents>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
             <children>
                 <internal-link ref="_assembly_extern">.assembly extern</internal-link>
                 <internal-link ref="_custom">.custom</internal-link>
                 <internal-link ref="_file">.file</internal-link>
             </children>
             <seealso><internal-link ref="_data">.data</internal-link></seealso>
+        </section>
+        <section special="ms-specific" id="_namespaceB" guid="c7846447-c88f-444b-9e88-26ba00384886">
+            <header>
+                <code>.namespace {}</code>
+            </header>
+            <introduction>Declares a namespace</introduction>
+            <syntax>.namspace <ref ref="Name">Name</ref> {}</syntax>
+            <syntax-dl>
+                <dt><code-ref>Name</code-ref> (<ref ref="Id">Id</ref>)</dt>
+                <dd>Name of the namespace</dd>
+            </syntax-dl>
+            <parents><li>File</li></parents>
+            <children>
+                <internal-link ref="_assemblyB">.assembly {}</internal-link>
+                <internal-link ref="_assembly_externB">.assembly extern {}</internal-link>
+                <internal-link ref="_classB">.class {}</internal-link>
+                <internal-link ref="_class_externB">.class extern {}</internal-link>
+                <internal-link ref="_corflags">.corflags</internal-link>
+                <internal-link ref="_custom">.custom</internal-link>
+                <internal-link ref="_data">.data</internal-link>
+                <internal-link ref="_dataB">.data {}</internal-link>
+                <internal-link ref="_field">.field</internal-link>
+                <internal-link ref="_file">.file</internal-link>
+                <li><ms-specific><internal-link ref="_imagebase">.imagebase</internal-link></ms-specific></li>
+                <li><ms-specific><internal-link ref="_language">.language</internal-link></ms-specific></li>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <internal-link ref="_module">.module</internal-link>
+                <internal-link ref="_module_extern">.module extern</internal-link>
+                <internal-link ref="_mresourceB">.mresource {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+                <internal-link ref="_permission">.permission</internal-link>
+                <internal-link ref="_subsystem">.subsystem</internal-link>
+                <li><undocumented><internal-link ref="_vtable">.vtable</internal-link></undocumented></li>
+                <internal-link ref="_vtfixup">.vtfixup</internal-link>
+            </children>
+            <p><undocumented>
+                ilasm allows syntax sugar for declaring namespaces.
+                This possibility is mentioned in documentation as Microsft-specific but is not explained.
+                So, explanation provided here may be inaccurate.
+            </undocumented></p>
+            <p><undocumented>
+                Normally types are declared including namespace name in their name.
+                When type (or namespace) is declared inside a namespace, compiler automatically prepends name of the namespace and dot (<code>.</code>) to name of item being declared.
+            </undocumented></p>
         </section>
         <section id="_propertyB" guid="1f1e1094-1887-4b78-ac30-748ee0970899" r="II.17">
             <header><code>.property {}</code></header>
@@ -2025,7 +2130,10 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 </dl>
                 <dd><new>All unspecified bits should be zero.</new></dd>
             </syntax-dl>
-            <parents><li>File</li></parents>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
             <seealso><internal-link ref="_emitbyte">.emitbyte</internal-link></seealso>
         </section>
         <section id="_culture" guid="4eef6475-af48-4fc0-b4fd-4258567e872c" r="II.6.2.1.2">
@@ -2093,6 +2201,7 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
                 <internal-link ref="_eventB">.event {}</internal-link>
                 <internal-link ref="_methodB">.method {}</internal-link>
                 <internal-link ref="_mresourceB">.mresource {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
                 <internal-link ref="_propertyB">.property {}</internal-link>
                 <internal-link ref="B">{}</internal-link>
             </parents>
@@ -2439,6 +2548,13 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         <section id="_data" guid="3197f08e-4cb5-481d-a148-92258b2d100f">
             <header><code>.data</code></header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <internal-link ref="_classB">.class {}</internal-link>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+                <internal-link ref="B">{}</internal-link>
+            </parents>
         </section>
         <section id="_emitbyte" guid="4b82a665-3a04-4010-8e23-c52177722399">
             <header><code>.emitbyte</code></header>
@@ -2460,10 +2576,19 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
             <header><code>.field</code></header>
             <introduction/>
             <!--TODO: See section 16.1.4 in MS Partition II.pdf-->
+            <parents>
+                <li>File</li>
+                <internal-link ref="_classB">.class {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section id="_file" guid="155f5a74-40b6-43ee-8164-a58ad46b36aa">
             <header><code>.file</code></header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section special="ms-specific" id="_file_alignment" guid="b4a471a4-cc6b-4853-b9bf-71be385dcf6f">
             <header><code>.file alignment</code></header>
@@ -2527,6 +2652,10 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         <section special="ms-specific" id="_imagebase" guid="c4e3bc53-89e8-4464-b4a9-f93dd1fb3d24">
             <header><code>.imagebase</code></header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section special="ms-specific" id="_language" guid="27d2766f-ba22-45f8-867c-b6b20172d3cb">
             <header><code>.language</code></header>
@@ -2535,6 +2664,10 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         <section id="_line" guid="bef239b4-0a82-47db-8906-53c4a12a931e">
             <header><code>.line</code> (<code>#line</code>)</header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section special="ms-specific" id="_locale" guid="b7409e19-9c6c-45dc-a869-ee53b533047f">
             <header><code>.locale</code></header>
@@ -2551,14 +2684,18 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         <section id="_module" guid="4bfc275e-6e3a-4fbf-ab12-940abe610ec6">
             <header><code>.module</code></header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section id="_module_extern" guid="94c52bb2-020b-40cb-8f74-bf7026cf17a5">
             <header><code>.module extern</code></header>
             <introduction/>
-        </section>
-        <section special="ms-specific" id="_namespace" guid="c7846447-c88f-444b-9e88-26ba00384886">
-            <header><code>.namespace</code></header>
-            <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section id="_other" guid="9e7d2dbc-aaa0-49a6-b729-d8d675add705">
             <header><code>.other</code></header>
@@ -2587,10 +2724,26 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         <section id="_permission" guid="26047966-4043-4e28-9cb0-843ae3385797">
             <header><code>.permission</code></header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <internal-link ref="_assemblyB">.assembly {}</internal-link>
+                <internal-link ref="_classB">.class {}</internal-link>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+                <internal-link ref="B">{}</internal-link>
+            </parents>
         </section>
         <section id="_permissionset" guid="ebf17d31-1fe9-404f-bd88-c9975425a241">
             <header><code>.permissionset</code></header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <internal-link ref="_assemblyB">.assembly {}</internal-link>
+                <internal-link ref="_classB">.class {}</internal-link>
+                <internal-link ref="_methodB">.method {}</internal-link>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+                <internal-link ref="B">{}</internal-link>
+            </parents>
         </section>
         <section id="_publickey" guid="acf601a2-56e8-4422-9d99-2cb0e3f896b9">
             <header><code>.publickey</code></header>
@@ -2650,10 +2803,22 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         <section id="_subsystem" guid="fe5d32d1-c45f-4cb4-b07e-129c46208e10">
             <header><code>.subsystem</code></header>
             <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section id="_ver" guid="270893db-17ab-412a-8a80-1678aa35475e">
             <header><code>.ver</code></header>
             <introduction/>
+        </section>
+        <section special="undocumented" id="_vtable" guid="9b9eee25-d154-4d61-9141-dd00e32cd7bb">
+            <header><code>.vtable</code></header>
+            <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
         </section>
         <section special="undocumented" id="_vtentry" guid="6932c4b6-6b86-436e-ba90-61e6d78602d9">
             <header><code>.vtentry</code></header>
@@ -2661,6 +2826,14 @@ interface IKeyComparer<-T> : IComparer<T> { bool Compare(T x, T y); int GetHashC
         </section>
         <section id="_vtfixup" guid="471534a4-c10c-4eca-a828-26786a676f12">
             <header><code>.vtfixup</code></header>
+            <introduction/>
+            <parents>
+                <li>File</li>
+                <li><ms-specific><internal-link ref="_namespaceB">.namespace {}</internal-link></ms-specific></li>
+            </parents>
+        </section>
+        <section special="undocumented" id="_zeroinit" guid="04f154d7-ef29-4eaa-a353-4afcc783a6c6">
+            <header><code>.zeroinit</code></header>
             <introduction/>
         </section>
         <section id="Label" guid="3bd656e8-8bd1-46bb-b93b-159ced4ebb8b">
