@@ -185,9 +185,11 @@
     <Compile Include="CodeDom\Xml2CodeDom.vb" />
     <Compile Include="Collections\Generic\CollectionTools.vb" />
     <Compile Include="Collections\Generic\DictionaryWithEvents.vb" />
+    <Compile Include="Collections\Generic\DuplicateDictionary.vb" />
     <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
     <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
     <Compile Include="Collections\Generic\IIndexable.vb" />
+    <Compile Include="Collections\Generic\TransliterationDictionary.vb" />
     <Compile Include="Collections\Specialized\SpecializedWrapper.vb" />
     <Compile Include="Collections\Generic\TypedArrayEnumerator.vb" />
     <Compile Include="Collections\Generic\UnionEnumerator.vb" />

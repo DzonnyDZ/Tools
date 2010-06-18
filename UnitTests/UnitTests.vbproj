@@ -211,6 +211,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
@@ -220,6 +222,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.RegularExpressions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -255,6 +258,7 @@
     <Compile Include="API\HelpersU.vb" />
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />
+    <Compile Include="Collections\Generic\DuplicateDictionaryU.vb" />
     <Compile Include="Extensions\StringFormatting.vb" />
     <Compile Include="Extensions\StringExtensions.vb" />
     <Compile Include="General\GeneralTestsU.vb" />
@@ -269,6 +273,7 @@
     <Compile Include="Special\TypeToolsU.vb" />
     <Compile Include="Collections\Generic\CollectionToolsU.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="Collections\Generic\TransliterationDictionaryU.vb" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\SharedFiles\Version.cpp">
@@ -325,6 +330,7 @@
       <Link>VersionHistory.xsd</Link>
       <SubType>Designer</SubType>
     </None>
+    <Shadow Include="Test References\Tools.accessor" />
     <None Include="Tools.snk" />
   </ItemGroup>
   <ItemGroup>
