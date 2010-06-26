@@ -252,12 +252,14 @@
         </Tag>
     </Group>
     <Group Name="Tags Relating to Date and Time" IFD="Exif" ShortName="DateAndTime">
-        <Tag Name="DateTimeOriginal" Tag="9003" Components="20" DisplayName="Date-time original">
+        <Tag Name="DateTimeOriginal" Tag="9003" Components="19" DisplayName="Date-time original"><!--Size changed from 20 to 19-->
             <summary>Date and time of original data generation</summary>
+            <version version="1.5.3">Expected number of components changed from 20 to 19. This is ad-hoc fix date format compatibility issues.</version>
             <Type>ASCII</Type>
         </Tag>
-        <Tag Name="DateTimeDigitized" Tag="9004" Components="20" DisplayName="Date-time digitized">
+        <Tag Name="DateTimeDigitized" Tag="9004" Components="19" DisplayName="Date-time digitized"><!--Size changed from 20 to 19-->
             <summary>Date and time of digital data generation</summary>
+            <version version="1.5.3">Expected number of components changed from 20 to 19. This is ad-hoc fix date format compatibility issues.</version>
             <Type>ASCII</Type>
         </Tag>
         <Tag Name="SubSecTime" Tag="9290" Components="any" DisplayName="Sub-sec time">

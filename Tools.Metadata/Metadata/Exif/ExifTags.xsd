@@ -150,11 +150,7 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
-                <xs:element minOccurs="1" maxOccurs="1" name="summary" type="xs:token">
-                    <xs:annotation>
-                        <xs:documentation>Tag desctiption (human readable in English)</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
+                <xs:group minOccurs="1" maxOccurs="1" ref="xmlDoc"/>
                 <xs:element minOccurs="1" maxOccurs="unbounded" name="Type" type="types">
                     <xs:annotation>
                         <xs:documentation>Type of tag. If more types are specified than the most preffered must me the first. Second, third etc. types must be convertible to first one.</xs:documentation>
@@ -323,4 +319,79 @@
             </xs:choice>
         </xs:complexType>
     </xs:element>
+
+    <xs:group name="xmlDoc">
+        <xs:annotation>
+            <xs:documentation>
+                Common XML documentation elements.
+                <remarks>Elements commonly used by XMl doc may be added to this group if needed in future.</remarks>
+                <version version="1.5.3">This group was introduced in version 1.5.3 extracting &lt;summary> element and adding &lt;version> element.</version>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="summary" type="xs:token">
+                <xs:annotation>
+                    <xs:documentation>Desctiption (human readable in English)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="version">
+                <xs:annotation>
+                    <xs:documentation>
+                        Documents changes to given item in particular versions.
+                        <version version="1.5.3">This element is new in version 1.5.3 of this XML-schema.</version>
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:token">
+                            <xs:attribute name="version" use="required">
+                                <xs:annotation>
+                                    <xs:documentation>The version to document changes in.</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="[0-9]+(\.[0-9]+){2,3}"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                            <xs:attribute name="stage" use="optional">
+                                <xs:annotation>
+                                    <xs:documentation>Compilation quality</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Nightly">
+                                            <xs:annotation>
+                                                <xs:documentation>This is debug build</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:enumeration>
+                                        <xs:enumeration value="Alpha">
+                                            <xs:annotation>
+                                                <xs:documentation>This is Alpha build</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:enumeration>
+                                        <xs:enumeration value="Beta">
+                                            <xs:annotation>
+                                                <xs:documentation>This is beta build</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:enumeration>
+                                        <xs:enumeration value="RC">
+                                            <xs:annotation>
+                                                <xs:documentation>This is release candidate build</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:enumeration>
+                                        <xs:enumeration value="Release">
+                                            <xs:annotation>
+                                                <xs:documentation>This is production build</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:enumeration>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
 </xs:schema>

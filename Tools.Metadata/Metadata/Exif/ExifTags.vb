@@ -6,7 +6,7 @@
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 30. května 2010
+' Created: 26. června 2010
 ' By:BiggerBook\Honza
 '
 'Localize: This auto-generated file was skipped during localization
@@ -932,9 +932,11 @@ Namespace MetadataT.ExifT
 #Region "Tags Relating to Date and Time"
 				''' <summary>Date and time of original data generation</summary>
 				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				''' <version version="1.5.3">Expected number of components changed from 20 to 19. This is ad-hoc fix date format compatibility issues.</version>
 				<FieldDisplayName("Date-time original"), Category("DateAndTime")>DateTimeOriginal = &h9003
 				''' <summary>Date and time of digital data generation</summary>
 				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				''' <version version="1.5.3">Expected number of components changed from 20 to 19. This is ad-hoc fix date format compatibility issues.</version>
 				<FieldDisplayName("Date-time digitized"), Category("DateAndTime")>DateTimeDigitized = &h9004
 				''' <summary>DateTime subseconds</summary>
 				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
@@ -2455,8 +2457,8 @@ Namespace MetadataT.ExifT
 						Case Tags.MakerNote : Return New ExifTagFormat(any, &h927C, "MakerNote", ExifDataTypes.NA)
 						Case Tags.UserComment : Return New ExifTagFormat(any, &h9286, "UserComment", ExifDataTypes.NA)
 						Case Tags.RelatedSoundFile : Return New ExifTagFormat(13, &hA004, "RelatedSoundFile", ExifDataTypes.ASCII)
-						Case Tags.DateTimeOriginal : Return New ExifTagFormat(20, &h9003, "DateTimeOriginal", ExifDataTypes.ASCII)
-						Case Tags.DateTimeDigitized : Return New ExifTagFormat(20, &h9004, "DateTimeDigitized", ExifDataTypes.ASCII)
+						Case Tags.DateTimeOriginal : Return New ExifTagFormat(19, &h9003, "DateTimeOriginal", ExifDataTypes.ASCII)
+						Case Tags.DateTimeDigitized : Return New ExifTagFormat(19, &h9004, "DateTimeDigitized", ExifDataTypes.ASCII)
 						Case Tags.SubSecTime : Return New ExifTagFormat(any, &h9290, "SubSecTime", ExifDataTypes.ASCII)
 						Case Tags.SubSecTimeOriginal : Return New ExifTagFormat(any, &h9291, "SubSecTimeOriginal", ExifDataTypes.ASCII)
 						Case Tags.SubSecTimeDigitized : Return New ExifTagFormat(any, &h9292, "SubSecTimeDigitized", ExifDataTypes.ASCII)

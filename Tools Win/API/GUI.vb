@@ -434,6 +434,62 @@ Namespace API
         ''' <returns>If the function succeeds, the return value is the blink time, in milliseconds. 
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
         Public Declare Function GetCaretBlinkTime Lib "user32.dll" () As Int32
+
+        ''' <summary>Retrieves the name of the class to which the specified window belongs. </summary>
+        ''' <param name="hwnd">A handle to the window and, indirectly, the class to which the window belongs.</param>
+        ''' <param name="lpClassName">The class name string.</param>
+        ''' <param name="nMaxCount">The length, in characters, of the buffer pointed to by the <paramref name="lpClassName"/> parameter. The class name string is truncated if it is longer than the buffer and is always null-terminated. </param>
+        ''' <returns>If the function succeeds, the return value is the number of characters copied to the specified buffer. If the function fails, the return value is zero.</returns>
+        Public Declare Auto Function GetClassName Lib "User32.dll" (ByVal hwnd As IntPtr, <Out()> ByVal lpClassName As System.Text.StringBuilder, ByVal nMaxCount As Integer) As Integer
+
+        ''' <summary>Contains information about a GUI thread.</summary>
+        ''' <remarks>This structure is used with the <see cref="GetGUIThreadInfo"/>  function to retrieve information about the active window or a specified GUI thread. </remarks>
+        <StructLayout(LayoutKind.Sequential)>
+        Public Structure GUITHREADINFO
+            ''' <summary>The size of this structure, in bytes. The caller must set this member to sizeof <see cref="GUITHREADINFO"/></summary>
+            Public cbSize As Integer
+            ''' <summary>The thread state.</summary>
+            Public flags As GuiThreadInfoFlags
+            ''' <summary>A handle to the active window within the thread. </summary>
+            Public hwndActive As IntPtr
+            ''' <summary>A handle to the window that has the keyboard focus.</summary>
+            Public hwndFocus As IntPtr
+            ''' <summary>A handle to the window that has captured the mouse. </summary>
+            Public hwndCapture As IntPtr
+            ''' <summary>A handle to the window that owns any active menus. </summary>
+            Public hwndMenuOwner As IntPtr
+            ''' <summary>A handle to the window in a move or size loop. </summary>
+            Public hwndMoveSize As IntPtr
+            ''' <summary>A handle to the window that is displaying the caret. </summary>
+            Public hwndCaret As IntPtr
+            ''' <summary>The caret's bounding rectangle, in client coordinates, relative to the window specified by the <see cref="hwndCaret"/> member. </summary>
+            Public rcCaret As RECT
+        End Structure
+
+        Public Enum GuiThreadInfoFlags As Integer
+            GUI_CARETBLINKING = &H1
+            GUI_INMENUMODE = &H4
+            GUI_INMOVESIZE = &H2
+            GUI_POPUPMENUMODE = &H10
+            GUI_SYSTEMMENUMODE = &H8
+        End Enum
+
+        ''' <summary>Retrieves information about the active window or a specified GUI thread.</summary>
+        ''' <param name="idThread">The identifier for the thread for which information is to be retrieved. To retrieve this value, use the GetWindowThreadProcessId  function. If this parameter is zero, the function returns information for the foreground thread. </param>
+        ''' <param name="lpgui">A pointer to a <see cref="GUITHREADINFO"/>  structure that receives information describing the thread. Note that you must set the <see cref="GUITHREADINFO.cbSize"/> member to sizeof <see cref="GUITHREADINFO"/>  before calling this function.</param>
+        ''' <remarks>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.</remarks>
+        Public Declare Auto Function GetGUIThreadInfo Lib "User32.dll" (ByVal idThread As Integer, <[In](), Out()> ByRef lpgui As GUITHREADINFO) As Boolean
+
+        ''' <summary>Retrieves the identifier of the thread that created the specified window and, optionally, the identifier of the process that created the window.</summary>
+        ''' <param name="hWnd">A handle to the window.</param>
+        ''' <param name="processId">A pointer to a variable that receives the process identifier. If this parameter is not zero, <see cref="GetWindowThreadProcessId"/> copies the identifier of the process to the variable; otherwise, it does not.</param>
+        ''' <returns>The return value is the identifier of the thread that created the window.</returns>
+        Public Declare Auto Function GetWindowThreadProcessId Lib "user32.dll" (ByVal hWnd As IntPtr, <Out()> Optional ByRef processId As Integer = 0) As Integer
+
+        ''' <summary>Brings the thread that created the specified window into the foreground and activates the window. Keyboard input is directed to the window, and various visual cues are changed for the user. The system assigns a slightly higher priority to the thread that created the foreground window than it does to other threads. </summary>
+        ''' <param name="hwnd">A handle to the window that should be activated and brought to the foreground. </param>
+        ''' <returns>If the window was brought to the foreground, the return value is nonzero.
+        ''' If the window was not brought to the foreground, the return value is zero.</returns>
+        Public Declare Ansi Function SetForegroundWindow Lib "user32.dll" Alias "SetForegroundWindow" (ByVal hwnd As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
     End Module
 End Namespace
-

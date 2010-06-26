@@ -49,6 +49,7 @@ Public Class frmMain
         cmdErrInfo.Parent = picPreview
         llbLarge.Parent = picPreview
         llbLarge.TabStop = False
+        lblExifDateTime.Parent = picPreview
         InitializeEditors()
         For Each item As Control In flpCommon.Controls
             item.AutoSize = False
@@ -474,6 +475,7 @@ Public Class frmMain
         'Next item
         SelectedMetadata.Clear()
         splMain.Panel2.Enabled = lvwImages.SelectedItems.Count > 0
+        lblExifDateTime.Text = ""
         If lvwImages.SelectedItems.Count > 0 Then
             For Each item As MetadataItem In lvwImages.SelectedItems
                 If Not item.IPTCLoaded Then
@@ -501,6 +503,18 @@ Public Class frmMain
             ShowIPTCValues(From item In SelectedMetadata Select item.IPTC)
             prgIPTC.SelectedObjects = (From mtd In SelectedMetadata Select mtd.IPTC).ToArray
             SetExifPropertyGrids(From mtd In SelectedMetadata Select mtd.Exif)
+            Dim exifTime As DateTime?
+            For Each item In From mtd In SelectedMetadata Select mtd.Exif
+                If item IsNot Nothing AndAlso item.IFD0 IsNot Nothing AndAlso item.IFD0.ExifSubIFD IsNot Nothing AndAlso item.IFD0.ExifSubIFD.DateTimeDigitizedDate IsNot Nothing Then
+                    If exifTime Is Nothing Then
+                        exifTime = item.IFD0.ExifSubIFD.DateTimeDigitizedDate
+                    ElseIf exifTime.Value <> item.IFD0.ExifSubIFD.DateTimeDigitizedDate.Value Then
+                        exifTime = Nothing
+                        Exit For
+                    End If
+                End If
+            Next
+            If exifTime IsNot Nothing Then lblExifDateTime.Text = exifTime.Value.ToString("F")
         Else
             prgIPTC.SelectedObjects = New Object() {}
             SetExifPropertyGrids(New ExifInternal() {})

@@ -19,6 +19,10 @@
         <member name="N:Tools.API.Messages.lParam">
             <summary>Contains declarations of constants used as values of lParam of windows messages.</summary>
         </member>
+        <member name="N:Tools.API.Messages.Notifications">
+            <summary>Contains enumerations, structures and methods for working with windows notifications.</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
         <member name="N:Tools.API.Messages.ReturnValues">
             <summary>Contains declarations of constants used as return values of windows messages.</summary>
         </member>

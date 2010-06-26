@@ -153,6 +153,10 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="API\Messages.lParam.vb" />
+    <Compile Include="API\Messages.ReturnValues.vb" />
+    <Compile Include="API\Message values.vb" />
+    <Compile Include="API\Notifications.vb" />
     <Compile Include="Windows\WPF\WPFNativeExtensions.vb" />
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
       <Link>Resources\Exceptions.Designer.vb</Link>
@@ -258,6 +262,7 @@
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
+    <Compile Include="API\Messages.wParam.vb" />
     <None Include="Migrated rules for Tools.Win %282%29.ruleset" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

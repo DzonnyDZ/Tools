@@ -185,6 +185,19 @@
             <xsl:value-of select="et:summary"/>
             <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added&lt;/version>&#xD;&#xA;</xsl:text>
+            <xsl:for-each select="et:version">
+                <xsl:text>&#9;&#9;&#9;&#9;''' &lt;version version="</xsl:text>
+                <xsl:value-of select="@version"/>
+                <xsl:text>"</xsl:text>
+                <xsl:if test="@stage">
+                    <xsl:text>&#32;stage="</xsl:text>
+                    <xsl:value-of select="@stage"/>
+                    <xsl:text>"</xsl:text>
+                </xsl:if>
+                <xsl:text>></xsl:text>
+                <xsl:value-of select="."/>
+                <xsl:text>&lt;/version>&#xD;&#xA;</xsl:text>
+            </xsl:for-each>
             <xsl:text>&#9;&#9;&#9;&#9;&lt;FieldDisplayName("</xsl:text>
             <xsl:value-of select="@DisplayName"/>
             <xsl:text>"), Category("</xsl:text>

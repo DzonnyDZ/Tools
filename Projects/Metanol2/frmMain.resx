@@ -112,16 +112,16 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="splMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="splMain.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -143,13 +143,13 @@
   <data name="lvwFolders.Size" type="System.Drawing.Size, System.Drawing">
     <value>231, 143</value>
   </data>
-  <metadata name="imlFolders.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="imlFolders.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>316, 32</value>
   </metadata>
   <data name="imlFolders.ImageSize" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lvwFolders.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -157,7 +157,7 @@
     <value>lvwFolders</value>
   </data>
   <data name="&gt;&gt;lvwFolders.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lvwFolders.Parent" xml:space="preserve">
     <value>splBrowser.Panel1</value>
@@ -169,7 +169,7 @@
     <value>splBrowser.Panel1</value>
   </data>
   <data name="&gt;&gt;splBrowser.Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splBrowser.Panel1.Parent" xml:space="preserve">
     <value>splBrowser</value>
@@ -177,7 +177,7 @@
   <data name="&gt;&gt;splBrowser.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="cmsImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="cmsImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 18</value>
   </metadata>
   <data name="tmiMerge.Size" type="System.Drawing.Size, System.Drawing">
@@ -193,12 +193,12 @@
     <value>cmsImages</value>
   </data>
   <data name="&gt;&gt;cmsImages.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lvwImages.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <metadata name="imlImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="imlImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>188, 17</value>
   </metadata>
   <data name="imlImages.ImageSize" type="System.Drawing.Size, System.Drawing">
@@ -217,7 +217,7 @@
     <value>lvwImages</value>
   </data>
   <data name="&gt;&gt;lvwImages.Type" xml:space="preserve">
-    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.2.41984, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
+    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.2.21695, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
   </data>
   <data name="&gt;&gt;lvwImages.Parent" xml:space="preserve">
     <value>splBrowser.Panel2</value>
@@ -229,7 +229,7 @@
     <value>splBrowser.Panel2</value>
   </data>
   <data name="&gt;&gt;splBrowser.Panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splBrowser.Panel2.Parent" xml:space="preserve">
     <value>splBrowser</value>
@@ -250,7 +250,7 @@
     <value>splBrowser</value>
   </data>
   <data name="&gt;&gt;splBrowser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splBrowser.Parent" xml:space="preserve">
     <value>splMain.Panel1</value>
@@ -262,12 +262,36 @@
     <value>splMain.Panel1</value>
   </data>
   <data name="&gt;&gt;splMain.Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splMain.Panel1.Parent" xml:space="preserve">
     <value>splMain</value>
   </data>
   <data name="&gt;&gt;splMain.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblExifDateTime.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblExifDateTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="lblExifDateTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
+  </data>
+  <data name="lblExifDateTime.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lblExifDateTime.Name" xml:space="preserve">
+    <value>lblExifDateTime</value>
+  </data>
+  <data name="&gt;&gt;lblExifDateTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblExifDateTime.Parent" xml:space="preserve">
+    <value>panImage</value>
+  </data>
+  <data name="&gt;&gt;lblExifDateTime.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="picPreview.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -295,13 +319,13 @@
     <value>picPreview</value>
   </data>
   <data name="&gt;&gt;picPreview.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;picPreview.Parent" xml:space="preserve">
     <value>panImage</value>
   </data>
   <data name="&gt;&gt;picPreview.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="llbLarge.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -328,13 +352,13 @@
     <value>llbLarge</value>
   </data>
   <data name="&gt;&gt;llbLarge.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;llbLarge.Parent" xml:space="preserve">
     <value>panImage</value>
   </data>
   <data name="&gt;&gt;llbLarge.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="cmdErrInfo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -376,13 +400,13 @@
     <value>cmdErrInfo</value>
   </data>
   <data name="&gt;&gt;cmdErrInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cmdErrInfo.Parent" xml:space="preserve">
     <value>panImage</value>
   </data>
   <data name="&gt;&gt;cmdErrInfo.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="panImage.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -400,7 +424,7 @@
     <value>panImage</value>
   </data>
   <data name="&gt;&gt;panImage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;panImage.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -427,7 +451,7 @@
     <value>sptImage</value>
   </data>
   <data name="&gt;&gt;sptImage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;sptImage.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -478,7 +502,7 @@
     <value>lblObjectName</value>
   </data>
   <data name="&gt;&gt;lblObjectName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblObjectName.Parent" xml:space="preserve">
     <value>tlpTitle</value>
@@ -505,7 +529,7 @@
     <value>txtObjectName</value>
   </data>
   <data name="&gt;&gt;txtObjectName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtObjectName.Parent" xml:space="preserve">
     <value>tlpTitle</value>
@@ -541,7 +565,7 @@
     <value>lblCaption</value>
   </data>
   <data name="&gt;&gt;lblCaption.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblCaption.Parent" xml:space="preserve">
     <value>tlpTitle</value>
@@ -577,7 +601,7 @@
     <value>txtCaption</value>
   </data>
   <data name="&gt;&gt;txtCaption.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtCaption.Parent" xml:space="preserve">
     <value>tlpTitle</value>
@@ -607,7 +631,7 @@
     <value>tlpTitle</value>
   </data>
   <data name="&gt;&gt;tlpTitle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tlpTitle.Parent" xml:space="preserve">
     <value>fraTitle</value>
@@ -640,7 +664,7 @@
     <value>fraTitle</value>
   </data>
   <data name="&gt;&gt;fraTitle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fraTitle.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -667,7 +691,7 @@
     <value>sptTitle</value>
   </data>
   <data name="&gt;&gt;sptTitle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;sptTitle.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -718,7 +742,7 @@
     <value>lblCity</value>
   </data>
   <data name="&gt;&gt;lblCity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblCity.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -748,7 +772,7 @@
     <value>txtCity</value>
   </data>
   <data name="&gt;&gt;txtCity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtCity.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -784,7 +808,7 @@
     <value>lblCountryCode</value>
   </data>
   <data name="&gt;&gt;lblCountryCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblCountryCode.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -814,7 +838,7 @@
     <value>cmbCountryCode</value>
   </data>
   <data name="&gt;&gt;cmbCountryCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cmbCountryCode.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -850,7 +874,7 @@
     <value>lblCountry</value>
   </data>
   <data name="&gt;&gt;lblCountry.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblCountry.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -880,7 +904,7 @@
     <value>txtCountry</value>
   </data>
   <data name="&gt;&gt;txtCountry.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtCountry.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -916,7 +940,7 @@
     <value>lblProvince</value>
   </data>
   <data name="&gt;&gt;lblProvince.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblProvince.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -946,7 +970,7 @@
     <value>txtProvince</value>
   </data>
   <data name="&gt;&gt;txtProvince.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtProvince.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -982,7 +1006,7 @@
     <value>lblSublocation</value>
   </data>
   <data name="&gt;&gt;lblSublocation.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblSublocation.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -1012,7 +1036,7 @@
     <value>txtSublocation</value>
   </data>
   <data name="&gt;&gt;txtSublocation.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtSublocation.Parent" xml:space="preserve">
     <value>tlpLocation</value>
@@ -1042,7 +1066,7 @@
     <value>tlpLocation</value>
   </data>
   <data name="&gt;&gt;tlpLocation.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tlpLocation.Parent" xml:space="preserve">
     <value>fraLocation</value>
@@ -1075,7 +1099,7 @@
     <value>fraLocation</value>
   </data>
   <data name="&gt;&gt;fraLocation.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fraLocation.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -1129,7 +1153,7 @@
     <value>fraKeywords</value>
   </data>
   <data name="&gt;&gt;fraKeywords.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fraKeywords.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -1156,7 +1180,7 @@
     <value>sptKeywords</value>
   </data>
   <data name="&gt;&gt;sptKeywords.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;sptKeywords.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -1207,7 +1231,7 @@
     <value>lblCopyright</value>
   </data>
   <data name="&gt;&gt;lblCopyright.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblCopyright.Parent" xml:space="preserve">
     <value>tlpAuthor</value>
@@ -1237,7 +1261,7 @@
     <value>txtCopyright</value>
   </data>
   <data name="&gt;&gt;txtCopyright.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtCopyright.Parent" xml:space="preserve">
     <value>tlpAuthor</value>
@@ -1273,7 +1297,7 @@
     <value>lblCredit</value>
   </data>
   <data name="&gt;&gt;lblCredit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblCredit.Parent" xml:space="preserve">
     <value>tlpAuthor</value>
@@ -1303,7 +1327,7 @@
     <value>txtCredit</value>
   </data>
   <data name="&gt;&gt;txtCredit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtCredit.Parent" xml:space="preserve">
     <value>tlpAuthor</value>
@@ -1333,7 +1357,7 @@
     <value>tlpAuthor</value>
   </data>
   <data name="&gt;&gt;tlpAuthor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tlpAuthor.Parent" xml:space="preserve">
     <value>fraAuthor</value>
@@ -1366,7 +1390,7 @@
     <value>fraAuthor</value>
   </data>
   <data name="&gt;&gt;fraAuthor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fraAuthor.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -1417,7 +1441,7 @@
     <value>lblEditStatus</value>
   </data>
   <data name="&gt;&gt;lblEditStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblEditStatus.Parent" xml:space="preserve">
     <value>tlpStatus</value>
@@ -1447,7 +1471,7 @@
     <value>txtEditStatus</value>
   </data>
   <data name="&gt;&gt;txtEditStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtEditStatus.Parent" xml:space="preserve">
     <value>tlpStatus</value>
@@ -1483,7 +1507,7 @@
     <value>lblUrgency</value>
   </data>
   <data name="&gt;&gt;lblUrgency.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblUrgency.Parent" xml:space="preserve">
     <value>tlpStatus</value>
@@ -1510,7 +1534,7 @@
     <value>nudUrgency</value>
   </data>
   <data name="&gt;&gt;nudUrgency.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;nudUrgency.Parent" xml:space="preserve">
     <value>tlpStatus</value>
@@ -1540,7 +1564,7 @@
     <value>tlpStatus</value>
   </data>
   <data name="&gt;&gt;tlpStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tlpStatus.Parent" xml:space="preserve">
     <value>fraStatus</value>
@@ -1573,7 +1597,7 @@
     <value>fraStatus</value>
   </data>
   <data name="&gt;&gt;fraStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fraStatus.Parent" xml:space="preserve">
     <value>flpCommon</value>
@@ -1603,7 +1627,7 @@
     <value>flpCommon</value>
   </data>
   <data name="&gt;&gt;flpCommon.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;flpCommon.Parent" xml:space="preserve">
     <value>tapCommon</value>
@@ -1630,7 +1654,7 @@
     <value>tapCommon</value>
   </data>
   <data name="&gt;&gt;tapCommon.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapCommon.Parent" xml:space="preserve">
     <value>tabInfo</value>
@@ -1654,7 +1678,7 @@
     <value>prgIPTC</value>
   </data>
   <data name="&gt;&gt;prgIPTC.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;prgIPTC.Parent" xml:space="preserve">
     <value>tapIPTC</value>
@@ -1681,7 +1705,7 @@
     <value>tapIPTC</value>
   </data>
   <data name="&gt;&gt;tapIPTC.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapIPTC.Parent" xml:space="preserve">
     <value>tabInfo</value>
@@ -1705,7 +1729,7 @@
     <value>prgExifMain</value>
   </data>
   <data name="&gt;&gt;prgExifMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;prgExifMain.Parent" xml:space="preserve">
     <value>tapExifMain</value>
@@ -1732,7 +1756,7 @@
     <value>tapExifMain</value>
   </data>
   <data name="&gt;&gt;tapExifMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapExifMain.Parent" xml:space="preserve">
     <value>tabExif</value>
@@ -1756,7 +1780,7 @@
     <value>prgExifExif</value>
   </data>
   <data name="&gt;&gt;prgExifExif.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;prgExifExif.Parent" xml:space="preserve">
     <value>tapExifExif</value>
@@ -1783,7 +1807,7 @@
     <value>tapExifExif</value>
   </data>
   <data name="&gt;&gt;tapExifExif.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapExifExif.Parent" xml:space="preserve">
     <value>tabExif</value>
@@ -1807,7 +1831,7 @@
     <value>prgExifGPS</value>
   </data>
   <data name="&gt;&gt;prgExifGPS.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;prgExifGPS.Parent" xml:space="preserve">
     <value>tapExifGPS</value>
@@ -1834,7 +1858,7 @@
     <value>tapExifGPS</value>
   </data>
   <data name="&gt;&gt;tapExifGPS.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapExifGPS.Parent" xml:space="preserve">
     <value>tabExif</value>
@@ -1858,7 +1882,7 @@
     <value>prgExifInterop</value>
   </data>
   <data name="&gt;&gt;prgExifInterop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;prgExifInterop.Parent" xml:space="preserve">
     <value>tapExifInterop</value>
@@ -1885,7 +1909,7 @@
     <value>tapExifInterop</value>
   </data>
   <data name="&gt;&gt;tapExifInterop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapExifInterop.Parent" xml:space="preserve">
     <value>tabExif</value>
@@ -1909,7 +1933,7 @@
     <value>prgExifThumbnail</value>
   </data>
   <data name="&gt;&gt;prgExifThumbnail.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;prgExifThumbnail.Parent" xml:space="preserve">
     <value>tapExifThumbnail</value>
@@ -1936,7 +1960,7 @@
     <value>tapExifThumbnail</value>
   </data>
   <data name="&gt;&gt;tapExifThumbnail.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapExifThumbnail.Parent" xml:space="preserve">
     <value>tabExif</value>
@@ -1960,7 +1984,7 @@
     <value>tabExif</value>
   </data>
   <data name="&gt;&gt;tabExif.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabExif.Parent" xml:space="preserve">
     <value>tapExif</value>
@@ -1987,7 +2011,7 @@
     <value>tapExif</value>
   </data>
   <data name="&gt;&gt;tapExif.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tapExif.Parent" xml:space="preserve">
     <value>tabInfo</value>
@@ -2011,7 +2035,7 @@
     <value>tabInfo</value>
   </data>
   <data name="&gt;&gt;tabInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabInfo.Parent" xml:space="preserve">
     <value>splMain.Panel2</value>
@@ -2026,7 +2050,7 @@
     <value>splMain.Panel2</value>
   </data>
   <data name="&gt;&gt;splMain.Panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splMain.Panel2.Parent" xml:space="preserve">
     <value>splMain</value>
@@ -2047,7 +2071,7 @@
     <value>splMain</value>
   </data>
   <data name="&gt;&gt;splMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splMain.Parent" xml:space="preserve">
     <value>tscMain.ContentPanel</value>
@@ -2055,7 +2079,7 @@
   <data name="&gt;&gt;splMain.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="stsStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="stsStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>0, 0</value>
   </metadata>
   <data name="stsStatus.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -2071,13 +2095,13 @@
     <value>False</value>
   </data>
   <data name="tslFolder.Size" type="System.Drawing.Size, System.Drawing">
-    <value>22, 17</value>
+    <value>23, 17</value>
   </data>
   <data name="tslFolder.Text" xml:space="preserve">
     <value>C:\</value>
   </data>
   <data name="tslNoFiles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 17</value>
+    <value>37, 17</value>
   </data>
   <data name="tslNoFiles.Text" xml:space="preserve">
     <value>0 files</value>
@@ -2095,7 +2119,7 @@
     <value>stsStatus</value>
   </data>
   <data name="&gt;&gt;stsStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;stsStatus.Parent" xml:space="preserve">
     <value>tscMain.BottomToolStripPanel</value>
@@ -2107,7 +2131,7 @@
     <value>tscMain.BottomToolStripPanel</value>
   </data>
   <data name="&gt;&gt;tscMain.BottomToolStripPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tscMain.BottomToolStripPanel.Parent" xml:space="preserve">
     <value>tscMain</value>
@@ -2122,7 +2146,7 @@
     <value>tscMain.ContentPanel</value>
   </data>
   <data name="&gt;&gt;tscMain.ContentPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripContentPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripContentPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tscMain.ContentPanel.Parent" xml:space="preserve">
     <value>tscMain</value>
@@ -2137,7 +2161,7 @@
     <value>tscMain.LeftToolStripPanel</value>
   </data>
   <data name="&gt;&gt;tscMain.LeftToolStripPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tscMain.LeftToolStripPanel.Parent" xml:space="preserve">
     <value>tscMain</value>
@@ -2152,7 +2176,7 @@
     <value>tscMain.RightToolStripPanel</value>
   </data>
   <data name="&gt;&gt;tscMain.RightToolStripPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tscMain.RightToolStripPanel.Parent" xml:space="preserve">
     <value>tscMain</value>
@@ -2169,7 +2193,7 @@
   <data name="tscMain.Text" xml:space="preserve">
     <value>ToolStripContainer1</value>
   </data>
-  <metadata name="msnMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="msnMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>0, 0</value>
   </metadata>
   <data name="msnMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -2179,13 +2203,13 @@
     <value>Ctrl+O</value>
   </data>
   <data name="tmiBrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="tmiBrowse.Text" xml:space="preserve">
     <value>&amp;Browse for folder ...</value>
   </data>
   <data name="tmiGoTo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="tmiGoTo.Text" xml:space="preserve">
     <value>&amp;Go to folder ...</value>
@@ -2194,25 +2218,25 @@
     <value>Ctrl+S</value>
   </data>
   <data name="tmiSaveAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="tmiSaveAll.Text" xml:space="preserve">
     <value>&amp;Save all</value>
   </data>
   <data name="tssFileSep1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 6</value>
+    <value>216, 6</value>
   </data>
   <data name="tmiExit.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Alt+F4</value>
   </data>
   <data name="tmiExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="tmiExit.Text" xml:space="preserve">
     <value>&amp;Exit</value>
   </data>
   <data name="tmiFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 20</value>
+    <value>37, 20</value>
   </data>
   <data name="tmiFile.Text" xml:space="preserve">
     <value>&amp;File</value>
@@ -2221,7 +2245,7 @@
     <value>F5</value>
   </data>
   <data name="tmiRefresh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>205, 22</value>
+    <value>203, 22</value>
   </data>
   <data name="tmiRefresh.Text" xml:space="preserve">
     <value>&amp;Refresh</value>
@@ -2230,7 +2254,7 @@
     <value>Alt+Right</value>
   </data>
   <data name="tmiNext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>205, 22</value>
+    <value>203, 22</value>
   </data>
   <data name="tmiNext.Text" xml:space="preserve">
     <value>Select &amp;next</value>
@@ -2242,49 +2266,49 @@
     <value>Alt+Left</value>
   </data>
   <data name="tmiPrevious.Size" type="System.Drawing.Size, System.Drawing">
-    <value>205, 22</value>
+    <value>203, 22</value>
   </data>
   <data name="tmiPrevious.Text" xml:space="preserve">
     <value>Select &amp;previous</value>
   </data>
   <data name="tmiView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 20</value>
+    <value>44, 20</value>
   </data>
   <data name="tmiView.Text" xml:space="preserve">
     <value>&amp;View</value>
   </data>
   <data name="tmiOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 22</value>
+    <value>226, 22</value>
   </data>
   <data name="tmiOptions.Text" xml:space="preserve">
     <value>&amp;Options ...</value>
   </data>
   <data name="tmiSynchronizeWithDatabase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 22</value>
+    <value>226, 22</value>
   </data>
   <data name="tmiSynchronizeWithDatabase.Text" xml:space="preserve">
     <value>&amp;Synchronize with database ...</value>
   </data>
   <data name="tmiTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+    <value>48, 20</value>
   </data>
   <data name="tmiTools.Text" xml:space="preserve">
     <value>&amp;Tools</value>
   </data>
   <data name="tmiAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>168, 22</value>
+    <value>161, 22</value>
   </data>
   <data name="tmiAbout.Text" xml:space="preserve">
     <value>&amp;About ...</value>
   </data>
   <data name="tmiVersionHistory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>168, 22</value>
+    <value>161, 22</value>
   </data>
   <data name="tmiVersionHistory.Text" xml:space="preserve">
     <value>&amp;Version history...</value>
   </data>
   <data name="tmiHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 20</value>
+    <value>44, 20</value>
   </data>
   <data name="tmiHelp.Text" xml:space="preserve">
     <value>&amp;Help</value>
@@ -2305,7 +2329,7 @@
     <value>msnMain</value>
   </data>
   <data name="&gt;&gt;msnMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;msnMain.Parent" xml:space="preserve">
     <value>tscMain.TopToolStripPanel</value>
@@ -2313,7 +2337,7 @@
   <data name="&gt;&gt;msnMain.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="tosMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="tosMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>3, 24</value>
   </metadata>
   <data name="tosMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -2374,7 +2398,7 @@
     <value>tosMain</value>
   </data>
   <data name="&gt;&gt;tosMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tosMain.Parent" xml:space="preserve">
     <value>tscMain.TopToolStripPanel</value>
@@ -2386,7 +2410,7 @@
     <value>tscMain.TopToolStripPanel</value>
   </data>
   <data name="&gt;&gt;tscMain.TopToolStripPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tscMain.TopToolStripPanel.Parent" xml:space="preserve">
     <value>tscMain</value>
@@ -2398,7 +2422,7 @@
     <value>tscMain</value>
   </data>
   <data name="&gt;&gt;tscMain.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tscMain.Parent" xml:space="preserve">
     <value>$this</value>
@@ -2406,19 +2430,19 @@
   <data name="&gt;&gt;tscMain.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="bgwImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="bgwImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 58</value>
   </metadata>
-  <metadata name="fbdGoTo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="fbdGoTo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>333, 58</value>
   </metadata>
-  <metadata name="bgwSave.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="bgwSave.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 1</value>
   </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>40</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
@@ -2753,180 +2777,180 @@
     <value>imlFolders</value>
   </data>
   <data name="&gt;&gt;imlFolders.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiMerge.Name" xml:space="preserve">
     <value>tmiMerge</value>
   </data>
   <data name="&gt;&gt;tmiMerge.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;imlImages.Name" xml:space="preserve">
     <value>imlImages</value>
   </data>
   <data name="&gt;&gt;imlImages.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tpbLoading.Name" xml:space="preserve">
     <value>tpbLoading</value>
   </data>
   <data name="&gt;&gt;tpbLoading.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tslFolder.Name" xml:space="preserve">
     <value>tslFolder</value>
   </data>
   <data name="&gt;&gt;tslFolder.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tslNoFiles.Name" xml:space="preserve">
     <value>tslNoFiles</value>
   </data>
   <data name="&gt;&gt;tslNoFiles.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbBack.Name" xml:space="preserve">
-    <value>tsbBack</value>
-  </data>
-  <data name="&gt;&gt;tsbBack.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbForward.Name" xml:space="preserve">
-    <value>tsbForward</value>
-  </data>
-  <data name="&gt;&gt;tsbForward.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbRefresh.Name" xml:space="preserve">
-    <value>tsbRefresh</value>
-  </data>
-  <data name="&gt;&gt;tsbRefresh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tsbSaveAll.Name" xml:space="preserve">
-    <value>tsbSaveAll</value>
-  </data>
-  <data name="&gt;&gt;tsbSaveAll.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiFile.Name" xml:space="preserve">
     <value>tmiFile</value>
   </data>
   <data name="&gt;&gt;tmiFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiBrowse.Name" xml:space="preserve">
     <value>tmiBrowse</value>
   </data>
   <data name="&gt;&gt;tmiBrowse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiGoTo.Name" xml:space="preserve">
     <value>tmiGoTo</value>
   </data>
   <data name="&gt;&gt;tmiGoTo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiSaveAll.Name" xml:space="preserve">
     <value>tmiSaveAll</value>
   </data>
   <data name="&gt;&gt;tmiSaveAll.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tssFileSep1.Name" xml:space="preserve">
     <value>tssFileSep1</value>
   </data>
   <data name="&gt;&gt;tssFileSep1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiExit.Name" xml:space="preserve">
     <value>tmiExit</value>
   </data>
   <data name="&gt;&gt;tmiExit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiView.Name" xml:space="preserve">
     <value>tmiView</value>
   </data>
   <data name="&gt;&gt;tmiView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiRefresh.Name" xml:space="preserve">
     <value>tmiRefresh</value>
   </data>
   <data name="&gt;&gt;tmiRefresh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiNext.Name" xml:space="preserve">
     <value>tmiNext</value>
   </data>
   <data name="&gt;&gt;tmiNext.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiPrevious.Name" xml:space="preserve">
     <value>tmiPrevious</value>
   </data>
   <data name="&gt;&gt;tmiPrevious.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiTools.Name" xml:space="preserve">
     <value>tmiTools</value>
   </data>
   <data name="&gt;&gt;tmiTools.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiOptions.Name" xml:space="preserve">
     <value>tmiOptions</value>
   </data>
   <data name="&gt;&gt;tmiOptions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiSynchronizeWithDatabase.Name" xml:space="preserve">
     <value>tmiSynchronizeWithDatabase</value>
   </data>
   <data name="&gt;&gt;tmiSynchronizeWithDatabase.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiHelp.Name" xml:space="preserve">
     <value>tmiHelp</value>
   </data>
   <data name="&gt;&gt;tmiHelp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiAbout.Name" xml:space="preserve">
     <value>tmiAbout</value>
   </data>
   <data name="&gt;&gt;tmiAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tmiVersionHistory.Name" xml:space="preserve">
     <value>tmiVersionHistory</value>
   </data>
   <data name="&gt;&gt;tmiVersionHistory.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbBack.Name" xml:space="preserve">
+    <value>tsbBack</value>
+  </data>
+  <data name="&gt;&gt;tsbBack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbForward.Name" xml:space="preserve">
+    <value>tsbForward</value>
+  </data>
+  <data name="&gt;&gt;tsbForward.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Name" xml:space="preserve">
+    <value>tsbRefresh</value>
+  </data>
+  <data name="&gt;&gt;tsbRefresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbSaveAll.Name" xml:space="preserve">
+    <value>tsbSaveAll</value>
+  </data>
+  <data name="&gt;&gt;tsbSaveAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bgwImages.Name" xml:space="preserve">
     <value>bgwImages</value>
   </data>
   <data name="&gt;&gt;bgwImages.Type" xml:space="preserve">
-    <value>System.ComponentModel.BackgroundWorker, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fbdGoTo.Name" xml:space="preserve">
     <value>fbdGoTo</value>
   </data>
   <data name="&gt;&gt;fbdGoTo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FolderBrowserDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.FolderBrowserDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bgwSave.Name" xml:space="preserve">
     <value>bgwSave</value>
   </data>
   <data name="&gt;&gt;bgwSave.Type" xml:space="preserve">
-    <value>System.ComponentModel.BackgroundWorker, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmMain</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
