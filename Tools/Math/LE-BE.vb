@@ -1,3 +1,4 @@
+Imports Tools.ExtensionsT
 'LE-BE (endians) conversions
 #If Config <= RC Then 'Stage: RC
 Partial Class MathT
@@ -27,11 +28,12 @@ Partial Class MathT
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
     ''' <author www="http://dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.3">Fix: Does not work correctly for negative values (<see cref="OverflowException"/> may be thrown).</version>
     Public Overloads Shared Function LEBE(ByVal value As Integer) As Integer
-        Dim B1 As Byte = (value And &HFF000000I) >> (3 * 8)
-        Dim B2 As Byte = (value And &HFF0000I) >> (2 * 8)
-        Dim B3 As Byte = (value And &HFF00I) >> 8
-        Dim B4 As Byte = (value And &HFFI)
+        Dim B1 As Byte = ((value And &HFF000000I) >> (3 * 8)) And &HFFI
+        Dim B2 As Byte = ((value And &HFF0000I) >> (2 * 8)) And &HFFI
+        Dim B3 As Byte = ((value And &HFF00I) >> 8) And &HFFI
+        Dim B4 As Byte = value And &HFFI
         Return CInt(B4) << (3 * 8) Or CInt(B3) << (2 * 8) Or CInt(B2) << 8 Or B1
     End Function
     ''' <summary>Converts <see cref="UInteger"/> from Little Endian to Big Endian or vice versa</summary>
