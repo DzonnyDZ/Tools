@@ -27,6 +27,7 @@ Namespace IOt
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Position"/> is not within range &lt;0; <paramref name="Stream"/>.<see cref="Stream.Length">Length</see>) -or- <paramref name="BytesToReplace"/> is not within range &lt;0; <paramref name="Stream"/>.<see cref="Stream.Length">Lenght</see> - <paramref name="Position"/> - or- <paramref name="Chunk"/> is not positive -or- <paramref name="Offset"/> or <paramref name="Count"/> is negative</exception>
         ''' <exception cref="ArgumentException">Sum of <paramref name="Offset"/> and <paramref name="Count"/> is greater than length of <paramref name="Data"/></exception>
         ''' <version version="1.5.3" stage="Nightly">Fix: <see cref="ArgumentOutOfRangeException"/> may be thrown when <paramref name="BytesToReplace"/>  &lt; <paramref name="Count"/>.</version>
+        ''' <version version="1.5.3">Fix: <see cref="ArgumentException"/> thrown when <paramref name="BytesToReplace"/> >= <paramref name="Count"/> (fixed - the exception is no longer thrown).</version>
         <Extension()> _
         Public Sub InsertInto(ByVal Stream As IO.Stream, ByVal Position As Integer, ByVal BytesToReplace As Integer, ByVal Data As Byte(), ByVal Offset As Long, ByVal Count As Long, Optional ByVal Chunk As Integer = 1024)
             If Stream Is Nothing Then Throw New ArgumentNullException("Stream")
@@ -37,7 +38,10 @@ Namespace IOt
             If Offset + Count > Data.Length Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.WasGreaterThanLegnthOf2, "Offset", "Count", "Data"))
             If Offset < 0 Then Throw New ArgumentOutOfRangeException("offset", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "Offset"))
             If Count < 0 Then Throw New ArgumentOutOfRangeException("offset", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "Count"))
-            If BytesToReplace >= Count Then
+            If BytesToReplace = Count Then
+                Stream.Seek(Position, SeekOrigin.Begin)
+                Stream.Write(Data, Offset, Count)
+            ElseIf BytesToReplace >= Count Then
                 Stream.Seek(Position, SeekOrigin.Begin)
                 Stream.Write(Data, Offset, Count)
                 Dim i As Integer
@@ -46,7 +50,7 @@ Namespace IOt
                     Stream.Seek(i, SeekOrigin.Begin)
                     Dim pos As Long = 0
                     While pos < Chunk
-                        pos += Stream.Read(BArr, pos, Chunk - pos)
+                        pos += Stream.Read(BArr, pos, BArr.Length - pos)
                     End While
                     Stream.Seek(i - (BytesToReplace - Count), SeekOrigin.Begin)
                     Stream.Write(BArr, 0, Chunk)
@@ -56,7 +60,7 @@ Namespace IOt
                     Stream.Seek(i, SeekOrigin.Begin)
                     Dim pos As Long = 0
                     While pos < BArr.Length
-                        pos += Stream.Read(BArr, pos, Chunk - BArr.Length)
+                        pos += Stream.Read(BArr, pos, BArr.Length - pos)
                     End While
                     Stream.Seek(i - (BytesToReplace - Count), SeekOrigin.Begin)
                     Stream.Write(BArr, 0, BArr.Length)
@@ -118,6 +122,7 @@ Namespace IOt
         ''' </exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Stream"/> is null -or- <paramref name="Data"/> is null</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Position"/> is not within range &lt;0; <paramref name="Stream"/>.<see cref="Stream.Length">Length</see>) -or- <paramref name="BytesToReplace"/> is not within range &lt;0; <paramref name="Stream"/>.<see cref="Stream.Length">Lenght</see> - <paramref name="Position"/> - or- <paramref name="Chunk"/> is not positive</exception>
+        ''' <version version="1.5.3">Fix: <see cref="ArgumentException"/> thrown when <paramref name="BytesToReplace"/> >= <paramref name="Data"/>.<see cref="Array.Length">Length</see> (fixed - the exception is no longer thrown).</version>
         <Extension()> _
         Public Sub InsertInto(ByVal Stream As IO.Stream, ByVal Position As Integer, ByVal BytesToReplace As Integer, ByVal Data As Byte(), Optional ByVal Chunk As Integer = 1024)
             Stream.InsertInto(Position, BytesToReplace, Data, 0, Data.Length, Chunk)
