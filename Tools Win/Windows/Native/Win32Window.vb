@@ -503,7 +503,6 @@ Namespace WindowsT.NativeT
         End Sub
         ''' <summary>Posts given window message to current window without waiting for the window to process the message</summary>
         ''' <param name="message">A message to be Post</param>
-        ''' <returns>Messsage return value - meaning depends on <paramref name="message"/>.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="message"/> is null</exception>
         ''' <exception cref="API.Win32APIException">Failed to post the message</exception>
         ''' <version version="1.5.3">This function is new in version 1.5.3</version>

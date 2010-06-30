@@ -1042,6 +1042,7 @@ CircleLevel:            If CircleLevel < Location.Count - 2 Then '2 because 1 fo
         ''' <remarks>If current step is <see cref="SpecialStep"/> <see cref="CurrentObject"/> is used instead of <see cref="ContextObject"/></remarks>
         Public Overridable ReadOnly Property CircleLevel() As Integer
             Get
+                Dim ret% = 0
                 Try
                     Dim co As Object = ContextObject
                     If CurrentStep.StepClass = [Step].StepClasses.Special Then co = CurrentObject
@@ -1062,10 +1063,11 @@ CircleLevel:            If CircleLevel < Location.Count - 2 Then '2 because 1 fo
                         End If
                         i += 1
                     Next item
-                    Return Location.Count - 1
+                    ret = Location.Count - 1
                 Finally
-                    If CurrentStep.StepClass = [Step].StepClasses.Special AndAlso CircleLevel = Location.Count - 1 Then CircleLevel = Location.Count - 2
+                    If CurrentStep.StepClass = [Step].StepClasses.Special AndAlso ret = Location.Count - 1 Then CircleLevel = Location.Count - 2
                 End Try
+                Return ret
             End Get
         End Property
         ''' <summary>Contains value of the <see cref="AllowCircles"/> property</summary>

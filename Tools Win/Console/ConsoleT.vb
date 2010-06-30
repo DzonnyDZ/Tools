@@ -174,7 +174,7 @@ Public Class ConsoleT
 
     ''' <summary>Permanently prevents console window from being closed by user (removes/dsiables the close button)</summary>
     ''' <remarks>This change cannot be easily reverted.
-    ''' <para>This method uses approch descriped here: <a href="http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&x=10&y=12">http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&x=10&y=12</a>.</para>
+    ''' <para>This method uses approch descriped here: <a href="http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&amp;x=10&amp;y=12">http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&amp;x=10&amp;y=12</a>.</para>
     ''' <para>User still can close console window via task manager or via taskbar context menu in Windows 7.</para>
     ''' </remarks>
     ''' <exception cref="API.Win32APIException">An error occured</exception>

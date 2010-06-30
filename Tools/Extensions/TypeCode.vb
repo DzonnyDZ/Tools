@@ -61,10 +61,12 @@ Namespace ExtensionsT
         ''' <param name="tc"><see cref="TypeCode"/> to check</param>
         ''' <returns>True if <paramref name="tc"/> is one of <see cref="TypeCode.Int16"/>, <see cref="TypeCode.UInt16"/>, <see cref="TypeCode.Int32"/>, <see cref="TypeCode.UInt32"/>, <see cref="TypeCode.Int64"/>, <see cref="TypeCode.UInt64"/>, <see cref="TypeCode.[Byte]"/>, <see cref="TypeCode.[SByte]"/>, <see cref="TypeCode.[Char]"/></returns>
         ''' <remarks>Although <see cref="TypeCode.[Char]"/> is not considered number (by <see cref="IsNumber"/>) it is considered integer by this function</remarks>
+        ''' <version version="1.5.3">Fix: Always returns false</version>
         <Extension()> _
         Public Function IsInteger(ByVal tc As TypeCode) As Boolean
             Select Case tc
                 Case TypeCode.SByte, TypeCode.Byte, TypeCode.UInt16, TypeCode.UInt32, TypeCode.UInt64, TypeCode.Int16, TypeCode.Int32, TypeCode.Int64, TypeCode.Char
+                    Return True
                 Case Else : Return False
             End Select
         End Function

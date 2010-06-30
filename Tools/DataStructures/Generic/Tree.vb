@@ -559,83 +559,80 @@ Namespace DataStructuresT.GenericT
             ''' <summary>Advances the enumerator to the next element of the collection.</summary>
             ''' <returns>true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.</returns>
             Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
-                Try
-                    If Current Is Nothing AndAlso Before Then
-                        'Get first node
-                        Select Case Order
-                            Case Tree.EnumOrders.PreOrder
-                                Current = Root
-                            Case Else
-                                If Direction = Tree.EnumDirections.FirstToLast Then
-                                    Current = Root.LeftMost
-                                Else
-                                    Current = Root.RightMost
+                If Current Is Nothing AndAlso Before Then
+                    'Get first node
+                    Select Case Order
+                        Case Tree.EnumOrders.PreOrder
+                            Current = Root
+                        Case Else
+                            If Direction = Tree.EnumDirections.FirstToLast Then
+                                Current = Root.LeftMost
+                            Else
+                                Current = Root.RightMost
+                            End If
+                    End Select
+                    Before = False
+                    Return True
+                ElseIf Current Is Nothing Then
+                    Return False
+                Else 'Get next node
+                    Select Case Order
+                        Case Tree.EnumOrders.PreOrder
+                            If Direction = Tree.EnumDirections.FirstToLast Then
+                                Current = Me.Current.PreOrderNextRight(Root)
+                            Else
+                                Current = Me.Current.PreOrderNextLeft(Root)
+                            End If
+                        Case Tree.EnumOrders.PostOrder
+                            If Current Is Root Then
+                                Current = Nothing
+                            ElseIf Direction = Tree.EnumDirections.FirstToLast Then
+                                Dim Right As Tree(Of T) = Me.Current.RightNeighbour
+                                If Right IsNot Nothing Then
+                                    Current = Right.LeftMost
+                                Else : Current = Current.Parent
                                 End If
-                        End Select
-                        Before = False
-                        Return True
-                    ElseIf Current Is Nothing Then
-                        Return False
-                    Else 'Get next node
-                        Select Case Order
-                            Case Tree.EnumOrders.PreOrder
-                                If Direction = Tree.EnumDirections.FirstToLast Then
-                                    Current = Me.Current.PreOrderNextRight(Root)
-                                Else
-                                    Current = Me.Current.PreOrderNextLeft(Root)
+                            Else
+                                Dim Left As Tree(Of T) = Me.Current.LeftNeighbour
+                                If Left IsNot Nothing Then
+                                    Current = Left.RightMost
+                                Else : Current = Current.Parent
                                 End If
-                            Case Tree.EnumOrders.PostOrder
-                                If Current Is Root Then
-                                    Current = Nothing
-                                ElseIf Direction = Tree.EnumDirections.FirstToLast Then
-                                    Dim Right As Tree(Of T) = Me.Current.RightNeighbour
-                                    If Right IsNot Nothing Then
-                                        Current = Right.LeftMost
-                                    Else : Current = Current.Parent
-                                    End If
+                            End If
+                        Case Else 'In-order
+                            Dim Index As Integer
+                            If Direction = Tree.EnumDirections.FirstToLast Then
+                                Index = Me.Current.InOrderNextChildIndex
+                            Else
+                                Index = Me.Current.InOrderPrevChildIndex
+                            End If
+                            If Index >= 0 Then
+                                Current = Me.Current.Nodes(Index)
+                            ElseIf Me.Current.Parent Is Nothing OrElse Me.Current.Parent Is Root Then
+                                Current = Nothing
+                            Else
+                                Dim MyIndex As Integer = Me.Current.Index
+                                If (Index = Me.Current.Parent.InOrderPrevChildIndex AndAlso Direction = Tree.EnumDirections.FirstToLast) OrElse (Index = Me.Current.Parent.InOrderNextChildIndex AndAlso Direction = Tree.EnumDirections.LastToFirst) Then
+                                    Current = Current.Parent
                                 Else
-                                    Dim Left As Tree(Of T) = Me.Current.LeftNeighbour
-                                    If Left IsNot Nothing Then
-                                        Current = Left.RightMost
-                                    Else : Current = Current.Parent
-                                    End If
-                                End If
-                            Case Else 'In-order
-                                Dim Index As Integer
-                                If Direction = Tree.EnumDirections.FirstToLast Then
-                                    Index = Me.Current.InOrderNextChildIndex
-                                Else
-                                    Index = Me.Current.InOrderPrevChildIndex
-                                End If
-                                If Index >= 0 Then
-                                    Current = Me.Current.Nodes(Index)
-                                ElseIf Me.Current.Parent Is Nothing OrElse Me.Current.Parent Is Root Then
-                                    Current = Nothing
-                                Else
-                                    Dim MyIndex As Integer = Me.Current.Index
-                                    If (Index = Me.Current.Parent.InOrderPrevChildIndex AndAlso Direction = Tree.EnumDirections.FirstToLast) OrElse (Index = Me.Current.Parent.InOrderNextChildIndex AndAlso Direction = Tree.EnumDirections.LastToFirst) Then
-                                        Current = Current.Parent
+                                    Dim NextNode As Tree(Of T)
+                                    If Direction = Tree.EnumDirections.FirstToLast Then
+                                        NextNode = Me.Current.RightNeighbour
                                     Else
-                                        Dim NextNode As Tree(Of T)
-                                        If Direction = Tree.EnumDirections.FirstToLast Then
-                                            NextNode = Me.Current.RightNeighbour
-                                        Else
-                                            NextNode = Me.Current.LeftNeighbour
-                                        End If
-                                        If NextNode IsNot Nothing Then
-                                            Current = NextNode
-                                        ElseIf Direction = Tree.EnumDirections.FirstToLast Then
-                                            Current = Current.PreOrderNextRight(Root)
-                                        Else
-                                            Current = Current.PreOrderNextLeft(Root)
-                                        End If
+                                        NextNode = Me.Current.LeftNeighbour
+                                    End If
+                                    If NextNode IsNot Nothing Then
+                                        Current = NextNode
+                                    ElseIf Direction = Tree.EnumDirections.FirstToLast Then
+                                        Current = Current.PreOrderNextRight(Root)
+                                    Else
+                                        Current = Current.PreOrderNextLeft(Root)
                                     End If
                                 End If
-                        End Select
-                    End If
-                Finally
-                    If Current Is Nothing Then MoveNext = False
-                End Try
+                            End If
+                    End Select
+                    Return Current IsNot Nothing
+                End If
             End Function
             ''' <summary>Sets the enumerator to its initial position, which is before the first element in the collection.</summary>
             Public Sub Reset() Implements System.Collections.IEnumerator.Reset

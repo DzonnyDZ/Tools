@@ -55,13 +55,14 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     ''' <summary>Contains value of the <see cref="IPTCContains"/> and <see cref="IPTCLoaded"/> properties</summary>
     Private _IPTCContains As Boolean? = Nothing
     ''' <summary>Gets value idicating if this instance contains IPTC information</summary>
+    ''' <version version="2.0.3">Fix: Returns false when chack was not done prior to call</version>
     Public ReadOnly Property IPTCContains() As Boolean
         Get
-            If Not _IPTCContains.HasValue Then
+            If Not _IPTCContains.HasValue Then _
                 IPTCLoad(True)
-            Else
-                Return _IPTCContains
-            End If
+            ' Else
+            Return _IPTCContains
+            'End If
         End Get
     End Property
     ''' <summary>Gets value indicating if IPTC for this instance was altready loaded</summary>
@@ -110,13 +111,14 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     ''' <summary>Contains value of the <see cref="IPTCContains"/> and <see cref="IPTCLoaded"/> properties</summary>
     Private _ExifContains As Boolean? = Nothing
     ''' <summary>Gets value idicating if this instance contains IPTC information</summary>
+    ''' <version version="2.0.3">Fix: Returns false when chack was not done prior to call</version>
     Public ReadOnly Property ExifContains() As Boolean
         Get
-            If Not _ExifContains.HasValue Then
+            If Not _ExifContains.HasValue Then _
                 ExifLoad(False)
-            Else
-                Return _ExifContains
-            End If
+            'Else
+            Return _ExifContains
+            'End If
         End Get
     End Property
     ''' <summary>Gets value indicating if IPTC for this instance was altready loaded</summary>

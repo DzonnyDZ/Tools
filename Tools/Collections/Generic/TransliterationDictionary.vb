@@ -10,12 +10,11 @@ Namespace CollectionsT.GenericT
 #Region "CTors"
         ''' <summary>CTor - creates a new instance of <see cref="TransliterationDictionary"/> class</summary>
         ''' <param name="dictionary">Contains data to populate dictionary with</param>
-        ''' <param name="comparison">Comparison used for comparing keys</param>
         ''' <exception cref="ArgumentNullException"><paramref name="dictionary"/> or <paramref name="comparison"/> is null</exception>
         Public Sub New(ByVal dictionary As IEnumerable(Of KeyValuePair(Of String, String)))
             MyBase.New(dictionary, StringComparer.Ordinal)
         End Sub
-        ''' <summary>Copy CTor - creates a copy of given instance of <see cref="DuplicateDictionary{TKey, TValue}"/></summary>
+        ''' <summary>Copy CTor - creates a copy of given instance of <see cref="DuplicateDictionary(Of TKey, TValue)"/></summary>
         ''' <param name="dictionary">A dictionary to create clone of</param>
         ''' <exception cref="ArgumentNullException"><paramref name="dictionary"/> is null</exception>
         Public Sub New(ByVal dictionary As TransliterationDictionary)

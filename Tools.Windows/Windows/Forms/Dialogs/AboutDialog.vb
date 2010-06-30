@@ -22,9 +22,10 @@ Namespace WindowsT.FormsT
         ''' <summary>Displays a modal dialog</summary>
         ''' <param name="owner">Window, dialog will be modal to, or null</param>
         ''' <returns>Result of dialog. <see cref="DialogResult.OK"/> when user clicked on OK button, pressed Enter or Escape; <see cref="DialogResult.Cancel"/> when window was closed another way (e.g. the close (X) button in top right corner)</returns>
+        ''' <version version="1.5.3">Fix: Always returns <see cref="DialogResult.None"/>.</version>
         Public Shared Function ShowModalDialog(Optional ByVal owner As IWin32Window = Nothing) As Windows.Forms.DialogResult
             Dim inst As New AboutDialog
-            inst.ShowDialog(owner)
+            Return inst.ShowDialog(owner)
         End Function
 
         Private Sub cmdOK_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdOK.Click

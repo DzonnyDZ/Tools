@@ -480,6 +480,7 @@ Namespace CollectionsT.GenericT
                         AddItemHandler(key)
                         Return False
                     End If
+                Else : Return False
                 End If
             Else
                 Return False

@@ -467,6 +467,7 @@ Namespace MetadataT.ExifT
             Dim IFD As IFDIndexes, RecordNumber As UShort
             InterpretKey(Key, IFD, RecordNumber)
             If Me.IFD(IFD) IsNot Nothing Then Return Me.IFD(IFD).Records.ContainsKey(RecordNumber)
+            Return False
         End Function
 
         ''' <summary>Gets keys of all the metadata present in curent instance</summary>
@@ -787,9 +788,10 @@ Namespace MetadataT.ExifT
         ''' <summary>Contains value of the <see cref="Fixed"/> property</summary>
         Private _Fixed As Boolean
         ''' <summary>True if <see cref="ExifRecordDescription.NumberOfElements"/> of this record is fixed</summary>
+        ''' <version version="1.5.3">Fix: Throws <see cref="StackOverflowException"/></version>
         Public ReadOnly Property Fixed() As Boolean
             Get
-                Return Fixed
+                Return _Fixed
             End Get
         End Property
         ''' <summary>Datatype and number of items of record</summary>

@@ -99,8 +99,11 @@ Namespace CollectionsT.GenericT
         ''' <param name="Value">Item to be added</param>
         ''' <remarks>Item is immediatelly sorted at correct index</remarks>
         ''' <returns>Index at which the item was pushed</returns>
+        ''' <version version="1.5.3">Fix: Always returns 0</version>
         Public Function Push(ByVal Value As T) As Integer
-            List.Insert(GetInsertIndex(Value), Value)
+            Dim index As Integer = GetInsertIndex(Value)
+            List.Insert(index, Value)
+            Return index
         End Function
         ''' <summary>Gets index where item item is expected to be</summary>
         ''' <param name="Value">Item to find</param>

@@ -1384,4 +1384,10 @@
   <data name="CollectionCannotContainNullValue" xml:space="preserve">
     <value>Collection cannot contain null value</value>
   </data>
+  <data name="NoPropertyIsMostSpecific" xml:space="preserve">
+    <value>No {0} property is most specific</value>
+  </data>
+  <data name="NoSuitablePropertyFound" xml:space="preserve">
+    <value>No suitable {0} property found</value>
+  </data>
 </root>

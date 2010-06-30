@@ -129,12 +129,12 @@ Namespace IOt
 
         ''' <summary>Sets the position within the current stream.</summary>
         ''' <returns>The new position within the current stream.</returns>
-        ''' <param name="offset">A byte offset relative to the 
-        ''' <paramref name="origin" /> parameter.</param>
+        ''' <param name="offset">A byte offset relative to the <paramref name="origin" /> parameter.</param>
         ''' <param name="origin">A value of type <see cref="T:System.IO.SeekOrigin" /> indicating the reference point used to obtain the new position.</param>
         ''' <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="T:System.NotSupportedException">The stream does not support seeking, such as if the stream is constructed from a pipe or console output.</exception>
         ''' <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+        ''' <version version="1.5.3">Fix: ALways returns zero.</version>
         ''' <filterpriority>1</filterpriority>
         Public Overrides Function Seek(ByVal offset As Long, ByVal origin As System.IO.SeekOrigin) As Long
             If Not CanSeek Then Throw New NotSupportedException(ResourcesT.Exceptions.ThisStreamDoesNotSupportSeeking)
@@ -150,6 +150,7 @@ Namespace IOt
                 iStream += 1
                 If iStream >= Streams.Length Then Throw New IO.IOException(ResourcesT.Exceptions.AttemptToSeekAfterEndOfStream)
             End While
+            Return Position
         End Function
     End Class
 End Namespace

@@ -59,7 +59,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' JPEG stream doesn't end with corect EOI marker
         ''' </exception>
         ''' <remarks>The <paramref name="Stream"/> is not automatically closed when instance is disposed.
-        ''' <para>When using this contructor system (<see cref="SystemMetadata"/>) and image (<see cref="ImageMetadata"/>) will be available.</remarks> only when <paramref name="Stream"/> is <see cref="IO.FileStream"/>.</para></remarks>
+        ''' <para>When using this contructor system (<see cref="SystemMetadata"/>) and image (<see cref="ImageMetadata"/>) will be available only when <paramref name="Stream"/> is <see cref="IO.FileStream"/>.</para></remarks>
         Public Sub New(ByVal Stream As System.IO.Stream)
             If Stream.CanRead AndAlso Stream.CanSeek Then
                 Me.Stream = Stream

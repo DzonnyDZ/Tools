@@ -2093,6 +2093,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'No {0} property is most specific'.
+        '''</summary>
+        Public ReadOnly Property NoPropertyIsMostSpecific() As String
+            Get
+                Return ResourceManager.GetString("NoPropertyIsMostSpecific", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'No suitable {0} property found'.
+        '''</summary>
+        Public ReadOnly Property NoSuitablePropertyFound() As String
+            Get
+                Return ResourceManager.GetString("NoSuitablePropertyFound", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '{0} not found in {1}'.
         '''</summary>
         Public ReadOnly Property NotFoundIn1() As String
@@ -5821,6 +5839,24 @@ Namespace ResourcesT
         '''<returns>The NoJPEGMarkerFound property value.</returns>
         Public Function NoJPEGMarkerFoundFormat() As String
             Return NoJPEGMarkerFound
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'No {0} property is most specific'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function NoPropertyIsMostSpecificFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, NoPropertyIsMostSpecific, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'No suitable {0} property found'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function NoSuitablePropertyFoundFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, NoSuitablePropertyFound, arg0)
         End Function
         
         '''<summary>

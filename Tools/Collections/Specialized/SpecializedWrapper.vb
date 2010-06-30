@@ -241,9 +241,11 @@ Namespace CollectionsT.SpecializedT
             ''' <returns>The position into which the new element was inserted.</returns>
             ''' <exception cref="System.NotSupportedException">The <see cref="System.Collections.IList" /> is read-only.-or- The <see cref="System.Collections.IList" /> has a fixed size.</exception>
             ''' <exception cref="TypeMismatchException"><paramref name="value"/> is not of type <typeparemref name="TItem"/></exception>
+            ''' <version version="1.5.3">Fix: Always returns 0</version>
             Private Function Add_Unsafe(ByVal value As Object) As Integer Implements System.Collections.IList.Add
                 ThrowType(value)
                 Add(value)
+                Return Count - 1
             End Function
 #End Region
         End Class

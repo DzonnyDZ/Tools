@@ -819,6 +819,7 @@ exceptions.Add(Err.GetException)
                         AddItemHandler(i)
                         Return False
                     End If
+                Else : Return False
                 End If
             Else
                 Return False
@@ -1585,7 +1586,7 @@ exceptions.Add(Err.GetException)
         ''' <remarks>This member implements <see cref="IBindingList.AllowNew"/></remarks>
         Public Overrides ReadOnly Property CanAddNew() As Boolean 'Implements System.ComponentModel.IBindingList.AllowNew
             Get
-                GetType(T).CanAutomaticallyCreateInstance()
+                Return GetType(T).CanAutomaticallyCreateInstance()
             End Get
         End Property
 

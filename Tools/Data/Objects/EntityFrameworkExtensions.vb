@@ -2,6 +2,7 @@
 Imports System.Reflection, System.Linq
 Imports System.Data.Objects
 Imports System.Data.Objects.DataClasses
+Imports Tools.ExtensionsT
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace DataT.ObjectsT
@@ -98,17 +99,17 @@ Namespace DataT.ObjectsT
             If eqPrps.Count = 1 Then
                 tPrp = eqPrps(0)
             ElseIf eqPrps.Count > 1 Then
-                Throw New AmbiguousMatchException("No ObjectSet property is most specific")
+                Throw New AmbiguousMatchException(ResourcesT.Exceptions.NoPropertyIsMostSpecific.f(GetType(IObjectSet(Of )).Name))
             ElseIf eq2prp.Count = 1 Then
                 tPrp = eq2prp(0)
             ElseIf eq2prp.Count > 1 Then
-                Throw New AmbiguousMatchException("No ObjectSet property is most specific")
+                Throw New AmbiguousMatchException(ResourcesT.Exceptions.NoPropertyIsMostSpecific.f(GetType(IObjectSet(Of )).Name))
             ElseIf TargetProperties.Count = 1 Then
                 tPrp = TargetProperties(0)
             ElseIf TargetProperties.Count > 0 Then
-                Throw New AmbiguousMatchException("No ObjectSet property is most specific")
+                Throw New AmbiguousMatchException(ResourcesT.Exceptions.NoPropertyIsMostSpecific.f(GetType(IObjectSet(Of )).Name))
             Else
-                Throw New MissingMemberException("No suitable ObjectSet property found")
+                Throw New MissingMemberException(ResourcesT.Exceptions.NoSuitablePropertyFound.f(GetType(IObjectSet(Of )).Name))
             End If
             'Late binding here is intensionally
             tPrp.GetValue(context, Nothing).AddObject(entity)

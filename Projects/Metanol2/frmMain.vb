@@ -834,6 +834,7 @@ Public Class frmMain
     ''' <param name="e">If called assynchronously argument e of <see cref="bgwSave"/>.<see cref="BackgroundWorker.DoWork">DoWork</see></param>
     ''' <remarks>True if all changes have been saved or whan it have not been saved but user confirmed that changes may be lost.</remarks>
     Private Function DoSave(Optional ByVal bgw As BackgroundWorker = Nothing, Optional ByVal e As DoWorkEventArgs = Nothing) As Boolean
+        DoSave = False
         Try
             Dim i As Integer = 0
             Dim OldCount = ChangedMetadata.Count
@@ -853,7 +854,7 @@ Retry:              item.Save()
                 i += 1
                 If bgw IsNot Nothing Then bgw.ReportProgress(i / OldCount * 100)
             Next
-            Return True
+            DoSave = True
         Finally
             If e IsNot Nothing Then e.Result = DoSave
         End Try

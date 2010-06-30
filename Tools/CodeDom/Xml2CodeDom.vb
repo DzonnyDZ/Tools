@@ -551,11 +551,13 @@ Namespace CodeDomT
         ''' <summary>Converts XML boolean value to <see cref="Boolean"/></summary>
         ''' <param name="XmlValue">Value to be converted</param>
         ''' <returns><see cref="Boolean"/> equivalent of <paramref name="XmlValue"/></returns>
+        ''' <exception cref="ArgumentException"><paramref name="XmlValue"/> does not represent valid XML boolean value</exception>
         Private Function GetBool(ByVal XmlValue$) As Boolean
             Select Case XmlValue
                 Case "1", "true" : Return True
                 Case "0", "false" : Return False
             End Select
+            Throw New ArgumentException("Invalid XML boolean value")
         End Function
         ''' <summary>Gets <see cref="CodeExpression"/> from <c>&lt;Expression></c> element</summary>
         ''' <param name="Xml">The <c>&lt;Expression></c> element</param>

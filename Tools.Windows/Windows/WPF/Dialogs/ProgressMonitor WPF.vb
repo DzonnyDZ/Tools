@@ -483,7 +483,7 @@ Namespace WindowsT.WPF.DialogsT
         End Property
         ''' <summary>Contains value of the <see cref="DoWorkOnShow"/> property</summary>
         Private _DoWorkOnShow As Boolean = True
-        ''' <summary>Gets or sets value indicationg if form will call <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.RunWorkerAsync">RunWorkerAsync</see> when <see cref="Shown"/> event occures.</summary>
+        ''' <summary>Gets or sets value indicationg if form will call <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.RunWorkerAsync">RunWorkerAsync</see> when dialog is shown.</summary>
         ''' <seelaso cref="WorkerArgument"/>
         ''' <value>Default value is true</value>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _

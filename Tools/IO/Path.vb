@@ -748,6 +748,7 @@ Namespace IOt
                     Catch : If Not skiperrors Then Throw Else ret = False
                     End Try
                 Next dir
+                Return ret
             Else
                 Throw New FileNotFoundException(ResourcesT.Exceptions.SourceFileOrDirectoryNotFound, Path)
             End If

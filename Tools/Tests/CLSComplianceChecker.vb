@@ -798,8 +798,9 @@ Namespace TestsT
         End Function
         ''' <summary>Interbally checks member for CLS compliance</summary>
         ''' <param name="Member">Member to check</param>
-        ''' <returns>Ture if member meets CLS rules. Returns tur even when member is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <returns>Ture if member meets CLS rules. Returns true even when member is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <version version="1.5.3">Returns true also when <paramref name="Member"/> is neither of following: <see cref="Type"/>, <see cref="PropertyInfo"/>, <see cref="EventInfo"/>, <see cref="FieldInfo"/>, <see cref="MethodInfo"/>.</version>
         Private Function CheckInternal(ByVal Member As MemberInfo) As Boolean
             If Member Is Nothing Then Throw New ArgumentNullException("Member")
             If GetItemClsCompliance(Member) Then
@@ -809,6 +810,7 @@ Namespace TestsT
                 ElseIf TypeOf Member Is MethodInfo Then : Return Check(DirectCast(Member, MethodInfo))
                 ElseIf TypeOf Member Is FieldInfo Then : Return Check(DirectCast(Member, FieldInfo))
                 End If
+                Return True
             Else
                 Return CheckAttributes(Member)
             End If

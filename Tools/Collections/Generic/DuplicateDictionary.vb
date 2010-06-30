@@ -24,7 +24,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Compares two <see cref="KeyValuePair(Of TKey, TValue)"/> values by their <see cref="KeyValuePair(Of TKey, TValue).Key">Keys</see></summary>
         ''' <param name="x">A <see cref="KeyValuePair(Of TKey, TValue)"/></param>
         ''' <param name="y">A <see cref="KeyValuePair(Of TKey, TValue)"/></param>
-        ''' <returns>Value Condition Less than 0 <paramref name="x"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see> is less than <paramref name="y"/>.<see cref="KeyValuePair{TKey, TValue}.Key">Key</see>.  0 <paramref name="x"/>.<see cref="KeyValuePair{TKey, TValue}.Key">Key</see> equals <paramref name="y"/>.<see cref="KeyValuePair{TKey, TValue}.Key">Key</see>.  Greater than 0 <paramref name="x"/>.<see cref="KeyValuePair{TKey, TValue}.Key">Key</see> is greater than <paramref name="y"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see>.</returns>
+        ''' <returns>Value Condition Less than 0 <paramref name="x"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see> is less than <paramref name="y"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see>.  0 <paramref name="x"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see> equals <paramref name="y"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see>. Greater than 0 <paramref name="x"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see> is greater than <paramref name="y"/>.<see cref="KeyValuePair(Of TKey, TValue).Key">Key</see>.</returns>
         ''' <seealso cref="Comparison"/>
         Private Function PairComparison(ByVal x As KeyValuePair(Of TKey, TValue), ByVal y As KeyValuePair(Of TKey, TValue)) As Integer
             Return Comparison(x.Key, y.Key)

@@ -5,7 +5,7 @@ Imports Tools.ComponentModelt, Tools.Windowst.Formst.Utilitiest
 Namespace WindowsT.FormsT
     ''' <summary><see cref="System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>
-    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2" stage="RC"><c>VersionAttribute</c> and <c>AuthorAttribute</c> removed</version>
     Public Class ExtendedForm : Inherits System.Windows.Forms.Form
 #Region "CloseBox"
         ''' <summary>Possible states of system menu</summary>

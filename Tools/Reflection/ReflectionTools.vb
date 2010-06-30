@@ -479,7 +479,7 @@ Namespace ReflectionT
 
         ''' <summary>Gets member-type-independent visibility of member</summary>
         ''' <param name="Member">Member to get visibility of</param>
-        ''' <returns>Visibility of member</returns>
+        ''' <returns>Visibility of member. In case member reports impossible combination of visibilities returns 0.</returns>
         ''' <version version="1.5.2">Function introduced</version>
         ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
         ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
@@ -492,6 +492,7 @@ Namespace ReflectionT
             ElseIf Member.IsPrivate Then : Return ReflectionT.Visibility.Private
             ElseIf Member.IsAssembly Then : Return ReflectionT.Visibility.Assembly
             End If
+            Return 0
         End Function
         ''' <summary>Combines visibility of parent and member as seen from outside of parent</summary>
         ''' <param name="ParentVisibility">Visibility of parent</param>
@@ -557,6 +558,7 @@ Namespace ReflectionT
                         Case ReflectionT.Visibility.Private : Return ReflectionT.Visibility.Private
                     End Select
             End Select
+            Return MemberVisibility 'Never happens
         End Function
 #End Region
 #Region "Events and properties"
@@ -920,6 +922,7 @@ Namespace ReflectionT
                 Return Type.DeclaringType.Equals(DeclaringType) OrElse Type.DeclaringType.IsMemberOf(DeclaringType)
             ElseIf Type.IsGenericParameter AndAlso Type.DeclaringMethod IsNot Nothing Then
                 Return Type.DeclaringMethod.IsMemberOf(DeclaringType)
+            Else : Return False
             End If
         End Function
         ''' <summary>Gets value indicating if given <see cref="Type"/> or object it is declared on is member of given <see cref="NamespaceInfo"/></summary>
@@ -961,6 +964,7 @@ Namespace ReflectionT
             For Each ns In ParentNamespace.GetNamespaces
                 If ns.Equals([Namespace]) Then Return True
             Next
+            Return False
         End Function
         ''' <summary>Gets value indicating if given <see cref="[Module]"/> or object it is declared on is member of given <see cref="Assembly"/></summary>
         ''' <param name="Module"><see cref="[Module]"/> to observe parent of</param>
