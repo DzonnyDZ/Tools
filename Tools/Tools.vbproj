@@ -212,6 +212,7 @@
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
     <Compile Include="ComponentModel\ValueContainer.vb" />
     <Compile Include="Numerics\Rational.vb" />
+    <Compile Include="Text\Escaping.vb" />
     <Compile Include="Threading\IInvoke.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
