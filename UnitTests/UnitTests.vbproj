@@ -273,7 +273,7 @@
     <Compile Include="Special\TypeToolsU.vb" />
     <Compile Include="Collections\Generic\CollectionToolsU.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="Collections\Generic\TransliterationDictionaryU.vb" />
+    <Compile Include="TransliterationDictionaryTest.vb" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\SharedFiles\Version.cpp">
@@ -282,7 +282,6 @@
     <Content Include="..\SharedFiles\VersionHistory.xslt">
       <Link>VersionHistory.xslt</Link>
     </Content>
-    <Content Include="AuthoringTests.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj">
@@ -313,13 +312,12 @@
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools IL\Tools IL.vcxproj">
+      <Name>Tools.IL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools IL\Tools IL.vcxproj">
-      <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
-      <Name>Tools.IL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +332,7 @@
     <None Include="Tools.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Collections\Specialized\" />
     <Folder Include="DataStructures\" />
   </ItemGroup>
   <ItemGroup>
