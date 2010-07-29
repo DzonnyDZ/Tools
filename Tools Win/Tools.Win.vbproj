@@ -232,6 +232,7 @@
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

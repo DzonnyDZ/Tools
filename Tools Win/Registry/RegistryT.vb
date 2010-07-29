@@ -16,6 +16,10 @@ Namespace RegistryT
         ''' <summary>Represents <see cref="Registry.CurrentConfig"/> key</summary>
         Public Const HKEY_CURRENT_CONFIG$ = "HKEY_CURRENT_CONFIG"
         ''' <summary>Represents <see cref="Registry.DynData"/> key</summary>
+        ''' <remarks>Obsolete. SUpported only on Win9x systems where neither .NET Framework 4 nor ĐTools are supported. Use <see cref="HKEY_PERFORMANCE_DATA"/> insted on NT-based systems.</remarks>
+        ''' <version version="1.5.3">This constant was made obsolete and hidden because HKEY_DYN_DATA registry key is supported only on Win9x system as ĐTools are now compiled for .NET Framework 4 ehich is not supported on Windows 9x.</version>
+        <Obsolete("HKEY_DYN_DATA key is only supported on Windws 9x and you cannot run .NET 4+ applications on Windows 9x. You can use HKEY_PERFORMANCE_DATA on NT-based systems instead.")>
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Const HKEY_DYN_DATA$ = "HKEY_DYN_DATA"
         ''' <summary>Represents <see cref="Registry.PerformanceData"/> key</summary>
         Public Const HKEY_PERFORMANCE_DATA$ = "HKEY_PERFORMANCE_DATA"
@@ -23,6 +27,8 @@ Namespace RegistryT
         ''' <param name="KeyPath">Full registry key path. Parts separated by backslashes (\), starting with base key name</param>
         ''' <returns>Pair of <see cref="RegistryKey"/> representing base key and string representing path of sub key. If path consists only of base key name, sub-key path is null.</returns>
         ''' <exception cref="ArgumentException">First segment of <paramref name="KeyPath"/> is not one of well-known registry base keys (as defined by HKEY_ constants from in <see cref="RegistryT"/>)</exception>
+        ''' <exception cref="NotSupportedException">First segment of <paramref name="KeyPath"/> is HKEY_DYN_DATA (see <see cref="HKEY_DYN_DATA"/>).</exception>
+        ''' <version version="1.5.3">Removed support for HKEY_DYN_DATA registry hive. It's bacuse that hive is supported only on Win9x systems and ĐTools are now compiled for .NET Framework 4 which is not supported on Win9x system.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Function SplitKeyPath(ByVal KeyPath$) As IPair(Of RegistryKey, String)
             Dim ret As New Pair(Of RegistryKey, String)(Nothing, Nothing)
@@ -33,7 +39,11 @@ Namespace RegistryT
                 Case HKEY_CURRENT_USER : ret.Value1 = Registry.CurrentUser
                 Case HKEY_LOCAL_MACHINE : ret.Value1 = Registry.LocalMachine
                 Case HKEY_USERS : ret.Value1 = Registry.Users
+#If Framework < 3 Then
                 Case HKEY_DYN_DATA : ret.Value1 = Registry.DynData
+#Else
+                Case "HKEY_DYN_DATA" : Throw New NotSupportedException(ResourcesT.Exceptions.RegistryHiveIsNoLongerSupported.f("HKEY_DYN_DATA")) 'Const not used to avoid obsolete warning
+#End If
                 Case HKEY_PERFORMANCE_DATA : ret.Value1 = Registry.PerformanceData
                 Case Else : Throw New ArgumentException(ResourcesT.ExceptionsWin.IsUnknownRegistryBaseKey.f(parts(0)))
             End Select
