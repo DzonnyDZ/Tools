@@ -200,10 +200,9 @@ Namespace WindowsT.NativeT
         End Function
 #Region "API"
 
-        'UPGRADE_ISSUE: Declaring a parameter 'As Any' is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="FAE78A8D-8978-4FD4-8208-5B7324A8F795"'
-        Private Declare Function CreateWindowEx Lib "user32" Alias "CreateWindowExA" (ByVal dwExStyle As Integer, ByVal lpClassName As String, ByVal lpWindowName As String, ByVal dwStyle As Integer, ByVal x As Integer, ByVal y As Integer, ByVal nWidth As Integer, ByVal nHeight As Integer, ByVal hWndParent As Integer, ByVal hMenu As Integer, ByVal hInstance As Integer, ByRef lpParam As CREATESTRUCT) As Integer
-        Private Declare Function ShowWindow Lib "user32" (ByVal hwnd As Integer, ByVal nCmdShow As Integer) As Integer
-        Private Declare Function DestroyWindow Lib "user32" (ByVal hwnd As Integer) As Integer
+        Private Declare Function CreateWindowEx Lib "user32" Alias "CreateWindowExA" (ByVal dwExStyle As Integer, ByVal lpClassName As String, ByVal lpWindowName As String, ByVal dwStyle As Integer, ByVal x As Integer, ByVal y As Integer, ByVal nWidth As Integer, ByVal nHeight As Integer, ByVal hWndParent As IntPtr, ByVal hMenu As IntPtr, ByVal hInstance As IntPtr, ByRef lpParam As CREATESTRUCT) As Integer
+        Private Declare Function ShowWindow Lib "user32" (ByVal hwnd As IntPtr, ByVal nCmdShow As Integer) As Integer
+        Private Declare Function DestroyWindow Lib "user32" (ByVal hwnd As IntPtr) As Integer
         Const WS_EX_STATICEDGE As Integer = &H20000
         Const WS_EX_TRANSPARENT As Integer = &H20
         Const WS_CHILD As Integer = &H40000000
@@ -226,7 +225,7 @@ Namespace WindowsT.NativeT
         Dim mWnd As Integer
         Private Sub CreateNativeWindow()
             Dim CS As New CREATESTRUCT
-            mWnd = CreateWindowEx(WS_EX_STATICEDGE Or WS_EX_TRANSPARENT, "STATIC", "Native label", WS_CHILD, 0, 0, 75, 20, TestForms(0).Handle, 0, VB6.GetHInstance.ToInt32, CS)
+            mWnd = CreateWindowEx(WS_EX_STATICEDGE Or WS_EX_TRANSPARENT, "STATIC", "Native label", WS_CHILD, 0, 0, 75, 20, TestForms(0).Handle, 0, Runtime.InteropServices.Marshal.GetHINSTANCE(Reflection.Assembly.GetEntryAssembly.ManifestModule), CS)
             ShowWindow(mWnd, SW_NORMAL)
             Dim MyLabel As New Win32Window(mWnd)
             MyLabel.Left = TestForms(0).ClientSize.Width - MyLabel.Width
