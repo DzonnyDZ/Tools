@@ -92,7 +92,7 @@ Namespace WindowsT.FormsT
                 If value IsNot bgw Then
                     bgw = value
                     CanCancel = bgw.WorkerSupportsCancellation
-                    pgbProgress.Style = If(bgw.WorkerReportsProgress, ProgressBarStyle.Blocks, ProgressBarStyle.Marquee)
+                    pgbProgress.Style = If(bgw.WorkerReportsProgress, Windows.Forms.ProgressBarStyle.Blocks, Windows.Forms.ProgressBarStyle.Marquee)
                 End If
             End Set
         End Property
