@@ -7,6 +7,9 @@ Namespace MetadataT.IptcT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2">The <see cref="IMetadata"/> interface implemented</version>
     ''' <version version="1.5.2">The <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/> attributes removed</version>
+    ''' <version version="1.5.3">Added limited autodetection of UTF-8 encoding based on <see cref="Iptc.CodedCharacterSet"/>. See <see cref="Iptc.Encoding"/> for details.</version>
+    ''' <version version="1.5.3">Changed encoding used when none is specified for <see cref="Iptc.GraphicCharacters_Value"/>, <see cref="Iptc.TextWithSpaces_Value"/>, <see cref="Iptc.Text_Value"/>, <see cref="Iptc.Num2_Str_Value"/>, <see cref="Iptc.Num3_Str_Value"/>, <see cref="Iptc.SubjectReference_Value"/>, <see cref="Iptc.Alpha_Value"/>: <see cref="Iptc.Encoding"/> is used for records 2 - 6 and 8, <see cref="System.Text.Encoding.ASCII"/> is used otherwise. (Previously: <see cref="Iptc.Encoding"/> is used whenever encoding is not specified).</version>
+    ''' <version version="1.5.3">Added the <see cref="Iptc.IgnoreLenghtConstraints"/> property which when set to true allows values violating length constraints (according to IPTC standard) to be stored.</version>
     Partial Public Class Iptc
         Implements IMetadata
         ''' <summary>Name identifiying IPTC metadata in <see cref="IMetadataProvider"/></summary>
@@ -96,6 +99,8 @@ Namespace MetadataT.IptcT
                         ObjectDataSizeAnnounced = SubFileLen
                         SizeMode = True
                     End If
+                Case DataSetIdentification.CodedCharacterSet 'Coded Caharcter Set - reset encoding
+                    If Not encodingSetExternally Then _Encoding = Nothing
             End Select
             If Cache.ContainsKey(Tag) Then Cache.Remove(Tag)
         End Sub

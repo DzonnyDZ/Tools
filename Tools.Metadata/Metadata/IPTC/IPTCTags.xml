@@ -365,8 +365,13 @@
                         <description>UCS Transformation Format (UTF-8) 4/7</description>
                     </item>
                 </list>
-                -->
+                <note>
+                    What's mentioned above is from definition of IPTC standard.
+                    This class currently does not support all encodings that can be advertised here neither it supports changes of encodings using ISO 2022 mechanism anywhere in text.
+                    Only certain encodings are supported - see the <see cref="Encoding"/> property for details.
+                </note>
             </remarks>
+            <version version="1.5.3">Added limited support for UTF-8 based encoding autodetection based on value of this dataset.</version>
         </tag>
         <tag number="100" name="UNO" human-name="UNO" type="UNO" fixed="false" mandatory="false" repeatable="false" length="80" category="Old IPTC">
             <desc>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</desc>

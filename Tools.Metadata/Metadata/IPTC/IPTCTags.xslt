@@ -1571,11 +1571,11 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         </xsl:for-each>
         <xsl:text>&#9;&#9;&#9;End Select&#xD;&#xA;</xsl:text>
         <xsl:text xml:space="preserve">&#9;&#9;&#9;<![CDATA[Try
-			    Dim AllValues As List(Of String) = Text_Value(Item)
-				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
-			Catch ex As Exception
-				Throw New IPTCGetException(ex)
-			End Try]]>&#xD;&#xA;</xsl:text>
+                Dim AllValues As List(Of String) = Text_Value(Item)
+                If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+            Catch ex As Exception
+                Throw New IPTCGetException(ex)
+            End Try]]>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;End Function&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
@@ -1705,6 +1705,29 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>&lt;/remarks>&#xD;&#xA;</xsl:text>
         </xsl:if>
     </xsl:template>
+    <!--Creates <version> from <version>-->
+    <xsl:template name="Tag-Version">
+        <xsl:param name="Tab"/>
+        <xsl:for-each select="I:version">
+            <xsl:call-template name="Tabs">
+                <xsl:with-param name="Count" select="$Tab"/>
+            </xsl:call-template>
+            <xsl:text>''' &lt;version</xsl:text>
+            <xsl:if test="./@version">
+                <xsl:text> version="</xsl:text>
+                <xsl:value-of select="./@version"/>
+                <xsl:text>"</xsl:text>
+            </xsl:if>
+            <xsl:if test="./@stage">
+                <xsl:text> stage="</xsl:text>
+                <xsl:value-of select="./@stage"/>
+                <xsl:text>"</xsl:text>
+            </xsl:if>
+            <xsl:text>></xsl:text>
+            <xsl:value-of select="normalize-space(.)" disable-output-escaping="yes"/>
+            <xsl:text>&lt;/version>&#xD;&#xA;</xsl:text>
+        </xsl:for-each>
+    </xsl:template>
     <!--Creates <summary> from desc=""-->
     <xsl:template name="Attr-Summary">
         <xsl:param name="Tab"/>
@@ -1740,6 +1763,9 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:with-param name="Tab" select="$Tab"/>
         </xsl:call-template>
         <xsl:call-template name="Tag-Remarks">
+            <xsl:with-param name="Tab" select="$Tab"/>
+        </xsl:call-template>
+        <xsl:call-template name="Tag-Version">
             <xsl:with-param name="Tab" select="$Tab"/>
         </xsl:call-template>
     </xsl:template>
@@ -1793,11 +1819,11 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                     <xsl:text>&#32;</xsl:text>
                     <xsl:choose>
                         <xsl:when test="string(.) or ./child::*">
-                            <xsl:if test="local-name(.)='para' or local-name(.)='list' or local-name(.)='item'">
-                                <xsl:text>" &amp; vbCrLf &amp; "</xsl:text>
-                            </xsl:if>
                             <xsl:if test="local-name(.)='item' and parent::node()/@type!='table'">
                                 <xsl:text>* </xsl:text>
+                            </xsl:if>
+                            <xsl:if test="local-name(.)='para' or local-name(.)='list' or local-name(.)='item' or local-name(.)='note'">
+                                <xsl:text>" &amp; vbCrLf &amp; "</xsl:text>
                             </xsl:if>
                             <xsl:if test="local-name(.)='description'">
                                 <xsl:text>" &amp; vbTab &amp; "</xsl:text>

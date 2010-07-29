@@ -2,27 +2,74 @@ Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.Dat
 Imports Tools.MetadataT.IptcT.IptcDataTypes
 Namespace MetadataT.IptcT
 #If Congig <= Nightly Then 'Stage: Nightly
-    Partial Public Class IPTC
+    Partial Public Class Iptc
         ''' <summary>Contains value of the <see cref="Encoding"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Encoding As System.Text.Encoding = System.Text.Encoding.Default
-        ''' <summary>Encoding used for encoding and decoding some texts</summary>
+        Private _Encoding As System.Text.Encoding
+        ''' <summary>Indicates whether value of the <see cref="Encoding"/> property was set externally or not</summary>
+        Private encodingSetExternally As Boolean
+        ''' <summary>Encoding used for encoding and decoding some texts (applies only to records 2 - 6 and 8 (see remarks))</summary>
+        ''' <value>
+        ''' By setting this property to null encoding is reset to default (either <see cref="System.Text.Encoding.[Default]"/> or autodetect from <see cref="CodedCharacterSet"/>) and <see cref="CodedCharacterSet"/> tracing is turned on.
+        ''' By setting this property to non-null value <see cref="CodedCharacterSet"/> change-tracking is turned of.
+        ''' </value>
+        ''' <returns>Current encoding used for decoding string values stored in records 2-6.</returns>
+        ''' <remarks>
+        ''' <para>
+        ''' By setting this property you can change encoding strings are treated as being stored in. Default encoding is <see cref="System.Text.Encoding.[Default]"/>.
+        ''' By setting this property <see cref="CodedCharacterSet"/> is NOT changed and existing string properties are NOT converted to a new encoding. Simply bytes of existing string properties are kept unchanged and treated as string stored in a new encoding specified.
+        ''' </para>
+        ''' <para>
+        ''' Until this property is set from ouside of an <see cref="Iptc"/> object it's value is determined by following logic:
+        ''' When <see cref="CodedCharacterSet"/> is not specified or not understood <see cref="System.Text.Encoding.[Default]"/> is used.
+        ''' When <see cref="CodedCharacterSet"/> is specified and understood appropriate encoding is used.
+        ''' When value of <see cref="CodedCharacterSet"/> changes <see cref="Encoding"/> changes as well - either to a new encoding (if it is understood) or to <see cref="System.Text.Encoding.[Default]"/> (if a new encoding is not understood).
+        ''' Making change of <see cref="CodedCharacterSet"/> has same affect on string properties as making change of <see cref="Encoding"/> - existing binary values are treated as being under a new encoding.
+        ''' </para>
+        ''' <para>Currently of a few encodings are understood by <see cref="CodedCharacterSet"/>. 
+        ''' Only UTF-8 encodings with ISO 2022 registration numbers 190, 191, 192 and 196 are supported.
+        ''' Other encodings are ignored (treated as <see cref="System.Text.Encoding.[Default]"/>).
+        ''' </para>
+        ''' <para>Once you set value of this property from code automatic tracking of changes of <see cref="CodedCharacterSet"/> stops.</para>
+        ''' <para>
+        ''' <see cref="CodedCharacterSet"/> also specifies encoding hint for record 8 (<see cref="RecordNumbers.ObjectDataRecord"/>).
+        ''' You shall decide yourself whether to use this hint or not when decoding binary data from record 8.
+        ''' <see cref="Iptc"/> class does not apply any encoding on binary data in record 8.
+        ''' Howver when text data are read from record 8 encoding is applied same way as in records 2 - 6.
+        ''' </para>
+        ''' </remarks>
+        ''' <seelaso cref="CodedCharacterSet"/><seelaso cref="Tools.TextT.EncodingT.ISO2022.DetectEncoding"/>
+        ''' <version version="1.5.3">Support to detect UTF-8 encodings (numbers 190, 191, 192 and 196 according to ISO 2022) from <see cref="CodedCharacterSet"/> addded.</version>
+        ''' <version version="1.5.3"><see cref="DebuggerStepThroughAttribute"/> removed from getter.</version>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property Encoding() As System.Text.Encoding
-            <DebuggerStepThrough()> Get
+            Get
+                If _Encoding Is Nothing Then
+                    If CodedCharacterSet IsNot Nothing AndAlso CodedCharacterSet.Length > 0 Then
+                        Dim enc = TextT.EncodingT.ISO2022.DefaultInstance.DetectEncoding(CodedCharacterSet)
+                        Select Case If(enc Is Nothing, -1, enc.Number)
+                            Case 190, 191, 192, 196 : _Encoding = New System.Text.UTF8Encoding(False)
+                            Case Else : _Encoding = System.Text.Encoding.Default
+                        End Select
+                    Else
+                        _Encoding = System.Text.Encoding.Default
+                    End If
+                End If
                 Return _Encoding
             End Get
             Set(ByVal value As System.Text.Encoding)
                 _Encoding = value
+                encodingSetExternally = True
             End Set
         End Property
+
 #Region "Readers and writers"
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.UnsignedBinaryNumber"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
-      Protected Overridable Property UnsignedBinaryNumber_Value(ByVal Key As DataSetIdentification) As List(Of ULong)
+        Protected Overridable Property UnsignedBinaryNumber_Value(ByVal Key As DataSetIdentification) As List(Of ULong)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
@@ -94,7 +141,7 @@ Namespace MetadataT.IptcT
         ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-       Protected Overridable Property Byte_Binary_Value(ByVal Key As DataSetIdentification) As List(Of Byte)
+        Protected Overridable Property Byte_Binary_Value(ByVal Key As DataSetIdentification) As List(Of Byte)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
@@ -145,15 +192,16 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.NumericChar"/></summary>
         ''' <param name="key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, 0 for no limit)</param>
+        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght (ignored in Getter)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <exception cref="InvalidCastException">Cannot convert stored bytes into number (in Getter)</exception>
         ''' <exception cref="ArgumentException">
-        ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is True (in Setter) -or-
-        ''' Number cannot be stored in given number of bytes (if <paramref name="Len"/> is non-zero, in Setter) -or-
-        ''' Number to be stored is negative (in Setter)
-        ''' </exception>
+        ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is True (in Setter) -or- Number to be stored is negative (in Setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException">Number cannot be stored in given number of bytes (if <paramref name="Len"/> is non-zero and <see cref="IgnoreLenghtConstraints"/> is false, in Setter)</exception>
+        ''' <version version="1.5.3">Fix: <paramref name="Len"/> is not enforced in setter.</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property NumericChar_Value(ByVal key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of Decimal)
             Get
@@ -175,7 +223,13 @@ Namespace MetadataT.IptcT
                 If value IsNot Nothing Then
                     For Each item As Decimal In value
                         If item < 0 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBeNegative, "Number"))
-                        values.Add(ToBytes(Len, item, Fixed))
+                        Dim bytes As Byte() = ToBytes(Len, item, Fixed)
+                        If (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                            Throw New LengthConstraintViolationException(key, Len, Fixed) ' ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
+                        Else
+                            values.Add(bytes)
+                        End If
+                        values.Add(bytes)
                     Next item
                 End If
                 Tag(key) = values
@@ -183,20 +237,26 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.GraphicCharacters"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> is used</param>
-        ''' <exception cref="ArgumentException">
-        ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- 
-        ''' One of values being set contains non-graphic character (in setter) -or-
-        ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded
-        ''' </exception>
+        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
+        ''' <exception cref="ArgumentException"><paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or-  One of values being set contains non-graphic character (in setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true).</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
+        ''' <seelaso cref="Encoding"/>
+        ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
@@ -207,7 +267,12 @@ Namespace MetadataT.IptcT
                 Return ret
             End Get
             Set(ByVal value As List(Of String))
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
                 If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", String.Format(ResourcesT.Exceptions.CannotBeNegative, "Len"))
                 Dim values As New List(Of Byte())
@@ -215,8 +280,8 @@ Namespace MetadataT.IptcT
                     For Each item As String In value
                         If Not IsGraphicCharacters(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonGraphicCharacter))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
+                        If (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                            Throw New LengthConstraintViolationException(Key, Len, Fixed) '(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -227,20 +292,26 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.TextWithSpaces"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> is used</param>
+        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
         ''' <exception cref="ArgumentException">
-        ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- 
-        ''' One of values being set contains non-graphic-non-space character (in setter) -or-
-        ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded -or-
-        ''' <paramref name="Len"/> is negative (in setter)
-        ''' </exception>
+        ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or-  One of values being set contains non-graphic-non-space character (in setter) -or- <paramref name="Len"/> is negative (in setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true.</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
+        ''' <seelaso cref="Tag"/><seelaso cref="Encoding"/><seelaso cref="Text_Value"/>
+        ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property TextWithSpaces_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
@@ -251,7 +322,12 @@ Namespace MetadataT.IptcT
                 Return ret
             End Get
             Set(ByVal value As List(Of String))
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
                 If Len < 0 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBeNegative, "Len"))
                 Dim values As New List(Of Byte())
@@ -259,8 +335,8 @@ Namespace MetadataT.IptcT
                     For Each item As String In value
                         If Not IsTextWithSpaces(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonGraphicNonSpaceCharacter, item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
+                        If (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                            Throw New LengthConstraintViolationException(Key, Len, Fixed) 'ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -272,20 +348,26 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.TextWithSpaces"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> is used</param>
-        ''' <exception cref="ArgumentException">
-        ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- 
-        ''' One of values being set contains non-graphic-non-space-non-cr-non-lf character (in setter) -or-
-        ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded
-        ''' </exception>
+        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
+        ''' <exception cref="ArgumentException"><paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- One of values being set contains non-graphic-non-space-non-cr-non-lf character (in setter)</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true.</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
+        ''' <seelaso cref="Tag"/><seelaso cref="Encoding"/><seelaso cref="TextWithSpaces_Value"/>
+        ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
@@ -296,7 +378,12 @@ Namespace MetadataT.IptcT
                 Return ret
             End Get
             Set(ByVal value As List(Of String))
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
                 If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", String.Format(ResourcesT.Exceptions.CannotBeNegative, "Len"))
                 Dim values As New List(Of Byte())
@@ -304,8 +391,8 @@ Namespace MetadataT.IptcT
                     For Each item As String In value
                         If Not IsText(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonGraphicNonSpaceNonCrNonLfCharacter, item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
+                        If (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                            Throw New LengthConstraintViolationException(Key, Len, Fixed) 'ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -318,17 +405,16 @@ Namespace MetadataT.IptcT
         Private Const BW460_460 As Integer = 460
         ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.BW460"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed length of serialized bitmap (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed lenght of serialized bitmap (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> represents fixed lenght of serialized bitmap (ignored in Getter)</param>
-        ''' <exception cref="ArgumentException">
-        ''' <paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter) -or-
-        ''' Bitmap being set has width different form 460 (in Setter) -or-
-        ''' Bitmap violates lenght constraint after serialization (in Setter)
-        ''' </exception>
+        ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter) -or- Bitmap being set has width different form 460 (in Setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException">Bitmap violates lenght constraint after serialization (in Setter; not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false)</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
+Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
             Get
                 If Cache.ContainsKey(Key) Then Return Cache(Key)
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -375,7 +461,8 @@ Namespace MetadataT.IptcT
                         Next i
                         values.Add(Ba2Bytes(ba))
                         Dim BLen As Integer = values(values.Count - 1).Length
-                        If (BLen > Len AndAlso Len <> 0) OrElse (Fixed AndAlso BLen <> Len) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.BitmapViolatesLenghtConstraintImageSizeMustBe4600Px, Len * 8 / 460))
+                        If (BLen > Len AndAlso Not IgnoreLenghtConstraints AndAlso Len <> 0) OrElse (Fixed AndAlso BLen <> Len) Then _
+                            Throw New LengthConstraintViolationException(Key, Len, Fixed) 'ArgumentException(String.Format(ResourcesT.Exceptions.BitmapViolatesLenghtConstraintImageSizeMustBe4600Px, Len * 8 / 460))
                     Next item
                 End If
                 Tag(Key) = values
@@ -462,8 +549,7 @@ Namespace MetadataT.IptcT
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Enum_NumChar"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="Type">Type of neumeration </param>
-        ''' <param name="Len">Maximal or fixed length of serialized bitmap (ignored in Getter)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> represents fixed lenght of serialized bitmap (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <exception cref="ArgumentException">
         ''' <paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 -or-
@@ -471,8 +557,12 @@ Namespace MetadataT.IptcT
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Restrict"/> is True and value being set is not member of <paramref name="Type"/></exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <exception cref="MissingMethodException">Failed to create instance of given enumeration (in Getter; sohold not occure if norma enumeration is passed to <paramref name="Type"/>)</exception>
+        ''' <exception cref="LengthConstraintViolationException">Encoded length of string violates lenght constraint (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
+        ''' <version version="1.5.3">Fix: <paramref name="Len"/> is not enforced in setter.</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of [Enum])
+Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of [Enum])
             Get
                 If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -495,7 +585,13 @@ Namespace MetadataT.IptcT
                 If value IsNot Nothing Then
                     For Each item As [Enum] In value
                         If Restrict AndAlso Not Array.IndexOf([Enum].GetValues(Type), item) >= 0 Then Throw New InvalidEnumArgumentException("value", CObj(item), Type)
-                        values.Add(ToBytes(Len, CDec(CObj(item)), Fixed))
+                        Dim bytes = ToBytes(Len, CDec(CObj(item)), Fixed)
+                        If (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                            Throw New LengthConstraintViolationException(Key, Len, Fixed) 'ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
+                        Else
+                            values.Add(bytes)
+                        End If
+                        values.Add(bytes)
                     Next item
                 End If
                 Tag(Key) = values
@@ -613,10 +709,11 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Byte_Binary"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed length of data (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed data lenght (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> is fixed length (ignored in Getter)</param>
         ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter)</exception>
-        ''' <exception cref="LengthConstraintViolationException">Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True</exception>
+        ''' <exception cref="LengthConstraintViolationException">Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         <EditorBrowsable(EditorBrowsableState.Always)> _
         Protected Overridable Property ByteArray_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Byte())
             Get
@@ -627,7 +724,7 @@ Namespace MetadataT.IptcT
             Set(ByVal value As List(Of Byte()))
                 If Len = 0 AndAlso Fixed Then Throw New ArgumentException(ResourcesT.Exceptions.WhenFixedIsTrueLenCannotBe0)
                 For Each item As Byte() In value
-                    If (Len <> 0 AndAlso Fixed AndAlso item.Length <> Len) OrElse (Not Fixed AndAlso Len <> 0 AndAlso item.Length > Len) Then _
+                    If (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso Fixed AndAlso item.Length <> Len) OrElse (Not Fixed AndAlso Len <> 0 AndAlso item.Length > Len) Then _
                         Throw New LengthConstraintViolationException(Key, Len, Fixed)
                 Next item
                 Tag(Key) = value
@@ -642,22 +739,22 @@ Namespace MetadataT.IptcT
         ''' <exception cref="InvalidCastException">UCD component odf stored value contains non-numeric character (in Getter)</exception>
         ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="iptcUNO.ODE"/> for more information. (in Getter)</exception>
         <EditorBrowsable(EditorBrowsableState.Always)> _
-        Protected Overridable Property UNO_Value(ByVal Key As DataSetIdentification) As List(Of iptcUNO)
+        Protected Overridable Property UNO_Value(ByVal Key As DataSetIdentification) As List(Of IptcUno)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of iptcUNO)(values.Count)
+                Dim ret As New List(Of IptcUno)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    ret.Add(New iptcUNO(item))
+                    ret.Add(New IptcUno(item))
                 Next item
                 If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
-            Set(ByVal value As List(Of iptcUNO))
+            Set(ByVal value As List(Of IptcUno))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As iptcUNO In value
+                    For Each item As IptcUno In value
                         values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
                     Next item
                 End If
@@ -666,13 +763,21 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Num2_Str"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="MaxLenght">Max length of serialized byte array (ignored in getter)</param>
-        ''' <param name="Encoding">Encoding for string patr (numeric always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> is used.</param>
-        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 2 bytes</exception> 
+        ''' <param name="MaxLenght">Maximal lenght of serialized byte array (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Encoding">Encoding for string part (numeric should always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> or default is used.</param>
+        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 2 bytes (not thrown for entire lenght when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception> 
+        ''' <seelaso cref="Encoding"/>
+        ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Num2_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr2)
             Get
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of NumStr2)(values.Count)
@@ -687,13 +792,18 @@ Namespace MetadataT.IptcT
                 Return ret
             End Get
             Set(ByVal value As List(Of NumStr2))
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As NumStr2 In value
                         Dim B1 As Byte() = System.Text.Encoding.ASCII.GetBytes(item.Number.ToString("00", InvariantCulture))
                         Dim B2 As Byte() = Encoding.GetBytes(item.String)
-                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 2 Then _
+                        If (B1.Length + B2.Length > MaxLenght AndAlso Not IgnoreLenghtConstraints) OrElse B1.Length <> 2 Then _
                             Throw New LengthConstraintViolationException(Key, MaxLenght)
                         Dim B3(B1.Length + B2.Length - 1) As Byte
                         B1.CopyTo(B3, 0)
@@ -707,13 +817,21 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Num2_Str"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="MaxLenght">Max length of serialized byte array (ignored in getter)</param>
-        ''' <param name="Encoding">Encoding for string patr (numeric always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> is used.</param>
-        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 3 bytes</exception> 
+        ''' <param name="MaxLenght">Maximal lenght of serialized byte array (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Encoding">Encoding for string patr (numeric should always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> or default is used.</param>
+        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 3 bytes (not thrown for entire length when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception> 
+        ''' <seelaso cref="Encoding"/>
+        ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Num3_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr3)
             Get
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of NumStr3)(values.Count)
@@ -728,13 +846,18 @@ Namespace MetadataT.IptcT
                 Return ret
             End Get
             Set(ByVal value As List(Of NumStr3))
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As NumStr3 In value
                         Dim B1 As Byte() = System.Text.Encoding.ASCII.GetBytes(item.Number.ToString("000", InvariantCulture))
                         Dim B2 As Byte() = Encoding.GetBytes(item.String)
-                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 3 Then _
+                        If (B1.Length + B2.Length > MaxLenght AndAlso Not IgnoreLenghtConstraints) OrElse B1.Length <> 3 Then _
                             Throw New LengthConstraintViolationException(Key, MaxLenght)
                         Dim B3(B1.Length + B2.Length - 1) As Byte
                         B1.CopyTo(B3, 0)
@@ -747,29 +870,41 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.SubjectReference"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Encoding">Encoding used to encode and decode names</param>
+        ''' <param name="Encoding">Encoding used to encode and decode names. If ommited <see cref="Encoding"/> or default is used.</param>
         ''' <exception cref="IndexOutOfRangeException">Stored value have more than 5 :-separated parts (in Getter)</exception>
         ''' <exception cref="ArgumentException">Stored value have less then 5 :-separated parts (in Getter)</exception>
         ''' <exception cref="InvalidOperationException">Setting value which's part(s) serializes into byte array of bad lengths (allowed lenghts are 1÷32 for <see cref="iptcSubjectReference.IPR"/>, 8 for <see cref="iptcSubjectReference.SubjectReferenceNumber"/> and 0÷64 for names) (in setter)</exception>
+        ''' <seelaso cref="Encoding"/>
+        ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property SubjectReference_Value(ByVal Key As DataSetIdentification, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of iptcSubjectReference)
+        Protected Overridable Property SubjectReference_Value(ByVal Key As DataSetIdentification, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of IptcSubjectReference)
             Get
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of iptcSubjectReference)(values.Count)
+                Dim ret As New List(Of IptcSubjectReference)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    ret.Add(New iptcSubjectReference(item, Encoding))
+                    ret.Add(New IptcSubjectReference(item, Encoding))
                 Next item
                 If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
-            Set(ByVal value As List(Of iptcSubjectReference))
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+            Set(ByVal value As List(Of IptcSubjectReference))
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As iptcSubjectReference In value
+                    For Each item As IptcSubjectReference In value
                         values.Add(item.ToBytes(Encoding))
                     Next item
                 End If
@@ -779,19 +914,25 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.Alpha"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> is used</param>
-        ''' <exception cref="ArgumentException">
-        ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- 
-        ''' One of values being set contains non-alpha character (in setter) -or-
-        ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded
-        ''' </exception>
+        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
+        ''' <exception cref="ArgumentException"><paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- One of values being set contains non-alpha character (in setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
+        ''' <seelaso cref="Encoding"/>
+        ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
@@ -802,15 +943,20 @@ Namespace MetadataT.IptcT
                 Return ret
             End Get
             Set(ByVal value As List(Of String))
-                If Encoding Is Nothing Then Encoding = Me.Encoding
+                If Encoding Is Nothing Then
+                    Select Case Key.RecordNumber
+                        Case 2 To 6, 8 : Encoding = Me.Encoding
+                        Case Else : Encoding = System.Text.Encoding.ASCII
+                    End Select
+                End If
                 If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
                         If Not IsAlpha(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonAlphaCharacter, item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
+                        If (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                            Throw New LengthConstraintViolationException(Key, Len, Fixed) ' ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -822,7 +968,7 @@ Namespace MetadataT.IptcT
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.StringEnum"/> type</summary>
         ''' <param name="Key">Record or dataset number</param>
         ''' <param name="Type">Type of enum in value</param>
-        ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed lenght of string after encoding (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
         ''' <exception cref="InvalidEnumArgumentException"><see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> set to true and value is not member of <see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> (in Setter)</exception>
         ''' <exception cref="ArrayTypeMismatchException"><see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> differs from <paramref name="Type"/> (in setter)</exception>
@@ -831,8 +977,9 @@ Namespace MetadataT.IptcT
         ''' Stored value contains invalid character (non-graphic-non-space-non-ASCII) (in getter) -or-
         ''' <paramref name="Fixed"/> is true and <paramref name="Len"/> is 0
         ''' </exception>
-        ''' <exception cref="LengthConstraintViolationException">Value violates length constaraint after serialization (in Setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException">Value violates length constaraint after serialization (in Setter, not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false)</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+        ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Property StringEnum_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of StringEnum)
             Get
@@ -868,7 +1015,7 @@ Namespace MetadataT.IptcT
                         If Attrs IsNot Nothing AndAlso Attrs.Length > 0 Then ra = Attrs(0)
                         If Not item.ContainsEnum AndAlso (ra Is Nothing OrElse ra.Restrict) Then Throw New InvalidEnumArgumentException(ResourcesT.Exceptions.ThisEnumerationDoesNotAllowValuesThatAreNotMemberOfIt)
                         Dim Bytes As Byte() = System.Text.Encoding.ASCII.GetBytes(item.StringValue)
-                        If Fixed AndAlso Bytes.Length <> Len OrElse Len <> 0 AndAlso Bytes.Length > Len Then _
+                        If (Fixed AndAlso Bytes.Length <> Len) OrElse (Len <> 0 AndAlso Not IgnoreLenghtConstraints AndAlso Bytes.Length > Len) Then _
                             Throw New LengthConstraintViolationException(Key, Len, Fixed)
                         values.Add(Bytes)
                     Next item
@@ -883,14 +1030,14 @@ Namespace MetadataT.IptcT
         ''' 2nd byte of stored value cannot be interpreted as <see cref="ImageTypeContents"/> (in Getter)
         ''' </exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Property ImageType_Value(ByVal Key As DataSetIdentification) As List(Of iptcImageType)
+        Protected Property ImageType_Value(ByVal Key As DataSetIdentification) As List(Of IptcImageType)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of iptcImageType)(values.Count)
+                Dim ret As New List(Of IptcImageType)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    Dim val As New iptcImageType
+                    Dim val As New IptcImageType
                     If item.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.StoredValueHasInvalidLenght)
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = ChrW(item(1))
@@ -899,10 +1046,10 @@ Namespace MetadataT.IptcT
                 If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
-            Set(ByVal value As List(Of iptcImageType))
+            Set(ByVal value As List(Of IptcImageType))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As iptcImageType In value
+                    For Each item As IptcImageType In value
                         values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
                     Next item
                 End If
@@ -918,14 +1065,14 @@ Namespace MetadataT.IptcT
         ''' Setting value which's serializatazion produes more or less than 2 bytes
         ''' </exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of iptcAudioType)
+        Protected Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of IptcAudioType)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of iptcAudioType)(values.Count)
+                Dim ret As New List(Of IptcAudioType)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    Dim val As New iptcAudioType
+                    Dim val As New IptcAudioType
                     If item.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.StoredValueHasInvalidLenght)
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = CStr(ChrW(item(1)))
@@ -934,10 +1081,10 @@ Namespace MetadataT.IptcT
                 If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
-            Set(ByVal value As List(Of iptcAudioType))
+            Set(ByVal value As List(Of IptcAudioType))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As iptcAudioType In value
+                    For Each item As IptcAudioType In value
                         Dim Bytes As Byte() = System.Text.Encoding.ASCII.GetBytes(item.ToString)
                         If Bytes.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.SerializedValueHasNotLength2Bytes)
                         values.Add(Bytes)
@@ -1053,6 +1200,13 @@ Namespace MetadataT.IptcT
         End Function
 #End Region
 #End Region
+
+
+        ''' <summary>Gets or sets value indicating wheather this instance of <see cref="Iptc"/> allows to save limited variable-length values when value being set exceeds maximum allowed lenght of the property.</summary>
+        ''' <value>True to allow saving variable-lenght values with lenght exceeding lenght constraint; false to throw <see cref="LengthConstraintViolationException"/>.</value>
+        ''' <remarks>It's always possible to read values violating lenght constraints.</remarks>
+        ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+        Public Property IgnoreLenghtConstraints As Boolean
     End Class
     ''' <summary>Exception thrown when length constraint of string- or byte-oriented IPTC property is violated (and such violation is not allowed)</summary>
     Public Class LengthConstraintViolationException : Inherits ArgumentException
