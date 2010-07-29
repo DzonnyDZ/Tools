@@ -217,7 +217,7 @@
     <value>lvwImages</value>
   </data>
   <data name="&gt;&gt;lvwImages.Type" xml:space="preserve">
-    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.2.21695, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
+    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.2.18972, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
   </data>
   <data name="&gt;&gt;lvwImages.Parent" xml:space="preserve">
     <value>splBrowser.Panel2</value>

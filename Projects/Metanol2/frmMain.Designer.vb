@@ -36,6 +36,7 @@ Partial Class frmMain
         Me.tapCommon = New System.Windows.Forms.TabPage()
         Me.flpCommon = New System.Windows.Forms.FlowLayoutPanel()
         Me.panImage = New System.Windows.Forms.Panel()
+        Me.lblExifDateTime = New System.Windows.Forms.Label()
         Me.picPreview = New System.Windows.Forms.PictureBox()
         Me.llbLarge = New System.Windows.Forms.LinkLabel()
         Me.cmdErrInfo = New System.Windows.Forms.Button()
@@ -118,7 +119,6 @@ Partial Class frmMain
         Me.bgwImages = New System.ComponentModel.BackgroundWorker()
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog()
         Me.bgwSave = New System.ComponentModel.BackgroundWorker()
-        Me.lblExifDateTime = New System.Windows.Forms.Label()
         CType(Me.splMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
@@ -274,6 +274,11 @@ Partial Class frmMain
         resources.ApplyResources(Me.panImage, "panImage")
         Me.panImage.MinimumSize = New System.Drawing.Size(0, 32)
         Me.panImage.Name = "panImage"
+        '
+        'lblExifDateTime
+        '
+        resources.ApplyResources(Me.lblExifDateTime, "lblExifDateTime")
+        Me.lblExifDateTime.Name = "lblExifDateTime"
         '
         'picPreview
         '
@@ -436,7 +441,6 @@ Partial Class frmMain
         Me.kweKeywords.AutoCompleteCacheName = "Keywords"
         Me.kweKeywords.AutomaticsLists_Designer = True
         resources.ApplyResources(Me.kweKeywords, "kweKeywords")
-        Me.kweKeywords.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         Me.kweKeywords.Name = "kweKeywords"
         Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         '
@@ -786,11 +790,6 @@ Partial Class frmMain
         'bgwSave
         '
         Me.bgwSave.WorkerReportsProgress = True
-        '
-        'lblExifDateTime
-        '
-        resources.ApplyResources(Me.lblExifDateTime, "lblExifDateTime")
-        Me.lblExifDateTime.Name = "lblExifDateTime"
         '
         'frmMain
         '

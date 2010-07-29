@@ -35,7 +35,7 @@ Public Class frmMain
     ''' <remarks>Calls to <see cref="SuspendUpdate"/> and <see cref="ResumeUpdate"/> chan be stacked up to 255 levels</remarks>
     ''' <param name="Force">True to ignore stacked calls and resume updating immediatelly</param>
     Private Sub ResumeUpdate(Optional ByVal Force As Boolean = False)
-        If Force Then ChangingSuspendedCounter = 0 Else ChangingSuspendedCounter -= 1
+        If Force Then ChangingSuspendedCounter = 0 Else ChangingSuspendedCounter = Math.Max(0, CInt(ChangingSuspendedCounter) - 1)
         DoSelectedImageChanged()
     End Sub
 
@@ -264,6 +264,9 @@ Public Class frmMain
                 kweKeywords.LoadFromXML(XDocument.Load(r))
             End Using
         End If
+        If My.Settings.IgnoreIptcLengthConstraints Then
+            SetLengthsIgnored()
+        End If
     End Sub
 
     Private Sub bgwImages_DoWork(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwImages.DoWork
@@ -414,7 +417,22 @@ Public Class frmMain
             End If
             If lvwImages.TCBehaviour <> My.Settings.TCBehavior Then _
                 lvwImages.TCBehaviour = My.Settings.TCBehavior
+            If My.Settings.IgnoreIptcLengthConstraints Then
+                SetLengthsIgnored()
+            End If
         End If
+    End Sub
+
+    Private Sub SetLengthsIgnored()
+        txtCaption.MaxLength = 0
+        txtCity.MaxLength = 0
+        txtCopyright.MaxLength = 0
+        txtCountry.MaxLength = 0
+        txtCredit.MaxLength = 0
+        txtEditStatus.MaxLength = 0
+        txtObjectName.MaxLength = 0
+        txtProvince.MaxLength = 0
+        txtSublocation.MaxLength = 0
     End Sub
 
     Private Sub flpCommon_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles flpCommon.Resize

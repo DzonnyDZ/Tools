@@ -51,7 +51,7 @@ Namespace ReflectionT
             Return ret.ToString
         End Function
 
-        ''' <summary>Append information about custom attributes to <see cref="Text.StringBuilder"/></summary>
+        ''' <summary>Append information about custom attributes to <see cref="System.Text.StringBuilder"/></summary>
         ''' <param name="Attributes">Attributes to append information about</param>
         ''' <param name="ret">target <see cref="System.Text.StringBuilder"/></param>
         ''' <param name="flags">Flags to control rendering</param>
@@ -114,12 +114,12 @@ Namespace ReflectionT
             End If
         End Sub
 
-        ''' <summary>Serializes value of attribute-allowed type to <see cref="Text.StringBuilder"/></summary>
+        ''' <summary>Serializes value of attribute-allowed type to <see cref="System.Text.StringBuilder"/></summary>
         ''' <param name="val">Value to serialize</param>
         ''' <param name="Flags">Serialization flags</param>
-        ''' <param name="ret"><see cref="Text.StringBuilder"/> to serialize value to</param>
+        ''' <param name="ret"><see cref="System.Text.StringBuilder"/> to serialize value to</param>
         ''' <exception cref="ArgumentNullException"><paramref name="ret"/> is null</exception>
-        Private Sub RepresentValue(ByVal val As Object, ByVal Flags As SignatureFlags, ByVal ret As Text.StringBuilder)
+        Private Sub RepresentValue(ByVal val As Object, ByVal Flags As SignatureFlags, ByVal ret As System.Text.StringBuilder)
             If ret Is Nothing Then Throw New ArgumentNullException("ret")
             Dim ic = System.Globalization.CultureInfo.InvariantCulture
             If val Is Nothing Then
@@ -739,7 +739,7 @@ Namespace ReflectionT
         ''' <param name="Flags">Controls how the signature will be rendered</param>
         ''' <returns>String representation of given custom attributes</returns>
         Public Function GetAttributes(ByVal AttributeData As System.Collections.Generic.IEnumerable(Of System.Reflection.CustomAttributeData), ByVal Flags As SignatureFlags) As String Implements ISignatureProvider.GetAttributes
-            Dim ret As New Text.StringBuilder
+            Dim ret As New System.Text.StringBuilder
             If (Flags And SignatureFlags.SomeAttributes) OrElse (Flags And SignatureFlags.AllAttributes) Then
                 Dim AData As IList(Of CustomAttributeData)
                 If TypeOf AttributeData Is IList(Of CustomAttributeData) Then

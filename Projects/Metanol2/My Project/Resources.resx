@@ -112,15 +112,15 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SavingChangedImages" xml:space="preserve">
     <value>Saving changed images</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="LeftArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LeftArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -316,5 +316,20 @@
   </data>
   <data name="TestConnection" xml:space="preserve">
     <value>Test connection</value>
+  </data>
+  <data name="catIPTC" xml:space="preserve">
+    <value>IPTC</value>
+  </data>
+  <data name="IgnoreLenghtConstraints_d" xml:space="preserve">
+    <value>Allow to save longer string values than allowed by IPTC standard</value>
+  </data>
+  <data name="IgnoreLenghtConstraints_n" xml:space="preserve">
+    <value>Ignore lenght constraints</value>
+  </data>
+  <data name="IptcUtf8_d" xml:space="preserve">
+    <value>Save IPTC data in UTF-8 encoding</value>
+  </data>
+  <data name="IptcUtf8_n" xml:space="preserve">
+    <value>UTF-8</value>
   </data>
 </root>

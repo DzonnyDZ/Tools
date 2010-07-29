@@ -47,9 +47,9 @@ Namespace TextT
         ''' <param name="Format">A composite format string.</param>
         ''' <param name="args">An array of objects to format.</param>
         ''' <returns><paramref name="Target"/></returns>
-        ''' <seealso cref="String.Format"/><seealso cref="Text.StringBuilder.AppendLine"/><seealso cref="Text.StringBuilder.AppendFormat"/>
-        <extension()> _
-        Public Function AppendLineFormat(ByVal Target As System.Text.StringBuilder, ByVal Format$, ByVal ParamArray args As Object()) As Text.StringBuilder
+        ''' <seealso cref="String.Format"/><seealso cref="System.Text.StringBuilder.AppendLine"/><seealso cref="System.Text.StringBuilder.AppendFormat"/>
+        <Extension()> _
+        Public Function AppendLineFormat(ByVal Target As System.Text.StringBuilder, ByVal Format$, ByVal ParamArray args As Object()) As System.Text.StringBuilder
             Return Target.AppendLine(String.Format(Format, args))
         End Function
         ''' <summary>Appends a formatted string, which contains zero or more format specifications, and the default line terminator to given <see cref="System.Text.StringBuilder"/>. Each format specification is replaced by the string representation of a corresponding object argument.</summary>
@@ -58,9 +58,9 @@ Namespace TextT
         ''' <param name="Format">A composite format string.</param>
         ''' <param name="args">An array of objects to format.</param>
         ''' <returns><paramref name="Target"/></returns>
-        ''' <seealso cref="String.Format"/><seealso cref="Text.StringBuilder.AppendLine"/><seealso cref="Text.StringBuilder.AppendFormat"/>
+        ''' <seealso cref="String.Format"/><seealso cref="System.Text.StringBuilder.AppendLine"/><seealso cref="System.Text.StringBuilder.AppendFormat"/>
         <Extension()> _
-        Public Function AppendLineFormat(ByVal Provider As IFormatProvider, ByVal Target As System.Text.StringBuilder, ByVal Format$, ByVal ParamArray args As Object()) As Text.StringBuilder
+        Public Function AppendLineFormat(ByVal Provider As IFormatProvider, ByVal Target As System.Text.StringBuilder, ByVal Format$, ByVal ParamArray args As Object()) As System.Text.StringBuilder
             Return Target.AppendLine(String.Format(Provider, Format, args))
         End Function
     End Module

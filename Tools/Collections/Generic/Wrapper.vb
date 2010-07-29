@@ -258,9 +258,11 @@ Namespace CollectionsT.GenericT
         ''' <param name="value">The <see cref="T:System.Object"></see> to add to the <see cref="T:System.Collections.IList"></see>. </param>
         ''' <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.IList"></see> is read-only.-or- The <see cref="T:System.Collections.IList"></see> has a fixed size. </exception>
         ''' <remarks>This function is provided only for compatibility with <see cref="IList"/>. Use type-safe <see cref="Add"/> instead</remarks>
+        ''' <version version="1.5.3">Fix: Always returns 0.</version>
         <Obsolete("Use type-safe overload instead")> _
         Private Function Add(ByVal value As Object) As Integer Implements System.Collections.IList.Add
             Add(CType(value, T))
+            Return Count - 1
         End Function
         ''' <summary>Determines whether the <see cref="T:System.Collections.IList"></see> contains a specific value.</summary>
         ''' <returns>true if the <see cref="T:System.Object"></see> is found in the <see cref="T:System.Collections.IList"></see>; otherwise, false.</returns>

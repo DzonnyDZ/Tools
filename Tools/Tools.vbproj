@@ -189,7 +189,7 @@
     <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
     <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
     <Compile Include="Collections\Generic\IIndexable.vb" />
-    <Compile Include="Collections\Generic\TransliterationDictionary.vb" />
+    <Compile Include="Collections\Specialized\TransliterationDictionary.vb" />
     <Compile Include="Collections\Specialized\SpecializedWrapper.vb" />
     <Compile Include="Collections\Generic\TypedArrayEnumerator.vb" />
     <Compile Include="Collections\Generic\UnionEnumerator.vb" />

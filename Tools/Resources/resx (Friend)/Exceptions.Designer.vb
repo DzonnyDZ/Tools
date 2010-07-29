@@ -2417,6 +2417,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'The {0} registry hive is no longer supported'.
+        '''</summary>
+        Public ReadOnly Property RegistryHiveIsNoLongerSupported() As String
+            Get
+                Return ResourceManager.GetString("RegistryHiveIsNoLongerSupported", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Removing was cenceled in event handler'.
         '''</summary>
         Public ReadOnly Property RemovingWasCenceledInEventHandler() As String
@@ -6150,6 +6159,15 @@ Namespace ResourcesT
         '''<returns>The RecycleInternalCanBeCalledOnlyOnClosedMessagebox property value.</returns>
         Public Function RecycleInternalCanBeCalledOnlyOnClosedMessageboxFormat() As String
             Return RecycleInternalCanBeCalledOnlyOnClosedMessagebox
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'The {0} registry hive is no longer supported'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function RegistryHiveIsNoLongerSupportedFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, RegistryHiveIsNoLongerSupported, arg0)
         End Function
         
         '''<summary>

@@ -1,6 +1,8 @@
 ﻿Imports System.Xml.Linq, System.Resources, System.Xml.Schema, System.Linq, Tools.ExtensionsT, Tools.XmlT.LinqT, Tools.LinqT
 Imports <xmlns:e="http://codeplex.com/DTools/IS2022">
 Imports System.Runtime.InteropServices
+Imports Encoding = System.Text.Encoding, StringBuider = System.Text.StringBuilder
+Imports RegexOptions = System.Text.RegularExpressions.RegexOptions
 'TODO:Test
 '#If Config <= Nightly Then set in project file
 'Stage=Nightly
@@ -26,7 +28,7 @@ Namespace TextT.EncodingT
         End Property
         ''' <summary>Default constructor. Returns new instance which operates with built-in definition of ISO-2022 encodings.</summary>
         Public Sub New()
-            Me.New(XDocument.Load(New IO.StreamReader(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.TextT.EncodingT.ISO2022"))))
+            Me.New(XDocument.Load(New IO.StreamReader(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.TextT.EncodingT.ISO2022.xml"))))
         End Sub
         ''' <summary>Constructor which allows to load definitions of encodings from custom <see cref="XDocument"/></summary>
         ''' <param name="EncodingDefinitions">The <see cref="XDocument"/> containing encoding definitions</param>
@@ -38,7 +40,7 @@ Namespace TextT.EncodingT
         Public Sub New(ByVal EncodingDefinitions As XDocument)
             If EncodingDefinitions Is Nothing Then Throw New ArgumentNullException("EncodingDefinitions")
             Dim ss As New XmlSchemaSet
-            ss.Add(XmlSchema.Read(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.TextT.EncodingT.ISO2022Schema"), AddressOf veh))
+            ss.Add(XmlSchema.Read(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.TextT.EncodingT.ISO2022Schema.xsd"), AddressOf veh))
             EncodingDefinitions.Validate(ss, AddressOf veh)
             If Not EncodingDefinitions.Root.HasSameName(<e:encodings/>) Then _
                 Throw New ArgumentException(String.Format(ResourcesT.Exceptions.RootElementOf0MustBe1, "EncodingDeifinitions", "<encodings>"), "EncodingDeifinitions")
@@ -84,7 +86,7 @@ Namespace TextT.EncodingT
         Public Function DetectEncoding(ByVal stream As IO.Stream, Optional ByVal WorkingSet As ISO20200Sets = ISO20200Sets.G0, <Out()> Optional ByRef BytesRead As Byte() = Nothing) As ISO2022Encoding
             If stream Is Nothing Then Throw New ArgumentNullException("stream")
             If Not stream.CanRead Then Throw New ArgumentException(ResourcesT.Exceptions.GivenStreamDoesNotSupportReading)
-            Dim Encodings = From enc In GetEncodings() Select Encoding = enc, Escape = enc.EscapeSequence(WorkingSet) Where Escape IsNot Nothing AndAlso Escape.Length > 0
+            Dim Encodings = (From enc In GetEncodings() Select Encoding = enc, Escape = enc.EscapeSequence(WorkingSet) Where Escape IsNot Nothing AndAlso Escape.Length > 0).ToList
             Dim i As Integer = 0
             Dim bytes As New List(Of Byte)
             Try
@@ -95,8 +97,8 @@ Namespace TextT.EncodingT
                         Return Nothing
                     End If
                     bytes.Add(b)
-                    Dim ByteMatch = From enc In Encodings Where enc.Escape.Length > i AndAlso enc.Escape(i) = b Select enc
-                    Dim TooShort = From enc In Encodings Where enc.Escape.Length <= i Select enc
+                    Dim ByteMatch = (From enc In Encodings Where enc.Escape.Length > i AndAlso enc.Escape(i) = b Select enc).ToList
+                    Dim TooShort = (From enc In Encodings Where enc.Escape.Length <= i Select enc).ToList
                     If ByteMatch.Count = 0 Then
                         If i = 0 Then Return Nothing
                         If TooShort.Count = 1 Then Return TooShort.First.Encoding
@@ -145,8 +147,8 @@ Namespace TextT.EncodingT
         ''' <remarks>Byte array representation of <paramref name="XmlEscapeSequence"/></remarks>
         ''' <exception cref="FormatException"><paramref name="XmlEscapeSequence"/> contains invalid byte. Each byte is specified as either "ESC" string or two numbers from range 0÷127 separated by "/". Leading zeros are allowd. Bytes are separated, preceded and succeded by any number of whitespaces.</exception>
         Friend Shared Function ParseXmlEscapeSequence(ByVal XmlEscapeSequence As String) As Byte()
-            Static wh As New System.Text.RegularExpressions.Regex("\s+", Text.RegularExpressions.RegexOptions.Compiled Or Text.RegularExpressions.RegexOptions.CultureInvariant)
-            Static regex As New System.Text.RegularExpressions.Regex("^(((?<High>(0*((1(([01]?[0-9])|(2[0-7]))?)|([2-9]?[0-9])))|0)/(?<Low>(0*((1(([01]?[0-9])|(2[0-7]))?)|([2-9]?[0-9])))|0))|(?<ESC>ESC))(\s+(?<Byte>((?<Low>(0*((1(([01]?[0-9])|(2[0-7]))?)|([2-9]?[0-9])))|0)/(?<High>(0*((1(([01]?[0-9])|(2[0-7]))?)|([2-9]?[0-9])))|0))|(?<ESC>ESC)))$", Text.RegularExpressions.RegexOptions.Compiled Or Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.ExplicitCapture)
+            Static wh As New System.Text.RegularExpressions.Regex("\s+", RegexOptions.Compiled Or RegexOptions.CultureInvariant)
+            Static regex As New System.Text.RegularExpressions.Regex("^(((?<High>(0*((1(([01]?[0-9])|(2[0-7]))?)|([2-9]?[0-9])))|0)/(?<Low>(0*((1(([01]?[0-9])|(2[0-7]))?)|([2-9]?[0-9])))|0))|(?<ESC>ESC))$", RegexOptions.Compiled Or RegexOptions.CultureInvariant Or RegexOptions.ExplicitCapture)
             Dim ret As New List(Of Byte)
             For Each b In wh.Split(XmlEscapeSequence)
                 If b = "" Then Continue For
@@ -163,6 +165,7 @@ Namespace TextT.EncodingT
             Return ret.ToArray
         End Function
     End Class
+
     ''' <summary>Represents single ISO-2022 encoding and provides infornmation about it.</summary>
     ''' <seealso cref="ISO2022"/>
     Public NotInheritable Class ISO2022Encoding : Implements IEquatable(Of ISO2022Encoding)
@@ -175,7 +178,7 @@ Namespace TextT.EncodingT
         Friend Sub New(ByVal encoding As XElement)
             If encoding Is Nothing Then Throw New ArgumentNullException("encoding")
             If Not encoding.HasSameName(<e:encoding/>) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustRepresentXMLElement1, "encoding", "encoding"), "encoding")
-            Me.element = element
+            Me.element = encoding
         End Sub
         ''' <summary>Gets official encoding name under which it is registered by IPSJ/ITSCJ</summary>
         ''' <returns>Name of encoding in ISO-2022 encoding register.</returns>
@@ -211,14 +214,14 @@ Namespace TextT.EncodingT
         ''' <remarks>Type of this encoding assording to IPSJ/ITSCJ registr</remarks>
         Public ReadOnly Property Type() As ISO2022EncodingType
             Get
-                Static iType As ISO2022EncodingType = New ISO2022EncodingType((From t In element.Parent.<e:type> Where t.@name = element.@name)(0))
+                Static iType As ISO2022EncodingType = New ISO2022EncodingType((From t In element.Parent.<e:type> Where t.@name = element.@type)(0))
                 Return iType
             End Get
         End Property
         ''' <summary>Gets name of encoding as registered by IANA (if exists).</summary>
         ''' <returns>Primary (preffered) name of encoding as registered by IANA. Or null if this encoding is not registered by IANA.</returns>
-        ''' <remarks>IANA organisation maintains list of encoding names registered for use on the Internet. Such encoding names are used eg. in XML encoding specification or in HTTP headers. Also <see cref="System.Text.EncodingInfo.Name"/> and <see cref="System.Text.Encoding.WebName"/> uses IANA registred names. For more information see <a href="http://www.iana.org">www.iana.org</a> or <a href="http://www.iana.org/assignments/character-sets">character sets registry</a>.</remarks>
-        ''' <seealso cref="System.Text.Encoding.WebName"/><seealso cref="System.Text.EncodingInfo.Name"/>
+        ''' <remarks>IANA organisation maintains list of encoding names registered for use on the Internet. Such encoding names are used eg. in XML encoding specification or in HTTP headers. Also <see cref="EncodingInfo.Name"/> and <see cref="Encoding.WebName"/> uses IANA registred names. For more information see <a href="http://www.iana.org">www.iana.org</a> or <a href="http://www.iana.org/assignments/character-sets">character sets registry</a>.</remarks>
+        ''' <seealso cref="Encoding.WebName"/><seealso cref="System.Text.EncodingInfo.Name"/>
         ''' <seealso cref="IanaAlias"/>
         Public ReadOnly Property IanaName$()
             Get
@@ -234,14 +237,14 @@ Namespace TextT.EncodingT
                 Return If(element.@IANAAlias <> "", element.@IANAAlias, Nothing)
             End Get
         End Property
-        ''' <summary>Gets <see cref="System.Text.Encoding"/> which implements ISO-2022 encoding represented by this instance</summary>
-        ''' <returns>Appropriate <see cref="Text.Encoding"/> or null if either <see cref="IanaName"/> is null or it is not supported by the .NET framework (the <see cref="M:System.Text.Encoding.GetEncoding(System.String)">Encoding.GetEncoding</see> method.)</returns>
+        ''' <summary>Gets <see cref="Encoding"/> which implements ISO-2022 encoding represented by this instance</summary>
+        ''' <returns>Appropriate <see cref="Encoding"/> or null if either <see cref="IanaName"/> is null or it is not supported by the .NET framework (the <see cref="M:Encoding.GetEncoding(System.String)">Encoding.GetEncoding</see> method.)</returns>
         ''' <remarks>Actual ability of .NET framework to support particular encoding depends on which encodings are supported by (installed in) operating system.</remarks>
-        ''' <seealso cref="Text.Encoding"/><seeaslo cref="M:System.Text.Encoding.GetEncoding(System.String)"/><seealso cref="IanaName"/>
-        Public Function GetEncoding() As Text.Encoding
+        ''' <seealso cref="Encoding"/><seeaslo cref="M:Encoding.GetEncoding(System.String)"/><seealso cref="IanaName"/>
+        Public Function GetEncoding() As Encoding
             If Me.IanaName Is Nothing Then Return Nothing
             Try
-                Return Text.Encoding.GetEncoding(Me.IanaName)
+                Return Encoding.GetEncoding(Me.IanaName)
             Catch ex As ArgumentException
                 Return Nothing
             End Try
@@ -347,6 +350,7 @@ Namespace TextT.EncodingT
             Return MyBase.Equals(obj)
         End Function
     End Class
+
     ''' <summary>Represents and provides information about one type of encoding as recognized by ISO-2022</summary>
     ''' <remarks>You can obtain all encoding type information by <see cref="ISO2022.GetEncodingTypes"/>. All existing encoding types are defined in the <see cref="ISO2022EncodingType.EncodingTypes"/> enumeration.
     ''' <para>This class has no public constructor.</para></remarks>

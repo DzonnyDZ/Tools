@@ -383,7 +383,7 @@ Namespace GlobalizationT.NumberingSystemsT
             If Expanded Is Nothing Then Return Nothing
             Expanded = Expand(Expanded)
             Dim state As CollapseState = CollapseState.S
-            Dim ret As New Text.StringBuilder(Expanded.Length)
+            Dim ret As New System.Text.StringBuilder(Expanded.Length)
             For idx As Integer = 0 To Expanded.Length
                 Dim curch = If(idx = Expanded.Length, ChrW(0), Expanded(idx))
                 Dim islast = idx = Expanded.Length

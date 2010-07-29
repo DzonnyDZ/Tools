@@ -1390,4 +1390,7 @@
   <data name="NoSuitablePropertyFound" xml:space="preserve">
     <value>No suitable {0} property found</value>
   </data>
+  <data name="RegistryHiveIsNoLongerSupported" xml:space="preserve">
+    <value>The {0} registry hive is no longer supported</value>
+  </data>
 </root>

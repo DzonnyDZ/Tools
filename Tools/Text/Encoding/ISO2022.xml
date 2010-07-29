@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <encodings xmlns="http://codeplex.com/DTools/IS2022">
+    <!--TODO: Private encodings defined by IPTC NAA IIM-->
     <type name="C0" C0="ESC 2/1"/>
     <type name="94/1" G0="ESC 2/8" G1="ESC 2/9" G2="ESC 2/10" G3="ESC 2/11"/>
     <type name="S" C0="ESC" C1="ESC" G0="ESC" G1="ESC" G2="ESC" G3="ESC"/>
@@ -519,9 +520,10 @@
     <encoding name ='Supplementary set for Latin-7 alternative with EURO SIGN' number='206' type='96'  >
         <escape>6/5</escape>
     </encoding>
-    <encoding name ='Variant of the ISO 7-bit coded character set for the Irish Gaelic language ' number='207' type='94'  >
+    <!--TODO: This is mistaken type-->
+    <!--<encoding name ='Variant of the ISO 7-bit coded character set for the Irish Gaelic language ' number='207' type='94'  >
         <escape>4/3</escape>
-    </encoding>
+    </encoding>-->
     <encoding name ='Ogham coded character set for information interchange' number='208' type='96'  >
         <escape>6/7</escape>
     </encoding>

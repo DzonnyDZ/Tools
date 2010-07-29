@@ -1258,7 +1258,7 @@ Namespace CodeDomT
         ''' <param name="enm">Value to get list for</param>
         ''' <returns>Space-separated list of names of constants from type of <paramref name="enm"/> which when or-ed gives value of <paramref name="enm"/></returns>
         Private Function Enum2List(ByVal enm As [Enum]) As String
-            Dim ret As New Text.StringBuilder
+            Dim ret As New System.Text.StringBuilder
             For Each value As [Enum] In [Enum].GetValues(enm.GetType)
                 If (enm.GetValue.ToInt64(Globalization.CultureInfo.InvariantCulture) And value.GetValue.ToInt64(Globalization.CultureInfo.InvariantCulture)) = value.GetValue.ToInt64(Globalization.CultureInfo.InvariantCulture) Then
                     Dim name = value.GetName

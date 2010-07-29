@@ -28,6 +28,10 @@ Public Class IptcInternal
     Friend Sub New(ByVal ImagePath As String)
         MyBase.New(New JPEG.JPEGReader(ImagePath, False))
         _ImagePath = ImagePath
+        IgnoreLenghtConstraints = My.Settings.IgnoreIptcLengthConstraints
+        If Me.Tags.Count = 0 AndAlso My.Settings.IptcUtf8 Then
+            Me.CodedCharacterSet = New Byte() {Tools.TextT.EncodingT.ISO2022.AsciiEscape, &H25, &H47}
+        End If
         _Changed = False
     End Sub
     ''' <summary>Contains value of the <see cref="ImagePath"/> property</summary>

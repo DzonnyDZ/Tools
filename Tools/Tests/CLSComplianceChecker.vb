@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection, Tools.ExtensionsT, System.Linq, Tools.ReflectionT
+Imports RegexOptions = System.Text.RegularExpressions.RegexOptions
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace TestsT
     ''' <summary>Allows to check if varios items of compiled code are CLS compliant</summary>
@@ -1238,11 +1239,11 @@ Namespace TestsT
         End Function
 
         ''' <summary>Regulare expersssion to check if identifier name is valid</summary>
-        Private Shared ReadOnly IdentifierRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*$", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
+        Private Shared ReadOnly IdentifierRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*$", RegexOptions.CultureInvariant Or RegexOptions.Compiled)
         ''' <summary>Regulare expersssion to check if identifier name including namespace is valid</summary>
-        Private Shared ReadOnly IdentifierNsRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*(\.[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*)*$", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
+        Private Shared ReadOnly IdentifierNsRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*(\.[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*)*$", RegexOptions.CultureInvariant Or RegexOptions.Compiled)
         ''' <summary>Regular expression if type name seems to encode generic arguments</summary>
-        Private gTypeNameRegEx As New Text.RegularExpressions.Regex("`\d+$", Text.RegularExpressions.RegexOptions.Compiled Or Text.RegularExpressions.RegexOptions.CultureInvariant)
+        Private gTypeNameRegEx As New System.Text.RegularExpressions.Regex("`\d+$", RegexOptions.Compiled Or RegexOptions.CultureInvariant)
 
         ''' <summary>Peprforms common CLS-compliance test on member</summary>
         ''' <param name="Item">Member to do tests on</param>
@@ -1271,7 +1272,7 @@ Namespace TestsT
                     End If
                 End With
             End If
-            Dim Normalized = ItemName.Normalize(Text.NormalizationForm.FormC)
+            Dim Normalized = ItemName.Normalize(System.Text.NormalizationForm.FormC)
             If Normalized.Length <> ItemName.Length Then
                 violated = True
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.NameC, CLSRule.UnicodeIdentifiers, Item)

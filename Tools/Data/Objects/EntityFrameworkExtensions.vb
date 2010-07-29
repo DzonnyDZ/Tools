@@ -111,8 +111,8 @@ Namespace DataT.ObjectsT
             Else
                 Throw New MissingMemberException(ResourcesT.Exceptions.NoSuitablePropertyFound.f(GetType(IObjectSet(Of )).Name))
             End If
-            'Late binding here is intensionally
-            tPrp.GetValue(context, Nothing).AddObject(entity)
+            'tPrp.GetValue(context, Nothing).AddObject(entity) 'Late binding
+            CallByName(tPrp.GetValue(context, Nothing), "AddObject", CallType.Method, entity)
         End Sub
 #End Region
     End Module

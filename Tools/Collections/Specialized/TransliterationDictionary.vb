@@ -2,7 +2,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 
-Namespace CollectionsT.GenericT
+Namespace CollectionsT.SpecializedT
     ''' <summary>String-string dictionary for transliteration</summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
     Public Class TransliterationDictionary
