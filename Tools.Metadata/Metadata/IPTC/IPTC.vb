@@ -10,6 +10,7 @@ Namespace MetadataT.IptcT
     ''' <version version="1.5.3">Added limited autodetection of UTF-8 encoding based on <see cref="Iptc.CodedCharacterSet"/>. See <see cref="Iptc.Encoding"/> for details.</version>
     ''' <version version="1.5.3">Changed encoding used when none is specified for <see cref="Iptc.GraphicCharacters_Value"/>, <see cref="Iptc.TextWithSpaces_Value"/>, <see cref="Iptc.Text_Value"/>, <see cref="Iptc.Num2_Str_Value"/>, <see cref="Iptc.Num3_Str_Value"/>, <see cref="Iptc.SubjectReference_Value"/>, <see cref="Iptc.Alpha_Value"/>: <see cref="Iptc.Encoding"/> is used for records 2 - 6 and 8, <see cref="System.Text.Encoding.ASCII"/> is used otherwise. (Previously: <see cref="Iptc.Encoding"/> is used whenever encoding is not specified).</version>
     ''' <version version="1.5.3">Added the <see cref="Iptc.IgnoreLenghtConstraints"/> property which when set to true allows values violating length constraints (according to IPTC standard) to be stored.</version>
+    ''' <version version="1.5.3">Properties of type HHMMSS_HHMM are also read when stored as HHMMSS only (before 1.5.3 an exception was thrown)</version>
     Partial Public Class Iptc
         Implements IMetadata
         ''' <summary>Name identifiying IPTC metadata in <see cref="IMetadataProvider"/></summary>

@@ -1,5 +1,7 @@
 Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT, Tools.ComponentModelT
 Imports Tools.MetadataT.IptcT.IptcDataTypes
+Imports System.Linq
+
 Namespace MetadataT.IptcT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class Iptc
@@ -670,12 +672,14 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.HHMMSS_HHMM"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentException">
-        ''' Stored time has length different than 11 (in Getter) -or-
+        ''' Stored time has length different than 11 and 6 (in Getter) -or-
         ''' Stored time has something else then + or - on 7th position (in Getter)
         ''' </exception>
         ''' <exception cref="InvalidCastException">Stored time has non-numeric character on any position excepting 7th (in Getter)</exception>
-        ''' <exception cref="ArgumentOutOfRangeException">Stored time is out of range of possible values (see <seealso cref="Time"/> for details)</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">Stored time is out of range of possible values (see <seealso cref="Time"/> for details; <see cref="M:MetadataT.IptcT.IptcDataTypes.Time.#ctor(System.TimeSpan)"/> when length of stored time is 6)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
+        ''' <seelaso cref="Tag"/><seelaso cref="HHMMSS_Value"/>
+        ''' <version version="1.5.3">In getter: When stored time lenght is 6 <see cref="HHMMSS_Value"/> is returned instead (with zero offset; previously <see cref="ArgumentException"/> used to be thrown).</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property HHMMSS_HHMM_Value(ByVal Key As DataSetIdentification) As List(Of Time)
             Get
@@ -685,14 +689,15 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
+
+                    If ItemStr.Length = 6 Then
+                        Return (From iitem In HHMMSS_Value(Key) Select New Time(iitem)).tolist
+                    End If
+
                     If ItemStr.Length <> 11 Then Throw New ArgumentException(ResourcesT.Exceptions.LengthOfDataStoredUnderThisTagIsDifferentThen11WhichIsNecessaryForDatatypeHHMMSSHHMM)
                     Dim Sig As String = ItemStr(6)
                     If Sig <> "-"c AndAlso Sig <> "+"c Then Throw New ArgumentException(ResourcesT.Exceptions.StoredTimeDoesNotContainValidCharacterOnTimeZoneOffsetSignPosition)
-                    '#If Framework >= 3.5 Then
                     ret.Add(New Time(ItemStr.Substring(0, 2), ItemStr.Substring(2, 2), ItemStr.Substring(4, 2), If(Sig = "+"c, 1, -1) * ItemStr.Substring(7, 2), ItemStr.Substring(9, 2)))
-                    '#Else
-                    '                    ret.Add(New Time(ItemStr.Substring(0, 2), ItemStr.Substring(2, 2), ItemStr.Substring(4, 2), VisualBasicT.iif(Sig = "+"c, 1, -1) * ItemStr.Substring(7, 2), ItemStr.Substring(9, 2)))
-                    '#End If
                 Next item
                 If ret.Count = 0 Then Return Nothing
                 Return ret

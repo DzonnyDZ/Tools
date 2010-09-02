@@ -1217,7 +1217,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <summary>CTor from <see cref="TimeSpan"/></summary>
         ''' <param name="Time"><see cref="TimeSpan"/> to initialize this instance (time local in UTC+0:00)</param>
         ''' <remarks>Offset is initialized to <see cref="TimeSpan.Zero"/></remarks>
-        ''' <exception cref="ArgumentOutOfRangeException">Time component exceeds range <see cref="Minimum"/>÷<see cref="Maximum"/> -or- offset component exceds range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
+        ''' <exception cref="ArgumentOutOfRangeException">Time component exceeds range <see cref="Minimum"/>÷<see cref="Maximum"/></exception>
         Public Sub New(ByVal Time As TimeSpan)
             Me.New(Time, TimeSpan.Zero)
         End Sub

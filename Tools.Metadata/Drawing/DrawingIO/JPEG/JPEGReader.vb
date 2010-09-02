@@ -11,6 +11,7 @@ Namespace DrawingT.DrawingIOt.JPEG
     ''' <version version="1.5.2">Added implementation of <see cref="MetadataT.ExifT.IExifWriter"/></version>
     ''' <version version="1.5.2">Implemented the <see cref="IMetadataProvider"/> interface</version>
     ''' <version version="1.5.3">Added support for <see cref="SystemMetadata"/> and <see cref="ImageMetadata"/> for <see cref="IMetadataProvider"/>.</version>
+    ''' <version version="1.5.3">Fix: <see cref="InvalidDataException"/> may be thrown when working with IPTC or Photoshop 8BIM data due to bug in <see cref="Photoshop8BIMReader.WholeSize"/> implementation. This happened especially for files edited with Adobe Photop.</version>
     Public Class JPEGReader
         Implements MetadataT.ExifT.IExifGetter, MetadataT.IptcT.IIptcGetter
         Implements MetadataT.IptcT.IIptcWriter, MetadataT.ExifT.IExifWriter
@@ -277,6 +278,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' An 8BIM segment doesn't start with string '8BIM'
         ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
         ''' </exception>
+        ''' <version version="1.5.3">Fix: <see cref="InvalidDataException"/> may be thrown due to bug in <see cref="Photoshop8BIMReader.WholeSize"/> implementation. This happened especially for files edited with Adobe Photop.</version>
         Public Function GetIPTCStream() As System.IO.Stream Implements MetadataT.IptcT.IIptcGetter.GetIptcStream
             For Each BIM8 As Photoshop8BIMReader In Get8BIMSegments()
                 If BIM8.Type = IPTC8BIM Then
@@ -289,6 +291,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         Private Const IPTC8BIM As UShort = &H404
         ''' <summary>Gets index of 8BIM segment which stores IPTC data</summary>
         ''' <returns>Index of 8BIM segment into <see cref="Get8BIMSegments"/> collection in which IPTC data are stored, -1 if there are no IPTC data</returns>
+        ''' <version version="1.5.3">Fix: <see cref="InvalidDataException"/> may be thrown due to bug in <see cref="Photoshop8BIMReader.WholeSize"/> implementation. This happened especially for files edited with Adobe Photop.</version>
         Public ReadOnly Property IPTC8BIMSegmentIndex() As Integer
             Get
                 Dim i As Integer = 0
@@ -309,6 +312,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' An 8BIM segment doesn't start with string '8BIM'
         ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
         ''' </exception>
+        ''' <version version="1.5.3">Fix: <see cref="InvalidDataException"/> may be thrown due to bug in <see cref="Photoshop8BIMReader.WholeSize"/> implementation. This happened especially for files edited with Adobe Photop.</version>
         Public Function Get8BIMSegments() As CollectionsT.GenericT.IReadOnlyList(Of Photoshop8BIMReader)
             Dim Segments As New List(Of Photoshop8BIMReader)
             Dim Pos As Long = 0
@@ -600,7 +604,10 @@ Namespace DrawingT.DrawingIOt.JPEG
     ''' <summary>Represents Photoshop 8BIM segment</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    ''' <version version="1.5.3">Added <see cref="DebuggerDisplayAttribute"/>.</version>
+    ''' <version version="1.5.3"><see cref="Photoshop8BIMReader.WholeSize"/> may be reported incorrectly</version>
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
+    <DebuggerDisplay("Photoshop8BIMReader type {Type}, name {Name}, data size {DataSize}")>
     Public Class Photoshop8BIMReader
         ''' <summary>CTor</summary>
         ''' <param name="Stream">Steam which contains segment data</param>
@@ -653,19 +660,17 @@ Namespace DrawingT.DrawingIOt.JPEG
         Private _Data As System.IO.Stream
         ''' <summary>Size of whole 8BIM segment including all header information</summary>
         ''' <remarks>See <see cref="DataSize"/> for size of data part of segment</remarks>
+        ''' <version version="1.5.3">Fix: Size may be reported incorrectly.</version>
         Public ReadOnly Property WholeSize() As Long
             Get
-                '#If Framework >= 3.5 Then
-                Return DataSize + 2 + 1 + If(Name.Length = 0, 2, Name.Length) + 4 + 4 + _
-                    If(NamePaddNeeded, 1, 0) + If(DataPadNeeded, 1, 0)
-                '#Else
-                '                Return DataSize + 2 + 1 + VisualBasicT.iif(Name.Length = 0, 2, Name.Length) + 4 + 4 + _
-                '                    Tools.VisualBasicT.iif(NamePaddNeeded, 1, 0) + Tools.VisualBasicT.iif(DataPadNeeded, 1, 0)
-                '#End If
-                '2 - Type
-                '1 - Length of Pascal string
-                '4 - Size
-                '4 - '8BIM'
+                Return 4 + 2 + Math.Ceiling((Name.Length + 1) / 2) * 2 + 4 + Math.Ceiling(Data.Length / 2) * 2
+                '4 - Marker "8BIM"
+                '2 - Segment type
+                'Name - Pascal string (1B size + string), padded to odd lenght (lenght measured including 1st byte)
+                '4 - Segment size
+                '5 - Data padded to odd length
+
+                'Return DataSize + 2 + 1 + If(Name.Length = 0, 2, Name.Length) + 4 + 4 + If(NamePaddNeeded, 1, 0) + If(DataPadNeeded, 1, 0)
             End Get
         End Property
         ''' <summary>True when data must be padded with one null byte to even lenght</summary>

@@ -518,7 +518,7 @@ Public Class frmMain
                 'End If
                 SelectedMetadata.Add(item)
             Next
-            ShowIPTCValues(From item In SelectedMetadata Select item.IPTC)
+            ShowIPTCValues(From item In SelectedMetadata Where item.IPTC IsNot Nothing Select item.IPTC)
             prgIPTC.SelectedObjects = (From mtd In SelectedMetadata Select mtd.IPTC).ToArray
             SetExifPropertyGrids(From mtd In SelectedMetadata Select mtd.Exif)
             Dim exifTime As DateTime?

@@ -6,10 +6,7 @@
 * Zobrazení informací v náhledu
 * Zoomování v náhledu, posun výřezu
 * FileSystemWatcher
-* Unicode IPTC
 * Exif
-* Exif výtah
-* Možnost obejít IPTC Length constraint (pro variable lenght)
 * Export CSV
 * Command line (file, folder, files)
 * Slide show/browser
@@ -20,3 +17,7 @@
 * Version history
 
 (done) Thesaurus button in keyword editor missing
+(done) Exif výtah
+(done) Možnost obejít IPTC Length constraint (pro variable lenght)
+(done) UTF-8 support for IPTC
+(done) Fix IPTC bux in Photoshop-saved files

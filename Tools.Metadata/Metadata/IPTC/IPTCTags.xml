@@ -84,6 +84,8 @@
         </tag>
         <tag number="80" name="TimeSent" human-name="Time Sent" type="HHMMSS-HHMM" fixed="true" mandatory="false" repeatable="false" length="11" category="Date">
             <desc>This is the time the service sent the material.</desc>
+            <remarks>This property should be stored in HHMMSS+HHMM format. When IPTC value was originally stored in HHMMSS format it can be red as well (but it's IPTC IIM standard violation).</remarks>
+            <version version="1.5.3">Values in HHMMSS format can be read.</version>
         </tag>
         <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteArray" fixed="false" mandatory="false" repeatable="false" length="32" category="Old IPTC" attributes="&lt;TypeConverter(GetType(HexaConverter))> &lt;Editor(GetType(Drawing.Design.UITypeEditor), GetType(Drawing.Design.UITypeEditor))>">
             <desc>
@@ -1175,12 +1177,16 @@
         </tag>
         <tag number="32" name="ReleaseTime" human-name="Release Time" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
             <desc>The earliest time the provider intends the object to be used.</desc>
+            <remarks>This property should be stored in HHMMSS+HHMM format. When IPTC value was originally stored in HHMMSS format it can be red as well (but it's IPTC IIM standard violation).</remarks>
+            <version version="1.5.3">Values in HHMMSS format can be read.</version>
         </tag>
         <tag number="37" name="ExpirationDate" human-name="Expiration Date" type="CCYYMMDD" mandatory="false" repeatable="false" fixed="true" length="8" category="Date">
             <desc>The latest date the provider or owner intends the objectdata to be used.</desc>
         </tag>
         <tag number="38" name="ExpirationTime" human-name="Expiration Time" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
             <desc>The latest time the provider or owner intends the objectdata to be used.</desc>
+            <remarks>This property should be stored in HHMMSS+HHMM format. When IPTC value was originally stored in HHMMSS format it can be red as well (but it's IPTC IIM standard violation).</remarks>
+            <version version="1.5.3">Values in HHMMSS format can be read.</version>
         </tag>
         <tag number="40" name="SpecialInstructions" human-name="Special Instructions" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="256" category="Other">
             <desc>Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.</desc>
@@ -1217,7 +1223,11 @@
         </tag>
         <tag number="60" name="TimeCreated" human-name="Time Created" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
             <desc>The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.</desc>
-            <remarks>Where the time cannot be precisely determined, the closest approximation should be used.</remarks>
+            <remarks>
+                Where the time cannot be precisely determined, the closest approximation should be used.
+                <para>This property should be stored in HHMMSS+HHMM format. When IPTC value was originally stored in HHMMSS format it can be red as well (but it's IPTC IIM standard violation).</para>
+            </remarks>
+            <version version="1.5.3">Values in HHMMSS format can be read.</version>
         </tag>
         <tag number="62" name="DigitalCreationDate" human-name="Digital Creation Date" type="CCYYMMDD" mandatory="false" repeatable="false" fixed="true" length="8" category="Date">
             <desc>The date the digital representation of the objectdata was created.</desc>
@@ -1225,6 +1235,8 @@
         </tag>
         <tag number="63" name="DigitalCreationTime" human-name="Digital Creation Time" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
             <desc>The time the digital representation of the objectdata was created.</desc>
+            <remarks>This property should be stored in HHMMSS+HHMM format. When IPTC value was originally stored in HHMMSS format it can be red as well (but it's IPTC IIM standard violation).</remarks>
+            <version version="1.5.3">Values in HHMMSS format can be read.</version>
         </tag>
         <tag number="65" name="OriginatingProgram" human-name="Originating Program" mandatory="false" repeatable="false" type="TextWithSpaces" fixed="false" length="32" category="Other">
             <desc>Identifies the type of program used to originate the objectdata.</desc>
