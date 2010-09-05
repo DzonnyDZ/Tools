@@ -332,4 +332,10 @@
   <data name="IptcUtf8_n" xml:space="preserve">
     <value>UTF-8</value>
   </data>
+  <data name="CSV_Filter" xml:space="preserve">
+    <value>Comma-separated values (*.csv)|*.csv|Text files (*.txt)|*.txt|Tab-separated values (*.tsv)|*.tsv|All files (*.*)|*.*</value>
+  </data>
+  <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
 </root>

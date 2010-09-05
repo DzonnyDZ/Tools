@@ -403,33 +403,39 @@ Namespace MetadataT.ExifT
             ThumbnailIFD = 1
         End Enum
         ''' <summary>Interprets Exif metadata key in format "X:RecordNumber" as IFD index and record number</summary>
-        ''' <param name="Key">Key to interpret</param>
-        ''' <param name="IFD">When method returns contains index of IFD</param>
-        ''' <param name="RecordNumber">When method returns contains record number</param>
-        ''' <param name="AllowPredefined">True to allow predefined names to be utilized; false to allow keys in specified format only.</param>
-        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name (when <paramref name="AllowPredefined"/> is true) and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
+        ''' <param name="key">Key to interpret</param>
+        ''' <param name="ifd">When method returns contains index of IFD</param>
+        ''' <param name="recordNumber">When method returns contains record number</param>
+        ''' <param name="allowPredefined">True to allow predefined names to be utilized; false to allow keys in specified format only.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="key"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> does not represent predefined Exif property name (when <paramref name="allowPredefined"/> is true) and: <paramref name="key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="key"/> is neither E, G, I or integer number. or Record number part or <paramref name="key"/> is not valid <see cref="UShort"/> number.</exception>
         ''' <version version="1.5.2">Method added</version>
-        Private Sub InterpretKey(ByVal Key As String, <Out()> ByRef IFD As IFDIndexes, <Out()> ByRef RecordNumber As UShort, Optional ByVal AllowPredefined As Boolean = True)
-            If Key Is Nothing Then Throw New ArgumentNullException("Key")
-            If AllowPredefined Then
-                'TODO: Return when matches predefined name
+        ''' <version version="1.5.3">Parameters renamed: <c>Key</c> to <paramref name="key"/>, <c>IFD</c> to <paramref name="ifd"/>, <c>RecordNumber</c> to <paramref name="recordNumber"/>, <c>AllowPredefined</c> to <paramref name="allowPredefined"/>.</version>
+        Private Sub InterpretKey(ByVal key As String, <Out()> ByRef ifd As IFDIndexes, <Out()> ByRef recordNumber As UShort, Optional ByVal allowPredefined As Boolean = True)
+            If key Is Nothing Then Throw New ArgumentNullException("Key")
+            If allowPredefined Then
+                Dim keyOfName = GetKeyOfName(key)
+                If keyOfName IsNot Nothing Then
+                    InterpretKey(keyOfName, ifd, recordNumber, False)
+                    Exit Sub
+                End If
+                If Not key.Contains(":"c) Then Throw New ArgumentException("'{0}' is not known predefined name of Exif metadata.".f(key), "key")
             End If
-            Dim Parts = Key.Split(":"c)
-            If Parts.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.ExifMEtadataKeyMustContain2SeparatedParts, "Key")
+            Dim Parts = key.Split(":"c)
+            If Parts.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.ExifMEtadataKeyMustContain2SeparatedParts, "key")
             Select Case Parts(0)
-                Case "E"c : IFD = IFDIndexes.Exif
-                Case "G"c : IFD = IFDIndexes.GPS
-                Case "I"c : IFD = IFDIndexes.Interop
+                Case "E"c : ifd = IFDIndexes.Exif
+                Case "G"c : ifd = IFDIndexes.GPS
+                Case "I"c : ifd = IFDIndexes.Interop
                 Case Else
                     Dim value%
                     If Not Integer.TryParse(Parts(0), Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, value) Then
                         Throw New ArgumentException(ResourcesT.Exceptions.IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust)
                     End If
-                    IFD = value
+                    ifd = value
             End Select
             Try
-                RecordNumber = UShort.Parse(Parts(1), Globalization.CultureInfo.InvariantCulture)
+                recordNumber = UShort.Parse(Parts(1), Globalization.CultureInfo.InvariantCulture)
             Catch ex As Exception When TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
                 Throw New ArgumentException(ResourcesT.Exceptions.RecordNumberPartOfExifMetadataIdentificationIsInvalid, ex)
             End Try
@@ -545,16 +551,27 @@ Namespace MetadataT.ExifT
         End Function
 
         ''' <summary>Gets key for predefined name</summary>
-        ''' <param name="Name">Name to get key for</param>
+        ''' <param name="name">Name to get key for</param>
         ''' <returns>Key in metadata-specific format for given predefined metadata item name</returns>
         ''' <exception cref="ArgumentException"><paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
         ''' <version version="1.5.2">Function added</version>
-        Public Function GetKeyOfName(ByVal Name As String) As String Implements IMetadata.GetKeyOfName
-            If [Enum].GetNames(GetType(IfdMain.Tags)).Contains(Name) Then Return "0:" & DirectCast(TypeTools.GetConstant(Name, GetType(IfdMain.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
-            If [Enum].GetNames(GetType(IfdExif.Tags)).Contains(Name) Then Return "E:" & DirectCast(TypeTools.GetConstant(Name, GetType(IfdExif.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
-            If [Enum].GetNames(GetType(IfdGps.Tags)).Contains(Name) Then Return "G:" & DirectCast(TypeTools.GetConstant(Name, GetType(IfdGps.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
-            If [Enum].GetNames(GetType(IfdInterop.Tags)).Contains(Name) Then Return "I:" & DirectCast(TypeTools.GetConstant(Name, GetType(IfdInterop.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
-            Throw New ArgumentException(ResourcesT.Exceptions.UnknownPredefinedName0.f(Name))
+        ''' <version version="1.5.3">Parameter <c>Name</c> renamed to <paramref name="name"/></version>
+        Public Function GetKeyOfName(ByVal name As String) As String Implements IMetadata.GetKeyOfName
+            Return GetKeyOfName(name, True)
+        End Function
+
+        ''' <summary>Gets key for predefined name</summary>
+        ''' <param name="name">Name to get key for</param>
+        ''' <param name="throwException">True to throw <see cref="ArgumentException"/> whan <paramref name="name"/> is not known name.</param>
+        ''' <returns>Key in metadata-specific format for given predefined metadata item nam; null if key is not known.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="throwException"/> is true and <paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
+        Private Function GetKeyOfName(ByVal name As String, ByVal throwException As Boolean) As String
+            If [Enum].GetNames(GetType(IfdMain.Tags)).Contains(name) Then Return "0:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdMain.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
+            If [Enum].GetNames(GetType(IfdExif.Tags)).Contains(name) Then Return "E:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdExif.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
+            If [Enum].GetNames(GetType(IfdGps.Tags)).Contains(name) Then Return "G:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdGps.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
+            If [Enum].GetNames(GetType(IfdInterop.Tags)).Contains(name) Then Return "I:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdInterop.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
+            If throwException Then Throw New ArgumentException(ResourcesT.Exceptions.UnknownPredefinedName0.f(name))
+            Return Nothing
         End Function
 
         ''' <summary>Gets name for key</summary>

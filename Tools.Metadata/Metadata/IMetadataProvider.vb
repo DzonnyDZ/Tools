@@ -55,31 +55,36 @@
         ''' Names are typically human-friendly (not-localized) string (like names) and only predefined names are supported (if any). Each name must have its corresponding key. Names are only aliases to certain important keys.</remarks>
         Function GetPredefinedNames() As IEnumerable(Of String)
         ''' <summary>Gets name for key</summary>
-        ''' <param name="Key">Key to get name for</param>
-        ''' <returns>One of predefined names to use instead of <paramref name="Key"/>; null when given key has no corresponding name.</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format</exception>
-        Function GetNameOfKey$(ByVal Key$)
+        ''' <param name="key">Key to get name for</param>
+        ''' <returns>One of predefined names to use instead of <paramref name="key"/>; null when given key has no corresponding name.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid format</exception>
+        ''' <version version="1.5.3">Parameter <c>Key</c> renamed to <paramref name="key"/>.</version>
+        Function GetNameOfKey$(ByVal key$)
         ''' <summary>Gets key for predefined name</summary>
-        ''' <param name="Name">Name to get key for</param>
+        ''' <param name="name">Name to get key for</param>
         ''' <returns>Key in metadata-specific format for given predefined metadata item name</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
-        Function GetKeyOfName$(ByVal Name$)
+        ''' <exception cref="ArgumentException"><paramref name="name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
+        ''' <version version="1.5.3">Parameter <c>Name</c> renamed to <paramref name="name"/>.</version>
+        Function GetKeyOfName$(ByVal name$)
         ''' <summary>Gets localized human-readable name for given key (or name)</summary>
-        ''' <param name="Key">Key (or name) to get name for</param>
-        ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="Key"/>; null when no such name is defined/known.</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid formar or it is not one of predefined names.</exception>
-        Function GetHumanName$(ByVal Key$)
+        ''' <param name="key">Key (or name) to get name for</param>
+        ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="key"/>; null when no such name is defined/known.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid formar or it is not one of predefined names.</exception>
+        ''' <version version="1.5.3">Parameter <c>Key</c> renamed to <paramref name="key"/>.</version>
+        Function GetHumanName$(ByVal key$)
         ''' <summary>Gets localized description for given key (or name)</summary>
-        ''' <param name="Key">Key (or name) to get description of</param>
-        ''' <returns>Localized description of purpose of metadata item identified by <paramref name="Key"/>; nul when description is not available.</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> is in invalid format or it is not one of predefined names.</exception>
-        Function GetDescription$(ByVal Key$)
+        ''' <param name="key">Key (or name) to get description of</param>
+        ''' <returns>Localized description of purpose of metadata item identified by <paramref name="key"/>; nul when description is not available.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> is in invalid format or it is not one of predefined names.</exception>
+        ''' <version version="1.5.3">Parameter <c>Key</c> renamed to <paramref name="key"/>.</version>
+        Function GetDescription$(ByVal key$)
         ''' <summary>Gets metadata value with given key as string</summary>
-        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <param name="key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
         ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
-        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
-        Function GetStringValue$(ByVal Key$)
+        ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.3">Parameter <c>Key</c> renamed to <paramref name="key"/>.</version>
+        Function GetStringValue$(ByVal key$)
     End Interface
 #End If
 End Namespace

@@ -133,6 +133,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to CSV.
+        '''</summary>
+        Friend ReadOnly Property CSV() As String
+            Get
+                Return ResourceManager.GetString("CSV", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Comma-separated values (*.csv)|*.csv|Text files (*.txt)|*.txt|Tab-separated values (*.tsv)|*.tsv|All files (*.*)|*.*.
+        '''</summary>
+        Friend ReadOnly Property CSV_Filter() As String
+            Get
+                Return ResourceManager.GetString("CSV_Filter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Do not show this dialog again..
         '''</summary>
         Friend ReadOnly Property DoNotShowThisDialogAgain() As String

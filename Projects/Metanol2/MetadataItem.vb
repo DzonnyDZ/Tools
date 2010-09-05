@@ -2,7 +2,9 @@
 Imports System.ComponentModel, Tools.DrawingT.ImageTools
 
 ''' <summary>Represents <see cref="ListViewItem"/> which contains metedata for given file</summary>
+''' <version version="2.0.5">Implements <see cref="IMetadataProvider"/>.</version>
 Public NotInheritable Class MetadataItem : Inherits ListViewItem
+    Implements IMetadataProvider
 #Region "CTors"
     ''' <exception cref="ArgumentNullException"><paramref name="FilePath"/> is null</exception>
     ''' <exception cref="ArgumentException">
@@ -37,9 +39,9 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
 #Region "Metadata"
 #Region "IPTC"
     ''' <summary>Contains value of the <see cref="IPTC"/> property</summary>
-    Private WithEvents _IPTC As IPTCInternal
+    Private WithEvents _IPTC As IptcInternal
     ''' <summary>Gets or sets IPTC data for file represented by this instance</summary>
-    Public Property IPTC() As IPTCInternal
+    Public Property IPTC() As IptcInternal
         Get
             If IPTCContains Then
                 Return _IPTC
@@ -47,7 +49,7 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
                 Return Nothing
             End If
         End Get
-        Set(ByVal value As IPTCInternal)
+        Set(ByVal value As IptcInternal)
             _IPTC = value
             _IPTCContains = True
         End Set
@@ -77,17 +79,17 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     ''' <remarks>This method is called automatically when <see cref="IPTC"/> or <see cref="IPTCContains"/> property is got for the first time.</remarks>
     Public Sub IPTCLoad(Optional ByVal SuppressExceptions As Boolean = False)
         Try
-            Me.IPTC = New IPTCInternal(Me.Path)
+            Me.IPTC = New IptcInternal(Me.Path)
         Catch ex As Exception
             _IPTCContains = False
             If Not SuppressExceptions Then Throw
         End Try
     End Sub
-    Private Sub IPTC_Saved(ByVal sender As IPTCInternal) Handles _IPTC.Saved
+    Private Sub IPTC_Saved(ByVal sender As IptcInternal) Handles _IPTC.Saved
         OnPartSaved(New PartEventArgs(Parts.IPTC))
     End Sub
 
-    Private Sub IPTC_ValueChanged(ByVal sender As IPTCInternal, ByVal e As System.EventArgs) Handles _IPTC.ValueChanged
+    Private Sub IPTC_ValueChanged(ByVal sender As IptcInternal, ByVal e As System.EventArgs) Handles _IPTC.ValueChanged
         OnChanged(New PartEventArgs(Parts.IPTC))
     End Sub
 #End Region
@@ -305,4 +307,74 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
         If Changed Then _
             e.Graphics.DrawString("✹", Me.Font, New SolidBrush(MyBase.ForeColor), e.Bounds.Location)
     End Sub
+
+#Region "IMetadataProvider"
+    ''' <summary>Gets value indicating if metadata of particular type are provided by this provider</summary>
+    ''' <param name="MetadataName">Name of metadata type</param>
+    ''' <returns>True if this provider contains metadata with given name</returns>
+    ''' <version version="2.0.5">This function is new in version 2.0.5</version>
+    Public Function ContainsMetadata(ByVal metadataName As String) As Boolean Implements MetadataT.IMetadataProvider.Contains
+        Select Case metadataName
+            Case ExifT.Exif.ExifName : Return ExifContains
+            Case IptcT.Iptc.IptcName : Return IPTCContains
+            Case ImageMetadata.ImageName, SystemMetadata.SystemName : Return True
+            Case Else : Return False
+        End Select
+    End Function
+
+    ''' <summary>Gets names of metadata actually contained in metadata source represented by this provider</summary>
+    ''' <returns>Names of metadata usefull with the <see cref="Metadata"/> function. Never returns null; may return an empty enumeration.</returns>
+    ''' <version version="2.0.5">This function is new in version 2.0.5</version>
+    Public Function GetContainedMetadataNames() As System.Collections.Generic.IEnumerable(Of String) Implements MetadataT.IMetadataProvider.GetContainedMetadataNames
+        Dim ret As New List(Of String)
+        If ExifContains Then ret.Add(ExifT.Exif.ExifName)
+        If IPTCContains Then ret.Add(IptcT.Iptc.IptcName)
+        ret.AddRange({ImageMetadata.ImageName, SystemMetadata.SystemName})
+        Return ret
+    End Function
+
+    ''' <summary>Get all the names of metadata supported by this provider (even when some of the metadata cannot be provided by current instance)</summary>
+    ''' <returns>Name sof metadata usefull with the <see cref="Metadata"/> function. Never returns null; should not return an empty enumeration.</returns>
+    ''' <version version="2.0.5">This function is new in version 2.0.5</version>
+    Public Function GetSupportedMetadataNames() As System.Collections.Generic.IEnumerable(Of String) Implements MetadataT.IMetadataProvider.GetSupportedMetadataNames
+        Return {ExifT.Exif.ExifName, IptcT.Iptc.IptcName, ImageMetadata.ImageName, SystemMetadata.SystemName}
+    End Function
+
+    ''' <summary>Gets metadata of particular type</summary>
+    ''' <param name="MetadataName">Name of metadata to get (see <see cref="GetSupportedMetadataNames"/> for possible values)</param>
+    ''' <returns>Metadata of requested type; or null if metadata of type <paramref name="MetadataName"/> are not contained in this instance or are not supported by this provider.</returns>
+    ''' <version version="2.0.5">This property is new in version 2.0.5</version>
+    Public ReadOnly Property Metadata(ByVal metadataName As String) As MetadataT.IMetadata Implements MetadataT.IMetadataProvider.Metadata
+        Get
+            If Not ContainsMetadata(metadataName) Then Return Nothing
+            Select Case metadataName
+                Case ExifT.Exif.ExifName : Return Exif
+                Case IptcT.Iptc.IptcName : Return IPTC
+                Case ImageMetadata.ImageName : Return ImageMetadata
+                Case SystemMetadata.SystemName : Return SystemMetadata
+                Case Else : Return Nothing
+            End Select
+        End Get
+    End Property
+
+    Private _ImageMetadata As ImageMetadata
+    ''' <summary>Gets image metadta for this item</summary>
+    ''' <version version="2.0.5">This property is new in version 2.0.5</version>
+    Public ReadOnly Property ImageMetadata As ImageMetadata
+        Get
+            If _ImageMetadata Is Nothing Then _ImageMetadata = New ImageMetadata(Path)
+            Return _ImageMetadata
+        End Get
+    End Property
+
+    Private _SystemMetadata As SystemMetadata
+    ''' <summary>Gets system metadata for this item</summary>
+    ''' <version version="2.0.5">This property is new in version 2.0.5</version>
+    Public ReadOnly Property SystemMetadata As SystemMetadata
+        Get
+            If _SystemMetadata Is Nothing Then _SystemMetadata = New SystemMetadata(Path)
+            Return _SystemMetadata
+        End Get
+    End Property
+#End Region
 End Class

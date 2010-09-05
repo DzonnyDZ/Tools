@@ -1018,7 +1018,7 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Exif m,etadata key must contain 2 :-separated parts.'.
+        '''Looks up a localized string similar to 'Exif metadata key must contain 2 colon(:)-separated parts.'.
         '''</summary>
         Public ReadOnly Property ExifMEtadataKeyMustContain2SeparatedParts() As String
             Get

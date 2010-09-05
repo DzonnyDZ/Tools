@@ -23,6 +23,13 @@ Namespace MetadataT
             End Try
             CreatedImage = True
         End Sub
+        ''' <summary>Creates a new empty instance of the <see cref="ImageMetadata"/> class</summary>
+        ''' <remarks>Instance created by this constructor cannot be used to obtain image metadata. It can be used only to enumerate supported fields.</remarks>
+        ''' <version version="1.5.3">This CTor is new in version 1.5.3</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Sub New()
+            Me.New(New Drawing.Bitmap(1, 1))
+        End Sub
         ''' <summary>CTor creates new instance of <see cref="ImageMetadata"/> form <see cref="Image"/></summary>
         ''' <param name="Image"><see cref="Image"/> reperesneting image to provide metadata for</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Image"/> is nul</exception>

@@ -1249,7 +1249,7 @@
     <value>Key is invalid for IPTC metadata.</value>
   </data>
   <data name="ExifMEtadataKeyMustContain2SeparatedParts" xml:space="preserve">
-    <value>Exif m,etadata key must contain 2 :-separated parts.</value>
+    <value>Exif metadata key must contain 2 colon(:)-separated parts.</value>
   </data>
   <data name="IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust" xml:space="preserve">
     <value>IFD identification part of Exif metadata key is invalid. It must be either E, G, I or number.</value>

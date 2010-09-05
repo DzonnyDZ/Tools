@@ -163,7 +163,7 @@ Public Class frmMain
                 Dim parent = Path.DirectoryName
                 If Path.Path.Length > 1 AndAlso Path.Path(Path.Path.Length - 1) = "\"c AndAlso Path.Path.Substring(0, Path.Path.Length - 1) = parent Then _
                     parent = New IOt.Path(parent).DirectoryName
-                lvwFolders.Items.Add("...", UpKey).Tag = Parent
+                lvwFolders.Items.Add("...", UpKey).Tag = parent
             End If
         Catch : End Try
         For Each subfolder In subfolders
@@ -274,19 +274,30 @@ Public Class frmMain
         Dim i As Integer = 0
         For Each path In Paths
             i += 1
+            Dim img As Bitmap = Nothing
+            Dim thImg As Bitmap = Nothing
             Try
-                Dim img As New Bitmap(path)
-                Dim thimg = img.GetThumbnail(My.Settings.ThumbSize, Color.Transparent, Function() sender.CancellationPending)
-                bgwImages.ReportProgress(i / Paths.Count * 100, New Pair(Of String, Image)(System.IO.Path.GetFileName(path), thimg))
+                img = New Bitmap(path)
+                thImg = img.GetThumbnail(My.Settings.ThumbSize, Color.Transparent, Function() sender.CancellationPending)
+                bgwImages.ReportProgress(i / Paths.Count * 100, New Pair(Of String, Image)(System.IO.Path.GetFileName(path), thImg))
             Catch ex As Runtime.InteropServices.ExternalException
                 If bgwImages.CancellationPending Then e.Cancel = True : Exit Sub _
                 Else Throw
             Catch
+                Dim thicon As Image = Nothing
+                Dim icon As Icon = Nothing
+                Dim iBmp As Bitmap = Nothing
                 Try
-                    Dim icon = IOt.FileSystemTools.GetIcon(path, True).ToBitmap
-                    Dim thicon = icon.GetThumbnail(My.Settings.ThumbSize, Color.Transparent, Function() sender.CancellationPending)
+                    icon = IOt.FileSystemTools.GetIcon(path, True)
+                    iBmp = icon.ToBitmap()
+                    thicon = iBmp.GetThumbnail(My.Settings.ThumbSize, Color.Transparent, Function() sender.CancellationPending)
                     bgwImages.ReportProgress(i / Paths.Count * 100, New Pair(Of String, Image)(System.IO.Path.GetFileName(path), thicon))
-                Catch : End Try
+                Finally
+                    If icon IsNot Nothing Then icon.Dispose()
+                    If iBmp IsNot Nothing AndAlso iBmp IsNot thicon Then iBmp.Dispose()
+                End Try
+            Finally
+                If img IsNot Nothing AndAlso img IsNot thImg Then img.Dispose()
             End Try
             If bgwImages.CancellationPending Then e.Cancel = True : Exit Sub
         Next path
@@ -1009,6 +1020,7 @@ Retry:              item.Save()
         tmiMerge.Visible = MergeKeywordsPossible
         'If sender.Items.AsTypeSafe.FirstOrDefault(Function(i As ToolStripMenuItem) i.Visible) Is Nothing Then _
         '    e.Cancel = True : Exit Sub
+        tmiExport.Enabled = lvwImages.SelectedItems.Count > 0
     End Sub
     Private ReadOnly Property MergeKeywordsPossible() As Boolean
         Get
@@ -1078,6 +1090,13 @@ Retry:              item.Save()
         Dim Wizard As New Wizard(Of Data.SelectDatabaseStep)
         Wizard.Text = My.Resources.SynchronizeWithDatabase
         Wizard.ShowDialog(Me)
+    End Sub
+
+    Private Sub tmiExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiExport.Click
+        Dim metadatas = (From item As MetadataItem In lvwImages.SelectedItems Where item IsNot Nothing).ToArray
+        Using frm As New frmExport(metadatas)
+            frm.showdialog()
+        End Using
     End Sub
 End Class
 

@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentTools", "Develop
 	ProjectSection(SolutionItems) = preProject
 		DevelopmentTools\msxsl.exe = DevelopmentTools\msxsl.exe
 		DevelopmentTools\read.me.txt = DevelopmentTools\read.me.txt
+		Projects\Metanol2\My Project\Settings.Designer.vb = Projects\Metanol2\My Project\Settings.Designer.vb
+		Projects\Metanol2\My Project\Settings.settings = Projects\Metanol2\My Project\Settings.settings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{677A518E-909C-414F-AC5E-528AB32023AF}"

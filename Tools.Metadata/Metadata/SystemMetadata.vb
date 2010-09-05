@@ -18,6 +18,13 @@ Namespace MetadataT
             If Not IO.File.Exists(FileName) Then Throw New IO.FileNotFoundException("File not found", FileName)
             file = New IO.FileInfo(FileName)
         End Sub
+        ''' <summary>Creates a new empty instance of the <see cref="SystemMetadata"/> class</summary>
+        ''' <remarks>Instance created by this contructor cannot be used for obtaining metadata. It can be used just for enumeration of supported metadata tags.</remarks>
+        ''' <version version="1.5.3">This CTor is new in version 1.5.3</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Sub New()
+            file = New IO.FileInfo("\\.\NUL")
+        End Sub
 
 #Region "Properties"
         ''' <summary>Gets the full path of the directory or file.</summary>

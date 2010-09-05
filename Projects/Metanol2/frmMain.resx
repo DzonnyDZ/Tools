@@ -181,13 +181,19 @@
     <value>17, 18</value>
   </metadata>
   <data name="tmiMerge.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 22</value>
+    <value>172, 22</value>
   </data>
   <data name="tmiMerge.Text" xml:space="preserve">
     <value>Merge keywords</value>
   </data>
+  <data name="tmiExport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 22</value>
+  </data>
+  <data name="tmiExport.Text" xml:space="preserve">
+    <value>Export metadata ...</value>
+  </data>
   <data name="cmsImages.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 26</value>
+    <value>173, 70</value>
   </data>
   <data name="&gt;&gt;cmsImages.Name" xml:space="preserve">
     <value>cmsImages</value>
@@ -217,7 +223,7 @@
     <value>lvwImages</value>
   </data>
   <data name="&gt;&gt;lvwImages.Type" xml:space="preserve">
-    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.2.18972, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
+    <value>Tools.Metanol.TotalCommanderListView, Metanol, Version=2.0.4.39700, Culture=neutral, PublicKeyToken=373c02ac923768e6</value>
   </data>
   <data name="&gt;&gt;lvwImages.Parent" xml:space="preserve">
     <value>splBrowser.Panel2</value>
@@ -2946,6 +2952,12 @@
   </data>
   <data name="&gt;&gt;bgwSave.Type" xml:space="preserve">
     <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiExport.Name" xml:space="preserve">
+    <value>tmiExport</value>
+  </data>
+  <data name="&gt;&gt;tmiExport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmMain</value>

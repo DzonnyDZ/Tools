@@ -119,6 +119,7 @@ Partial Class frmMain
         Me.bgwImages = New System.ComponentModel.BackgroundWorker()
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog()
         Me.bgwSave = New System.ComponentModel.BackgroundWorker()
+        Me.tmiExport = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.splMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
@@ -219,7 +220,7 @@ Partial Class frmMain
         '
         'cmsImages
         '
-        Me.cmsImages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiMerge})
+        Me.cmsImages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiMerge, Me.tmiExport})
         Me.cmsImages.Name = "cmsImages"
         resources.ApplyResources(Me.cmsImages, "cmsImages")
         '
@@ -791,6 +792,11 @@ Partial Class frmMain
         '
         Me.bgwSave.WorkerReportsProgress = True
         '
+        'tmiExport
+        '
+        Me.tmiExport.Name = "tmiExport"
+        resources.ApplyResources(Me.tmiExport, "tmiExport")
+        '
         'frmMain
         '
         resources.ApplyResources(Me, "$this")
@@ -952,5 +958,6 @@ Partial Class frmMain
     Friend WithEvents prgExifThumbnail As System.Windows.Forms.PropertyGrid
     Friend WithEvents tmiSynchronizeWithDatabase As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lblExifDateTime As System.Windows.Forms.Label
+    Friend WithEvents tmiExport As System.Windows.Forms.ToolStripMenuItem
 
 End Class

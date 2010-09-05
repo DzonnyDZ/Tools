@@ -158,13 +158,6 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
-    <None Include="..\SharedFiles\Version.il">
-      <Link>Version.il</Link>
-    </None>
-    <None Include="..\SharedFiles\VersionHistory.xsd">
-      <Link>VersionHistory.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
       <Link>Resources\Exceptions.Designer.vb</Link>
       <AutoGen>True</AutoGen>
@@ -259,12 +252,6 @@
     <None Include="Metadata\Exif\ExifTags.html">
       <DependentUpon>ExifTags.xml</DependentUpon>
     </None>
-    <Content Include="..\SharedFiles\Version.cpp">
-      <Link>Version.cpp</Link>
-    </Content>
-    <Content Include="..\SharedFiles\VersionHistory.xslt">
-      <Link>VersionHistory.xslt</Link>
-    </Content>
     <Content Include="Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
@@ -288,6 +275,7 @@
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
       <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
