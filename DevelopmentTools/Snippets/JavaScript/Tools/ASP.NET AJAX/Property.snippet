@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Property</Title>
+            <Author>Đonny</Author>
+            <Description>Adds code for ASP.NET AJAX property to prototype</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>propertyName</ID>
+                    <ToolTip>Replace with name of the property.</ToolTip>
+                    <Default>property</Default>
+                </Literal>
+                <Literal>
+                    <ID>propertyType</ID>
+                    <ToolTip>Replace with type of the property.</ToolTip>
+                    <Default>Object</Default>
+                </Literal>
+                <Literal>
+                    <ID>value</ID>
+                    <ToolTip>Summary description of the property</ToolTip>
+                    <Default>Gets or sets value</Default>
+                </Literal>
+                <Literal>
+                    <ID>TODO</ID>
+                    <ToolTip>Initilize the property in CTor like this._property = null and delete this comment</ToolTip>
+                    <Default xml:space="preserve">//TODO: Don't forget to initialize the property in CTor&#xD;&#xA;</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="JScript">
+                <![CDATA[
+$TODO$get_$propertyName$: function get_$propertyName$() {
+    /// <value type="$propertyType$">$value$</values>
+    return this._$propertyName$;
+},
+set_$propertyName$: function set_$propertyName$(value) {
+    if (value !== this._$propertyName$) {
+        this._$propertyName$ = value;
+        this.raisePropertyChanged('$propertyName$');
+    }
+}
+          ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
+
