@@ -50,6 +50,7 @@ Public Class TypeMismatchException : Inherits ArgumentException
     ''' <param name="ActualValue">Value of argument which caused the exception to be thrown</param>
     ''' <param name="ExpectedType">Type which is acceptable</param>
     ''' <param name="innerException">The exception that is the cause of the current exception. If the innerException parameter is not a null reference, the current exception is raised in a catch block that handles the inner exception.</param>
+    ''' <version version="1.5.3">Fix: Exception is thrown from <see cref="CreateMessage"/> when neither <paramref name="ActualValue"/> nor <paramref name="ExpectedType"/> is null</version>
     ''' <filterpriority>5</filterpriority>
     Public Sub New(ByVal ParamName$, ByVal ActualValue As Object, ByVal ExpectedType As Type, Optional ByVal InnerException As Exception = Nothing)
         MyBase.new(CreateMessage(ActualValue, ExpectedType), ParamName, InnerException)
@@ -71,6 +72,7 @@ Public Class TypeMismatchException : Inherits ArgumentException
     ''' <param name="ActualValue">Value of argument which caused the exception to be thrown</param>
     ''' <param name="ExpectedType">Type which is acceptable</param>
     ''' <param name="innerException">The exception that is the cause of the current exception. If the innerException parameter is not a null reference, the current exception is raised in a catch block that handles the inner exception.</param>
+    ''' <version version="1.5.3">Fix: Exception is thrown from <see cref="CreateMessage"/> when neither <paramref name="ActualValue"/> nor <paramref name="ExpectedType"/> is null</version>
     ''' <filterpriority>7</filterpriority>
     Public Sub New(ByVal ActualValue As Object, ByVal ExpectedType As Type, Optional ByVal InnerException As Exception = Nothing)
         MyBase.new(CreateMessage(ActualValue, ExpectedType), InnerException)
@@ -168,11 +170,12 @@ Public Class TypeMismatchException : Inherits ArgumentException
     ''' <param name="ExpectedType">Type which is acceptable</param>
     ''' <returns>Exception message</returns>
     ''' <remarks>Either of both arguments can be null and appropriate message will be created</remarks>
+    ''' <version version="1.5.3">Fix: Exception is thrown when neither <paramref name="ActualValue"/> nor <paramref name="ExpectedType"/> is null</version>
     Protected Shared Function CreateMessage$(Optional ByVal ActualValue As Object = Nothing, Optional ByVal ExpectedType As Type = Nothing)
         If ActualValue Is Nothing AndAlso ExpectedType Is Nothing Then Return ResourcesT.Exceptions.ValueOfSomeTypeWasPassedWhereItIsNotAcceptable
         If ActualValue Is Nothing Then Return String.Format(ResourcesT.Exceptions.OnlyValuesOfType0AreAcceptable, ExpectedType.FullName)
         If ExpectedType Is Nothing Then Return String.Format(ResourcesT.Exceptions.ValueOfType0IsNotAcceptable, ActualValue.GetType.FullName)
-        Return String.Format(ResourcesT.Exceptions.ValueOfUnexpectedType0Expected1, ExpectedType.Name)
+        Return String.Format(ResourcesT.Exceptions.ValueOfUnexpectedType0Expected1, ActualValue.GetType.Name, ExpectedType.Name)
     End Function
     ''' <summary>Creates exception message from actual argument value and expected types</summary>
     ''' <param name="actualValue">Value of argument which caused the exception to be thrown</param>
