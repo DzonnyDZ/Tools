@@ -211,6 +211,7 @@
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
     <Compile Include="ComponentModel\ValueContainer.vb" />
+    <Compile Include="misc\SyntaxErrorException.vb" />
     <Compile Include="Numerics\Rational.vb" />
     <Compile Include="Text\Escaping.vb" />
     <Compile Include="Threading\IInvoke.vb" />
@@ -251,6 +252,7 @@
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
     <Compile Include="Tests\AttributeTest.vb" />
+    <Compile Include="Web\Css\Lexical\SelectorLexer.vb" />
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues .vb" />
     <Compile Include="Xml\Linq\Extensions.vb" />
     <Compile Include="Media\Sound.vb">
@@ -342,6 +344,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="Web\Css\Lexical\SelectorsFSA.vsd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ĐTools.ico" />
