@@ -132,6 +132,7 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceProcess" />
@@ -196,7 +197,38 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Windows\WPF\Converters\CompareConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\ConverterResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConverterResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanToCharConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanVisibilityConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CachedImageConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CheckStateConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\ConcatConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\CompareConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Numeric\CompareConverterEx.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\EnumInConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\FileNameConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\FunctionConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Numeric\HalfConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\HorizontalTextAlingConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\IntColorConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\IsNotNullConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\IsNullConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\NestedConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Type-safe\NotBooleanValueConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\NotColorConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\NotVisibilityConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\NullFalseConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Type-safe\NullInvisibleConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Numeric\PlusConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\RelativePathConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\SameTypeOrNullConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\SecureStringConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\StaticTryCastConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\StringFormatConverter.vb" />
     <Compile Include="Windows\WPF\Threading\DispatcherExtensions.vb" />
     <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
       <DependentUpon>HTMLDialog.vb</DependentUpon>
@@ -223,7 +255,7 @@
     <Compile Include="Windows\Interop\InteropExtensions.vb" />
     <Compile Include="Windows\WPF\AssemblyInfo.vb" />
     <Compile Include="Windows\WPF\Controls\NumericUpDown.vb" />
-    <Compile Include="Windows\WPF\Converters\Converters.vb" />
+    <Compile Include="Windows\WPF\Converters\Type-safe\CountVisibilityConverter.vb" />
     <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
     <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
       <SubType>Component</SubType>
@@ -310,6 +342,7 @@
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Resources.resx" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\ResourcesWPF.cs.resx">
       <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
       <SubType>Designer</SubType>
@@ -332,6 +365,15 @@
       <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LogicalName>Tools.WindowsT.WPF.Dialogs.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\WPF\Converters\ConverterResources.cs.resx">
+      <DependentUpon>ConverterResources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\WPF\Converters\ConverterResources.resx">
+      <CustomToolNamespace>WindowsT.WPF.ConvertersT</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConverterResources.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.WPF.ConvertersT.ConverterResources.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.cs.resx">
       <DependentUpon>LinkLabel.vb</DependentUpon>
@@ -705,6 +747,7 @@
       <Link>VersionHistory.xslt</Link>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

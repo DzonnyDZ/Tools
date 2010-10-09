@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ex_UnsupportedDataType" xml:space="preserve">
+    <value>Unsupported data type {0}</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_ConvertsOnlyToBool" xml:space="preserve">
+    <value>{0} converts only to boolean.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_CanConvertBackOnlyFromFalse" xml:space="preserve">
+    <value>{0} can convert back only from False.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_CannotConvertBack" xml:space="preserve">
+    <value>{0} cannot convert back.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_ConvertOnlyFromNumericAndColors" xml:space="preserve">
+    <value>{0} can convert only from numeric and color types.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_CanConvertBackOnlyFromColors" xml:space="preserve">
+    <value>{0} can convert back only from {1} and {2}.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_ValueMustBeSetPriorCalling" xml:space="preserve">
+    <value>Value of the {0} property mus be set prior to calling {1}</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_ConverterCanConvertOnlyFromTo" xml:space="preserve">
+    <value>{0} can convert only from {1} to {2}.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_ConverterCanConvertBackOnlyFromTo" xml:space="preserve">
+    <value>{0} can convert back only from {1} to {2}.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_ConverterCannotConvertValueBack" xml:space="preserve">
+    <value>{0} cannot convert back value {1}.</value>
+    <comment>Internal error message</comment>
+  </data>
+  <data name="ex_IsNotAssignableFrom" xml:space="preserve">
+    <value>{0} is not assignable from {1}</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_IsAssignableFromNeither" xml:space="preserve">
+    <value>{0} is assignable from neither {1} nor {2}</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_FunctionForForwardConversionHaveNotBeenSet" xml:space="preserve">
+    <value>Function for forward conversion have not been set.</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_FunctionForBackwardConversionHasNotBeenSet" xml:space="preserve">
+    <value>Function for backward conversion has not been set.</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_IsNull" xml:space="preserve">
+    <value>{0} is null.</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_CanConvertOnlyTo" xml:space="preserve">
+    <value>{0} can convert only to {1}</value>
+  </data>
+  <data name="ex_CanConvertBackOnlyTo" xml:space="preserve">
+    <value>{0} can convert back only to {1}.</value>
+  </data>
+  <data name="ex_IntermediateValueUndefined" xml:space="preserve">
+    <value>Converter parameter does not contain definition for intermediate value.</value>
+  </data>
+  <data name="ex_IntermediateEmpty" xml:space="preserve">
+    <value>Converter parameter for intermediate value is empty.</value>
+  </data>
+  <data name="ex_CheckedUndefined" xml:space="preserve">
+    <value>Converter parameter does not contain definition for checked value.</value>
+  </data>
+  <data name="ex_CheckedEmpty" xml:space="preserve">
+    <value>Converter parameter for checked value is empty.</value>
+  </data>
+  <data name="ex_UncheckedUndefined" xml:space="preserve">
+    <value>Converter parameter does not contain definition for unchecked value.</value>
+  </data>
+  <data name="ex_UncheckedEmpty" xml:space="preserve">
+    <value>Converter parameter for unchecked value is empty.</value>
+  </data>
+  <data name="ex_ConverterSupportsOnlyTargetTypes_2AndOneGeneric" xml:space="preserve">
+    <value>{0} supports only target types {0} and {1} and {2} of {1}</value>
+  </data>
+  <data name="ex_ConverterCanConvertBackOnlyTo_1And1Generic" xml:space="preserve">
+    <value>{0} can convert back only to {1} and {2} of {1}</value>
+  </data>
+  <data name="ex_CharacterNotBoolean" xml:space="preserve">
+    <value>Character '{0}' does not represent known boolean value</value>
+  </data>
+  <data name="ex_ConverterCanConvertOnlyTo_2" xml:space="preserve">
+    <value>{0} can convert only to {1} and {2}</value>
+  </data>
+  <data name="ex_ConverterCanConvertOnlyFrom_2" xml:space="preserve">
+    <value>{0} can convert only from {1} and {2}</value>
+  </data>
+  <data name="ex_ConverterAcceptsValuesOfType_3" xml:space="preserve">
+    <value>{0} accepts values of type {1}, {2} and {3}</value>
+  </data>
+  <data name="ex_ConverterCanConvertOnlyTo_3" xml:space="preserve">
+    <value>{0} can convert only to {1}, {2} and {3}</value>
+  </data>
+</root>
