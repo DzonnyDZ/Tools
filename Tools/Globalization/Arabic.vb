@@ -271,7 +271,6 @@ Namespace GlobalizationT
         End Function
     End Module
 
-    'TODO: Equals
     ''' <summary>Represents arabic letter and it's four different forms</summary>
     ''' <version version="1.5.3" stage="Nightly">This structure is new in version 1.5.3</version>
     <DebuggerDisplay("{Default}")>
@@ -400,6 +399,16 @@ Namespace GlobalizationT
         Public Overrides Function GetHashCode() As Integer
             If [Default] Is Nothing Then Return 0
             Return [Default].GetHashCode
+        End Function
+        ''' <summary>Indicates whether this instance and a specified object are equal.</summary>
+        ''' <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.</returns>
+        ''' <param name="obj">Another object to compare to. </param>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            If TypeOf obj Is ArabicLetter Then
+                Dim al As ArabicLetter = obj
+                Return Me.Default = al.Default AndAlso Me.Isolated = al.Isolated AndAlso Me.Final = al.Final AndAlso Me.Initial.HasValue = al.Initial.HasValue AndAlso (Not Me.Initial.HasValue OrElse Me.Initial.Value = al.Initial.Value) AndAlso Me.Medial.HasValue = al.Medial.HasValue AndAlso (Not Me.Medial.HasValue OrElse Me.Medial.Value = al.Medial.Value)
+            End If
         End Function
     End Structure
 End Namespace
