@@ -328,7 +328,6 @@
       <Link>VersionHistory.xsd</Link>
       <SubType>Designer</SubType>
     </None>
-    <Shadow Include="Test References\Tools.accessor" />
     <None Include="Tools.snk" />
   </ItemGroup>
   <ItemGroup>

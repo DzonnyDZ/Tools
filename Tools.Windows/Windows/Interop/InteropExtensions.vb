@@ -7,27 +7,41 @@ Imports System.Windows.Interop
 #If Config <= Alpha Then 'Stage: Alpha
 Namespace WindowsT.InteropT
     ''' <summary>Contains extension methods for WPF - WinForms interoperability</summary>
+    ''' <seealso cref="T:Tools.Tools.WindowsT.InteropT.NativeInteropExtensions"/>
     ''' <version version="1.5.3." stage="Alpha">Introduced new overloads to <see cref="InteropExtensions.Show"/> and <see cref="InteropExtensions.ShowDialog"/> methods to support <see cref="Interop.IWin32Window"/>.</version>
     Public Module InteropExtensions
 #Region "Images"
         ''' <summary>Converts <see cref="Drawing.Image"/> to WPF <see cref="BitmapSource"/></summary>
         ''' <param name="Image">An <see cref="Drawing.Image"/></param>
         ''' <returns><see cref="BitmapSource"/> created from <paramref name="Image"/>; null when <paramref name="Image"/> is null.</returns>
+        ''' <remarks><see cref="M:Tools.Tools.WindowsT.InteropT.NativeInteropExtensions.ToBitmapSource(System.Drawing.Bitmap)"/> may be more efficient way of converting bitmaps.</remarks>
         ''' <seelaso cref="Interop.Imaging.CreateBitmapSourceFromHBitmap"/>
+        ''' <version version="1.5.3">In version 1.5.3 overload for <see cref="Drawing.Image"/> overload was added and since then this overload calls that overload.</version>
+        ''' <seelaso cref="M:Tools.Tools.WindowsT.InteropT.NativeInteropExtensions.ToBitmapSourceFast(System.Drawing.Bitmap)"/>
         <Extension()> _
         Public Function ToBitmapSource(ByVal Image As Drawing.Bitmap) As BitmapSource
-            If Image Is Nothing Then Return Nothing
-            'Return Interop.Imaging.CreateBitmapSourceFromHBitmap(Image.GetHbitmap, IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions())  'TODO: This may lead to memory leak
+            Return DirectCast(Image, Drawing.Image).ToBitmapSource
+        End Function
+
+        ''' <summary>Converts <see cref="Drawing.Image"/> to WPF <see cref="BitmapSource"/></summary>
+        ''' <param name="Image">An <see cref="Drawing.Image"/></param>
+        ''' <returns><see cref="BitmapSource"/> created from <paramref name="Image"/>; null when <paramref name="Image"/> is null.</returns>
+        ''' <remarks>For <see cref="Drawing.Bitmap"/>, you may consider using <see cref="M:Tools.Tools.WindowsT.InteropT.NativeInteropExtensions.ToBitmapSourceFast(System.Drawing.Bitmap)"/> which is faster but depends on Windows API.</remarks>
+        ''' <version version="1.5.3">This overload is new in version 1.5.3</version>
+        ''' <seelaso cref="M:Tools.Tools.WindowsT.InteropT.NativeInteropExtensions.ToBitmapSourceFast(System.Drawing.Image)"/>
+        <Extension()> _
+        Public Function ToBitmapSource(ByVal image As Drawing.Image) As BitmapSource
+            If image Is Nothing Then Return Nothing
             Dim str As New IO.MemoryStream
             Static bmp As Drawing.Imaging.ImageFormat = Drawing.Imaging.ImageFormat.Png
-            Image.Save(str, bmp)
+            image.Save(str, bmp)
             Dim ret As New BitmapImage
             ret.BeginInit()
             ret.StreamSource = str
             ret.EndInit()
             Return ret
-
         End Function
+
         ''' <summary>Converts <see cref="Drawing.Icon"/> to WPF <see cref="BitmapSource"/></summary>
         ''' <param name="Icon">An <see cref="Drawing.Icon"/></param>
         ''' <returns><see cref="BitmapSource"/> created from <paramref name="Icon"/>; null when <paramref name="Icon"/> is null.</returns>

@@ -157,6 +157,7 @@
     <Compile Include="API\Messages.ReturnValues.vb" />
     <Compile Include="API\Message values.vb" />
     <Compile Include="API\Notifications.vb" />
+    <Compile Include="Windows\Interop\NativeInteropExtensions.vb" />
     <Compile Include="Windows\WPF\WPFNativeExtensions.vb" />
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
       <Link>Resources\Exceptions.Designer.vb</Link>
@@ -279,6 +280,10 @@
     <Content Include="Resources\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
+      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
+      <Name>Tools.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>

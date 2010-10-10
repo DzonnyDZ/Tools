@@ -115,6 +115,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Default for of Arabic letter must be specified'.
+        '''</summary>
+        Public ReadOnly Property ArabicDefaultNotSpecified() As String
+            Get
+                Return ResourceManager.GetString("ArabicDefaultNotSpecified", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Array cannot be empty.'.
         '''</summary>
         Public ReadOnly Property ArrayCannotBeEmpty() As String
@@ -1693,6 +1702,15 @@ Namespace ResourcesT
         Public ReadOnly Property LengthOfSerialized0IsNotWithinRange12Bytes() As String
             Get
                 Return ResourceManager.GetString("LengthOfSerialized0IsNotWithinRange12Bytes", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Ligature cannot be converted to single character'.
+        '''</summary>
+        Public ReadOnly Property LigatureToChar() As String
+            Get
+                Return ResourceManager.GetString("LigatureToChar", _resourceCulture)
             End Get
         End Property
         
@@ -3965,6 +3983,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the ArabicDefaultNotSpecified property value.
+        '''</summary>
+        '''<returns>The ArabicDefaultNotSpecified property value.</returns>
+        Public Function ArabicDefaultNotSpecifiedFormat() As String
+            Return ArabicDefaultNotSpecified
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the ArrayCannotBeEmpty property value.
         '''</summary>
         '''<returns>The ArrayCannotBeEmpty property value.</returns>
@@ -5443,6 +5469,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function LengthOfSerialized0IsNotWithinRange12BytesFormat(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object) As String
             Return String.Format(_resourceCulture, LengthOfSerialized0IsNotWithinRange12Bytes, arg0, arg1, arg2)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the LigatureToChar property value.
+        '''</summary>
+        '''<returns>The LigatureToChar property value.</returns>
+        Public Function LigatureToCharFormat() As String
+            Return LigatureToChar
         End Function
         
         '''<summary>

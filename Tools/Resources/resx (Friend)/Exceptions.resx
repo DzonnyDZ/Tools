@@ -1393,4 +1393,10 @@
   <data name="RegistryHiveIsNoLongerSupported" xml:space="preserve">
     <value>The {0} registry hive is no longer supported</value>
   </data>
+  <data name="ArabicDefaultNotSpecified" xml:space="preserve">
+    <value>Default for of Arabic letter must be specified</value>
+  </data>
+  <data name="LigatureToChar" xml:space="preserve">
+    <value>Ligature cannot be converted to single character</value>
+  </data>
 </root>

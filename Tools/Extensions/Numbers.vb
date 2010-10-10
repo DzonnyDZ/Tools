@@ -193,6 +193,131 @@ Namespace ExtensionsT
         <Extension()> Function GetBits(ByVal n As Long) As BitArray
             Return n.BitwiseSame.GetBits
         End Function
+
+#Region "MSB"
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function MSB(ByVal n As Byte) As Boolean
+            Return n.GetBit(7)
+        End Function
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function MSB(ByVal n As SByte) As Boolean
+            Return n.GetBit(7)
+        End Function
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function MSB(ByVal n As Int16) As Boolean
+            Return n.GetBit(15)
+        End Function
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function MSB(ByVal n As UInt16) As Boolean
+            Return n.GetBit(15)
+        End Function
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function MSB(ByVal n As Int32) As Boolean
+            Return n.GetBit(31)
+        End Function
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function MSB(ByVal n As UInt32) As Boolean
+            Return n.GetBit(31)
+        End Function
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function MSB(ByVal n As Int64) As Boolean
+            Return n.GetBit(63)
+        End Function
+        ''' <summary>Gets most significant bit (MSB) from given number</summary>
+        ''' <param name="n">Number to get MSB from</param>
+        ''' <remarks>True if MSb of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function MSB(ByVal n As UInt64) As Boolean
+            Return n.GetBit(63)
+        End Function
+#End Region
+#Region "LSB"
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function LSB(ByVal n As Byte) As Boolean
+            Return n.GetBit(0)
+        End Function
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function LSB(ByVal n As SByte) As Boolean
+            Return n.GetBit(0)
+        End Function
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function LSB(ByVal n As Int16) As Boolean
+            Return n.GetBit(0)
+        End Function
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function LSB(ByVal n As UInt16) As Boolean
+            Return n.GetBit(0)
+        End Function
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function LSB(ByVal n As Int32) As Boolean
+            Return n.GetBit(0)
+        End Function
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function LSB(ByVal n As UInt32) As Boolean
+            Return n.GetBit(0)
+        End Function
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Function LSB(ByVal n As Int64) As Boolean
+            Return n.GetBit(0)
+        End Function
+        ''' <summary>Gets least significant bit (LSB) from given number</summary>
+        ''' <param name="n">Number to get LSB from</param>
+        ''' <remarks>True if LSB of <paramref name="n"/> is set, false otherwise</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <CLSCompliant(False)>
+        <Extension()> Function LSB(ByVal n As UInt64) As Boolean
+            Return n.GetBit(0)
+        End Function
+#End Region
 #End Region
 #Region "Bitwise same"
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>

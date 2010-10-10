@@ -1,6 +1,7 @@
 ﻿#If Config <= RC Then 'Stage:RC
 ''' <summary>Contains character constants</summary>
-Module Chars
+''' <version version="1.5.3">Module vas mad public</version>
+Public Module Chars
     ''' <summary>Carriage return (CR) character (\r, code 13 = 0xD)</summary>
     ''' <seealso cref="vbCrLf"/>
     Public Const Cr As Char = vbCr

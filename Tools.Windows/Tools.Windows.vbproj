@@ -202,13 +202,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConverterResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WPF\Converters\General\CompareConverterEx.vb" />
+    <Compile Include="Windows\WPF\Converters\General\CountConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanToCharConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanVisibilityConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CachedImageConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CheckStateConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\ConcatConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\CompareConverter.vb" />
-    <Compile Include="Windows\WPF\Converters\Numeric\CompareConverterEx.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\EnumInConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\FileNameConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\FunctionConverter.vb" />
@@ -342,7 +343,6 @@
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Resources.resx" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\ResourcesWPF.cs.resx">
       <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
       <SubType>Designer</SubType>

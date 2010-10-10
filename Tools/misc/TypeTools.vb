@@ -404,7 +404,7 @@ Public Module TypeTools
     ''' There is no specific support for <see cref="Nullable(Of T)"/></para></remarks>
     ''' <seealso cref="M:Tools.TypeTools.DynamicCast`1(System.Object)"/>
     ''' <version version="1.5.2">Function introduced</version>
-    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longe extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
+    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longer extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
     Public Function DynamicCast(ByVal obj As Object, ByVal Type As Type) As Object
         If obj Is Nothing Then
             If Type Is Nothing Then Return Nothing
