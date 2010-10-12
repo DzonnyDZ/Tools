@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Control</Title>
+            <Author>Đonny</Author>
+            <Description>Adds code for JavaScript Control "class"</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>Namespace</ID>
+                    <ToolTip>Name of namespace class will be defined in</ToolTip>
+                    <Default>Namespace</Default>
+                </Literal>
+                <Literal>
+                    <ID>ClassName</ID>
+                    <ToolTip>Name of the class</ToolTip>
+                    <Default>MyClass</Default>
+                </Literal>
+                <Literal>
+                    <ID>Summary</ID>
+                    <ToolTip>Summary documentation for class and constructor</ToolTip>
+                    <Default>This class does something</Default>
+                </Literal>
+                <Literal>
+                    <ID>base</ID>
+                    <ToolTip>Base class of this class</ToolTip>
+                    <Default>Sys.UI.Control</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="JScript" Delimiter="§">
+<![CDATA[
+Type.registerNamespace('§Namespace§');
+
+§Namespace§.§ClassName§ = function (element) {
+    /// <summary>§Summary§</summary>
+    /// <param name="element" domElement="true">A HTML element this class provides client behavior of</param>
+    §Namespace§.§ClassName§.initializeBase(this, [element]);
+};
+§Namespace§.§ClassName§.prototype = {
+    initialize: function () {
+        /// <summary>Initializes a newly created instance of <see cref="§Namespace§.§ClassName§"/> class</summary>
+        §Namespace§.§ClassName§.callBaseMethod(this, 'initialize');
+    },
+    dispose: function () {
+        /// <summary>Removes the component from the application.</summary>
+        §Namespace§.§ClassName§.callBaseMethod(this, 'dispose');
+    },
+};
+§Namespace§.§ClassName§.registerClass('§Namespace§.§ClassName§', §base§);
+]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
