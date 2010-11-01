@@ -33,8 +33,7 @@
                 </Literal>
             </Declarations>
             <Code Language="JScript" Delimiter="§">
-<![CDATA[
-Type.registerNamespace('§Namespace§');
+<![CDATA[Type.registerNamespace('§Namespace§');
 
 §Namespace§.§ClassName§ = function (element) {
     /// <summary>§Summary§</summary>
@@ -42,17 +41,17 @@ Type.registerNamespace('§Namespace§');
     §Namespace§.§ClassName§.initializeBase(this, [element]);
 };
 §Namespace§.§ClassName§.prototype = {
-    initialize: function () {
+    initialize: function initialize() {
         /// <summary>Initializes a newly created instance of <see cref="§Namespace§.§ClassName§"/> class</summary>
         §Namespace§.§ClassName§.callBaseMethod(this, 'initialize');
     },
-    dispose: function () {
+    dispose: function dispose() {
         /// <summary>Removes the component from the application.</summary>
         §Namespace§.§ClassName§.callBaseMethod(this, 'dispose');
-    },
+    }
+    //Add your code here
 };
-§Namespace§.§ClassName§.registerClass('§Namespace§.§ClassName§', §base§);
-]]>
+§Namespace§.§ClassName§.registerClass('§Namespace§.§ClassName§', §base§);]]>
             </Code>
         </Snippet>
     </CodeSnippet>

@@ -26,15 +26,10 @@
                     <ToolTip>Summary description of the property</ToolTip>
                     <Default>Gets or sets value</Default>
                 </Literal>
-                <Literal>
-                    <ID>TODO</ID>
-                    <ToolTip>Initilize the property in CTor like this._property = null and delete this comment</ToolTip>
-                    <Default xml:space="preserve">//TODO: Don't forget to initialize the property in CTor&#xD;&#xA;</Default>
-                </Literal>
             </Declarations>
             <Code Language="JScript">
                 <![CDATA[
-$TODO$get_$propertyName$: function get_$propertyName$() {
+get_$propertyName$: function get_$propertyName$() {
     /// <value type="$propertyType$">$value$</values>
     return this._$propertyName$;
 },
