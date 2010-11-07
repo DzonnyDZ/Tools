@@ -222,4 +222,7 @@
   <data name="ex_ConverterCanConvertOnlyTo_3" xml:space="preserve">
     <value>{0} can convert only to {1}, {2} and {3}</value>
   </data>
+  <data name="ex_XPathNotSupportedType" xml:space="preserve">
+    <value>XPath query cannot be used on type {0}</value>
+  </data>
 </root>

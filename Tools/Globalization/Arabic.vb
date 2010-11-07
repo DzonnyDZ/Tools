@@ -409,6 +409,7 @@ Namespace GlobalizationT
                 Dim al As ArabicLetter = obj
                 Return Me.Default = al.Default AndAlso Me.Isolated = al.Isolated AndAlso Me.Final = al.Final AndAlso Me.Initial.HasValue = al.Initial.HasValue AndAlso (Not Me.Initial.HasValue OrElse Me.Initial.Value = al.Initial.Value) AndAlso Me.Medial.HasValue = al.Medial.HasValue AndAlso (Not Me.Medial.HasValue OrElse Me.Medial.Value = al.Medial.Value)
             End If
+            Return False
         End Function
     End Structure
 End Namespace

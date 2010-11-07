@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Windows\WPF\Converters\General\CompareConverterEx.vb" />
     <Compile Include="Windows\WPF\Converters\General\CountConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\XPathConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanToCharConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanVisibilityConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CachedImageConverter.vb" />
@@ -230,6 +231,11 @@
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\SecureStringConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\StaticTryCastConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\StringFormatConverter.vb" />
+    <Compile Include="Windows\WPF\Markup\MarkupExtensionBase.vb" />
+    <Compile Include="Windows\WPF\Markup\NamespacesExtension.vb" />
+    <Compile Include="Windows\WPF\Markup\NewExtension.vb" />
+    <Compile Include="Windows\WPF\Markup\XamlServiceProvider.vb" />
+    <Compile Include="Windows\WPF\RegularExpressionValidationRule.vb" />
     <Compile Include="Windows\WPF\Threading\DispatcherExtensions.vb" />
     <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
       <DependentUpon>HTMLDialog.vb</DependentUpon>
@@ -736,7 +742,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
+      <Name>Tools %28Tools\Tools%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

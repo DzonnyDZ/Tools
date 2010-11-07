@@ -330,6 +330,14 @@ Namespace API
             ByRef totalentries As Integer, _
             ByRef resume_handle As Integer _
             ) As Integer
+
+        ''' <summary>Retrieves file system attributes for a specified file or directory.</summary>
+        ''' <param name="lpFileName">The name of the file or directory.</param>
+        ''' <returns>If the function succeeds, the return value contains the attributes of the specified file or directory. For a list of attribute values and their descriptions, see <see cref="FileAttributes"/>.
+        ''' If the function fails, the return value is <see cref="INVALID_FILE_ATTRIBUTES"/>.</returns>
+        Public Declare Auto Function GetFileAttributes Lib "Kernel32.dll" (ByVal lpFileName As String) As FileAttributes
+        ''' <summary>Value returned by <see cref="GetFileAttributes"/> in case of error</summary>
+        Public Const INVALID_FILE_ATTRIBUTES As UInteger = &HFFFFFFFFUI
 #End Region
 #Region "Enumerations"
         ''' <summary>The flags that specify the file information to retrieve. USed by <see cref="SHGetFileInfo"/>.</summary>

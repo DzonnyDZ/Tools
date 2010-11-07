@@ -1399,4 +1399,10 @@
   <data name="LigatureToChar" xml:space="preserve">
     <value>Ligature cannot be converted to single character</value>
   </data>
+  <data name="ProviderDoesNotProviderService" xml:space="preserve">
+    <value>Provider does not provider service {0}</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
 </root>

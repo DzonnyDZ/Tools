@@ -8,7 +8,7 @@ Imports RegexOptions = System.Text.RegularExpressions.RegexOptions
 'Stage=Nightly
 Namespace TextT.EncodingT
     ''' <summary>Provides runtime access to list of text encodings registered by ISO-IR 2022 (also known as ISO/IEC 2022 or ECMA-35)</summary>
-    ''' <remarks>This class provides access to information about such encodings and possibly gives their names as registered by IANA and possibly gives instances of the <see cref="Text.Encoding"/> class to manipulate with text stored in this encoding. Not all ISO-2022 encodings are registered with IANA and not all ISO-2022 encodings are supported by .NET framework. This class does not provide more implementations of the <see cref="Text.Encoding"/> class to deal with all ISO-2022 registered encodings neither this class provides generic ISO-2022 reader/writer. The aim of this class is to provide possibility of identifiying ISO 2022 encoding by its escape sequence, not to deal with it.
+    ''' <remarks>This class provides access to information about such encodings and possibly gives their names as registered by IANA and possibly gives instances of the <see cref="System.Text.Encoding"/> class to manipulate with text stored in this encoding. Not all ISO-2022 encodings are registered with IANA and not all ISO-2022 encodings are supported by .NET framework. This class does not provide more implementations of the <see cref="System.Text.Encoding"/> class to deal with all ISO-2022 registered encodings neither this class provides generic ISO-2022 reader/writer. The aim of this class is to provide possibility of identifiying ISO 2022 encoding by its escape sequence, not to deal with it.
     ''' <para>For further reference see <a href="http://www.itscj.ipsj.or.jp/ISO-IR/">International Register of Coded Character Sets To Be Used With Escape Sequences</a>.</para></remarks>
     Public NotInheritable Class ISO2022
         ''' <summary>XML namespace which contains XML-Schema definition of format for storing information about ISO-2022 encodings</summary>
@@ -220,7 +220,7 @@ Namespace TextT.EncodingT
         End Property
         ''' <summary>Gets name of encoding as registered by IANA (if exists).</summary>
         ''' <returns>Primary (preffered) name of encoding as registered by IANA. Or null if this encoding is not registered by IANA.</returns>
-        ''' <remarks>IANA organisation maintains list of encoding names registered for use on the Internet. Such encoding names are used eg. in XML encoding specification or in HTTP headers. Also <see cref="EncodingInfo.Name"/> and <see cref="Encoding.WebName"/> uses IANA registred names. For more information see <a href="http://www.iana.org">www.iana.org</a> or <a href="http://www.iana.org/assignments/character-sets">character sets registry</a>.</remarks>
+        ''' <remarks>IANA organisation maintains list of encoding names registered for use on the Internet. Such encoding names are used eg. in XML encoding specification or in HTTP headers. Also <see cref="System.Text.EncodingInfo.Name"/> and <see cref="Encoding.WebName"/> uses IANA registred names. For more information see <a href="http://www.iana.org">www.iana.org</a> or <a href="http://www.iana.org/assignments/character-sets">character sets registry</a>.</remarks>
         ''' <seealso cref="Encoding.WebName"/><seealso cref="System.Text.EncodingInfo.Name"/>
         ''' <seealso cref="IanaAlias"/>
         Public ReadOnly Property IanaName$()

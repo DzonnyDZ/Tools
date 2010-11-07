@@ -211,9 +211,11 @@
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
     <Compile Include="ComponentModel\ValueContainer.vb" />
+    <Compile Include="Data\DataExtensions.vb" />
     <Compile Include="Globalization\Arabic.vb" />
     <Compile Include="misc\Operators.vb" />
     <Compile Include="misc\SyntaxErrorException.vb" />
+    <Compile Include="Numerics\IntegerUnion.vb" />
     <Compile Include="Numerics\Rational.vb" />
     <Compile Include="Text\Escaping.vb" />
     <Compile Include="Threading\IInvoke.vb" />

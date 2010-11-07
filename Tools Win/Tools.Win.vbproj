@@ -286,7 +286,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
+      <Name>Tools %28Tools\Tools%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

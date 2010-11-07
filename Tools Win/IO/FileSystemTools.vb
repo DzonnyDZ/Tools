@@ -98,6 +98,49 @@ Namespace IOt
                 End Select
             End If
         End Sub
+
+        ''' <summary>Creates or opens a file or I/O device. The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</summary>
+        ''' <param name="path">The file to open.</param>
+        ''' <param name="mode">A <see cref="System.IO.FileMode" /> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
+        ''' <param name="access">A <see cref="System.IO.FileAccess" /> value that specifies the operations that can be performed on the file.</param>
+        ''' <param name="share">A <see cref="System.IO.FileShare" /> value specifying the type of access other threads have to the file.</param>
+        ''' <returns>A <see cref="System.IO.FileStream" /> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
+        ''' <exception cref="System.ArgumentException">path is a zero-length string.</exception>
+        ''' <exception cref="System.ArgumentNullException">path is null.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error occurred while opening the file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">path specified a file that is read-only and access is not Read.-or- path specified a directory.-or- The caller does not have the required permission. -or-mode is <see cref="System.IO.FileMode.Create" /> and the specified file is a hidden file.</exception>
+        ''' <exception cref="System.ArgumentOutOfRangeException">mode, access, or share specified an invalid value.</exception>
+        ''' <exception cref="System.NotSupportedException">path is in an invalid format.</exception>
+        ''' <remarks>Use this method instead of <see cref="IO.File.Open"/> when you need file-like access to something different than file (e.g. NTFS alternate stream or port)</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Function OpenFile(ByVal path As String, ByVal mode As IO.FileMode, ByVal access As IO.FileAccess, Optional ByVal share As IO.FileShare = IO.FileShare.Read) As IO.FileStream
+            If path Is Nothing Then Throw New ArgumentException("path")
+            If path = "" Then Throw New ArgumentNullException(ResourcesT.Exceptions.CannotBeAnEmptyString.f(ResourcesT.Exceptions.Path), "path")
+            Dim apiAccess As FileSystem.GenericFileAccess = If(access.HasFlag(IO.FileAccess.Read), GenericFileAccess.GENERIC_READ, GenericFileAccess.None) Or
+                                                            If(access.HasFlag(IO.FileAccess.Write), GenericFileAccess.GENERIC_WRITE, GenericFileAccess.None)
+            Dim h = API.CreateFile(path, apiAccess, share, IntPtr.Zero, If(mode = IO.FileMode.Append, FileCreateDisposition.OPEN_ALWAYS, CInt(mode)))
+            If h.IsInvalid Then
+                Dim ex = API.Win32APIException.GetLastWin32Exception()
+                If TypeOf ex Is IO.IOException Then Throw ex
+                If TypeOf ex Is NotSupportedException Then Throw ex
+                If TypeOf ex Is UnauthorizedAccessException Then Throw ex
+                If TypeOf ex Is ArgumentException Then Throw ex
+                If TypeOf ex Is Security.SecurityException Then Throw ex
+                Throw New IO.IOException(ex.Message, ex)
+            End If
+            Dim ret = New IO.FileStream(h, access)
+            If mode.HasFlag(IO.FileMode.Append) Then ret.Seek(ret.Length, IO.SeekOrigin.Begin)
+            Return ret
+        End Function
+        ''' <summary>Tests if file, stream, device or something other file-like exists</summary>
+        ''' <param name="path">Path to file, device etc. to test</param>
+        ''' <returns>True if given device or file exists, false otherwise</returns>
+        ''' <remarks>Use this instead of <see cref="IO.File.Exists"/> when you are working with something different than file (e.g. NTFS alternate stream or port)</remarks>
+        Public Function TestFileExists(ByVal path$) As Boolean
+            Dim attrs = API.GetFileAttributes(path)
+            If attrs = INVALID_FILE_ATTRIBUTES Then Return False
+            Return True
+        End Function
     End Module
 
 End Namespace

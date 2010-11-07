@@ -4,7 +4,8 @@ Imports System.Runtime.CompilerServices
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace XmlT.LinqT
     ''' <summary>Provides extension methods related to <see cref="System.Xml.Linq"/></summary>
-    Module Extensions
+    ''' <version version="1.5.3" stage="Nightly">Module made public</version>
+    Public Module Extensions
         ''' <summary>Retruns value indicating if two <see cref="XElement">XElements</see> has same name (this means <see cref="XName.LocalName"/> are same as well as <see cref="XName.NamespaceName"/>.</summary>
         ''' <param name="el">A <see cref="XElement"/> to test name of</param>
         ''' <param name="other">A <see cref="XElement"/> to compare name with</param>

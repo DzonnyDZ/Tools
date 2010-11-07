@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
+Imports Tools.NumericsT
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace ExtensionsT
@@ -323,61 +325,77 @@ Namespace ExtensionsT
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        ''' <seelaso cref="ByteUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="ByteUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Byte) As SByte
-            Return If(n > SByte.MaxValue, CShort(n) - Byte.MaxValue - 1, n)
+            Return ByteUnion.BitwiseSame(n)
         End Function
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        ''' <seelaso cref="ShortUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="ShortUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As UShort) As Short
-            Return If(n > Short.MaxValue, CInt(n) - UShort.MaxValue - 1, n)
+            Return ShortUnion.BitwiseSame(n)
         End Function
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        ''' <seelaso cref="IntegerUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="IntegerUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As UInteger) As Integer
-            Return If(n > Integer.MaxValue, CLng(n) - UInteger.MaxValue - 1, n)
+            Return IntegerUnion.BitwiseSame(n)
         End Function
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        ''' <seelaso cref="LongUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="LongUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As ULong) As Long
-            Return If(n > Long.MaxValue, CDec(n) - ULong.MaxValue - 1, n)
+            Return LongUnion.BitwiseSame(n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        ''' <seelaso cref="ByteUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="ByteUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As SByte) As Byte
-            Return If(n < 0, n + Byte.MaxValue + 1, n)
+            Return ByteUnion.BitwiseSame(n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        ''' <seelaso cref="ShortUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="ShortUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Short) As UShort
-            Return If(n < 0, n + UShort.MaxValue + 1, n)
+            Return ShortUnion.BitwiseSame(n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        ''' <seelaso cref="IntegerUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="IntegerUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Integer) As UInteger
-            Return If(n < 0, n + UInteger.MaxValue + 1, n)
+            Return IntegerUnion.BitwiseSame(n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        ''' <seelaso cref="LongUnion.BitwiseSame"/>
+        ''' <version version="1.5.3">Implementation changed form arithmetic operation to use <see cref="LongUnion"/>.</version>
         <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Long) As ULong
-            Return If(n < 0, n + ULong.MaxValue + 1, n)
+            Return LongUnion.BitwiseSame(n)
         End Function
 #End Region
-#Region "Bitwise"
+#Region "Get/Set bit"
         ''' <summary>Gets value of given bit of <see cref="Byte"/></summary>
         ''' <param name="n">Number to get bit of</param>
         ''' <param name="bit">Number of bit to get (0 for LSB, 7 for MSB)</param>

@@ -6,7 +6,7 @@ Namespace WindowsT.WPF.MarkupT
     ''' <summary>Markup extension that can create instance of generic type</summary>
     ''' <author www="http://blogs.msdn.com/mikehillberg/archive/2006/10/06/LimitedGenericsSupportInXaml.aspx">Mike Hillberg</author>
     ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
-    <ContentPropertyAttribute("TypeArguments")> _
+    <ContentPropertyAttribute("TypeArguments"), MarkupExtensionReturnType(GetType(Object))> _
     Public Class GenericExtension : Inherits MarkupExtension
         ''' <summary>Contains value of the <see cref="TypeArguments"/> proeprty</summary>
         Private _typeArguments As New System.Collections.ObjectModel.Collection(Of Type)
@@ -40,10 +40,17 @@ Namespace WindowsT.WPF.MarkupT
 
         ''' <summary>Returns an object - instance of the constructed generic type that is set as the value of the target property for this markup extension.</summary>
         ''' <returns>An object instance of the constructed generic type</returns>
-        ''' <param name="serviceProvider">Object that can provide services for the markup extension.</param>
+        ''' <param name="serviceProvider">Object that can provide services for the markup extension. This markup extension requires <see cref="IXamlTypeResolver"/></param>
+        ''' <exception cref="ArgumentNullException"><paramref name="serviceProvider"/> is null.</exception>
+        ''' <exception cref="ArgumentException"><paramref name="serviceProvider"/> does not provide <see cref="IXamlTypeResolver"/> service.</exception>
+        ''' <version version="1.5.3">Changed exceptions thrown:
+        ''' When <paramref name="serviceProvider"/> <see cref="ArgumentNullException"/> is thrown instead of <see cref="NullReferenceException"/>.
+        ''' When <paramref name="serviceProvider"/> does not provide <see cref="IXamlTypeResolver"/> <see cref="InvalidOperationException"/> is thrown instead of <see cref="Exception"/>.
+        ''' </version>
         Public Overrides Function ProvideValue(ByVal serviceProvider As IServiceProvider) As Object
+            If serviceProvider Is Nothing Then Throw New ArgumentNullException("serviceProvider")
             Dim xamlTypeResolver = TryCast(serviceProvider.GetService(GetType(IXamlTypeResolver)), IXamlTypeResolver)
-            If xamlTypeResolver Is Nothing Then Throw New Exception(ResourcesT.Exceptions.The0MarkupExtensionRequiresAn1ServiceProvider.f("Generic", "IXamlTypeResolver"))
+            If xamlTypeResolver Is Nothing Then Throw New InvalidOperationException(ResourcesT.Exceptions.The0MarkupExtensionRequiresAn1ServiceProvider.f(GetType(GenericExtension).Name, GetType(IXamlTypeResolver).Name))
             ' Get e.g. "Collection`1" type
             Dim genericType = xamlTypeResolver.Resolve(_typeName + "`"c + TypeArguments.Count.ToString())
             ' Get an array of the type arguments

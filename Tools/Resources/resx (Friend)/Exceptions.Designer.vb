@@ -2336,6 +2336,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Path'.
+        '''</summary>
+        Public ReadOnly Property Path() As String
+            Get
+                Return ResourceManager.GetString("Path", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Path {0} does not exist.'.
         '''</summary>
         Public ReadOnly Property Path0DoesNotExist() As String
@@ -2395,6 +2404,15 @@ Namespace ResourcesT
         Public ReadOnly Property PropertyIsReadOnly() As String
             Get
                 Return ResourceManager.GetString("PropertyIsReadOnly", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Provider does not provider service {0}'.
+        '''</summary>
+        Public ReadOnly Property ProviderDoesNotProviderService() As String
+            Get
+                Return ResourceManager.GetString("ProviderDoesNotProviderService", _resourceCulture)
             End Get
         End Property
         
@@ -6105,6 +6123,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the Path property value.
+        '''</summary>
+        '''<returns>The Path property value.</returns>
+        Public Function PathFormat() As String
+            Return Path
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Path {0} does not exist.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -6161,6 +6187,15 @@ Namespace ResourcesT
         '''<returns>The PropertyIsReadOnly property value.</returns>
         Public Function PropertyIsReadOnlyFormat() As String
             Return PropertyIsReadOnly
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Provider does not provider service {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ProviderDoesNotProviderServiceFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ProviderDoesNotProviderService, arg0)
         End Function
         
         '''<summary>

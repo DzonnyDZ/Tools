@@ -333,5 +333,14 @@ Namespace WindowsT.WPF.ConvertersT
                 Return ResourceManager.GetString("ex_ValueMustBeSetPriorCalling", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to XPath query cannot be used on type {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_XPathNotSupportedType() As String
+            Get
+                Return ResourceManager.GetString("ex_XPathNotSupportedType", resourceCulture)
+            End Get
+        End Property
     End Class
 End Namespace

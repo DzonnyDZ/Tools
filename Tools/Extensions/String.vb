@@ -13,6 +13,14 @@ Namespace ExtensionsT
         <Extension()> Public Function IsNullOrEmpty(ByVal s As String) As Boolean
             Return String.IsNullOrEmpty(s)
         End Function
+        ''' <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
+        ''' <param name="s">The string to test.</param>
+        ''' <returns>true if the <paramref name="s"/> parameter is null or <see cref="System.String.Empty" />, or if <paramref name="s"/> consists exclusively of white-space characters.</returns>
+        ''' <seelaso cref="System.String.IsNullOrWhiteSpace"/>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Public Function IsNullOrWhiteSpace(ByVal s As String) As Boolean
+            Return String.IsNullOrWhiteSpace(s)
+        End Function
         ''' <summary>Replaces the format item in a specified <see cref="System.String" /> with the text equivalent of the value of a corresponding <see cref="System.Object" /> instance in a specified array. A specified parameter supplies culture-specific formatting information.</summary>
         ''' <param name="s">A composite format string.</param>
         ''' <param name="args">An <see cref="System.Object" /> array containing zero or more objects to format.</param>
@@ -25,6 +33,18 @@ Namespace ExtensionsT
         End Function
         ''' <summary>Replaces the format item in a specified <see cref="System.String" /> with the text equivalent of the value of a corresponding <see cref="System.Object" /> instance in a specified array. A specified parameter supplies culture-specific formatting information.</summary>
         ''' <param name="s">A composite format string.</param>
+        ''' <param name="provider"> An object that supplies culture-specific formatting information.</param>
+        ''' <param name="args">An <see cref="System.Object" /> array containing zero or more objects to format.</param>
+        ''' <returns>A copy of format in which the format items have been replaced by the <see cref="System.String" /> equivalent of the corresponding instances of <see cref="System.Object" /> in args.</returns>
+        ''' <exception cref="System.ArgumentNullException">format or args is null.</exception>
+        ''' <exception cref="System.FormatException"><paramref name="s"/> is invalid composite format string.-or- The number indicating an argument to format is less than zero, or greater than or equal to the length of the args array.</exception>
+        ''' <seealso cref="System.String.Format"/><seealso cref="f"/>
+        ''' <version version="1.5.3">This overload is new in version 1.5.3</version>
+        <Extension()> Public Function Format(ByVal s As String, ByVal provider As IFormatProvider, ByVal ParamArray args As Object()) As String
+            Return String.Format(provider, s, args)
+        End Function
+        ''' <summary>Replaces the format item in a specified <see cref="System.String" /> with the text equivalent of the value of a corresponding <see cref="System.Object" /> instance in a specified array. A specified parameter supplies culture-specific formatting information.</summary>
+        ''' <param name="s">A composite format string.</param>
         ''' <param name="args">An <see cref="System.Object" /> array containing zero or more objects to format.</param>
         ''' <returns>A copy of format in which the format items have been replaced by the <see cref="System.String" /> equivalent of the corresponding instances of <see cref="System.Object" /> in args.</returns>
         ''' <exception cref="System.ArgumentNullException">format or args is null.</exception>
@@ -33,6 +53,19 @@ Namespace ExtensionsT
         ''' <remarks>This function is shortcut alias of <see cref="Format"/></remarks>
         <Extension()> Public Function f(ByVal s As String, ByVal ParamArray args As Object()) As String
             Return String.Format(s, args)
+        End Function
+        ''' <summary>Replaces the format item in a specified <see cref="System.String" /> with the text equivalent of the value of a corresponding <see cref="System.Object" /> instance in a specified array. A specified parameter supplies culture-specific formatting information.</summary>
+        ''' <param name="s">A composite format string.</param>
+        ''' <param name="provider"> An object that supplies culture-specific formatting information.</param>
+        ''' <param name="args">An <see cref="System.Object" /> array containing zero or more objects to format.</param>
+        ''' <returns>A copy of format in which the format items have been replaced by the <see cref="System.String" /> equivalent of the corresponding instances of <see cref="System.Object" /> in args.</returns>
+        ''' <exception cref="System.ArgumentNullException">format or args is null.</exception>
+        ''' <exception cref="System.FormatException"><paramref name="s"/> is invalid composite format string.-or- The number indicating an argument to format is less than zero, or greater than or equal to the length of the args array.</exception>
+        ''' <seealso cref="System.String.Format"/><seealso cref="Format"/>
+        ''' <remarks>This function is shortcut alias of <see cref="Format"/></remarks>
+        ''' <version version="1.5.3">This overload is new in version 1.5.3</version>
+        <Extension()> Public Function f(ByVal s As String, ByVal provider As IFormatProvider, ByVal ParamArray args As Object()) As String
+            Return String.Format(provider, s, args)
         End Function
         ''' <summary>Concatenates a specified separator <see cref="System.String" /> between each element of a specified <see cref="System.String" /> array, yielding a single concatenated string.</summary>
         ''' <param name="separator">A <see cref="System.String" /> to separate items with.</param>
@@ -102,6 +135,37 @@ Namespace ExtensionsT
                 ret.Append(value(i))
             Next
             Return ret.ToString
+        End Function
+
+        ''' <summary>Returns the substring of the value of <paramref name="value"/> that follows in the value of <paramref name="delimiter"/> the first occurrence</summary>
+        ''' <param name="value">String to return substring of</param>
+        ''' <param name="delimiter">Substring to search for</param>
+        ''' <returns>
+        ''' Rest of <paramref name="value"/> following first occurence of <paramref name="delimiter"/>.
+        ''' If <paramref name="delimiter"/> is null or an empty string returns <paramref name="value"/>.
+        ''' If <paramref name="value"/> does not contain <paramref name="delimiter"/> (or <paramref name="value"/> is null) returns an empty string.
+        ''' </returns>
+        ''' <remarks>This function implements XPath function <a href="http://www.w3.org/TR/xpath-functions/#func-substring-after">substring-after</a>.</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Function SubstringAfter(ByVal value As String, ByVal delimiter As String) As String
+            If delimiter = "" OrElse value = "" Then Return value
+            If Not value.Contains(delimiter) Then Return ""
+            Return value.Substring(value.IndexOf(delimiter) + delimiter.Length)
+        End Function
+        ''' <summary>Returns the substring of the value of <paramref name="value"/> that precedes in the value of <paramref name="delimiter"/> the first occurrence</summary>
+        ''' <param name="value">String to return substring of</param>
+        ''' <param name="delimiter">Substring to search for</param>
+        ''' <returns>
+        ''' Part of <paramref name="value"/> from start to start of first occurence of <paramref name="delimiter"/> (exluding it).
+        ''' If <paramref name="delimiter"/> is null or an empty string or <paramref name="value"/> does not contain <paramref name="delimiter"/> (or <paramref name="value"/> is null) returns an empty string.
+        ''' </returns>
+        ''' <remarks>This function implements XPath function <a href="http://www.w3.org/TR/xpath-functions/#func-substring-before">substring-before</a>.</remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Function SubstringBefore(ByVal value As String, ByVal delimiter As String) As String
+            If delimiter = "" OrElse value = "" OrElse Not value.Contains(delimiter) Then Return ""
+            Return value.Substring(0, value.IndexOf(delimiter))
         End Function
     End Module
 End Namespace

@@ -2,6 +2,8 @@
 Imports System.Windows
 Imports System.Windows.Media
 Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions
+Imports System.Windows.Markup
+Imports System.Xaml, Tools.ExtensionsT
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF
@@ -179,6 +181,70 @@ Namespace WindowsT.WPF
         End Function
 
 #End Region
+
+        ''' <summary>Gets one of predefined well-known XAML services usually provided by <see cref="IServiceProvider"/> in XAML context such as <see cref="MarkupExtension.ProvideValue"/>.</summary>
+        ''' <param name="provider">An <see cref="IServiceProvider"/> to get service from.</param>
+        ''' <param name="service">Specifies service to get</param>
+        ''' <returns>Service requested in <paramref name="service"/> parameter; nulll when <paramref name="provider"/> is nulll or does not provide service requested.</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="service"/> is not one of <see cref="XamlService"/> values</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function GetXamlService(ByVal provider As IServiceProvider, ByVal service As XamlService) As Object
+            Return GetXamlService(provider, service, False)
+        End Function
+        ''' <summary>Gets one of predefined well-known XAML services usually provided by <see cref="IServiceProvider"/> in XAML context such as <see cref="MarkupExtension.ProvideValue"/>.</summary>
+        ''' <param name="provider">An <see cref="IServiceProvider"/> to get service from.</param>
+        ''' <param name="service">Specifies service to get</param>
+        ''' <param name="throwException">True to throw exception when <paramref name="provider"/> is null or does not provide service requested.</param>
+        ''' <returns>Service requested in <paramref name="service"/> parameter; nulll when <paramref name="provider"/> is nulll or does not provide service requested.</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="service"/> is not one of <see cref="XamlService"/> values. <note>This exception is thrown even when <paramref name="throwException"/> is false.</note></exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="throwException"/> is true and <paramref name="provider"/> is null.</exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="provider"/> does not provide service requested and <paramref name="throwException"/> is true.</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function GetXamlService(ByVal provider As IServiceProvider, ByVal service As XamlService, ByVal throwException As Boolean) As Object
+            Dim ret As Object
+            If provider Is Nothing AndAlso throwException Then Throw New ArgumentNullException("provider")
+            If provider Is Nothing Then Return Nothing
+            Select Case service
+                Case XamlService.ProvideValueTarget : ret = provider.GetService(GetType(IProvideValueTarget))
+                Case XamlService.XamlTypeResolver : ret = provider.GetService(GetType(IXamlTypeResolver))
+                Case XamlService.XamlSchemaContextProvider : ret = provider.GetService(GetType(IXamlSchemaContextProvider))
+                Case XamlService.UriContext : ret = provider.GetService(GetType(IUriContext))
+                Case XamlService.AmbientProvider : ret = provider.GetService(GetType(IAmbientProvider))
+                Case XamlService.DestinationTypeProvider : ret = provider.GetService(GetType(IDestinationTypeProvider))
+                Case XamlService.RootObjectProvider : ret = provider.GetService(GetType(IRootObjectProvider))
+                Case XamlService.XamlNameResolver : ret = provider.GetService(GetType(IXamlNameResolver))
+                Case XamlService.XamlNamespaceResolver : ret = provider.GetService(GetType(IXamlNamespaceResolver))
+                Case Else : Throw New InvalidEnumArgumentException("service", service, GetType(XamlService))
+            End Select
+            If ret Is Nothing AndAlso throwException Then Throw New InvalidOperationException(ResourcesT.Exceptions.ProviderDoesNotProviderService.f(service))
+            Return ret
+        End Function
     End Module
+
+    ''' <summary>Enumeration of well-known services that are often used with XAML (especially by <c>serviceProvider</c> parameters of <see cref="MarkupExtension.ProvideValue"/>)</summary>
+    ''' <seelaso cref="MarkupExtension.ProvideValue"/>
+    ''' <version stage="1.5.3">This enumeration is new in version 1.5.3</version>
+    Public Enum XamlService
+        ''' <summary><see cref="IProvideValueTarget"/> (Reports situational object-property relationships for markup extension evaluation.)</summary>
+        ProvideValueTarget
+        ''' <summary><see cref="IXamlTypeResolver"/> (Resolves from named elements in XAML markup to the appropriate CLR type.)</summary>
+        XamlTypeResolver
+        ''' <summary><see cref="IXamlSchemaContextProvider"/> (Provides XAML schema context information to type converters and markup extensions.)</summary>
+        XamlSchemaContextProvider
+        ''' <summary><see cref="IUriContext"/> (Can use application context to resolve a provided relative URI to an absolute URI.)</summary>
+        UriContext
+        ''' <summary><see cref="IAmbientProvider"/> (Can return information items of ambient properties or ambient types to type converters and markup extensions.)</summary>
+        AmbientProvider
+        ''' <summary><see cref="IDestinationTypeProvider"/> (Can return a type system identifier for the destination type. The destination type is relevant for cases where there is an indirect reporting of destination type for a set operation based on reflection or other mechanisms.)</summary>
+        DestinationTypeProvider
+        ''' <summary><see cref="IRootObjectProvider"/> (Can return the root object of markup being parsed.)</summary>
+        RootObjectProvider
+        ''' <summary><see cref="IXamlNameResolver"/> (Can return objects specified by name, or alternatively returns a token. The service can also return an enumerable set of all named objects that are in the XAML namescope.)</summary>
+        XamlNameResolver
+        ''' <summary><see cref="IXamlNamespaceResolver"/> (Can return a XAML namespace based on its prefix as mapped in XAML markup.)</summary>
+        XamlNamespaceResolver
+    End Enum
 End Namespace
 #End If
