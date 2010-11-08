@@ -48,6 +48,9 @@ Namespace WindowsT.WPF
         ''' <summary>Gets or sets the error message to be used when validation fails.</summary>
         Public Property ErrorMessage() As String
 
+        ''' <summary>Gets or sets value indicating if empty string values are always considered valid</summary>
+        Public Property IgnoreEmptyString As Boolean
+
         ''' <summary>Gets or sets the RegexOptions to be used during validation. This property's default value is <see cref="RegexOptions.Compiled"/>.</summary>
         Public Property Options() As RegexOptions
             Get
@@ -94,8 +97,8 @@ Namespace WindowsT.WPF
 #Region "Validate"
         ''' <summary>Validates the 'value' argument using the regular expression and RegexOptions associated with this object.</summary>
         Public Overrides Function Validate(ByVal value As Object, ByVal cultureInfo As Globalization.CultureInfo) As ValidationResult
-            If RegularExpression IsNot Nothing Then
-                Dim text = If(value Is Nothing, "", value.ToString)
+            Dim text = If(value Is Nothing, "", value.ToString)
+            If RegularExpression IsNot Nothing AndAlso Not (IgnoreEmptyString AndAlso text = "") Then
                 If Not RegularExpression.IsMatch(text) Then Return New ValidationResult(False, Me.ErrorMessage)
             End If
             Return ValidationResult.ValidResult

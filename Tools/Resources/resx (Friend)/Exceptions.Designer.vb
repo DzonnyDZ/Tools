@@ -1326,6 +1326,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Invalid boolean value {0}'.
+        '''</summary>
+        Public ReadOnly Property InvalidBooleanValue() As String
+            Get
+                Return ResourceManager.GetString("InvalidBooleanValue", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Invalid character near &quot;{0}{1}&quot;'.
         '''</summary>
         Public ReadOnly Property InvalidCharacterNear01() As String
@@ -5143,6 +5152,15 @@ Namespace ResourcesT
         '''<returns>The InvalidBitmapNumberOfBitsInBitmapMustBeMultiplicationOf460 property value.</returns>
         Public Function InvalidBitmapNumberOfBitsInBitmapMustBeMultiplicationOf460Format() As String
             Return InvalidBitmapNumberOfBitsInBitmapMustBeMultiplicationOf460
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Invalid boolean value {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function InvalidBooleanValueFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, InvalidBooleanValue, arg0)
         End Function
         
         '''<summary>

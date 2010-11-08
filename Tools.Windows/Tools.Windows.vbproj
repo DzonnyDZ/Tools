@@ -231,6 +231,7 @@
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\SecureStringConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\StaticTryCastConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\StringFormatConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Type-safe\XmlBooleanConverter.vb" />
     <Compile Include="Windows\WPF\Markup\MarkupExtensionBase.vb" />
     <Compile Include="Windows\WPF\Markup\NamespacesExtension.vb" />
     <Compile Include="Windows\WPF\Markup\NewExtension.vb" />

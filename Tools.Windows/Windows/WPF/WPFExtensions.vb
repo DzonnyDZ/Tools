@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports System.Windows
+Imports System.Windows, System.Linq
 Imports System.Windows.Media
 Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions
 Imports System.Windows.Markup
@@ -64,13 +64,50 @@ Namespace WindowsT.WPF
             Return Window.ShowDialog()
         End Function
 
+        ''' <summary>Enumerates all the visual children of given <see cref="DependencyObject"/> which conform to given condition</summary>
+        ''' <param name="parent">A <see cref="DependencyObject"/> to look for children in</param>
+        ''' <param name="condition">Condition to be used to filer children objects</param>
+        ''' <param name="onlyFirstLevel">True not to look inside objects fulfilling the condition, false to enumerate children of these objects recursivelly.</param>
+        ''' <returns>Visual children of <paramref name="parent"/> fulfilling <paramref name="condition"/>. If <paramref name="onlyFirstLevel"/> is false search is done inside these objects as well and objects are returned in in-order order.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null or <paramref name="condition"/> is null.</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function FindVisualChildren(ByVal parent As DependencyObject, ByVal condition As Func(Of DependencyObject, Boolean), ByVal onlyFirstLevel As Boolean) As IEnumerable(Of DependencyObject)
+            If parent Is Nothing Then Throw New ArgumentNullException("parent")
+            If condition Is Nothing Then Throw New ArgumentNullException("condition")
+            Dim ret As New List(Of DependencyObject)
+            For i = 0 To VisualTreeHelper.GetChildrenCount(parent) - 1
+                Dim added As Boolean = False
+                If condition(VisualTreeHelper.GetChild(parent, i)) Then
+                    ret.Add(VisualTreeHelper.GetChild(parent, i))
+                    added = True
+                End If
+                If Not added OrElse Not onlyFirstLevel Then
+                    ret.AddRange(VisualTreeHelper.GetChild(parent, i).FindVisualChildren(condition, onlyFirstLevel))
+                End If
+            Next
+            Return ret
+        End Function
+        ''' <summary>Enumerates all the visual children of given <see cref="DependencyObject"/> of given type</summary>
+        ''' <typeparam name="T">Type (derived from <see cref="DependencyObject"/>) to to serach for children of</typeparam>
+        ''' <param name="parent">A <see cref="DependencyObject"/> to look for children in</param>
+        ''' <param name="onlyFirstLevel">True not to look inside objects of type <typeparamref name="T"/>, false to enumerate children of these objects recursivelly.</param>
+        ''' <returns>Visual children of <paramref name="parent"/> of type <typeparamref name="T"/>. If <paramref name="onlyFirstLevel"/> is false search is done inside these objects as well and objects are returned in in-order order.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null.</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function FindVisualChildren(Of T As DependencyObject)(ByVal parent As DependencyObject, ByVal onlyFirstLevel As Boolean) As IEnumerable(Of T)
+            Return FindVisualChildren(parent, Function([do]) TypeOf [do] Is T, onlyFirstLevel).OfType(Of T)()
+        End Function
+
         ''' <summary>Finds first visual child of given <see cref="DependencyObject"/> which conforms to given condition</summary>
         ''' <param name="parent">A <see cref="DependencyObject"/> to search for visual child of</param>
         ''' <param name="condition">Function evaluated for each visual child of <paramref name="parent"/> until conforming child is found</param>
         ''' <returns>First visual child of <paramref name="parent"/> for which <paramref name="condition"/> returns true; null when no such child can be found</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null -or- <paramref name="condition"/> is null</exception>
         ''' <version version="1.3.5" stage="Nightly">This function is new in version 1.3.5</version>
-        <Extension()> Public Function FindVisualChild(ByVal parent As DependencyObject, ByVal condition As Func(Of DependencyObject, Boolean)) As DependencyObject
+        <Extension()>
+        Public Function FindVisualChild(ByVal parent As DependencyObject, ByVal condition As Func(Of DependencyObject, Boolean)) As DependencyObject
             If parent Is Nothing Then Throw New ArgumentNullException("parent")
             If condition Is Nothing Then Throw New ArgumentNullException("condition")
             For i = 0 To VisualTreeHelper.GetChildrenCount(parent) - 1
@@ -88,7 +125,8 @@ Namespace WindowsT.WPF
         ''' <returns>First visual child of <paramref name="parent"/> which is of type <typeparamref name="T"/>; null when no such child can be found</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null</exception>
         ''' <version version="1.3.5" stage="Nightly">This function is new in version 1.3.5</version>
-        <Extension()> Public Function FindVisualChild(Of T As DependencyObject)(ByVal parent As DependencyObject) As T
+        <Extension()>
+        Public Function FindVisualChild(Of T As DependencyObject)(ByVal parent As DependencyObject) As T
             Return parent.FindVisualChild(Function(a) TypeOf a Is T)
         End Function
         ''' <summary>Finds first visual child of given <see cref="DependencyObject"/> of specific type which conforms to given condition</summary>

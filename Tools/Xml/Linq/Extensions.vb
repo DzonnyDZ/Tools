@@ -1,5 +1,6 @@
 ﻿Imports System.Xml.Linq, Tools.ExtensionsT
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Schema
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace XmlT.LinqT
@@ -161,6 +162,23 @@ Namespace XmlT.LinqT
             If attr.Parent Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.XMLAttributeHasNoParentElement)
             Dim name As XName = XName.Get(attr.Value)
             attr.Value = name.CollapseInContext(attr.Parent)
+        End Sub
+
+        ''' <summary>Validates that an <see cref="System.Xml.Linq.XDocument" /> conforms to an XSD in an <see cref="System.Xml.Schema.XmlSchemaSet" />, optionally populating the XML tree with the post-schema-validation infoset (PSVI).</summary>
+        ''' <param name="document">The <see cref="System.Xml.Linq.XDocument" /> to validate.</param>
+        ''' <param name="schema">A <see cref="System.Xml.Schema.XmlSchema" /> to validate against.</param>
+        ''' <param name="validationEventHandler">A <see cref="System.Xml.Schema.ValidationEventHandler" /> for an event that occurs when the reader encounters validation errors. If null (default), throws an exception upon validation errors.</param>
+        ''' <param name="addSchemaInfo">A <see cref="System.Boolean" /> indicating whether to populate the post-schema-validation infoset (PSVI).</param>
+        ''' <exception cref="System.Xml.Schema.XmlSchemaValidationException">Thrown for XML Schema Definition Language (XSD) validation errors.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="document"/> or <paramref name="schema"/> is null.</exception>
+        ''' <version version="1.5.3">This method is new in version 1.5.3</version>
+        <Extension()>
+        Public Sub Validate(ByVal document As XDocument, ByVal schema As XmlSchema, Optional ByVal validationEventHandler As ValidationEventHandler = Nothing, Optional ByVal addSchemaInfo As Boolean = False)
+            If document Is Nothing Then Throw New ArgumentNullException("document")
+            If schema Is Nothing Then Throw New ArgumentNullException("schema")
+            Dim ss As New XmlSchemaSet
+            ss.Add(schema)
+            document.Validate(ss, validationEventHandler, addSchemaInfo)
         End Sub
     End Module
 End Namespace

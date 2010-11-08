@@ -48,7 +48,8 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ListWithEvents.Adding"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnAdding"/> when <see cref="AllowItemCancel"/> is true.</exception>
-        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride Function Add(ByVal value As Object) As Integer Implements System.Collections.IList.Add
+        ''' <version version="1.5.3">Method renamed from <c>Add</c> to <c>IList_Add</c> to avoid compiler from selecting this method and complaining thet it is obsolete (on <see cref="ListWithEvents(Of T)"/>) when <see cref="ListWithEvents(Of T)"/>[<see cref="Object"/>] is used.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride Function IList_Add(ByVal value As Object) As Integer Implements System.Collections.IList.Add
         ''' <summary>When overriden in derived class removes all items from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
@@ -372,7 +373,7 @@ Namespace CollectionsT.GenericT
         ''' </list>
         ''' </remarks>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-     Public NotOverridable Overrides Property AllowAddCancelableEventsHandlers() As Boolean
+        Public NotOverridable Overrides Property AllowAddCancelableEventsHandlers() As Boolean
             <DebuggerStepThrough()> Get
                 Return _AllowAddCancelableEventsHandlers
             End Get
@@ -394,7 +395,7 @@ Namespace CollectionsT.GenericT
         ''' <seelaso cref="IsAllowItemCancelLocked"/><seelaso cref="LockAllowItemCancel"/><seelaso cref="ICollectionCancelItem"/>
         ''' <version version="1.5.2">Property introduced</version>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-         Public NotOverridable Overrides Property AllowItemCancel() As Boolean
+        Public NotOverridable Overrides Property AllowItemCancel() As Boolean
             Get
                 Return _AllowItemCancel
             End Get
@@ -589,7 +590,7 @@ Namespace CollectionsT.GenericT
             If exceptions.Count > 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-exceptions.Add(Err.GetException)
+            exceptions.Add(Err.GetException)
             Resume Next
         End Sub
 #End Region
@@ -680,7 +681,7 @@ exceptions.Add(Err.GetException)
             If exceptions.Count > 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-exceptions.Add(Err.GetException())
+            exceptions.Add(Err.GetException())
             Resume Next
         End Sub
 #End Region
@@ -789,7 +790,7 @@ exceptions.Add(Err.GetException())
             If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-exceptions.Add(Err.GetException)
+            exceptions.Add(Err.GetException)
             Resume Next
         End Sub
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="ListWithEvents(Of T)"/>.</summary>
@@ -982,7 +983,7 @@ exceptions.Add(Err.GetException)
             If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-exceptions.Add(Err.GetException)
+            exceptions.Add(Err.GetException)
             Resume Next
         End Sub
         ''' <summary>Gets or sets the element at the specified index.</summary>
@@ -1081,7 +1082,7 @@ exceptions.Add(Err.GetException)
             If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
             Exit Sub
 erh:
-exceptions.Add(Err.GetException)
+            exceptions.Add(Err.GetException)
             Resume Next
         End Sub
         ''' <summary>Raised when any of items that is of type <see cref="IReportsChange"/> raises <see cref="IReportsChange.Changed"/> event</summary>
@@ -1264,9 +1265,10 @@ exceptions.Add(Err.GetException)
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         ''' <version version="1.5.2"><see cref="InvalidCastException"/> thrown replaced with <see cref="TypeMismatchException"/></version>
+        ''' <version version="1.5.3">Renamed from <c>Add</c> to <c>IList_Add</c>. See comment on <see cref="ListWithEventsBase.IList_Add"/>.</version>
         <Obsolete("Use type-safe overload instead")> _
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public NotOverridable Overrides Function Add(ByVal value As Object) As Integer 'Implements System.Collections.IList.Add
+        Public NotOverridable Overrides Function IList_Add(ByVal value As Object) As Integer 'Implements System.Collections.IList.Add
             Try
                 Add(CType(value, T))
             Catch ex As InvalidCastException
