@@ -295,6 +295,19 @@ Namespace NumericsT
             Return Parse(str, Globalization.NumberStyles.Any, Globalization.CultureInfo.CurrentCulture)
         End Function
 #End Region
+        ''' <summary>Formats the value of the current instance using the specified format and current culture.</summary>
+        ''' <param name="format">The <see cref="System.String" /> specifying the format to use.-or- null to use the default format defined for the type of the <see cref="System.IFormattable" /> implementation.</param>
+        ''' <returns>A <see cref="System.String" /> containing the value of the current instance in the specified format.</returns>
+        ''' <remarks>
+        ''' Use sigle format string to format value as <see cref="Double"/>. Use two /-separated format strings to format this value as two <see cref="UInteger"/> values separated by /.
+        ''' Format(s) passed to <see cref="Double.ToString"/> or <see cref="UInteger.ToString"/> can be empty, predefined (one letter) or custom.
+        ''' If two formats are specified, delimited by /, only first slash encountered is treatead as delimitter. Other slashes are passed to <see cref="UInteger.Format"/>. In order to escape firts slahs, precede it with \.
+        ''' If <paramref name="format"/> is null or <see cref="String.Empty"/> G/G is used. 
+        ''' </remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Overloads Function ToString(ByVal format As String) As String
+            Return ToString(format, Threading.Thread.CurrentThread.CurrentCulture)
+        End Function
         ''' <summary>Formats the value of the current instance using the specified format.</summary>
         ''' <param name="format">The <see cref="System.String" /> specifying the format to use.-or- null to use the default format defined for the type of the <see cref="System.IFormattable" /> implementation.</param>
         ''' <param name="formatProvider">The <see cref="System.IFormatProvider" /> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system.</param>
@@ -353,6 +366,9 @@ Namespace NumericsT
                 Return value.ToString(Nothing, culture)
             End Function
         End Class
+
+
+
     End Structure
 
     ''' <summary>Represents signed rational number with numerator and denominator</summary>
@@ -657,6 +673,19 @@ Namespace NumericsT
             Return Parse(str, Globalization.NumberStyles.Any, Globalization.CultureInfo.CurrentCulture)
         End Function
 #End Region
+        ''' <summary>Formats the value of the current instance using the specified format and current culture.</summary>
+        ''' <param name="format">The <see cref="System.String" /> specifying the format to use.-or- null to use the default format defined for the type of the <see cref="System.IFormattable" /> implementation.</param>
+        ''' <returns>A <see cref="System.String" /> containing the value of the current instance in the specified format.</returns>
+        ''' <remarks>
+        ''' Use sigle format string to format value as <see cref="Double"/>. Use two /-separated format strings to format this value as two <see cref="UInteger"/> values separated by /.
+        ''' Format(s) passed to <see cref="Double.ToString"/> or <see cref="UInteger.ToString"/> can be empty, predefined (one letter) or custom.
+        ''' If two formats are specified, delimited by /, only first slash encountered is treatead as delimitter. Other slashes are passed to <see cref="UInteger.Format"/>. In order to escape firts slahs, precede it with \.
+        ''' If <paramref name="format"/> is null or <see cref="String.Empty"/> G/G is used. 
+        ''' </remarks>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        Public Overloads Function ToString(ByVal format As String) As String
+            Return ToString(format, Threading.Thread.CurrentThread.CurrentCulture)
+        End Function
         ''' <summary>Formats the value of the current instance using the specified format.</summary>
         ''' <param name="format">The <see cref="System.String" /> specifying the format to use.-or- null to use the default format defined for the type of the <see cref="System.IFormattable" /> implementation.</param>
         ''' <param name="formatProvider">The <see cref="System.IFormatProvider" /> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system.</param>

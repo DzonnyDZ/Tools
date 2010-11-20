@@ -11,6 +11,6 @@ using System.Resources;
 [assembly: AssemblyDescription( "Visual Studio Custom Tool that Generates classes from XML-Schema (XSD) files" )]
 [assembly: AssemblyCompany( "ÐTools team" )]
 [assembly: AssemblyProduct( "ÐTools" )]
-[assembly: AssemblyCopyright( "© Ðonny 2008÷9" )]
+[assembly: AssemblyCopyright( "© Ðonny 2008÷10" )]
 
 [assembly: NeutralResourcesLanguageAttribute("en")]

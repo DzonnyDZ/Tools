@@ -88,12 +88,65 @@ Namespace WindowsT.WPF
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Property {0} has unknown value {1}'.
+        '''</summary>
+        Public ReadOnly Property ex_PropertyHasUnknownValue() As String
+            Get
+                Return ResourceManager.GetString("ex_PropertyHasUnknownValue", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Value cannot be null'.
+        '''</summary>
+        Public ReadOnly Property ValueCannotBeNull() As String
+            Get
+                Return ResourceManager.GetString("ValueCannotBeNull", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Value has incorrect format'.
+        '''</summary>
+        Public ReadOnly Property ValueHasIncorrectFormat() As String
+            Get
+                Return ResourceManager.GetString("ValueHasIncorrectFormat", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Formats a localized string similar to '{0} cannot convert back.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function ex_CannotConvertBackFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, ex_CannotConvertBack, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Property {0} has unknown value {1}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ex_PropertyHasUnknownValueFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, ex_PropertyHasUnknownValue, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ValueCannotBeNull property value.
+        '''</summary>
+        '''<returns>The ValueCannotBeNull property value.</returns>
+        Public Function ValueCannotBeNullFormat() As String
+            Return ValueCannotBeNull
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ValueHasIncorrectFormat property value.
+        '''</summary>
+        '''<returns>The ValueHasIncorrectFormat property value.</returns>
+        Public Function ValueHasIncorrectFormatFormat() As String
+            Return ValueHasIncorrectFormat
         End Function
     End Module
 End Namespace

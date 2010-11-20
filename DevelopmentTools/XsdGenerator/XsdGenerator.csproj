@@ -100,6 +100,7 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="VSLangProj">
       <Name>VSLangProj</Name>
       <HintPath>C:\Program Files\Microsoft Visual Studio .NET 2003\Common7\IDE\PublicAssemblies\VSLangProj.dll</HintPath>
@@ -107,34 +108,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SharedFiles\Version.cs">
-      <Link>Version.cs</Link>
-    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Library\Extensions\AddPropertyAttribute.cs" />
+    <Compile Include="Library\Extensions\AlterProperty.cs" />
     <Compile Include="Library\Extensions\ArraysToCollectionsExtension.cs" />
     <Compile Include="Library\Extensions\ArraysToGenericCollections.cs" />
+    <Compile Include="Library\Extensions\DateNullableByEmptyString.cs" />
     <Compile Include="Library\Extensions\DebuggerStepThrough.cs" />
+    <Compile Include="Library\Extensions\EmptyStringMode.cs" />
+    <Compile Include="Library\Extensions\ExtenstionHelpers.cs" />
     <Compile Include="Library\Extensions\FieldsToPropertiesExtension.cs" />
     <Compile Include="Library\Extensions\NoEmptyRemarks.cs" />
     <Compile Include="Library\Extensions\NumericEnums.cs" />
     <Compile Include="Library\Extensions\OnChangingCall.cs" />
     <Compile Include="Library\Extensions\OnInitCall.cs" />
     <Compile Include="Library\Extensions\OverridableProperties.cs" />
+    <Compile Include="Library\Extensions\RemoveMember.cs" />
+    <Compile Include="Library\Extensions\RemoveNamespace.cs" />
     <Compile Include="Library\Extensions\RemoveTypeAttribute.cs" />
+    <Compile Include="Library\Extensions\Specified2Nullable.cs" />
+    <Compile Include="Library\Extensions\StringBackedProperty.cs" />
+    <Compile Include="Library\Extensions\TNullableByEmptyString.cs" />
     <Compile Include="Library\Extensions\TypeList.cs" />
     <Compile Include="Library\ICodeExtension.cs" />
     <Compile Include="Library\Processor.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="XsdCodeGenerator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include="..\..\SharedFiles\Version.cpp">
-      <Link>Version.cpp</Link>
-    </Content>
-    <Content Include="..\..\SharedFiles\VersionHistory.xslt">
-      <Link>VersionHistory.xslt</Link>
-    </Content>
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -174,13 +181,13 @@
     <None Include="..\..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
-    <None Include="..\..\SharedFiles\Version.il">
-      <Link>Version.il</Link>
-    </None>
-    <None Include="..\..\SharedFiles\VersionHistory.xsd">
-      <Link>VersionHistory.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.cs.resx" />
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

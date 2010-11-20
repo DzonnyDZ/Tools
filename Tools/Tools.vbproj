@@ -210,6 +210,7 @@
     <Compile Include="ComponentModel\CustomTypeDescriptorBase.vb" />
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
+    <Compile Include="ComponentModel\PropertyChangingEventArgsEx.vb" />
     <Compile Include="ComponentModel\ValueContainer.vb" />
     <Compile Include="Data\DataExtensions.vb" />
     <Compile Include="Globalization\Arabic.vb" />

@@ -112,22 +112,71 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ex_CannotConvertBack" xml:space="preserve">
-    <value>{0} cannot convert back.</value>
-    <comment>Internal error message</comment>
+  <data name="XSDClassesGenerator" xml:space="preserve">
+    <value>XSD Generátor tříd</value>
   </data>
-  <data name="ValueHasIncorrectFormat" xml:space="preserve">
-    <value>Value has incorrect format</value>
+  <data name="ex_AssemblyTooBig" xml:space="preserve">
+    <value>Sestavení je příliš velké. Operace není podporována.</value>
   </data>
-  <data name="ValueCannotBeNull" xml:space="preserve">
-    <value>Value cannot be null</value>
+  <data name="ex_DebugSymbolsToooBig" xml:space="preserve">
+    <value>Ladicí symboly sjou příliš velké. Operace není podporována.</value>
   </data>
-  <data name="ex_PropertyHasUnknownValue" xml:space="preserve">
-    <value>Property {0} has unknown value {1}</value>
+  <data name="err_CouldNotGenerateCode" xml:space="preserve">
+    <value>#chyba Nemohu generovat kód!
+/*
+{0}
+*/</value>
+  </data>
+  <data name="ex_InvalidExtensionType" xml:space="preserve">
+    <value>Neplatný typ rozšíření '{0}'.</value>
+  </data>
+  <data name="Summary_misc" xml:space="preserve">
+    <value>&lt;summary&gt;Různé položky&lt;/summary&gt;</value>
+  </data>
+  <data name="Summary_misc_types" xml:space="preserve">
+    <value>&lt;summary&gt;Pole všech typů generovaných vlastním nástrojem&lt;/summary&gt;</value>
+  </data>
+  <data name="Summary_OnChanging" xml:space="preserve">
+    <value>&lt;summary&gt;Vyvolává událost &lt;see cref='{0}Changing'/&gt;&lt;/summary&gt;
+&lt;param name='e'&gt;Argumenty udállosti&lt;/param&gt;</value>
+  </data>
+  <data name="Summary_Changing" xml:space="preserve">
+    <value>&lt;summary&gt;Vyvolána, pokud se hodnota vlastnosti {0} chystá změnit.&lt;/summary&gt;
+&lt;remarks&gt;Abyste předešli změně, vyvolejte výjimku. Výjimka je předána zdroji změny.&lt;/remarks&gt;</value>
+  </data>
+  <data name="Summary_PropertyChanging" xml:space="preserve">
+    <value>&lt;summary&gt;Nastávaá, když se hodnota vlastnosti měmní.&lt;/summary&gt;</value>
+  </data>
+  <data name="Summary_OnPropertyChanging" xml:space="preserve">
+    <value>&lt;summary&gt;Vyvolává událost &lt;see cref='PropertyChanging'/&gt;&lt;/summary&gt;</value>
+  </data>
+  <data name="Param_OnPropertyChanging_e" xml:space="preserve">
+    <value>&lt;param name='e'&gt;Argumenty události&lt;/summary&gt;</value>
+  </data>
+  <data name="ex_UknnownNullSerializationOption" xml:space="preserve">
+    <value>Neznámá serializační volba pro null "{0}". Očekáváno "Empty" nebo "Null".</value>
+  </data>
+  <data name="ex_TypeNotFound" xml:space="preserve">
+    <value>Typ {0} nenalezen.</value>
+  </data>
+  <data name="ex_UknnownDateSerializationKind" xml:space="preserve">
+    <value>Neznámý typ serializace datumů "{0}". Očekáváno "date" nebo "DateTime".</value>
+  </data>
+  <data name="ex_PropertyNotFound" xml:space="preserve">
+    <value>Vlastnost {0} nenalezena.</value>
+  </data>
+  <data name="ex_FieldNotFound" xml:space="preserve">
+    <value>Proměnná (field) {0} nenalezena.</value>
+  </data>
+  <data name="Registered" xml:space="preserve">
+    <value>Registrováno {0}</value>
+  </data>
+  <data name="Unregistered" xml:space="preserve">
+    <value>Odregistrováno {0}</value>
   </data>
 </root>

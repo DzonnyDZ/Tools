@@ -28,49 +28,45 @@ using Microsoft.Win32;  // Registry
 #endregion
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
-    /// <summary>
-    /// Uses the XsdGeneratorLibrary to process XSD files and generate the corresponding 
-    /// classes.
-    /// </summary>
-    [Guid("9B7CF25A-1782-433b-B534-0B94E76A7D62")]
+    /// <summary>Uses the XsdGeneratorLibrary to process XSD files and generate the corresponding classes.</summary>
+    /// <version version="1.5.3">Added support fopr Visual Sudio 2010</version>
+    [Guid(XsdCodeGenerator._customToolGuid)]
     [ComVisible(true)]
     public class XsdCodeGenerator : BaseCodeGeneratorWithSite {
         #region Constants
 
-        /// <summary>
-        /// VS Generator Category for C# Language.
-        /// </summary>
+        /// <summary>VS Generator Category for C# Language.</summary>
         private static Guid CSharpCategory = new Guid("{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}");
 
-        /// <summary>
-        /// VS Generator Category for VB Language.
-        /// </summary>
+        /// <summary>VS Generator Category for VB Language.</summary>
         private static Guid VBCategory = new Guid("{164B10B9-B200-11D0-8C61-00A0C91E29D5}");
 
-        /// <summary>
-        /// The tool Guid. Keep in sync with the GuidAttribute!!!
-        /// </summary>
-        private static Guid CustomToolGuid = new Guid("9B7CF25A-1782-433b-B534-0B94E76A7D62");
+        /// <summary>String version fo tool GUID.</summary>
+        /// <remarks>Use <see cref="CustomToolGuid"/> instead.</remarks>
+        /// <version version="1.5.3">This constant is new in version 1.5.3</version>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal const string _customToolGuid = "9B7CF25A-1782-433b-B534-0B94E76A7D62";
+        /// <summary>The tool Guid.</summary>
+        private static Guid CustomToolGuid = new Guid(_customToolGuid);
 
-        /// <summary>
-        /// Name of the custom tool to register.
-        /// </summary>
+        /// <summary>Name of the custom tool to register.</summary>
         private const string CustomToolName = "XsdCodeGen";
 
-        /// <summary>
-        /// Description for registration.
-        /// </summary>
-        private const string CustomToolDescription = "MSDN Classes Generator";
+        /// <summary>Description for registration.</summary>
+        /// <version version="1.5.3">Changed from constant to literal</version>
+        private readonly string CustomToolDescription = Resources.XSDClassesGenerator;
 
         #endregion Constants
 
         #region Ctor & Assembly resolution
+        /// <summary>Type initializer - initializes the <see cref="XsdCodeGenerator"/> class</summary>
         [Obsolete]
         static XsdCodeGenerator() {
             // Add our path to the private path.
             AppDomain.CurrentDomain.AppendPrivatePath(Assembly.GetExecutingAssembly().Location);
         }
 
+        /// <summary>CTor - creates a new instance of the <see cref="XsdCodeGenerator"/> class</summary>
         public XsdCodeGenerator() {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(OnAssemblyResolve);
         }
@@ -193,7 +189,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
                 asmbytes = new byte[fs.Length];
                 if (fs.Length > int.MaxValue)
-                    throw new TypeLoadException("Assembly too big. Operation not supported.");
+                    throw new TypeLoadException(Resources.ex_AssemblyTooBig);
                 else
                     fs.Read(asmbytes, 0, (int)fs.Length);
             }
@@ -203,7 +199,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
                 using (FileStream fs = new FileStream(Path.ChangeExtension(path, "pdb"), FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
                     pdbbytes = new byte[fs.Length];
                     if (fs.Length > int.MaxValue)
-                        throw new TypeLoadException("Debug symbols too big. Operation not supported.");
+                        throw new TypeLoadException(Resources.ex_DebugSymbolsToooBig);
                     else
                         fs.Read(pdbbytes, 0, (int)fs.Length);
                 }
@@ -226,7 +222,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
         DateTime _lastupdate = DateTime.MinValue;
         string _lastfile = String.Empty;
 
-        // We won't refresh changes raised with less that 5 secs. between events.
+        /// <summary>We won't refresh changes raised with less that 5 secs. between events.</summary>
         TimeSpan _updateinterval = new TimeSpan(0, 0, 5);
 
         private void MonitorAssembly(string file) {
@@ -290,21 +286,15 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
 
         #region GenerateCode
 
-        /// <summary>
-        /// Generates the output.
-        /// </summary>
+        /// <summary>Generates the output.</summary>
+        /// <param name="inputFileName">Name of file to generate input from</param>
+        /// <param name="inputFileContent">Content of file to generate input from</param>
         protected override byte[] GenerateCode(string inputFileName, string inputFileContent) {
             string code = "";
             try {
-                /*string OldPath = System.Environment.CurrentDirectory;
-                System.Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(inputFileName);
-                try                { */
                 // Process the file.
                 CodeDomProvider Provider = CodeProvider;
-                CodeNamespace ns = Processor.Process(inputFileName, FileNamespace ,Provider);
-                /*}                finally                {
-                    System.Environment.CurrentDirectory = OldPath; 
-                }*/
+                CodeNamespace ns = Processor.Process(inputFileName, FileNamespace, Provider);
 
                 // Generate code for it.
                 CodeGeneratorOptions opt = new CodeGeneratorOptions();
@@ -315,9 +305,9 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
                 // Finaly assign it to the result to return.
                 code = sw.ToString();
 
-                Processor.PostProcess(inputFileName,ref code, Provider);
+                Processor.PostProcess(inputFileName, ref code, Provider);
             } catch (Exception e) {
-                code = String.Format("#error Couldn't generate code!\r\n/*\r\n{0}\r\n*/", e);
+                code = String.Format(Resources.err_CouldNotGenerateCode, e);
             }
             // Convert to bytes.
             return System.Text.Encoding.UTF8.GetBytes(code);
@@ -327,40 +317,39 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
 
         #region Registration
 
-        // [HKLM\SOFTWARE\Microsoft\VisualStudio\{Version}\Generators\{C#/VB GUID}\{ToolName}]
+        /// <summary>Formating string for Visual Studio registry key</summary>
+        /// <remarks>Value is HKLM\SOFTWARE\Microsoft\VisualStudio\{Version}\Generators\{C#/VB GUID}\{ToolName}</remarks>
         private const string KeyFormat = @"SOFTWARE\Microsoft\VisualStudio\{0}\Generators\{1}\{2}";
 
-        /// <summary>
-        /// Registers the tool for a VS version and a language category.
-        /// </summary>
+        /// <summary>Registers the tool for a VS version and a language category.</summary>
+        /// <param name="vsVersion">Version of Visual Studio to register for</param>
+        /// <param name="categoryGuid">Category GUID - represents language to register for</param>
+        /// <remarks>
+        /// Creates registry key HKLM\SOFTWARE\Microsoft\VisualStudio\{Version}\Generators\{C#/VB GUID}\{ToolName} and 
+        /// setrs properties "", CLSID and GeneratesDesignTimeSource
+        /// </remarks>
         protected static void Register(Version vsVersion, Guid categoryGuid) {
-            /* Key to create:
-             * 
-              * [HKLM\SOFTWARE\Microsoft\VisualStudio\{Version}\Generators\{C#/VB GUID}\{ToolName}]
-              * @="{ToolDescription}"
-              * "CLSID"="{ToolGUID}"
-              * "GeneratesDesignTimeSource"=dword:00000001
-              */
-
-            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(String.Format(
-                       KeyFormat, vsVersion, categoryGuid.ToString("B"), CustomToolName))) {
-                key.SetValue("", CustomToolDescription);
+            string keyPath = String.Format(KeyFormat, vsVersion, categoryGuid.ToString("B"), CustomToolName);
+            using (RegistryKey key = Registry.LocalMachine.CreateSubKey(keyPath)) {
+                key.SetValue("", Resources.XSDClassesGenerator);
                 key.SetValue("CLSID", CustomToolGuid.ToString("B"));
                 key.SetValue("GeneratesDesignTimeSource", 1);
+                Console.WriteLine(Resources.Registered, "HKLM\\" + keyPath);
             }
         }
 
-        /// <summary>
-        /// Unregisters the custom tool.
-        /// </summary>
+        /// <summary>Unregisters the custom tool.</summary>
+        /// <param name="vsVersion">Version of visual studio to unregister tool from</param>
+        /// <param name="categoryGuid">Category GUID - represents language to unregister from</param>
         protected static void Unregister(Version vsVersion, Guid categoryGuid) {
-            Registry.LocalMachine.DeleteSubKey(
-                String.Format(KeyFormat, vsVersion, categoryGuid.ToString("B"), CustomToolName), false);
+            string keyPath = String.Format(KeyFormat, vsVersion, categoryGuid.ToString("B"), CustomToolName);
+            Registry.LocalMachine.DeleteSubKey(keyPath, false);
+            Console.WriteLine(Resources.Unregistered, "HKLM\\" + keyPath);
         }
 
-        /// <summary>
-        /// Registers the generator.
-        /// </summary>
+        /// <summary>Registers the generator.</summary>
+        /// <param name="t">ignored</param>
+        /// <version version="1.5.3">Registers for VS 2010</version>
         [ComRegisterFunction]
         public static void RegisterClass(Type t) {
             // Register for both VS.NET 2002 & 2003 ( C# )
@@ -368,17 +357,19 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
             //Register(new Version(7, 1), CSharpCategory);
             Register(new Version(8, 0), CSharpCategory);
             Register(new Version(9, 0), CSharpCategory);
+            Register(new Version(10, 0), CSharpCategory);
 
             // Register for both VS.NET 2002 & 2003 ( VB )
             //Register(new Version(7, 0), VBCategory);
             //Register(new Version(7, 1), VBCategory);
             Register(new Version(8, 0), VBCategory);
             Register(new Version(9, 0), VBCategory);
+            Register(new Version(10, 0), VBCategory);
         }
 
-        /// <summary>
-        /// Unregisters the generator.
-        /// </summary>
+        /// <summary>Unregisters the generator.</summary>
+        /// <param name="t">ignored</param>
+        /// <version version="1.5.3">Unregisters from VS 2010</version>
         [ComUnregisterFunction]
         public static void UnregisterClass(Type t) {
             // Unregister for both VS.NET 2002 & 2003 ( C# )
@@ -386,12 +377,14 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
             //Unregister(new Version(7, 1), CSharpCategory);
             Unregister(new Version(8, 0), CSharpCategory);
             Unregister(new Version(9, 0), CSharpCategory);
+            Unregister(new Version(10, 0), CSharpCategory);
 
             // Unregister for both VS.NET 2002 & 2003 ( VB )
             //Unregister(new Version(7, 0), VBCategory);
             //Unregister(new Version(7, 1), VBCategory);
             Unregister(new Version(8, 0), VBCategory);
             Unregister(new Version(9, 0), VBCategory);
+            Unregister(new Version(10, 0), VBCategory);
         }
 
         #endregion Registration

@@ -73,17 +73,25 @@ Namespace WindowsT.WPF
         ''' <version version="1.5.3">This function is new in version 1.5.3</version>
         <Extension()>
         Public Function FindVisualChildren(ByVal parent As DependencyObject, ByVal condition As Func(Of DependencyObject, Boolean), ByVal onlyFirstLevel As Boolean) As IEnumerable(Of DependencyObject)
+            'Static level% = 0
             If parent Is Nothing Then Throw New ArgumentNullException("parent")
             If condition Is Nothing Then Throw New ArgumentNullException("condition")
             Dim ret As New List(Of DependencyObject)
             For i = 0 To VisualTreeHelper.GetChildrenCount(parent) - 1
                 Dim added As Boolean = False
-                If condition(VisualTreeHelper.GetChild(parent, i)) Then
-                    ret.Add(VisualTreeHelper.GetChild(parent, i))
+                Dim child As DependencyObject = VisualTreeHelper.GetChild(parent, i)
+                'Debug.Print("{0}{1} {2}", New String(Tab, level), child.GetType.Name, If(TypeOf child Is FrameworkElement, DirectCast(child, FrameworkElement).Name, ""))
+                If condition(child) Then
+                    ret.Add(child)
                     added = True
                 End If
                 If Not added OrElse Not onlyFirstLevel Then
-                    ret.AddRange(VisualTreeHelper.GetChild(parent, i).FindVisualChildren(condition, onlyFirstLevel))
+                    'level += 1
+                    'Try
+                    ret.AddRange(child.FindVisualChildren(condition, onlyFirstLevel))
+                    'Finally
+                    '    level -= 1
+                    'End Try
                 End If
             Next
             Return ret
@@ -158,7 +166,7 @@ Namespace WindowsT.WPF
             If GetType(TAncestor).Equals(GetType(Window)) Then Return CObj(Window.GetWindow(obj))
             Dim currobj As DependencyObject = obj
             Do
-                currobj = LogicalTreeHelper.GetParent(obj)
+                currobj = LogicalTreeHelper.GetParent(currobj)
                 If currobj Is Nothing Then Return Nothing
                 If TypeOf currobj Is TAncestor Then Return currobj
             Loop

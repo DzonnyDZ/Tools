@@ -220,6 +220,7 @@
     <Compile Include="Windows\WPF\Converters\General\IsNotNullConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\IsNullConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\NestedConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Type-safe\ChoiceBooleanConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Type-safe\NotBooleanValueConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\NotColorConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\NotVisibilityConverter.vb" />
@@ -232,10 +233,12 @@
     <Compile Include="Windows\WPF\Converters\General\StaticTryCastConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\StringFormatConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Type-safe\XmlBooleanConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Type-safe\XmlXPathConverter.vb" />
     <Compile Include="Windows\WPF\Markup\MarkupExtensionBase.vb" />
     <Compile Include="Windows\WPF\Markup\NamespacesExtension.vb" />
     <Compile Include="Windows\WPF\Markup\NewExtension.vb" />
     <Compile Include="Windows\WPF\Markup\XamlServiceProvider.vb" />
+    <Compile Include="Windows\WPF\TryParseValidationRule.vb" />
     <Compile Include="Windows\WPF\RegularExpressionValidationRule.vb" />
     <Compile Include="Windows\WPF\Threading\DispatcherExtensions.vb" />
     <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">

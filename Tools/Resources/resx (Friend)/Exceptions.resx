@@ -1408,4 +1408,7 @@
   <data name="InvalidBooleanValue" xml:space="preserve">
     <value>Invalid boolean value {0}</value>
   </data>
+  <data name="PropertyMustBeSet" xml:space="preserve">
+    <value>{0} must be set</value>
+  </data>
 </root>

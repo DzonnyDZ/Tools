@@ -2417,6 +2417,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} must be set'.
+        '''</summary>
+        Public ReadOnly Property PropertyMustBeSet() As String
+            Get
+                Return ResourceManager.GetString("PropertyMustBeSet", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Provider does not provider service {0}'.
         '''</summary>
         Public ReadOnly Property ProviderDoesNotProviderService() As String
@@ -6205,6 +6214,15 @@ Namespace ResourcesT
         '''<returns>The PropertyIsReadOnly property value.</returns>
         Public Function PropertyIsReadOnlyFormat() As String
             Return PropertyIsReadOnly
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} must be set'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function PropertyMustBeSetFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, PropertyMustBeSet, arg0)
         End Function
         
         '''<summary>

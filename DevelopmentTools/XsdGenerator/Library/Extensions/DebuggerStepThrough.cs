@@ -2,19 +2,34 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.CodeDom.Compiler;
+using System.Diagnostics;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions
 {
-	public class DebuggerStepThrough : ICodeExtension,IPostExtension
-	{
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> Parameters) { }
-        void IPostExtension.Initialize(System.Collections.Generic.IDictionary<string, string> Parameters) { }
-		public void Process( System.CodeDom.CodeNamespace code, System.Xml.Schema.XmlSchema schema,CodeDomProvider Provider)
-		{
-			foreach ( CodeTypeDeclaration type in code.Types ){
+    /// <summary>This extension adds the <see cref="DebuggerStepThroughAttribute"/> to property accessors, removes it from types and methods.</summary>
+    public class DebuggerStepThrough : ICodeExtension,IPostExtension
+    {
+        /// <summary>Initializes the extension (this implementation does nothing)</summary>
+        /// <param name="parameters">Initialization parameters (ignored)</param>
+        /// <version version="1.5.3">Added documentation</version>
+        /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
+        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        /// <summary>Initializes the extension (this implementation does nothing)</summary>
+        /// <param name="parameters">Initialization parameters (ignored)</param>
+        /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
+        void IPostExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        /// <summary>Called when extension shall processs generated CodeDOM</summary>
+        /// <param name="code">Object tree representing generated CodeDOM</param>
+        /// <param name="schema">Input XML schema</param>
+        /// <param name="provider">CodeDOM provider (the language)</param>
+        /// <version version="1.5.3">Added documentation</version>
+        /// <version version="1.5.3">Parameter <c>Provider</c> renamed to <c>provider</c></version>
+        public void Process( System.CodeDom.CodeNamespace code, System.Xml.Schema.XmlSchema schema,CodeDomProvider provider)
+        {
+            foreach ( CodeTypeDeclaration type in code.Types ){
                 Process(type);
-			}
-		}
+            }
+        }
         private void Process(CodeTypeMember member) {
             CodeAttributeDeclaration  memberAttr = GetAttribute(member);
             if (member is CodeTypeDeclaration) {
@@ -35,23 +50,27 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions
         private CodeAttributeDeclaration GetAttribute(CodeTypeMember member) {
             if (member.CustomAttributes != null)
                 foreach (CodeAttributeDeclaration attr in member.CustomAttributes)
-                    if (attr.AttributeType.BaseType == "System.Diagnostics.DebuggerStepThroughAttribute")
+                    if (attr.AttributeType.BaseType == typeof(DebuggerStepThroughAttribute).FullName)
                         return attr;
             return null;
         }
         private static CodeAttributeDeclaration NewAttribute{get{return new CodeAttributeDeclaration(new CodeTypeReference(typeof(System.Diagnostics.DebuggerStepThroughAttribute)));}}
 
 
-        public void PostProcess(ref string code, CodeDomProvider Provider) {
+        /// <summary>Called when extension shall process generated code</summary>
+        /// <param name="code">The code</param>
+        /// <param name="provider">CodeDOM provider (the language)</param>
+        /// <version version="1.5.3">Parameter <c>Provider</c> renamed to <c>provider</c></version>
+        public void PostProcess(ref string code, CodeDomProvider provider) {
             System.IO.StringWriter tw = new System.IO.StringWriter();
-            Provider.GenerateCodeFromStatement(new CodeCommentStatement(FirtsLineOfAccessor),tw,new System.CodeDom.Compiler.CodeGeneratorOptions());
+            provider.GenerateCodeFromStatement(new CodeCommentStatement(FirtsLineOfAccessor),tw,new System.CodeDom.Compiler.CodeGeneratorOptions());
             string srch = tw.GetStringBuilder().ToString();
             if(srch.EndsWith("\r\n")) srch = srch.Substring(0,srch.Length-2);
             else if(srch.EndsWith("\r") || srch.EndsWith("\n")) srch=srch.Substring(0,srch.Length-1);
             tw = new System.IO.StringWriter();
             CodeTypeDeclaration foo = new CodeTypeDeclaration("foo");
             foo.CustomAttributes.Add(NewAttribute);
-            Provider.GenerateCodeFromType(foo,tw,new System.CodeDom.Compiler.CodeGeneratorOptions());
+            provider.GenerateCodeFromType(foo,tw,new System.CodeDom.Compiler.CodeGeneratorOptions());
             string attr = new System.IO.StringReader(tw.GetStringBuilder().ToString()).ReadLine();
             System.IO.StringReader sr = new System.IO.StringReader(code);
             List<String> Lines = new List<string>();

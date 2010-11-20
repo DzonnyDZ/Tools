@@ -4,41 +4,61 @@ using System.Collections;
 using System.Xml.Schema;
 using System.CodeDom.Compiler;
 
-namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions{
+namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
 
-    /// <summary>Adds a call to OnBeforeInit at tthe very beignning of each CTor</summary>
-	public class OnBeforeInitCall : ICodeExtension	{
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> Parameters) { }
-        public void Process(CodeNamespace code, XmlSchema schema, CodeDomProvider Provider) {
-            foreach(CodeTypeDeclaration type in code.Types) {
+    /// <summary>Adds a call to <c>OnBeforeInit</c> at the very beignning of each CTor</summary>
+    public class OnBeforeInitCall : ICodeExtension {
+        /// <summary>Initializes the extension (this implementation does nothing)</summary>
+        /// <param name="parameters">Initialization parameters (ignored)</param>
+        /// <version version="1.5.3">Added documentation</version>
+        /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
+        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        /// <summary>Called when extension shall processs generated CodeDOM</summary>
+        /// <param name="code">Object tree representing generated CodeDOM</param>
+        /// <param name="schema">Input XML schema</param>
+        /// <param name="provider">CodeDOM provider (the language)</param>
+        /// <version version="1.5.3">Added documentation</version>
+        /// <version version="1.5.3">Parameter <c>Provider</c> renamed to <c>provider</c></version>
+        public void Process(CodeNamespace code, XmlSchema schema, CodeDomProvider provider) {
+            foreach (CodeTypeDeclaration type in code.Types) {
                 ProcessType(type);
             }
-		}
+        }
         private void ProcessType(CodeTypeDeclaration type) {
-            foreach(CodeTypeMember member in type.Members) {
-                if(member is CodeTypeDeclaration) ProcessType((CodeTypeDeclaration)member);
-                else if(member is CodeConstructor) {
-                    CodeConstructor ctor = (CodeConstructor) member;
+            foreach (CodeTypeMember member in type.Members) {
+                if (member is CodeTypeDeclaration) ProcessType((CodeTypeDeclaration)member);
+                else if (member is CodeConstructor) {
+                    CodeConstructor ctor = (CodeConstructor)member;
                     ctor.Statements.Insert(0, new CodeExpressionStatement(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "OnBeforeInit", new CodeExpression[] { })));
                 }
             }
         }
-	}
+    }
 
-    /// <summary>Adds a call to OnAfterInit at tthe very beignning of each CTor</summary>
-    public class OnAfterInitCall:ICodeExtension {
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> Parameters) { }
-        public void Process(CodeNamespace code, XmlSchema schema, CodeDomProvider Provider) {
-            foreach(CodeTypeDeclaration type in code.Types) {
+    /// <summary>Adds a call to <c>OnAfterInit</c> at the end of each CTor</summary>
+    public class OnAfterInitCall : ICodeExtension {
+        /// <summary>Initializes the extension (this implementation does nothing)</summary>
+        /// <param name="parameters">Initialization parameters (ignored)</param>
+        /// <version version="1.5.3">Added documentation</version>
+        /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
+        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        /// <summary>Called when extension shall processs generated CodeDOM</summary>
+        /// <param name="code">Object tree representing generated CodeDOM</param>
+        /// <param name="schema">Input XML schema</param>
+        /// <param name="provider">CodeDOM provider (the language)</param>
+        /// <version version="1.5.3">Added documentation</version>
+        /// <version version="1.5.3">Parameter <c>Provider</c> renamed to <c>provider</c></version>
+        public void Process(CodeNamespace code, XmlSchema schema, CodeDomProvider provider) {
+            foreach (CodeTypeDeclaration type in code.Types) {
                 ProcessType(type);
             }
         }
         private void ProcessType(CodeTypeDeclaration type) {
-            foreach(CodeTypeMember member in type.Members) {
-                if(member is CodeTypeDeclaration) ProcessType((CodeTypeDeclaration)member);
-                else if(member is CodeConstructor) {
+            foreach (CodeTypeMember member in type.Members) {
+                if (member is CodeTypeDeclaration) ProcessType((CodeTypeDeclaration)member);
+                else if (member is CodeConstructor) {
                     CodeConstructor ctor = (CodeConstructor)member;
-                    ctor.Statements.Add( new CodeExpressionStatement(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "OnAfterInit", new CodeExpression[] { })));
+                    ctor.Statements.Add(new CodeExpressionStatement(new CodeMethodInvokeExpression(new CodeThisReferenceExpression(), "OnAfterInit", new CodeExpression[] { })));
                 }
             }
         }
