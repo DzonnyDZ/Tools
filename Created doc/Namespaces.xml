@@ -84,6 +84,10 @@
             <summary>Contains classes that can be uded to deploy database schemas</summary>
             <version version="1.5.3">This namespace is new in version 1.5.3</version>
         </member>
+        <member name="N:Tools.DiagnosticsT">
+            <summary>Provides classes and extension methods that allow you to interact with system processes, event logs, and performance counters.</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
         <member name="N:DataT.SqlServerT">
             <summary>Contains classes and tools related to Micosoft SQL Server</summary>
             <version version="1.5.3">Namespaces introduced to contain assemby Tools.SqlServer to be loaded to Microsoft SQL Server</version>

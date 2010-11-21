@@ -184,6 +184,11 @@ Namespace API
         ''' <para>When a pattern brush is deleted, the bitmap associated with the brush is not deleted. The bitmap must be deleted independently.</para>
         ''' </remarks>
         Public Declare Function DeleteObject Lib "gdi32.dll" (ByVal hObject As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+
+        ''' <summary>Closes an open object handle.</summary>
+        ''' <param name="hObject">A valid handle to an open object.</param>
+        ''' <returns>If the function succeeds, the return value is true. If the function fails, the return value is false.</returns>
+        Public Declare Function CloseHandle Lib "Kernel32.dll" (ByVal hObject As IntPtr) As Boolean
     End Module
   
 End Namespace

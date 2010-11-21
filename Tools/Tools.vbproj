@@ -391,15 +391,15 @@
     <Content Include="CodeDom\XmlNames.xslt">
       <DependentUpon>CodeDom.xsd</DependentUpon>
     </Content>
-    <Content Include="Collections\Specialized\SpecializedWrappers.xml">
+    <None Include="Collections\Specialized\SpecializedWrappers.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>
       <CustomToolNamespace>CollectionsT.SpecializedT</CustomToolNamespace>
-    </Content>
+    </None>
     <Content Include="Collections\Specialized\SpecializedWrappers.xslt">
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
     </Content>
-    <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
+    <None Include="Data\Metadata\MetaData Query language proposal.xml" />
     <None Include="Reflection\MemberNumbers.xls" />
     <None Include="Reflection\Resources\Assembly.png" />
     <None Include="Reflection\Resources\Class.png" />
@@ -440,7 +440,7 @@
     <None Include="Reflection\Resources\TypeDef.png" />
     <None Include="Reflection\Resources\Union.png" />
     <None Include="Reflection\Resources\ValueType.png" />
-    <Content Include="Reflection\Resources\Attribute.png" />
+    <None Include="Reflection\Resources\Attribute.png" />
     <None Include="Resources\Images\play.png" />
     <EmbeddedResource Include="Text\Encoding\ISO2022.xml">
       <DependentUpon>ISO2022.vb</DependentUpon>

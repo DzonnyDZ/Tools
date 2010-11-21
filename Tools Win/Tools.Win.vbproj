@@ -157,6 +157,8 @@
     <Compile Include="API\Messages.ReturnValues.vb" />
     <Compile Include="API\Message values.vb" />
     <Compile Include="API\Notifications.vb" />
+    <Compile Include="API\Threads.vb" />
+    <Compile Include="Diagnostics\ProcessExtensions.vb" />
     <Compile Include="Windows\Interop\NativeInteropExtensions.vb" />
     <Compile Include="Windows\WPF\WPFNativeExtensions.vb" />
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
@@ -277,7 +279,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\ReadMe.txt" />
+    <None Include="Resources\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
