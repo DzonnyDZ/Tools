@@ -1,6 +1,6 @@
 ﻿Imports Tools.ComponentModelT
 
-#If Stage <= Nightly Then 'Stage: Nightly
+#If Stage <= Beta Then 'Stage: Beta
 Imports System
 Imports System.Windows
 Imports System.Windows.Controls
@@ -15,7 +15,6 @@ Imports System.Windows.Controls.Primitives
 Imports CultureInfo = System.Globalization.CultureInfo
 
 Namespace WindowsT.WPF.ControlsT
-    'ASAP: More comments
     '<SnippetStaticCtorOfCustomClassCommonTasks>
     ''' <summary>Represents a Windows spin box (also known as an up-down control) that displays numeric values.</summary>
     ''' <remarks>
@@ -25,6 +24,9 @@ Namespace WindowsT.WPF.ControlsT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Documentation improved</version>
+    ''' <version version="1.5.3" stage="Beta">Default visual style changed so that <see cref="NumericUpDown"/> has same height as regular <see cref="TextBox"/>.</version>
+    ''' <version version="1.5.3">User can no longer enter following characters multiple times: <see cref="NumberFormatInfo.PositiveSign"/>, <see cref="NumberFormatInfo.NegativeSign"/> and <see cref="NumberFormatInfo.NumberDecimalSeparator"/>.</version>
+    ''' <version version="1.5.3">Fixed focus issues (focusable parent of textbox) and Up/Down arrow keys binding (not working)</version>
     <TemplatePart(Name:=NumericUpDown.PART_EditableTextBox, Type:=GetType(TextBox))> _
     Public Class NumericUpDown
         Inherits Control
@@ -444,11 +446,11 @@ Namespace WindowsT.WPF.ControlsT
         Private Shared Sub InitializeCommands()
             _increaseCommand = New RoutedCommand("IncreaseCommand", GetType(NumericUpDown))
             CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_increaseCommand, AddressOf OnIncreaseCommand))
-            CommandManager.RegisterClassInputBinding(GetType(NumericUpDown), New InputBinding(_increaseCommand, New KeyGesture(Key.Up)))
+            'CommandManager.RegisterClassInputBinding(GetType(NumericUpDown), New InputBinding(_increaseCommand, New KeyGesture(Key.Up)))
 
             _decreaseCommand = New RoutedCommand("DecreaseCommand", GetType(NumericUpDown))
             CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_decreaseCommand, AddressOf OnDecreaseCommand))
-            CommandManager.RegisterClassInputBinding(GetType(NumericUpDown), New InputBinding(_decreaseCommand, New KeyGesture(Key.Down)))
+            'CommandManager.RegisterClassInputBinding(GetType(NumericUpDown), New InputBinding(_decreaseCommand, New KeyGesture(Key.Down)))
         End Sub
         ''' <summary>Handles the <see cref="IncreaseCommand"/> command</summary>
         ''' <param name="sender">Event source. Must be <see cref="NumericUpDown"/></param>
@@ -508,15 +510,15 @@ Namespace WindowsT.WPF.ControlsT
             End If
         End Sub
         ''' <summary>Default value of the <see cref="Minimum"/> property</summary>
-        Private Const DefaultMinValue As Decimal = 0
+        Friend Const DefaultMinValue As Decimal = 0
         ''' <summary>Default value of the <see cref="Value"/> property</summary>
         Private Const DefaultValue As Decimal = DefaultMinValue
         ''' <summary>Default value of the <see cref="Maximum"/> property</summary>
-        Private Const DefaultMaxValue As Decimal = 100
+        Friend Const DefaultMaxValue As Decimal = 100
         ''' <summary>Default value of the <see cref="Change"/> property</summary>
-        Private Const DefaultChange As Decimal = 1
+        Friend Const DefaultChange As Decimal = 1
         ''' <summary>Default value of the <see cref="DecimalPlaces"/> property</summary>
-        Private Const DefaultDecimalPlaces As Integer = 0
+        Friend Const DefaultDecimalPlaces As Integer = 0
 
 #Region "TextBox Validation"
         ''' <summary>Current <see cref="TextBox"/> (if any)</summary>
@@ -582,13 +584,18 @@ Namespace WindowsT.WPF.ControlsT
         ''' <param name="text">String to verify</param>
         ''' <returns>True if <paramref name="text"/> consists only of characters valid as part of number. Takes current culture and current constrainst in account.</returns>
         ''' <remarks>Returns true even for string which consists for valid character but is invalid number (i.e. "4.-..5" in invariant culture)</remarks>
+        ''' <version version="1.5.3">This implementation changed - multiple <see cref="NumberFormatInfo.PositiveSign"/>, <see cref="NumberFormatInfo.NegativeSign"/> and <see cref="NumberFormatInfo.NumberDecimalSeparator"/> characters are no longer allowed</version>
         Protected Overridable Function AreCharsAccepltable(ByVal text As String) As Boolean
             If String.IsNullOrEmpty(text) Then
                 Return True
             End If
             Dim NumberFormat = CultureInfo.CurrentCulture.NumberFormat
             For Each ch As Char In text
-                If (NumberFormat.NumberDecimalSeparator.Contains(New String(ch, 1)) AndAlso Me.DecimalPlaces > 0) OrElse (NumberFormat.NumberGroupSeparator.Contains(New String(ch, 1))) OrElse (Char.IsDigit(ch)) OrElse (NumberFormat.NegativeSign.Contains(New String(ch, 1)) AndAlso Me.Minimum < 0) OrElse (NumberFormat.PositiveSign.Contains(New String(ch, 1)) AndAlso Me.Maximum > 0) Then
+                If (NumberFormat.NumberDecimalSeparator.Contains(ch) AndAlso Me.DecimalPlaces > 0 AndAlso Not Me.ValueString.Contains(NumberFormat.NumberDecimalSeparator)) OrElse
+                   NumberFormat.NumberGroupSeparator.Contains(ch) OrElse
+                   Char.IsDigit(ch) OrElse
+                   (NumberFormat.NegativeSign.Contains(ch) AndAlso Me.Minimum <= 0 AndAlso Not Me.ValueString.Contains(NumberFormat.NegativeSign)) OrElse
+                   (NumberFormat.PositiveSign.Contains(ch) AndAlso Me.Maximum >= 0 AndAlso Not Me.ValueString.Contains(NumberFormat.PositiveSign)) Then
                     Continue For
                 End If
                 Return False
@@ -596,7 +603,31 @@ Namespace WindowsT.WPF.ControlsT
             Return True
         End Function
 #End Region
+
+
+        Private Sub NumericUpDown_GotFocus(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles Me.GotFocus
+            textBox.Focus()
+        End Sub
+
+        Private Sub NumericUpDown_GotKeyboardFocus(ByVal sender As Object, ByVal e As System.Windows.Input.KeyboardFocusChangedEventArgs) Handles Me.GotKeyboardFocus
+            textBox.Focus()
+        End Sub
+
+        ''' <summary>Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event. </summary>
+        ''' <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
+        ''' <remarks>This implementation handles the <see cref="Key.Up"/> and <see cref="Key.Down"/> keys.</remarks>
+        ''' <version version="1.5.3">This override is new in version 1.5.3</version>
+        Protected Overrides Sub OnPreviewKeyDown(ByVal e As System.Windows.Input.KeyEventArgs)
+            MyBase.OnPreviewKeyDown(e)
+            If Not e.Handled Then
+                Select Case e.Key
+                    Case Key.Down : If NumericUpDown.DecreaseCommand.CanExecute(Nothing, Me) Then NumericUpDown.DecreaseCommand.Execute(Nothing, Me) : e.Handled = True
+                    Case Key.Up : If NumericUpDown.IncreaseCommand.CanExecute(Nothing, Me) Then NumericUpDown.IncreaseCommand.Execute(Nothing, Me) : e.Handled = True
+                End Select
+            End If
+        End Sub
     End Class
+
     ''' <summary><see cref="AutomationPeer"/> for <see cref="NumericUpDown"/> control</summary>
     ''' <version version="1.5.2" stage="Nightly">Documentation added</version>
     ''' <version version="1.5.2"><see cref="EditorBrowsableAttribute"/> applied</version>

@@ -197,6 +197,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Windows\WPF\Controls\NumericUpDowndataGridColumn.vb" />
     <Compile Include="Windows\WPF\Converters\ConverterResources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -265,7 +266,9 @@
     </Compile>
     <Compile Include="Windows\Interop\InteropExtensions.vb" />
     <Compile Include="Windows\WPF\AssemblyInfo.vb" />
-    <Compile Include="Windows\WPF\Controls\NumericUpDown.vb" />
+    <Compile Include="Windows\WPF\Controls\NumericUpDown.vb">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WPF\Converters\Type-safe\CountVisibilityConverter.vb" />
     <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
     <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
