@@ -1,15 +1,17 @@
 ﻿Imports System.Windows.Controls
 Imports System.Windows.Data
-Imports System.Windows
+Imports System.Windows, System.Globalization.CultureInfo
 Imports System.Windows.Documents
 Imports Tools.ComponentModelT
+Imports System.Windows.Input
+Imports Tools.WindowsT.WPF.ConvertersT
 
 #If Stage <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.ControlsT
 
     ''' <summary>A column for WPF <see cref="DataGrid"/> for entering numbers using <see cref="NumericUpDown"/>.</summary>
     ''' <version version="1.5.3" stage="Nightly">This class is new in version 1.5.3</version>
-    Public Class NumericUpDowndataGridColumn
+    Public Class DataGridNumericUpDownColumn
         Inherits DataGridBoundColumn
 
         ''' <summary>Gets an editing element that is bound to the column's <see cref="P:System.Windows.Controls.DataGridBoundColumn.Binding" /> property value.</summary>
@@ -17,7 +19,11 @@ Namespace WindowsT.WPF.ControlsT
         ''' <param name="cell">The cell that will contain the generated element.</param>
         ''' <param name="dataItem">The data item represented by the row that contains the intended cell.</param>
         Protected Overrides Function GenerateEditingElement(ByVal cell As System.Windows.Controls.DataGridCell, ByVal dataItem As Object) As System.Windows.FrameworkElement
+            Dim eargs As New DataGridCellElementCreatingEventArgs(Me, cell, dataItem) With {.Cancel = False}
+            OnGeneratingEditingElement(eargs)
+            If eargs.Cancel Then Return GenerateElement(cell, dataItem)
             Dim e As New NumericUpDown
+            e.HorizontalAlignment = HorizontalAlignment.Stretch
             ApplyStyle(True, False, e)
             Dim binding As BindingBase = Me.Binding
             If (Not binding Is Nothing) Then
@@ -27,6 +33,14 @@ Namespace WindowsT.WPF.ControlsT
             End If
             Return e
         End Function
+        ''' <summary>Raised before eiditng element is generated. Allows you to cancle editing element generation.</summary>
+        ''' <remarks>When this event is cancelled normal element (<see cref="TextBlock"/>) is used for that cell instead of <see cref="NumericUpDown"/>.</remarks>
+        Public Event GeneratingEditingElement As EventHandler(Of DataGridCellElementCreatingEventArgs)
+        ''' <summary>Raises the <see cref="GeneratingEditingElement"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        Protected Overridable Sub OnGeneratingEditingElement(ByVal e As DataGridCellElementCreatingEventArgs)
+            RaiseEvent GeneratingEditingElement(Me, e)
+        End Sub
 
         ''' <summary>When overridden in a derived class, gets a read-only element that is bound to the column's <see cref="P:System.Windows.Controls.DataGridBoundColumn.Binding" /> property value.</summary>
         ''' <returns>A new, read-only element that is bound to the column's <see cref="P:System.Windows.Controls.DataGridBoundColumn.Binding" /> property value. (A <see cref="TextBlock"/>)</returns>
@@ -41,9 +55,46 @@ Namespace WindowsT.WPF.ControlsT
             Else
                 BindingOperations.ClearBinding(e, TextBlock.TextProperty)
             End If
+            If HideZero Then BindingOperations.SetBinding(e, TextBlock.VisibilityProperty, HideZeroBinding)
             Return e
         End Function
 
+        ''' <summary>Gets a binding used with <see cref="TextBox.VisibilityProperty"/> to set it invisible when value is zero and <see cref="HideZero"/> is true</summary>
+        ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+        Protected Overridable ReadOnly Property HideZeroBinding As BindingBase
+            Get
+                Dim ret As New Binding
+                ret.RelativeSource = RelativeSource.Self
+                ret.Path = New PropertyPath(TextBlock.TextProperty)
+                ret.Converter = New CompareConverterEx()
+                ret.ConverterParameter = String.Format(InvariantCulture, "<>'{0}'", Decimal.Zero)
+                ret.ConverterCulture = InvariantCulture
+                Return ret
+            End Get
+        End Property
+
+
+        ''' <summary>Sets cell content as needed for editing.</summary>
+        ''' <returns>Derived classes return the unedited cell value. This implementation returns null in all cases.</returns>
+        ''' <param name="editingElement">The element that the column displays for a cell in editing mode.</param>
+        ''' <param name="editingEventArgs">Information about the user gesture that is causing a cell to enter editing mode.</param>
+        Protected Overrides Function PrepareCellForEdit(ByVal editingElement As FrameworkElement, ByVal editingEventArgs As RoutedEventArgs) As Object
+            Dim nud = TryCast(editingElement, NumericUpDown)
+            If (nud Is Nothing) Then
+                Return Nothing
+            End If
+            nud.Focus()
+            Dim value As Decimal = nud.Value
+            Dim args As TextCompositionEventArgs = TryCast(editingEventArgs, TextCompositionEventArgs)
+            If args IsNot Nothing Then
+                Dim str2 As String = args.Text
+                nud.ValueString = args.Text
+                Return nud.Value
+            Else
+                nud.SelectAll()
+            End If
+            Return value
+        End Function
 
 #Region "Helpers"
         ''' <summary>Applies a style to a <see cref="FrameworkElement"/></summary>
@@ -97,10 +148,10 @@ Namespace WindowsT.WPF.ControlsT
 
         ''' <summary>Synchronizes properties of editing element and column</summary>
         Private Sub SyncProperties(ByVal e As FrameworkElement)
-            SyncColumnProperty(Me, e, NumericUpDown.MinimumProperty, NumericUpDowndataGridColumn.MinimumProperty)
-            SyncColumnProperty(Me, e, NumericUpDown.MaximumProperty, NumericUpDowndataGridColumn.MaximumProperty)
-            SyncColumnProperty(Me, e, NumericUpDown.ChangeProperty, NumericUpDowndataGridColumn.ChangeProperty)
-            SyncColumnProperty(Me, e, NumericUpDown.DecimalPlacesProperty, NumericUpDowndataGridColumn.DecimalPlacesProperty)
+            SyncColumnProperty(Me, e, NumericUpDown.MinimumProperty, DataGridNumericUpDownColumn.MinimumProperty)
+            SyncColumnProperty(Me, e, NumericUpDown.MaximumProperty, DataGridNumericUpDownColumn.MaximumProperty)
+            SyncColumnProperty(Me, e, NumericUpDown.ChangeProperty, DataGridNumericUpDownColumn.ChangeProperty)
+            SyncColumnProperty(Me, e, NumericUpDown.DecimalPlacesProperty, DataGridNumericUpDownColumn.DecimalPlacesProperty)
         End Sub
 
 #End Region
@@ -122,7 +173,7 @@ Namespace WindowsT.WPF.ControlsT
         End Property
         ''' <summary>Identifies the <see cref="Minimum"/> property</summary>
         Public Shared ReadOnly MinimumProperty As DependencyProperty =
-            DependencyProperty.Register("Minimum", GetType(Decimal), GetType(NumericUpDowndataGridColumn),
+            DependencyProperty.Register("Minimum", GetType(Decimal), GetType(DataGridNumericUpDownColumn),
                                         New FrameworkPropertyMetadata(NumericUpDown.DefaultMinValue, New PropertyChangedCallback(AddressOf OnMinimumChanged),
                                                                       New CoerceValueCallback(AddressOf CoerceMinimum)))
         ''' <summary>Handles change of the <see cref="Minimum"/> property</summary>
@@ -136,7 +187,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <param name="value">Value to be coerced. Must be <see cref="Decimal"/></param>
         Private Shared Function CoerceMinimum(ByVal element As DependencyObject, ByVal value As Object) As Object
             Dim minimum As Decimal = CDec(value)
-            Dim control As NumericUpDowndataGridColumn = DirectCast(element, NumericUpDowndataGridColumn)
+            Dim control As DataGridNumericUpDownColumn = DirectCast(element, DataGridNumericUpDownColumn)
             Return [Decimal].Round(minimum, control.DecimalPlaces)
         End Function
 #End Region
@@ -155,14 +206,14 @@ Namespace WindowsT.WPF.ControlsT
         End Property
         ''' <summary>Identifies the <see cref="Maximum"/> property</summary>
         Public Shared ReadOnly MaximumProperty As DependencyProperty =
-            DependencyProperty.Register("Maximum", GetType(Decimal), GetType(NumericUpDowndataGridColumn),
+            DependencyProperty.Register("Maximum", GetType(Decimal), GetType(DataGridNumericUpDownColumn),
                                         New FrameworkPropertyMetadata(NumericUpDown.DefaultMaxValue, Nothing,
                                                                       New CoerceValueCallback(AddressOf CoerceMaximum)))
         ''' <summary>Coerces value of the <see cref="Maximum"/> property</summary>
         ''' <param name="element">Element to coerce value for. Must be <see cref="NumericUpDown"/>.</param>
         ''' <param name="value">Value to be coerced. Must be <see cref="Decimal"/></param>
         Private Shared Function CoerceMaximum(ByVal element As DependencyObject, ByVal value As Object) As Object
-            Dim control As NumericUpDowndataGridColumn = DirectCast(element, NumericUpDowndataGridColumn)
+            Dim control As DataGridNumericUpDownColumn = DirectCast(element, DataGridNumericUpDownColumn)
             Dim newMaximum As Decimal = CDec(value)
             Return [Decimal].Round(Math.Max(newMaximum, control.Minimum), control.DecimalPlaces)
         End Function
@@ -182,7 +233,7 @@ Namespace WindowsT.WPF.ControlsT
         End Property
         ''' <summary>Identifies the <see cref="Change"/> dependency property</summary>
         Public Shared ReadOnly ChangeProperty As DependencyProperty =
-            DependencyProperty.Register("Change", GetType(Decimal), GetType(NumericUpDowndataGridColumn),
+            DependencyProperty.Register("Change", GetType(Decimal), GetType(DataGridNumericUpDownColumn),
                                         New FrameworkPropertyMetadata(NumericUpDown.DefaultChange, Nothing,
                                                                       New CoerceValueCallback(AddressOf CoerceChange)),
                                                                   New ValidateValueCallback(AddressOf ValidateChange))
@@ -200,7 +251,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <returns>Coerced value (<see cref="Decimal"/>)</returns>
         Private Shared Function CoerceChange(ByVal element As DependencyObject, ByVal value As Object) As Object
             Dim newChange As Decimal = CDec(value)
-            Dim control As NumericUpDowndataGridColumn = DirectCast(element, NumericUpDowndataGridColumn)
+            Dim control As DataGridNumericUpDownColumn = DirectCast(element, DataGridNumericUpDownColumn)
 
             Dim coercedNewChange As Decimal = [Decimal].Round(newChange, control.DecimalPlaces)
 
@@ -244,14 +295,14 @@ Namespace WindowsT.WPF.ControlsT
         End Property
         ''' <summary>Identifies the <see cref="DecimalPlaces"/> property</summary>
         Public Shared ReadOnly DecimalPlacesProperty As DependencyProperty =
-            DependencyProperty.Register("DecimalPlaces", GetType(Integer), GetType(NumericUpDowndataGridColumn),
+            DependencyProperty.Register("DecimalPlaces", GetType(Integer), GetType(DataGridNumericUpDownColumn),
                                         New FrameworkPropertyMetadata(NumericUpDown.DefaultDecimalPlaces, New PropertyChangedCallback(AddressOf OnDecimalPlacesChanged)),
                                         New ValidateValueCallback(AddressOf ValidateDecimalPlaces))
         ''' <summary>Handles change of value of <see cref="DecimalPlaces"/> property</summary>
         ''' <param name="element">Element must be <see cref="NumericUpDown"/>.</param>
         ''' <param name="args">Event arguments</param>
         Private Shared Sub OnDecimalPlacesChanged(ByVal element As DependencyObject, ByVal args As DependencyPropertyChangedEventArgs)
-            Dim control As NumericUpDowndataGridColumn = DirectCast(element, NumericUpDowndataGridColumn)
+            Dim control As DataGridNumericUpDownColumn = DirectCast(element, DataGridNumericUpDownColumn)
             control.CoerceValue(ChangeProperty)
             control.CoerceValue(MinimumProperty)
             control.CoerceValue(MaximumProperty)
@@ -265,8 +316,62 @@ Namespace WindowsT.WPF.ControlsT
         End Function
 
 #End Region
+
+
+
+#Region "HideZero"
+        ''' <summary>Gets or sets value idicating wheather not text is shown when value is zero</summary>      
+        ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+        Public Property HideZero As Boolean
+            Get
+                Return GetValue(HideZeroProperty)
+            End Get
+            Set(ByVal value As Boolean)
+                SetValue(HideZeroProperty, value)
+            End Set
+        End Property
+        ''' <summary>Metadata of the <see cref="HideZero"/> property</summary>                                                   
+        Public Shared ReadOnly HideZeroProperty As DependencyProperty = DependencyProperty.Register(
+            "HideZero", GetType(Boolean), GetType(DataGridNumericUpDownColumn), New FrameworkPropertyMetadata(False))
+#End Region
+
+
+
 #End Region
     End Class
 
+    ''' <summary>Event argumens of events related to creation of elemtnt in <see cref="DataGridColumn"/></summary>
+    Public Class DataGridCellElementCreatingEventArgs : Inherits CancelEventArgs
+        Private ReadOnly _dataItem As Object
+        Private ReadOnly _cell As Windows.Controls.DataGridCell
+        Private ReadOnly _column As DataGridColumn
+        ''' <summary> - creates a new instance of the <see cref="DataGridCellElementCreatingEventArgs"/></summary>
+        ''' <param name="column">Column cell belongs to</param>
+        ''' <param name="cell">The cell</param>
+        ''' <param name="dataItem">Data item cell is bound to</param>
+        Sub New(ByVal column As DataGridColumn, ByVal cell As Windows.Controls.DataGridCell, ByVal dataItem As Object)
+            _column = column
+            _cell = cell
+            _dataItem = dataItem
+        End Sub
+        ''' <summary>Gets a data item cell is bound to</summary>
+        Public ReadOnly Property DataItem() As Object
+            Get
+                Return _dataItem
+            End Get
+        End Property
+        ''' <summary>Gets the cell object</summary>
+        Public ReadOnly Property Cell() As Windows.Controls.DataGridCell
+            Get
+                Return _cell
+            End Get
+        End Property
+        ''' <summary>Gets a column cell belongs to</summary>
+        Public ReadOnly Property Column() As DataGridColumn
+            Get
+                Return _column
+            End Get
+        End Property
+    End Class
 End Namespace
 #End If

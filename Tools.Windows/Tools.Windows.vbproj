@@ -197,7 +197,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Windows\WPF\Controls\NumericUpDowndataGridColumn.vb" />
+    <Compile Include="Windows\WPF\Controls\DataGridNumericUpDownColumn.vb" />
     <Compile Include="Windows\WPF\Converters\ConverterResources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -206,6 +206,7 @@
     <Compile Include="Windows\WPF\Converters\General\CompareConverterEx.vb" />
     <Compile Include="Windows\WPF\Converters\General\CountConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\XPathConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Multi\BooleanOperationConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanToCharConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanVisibilityConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CachedImageConverter.vb" />
@@ -270,7 +271,7 @@
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WPF\Converters\Type-safe\CountVisibilityConverter.vb" />
-    <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\StronglyTypedConverter.vb" />
     <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
       <SubType>Component</SubType>
     </Compile>

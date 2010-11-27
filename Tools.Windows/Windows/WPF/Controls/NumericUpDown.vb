@@ -1,8 +1,7 @@
 ﻿Imports Tools.ComponentModelT
+Imports System.Windows
 
 #If Stage <= Beta Then 'Stage: Beta
-Imports System
-Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
 Imports System.Windows.Automation.Peers
@@ -363,6 +362,7 @@ Namespace WindowsT.WPF.ControlsT
             Return CanParse
         End Function
 #End Region
+#Region "IsEditable"
         ''' <summary>Gets or sets value indicating if text-box is editable</summary>
         ''' <returns>True if text-box is editable, false otherwise</returns>
         ''' <value>True to make text-box editable; false to disallow editing</value>
@@ -380,6 +380,25 @@ Namespace WindowsT.WPF.ControlsT
         ' Using a DependencyProperty as the backing store for IsEditable.  This enables animation, styling, binding, etc...
         ''' <summary>Identifies the <see cref="IsEditable"/>dependency proeperty</summary>
         Public Shared ReadOnly IsEditableProperty As DependencyProperty = DependencyProperty.Register("IsEditable", GetType(Boolean), GetType(NumericUpDown), New UIPropertyMetadata(True))
+#End Region
+
+#Region "IsReadOnly"
+        ''' <summary>Gets or sets value indicating if this <see cref="NumericUpDown"/> is read-only (value cannot be changed)</summary>      
+        ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+        Public Property IsReadOnly As Boolean
+            Get
+                Return GetValue(IsReadOnlyProperty)
+            End Get
+            Set(ByVal value As Boolean)
+                SetValue(IsReadOnlyProperty, value)
+            End Set
+        End Property
+        ''' <summary>Metadata of the <see cref="IsReadOnly"/> property</summary>                                                   
+        Public Shared ReadOnly IsReadOnlyProperty As DependencyProperty = DependencyProperty.Register(
+            "IsReadOnly", GetType(Boolean), GetType(NumericUpDown), New FrameworkPropertyMetadata(False))
+#End Region
+
+
 
 
 #End Region
@@ -445,15 +464,15 @@ Namespace WindowsT.WPF.ControlsT
         ''' <summary>Initializes comands</summary>
         Private Shared Sub InitializeCommands()
             _increaseCommand = New RoutedCommand("IncreaseCommand", GetType(NumericUpDown))
-            CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_increaseCommand, AddressOf OnIncreaseCommand))
+            CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_increaseCommand, AddressOf OnIncreaseCommand, AddressOf CanChangeValue))
             'CommandManager.RegisterClassInputBinding(GetType(NumericUpDown), New InputBinding(_increaseCommand, New KeyGesture(Key.Up)))
 
             _decreaseCommand = New RoutedCommand("DecreaseCommand", GetType(NumericUpDown))
-            CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_decreaseCommand, AddressOf OnDecreaseCommand))
+            CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_decreaseCommand, AddressOf OnDecreaseCommand, AddressOf CanChangeValue))
             'CommandManager.RegisterClassInputBinding(GetType(NumericUpDown), New InputBinding(_decreaseCommand, New KeyGesture(Key.Down)))
         End Sub
         ''' <summary>Handles the <see cref="IncreaseCommand"/> command</summary>
-        ''' <param name="sender">Event source. Must be <see cref="NumericUpDown"/></param>
+        ''' <param name="sender">Event source. Should be <see cref="NumericUpDown"/> otherwise event is ignored.</param>
         ''' <param name="e">event arguments</param>
         Private Shared Sub OnIncreaseCommand(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs)
             Dim control As NumericUpDown = TryCast(sender, NumericUpDown)
@@ -462,12 +481,21 @@ Namespace WindowsT.WPF.ControlsT
             End If
         End Sub
         ''' <summary>Handles the <see cref="DecreaseCommand"/> command</summary>
-        ''' <param name="sender">Event source. Must be <see cref="NumericUpDown"/></param>
+        ''' <param name="sender">Event source. Should be <see cref="NumericUpDown"/> otherwise event is ignored.</param>
         ''' <param name="e">event arguments</param>
         Private Shared Sub OnDecreaseCommand(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs)
             Dim control As NumericUpDown = TryCast(sender, NumericUpDown)
             If control IsNot Nothing Then
                 control.OnDecrease()
+            End If
+        End Sub
+        ''' <summary>Gets value indicating if increase or decrease command can be exceuted on given <see cref="NumericUpDown"/></summary>
+        ''' <param name="sender">Event source. SHould be <see cref="NumericUpDown"/> otherwise event is ignored.</param>
+        ''' <param name="e">event arguments</param>
+        Private Shared Sub CanChangeValue(ByVal sender As Object, ByVal e As System.Windows.Input.CanExecuteRoutedEventArgs)
+            Dim control As NumericUpDown = TryCast(sender, NumericUpDown)
+            If control IsNot Nothing Then
+                e.CanExecute = Not control.IsReadOnly AndAlso control.IsEnabled
             End If
         End Sub
         ''' <summary>Handles increasing of value</summary>
@@ -494,17 +522,15 @@ Namespace WindowsT.WPF.ControlsT
 #End Region
 
         ''' <summary>
-        ''' This is a class handler for MouseLeftButtonDown event.
-        ''' The purpose of this handle is to move input focus to NumericUpDown when user pressed
-        ''' mouse left button on any part of slider that is not focusable.
+        ''' This is a class handler for <see cref="MouseLeftButtonDown"/> event.
+        ''' The purpose of this handle is to move input focus to <see cref="NumericUpDown"/> when user pressed mouse left button on any part of slider that is not focusable.
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Overloads Shared Sub OnMouseLeftButtonDown(ByVal sender As Object, ByVal e As MouseButtonEventArgs)
             Dim control As NumericUpDown = DirectCast(sender, NumericUpDown)
-
-            ' When someone click on a part in the NumericUpDown and it's not focusable
-            ' NumericUpDown needs to take the focus in order to process keyboard correctly
+            'When someone click on a part in the NumericUpDown and it's not focusable
+            'NumericUpDown needs to take the focus in order to process keyboard correctly
             If Not control.IsKeyboardFocusWithin Then
                 e.Handled = control.Focus() OrElse e.Handled
             End If
@@ -522,17 +548,24 @@ Namespace WindowsT.WPF.ControlsT
 
 #Region "TextBox Validation"
         ''' <summary>Current <see cref="TextBox"/> (if any)</summary>
-        Private textBox As TextBox
+        Private _textBox As TextBox
+        ''' <summary>Gets a text box used for text editing</summary>
+        Private ReadOnly Property TextBox As TextBox
+            Get
+                Return _textBox
+            End Get
+        End Property
+
         ''' <summary>Invoked whenever application code or internal processes call <see cref="System.Windows.FrameworkElement.ApplyTemplate"/>.</summary>
         Public Overloads Overrides Sub OnApplyTemplate()
             MyBase.OnApplyTemplate()
             Dim TemplateObj = Me.Template.FindName(PART_EditableTextBox, Me)
             DetachTextBoxEvents()
             If TypeOf TemplateObj Is TextBox Then
-                textBox = DirectCast(TemplateObj, TextBox)
+                _textBox = DirectCast(TemplateObj, TextBox)
                 AttachTextBoxEvents()
             Else
-                textBox = Nothing
+                _textBox = Nothing
             End If
         End Sub
         ''' <summary>Hooks events of <see cref="textBox"/></summary>
@@ -625,6 +658,11 @@ Namespace WindowsT.WPF.ControlsT
                     Case Key.Up : If NumericUpDown.IncreaseCommand.CanExecute(Nothing, Me) Then NumericUpDown.IncreaseCommand.Execute(Nothing, Me) : e.Handled = True
                 End Select
             End If
+        End Sub
+
+        ''' <summary>Selects alll text in editing text box</summary>
+        Public Sub SelectAll()
+            If TextBox IsNot Nothing Then TextBox.SelectAll()
         End Sub
     End Class
 
