@@ -10,4 +10,10 @@ Debug
 obj
 Tools.sdf
 *.suo
+</Value></Property><Property><Name>svn:ignore</Name><Value>bin
+Debug
+obj
+Tools.sdf
+*.suo
+*.opensdf
 </Value></Property></Properties></ItemProperties>

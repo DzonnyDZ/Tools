@@ -9,7 +9,7 @@
     <RC>4</RC>
     <Release>5</Release>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Tools.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
@@ -321,6 +321,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\SharedFiles\Tools.snk">
+      <Link>Tools.snk</Link>
+    </None>
     <None Include="..\SharedFiles\Version.il">
       <Link>Version.il</Link>
     </None>
@@ -328,7 +331,6 @@
       <Link>VersionHistory.xsd</Link>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Tools.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Collections\Specialized\" />
