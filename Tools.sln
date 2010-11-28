@@ -47,6 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 	ProjectSection(SolutionItems) = preProject
 		SharedFiles\AssemblyStage.cs = SharedFiles\AssemblyStage.cs
 		SharedFiles\AssemblyStage.vb = SharedFiles\AssemblyStage.vb
+		SharedFiles\FixXmlComments.xslt = SharedFiles\FixXmlComments.xslt
 		SharedFiles\Tools.snk = SharedFiles\Tools.snk
 		SharedFiles\Version.cpp = SharedFiles\Version.cpp
 		SharedFiles\Version.cs = SharedFiles\Version.cs
@@ -174,6 +175,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{D99EA3E2-E52
 		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet
 		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.Hardcore", "Tools.Hardcore\Tools.Hardcore.vcxproj", "{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -344,10 +347,12 @@ Global
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Alpha|Mixed Platforms.Build.0 = Alpha|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Alpha|x86.ActiveCfg = Alpha|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Beta|Any CPU.ActiveCfg = Beta|Win32
+		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Beta|Any CPU.Build.0 = Beta|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Beta|Mixed Platforms.ActiveCfg = Beta|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Beta|Mixed Platforms.Build.0 = Beta|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Beta|x86.ActiveCfg = Beta|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|Any CPU.Build.0 = Debug|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}.Debug|x86.ActiveCfg = Debug|Win32
@@ -828,6 +833,31 @@ Global
 		{4FA454BC-332A-4226-A229-38D87C504F8F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4FA454BC-332A-4226-A229-38D87C504F8F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4FA454BC-332A-4226-A229-38D87C504F8F}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Alpha|Any CPU.ActiveCfg = Alpha|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Alpha|Any CPU.Build.0 = Alpha|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Alpha|Mixed Platforms.ActiveCfg = Alpha|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Alpha|Mixed Platforms.Build.0 = Alpha|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Alpha|x86.ActiveCfg = Alpha|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Beta|Any CPU.ActiveCfg = Beta|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Beta|Any CPU.Build.0 = Beta|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Beta|Mixed Platforms.ActiveCfg = Beta|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Beta|Mixed Platforms.Build.0 = Beta|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Beta|x86.ActiveCfg = Beta|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Debug|Any CPU.Build.0 = Debug|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Debug|x86.ActiveCfg = Debug|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.RC|Any CPU.ActiveCfg = RC|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.RC|Any CPU.Build.0 = RC|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.RC|Mixed Platforms.ActiveCfg = RC|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.RC|Mixed Platforms.Build.0 = RC|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.RC|x86.ActiveCfg = RC|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Release|Any CPU.ActiveCfg = Release|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Release|Any CPU.Build.0 = Release|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

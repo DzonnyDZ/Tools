@@ -129,10 +129,8 @@
       <KeyFile>..\SharedFiles\Tools.snk</KeyFile>
     </Link>
     <PostBuildEvent>
-      <Command>
-                "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(ProjectDir)FixComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
-                move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"                
-            </Command>
+      <Command>"$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
+move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -243,7 +241,6 @@
     <None Include="Doc\FileSystem.wfx.hlp" />
     <None Include="Doc\Lister.wlx.hlp" />
     <None Include="Doc\Packer.wcx.hlp" />
-    <None Include="FixComments.xslt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Exceptions.cs.resx" />

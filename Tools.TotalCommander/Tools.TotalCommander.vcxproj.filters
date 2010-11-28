@@ -65,7 +65,6 @@
     <None Include="Doc\Packer.wcx.hlp">
       <Filter>Doc</Filter>
     </None>
-    <None Include="FixComments.xslt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">

@@ -16,4 +16,11 @@ obj
 Tools.sdf
 *.suo
 *.opensdf
+</Value></Property><Property><Name>svn:ignore</Name><Value>*.opensdf
+*.suo
+Debug
+TestResults
+Tools.sdf
+bin
+obj
 </Value></Property></Properties></ItemProperties>

@@ -28,59 +28,5 @@
             <exception cref="ArgumentNullException"><paramref name="value"/> is not member of <paramref name="T"/></exception>
             <version version="1.5.2">Removed <see cref="ArgumentNullException"/> thrown when <paramref name="value"/> is not member of enumeration <typeparamref name="T"/>. Null is returned in such case.</version>
         </member>
-        <member name="T:Tools.SpecialT.DelegateTools">
-            <summary>Contains static methods (extension methods) for working with <see cref="T:System.Delegate"/>.</summary>
-            <seealso cref="T:Tools.ExtensionsT.DelegateExtensions"/>
-            <version version="1.5.3">This class is new in version 1.5.3.</version>
-        </member>
-        <member name="M:Tools.SpecialT.DelegateTools.CombineWith``1(``0,``0)">
-            <summary>Concatenates the invocation lists of two delegates in type-safe way.</summary>
-            <param name="A_0">The delegate whose invocation list comes first.</param>
-            <param name="A_1">The delegate whose invocation list comes last.</param>
-            <returns>
-                A new delegate with an invocation list that concatenates the invocation lists of <paramref name="A_0"/> and <paramref name="A_1"/> in that order.
-                Returns <paramref name="A_0"/> if <paramref name="A_1"/> is null, returns <paramref name="A_1"/> if <paramref name="A_0"/> is a null reference, and returns a null reference if both <paramref name="A_0"/> and <paramref name="A_1"/> are null references.
-            </returns>
-            <seealso cref="M:System.Delegate.Combine(System.Delegate,System.Delegate)"/>
-        </member>
-        <member name="M:Tools.SpecialT.DelegateTools.Remove``1(``0,``0)">
-            <summary>Removes the last occurrence of the invocation list of a delegate from the invocation list of another delegate.</summary>
-            <param name="A_0">The delegate from which to remove the invocation list of <paramref name="A_1"/>.</param>
-            <param name="A_1">The delegate that supplies the invocation list to remove from the invocation list of <paramref name="A_0"/>.</param>
-            <returns>
-                A new delegate with an invocation list formed by taking the invocation list of <paramref name="A_0"/> and removing the last occurrence of the invocation list of <paramref name="A_1"/>,
-                if the invocation list of <paramref name="A_1"/> is found within the invocation list of <paramref name="A_0"/>.
-                Returns <paramref name="A_0"/> if <paramref name="A_1"/> is null or if the invocation list of <paramref name="A_1"/> is not found within the invocation list of <paramref name="A_0"/>.
-                Returns a null reference if the invocation list of <paramref name="A_0"/> is equal to the invocation list of <paramref name="A_1"/> or if <paramref name="A_0"/> is a null reference.
-            </returns>
-            <exception cref="T:System.MemberAccessException">The caller does not have access to the method represented by the delegate (for example, if the method is private).</exception>
-            <seealso cref="M:System.Delegate.Remove(System.Delegate,System.Delegate)"/>
-        </member>
-        <member name="M:Tools.SpecialT.DelegateTools.CombineWith``1(``0,``0[])">
-            <summary>Concatenates the invocation lists of a delegate and an array of delegates.</summary>
-            <param name="A_0">The delegate whose invocation list comes first.</param>
-            <param name="A_1">The array of delegates to combine.</param>
-            <returns>
-                A new delegate with an invocation list that concatenates the invocation lists of <paramref name="A_0"/> and the delegates in the <paramref name="A_1"/> array.
-                Returns <paramref name="A_0"/> if <paramref name="A_1"/> is null, contains zero elements, or every entry in <paramref name="A_1"/> is null.
-                Returns null if <paramref name="A_0"/> is null and <paramref name="A_1"/>, empty or contains only null values.
-            </returns>
-            <seealso cref="M:System.Delegate.Combine(System.Delegate[])"/>
-        </member>
-        <member name="M:Tools.Special.DelegateTools.RemoveAll``1(``0,``0)">
-            <summary>Removes all occurrences of the invocation list of a delegate from the invocation list of another delegate.</summary>
-            <param name="A_0">The delegate from which to remove the invocation list of <paramref name="A_1"/>.</param>
-            <param name="A_1">The delegate that supplies the invocation list to remove from the invocation list of <paramref name="A_0"/>.</param>
-            <returns>
-                A new delegate with an invocation list formed by taking the invocation list of <paramref name="A_0"/> and removing all occurrences of the invocation list of <paramref name="A_1"/>,
-                if the invocation list of <paramref name="A_1"/> is found within the invocation list of <paramref name="A_0"/>.
-                Returns <paramref name="A_0"/> if <paramref name="A_1"/> is null or if the invocation list of <paramref name="A_1"/> is not found within the invocation list of <paramref name="A_0"/>.
-                Returns a null reference if the invocation list of <paramref name="A_1"/> is equal to the invocation list of <paramref name="A_0"/>,
-                if <paramref name="A_0"/> contains only a series of invocation lists that are equal to the invocation list of <paramref name="A_1"/>,
-                or if <paramref name="A_0"/> is a null reference.
-            </returns>
-            <exception cref="T:System.MemberAccessException">The caller does not have access to the method represented by the delegate (for example, if the method is private).</exception>
-            <seealso cref="M:System.Delegate.RemoveAll(System.Delegate,System.Delegate)"/>
-        </member>
     </members>
 </doc>
