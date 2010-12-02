@@ -23,4 +23,12 @@ TestResults
 Tools.sdf
 bin
 obj
+</Value></Property><Property><Name>svn:ignore</Name><Value>*.opensdf
+*.suo
+Debug
+TestResults
+Tools.sdf
+bin
+desktop.ini
+obj
 </Value></Property></Properties></ItemProperties>

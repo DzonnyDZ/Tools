@@ -11,6 +11,7 @@ Namespace ComponentModelT
         ''' <param name="proposedNewValue">Proposed new value of the property</param>
         Public Sub New(ByVal propertyName$, ByVal proposedNewValue As Object)
             MyBase.New(propertyName)
+            _proposedNewValue = proposedNewValue
         End Sub
         Private ReadOnly _proposedNewValue As Object
         ''' <summary>Gets proposed new value of the property</summary>

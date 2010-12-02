@@ -32,6 +32,7 @@ namespace Tools{
         ///     Returns null if <paramref name="a"/> is null and <paramref name="delegates"/>, empty or contains only null values.
         /// </returns>
         /// <seealso cref2="M:System.Delegate.Combine(System.Delegate[])"/>
+        /// <seelaso cref="Delegate::Combine(array{Delegate^}^)"/>
         generic <class T> where T:Delegate
         [Extension]
         static T CombineWith(T a, ... array<T>^ delegates);

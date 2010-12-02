@@ -83,6 +83,15 @@ Public Class ConsoleT
         If cwnd = IntPtr.Zero Then Return Nothing
         Return New WindowsT.NativeT.Win32Window(cwnd)
     End Function
+
+    ''' <summary>Gets value indicating wheather console is attached to current process</summary>
+    ''' <version version="1.5.3">This property is new in version 1.5.3</version>
+    Public Shared ReadOnly Property IsConsoleAttached As Boolean
+        Get
+            Return API.Console.GetConsoleWindow <> IntPtr.Zero
+        End Get
+    End Property
+
     ''' <summary>Sets console icon</summary>
     ''' <value>Icon to be set</value>
     ''' <exception cref="API.Win32APIException">An error ocured while setting the icon</exception>
@@ -179,7 +188,7 @@ Public Class ConsoleT
     ''' </remarks>
     ''' <exception cref="API.Win32APIException">An error occured</exception>
     ''' <version version="1.5.3">This function is new in version 1.5.3</version>
-    Shared Sub PreventClose()
+    Public Shared Sub PreventClose()
         'http://support.microsoft.com/?scid=kb%3Ben-us%3B818361&x=10&y=12
         Dim hMenu As Integer = API.GetSystemMenu(GetHandle.Handle, False)
         If Not API.DeleteMenu(hMenu, 6, API.enmSelectMenuMethod.MF_BYPOSITION) Then

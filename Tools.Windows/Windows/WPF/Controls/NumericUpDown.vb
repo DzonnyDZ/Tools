@@ -19,6 +19,12 @@ Namespace WindowsT.WPF.ControlsT
     ''' <remarks>
     ''' <para>This is companion class to <see cref="Windows.Forms.NumericUpDown"/>.</para>
     ''' <para>This class is bsed on http://msdn.microsoft.com/en-us/library/ms771573.aspx, converted by http://labs.developerfusion.co.uk/convert/csharp-to-vb.aspx</para>
+    ''' <para>This control contains following template parts:
+    ''' <list type="table"><listheader><term>Part</term><description>Description</description></listheader>
+    ''' <item><term><c>PART_EditableTextBox</c></term><description>The text box user can enter text in. This part is not compulsory but it is strongly recomended and required for certain functionality.</description></item>
+    ''' <item><term><c>PART_ButtonUp</c></term><description>Increment button. Optional.</description></item>
+    ''' <item><term><c>PART_ButtonDown</c></term><description>Decrement button. Optional.</description></item>
+    ''' </list></para>
     ''' </remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
@@ -26,11 +32,36 @@ Namespace WindowsT.WPF.ControlsT
     ''' <version version="1.5.3" stage="Beta">Default visual style changed so that <see cref="NumericUpDown"/> has same height as regular <see cref="TextBox"/>.</version>
     ''' <version version="1.5.3">User can no longer enter following characters multiple times: <see cref="NumberFormatInfo.PositiveSign"/>, <see cref="NumberFormatInfo.NegativeSign"/> and <see cref="NumberFormatInfo.NumberDecimalSeparator"/>.</version>
     ''' <version version="1.5.3">Fixed focus issues (focusable parent of textbox) and Up/Down arrow keys binding (not working)</version>
-    <TemplatePart(Name:=NumericUpDown.PART_EditableTextBox, Type:=GetType(TextBox))> _
+    ''' <version version="1.5.3">Added new template parts <c>PART_ButtonUp</c> and <c>PART_ButtonDown</c>.</version>
+    ''' <version version="1.5.3">New behavior: Pressing Enter forces <see cref="NumericUpDown"/> to process it's text, coerce the text, update value and possibly raise <see cref="NumericUpDown.ValueChanged"/> event.</version>
+    <TemplatePart(Name:=NumericUpDown.PART_EditableTextBox, Type:=GetType(TextBox))>
+    <TemplatePart(Name:=NumericUpDown.PART_ButtonUp, Type:=GetType(ButtonBase))>
+    <TemplatePart(Name:=NumericUpDown.PART_ButtonDown, Type:=GetType(ButtonBase))>
     Public Class NumericUpDown
         Inherits Control
         ''' <summary>Name of text box part</summary>
         Friend Const PART_EditableTextBox As String = "PART_EditableTextBox"
+        ''' <summary>Name of up button part</summary>
+        Friend Const PART_ButtonUp As String = "PART_ButtonUp"
+        ''' <summary>Name of down button part</summary>
+        Friend Const PART_ButtonDown As String = "PART_ButtonDown"
+
+        ''' <summary>Default value of the <see cref="Minimum"/> property</summary>
+        Friend Const DefaultMinValue As Decimal = 0
+        ''' <summary>Default value of the <see cref="Value"/> property</summary>
+        Private Const DefaultValue As Decimal = DefaultMinValue
+        ''' <summary>Default value of the <see cref="Maximum"/> property</summary>
+        Friend Const DefaultMaxValue As Decimal = 100
+        ''' <summary>Default value of the <see cref="Change"/> property</summary>
+        Friend Const DefaultChange As Decimal = 1
+        ''' <summary>Default value of the <see cref="DecimalPlaces"/> property</summary>
+        Friend Const DefaultDecimalPlaces As Integer = 0
+
+        ''' <summary>The down button part</summary>
+        Private WithEvents buttonDown As ButtonBase
+        ''' <summary>The up button part</summary>
+        Private WithEvents buttonUp As ButtonBase
+
         ''' <summary>Initializer</summary>
         Shared Sub New()
             InitializeCommands()
@@ -398,9 +429,6 @@ Namespace WindowsT.WPF.ControlsT
             "IsReadOnly", GetType(Boolean), GetType(NumericUpDown), New FrameworkPropertyMetadata(False))
 #End Region
 
-
-
-
 #End Region
 
 #Region "Events"
@@ -521,77 +549,35 @@ Namespace WindowsT.WPF.ControlsT
         '</SnippetOnCreateAutomationPeer>
 #End Region
 
-        ''' <summary>
-        ''' This is a class handler for <see cref="MouseLeftButtonDown"/> event.
-        ''' The purpose of this handle is to move input focus to <see cref="NumericUpDown"/> when user pressed mouse left button on any part of slider that is not focusable.
-        ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        Private Overloads Shared Sub OnMouseLeftButtonDown(ByVal sender As Object, ByVal e As MouseButtonEventArgs)
-            Dim control As NumericUpDown = DirectCast(sender, NumericUpDown)
-            'When someone click on a part in the NumericUpDown and it's not focusable
-            'NumericUpDown needs to take the focus in order to process keyboard correctly
-            If Not control.IsKeyboardFocusWithin Then
-                e.Handled = control.Focus() OrElse e.Handled
-            End If
-        End Sub
-        ''' <summary>Default value of the <see cref="Minimum"/> property</summary>
-        Friend Const DefaultMinValue As Decimal = 0
-        ''' <summary>Default value of the <see cref="Value"/> property</summary>
-        Private Const DefaultValue As Decimal = DefaultMinValue
-        ''' <summary>Default value of the <see cref="Maximum"/> property</summary>
-        Friend Const DefaultMaxValue As Decimal = 100
-        ''' <summary>Default value of the <see cref="Change"/> property</summary>
-        Friend Const DefaultChange As Decimal = 1
-        ''' <summary>Default value of the <see cref="DecimalPlaces"/> property</summary>
-        Friend Const DefaultDecimalPlaces As Integer = 0
-
 #Region "TextBox Validation"
         ''' <summary>Current <see cref="TextBox"/> (if any)</summary>
-        Private _textBox As TextBox
-        ''' <summary>Gets a text box used for text editing</summary>
-        Private ReadOnly Property TextBox As TextBox
-            Get
-                Return _textBox
-            End Get
-        End Property
+        Private WithEvents textBox As TextBox
 
         ''' <summary>Invoked whenever application code or internal processes call <see cref="System.Windows.FrameworkElement.ApplyTemplate"/>.</summary>
         Public Overloads Overrides Sub OnApplyTemplate()
             MyBase.OnApplyTemplate()
-            Dim TemplateObj = Me.Template.FindName(PART_EditableTextBox, Me)
-            DetachTextBoxEvents()
-            If TypeOf TemplateObj Is TextBox Then
-                _textBox = DirectCast(TemplateObj, TextBox)
-                AttachTextBoxEvents()
-            Else
-                _textBox = Nothing
-            End If
+            Me.textBox = TryCast(Me.Template.FindName(PART_EditableTextBox, Me), TextBox)
+            Me.buttonUp = TryCast(Me.Template.FindName(PART_ButtonUp, Me), ButtonBase)
+            Me.buttonDown = TryCast(Me.Template.FindName(PART_ButtonDown, Me), ButtonBase)
         End Sub
-        ''' <summary>Hooks events of <see cref="textBox"/></summary>
-        Private Sub AttachTextBoxEvents()
-            If textBox Is Nothing Then
-                Return
-            End If
-            AddHandler textBox.PreviewTextInput, AddressOf textBox_PreviewTextInput
-            AddHandler textBox.LostFocus, AddressOf textBox_LostFocus
+
+        Private Sub textBox_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Input.KeyEventArgs) Handles textBox.KeyDown
+            If IsEditable AndAlso Not IsReadOnly AndAlso e.Key = Key.Enter AndAlso Not e.Handled AndAlso Me.textBox IsNot Nothing Then ApplyText()
         End Sub
-        ''' <summary>Unhooks events of <see cref="textBox"/></summary>
-        Private Sub DetachTextBoxEvents()
-            If textBox Is Nothing Then
-                Return
-            End If
-            AddHandler textBox.PreviewTextInput, AddressOf textBox_PreviewTextInput
-            RemoveHandler textBox.LostFocus, AddressOf textBox_LostFocus
-        End Sub
+
         ''' <summary>Prevents non-number characters from being typed</summary>
-        Private Sub textBox_PreviewTextInput(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
+        Private Sub textBox_PreviewTextInput(ByVal sender As Object, ByVal e As TextCompositionEventArgs) Handles textBox.PreviewTextInput
             If Me.IsEditable Then
                 e.Handled = Not AreCharsAccepltable(e.Text)
             End If
         End Sub
-        Private Sub textBox_LostFocus(ByVal sender As Object, ByVal e As RoutedEventArgs)
-            If Me.IsEditable Then
+        Private Sub textBox_LostFocus(ByVal sender As Object, ByVal e As RoutedEventArgs) Handles textBox.LostFocus
+            If Me.IsEditable AndAlso Not Me.IsReadOnly AndAlso Me.textBox IsNot Nothing Then ApplyText()
+        End Sub
+
+        ''' <summary>Applies and coerces current text to value</summary>
+        Private Sub ApplyText()
+            If Me.IsEditable AndAlso Not Me.IsReadOnly AndAlso Me.textBox IsNot Nothing Then
                 Me.Value = TextToValue(textBox.Text, Me.Value)
                 Me.ValueString = ValueToString(Me.Value)
                 textBox.Text = Me.ValueString
@@ -623,12 +609,13 @@ Namespace WindowsT.WPF.ControlsT
                 Return True
             End If
             Dim NumberFormat = CultureInfo.CurrentCulture.NumberFormat
+            Dim currentText As String = If(textBox Is Nothing, "", textBox.Text)
             For Each ch As Char In text
-                If (NumberFormat.NumberDecimalSeparator.Contains(ch) AndAlso Me.DecimalPlaces > 0 AndAlso Not Me.ValueString.Contains(NumberFormat.NumberDecimalSeparator)) OrElse
+                If (NumberFormat.NumberDecimalSeparator.Contains(ch) AndAlso Me.DecimalPlaces > 0 AndAlso Not currentText.Contains(NumberFormat.NumberDecimalSeparator)) OrElse
                    NumberFormat.NumberGroupSeparator.Contains(ch) OrElse
                    Char.IsDigit(ch) OrElse
-                   (NumberFormat.NegativeSign.Contains(ch) AndAlso Me.Minimum <= 0 AndAlso Not Me.ValueString.Contains(NumberFormat.NegativeSign)) OrElse
-                   (NumberFormat.PositiveSign.Contains(ch) AndAlso Me.Maximum >= 0 AndAlso Not Me.ValueString.Contains(NumberFormat.PositiveSign)) Then
+                   (NumberFormat.NegativeSign.Contains(ch) AndAlso Me.Minimum <= 0 AndAlso Not currentText.Contains(NumberFormat.NegativeSign)) OrElse
+                   (NumberFormat.PositiveSign.Contains(ch) AndAlso Me.Maximum >= 0 AndAlso Not currentText.Contains(NumberFormat.PositiveSign)) Then
                     Continue For
                 End If
                 Return False
@@ -637,13 +624,28 @@ Namespace WindowsT.WPF.ControlsT
         End Function
 #End Region
 
+#Region "Event handlers"
+        ''' <summary>
+        ''' This is a class handler for <see cref="MouseLeftButtonDown"/> event.
+        ''' The purpose of this handle is to move input focus to <see cref="NumericUpDown"/> when user pressed mouse left button on any part of slider that is not focusable.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Overloads Shared Sub OnMouseLeftButtonDown(ByVal sender As Object, ByVal e As MouseButtonEventArgs)
+            Dim control As NumericUpDown = DirectCast(sender, NumericUpDown)
+            'When someone click on a part in the NumericUpDown and it's not focusable
+            'NumericUpDown needs to take the focus in order to process keyboard correctly
+            If Not control.IsKeyboardFocusWithin Then
+                e.Handled = control.Focus() OrElse e.Handled
+            End If
+        End Sub
 
         Private Sub NumericUpDown_GotFocus(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles Me.GotFocus
-            textBox.Focus()
+            If Me.TextBox IsNot Nothing Then TextBox.Focus()
         End Sub
 
         Private Sub NumericUpDown_GotKeyboardFocus(ByVal sender As Object, ByVal e As System.Windows.Input.KeyboardFocusChangedEventArgs) Handles Me.GotKeyboardFocus
-            textBox.Focus()
+            If Me.TextBox IsNot Nothing Then TextBox.Focus()
         End Sub
 
         ''' <summary>Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event. </summary>
@@ -660,10 +662,18 @@ Namespace WindowsT.WPF.ControlsT
             End If
         End Sub
 
-        ''' <summary>Selects alll text in editing text box</summary>
+        Private Sub button_PreviewMouseLeftButtonDown(ByVal sender As Object, ByVal e As System.Windows.Input.MouseButtonEventArgs) Handles buttonDown.PreviewMouseLeftButtonDown, buttonUp.PreviewMouseLeftButtonDown
+            If Not e.Handled AndAlso TextBox IsNot Nothing AndAlso Not TextBox.IsFocused AndAlso Not IsReadOnly AndAlso IsEditable Then TextBox.Focus()
+        End Sub
+#End Region
+
+        ''' <summary>Selects all text in editing text box</summary>
+        ''' <version version="1.5.3">This method is new in version 1.5.3</version>
         Public Sub SelectAll()
             If TextBox IsNot Nothing Then TextBox.SelectAll()
         End Sub
+
+        
     End Class
 
     ''' <summary><see cref="AutomationPeer"/> for <see cref="NumericUpDown"/> control</summary>

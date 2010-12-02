@@ -4,7 +4,7 @@ Imports System.Runtime.InteropServices
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.ConvertersT
-    ''' <summary>Converter whic converts a boolean value to one of given string values</summary>
+    ''' <summary>Converter which converts a boolean value to one of given string values</summary>
     ''' <remarks>Values are passed to parameter as two pipe(|)-separated strings or as an array of strings with two elements.</remarks>
     ''' <version version="1.5.3" stage="Nightly">This class is new in version 1.5.3</version>
     Public Class ChoiceBooleanConverter
