@@ -660,9 +660,6 @@
   <data name="SyntaxErrorInFormastStringExpectedAt0" xml:space="preserve">
     <value>Syntax error in formast string. ']' expected at {0}.</value>
   </data>
-  <data name="SyntaxErrorInFormatStringHMustBeFollowedWithAt0" xml:space="preserve">
-    <value>Syntax error in format string. 'H' must be followed with '(' at {0}.</value>
-  </data>
   <data name="SyntaxErrorInFormatStringMMustBeFollowedWithAt0" xml:space="preserve">
     <value>Syntax error in format string. 'M' must be followed with '(' at {0}.</value>
   </data>
@@ -1410,5 +1407,8 @@
   </data>
   <data name="PropertyMustBeSet" xml:space="preserve">
     <value>{0} must be set</value>
+  </data>
+  <data name="IsNotAllowed" xml:space="preserve">
+    <value>{0} is not allowed</value>
   </data>
 </root>

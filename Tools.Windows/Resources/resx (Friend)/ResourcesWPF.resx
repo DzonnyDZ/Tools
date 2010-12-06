@@ -130,4 +130,24 @@
   <data name="ex_PropertyHasUnknownValue" xml:space="preserve">
     <value>Property {0} has unknown value {1}</value>
   </data>
+  <data name="ex_CannotBeAnEmptyString" xml:space="preserve">
+    <value>{0} cannot be an empty string.</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_DoesNotContainMemberNamePart" xml:space="preserve">
+    <value>{0} does not contain member name part.</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_IsNull" xml:space="preserve">
+    <value>{0} is null.</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_MemberHasValueNull" xml:space="preserve">
+    <value>Member {0} has value null.</value>
+    <comment>Inner exception message</comment>
+  </data>
+  <data name="ex_ServiceProviderDoesntProvide" xml:space="preserve">
+    <value>Service provider doesn't provide {0}</value>
+    <comment>Inner exception message</comment>
+  </data>
 </root>

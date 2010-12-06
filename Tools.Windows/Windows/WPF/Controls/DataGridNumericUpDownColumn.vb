@@ -22,16 +22,17 @@ Namespace WindowsT.WPF.ControlsT
             Dim eargs As New DataGridCellElementCreatingEventArgs(Me, cell, dataItem) With {.Cancel = False}
             OnGeneratingEditingElement(eargs)
             If eargs.Cancel Then Return GenerateElement(cell, dataItem)
-            Dim e As New NumericUpDown
-            e.HorizontalAlignment = HorizontalAlignment.Stretch
-            ApplyStyle(True, False, e)
+            Dim nud As New NumericUpDown
+            SyncProperties(nud)
+            nud.HorizontalAlignment = HorizontalAlignment.Stretch
+            ApplyStyle(True, False, nud)
             Dim binding As BindingBase = Me.Binding
             If (Not binding Is Nothing) Then
-                BindingOperations.SetBinding(e, NumericUpDown.ValueProperty, binding)
+                BindingOperations.SetBinding(nud, NumericUpDown.ValueProperty, binding)
             Else
-                BindingOperations.ClearBinding(e, NumericUpDown.ValueProperty)
+                BindingOperations.ClearBinding(nud, NumericUpDown.ValueProperty)
             End If
-            Return e
+            Return nud
         End Function
         ''' <summary>Raised before eiditng element is generated. Allows you to cancle editing element generation.</summary>
         ''' <remarks>When this event is cancelled normal element (<see cref="TextBlock"/>) is used for that cell instead of <see cref="NumericUpDown"/>.</remarks>

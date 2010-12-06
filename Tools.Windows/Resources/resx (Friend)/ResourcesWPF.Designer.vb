@@ -79,6 +79,15 @@ Namespace WindowsT.WPF
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} cannot be an empty string.'.
+        '''</summary>
+        Public ReadOnly Property ex_CannotBeAnEmptyString() As String
+            Get
+                Return ResourceManager.GetString("ex_CannotBeAnEmptyString", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '{0} cannot convert back.'.
         '''</summary>
         Public ReadOnly Property ex_CannotConvertBack() As String
@@ -88,11 +97,47 @@ Namespace WindowsT.WPF
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} does not contain member name part.'.
+        '''</summary>
+        Public ReadOnly Property ex_DoesNotContainMemberNamePart() As String
+            Get
+                Return ResourceManager.GetString("ex_DoesNotContainMemberNamePart", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to '{0} is null.'.
+        '''</summary>
+        Public ReadOnly Property ex_IsNull() As String
+            Get
+                Return ResourceManager.GetString("ex_IsNull", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Member {0} has value null.'.
+        '''</summary>
+        Public ReadOnly Property ex_MemberHasValueNull() As String
+            Get
+                Return ResourceManager.GetString("ex_MemberHasValueNull", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Property {0} has unknown value {1}'.
         '''</summary>
         Public ReadOnly Property ex_PropertyHasUnknownValue() As String
             Get
                 Return ResourceManager.GetString("ex_PropertyHasUnknownValue", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Service provider doesn&apos;t provide {0}'.
+        '''</summary>
+        Public ReadOnly Property ex_ServiceProviderDoesntProvide() As String
+            Get
+                Return ResourceManager.GetString("ex_ServiceProviderDoesntProvide", _resourceCulture)
             End Get
         End Property
         
@@ -115,12 +160,48 @@ Namespace WindowsT.WPF
         End Property
         
         '''<summary>
+        '''Formats a localized string similar to '{0} cannot be an empty string.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ex_CannotBeAnEmptyStringFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ex_CannotBeAnEmptyString, arg0)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to '{0} cannot convert back.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function ex_CannotConvertBackFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, ex_CannotConvertBack, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} does not contain member name part.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ex_DoesNotContainMemberNamePartFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ex_DoesNotContainMemberNamePart, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} is null.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ex_IsNullFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ex_IsNull, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Member {0} has value null.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ex_MemberHasValueNullFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ex_MemberHasValueNull, arg0)
         End Function
         
         '''<summary>
@@ -131,6 +212,15 @@ Namespace WindowsT.WPF
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function ex_PropertyHasUnknownValueFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, ex_PropertyHasUnknownValue, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Service provider doesn&apos;t provide {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ex_ServiceProviderDoesntProvideFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ex_ServiceProviderDoesntProvide, arg0)
         End Function
         
         '''<summary>

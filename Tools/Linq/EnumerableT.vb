@@ -122,6 +122,43 @@ Namespace LinqT
             Dim enumerator = collection.GetEnumerator
             Return enumerator.MoveNext AndAlso Not enumerator.MoveNext
         End Function
+
+        ''' <summary>Gets index of first occurence of given item in given collection</summary>
+        ''' <param name="collection">Collection to find item in</param>
+        ''' <param name="item">Item to be found</param>
+        ''' <returns>Index of first occurence of <paramref name="item"/> in <paramref name="collection"/> (compared using <see cref="System.Object.Equals"/>). -1 if <paramref name="item"/> is not found in <paramref name="collection"/>.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Public Function IndexOf(ByVal collection As IEnumerable, ByVal item As Object) As Integer
+            If collection Is Nothing Then Throw New ArgumentNullException("collection")
+            If TypeOf collection Is Array Then
+                Return Array.IndexOf(collection, item)
+            ElseIf TypeOf collection Is IList Then
+                Return DirectCast(collection, IList).IndexOf(item)
+            End If
+            Dim i% = 0
+            For Each iitem In collection
+                If iitem Is Nothing AndAlso item Is Nothing OrElse (iitem IsNot Nothing AndAlso iitem.Equals(item)) Then Return i
+                i += 1
+            Next
+            Return -1
+        End Function
+        ''' <summary>Gets index of first occurence of given item in given collection</summary>
+        ''' <typeparam name="T">Type of items in collection</typeparam>
+        ''' <param name="collection">Collection to find item in</param>
+        ''' <param name="item">Item to be found</param>
+        ''' <returns>Index of first occurence of <paramref name="item"/> in <paramref name="collection"/> (compared using <see cref="System.Object.Equals"/>). -1 if <paramref name="item"/> is not found in <paramref name="collection"/>.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()> Public Function IndexOf(Of T)(ByVal collection As IEnumerable(Of T), ByVal item As T) As Integer
+            If collection Is Nothing Then Throw New ArgumentNullException("collection")
+            If TypeOf collection Is IList(Of T) Then
+                Return DirectCast(collection, IList(Of T)).IndexOf(item)
+            ElseIf TypeOf collection Is T() Then
+                Return Array.IndexOf(Of T)(collection, item)
+            End If
+            Return IndexOf(DirectCast(collection, IEnumerable), DirectCast(item, Object))
+        End Function
     End Module
 End Namespace
 #End If

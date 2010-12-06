@@ -184,6 +184,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <value>Maximum alloved value of <see cref="Value"/></value>
         ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(NumericUpDown.DefaultMaxValue)> _
         Public Property Maximum() As Decimal
             Get
                 Return CDec(GetValue(MaximumProperty))

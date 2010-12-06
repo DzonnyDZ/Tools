@@ -558,6 +558,9 @@ Public Structure TimeSpanFormattable
     '''     <item><term>H()</term>
     '''         <description>Custom-formated fractional hours. Value of <see cref="TotalHours"/> formated with format specified in braces. For more information about formats in braces see below.</description>
     '''     </item>
+    '''     <item><term>H, HH, HHH, ...</term>
+    '''         <description>Integral part of <see cref="TotalHours"/>, minimum number of digits same as number of Hs. Note: When multiple Hs are followed by '(' it's not treated as custom formatter for preceding Hs (like in case of 'H(')</description>
+    '''     </item>
     '''     <item><term>m</term>
     '''         <description>Short minutes. Value of <see cref="Minutes"/> from range 0÷59 as 1 or 2 digits.</description>
     '''     </item>
@@ -706,6 +709,7 @@ Public Structure TimeSpanFormattable
     ''' </remarks>
     ''' <exception cref="FormatException">Unknown predefined format -or- syntax error in format string</exception>
     ''' <exception cref="ArgumentOutOfRangeException">The 'T()' patter is used on negative <see cref="TimeSpanFormattable"/> or value of current <see cref="TimeSpanFormattable"/> added to <see cref="DateTime.MinValue"/> causes <see cref="DateTime.MaxValue"/> to be exceeded.</exception>
+    ''' <version version="1.5.3">Added new formating options capital H without braces, HH, HHH, ...</version>
     Public Overloads Function ToString(ByVal format As String) As String
         Return ToString(format, Nothing)
     End Function
@@ -891,6 +895,8 @@ Public Structure TimeSpanFormattable
         h2Format
         ''' <summary>After hh(\</summary>
         h2Formatb
+        ''' <summary>After HH</summary>
+        H2_
 #End Region
 #Region "m"
         ''' <summary>After m</summary>
@@ -1115,7 +1121,7 @@ Public Structure TimeSpanFormattable
                         Case "D"c : state = FormatAutomatState.D_
                         Case "["c : state = FormatAutomatState.leftB
                         Case "h"c : state = FormatAutomatState.h1
-                        Case "H"c : state = FormatAutomatState.H_
+                        Case "H"c : state = FormatAutomatState.H_ : StartIndex = i
                         Case "m"c : state = FormatAutomatState.m1
                         Case "M"c : state = FormatAutomatState.M_
                         Case "s"c : state = FormatAutomatState.s1
@@ -1269,7 +1275,15 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.H_ 'H
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.H_Format : InFormat = ""
-                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringHMustBeFollowedWithAt0, i + 1))
+                        Case "H"c : state = FormatAutomatState.H2_
+                        Case Else : Append.Invoke(Abs(CInt(Math.Floor(TS.TotalHours))).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
+                    End Select
+                Case FormatAutomatState.H2_ 'HH..
+                    Select Case format(i)
+                        Case "H"c
+                        Case Else : i -= 1
+                            Append.Invoke(Abs(TS.TotalHours).ToString(New String("0"c, i - StartIndex + 1), prov))
+                            state = FormatAutomatState.nth
                     End Select
                 Case FormatAutomatState.hFormat 'h(
                     Select Case format(i)

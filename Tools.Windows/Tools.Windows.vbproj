@@ -204,9 +204,13 @@
       <DependentUpon>ConverterResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Windows\WPF\Converters\General\CompareConverterEx.vb" />
+    <Compile Include="Windows\WPF\Converters\General\CompareConverters.vb" />
     <Compile Include="Windows\WPF\Converters\General\CountConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\General\OneWayBooleanConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\XPathConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Multi\BooleanOperationConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Multi\FirstNonEmptyConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Multi\StringFormatMultiConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanToCharConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanVisibilityConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CachedImageConverter.vb" />
@@ -239,6 +243,7 @@
     <Compile Include="Windows\WPF\Markup\MarkupExtensionBase.vb" />
     <Compile Include="Windows\WPF\Markup\NamespacesExtension.vb" />
     <Compile Include="Windows\WPF\Markup\NewExtension.vb" />
+    <Compile Include="Windows\WPF\Markup\StaticExExtension.vb" />
     <Compile Include="Windows\WPF\Markup\XamlServiceProvider.vb" />
     <Compile Include="Windows\WPF\TryParseValidationRule.vb" />
     <Compile Include="Windows\WPF\RegularExpressionValidationRule.vb" />
@@ -357,6 +362,7 @@
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Resources.resx" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\ResourcesWPF.cs.resx">
       <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
       <SubType>Designer</SubType>

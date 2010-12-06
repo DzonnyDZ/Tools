@@ -1479,6 +1479,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} is not allowed'.
+        '''</summary>
+        Public ReadOnly Property IsNotAllowed() As String
+            Get
+                Return ResourceManager.GetString("IsNotAllowed", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '{0} is not member of {1}.'.
         '''</summary>
         Public ReadOnly Property IsNotMemberOf1() As String
@@ -2801,15 +2810,6 @@ Namespace ResourcesT
         Public ReadOnly Property SyntaxErrorInFormatStringDMustBeFollowedWithAt0() As String
             Get
                 Return ResourceManager.GetString("SyntaxErrorInFormatStringDMustBeFollowedWithAt0", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'Syntax error in format string. &apos;H&apos; must be followed with &apos;(&apos; at {0}.'.
-        '''</summary>
-        Public ReadOnly Property SyntaxErrorInFormatStringHMustBeFollowedWithAt0() As String
-            Get
-                Return ResourceManager.GetString("SyntaxErrorInFormatStringHMustBeFollowedWithAt0", _resourceCulture)
             End Get
         End Property
         
@@ -5291,6 +5291,15 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to '{0} is not allowed'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function IsNotAllowedFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, IsNotAllowed, arg0)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to '{0} is not member of {1}.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -6579,15 +6588,6 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function SyntaxErrorInFormatStringDMustBeFollowedWithAt0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, SyntaxErrorInFormatStringDMustBeFollowedWithAt0, arg0)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'Syntax error in format string. &apos;H&apos; must be followed with &apos;(&apos; at {0}.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Function SyntaxErrorInFormatStringHMustBeFollowedWithAt0Format(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, SyntaxErrorInFormatStringHMustBeFollowedWithAt0, arg0)
         End Function
         
         '''<summary>
