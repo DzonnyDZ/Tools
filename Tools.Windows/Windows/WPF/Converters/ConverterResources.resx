@@ -225,4 +225,10 @@
   <data name="ex_XPathNotSupportedType" xml:space="preserve">
     <value>XPath query cannot be used on type {0}</value>
   </data>
+  <data name="ex_UnsupportedOperation" xml:space="preserve">
+    <value>Unsupported operation {0}</value>
+  </data>
+  <data name="ex_ParamMustHaveMinOneChar" xml:space="preserve">
+    <value>Parameter must contain at least one character</value>
+  </data>
 </root>

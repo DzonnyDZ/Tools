@@ -299,6 +299,15 @@ Namespace WindowsT.WPF.ConvertersT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Parameter must contain at least one character.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_ParamMustHaveMinOneChar() As String
+            Get
+                Return ResourceManager.GetString("ex_ParamMustHaveMinOneChar", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Converter parameter for unchecked value is empty..
         '''</summary>
         Friend Shared ReadOnly Property ex_UncheckedEmpty() As String
@@ -322,6 +331,15 @@ Namespace WindowsT.WPF.ConvertersT
         Friend Shared ReadOnly Property ex_UnsupportedDataType() As String
             Get
                 Return ResourceManager.GetString("ex_UnsupportedDataType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unsupported operation {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_UnsupportedOperation() As String
+            Get
+                Return ResourceManager.GetString("ex_UnsupportedOperation", resourceCulture)
             End Get
         End Property
         

@@ -52,7 +52,7 @@ Namespace WindowsT.WPF.ConvertersT
             End Select
             Dim comparisonResult As Integer
             If TypeOf value Is IComparable Then
-                comparisonResult = DirectCast(value, IComparable).CompareTo(parameter)
+                comparisonResult = DirectCast(value, IComparable).CompareTo(DynamicCast(parameter, value.GetType))     'TODO: This should be more clever
             ElseIf TypeOf parameter Is IComparable Then
                 comparisonResult = -DirectCast(parameter, IComparable).CompareTo(value)
             Else
