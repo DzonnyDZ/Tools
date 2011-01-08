@@ -212,6 +212,7 @@
     <Compile Include="Windows\WPF\Converters\Multi\FirstNonEmptyConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Multi\MathOperationMultiConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Multi\StringFormatMultiConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Numeric\Floor-Ceiling-Round.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanToCharConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\BooleanVisibilityConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Specialized %28type-unsafe%29\CachedImageConverter.vb" />

@@ -69,7 +69,10 @@ Namespace WindowsT.WPF.MarkupT
         End Property
 
         ''' <summary>Returns an object that is set as the value of the target property for this markup extension.</summary>
-        ''' <returns>The object value to set on the property where the extension is applied. If <paramref name="serviceProvider"/> provides <see cref="IProvideValueTarget"/> service and its <see cref="IProvideValueTarget.TargetProperty"/> is <see cref="PropertyInfo"/> with non-null <see cref="PropertyInfo.PropertyType"/> <see cref="Tools.TypeTools.DynamicCast">dynamic cast</see> or result of properties/fields evaluation is attempted.</returns>
+        ''' <returns>The object value to set on the property where the extension is applied.
+        ''' If <paramref name="serviceProvider"/> provides <see cref="IProvideValueTarget"/> service and its <see cref="IProvideValueTarget.TargetProperty"/> is 
+        '''     <see cref="PropertyInfo"/> with non-null <see cref="PropertyInfo.PropertyType"/> or <see cref="Windows.DependencyProperty"/> with non-null <see cref="Windows.DependencyProperty.PropertyType"/> 
+        '''     <see cref="Tools.TypeTools.DynamicCast">dynamic cast</see> or result of properties/fields evaluation is attempted.</returns>
         ''' <param name="serviceProvider">Object that can provide services for the markup extension.</param>
         ''' <exception cref="InvalidOperationException"><see cref="Member"/> is null, an empty string or contains fewer than 2 dot-separated parts.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="serviceProvider"/> is null.</exception>
@@ -126,8 +129,10 @@ Namespace WindowsT.WPF.MarkupT
                     CurrVal = DirectCast(CurrProp, FieldInfo).GetValue(CurrVal)
                 End If
             Next
-            If ValueTarget IsNot Nothing AndAlso ValueTarget.TargetProperty IsNot Nothing AndAlso TypeOf ValueTarget.TargetProperty Is Reflection.PropertyInfo Then
+            If ValueTarget IsNot Nothing AndAlso ValueTarget.TargetProperty IsNot Nothing AndAlso TypeOf ValueTarget.TargetProperty Is Reflection.PropertyInfo AndAlso DirectCast(ValueTarget.TargetProperty, Reflection.PropertyInfo).PropertyType IsNot Nothing Then
                 Return Tools.TypeTools.DynamicCast(CurrVal, DirectCast(ValueTarget.TargetProperty, Reflection.PropertyInfo).PropertyType)
+            ElseIf ValueTarget IsNot Nothing AndAlso ValueTarget.TargetProperty IsNot Nothing AndAlso TypeOf ValueTarget.TargetProperty Is Windows.DependencyProperty AndAlso DirectCast(ValueTarget.TargetProperty, Windows.DependencyProperty).PropertyType IsNot Nothing Then
+                Return Tools.TypeTools.DynamicCast(CurrVal, DirectCast(ValueTarget.TargetProperty, Windows.DependencyProperty).PropertyType)
             End If
             Return CurrVal
         End Function
