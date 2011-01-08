@@ -358,6 +358,15 @@ Namespace WindowsT.WPF.DialogsT
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     ''' <version version="1.5.3" stage="Beta">Added support for <see cref="Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
     ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/>.</version>
+    ''' <version version="1.5.3">Messages are now centered to thair owner (if some conditions are met).
+    ''' The conditions are: Owner is specified and - Owner is <see cref="Window"/> or it's <see cref="DependencyObject"/> for which a <see cref="Window"/> can be determined using <see cref="Window.GetWindow"/> -or- 
+    ''' Owner is <see cref="Forms.Control"/> -or-
+    ''' Owner is either <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> and it's handle represents <see cref="Windows.Controls"/> -or-
+    ''' <para>
+    ''' If owner is <see cref="Forms.Control"/> dialog is centered to control's parent <see cref="Forms.Form"/> (if it can be determined using <see cref="Forms.Control.FindForm"/>). If <see cref="Forms.Form"/> cannot be determined the dialog is centered to control itself.
+    ''' If owner is <see cref="DependencyObject"/> dialog is centered to parent <see cref="Window"/> of the <see cref="DependencyObject"/>. If parent <see cref="Window"/> cannot be found (using <see cref="Window.GetWindow"/>) the dialog is not centered at all.
+    ''' </para>
+    ''' <para>If owner is either <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> and no corresponding <see cref="Forms.Control"/> can be found (using <see cref="Forms.Control.FromHandle"/>) the dialog is not centered. (This is considered a limitation which may be fixed in one of next versions.)</para></version>
     Public Class MessageBox : Inherits iMsg
         Implements INotifyPropertyChanged
         ''' <summary>Format of title with timer</summary>
@@ -418,26 +427,61 @@ Namespace WindowsT.WPF.DialogsT
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="Forms.IWin32Window"/> to <see cref="Object"/> to support <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="Windows.DependencyObject"/> for which <see cref="Windows.Window.GetWindow"/> returns non-null value.</version>
-        Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
+        ''' <version version="1.5.3">Parameters renamed: <c>Modal</c> to <c>modal</c>; <c>Owner</c> to <c>owner</c></version>
+        ''' <version version="1.5.3">Changed so that message box is now centered to it's parent (as long as the parent is <see cref="Forms.Control"/>, <see cref="Windows.Window"/> (or <see cref="DependencyObject"/> from a <see cref="Window"/>) or <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> representing <see cref="Forms.Control"/>). See class documentation for details.</version>
+        Protected Overrides Sub PerformDialog(ByVal modal As Boolean, ByVal owner As Object)
             If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Window = New MessageBoxWindow()
             Control = DirectCast(Window, MessageBoxWindow).MsgBoxControl
             Control.MessageBox = Me
-            If TypeOf Owner Is Forms.IWin32Window Then
+            'Owner
+            If TypeOf owner Is Forms.IWin32Window Then
                 Dim hlp As New Interop.WindowInteropHelper(Window)
-                hlp.Owner = DirectCast(Owner, Forms.IWin32Window).Handle
-            ElseIf TypeOf Owner Is Interop.IWin32Window Then
+                hlp.Owner = DirectCast(owner, Forms.IWin32Window).Handle
+            ElseIf TypeOf owner Is Interop.IWin32Window Then
                 Dim hlp As New Interop.WindowInteropHelper(Window)
-                hlp.Owner = DirectCast(Owner, Interop.IWin32Window).Handle
-            ElseIf TypeOf Owner Is Window Then
-                Window.Owner = Owner
-            ElseIf TypeOf Owner Is DependencyObject Then
-                Window.Owner = Window.GetWindow(Owner)
+                hlp.Owner = DirectCast(owner, Interop.IWin32Window).Handle
+            ElseIf TypeOf owner Is Window Then
+                Window.Owner = owner
+            ElseIf TypeOf owner Is DependencyObject Then
+                Window.Owner = Window.GetWindow(owner)
             End If
-            If Modal Then
+            'Owner size and position
+            Dim ownerRect As Drawing.Rectangle?
+            If TypeOf owner Is Forms.Form Then
+                ownerRect = DirectCast(owner, Forms.Form).DisplayRectangle
+            ElseIf TypeOf owner Is Forms.Control Then
+                ownerRect = If(DirectCast(owner, Forms.Control).FindForm, DirectCast(owner, Forms.Control)).DisplayRectangle
+            ElseIf TypeOf owner Is Forms.IWin32Window Then 'TODO:SUpport any IWin32Window
+                Dim ctl As Forms.Control = Forms.Control.FromHandle(DirectCast(owner, Forms.IWin32Window).Handle)
+                If ctl IsNot Nothing Then
+                    ownerRect = If(ctl.FindForm, ctl).DisplayRectangle
+                End If
+            ElseIf TypeOf owner Is Interop.IWin32Window Then 'TODO:SUpport any IWin32Window
+                Dim ctl As Forms.Control = Forms.Control.FromHandle(DirectCast(owner, Interop.IWin32Window).Handle)
+                If ctl IsNot Nothing Then
+                    ownerRect = If(ctl.FindForm, ctl).DisplayRectangle
+                End If
+            ElseIf TypeOf owner Is DependencyObject Then
+                Dim window As Window
+                If TypeOf owner Is Window Then window = owner _
+                Else window = window.GetWindow(owner)
+                If window IsNot Nothing Then
+                    ownerRect = New Drawing.Rectangle(window.Left, window.Top, window.ActualWidth, window.ActualHeight)
+                End If
+            End If
+            If ownerRect IsNot Nothing Then
+                AddHandler Window.Loaded, Sub(sender, e)
+                                              Dim sw As Window = sender
+                                              sw.Left = (ownerRect.Value.X * 2 + ownerRect.Value.Width) / 2 - sw.Width / 2
+                                              sw.Top = (ownerRect.Value.Y * 2 + ownerRect.Value.Height) / 2 - sw.Height / 2
+                                          End Sub
+            End If
+
+            If modal Then
                 Window.ShowDialog()
             Else
-                If TypeOf Owner Is Forms.IWin32Window OrElse TypeOf Owner Is Interop.IWin32Window Then Forms.Integration.ElementHost.EnableModelessKeyboardInterop(Window)
+                If TypeOf owner Is Forms.IWin32Window OrElse TypeOf owner Is Interop.IWin32Window Then Forms.Integration.ElementHost.EnableModelessKeyboardInterop(Window)
                 Window.Show()
             End If
         End Sub
