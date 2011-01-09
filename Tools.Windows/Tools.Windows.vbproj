@@ -209,6 +209,7 @@
     <Compile Include="Windows\WPF\Converters\General\OneWayBooleanConverter.vb" />
     <Compile Include="Windows\WPF\Converters\General\XPathConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Multi\BooleanOperationConverter.vb" />
+    <Compile Include="Windows\WPF\Converters\Multi\CollectionCombiningConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Multi\FirstNonEmptyConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Multi\MathOperationMultiConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Multi\StringFormatMultiConverter.vb" />
