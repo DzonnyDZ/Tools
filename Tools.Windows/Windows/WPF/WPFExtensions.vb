@@ -4,6 +4,8 @@ Imports System.Windows.Media
 Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions
 Imports System.Windows.Markup
 Imports System.Xaml, Tools.ExtensionsT
+Imports System.Windows.Controls
+Imports Tools.LinqT
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF
@@ -266,6 +268,35 @@ Namespace WindowsT.WPF
             End Select
             If ret Is Nothing AndAlso throwException Then Throw New InvalidOperationException(ResourcesT.Exceptions.ProviderDoesNotProviderService.f(service))
             Return ret
+        End Function
+
+        ''' <summary>Gets a value that indicates whether any binding on given lement or any of its logical children has a <see cref="ValidationError"/>.</summary>
+        ''' <param name="parent">The element to check recursivelly for validation errors</param>
+        ''' <returns>True if the <see cref="Validation.HasErrorProperty"/> attached property is true for <paramref name="parent"/> or any of its logical children</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null</exception>
+        ''' <seelaso cref="Validation.HasErrorProperty"/><seelaso cref="LogicalTreeHelper.GetChildren"/>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function HasErrors(ByVal parent As DependencyObject) As Boolean
+            If parent Is Nothing Then Throw New ArgumentNullException("parent")
+            If Validation.GetHasError(parent) Then Return True
+            For i = 0 To VisualTreeHelper.GetChildrenCount(parent) - 1
+                If VisualTreeHelper.GetChild(parent, i).HasErrors Then Return True
+            Next
+            Return False
+        End Function
+        ''' <summary>Recursivelly gets validation errors of given elemnent and all its logical children</summary>
+        ''' <param name="parent">The element to check recursivelly for validation errors</param>
+        ''' <returns>Collection of validation errors for <paramref name="parent"/> and all its logical children</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="parent"/> is null</exception>
+        ''' <seelaso cref="Validation.ErrorsProperty"/><seelaso cref="LogicalTreeHelper.GetChildren"/>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function GetErrors(ByVal parent As DependencyObject) As IEnumerable(Of ValidationError)
+            Return FlatAllDeffered(New IEnumerable(Of ValidationError)() {Validation.GetErrors(parent), FlatAllDeffered(
+                                       New ForLoopCollection(Of IEnumerable(Of ValidationError))(0, VisualTreeHelper.GetChildrenCount(parent) - 1,
+                                           Sub(ByRef i, ByRef yield) yield = VisualTreeHelper.GetChild(parent, i).GetErrors()
+                                      ))})
         End Function
     End Module
 

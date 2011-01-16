@@ -142,7 +142,7 @@
     <value>To add or remove a member, edit your .ResX file then rerun the {0} custom tool or rebuild your VS.NET project.</value>
   </data>
   <data name="ClassCommentsCopyright" xml:space="preserve">
-    <value>Copyright © Dmytro Kryvko 2006-{0} (http://dmytro.kryvko.googlepages.com/); Đonny 2008-{0} (http://tools.codeplex.com)</value>
+    <value>Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-{0} (http://tools.codeplex.com)</value>
   </data>
   <data name="ResMgrPropertyComment" xml:space="preserve">
     <value>Returns the cached ResourceManager instance used by this class.</value>

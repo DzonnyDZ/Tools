@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MismatchedResourceName" xml:space="preserve">
     <value>Při předávání ResXDataNodů jako hodnot v IDictionary do StronglyTypedResourceBuilderEx.Create se musí klíče shodovat s odpovídajícími hodnotami pro ResXDataNode.Name. Název klíče: '{0}', ResXDataNode.Name: '{1}'.</value>
@@ -142,7 +142,7 @@
     <value>Pro přidání nebo odebrání člena editujte váš .resx soubor a pak spusťte custom tool {0} nebo přebuildujte váš projek ve VS.NET.</value>
   </data>
   <data name="ClassCommentsCopyright" xml:space="preserve">
-    <value>Copyright © Dmytro Kryvko 2006-{0} (http://dmytro.kryvko.googlepages.com/); Đonny 2008-{0} (http://tools.codeplex.com)</value>
+    <value>Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-{0} (http://tools.codeplex.com)</value>
   </data>
   <data name="ResMgrPropertyComment" xml:space="preserve">
     <value>Vrací nacacheovanou instanci ResourceManageru používanou touto třídou.</value>

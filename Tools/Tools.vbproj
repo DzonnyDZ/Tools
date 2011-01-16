@@ -214,6 +214,7 @@
     <Compile Include="ComponentModel\ValueContainer.vb" />
     <Compile Include="Data\DataExtensions.vb" />
     <Compile Include="Globalization\Arabic.vb" />
+    <Compile Include="Linq\ForEnumerator.vb" />
     <Compile Include="misc\Operators.vb" />
     <Compile Include="misc\SyntaxErrorException.vb" />
     <Compile Include="Numerics\IntegerUnion.vb" />

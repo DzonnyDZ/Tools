@@ -40,13 +40,30 @@ Namespace ExtensionsT
         End Function
         ''' <summary>Throws an <see cref="ArgumentNullException"/> if given object is null</summary>
         ''' <param name="arg">Object to be tested</param>
-        ''' <param name="ArgumentName">Optional. Name of argument for exception. If null "arg" is supplied.</param>
+        ''' <param name="argumentName">Optional. Name of argument for exception. If null "arg" is supplied.</param>
         ''' <typeparam name="T">Type of object. Must be reference type.</typeparam>
-        ''' <exception cref="ArgumentException"><paramref name="arg"/> is null</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="arg"/> is null</exception>
+        ''' <remarks>You should throw your exception yourself whenever possible because place where it was thrown from appears on call stack, however there ara some situations where it is not possible due to programming language limitations (chanied/base CTor call, field initializers, LINQ.</remarks>
+        ''' <version version="1.5.3">Parameter <c>ArgumentName</c> renamed to <c>argumentName</c></version>
+        ''' <version version="1.5.3">Documentation fix: Throws <see cref="ArgumentNullException"/> when <paramref name="arg"/> is null. Originally documentation stated tha <see cref="ArgumentException"/> is thrown, which was not accurate.</version>
         <Extension()> _
-        Public Function ThrowIfNull(Of T As Class)(ByVal arg As T, Optional ByVal ArgumentName$ = Nothing) As T
+        Public Function ThrowIfNull(Of T As Class)(ByVal arg As T, Optional ByVal argumentName$ = Nothing) As T
             If arg Is Nothing Then Throw New ArgumentNullException(If(ArgumentName, "arg"))
             Return arg
+        End Function
+        ''' <summary>Throws an <see cref="ArgumentNullException"/> if given objects is null, if it is not null returns another given object</summary>
+        ''' <typeparam name="TTest">Type of value to be tested</typeparam>
+        ''' <typeparam name="TReturn">Type of value to be returned when test succeds</typeparam>
+        ''' <param name="valueToTest">Object to be tested</param>
+        ''' <param name="valueToReturn">Value to be returned in case <paramref name="valueToTest"/> is not null</param>
+        ''' <param name="argumentName">Optional. Name of argument for exception. If null "valueToTest" is supplied.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="valueToTest"/> is nulll</exception>
+        ''' <remarks>You should throw your exception yourself whenever possible because place where it was thrown from appears on call stack, however there ara some situations where it is not possible due to programming language limitations (chanied/base CTor call, field initializers, LINQ.</remarks>
+        ''' <version version="1.5.3">This overload is new in version 1.5.3</version>
+        <Extension()>
+        Public Function ThrowIfNull(Of TTest As Class, TReturn)(ByVal valueToTest As TTest, ByVal valueToReturn As TReturn, Optional ByVal argumentName$ = Nothing) As TReturn
+            If valueToTest Is Nothing Then Throw New ArgumentNullException(If(argumentName, "valueToTest"))
+            Return valueToReturn
         End Function
     End Module
 End Namespace

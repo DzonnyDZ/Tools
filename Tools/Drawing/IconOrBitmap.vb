@@ -21,16 +21,20 @@ Namespace DrawingT
         End Sub
         ''' <summary>Converts <see cref="IconOrBitmap"/> to <see  cref="Image"/></summary>
         ''' <param name="a">A <see cref="IconOrBitmap"/></param>
-        ''' <returns><see cref="Drawing.Image"/> that represents by this instance. It is either <see cref="Image"/> or <see cref="Icon"/>.<see cref="Icon.ToBitmap">ToBitmap</see></returns>
+        ''' <returns><see cref="Drawing.Image"/> that represents by this instance. It is either <see cref="Image"/> or <see cref="Icon"/>.<see cref="Icon.ToBitmap">ToBitmap</see>; null when <paramref name="a"/> is null.</returns>
         ''' <seelaso cref="Image"/>
+        ''' <version version="1.5.3">Fix: <see cref="NullReferenceException"/> when <paramref name="a"/> is null. Now returns null instead.</version>
         Overloads Shared Widening Operator CType(ByVal a As IconOrBitmap) As Image
+            if a is nothing then return nothing
             Return a.Image
         End Operator
         ''' <summary>Converts <see cref="IconOrBitmap"/> to <see  cref="Image"/></summary>
         ''' <param name="a">A <see cref="IconOrBitmap"/></param>
-        ''' <returns><see cref="Drawing.Image"/> that represents by this instance. It is either <see cref="Image"/> or <see cref="Icon"/>.<see cref="Icon.ToBitmap">ToBitmap</see></returns>
+        ''' <returns><see cref="Drawing.Image"/> that represents by this instance. It is either <see cref="Image"/> or <see cref="Icon"/>.<see cref="Icon.ToBitmap">ToBitmap</see>; null when <paramref name="a"/> is null.</returns>
         ''' <seelaso cref="Icon"/>
+        ''' <version version="1.5.3">Fix: <see cref="NullReferenceException"/> when <paramref name="a"/> is null. Now returns null instead.</version>
         Overloads Shared Widening Operator CType(ByVal a As IconOrBitmap) As Icon
+            if a is nothing then return nothing
             Return a.Icon
         End Operator
         ''' <summary>Converts <see cref="T1orT2"/>[<see cref="Bitmap"/>, <see cref="Icon"/>] to <see cref="IconOrBitmap"/></summary>

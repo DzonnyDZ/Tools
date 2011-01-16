@@ -39,6 +39,8 @@ Namespace CollectionsT.GenericT
 
     ''' <summary>Implements <see cref="IEnumerator(Of T)"/> tha unifies more <see cref="IEnumerator(Of T)"/>s</summary>
     ''' <typeparam name="T">Type of item</typeparam>
+    ''' <version version="1.5.3">Added support for united enumerators to be null. Such enumerators are skipped. Previously caused <see cref="NullReferenceException"/> in <see cref="UnionEnumerator.MoveNext"/></version>
+    ''' <version version="1.5.3">Fix: <see cref="NullReferenceException"/> can occur at the end of enumeration in <see cref="UnionEnumerator.MoveNext"/>.</version>
     Public Class UnionEnumerator(Of T)
         Implements IEnumerator(Of T)
         ''' <summary>Enumerators to unionize are enumerated through this enumerator</summary>
@@ -93,15 +95,27 @@ Namespace CollectionsT.GenericT
             End Get
         End Property
 
+        Private finished As Boolean
+
         ''' <summary>Advances the enumerator to the next element of the collection.</summary>
         ''' <returns>true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.</returns>
         ''' <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created. </exception>
+        ''' <version version="1.5.3">Addes support for united enumerators to be null. Such enumerators are skipped</version>
+        ''' <version version="1.5.3">Fix: <see cref="NullReferenceException"/> can occur at the end of enumeration.</version>
         Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
+            If finished Then Return False
+            While Enumerators.Current Is Nothing
+                If Not Enumerators.MoveNext Then
+                    finished = True
+                    Return False
+                End If
+            End While
             If Enumerators.Current.MoveNext Then
                 Return True
             ElseIf Enumerators.MoveNext Then
                 Return MoveNext()
             Else
+                finished = True
                 Return False
             End If
         End Function
@@ -115,6 +129,7 @@ Namespace CollectionsT.GenericT
             End While
             Enumerators.Reset()
             Enumerators.MoveNext()
+            finished = False
         End Sub
 
 

@@ -1411,4 +1411,7 @@
   <data name="IsNotAllowed" xml:space="preserve">
     <value>{0} is not allowed</value>
   </data>
+  <data name="InvalidValueReturnedByLoopFunction" xml:space="preserve">
+    <value>Invalid value {0} returned by loop function.</value>
+  </data>
 </root>
