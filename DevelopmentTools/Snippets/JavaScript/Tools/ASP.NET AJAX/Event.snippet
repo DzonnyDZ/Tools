@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Event</Title>
+            <Author>Đonny</Author>
+            <Description>Adds code for ASP.NET AJAX event to prototype</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>name</ID>
+                    <ToolTip>Replace with name of the event.</ToolTip>
+                    <Default>eventHappened</Default>
+                </Literal>
+                <Literal>
+                    <ID>type</ID>
+                    <ToolTip>Replace with type of the delegate.</ToolTip>
+                    <Default>Sys.EventArgs</Default>
+                </Literal>
+                <Literal>
+                    <ID>summary</ID>
+                    <ToolTip>Summary description of the property</ToolTip>
+                    <Default>Raised when something happens</Default>
+                </Literal>
+                <Literal>
+                    <ID>senderType</ID>
+                    <ToolTip>Type of owning object</ToolTip>
+                    <Default>Object</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="JScript">
+                <![CDATA[
+add_$name$: function add_$name$(handler) {
+    /// <summary>$summary$</summary>
+    /// <param name="handler" type="Function">Event handler of type <see cref="$type$"/></param>
+    this.get_events().addHandler("$name$", handler);
+},
+remove_$name$: function remove_$name$(handler) {
+    /// <summary>Removes handler of the <see cref="$name$"/> event</summary>
+    /// <param name="handler" type="Function">The handler to be removed (type <see cref="$type$"/>)</param>
+    this.get_events().removeHandler("$name$", handler);
+},
+_raise_$name$: function raise_$name$(sender, e) {
+    /// <summary>Raises the <see cref="$name$"/> event</summary>
+    /// <param name="sender" type="$senderType$">Source of the event</param>
+    /// <param name="e" type="$type$">Event arguments</param>
+    var handler = this.get_events().getHandler("$name$");
+    if (handler) handler(sender, e);
+},
+          ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
+

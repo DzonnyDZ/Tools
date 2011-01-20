@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>ViewState property</Title>
+            <Author>Đonny</Author>
+            <Description>Adds ViewState-backed property</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Imports>
+                <Import>
+                    <Namespace>System.ComponentModel</Namespace>
+                </Import>
+            </Imports>
+            <Declarations>
+                <Literal>
+                    <ID>Summary</ID>
+                    <ToolTip>Summary documentation for the property</ToolTip>
+                    <Default>Gets or sets value</Default>
+                </Literal>
+                <Literal>
+                    <ID>Default</ID>
+                    <ToolTip>Default value of the property</ToolTip>
+                    <Default>null</Default>
+                </Literal>
+                <Literal>
+                    <ID>Type</ID>
+                    <ToolTip>Type of the property</ToolTip>
+                    <Default>string</Default>
+                </Literal>
+                <Literal>
+                    <ID>Name</ID>
+                    <ToolTip>Name of the property</ToolTip>
+                    <Default>Property</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="CSharp" Delimiter="$">
+<![CDATA[/// <summary>$Summary$</summary>
+[DefaultValue($Default$)]
+public $Type$ $Name$ { get { return ($Type$)(ViewState["$Name$"] ?? $Default$); } set { ViewState["$Name$"] = value; } }]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
