@@ -293,6 +293,30 @@ condition:  If Not condition(i) Then
 
     ''' <summary>This class allows to turn any <see cref="Integer"/>-based VB-style for loop to <see cref="IEnumerable(Of T)"/>/<see cref="IEnumerator(Of T)"/></summary>
     ''' <typeparam name="T">Type of values being returned from the loop</typeparam>
+    ''' <remarks><example>Shows a C# iterator code and how to simulate it in VB using <see cref="ForLoopCollection(Of T)"/>
+    ''' <code lang="C#"><![CDATA[
+    ''' public static IEnumerable<int> SplitToInts(string commaSeparated){
+    '''     if(commaSeparated == null) throw new ArgumentNullException("commaSeparated");
+    '''     var parts = commaSeparated.Split(',');
+    '''     for(var i = 0; i < parts.Length; i++){
+    '''         if(string.IsNullOrEmpty(parts[i])) continue;
+    '''         yield return int.Parse(parts[i]);
+    '''     }
+    ''' }
+    ''' ]]></code><code><![CDATA[
+    ''' Public Shared Function SplitToInts(ByVal commaSeparated As String) As IEnumerable(Of Integer)
+    '''     If commaSeparated Is Nothing Then Throw New ArgumentNullException("commaSeparated")
+    '''     Dim parts = commaSeparated.Split(","c)
+    '''     Return New ForLoopCollection(Of Integer)(0, parts.Length - 1,
+    '''                                              Function(ByRef i, ByRef yield)
+    '''                                                  If parts(i) = "" Then Return LoopState.Continue
+    '''                                                  yield = Integer.Parse(parts(i))
+    '''                                                  Return LoopState.Next
+    '''                                              End Function
+    '''                                             )
+    ''' End Function
+    ''' ]]></code><note>The VB sample behavior is actually better than of C# one:
+    ''' The <see cref="ArgumentNullException"/> is potentially thrown by C# at first call to <see cref="System.Collections.IEnumerator.MoveNext"/> while VB throws the error immediatelly on <c>SplitToInts</c> call.</note></example></remarks>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
     Public Class ForLoopCollection(Of T)
         Inherits ForLoopCollection(Of T, Integer)
