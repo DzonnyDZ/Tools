@@ -28,3 +28,23 @@ bool EnumCore::HasFlagSet(IDictionary<TKey, TValue>^ dic, TValue flag){
         if(item.Value->HasFlag(flag)) return true;
     return false;
 }
+
+generic <class T> where T:Enum, gcnew()
+T EnumCore::Parse(String^ value){
+    return (T)Enum::Parse(T::typeid, value);
+}
+
+generic <class T> where T:Enum, gcnew()
+T EnumCore::Parse(String^ value, bool ignoreCase){
+    return (T)Enum::Parse(T::typeid, value, ignoreCase);
+}
+
+generic <class T> where T:Enum, value class
+bool EnumCore::TryParse(String^ value, T% result){
+    return Enum::TryParse<T>(value, result);
+}
+
+generic <class T> where T:Enum, value class
+bool EnumCore::TryParse(String^ value, bool ignoreCase, T% result){
+    return Enum::TryParse<T>(value, ignoreCase, result);
+}

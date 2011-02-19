@@ -30,8 +30,8 @@ generic <class T> where T:Delegate
 array<T>^ DelegateCore::InvocationList(T delegate){
     if(delegate == nullptr) throw gcnew ArgumentNullException("source");
     array<Delegate^>^ invList = delegate->GetInvocationList();
-    array<T>^ ret = gcnew array<T>(invList.Length);
-    for(int i = 0; i < invList.Length; i++)
+    array<T>^ ret = gcnew array<T>(invList->Length);
+    for(int i = 0; i < invList->Length; i++)
         ret[i] = (T)invList[i];
     return ret;
 }

@@ -119,6 +119,11 @@
 "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
 move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <UpdateFileHashes>false</UpdateFileHashes>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <VerboseOutput>false</VerboseOutput>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">
     <ClCompile>
