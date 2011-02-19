@@ -69,9 +69,9 @@
             SetValue($propertyName$Property, value)
         End Set
     End Property
-    ''' <summary>Metadata of the <see cref="$propertyName$"/> property</summary>
-    Public Shared ReadOnly $propertyName$Property As DependencyProperty = _
-                           DependencyProperty.Register("$propertyName$", GetType($propertyType$), GetType($ownertype$), _
+    ''' <summary>Metadata of the <see cref="$propertyName$"/> dependency property</summary>
+    Public Shared ReadOnly $propertyName$Property As DependencyProperty =
+                           DependencyProperty.Register("$propertyName$", GetType($propertyType$), GetType($ownertype$),
                            New FrameworkPropertyMetadata($defaultValue$, AddressOf On$propertyName$Changed))
     ''' <summary>Called when value of the <see cref="$propertyName$"/> property changes for any <see cref="$ownertype$"/></summary>
     ''' <param name="d">A <see cref="$ownertype$"/> <see cref="$propertyName$"/> has changed for</param>
