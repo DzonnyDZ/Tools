@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NoEmptyRemarks?>
+<!--<?extension XsdGenerator.Extensions.OnChangingCall?>-->
+<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.RemoveTypeAttribute" type="System.Diagnostics.DebuggerStepThroughAttribute"?>
+<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnAfterInitCall?>
+<xs:schema id="XmlTemplateSettings"
+    targetNamespace="urn:eos-ksi/KolUni/Reporting/Xml"
+    elementFormDefault="qualified"
+    xmlns="urn:eos-ksi/KolUni/Reporting/Xml"
+    xmlns:xt="urn:eos-ksi/KolUni/Reporting/Xml"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:element name="XmlTemplateSettings" type="XmlTemplateSettings"/>
+    <xs:complexType name="XmlTemplateSettings">
+        <xs:attribute name="EnableDocumentFunction" type="xs:boolean" use="optional" default="false"/>
+        <xs:attribute name="EnableScript" type="xs:boolean" use="optional" default="false"/>
+        <xs:attribute name="DataSetNamespace" type="xs:string" use="optional" default=""/>
+        <xs:attribute name="DataSetName" type="xs:string" use="optional" default=""/>
+        <xs:attribute name="TableName" type="xs:string" use="optional" default=""/>
+        <xs:attribute name="DatasetNamespacePrefix" type="xs:string" use="optional" default=""/>
+        <xs:attribute name="DefaultExtension" type="xs:string" use="optional" default="xml"/>
+        <xs:attribute name="Filter" type="xs:string" use="optional" default="XML files (*.xml)|*.xml"/>
+    </xs:complexType>
+
+</xs:schema>

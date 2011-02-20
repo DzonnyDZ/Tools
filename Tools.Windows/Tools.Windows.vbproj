@@ -197,6 +197,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Windows\Forms\Derived controls\PropertyGridEditor.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Windows\WPF\Controls\DataGridNumericUpDownColumn.vb" />
     <Compile Include="Windows\WPF\Converters\ConverterResources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -388,6 +391,10 @@
       <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LogicalName>Tools.WindowsT.WPF.Dialogs.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Derived controls\PropertyGridEditor.resx">
+      <DependentUpon>PropertyGridEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\WPF\Converters\ConverterResources.cs.resx">
       <DependentUpon>ConverterResources.resx</DependentUpon>

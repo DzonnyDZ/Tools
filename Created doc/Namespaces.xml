@@ -4,7 +4,9 @@
     <members>
         <member name="N:">
             <summary>ĐTools project root unnamed namespace</summary>
-            <remarks>Root namespace should not contain any members directly. All tools hsould be nested within the <see cref="N:Tools"/> namespace.</remarks>
+            <remarks>
+                Root namespace should not contain any members directly. All tools hsould be nested within the <see cref="N:Tools"/> namespace.
+            </remarks>
         </member>
         <member name="N:Tools">
             <summary>Root namespace for all tools in the ĐTools project</summary>
@@ -149,7 +151,8 @@
         <!--Experimental-->
         <member name="N:Tools.Experimental">
             <summary>This namespace contains tools that are in very unstable stage of development. Those tools come from the Experimental.dll assembly.</summary>
-            <remarks>Everything in this namespace may be changed without noticing.
+            <remarks>
+                Everything in this namespace may be changed without noticing.
                 <para>This namespace serves 2 purposes:</para>
                 <list type="number">
                     <item>Incubator for tools in early development stage where it is not clear where the tool will fit and even if it will be created.</item>
@@ -240,7 +243,9 @@
         </member>
         <member name="N:Tools.MetadataT.ExifT">
             <summary>Contains classes related to reading and manipulating Exif metadata.</summary>
-            <version version="1.5.3">Types <c>URational</c> and <c>SRational</c> moved to namespace <see cref="N:Tools.NumericsT"/>.</version>
+            <version version="1.5.3">
+                Types <c>URational</c> and <c>SRational</c> moved to namespace <see cref="N:Tools.NumericsT"/>.
+            </version>
         </member>
         <member name="N:Tools.MetadataT.IptcT">
             <summary>Contains classes realetd to reading and manipulating Iptc metadata.</summary>
@@ -265,6 +270,15 @@
             </remarks>
             <seealso cref="N:System.Reflection"/>
             <seealso cref="T:Tools.TypeTools"/>
+        </member>
+        <!--Reporting-->
+        <member name="N:Tools.ReportingT">
+            <summary>Contains classes for generating reports</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+        </member>
+        <member name="N:Tools.ReportingT.ReportingEngineLite">
+            <summary>Contains classes implementing a lightweight reporting engine capable of generating reports from data readers to various outputs</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
         </member>
         <!--ResourcesT-->
         <member name="N:Tools.ResourcesT">
@@ -331,12 +345,18 @@
         </member>
         <member name="N:Tools.VisualStudioT.GeneratorsT">
             <summary>Contains various code generators.</summary>
-            <version version="1.5.2">Renamed from <c>Tools.GeneratorsT</c> to <see cref="N:Tools.VisualStudioT.GeneratorsT"/></version>
-            <version version="1.5.3">Class <c>ServiceProvider</c> removed. Use <see cref="T:Microsoft.VisualStudio.OLE.Interop.IServiceProvider"/> instead.</version>
+            <version version="1.5.2">
+                Renamed from <c>Tools.GeneratorsT</c> to <see cref="N:Tools.VisualStudioT.GeneratorsT"/>
+            </version>
+            <version version="1.5.3">
+                Class <c>ServiceProvider</c> removed. Use <see cref="T:Microsoft.VisualStudio.OLE.Interop.IServiceProvider"/> instead.
+            </version>
         </member>
         <member name="N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator">
             <summary>Contains classes implementing advanced RESX file generator</summary>
-            <version version="1.5.3">This namespace is new in version 1.5.3. Previously it was used only by ResXFileGenerator.exe assembly. Classes from <c>DMKSoftware.CodeGenerators</c> were moved there.</version>
+            <version version="1.5.3">
+                This namespace is new in version 1.5.3. Previously it was used only by ResXFileGenerator.exe assembly. Classes from <c>DMKSoftware.CodeGenerators</c> were moved there.
+            </version>
         </member>
         <member name="N:Tools.VisualStudioT.MacrosT">
             <summary>Visual Studio macros</summary>
@@ -373,10 +393,14 @@
         <!--WindowsT-->
         <member name="N:Tools.WindowsT">
             <summary>Contains GUI-related tools for different technologies.</summary>
-            <remarks>Unlike <see cref="N:System.Windows"/> this namespace does not contain tools related to Windows Presentation Foundation (WPF) directly. Those tools are stored in the <see cref="T:Tools.WindowsT.WPF"/> namespace.</remarks>
+            <remarks>
+                Unlike <see cref="N:System.Windows"/> this namespace does not contain tools related to Windows Presentation Foundation (WPF) directly. Those tools are stored in the <see cref="T:Tools.WindowsT.WPF"/> namespace.
+            </remarks>
             <seealso cref="N:System.Windows"/>
             <seealso cref="N:Tools.WindowsT.WPF"/>
-            <version version="1.5.2">Whole namespace and all sub-namespaces with exception of <see cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/> relocated to newly created assembly Tools.Windows.</version>
+            <version version="1.5.2">
+                Whole namespace and all sub-namespaces with exception of <see cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/> relocated to newly created assembly Tools.Windows.
+            </version>
         </member>
         <!--WindowsT.FormsT-->
         <member name="N:Tools.WindowsT.FormsT">
@@ -384,7 +408,9 @@
             <seealso cref="N:System.Windows.Forms"/>
         </member>
         <member name="N:Tools.WindowsT.FormsT.UtilitiesT">
-            <summary>Contains utility classes related to <see cref="N:System.Windows.Forms">Windows Forms</see></summary>
+            <summary>
+                Contains utility classes related to <see cref="N:System.Windows.Forms">Windows Forms</see>
+            </summary>
         </member>
         <member name="N:Tools.WindowsT.FormsT.VisualStylesT">
             <summary>Contains classes for rendering Windows Forms controls with and without visual styles</summary>
@@ -453,5 +479,5 @@
             <summary>Contains XPath-related tools</summary>
             <seealso cref="N:System.Xml.XPath"/>
         </member>
-    </members>    
+    </members>
 </doc>

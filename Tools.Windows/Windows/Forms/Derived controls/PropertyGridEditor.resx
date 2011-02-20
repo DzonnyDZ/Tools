@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -112,99 +112,15 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DisplayMember_d" xml:space="preserve">
-    <value>Gets or sets the property to display for internal ComboBox.</value>
-  </data>
-  <data name="ValueMember_d" xml:space="preserve">
-    <value>Gets or sets the property to use as the actual value for the items in internal ComboBox.</value>
-  </data>
-  <data name="DataSource_d" xml:space="preserve">
-    <value>Gets or sets the data source for internal ComboBox</value>
-  </data>
-  <data name="DataBindings_d" xml:space="preserve">
-    <value>Gets the data bindings for the control.</value>
-  </data>
-  <data name="BindingContextChanged_d" xml:space="preserve">
-    <value>Fired when BindingContextChanged of internal ComboBox occurs</value>
-  </data>
-  <data name="ListOfAllItemsInLabel" xml:space="preserve">
-    <value>List of all items in label</value>
-  </data>
-  <data name="Text_LinkLabelItem_d" xml:space="preserve">
-    <value>Text to be show in place of this item</value>
-  </data>
-  <data name="LinkData_d" xml:space="preserve">
-    <value>Data associated with this link</value>
-  </data>
-  <data name="Description_d" xml:space="preserve">
-    <value>Stores value for the Link.Description of Link that represents this LinkItem</value>
-  </data>
-  <data name="Name_d" xml:space="preserve">
-    <value>Stores value for the Link.Name of Link that represents this LinkItem</value>
-  </data>
-  <data name="Tag_d" xml:space="preserve">
-    <value>Stores value for the Link.Tag of Link that represents this LinkItem</value>
-  </data>
-  <data name="Visited_d" xml:space="preserve">
-    <value>Stores value for the Link.Visited of Link that represents this LinkItem</value>
-  </data>
-  <data name="Enabled_d" xml:space="preserve">
-    <value>Stores value for the Link.Enabled of Link that represents this LinkItem</value>
-  </data>
-  <data name="LinkURI_d" xml:space="preserve">
-    <value>URI of target of the link</value>
-  </data>
-  <data name="LinkPath_d" xml:space="preserve">
-    <value>Path (string representation of URI) of target of the link</value>
-  </data>
-  <data name="AutoText_d" xml:space="preserve">
-    <value>Get or sets value indicating if text automatically displays value of progress bar</value>
-  </data>
-  <data name="AutoTextFormat_d" xml:space="preserve">
-    <value>Format string used to format value when displayed as text of control automatically.</value>
-  </data>
-  <data name="ValueChanged_d" xml:space="preserve">
-    <value>Occurs when Value changes</value>
-  </data>
-  <data name="AutoTextChanged_d" xml:space="preserve">
-    <value>Ocuurs when AutoText changes</value>
-  </data>
-  <data name="AutoTextFormatChanged_d" xml:space="preserve">
-    <value>Ocuurs when AutoTextFormat changes</value>
-  </data>
-  <data name="TextAlign_d" xml:space="preserve">
-    <value>Gets or sets the alignment of text in the label.</value>
-  </data>
-  <data name="AutoSize_d" xml:space="preserve">
-    <value>Gets or sets a value indicating whether the control is automatically resized to display its entire contents.</value>
-  </data>
-  <data name="KeyPreview_d" xml:space="preserve">
-    <value>Gets or sets a value indicating whether the form will receive key events before the event is passed to the control that has focus.</value>
-  </data>
-  <data name="KeyPreviewDefaultValue_d" xml:space="preserve">
-    <value>Contains default value of the KeyPreview property.</value>
-  </data>
-  <data name="Help_c" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="HelpNamespace_d" xml:space="preserve">
-    <value>A value specifying the name of the Help file associated with this System.Windows.Forms.HelpProvider object.</value>
-  </data>
-  <data name="HelpKeyword_d" xml:space="preserve">
-    <value>The Help keyword for the control.</value>
-  </data>
-  <data name="HelpNavigator_d" xml:space="preserve">
-    <value>The current System.Windows.Forms.HelpNavigator setting for the control.</value>
-  </data>
-  <data name="HelpString_d" xml:space="preserve">
-    <value>Contents of the pop-up Help window for the specified control.</value>
-  </data>
-  <data name="ShowHelp_d" xml:space="preserve">
-    <value>Inicates whether the specified control's Help should be displayed.</value>
-  </data>
+  <metadata name="hlpHelp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

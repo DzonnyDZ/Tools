@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NoEmptyRemarks?>
+<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnChangingCall?>
+<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.RemoveTypeAttribute" type="System.Diagnostics.DebuggerStepThroughAttribute"?>
+<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnAfterInitCall?>
+<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.AddPropertyAttribute" PropertyName="separator_" TypeName="CsvTemplateSettings" Name="System.ComponentModel.BrowsableAttribute" p-0="System.Boolean False"?>
+<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.AddPropertyAttribute" PropertyName="separator_" TypeName="CsvTemplateSettings" Name="System.ComponentModel.EditorBrowsableAttribute" p-0="System.ComponentModel.EditorBrowsableState Never"?>
+<xs:schema id="CsvTemplateSettings"
+                  targetNamespace="urn:eos-ksi/KolUni/Reporting/Csv"
+                  elementFormDefault="qualified"
+                  xmlns="urn:eos-ksi/KolUni/Reporting/Csv"
+                  xmlns:csv="urn:eos-ksi/KolUni/Reporting/Csv"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="CsvTemplateSettings" type="CsvTemplateSettings">
+        <xs:annotation>
+            <xs:documentation>Nastavení šablony CSVTemplate</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CsvTemplateSettings">
+        <xs:annotation>
+            <xs:documentation>Nastavení šablony CSVTemplate</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="encoding" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Kódování. Pokud není vyplněno, použije se výchozí kódování systému. Speciální hodnota System, též znamená výchozí kódování systému.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="culture" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>
+                    Kultura použitá pro výstup dat. Pokud není vyplněno použije se invariantní.
+                    Speciální hodnoty: Current - CurrentCulture, CurrentUI - CurrentUICulture, System - InstalledUICulture, Invariant - InvariantCulture
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="number-format" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Formát čísle na výstupu ( v kultuře culture). Pokud není vyplněno, použije se výchozí.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="date-format" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Formát datumů na výstupu (v kultuře culture). Pokud není vyplněno, použije se výchozí.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="time-format" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Formát časů na výstupu (v kultuře culture). Pokud není vyplněno, použije se výchozí. Používá Tools.TimeSpanFormattable (ne System.TimeSpan)!</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="separator_" use="required">
+            <xs:annotation>
+                <xs:documentation>Oddělovač sloupců</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:union memberTypes="char">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="\t"/>
+                            <xs:enumeration value="\s"/>
+                            <xs:enumeration value="System">
+                                <xs:annotation>
+                                    <xs:documentation>Výchozí separátor podle kultury</xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-qualifier" use="required" type="char">
+            <xs:annotation>
+                <xs:documentation>Textový kvalifikátor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="text-qualifier-usage" use="optional" default="as-needed">
+            <xs:annotation>
+                <xs:documentation>Indikuje kdy bude textový kvalifikátor použit</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="as-needed">
+                        <xs:annotation>
+                            <xs:documentation>Jen když je potřeba</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="always">
+                        <xs:annotation>
+                            <xs:documentation>Vždy</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="always-on-text">
+                        <xs:annotation>
+                            <xs:documentation>Vždy na řetězcové hodnoty. na čísla a data podle potřeby.</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-qualifier-escape" use="optional" default="double">
+            <xs:annotation>
+                <xs:documentation>Jak escapovat textový kvalifikátor?</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="double">
+                        <xs:annotation>
+                            <xs:documentation>Zdvojit jej</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="escape">
+                        <xs:annotation>
+                            <xs:documentation>Předcházet jej \</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="html">
+                        <xs:annotation>
+                            <xs:documentation>Nahradit HTML entitou</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="do-nothing">
+                        <xs:annotation>
+                            <xs:documentation>Nechat na pokoji</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="new-line" use="optional" default="CrLf">
+            <xs:annotation>
+                <xs:documentation>Jak značit nový řádek</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="CrLf"/>
+                    <xs:enumeration value="LineFeed"/>
+                    <xs:enumeration value="CarriageReturn"/>
+                    <xs:enumeration value="NextLine"/>
+                    <xs:enumeration value="FormFeed"/>
+                    <xs:enumeration value="LineSeparator"/>
+                    <xs:enumeration value="ParagraphSeparator"/>
+                    <xs:enumeration value="System">
+                        <xs:annotation>
+                            <xs:documentation>Použít výchozí hodnotu aktuální platformy</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="nl-escape" use="optional" default="replace-all-with-escape">
+            <xs:annotation>
+                <xs:documentation>Jak se chovat k novým řádkům v textu</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="replace-all-with-escape">
+                        <xs:annotation>
+                            <xs:documentation>Nahradit všechny příslušnou escape sekvencí</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="replace-with-escape">
+                        <xs:annotation>
+                            <xs:documentation>Nahredit jen new-line příslušnou escape sequencí</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="escape-all">
+                        <xs:annotation>
+                            <xs:documentation>Předřadit \ všem (CrLf je nahrazeno \Cr\Lf)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="escape">
+                        <xs:annotation>
+                            <xs:documentation>Předřadit \ jen před new-line (CrLf je nahrazeno \Cr\Lf)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="special-replace">
+                        <xs:annotation>
+                            <xs:documentation>Nahradit speciálním znakem (jen new-line)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="special-replace-all">
+                        <xs:annotation>
+                            <xs:documentation>Nahradit speciálním znakem (všechny stejným)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="strip">
+                        <xs:annotation>
+                            <xs:documentation>Odstranit (jen new-line)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="strip-all">
+                        <xs:annotation>
+                            <xs:documentation>Odstranit všechny</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="html">
+                        <xs:annotation>
+                            <xs:documentation>Nahradit HTML entitou (jen new-line)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="html-all">
+                        <xs:annotation>
+                            <xs:documentation>Nahradit všechny HTML entitou</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="do-nothing">
+                        <xs:annotation>
+                            <xs:documentation>Nedělat nic, jen použit textový kvalifikátor</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="special-string" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Speciální řetězec (použit k nahrazení konce řádku). Escapován podle text-qualifier-escape. escape předřadí \ před celý řetětzec, ne před každý znak.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="header" type="xs:boolean" use="optional" default="false">
+            <xs:annotation>
+                <xs:documentation>Zapsat názvy sloupců do záhlaví</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="footer" type="xs:boolean" use="optional" default="false">
+            <xs:annotation>
+                <xs:documentation>Zapsat názvy sloupců do zápatí</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="header-size" type="xs:integer" use="optional" default="0">
+            <xs:annotation>
+                <xs:documentation>Počet řádků záhlaví ve sloupci šablony (platné jen pokud je soubor šablony použit)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="null-value" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Řetězec je vložen místo NULL hodnoty.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="char"> 
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1"/>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

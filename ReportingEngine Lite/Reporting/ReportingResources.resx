@@ -117,94 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DisplayMember_d" xml:space="preserve">
-    <value>Gets or sets the property to display for internal ComboBox.</value>
+  <data name="AutoWidth_d" xml:space="preserve">
+    <value>Zadejte sloupce, u nichž má být nastavena automatická šířka po vyplnění všech řádků. Zadejte:
+• * pro nastavení u všech vyplňovaných sloupců
+• čísla (např. 1,2,5).
+• rozmezí (např. 1-6, 12-22).
+• neomezené rozmezí (např. 12-) pro všechny vyplňované sloupce od 12 výše.
+• ponechte prázdné a nenastaví se nic.
+Všechna čísla sloupců jsou absolutní v rámci listu (1-based)</value>
   </data>
-  <data name="ValueMember_d" xml:space="preserve">
-    <value>Gets or sets the property to use as the actual value for the items in internal ComboBox.</value>
+  <data name="Col1_d" xml:space="preserve">
+    <value>Zadejte 1-based číslo sloupce, kam se budou data zapisovat (buňky vlevo budou tvořt záhlaví řádků)</value>
   </data>
-  <data name="DataSource_d" xml:space="preserve">
-    <value>Gets or sets the data source for internal ComboBox</value>
+  <data name="ColumnNameRow_d" xml:space="preserve">
+    <value>Číslo řádku (1-based) kam zapsat název sloupce z databáze (0 a nezapíše se nikam)</value>
   </data>
-  <data name="DataBindings_d" xml:space="preserve">
-    <value>Gets the data bindings for the control.</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\excel.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BindingContextChanged_d" xml:space="preserve">
-    <value>Fired when BindingContextChanged of internal ComboBox occurs</value>
+  <data name="InsertRows_d" xml:space="preserve">
+    <value>Řádky budou vkládány místo aby byly přepisovány. Omožňuje zachovat zápatí.</value>
   </data>
-  <data name="ListOfAllItemsInLabel" xml:space="preserve">
-    <value>List of all items in label</value>
+  <data name="List_d" xml:space="preserve">
+    <value>Zadejte název listu nebo 1-based index, kam se budou data zapisovat (nechte prázdné a použije se první list)</value>
   </data>
-  <data name="Text_LinkLabelItem_d" xml:space="preserve">
-    <value>Text to be show in place of this item</value>
+  <data name="PrintArea_d" xml:space="preserve">
+    <value>Zadejte ve formátu:
+x1;x2-y1;y2
+• x1 - sloupec vzhledem k prvnímu vyplňovanému
+• x2 - sloupec vzhledem k poslednímu vyplňovanému
+• y1 - řádek vzhledem k prvnímu vyplňovanému
+• y2 - řádek vzhledem k poslednímu vyplňovanému
+Relativní čísla mají tento význam:
+• 0 - řádek/sloupec ke kterému se vztakují
+• +1, +2, ... posun dolů/doprava
+• -1, -2, ... posun nahoru/doleva
+• 1, 2, ... absolutní vzhledem k listu
+Ponechte prázdné a oblast tisku nebude nastavena.</value>
   </data>
-  <data name="LinkData_d" xml:space="preserve">
-    <value>Data associated with this link</value>
+  <data name="Row1_d" xml:space="preserve">
+    <value>Zadejte 1-based číslo 1.řádku pro zápis (buňky výše budou tvořit záhlaví)</value>
   </data>
-  <data name="Description_d" xml:space="preserve">
-    <value>Stores value for the Link.Description of Link that represents this LinkItem</value>
+  <data name="SkipFilled_d" xml:space="preserve">
+    <value>Sloupce v nichž je vyplněna hodnota nebo vzorec budou přeskočeny místo aby byly zapsány (rozhodující je stav v 1. vyplňovaném řádku)</value>
   </data>
-  <data name="Name_d" xml:space="preserve">
-    <value>Stores value for the Link.Name of Link that represents this LinkItem</value>
+  <data name="SkipFilledNames_d" xml:space="preserve">
+    <value>Nezapisovat název sloupce, pokud je již buňka vyplněna</value>
   </data>
-  <data name="Tag_d" xml:space="preserve">
-    <value>Stores value for the Link.Tag of Link that represents this LinkItem</value>
+  <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
   </data>
-  <data name="Visited_d" xml:space="preserve">
-    <value>Stores value for the Link.Visited of Link that represents this LinkItem</value>
-  </data>
-  <data name="Enabled_d" xml:space="preserve">
-    <value>Stores value for the Link.Enabled of Link that represents this LinkItem</value>
-  </data>
-  <data name="LinkURI_d" xml:space="preserve">
-    <value>URI of target of the link</value>
-  </data>
-  <data name="LinkPath_d" xml:space="preserve">
-    <value>Path (string representation of URI) of target of the link</value>
-  </data>
-  <data name="AutoText_d" xml:space="preserve">
-    <value>Get or sets value indicating if text automatically displays value of progress bar</value>
-  </data>
-  <data name="AutoTextFormat_d" xml:space="preserve">
-    <value>Format string used to format value when displayed as text of control automatically.</value>
-  </data>
-  <data name="ValueChanged_d" xml:space="preserve">
-    <value>Occurs when Value changes</value>
-  </data>
-  <data name="AutoTextChanged_d" xml:space="preserve">
-    <value>Ocuurs when AutoText changes</value>
-  </data>
-  <data name="AutoTextFormatChanged_d" xml:space="preserve">
-    <value>Ocuurs when AutoTextFormat changes</value>
-  </data>
-  <data name="TextAlign_d" xml:space="preserve">
-    <value>Gets or sets the alignment of text in the label.</value>
-  </data>
-  <data name="AutoSize_d" xml:space="preserve">
-    <value>Gets or sets a value indicating whether the control is automatically resized to display its entire contents.</value>
-  </data>
-  <data name="KeyPreview_d" xml:space="preserve">
-    <value>Gets or sets a value indicating whether the form will receive key events before the event is passed to the control that has focus.</value>
-  </data>
-  <data name="KeyPreviewDefaultValue_d" xml:space="preserve">
-    <value>Contains default value of the KeyPreview property.</value>
-  </data>
-  <data name="Help_c" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="HelpNamespace_d" xml:space="preserve">
-    <value>A value specifying the name of the Help file associated with this System.Windows.Forms.HelpProvider object.</value>
-  </data>
-  <data name="HelpKeyword_d" xml:space="preserve">
-    <value>The Help keyword for the control.</value>
-  </data>
-  <data name="HelpNavigator_d" xml:space="preserve">
-    <value>The current System.Windows.Forms.HelpNavigator setting for the control.</value>
-  </data>
-  <data name="HelpString_d" xml:space="preserve">
-    <value>Contents of the pop-up Help window for the specified control.</value>
-  </data>
-  <data name="ShowHelp_d" xml:space="preserve">
-    <value>Inicates whether the specified control's Help should be displayed.</value>
+  <data name="XML" xml:space="preserve">
+    <value>XML</value>
   </data>
 </root>

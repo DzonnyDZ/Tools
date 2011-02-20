@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{855B4F94-9AD7-49A5-A75D-6FC8B1892A58}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Tools</RootNamespace>
+    <AssemblyName>ReportingEngine Lite</AssemblyName>
+    <MyType>Windows</MyType>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <OptionInfer>On</OptionInfer>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>ReportingEngine Lite.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>My Project\AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>My Project\Version.vb</Link>
+    </Compile>
+    <Compile Include="SingleTypeDescriptionProvider.vb" />
+    <Compile Include="WrapPropertyDescriptor.vb" />
+    <None Include="..\SharedFiles\Tools.snk">
+      <Link>My Project\Tools.snk</Link>
+    </None>
+    <Compile Include="ListLog.vb" />
+    <Compile Include="Reporting\Csv\CsvTemplateSettings.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CsvTemplateSettings.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\SimpleXls\SimpleXlsTemplateSettings.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleXlsTemplateSettings.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Csv\CSVSettingsEditor.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporting\Csv\CsvTemplate.vb" />
+    <Compile Include="Reporting\Csv\CsvTemplateSettings.user.vb" />
+    <Compile Include="Reporting\IReportTemplate.vb" />
+    <Compile Include="Reporting\ReportingResources.Designer.vb">
+      <DependentUpon>ReportingResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Reporting\SimpleXls\SimpleXlsTemplate.vb" />
+    <Compile Include="Reporting\SimpleXls\SimpleXlsTemplateSettings.user.vb" />
+    <Compile Include="Reporting\XML\XMLTemplate.vb" />
+    <Compile Include="Reporting\XML\XMLTemplateSettings.user.vb" />
+    <Compile Include="Reporting\XML\XMLTemplateSettings.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XMLTemplateSettings.xsd</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Resources\ReportPostProcessingFile.vb">
+      <LogicalName>Tools.ReportingT.ReportingEngineLite.ReportPostProcessingFile.vb</LogicalName>
+    </EmbeddedResource>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reporting\Csv\CsvTemplateSettings.xsd">
+      <CustomToolNamespace>ReportingT.ReportingEngineLite</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LogicalName>Tools.ReportingT.ReportingEngineLite.CsvTemplateSettings.xsd</LogicalName>
+      <Generator>XsdCodeGen</Generator>
+      <LastGenOutput>CsvTemplateSettings.vb</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Reporting\Csv\CsvTemplateSettings.xsx">
+      <DependentUpon>CsvTemplateSettings.xsd</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Reporting\ReportingResources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReportingResources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>ReportingT.ReportingEngineLite</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\SimpleXls\SimpleXlsTemplateSettings.xsd">
+      <CustomToolNamespace>ReportingT.ReportingEngineLite</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LogicalName>Tools.ReportingT.ReportingEngineLite.SimpleXlsTemplateSettings.xsd</LogicalName>
+      <Generator>XsdCodeGen</Generator>
+      <LastGenOutput>SimpleXlsTemplateSettings.vb</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Reporting\SimpleXls\SimpleXlsTemplateSettings.xsx">
+      <DependentUpon>SimpleXlsTemplateSettings.xsd</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Reporting\XML\XMLTemplateSettings.xsd">
+      <Generator>XsdCodeGen</Generator>
+      <LastGenOutput>XMLTemplateSettings.vb</LastGenOutput>
+      <CustomToolNamespace>ReportingT.ReportingEngineLite</CustomToolNamespace>
+      <LogicalName>Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.xsd</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Programy\Tools\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools %28Tools\Tools%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
+      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
+      <Name>Tools.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Excel.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>
