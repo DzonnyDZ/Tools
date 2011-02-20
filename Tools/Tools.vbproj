@@ -182,6 +182,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CodeDom.xsd</DependentUpon>
     </Compile>
+    <Compile Include="CodeDom\CompilerErrorException.vb" />
     <Compile Include="CodeDom\Xml2CodeDom.vb" />
     <Compile Include="Collections\Generic\CollectionTools.vb" />
     <Compile Include="Collections\Generic\DictionaryWithEvents.vb" />

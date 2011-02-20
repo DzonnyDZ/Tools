@@ -18,7 +18,7 @@ namespace Tools {
     /// </summary>
     // Tato třída byla automaticky vygenerována pomocí třídy StronglyTypedResourceVuildeEx přes custom tool InternalResXFileCodeGeneratorEx.
     // Pro přidání nebo odebrání člena editujte váš .resx soubor a pak spusťte custom tool InternalResXFileCodeGeneratorEx nebo přebuildujte váš projek ve VS.NET.
-    // Copyright © Dmytro Kryvko 2006-2011 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-2011 (http://tools.codeplex.com)
+    // Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-2011 (http://tools.codeplex.com)
     [System::CodeDom::Compiler::GeneratedCodeAttribute(L"Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx", 
     L"1.5.3.1"), 
     System::Diagnostics::DebuggerNonUserCodeAttribute, 

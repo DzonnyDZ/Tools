@@ -4,6 +4,7 @@
 using namespace System;
 using namespace Tools;
 using namespace System::Collections::Generic;
+using namespace System::Reflection;
 
 EnumCore::EnumCore(){/*do nothing*/}
 
@@ -47,4 +48,16 @@ bool EnumCore::TryParse(String^ value, T% result){
 generic <class T> where T:Enum, value class
 bool EnumCore::TryParse(String^ value, bool ignoreCase, T% result){
     return Enum::TryParse<T>(value, ignoreCase, result);
+}
+
+generic <class T> where T:Enum, gcnew()
+bool EnumCore::IsDefined(T value){
+    return Array::IndexOf(Enum::GetValues(T::typeid), value) >= 0;
+}
+
+generic <class T> where T:Enum, gcnew()
+FieldInfo^ EnumCore::GetConstant(T value){
+    String^ name = Enum::GetName(T::typeid, value);
+    if(name == nullptr) return nullptr;
+    return T::typeid->GetField(name, BindingFlags::Public | BindingFlags::Static);
 }

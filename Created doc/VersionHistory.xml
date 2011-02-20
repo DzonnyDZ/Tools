@@ -51,5 +51,7 @@
     </vh:Version>
     <vh:Version Major="1" Minor="5" Build="3">
         <vh:i>Added assembly Tools.SqlServer. This assembly should be loaded to SQL Sever.</vh:i>
+        <vh:i>Corresponding API from <see cref="N:Tools.SpecialT"/> moved to <see cref="T:Tools.EnumCore"/> and <see cref="T:Tools.DelegateCore"/>.</vh:i>
+        <vh:i>Many new classes for WPF.</vh:i>
     </vh:Version>
 </vh:VersionHistory>

@@ -3,6 +3,7 @@ using namespace System;
 using namespace System::Runtime::CompilerServices;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
+using namespace System::Reflection;
 
 namespace Tools{
     /// <summary>Contains basic extension methods for working with enumerations</summary>
@@ -76,5 +77,22 @@ namespace Tools{
         /// <returns>true if the value parameter was converted successfully; otherwise, false.</returns>
         generic <class T> where T:Enum, value class
         static bool TryParse(String^ value, bool ignoreCase, [Out]T% result);
+
+        /// <summary>Gets value indicating if given value is defined as member of an enumeration</summary>
+        /// <typeparam name="T">Type of the enumeration</typeparam>
+        /// <param name="value">Value to verify</param>
+        /// <returns>True if enumeration <typeparamref name="T"/> contains constant with value <paramref name="value"/>; false otherwise.</returns>
+        /// <remarks>There is a companion method <see cref2="M:Tools.TypeTools.IsDefined(System.ENum)"/> in assembly Tools.</remarks>
+        generic <class T> where T:Enum, gcnew()
+        [Extension]
+        static bool IsDefined(T value);
+
+        /// <summary>Gets <see cref="FieldInfo"/> that represent given constant within an enum</summary>
+        /// <param name="value">Constant to be found</param>
+        /// <returns><see cref="FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <typeparamref name="T"/>; null instead</returns>
+        /// <typeparam name="T"><see cref="Enum"/> to found constant within</typeparam>
+        generic <class T> where T:Enum, gcnew()
+        [Extension]
+        static FieldInfo^ GetConstant(T value);
     };
 }

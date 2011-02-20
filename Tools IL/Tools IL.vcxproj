@@ -150,9 +150,6 @@
     <None Include="Tools.IL.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Type.il">
-      <FileType>Script</FileType>
-    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

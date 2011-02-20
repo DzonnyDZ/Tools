@@ -8,25 +8,7 @@
             <summary>Root namespace for all tools in ĐTools project</summary>
         </member>
         <member name="N:Tools.SpecialT">
-            <summary>Special tools created using techniques not available in ordinary .NET programming languages as Visual Basic or C#</summary>
+            <summary>Special tools created using techniques not available in ordinary .NET programming languages as Visual Basic, C# or C++/CLI</summary>
         </member>
-        <member name="T:Tools.SpecialT.TypeTools">
-            <summary>Contains static methods (extension methods) for working with <see cref="T:System.Type"/> and <see cref="T:System.Enum"/>.</summary>
-        </member>
-        <member name="M:Tools.SpecialT.TypeTools.IsDefined``1(``0)">
-            <summary>Gets value indicating if given value is defined as member of enumeration</summary>
-            <typeparam name="T">Type of the enumeration</typeparam>
-            <param name="value">Value to verify</param>
-            <returns>True if enumeration <typeparamref name="T"/> contains constant with value <paramref name="value"/>; false otherwise.</returns>
-            <remarks>There is a companion method Tools.TypeTools.IsDefined in assembly Tools.</remarks>
-        </member>
-        <member name="M:Tools.SpecialT.TypeTools.GetConstant``1(``0)">
-            <summary>Gets <see cref="T:System.Reflection.FieldInfo"/> that represent given constant within an enum</summary>
-            <param name="value">Constant to be found</param>
-            <returns><see cref="T:System.Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <typeparamref name="T"/>; null instead</returns>
-            <typeparam name="T"><see cref="T:System.Enum"/> to found constant within</typeparam>
-            <exception cref="ArgumentNullException"><paramref name="value"/> is not member of <paramref name="T"/></exception>
-            <version version="1.5.2">Removed <see cref="ArgumentNullException"/> thrown when <paramref name="value"/> is not member of enumeration <typeparamref name="T"/>. Null is returned in such case.</version>
-        </member>
-    </members>
+     </members>
 </doc>
