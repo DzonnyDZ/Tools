@@ -51,7 +51,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
     <DocumentationFile>ReportingEngine Lite.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>

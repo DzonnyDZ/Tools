@@ -1,109 +1,188 @@
-﻿<project schemaVersion="1.6.0.7">
-    <assemblies>
-        <assembly assemblyPath=".\Projects\Metanol2\bin\Debug\Metanol.exe" xmlCommentsPath=".\Projects\Metanol2\bin\Debug\Metanol.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools Experimental.dll" xmlCommentsPath=".\bin\Nightly\Tools Experimental.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools IL.dll" xmlCommentsPath=".\bin\Nightly\Tools IL.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools Win.dll" xmlCommentsPath=".\bin\Nightly\Tools Win.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools.dll" xmlCommentsPath=".\bin\Nightly\Tools.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools.Metadata.dll" xmlCommentsPath=".\bin\Nightly\Tools.Metadata.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools.VisualStudio.CS.dll" xmlCommentsPath=".\bin\Nightly\Tools.VisualStudio.CS.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools.VisualStudio.dll" xmlCommentsPath=".\bin\Nightly\Tools.VisualStudio.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\DevelopmentTools\Macros\bin\Debug\Tools.VisualStudio.Macros.dll" xmlCommentsPath=".\DevelopmentTools\Macros\bin\Debug\Tools.VisualStudio.Macros.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\Tools.Windows.dll" xmlCommentsPath=".\bin\Nightly\Tools.Windows.xml" commentsOnly="False" />
-        <assembly assemblyPath=".\bin\Nightly\TransformCodeGenerator.dll" xmlCommentsPath=".\bin\Nightly\TransformCodeGenerator.xml" commentsOnly="False" />
-    </assemblies>
-    <namespaceSummaries>
-        <namespaceSummaryItem name="" isDocumented="True" />
-        <namespaceSummaryItem name="Tools" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.API" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.API.Messages" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.API.Messages.lParam" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.API.Messages.ReturnValues" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.API.Messages.wParam" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.API.Public" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.CollectionsT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.CollectionsT.GenericT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.CollectionsT.SpecializedT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.ComponentModelT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.DataStructuresT.GenericT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.DiagnosticsT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.DrawingT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.DrawingT.DesignT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.DrawingT.IO.JPEG" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.MetadataT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.Experimental" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.GeneratorsT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.GlobalizationT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.InternalT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.IOt" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.LinqT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.ReflectionT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.ResourcesT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.SpecialT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.TextT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.VisualBasicT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.WindowsT.FormsT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.WindowsT.FormsT.UtilitiesT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.WindowsT.IndependentT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.WindowsT.NativeT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.WindowsT.WPF.ControlsT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.WindowsT.WPF.ConvertersT" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.XamlGeneratedNamespace" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.XmlT.XPathT" isDocumented="True" />
-    </namespaceSummaries>
-    <componentConfigurations>
-        <component id="Cached Framework Comments Index Data" enabled="True" configuration="&lt;component id=&quot;Cached Framework Comments Index Data&quot; type=&quot;SandcastleBuilder.Components.CachedCopyFromIndexComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&#xD;&#xA;&lt;index name=&quot;comments&quot; value=&quot;/doc/members/member&quot; key=&quot;@name&quot; cache=&quot;100&quot;&gt;&#xD;&#xA;{@CachedFrameworkCommentList}&#xD;&#xA;{@CommentFileList}&#xD;&#xA;            &lt;/index&gt;&#xD;&#xA;&lt;copy name=&quot;comments&quot; source=&quot;*&quot; target=&quot;/document/comments&quot; /&gt;&#xD;&#xA;&lt;/component&gt;" />
-        <component id="Cached MSDN URL References" enabled="True" configuration="&lt;component id=&quot;Cached MSDN URL References&quot; type=&quot;SandcastleBuilder.Components.CachedResolveReferenceLinksComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&#xD;&#xA;&lt;cache filename=&quot;{@AppDataFolder}Cache\MsdnUrl.cache&quot; /&gt;&#xD;&#xA;&lt;targets base=&quot;{@SandcastlePath}Data\Reflection&quot; recurse=&quot;true&quot; files=&quot;*.xml&quot; type=&quot;{@SDKLinks}&quot; /&gt;&#xD;&#xA;&lt;targets files=&quot;reflection.xml&quot; type=&quot;{@ProjectLinks}&quot; /&gt;&#xD;&#xA;&lt;/component&gt;" />
-        <component id="Cached Reflection Index Data" enabled="True" configuration="&lt;component id=&quot;Cached Reflection Index Data&quot; type=&quot;SandcastleBuilder.Components.CachedCopyFromIndexComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&#xD;&#xA;&lt;index name=&quot;reflection&quot; value=&quot;/reflection/apis/api&quot; key=&quot;@id&quot; cache=&quot;10&quot;&gt;&#xD;&#xA;  &lt;cache base=&quot;{@SandcastlePath}Data\Reflection&quot; recurse=&quot;true&quot; files=&quot;*.xml&quot; cacheFile=&quot;{@AppDataFolder}Cache\Reflection.cache&quot; /&gt;&#xD;&#xA;  &lt;data files=&quot;reflection.xml&quot; /&gt;&#xD;&#xA;&lt;/index&gt;&#xD;&#xA;&lt;copy name=&quot;reflection&quot; source=&quot;*&quot; target=&quot;/document/reference&quot; /&gt;&#xD;&#xA;&lt;/component&gt;" />
-        <component id="Code Block Component" enabled="True" configuration="&lt;component id=&quot;Code Block Component&quot; type=&quot;SandcastleBuilder.Components.CodeBlockComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&lt;!-- Base path for relative filenames in source attributes&#xD;&#xA;                 (optional) --&gt;&lt;basePath value=&quot;{@ProjectFolder}&quot; /&gt;&lt;!-- Connect to language filter (optional).  If omitted,&#xD;&#xA;                 language filtering is enabled by default. --&gt;&lt;languageFilter value=&quot;true&quot; /&gt;&lt;!-- Code colorizer options (required).&#xD;&#xA;                 Attributes:&#xD;&#xA;                    Language syntax configuration file (required)&#xD;&#xA;                    XSLT style file (required)&#xD;&#xA;                    &quot;Copy&quot; image file URL (required)&#xD;&#xA;                    Default language (optional)&#xD;&#xA;                    Enable line numbering (optional)&#xD;&#xA;                    Enable outlining (optional)&#xD;&#xA;                    Keep XML comment &quot;see&quot; tags within the code (optional)&#xD;&#xA;                    Tab size override (optional, 0 = Use syntax file setting)&#xD;&#xA;                    Use language name as default title (optional) --&gt;&lt;colorizer syntaxFile=&quot;{@SHFBFolder}Colorizer\highlight.xml&quot; styleFile=&quot;{@SHFBFolder}Colorizer\highlight.xsl&quot; copyImageUrl=&quot;../icons/CopyCode.gif&quot; language=&quot;vbnet&quot; numberLines=&quot;false&quot; outlining=&quot;false&quot; keepSeeTags=&quot;true&quot; tabSize=&quot;4&quot; defaultTitle=&quot;true&quot; /&gt;&lt;/component&gt;" />
-    </componentConfigurations>
-    <plugInConfigurations>
-        <plugIn id="Hierarchical Table of Content" enabled="True" configuration="&lt;configuration&gt;&lt;toc minParts=&quot;2&quot; insertBelow=&quot;True&quot; /&gt;&lt;/configuration&gt;" />
-    </plugInConfigurations>
-    <apiFilter>
-        <filter entryType="Namespace" fullName="System" isExposed="True">
-            <filter entryType="Class" fullName="System.Object" filterName="Object" isExposed="False" />
-        </filter>
-    </apiFilter>
-    <ProjectSummary>ĐTools project gathers varoius asorted tools that are missing fon .NET framework.</ProjectSummary>
-    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
-    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
-    <HtmlHelp1xCompilerPath path="" />
-    <HtmlHelp2xCompilerPath path="" />
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <!-- The configuration and platform will be used to determine which
+         assemblies to include from solution and project documentation
+         sources -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{a3ac55c9-e274-40b0-b458-3a3eff9c9d6e}</ProjectGuid>
+    <SHFBSchemaVersion>1.9.0.0</SHFBSchemaVersion>
+    <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual
+         Studio adds them anyway -->
+    <AssemblyName>Documentation</AssemblyName>
+    <RootNamespace>Documentation</RootNamespace>
+    <Name>Documentation</Name>
+    <!-- SHFB properties -->
     <OutputPath>.\Help\</OutputPath>
-    <SandcastlePath path="" />
-    <WorkingPath path="" />
-    <CleanIntermediates>False</CleanIntermediates>
-    <KeepLogFile>True</KeepLogFile>
-    <BuildLogFile path=".\Help\log.log" />
-    <HelpFileFormat>Help1xAnd2xAndWebsite</HelpFileFormat>
-    <CppCommentsFixup>False</CppCommentsFixup>
-    <FrameworkVersion>3.5</FrameworkVersion>
-    <IndentHtml>False</IndentHtml>
-    <Preliminary>True</Preliminary>
-    <RootNamespaceContainer>False</RootNamespaceContainer>
-    <RootNamespaceTitle>ĐTools</RootNamespaceTitle>
-    <HelpTitle>ĐTools Documentation</HelpTitle>
     <HtmlHelpName>Tools</HtmlHelpName>
     <Language>en-US</Language>
+    <ApiFilter>
+      <Filter entryType="Namespace" fullName="System" isExposed="True" xmlns="">
+        <Filter entryType="Class" fullName="System.Object" filterName="Object" isExposed="False" />
+      </Filter>
+    </ApiFilter>
+    <ProjectSummary>ĐTools project gathers varoius asorted tools that are missing fon .NET framework.</ProjectSummary>
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter, IncludeTargets, AutoDocumentDispose</MissingTags>
+    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
+    <HtmlHelp1xCompilerPath>
+    </HtmlHelp1xCompilerPath>
+    <HtmlHelp2xCompilerPath>
+    </HtmlHelp2xCompilerPath>
+    <SandcastlePath>
+    </SandcastlePath>
+    <WorkingPath>
+    </WorkingPath>
+    <CleanIntermediates>False</CleanIntermediates>
+    <BuildLogFile>Help\log.log</BuildLogFile>
+    <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
+    <FrameworkVersion>4.0.30319</FrameworkVersion>
+    <Preliminary>True</Preliminary>
+    <RootNamespaceTitle>ĐTools</RootNamespaceTitle>
+    <HelpTitle>ĐTools 1.5.3 Documentation</HelpTitle>
     <CopyrightHref>http://codeplex.com/Tools</CopyrightHref>
-    <CopyrightText>© Đonny 2006÷8</CopyrightText>
-    <FeedbackEMailAddress />
-    <FeedbackEMailLinkText />
-    <HeaderText />
-    <FooterText>Generated by Sandcastle Help File Builder GUI for version 1.5.2 Nov 28 2008</FooterText>
-    <ProjectLinkType>Local</ProjectLinkType>
-    <SdkLinkType>Msdn</SdkLinkType>
-    <SdkLinkTarget>Blank</SdkLinkTarget>
+    <CopyrightText>&amp;#169%3b Đonny 2006&amp;#247%3b11</CopyrightText>
+    <FooterText>Generated by Sandcastle Help File Builder GUI for version 1.9.1.0</FooterText>
     <PresentationStyle>vs2005</PresentationStyle>
     <NamingMethod>MemberName</NamingMethod>
-    <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
-    <ShowFeedbackControl>False</ShowFeedbackControl>
-    <BinaryTOC>True</BinaryTOC>
-    <IncludeFavorites>False</IncludeFavorites>
-    <CollectionTocStyle>Hierarchical</CollectionTocStyle>
-    <IncludeStopWordList>True</IncludeStopWordList>
-    <PlugInNamespaces>ms.vsipcc+, ms.vsexpresscc+</PlugInNamespaces>
-    <HelpFileVersion>1.5.0.39050</HelpFileVersion>
-    <ContentPlacement>AboveNamespaces</ContentPlacement>
-</project>
+    <SyntaxFilters>CSharp, VisualBasic, CPlusPlus, FSharp, JScript, XamlUsage</SyntaxFilters>
+    <HelpFileVersion>1.5.3.2</HelpFileVersion>
+    <ComponentConfigurations>
+      <ComponentConfig id="Code Block Component" enabled="True">
+        <component id="Code Block Component" type="SandcastleBuilder.Components.CodeBlockComponent" assembly="{@SHFBFolder}SandcastleBuilder.Components.dll">
+  <basePath value="{@HtmlEncProjectFolder}" />
+  <languageFilter value="true" />
+  <allowMissingSource value="false" />
+  <removeRegionMarkers value="false" />
+  <colorizer syntaxFile="{@SHFBFolder}Colorizer\highlight.xml" styleFile="{@SHFBFolder}Colorizer\highlight.xsl" copyImageUrl="../icons/CopyCode.gif" language="vbnet" tabSize="0" numberLines="false" outlining="false" keepSeeTags="true" defaultTitle="true" />
+</component>
+      </ComponentConfig>
+<ComponentConfig id="Cached Reflection Index Data" enabled="True"><component id="Cached Reflection Index Data" type="SandcastleBuilder.Components.CachedCopyFromIndexComponent" assembly="{@SHFBFolder}SandcastleBuilder.Components.dll">
+<index name="reflection" value="/reflection/apis/api" key="@id" cache="10">
+  <cache base="{@SandcastlePath}Data\Reflection" recurse="true" files="*.xml" cacheFile="{@LocalDataFolder}Cache\Reflection.cache" />
+  <data files="reflection.xml" />
+</index>
+<copy name="reflection" source="*" target="/document/reference" />
+</component></ComponentConfig>
+<ComponentConfig id="Cached MSDN URL References" enabled="True"><component id="Cached MSDN URL References" type="SandcastleBuilder.Components.CachedResolveReferenceLinksComponent" assembly="{@SHFBFolder}SandcastleBuilder.Components.dll" locale="{@Locale}" linkTarget="{@SdkLinkTarget}">
+<helpOutput format="HtmlHelp1">
+  <cache filename="{@LocalDataFolder}Cache\MsdnUrl.cache" />
+  <targets base="{@SandcastlePath}Data\Reflection" recurse="true" files="*.xml" type="{@HtmlSdkLinkType}" />
+  <targets files="reflection.xml" type="Local" />
+</helpOutput>
+<helpOutput format="MSHelp2">
+  <cache filename="{@LocalDataFolder}Cache\MsdnUrl.cache" />
+  <targets base="{@SandcastlePath}Data\Reflection" recurse="true" files="*.xml" type="{@MSHelp2SdkLinkType}" />
+  <targets files="reflection.xml" type="Index" />
+</helpOutput>
+<helpOutput format="MSHelpViewer">
+  <cache filename="{@LocalDataFolder}Cache\MsdnUrl.cache" />
+  <targets base="{@SandcastlePath}Data\Reflection" recurse="true" files="*.xml" type="{@MSHelpViewerSdkLinkType}" />
+  <targets files="reflection.xml" type="Id" />
+</helpOutput>
+<helpOutput format="Website">
+  <cache filename="{@LocalDataFolder}Cache\MsdnUrl.cache" />
+  <targets base="{@SandcastlePath}Data\Reflection" recurse="true" files="*.xml" type="{@WebsiteSdkLinkType}" />
+  <targets files="reflection.xml" type="Local" />
+</helpOutput>
+</component></ComponentConfig>
+<ComponentConfig id="Cached Framework Comments Index Data" enabled="True"><component id="Cached Framework Comments Index Data" type="SandcastleBuilder.Components.CachedCopyFromIndexComponent" assembly="{@SHFBFolder}SandcastleBuilder.Components.dll">
+<index name="comments" value="/doc/members/member" key="@name" cache="100">
+{@CachedFrameworkCommentList}
+{@CommentFileList}
+            </index>
+<copy name="comments" source="*" target="/document/comments" />
+</component></ComponentConfig></ComponentConfigurations>
+    <DocumentationSources>
+      <DocumentationSource sourceFile="Experimental\Experimental.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Projects\Metanol2\Metanol2.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Created doc\Namespaces.xml" />
+<DocumentationSource sourceFile="ReportingEngine Lite\ReportingEngineLite.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\SplashScreenGenerator\SplashScreenGenerator.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.dll" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.xml" />
+<DocumentationSource sourceFile="Tools.Metadata\Tools.Metadata.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.dll" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.xml" />
+<DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.dll" />
+<DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.xml" />
+<DocumentationSource sourceFile="Tools\Tools.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools VisualStudio CS\Tools.VisualStudio.CS.csproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools Visual Studio\Tools.VisualStudio.vbproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="Tools Win\Tools.Win.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools.Windows\Tools.Windows.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools.TotalCommander\TotalCommander Plugin Builder\TotalCommander Plugin Builder.vbproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\XsdGenerator\XsdGenerator.csproj" configuration="Debug" platform="x86" /></DocumentationSources>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.API" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.API.Messages" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.API.Messages.lParam" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.API.Messages.ReturnValues" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.API.Messages.wParam" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.API.Public" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.CollectionsT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.CollectionsT.GenericT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.CollectionsT.SpecializedT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.ComponentModelT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.DataStructuresT.GenericT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.DiagnosticsT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.DrawingT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.DrawingT.DesignT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.DrawingT.IO.JPEG" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.MetadataT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.Experimental" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.GeneratorsT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.GlobalizationT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.InternalT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.IOt" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.LinqT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.ReflectionT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.ResourcesT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.SpecialT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.TextT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.VisualBasicT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.WindowsT.FormsT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.WindowsT.FormsT.UtilitiesT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.WindowsT.IndependentT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.WindowsT.NativeT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.WindowsT.WPF.ControlsT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.WindowsT.WPF.ConvertersT" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.XamlGeneratedNamespace" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Tools.XmlT.XPathT" isDocumented="True" xmlns="" />
+    </NamespaceSummaries>
+    <PlugInConfigurations>
+      <PlugInConfig id="Hierarchical Table of Contents" enabled="True">
+        <configuration>
+          <toc minParts="1" insertBelow="True" />
+        </configuration>
+      </PlugInConfig>
+    </PlugInConfigurations>
+  </PropertyGroup>
+  <!-- There are no properties for these groups.  AnyCPU needs to appear in
+       order for Visual Studio to perform the build.  The others are optional
+       common platform types that may appear. -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Win32' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
+  </PropertyGroup>
+  <!-- Import the SHFB build targets -->
+  <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
+</Project>

@@ -10,10 +10,10 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator
     /// <version version="1.5.3">Modules are generated for Visual Basic. For other languages class constructor is made <see langword="private"/> (previously <see langword="internal"/>).</version>
     /// <version version="1.5.3">Members of resource class (module for VB) are <see langword="public"/>.</version>
     [Guid("26e153bc-81cf-41cf-a8aa-fe2969b4fde3")]
-	[Description("Extended ResX Internal File Code Generator")]
-	public class InternalResXFileCodeGeneratorEx : BaseResXFileCodeGeneratorEx
+    [Description("Extended ResX Internal File Code Generator")]
+    public class InternalResXFileCodeGeneratorEx : BaseResXFileCodeGeneratorEx
     {
-		/// <summary>CTor - initializes a new instance of the <see cref="InternalResXFileCodeGeneratorEx"/> class.</summary>
+        /// <summary>CTor - initializes a new instance of the <see cref="InternalResXFileCodeGeneratorEx"/> class.</summary>
         public InternalResXFileCodeGeneratorEx() { }
 
         /// <summary>Gets the boolean flag indicating whether the internal class is generated.</summary>

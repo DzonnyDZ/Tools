@@ -47,7 +47,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Nightly</DefineConstants>
-    <DocumentationFile>..\bin\Debug\Tools.VisualStudio.CS.xml</DocumentationFile>
+    <DocumentationFile>bin\x86\Debug\Tools.VisualStudio.CS.xml</DocumentationFile>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisLogFile>..\bin\Debug\Tools.VisualStudio.CS.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
