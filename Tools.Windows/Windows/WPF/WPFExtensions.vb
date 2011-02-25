@@ -18,7 +18,7 @@ Namespace WindowsT.WPF
         ''' <returns>Parent of given dependency object; null when <paramref name="obj"/> is null or no parent can be found</returns>
         ''' <remarks>Parent is obtained either via <see cref="ContentOperations.GetParent"/> for <see cref="ContentElement">ContentElement</see> or via <see cref="VisualTreeHelper.GetParent"/>.</remarks>
         ''' <author www="http://code.logos.com/blog/2008/02/finding_ancestor_elements_in_w.html">Ed Ball</author>
-        <Extension()> Public Function GetParent(ByVal obj As DependencyObject) As DependencyObject
+        <Extension()> Public Function GetVisualParent(ByVal obj As DependencyObject) As DependencyObject
             If obj Is Nothing Then Return Nothing
             Dim ce As ContentElement = TryCast(obj, ContentElement)
             If ce IsNot Nothing Then
@@ -29,6 +29,7 @@ Namespace WindowsT.WPF
             End If
             Return VisualTreeHelper.GetParent(obj)
         End Function
+
         ''' <summary>Looks for visual tree ancestor of given <see cref="DependencyObject"/> of given type</summary>
         ''' <param name="obj">A <see cref="DependencyObject"/> to get ancestor of</param>
         ''' <typeparam name="TParent">Type of ancestor to get</typeparam>
@@ -36,14 +37,15 @@ Namespace WindowsT.WPF
         ''' <remarks>This function uses <see cref="GetParent"/> to get parents of investigated <see cref="DependencyObject">DependencyObjects</see>.</remarks>
         ''' <seelaso cref="GetParent"/>
         ''' <version stage="Nightly" version="1.5.3">This function is new in version 1.5.3</version> 
-        <Extension()> Public Function GetParent(Of TParent As DependencyObject)(ByVal obj As DependencyObject) As TParent
-            Dim p As DependencyObject = obj.GetParent
+        <Extension()> Public Function GetVisualAncestor(Of TParent As DependencyObject)(ByVal obj As DependencyObject) As TParent
+            Dim p As DependencyObject = obj.GetVisualParent
             Do
                 If p Is Nothing Then Return Nothing
                 If TypeOf p Is TParent Then Return p
-                p = p.GetParent
+                p = p.GetVisualParent
             Loop
         End Function
+
         ''' <summary>Sets window owner and opens it and returns only when the newly opened window is closed.</summary>
         ''' <returns>A <see cref="System.Nullable(Of T)" /> value of type <see cref="System.Boolean" /> that signifies how a window was closed by the user.</returns>
         ''' <exception cref="System.InvalidOperationException"><see cref="System.Windows.Window.ShowDialog" /> is called on a <see cref="System.Windows.Window" /> that is visible -or- <see cref="System.Windows.Window.ShowDialog" /> is called on a visible <see cref="System.Windows.Window" /> that was opened by calling <see cref="System.Windows.Window.ShowDialog" />. -or-
@@ -59,7 +61,7 @@ Namespace WindowsT.WPF
                 If TypeOf Owner Is Window Then
                     Window.Owner = Owner
                 Else
-                    Dim newOwner = Owner.GetParent(Of Window)()
+                    Dim newOwner = Owner.GetVisualAncestor(Of Window)()
                     If newOwner IsNot Nothing Then Window.Owner = newOwner
                 End If
             End If
@@ -98,6 +100,7 @@ Namespace WindowsT.WPF
             Next
             Return ret
         End Function
+
         ''' <summary>Enumerates all the visual children of given <see cref="DependencyObject"/> of given type</summary>
         ''' <typeparam name="T">Type (derived from <see cref="DependencyObject"/>) to to serach for children of</typeparam>
         ''' <param name="parent">A <see cref="DependencyObject"/> to look for children in</param>
@@ -129,6 +132,7 @@ Namespace WindowsT.WPF
             Next
             Return Nothing
         End Function
+
         ''' <summary>Finds first visual child of given <see cref="DependencyObject"/> of specific type</summary>
         ''' <param name="parent">A <see cref="DependencyObject"/> to search for visual child of</param>
         ''' <typeparam name="T">Type of child to search for</typeparam>
@@ -139,6 +143,7 @@ Namespace WindowsT.WPF
         Public Function FindVisualChild(Of T As DependencyObject)(ByVal parent As DependencyObject) As T
             Return parent.FindVisualChild(Function(a) TypeOf a Is T)
         End Function
+
         ''' <summary>Finds first visual child of given <see cref="DependencyObject"/> of specific type which conforms to given condition</summary>
         ''' <param name="parent">A <see cref="DependencyObject"/> to search for visual child of</param>
         ''' <param name="condition">Function evaluated for each visual child of <paramref name="parent"/> which is of type <typeparamref name="T"/> until conforming child is found</param>
@@ -149,6 +154,9 @@ Namespace WindowsT.WPF
         <Extension()> Public Function FindVisualChild(Of T As DependencyObject)(ByVal parent As DependencyObject, ByVal condition As Func(Of T, Boolean)) As T
             Return parent.FindVisualChild(Function(a) If(TypeOf a Is T, condition(a), False))
         End Function
+
+
+        'TODO:Adopt visual tree helper methods
 #End Region
 
 #Region "Logical Tree"
@@ -163,7 +171,7 @@ Namespace WindowsT.WPF
         ''' </remarks>
         ''' <version version="1.5.3">This function is new in version 1.5.3</version>
         <Extension()>
-        Public Function FindAncestor(Of TAncestor As DependencyObject)(ByVal obj As DependencyObject) As TAncestor
+        Public Function FindLogicalAncestor(Of TAncestor As DependencyObject)(ByVal obj As DependencyObject) As TAncestor
             If obj Is Nothing Then Throw New ArgumentNullException("obj")
             If GetType(TAncestor).Equals(GetType(Window)) Then Return CObj(Window.GetWindow(obj))
             Dim currobj As DependencyObject = obj
@@ -174,6 +182,55 @@ Namespace WindowsT.WPF
             Loop
             Return Nothing
         End Function
+
+        ''' <summary>Returns the parent object of the specified object by processing the logical tree.</summary>
+        ''' <param name="obj">The object to find the parent object for. This is expected to be either a <see cref="System.Windows.FrameworkElement"/> or a <see cref="System.Windows.FrameworkContentElement"/>.</param>
+        ''' <returns>The requested parent object.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="obj"/> is null</exception>
+        ''' <seelaso cref="LogicalTreeHelper.GetParent"/>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function LogicalParent(obj As DependencyObject) As DependencyObject
+            If obj Is Nothing Then Throw New ArgumentNullException("obj")
+            Return LogicalTreeHelper.GetParent(obj)
+        End Function
+
+        ''' <summary>Returns the collection of immediate child objects of the specified object, by processing the logical tree.</summary>
+        ''' <param name="obj">The object from which to start processing the logical tree. This is expected to be either a <see cref="System.Windows.FrameworkElement"/> or <see cref="System.Windows.FrameworkContentElement"/>.</param>
+        ''' <returns>The enumerable collection of immediate child objects from the logical tree of the specified object.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="obj"/> is null</exception>
+        ''' <seelaso cref="LogicalTreeHelper.GetChildren"/>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function LogicalChildren(obj As DependencyObject) As IEnumerable(Of DependencyObject)
+            If obj Is Nothing Then Throw New ArgumentNullException("obj")
+            Return LogicalTreeHelper.GetChildren(obj).OfType(Of DependencyObject)()
+        End Function
+
+        ''' <summary>Attempts to find and return an object that has the specified name. The search starts from the specified object and continues into subnodes of the logical tree.</summary>
+        ''' <param name="logicalTreeNode">The object to start searching from. This object must be either a <see cref="System.Windows.FrameworkElement"/> or a <see cref="System.Windows.FrameworkContentElement"/>.</param>
+        ''' <param name="elementName">The name of the object to find.</param>
+        ''' <returns>The object with the matching name, if one is found; returns null if no matching name was found in the logical tree.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="logicalTreeNode"/> is null</exception>
+        ''' <seelaso cref="LogicalTreeHelper.FindLogicalNode"/>
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version>
+        <Extension()>
+        Public Function FindLogicalNode(logicalTreeNode As DependencyObject, elementName As String) As DependencyObject
+            If logicalTreeNode Is Nothing Then Throw New ArgumentNullException("logicalTreeNode ")
+            Return LogicalTreeHelper.FindLogicalNode(logicalTreeNode, elementName)
+        End Function
+
+        ''' <summary>Attempts to bring the requested UI element into view and raises the <see cref="System.Windows.FrameworkElement.RequestBringIntoView"/> event on the target in order to report the results.</summary>
+        ''' <param name="obj">The UI element to bring into view.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="obj"/> is null</exception>
+        ''' <seelaso cref="LogicalTreeHelper.BringIntoView"/>
+        ''' <version version="1.5.3">This method is new in version 1.5.3</version>
+        <Extension()>
+        Public Sub BringIntoView(obj As DependencyObject)
+            If obj Is Nothing Then Throw New ArgumentNullException("obj")
+            LogicalTreeHelper.BringIntoView(obj)
+        End Sub
+
 #End Region
 
 #Region "Windows"
