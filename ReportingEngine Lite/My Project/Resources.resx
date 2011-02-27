@@ -112,181 +112,181 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ExcelName_Default" xml:space="preserve">
-    <value>Sešit aplikace Excel</value>
+    <value>Excel workbook</value>
   </data>
   <data name="ExcelName_XLSM" xml:space="preserve">
-    <value>Sešit aplikace Excel s podporou maker</value>
+    <value>Macro-enabled Excel workbook</value>
   </data>
   <data name="ExcelName_XLSB" xml:space="preserve">
-    <value>Binární sešit aplikace Excel</value>
+    <value>Binary Excel workbook</value>
   </data>
   <data name="ExcelName_XLSOld" xml:space="preserve">
-    <value>Sešit aplikace Excel 97-2003</value>
+    <value>Excel 97-2003 workbook</value>
   </data>
   <data name="ExcelName_XML" xml:space="preserve">
-    <value>Datové soubory ve formátu XML</value>
+    <value>Data files in XML format</value>
   </data>
   <data name="ExcelName_MHTML" xml:space="preserve">
-    <value>Webová stránka tvořená jedním souborem</value>
+    <value>One file web page</value>
   </data>
   <data name="ExcelName_HTML" xml:space="preserve">
-    <value>Webová stránka</value>
+    <value>Web page</value>
   </data>
   <data name="ExcelName_TemplateDefault" xml:space="preserve">
-    <value>Šablona aplikace Excel</value>
+    <value>Excel template</value>
   </data>
   <data name="ExcelName_XLTM" xml:space="preserve">
-    <value>šablona aplikace Excel s podporou maker</value>
+    <value>Macro-enabled Excel template</value>
   </data>
   <data name="ExcelName_XLTOld" xml:space="preserve">
-    <value>šablona aplikace Excel 97-2003</value>
+    <value>Excel 97-2003 template</value>
   </data>
   <data name="ExcelName_TXT" xml:space="preserve">
-    <value>Text (oddělený tabulátory)</value>
+    <value>Tab-separated text</value>
   </data>
   <data name="ExcelName_CSV" xml:space="preserve">
-    <value>Text oddělený oddělovačem</value>
+    <value>Delimiter-separated text</value>
   </data>
   <data name="ExcelName_PRN" xml:space="preserve">
-    <value>Formátovaný text (oddělený mezerami)</value>
+    <value>Formatted text (space-separated)</value>
   </data>
   <data name="ExcelName_DIF" xml:space="preserve">
-    <value>DIF (formát výměny dat)</value>
+    <value>DIF (data interchange format)</value>
   </data>
   <data name="ExcelName_SLK" xml:space="preserve">
-    <value>SYLK (symbolické propojení)</value>
+    <value>SYLK (symbolic link)</value>
   </data>
   <data name="ExcelName_AddInDefault" xml:space="preserve">
-    <value>Doplněk aplikace excel</value>
+    <value>Excel add-in</value>
   </data>
   <data name="ExcelName_XLAOld" xml:space="preserve">
-    <value>Doplněk aplikace excel 97-2003</value>
+    <value>Excel 97-2003 add-in</value>
   </data>
   <data name="ExcelName_PDF" xml:space="preserve">
     <value>PDF</value>
   </data>
   <data name="ExcelName_XPS" xml:space="preserve">
-    <value>Dokument XPS</value>
+    <value>XPS document</value>
   </data>
   <data name="ExcelName_ODS" xml:space="preserve">
     <value>OpenDocument Spreadsheet</value>
   </data>
   <data name="ExcelName_TemplatesAll" xml:space="preserve">
-    <value>Šablony aplikace Excel</value>
+    <value>Excel tamplates</value>
   </data>
   <data name="ExcelName_CommonFiles" xml:space="preserve">
-    <value>Soubory aplikace Excel</value>
+    <value>Excel files</value>
   </data>
   <data name="ExcelSimple" xml:space="preserve">
-    <value>Excel (jednoduchý)</value>
+    <value>Excel (simple)</value>
   </data>
   <data name="ex_TemplateNotFound" xml:space="preserve">
-    <value>Sobor šablony nebyl nalezen</value>
+    <value>Template file not found</value>
   </data>
   <data name="ex_OperationCancelled" xml:space="preserve">
-    <value>Operace stornována</value>
+    <value>Operation cancelled</value>
   </data>
   <data name="ex_ExcelListIndexOutOfRange" xml:space="preserve">
-    <value>V sešitu není dostatek listů pro index </value>
+    <value>There is not egouh space for an index in the workbook</value>
   </data>
   <data name="msg_PreparingTemplateList" xml:space="preserve">
-    <value>Příprava šablony {0}, list {1}</value>
+    <value>Preparing template {0}, worksheet {1}</value>
   </data>
   <data name="msg_WritingTemplateList" xml:space="preserve">
-    <value>Zápis dat šablony {0}, list {1}</value>
+    <value>Writing data to the template {0}, worksheet {1}</value>
   </data>
   <data name="Recomputing" xml:space="preserve">
-    <value>přepočet...</value>
+    <value>recomputing...</value>
   </data>
   <data name="msg_FinalizeTemplateList" xml:space="preserve">
-    <value>Dokončování listu {0}, šablona {1}</value>
+    <value>Finalizing worksheet {0}, template {1}</value>
   </data>
   <data name="msg_SubreportsOfTemplate" xml:space="preserve">
-    <value>Subreporty šablony {0}</value>
+    <value>Template subreports {0}</value>
   </data>
   <data name="ex_UnsupportedSubreportType" xml:space="preserve">
-    <value>Šablona typu {0} ({1}) není podporována jako šablona subreportu se šablonou {2} ({3}).</value>
+    <value>{0} ({1}) type template is not supported as subreport template with {2} ({3}) template.</value>
   </data>
   <data name="msg_CompilerWarningLog" xml:space="preserve">
     <value>{0},{1}: {2} - {3}</value>
   </data>
   <data name="msg_ErrorInUserCode" xml:space="preserve">
-    <value>Chyba v uživatelském kódu {0}: {1} @ {2}</value>
+    <value>User code error {0}: {1} @ {2}</value>
   </data>
   <data name="ex_ErrorInUserPostprocessingCode" xml:space="preserve">
-    <value>V uživatelském kódu pro postprocessing došlo k chybě {0} {1}</value>
+    <value>There was an error in user code for postprocessing {0} {1}</value>
   </data>
   <data name="ExcelRepeated" xml:space="preserve">
-    <value>Excel (opakovaný)</value>
+    <value>Excel (repeated)</value>
   </data>
   <data name="ex_NewLineInvalidValue" xml:space="preserve">
-    <value>Vlastnost newline má nepodporovanou hodnotu</value>
+    <value>The newline property has unsupported value</value>
   </data>
   <data name="filter_XML" xml:space="preserve">
-    <value>Soubory XML (*.xml)|*.xml</value>
+    <value>XML files (*.xml)|*.xml</value>
   </data>
   <data name="filter_CSVTSVTSXT" xml:space="preserve">
-    <value>Hodnoty oddělené oddělovačem (*.csv)|*.csv|Hodnoty oddělené tabulátorem (*.tsv)|*.tsv|Textové soubory (*.txt)|*.txt</value>
+    <value>Delimiter-separated values (*.csv)|*.csv|Tab-separated values (*.tsv)|*.tsv|Text files (*.txt)|*.txt</value>
   </data>
   <data name="msg_GeneratingTemplate" xml:space="preserve">
-    <value>Generování šablony {0}</value>
+    <value>Generating template {0}</value>
   </data>
   <data name="msg_PreparingTemplate" xml:space="preserve">
-    <value>Příprava šablony {0}</value>
+    <value>Preparing template {0}</value>
   </data>
   <data name="msg_LoadingXsltTemplate" xml:space="preserve">
-    <value>Načítám XSLT šablonu</value>
+    <value>Loading XSL template</value>
   </data>
   <data name="msg_LoadingDataFromDatabase" xml:space="preserve">
-    <value>Načítám data z databáze</value>
+    <value>Loading data from a database</value>
   </data>
   <data name="msg_ExportingXml" xml:space="preserve">
-    <value>Exportuji XML</value>
+    <value>Exporting XML</value>
   </data>
   <data name="msg_SavingXml" xml:space="preserve">
-    <value>Ukládám XML</value>
+    <value>Saving XML</value>
   </data>
   <data name="dn_AllowDocumentFunction" xml:space="preserve">
-    <value>Povolit funkci Document()</value>
+    <value>Enable the document() function</value>
   </data>
   <data name="d_AllowDocumentFunction" xml:space="preserve">
-    <value>Povolí XSLT funkci document()</value>
+    <value>Enables the document() XSLT function</value>
   </data>
   <data name="dn_AllowScript" xml:space="preserve">
-    <value>Povolit script</value>
+    <value>Allow script</value>
   </data>
   <data name="d_AllowScript" xml:space="preserve">
-    <value>Povolit vložený kód v XSL šabloně.</value>
+    <value>Allows a script code embedded in XSL template.</value>
   </data>
   <data name="dn_DatasetName" xml:space="preserve">
-    <value>Název DataSetu</value>
+    <value>DataSet name</value>
   </data>
   <data name="d_DataSetName" xml:space="preserve">
-    <value>Název DataSetu - bude použit jako název kořenového elementu v XML.</value>
+    <value>Name of DataSet - it'll be used as name of root XML element.</value>
   </data>
   <data name="dn_DatasetNamespace" xml:space="preserve">
-    <value>Jmenný prostor DataSetu</value>
+    <value>DataSet namespace</value>
   </data>
   <data name="d_DatasetNamespace" xml:space="preserve">
-    <value>URI jmenného prostoru XML pro DataSet</value>
+    <value>Namespace URI for XML DataSet</value>
   </data>
   <data name="dn_datasetTableName" xml:space="preserve">
-    <value>Název tabulky v datasetu</value>
+    <value>DataSet table name</value>
   </data>
   <data name="d_datasetTableName" xml:space="preserve">
-    <value>Název tabulky - bude použit jako název XML elementu.</value>
+    <value>Name of a table - it'll be used as XML element name</value>
   </data>
   <data name="dn_XmlPrefix" xml:space="preserve">
     <value>XML prefix</value>
   </data>
   <data name="d_XmlPrefix" xml:space="preserve">
-    <value>Prefix jmenného prostoru DataSetu</value>
+    <value>DataSet namespace prefix</value>
   </data>
   <data name="cat_Xml" xml:space="preserve">
     <value>XML</value>
@@ -295,219 +295,301 @@
     <value>DataSet</value>
   </data>
   <data name="dn_AutoWidtn" xml:space="preserve">
-    <value>Auto-šířka sloupců</value>
+    <value>Column auto-width</value>
   </data>
   <data name="cat_Formatting" xml:space="preserve">
-    <value>Formátování</value>
+    <value>Formatting</value>
   </data>
   <data name="dn_Col1" xml:space="preserve">
-    <value>Sloupec 1</value>
+    <value>1st column</value>
   </data>
   <data name="cat_Location" xml:space="preserve">
-    <value>Umístění</value>
+    <value>Location</value>
   </data>
   <data name="dn_ColumnNameRow" xml:space="preserve">
-    <value>Řádek názvu</value>
+    <value>Name row</value>
   </data>
   <data name="dn_InsertRows" xml:space="preserve">
-    <value>Vkládat řádky</value>
+    <value>Insert rows</value>
   </data>
   <data name="cat_Filling" xml:space="preserve">
-    <value>Vyplňování</value>
+    <value>Filling in</value>
   </data>
   <data name="dn_PrintArea" xml:space="preserve">
-    <value>Oblast tisku</value>
+    <value>Print area</value>
   </data>
   <data name="dn_List" xml:space="preserve">
-    <value>List</value>
+    <value>Worksheet</value>
   </data>
   <data name="dn_Row1" xml:space="preserve">
-    <value>Řádek 1</value>
+    <value>1st row</value>
   </data>
   <data name="dn_SkipFilledName" xml:space="preserve">
-    <value>Jen chybějící názvy</value>
+    <value>Only missing names</value>
   </data>
   <data name="dn_SkipFilled" xml:space="preserve">
-    <value>Vynechat vyplněné sloupce</value>
+    <value>Skip non-empty columns</value>
   </data>
   <data name="dn_CopyColumnsFrom" xml:space="preserve">
-    <value>Kopírovat sloupce od</value>
+    <value>Copy columns from</value>
   </data>
   <data name="d_CopyColumnsFrom" xml:space="preserve">
-    <value>1-based index sloupce (v Excelu) od nějž budou sloupce kopírovány (levý do pravého). 0 - nebudou kopírovány vůbec.</value>
+    <value>1-based index of column (in Excel). Columns willl be copyied starting with this column (left column to right-column). 0 - columns will not be copyied at all.</value>
   </data>
   <data name="dn_SkipColumns" xml:space="preserve">
-    <value>Vynechat</value>
+    <value>Skip</value>
   </data>
   <data name="d_SkipColumns" xml:space="preserve">
-    <value>Čárkou oddělený seznam názvů sloupců (z databáze)., které budou vynechány při výpisu do Excelu. Pokud se z nějakých exotických důvodů vyskytuje v názvu sloupce čárka (,) nahraďte ji pipou (|); pipu (|) nahraďte dvěma (||). Case-sinsitive.</value>
+    <value>Comma-separated list of columns (from database) to skip while writing to Excel. In case the name of the column contains a comma (,), replace the comma with a pipe (|), replace a pipe (|) with two pipes (||). Case-sensitive.</value>
   </data>
   <data name="dn_NameColumns" xml:space="preserve">
-    <value>Název listu</value>
+    <value>Worksheet name</value>
   </data>
   <data name="d_NameColumn" xml:space="preserve">
-    <value>Sloupec, podle něhož bude nastaven název listu. Prázdné - název lsitu se nezmění.</value>
+    <value>Column to be used as name of worksheet. Empty - worksheet name will not change.</value>
   </data>
   <data name="dn_NameFormat" xml:space="preserve">
-    <value>Formát názvu</value>
+    <value>Name format</value>
   </data>
   <data name="d_NameFormat" xml:space="preserve">
-    <value>Formátovací řetězec jímž bude formátován název listu. {0} bude nahrazena názvem listu.</value>
+    <value>Formatting string to be used when creating worksheet name. The {0} placeholder is replaced with actual worksheet name.</value>
   </data>
   <data name="dn_SelectList" xml:space="preserve">
-    <value>Aktivní list</value>
+    <value>Active worksheet</value>
   </data>
   <data name="d_SelectList" xml:space="preserve">
-    <value>Název nebo index (1-based) listu, který bude vybrán po doběhnutí exportu. Ignorováno u subreportů. Prázdné - aktivní list nebude změněn.</value>
+    <value>A name or 1-based index of worksheet to be made active after export finishes. Ignored for subreports. Empty - active worksheet does not change.</value>
   </data>
   <data name="cat_PostProcessing" xml:space="preserve">
-    <value>Postprocesing</value>
+    <value>Postprocessing</value>
   </data>
   <data name="dn_SuspendRecalculations" xml:space="preserve">
-    <value>Pozastavit přepočítávání</value>
+    <value>Prevent recompute</value>
   </data>
   <data name="d_SuspendRecalculations" xml:space="preserve">
-    <value>Pozastavit přepočítávání vzorců během vyplňování listu? (urychlí operaci)</value>
+    <value>Stops formula recomputing during data filling (makes filling faster)</value>
   </data>
   <data name="dn_RunMacroAfter" xml:space="preserve">
-    <value>Spustit makro</value>
+    <value>Run macro</value>
   </data>
   <data name="d_RunMacroAfter" xml:space="preserve">
-    <value>Spustit makro se zadaným názvem po dokončení exportu. Pozor: Makro nemusí fungovat v závislosti na nastavení Excelu!</value>
+    <value>Run a macro with given name after export finishes. Warning: Depending on Excel settings the macro may or may not work!</value>
   </data>
   <data name="dn_PostProcessingCode" xml:space="preserve">
-    <value>Postrocesovací kód</value>
+    <value>Postrpocessing code</value>
   </data>
   <data name="d_PostProcessingCode" xml:space="preserve">
-    <value>VB.NET kód, kerý je spuštěn po exportu. Kód je zavřen do funkce, které je předán parametr WorkBook.</value>
+    <value>A code in VB.NET to run after export finishes. The code is enclosed in a function which accepts a parameter WorkBook.</value>
   </data>
   <data name="dn_BreakColumn" xml:space="preserve">
-    <value>Rozložit podle</value>
+    <value>Split by</value>
   </data>
   <data name="d_BreakColumn" xml:space="preserve">
-    <value>Název sloupce, který bude použit pro rozložení výstupu tabulky na jednotlivé listy. Pokaždé, když se hodnota v tomto sloupci změní, je založen nový list. Case-sensitive.</value>
+    <value>Name of a column to be used to split table output to multiple worksheets. Everytime value in that column changes a new worksheet is created. Case-sensitive.</value>
   </data>
   <data name="cat_Repeat" xml:space="preserve">
-    <value>Opakování</value>
+    <value>Repeat</value>
   </data>
   <data name="dn_NameColumn" xml:space="preserve">
-    <value>Názvy</value>
+    <value>Names</value>
   </data>
   <data name="d_NameColumnXlsRepeat" xml:space="preserve">
-    <value>Sloupec obsahující názvy listů, case-sensitive.</value>
+    <value>A column containing worksheet names, case-sensitive.</value>
   </data>
   <data name="dn_WriteBreak" xml:space="preserve">
-    <value>Zapisovat rozklad</value>
+    <value>Show split value</value>
   </data>
   <data name="d_WriteBreak" xml:space="preserve">
-    <value>Má být hodnota z rozkladového sloupce zapisována do listu?</value>
+    <value>Should the value of "Split by" column be written to a worksheet?</value>
   </data>
   <data name="dn_WriteName" xml:space="preserve">
-    <value>Zapisovat název</value>
+    <value>Show name</value>
   </data>
   <data name="d_WriteName" xml:space="preserve">
-    <value>Má být hodnota ze sloupce názvu zapisována do listu?</value>
+    <value>Should the value of "Names" column be written to a worksheet?</value>
   </data>
   <data name="dn_Encoding" xml:space="preserve">
-    <value>Kódování</value>
+    <value>Encoding</value>
   </data>
   <data name="dn_EncodingCsv" xml:space="preserve">
-    <value>Kódování výstupního textu. Například utf-8 nebo windows-1250. Prázdné - použije se výchozí systémové.</value>
+    <value>Output text encoding. E.g. utf-8 or windows-1250. Empty - use system default.</value>
   </data>
   <data name="cat_Basic" xml:space="preserve">
-    <value>Základní</value>
+    <value>Basics</value>
   </data>
   <data name="dn_Culture" xml:space="preserve">
-    <value>Kultura</value>
+    <value>Culture</value>
   </data>
   <data name="d_Culture" xml:space="preserve">
-    <value>Kultura použitá pro formátování dat a čísel. Například en-US, cs-CZ. Prázdné - použijete invariantní kultura.</value>
+    <value>A culture to be used for date and number formatting. E.g. en-US, cs-CZ. Empty - use invariant culture.</value>
   </data>
   <data name="cat_Format" xml:space="preserve">
-    <value>Formát</value>
+    <value>Format</value>
   </data>
   <data name="dn_NumberFormat" xml:space="preserve">
-    <value>Formát čísel</value>
+    <value>Number format</value>
   </data>
   <data name="d_NumberFormat" xml:space="preserve">
-    <value>Formát pro formátování sloupců typu číslo. Použijte .NET formát. Prázdné - výchozí. Závisí na kultuře.</value>
+    <value>A format to be used for formatting of numeric columns. Use .NET format. Empty - default. Culture-dependent.</value>
   </data>
   <data name="dn_DateFormat" xml:space="preserve">
-    <value>Formát datumů</value>
+    <value>Date format</value>
   </data>
   <data name="d_DateFormat" xml:space="preserve">
-    <value>Formát pro formátování sloupců typu datum/čas. Použijte .NET formát. Prázdné - výchozí. Závisí na kultuře.</value>
+    <value>A format to be used fo formattting of date/time columns. Use .NET format. Empty - default. Culture-dependent.</value>
   </data>
   <data name="dn_Separator" xml:space="preserve">
-    <value>Oddělovač</value>
+    <value>Separator</value>
   </data>
   <data name="d_Separator" xml:space="preserve">
-    <value>Oddělovač sloupců Např. , ; | nebo tabulátor (vložte zkopírováním z Notepadu)</value>
+    <value>Column separator E.g. ,, ;, | or tab (enter tab by copying it from notepad)</value>
   </data>
   <data name="dn_TextQualifier" xml:space="preserve">
-    <value>Textový kvalifikátor</value>
+    <value>Text qualifier</value>
   </data>
   <data name="d_TextQualifier" xml:space="preserve">
-    <value>Ohraničuje textová pole z obou stran. Použije se pokud pole obsahuje divoké znaky nebo je to vyžadováno nastavením. Např.: ", '</value>
+    <value>Used to delimit text values from both sides. Used as necessary (when text contains changacters in collision with colum delimiters or when required by another configuration). E.g. ", '</value>
   </data>
   <data name="dn_TextQualifierUsage" xml:space="preserve">
-    <value>Použit kvalifikátor</value>
+    <value>Use qualifier</value>
   </data>
   <data name="d_TextQualifierUsage" xml:space="preserve">
-    <value>Určuje jestli textový klavlifikátor bude použit jen pokud je potřeba, vždy nebo vždy na řetězcové sloupce a je pokud je potřeba na data a čísla.</value>
+    <value>Determines if text qualifier is used only when needed or always for strings and when required on numbers and dates.</value>
   </data>
   <data name="dn_TextQualifierEscape" xml:space="preserve">
-    <value>Escape textového kvalifikátoru</value>
+    <value>Text-qualifier escape</value>
   </data>
   <data name="d_TextQualifierEscape" xml:space="preserve">
-    <value>Určuje jak bude zacházeno s řetězcem, který obsahuje textový kvalifikátor.</value>
+    <value>Determines how to treat string containing text qualifier.</value>
   </data>
   <data name="cat_SpecialCases" xml:space="preserve">
-    <value>Speciální případy</value>
+    <value>Special cases</value>
   </data>
   <data name="d_NewLine" xml:space="preserve">
-    <value>Nový řádek</value>
+    <value>New line</value>
   </data>
   <data name="dn_NewLine" xml:space="preserve">
-    <value>Určuje znak pro použití nového řádku. Možné jsou všechny oddělovače podporované Unicode.</value>
+    <value>Determines a character to be used for new lines. All Unicode-supported delimiters are allowed.</value>
   </data>
   <data name="dn_NlEscape" xml:space="preserve">
-    <value>Escape nového řádku</value>
+    <value>New-line escape</value>
   </data>
   <data name="d_NlEscape" xml:space="preserve">
-    <value>Jak se zachovat, pokud hodnota obsahuje konec řádku. Je možno nahrazovat konce řádků, jen z Nový řádek nebo všechny podle Unicode.</value>
+    <value>Indicates what to do when value contains new line. It's possible to treate all Unicode new lines this way or only new line delimiter specified in "New line"</value>
   </data>
   <data name="dn_SpecialString" xml:space="preserve">
-    <value>Speciální řetězec</value>
+    <value>Special string</value>
   </data>
   <data name="d_SpecialString" xml:space="preserve">
-    <value>Speciální řetězec, pokud má být konec řádku nahrazen speciálním řetězcem. Speciální řetězec je, pokud se vyskytne v hodnotě, escapován stejným stylem jako textový kvalifikátor.</value>
+    <value>A special string used when new line is gonna be replaced with special string. In case the special string is part of value it's escaped the same way text qualifier is.</value>
   </data>
   <data name="dn_Header" xml:space="preserve">
-    <value>Hlavička</value>
+    <value>Header</value>
   </data>
   <data name="d_Header" xml:space="preserve">
-    <value>Zapsat názvy sloupců z databáze do záhlaví?</value>
+    <value>Write names of database columns to header?</value>
   </data>
   <data name="dn_Footer" xml:space="preserve">
-    <value>Patička</value>
+    <value>Footer</value>
   </data>
   <data name="d_Footer" xml:space="preserve">
-    <value>Zapsat názvy sloupců z databáze do zápatí?</value>
+    <value>Write names of database columns to footer?</value>
   </data>
   <data name="dn_HeaderSize" xml:space="preserve">
-    <value>Velikost záhlaví</value>
+    <value>Header size</value>
   </data>
   <data name="d_HeaderSize" xml:space="preserve">
-    <value>Pokud je načítán soubor šablony identifikuje kolik prvních řádků přijde do záhlaví, zbytek přijde do zápatí.</value>
+    <value>In case the file is read from template indentifies how much rows from top is part of header, rest is footer.</value>
   </data>
   <data name="cat_Template" xml:space="preserve">
-    <value>Šablona</value>
+    <value>Template</value>
   </data>
   <data name="dn_NullValue" xml:space="preserve">
     <value>Null</value>
   </data>
   <data name="d_NullValue" xml:space="preserve">
-    <value>Řetězec je vložen místo NULL hodnoty.</value>
+    <value>A string tu insert instead of a NULL value.</value>
+  </data>
+
+    <data name="AutoWidth_d" xml:space="preserve">
+    <value>Enter columns which's width will be set automatically after all rows are filled-in. Enter:
+• * to set automatic width for all columns filled in
+• numbers (e.g. 1,2,5).
+• ranges (eg. 1-6, 12-22).
+• unterminated range (e.g. 12-) for all filled-in columns from 12th onwards.
+• leave empty not to set automatic widths.
+All column numbers are absolute in worksheet and 1-based.</value>
+  </data>
+    <data name="Col1_d" xml:space="preserve">
+    <value>Enter 1-based column number to write data to (cells left from it will become row headers)</value>
+  </data>
+    <data name="ColumnNameRow_d" xml:space="preserve">
+    <value>Row number (1-based) to write database column name to (0 not to write anywhere)</value>
+  </data>
+    <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <data name="Excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+        <value>..\resources\excel.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    </data>
+    <data name="InsertRows_d" xml:space="preserve">
+    <value>Rows will be inserted instead of rewriting them. Allows to reserve footer.</value>
+  </data>
+    <data name="List_d" xml:space="preserve">
+    <value>Enter a worksheet name or 1-based index to write data to (empty to use 1st worksheet)</value>
+  </data>
+    <data name="PrintArea_d" xml:space="preserve">
+    <value>Enter in form:
+x1;x2-y1;y2
+• x1 - a column relative to 1st filled in
+• x2 - a column relative to last filled-in
+• y1 - a row relative to first filled-in
+• y2 - a row relative to last filled-in
+Relative numbers bear these meanings:
+• 0 - the row/colmn they are relative to
+• +1, +2, ... x columns down/right
+• -1, -2, ... x columns top/left
+• 1, 2, ... worksheet absolute
+Let empty not to set print area</value>
+  </data>
+    <data name="Row1_d" xml:space="preserve">
+    <value>Enter 1-based number of 1ts row to write data to (cells abowe will become headers)</value>
+  </data>
+    <data name="SkipFilled_d" xml:space="preserve">
+    <value>Columns with a value or formula filled in will be skipped instead of being overwritten (detemined by state of cells in 1st written row)</value>
+  </data>
+    <data name="SkipFilledNames_d" xml:space="preserve">
+    <value>Do not fill-in column name when the cell is already filled-in</value>
+  </data>
+    <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+    <data name="XML" xml:space="preserve">
+    <value>XML</value>
+  </data>
+    <data name="txt_SetExcelFriendly" xml:space="preserve">
+    <value>Fill in Excel-friendly values</value>
+  </data>
+    <data name="ex_NegativeSize" xml:space="preserve">
+    <value>The size cannot be negative</value>
+  </data>
+    <data name="ex_InvalidFormat" xml:space="preserve">
+    <value>The format of {0} is invalid.</value>
+  </data>
+    <data name="AutoWidthFormatHelp" xml:space="preserve">
+    <value>Enter * or column range defined by 1-based column indexes. E.g. "7,8,10-15,20,22,53-" (witout quotes)</value>
+  </data>
+    <data name="ex_ValueMustBeGreaterThan" xml:space="preserve">
+    <value>{0} must be greater than {1}</value>
+  </data>
+    <data name="ex_ValueMustBeGreaterThanOrEqualTo" xml:space="preserve">
+    <value>{0} must be greater than or equal to {1}</value>
+  </data>
+    <data name="ex_NonPositiveColumnNumber" xml:space="preserve">
+    <value>In case a column is specified as number the number must be greater than zero.</value>
+  </data>
+    <data name="PrintAreaFormatHelp" xml:space="preserve">
+    <value>Enter the value as x1;y1-x2;y2 - each number in format +a, -a, 0 or a.</value>
+  </data>
+    <data name="fil_XSLT" xml:space="preserve">
+    <value>XSL Transformations (*.xsl, *.xslt)|*.xsl;*.xslt</value>
   </data>
 </root>
