@@ -61,7 +61,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Základní.
+        '''  Looks up a localized string similar to Enter columns which&apos;s width will be set automatically after all rows are filled-in. Enter:
+        '''• * to set automatic width for all columns filled in
+        '''• numbers (e.g. 1,2,5).
+        '''• ranges (eg. 1-6, 12-22).
+        '''• unterminated range (e.g. 12-) for all filled-in columns from 12th onwards.
+        '''• leave empty not to set automatic widths.
+        '''All column numbers are absolute in worksheet and 1-based..
+        '''</summary>
+        Friend ReadOnly Property AutoWidth_d() As String
+            Get
+                Return ResourceManager.GetString("AutoWidth_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enter * or column range defined by 1-based column indexes. E.g. &quot;7,8,10-15,20,22,53-&quot; (witout quotes).
+        '''</summary>
+        Friend ReadOnly Property AutoWidthFormatHelp() As String
+            Get
+                Return ResourceManager.GetString("AutoWidthFormatHelp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Basics.
         '''</summary>
         Friend ReadOnly Property cat_Basic() As String
             Get
@@ -79,7 +103,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Vyplňování.
+        '''  Looks up a localized string similar to Filling in.
         '''</summary>
         Friend ReadOnly Property cat_Filling() As String
             Get
@@ -88,7 +112,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formát.
+        '''  Looks up a localized string similar to Format.
         '''</summary>
         Friend ReadOnly Property cat_Format() As String
             Get
@@ -97,7 +121,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formátování.
+        '''  Looks up a localized string similar to Formatting.
         '''</summary>
         Friend ReadOnly Property cat_Formatting() As String
             Get
@@ -106,7 +130,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Umístění.
+        '''  Looks up a localized string similar to Location.
         '''</summary>
         Friend ReadOnly Property cat_Location() As String
             Get
@@ -115,7 +139,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Postprocesing.
+        '''  Looks up a localized string similar to Postprocessing.
         '''</summary>
         Friend ReadOnly Property cat_PostProcessing() As String
             Get
@@ -124,7 +148,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Opakování.
+        '''  Looks up a localized string similar to Repeat.
         '''</summary>
         Friend ReadOnly Property cat_Repeat() As String
             Get
@@ -133,7 +157,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Speciální případy.
+        '''  Looks up a localized string similar to Special cases.
         '''</summary>
         Friend ReadOnly Property cat_SpecialCases() As String
             Get
@@ -142,7 +166,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Šablona.
+        '''  Looks up a localized string similar to Template.
         '''</summary>
         Friend ReadOnly Property cat_Template() As String
             Get
@@ -160,7 +184,34 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Povolí XSLT funkci document().
+        '''  Looks up a localized string similar to Enter 1-based column number to write data to (cells left from it will become row headers).
+        '''</summary>
+        Friend ReadOnly Property Col1_d() As String
+            Get
+                Return ResourceManager.GetString("Col1_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Row number (1-based) to write database column name to (0 not to write anywhere).
+        '''</summary>
+        Friend ReadOnly Property ColumnNameRow_d() As String
+            Get
+                Return ResourceManager.GetString("ColumnNameRow_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to CSV.
+        '''</summary>
+        Friend ReadOnly Property CSV() As String
+            Get
+                Return ResourceManager.GetString("CSV", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enables the document() XSLT function.
         '''</summary>
         Friend ReadOnly Property d_AllowDocumentFunction() As String
             Get
@@ -169,7 +220,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Povolit vložený kód v XSL šabloně..
+        '''  Looks up a localized string similar to Allows a script code embedded in XSL template..
         '''</summary>
         Friend ReadOnly Property d_AllowScript() As String
             Get
@@ -178,7 +229,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Název sloupce, který bude použit pro rozložení výstupu tabulky na jednotlivé listy. Pokaždé, když se hodnota v tomto sloupci změní, je založen nový list. Case-sensitive..
+        '''  Looks up a localized string similar to Name of a column to be used to split table output to multiple worksheets. Everytime value in that column changes a new worksheet is created. Case-sensitive..
         '''</summary>
         Friend ReadOnly Property d_BreakColumn() As String
             Get
@@ -187,7 +238,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to 1-based index sloupce (v Excelu) od nějž budou sloupce kopírovány (levý do pravého). 0 - nebudou kopírovány vůbec..
+        '''  Looks up a localized string similar to 1-based index of column (in Excel). Columns willl be copyied starting with this column (left column to right-column). 0 - columns will not be copyied at all..
         '''</summary>
         Friend ReadOnly Property d_CopyColumnsFrom() As String
             Get
@@ -196,7 +247,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Kultura použitá pro formátování dat a čísel. Například en-US, cs-CZ. Prázdné - použijete invariantní kultura..
+        '''  Looks up a localized string similar to A culture to be used for date and number formatting. E.g. en-US, cs-CZ. Empty - use invariant culture..
         '''</summary>
         Friend ReadOnly Property d_Culture() As String
             Get
@@ -205,7 +256,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Název DataSetu - bude použit jako název kořenového elementu v XML..
+        '''  Looks up a localized string similar to Name of DataSet - it&apos;ll be used as name of root XML element..
         '''</summary>
         Friend ReadOnly Property d_DataSetName() As String
             Get
@@ -214,7 +265,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to URI jmenného prostoru XML pro DataSet.
+        '''  Looks up a localized string similar to Namespace URI for XML DataSet.
         '''</summary>
         Friend ReadOnly Property d_DatasetNamespace() As String
             Get
@@ -223,7 +274,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Název tabulky - bude použit jako název XML elementu..
+        '''  Looks up a localized string similar to Name of a table - it&apos;ll be used as XML element name.
         '''</summary>
         Friend ReadOnly Property d_datasetTableName() As String
             Get
@@ -232,7 +283,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formát pro formátování sloupců typu datum/čas. Použijte .NET formát. Prázdné - výchozí. Závisí na kultuře..
+        '''  Looks up a localized string similar to A format to be used fo formattting of date/time columns. Use .NET format. Empty - default. Culture-dependent..
         '''</summary>
         Friend ReadOnly Property d_DateFormat() As String
             Get
@@ -241,7 +292,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Zapsat názvy sloupců z databáze do zápatí?.
+        '''  Looks up a localized string similar to Write names of database columns to footer?.
         '''</summary>
         Friend ReadOnly Property d_Footer() As String
             Get
@@ -250,7 +301,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Zapsat názvy sloupců z databáze do záhlaví?.
+        '''  Looks up a localized string similar to Write names of database columns to header?.
         '''</summary>
         Friend ReadOnly Property d_Header() As String
             Get
@@ -259,7 +310,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Pokud je načítán soubor šablony identifikuje kolik prvních řádků přijde do záhlaví, zbytek přijde do zápatí..
+        '''  Looks up a localized string similar to In case the file is read from template indentifies how much rows from top is part of header, rest is footer..
         '''</summary>
         Friend ReadOnly Property d_HeaderSize() As String
             Get
@@ -268,7 +319,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Sloupec, podle něhož bude nastaven název listu. Prázdné - název lsitu se nezmění..
+        '''  Looks up a localized string similar to Column to be used as name of worksheet. Empty - worksheet name will not change..
         '''</summary>
         Friend ReadOnly Property d_NameColumn() As String
             Get
@@ -277,7 +328,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Sloupec obsahující názvy listů, case-sensitive..
+        '''  Looks up a localized string similar to A column containing worksheet names, case-sensitive..
         '''</summary>
         Friend ReadOnly Property d_NameColumnXlsRepeat() As String
             Get
@@ -286,7 +337,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formátovací řetězec jímž bude formátován název listu. {0} bude nahrazena názvem listu..
+        '''  Looks up a localized string similar to Formatting string to be used when creating worksheet name. The {0} placeholder is replaced with actual worksheet name..
         '''</summary>
         Friend ReadOnly Property d_NameFormat() As String
             Get
@@ -295,7 +346,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Nový řádek.
+        '''  Looks up a localized string similar to New line.
         '''</summary>
         Friend ReadOnly Property d_NewLine() As String
             Get
@@ -304,7 +355,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Jak se zachovat, pokud hodnota obsahuje konec řádku. Je možno nahrazovat konce řádků, jen z Nový řádek nebo všechny podle Unicode..
+        '''  Looks up a localized string similar to Indicates what to do when value contains new line. It&apos;s possible to treate all Unicode new lines this way or only new line delimiter specified in &quot;New line&quot;.
         '''</summary>
         Friend ReadOnly Property d_NlEscape() As String
             Get
@@ -313,7 +364,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Řetězec je vložen místo NULL hodnoty..
+        '''  Looks up a localized string similar to A string tu insert instead of a NULL value..
         '''</summary>
         Friend ReadOnly Property d_NullValue() As String
             Get
@@ -322,7 +373,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formát pro formátování sloupců typu číslo. Použijte .NET formát. Prázdné - výchozí. Závisí na kultuře..
+        '''  Looks up a localized string similar to A format to be used for formatting of numeric columns. Use .NET format. Empty - default. Culture-dependent..
         '''</summary>
         Friend ReadOnly Property d_NumberFormat() As String
             Get
@@ -331,7 +382,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to VB.NET kód, kerý je spuštěn po exportu. Kód je zavřen do funkce, které je předán parametr WorkBook..
+        '''  Looks up a localized string similar to A code in VB.NET to run after export finishes. The code is enclosed in a function which accepts a parameter WorkBook..
         '''</summary>
         Friend ReadOnly Property d_PostProcessingCode() As String
             Get
@@ -340,7 +391,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Spustit makro se zadaným názvem po dokončení exportu. Pozor: Makro nemusí fungovat v závislosti na nastavení Excelu!.
+        '''  Looks up a localized string similar to Run a macro with given name after export finishes. Warning: Depending on Excel settings the macro may or may not work!.
         '''</summary>
         Friend ReadOnly Property d_RunMacroAfter() As String
             Get
@@ -349,7 +400,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Název nebo index (1-based) listu, který bude vybrán po doběhnutí exportu. Ignorováno u subreportů. Prázdné - aktivní list nebude změněn..
+        '''  Looks up a localized string similar to A name or 1-based index of worksheet to be made active after export finishes. Ignored for subreports. Empty - active worksheet does not change..
         '''</summary>
         Friend ReadOnly Property d_SelectList() As String
             Get
@@ -358,7 +409,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Oddělovač sloupců Např. , ; | nebo tabulátor (vložte zkopírováním z Notepadu).
+        '''  Looks up a localized string similar to Column separator E.g. ,, ;, | or tab (enter tab by copying it from notepad).
         '''</summary>
         Friend ReadOnly Property d_Separator() As String
             Get
@@ -367,7 +418,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Čárkou oddělený seznam názvů sloupců (z databáze)., které budou vynechány při výpisu do Excelu. Pokud se z nějakých exotických důvodů vyskytuje v názvu sloupce čárka (,) nahraďte ji pipou (|); pipu (|) nahraďte dvěma (||). Case-sinsitive..
+        '''  Looks up a localized string similar to Comma-separated list of columns (from database) to skip while writing to Excel. In case the name of the column contains a comma (,), replace the comma with a pipe (|), replace a pipe (|) with two pipes (||). Case-sensitive..
         '''</summary>
         Friend ReadOnly Property d_SkipColumns() As String
             Get
@@ -376,7 +427,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Speciální řetězec, pokud má být konec řádku nahrazen speciálním řetězcem. Speciální řetězec je, pokud se vyskytne v hodnotě, escapován stejným stylem jako textový kvalifikátor..
+        '''  Looks up a localized string similar to A special string used when new line is gonna be replaced with special string. In case the special string is part of value it&apos;s escaped the same way text qualifier is..
         '''</summary>
         Friend ReadOnly Property d_SpecialString() As String
             Get
@@ -385,7 +436,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Pozastavit přepočítávání vzorců během vyplňování listu? (urychlí operaci).
+        '''  Looks up a localized string similar to Stops formula recomputing during data filling (makes filling faster).
         '''</summary>
         Friend ReadOnly Property d_SuspendRecalculations() As String
             Get
@@ -394,7 +445,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Ohraničuje textová pole z obou stran. Použije se pokud pole obsahuje divoké znaky nebo je to vyžadováno nastavením. Např.: &quot;, &apos;.
+        '''  Looks up a localized string similar to Used to delimit text values from both sides. Used as necessary (when text contains changacters in collision with colum delimiters or when required by another configuration). E.g. &quot;, &apos;.
         '''</summary>
         Friend ReadOnly Property d_TextQualifier() As String
             Get
@@ -403,7 +454,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Určuje jak bude zacházeno s řetězcem, který obsahuje textový kvalifikátor..
+        '''  Looks up a localized string similar to Determines how to treat string containing text qualifier..
         '''</summary>
         Friend ReadOnly Property d_TextQualifierEscape() As String
             Get
@@ -412,7 +463,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Určuje jestli textový klavlifikátor bude použit jen pokud je potřeba, vždy nebo vždy na řetězcové sloupce a je pokud je potřeba na data a čísla..
+        '''  Looks up a localized string similar to Determines if text qualifier is used only when needed or always for strings and when required on numbers and dates..
         '''</summary>
         Friend ReadOnly Property d_TextQualifierUsage() As String
             Get
@@ -421,7 +472,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Má být hodnota z rozkladového sloupce zapisována do listu?.
+        '''  Looks up a localized string similar to Should the value of &quot;Split by&quot; column be written to a worksheet?.
         '''</summary>
         Friend ReadOnly Property d_WriteBreak() As String
             Get
@@ -430,7 +481,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Má být hodnota ze sloupce názvu zapisována do listu?.
+        '''  Looks up a localized string similar to Should the value of &quot;Names&quot; column be written to a worksheet?.
         '''</summary>
         Friend ReadOnly Property d_WriteName() As String
             Get
@@ -439,7 +490,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Prefix jmenného prostoru DataSetu.
+        '''  Looks up a localized string similar to DataSet namespace prefix.
         '''</summary>
         Friend ReadOnly Property d_XmlPrefix() As String
             Get
@@ -448,7 +499,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Povolit funkci Document().
+        '''  Looks up a localized string similar to Enable the document() function.
         '''</summary>
         Friend ReadOnly Property dn_AllowDocumentFunction() As String
             Get
@@ -457,7 +508,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Povolit script.
+        '''  Looks up a localized string similar to Allow script.
         '''</summary>
         Friend ReadOnly Property dn_AllowScript() As String
             Get
@@ -466,7 +517,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Auto-šířka sloupců.
+        '''  Looks up a localized string similar to Column auto-width.
         '''</summary>
         Friend ReadOnly Property dn_AutoWidtn() As String
             Get
@@ -475,7 +526,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Rozložit podle.
+        '''  Looks up a localized string similar to Split by.
         '''</summary>
         Friend ReadOnly Property dn_BreakColumn() As String
             Get
@@ -484,7 +535,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Sloupec 1.
+        '''  Looks up a localized string similar to 1st column.
         '''</summary>
         Friend ReadOnly Property dn_Col1() As String
             Get
@@ -493,7 +544,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Řádek názvu.
+        '''  Looks up a localized string similar to Name row.
         '''</summary>
         Friend ReadOnly Property dn_ColumnNameRow() As String
             Get
@@ -502,7 +553,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Kopírovat sloupce od.
+        '''  Looks up a localized string similar to Copy columns from.
         '''</summary>
         Friend ReadOnly Property dn_CopyColumnsFrom() As String
             Get
@@ -511,7 +562,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Kultura.
+        '''  Looks up a localized string similar to Culture.
         '''</summary>
         Friend ReadOnly Property dn_Culture() As String
             Get
@@ -520,7 +571,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Název DataSetu.
+        '''  Looks up a localized string similar to DataSet name.
         '''</summary>
         Friend ReadOnly Property dn_DatasetName() As String
             Get
@@ -529,7 +580,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Jmenný prostor DataSetu.
+        '''  Looks up a localized string similar to DataSet namespace.
         '''</summary>
         Friend ReadOnly Property dn_DatasetNamespace() As String
             Get
@@ -538,7 +589,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Název tabulky v datasetu.
+        '''  Looks up a localized string similar to DataSet table name.
         '''</summary>
         Friend ReadOnly Property dn_datasetTableName() As String
             Get
@@ -547,7 +598,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formát datumů.
+        '''  Looks up a localized string similar to Date format.
         '''</summary>
         Friend ReadOnly Property dn_DateFormat() As String
             Get
@@ -556,7 +607,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Kódování.
+        '''  Looks up a localized string similar to Encoding.
         '''</summary>
         Friend ReadOnly Property dn_Encoding() As String
             Get
@@ -565,7 +616,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Kódování výstupního textu. Například utf-8 nebo windows-1250. Prázdné - použije se výchozí systémové..
+        '''  Looks up a localized string similar to Output text encoding. E.g. utf-8 or windows-1250. Empty - use system default..
         '''</summary>
         Friend ReadOnly Property dn_EncodingCsv() As String
             Get
@@ -574,7 +625,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Patička.
+        '''  Looks up a localized string similar to Footer.
         '''</summary>
         Friend ReadOnly Property dn_Footer() As String
             Get
@@ -583,7 +634,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Hlavička.
+        '''  Looks up a localized string similar to Header.
         '''</summary>
         Friend ReadOnly Property dn_Header() As String
             Get
@@ -592,7 +643,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Velikost záhlaví.
+        '''  Looks up a localized string similar to Header size.
         '''</summary>
         Friend ReadOnly Property dn_HeaderSize() As String
             Get
@@ -601,7 +652,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Vkládat řádky.
+        '''  Looks up a localized string similar to Insert rows.
         '''</summary>
         Friend ReadOnly Property dn_InsertRows() As String
             Get
@@ -610,7 +661,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to List.
+        '''  Looks up a localized string similar to Worksheet.
         '''</summary>
         Friend ReadOnly Property dn_List() As String
             Get
@@ -619,7 +670,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Názvy.
+        '''  Looks up a localized string similar to Names.
         '''</summary>
         Friend ReadOnly Property dn_NameColumn() As String
             Get
@@ -628,7 +679,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Název listu.
+        '''  Looks up a localized string similar to Worksheet name.
         '''</summary>
         Friend ReadOnly Property dn_NameColumns() As String
             Get
@@ -637,7 +688,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formát názvu.
+        '''  Looks up a localized string similar to Name format.
         '''</summary>
         Friend ReadOnly Property dn_NameFormat() As String
             Get
@@ -646,7 +697,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Určuje znak pro použití nového řádku. Možné jsou všechny oddělovače podporované Unicode..
+        '''  Looks up a localized string similar to Determines a character to be used for new lines. All Unicode-supported delimiters are allowed..
         '''</summary>
         Friend ReadOnly Property dn_NewLine() As String
             Get
@@ -655,7 +706,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Escape nového řádku.
+        '''  Looks up a localized string similar to New-line escape.
         '''</summary>
         Friend ReadOnly Property dn_NlEscape() As String
             Get
@@ -673,7 +724,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formát čísel.
+        '''  Looks up a localized string similar to Number format.
         '''</summary>
         Friend ReadOnly Property dn_NumberFormat() As String
             Get
@@ -682,7 +733,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Postrocesovací kód.
+        '''  Looks up a localized string similar to Postrpocessing code.
         '''</summary>
         Friend ReadOnly Property dn_PostProcessingCode() As String
             Get
@@ -691,7 +742,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Oblast tisku.
+        '''  Looks up a localized string similar to Print area.
         '''</summary>
         Friend ReadOnly Property dn_PrintArea() As String
             Get
@@ -700,7 +751,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Řádek 1.
+        '''  Looks up a localized string similar to 1st row.
         '''</summary>
         Friend ReadOnly Property dn_Row1() As String
             Get
@@ -709,7 +760,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Spustit makro.
+        '''  Looks up a localized string similar to Run macro.
         '''</summary>
         Friend ReadOnly Property dn_RunMacroAfter() As String
             Get
@@ -718,7 +769,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Aktivní list.
+        '''  Looks up a localized string similar to Active worksheet.
         '''</summary>
         Friend ReadOnly Property dn_SelectList() As String
             Get
@@ -727,7 +778,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Oddělovač.
+        '''  Looks up a localized string similar to Separator.
         '''</summary>
         Friend ReadOnly Property dn_Separator() As String
             Get
@@ -736,7 +787,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Vynechat.
+        '''  Looks up a localized string similar to Skip.
         '''</summary>
         Friend ReadOnly Property dn_SkipColumns() As String
             Get
@@ -745,7 +796,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Vynechat vyplněné sloupce.
+        '''  Looks up a localized string similar to Skip non-empty columns.
         '''</summary>
         Friend ReadOnly Property dn_SkipFilled() As String
             Get
@@ -754,7 +805,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Jen chybějící názvy.
+        '''  Looks up a localized string similar to Only missing names.
         '''</summary>
         Friend ReadOnly Property dn_SkipFilledName() As String
             Get
@@ -763,7 +814,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Speciální řetězec.
+        '''  Looks up a localized string similar to Special string.
         '''</summary>
         Friend ReadOnly Property dn_SpecialString() As String
             Get
@@ -772,7 +823,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Pozastavit přepočítávání.
+        '''  Looks up a localized string similar to Prevent recompute.
         '''</summary>
         Friend ReadOnly Property dn_SuspendRecalculations() As String
             Get
@@ -781,7 +832,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Textový kvalifikátor.
+        '''  Looks up a localized string similar to Text qualifier.
         '''</summary>
         Friend ReadOnly Property dn_TextQualifier() As String
             Get
@@ -790,7 +841,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Escape textového kvalifikátoru.
+        '''  Looks up a localized string similar to Text-qualifier escape.
         '''</summary>
         Friend ReadOnly Property dn_TextQualifierEscape() As String
             Get
@@ -799,7 +850,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Použit kvalifikátor.
+        '''  Looks up a localized string similar to Use qualifier.
         '''</summary>
         Friend ReadOnly Property dn_TextQualifierUsage() As String
             Get
@@ -808,7 +859,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Zapisovat rozklad.
+        '''  Looks up a localized string similar to Show split value.
         '''</summary>
         Friend ReadOnly Property dn_WriteBreak() As String
             Get
@@ -817,7 +868,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Zapisovat název.
+        '''  Looks up a localized string similar to Show name.
         '''</summary>
         Friend ReadOnly Property dn_WriteName() As String
             Get
@@ -835,7 +886,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to V uživatelském kódu pro postprocessing došlo k chybě {0} {1}.
+        '''  Looks up a localized string similar to There was an error in user code for postprocessing {0} {1}.
         '''</summary>
         Friend ReadOnly Property ex_ErrorInUserPostprocessingCode() As String
             Get
@@ -844,7 +895,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to V sešitu není dostatek listů pro index .
+        '''  Looks up a localized string similar to There is not egouh space for an index in the workbook.
         '''</summary>
         Friend ReadOnly Property ex_ExcelListIndexOutOfRange() As String
             Get
@@ -853,7 +904,25 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Vlastnost newline má nepodporovanou hodnotu.
+        '''  Looks up a localized string similar to The format of {0} is invalid..
+        '''</summary>
+        Friend ReadOnly Property ex_InvalidFormat() As String
+            Get
+                Return ResourceManager.GetString("ex_InvalidFormat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The size cannot be negative.
+        '''</summary>
+        Friend ReadOnly Property ex_NegativeSize() As String
+            Get
+                Return ResourceManager.GetString("ex_NegativeSize", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The newline property has unsupported value.
         '''</summary>
         Friend ReadOnly Property ex_NewLineInvalidValue() As String
             Get
@@ -862,7 +931,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Operace stornována.
+        '''  Looks up a localized string similar to In case a column is specified as number the number must be greater than zero..
+        '''</summary>
+        Friend ReadOnly Property ex_NonPositiveColumnNumber() As String
+            Get
+                Return ResourceManager.GetString("ex_NonPositiveColumnNumber", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Operation cancelled.
         '''</summary>
         Friend ReadOnly Property ex_OperationCancelled() As String
             Get
@@ -871,7 +949,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Sobor šablony nebyl nalezen.
+        '''  Looks up a localized string similar to Template file not found.
         '''</summary>
         Friend ReadOnly Property ex_TemplateNotFound() As String
             Get
@@ -880,7 +958,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Šablona typu {0} ({1}) není podporována jako šablona subreportu se šablonou {2} ({3})..
+        '''  Looks up a localized string similar to {0} ({1}) type template is not supported as subreport template with {2} ({3}) template..
         '''</summary>
         Friend ReadOnly Property ex_UnsupportedSubreportType() As String
             Get
@@ -889,7 +967,32 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Doplněk aplikace excel.
+        '''  Looks up a localized string similar to {0} must be greater than {1}.
+        '''</summary>
+        Friend ReadOnly Property ex_ValueMustBeGreaterThan() As String
+            Get
+                Return ResourceManager.GetString("ex_ValueMustBeGreaterThan", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} must be greater than or equal to {1}.
+        '''</summary>
+        Friend ReadOnly Property ex_ValueMustBeGreaterThanOrEqualTo() As String
+            Get
+                Return ResourceManager.GetString("ex_ValueMustBeGreaterThanOrEqualTo", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Excel() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Excel", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Excel add-in.
         '''</summary>
         Friend ReadOnly Property ExcelName_AddInDefault() As String
             Get
@@ -898,7 +1001,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Soubory aplikace Excel.
+        '''  Looks up a localized string similar to Excel files.
         '''</summary>
         Friend ReadOnly Property ExcelName_CommonFiles() As String
             Get
@@ -907,7 +1010,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Text oddělený oddělovačem.
+        '''  Looks up a localized string similar to Delimiter-separated text.
         '''</summary>
         Friend ReadOnly Property ExcelName_CSV() As String
             Get
@@ -916,7 +1019,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Sešit aplikace Excel.
+        '''  Looks up a localized string similar to Excel workbook.
         '''</summary>
         Friend ReadOnly Property ExcelName_Default() As String
             Get
@@ -925,7 +1028,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to DIF (formát výměny dat).
+        '''  Looks up a localized string similar to DIF (data interchange format).
         '''</summary>
         Friend ReadOnly Property ExcelName_DIF() As String
             Get
@@ -934,7 +1037,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Webová stránka.
+        '''  Looks up a localized string similar to Web page.
         '''</summary>
         Friend ReadOnly Property ExcelName_HTML() As String
             Get
@@ -943,7 +1046,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Webová stránka tvořená jedním souborem.
+        '''  Looks up a localized string similar to One file web page.
         '''</summary>
         Friend ReadOnly Property ExcelName_MHTML() As String
             Get
@@ -970,7 +1073,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Formátovaný text (oddělený mezerami).
+        '''  Looks up a localized string similar to Formatted text (space-separated).
         '''</summary>
         Friend ReadOnly Property ExcelName_PRN() As String
             Get
@@ -979,7 +1082,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to SYLK (symbolické propojení).
+        '''  Looks up a localized string similar to SYLK (symbolic link).
         '''</summary>
         Friend ReadOnly Property ExcelName_SLK() As String
             Get
@@ -988,7 +1091,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Šablona aplikace Excel.
+        '''  Looks up a localized string similar to Excel template.
         '''</summary>
         Friend ReadOnly Property ExcelName_TemplateDefault() As String
             Get
@@ -997,7 +1100,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Šablony aplikace Excel.
+        '''  Looks up a localized string similar to Excel tamplates.
         '''</summary>
         Friend ReadOnly Property ExcelName_TemplatesAll() As String
             Get
@@ -1006,7 +1109,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Text (oddělený tabulátory).
+        '''  Looks up a localized string similar to Tab-separated text.
         '''</summary>
         Friend ReadOnly Property ExcelName_TXT() As String
             Get
@@ -1015,7 +1118,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Doplněk aplikace excel 97-2003.
+        '''  Looks up a localized string similar to Excel 97-2003 add-in.
         '''</summary>
         Friend ReadOnly Property ExcelName_XLAOld() As String
             Get
@@ -1024,7 +1127,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Binární sešit aplikace Excel.
+        '''  Looks up a localized string similar to Binary Excel workbook.
         '''</summary>
         Friend ReadOnly Property ExcelName_XLSB() As String
             Get
@@ -1033,7 +1136,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Sešit aplikace Excel s podporou maker.
+        '''  Looks up a localized string similar to Macro-enabled Excel workbook.
         '''</summary>
         Friend ReadOnly Property ExcelName_XLSM() As String
             Get
@@ -1042,7 +1145,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Sešit aplikace Excel 97-2003.
+        '''  Looks up a localized string similar to Excel 97-2003 workbook.
         '''</summary>
         Friend ReadOnly Property ExcelName_XLSOld() As String
             Get
@@ -1051,7 +1154,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to šablona aplikace Excel s podporou maker.
+        '''  Looks up a localized string similar to Macro-enabled Excel template.
         '''</summary>
         Friend ReadOnly Property ExcelName_XLTM() As String
             Get
@@ -1060,7 +1163,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to šablona aplikace Excel 97-2003.
+        '''  Looks up a localized string similar to Excel 97-2003 template.
         '''</summary>
         Friend ReadOnly Property ExcelName_XLTOld() As String
             Get
@@ -1069,7 +1172,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Datové soubory ve formátu XML.
+        '''  Looks up a localized string similar to Data files in XML format.
         '''</summary>
         Friend ReadOnly Property ExcelName_XML() As String
             Get
@@ -1078,7 +1181,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Dokument XPS.
+        '''  Looks up a localized string similar to XPS document.
         '''</summary>
         Friend ReadOnly Property ExcelName_XPS() As String
             Get
@@ -1087,7 +1190,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Excel (opakovaný).
+        '''  Looks up a localized string similar to Excel (repeated).
         '''</summary>
         Friend ReadOnly Property ExcelRepeated() As String
             Get
@@ -1096,7 +1199,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Excel (jednoduchý).
+        '''  Looks up a localized string similar to Excel (simple).
         '''</summary>
         Friend ReadOnly Property ExcelSimple() As String
             Get
@@ -1105,7 +1208,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Hodnoty oddělené oddělovačem (*.csv)|*.csv|Hodnoty oddělené tabulátorem (*.tsv)|*.tsv|Textové soubory (*.txt)|*.txt.
+        '''  Looks up a localized string similar to XSL Transformations (*.xsl, *.xslt)|*.xsl;*.xslt.
+        '''</summary>
+        Friend ReadOnly Property fil_XSLT() As String
+            Get
+                Return ResourceManager.GetString("fil_XSLT", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Delimiter-separated values (*.csv)|*.csv|Tab-separated values (*.tsv)|*.tsv|Text files (*.txt)|*.txt.
         '''</summary>
         Friend ReadOnly Property filter_CSVTSVTSXT() As String
             Get
@@ -1114,11 +1226,29 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Soubory XML (*.xml)|*.xml.
+        '''  Looks up a localized string similar to XML files (*.xml)|*.xml.
         '''</summary>
         Friend ReadOnly Property filter_XML() As String
             Get
                 Return ResourceManager.GetString("filter_XML", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Rows will be inserted instead of rewriting them. Allows to reserve footer..
+        '''</summary>
+        Friend ReadOnly Property InsertRows_d() As String
+            Get
+                Return ResourceManager.GetString("InsertRows_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enter a worksheet name or 1-based index to write data to (empty to use 1st worksheet).
+        '''</summary>
+        Friend ReadOnly Property List_d() As String
+            Get
+                Return ResourceManager.GetString("List_d", resourceCulture)
             End Get
         End Property
         
@@ -1132,7 +1262,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Chyba v uživatelském kódu {0}: {1} @ {2}.
+        '''  Looks up a localized string similar to User code error {0}: {1} @ {2}.
         '''</summary>
         Friend ReadOnly Property msg_ErrorInUserCode() As String
             Get
@@ -1141,7 +1271,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Exportuji XML.
+        '''  Looks up a localized string similar to Exporting XML.
         '''</summary>
         Friend ReadOnly Property msg_ExportingXml() As String
             Get
@@ -1150,7 +1280,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Dokončování listu {0}, šablona {1}.
+        '''  Looks up a localized string similar to Finalizing worksheet {0}, template {1}.
         '''</summary>
         Friend ReadOnly Property msg_FinalizeTemplateList() As String
             Get
@@ -1159,7 +1289,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Generování šablony {0}.
+        '''  Looks up a localized string similar to Generating template {0}.
         '''</summary>
         Friend ReadOnly Property msg_GeneratingTemplate() As String
             Get
@@ -1168,7 +1298,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Načítám data z databáze.
+        '''  Looks up a localized string similar to Loading data from a database.
         '''</summary>
         Friend ReadOnly Property msg_LoadingDataFromDatabase() As String
             Get
@@ -1177,7 +1307,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Načítám XSLT šablonu.
+        '''  Looks up a localized string similar to Loading XSL template.
         '''</summary>
         Friend ReadOnly Property msg_LoadingXsltTemplate() As String
             Get
@@ -1186,7 +1316,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Příprava šablony {0}.
+        '''  Looks up a localized string similar to Preparing template {0}.
         '''</summary>
         Friend ReadOnly Property msg_PreparingTemplate() As String
             Get
@@ -1195,7 +1325,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Příprava šablony {0}, list {1}.
+        '''  Looks up a localized string similar to Preparing template {0}, worksheet {1}.
         '''</summary>
         Friend ReadOnly Property msg_PreparingTemplateList() As String
             Get
@@ -1204,7 +1334,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Ukládám XML.
+        '''  Looks up a localized string similar to Saving XML.
         '''</summary>
         Friend ReadOnly Property msg_SavingXml() As String
             Get
@@ -1213,7 +1343,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Subreporty šablony {0}.
+        '''  Looks up a localized string similar to Template subreports {0}.
         '''</summary>
         Friend ReadOnly Property msg_SubreportsOfTemplate() As String
             Get
@@ -1222,7 +1352,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Zápis dat šablony {0}, list {1}.
+        '''  Looks up a localized string similar to Writing data to the template {0}, worksheet {1}.
         '''</summary>
         Friend ReadOnly Property msg_WritingTemplateList() As String
             Get
@@ -1231,11 +1361,85 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to přepočet....
+        '''  Looks up a localized string similar to Enter in form:
+        '''x1;x2-y1;y2
+        '''• x1 - a column relative to 1st filled in
+        '''• x2 - a column relative to last filled-in
+        '''• y1 - a row relative to first filled-in
+        '''• y2 - a row relative to last filled-in
+        '''Relative numbers bear these meanings:
+        '''• 0 - the row/colmn they are relative to
+        '''• +1, +2, ... x columns down/right
+        '''• -1, -2, ... x columns top/left
+        '''• 1, 2, ... worksheet absolute
+        '''Let empty not to set print area.
+        '''</summary>
+        Friend ReadOnly Property PrintArea_d() As String
+            Get
+                Return ResourceManager.GetString("PrintArea_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enter the value as x1;y1-x2;y2 - each number in format +a, -a, 0 or a..
+        '''</summary>
+        Friend ReadOnly Property PrintAreaFormatHelp() As String
+            Get
+                Return ResourceManager.GetString("PrintAreaFormatHelp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to recomputing....
         '''</summary>
         Friend ReadOnly Property Recomputing() As String
             Get
                 Return ResourceManager.GetString("Recomputing", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enter 1-based number of 1ts row to write data to (cells abowe will become headers).
+        '''</summary>
+        Friend ReadOnly Property Row1_d() As String
+            Get
+                Return ResourceManager.GetString("Row1_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Columns with a value or formula filled in will be skipped instead of being overwritten (detemined by state of cells in 1st written row).
+        '''</summary>
+        Friend ReadOnly Property SkipFilled_d() As String
+            Get
+                Return ResourceManager.GetString("SkipFilled_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Do not fill-in column name when the cell is already filled-in.
+        '''</summary>
+        Friend ReadOnly Property SkipFilledNames_d() As String
+            Get
+                Return ResourceManager.GetString("SkipFilledNames_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Fill in Excel-friendly values.
+        '''</summary>
+        Friend ReadOnly Property txt_SetExcelFriendly() As String
+            Get
+                Return ResourceManager.GetString("txt_SetExcelFriendly", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to XML.
+        '''</summary>
+        Friend ReadOnly Property XML() As String
+            Get
+                Return ResourceManager.GetString("XML", resourceCulture)
             End Get
         End Property
     End Module

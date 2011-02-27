@@ -26,7 +26,6 @@ Namespace ReportingT.ReportingEngineLite
         ''' <returns>A new instance of control for editing current report settings</returns>
         Public Function GetConfigEditor() As System.Windows.Forms.Control Implements IReportTemplate.GetConfigEditor
             Dim ret As New CsvSettingsEditor(Me.Settings)
-            ret.SetHelp("http://mis.eosksicz.net/wiki/index.php/KolUNI:_%C5%A0ablona_CSV", "#")
             Return ret
         End Function
         ''' <summary>Retturns template settings as XML document</summary>
@@ -89,7 +88,7 @@ Namespace ReportingT.ReportingEngineLite
         ''' <summary>Human-friendly Template name (as shown to the user)</summary>
         Public ReadOnly Property Name() As String Implements IReportTemplate.Name
             Get
-                Return ReportingT.ReportingEngineLite.ReportingResources.CSV
+                Return My.Resources.CSV
             End Get
         End Property
 

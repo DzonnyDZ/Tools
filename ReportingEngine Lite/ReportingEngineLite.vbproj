@@ -112,11 +112,6 @@
     <Compile Include="Reporting\Csv\CsvTemplate.vb" />
     <Compile Include="Reporting\Csv\CsvTemplateSettings.user.vb" />
     <Compile Include="Reporting\IReportTemplate.vb" />
-    <Compile Include="Reporting\ReportingResources.Designer.vb">
-      <DependentUpon>ReportingResources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Reporting\SimpleXls\SimpleXlsTemplate.vb" />
     <Compile Include="Reporting\SimpleXls\SimpleXlsTemplateSettings.user.vb" />
     <Compile Include="Reporting\XML\XMLTemplate.vb" />
@@ -126,6 +121,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XMLTemplateSettings.xsd</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="My Project\Resources.cs.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ReportPostProcessingFile.vb">
       <LogicalName>Tools.ReportingT.ReportingEngineLite.ReportPostProcessingFile.vb</LogicalName>
     </EmbeddedResource>
@@ -178,12 +177,6 @@
     <None Include="Reporting\Csv\CsvTemplateSettings.xsx">
       <DependentUpon>CsvTemplateSettings.xsd</DependentUpon>
     </None>
-    <EmbeddedResource Include="Reporting\ReportingResources.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ReportingResources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>ReportingT.ReportingEngineLite</CustomToolNamespace>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\SimpleXls\SimpleXlsTemplateSettings.xsd">
       <CustomToolNamespace>ReportingT.ReportingEngineLite</CustomToolNamespace>
       <SubType>Designer</SubType>

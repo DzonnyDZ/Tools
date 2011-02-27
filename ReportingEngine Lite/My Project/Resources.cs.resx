@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ExcelName_Default" xml:space="preserve">
+    <value>Sešit aplikace Excel</value>
+  </data>
+  <data name="ExcelName_XLSM" xml:space="preserve">
+    <value>Sešit aplikace Excel s podporou maker</value>
+  </data>
+  <data name="ExcelName_XLSB" xml:space="preserve">
+    <value>Binární sešit aplikace Excel</value>
+  </data>
+  <data name="ExcelName_XLSOld" xml:space="preserve">
+    <value>Sešit aplikace Excel 97-2003</value>
+  </data>
+  <data name="ExcelName_XML" xml:space="preserve">
+    <value>Datové soubory ve formátu XML</value>
+  </data>
+  <data name="ExcelName_MHTML" xml:space="preserve">
+    <value>Webová stránka tvořená jedním souborem</value>
+  </data>
+  <data name="ExcelName_HTML" xml:space="preserve">
+    <value>Webová stránka</value>
+  </data>
+  <data name="ExcelName_TemplateDefault" xml:space="preserve">
+    <value>Šablona aplikace Excel</value>
+  </data>
+  <data name="ExcelName_XLTM" xml:space="preserve">
+    <value>šablona aplikace Excel s podporou maker</value>
+  </data>
+  <data name="ExcelName_XLTOld" xml:space="preserve">
+    <value>šablona aplikace Excel 97-2003</value>
+  </data>
+  <data name="ExcelName_TXT" xml:space="preserve">
+    <value>Text (oddělený tabulátory)</value>
+  </data>
+  <data name="ExcelName_CSV" xml:space="preserve">
+    <value>Text oddělený oddělovačem</value>
+  </data>
+  <data name="ExcelName_PRN" xml:space="preserve">
+    <value>Formátovaný text (oddělený mezerami)</value>
+  </data>
+  <data name="ExcelName_DIF" xml:space="preserve">
+    <value>DIF (formát výměny dat)</value>
+  </data>
+  <data name="ExcelName_SLK" xml:space="preserve">
+    <value>SYLK (symbolické propojení)</value>
+  </data>
+  <data name="ExcelName_AddInDefault" xml:space="preserve">
+    <value>Doplněk aplikace excel</value>
+  </data>
+  <data name="ExcelName_XLAOld" xml:space="preserve">
+    <value>Doplněk aplikace excel 97-2003</value>
+  </data>
+  <data name="ExcelName_PDF" xml:space="preserve">
+    <value>PDF</value>
+  </data>
+  <data name="ExcelName_XPS" xml:space="preserve">
+    <value>Dokument XPS</value>
+  </data>
+  <data name="ExcelName_ODS" xml:space="preserve">
+    <value>OpenDocument Spreadsheet</value>
+  </data>
+  <data name="ExcelName_TemplatesAll" xml:space="preserve">
+    <value>Šablony aplikace Excel</value>
+  </data>
+  <data name="ExcelName_CommonFiles" xml:space="preserve">
+    <value>Soubory aplikace Excel</value>
+  </data>
+  <data name="ExcelSimple" xml:space="preserve">
+    <value>Excel (jednoduchý)</value>
+  </data>
+  <data name="ex_TemplateNotFound" xml:space="preserve">
+    <value>Sobor šablony nebyl nalezen</value>
+  </data>
+  <data name="ex_OperationCancelled" xml:space="preserve">
+    <value>Operace stornována</value>
+  </data>
+  <data name="ex_ExcelListIndexOutOfRange" xml:space="preserve">
+    <value>V sešitu není dostatek listů pro index </value>
+  </data>
+  <data name="msg_PreparingTemplateList" xml:space="preserve">
+    <value>Příprava šablony {0}, list {1}</value>
+  </data>
+  <data name="msg_WritingTemplateList" xml:space="preserve">
+    <value>Zápis dat šablony {0}, list {1}</value>
+  </data>
+  <data name="Recomputing" xml:space="preserve">
+    <value>přepočet...</value>
+  </data>
+  <data name="msg_FinalizeTemplateList" xml:space="preserve">
+    <value>Dokončování listu {0}, šablona {1}</value>
+  </data>
+  <data name="msg_SubreportsOfTemplate" xml:space="preserve">
+    <value>Subreporty šablony {0}</value>
+  </data>
+  <data name="ex_UnsupportedSubreportType" xml:space="preserve">
+    <value>Šablona typu {0} ({1}) není podporována jako šablona subreportu se šablonou {2} ({3}).</value>
+  </data>
+  <data name="msg_CompilerWarningLog" xml:space="preserve">
+    <value>{0},{1}: {2} - {3}</value>
+  </data>
+  <data name="msg_ErrorInUserCode" xml:space="preserve">
+    <value>Chyba v uživatelském kódu {0}: {1} @ {2}</value>
+  </data>
+  <data name="ex_ErrorInUserPostprocessingCode" xml:space="preserve">
+    <value>V uživatelském kódu pro postprocessing došlo k chybě {0} {1}</value>
+  </data>
+  <data name="ExcelRepeated" xml:space="preserve">
+    <value>Excel (opakovaný)</value>
+  </data>
+  <data name="ex_NewLineInvalidValue" xml:space="preserve">
+    <value>Vlastnost newline má nepodporovanou hodnotu</value>
+  </data>
+  <data name="filter_XML" xml:space="preserve">
+    <value>Soubory XML (*.xml)|*.xml</value>
+  </data>
+  <data name="filter_CSVTSVTSXT" xml:space="preserve">
+    <value>Hodnoty oddělené oddělovačem (*.csv)|*.csv|Hodnoty oddělené tabulátorem (*.tsv)|*.tsv|Textové soubory (*.txt)|*.txt</value>
+  </data>
+  <data name="msg_GeneratingTemplate" xml:space="preserve">
+    <value>Generování šablony {0}</value>
+  </data>
+  <data name="msg_PreparingTemplate" xml:space="preserve">
+    <value>Příprava šablony {0}</value>
+  </data>
+  <data name="msg_LoadingXsltTemplate" xml:space="preserve">
+    <value>Načítám XSLT šablonu</value>
+  </data>
+  <data name="msg_LoadingDataFromDatabase" xml:space="preserve">
+    <value>Načítám data z databáze</value>
+  </data>
+  <data name="msg_ExportingXml" xml:space="preserve">
+    <value>Exportuji XML</value>
+  </data>
+  <data name="msg_SavingXml" xml:space="preserve">
+    <value>Ukládám XML</value>
+  </data>
+  <data name="dn_AllowDocumentFunction" xml:space="preserve">
+    <value>Povolit funkci Document()</value>
+  </data>
+  <data name="d_AllowDocumentFunction" xml:space="preserve">
+    <value>Povolí XSLT funkci document()</value>
+  </data>
+  <data name="dn_AllowScript" xml:space="preserve">
+    <value>Povolit script</value>
+  </data>
+  <data name="d_AllowScript" xml:space="preserve">
+    <value>Povolit vložený kód v XSL šabloně.</value>
+  </data>
+  <data name="dn_DatasetName" xml:space="preserve">
+    <value>Název DataSetu</value>
+  </data>
+  <data name="d_DataSetName" xml:space="preserve">
+    <value>Název DataSetu - bude použit jako název kořenového elementu v XML.</value>
+  </data>
+  <data name="dn_DatasetNamespace" xml:space="preserve">
+    <value>Jmenný prostor DataSetu</value>
+  </data>
+  <data name="d_DatasetNamespace" xml:space="preserve">
+    <value>URI jmenného prostoru XML pro DataSet</value>
+  </data>
+  <data name="dn_datasetTableName" xml:space="preserve">
+    <value>Název tabulky v datasetu</value>
+  </data>
+  <data name="d_datasetTableName" xml:space="preserve">
+    <value>Název tabulky - bude použit jako název XML elementu.</value>
+  </data>
+  <data name="dn_XmlPrefix" xml:space="preserve">
+    <value>XML prefix</value>
+  </data>
+  <data name="d_XmlPrefix" xml:space="preserve">
+    <value>Prefix jmenného prostoru DataSetu</value>
+  </data>
+  <data name="cat_Xml" xml:space="preserve">
+    <value>XML</value>
+  </data>
+  <data name="cat_Dataset" xml:space="preserve">
+    <value>DataSet</value>
+  </data>
+  <data name="dn_AutoWidtn" xml:space="preserve">
+    <value>Auto-šířka sloupců</value>
+  </data>
+  <data name="cat_Formatting" xml:space="preserve">
+    <value>Formátování</value>
+  </data>
+  <data name="dn_Col1" xml:space="preserve">
+    <value>Sloupec 1</value>
+  </data>
+  <data name="cat_Location" xml:space="preserve">
+    <value>Umístění</value>
+  </data>
+  <data name="dn_ColumnNameRow" xml:space="preserve">
+    <value>Řádek názvu</value>
+  </data>
+  <data name="dn_InsertRows" xml:space="preserve">
+    <value>Vkládat řádky</value>
+  </data>
+  <data name="cat_Filling" xml:space="preserve">
+    <value>Vyplňování</value>
+  </data>
+  <data name="dn_PrintArea" xml:space="preserve">
+    <value>Oblast tisku</value>
+  </data>
+  <data name="dn_List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="dn_Row1" xml:space="preserve">
+    <value>Řádek 1</value>
+  </data>
+  <data name="dn_SkipFilledName" xml:space="preserve">
+    <value>Jen chybějící názvy</value>
+  </data>
+  <data name="dn_SkipFilled" xml:space="preserve">
+    <value>Vynechat vyplněné sloupce</value>
+  </data>
+  <data name="dn_CopyColumnsFrom" xml:space="preserve">
+    <value>Kopírovat sloupce od</value>
+  </data>
+  <data name="d_CopyColumnsFrom" xml:space="preserve">
+    <value>1-based index sloupce (v Excelu) od nějž budou sloupce kopírovány (levý do pravého). 0 - nebudou kopírovány vůbec.</value>
+  </data>
+  <data name="dn_SkipColumns" xml:space="preserve">
+    <value>Vynechat</value>
+  </data>
+  <data name="d_SkipColumns" xml:space="preserve">
+    <value>Čárkou oddělený seznam názvů sloupců (z databáze)., které budou vynechány při výpisu do Excelu. Pokud se z nějakých exotických důvodů vyskytuje v názvu sloupce čárka (,) nahraďte ji pipou (|); pipu (|) nahraďte dvěma (||). Case-sinsitive.</value>
+  </data>
+  <data name="dn_NameColumns" xml:space="preserve">
+    <value>Název listu</value>
+  </data>
+  <data name="d_NameColumn" xml:space="preserve">
+    <value>Sloupec, podle něhož bude nastaven název listu. Prázdné - název lsitu se nezmění.</value>
+  </data>
+  <data name="dn_NameFormat" xml:space="preserve">
+    <value>Formát názvu</value>
+  </data>
+  <data name="d_NameFormat" xml:space="preserve">
+    <value>Formátovací řetězec jímž bude formátován název listu. {0} bude nahrazena názvem listu.</value>
+  </data>
+  <data name="dn_SelectList" xml:space="preserve">
+    <value>Aktivní list</value>
+  </data>
+  <data name="d_SelectList" xml:space="preserve">
+    <value>Název nebo index (1-based) listu, který bude vybrán po doběhnutí exportu. Ignorováno u subreportů. Prázdné - aktivní list nebude změněn.</value>
+  </data>
+  <data name="cat_PostProcessing" xml:space="preserve">
+    <value>Postprocesing</value>
+  </data>
+  <data name="dn_SuspendRecalculations" xml:space="preserve">
+    <value>Pozastavit přepočítávání</value>
+  </data>
+  <data name="d_SuspendRecalculations" xml:space="preserve">
+    <value>Pozastavit přepočítávání vzorců během vyplňování listu? (urychlí operaci)</value>
+  </data>
+  <data name="dn_RunMacroAfter" xml:space="preserve">
+    <value>Spustit makro</value>
+  </data>
+  <data name="d_RunMacroAfter" xml:space="preserve">
+    <value>Spustit makro se zadaným názvem po dokončení exportu. Pozor: Makro nemusí fungovat v závislosti na nastavení Excelu!</value>
+  </data>
+  <data name="dn_PostProcessingCode" xml:space="preserve">
+    <value>Postrocesovací kód</value>
+  </data>
+  <data name="d_PostProcessingCode" xml:space="preserve">
+    <value>VB.NET kód, kerý je spuštěn po exportu. Kód je zavřen do funkce, které je předán parametr WorkBook.</value>
+  </data>
+  <data name="dn_BreakColumn" xml:space="preserve">
+    <value>Rozložit podle</value>
+  </data>
+  <data name="d_BreakColumn" xml:space="preserve">
+    <value>Název sloupce, který bude použit pro rozložení výstupu tabulky na jednotlivé listy. Pokaždé, když se hodnota v tomto sloupci změní, je založen nový list. Case-sensitive.</value>
+  </data>
+  <data name="cat_Repeat" xml:space="preserve">
+    <value>Opakování</value>
+  </data>
+  <data name="dn_NameColumn" xml:space="preserve">
+    <value>Názvy</value>
+  </data>
+  <data name="d_NameColumnXlsRepeat" xml:space="preserve">
+    <value>Sloupec obsahující názvy listů, case-sensitive.</value>
+  </data>
+  <data name="dn_WriteBreak" xml:space="preserve">
+    <value>Zapisovat rozklad</value>
+  </data>
+  <data name="d_WriteBreak" xml:space="preserve">
+    <value>Má být hodnota z rozkladového sloupce zapisována do listu?</value>
+  </data>
+  <data name="dn_WriteName" xml:space="preserve">
+    <value>Zapisovat název</value>
+  </data>
+  <data name="d_WriteName" xml:space="preserve">
+    <value>Má být hodnota ze sloupce názvu zapisována do listu?</value>
+  </data>
+  <data name="dn_Encoding" xml:space="preserve">
+    <value>Kódování</value>
+  </data>
+  <data name="dn_EncodingCsv" xml:space="preserve">
+    <value>Kódování výstupního textu. Například utf-8 nebo windows-1250. Prázdné - použije se výchozí systémové.</value>
+  </data>
+  <data name="cat_Basic" xml:space="preserve">
+    <value>Základní</value>
+  </data>
+  <data name="dn_Culture" xml:space="preserve">
+    <value>Kultura</value>
+  </data>
+  <data name="d_Culture" xml:space="preserve">
+    <value>Kultura použitá pro formátování dat a čísel. Například en-US, cs-CZ. Prázdné - použijete invariantní kultura.</value>
+  </data>
+  <data name="cat_Format" xml:space="preserve">
+    <value>Formát</value>
+  </data>
+  <data name="dn_NumberFormat" xml:space="preserve">
+    <value>Formát čísel</value>
+  </data>
+  <data name="d_NumberFormat" xml:space="preserve">
+    <value>Formát pro formátování sloupců typu číslo. Použijte .NET formát. Prázdné - výchozí. Závisí na kultuře.</value>
+  </data>
+  <data name="dn_DateFormat" xml:space="preserve">
+    <value>Formát datumů</value>
+  </data>
+  <data name="d_DateFormat" xml:space="preserve">
+    <value>Formát pro formátování sloupců typu datum/čas. Použijte .NET formát. Prázdné - výchozí. Závisí na kultuře.</value>
+  </data>
+  <data name="dn_Separator" xml:space="preserve">
+    <value>Oddělovač</value>
+  </data>
+  <data name="d_Separator" xml:space="preserve">
+    <value>Oddělovač sloupců Např. , ; | nebo tabulátor (vložte zkopírováním z Notepadu)</value>
+  </data>
+  <data name="dn_TextQualifier" xml:space="preserve">
+    <value>Textový kvalifikátor</value>
+  </data>
+  <data name="d_TextQualifier" xml:space="preserve">
+    <value>Ohraničuje textová pole z obou stran. Použije se pokud pole obsahuje divoké znaky nebo je to vyžadováno nastavením. Např.: ", '</value>
+  </data>
+  <data name="dn_TextQualifierUsage" xml:space="preserve">
+    <value>Použit kvalifikátor</value>
+  </data>
+  <data name="d_TextQualifierUsage" xml:space="preserve">
+    <value>Určuje jestli textový klavlifikátor bude použit jen pokud je potřeba, vždy nebo vždy na řetězcové sloupce a je pokud je potřeba na data a čísla.</value>
+  </data>
+  <data name="dn_TextQualifierEscape" xml:space="preserve">
+    <value>Escape textového kvalifikátoru</value>
+  </data>
+  <data name="d_TextQualifierEscape" xml:space="preserve">
+    <value>Určuje jak bude zacházeno s řetězcem, který obsahuje textový kvalifikátor.</value>
+  </data>
+  <data name="cat_SpecialCases" xml:space="preserve">
+    <value>Speciální případy</value>
+  </data>
+  <data name="d_NewLine" xml:space="preserve">
+    <value>Nový řádek</value>
+  </data>
+  <data name="dn_NewLine" xml:space="preserve">
+    <value>Určuje znak pro použití nového řádku. Možné jsou všechny oddělovače podporované Unicode.</value>
+  </data>
+  <data name="dn_NlEscape" xml:space="preserve">
+    <value>Escape nového řádku</value>
+  </data>
+  <data name="d_NlEscape" xml:space="preserve">
+    <value>Jak se zachovat, pokud hodnota obsahuje konec řádku. Je možno nahrazovat konce řádků, jen z Nový řádek nebo všechny podle Unicode.</value>
+  </data>
+  <data name="dn_SpecialString" xml:space="preserve">
+    <value>Speciální řetězec</value>
+  </data>
+  <data name="d_SpecialString" xml:space="preserve">
+    <value>Speciální řetězec, pokud má být konec řádku nahrazen speciálním řetězcem. Speciální řetězec je, pokud se vyskytne v hodnotě, escapován stejným stylem jako textový kvalifikátor.</value>
+  </data>
+  <data name="dn_Header" xml:space="preserve">
+    <value>Hlavička</value>
+  </data>
+  <data name="d_Header" xml:space="preserve">
+    <value>Zapsat názvy sloupců z databáze do záhlaví?</value>
+  </data>
+  <data name="dn_Footer" xml:space="preserve">
+    <value>Patička</value>
+  </data>
+  <data name="d_Footer" xml:space="preserve">
+    <value>Zapsat názvy sloupců z databáze do zápatí?</value>
+  </data>
+  <data name="dn_HeaderSize" xml:space="preserve">
+    <value>Velikost záhlaví</value>
+  </data>
+  <data name="d_HeaderSize" xml:space="preserve">
+    <value>Pokud je načítán soubor šablony identifikuje kolik prvních řádků přijde do záhlaví, zbytek přijde do zápatí.</value>
+  </data>
+  <data name="cat_Template" xml:space="preserve">
+    <value>Šablona</value>
+  </data>
+  <data name="dn_NullValue" xml:space="preserve">
+    <value>Null</value>
+  </data>
+  <data name="d_NullValue" xml:space="preserve">
+    <value>Řetězec je vložen místo NULL hodnoty.</value>
+  </data>
+
+    <data name="AutoWidth_d" xml:space="preserve">
+    <value>Zadejte sloupce, u nichž má být nastavena automatická šířka po vyplnění všech řádků. Zadejte:
+• * pro nastavení u všech vyplňovaných sloupců
+• čísla (např. 1,2,5).
+• rozmezí (např. 1-6, 12-22).
+• neomezené rozmezí (např. 12-) pro všechny vyplňované sloupce od 12 výše.
+• ponechte prázdné a nenastaví se nic.
+Všechna čísla sloupců jsou absolutní v rámci listu (1-based)</value>
+  </data>
+    <data name="Col1_d" xml:space="preserve">
+    <value>Zadejte 1-based číslo sloupce, kam se budou data zapisovat (buňky vlevo budou tvořt záhlaví řádků)</value>
+  </data>
+    <data name="ColumnNameRow_d" xml:space="preserve">
+    <value>Číslo řádku (1-based) kam zapsat název sloupce z databáze (0 a nezapíše se nikam)</value>
+  </data>
+    <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <data name="Excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+        <value>..\resources\excel.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    </data>
+    <data name="InsertRows_d" xml:space="preserve">
+    <value>Řádky budou vkládány místo aby byly přepisovány. Omožňuje zachovat zápatí.</value>
+  </data>
+    <data name="List_d" xml:space="preserve">
+    <value>Zadejte název listu nebo 1-based index, kam se budou data zapisovat (nechte prázdné a použije se první list)</value>
+  </data>
+    <data name="PrintArea_d" xml:space="preserve">
+    <value>Zadejte ve formátu:
+x1;x2-y1;y2
+• x1 - sloupec vzhledem k prvnímu vyplňovanému
+• x2 - sloupec vzhledem k poslednímu vyplňovanému
+• y1 - řádek vzhledem k prvnímu vyplňovanému
+• y2 - řádek vzhledem k poslednímu vyplňovanému
+Relativní čísla mají tento význam:
+• 0 - řádek/sloupec ke kterému se vztakují
+• +1, +2, ... posun dolů/doprava
+• -1, -2, ... posun nahoru/doleva
+• 1, 2, ... absolutní vzhledem k listu
+Ponechte prázdné a oblast tisku nebude nastavena.</value>
+  </data>
+    <data name="Row1_d" xml:space="preserve">
+    <value>Zadejte 1-based číslo 1.řádku pro zápis (buňky výše budou tvořit záhlaví)</value>
+  </data>
+    <data name="SkipFilled_d" xml:space="preserve">
+    <value>Sloupce v nichž je vyplněna hodnota nebo vzorec budou přeskočeny místo aby byly zapsány (rozhodující je stav v 1. vyplňovaném řádku)</value>
+  </data>
+    <data name="SkipFilledNames_d" xml:space="preserve">
+    <value>Nezapisovat název sloupce, pokud je již buňka vyplněna</value>
+  </data>
+    <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+    <data name="XML" xml:space="preserve">
+    <value>XML</value>
+  </data>
+    <data name="txt_SetExcelFriendly" xml:space="preserve">
+    <value>Vyplnit hornoty vhodné pro Microsft Excel</value>
+  </data>
+    <data name="ex_NegativeSize" xml:space="preserve">
+    <value>Velikost nemůže být záporná.</value>
+  </data>
+    <data name="ex_InvalidFormat" xml:space="preserve">
+    <value>Formát {0} není platný.</value>
+  </data>
+    <data name="AutoWidthFormatHelp" xml:space="preserve">
+    <value>Zadejte * nemo rozsah sloupců definovaný jejich indexy (1-based). Např. "7,8,10-15,20,22,53-" (bez uvozovek)</value>
+  </data>
+    <data name="ex_ValueMustBeGreaterThan" xml:space="preserve">
+    <value>{0} musí být větší než {1}</value>
+  </data>
+    <data name="ex_ValueMustBeGreaterThanOrEqualTo" xml:space="preserve">
+    <value>{0} musí být větší nebo rovno {1}</value>
+  </data>
+    <data name="ex_NonPositiveColumnNumber" xml:space="preserve">
+    <value>Pokud je sloupec zadán jako číslo musí být větší než nula.</value>
+  </data>
+    <data name="PrintAreaFormatHelp" xml:space="preserve">
+    <value>Zadejte hodnoty jako x1;y1-x2;y2 - každé číslo ve formátu +a, -a, 0 nebo a.</value>
+  </data>
+    <data name="fil_XSLT" xml:space="preserve">
+    <value>XSLT transformace (*.xsl, *.xslt)|*.xsl;*.xslt</value>
+  </data>
+</root>

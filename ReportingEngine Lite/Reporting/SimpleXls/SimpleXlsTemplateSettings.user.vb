@@ -1,8 +1,8 @@
 ﻿Imports System.ComponentModel
-Imports res = Tools.ReportingT.ReportingEngineLite.ReportingResources
+Imports res = Tools.My.Resources
 Imports System.Drawing.Design
 Imports System.ComponentModel.Design
-Imports Tools.ComponentModelT
+Imports Tools.ComponentModelT, Tools.ExtensionsT
 
 Namespace ReportingT.ReportingEngineLite
     ''' <summary>Settings of <see cref="SimpleXlsTemplate"/></summary>
@@ -30,30 +30,30 @@ Namespace ReportingT.ReportingEngineLite
 
         Private Sub SimpleXlsSettings_AutoWidthChanging(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of String)) Handles Me.AutoWidthChanging
             If e.ProposedNewValue = "" Then Return
-            If Not AutoWidthRegEx.IsMatch(e.ProposedNewValue) Then Throw New FormatException("AutoWidth má neplatný formát." & vbCrLf & "Zadejte *, nebo seznam rozsahů sloupců určených jejich indexy (1-based). Například ""7,8,10-15,20,22,53-"" (bez uvozovek)")
+            If Not AutoWidthRegEx.IsMatch(e.ProposedNewValue) Then Throw New FormatException(My.Resources.ex_InvalidFormat.f("AutoWidth") & vbCrLf & My.Resources.AutoWidthFormatHelp)
         End Sub
 
         Private Sub SimpleXlsSettings_Col1Changing(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of String)) Handles Me.Col1Changing
-            If e.ProposedNewValue < 1 Then Throw New ArgumentOutOfRangeException("Col1 musí být větší než 0")
+            If e.ProposedNewValue < 1 Then Throw New ArgumentOutOfRangeException("value", My.Resources.ex_ValueMustBeGreaterThan.f("Col1", 0))
         End Sub
 
         Private Sub SimpleXlsSettings_ColumnNameRowChanging(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of String)) Handles Me.ColumnNameRowChanging
-            If e.ProposedNewValue < 0 Then Throw New ArgumentOutOfRangeException("ColumnNameRow musí být větší než nebo rovno 0")
+            If e.ProposedNewValue < 0 Then Throw New ArgumentOutOfRangeException("value", My.Resources.ex_ValueMustBeGreaterThanOrEqualTo.f("ColumnNameRow", 0))
         End Sub
 
         Private Sub SimpleXlsSettings_ListChanging(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of String)) Handles Me.ListChanging
             Dim Value As Integer
             If Integer.TryParse(e.ProposedNewValue, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value) AndAlso Value <= 0 Then Throw _
-                New ArgumentOutOfRangeException("Pokud je sloupec zadán jako číslo, musí toto číslo být větší než 0.")
+                New ArgumentOutOfRangeException("value", My.Resources.ex_NonPositiveColumnNumber)
         End Sub
 
         Private Sub SimpleXlsSettings_PrintAreaChanging(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of String)) Handles Me.PrintAreaChanging
             If e.ProposedNewValue = "" Then Return
-            If Not PrintAreaRegEx.IsMatch(e.ProposedNewValue) Then Throw New FormatException("PrintArea má neplatný formát." & vbCrLf & "Zadejte jako x1;y1-x2;y2 každé číslo ve formátu +a, -a, 0 nebo a.")
+            If Not PrintAreaRegEx.IsMatch(e.ProposedNewValue) Then Throw New FormatException(My.Resources.ex_InvalidFormat.f("PrintArea") & vbCrLf & My.Resources.PrintAreaFormatHelp)
         End Sub
 
         Private Sub SimpleXlsSettings_Row1Changing(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of String)) Handles Me.Row1Changing
-            If e.ProposedNewValue < 1 Then Throw New ArgumentOutOfRangeException("Row1 musí být větší než nula")
+            If e.ProposedNewValue < 1 Then Throw New ArgumentOutOfRangeException("value", My.Resources.ex_ValueMustBeGreaterThan.f("Row1", 0))
         End Sub
 #End Region
         ''' <summary>Gets indexes (1-based) of all columns to set width of</summary>

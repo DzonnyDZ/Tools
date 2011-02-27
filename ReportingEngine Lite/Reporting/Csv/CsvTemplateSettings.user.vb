@@ -66,7 +66,7 @@ Namespace ReportingT.ReportingEngineLite
         End Sub
 
         Private Sub CSVTemplateSettings_headersizeChanging(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of String)) Handles Me.headersizeChanging
-            If e.ProposedNewValue < 0 Then Throw New ArgumentOutOfRangeException("Velikost záklaví nemùže být záporná")
+            If e.ProposedNewValue < 0 Then Throw New ArgumentOutOfRangeException("value", My.Resources.ex_NegativeSize)
         End Sub
 
         Private Sub CSVTemplateSettings_newlineChanging(ByVal sender As Object, ByVal e As PropertyChangingEventArgsEx(Of CSVTemplateSettingsNewline)) Handles Me.newlineChanging

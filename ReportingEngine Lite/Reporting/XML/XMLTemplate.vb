@@ -61,9 +61,9 @@ Namespace ReportingT.ReportingEngineLite
                 Table.Namespace = ds.Namespace
                 Table.Prefix = ds.Prefix
                 If TemplatePath <> "" Then
-                    'Vytvoření IXPathNavigable z DataSetu
+                    'Create an IXPathNavigable from a DataSetu
                     Dim doc As New XmlDataDocument(ds)
-                    'Spuštění transformace and datasetem
+                    'Run a transformation on a DataSet
                     If Context.BackgroundWorker IsNot Nothing Then Context.BackgroundWorker.ReportProgress(-1, My.Resources.msg_ExportingXml)
                     Dim ws As New XmlWriterSettings
                     Using w = XmlWriter.Create(TargetFilePath, Template.OutputSettings)
@@ -83,7 +83,7 @@ Namespace ReportingT.ReportingEngineLite
             End If
         End Sub
 
-#Region "nedůležité"
+#Region "unimportant"
         ''' <summary>Gets an instance of settings editor control</summary>
         ''' <returns>A new instance of control for editing current report settings</returns>
         ''' <remarks>The control must be prepared for being resized to any size.</remarks>
@@ -189,7 +189,7 @@ Namespace ReportingT.ReportingEngineLite
         ''' <summary>Human-friendly Template name (as shown to the user)</summary>
         Public ReadOnly Property Name() As String Implements IReportTemplate.Name
             Get
-                Return ReportingT.ReportingEngineLite.ReportingResources.XML
+                Return My.Resources.XML
             End Get
         End Property
 
@@ -223,7 +223,7 @@ Namespace ReportingT.ReportingEngineLite
         ''' <seealso cref="OpenFileDialog.Filter"/>
         Public ReadOnly Property TemplateMask() As String Implements IReportTemplate.TemplateMask
             Get
-                Return "XML transformace (*.xsl, *.xslt)|*.xsl;*.xslt"
+                Return My.Resources.fil_XSLT
             End Get
         End Property
 

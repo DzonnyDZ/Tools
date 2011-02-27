@@ -17,10 +17,8 @@ Namespace ReportingT.ReportingEngineLite
 
         ''' <summary>Initializes newly created instance of <see cref="CsvSettingsEditor"/></summary>
         Private Sub init()
-            Me.SetHelp("http://mis.eosksicz.net/wiki/index.php/KolUNI:_%C5%A0ablona_CSV", "#")
-
-            tsbXls.Text = "Vyplnit hodnoty vhodné pro Microsof Excel"
-            tsbXls.Image = ReportingResources.Excel.ToBitmap
+            tsbXls.Text = My.Resources.txt_SetExcelFriendly
+            tsbXls.Image = My.Resources.Excel.ToBitmap
             tsbXls.DisplayStyle = ToolStripItemDisplayStyle.Image
             tsbXls.AutoToolTip = True
 
