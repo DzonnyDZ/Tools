@@ -1414,4 +1414,22 @@
   <data name="InvalidValueReturnedByLoopFunction" xml:space="preserve">
     <value>Invalid value {0} returned by loop function.</value>
   </data>
+  <data name="HexStringInvalid" xml:space="preserve">
+    <value>The provided string does not appear to be Hex encoded:</value>
+  </data>
+  <data name="Base64StringInvalid" xml:space="preserve">
+    <value>The provided string does not appear to be Base64 encoded:</value>
+  </data>
+  <data name="DecryptInitializationVectorMissing" xml:space="preserve">
+    <value>No initialization vector was provided for the decryption operation.</value>
+  </data>
+  <data name="DecryptKeyMissing" xml:space="preserve">
+    <value>No key was provided for the decryption operation.</value>
+  </data>
+  <data name="InvalidVersionFormat" xml:space="preserve">
+    <value>{0} is invalid version</value>
+  </data>
+  <data name="VersionPartToVersionMinorNull" xml:space="preserve">
+    <value>Cannot convert VersionPart to Version when Minor is not set.</value>
+  </data>
 </root>

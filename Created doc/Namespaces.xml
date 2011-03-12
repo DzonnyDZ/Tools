@@ -288,6 +288,22 @@
             </remarks>
             <seealso cref="N:System.Resources"/>
         </member>
+        <!--SecurityT-->
+        <member name="N:Tools.SecurityT">
+            <summary>Contain classes that represent security system and permissions.</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+            <seealso cref="N:System.Security"/>
+        </member>
+        <member name="N:Tools.SecurityT.CryptographyT">
+            <summary>Provides cryptographic services, including secure encoding and decoding of data, as well as many other operations, such as hashing.</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+            <seealso cref="N:System.Security.Cryptography"/>
+        </member>
+        <member name="N:Tools.SecurityT.CryptographyT.EncryptionT">
+            <summary>Provides a simple, string-oriented wrapper classes for encryption functions, including hashing, symmetric encryption, and asymmetric encryption.</summary>
+            <version version="1.5.3">This namespace is new in version 1.5.3</version>
+            <remarks>See http://www.codeproject.com/KB/security/SimpleEncryption.aspx.</remarks>
+        </member>
         <!--SpecialT-->
         <!--<member name="N:Tools.SpecialT">
             <summary>Contains tools implemented in Tools IL.dll assembly. Those tools are somewhat special, so it had to be implemented in MSIL directly, because neither of other standard .NET languages is capable of producing such tool.</summary>

@@ -218,8 +218,14 @@
     <Compile Include="Linq\ForEnumerator.vb" />
     <Compile Include="misc\Operators.vb" />
     <Compile Include="misc\SyntaxErrorException.vb" />
+    <Compile Include="misc\VersionPart.vb" />
     <Compile Include="Numerics\IntegerUnion.vb" />
     <Compile Include="Numerics\Rational.vb" />
+    <Compile Include="Security\Cryptography\Encryption\Asymmetric.vb" />
+    <Compile Include="Security\Cryptography\Encryption\EncryptionData.vb" />
+    <Compile Include="Security\Cryptography\Encryption\EncryptionUtilities.vb" />
+    <Compile Include="Security\Cryptography\Encryption\Hash.vb" />
+    <Compile Include="Security\Cryptography\Encryption\Symmetric.vb" />
     <Compile Include="Text\Escaping.vb" />
     <Compile Include="Threading\IInvoke.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
