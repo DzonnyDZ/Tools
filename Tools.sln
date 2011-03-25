@@ -52,6 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		SharedFiles\Version.cpp = SharedFiles\Version.cpp
 		SharedFiles\Version.cs = SharedFiles\Version.cs
 		SharedFiles\Version.il = SharedFiles\Version.il
+		SharedFiles\Version.txt = SharedFiles\Version.txt
 		SharedFiles\Version.vb = SharedFiles\Version.vb
 		SharedFiles\VersionHistory.xsd = SharedFiles\VersionHistory.xsd
 		SharedFiles\VersionHistory.xslt = SharedFiles\VersionHistory.xslt
@@ -83,62 +84,120 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2} = {EC883124-C0D6-4349-B3D7-22A688CE6BA2}
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Win", "Tools Win\Tools.Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.VisualStudio", "Tools Visual Studio\Tools.VisualStudio.vbproj", "{DCD6658E-6008-4668-BBDF-CCB0F0267759}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol Screen Saver", "Projects\Metanol Screen Saver\Metanol Screen Saver.vbproj", "{88FEE481-A97F-4DD6-B206-5B33F777AD4D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformCodeGenerator", "DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj", "{43599321-D767-4BF7-A725-34850D057B4E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.VisualStudio.CS", "Tools VisualStudio CS\Tools.VisualStudio.CS.csproj", "{6904C0F4-0535-48EB-AFC1-CE1396418D00}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Experimental", "Experimental\Experimental.vbproj", "{088CB10C-E5D3-4537-979F-F5BED401DB25}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CommentsMerge", "DevelopmentTools\CommentsMerge\CommentsMerge.vbproj", "{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol2", "Projects\Metanol2\Metanol2.vbproj", "{DC459772-7889-47B1-9471-7F9ABA3C3FC4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResXFileCodeGeneratorEx", "DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj", "{A8636D77-B876-4E6A-863D-8C924E40955C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.VisualStudio.Macros", "DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj", "{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Windows", "Tools.Windows\Tools.Windows.vbproj", "{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2} = {EC883124-C0D6-4349-B3D7-22A688CE6BA2}
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Metadata", "Tools.Metadata\Tools.Metadata.vbproj", "{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VersionCorrector", "DevelopmentTools\VersionCorrector\VersionCorrector.vbproj", "{EC883124-C0D6-4349-B3D7-22A688CE6BA2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UnitTests", "UnitTests\UnitTests.vbproj", "{4038CE43-6F12-4DC1-AE48-D0444A56BE41}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.TotalCommander", "Tools.TotalCommander\Tools.TotalCommander.vcxproj", "{7F278F32-47B4-4F4E-85B2-BAEAA406951B}"
 	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
 		{833877EA-2CEA-46EE-B475-14051B77D9F0} = {833877EA-2CEA-46EE-B475-14051B77D9F0}
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ResXFileGenerator", "DevelopmentTools\ResXFileGenerator\ResXFileGenerator.vbproj", "{833877EA-2CEA-46EE-B475-14051B77D9F0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TotalCommander Plugin Builder", "Tools.TotalCommander\TotalCommander Plugin Builder\TotalCommander Plugin Builder.vbproj", "{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "wfx sample", "Samples\wfx sample\wfx sample.vbproj", "{C3B940DA-5325-43D8-94E1-CF87255DA471}"
 	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
 		{D8000EE2-BBD5-4E10-97E2-B1CF562753EF} = {D8000EE2-BBD5-4E10-97E2-B1CF562753EF}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.TotalCommander.Plugin", "Tools.TotalCommander\Plugin\Tools.TotalCommander.Plugin.vcxproj", "{97FA3B48-FA55-43A0-9B86-82415A1E29F3}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PseudoZip", "DevelopmentTools\PseudoZip\PseudoZip.vbproj", "{FE543F37-B717-412E-98A1-4EA3DDE2EF34}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XsdGenerator", "DevelopmentTools\XsdGenerator\XsdGenerator.csproj", "{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.SqlServer", "Tools.SqlServer\Tools.SqlServer.vbproj", "{850AAA8C-49CC-476F-B871-53EBDE85E679}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ildoc", "ildoc", "{10C22CD7-1CB7-4E4D-8422-F9C589A3F743}"
 	ProjectSection(SolutionItems) = preProject
@@ -162,6 +221,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLI", "CLI", "{3469B02D-8F1
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Data.Schema.Deploy", "Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj", "{4FA454BC-332A-4226-A229-38D87C504F8F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}"
 EndProject
@@ -175,10 +237,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{D99EA3E2-E52
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.Hardcore", "Tools.Hardcore\Tools.Hardcore.vcxproj", "{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SplashScreenGenerator", "DevelopmentTools\SplashScreenGenerator\SplashScreenGenerator.vbproj", "{5664DF0B-6BE5-42A4-A7AE-0CAEE046918E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ReportingEngineLite", "ReportingEngine Lite\ReportingEngineLite.vbproj", "{855B4F94-9AD7-49A5-A75D-6FC8B1892A58}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_Tools.PreBuild", "Tools.PreBuild\Tools.PreBuild.vcxproj", "{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VersionUpdater", "DevelopmentTools\VersionUpdater\VersionUpdater.vbproj", "{5425D659-18C8-479A-BC2C-75B99FC71254}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -900,6 +975,54 @@ Global
 		{855B4F94-9AD7-49A5-A75D-6FC8B1892A58}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{855B4F94-9AD7-49A5-A75D-6FC8B1892A58}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{855B4F94-9AD7-49A5-A75D-6FC8B1892A58}.Release|x86.ActiveCfg = Debug|Any CPU
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Alpha|Any CPU.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Alpha|Mixed Platforms.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Alpha|Mixed Platforms.Build.0 = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Alpha|x86.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Beta|Any CPU.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Beta|Mixed Platforms.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Beta|Mixed Platforms.Build.0 = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Beta|x86.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Debug|Any CPU.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Debug|Any CPU.Build.0 = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Debug|Mixed Platforms.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Debug|Mixed Platforms.Build.0 = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Debug|x86.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Debug|x86.Build.0 = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.RC|Any CPU.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.RC|Mixed Platforms.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.RC|Mixed Platforms.Build.0 = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.RC|x86.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Release|Any CPU.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Release|Mixed Platforms.ActiveCfg = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Release|Mixed Platforms.Build.0 = prebuild|Win32
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}.Release|x86.ActiveCfg = prebuild|Win32
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Alpha|Any CPU.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Alpha|Any CPU.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Alpha|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Alpha|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Alpha|x86.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Beta|Any CPU.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Beta|Any CPU.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Beta|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Beta|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Beta|x86.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Debug|x86.ActiveCfg = Debug|x86
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Debug|x86.Build.0 = Debug|x86
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.RC|Any CPU.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.RC|Any CPU.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.RC|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.RC|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.RC|x86.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5425D659-18C8-479A-BC2C-75B99FC71254}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -910,6 +1033,7 @@ Global
 		{982F36B7-A3E5-4782-96B0-9979A95610F1} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{B1BD67A4-BEC2-442D-8F70-DAEB27735602} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{8129B61A-3FCE-4012-8013-377A87D4132B} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{43599321-D767-4BF7-A725-34850D057B4E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
@@ -921,6 +1045,7 @@ Global
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{A55DC44A-FAA2-4691-8C8F-5DB19B870FA5} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{5664DF0B-6BE5-42A4-A7AE-0CAEE046918E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
+		{5425D659-18C8-479A-BC2C-75B99FC71254} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{3469B02D-8F18-4333-94F7-0DD3D240C7A1} = {677A518E-909C-414F-AC5E-528AB32023AF}
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}

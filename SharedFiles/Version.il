@@ -1,5 +1,2 @@
-﻿//See notes in Version.vb!!!!!
-//Note: The x:x:x:* canot be used here, use some <> 0 number instead
-.ver 1:5:3:3
-TODO:
-//TODO: File version
+﻿.ver 1:5:3:20832
+.custom instance void [mscorlib]System.Reflection.AssemblyFileVersionAttribute::.ctor(string) = { string('1.5.3.20832') }

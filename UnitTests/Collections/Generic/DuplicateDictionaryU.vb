@@ -261,7 +261,7 @@ Namespace CollectionsUT.GenericUT
 
         <TestMethod()> _
         Public Sub TryGetValueTest()
-            Dim value As String
+            Dim value As String = Nothing
             Assert.IsTrue(instance.TryGetValue("a", value))
             Assert.AreEqual("а", value)
             Assert.IsTrue(instance.TryGetValue("šč", value))
@@ -299,8 +299,8 @@ Namespace CollectionsUT.GenericUT
             clone("šč") = "сц"
             Assert.AreEqual("сц", clone("šč"))
             Dim array__1 = clone.GetAll("šč")
-            Assert.IsTrue(array.IndexOf(array__1, "сц") >= 0)
-            Assert.IsTrue(array.IndexOf(array__1, "щ") >= 0 OrElse array.IndexOf(array__1, "шч") >= 0)
+            Assert.IsTrue(System.Array.IndexOf(array__1, "сц") >= 0)
+            Assert.IsTrue(System.Array.IndexOf(array__1, "щ") >= 0 OrElse System.Array.IndexOf(array__1, "шч") >= 0)
 
             exc = Nothing
             Try

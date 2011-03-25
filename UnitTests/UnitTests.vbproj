@@ -259,6 +259,7 @@
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />
     <Compile Include="Collections\Generic\DuplicateDictionaryU.vb" />
+    <Compile Include="Extensions\DateTimeExtensionsTest.vb" />
     <Compile Include="Extensions\StringFormatting.vb" />
     <Compile Include="Extensions\StringExtensions.vb" />
     <Compile Include="General\DelegateCoreU.vb" />

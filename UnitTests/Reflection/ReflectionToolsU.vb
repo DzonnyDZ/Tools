@@ -33,6 +33,7 @@ Namespace ReflectionUT
         Private Sub hssHB()
         End Sub
         Private Function hssHC() As Integer
+            Return 0
         End Function
         Private Sub hssHD(ByVal x As Long)
         End Sub
@@ -48,6 +49,7 @@ Namespace ReflectionUT
         Private Sub hssHJ(<[In](), Out()> ByRef x As Integer)
         End Sub
         Private Function hssHK(ByRef DisconnectRoot As SByte) As Integer
+            Return 0
         End Function
         Private Delegate Function RefFunc(Of T1, TRet)(ByRef x As t1) As tret
 #End Region
@@ -93,6 +95,7 @@ Namespace ReflectionUT
             End Sub
             Public Overridable ReadOnly Property SomeProperty%()
                 Get
+                    Return 0
                 End Get
             End Property
             Protected Sub MethodProtected()
