@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="A4257124-C37D-472d-B189-79528BC483B4" revisionNumber="1" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <developerConceptualDocument>
+    <introduction>
+      <para>
+                        This file describe all the changes in version 1.5.2. For brief description of changes see <link xlink:href="9b0f2e22-3088-4c9b-af71-51717771bb58" />.
+                    </para>
+    </introduction>
+    <section address="ChangeList">
+      <title>Changes in version 1.5.2</title>
+      <content>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.DrawingT.DrawingIOt</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>Namespace and all sub-namespaces relocated to newly created assemly Tools.Metadata</para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.InternalT</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>
+                Attributtes <codeEntityReference qualifyHint="true">T:Tools.InternalT.VersionAttribute</codeEntityReference>, <codeEntityReference qualifyHint="true">T:Tools.InternaltT.AuthorAttribute</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.InternalT.FirstVersionAttribute</codeEntityReference> are obsolete and should no longer be used. Use XML documentation tags instead.
+            </para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.MetadataT</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>
+              <list class="bullet">
+                <listItem>Namespace and all sub-namespaces relocated to newly created assemly Tools.Metadata</listItem>
+                <listItem>Renamed from Tools.DrawingT.MetadataT to Tools.MetadataT</listItem>
+              </list>
+            </para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.TotalCommanderT</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>Namespace introduced</para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.GeneratorsT</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>
+                Renamed from <codeInline>Tools.GeneratorsT</codeInline> to <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.GeneratorsT</codeEntityReference></para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.WindowsT</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>
+                Whole namespace and all sub-namespaces with exception of <codeEntityReference qualifyHint="true">T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues</codeEntityReference> relocated to newly created assembly Tools.Windows.
+            </para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.WindowsT.FormsT.VisualStylesT</codeEntityReference>
+        </title>
+        <para>
+          <legacyBold>Development stage:</legacyBold> Nightly</para>
+        <list class="bullet">
+          <listItem>
+            <para>Namespace introduced</para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.WindowsT.FormsT.VisualStylesT.SpecializedNonThemedRenderers</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>Namespace introduced</para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.WindowsT.FormsT.VisualStylesT.SpecializedSafeRenderers</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>Namespace introduced</para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.WindowsT.FormsT.VisualStylesT.SpecializedThemedRenderers</codeEntityReference>
+        </title>
+        <list class="bullet">
+          <listItem>
+            <para>Namespace introduced</para>
+          </listItem>
+        </list>
+        <title>
+          <codeEntityReference qualifyHint="true">N:Tools.WindowsT.WPF.MarkupT</codeEntityReference>
+        </title>
+        <para>
+          <legacyBold>Development stage:</legacyBold> Nightly</para>
+        <list class="bullet">
+          <listItem>
+            <para>Namespace introduced</para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+    <relatedTopics />
+  </developerConceptualDocument>
+</topic>

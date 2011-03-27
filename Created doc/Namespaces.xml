@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns="http://dzonny.cz/xml/schemas/intellisense" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<doc xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:noNamespaceSchemaLocation="../DevelopmentTools/Intellisense/intellisense.xsd">
+    <assembly>
+        <name>_SharedItems_</name>
+    </assembly>
     <members>
         <member name="N:">
-            <summary>ĐTools project root unnamed namespace</summary>
-            <remarks>
-                Root namespace should not contain any members directly. All tools hsould be nested within the <see cref="N:Tools"/> namespace.
-            </remarks>
+            <exclude />
+            <summary>Global namespace</summary>
         </member>
         <member name="N:Tools">
             <summary>Root namespace for all tools in the ĐTools project</summary>

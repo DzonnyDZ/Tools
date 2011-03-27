@@ -415,13 +415,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\SharedFiles\Version.il">
-      <Link>Version.il</Link>
-    </None>
-    <None Include="..\SharedFiles\VersionHistory.xsd">
-      <Link>VersionHistory.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -766,16 +759,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools %28Tools\Tools%29</Name>
+      <Name>Tools</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\SharedFiles\Version.cpp">
-      <Link>Version.cpp</Link>
-    </Content>
-    <Content Include="..\SharedFiles\VersionHistory.xslt">
-      <Link>VersionHistory.xslt</Link>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

@@ -2,4 +2,9 @@
 </Value></Property><Property><Name>svn:ignore</Name><Value>Output
 Working
 log.log
+</Value></Property><Property><Name>svn:ignore</Name><Value>Output
+Working
+fti
+html
+log.log
 </Value></Property></Properties></ItemProperties>

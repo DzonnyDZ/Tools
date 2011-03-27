@@ -277,14 +277,6 @@
     <Compile Include="TransliterationDictionaryTest.vb" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\SharedFiles\Version.cpp">
-      <Link>Version.cpp</Link>
-    </Content>
-    <Content Include="..\SharedFiles\VersionHistory.xslt">
-      <Link>VersionHistory.xslt</Link>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj">
       <Project>{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}</Project>
       <Name>Tools.VisualStudio.Macros</Name>
@@ -325,13 +317,6 @@
   <ItemGroup>
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
-    </None>
-    <None Include="..\SharedFiles\Version.il">
-      <Link>Version.il</Link>
-    </None>
-    <None Include="..\SharedFiles\VersionHistory.xsd">
-      <Link>VersionHistory.xsd</Link>
-      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

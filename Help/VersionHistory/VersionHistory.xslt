@@ -23,12 +23,19 @@
                 <introduction>
                     <autoOutline />
                     <para>
-                        Here you can see version history (beginning with version 1.5.2.0) of the ĐTools project.
-                        This file contain only main changes.
-                        All changes are registered with single classes and members.
+                        This document documents version history of the ĐTools project (starting with version 1.5.2.0).
+                        Only main changes are listed here. All changes are listed in doccumentation of appropriate members.
+                        Whene there was a bigger change - like added namespace or class it's listed only in documentation of top-most changed object (e.g. a new namespace or a new class).
                     </para>
                 </introduction>
-                <xsl:apply-templates/>
+                <xsl:for-each select="vh:Version">
+                    <xsl:sort data-type="number" order="descending" select="@Major"/>
+                    <xsl:sort data-type="number" order="descending" select="@Minor"/>
+                    <xsl:sort data-type="number" order="descending" select="@Build"/>
+                    <xsl:sort data-type="number" order="descending" select="@Revision"/>
+                    <xsl:apply-templates select="."/>
+                </xsl:for-each>
+                <relatedTopics />
             </developerConceptualDocument>
         </topic>
     </xsl:template>
@@ -47,7 +54,9 @@
     </xsl:template>
     <xsl:template match="vh:i">
         <listItem>
-            <xsl:apply-templates/>
+            <para>
+                <xsl:apply-templates/>
+            </para>
         </listItem>    
     </xsl:template>
     <xsl:template match="i:see">

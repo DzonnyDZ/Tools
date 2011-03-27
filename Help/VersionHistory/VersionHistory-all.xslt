@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:msxsl="urn:schemas-microsoft-com:xslt"
-    xmlns:c="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:vh="http://dzonny.cz/xml/Schemas/VersionHistory"
     exclude-result-prefixes="msxsl vh"
@@ -20,32 +20,33 @@
 
     <xsl:template match="/doc">
         <topic id="{$guid}" revisionNumber="1">
-            <c:developerConceptualDocument>
-                <c:introduction>
-                    <c:para>
-                        This file describe all the changes in version <xsl:value-of select="$version"/>. For brief description of changes see <c:link xlink:href="9b0f2e22-3088-4c9b-af71-51717771bb58"/>.
-                    </c:para>
-                </c:introduction>
-                <c:section address="ChangeList">
-                    <c:title>Changes in version <xsl:value-of select="$version"/></c:title>
-                    <c:content>
+            <developerConceptualDocument>
+                <introduction>
+                    <para>
+                        This file describe all the changes in version <xsl:value-of select="$version"/>. For brief description of changes see <link xlink:href="9b0f2e22-3088-4c9b-af71-51717771bb58"/>.
+                    </para>
+                </introduction>
+                <section address="ChangeList">
+                    <title>Changes in version <xsl:value-of select="$version"/></title>
+                    <content>
                         <xsl:apply-templates select="/doc/members/member[version/@version=$version]">
                             <xsl:sort select="substring-after(@name,':')" data-type="text" lang="en-US"/>
                         </xsl:apply-templates>
-                    </c:content>
-                </c:section>
-            </c:developerConceptualDocument>
+                    </content>
+                </section>
+                <relatedTopics />
+            </developerConceptualDocument>
         </topic>
     </xsl:template>
     <xsl:template match="member">
-            <c:title>
-                <c:codeEntityReference qualifyHint="true">
+            <title>
+                <codeEntityReference qualifyHint="true">
                     <xsl:value-of select="@name"/>
-                </c:codeEntityReference>
-            </c:title>
+                </codeEntityReference>
+            </title>
             <xsl:if test="version[@version=$version][@stage]">
-                <c:para>
-                    <c:legacyBold>Development stage:</c:legacyBold>
+                <para>
+                    <legacyBold>Development stage:</legacyBold>
                     <xsl:text xml:space="preserve"> </xsl:text>
                     <xsl:choose>
                         <xsl:when test="version[@version=$version][@stage][1]/@stage = 'RC'">Release Candidate</xsl:when>
@@ -53,37 +54,39 @@
                             <xsl:value-of select="version[@version=$version][@stage][1]/@stage"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                </c:para>
+                </para>
             </xsl:if>
-            <c:list class="bullet">
+            <list class="bullet">
                 <xsl:apply-templates select="version[@version=$version]"/>
-            </c:list>
+            </list>
     </xsl:template>
 
     <xsl:template match="version">
-        <c:listItem>
+        <listItem>
+            <para>
             <xsl:apply-templates/>
-        </c:listItem>
+            </para>
+        </listItem>
     </xsl:template>
 
     <xsl:template match="see">
-        <c:codeEntityReference qualifyHint="true">
+        <codeEntityReference qualifyHint="true">
             <xsl:value-of select="@cref"/>
-        </c:codeEntityReference>
+        </codeEntityReference>
     </xsl:template>
     <xsl:template match="code">
-        <c:code>
+        <code>
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates/>
-        </c:code>
+        </code>
     </xsl:template>
     <xsl:template match="c">
-        <c:codeInline>
+        <codeInline>
             <xsl:apply-templates/>
-        </c:codeInline>
+        </codeInline>
     </xsl:template>
     <xsl:template match="paramref | typeparamref">
-        <c:codeInline>
+        <codeInline>
             <xsl:choose>
                 <xsl:when test="node()">
                     <xsl:apply-templates />
@@ -92,61 +95,61 @@
                     <xsl:value-of select="@name"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </c:codeInline>
+        </codeInline>
     </xsl:template>
     <xsl:template match="example">
-        <c:para>
+        <para>
             <xsl:apply-templates />
-        </c:para>
+        </para>
     </xsl:template>
     <xsl:template match="list">
-        <c:list class="bullet">
+        <list class="bullet">
             <xsl:apply-templates/>
-        </c:list>
+        </list>
     </xsl:template>
     <xsl:template match="list[@type='number'] | list[@type='ordered']">
-        <c:list class="ordered">
+        <list class="ordered">
             <xsl:apply-templates/>
-        </c:list>
+        </list>
     </xsl:template>
     <xsl:template match="list[@type='table']">
-        <c:table>
+        <table>
             <xsl:apply-templates/>
-        </c:table>
+        </table>
     </xsl:template>
     <xsl:template match="item">
-        <c:listItem>
+        <listItem>
             <xsl:apply-templates />
-        </c:listItem>
+        </listItem>
     </xsl:template>
     <xsl:template match="listheader">
-        <c:listItem>
-            <c:legacyBold>
+        <listItem>
+            <legacyBold>
                 <xsl:apply-templates />
-            </c:legacyBold>
-        </c:listItem>
+            </legacyBold>
+        </listItem>
     </xsl:template>
     <xsl:template match="list[@type='table']/item">
-        <c:row>
+        <row>
             <xsl:apply-templates/>
-        </c:row>
+        </row>
     </xsl:template>
     <xsl:template match="list[@type='table']/listheader">
-        <c:tableHeader>
-            <c:row>
+        <tableHeader>
+            <row>
                 <xsl:apply-templates/>
-            </c:row>
-        </c:tableHeader>
+            </row>
+        </tableHeader>
     </xsl:template>
     <xsl:template match="term | description">
-        <c:entry>
+        <entry>
             <xsl:apply-templates />
-        </c:entry>
+        </entry>
     </xsl:template>
     <xsl:template match="para">
-        <c:para>
+        <para>
             <xsl:apply-templates/>
-        </c:para>
+        </para>
     </xsl:template>
     <xsl:template match="include">
         <xsl:apply-templates select="document(@file,@path)"/>
@@ -158,8 +161,8 @@
                 <xsl:when test="@type='implementnotes'">implement</xsl:when>
             </xsl:choose>
         </xsl:variable>
-        <c:alert class="{$type}">
+        <alert class="{$type}">
             <xsl:apply-templates/>
-        </c:alert>
+        </alert>
     </xsl:template>
 </xsl:stylesheet>

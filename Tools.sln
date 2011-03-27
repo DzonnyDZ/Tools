@@ -55,7 +55,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		SharedFiles\Version.txt = SharedFiles\Version.txt
 		SharedFiles\Version.vb = SharedFiles\Version.vb
 		SharedFiles\VersionHistory.xsd = SharedFiles\VersionHistory.xsd
-		SharedFiles\VersionHistory.xslt = SharedFiles\VersionHistory.xslt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intellisense", "Intellisense", "{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC}"
@@ -252,8 +251,27 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ReportingEngineLite", "Repo
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_Tools.PreBuild", "Tools.PreBuild\Tools.PreBuild.vcxproj", "{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5425D659-18C8-479A-BC2C-75B99FC71254} = {5425D659-18C8-479A-BC2C-75B99FC71254}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VersionUpdater", "DevelopmentTools\VersionUpdater\VersionUpdater.vbproj", "{5425D659-18C8-479A-BC2C-75B99FC71254}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help", "Help", "{9611D0E6-CEA6-4CD6-8C1C-FE9932372416}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandcastle customization", "Sandcastle customization", "{69CAA1BD-A7B6-419E-BA1E-05347BB80698}"
+	ProjectSection(SolutionItems) = preProject
+		Help\Sandcastle customization\Tools.AuthorAndVersion.xslt = Help\Sandcastle customization\Tools.AuthorAndVersion.xslt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionHistory", "VersionHistory", "{3CF08082-4063-4345-84BC-92248A5C2F29}"
+	ProjectSection(SolutionItems) = preProject
+		Help\VersionHistory\AllComments.xml = Help\VersionHistory\AllComments.xml
+		Help\VersionHistory\AllVersionHistory.bat = Help\VersionHistory\AllVersionHistory.bat
+		Help\VersionHistory\VersionHistory-all.xslt = Help\VersionHistory\VersionHistory-all.xslt
+		Help\VersionHistory\VersionHistory.wiki.xslt = Help\VersionHistory\VersionHistory.wiki.xslt
+		Help\VersionHistory\VersionHistory.xslt = Help\VersionHistory\VersionHistory.xslt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -1034,6 +1052,7 @@ Global
 		{B1BD67A4-BEC2-442D-8F70-DAEB27735602} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{8129B61A-3FCE-4012-8013-377A87D4132B} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
+		{9611D0E6-CEA6-4CD6-8C1C-FE9932372416} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{43599321-D767-4BF7-A725-34850D057B4E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
@@ -1058,5 +1077,7 @@ Global
 		{10C22CD7-1CB7-4E4D-8422-F9C589A3F743} = {F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}
 		{752D1A5C-9013-4D5B-A7A8-2DA12197A275} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
 		{D99EA3E2-E522-4C20-867D-065A478FD56A} = {752D1A5C-9013-4D5B-A7A8-2DA12197A275}
+		{69CAA1BD-A7B6-419E-BA1E-05347BB80698} = {9611D0E6-CEA6-4CD6-8C1C-FE9932372416}
+		{3CF08082-4063-4345-84BC-92248A5C2F29} = {9611D0E6-CEA6-4CD6-8C1C-FE9932372416}
 	EndGlobalSection
 EndGlobal

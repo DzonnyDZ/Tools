@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema targetNamespace="http://dzonny.cz/xml/schemas/intellisense"
+<xs:schema
     elementFormDefault="qualified"
-    xmlns="http://dzonny.cz/xml/schemas/intellisense"
-    xmlns:is="http://dzonny.cz/xml/schemas/intellisense"
+    xmlns=""
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
 
