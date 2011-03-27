@@ -56,7 +56,7 @@ Public Class CustomTypeDescriptorBase(Of T) : Inherits CustomTypeDescriptorAbstr
     ''' <summary>Contains value of the <see cref="Instance"/> property</summary>
     <EditorBrowsable(EditorBrowsableState.Never)> _
     Private _instance As T
-    ''' <summary>Instance of type <see cref="T"/> described by this instance of <see cref="CustomTypeDescriptorBase(Of T)"/></summary>
+    ''' <summary>Instance of type <typeparamref name="T"/> described by this instance of <see cref="CustomTypeDescriptorBase(Of T)"/></summary>
     Protected Property Instance() As T
         Get
             Return _instance

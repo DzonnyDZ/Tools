@@ -74,7 +74,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.ArgumentNullException"><paramref name="match"/> is null.</exception>
         Function FindIndex(ByVal match As Predicate(Of T)) As Integer
         ''' <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire <see cref="IReadOnlyList(Of T)"/>.</summary>
-        ''' <returns>The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <see cref="T"/>.</returns>
+        ''' <returns>The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <typeparamref name="T"/>.</returns>
         ''' <param name="match">The <see cref="System.Predicate(Of T)"/> delegate that defines the conditions of the element to search for.</param>
         ''' <exception cref="System.ArgumentNullException"><paramref name="match"/> is null.</exception>
         Function FindLast(ByVal match As Predicate(Of T)) As T

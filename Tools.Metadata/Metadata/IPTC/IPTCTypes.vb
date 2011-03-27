@@ -795,9 +795,9 @@ Namespace MetadataT.IptcT.IptcDataTypes
     <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
     Public Class NumStr2(Of T As {IConvertible, Structure}) : Inherits NumStr2
         ''' <summary>Number in this <see cref="NumStr2(Of T)"/></summary>            
-        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
+        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <typeparamref name="T"/> is not <see cref="[Enum]"/></exception>
         ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><typeparamref name="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <typeparamref name="T"/></exception>
         Public Overridable Property EnumNumber() As T
             Get
                 Return CObj(MyBase.Number)
@@ -811,9 +811,9 @@ Namespace MetadataT.IptcT.IptcDataTypes
             End Set
         End Property
         ''' <summary>Number in this <see cref="NumStr"/></summary>            
-        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
+        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <typeparamref name="T"/> is not <see cref="[Enum]"/></exception>
         ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><typeparamref name="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <typeparamref name="T"/></exception>
         <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
         Public NotOverridable Overrides Property Number() As Integer
             Get
@@ -831,7 +831,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <param name="Str"><see cref="String"/></param>
         ''' <exception cref="ArgumentException"><paramref name="Num"/> converted to string is longer than <see cref="NumberDigits"/> (2)</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Num"/> beign set is negative</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and <paramref name="Num"/> is not member of <see cref="T"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><typeparamref name="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and <paramref name="Num"/> is not member of <typeparamref name="T"/></exception>
         Public Sub New(ByVal Num As T, ByVal Str As String)
             Me.EnumNumber = Num
             Me.String = Str
@@ -842,9 +842,9 @@ Namespace MetadataT.IptcT.IptcDataTypes
     <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
     Public Class NumStr3(Of T As {IConvertible, Structure}) : Inherits NumStr3
         ''' <summary>Number in this <see cref="NumStr3(Of T)"/></summary>            
-        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
+        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <typeparamref name="T"/> is not <see cref="[Enum]"/></exception>
         ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><typeparamref name="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <typeparamref name="T"/></exception>
         Public Overridable Property EnumNumber() As T
             Get
                 Return CObj(MyBase.Number)
@@ -858,9 +858,9 @@ Namespace MetadataT.IptcT.IptcDataTypes
             End Set
         End Property
         ''' <summary>Number in this <see cref="NumStr"/></summary>            
-        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
+        ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <typeparamref name="T"/> is not <see cref="[Enum]"/></exception>
         ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><typeparamref name="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <typeparamref name="T"/></exception>
         <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
         Public NotOverridable Overrides Property Number() As Integer
             Get
@@ -878,7 +878,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <param name="Str"><see cref="String"/></param>
         ''' <exception cref="ArgumentException"><paramref name="Num"/> converted to string is longer than <see cref="NumberDigits"/> (3)</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Num"/> beign set is negative</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and <paramref name="Num"/> is not member of <see cref="T"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><typeparamref name="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and <paramref name="Num"/> is not member of <typeparamref name="T"/></exception>
         Public Sub New(ByVal Num As T, ByVal Str As String)
             Me.EnumNumber = Num
             Me.String = Str

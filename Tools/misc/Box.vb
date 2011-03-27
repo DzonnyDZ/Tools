@@ -39,7 +39,7 @@ Public Class Box(Of T) : Inherits Cloenable(Of Box(Of T))
 
     ''' <summary>Creates a new object that is a copy of the current instance.</summary>
     ''' <returns>A new object that is a copy of this instance</returns>
-    ''' <remarks>If <see cref="T"/> implements <see cref="System.ICloneable"/> then also boxed object is cloned (deep copy), othervise only reference is passed to the new instance.</remarks>
+    ''' <remarks>If <typeparamref name="T"/> implements <see cref="System.ICloneable"/> then also boxed object is cloned (deep copy), othervise only reference is passed to the new instance.</remarks>
     Public Overrides Function Clone() As Box(Of T)
         If TypeOf Item Is ICloneable Then
             Return New Box(Of T)(CType(Item, ICloneable).Clone)

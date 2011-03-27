@@ -779,7 +779,7 @@ Namespace CollectionsT.GenericT
         '        Return TSEqComp.Equals(x, y)
         '    End Function
         '    ''' <summary>Returns a hash code for the specified object.</summary>
-        '    ''' <param name="obj">The <see cref="T"/> for which a hash code is to be returned.</param>
+        '    ''' <param name="obj">The <typeparamref name="T"/> for which a hash code is to be returned.</param>
         '    ''' <returns>A hash code for the specified object.</returns>
         '    ''' <exception cref="System.ArgumentNullException">The type of obj is a reference type and obj is null.</exception>
         '    Public Overloads Function GetHashCode(ByVal obj As T) As Integer Implements System.Collections.Generic.IEqualityComparer(Of T).GetHashCode

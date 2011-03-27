@@ -11,31 +11,31 @@
     Public Interface IT1orT2(Of T1, T2)
         Inherits IPair(Of T1, T2)
         ''' <summary>Gets or sets value of type <see cref="T1"/></summary>
-        ''' <value>Non-null value to set value of type <see cref="T1"/> and delete value of type <see cref="T2"/> or nothing to delete value of type <see cref="T1"/></value>
+        ''' <value>Non-null value to set value of type <see cref="T1"/> and delete value of type <typeparamref name="T2"/> or nothing to delete value of type <see cref="T1"/></value>
         ''' <returns>If this instance contains value of type <see cref="T1"/> then returns it, otherwise return null</returns>
         ''' <remarks>
         ''' If <see cref="value1"/> retruns null it means that either value of type <see cref="T1"/> is not present in this instance or it is present but it is null. Check <see cref="contains1"/> property in order to determine actual situation.
         ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <see cref="T1"/>.
         ''' </remarks>
         Overloads Property value1() As T1
-        ''' <summary>Gets or sets value of type <see cref="T2"/></summary>
-        ''' <value>Non-null value to set value of type <see cref="T2"/> and delete value of type <see cref="T2"/> or nothing to delete value of type <see cref="T2"/></value>
-        ''' <returns>If this instance contains value of type <see cref="T2"/> then returns it, otherwise return null</returns>
+        ''' <summary>Gets or sets value of type <typeparamref name="T2"/></summary>
+        ''' <value>Non-null value to set value of type <typeparamref name="T2"/> and delete value of type <typeparamref name="T2"/> or nothing to delete value of type <typeparamref name="T2"/></value>
+        ''' <returns>If this instance contains value of type <typeparamref name="T2"/> then returns it, otherwise return null</returns>
         ''' <remarks>
-        ''' If <see cref="value2"/> retruns null it means that either value of type <see cref="T2"/> is not present in this instance or it is present but it is null. Check <see cref="contains2"/> property in order to determine actual situation.
-        ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <see cref="T2"/>.
+        ''' If <see cref="value2"/> retruns null it means that either value of type <typeparamref name="T2"/> is not present in this instance or it is present but it is null. Check <see cref="contains2"/> property in order to determine actual situation.
+        ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <typeparamref name="T2"/>.
         ''' </remarks>
         Overloads Property value2() As T2
         ''' <summary>Get or sets stored value in type-unsafe way</summary>
         ''' <value>New value to be stored in this instance</value>
         ''' <returns>Value stored in this instance</returns>
-        ''' <exception cref="NullReferenceException">When trying to obtain value from instance that contains value of type neither <see cref="T1"/> nor <see cref="T2"/></exception>
-        ''' <exception cref="ArgumentException">When trying to set value of type other than <see cref="T1"/> or <see cref="T2"/></exception>
+        ''' <exception cref="NullReferenceException">When trying to obtain value from instance that contains value of type neither <see cref="T1"/> nor <typeparamref name="T2"/></exception>
+        ''' <exception cref="ArgumentException">When trying to set value of type other than <see cref="T1"/> or <typeparamref name="T2"/></exception>
         Property objValue() As Object
         ''' <summary>Determines if currrent instance contains value of type <see  cref="T1"/></summary>
         ''' <value>
         ''' True to delete value of type <see cref="T1"/> 
-        ''' False to mark this instance as containing value of type <see cref="T1"/> and not containing value of type <see cref="T2"/>.
+        ''' False to mark this instance as containing value of type <see cref="T1"/> and not containing value of type <typeparamref name="T2"/>.
         ''' </value>
         ''' <returns>True if this instance contains value of type <see cref="T1"/> (even if containde value is null)</returns>
         ''' <remarks>
@@ -45,10 +45,10 @@
         Property contains1() As Boolean
         ''' <summary>Determines if currrent instance contains value of type <see  cref="T2"/></summary>
         ''' <value>
-        ''' True to delete value of type <see cref="T2"/> 
-        ''' False to mark this instance as containing value of type <see cref="T2"/> and not containing value of type <see cref="T1"/>.
+        ''' True to delete value of type <typeparamref name="T2"/> 
+        ''' False to mark this instance as containing value of type <typeparamref name="T2"/> and not containing value of type <see cref="T1"/>.
         ''' </value>
-        ''' <returns>True if this instance contains value of type <see cref="T2"/> (even if containde value is null)</returns>
+        ''' <returns>True if this instance contains value of type <typeparamref name="T2"/> (even if containde value is null)</returns>
         ''' <remarks>
         ''' When <see cref="contains2"/> is True and is set to True nothing happens.
         ''' When <see cref="contains2"/> is False and is set tor True nothing is stored in <see cref="value2"/> and <see cref="value1"/> is removed.
@@ -58,7 +58,7 @@
         ''' <param name="T">Type to be contained</param>
         ''' <returns>True if this instance contais value of type <paramref name="T"/> otherwise False</returns>
         ReadOnly Property contains(ByVal T As Type) As Boolean
-        ''' <summary>Determines whether instance contains value of neither type <see cref="T1"/> nor type <see cref="T2"/></summary>
+        ''' <summary>Determines whether instance contains value of neither type <see cref="T1"/> nor type <typeparamref name="T2"/></summary>
         ''' <returns>True when both values are not present. False if one of values is present (even if it contains null)</returns>
         ReadOnly Property IsEmpty() As Boolean
     End Interface
@@ -91,13 +91,13 @@
         ''' <summary>CTor - initializes en empty instance of <see cref="T1orT2(Of T1, T2)"/></summary>
         Public Sub New()
         End Sub
-        ''' <summary>CTor - initializes new instance of <see cref="T1orT2(Of T1, T2)"/> with value of type <see cref="T2"/></summary>
+        ''' <summary>CTor - initializes new instance of <see cref="T1orT2(Of T1, T2)"/> with value of type <typeparamref name="T2"/></summary>
         ''' <param name="value">Value to be contained in new instance</param>
         Public Sub New(ByVal value As T2)
             value2 = value
         End Sub
         ''' <summary>Gets or sets value of type <see cref="T1"/></summary>
-        ''' <value>Non-null value to set value of type <see cref="T1"/> and delete value of type <see cref="T2"/> or nothing to delete value of type <see cref="T1"/></value>
+        ''' <value>Non-null value to set value of type <see cref="T1"/> and delete value of type <typeparamref name="T2"/> or nothing to delete value of type <see cref="T1"/></value>
         ''' <returns>If this instance contains value of type <see cref="T1"/> then returns it, otherwise return null</returns>
         ''' <remarks>
         ''' If <see cref="value1"/> retruns null it means that either value of type <see cref="T1"/> is not present in this instance or it is present but it is null. Check <see cref="contains1"/> property in order to determine actual situation.
@@ -112,12 +112,12 @@
                 If _value1 IsNot Nothing Then _value2 = Nothing
             End Set
         End Property
-        ''' <summary>Gets or sets value of type <see cref="T2"/></summary>
-        ''' <value>Non-null value to set value of type <see cref="T2"/> and delete value of type <see cref="T2"/> or nothing to delete value of type <see cref="T2"/></value>
-        ''' <returns>If this instance contains value of type <see cref="T2"/> then returns it, otherwise return null</returns>
+        ''' <summary>Gets or sets value of type <typeparamref name="T2"/></summary>
+        ''' <value>Non-null value to set value of type <typeparamref name="T2"/> and delete value of type <typeparamref name="T2"/> or nothing to delete value of type <typeparamref name="T2"/></value>
+        ''' <returns>If this instance contains value of type <typeparamref name="T2"/> then returns it, otherwise return null</returns>
         ''' <remarks>
-        ''' If <see cref="value2"/> retruns null it means that either value of type <see cref="T2"/> is not present in this instance or it is present but it is null. Check <see cref="contains2"/> property in order to determine actual situation.
-        ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <see cref="T2"/>.
+        ''' If <see cref="value2"/> retruns null it means that either value of type <typeparamref name="T2"/> is not present in this instance or it is present but it is null. Check <see cref="contains2"/> property in order to determine actual situation.
+        ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <typeparamref name="T2"/>.
         ''' </remarks>
         Public Overridable Property value2() As T2 Implements IT1orT2(Of T1, T2).value2, IPair(Of T1, T2).Value2
             Get
@@ -131,7 +131,7 @@
         ''' <summary>Determines if currrent instance contains value of type <see  cref="T1"/></summary>
         ''' <value>
         ''' True to delete value of type <see cref="T1"/> 
-        ''' False to mark this instance as containing value of type <see cref="T1"/> and not containing value of type <see cref="T2"/>.
+        ''' False to mark this instance as containing value of type <see cref="T1"/> and not containing value of type <typeparamref name="T2"/>.
         ''' </value>
         ''' <returns>True if this instance contains value of type <see cref="T1"/> (even if containde value is null)</returns>
         ''' <remarks>
@@ -153,10 +153,10 @@
         End Property
         ''' <summary>Determines if currrent instance contains value of type <see  cref="T2"/></summary>
         ''' <value>
-        ''' True to delete value of type <see cref="T2"/> 
-        ''' False to mark this instance as containing value of type <see cref="T2"/> and not containing value of type <see cref="T1"/>.
+        ''' True to delete value of type <typeparamref name="T2"/> 
+        ''' False to mark this instance as containing value of type <typeparamref name="T2"/> and not containing value of type <see cref="T1"/>.
         ''' </value>
-        ''' <returns>True if this instance contains value of type <see cref="T2"/> (even if containde value is null)</returns>
+        ''' <returns>True if this instance contains value of type <typeparamref name="T2"/> (even if containde value is null)</returns>
         ''' <remarks>
         ''' When <see cref="contains2"/> is True and is set to True nothing happens.
         ''' When <see cref="contains2"/> is False and is set tor True nothing is stored in <see cref="value2"/> and <see cref="value1"/> is removed.
@@ -174,7 +174,7 @@
                 End If
             End Set
         End Property
-        ''' <summary>Determines whether instance contains value of neither type <see cref="T1"/> nor type <see cref="T2"/></summary>
+        ''' <summary>Determines whether instance contains value of neither type <see cref="T1"/> nor type <typeparamref name="T2"/></summary>
         ''' <returns>True when both values are not present. False if one of values is present (even if it contains null)</returns>
         Public Overridable ReadOnly Property IsEmpty() As Boolean Implements IT1orT2(Of T1, T2).IsEmpty
             Get
@@ -210,7 +210,7 @@
         Shared Widening Operator CType(ByVal a As T1) As T1orT2(Of T1, T2)
             Return New T1orT2(Of T1, T2)(a)
         End Operator
-        ''' <summary>Boxes value of type <see cref="T2"/> into new instance of <see cref="T1orT2(Of T1, T2)"/></summary>
+        ''' <summary>Boxes value of type <typeparamref name="T2"/> into new instance of <see cref="T1orT2(Of T1, T2)"/></summary>
         ''' <param name="a">Value to be boxed</param>
         ''' <returns>New instance of <see cref="T1orT2(Of T1, T2)"/> initialized with <paramref name="a"/></returns>
         Shared Widening Operator CType(ByVal a As T2) As T1orT2(Of T1, T2)
@@ -227,10 +227,10 @@
                 Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1, "T1", "T1"))
             End If
         End Operator
-        ''' <summary>Unboxes value of type <see cref="T2"/> from <see cref="T1orT2(Of T1, T2)"/> when <paramref name="a"/> contains <see cref="value2"/>.</summary>
+        ''' <summary>Unboxes value of type <typeparamref name="T2"/> from <see cref="T1orT2(Of T1, T2)"/> when <paramref name="a"/> contains <see cref="value2"/>.</summary>
         ''' <param name="a">Instance that may contain value to be unboxed</param>
         ''' <returns>Value of <see cref="value2"/> property of <paramref name="a"/></returns>
-        ''' <exception cref="InvalidCastException"><paramref name="a"/>doesn't contain value of type <see cref="T2"/></exception>
+        ''' <exception cref="InvalidCastException"><paramref name="a"/>doesn't contain value of type <typeparamref name="T2"/></exception>
         Shared Narrowing Operator CType(ByVal a As T1orT2(Of T1, T2)) As T2
             If a.contains2 Then
                 Return a.value2
@@ -247,7 +247,7 @@
             End Get
         End Property
         ''' <summary>Return new instance of <see cref="T1orT2(Of T2, T1)"/> initialized by value of this instance</summary>
-        ''' <returns>Instance of type with swapped types <see cref="T1"/> and <see cref="T2"/></returns>
+        ''' <returns>Instance of type with swapped types <see cref="T1"/> and <typeparamref name="T2"/></returns>
         Public Overridable Function Swap() As T1orT2(Of T2, T1)
             Dim ret As New T1orT2(Of T2, T1)
             If contains1 Then
@@ -273,8 +273,8 @@
         ''' <summary>Get or sets stored value in type-unsafe way</summary>
         ''' <value>New value to be stored in this instance</value>
         ''' <returns>Value stored in this instance</returns>
-        ''' <exception cref="NullReferenceException">When trying to obtain value from instance that contains value of type neither <see cref="T1"/> nor <see cref="T2"/></exception>
-        ''' <exception cref="ArgumentException">When trying to set value of type other than <see cref="T1"/> or <see cref="T2"/></exception>
+        ''' <exception cref="NullReferenceException">When trying to obtain value from instance that contains value of type neither <see cref="T1"/> nor <typeparamref name="T2"/></exception>
+        ''' <exception cref="ArgumentException">When trying to set value of type other than <see cref="T1"/> or <typeparamref name="T2"/></exception>
         Public Overridable Property objValue() As Object Implements IT1orT2(Of T1, T2).objValue
             Get
                 If contains1 Then

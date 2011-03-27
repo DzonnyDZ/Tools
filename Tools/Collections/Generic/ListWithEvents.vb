@@ -1261,7 +1261,7 @@ erh:
         ''' <summary>Adds an item to the <see cref="System.Collections.IList"/>.</summary>
         ''' <param name="value">The <see cref="System.Object"/> to add to the <see cref="System.Collections.IList"/>.</param>
         ''' <returns>The position into which the new element was inserted.</returns>
-        ''' <exception cref="TypeMismatchException"><paramref name="value"/> cannot be converted into type <see cref="T"/></exception>
+        ''' <exception cref="TypeMismatchException"><paramref name="value"/> cannot be converted into type <typeparamref name="T"/></exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         ''' <version version="1.5.2"><see cref="InvalidCastException"/> thrown replaced with <see cref="TypeMismatchException"/></version>
@@ -1306,7 +1306,7 @@ erh:
         ''' <param name="index">The zero-based index at which value should be inserted.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="System.Collections.IList"/>.</exception>
         ''' <exception cref="System.NullReferenceException">value is null reference in the <see cref="System.Collections.IList"/>.</exception>
-        ''' <exception cref="TypeMismatchException"><paramref name="value"/> cannot be converted to the type <see cref="T"/></exception>
+        ''' <exception cref="TypeMismatchException"><paramref name="value"/> cannot be converted to the type <typeparamref name="T"/></exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         ''' <version version="1.5.2"><see cref="InvalidCastException"/> thrown replaced with <see cref="TypeMismatchException"/>.</version>
@@ -1343,7 +1343,7 @@ erh:
         ''' <param name="index">The zero-based index of the element to get or set.</param>
         ''' <returns>The element at the specified index.</returns>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="System.Collections.IList"/>.</exception>
-        ''' <exception cref="TypeMismatchException">When setting value that cannot be converted to <see cref="T"/></exception>
+        ''' <exception cref="TypeMismatchException">When setting value that cannot be converted to <typeparamref name="T"/></exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True (in setter)</exception>
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         ''' <version version="1.5.2"><see cref="InvalidCastException"/> thrown replaced with <see cref="TypeMismatchException"/></version>

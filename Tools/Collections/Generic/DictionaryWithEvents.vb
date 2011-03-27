@@ -901,7 +901,7 @@ Namespace CollectionsT.GenericT
         '        ''' <summary>Adds an item to the <see cref="System.Collections.IList"/>.</summary>
         '        ''' <param name="value">The <see cref="System.Object"/> to add to the <see cref="System.Collections.IList"/>.</param>
         '        ''' <returns>The position into which the new element was inserted.</returns>
-        '        ''' <exception cref="InvalidCastException"><paramref name="value"/> cannot be converted into type <see cref="T"/></exception>
+        '        ''' <exception cref="InvalidCastException"><paramref name="value"/> cannot be converted into type <typeparamref name="T"/></exception>
         '        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         '        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         '        <Obsolete("Use type-safe overload instead")> _
@@ -940,7 +940,7 @@ Namespace CollectionsT.GenericT
         '        ''' <param name="index">The zero-based index at which value should be inserted.</param>
         '        ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="System.Collections.IList"/>.</exception>
         '        ''' <exception cref="System.NullReferenceException">value is null reference in the <see cref="System.Collections.IList"/>.</exception>
-        '        ''' <exception cref="InvalidCastException"><paramref name="value"/> cannot be converted to the type <see cref="T"/></exception>
+        '        ''' <exception cref="InvalidCastException"><paramref name="value"/> cannot be converted to the type <typeparamref name="T"/></exception>
         '        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         '        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         '        <Obsolete("Use type-safe overload instead")> _
@@ -972,7 +972,7 @@ Namespace CollectionsT.GenericT
         '        ''' <param name="index">The zero-based index of the element to get or set.</param>
         '        ''' <returns>The element at the specified index.</returns>
         '        ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="System.Collections.IList"/>.</exception>
-        '        ''' <exception cref="InvalidCastException">When setting value that cannot be converted to <see cref="T"/></exception>
+        '        ''' <exception cref="InvalidCastException">When setting value that cannot be converted to <typeparamref name="T"/></exception>
         '        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True (in setter)</exception>
         '        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         '        <Obsolete("Use type-safe Item property instead"), EditorBrowsable(EditorBrowsableState.Never)> _

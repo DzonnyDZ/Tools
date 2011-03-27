@@ -8,7 +8,7 @@
     Public Interface IPair(Of T1, T2) : Inherits ICloneable(Of IPair(Of T1, T2))
         ''' <summary>Value of type <see cref="T1"/></summary>
         Property Value1() As T1
-        ''' <summary>Value of type <see cref="T2"/></summary>
+        ''' <summary>Value of type <typeparamref name="T2"/></summary>
         Property Value2() As T2
         ''' <summary>Swaps values <see cref="Value1"/> and <see cref="Value2"/></summary>
         Function Swap() As IPair(Of T2, T1)
@@ -64,7 +64,7 @@
             End Set
         End Property
 
-        ''' <summary>Value of type <see cref="T2"/></summary>        
+        ''' <summary>Value of type <typeparamref name="T2"/></summary>        
         Public Overridable Property Value2() As T2 Implements IPair(Of T1, T2).Value2
             Get
                 Return _Value2
@@ -75,7 +75,7 @@
         End Property
 
         ''' <summary>Returns new instance of <see cref="IPair(Of T1, T2)"/> initialized with current instance</summary>
-        ''' <returns>New instance of <see cref="IPair(Of T1, T2)"/> initialized with current instance if either <see cref="T1"/> or <see cref="T2"/> implements <see cref="ICloneable"/> then they are also cloned via <see cref="ICloneable.Clone"/></returns>
+        ''' <returns>New instance of <see cref="IPair(Of T1, T2)"/> initialized with current instance if either <see cref="T1"/> or <typeparamref name="T2"/> implements <see cref="ICloneable"/> then they are also cloned via <see cref="ICloneable.Clone"/></returns>
         Public Overrides Function Clone() As Pair(Of T1, T2)
             Dim new1 As T1, new2 As T2
             If TypeOf Value1 Is ICloneable Then

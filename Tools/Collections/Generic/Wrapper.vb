@@ -51,7 +51,7 @@ Namespace CollectionsT.GenericT
             End Sub
             ''' <summary>Gets the element in the collection at the current position of the enumerator.</summary>
             ''' <returns>The element in the collection at the current position of the enumerator.</returns>
-            ''' <exception cref="InvalidCastException">Current value from collection cannot be converted to <see cref="T"/>. Also another exception can be throw if thrown by cast operator.</exception>
+            ''' <exception cref="InvalidCastException">Current value from collection cannot be converted to <typeparamref name="T"/>. Also another exception can be throw if thrown by cast operator.</exception>
             Public Overridable ReadOnly Property Current() As T Implements System.Collections.Generic.IEnumerator(Of T).Current
                 Get
                     Return Wrap.Current
@@ -156,7 +156,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex"/> is less than 0.</exception>
         ''' <exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception>
         ''' <exception cref="T:System.ArgumentException"><paramref name="array"/> is multidimensional.-or-arrayIndex is equal to or greater than the length of <paramref name="array"/>.-or-The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1"></see> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination array.</exception>
-        ''' <exception cref="InvalidCastException"><see cref="List"/> contains item that cannot be automatically cast to <see cref="T"/></exception>
+        ''' <exception cref="InvalidCastException"><see cref="List"/> contains item that cannot be automatically cast to <typeparamref name="T"/></exception>
         Public Sub CopyTo(ByVal array() As T, ByVal arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of T).CopyTo
             If arrayIndex < 0 Then Throw New ArgumentOutOfRangeException("arrayIndex", String.Format(ResourcesT.Exceptions.MustBeNonNegative, "arrayIndex"))
             If array Is Nothing Then Throw New ArgumentNullException("array")
@@ -286,7 +286,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.IList"></see>. </exception>
         ''' <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.IList"></see> is read-only.-or- The <see cref="T:System.Collections.IList"></see> has a fixed size. </exception>
         ''' <exception cref="T:System.NullReferenceException">value is null reference in the <see cref="T:System.Collections.IList"></see>.</exception>
-        ''' <remarks>This function is provided only for compatibility with <see cref="IList"/>. Use type-safe <see cref="Insert"/> instead. This method allows you to insert item of othert type than <see cref="T"/></remarks>
+        ''' <remarks>This function is provided only for compatibility with <see cref="IList"/>. Use type-safe <see cref="Insert"/> instead. This method allows you to insert item of othert type than <typeparamref name="T"/></remarks>
         <Obsolete("Use type-safe overload instead")> _
         Private Sub Insert(ByVal index As Integer, ByVal value As Object) Implements System.Collections.IList.Insert
             Insert(index, CType(value, T))
@@ -303,7 +303,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="index">The zero-based index of the element to get or set. </param>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.IList"></see>. </exception>
         ''' <exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.IList"></see> is read-only. </exception>
-        ''' <remarks>This function is provided only for compatibility with <see cref="IList"/>. Use type-safe <see cref="Item"/> instead. This property allows you to set item that is not of type <see cref="T"/></remarks>
+        ''' <remarks>This function is provided only for compatibility with <see cref="IList"/>. Use type-safe <see cref="Item"/> instead. This property allows you to set item that is not of type <typeparamref name="T"/></remarks>
         <Obsolete("Use type-safe Item")> _
         Private Property UnsafeItem(ByVal index As Integer) As Object Implements System.Collections.IList.Item
             Get

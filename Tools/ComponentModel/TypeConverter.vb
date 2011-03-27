@@ -12,34 +12,34 @@ Namespace ComponentModelT
         ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <paramref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
         ''' <remarks>By implementing this interface you tells to your base class (<see cref="TypeConverter(Of T)"/>) that you are able to convert from type <paramref name="TOther"/></remarks>
         Protected Interface ITypeConverterFrom(Of TOther)
-            ''' <summary>Performs conversion from type <see cref="TOther"/> to type <see cref="T"/></summary>
+            ''' <summary>Performs conversion from type <typeparamref name="TOther"/> to type <typeparamref name="T"/></summary>
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
-            ''' <param name="value">Value to be converted to type <see cref="T"/></param>
-            ''' <returns>Value of type <see cref="T"/> initialized by <paramref name="value"/></returns>
+            ''' <param name="value">Value to be converted to type <typeparamref name="T"/></param>
+            ''' <returns>Value of type <typeparamref name="T"/> initialized by <paramref name="value"/></returns>
             Function ConvertFrom(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As TOther) As T
             ''' <summary>Delegate to <see cref="ConverterFrom"/> function</summary>
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
-            ''' <param name="value">Value to be converted to type <see cref="T"/></param>
-            ''' <returns>Value of type <see cref="T"/> initialized by <paramref name="value"/></returns>
+            ''' <param name="value">Value to be converted to type <typeparamref name="T"/></param>
+            ''' <returns>Value of type <typeparamref name="T"/> initialized by <paramref name="value"/></returns>
             Delegate Function dConvertFrom(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As TOther) As T
         End Interface
         ''' <summary>Interface for type-safe <see cref="ComponentModel.TypeConverter"/>s (write-only conversion)</summary>
         ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <paramref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
         ''' <remarks>By implementing this interface you tells to your base class (<see cref="TypeConverter(Of T)"/>) that you are able to convert to type <paramref name="TOther"/></remarks>
         Protected Interface ITypeConverterTo(Of TOther)
-            ''' <summary>Performs conversion from type <see cref="T"/> to type <see cref="TOther"/></summary>
+            ''' <summary>Performs conversion from type <typeparamref name="T"/> to type <typeparamref name="TOther"/></summary>
             ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
             ''' <param name="value">Value to be converted</param>
-            ''' <returns>Representation of <paramref name="value"/> in type <see cref="TOther"/></returns>
+            ''' <returns>Representation of <paramref name="value"/> in type <typeparamref name="TOther"/></returns>
             Function ConvertTo(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As T) As TOther
             ''' <summary>delegate to <see cref="ConvertTo"/> function</summary>
             ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
             ''' <param name="value">Value to be converted</param>
-            ''' <returns>Representation of <paramref name="value"/> in type <see cref="TOther"/></returns>
+            ''' <returns>Representation of <paramref name="value"/> in type <typeparamref name="TOther"/></returns>
             Delegate Function dConvertTo(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As T) As TOther
         End Interface
         ''' <summary>Interface for type-safe <see cref="ComponentModel.TypeConverter"/>s (read-write conversion)</summary>
@@ -53,15 +53,15 @@ Namespace ComponentModelT
         ''' <remarks>By implementing this interface you tells to your base class (<see cref="TypeConverter(Of T)"/>) that you are able to convert to and from type <paramref name="TOther"/></remarks>
         Protected Interface ITypeConverterWithValidation(Of TOther)
             Inherits ITypeConverter(Of TOther)
-            ''' <summary>Returns whether the given instance of <see cref="TOther"/> is valid for type <see cref="T"/></summary>
+            ''' <summary>Returns whether the given instance of <typeparamref name="TOther"/> is valid for type <typeparamref name="T"/></summary>
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="value">Value to test validity</param>
-            ''' <returns>true if the specified value is valid for this type <see cref="T"/>; otherwise, false.</returns>
+            ''' <returns>true if the specified value is valid for this type <typeparamref name="T"/>; otherwise, false.</returns>
             Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As TOther) As Boolean
             ''' <summary>Delegate to the <see cref="IsValid"/> function</summary>
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="value">Value to test validity</param>
-            ''' <returns>true if the specified value is valid for this type <see cref="T"/>; otherwise, false.</returns>
+            ''' <returns>true if the specified value is valid for this type <typeparamref name="T"/>; otherwise, false.</returns>
             Delegate Function dIsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As TOther) As Boolean
         End Interface
 #End Region
@@ -179,10 +179,10 @@ Namespace ComponentModelT
                 Return Conv.Invoke(context, culture, value)
             End If
         End Function
-        ''' <summary>If overriden in derived class performs conversion form null to type <see cref="T"/></summary>
+        ''' <summary>If overriden in derived class performs conversion form null to type <typeparamref name="T"/></summary>
         ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
-        ''' <returns>Null value converted to type <see cref="T"/></returns>
+        ''' <returns>Null value converted to type <typeparamref name="T"/></returns>
         ''' <remarks>
         ''' <para>This method is called by base class when <see cref="ConverterFrom"/> method (type-unsafe) is called with value null. Sou type to convert from cannot be distinguished.</para>
         ''' <para>This implementation simply returns null (which means default value for value types). You can override it to (for example) throw an exception. You can also call <see cref="BaseConvertFrom"/> with null value, which efectivelly throws <see cref="NotSupportedException"/>.</para>
@@ -226,9 +226,9 @@ Namespace ComponentModelT
         Public NotOverridable Overloads Overrides Function CreateInstance(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal propertyValues As System.Collections.IDictionary) As Object
             Return CreateInstance(propertyValues, context)
         End Function
-        ''' <summary>Re-creates instance of <see cref="T"/> given a set of property values for it.</summary>
+        ''' <summary>Re-creates instance of <typeparamref name="T"/> given a set of property values for it.</summary>
         ''' <param name="propertyValues">An <see cref="System.Collections.IDictionary"/> that represents a dictionary of new property values.</param>
-        ''' <returns>Instance of <see cref="T"/> representing the given <see cref="System.Collections.IDictionary"/>, or null if the object cannot be created. This method calls <see cref="ComponentModel.TypeConverter.CreateInstance"/> unless it is overriden in derived class.</returns>
+        ''' <returns>Instance of <typeparamref name="T"/> representing the given <see cref="System.Collections.IDictionary"/>, or null if the object cannot be created. This method calls <see cref="ComponentModel.TypeConverter.CreateInstance"/> unless it is overriden in derived class.</returns>
         Public Overridable Overloads Function CreateInstance(ByVal propertyValues As System.Collections.IDictionary, ByVal context As System.ComponentModel.ITypeDescriptorContext) As T
             Return MyBase.CreateInstance(context, propertyValues)
         End Function
@@ -408,29 +408,29 @@ Namespace ComponentModelT
     ''' <typeparam name="TOther">Type the <paramref name="T"/> will be converted from and to</typeparam>
     ''' <remarks>This class provides type-safe base of <see cref="ComponentModel.TypeConverter"/> for two types. You can extend its support for another types by implementing another <see cref="TypeConverter(Of T)"/> nested interfaces.</remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
-''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public MustInherit Class TypeConverter(Of T, TOther)
         Inherits TypeConverter(Of T)
         Implements ITypeConverterWithValidation(Of TOther)
 
-        ''' <summary>Performs conversion from type <see cref="TOther"/> to type <see cref="T"/></summary>
+        ''' <summary>Performs conversion from type <typeparamref name="TOther"/> to type <typeparamref name="T"/></summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
-        ''' <param name="value">Value to be converted to type <see cref="T"/></param>
-        ''' <returns>Value of type <see cref="T"/> initialized by <paramref name="value"/></returns>
+        ''' <param name="value">Value to be converted to type <typeparamref name="T"/></param>
+        ''' <returns>Value of type <typeparamref name="T"/> initialized by <paramref name="value"/></returns>
         Public MustOverride Shadows Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As TOther) As T Implements ITypeConverter(Of TOther).ConvertFrom
 
-        ''' <summary>Performs conversion from type <see cref="T"/> to type <see cref="TOther"/></summary>
+        ''' <summary>Performs conversion from type <typeparamref name="T"/> to type <typeparamref name="TOther"/></summary>
         ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
         ''' <param name="value">Value to be converted</param>
-        ''' <returns>Representation of <paramref name="value"/> in type <see cref="TOther"/></returns>
+        ''' <returns>Representation of <paramref name="value"/> in type <typeparamref name="TOther"/></returns>
         Public MustOverride Shadows Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As T) As TOther Implements ITypeConverter(Of TOther).ConvertTo
 
-        ''' <summary>Returns whether the given instance of <see cref="TOther"/> is valid for type <see cref="T"/></summary>
+        ''' <summary>Returns whether the given instance of <typeparamref name="TOther"/> is valid for type <typeparamref name="T"/></summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <param name="value">Value to test validity</param>
-        ''' <returns>true if the specified value is valid for this type <see cref="T"/>; otherwise, false.</returns>
+        ''' <returns>true if the specified value is valid for this type <typeparamref name="T"/>; otherwise, false.</returns>
         ''' <remarks>If not overriden in derived class thi method calls <see cref="ConvertFrom"/> and checks if it throws an exception or not.</remarks>
         Public Overridable Shadows Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As TOther) As Boolean Implements ITypeConverterWithValidation(Of TOther).IsValid
             Try
@@ -445,7 +445,7 @@ Namespace ComponentModelT
         Private Adaptor As New DAdaptor(Of TOther)(AddressOf ConvertFrom, AddressOf ConvertTo, AddressOf IsValid)
         ''' <summary>Increases efficiency of base class method by returning delegate directly</summary>
         ''' <param name="sourceType">Type to return delegate for</param>
-        ''' <returns>If <paramref name="sourceType"/> is <see cref="TOther"/> then returns <see cref="ConvertFrom"/> otherwise calls base class's method</returns>
+        ''' <returns>If <paramref name="sourceType"/> is <typeparamref name="TOther"/> then returns <see cref="ConvertFrom"/> otherwise calls base class's method</returns>
         Protected Overrides Function ConverterFrom(ByVal sourceType As System.Type) As dConvertFrom
             If sourceType.Equals(GetType(TOther)) Then
                 Return AddressOf Adaptor.ConvertFrom
@@ -454,30 +454,30 @@ Namespace ComponentModelT
         End Function
         ''' <summary>Increases efficiency of base class method by returning delegate directly</summary>
         ''' <param name="destinationType">Type to return delegate for</param>
-        ''' <returns>If <paramref name="destinationType"/> is <see cref="TOther"/> then returns <see cref="ConvertTo"/> otherwise calls base class's method</returns>
+        ''' <returns>If <paramref name="destinationType"/> is <typeparamref name="TOther"/> then returns <see cref="ConvertTo"/> otherwise calls base class's method</returns>
         Protected Overrides Function ConverterTo(ByVal destinationType As System.Type) As dConvertTo
             If destinationType.Equals(GetType(TOther)) Then Return AddressOf Adaptor.ConvertTo
             Return MyBase.ConverterTo(destinationType)
         End Function
         ''' <summary>Increases efficiency of base class method by returning delegate directly</summary>
         ''' <param name="validateType">Type to return delegate for</param>
-        ''' <returns>If <paramref name="validateType"/> is <see cref="TOther"/> then returns <see cref="IsValid"/> otherwise calls base class's method</returns>
+        ''' <returns>If <paramref name="validateType"/> is <typeparamref name="TOther"/> then returns <see cref="IsValid"/> otherwise calls base class's method</returns>
         Protected Overrides Function Validator(ByVal validateType As System.Type) As dIsValid
             If validateType.Equals(GetType(TOther)) Then Return AddressOf Adaptor.IsValid
             Return MyBase.Validator(validateType)
         End Function
 #End Region
-        ''' <summary>Converts value of type <see cref="TOther"/> to <see cref="T"/></summary>
+        ''' <summary>Converts value of type <typeparamref name="TOther"/> to <typeparamref name="T"/></summary>
         ''' <param name="value">value to be converted</param>
         Public Shadows Function ConvertFrom(ByVal value As TOther) As T
             Return ConvertFrom(Nothing, Threading.Thread.CurrentThread.CurrentCulture, value)
         End Function
-        ''' <summary>Converts value of type <see cref="T"/> to <see cref="TOther"/></summary>
+        ''' <summary>Converts value of type <typeparamref name="T"/> to <typeparamref name="TOther"/></summary>
         ''' <param name="value">value to be converted</param>
         Public Shadows Function ConvertTo(ByVal value As T) As TOther
             Return ConvertTo(Nothing, Threading.Thread.CurrentThread.CurrentCulture, value)
         End Function
-        ''' <summary>Checks if value of type <see cref="TOther"/> can be converted to <see cref="T"/></summary>
+        ''' <summary>Checks if value of type <typeparamref name="TOther"/> can be converted to <typeparamref name="T"/></summary>
         ''' <param name="value">value to be converted</param>
         Public Shadows Function IsValid(ByVal value As TOther) As Boolean
             Return IsValid(Nothing, value)
@@ -502,7 +502,7 @@ Namespace ComponentModelT
     ''' <summary>Provides base class for type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with support for interface based conversion as <see cref="TypeConverter(Of T)"/></summary>
     ''' <typeparam name="T">Main type conversion is provided from and to</typeparam>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
-  ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public MustInherit Class ExpandableObjectConverter(Of T) : Inherits TypeConverter(Of T)
         ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
@@ -582,10 +582,10 @@ Namespace ComponentModelT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <CLSCompliant(False)> _
-      Public Class EnumConverterWithAttributes(Of T As {IConvertible, Structure})
+    Public Class EnumConverterWithAttributes(Of T As {IConvertible, Structure})
         Inherits TypeConverter(Of T, String)
         ''' <summary>Returns whether the collection of standard values returned from <see cref="M:System.ComponentModel.TypeConverter.GetStandardValues"></see> is an exclusive list.</summary>
-        ''' <returns>True when <see cref="T"/> has no <see cref="RestrictAttribute"/> or if its <see cref="RestrictAttribute"/> has <see cref="RestrictAttribute.Restrict"/> true</returns>
+        ''' <returns>True when <typeparamref name="T"/> has no <see cref="RestrictAttribute"/> or if its <see cref="RestrictAttribute"/> has <see cref="RestrictAttribute.Restrict"/> true</returns>
         Public Overrides Function GetStandardValuesExclusive(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
             Dim Rest As RestrictAttribute = GetAttribute(Of RestrictAttribute)(GetType(T))
             Return Rest Is Nothing OrElse Rest.Restrict
@@ -596,7 +596,7 @@ Namespace ComponentModelT
             Return True
         End Function
         ''' <summary>Returns whether the given value object is valid for this type.</summary>
-        ''' <returns>true if the specified value is valid for type <see cref="T"/>; otherwise, false.</returns>
+        ''' <returns>true if the specified value is valid for type <typeparamref name="T"/>; otherwise, false.</returns>
         ''' <param name="value">The object to test for validity. </param>
         Public Overrides Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As String) As Boolean
             Try
@@ -617,11 +617,11 @@ Namespace ComponentModelT
             Next cns
             Return New TypeConverter.StandardValuesCollection(ret)
         End Function
-        ''' <summary>Performs conversion from <see cref="String"/> to type <see cref="T"/></summary>
+        ''' <summary>Performs conversion from <see cref="String"/> to type <typeparamref name="T"/></summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
-        ''' <param name="value">Value to be converted to type <see cref="T"/></param>
-        ''' <returns>Value of type <see cref="T"/> initialized by <paramref name="value"/></returns>
+        ''' <param name="value">Value to be converted to type <typeparamref name="T"/></param>
+        ''' <returns>Value of type <typeparamref name="T"/> initialized by <paramref name="value"/></returns>
         Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As T
             For Each cns As Reflection.FieldInfo In GetType(T).GetFields
                 If cns.IsLiteral AndAlso cns.IsPublic Then
@@ -651,7 +651,7 @@ Namespace ComponentModelT
                 Return [Enum].ToObject(GetType(T), EValue)
             End If
         End Function
-        ''' <summary>Performs conversion from type <see cref="T"/> to <see cref="String"/></summary>
+        ''' <summary>Performs conversion from type <typeparamref name="T"/> to <see cref="String"/></summary>
         ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
         ''' <param name="value">Value to be converted</param>
