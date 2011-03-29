@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>ddue annotation appinfo</Title>
+            <Author>Đonny</Author>
+            <Description>Inserts XML schema &lt;appinfo> element for documenting XML schema extended way using XML Schema Documenter SnadCastle plugin.</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>Summary</ID>
+                    <ToolTip>Summary text</ToolTip>
+                    <Default>Summary</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="XML"><![CDATA[<xs:appinfo>
+    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+        <summary>
+            <para>$Summary$</para>
+        </summary>
+    </sd:schemaDoc>
+</xs:appinfo>]]></Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

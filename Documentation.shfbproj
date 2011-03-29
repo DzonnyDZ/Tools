@@ -103,35 +103,36 @@
     </ComponentConfigurations>
     <DocumentationSources>
       <DocumentationSource sourceFile="Experimental\Experimental.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="Projects\Metanol2\Metanol2.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="Created doc\Namespaces.xml" />
-<DocumentationSource sourceFile="ReportingEngine Lite\ReportingEngineLite.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj" configuration="Debug" platform="x86" />
-<DocumentationSource sourceFile="DevelopmentTools\SplashScreenGenerator\SplashScreenGenerator.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.dll" />
-<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.xml" />
-<DocumentationSource sourceFile="Tools.Metadata\Tools.Metadata.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.dll" />
-<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.xml" />
-<DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.dll" />
-<DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.xml" />
-<DocumentationSource sourceFile="Tools\Tools.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="Tools VisualStudio CS\Tools.VisualStudio.CS.csproj" configuration="Debug" platform="x86" />
-<DocumentationSource sourceFile="DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="Tools Visual Studio\Tools.VisualStudio.vbproj" configuration="Debug" platform="x86" />
-<DocumentationSource sourceFile="Tools Win\Tools.Win.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="Tools.Windows\Tools.Windows.vbproj" configuration="Debug" platform="Any CPU" />
-<DocumentationSource sourceFile="Tools.TotalCommander\TotalCommander Plugin Builder\TotalCommander Plugin Builder.vbproj" configuration="Debug" platform="x86" />
-<DocumentationSource sourceFile="DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj" configuration="Debug" platform="x86" />
-<DocumentationSource sourceFile="DevelopmentTools\XsdGenerator\XsdGenerator.csproj" configuration="Debug" platform="x86" /></DocumentationSources>
+      <DocumentationSource sourceFile="Projects\Metanol2\Metanol2.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="Created doc\Namespaces.xml" />
+      <DocumentationSource sourceFile="ReportingEngine Lite\ReportingEngineLite.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj" configuration="Debug" platform="x86" />
+      <DocumentationSource sourceFile="DevelopmentTools\SplashScreenGenerator\SplashScreenGenerator.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.dll" />
+      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.xml" />
+      <DocumentationSource sourceFile="Tools.Metadata\Tools.Metadata.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.dll" />
+      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.xml" />
+      <DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.dll" />
+      <DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.xml" />
+      <DocumentationSource sourceFile="Tools\Tools.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="Tools VisualStudio CS\Tools.VisualStudio.CS.csproj" configuration="Debug" platform="x86" />
+      <DocumentationSource sourceFile="DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="Tools Visual Studio\Tools.VisualStudio.vbproj" configuration="Debug" platform="x86" />
+      <DocumentationSource sourceFile="Tools Win\Tools.Win.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="Tools.Windows\Tools.Windows.vbproj" configuration="Debug" platform="Any CPU" />
+      <DocumentationSource sourceFile="Tools.TotalCommander\TotalCommander Plugin Builder\TotalCommander Plugin Builder.vbproj" configuration="Debug" platform="x86" />
+      <DocumentationSource sourceFile="DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj" configuration="Debug" platform="x86" />
+      <DocumentationSource sourceFile="DevelopmentTools\XsdGenerator\XsdGenerator.csproj" configuration="Debug" platform="x86" />
+    </DocumentationSources>
     <PlugInConfigurations>
       <PlugInConfig id="Hierarchical Table of Contents" enabled="True">
         <configuration>
           <toc minParts="1" insertBelow="True" />
         </configuration>
       </PlugInConfig>
-<PlugInConfig id="XML Schema Documenter" enabled="True"><configuration><document rootSchemas="true" rootElements="true" constraints="true" schemas="true" syntax="true" /><useTypeDocumentation forUndocumentedAttributes="true" forUndocumentedElements="true" /><schemaSet container="false" title="" /><namespace container="true" /><sortOrder>1</sortOrder><includeLinkUriInKeywordK>false</includeLinkUriInKeywordK><annotationTransformFile path="" /><schemaFiles><schemaFile path="ReportingEngine Lite\Reporting\XML\XMLTemplateSettings.xsd" /><schemaFile path="ReportingEngine Lite\Reporting\CSV\CSVTemplateSettings.xsd" /><schemaFile path="ReportingEngine Lite\Reporting\SimpleXLS\SimpleXLSTemplateSettings.xsd" /><schemaFile path="Tools.Windows\XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" /><schemaFile path="Tools.Metadata\Metadata\IPTC\IPTCTags.xsd" /><schemaFile path="Tools.Metadata\Metadata\Exif\ExifTags.xsd" /><schemaFile path="Tools\Text\Encoding\ISO2022.xsd" /><schemaFile path="Tools\Globalization\ISOLanguages.xsd" /><schemaFile path="Tools\CodeDom\CodeDom.xsd" /></schemaFiles><dependencyFiles /><docFiles /></configuration></PlugInConfig></PlugInConfigurations>
+<PlugInConfig id="XML Schema Documenter" enabled="True"><configuration><document rootSchemas="true" rootElements="true" constraints="true" schemas="true" syntax="true" /><useTypeDocumentation forUndocumentedAttributes="true" forUndocumentedElements="true" /><schemaSet container="true" title="XML Schemas" /><namespace container="true" /><sortOrder>1</sortOrder><includeLinkUriInKeywordK>false</includeLinkUriInKeywordK><annotationTransformFile path="" /><schemaFiles><schemaFile path="ReportingEngine Lite\Reporting\XML\XMLTemplateSettings.xsd" /><schemaFile path="ReportingEngine Lite\Reporting\CSV\CSVTemplateSettings.xsd" /><schemaFile path="ReportingEngine Lite\Reporting\SimpleXLS\SimpleXLSTemplateSettings.xsd" /><schemaFile path="Tools.Windows\XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" /><schemaFile path="Tools.Metadata\Metadata\IPTC\IPTCTags.xsd" /><schemaFile path="Tools.Metadata\Metadata\Exif\ExifTags.xsd" /><schemaFile path="Tools\Text\Encoding\ISO2022.xsd" /><schemaFile path="Tools\Globalization\ISOLanguages.xsd" /><schemaFile path="Tools\CodeDom\CodeDom.xsd" /></schemaFiles><dependencyFiles /><docFiles /></configuration></PlugInConfig></PlugInConfigurations>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional

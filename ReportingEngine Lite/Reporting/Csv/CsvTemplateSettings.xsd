@@ -13,55 +13,171 @@
                   xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="CsvTemplateSettings" type="CsvTemplateSettings">
         <xs:annotation>
-            <xs:documentation>Nastavení šablony CSVTemplate</xs:documentation>
+            <xs:documentation>A XML-Schema used for storing configuration of CsvTemplate</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                    <summary>
+                        <para>
+                            A XML-Schema used for storing configuration of <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.CsvTemplate</codeEntityReference>
+                        </para>
+                    </summary>
+                    <remarks>
+                        <content>
+                            <title xmlns="http://www.w3.org/1999/xlink"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="titleEltType">Version history</title>
+                            <list class="nobullet">
+                                <listItem>
+                                    <para>1.5.3</para>
+                                    <list class="bullet">
+                                        <listItem>
+                                            <para>This schema is new in version 1.5.3</para>
+                                        </listItem>
+                                    </list>
+                                </listItem>
+                            </list>
+                        </content>
+                    </remarks>
+                    <relatedTopics>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.CsvTemplateSettings</codeEntityReference>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.CsvTemplate</codeEntityReference>
+                    </relatedTopics>
+                </sd:schemaDoc>
+            </xs:appinfo>
         </xs:annotation>
     </xs:element>
 
     <xs:complexType name="CsvTemplateSettings">
         <xs:annotation>
-            <xs:documentation>Nastavení šablony CSVTemplate</xs:documentation>
+            <xs:documentation>Stores CsvTemplate settings</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                    <summary>
+                        <para>
+                            Stores <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.CsvTemplate</codeEntityReference> settings.
+                        </para>
+                    </summary>
+                    <relatedTopics>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.CsvTemplateSettings</codeEntityReference>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.CsvTemplate</codeEntityReference>
+                    </relatedTopics>
+                </sd:schemaDoc>
+            </xs:appinfo>
         </xs:annotation>
         <xs:attribute name="encoding" type="xs:string" use="optional" default="">
             <xs:annotation>
-                <xs:documentation>Kódování. Pokud není vyplněno, použije se výchozí kódování systému. Speciální hodnota System, též znamená výchozí kódování systému.</xs:documentation>
+                <xs:documentation>An encoding. If not set system-default encoding is used. Also the special value System also means system-default encoding.</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>An encoding. If not set system-default encoding is used.</para>
+                        </summary>
+                        <remarks>
+                            <content>
+                                <para>
+                                    In addition an to empty string also the special value <codeInline>System</codeInline> also means system-default encoding.
+                                </para>
+                            </content>
+                        </remarks>
+                    </sd:schemaDoc>
+                </xs:appinfo>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="culture" type="xs:string" use="optional" default="">
             <xs:annotation>
                 <xs:documentation>
-                    Kultura použitá pro výstup dat. Pokud není vyplněno použije se invariantní.
-                    Speciální hodnoty: Current - CurrentCulture, CurrentUI - CurrentUICulture, System - InstalledUICulture, Invariant - InvariantCulture
+                    A culture used for output data formatting. If not set invariant culture is used.
+                    Recognized special values: Current - CurrentCulture, CurrentUI - CurrentUICulture, System - InstalledUICulture, Invariant - InvariantCulture
                 </xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>A culture used for output data formatting. If not set invariant culture is used.</para>
+                        </summary>
+                        <remarks>
+                            <content>
+                                <para>Special values are recognized:</para>
+                                <definitionTable>
+                                    <definedTerm>
+                                        <codeInline>Current</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Current culture (<codeEntityReference qualifyHint="true">P:System.Globalization.CultureInfo.CurrentCulture</codeEntityReference>)
+                                        </para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>CurrentUI</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Current UI culture (<codeEntityReference qualifyHint="true">P:System.Globalization.CultureInfo.CurrentUICulture</codeEntityReference>)
+                                        </para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>System</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            UI culture of current system installation (<codeEntityReference qualifyHint="true">P:System.Globalization.CultureInfo.InstalledUICulture</codeEntityReference>)
+                                        </para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>Invariant</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Invariant culture (<codeEntityReference qualifyHint="true">P:System.Globalization.CultureInfo.InvariantCulture</codeEntityReference>)
+                                        </para>
+                                    </definition>
+                                </definitionTable>
+                            </content>
+                        </remarks>
+                    </sd:schemaDoc>
+                </xs:appinfo>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="number-format" type="xs:string" use="optional" default="">
             <xs:annotation>
-                <xs:documentation>Formát čísle na výstupu ( v kultuře culture). Pokud není vyplněno, použije se výchozí.</xs:documentation>
+                <xs:documentation>Output number format (using specified culture). If empty default is used.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="date-format" type="xs:string" use="optional" default="">
             <xs:annotation>
-                <xs:documentation>Formát datumů na výstupu (v kultuře culture). Pokud není vyplněno, použije se výchozí.</xs:documentation>
+                <xs:documentation>Output date format (using specified culture). If empty default is used.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="time-format" type="xs:string" use="optional" default="">
             <xs:annotation>
-                <xs:documentation>Formát časů na výstupu (v kultuře culture). Pokud není vyplněno, použije se výchozí. Používá Tools.TimeSpanFormattable (ne System.TimeSpan)!</xs:documentation>
+                <xs:documentation>Ouput time format (using specified culture). If not empty default is used. Uses Tools.TimeSpanFormattable (not System.TimeSpan)!</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Ouput time format (using specified culture). If not empty default is used. Uses <codeEntityReference qualifyHint="true">T:Tools.TimeSpanFormattable</codeEntityReference> (not <codeEntityReference qualifyHint="true">T:System.TimeSpan</codeEntityReference>)!</para>
+                        </summary>
+                    </sd:schemaDoc>
+                </xs:appinfo>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="separator_" use="required">
             <xs:annotation>
-                <xs:documentation>Oddělovač sloupců</xs:documentation>
+                <xs:documentation>Column separator character</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
                 <xs:union memberTypes="char">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:enumeration value="\t"/>
-                            <xs:enumeration value="\s"/>
+                            <xs:enumeration value="\t">
+                                <xs:annotation>
+                                    <xs:documentation>Tabulator</xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+                            <xs:enumeration value="\s">
+                                <xs:annotation>
+                                    <xs:documentation>Space</xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
                             <xs:enumeration value="System">
                                 <xs:annotation>
-                                    <xs:documentation>Výchozí separátor podle kultury</xs:documentation>
+                                    <xs:documentation>Use default culture-specific column separator</xs:documentation>
                                 </xs:annotation>
                             </xs:enumeration>
                         </xs:restriction>
@@ -71,28 +187,28 @@
         </xs:attribute>
         <xs:attribute name="text-qualifier" use="required" type="char">
             <xs:annotation>
-                <xs:documentation>Textový kvalifikátor</xs:documentation>
+                <xs:documentation>Text qualifier (quotes)</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="text-qualifier-usage" use="optional" default="as-needed">
             <xs:annotation>
-                <xs:documentation>Indikuje kdy bude textový kvalifikátor použit</xs:documentation>
+                <xs:documentation>Indicates when to use taxt qualifier</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="as-needed">
                         <xs:annotation>
-                            <xs:documentation>Jen když je potřeba</xs:documentation>
+                            <xs:documentation>Use only when necessary</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="always">
                         <xs:annotation>
-                            <xs:documentation>Vždy</xs:documentation>
+                            <xs:documentation>Use always</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="always-on-text">
                         <xs:annotation>
-                            <xs:documentation>Vždy na řetězcové hodnoty. na čísla a data podle potřeby.</xs:documentation>
+                            <xs:documentation>Use always for text values. Use when necessary for dates and numbers.</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                 </xs:restriction>
@@ -100,28 +216,28 @@
         </xs:attribute>
         <xs:attribute name="text-qualifier-escape" use="optional" default="double">
             <xs:annotation>
-                <xs:documentation>Jak escapovat textový kvalifikátor?</xs:documentation>
+                <xs:documentation>How to expace text qualifier?</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="double">
                         <xs:annotation>
-                            <xs:documentation>Zdvojit jej</xs:documentation>
+                            <xs:documentation>Make id double (as quote in VB)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="escape">
                         <xs:annotation>
-                            <xs:documentation>Předcházet jej \</xs:documentation>
+                            <xs:documentation>Prepend it with backslash (\; as quote in C#)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="html">
                         <xs:annotation>
-                            <xs:documentation>Nahradit HTML entitou</xs:documentation>
+                            <xs:documentation>Replace it with HTML/XML entity (like " goes &amp;quot; in HTML/XML)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="do-nothing">
                         <xs:annotation>
-                            <xs:documentation>Nechat na pokoji</xs:documentation>
+                            <xs:documentation>Do not escape it.</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                 </xs:restriction>
@@ -129,20 +245,48 @@
         </xs:attribute>
         <xs:attribute name="new-line" use="optional" default="CrLf">
             <xs:annotation>
-                <xs:documentation>Jak značit nový řádek</xs:documentation>
+                <xs:documentation>How to start a new line</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:enumeration value="CrLf"/>
-                    <xs:enumeration value="LineFeed"/>
-                    <xs:enumeration value="CarriageReturn"/>
-                    <xs:enumeration value="NextLine"/>
-                    <xs:enumeration value="FormFeed"/>
-                    <xs:enumeration value="LineSeparator"/>
-                    <xs:enumeration value="ParagraphSeparator"/>
+                    <xs:enumeration value="CrLf">
+                        <xs:annotation>
+                            <xs:documentation>Use windows new line indicator (\r\n / CrLf)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="LineFeed">
+                        <xs:annotation>
+                            <xs:documentation>Use line feed character (\n, Lf)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="CarriageReturn">
+                        <xs:annotation>
+                            <xs:documentation>Use carriage return character (\r, Cr)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="NextLine">
+                        <xs:annotation>
+                            <xs:documentation>Use Unicode next line character (nl)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="FormFeed">
+                        <xs:annotation>
+                            <xs:documentation>Use Unicode form feed character (ff)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="LineSeparator">
+                        <xs:annotation>
+                            <xs:documentation>Use Unicode line separator character (ls)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="ParagraphSeparator">
+                        <xs:annotation>
+                            <xs:documentation>Use Unicode paragraph separator character (ps)</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
                     <xs:enumeration value="System">
                         <xs:annotation>
-                            <xs:documentation>Použít výchozí hodnotu aktuální platformy</xs:documentation>
+                            <xs:documentation>Use current platform native character (i.e. CrLf on Windows)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                 </xs:restriction>
@@ -150,63 +294,63 @@
         </xs:attribute>
         <xs:attribute name="nl-escape" use="optional" default="replace-all-with-escape">
             <xs:annotation>
-                <xs:documentation>Jak se chovat k novým řádkům v textu</xs:documentation>
+                <xs:documentation>How to deal with line brekas inside text</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="replace-all-with-escape">
                         <xs:annotation>
-                            <xs:documentation>Nahradit všechny příslušnou escape sekvencí</xs:documentation>
+                            <xs:documentation>Replace all line breaks with appropriate escape sequence</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="replace-with-escape">
                         <xs:annotation>
-                            <xs:documentation>Nahredit jen new-line příslušnou escape sequencí</xs:documentation>
+                            <xs:documentation>Replace only those specified in new-line attribute with appropriate escape sequence</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="escape-all">
                         <xs:annotation>
-                            <xs:documentation>Předřadit \ všem (CrLf je nahrazeno \Cr\Lf)</xs:documentation>
+                            <xs:documentation>Prepend all of them with backslash (\; CrLf goes \Cr\Lf)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="escape">
                         <xs:annotation>
-                            <xs:documentation>Předřadit \ jen před new-line (CrLf je nahrazeno \Cr\Lf)</xs:documentation>
+                            <xs:documentation>Prepend only those specified in new-line attribute with backslash (\; CrLf goes \Cr\Lf)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="special-replace">
                         <xs:annotation>
-                            <xs:documentation>Nahradit speciálním znakem (jen new-line)</xs:documentation>
+                            <xs:documentation>Replace them with a special character (only those specified in new-line attribute)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="special-replace-all">
                         <xs:annotation>
-                            <xs:documentation>Nahradit speciálním znakem (všechny stejným)</xs:documentation>
+                            <xs:documentation>Replace them all with same special character</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="strip">
                         <xs:annotation>
-                            <xs:documentation>Odstranit (jen new-line)</xs:documentation>
+                            <xs:documentation>Remove them (only thos specified in new-line attribute)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="strip-all">
                         <xs:annotation>
-                            <xs:documentation>Odstranit všechny</xs:documentation>
+                            <xs:documentation>Remove them all</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="html">
                         <xs:annotation>
-                            <xs:documentation>Nahradit HTML entitou (jen new-line)</xs:documentation>
+                            <xs:documentation>Replace them with HTML/XML entity (only thos specified in new-line attribute)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="html-all">
                         <xs:annotation>
-                            <xs:documentation>Nahradit všechny HTML entitou</xs:documentation>
+                            <xs:documentation>Replace them all with HTML/XML entity</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="do-nothing">
                         <xs:annotation>
-                            <xs:documentation>Nedělat nic, jen použit textový kvalifikátor</xs:documentation>
+                            <xs:documentation>Do nothing (just use text-qualifier)</xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                 </xs:restriction>
@@ -214,32 +358,35 @@
         </xs:attribute>
         <xs:attribute name="special-string" type="xs:string" use="optional">
             <xs:annotation>
-                <xs:documentation>Speciální řetězec (použit k nahrazení konce řádku). Escapován podle text-qualifier-escape. escape předřadí \ před celý řetětzec, ne před každý znak.</xs:documentation>
+                <xs:documentation>A special string (used to replace line breaks). Its escaped using the rule define din text-qualifier-escape attribute. The escape vallue cuases backslash (\) to be prepended in front of entire string (not all single characters of the string).</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="header" type="xs:boolean" use="optional" default="false">
             <xs:annotation>
-                <xs:documentation>Zapsat názvy sloupců do záhlaví</xs:documentation>
+                <xs:documentation>Indicates whether to write data-source column names to header</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="footer" type="xs:boolean" use="optional" default="false">
             <xs:annotation>
-                <xs:documentation>Zapsat názvy sloupců do zápatí</xs:documentation>
+                <xs:documentation>Indicate whether to write data-source column names to footer</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="header-size" type="xs:integer" use="optional" default="0">
             <xs:annotation>
-                <xs:documentation>Počet řádků záhlaví ve sloupci šablony (platné jen pokud je soubor šablony použit)</xs:documentation>
+                <xs:documentation>Number of header lines in template file (when used). Rest of template file becomes footer.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="null-value" type="xs:string" use="optional">
             <xs:annotation>
-                <xs:documentation>Řetězec je vložen místo NULL hodnoty.</xs:documentation>
+                <xs:documentation>A string inserted instead of NULL value.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
 
-    <xs:simpleType name="char"> 
+    <xs:simpleType name="char">
+        <xs:annotation>
+            <xs:documentation>Specifies 1-character long character type</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:maxLength value="1"/>
             <xs:minLength value="1"/>

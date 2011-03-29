@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Snippet</Title>
+            <Author>Đonny</Author>
+            <Description>Creates a Visual Studio code snipped definition</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>Title</ID>
+                    <Default>Title</Default>
+                    <ToolTip>Title of snippet</ToolTip>
+                </Literal>
+                <Literal>
+                    <ID>Author</ID>
+                    <Default>Author</Default>
+                    <ToolTip>Name of snippet author</ToolTip>
+                </Literal>
+                <Literal>
+                    <ID>Description</ID>
+                    <Default>Description</Default>
+                    <ToolTip>Describes the snippet</ToolTip>
+                </Literal>
+                <Literal>
+                    <ID>LiteralId</ID>
+                    <Default>LiteralId</Default>
+                    <ToolTip>Identifier of placeholder</ToolTip>
+                </Literal>
+                <Literal>
+                    <ID>LiteralDefaultValue</ID>
+                    <Default>Defalut value</Default>
+                    <ToolTip>Defaut value of literal</ToolTip>
+                </Literal>
+                <Literal>
+                    <ID>LiteralTooltip</ID>
+                    <Default>Tooltip</Default>
+                    <ToolTip>ToolTip text for a literal</ToolTip>
+                </Literal>
+                <Literal>
+                    <ID>Lang</ID>
+                    <Default>Language</Default>
+                    <ToolTip>Language of snippet</ToolTip>
+                </Literal>
+                <Literal>
+                    <ID>$Code$</ID>
+                    <Default>Here goes the code of the snippet. Use $LiteralId$ as literal placeholders.</Default>
+                    <ToolTip>Snippet code</ToolTip>
+                </Literal>
+            </Declarations>
+            <Code Language="XML">
+                <![CDATA[
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>$Title$</Title>
+            <Author>$Author$</Author>
+            <Description>$Description$</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>$LiteralId$</ID>
+                    <ToolTip>$LiteralTooltip$</ToolTip>
+                    <Default>$LiteralDefaultValue$</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="$Lang$">
+                <![CDATA[
+                    $Code$]]>
+                ]]&gt;<![CDATA[
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
+          ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

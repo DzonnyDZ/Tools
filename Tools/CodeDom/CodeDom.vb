@@ -1,10 +1,10 @@
 
         
         ' GENERATED FILE -- DO NOT EDIT
-        ' Generator: TransformCodeGenerator, Version=1.5.0.36089, Culture=neutral, PublicKeyToken=373c02ac923768e6
-        ' Version: 1.5.0.36089
+        ' Generator: TransformCodeGenerator, Version=1.5.3.1, Culture=neutral, PublicKeyToken=373c02ac923768e6
+        ' Version: 1.5.3.1
         ' Generated code from "CodeDom.xsd"
-        ' Created: 9. října 2008 by: DZONNY\Honza
+        ' Created: 30. března 2011 by: BiggerBook\Honza
     
         Imports System.Xml.Linq, <xmlns="http://dzonny.cz/xml/schemas/CodeDom">
         Imports System.CodeDom

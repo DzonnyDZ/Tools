@@ -12,61 +12,131 @@
                   xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="SimpleXlsSettings" type="SimpleXlsSettings">
         <xs:annotation>
-            <xs:documentation>Nastavení šablony SimpleXlsTemplate</xs:documentation>
+            <xs:documentation>A XML-Schema used for storing configuration of SimpleXlsTemplate</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                    <summary>
+                        <para>
+                            A XML-Schema used for storing configuration of <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.SimpleXlsTemplate</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.RepeatXlsTemplate</codeEntityReference>
+                        </para>
+                    </summary>
+                    <remarks>
+                        <content>
+                            <title xmlns="http://www.w3.org/1999/xlink"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="titleEltType">Version history</title>
+                            <list class="nobullet">
+                                <listItem>
+                                    <para>1.5.3</para>
+                                    <list class="bullet">
+                                        <listItem>
+                                            <para>This schema is new in version 1.5.3</para>
+                                        </listItem>
+                                    </list>
+                                </listItem>
+                            </list>
+                        </content>
+                    </remarks>
+                    <relatedTopics>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.SimpleXlsSettings</codeEntityReference>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.RepeatedXlsSettings</codeEntityReference>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.SimpleXlsTemplate</codeEntityReference>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.RepeatXlsTemplate</codeEntityReference>
+                    </relatedTopics>
+                </sd:schemaDoc>
+            </xs:appinfo>
         </xs:annotation>
     </xs:element>
 
     <xs:complexType name="SimpleXlsSettings">
+        <xs:annotation>
+            <xs:documentation>Stores settings of SimpleXlsTemplate</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                    <summary>
+                        <para>
+                            Stores settings of <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.SimpleXlsTemplate</codeEntityReference>
+                        </para>
+                    </summary>
+                    <relatedTopics>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.SimpleXlsSettings</codeEntityReference>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.SimpleXlsTemplate</codeEntityReference>
+                    </relatedTopics>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:sequence minOccurs="1" maxOccurs="1">
             <xs:element name="PostProcessingCode" type="xs:string" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation>VB.NET kód, který se provede po exportu. Kód je zavřen do funkce a funkci je předán argument WorkBook.</xs:documentation>
+                    <xs:documentation>A VB.NET code executed after export. The code is enclosed in a function athe the function accepts a WorkBook parameter.</xs:documentation>
+                    <xs:appinfo>
+                        <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                            <summary>
+                                <para>A VB.NET code executed after export.</para>
+                            </summary>
+                            <remarks>
+                                <content>
+                                    <para>The code is enclosed in a function athe the function accepts a WorkBook parameter.</para>
+                                </content>
+                            </remarks>
+                        </sd:schemaDoc>
+                    </xs:appinfo>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
         <xs:attribute name="List" type="xs:string" use="optional">
             <xs:annotation>
-                <xs:documentation>List, kna který budou data zapsána - název nebo číslo (1-based)</xs:documentation>
+                <xs:documentation>A WorkSheet to write data to - name or 1-based index</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="Row1" type="RowNum" use="optional" default="2">
             <xs:annotation>
-                <xs:documentation>Číslo řádku, kde začne zápis data (1-based)</xs:documentation>
+                <xs:documentation>1-based row index indicating row where to strat writing data</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="Col1" type="ColNum" use="optional" default="1">
             <xs:annotation>
-                <xs:documentation>Číslo sloupce, kde začne zápis dat (1-based)</xs:documentation>
+                <xs:documentation>1-based column index indicating column where to start writing data</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="SkipFilled" type="xs:boolean" use="optional" default="false">
             <xs:annotation>
-                <xs:documentation>Přeskočit předvyplněné sloupce (pro všechny řádky se určí podle řádku Row1)</xs:documentation>
+                <xs:documentation>Skipp pre-filled columns (for all subsequent rows determined by row Row1)</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="InsertRows" type="xs:boolean" use="optional" default="false">
             <xs:annotation>
-                <xs:documentation>Řádky budou vkládány, místo aby byly přepisovány. Umožňuje zachovat zápatí.</xs:documentation>
+                <xs:documentation>Insert rows insthead of rewriting them. This allows to preserve a footer.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="ColumnNameRow" use="optional" default="0" type="RowNum0">
             <xs:annotation>
-                <xs:documentation>Číslo řádku, kam se mají vkládat názvy sloupců (tak jak je vrátí databáze; 1-based; 0 a nezapíší se nikam). Názvy sloupoců jsou zapsány před zápisem dat.</xs:documentation>
+                <xs:documentation>1-based index of row to write data-source column names to (0 - do not write them). Column names are written prior data are written.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="SkipFilledNames" use="optional" default="false" type="xs:boolean">
             <xs:annotation>
-                <xs:documentation>Nezapisovat název sloupce, pokud je příslušná buňka již vyplněna.</xs:documentation>
+                <xs:documentation>Do not write column name if the target cell is already non-empty.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="AutoWidth" use="optional" default="">
             <xs:annotation>
                 <xs:documentation>
-                    Sloupce u nichž má být nastavena automatická šířka.
-                    1-based indexy v rámci listu.
-                    Seznam oddělený šárkou, možno používat rozsahy, poslední rozsah může být otevřený.
-                    Např.: 1,6,15-20,22-
+                    Indicates columns to set automatic width of them
+                    1-based indexes in the worksheet specified as comma-separated list. It's possible to user ranges. Last range can be open one.
+                    E.g.: 1,6,15-20,22-
                 </xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Indicates columns to set automatic width of them</para>
+                        </summary>
+                        <remarks>
+                            <content>
+                                <para>1-based indexes in the worksheet specified as comma-separated list. It's possible to user ranges. Last range can be open one.</para>
+                                <para>E.g.: 1,6,15-20,22-</para>
+                            </content>
+                        </remarks>
+                    </sd:schemaDoc>
+                </xs:appinfo>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -77,11 +147,25 @@
         <xs:attribute name="PrintArea" use="optional" default="">
             <xs:annotation>
                 <xs:documentation>
-                    Nastavení oblasti tisku ve formátu x1-x2;y1-y2.
-                    Absolutní čísla jsou 1-based indey v rámci listu, relativní čísla jsou 0-based offsety.
-                    x1 se vztahuje k 1. vyplňovanému sloupci, x2 k poslednímu vyplňovanému sloupci, y1 k prvnímu vyplňovanému řádku, y2 k poslednímu vyplňovanému řádku.
-                    Prázdné - oblast tisku nebude změněna oproti šabloně.
+                    Sets up a print area (format x1-x2;y1-y2).
+                    Absolute numbers mean 1-based indexes inside a worksheet, relative numbers (starting with + or -) are 0-based offsets.
+                    x1 relates to 1st filled column. x2 relates to last filled column. y1 relates to 1st filled row. y2 relates to last filled row.
+                    Leave empty not to change template print area.
                 </xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Sets up a print area (format x1-x2;y1-y2)</para>
+                        </summary>
+                        <remarks>
+                            <content>
+                                <para>Absolute numbers mean 1-based indexes inside a worksheet, relative numbers (starting with + or -) are 0-based offsets.</para>
+                                <para>x1 relates to 1st filled column. x2 relates to last filled column. y1 relates to 1st filled row. y2 relates to last filled row.</para>
+                                <para>Leave empty not to change template print area.</para>
+                            </content>
+                        </remarks>
+                    </sd:schemaDoc>
+                </xs:appinfo>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -91,57 +175,77 @@
         </xs:attribute>
         <xs:attribute name="CopyColumnsFrom" use="optional" default="0">
             <xs:annotation>
-                <xs:documentation>1-based index sloupce (v Excelu) od nějž budou sloupce kopírovány (levý do pravého). 0 - nebudou kopírovány vůbec.</xs:documentation>
+                <xs:documentation>1-based Excel column index to start with column copying (left to right) from. 0 - no copying at all.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="SkipColumns" use="optional" default="">
             <xs:annotation>
                 <xs:documentation>
-                    Čárkou oddělený seznam názvů sloupců (z databáze)., které budou vynechány při výpisu do Excelu.
-                    Pokud se z nějakých exotických důvodů vyskytuje v názvu sloupce čárka (,) nahraďte ji pipou (|); pipu (|) nahraďte dvěma (||).
+                    Comma-separated list of data-source column names to skip them when writing data to Excel.
                 </xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Comma-separated list of data-source column names to skip them when writing data to Excel.</para>
+                        </summary>
+                        <remarks>
+                            <content>
+                                <para>In case you must (for any reason) have a comma (,) in column name, replace the comma (,) with a pipe (|). Replace a pipe (|) with two pipes (||).</para>
+                            </content>
+                        </remarks>
+                    </sd:schemaDoc>
+                </xs:appinfo>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="NameColumn" type="xs:string" use="optional" default="">
             <xs:annotation>
-                <xs:documentation>Sloupce podle něhož bude nastaven název listu (nebo nic)</xs:documentation>
+                <xs:documentation>A column to be used to set name of worksheet by value of it (or none)</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="NameFormat" type="xs:string" use="optional" default="{0}">
             <xs:annotation>
-                <xs:documentation>Formátovací řetězec pro název listu. {0} bude nahrazeno hodnotou NameColumn.</xs:documentation>
+                <xs:documentation>Formatting string for worksheet name. The {0} placeholder is replaced with NameColumn column value.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="SelectList" type="xs:string" use="optional" default="">
             <xs:annotation>
-                <xs:documentation>Název nebo index (1-based) listu, který bude vybrán po dokončení.</xs:documentation>
+                <xs:documentation>A new or 1-based index of a list to be set as active when export finishes.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="SuspendRecalculations" type="xs:boolean" use="optional" default="false">
             <xs:annotation>
-                <xs:documentation>Pozastavit přepočítávání vzorců během vyplňování listu?</xs:documentation>
+                <xs:documentation>Indicates whether to pause formula recalculations during expoert.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="RunMacroAfter" type="xs:token" use="optional">
             <xs:annotation>
-                <xs:documentation>Spustit zadané makro po exportu.</xs:documentation>
+                <xs:documentation>Indicate name of a macro to run after export.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
-    
+
     <xs:simpleType name="RowNum">
+        <xs:annotation>
+            <xs:documentation>Constraints row numbers in Excel</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:integer">
             <xs:minInclusive value="1"/>
             <xs:maxInclusive value="65536"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="ColNum">
+        <xs:annotation>
+            <xs:documentation>Constraints column numbers in Excel</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:integer">
             <xs:minInclusive value="1"/>
             <xs:maxInclusive value="256"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="RowNum0">
+        <xs:annotation>
+            <xs:documentation>Constrains row numbers in Excel. Alllows special value 0 meaning ignore/do not process/etc.</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:integer">
             <xs:minInclusive value="0"/>
             <xs:maxInclusive value="65536"/>
@@ -150,7 +254,20 @@
 
     <xs:element name="RepeatedXlsSettings" type="RepeatedXlsSettings">
         <xs:annotation>
-            <xs:documentation>Nastavení šablony opakovaného XMLS</xs:documentation>
+            <xs:documentation>Stores settings of RepeatXlsTemplate</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                    <summary>
+                        <para>
+                            Stores settings of <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.RepeatXlsTemplate</codeEntityReference>
+                        </para>
+                    </summary>
+                    <relatedTopics>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.RepeatedXlsSettings</codeEntityReference>
+                        <codeEntityReference qualifyHint="true">T:Tools.ReportingT.ReportingEngineLite.RepeatXlsTemplate</codeEntityReference>
+                    </relatedTopics>
+                </sd:schemaDoc>
+            </xs:appinfo>
         </xs:annotation>
     </xs:element>
     <xs:complexType name="RepeatedXlsSettings">
@@ -158,22 +275,22 @@
             <xs:extension base="SimpleXlsSettings">
                 <xs:attribute name="BreakColumn" type="xs:string" use="optional">
                     <xs:annotation>
-                        <xs:documentation>Sloupec podle kterého jsou rozdělovány listy. Vždy když se hodnota v tomto sloupci změní je založen nový list.</xs:documentation>
+                        <xs:documentation>Name of colum to use values of to break data to different worksheets. Everywhen when value of this column changes a new list is created.</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
                 <xs:attribute name="WriteBreak" type="xs:boolean" use="optional" default="false">
                     <xs:annotation>
-                        <xs:documentation>Zapisovat do tabulky BreakColumn?</xs:documentation>
+                        <xs:documentation>Indicates whether to write value of BreakColumn column to output table.</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
                 <xs:attribute name="NameColumn" type="xs:string" use="optional" >
                     <xs:annotation>
-                        <xs:documentation>Sloupec obsahující názvy listů</xs:documentation>
+                        <xs:documentation>Name of column containing names of worksheets.</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
                 <xs:attribute name="WriteName" type="xs:boolean" use="optional" default="false">
                     <xs:annotation>
-                        <xs:documentation>Zapisovat do tabulky NameColumn?</xs:documentation>
+                        <xs:documentation>Indicates whether to write value of NameColumn column to output table.</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
             </xs:extension>

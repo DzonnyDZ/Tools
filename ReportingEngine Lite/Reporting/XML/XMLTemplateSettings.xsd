@@ -10,16 +10,178 @@
     xmlns:xt="urn:eos-ksi/KolUni/Reporting/Xml"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
+    <xs:annotation>
+        <xs:documentation>XML Schema for storing configuration of ReportingT.ReportingEngineLite.XMLTemplate</xs:documentation>
+        <xs:appinfo>
+            <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                <summary>
+                    <para>
+                        XML Schema for storing configuration of <codeEntityReference qualifyHint="true">T:ReportingT.ReportingEngineLite.XMLTemplate</codeEntityReference>
+                    </para>
+                </summary>
+                <remarks>
+                    <content>
+                        <title xmlns="http://www.w3.org/1999/xlink"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="titleEltType">Version history</title>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>1.5.3</para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>This schema is new in version 1.5.3</para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                        </list>
+                    </content>
+                </remarks>
+                <relatedTopics>
+                    <codeEntityReference qualifyHint="true">T:ReportingT.ReportingEngineLite.XMLTemplate</codeEntityReference>
+                    <codeEntityReference qualifyHint="true">T:ReportingT.ReportingEngineLite.XMLTemplateSettings</codeEntityReference>
+                </relatedTopics>
+            </sd:schemaDoc>
+        </xs:appinfo>
+    </xs:annotation>
     <xs:element name="XmlTemplateSettings" type="XmlTemplateSettings"/>
     <xs:complexType name="XmlTemplateSettings">
-        <xs:attribute name="EnableDocumentFunction" type="xs:boolean" use="optional" default="false"/>
-        <xs:attribute name="EnableScript" type="xs:boolean" use="optional" default="false"/>
-        <xs:attribute name="DataSetNamespace" type="xs:string" use="optional" default=""/>
-        <xs:attribute name="DataSetName" type="xs:string" use="optional" default=""/>
-        <xs:attribute name="TableName" type="xs:string" use="optional" default=""/>
-        <xs:attribute name="DatasetNamespacePrefix" type="xs:string" use="optional" default=""/>
-        <xs:attribute name="DefaultExtension" type="xs:string" use="optional" default="xml"/>
-        <xs:attribute name="Filter" type="xs:string" use="optional" default="XML files (*.xml)|*.xml"/>
+        <xs:annotation>
+            <xs:documentation>Stores configuration of XMLTemplate</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                    <summary>
+                        <para>
+                            Stores configuration of <codeEntityReference qualifyHint="true">T:ReportingT.ReportingEngineLite.XMLTemplate</codeEntityReference>
+                        </para>
+                    </summary>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:attribute name="EnableDocumentFunction" type="xs:boolean" use="optional" default="false">
+            <xs:annotation>
+                <xs:documentation>Indicates if the document() XSLT function is allowed.</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>
+                                Indicates if the <codeInline>document()</codeInline> XSLT function is allowed.
+                            </para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:System.Xml.Xsl.XsltSettings.EnableDocumentFunction</codeEntityReference>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.EnableDocumentFunction</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="EnableScript" type="xs:boolean" use="optional" default="false">
+            <xs:annotation>
+                <xs:documentation>Indicates whether to enable support for embedded script blocks in XSL template.</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Indicates whether to enable support for embedded script blocks in XSL template.</para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:System.Xml.Xsl.XsltSettings.EnableScript</codeEntityReference>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.EnableScript</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DataSetNamespace" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Namespace of DataSet</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Namespace of DataSet</para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.DataSetNamespace</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DataSetName" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Name of DataSet</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Name of DataSet</para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.DataSetName</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TableName" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Name of table in DataSet</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Name of table in DataSet</para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.TableName</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DatasetNamespacePrefix" type="xs:string" use="optional" default="">
+            <xs:annotation>
+                <xs:documentation>Prefix associated with DataSet namespace</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Prefix associated with DataSet namespace</para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.DatasetNamespacePrefix</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DefaultExtension" type="xs:string" use="optional" default="xml">
+            <xs:annotation>
+                <xs:documentation>Default extension of files exported using this template</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>Default extension of files exported using this template</para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.DefaultExtension</codeEntityReference>
+                            <codeEntityReference qualifyHint="true">P:System.Windows.Forms.SaveFileDialog.DefaultExtension</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Filter" type="xs:string" use="optional" default="XML files (*.xml)|*.xml">
+            <xs:annotation>
+                <xs:documentation>Filter for SaveFileDialog used when saving file exported using this template</xs:documentation>
+                <xs:appinfo>
+                    <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                        <summary>
+                            <para>
+                                Filter for <codeEntityReference qualifyHint="true">T:System.Windows.Forms.SaveFileDialog</codeEntityReference> used when saving file exported using this template
+                            </para>
+                        </summary>
+                        <relatedTopics>
+                            <codeEntityReference qualifyHint="true">P:Tools.ReportingT.ReportingEngineLite.XmlTemplateSettings.Filter</codeEntityReference>
+                            <codeEntityReference qualifyHint="true">P:System.Windows.Forms.SaveFileDialog.Filter</codeEntityReference>
+                        </relatedTopics>
+                    </sd:schemaDoc>
+                </xs:appinfo>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
-
 </xs:schema>

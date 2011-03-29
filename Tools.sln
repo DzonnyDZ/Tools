@@ -227,6 +227,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Basic", "Visual Basic", "{752D1A5C-9013-4D5B-A7A8-2DA12197A275}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\Visual Basic\Tools\CustomEvent.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\CustomEvent.snippet
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{D99EA3E2-E522-4C20-867D-065A478FD56A}"
 	ProjectSection(SolutionItems) = preProject
@@ -271,6 +274,39 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionHistory", "VersionHi
 		Help\VersionHistory\VersionHistory-all.xslt = Help\VersionHistory\VersionHistory-all.xslt
 		Help\VersionHistory\VersionHistory.wiki.xslt = Help\VersionHistory\VersionHistory.wiki.xslt
 		Help\VersionHistory\VersionHistory.xslt = Help\VersionHistory\VersionHistory.xslt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML", "XML", "{6683BA1C-8DD6-4A33-9139-7BDF9566524A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharp", "CSharp", "{276528FB-1D01-4BB7-96AB-C29CA1C25EC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScript", "JavaScript", "{416ABC6F-4C14-4468-B51B-E2D2929DF808}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{A7B3C91E-E7FF-4E53-957A-1F7BEFA8585B}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\C#\Tools\ASP.NET\ViewStateProperty.snippet = DevelopmentTools\Snippets\C#\Tools\ASP.NET\ViewStateProperty.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET AJAX", "ASP.NET AJAX", "{A9BDC9A0-7D55-4615-B290-C661E13DF997}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Control.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Control.snippet
+		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Event.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Event.snippet
+		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Property.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Property.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Special", "Special", "{64F2641B-ECF2-4ACF-83FB-69BF28C54ECE}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\Visual Basic\Tools\Special\WindowMessage.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\Special\WindowMessage.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{3662CABF-2023-4A0B-96AC-8AFA0818A704}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\XML\Tools\Visual Studio\snippet.snippet = DevelopmentTools\Snippets\XML\Tools\Visual Studio\snippet.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML-Schema", "XML-Schema", "{339C78F1-563A-472D-A5CC-3A03358EE202}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet = DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet
 	EndProjectSection
 EndProject
 Global
@@ -1076,8 +1112,16 @@ Global
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3} = {708C9420-4676-4314-B690-7A887F8CC992}
 		{10C22CD7-1CB7-4E4D-8422-F9C589A3F743} = {F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}
 		{752D1A5C-9013-4D5B-A7A8-2DA12197A275} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
+		{6683BA1C-8DD6-4A33-9139-7BDF9566524A} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
+		{276528FB-1D01-4BB7-96AB-C29CA1C25EC8} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
+		{416ABC6F-4C14-4468-B51B-E2D2929DF808} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
 		{D99EA3E2-E522-4C20-867D-065A478FD56A} = {752D1A5C-9013-4D5B-A7A8-2DA12197A275}
+		{64F2641B-ECF2-4ACF-83FB-69BF28C54ECE} = {752D1A5C-9013-4D5B-A7A8-2DA12197A275}
 		{69CAA1BD-A7B6-419E-BA1E-05347BB80698} = {9611D0E6-CEA6-4CD6-8C1C-FE9932372416}
 		{3CF08082-4063-4345-84BC-92248A5C2F29} = {9611D0E6-CEA6-4CD6-8C1C-FE9932372416}
+		{3662CABF-2023-4A0B-96AC-8AFA0818A704} = {6683BA1C-8DD6-4A33-9139-7BDF9566524A}
+		{339C78F1-563A-472D-A5CC-3A03358EE202} = {6683BA1C-8DD6-4A33-9139-7BDF9566524A}
+		{A7B3C91E-E7FF-4E53-957A-1F7BEFA8585B} = {276528FB-1D01-4BB7-96AB-C29CA1C25EC8}
+		{A9BDC9A0-7D55-4615-B290-C661E13DF997} = {416ABC6F-4C14-4468-B51B-E2D2929DF808}
 	EndGlobalSection
 EndGlobal

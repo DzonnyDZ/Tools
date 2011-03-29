@@ -19,8 +19,8 @@
     <xsl:param name="guid"/>
 
     <xsl:template match="/doc">
-        <topic id="{$guid}" revisionNumber="1">
-            <developerConceptualDocument>
+        <topic id="{$guid}" revisionNumber="1" xmlns="">
+            <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
                 <introduction>
                     <para>
                         This file describe all the changes in version <xsl:value-of select="$version"/>. For brief description of changes see <link xlink:href="9b0f2e22-3088-4c9b-af71-51717771bb58"/>.

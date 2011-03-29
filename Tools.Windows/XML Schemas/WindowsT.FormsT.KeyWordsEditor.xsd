@@ -28,6 +28,38 @@
     -->
     <xs:annotation>
         <xs:documentation>Defines XML schema used by Tools.WindowsT.FormsT.KeyWordsEditor to store keyords in file.</xs:documentation>
+        <xs:appinfo>
+            <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                <summary>
+                    <para>Defines XML schema used by <codeEntityReference qualifyHint="true">T:Tools.WindowsT.FormsT.KeyWordsEditor</codeEntityReference> to store keyords in file.</para>
+                </summary>
+                <example>
+                    Sample stored keywords.
+                    <code language="xml">
+                        <![CDATA[
+                            <Keywords xmlns="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor">
+                                <keywords>
+                                    <kw>keyword1</kw>
+                                    <kw>keyword2</kw>
+                                </keywords>
+                                <synonyms>
+                                    <pair>
+                                        <keys>
+                                            <key>Key1</key>
+                                            <key>Key2</key>
+                                        </keys>
+                                        <values>
+                                            <word>Word1</word>
+                                            <word>Word2</word>
+                                        </values>
+                                    </pair>
+                                </synonyms>
+                            </Keywords>
+                        ]]>
+                    </code>
+                </example>
+            </sd:schemaDoc>
+        </xs:appinfo>
     </xs:annotation>
     <xs:element name="Keywords">
         <xs:annotation>
@@ -57,7 +89,7 @@
                         <xs:sequence minOccurs="1" maxOccurs="1">
                             <xs:element name="pair" minOccurs="0" maxOccurs="unbounded">
                                 <xs:annotation>
-                                    <xs:documentation>Stores single synonmy pair</xs:documentation>
+                                    <xs:documentation>Stores single synonym pair</xs:documentation>
                                 </xs:annotation>
                                 <xs:complexType>
                                     <xs:sequence minOccurs="1" maxOccurs="1">
@@ -98,4 +130,4 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-</xs:schema>
+</xs:schema>     
