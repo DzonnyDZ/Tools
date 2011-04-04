@@ -52,6 +52,7 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='general|Win32'">$(PluginOutputName)</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='general|Win32'">.$(PluginOutputExtension)</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='general|Win32'">false</LinkIncremental>
+    <ExtensionsToDeleteOnClean Condition="'$(Configuration)|$(Platform)'=='general|Win32'">.$(PluginOutputExtension);$(ExtensionsToDeleteOnClean)</ExtensionsToDeleteOnClean>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='general|Win32'">
     <PreBuildEvent>
@@ -88,10 +89,10 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)app.config"  "$(TargetDir)$(TargetFileName).config" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllTCFunctions.h" />
     <ClInclude Include="AssemblyResolver.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="wfx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Exports.def" />
     <None Include="Icon.ico" />
     <None Include="ReadMe.txt" />

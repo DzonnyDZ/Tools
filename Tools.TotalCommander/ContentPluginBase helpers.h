@@ -153,4 +153,16 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>For field type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.DateAndTime"/> only: User has only entered a date, don't change the time</summary>
         OnlyDate = setflags_only_date
     };
+
+    /// <summary>Defines sorting orders</summary>
+    /// <seealso cref2="T:System.Windows.Forms.SortOrder"/>
+    /// <version version="1.5.3">This enumeration is new in version 1.5.3</version>
+    public enum class SortOrder : Int32{
+        /// <summary>Sort order is not set. May default to <see cref="Ascending"/></summary>
+        unknown = 0,
+        /// <summary>Items are sorted in ascending order (from lower to greater)</summary>
+        Ascending = 1,
+        /// <summary>Items are sorted in descending order (from greater to smaller)</summary>
+        Descending = 2
+    };
 }}

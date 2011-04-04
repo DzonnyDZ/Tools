@@ -163,15 +163,15 @@ namespace Tools{namespace TotalCommanderT{
         int ContentGetDefaultSortOrder(int FieldIndex);
         /// <summary>When overriden in derived class, called when the user clicks on the sorting header above the columns.</summary>
         /// <param name="FieldIndex">The index of the field for which the sort order should be returne</param>
-        /// <returns>One of the <see cref="Windows::Forms::SortOrder"/> values. <see2 cref2="F:System::Windows::Forms::SortOrder::None"/> has same meaning as <see2 cref2="F:System::Windows::Forms::SortOrder::Ascending"/>.</returns>
+        /// <returns>One of the <see cref="SortOrder"/> values. <see2 cref2="F:Tools::TotalCommanderT::SortOrder::unknown"/> has same meaning as <see2 cref2="F:Tools::TotalCommanderT::SortOrder::Ascending"/>.</returns>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="FieldIndex"/> is out of range of field indexes as returned by <see cref="SupportedFields"/>. Throwing this exception has same effect as returning <see2 cref2="F:System::Windows::Forms::SortOrder::None"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="FieldIndex"/> is out of range of field indexes as returned by <see cref="SupportedFields"/>. Throwing this exception has same effect as returning <see2 cref2="F:Tools::TotalCommanderT::SortOrder::unknown"/>.</exception>
         /// <remarks>You may implement this function if there are fields which are usually sorted in descending order, like the size field (largest file first) or the date/time fields (newest first). If the function isn't implemented, ascending will be the default.
         /// <para>When most derived implementation of the function is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the function.</para>
         /// <note type="inheritinfo">Do not throw any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         /// <version version="1.5.3">This function is new in version 1.5.3</version>
         [MethodNotSupported]
-        virtual System::Windows::Forms::SortOrder GetDefaultSortOrder(int FieldIndex);
+        virtual SortOrder GetDefaultSortOrder(int FieldIndex);
         /// <summary>Called just before the plugin is unloaded, e.g. to close buffers, abort operations etc.</summary>
         /// <remarks>This function was added (to Total Commander plugin interface, not Managed plugin interface) by request from a user who needs to unload GDI+. It seems that GDI+ has a bug which makes it crash when unloading it in the DLL unload function, therefore a separate unload function is needed. The function is only called if the content plugin part of the file system plugin is used!
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>

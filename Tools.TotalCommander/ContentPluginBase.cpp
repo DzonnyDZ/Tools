@@ -144,13 +144,13 @@ namespace Tools{namespace TotalCommanderT{
     int ContentPluginBase::ContentGetDefaultSortOrder(int FieldIndex){
         try{
             switch(GetDefaultSortOrder(FieldIndex)){
-                case Windows::Forms::SortOrder::Descending:
+                case SortOrder::Descending:
                     return -1;
                 default: return 1;
             }
         }catch(ArgumentOutOfRangeException^){return 1;}
     }
-    inline Windows::Forms::SortOrder ContentPluginBase::GetDefaultSortOrder(int FieldIndex){throw gcnew NotSupportedException();}
+    inline SortOrder ContentPluginBase::GetDefaultSortOrder(int FieldIndex){throw gcnew NotSupportedException();}
     inline void ContentPluginBase::ContentPluginUnloading(){OnContentPluginUnloading();}
     inline void ContentPluginBase::OnContentPluginUnloading(){}
     int ContentPluginBase::ContentGetSupportedFieldFlags(int FieldIndex){

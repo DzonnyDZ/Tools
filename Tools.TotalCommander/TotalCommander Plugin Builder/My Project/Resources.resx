@@ -241,4 +241,7 @@
   <data name="i_CopyOutputTo" xml:space="preserve">
     <value>Copy output to {0}</value>
   </data>
+  <data name="i_CopyAppConfig" xml:space="preserve">
+    <value>Copying app.config file from {0} to {1}</value>
+  </data>
 </root>

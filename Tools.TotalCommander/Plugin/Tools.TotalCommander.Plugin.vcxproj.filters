@@ -68,6 +68,7 @@
     </None>
     <None Include="Icon.ico" />
     <None Include="ReadMe.txt" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources.rc" />

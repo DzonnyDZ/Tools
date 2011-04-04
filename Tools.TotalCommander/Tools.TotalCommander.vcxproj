@@ -258,16 +258,10 @@ move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Comma
     <ClCompile Include="PluginBase.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic">
-      <RequiredTargetFramework>v3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System">
       <RequiredTargetFramework>v3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing">
-      <RequiredTargetFramework>v3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
       <RequiredTargetFramework>v3.5</RequiredTargetFramework>
     </Reference>
   </ItemGroup>

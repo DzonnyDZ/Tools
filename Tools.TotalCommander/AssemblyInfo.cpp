@@ -14,9 +14,9 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyTitleAttribute("Tools.TotalCommander")];
 [assembly:AssemblyDescriptionAttribute("Classes for interaction with Total Commander from managed code")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("ÐTools team")];
+[assembly:AssemblyCompanyAttribute("Ðonny")];
 [assembly:AssemblyProductAttribute("ÐTools")];
-[assembly:AssemblyCopyrightAttribute("© Ðonny 2009-10")];
+[assembly:AssemblyCopyrightAttribute("© Ðonny 2009-11")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:Resources::NeutralResourcesLanguageAttribute("en")]
 

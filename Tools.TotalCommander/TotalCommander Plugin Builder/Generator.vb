@@ -421,6 +421,12 @@ Public Class Generator
                 Log(My.Resources.i_CopyPDB, PdbFile, PdbTarget)
                 IO.File.Copy(PdbFile, PdbTarget, True)
             End If
+            Dim configFile = IO.Path.Combine(IO.Path.GetDirectoryName(OutFile), name & ".config")
+            If IO.File.Exists(configFile) Then
+                Dim configTarget = IO.Path.Combine(Me.OutputDirectory, name & ".config")
+                Log(My.Resources.i_CopyAppConfig, configFile, configTarget)
+                IO.File.Copy(configFile, configTarget, True)
+            End If
             Return name & "." & ext
         Catch ex As Exception
             Thrown = ex

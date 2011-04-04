@@ -21,18 +21,32 @@ namespace Tools{namespace TotalCommanderT{
         this->instance = TC_WFX;
     }
     AppDomainHolder::AppDomainHolder(){
-        this->holder = gcnew PluginInstanceHolder();
+        AssemblyCodeBaseResolver::Setup();
+        try{
+            this->holder = gcnew PluginInstanceHolder();
+        }catch(Exception^ ex){
+            //This line is here just as a place where one can place a breakpoint
+            throw;
+        }
     }
     void Initialize(){
         if(!RequireInitialize) return;
-        RequireInitialize = false;
         PluginSelfAssemblyResolver::Setup();
         AppDomainSetup^ setup = gcnew AppDomainSetup();
         Assembly^ currentAssembly = Assembly::GetExecutingAssembly();
         setup->ApplicationBase = IO::Path::GetDirectoryName(currentAssembly->Location);
-        AppDomain^ pluginDomain = AppDomain::CreateDomain(PLUGIN_NAME,nullptr,setup);
-        AppDomainHolder^ iholder = (AppDomainHolder^)pluginDomain->CreateInstanceFromAndUnwrap(currentAssembly->CodeBase,AppDomainHolder::typeid->FullName);
+        setup->ConfigurationFile = IO::Path::Combine(setup->ApplicationBase, PLUGIN_NAME + ".config");
+
+        AppDomain^ pluginDomain = AppDomain::CreateDomain(PLUGIN_NAME, nullptr, setup);
+        AppDomainHolder^ iholder;
+        try{
+            iholder = (AppDomainHolder^)pluginDomain->CreateInstanceFromAndUnwrap(currentAssembly->CodeBase, AppDomainHolder::typeid->FullName);
+        }catch(Exception^ ex){
+            //This line is here just as a place where one can place a breakpoint
+            throw;            
+        }
         Tools::TotalCommanderT::holder = iholder;
+        RequireInitialize = false;
     }
 #define TC_FNC_HEADER
 #define TC_FNC_BODY

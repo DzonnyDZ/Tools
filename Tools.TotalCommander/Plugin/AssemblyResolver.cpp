@@ -12,6 +12,17 @@ namespace Tools{namespace TotalCommanderT{
         else return nullptr;
     }
     inline void PluginSelfAssemblyResolver::Setup(){
-        AppDomain::CurrentDomain->AssemblyResolve += gcnew ResolveEventHandler( PluginSelfAssemblyResolver::OnResolveAssembly );
+        AppDomain::CurrentDomain->AssemblyResolve += gcnew ResolveEventHandler(PluginSelfAssemblyResolver::OnResolveAssembly);
+    }
+
+
+    inline void AssemblyCodeBaseResolver::Setup(){
+        AppDomain::CurrentDomain->AssemblyResolve += gcnew ResolveEventHandler(AssemblyCodeBaseResolver::OnResolveAssembly);
+    }
+    Assembly^ AssemblyCodeBaseResolver::OnResolveAssembly(Object^ sender, ResolveEventArgs^ args){
+        return nullptr;
+    }
+    Assembly^ AssemblyCodeBaseResolver::OnResolveType(Object^ sender, ResolveEventArgs^ args){
+        return nullptr;
     }
 }}

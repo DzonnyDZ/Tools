@@ -6,7 +6,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace Tools{namespace TotalCommanderT{
     /// <summary>Resolves reference to current assembly</summary>
-    private ref class PluginSelfAssemblyResolver{
+    private ref class PluginSelfAssemblyResolver abstract sealed{
     private:    
         /// <summary>Resolves reference to curent assembly. Handles the <see cref="AppDomain::AssemblyResolve"/> event.</summary>
         /// <param name="sender">The source of the event</param>
@@ -25,5 +25,13 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="assembly">When function returns true, this parameter is assigned loaded assembly; otherwise null</param>
         /// <returns>True if assembly with name <paramref name="name"/> was successfuly loaded from path <paramref name="path"/> and stored in <paramref name="assembly"/>; false otherwise</returns>
         static bool TryLoadAssembly(String^ path, AssemblyName^ name, [Out] Assembly^% assembly);*/
+    };
+
+    private ref class AssemblyCodeBaseResolver abstract sealed{
+    private:
+        static Assembly^ OnResolveAssembly(Object^ sender, ResolveEventArgs^ args);
+        static Assembly^ OnResolveType(Object^ sender, ResolveEventArgs^ args);
+    internal:
+        static void Setup();
     };
 }}
