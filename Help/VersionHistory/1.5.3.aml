@@ -8,323 +8,492 @@
     </introduction>
     <section address="ChangeList">
       <title>Changes in version 1.5.3</title>
-      <content>
-        <title>
-          <codeEntityReference qualifyHint="true">N:DataT.SqlServerT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>Namespaces introduced to contain assemby Tools.SqlServer to be loaded to Microsoft SQL Server</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.API.Messages.Notifications</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.ApplicationServicesT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.CodeDomT.CompilerT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.DataT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>Namespaces introduced to contain assemby Tools.SqlServer to be loaded to Microsoft SQL Server</para>
-          </listItem>
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.DataT.ObjectsT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.DataT.SchemaT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.DataT.SchemaT.DeployT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.DiagnosticsT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.MetadataT.ExifT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
+      <content />
+      <sections>
+        <section>
+          <title>Namespace DataT.SqlServerT</title>
+          <content>
             <para>
+              <codeEntityReference>N:DataT.SqlServerT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Namespaces introduced to contain assemby Tools.SqlServer to be loaded to Microsoft SQL Server</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.API.Messages.Notifications</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.API.Messages.Notifications</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.ApplicationServicesT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.ApplicationServicesT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.CodeDomT.CompilerT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.CodeDomT.CompilerT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.DataT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.DataT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Namespaces introduced to contain assemby Tools.SqlServer to be loaded to Microsoft SQL Server</para>
+              </listItem>
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.DataT.ObjectsT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.DataT.ObjectsT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.DataT.SchemaT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.DataT.SchemaT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.DataT.SchemaT.DeployT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.DataT.SchemaT.DeployT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.DiagnosticsT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.DiagnosticsT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.MetadataT.ExifT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.MetadataT.ExifT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
                 Types <codeInline>URational</codeInline> and <codeInline>SRational</codeInline> moved to namespace <codeEntityReference qualifyHint="true">N:Tools.NumericsT</codeEntityReference>.
             </para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.NumericsT</codeEntityReference>
-        </title>
-        <para>
-          <legacyBold>Development stage:</legacyBold> Alpha</para>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.ReportingT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.ReportingT.ReportingEngineLite</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.SecurityT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.SecurityT.CryptographyT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.SecurityT.CryptographyT.EncryptionT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.SplashScreenGenerator</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.ThreadingT</codeEntityReference>
-        </title>
-        <para>
-          <legacyBold>Development stage:</legacyBold> Nightly</para>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.TotalCommanderT.PluginBuilder</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.NumericsT</title>
+          <content>
             <para>
+              <codeEntityReference>N:Tools.NumericsT</codeEntityReference>
+            </para>
+            <para>
+                        Development stage:
+                         Alpha</para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.ReportingT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.ReportingT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.ReportingT.ReportingEngineLite</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.ReportingT.ReportingEngineLite</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.SecurityT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.SecurityT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.SecurityT.CryptographyT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.SecurityT.CryptographyT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.SecurityT.CryptographyT.EncryptionT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.SecurityT.CryptographyT.EncryptionT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.SplashScreenGenerator</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.SplashScreenGenerator</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.ThreadingT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.ThreadingT</codeEntityReference>
+            </para>
+            <para>
+                        Development stage:
+                         Nightly</para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.TotalCommanderT.PluginBuilder</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.TotalCommanderT.PluginBuilder</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
                 Class <codeInline>ExitCodeException</codeInline> removed due not being used anymore.
             </para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.GeneratorsT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.VisualStudioT.GeneratorsT</title>
+          <content>
             <para>
+              <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
                 Class <codeInline>ServiceProvider</codeInline> removed. Use <codeEntityReference qualifyHint="true">T:Microsoft.VisualStudio.OLE.Interop.IServiceProvider</codeEntityReference> instead.
             </para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</title>
+          <content>
             <para>
+              <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
                 This namespace is new in version 1.5.3. Previously it was used only by ResXFileGenerator.exe assembly. Classes from <codeInline>DMKSoftware.CodeGenerators</codeInline> were moved there.
             </para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.BaseResXFileCodeGeneratorEx</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This class is new in version 1.5.3 It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
-          </listItem>
-          <listItem>
-            <para>Base class chaged to <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.BaseCodeGeneratorWithSite</codeEntityReference></para>
-          </listItem>
-          <listItem>
-            <para>When &lt;LogicalName&gt; is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</para>
-          </listItem>
-          <listItem>
-            <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
-          </listItem>
-          <listItem>
-            <para>Members of resource class (module for VB) are always <codeEntityReference qualifyHint="true"></codeEntityReference>, even when the class (module) is <codeEntityReference qualifyHint="true"></codeEntityReference>.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.InternalResXFileCodeGeneratorEx</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This class is new in version 1.5.3. It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
-          </listItem>
-          <listItem>
-            <para>When &lt;LogicalName&gt; is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</para>
-          </listItem>
-          <listItem>
-            <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
-          </listItem>
-          <listItem>
-            <para>Members of resource class (module for VB) are <codeEntityReference qualifyHint="true"></codeEntityReference>.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This class is new in version 1.5.3. It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResXFileCodeGeneratorEx</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>This class is new in version 1.5.3. It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
-          </listItem>
-          <listItem>
-            <para>When &lt;LOgicalName&gt; is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</para>
-          </listItem>
-          <listItem>
-            <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
-          </listItem>
-          <listItem>
-            <para>Members of resource class (module for VB) are always <codeEntityReference qualifyHint="true"></codeEntityReference>, even when the class (module) is <codeEntityReference qualifyHint="true"></codeEntityReference>.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.Collections.IDictionary,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.Collections.IDictionary,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.String,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
-            <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.MacrosT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Type Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.BaseResXFileCodeGeneratorEx</title>
+          <content>
             <para>
+              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.BaseResXFileCodeGeneratorEx</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This class is new in version 1.5.3 It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
+              </listItem>
+              <listItem>
+                <para>Base class chaged to <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.BaseCodeGeneratorWithSite</codeEntityReference></para>
+              </listItem>
+              <listItem>
+                <para>When &lt;LogicalName&gt; is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</para>
+              </listItem>
+              <listItem>
+                <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
+              </listItem>
+              <listItem>
+                <para>Members of resource class (module for VB) are always <codeEntityReference qualifyHint="true"></codeEntityReference>, even when the class (module) is <codeEntityReference qualifyHint="true"></codeEntityReference>.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Type Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.InternalResXFileCodeGeneratorEx</title>
+          <content>
+            <para>
+              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.InternalResXFileCodeGeneratorEx</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This class is new in version 1.5.3. It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
+              </listItem>
+              <listItem>
+                <para>When &lt;LogicalName&gt; is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</para>
+              </listItem>
+              <listItem>
+                <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
+              </listItem>
+              <listItem>
+                <para>Members of resource class (module for VB) are <codeEntityReference qualifyHint="true"></codeEntityReference>.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Type Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData</title>
+          <content>
+            <para>
+              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This class is new in version 1.5.3. It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Type Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResXFileCodeGeneratorEx</title>
+          <content>
+            <para>
+              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResXFileCodeGeneratorEx</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This class is new in version 1.5.3. It was moved from namespace <codeInline>DMKSoftware.CodeGenerators</codeInline>.</para>
+              </listItem>
+              <listItem>
+                <para>When &lt;LOgicalName&gt; is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</para>
+              </listItem>
+              <listItem>
+                <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Type Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx</title>
+          <content>
+            <para>
+              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Modules are generated for Visual Basic. For other languages class constructor is made <codeEntityReference qualifyHint="true"></codeEntityReference> (previously <codeEntityReference qualifyHint="true"></codeEntityReference>).</para>
+              </listItem>
+              <listItem>
+                <para>Members of resource class (module for VB) are always <codeEntityReference qualifyHint="true"></codeEntityReference>, even when the class (module) is <codeEntityReference qualifyHint="true"></codeEntityReference>.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title> Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.Collections.IDictionary,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</title>
+          <content>
+            <para>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.Collections.IDictionary,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title> Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.Collections.IDictionary,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</title>
+          <content>
+            <para>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.Collections.IDictionary,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title> Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</title>
+          <content>
+            <para>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title> Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.String,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</title>
+          <content>
+            <para>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx.Create(System.Type,System.String,System.String,System.String,System.String,System.CodeDom.Compiler.CodeDomProvider,System.Boolean,System.Collections.Generic.List{Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResourceErrorData},System.String)</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Since version 1.5.3 modules are generated for Visual Basic.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.VisualStudioT.MacrosT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools.VisualStudioT.MacrosT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
                 Namespace name in macro projects changed from <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.MacrosT</codeEntityReference> to <codeEntityReference qualifyHint="true">N:Tools_VisualStudioT_MacrosT</codeEntityReference> to workaround Visual Studio 2010 bug <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968" xmlns="">464968</a>. This change does not affect this documentation and (publicly not available) binary DLL with macros.
             </para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools.WindowsT.WPF.ThreadingT</codeEntityReference>
-        </title>
-        <para>
-          <legacyBold>Development stage:</legacyBold> Nightly</para>
-        <list class="bullet">
-          <listItem>
-            <para>This namespace is new in version 1.5.3</para>
-          </listItem>
-        </list>
-        <title>
-          <codeEntityReference qualifyHint="true">N:Tools_VisualStudioT_MacrosT</codeEntityReference>
-        </title>
-        <list class="bullet">
-          <listItem>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools.WindowsT.WPF.ThreadingT</title>
+          <content>
             <para>
+              <codeEntityReference>N:Tools.WindowsT.WPF.ThreadingT</codeEntityReference>
+            </para>
+            <para>
+                        Development stage:
+                         Nightly</para>
+            <list class="bullet">
+              <listItem>
+                <para>This namespace is new in version 1.5.3</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Namespace Tools_VisualStudioT_MacrosT</title>
+          <content>
+            <para>
+              <codeEntityReference>N:Tools_VisualStudioT_MacrosT</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>
                 Namespace introduced as workaround of Visual Studio bug <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968" xmlns="">464968</a>. This namespace is not used in this documentation and in (publicly not available) binary macros DLL.
             </para>
-          </listItem>
-        </list>
-      </content>
+              </listItem>
+            </list>
+          </content>
+        </section>
+      </sections>
     </section>
     <relatedTopics />
   </developerConceptualDocument>

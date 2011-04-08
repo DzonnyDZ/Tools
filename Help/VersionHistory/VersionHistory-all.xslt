@@ -28,37 +28,49 @@
                 </introduction>
                 <section address="ChangeList">
                     <title>Changes in version <xsl:value-of select="$version"/></title>
-                    <content>
+                    <content/>
+                    <sections>
                         <xsl:apply-templates select="/doc/members/member[version/@version=$version]">
                             <xsl:sort select="substring-after(@name,':')" data-type="text" lang="en-US"/>
                         </xsl:apply-templates>
-                    </content>
+                    </sections>
                 </section>
                 <relatedTopics />
             </developerConceptualDocument>
         </topic>
     </xsl:template>
     <xsl:template match="member">
+        <section>
             <title>
-                <codeEntityReference qualifyHint="true">
-                    <xsl:value-of select="@name"/>
-                </codeEntityReference>
+                <xsl:call-template name="member-type">
+                    <xsl:with-param name="specifier" select="substring-before(@name, ':')"/>
+                </xsl:call-template>
+                <xsl:text xml:whitespace="preserve"> </xsl:text>
+                <xsl:value-of select="substring-after(@name, ':')"/>
             </title>
-            <xsl:if test="version[@version=$version][@stage]">
+            <content>
                 <para>
-                    <legacyBold>Development stage:</legacyBold>
-                    <xsl:text xml:space="preserve"> </xsl:text>
-                    <xsl:choose>
-                        <xsl:when test="version[@version=$version][@stage][1]/@stage = 'RC'">Release Candidate</xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="version[@version=$version][@stage][1]/@stage"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <codeEntityReference>
+                        <xsl:value-of select="@name"/>
+                    </codeEntityReference>
                 </para>
-            </xsl:if>
-            <list class="bullet">
-                <xsl:apply-templates select="version[@version=$version]"/>
-            </list>
+                <xsl:if test="version[@version=$version][@stage]">
+                    <para>
+                        Development stage:
+                        <xsl:text xml:space="preserve"> </xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="version[@version=$version][@stage][1]/@stage = 'RC'">Release Candidate</xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="version[@version=$version][@stage][1]/@stage"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </para>
+                </xsl:if>
+                <list class="bullet">
+                    <xsl:apply-templates select="version[@version=$version]"/>
+                </list>
+            </content>
+        </section>
     </xsl:template>
 
     <xsl:template match="version">
@@ -164,5 +176,17 @@
         <alert class="{$type}">
             <xsl:apply-templates/>
         </alert>
+    </xsl:template>
+
+    <xsl:template name="member-type">
+        <xsl:param name="specifier"/>
+        <xsl:choose>
+            <xsl:when test="$specifier='N'">Namespace</xsl:when>
+            <xsl:when test="$specifier='T'">Type</xsl:when>
+            <xsl:when test="$specifier='N'">Method</xsl:when>
+            <xsl:when test="$specifier='P'">Property</xsl:when>
+            <xsl:when test="$specifier='E'">Event</xsl:when>
+            <xsl:when test="$specifier='F'">Field</xsl:when>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

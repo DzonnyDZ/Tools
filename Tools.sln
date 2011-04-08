@@ -269,8 +269,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandcastle customization", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionHistory", "VersionHistory", "{3CF08082-4063-4345-84BC-92248A5C2F29}"
 	ProjectSection(SolutionItems) = preProject
+		Help\VersionHistory\1.5.2.aml = Help\VersionHistory\1.5.2.aml
+		Help\VersionHistory\1.5.3.aml = Help\VersionHistory\1.5.3.aml
 		Help\VersionHistory\AllComments.xml = Help\VersionHistory\AllComments.xml
 		Help\VersionHistory\AllVersionHistory.bat = Help\VersionHistory\AllVersionHistory.bat
+		Help\VersionHistory\brief.aml = Help\VersionHistory\brief.aml
 		Help\VersionHistory\VersionHistory-all.xslt = Help\VersionHistory\VersionHistory-all.xslt
 		Help\VersionHistory\VersionHistory.wiki.xslt = Help\VersionHistory\VersionHistory.wiki.xslt
 		Help\VersionHistory\VersionHistory.xslt = Help\VersionHistory\VersionHistory.xslt

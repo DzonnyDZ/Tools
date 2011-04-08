@@ -5,7 +5,7 @@
     * Copy this file to %SandCastleDir%\Presentation\Shared\Tools.AuthorAndVersion.xslt
     * Apply following changes to %SandCastleDir%\Presentation\vs2005\transforms\main_sandcastle.xsl:
         * Add (at beginning of <xsl:stylesheet> element)
-            <xsl:import href="../../Shared/transforms/Tools.AuthorAndVersion.xslt"/>
+            <xsl:include href="../../Shared/transforms/Tools.AuthorAndVersion.xslt"/>
         * Add (at beginning of <xsl:template name="body">)
             <xsl:apply-templates select="/document/reference/author"/>
         * Add (at the end of <xsl:template name="body">)
@@ -23,18 +23,35 @@
     <xsl:template match="author">
         <p>
             Author:
-            <xsl:value-of select="text()"/>
-            <xsl:if test="@mail">
-                |
-                <a href="mailto:{@mail}">
-                    <xsl:value-of select="@mail"/>
-                </a>
-            </xsl:if>
-            <xsl:if test="@www">
-                <a href="{@www}">
-                    <xsl:value-of select="@www"/>
-                </a>
-            </xsl:if>
+            <xsl:text xml:space="preserve"> </xsl:text>
+            <xsl:choose>
+                <xsl:when test="@mail and @www">
+                    <xsl:apply-templates/>
+                    <xsl:text xml:space="preserve"> </xsl:text>
+                    <a href="mailto:{@mail}">
+                        <xsl:value-of select="@mail"/>
+                    </a>
+                    <xsl:text xml:space="preserve"> </xsl:text>
+                    |
+                    <xsl:text xml:space="preserve"> </xsl:text>
+                    <a href="{@www}">
+                        <xsl:value-of select="@www"/>
+                    </a>
+                </xsl:when>
+                <xsl:when test="@mail">
+                    <a href="mailto:{@mail}">
+                        <xsl:apply-templates/>
+                    </a>
+                </xsl:when>
+                <xsl:when test="@www">
+                    <a href="{@www}">
+                        <xsl:apply-templates/>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates/>
+                </xsl:otherwise>
+            </xsl:choose>
         </p>
     </xsl:template>
 
@@ -59,14 +76,14 @@
                 </span>
             </h1>
             <div id="familySection" class="section" name="collapseableSection">
-                <xsl:for-each select="$versions/version">
+                <xsl:for-each select="$versions">
                     <xsl:variable name="version" select="@version"/>
                     <xsl:if test="count(./preceding-sibling::version[@version=$version])=0">
                         <h2>
                             <xsl:value-of select="$version"/>
                         </h2>
                         <ul>
-                            <xsl:apply-templates select="$versions/version[@version=$version]"/>
+                            <xsl:apply-templates select="$versions[@version=$version]"/>
                         </ul>
                     </xsl:if>
                 </xsl:for-each>
