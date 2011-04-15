@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="9ca409ca-de9d-4ba1-bc84-0501796c46ea" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                VersionCorrector.exe is a command line application which's purpose is to take a .NET assembly which contains WPF resoutrces and fix version information for types from the same assembyl referenced form XAML resources.
+            </para>
+        </introduction>
+        <section>
+            <title>VersionCorrector</title>
+            <content>
+                <para>Usage:</para>
+                <para>
+                    <system>VersionCorrector assembly [snkfile]</system>
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>assembly</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>path to assembly to fix. Can contain wildchars such as *.dll.</para>
+                        <para>
+                            Special extension <codeInline>.dllexe</codeInline> is treates as both - .dll and .exe.
+                        </para>
+                        <alert class="note">
+                            <para>Files *.vshost.exe are always skipped event if they fit to mask specified.</para>
+                        </alert>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>snkfile</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Path to a snk file to re-sign the assembly.</para>
+                        <alert class="note">
+                            <para>
+                                Assemblies which are not strongly named are not re-signed wven when <codeInline>snkfile</codeInline> is specified.
+                            </para>
+                        </alert>
+                    </definition>
+                </definitionTable>
+            </content>
+            <sections>
+                <section>
+                    <title>Remarks</title>
+                    <content>
+                        <para>
+                            There is an unfixed bug in Visual Studio / .NET Framework for a longtime. It's reported under <externalLink>
+                                <linkText>Connect#385005</linkText>
+                                <linkUri>https://connect.microsoft.com/VisualStudio/feedback/details/385005</linkUri>
+                            </externalLink>.
+                            When you allow assembly version auto-generation on each build by specifying <codeEntityReference>T:System.Reflection.AssemblyVersionAttribute</codeEntityReference> value like <codeInline>1.0.0.*</codeInline>,
+                            the build process may generate different version numbers for the assembly itself and for references to types inside the same assembly used in XAML resources.
+                        </para>
+                        <para>The purpose if this tool is to fix such references.</para>
+                        <alert class="warning">
+                            <para>
+                                This application is a dirty workaround to unfixed bug in .NET Framework, Visual Studio, MS Build or some other part of the infrastructure.
+                                It's not intended as permanent solution. Microsoft should rather fix the bug. But they haver not done so as of VS2010 SP1.
+                                The application simply searches for a suspicious string (representing assembly name but with different version) in assembly file (DLL/EXE)
+                                and replaces it with different (correct) version number.
+                            </para>
+                            <para>
+                                If you assembly is signed it breaks the signature. To fix this, instruct the application to re-sign the asssembly (requires <externalLink>
+                                    <linkText>sn.exe</linkText>
+                                    <linkUri>http://msdn.microsoft.com/en-us/library/k5b5tt23.aspx</linkUri>
+                                </externalLink> from .NET SDK).
+                            </para>
+                            <para>Because of being dirty binary hack this tool is capable for entirely breaking your assembly!</para>
+                        </alert>
+                        <para>VersionCorrector.exe does not provide public API.</para>
+                        <alert class="tip">
+                            <para>
+                                You may need to set path to snk.exe in VersionCorrector.exe.config in <codeInline>//applicationSettings/Tools.VersionCorrector.My.MySettings</codeInline> in setting <codeInline>sn</codeInline>.
+                            </para>
+                            <para>
+                                By default it's set to <localUri>C:\Program Files\Microsoft SDKs\Windows\v7.0\Bin\x64\sn.exe</localUri>.
+                                That may not work on 64-bit system.
+                            </para>
+                        </alert>
+                        <alert class="caution">
+                            <para>
+                                It has been reported that the progrma does not work correcctly in early morning hours (early after midnight).
+                                This is becaus of how automatic revion numbers are generated - it has something to do with number of seconds elapsed since local midnight.
+                                When number of digits in such number differes the program cannot fix version referecne correctly because it's never changing site of the file - only replacing some bytes.
+                            </para>
+                        </alert>
+                        <alert class="note">
+                            <para>
+                                It has been reported that <externalLink>
+                                    <linkText>bug#385005</linkText>
+                                    <linkUri>https://connect.microsoft.com/VisualStudio/feedback/details/385005</linkUri>
+                                </externalLink> does not occur on coputers that are fast enough (probably fast enough to generate XAML resources and build the assembly in 0.5s).
+                            </para>
+                        </alert>
+                        <alert class="tip">
+                            <para>Untill Microsoft fixes the bug it may be better option not to use auto-generated (asterisk) version number in your programs rather than using this tool that manipulates assembly at binary level at is not always successful.</para>
+                        </alert>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

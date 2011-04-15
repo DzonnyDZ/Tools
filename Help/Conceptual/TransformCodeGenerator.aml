@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="8aaeabbc-cfbf-4bc0-8824-b8b9d6aa3284" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                <link xlink:href="#TransformCodeGenerator">TransformCodeGenerator</link> Custom Tool is Visual Studio Custom Tool used to convert a XML file to code in a programming language using XSL Transformation.
+                The are more <link xlink:href="#CodeDOM">Custom Tools provided for working with XML form of CodeDOM</link>.
+            </para>
+        </introduction>
+
+        <!--TransformCodeGenerator Custom Tool-->
+        <section address="TransformCodeGenerator">
+            <title>TransformCodeGenerator Custom Tool</title>
+            <content>
+                <para>
+                    This custom tool is applied on a XML file (not on a XSLT file).
+                    It's required that the XML file contains a Processing Instruction in a beginning:
+                </para>
+                <code language="xml"><![CDATA[<?transformer somefile.xslt?>]]></code>
+                <para>
+                    The custom tool invokes transformation specified in the <codeInline><![CDATA[<?transformer?>]]></codeInline> processing instruction.
+                    The transformation is run against the file TransformCodeGenerator custom tool is applied on.
+                    Sevaral parameters are passed to the transformation:
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>generator</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            Full name of generator assembly (<codeEntityReference>P:System.Reflection.Assembly.FullName</codeEntityReference>).
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>version</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>String representation of version of generator assembly.</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>fullfilename</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Name and path of input XML file as passed to the Custom Tool.</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>filename</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Name (without path) of input XML file.</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>date-created</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            String representation of today's date (<codeEntityReference>P:System.DateTime.Today</codeEntityReference>).
+                            String representation is generated using <codeEntityReference>M:System.DateTime.ToLongDateString()</codeEntityReference>.
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>created-by</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            Current user name and domain in format <codeEntityReference>P:System.Environment.UserDomainName</codeEntityReference>\<codeEntityReference>P:System.Environment.UserName</codeEntityReference>.
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>namespace</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Namespace passed to a custom tool. Generated code is supposed to lie in this namespace.</para>
+                        <para>
+                            See <codeEntityReference>P:Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGenerator.FileNamespace</codeEntityReference>.
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>classname</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Name fo class the tool is supposed to generate. Name of the XML file without extension is passed here.</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>language</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            Indicates programming language code should be generated for.
+                            The programming language is identified using <codeEntityReference>P:System.CodeDom.Compiler.CodeDomProvider.FileExtension</codeEntityReference>.
+                        </para>
+                    </definition>
+                </definitionTable>
+                <para>All parameters are namespace-less.</para>
+                <para>Transformation is run with following settings:</para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeEntityReference>P:System.Xml.Xsl.XsltSettings.EnableDocumentFunction</codeEntityReference>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            <languageKeyword>true</languageKeyword>
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeEntityReference>P:System.Xml.Xsl.XsltSettings.EnableScript</codeEntityReference>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            <languageKeyword>true</languageKeyword>
+                        </para>
+                    </definition>
+                </definitionTable>
+                <alert class="tip">
+                    <para>
+                        Visual Studio 2010 provides very flexible way of code generation from XML files using text templating (<externalLink>
+                            <linkText>T4 templates</linkText>
+                            <linkUri>http://msdn.microsoft.com/en-us/library/bb126445.aspx</linkUri>
+                        </externalLink>).
+                        You should consider this approach before using TransformCodeGenerator.
+                    </para>
+                </alert>
+                <alert class="note">
+                    <para>
+                        XSLT parameters and settings apply to all custom tools but <link xlink:href="#CodeDOMGenerator">CodeDOMGenerator</link>.
+                    </para>
+                </alert>
+            </content>
+        </section>
+
+        <!--Processing Instructions-->
+        <section address="PIs">
+            <title>Processing Instructions</title>
+            <content>
+                <para>
+                    A few processing instructions are used by XSLT Custom Tools.
+                    The processing instructions are used to establish link between XML and XSLT files.
+                </para>
+                <para>All processing instructions are namespace-less.</para>
+            </content>
+            <sections>
+                <!--<?transformer?>-->
+                <section address="transformer">
+                    <title><![CDATA[<?transformer?>]]></title>
+                    <content>
+                        <para>
+                            The <codeInline><![CDATA[<?transformer?>]]></codeInline> processing instruction specifies path of XSLT file containing transformation to be used on the XML file.
+                            Data of the procesing instruction specify the path.
+                            If relative path is specified it's first treated as relative to original XML file (the file the processing instructiopn is written in).
+                            If unsuccessfull (file does not exist) it's tried as relative to location of DLL implementing the Custom Tool.
+                        </para>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>
+                                    <legacyBold>Puspose:</legacyBold> To specify XSL Template to be used to transform current XML file
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    <legacyBold>Used by:</legacyBold> <link xlink:href="#TransformCodeGenerator">TransformCodeGenerator</link>, <link xlink:href="#CodeDomTransformCodeGenerator">CodeDomTransformCodeGenerator</link>
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    <legacyBold>Used in:</legacyBold> XML file to be transformed
+                                </para>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+                <!--<?input?>-->
+                <section address="input">
+                    <title><![CDATA[<?input?>]]></title>
+                    <content>
+                        <para>
+                            The <codeInline><![CDATA[<?input?>]]></codeInline> processing instruction specified path to XML file which will become input of current XSL Transform.
+                            Data of the processing instruction specify the path.
+                            If relative path is specified it's first treated as relative to a XSLT file (the file the processing instructiopn is written in).
+                            If unsuccessfull (file does not exist) it's tried as relative to location of DLL implementing the Custom Tool.
+                        </para>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>
+                                    <legacyBold>Purpose:</legacyBold> To indicate input of current XSL Template
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    <legacyBold>Used by:</legacyBold>
+                                    <link xlink:href="#CodeDomXsltCustomTool">CodeDomXsltCustomTool</link>
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    <legacyBold>Used in:</legacyBold> XSLT file
+                                </para>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+            </sections>
+        </section>
+
+        <!--CodeDOM transformation tools-->
+        <section address="CodeDOM">
+            <title>CodeDOM transformation tools</title>
+            <content>
+                <alert class="caution">
+                    <para>Custom Tools described in this section are experimental. They haven't been tested much.</para>
+                </alert>
+                <para>
+                    Transforming a XML file directly to C# or Visual Basic (or any other language) source code is fast and quite easy to implement way of generating code (though <externalLink>
+                        <linkText>T4 templates</linkText>
+                        <linkUri>http://msdn.microsoft.com/en-us/library/bb126445.aspx</linkUri>
+                    </externalLink> may prove to be faster to implement).
+                    Sometimes you need language-independent way of transforming XML to code.
+                    Common Custom Tools (e.g. for generating code from RESX or settings files) abe based around Code DOM.
+                    But thouse tools are single-purpose (yet powerfull and usefull).
+                    The concept of language-independent XSL Transformation exists.
+                    What about generating XML representation of CodeDOM using XSL Transformation and then let some tool generate actual language code from that intermediate form?
+                </para>
+                <para>
+                    That's what <codeEntityReference>T:Tools.CodeDomT.Xml2CodeDom</codeEntityReference> does.
+                    And TransformCodeGenerator provides Custom Tools written around this class.
+                    Basically a XML form of CodeDOM tree is deffined and <codeEntityReference>T:Tools.CodeDomT.Xml2CodeDom</codeEntityReference> can serialize CodeDOM tree to XML and deserialize if from XML.
+                </para>
+            </content>
+        </section>
+
+        <!--Custom Tool information-->
+        <section address="custom-tool">
+            <title>Custom Tool information</title>
+            <content>
+                <para>Following Custom Tools are defined:</para>
+                <definitionTable>
+                    <definedTerm address="TransformCodeGenerator2">TransformCodeGenerator</definedTerm>
+                    <definition>
+                        <para>
+                            Uses XSL Transformation to convert a XML file to something else (supposedly code in current programming language).
+                        </para>
+                        <para>
+                            Implemented by <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.TransformCodeGenerator</codeEntityReference>.
+                        </para>
+                        <para>
+                            <legacyBold>Used to:</legacyBold> Transform XML file using XSL Template directly to language source code.
+                        </para>
+                        <para>
+                            <legacyBold>Attach to:</legacyBold> XML file. It must contain <codeInline><![CDATA[<?transformer?>]]> processsing instruction.</codeInline>.
+                        </para>
+                    </definition>
+                    <definedTerm address="CodeDOMGenerator">CodeDOMGenerator</definedTerm>
+                    <definition>
+                        <para>
+                            Code DOM generator. It performs code generation from XML-serialized Code DOM.
+                            This Custom Tool does not use any XSL Transformation. It just transforms serialized XML for of Code DOM ot code in actual language.
+                        </para>
+                        <para>
+                            Implemented by <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.CodeDOMGenerator</codeEntityReference>
+                        </para>
+                        <alert class="caution">
+                            <para>This Custom Tool is experimental.</para>
+                        </alert>
+                        <para>
+                            <legacyBold>Used to:</legacyBold> Convert XML serialization of CodeDOM to code in a language
+                        </para>
+                        <para>
+                            <legacyBold>Attach to:</legacyBold> XML file (which contains XML-serialized CodeDOM as defined in <xsd:xmlEntityReference xmlns:xsd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3">http://dzonny.cz/xml/schemas/CodeDom</xsd:xmlEntityReference> namespace).
+                        </para>
+                    </definition>
+                    <definedTerm address="CodeDomTransformCodeGenerator">CodeDomTransformCodeGenerator</definedTerm>
+                    <definition>
+                        <para>
+                            Code DOM transform code generator.
+                            It performs XSL transform as Custom Tool in Visual Studio and interprets result of the transformation as XML-serialized CodeDOM.
+                            Apply this tool to a XML file.
+                        </para>
+                        <para>
+                            Implemented by <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.CodeDomTransformCodeGenerator</codeEntityReference>
+                        </para>
+                        <alert class="caution">
+                            <para>This Custom Tool is experimental.</para>
+                        </alert>
+                        <para>
+                            <legacyBold>Used to:</legacyBold> Convert a XML file using a XSL Transform to CodeDOM XML. The CodeDOM XML is then converted to code of current programming language.
+                        </para>
+                        <para>
+                            <legacyBold>Attach to:</legacyBold> Any XML file. It must contain <codeInline><![CDATA[<?transformer?>]]> processsing instruction.</codeInline>
+                        </para>
+                    </definition>
+                    <definedTerm address="CodeDomXsltCustomTool">CodeDomXsltCustomTool</definedTerm>
+                    <definition>
+                        <para>
+                            Code DOM XSLT Custom Tool.
+                            It performs XSL transform as Custom Tool in Visual Studio and interprets its result as XML-serialized CodeDOM.
+                            Apply this tool to a XSLT file.
+                        </para>
+                        <para>
+                            Implemented by <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.CodeDomXsltCustomTool</codeEntityReference>
+                        </para>
+                        <alert class="caution">
+                            <para>This Custom Tool is experimental.</para>
+                        </alert>
+                        <para>
+                            <legacyBold>Used to:</legacyBold> Convert a XML file using a XSL Transform to CodeDOM XML. The CodeDOM XML is then converted to code of current programming language.
+                        </para>
+                        <para>
+                            <legacyBold>Attach to:</legacyBold> XSLT file. It must contain <codeInline><![CDATA[<?input?>]]> processsing instruction.</codeInline>
+                        </para>
+
+                    </definition>
+                </definitionTable>
+                <para>
+                    Implemented by <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.TransformCodeGenerator</codeEntityReference> (in TransformCodeGenerator.dll).
+                    This Custom Tool is implemented in managed code.
+                </para>
+                <para>
+                    When registered using <externalLink>
+                        <linkText>Regasm.exe</linkText>
+                        <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
+                    </externalLink> Custom Tools are registered for Visual Studio versions defined in <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.CustomToolBase.GetVisualStudioVersions</codeEntityReference>
+                    and languages defined in <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.CustomToolBase.GetLanguages</codeEntityReference> (currently VS 2005 (8.0), 2008 (9.0) and 2010 (10.0) and C# and Visual Basic).
+                    However TransformCodeGenerator can be used with any language because it depends on XSL Transform which code it generates.
+                </para>
+                <alert class="note">
+                    <para>
+                        For more information about Custom Tools see <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8#CustomToolsInfo"/>.
+                    </para>
+                </alert>
+            </content>
+        </section>
+
+        <section address="license">
+            <title>License</title>
+            <content>
+                <para>
+                    TransformCodeGenerator Custom Tools is based on Chris Stefano's <externalLink>
+                        <linkText>Transform Code Generator</linkText>
+                        <linkUri>http://www.codeproject.com/KB/dotnet/TransformCodeGenerator.aspx</linkUri>
+                    </externalLink>. The original tool has no specific license attached.
+                    So I hope I'm not violating any implied license terms by making modified version of it part of ĐTools library.
+                </para>
+                <para>The other Custom Tools are my own work and are covered by <link address="cab7bff3-b8ec-4032-8ae1-1aa836c83531">ĐTools license</link>.</para>
+            </content>
+        </section>
+
+        <!--Version History-->
+        <section address="version-history">
+            <title>Version History</title>
+            <content>
+                <list class="nobullet">
+                    <listItem>
+                        <para>1.5.4</para>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    XSLT parameter <codeInline>language</codeInline> added.
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    XSL Transform now can use document() function and contain scripts.
+                                </para>
+                            </listItem>
+                        </list>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8#CustomToolsInfo"/>
+            <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.TransformCodeGenerator</codeEntityReference>
+            <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.CodeDomXsltCustomTool</codeEntityReference>
+            <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.CodeDomTransformCodeGenerator</codeEntityReference>
+            <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.CodeDOMGenerator</codeEntityReference>
+            <codeEntityReference>T:Tools.CodeDomT.Xml2CodeDom</codeEntityReference>
+            <externalLink>
+                <linkText>Regasm.exe (Assembly Registration Tool)</linkText>
+                <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
+            </externalLink>
+            <codeEntityReference>N:System.Xml.Xsl</codeEntityReference>
+            <codeEntityReference>T:System.Xml.Xsl.XslCompiledTransform</codeEntityReference>
+            <codeEntityReference>T:System.Xml.Xsl.XsltSettings</codeEntityReference>
+            <xsd:xmlEntityReference xmlns:xsd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3">http://dzonny.cz/xml/schemas/CodeDom</xsd:xmlEntityReference>
+            <externalLink>
+                <linkText>Code Generation and T4 Text Templates</linkText>
+                <linkUri>http://msdn.microsoft.com/en-us/library/bb126445.aspx</linkUri>
+            </externalLink>
+            <codeEntityReference>N:System.CodeDom</codeEntityReference>
+            <externalLink>
+                <linkText>XSL Transform Code Generator for Visual Studio .NET</linkText>
+                <linkUri>http://www.codeproject.com/KB/dotnet/TransformCodeGenerator.aspx</linkUri>
+            </externalLink>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

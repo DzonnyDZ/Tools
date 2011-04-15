@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Stylesheet</Title>
+            <Author>Đonny</Author>
+            <Description>Associates a stylesheet to XML file</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>href</ID>
+                    <ToolTip>URL of stylesheet</ToolTip>
+                    <Default>style.css</Default>
+                </Literal>
+                <Literal>
+                    <ID>type</ID>
+                    <ToolTip>MIME type of stylesheet - common types are text/css and application/xslt+xml (optional)</ToolTip>
+                    <Default>text/css</Default>
+                </Literal>
+                <Literal>
+                    <ID>title</ID>
+                    <ToolTip>A title of stylesheet (optional, required if alternate="yes")</ToolTip>
+                    <Default>Default</Default>
+                </Literal>
+                <Literal>
+                    <ID>media</ID>
+                    <ToolTip>Media type the stylesheet is valid for (optional)</ToolTip>
+                    <Default>all</Default>
+                </Literal>
+                <Literal>
+                    <ID>charset</ID>
+                    <ToolTip>Character set (encoding) of stylesheeet (optional)</ToolTip>
+                    <Default>utf-8</Default>
+                </Literal>
+                <Literal>
+                    <ID>alternate</ID>
+                    <ToolTip>Indicates alternate stylesheet (optional)</ToolTip>
+                    <Default>no</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="xml">
+                <![CDATA[
+<?xml-stylesheet href="$href$" type="$type$" title="$title$" media="$media$" charset="$charset$" alternate="$alternate$"?>                    
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

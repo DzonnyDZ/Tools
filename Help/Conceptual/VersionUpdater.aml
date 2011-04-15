@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="0a384324-351a-4fe9-9a73-7f71f8363c42" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>VersionUpdater.exe is a command line application that can generate version files (part of assembly info).</para>
+        </introduction>
+        <section>
+            <title>VersionUpdater</title>
+            <content>
+                <para>Usage:</para>
+                <para>
+                    <system>VersionUpdater infile mode outfile1 otfile2 outfile3 ...</system>
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>infile</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            A text file that contains version number (or part of it) that will be used as base for generated version number.
+                            The file shall not contain anything else - just the version number.
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>mode</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Defines how the version number is generated (case-insensitive).</para>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>Timestamp</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    A Unix timestamp (number of whole seconds elapsed since 1970-01-01 0:00:00 UTC, ignoring leap seconds) is base for <codeEntityReference>P:System.Version.Revision</codeEntityReference> component.
+                                    Since components of version are restricted to <codeEntityReference>F:System.UInt16.MaxValue</codeEntityReference> - 1 timestamp is AND-ed with value <codeInline>0xFFFF</codeInline>
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>Increment</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Value of <codeEntityReference>P:System.Version.Revision</codeEntityReference> component is incremented by one.
+                                    If <codeInline>infile</codeInline> does not define <codeEntityReference>P:System.Version.Revision</codeEntityReference> component, 0 is assumed.
+                                </para>
+                                <alert class="important">
+                                    <para>
+                                        In order incrementation to work <codeInline>infile</codeInline> should be also included among <codeInline>oufile</codeInline>s, so the version number is updated for next build.
+                                        If version number exceeds <codeEntityReference>F:System.UInt16.MaxValue</codeEntityReference> - 1 it overflows to 0.
+                                    </para>
+                                </alert>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>Svn:dirpath</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Uses revision number form SVN.
+                                    Because of limitation of value of <codeEntityReference>P:System.Version.Revision</codeEntityReference> to maximally <codeEntityReference>F:System.UInt16.MaxValue</codeEntityReference> - 1 it's AND-ed with <codeInline>0xFFFF</codeInline>.
+                                </para>
+                                <definitionTable>
+                                    <definedTerm>
+                                        <codeInline>dirpath</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>Path of SVN.controlled directory to use revision number of.</para>
+                                        <alert class="note">
+                                            <para>
+                                                If <codeInline>dirpath</codeInline> contains spaces entire <codeInline>Svn:dirpath</codeInline> argument must be enclosed in quotes.
+                                            </para>
+                                        </alert>
+                                    </definition>
+                                </definitionTable>
+                                <alert class="note">
+                                    <para>
+                                        No SVN API is used to obtain SVN revision number.
+                                        Instead version number is read from SVN supportive files - namely <localUri>.svn\entries</localUri> file.
+                                        Because of this this method works only if you use SVN client which stores certain SVN metadata in <localUri>.svn\entries</localUri>.
+                                    </para>
+                                    <para>
+                                        VersionUpdater requirement is that <localUri>.svn\entries</localUri> contains revision number on its 4th line.
+                                        It must be stored there as decadic integral number parseable in invariant culture.
+                                    </para>
+                                </alert>
+                            </definition>
+                        </definitionTable>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>outfile1 outfile2 outfile3 ...</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            (optional) Defines paths of files to write version information to.
+                        </para>
+                        <alert class="note">
+                            <para>
+                                If no <codeInline>outfile</codeInline> is spefified program does not crash, but nou version information is written anywhere.
+                            </para>
+                        </alert>
+                        <alert class="note">
+                            <para>
+                                When <codeInline>mode</codeInline> is <codeInline>Increment</codeInline> <codeInline>infile</codeInline> should be listed as one of <codeInline>outfile</codeInline>s so version incremeting occures each time program is run.
+                            </para>
+                        </alert>
+                        <para>
+                            Extension of each output file identifies programming language used to generate version attributes (case-insensitive):
+                        </para>
+                        <definitionTable>
+                            <definedTerm>vb, bas</definedTerm>
+                            <definition>
+                                <para>Visual Basic</para>
+                                <code language="vb"><![CDATA[<Assembly: System.Reflection.AssemblyVersion("{0}")>
+<Assembly: System.Reflection.AssemblyFileVersion("{0}")>]]></code>
+                            </definition>
+                            <definedTerm>cs, c#</definedTerm>
+                            <definition>
+                                <para>C#</para>
+                                <code language="c#"><![CDATA[[assembly: System.Reflection.AssemblyVersion("{0}")]
+[assembly: System.Reflection.AssemblyFileVersion("{0}")])]]></code>
+                            </definition>
+                            <definedTerm>c, cpp, h, c++</definedTerm>
+                            <definition>
+                                <para>C++/CLI</para>
+                                <code language="cpp"><![CDATA[[assembly: System::Reflection::AssemblyVersion("{0}")]
+[assembly: System::Reflection::AssemblyFileVersion("{0}")]]]></code>
+                            </definition>
+                            <definedTerm>il, msil, cil</definedTerm>
+                            <definition>
+                                <para>Common Intermediate Language (CIL)</para>
+                                <code language="il"><![CDATA[.ver {0}:{1}:{2}:{3}
+.custom instance void [mscorlib]System.Reflection.AssemblyFileVersionAttribute::.ctor(string) = { string('{4}') }]]></code>
+                            </definition>
+                            <definedTerm>js</definedTerm>
+                            <definition>
+                                <para>JScript.NET</para>
+                                <code language="js"><![CDATA[assembly: System.Reflection.AssemblyVersion("{0}")
+assembly: System.Reflection.AssemblyFileVersion("{0}")]]></code>
+                            </definition>
+                            <definedTerm>fs, f#</definedTerm>
+                            <definition>
+                                <para>F#</para>
+                                <code language="f#"><![CDATA[[<assembly: System.Reflection.AssemblyVersion("{0}")>]
+[<assembly: System.Reflection.AssemblyFileVersion("{0}")>]]]></code>
+                            </definition>
+                            <definedTerm>java, j#</definedTerm>
+                            <definition>
+                                <para>J#</para>
+                                <code language="j#"><![CDATA[/** @assembly System.Reflection.AssemblyVersion("{0}") */
+/** @assembly System.Reflection.AssemblyFileVersion("{0}") */]]></code>
+                            </definition>
+                            <definedTerm>php, inc, php3, php4, php5, php6</definedTerm>
+                            <definition>
+                                <para>PHP (Phalanger)</para>
+                                <code language="php"><![CDATA[[assembly: System:::Reflection:::AssemblyVersion("{0}")]
+[assembly: System:::Reflection:::AssemblyFileVersion("{0}")]]]></code>
+                            </definition>
+                            <definedTerm>xml</definedTerm>
+                            <definition>
+                                <para>Writes version information to a XML file as follows:</para>
+                                <code language="xml"><![CDATA[<?xml version="1.0"?>
+<assembly>
+    <System.Reflection.AssemblyVersion>{0}</System.Reflection.AssemblyVersion>
+    <System.Reflection.AssemblyFileVersion>{1}</System.Reflection.AssemblyFileVersion>
+</assembly>]]></code>
+                            </definition>
+                            <definedTerm>p</definedTerm>
+                            <definition>
+                                <para>Pascal/Delphi</para>
+                                <code language="pascal"><![CDATA[[assembly: System.Reflection.AssemblyVersion("{0}")]
+[assembly: System.Reflection.AssemblyFileVersion("{0}")]]]></code>
+                            </definition>
+                            <definedTerm>Anything else</definedTerm>
+                            <definition>
+                                <para>Version number is written to file as plain text.</para>
+                                <alert class="tip">
+                                    <para>
+                                        This way you can save updated version infor back to <codeInline>infile</codeInline> and achieve continuous incrementation when <codeInline>mode</codeInline> is <codeInline>Increment</codeInline>.
+                                    </para>
+                                </alert>
+                            </definition>
+                        </definitionTable>
+                        <alert class="note">
+                            <para>
+                                <codeEntityReference>N:System.CodeDom</codeEntityReference> is <legacyBold>not</legacyBold> used for source code generation.
+                            </para>
+                        </alert>
+                    </definition>
+                </definitionTable>
+            </content>
+            <sections>
+                <section>
+                    <title>Remarks</title>
+                    <content>
+                        <para>
+                            The application updates only <codeInline>P:System.Version.Revision</codeInline> comnponent.
+                        </para>
+                        <para>
+                            The application always generated <codeEntityReference>T:System.Reflection.AssemblyVersionAttribute</codeEntityReference> and <codeEntityReference>T:System.Reflection.AssemblyFileVersionAttribute</codeEntityReference>.
+                        </para>
+                        <para>
+                            Revision number is always AND-ed with <codeInline>0xFFFF</codeInline>. This is necessary to comply with .NET Framework limitation  - each version component must be maximally <codeEntityReference>F:System.UInt16.MaxValue</codeEntityReference> - 1.
+                        </para>
+                        <para>VersionUpdater.exe does not provide public API.</para>
+                    </content>
+                </section>
+                <section>
+                    <title>Version History</title>
+                    <content>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>1.5.4</para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>Added support for extensions: il, inc, php3, php4, php5, php6</para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <codeEntityReference>T:System.Version</codeEntityReference>
+            <codeEntityReference>T:System.Reflection.AssemblyVersionAttribute</codeEntityReference>
+            <codeEntityReference>T:System.Reflection.AssemblyFileVersionAttribute</codeEntityReference>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

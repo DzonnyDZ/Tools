@@ -132,7 +132,32 @@
           <toc minParts="1" insertBelow="True" />
         </configuration>
       </PlugInConfig>
-<PlugInConfig id="XML Schema Documenter" enabled="True"><configuration><document rootSchemas="true" rootElements="true" constraints="true" schemas="true" syntax="true" /><useTypeDocumentation forUndocumentedAttributes="true" forUndocumentedElements="true" /><schemaSet container="true" title="XML Schemas" /><namespace container="true" /><sortOrder>3</sortOrder><includeLinkUriInKeywordK>false</includeLinkUriInKeywordK><annotationTransformFile path="" /><schemaFiles><schemaFile path="ReportingEngine Lite\Reporting\XML\XMLTemplateSettings.xsd" /><schemaFile path="ReportingEngine Lite\Reporting\CSV\CSVTemplateSettings.xsd" /><schemaFile path="ReportingEngine Lite\Reporting\SimpleXLS\SimpleXLSTemplateSettings.xsd" /><schemaFile path="Tools.Windows\XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" /><schemaFile path="Tools.Metadata\Metadata\IPTC\IPTCTags.xsd" /><schemaFile path="Tools.Metadata\Metadata\Exif\ExifTags.xsd" /><schemaFile path="Tools\Text\Encoding\ISO2022.xsd" /><schemaFile path="Tools\Globalization\ISOLanguages.xsd" /><schemaFile path="Tools\CodeDom\CodeDom.xsd" /></schemaFiles><dependencyFiles /><docFiles /></configuration></PlugInConfig></PlugInConfigurations>
+      <PlugInConfig id="XML Schema Documenter" enabled="True">
+        <configuration>
+          <document rootSchemas="true" rootElements="true" constraints="true" schemas="true" syntax="true" />
+          <useTypeDocumentation forUndocumentedAttributes="true" forUndocumentedElements="true" />
+          <schemaSet container="true" title="XML Schemas" />
+          <namespace container="true" />
+          <sortOrder>3</sortOrder>
+          <includeLinkUriInKeywordK>false</includeLinkUriInKeywordK>
+          <annotationTransformFile path="" />
+          <schemaFiles>
+            <schemaFile path="ReportingEngine Lite\Reporting\XML\XMLTemplateSettings.xsd" />
+            <schemaFile path="ReportingEngine Lite\Reporting\CSV\CSVTemplateSettings.xsd" />
+            <schemaFile path="ReportingEngine Lite\Reporting\SimpleXLS\SimpleXLSTemplateSettings.xsd" />
+            <schemaFile path="Tools.Windows\XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />
+            <schemaFile path="Tools.Metadata\Metadata\IPTC\IPTCTags.xsd" />
+            <schemaFile path="Tools.Metadata\Metadata\Exif\ExifTags.xsd" />
+            <schemaFile path="Tools\Text\Encoding\ISO2022.xsd" />
+            <schemaFile path="Tools\Globalization\ISOLanguages.xsd" />
+            <schemaFile path="Tools\CodeDom\CodeDom.xsd" />
+          </schemaFiles>
+          <dependencyFiles />
+          <docFiles />
+        </configuration>
+      </PlugInConfig>
+    </PlugInConfigurations>
+    <ContentPlacement>BelowNamespaces</ContentPlacement>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional
@@ -154,10 +179,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Help\Conceptual\" />
     <Folder Include="Help\" />
     <Folder Include="Help\VersionHistory\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Help\Conceptual\DevelopmentTools.aml" />
+    <None Include="Help\Conceptual\DevelopmentTools.aml" />
+    <None Include="Help\Conceptual\DevelopmentTools.aml" />
     <None Include="Help\VersionHistory\brief.aml" />
     <None Include="Help\VersionHistory\1.5.3.aml" />
     <None Include="Help\VersionHistory\1.5.2.aml" />

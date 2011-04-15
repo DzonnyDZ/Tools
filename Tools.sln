@@ -271,6 +271,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionHistory", "VersionHi
 	ProjectSection(SolutionItems) = preProject
 		Help\VersionHistory\1.5.2.aml = Help\VersionHistory\1.5.2.aml
 		Help\VersionHistory\1.5.3.aml = Help\VersionHistory\1.5.3.aml
+		Help\VersionHistory\1.5.4.aml = Help\VersionHistory\1.5.4.aml
 		Help\VersionHistory\AllComments.xml = Help\VersionHistory\AllComments.xml
 		Help\VersionHistory\AllVersionHistory.bat = Help\VersionHistory\AllVersionHistory.bat
 		Help\VersionHistory\brief.aml = Help\VersionHistory\brief.aml
@@ -310,6 +311,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML-Schema", "XML-Schema", "{339C78F1-563A-472D-A5CC-3A03358EE202}"
 	ProjectSection(SolutionItems) = preProject
 		DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet = DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conceptual", "Conceptual", "{EBF0E95D-737E-4092-95DE-6EF91FA05FF3}"
+	ProjectSection(SolutionItems) = preProject
+		Help\Conceptual\CommentsMerge.aml = Help\Conceptual\CommentsMerge.aml
+		Help\Conceptual\conceptual.css = Help\Conceptual\conceptual.css
+		Help\Conceptual\DevelopmentTools.aml = Help\Conceptual\DevelopmentTools.aml
+		Help\Conceptual\PseudoZip.aml = Help\Conceptual\PseudoZip.aml
+		Help\Conceptual\ResXFileCodeGeneratorEx.aml = Help\Conceptual\ResXFileCodeGeneratorEx.aml
+		Help\Conceptual\ResXFileGenerator.aml = Help\Conceptual\ResXFileGenerator.aml
+		Help\Conceptual\SplashScreenGenerator.aml = Help\Conceptual\SplashScreenGenerator.aml
+		Help\Conceptual\TransformCodeGenerator.aml = Help\Conceptual\TransformCodeGenerator.aml
+		Help\Conceptual\VersionCorrector.aml = Help\Conceptual\VersionCorrector.aml
+		Help\Conceptual\VersionUpdater.aml = Help\Conceptual\VersionUpdater.aml
+		Help\Conceptual\XsdGenerator.aml = Help\Conceptual\XsdGenerator.aml
 	EndProjectSection
 EndProject
 Global
@@ -1122,6 +1138,7 @@ Global
 		{64F2641B-ECF2-4ACF-83FB-69BF28C54ECE} = {752D1A5C-9013-4D5B-A7A8-2DA12197A275}
 		{69CAA1BD-A7B6-419E-BA1E-05347BB80698} = {9611D0E6-CEA6-4CD6-8C1C-FE9932372416}
 		{3CF08082-4063-4345-84BC-92248A5C2F29} = {9611D0E6-CEA6-4CD6-8C1C-FE9932372416}
+		{EBF0E95D-737E-4092-95DE-6EF91FA05FF3} = {9611D0E6-CEA6-4CD6-8C1C-FE9932372416}
 		{3662CABF-2023-4A0B-96AC-8AFA0818A704} = {6683BA1C-8DD6-4A33-9139-7BDF9566524A}
 		{339C78F1-563A-472D-A5CC-3A03358EE202} = {6683BA1C-8DD6-4A33-9139-7BDF9566524A}
 		{A7B3C91E-E7FF-4E53-957A-1F7BEFA8585B} = {276528FB-1D01-4BB7-96AB-C29CA1C25EC8}

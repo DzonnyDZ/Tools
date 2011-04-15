@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="a7050015-d5cf-4f91-9f00-847a82337096" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                SplashScreenGenerator.exe is a command line application used to generate image files that can be used as Splash Sreens for WPF applications.
+                Main advantage of the application is its ability to include version number in the image.
+            </para>
+        </introduction>
+        <section>
+            <title>SplashScreenGenerator</title>
+            <content>
+                <para>Usage:</para>
+                <para>
+                    <system>SplashScreenGenerator infile outfile arguments</system>
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>infile</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            Path to original image file. Image in this file will be used as base image for Splash Screen.
+                            If the original file is PNG and it contains transparent areas the transparent areas become "holes" in Splash Screen window.
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>outfile</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Path to image file generated image will be stored in. If the file exists it'll be overwritten.</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>arguments</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Specify arguments in any order. Argument names are case-insensitive.</para>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>-assemblyInfo path</codeInline> -or- short form <codeInline>-a path</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>Must be used at least once, if specified multiple times all files must have the same extension.</para>
+                                <para>
+                                    <codeInline>path</codeInline> indicates path to a source code file in a programming language.
+                                    This file is compiled in given programming language (determined by file extension using <codeEntityReference>M:System.CodeDom.Compiler.CodeDomProvider.CreateProvider(System.String)</codeEntityReference>).
+                                    It is expected to cantain various attributes defining assembly properties such as version, company etc.
+                                    Once compiled these attributes are read via reflection.
+                                    The file (or all the files if <codeInline>-assemblyInfo</codeInline> is specified multiple times) must be compilable without any other dependencies (unless the language supports something like C++/CLI <codeInline>#include</codeInline>).
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>-printArgument fontSize offset [foregroundColor [backgroundColor [font [fontStyle [format]]]]]</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Print arguments are used to print information to an image file. There are various print arguments defined.
+                                    They all share same syntax specified above.
+                                    Optional arguments are optional left to right - if you want to spefify an argument you must also specify all arguments left from it.
+                                </para>
+                                <definitionTable>
+                                    <definedTerm>
+                                        <codeInline>-printArgument</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>Indicates kind of textual infoprmation which is printed to the image:</para>
+                                        <definitionTable>
+                                            <definedTerm>
+                                                <codeInline>-CompanyName</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Assembly company name - see <codeEntityReference>T:System.Reflection.AssemblyCompanyAttribute</codeEntityReference>,
+                                                    <codeEntityReference>F:Tools.SplashScreenGenerator.InfoItemType.CompanyName</codeEntityReference>,
+                                                    <codeEntityReference>P:Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.CompanyName</codeEntityReference>.
+                                                </para>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>-Copyright</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Assembly copyright - see <codeEntityReference>T:System.Reflection.AssemblyCopyrightAttribute</codeEntityReference>,
+                                                    <codeEntityReference>F:Tools.SplashScreenGenerator.InfoItemType.Copyright</codeEntityReference>,
+                                                    <codeEntityReference>P:Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Copyright</codeEntityReference>.
+                                                </para>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>-Description</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Assembly description - see <codeEntityReference>T:System.Reflection.AssemblyDescriptionAttribute</codeEntityReference>,
+                                                    <codeEntityReference>F:Tools.SplashScreenGenerator.InfoItemType.Description</codeEntityReference>,
+                                                    <codeEntityReference>P:Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Description</codeEntityReference>.
+                                                </para>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>-ProductName</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Assembly product name - see <codeEntityReference>T:System.Reflection.AssemblyProductAttribute</codeEntityReference>,
+                                                    <codeEntityReference>F:Tools.SplashScreenGenerator.InfoItemType.ProductName</codeEntityReference>,
+                                                    <codeEntityReference>P:Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.ProductName</codeEntityReference>.
+                                                </para>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>-Title</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Assembly title - see <codeEntityReference>T:System.Reflection.AssemblyTitleAttribute</codeEntityReference>,
+                                                    <codeEntityReference>F:Tools.SplashScreenGenerator.InfoItemType.Title</codeEntityReference>,
+                                                    <codeEntityReference>P:Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Title</codeEntityReference>.
+                                                </para>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>-Trademark</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Assembly trademark - see <codeEntityReference>T:System.Reflection.AssemblyTrademarkAttribute</codeEntityReference>,
+                                                    <codeEntityReference>Tools.SplashScreenGenerator.InfoItemType.Trademark</codeEntityReference>,
+                                                    <codeEntityReference>Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Trademark</codeEntityReference>.
+                                                </para>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>-Version</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Assembly version - see <codeEntityReference>T:System.Reflection.AssemblyVersionAttribute</codeEntityReference>,
+                                                    <codeEntityReference>F:Tools.SplashScreenGenerator.InfoItemType.Version</codeEntityReference>,
+                                                    <codeEntityReference>P:Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Version</codeEntityReference>.
+                                                </para>
+                                                <alert class="note">
+                                                    <para>
+                                                        Object passed to formatting is not of type <codeEntityReference>T:System.Version</codeEntityReference> but rather special <languageKeyword>internal</languageKeyword> type.
+                                                        It's of special type which implements <codeEntityReference>T:System.IFormattable</codeEntityReference>.
+                                                    </para>
+                                                </alert>
+                                                <para>Formatting strings:</para>
+                                                <definitionTable>
+                                                    <definedTerm>g, G</definedTerm>
+                                                    <definition>
+                                                        <para>
+                                                            General - <codeEntityReference>M:System.Version.ToString()</codeEntityReference> is used.
+                                                        </para>
+                                                    </definition>
+                                                    <definedTerm>An integer number</definedTerm>
+                                                    <definition>
+                                                        <para>
+                                                            <codeEntityReference>M:System.Version.ToString(System:Int32)</codeEntityReference> is used to render given number of version parts.
+                                                        </para>
+                                                    </definition>
+                                                    <definedTerm>Anything else</definedTerm>
+                                                    <definition>
+                                                        <para>
+                                                            A <codeEntityReference>T:System.FormatException</codeEntityReference> is thrown.
+                                                        </para>
+                                                    </definition>
+                                                </definitionTable>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>-Text</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Any text - see <codeEntityReference>F:Tools.SplashScreenGenerator.InfoItemType.Version</codeEntityReference>.
+                                                </para>
+                                                <para>
+                                                    <languageKeyword>null</languageKeyword> is passed to formatting.
+                                                </para>
+                                            </definition>
+                                        </definitionTable>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>fontSize</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>Size of font (inpoints) used to print the information.</para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>offset</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Offset (in points) to print the text on (indicates poistion of uppper-left corner the text to render).
+                                            This value must be in format <codeInline>x,y</codeInline> because it's passed to <codeEntityReference>T:System.ComponentModel.TypeConverter</codeEntityReference> of <codeEntityReference>T:System.Drawing.Point</codeEntityReference> (invariant culture is used).
+                                        </para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>foregroundColor</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Color of text.
+                                            Any value valid for <codeEntityReference>T:System.ComponentModel.TypeConverter</codeEntityReference> of <codeEntityReference>T:System.Drawing.Color</codeEntityReference> is accepted.
+                                            Default is <codeEntityReference>P:System.Drawing.Color.Black</codeEntityReference>.
+                                        </para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>backgroundColor</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Color of obllong rendered behinbd the text.
+                                            Any value valid for <codeEntityReference>T:System.ComponentModel.TypeConverter</codeEntityReference> of <codeEntityReference>T:System.Drawing.Color</codeEntityReference> is accepted.
+                                            Default is <codeEntityReference>P:System.Drawing.Color.Transparent</codeEntityReference>.
+                                            If value is <codeEntityReference>P:System.Drawing.Color.Transparent</codeEntityReference> no background is rendered at all.
+                                        </para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>font</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>Name of font used to render the text. Default is Arial.</para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>fontStyle</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Style of font used for text rendering.
+                                            Value is parsed as <codeEntityReference>T:System.Drawing.FontStyle</codeEntityReference>.
+                                            Default is <codeEntityReference>F:System.Drawing.FontStyle.Regular</codeEntityReference>.
+                                        </para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>format</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Template for <codeEntityReference>M:System.String.Format(System.String,System.Object)</codeEntityReference>.
+                                            Only placeholder {0} is used.
+                                            Default "{0}".
+                                        </para>
+                                    </definition>
+                                </definitionTable>
+                            </definition>
+                        </definitionTable>
+                    </definition>
+                </definitionTable>
+            </content>
+            <sections>
+                <section>
+                    <title>Remarks</title>
+                    <content>
+                        <para>
+                            The application taks an imput image and produces and output image.
+                            Each parameter defines one string rendered to the output image.
+                            You can render various information about the assembly.
+                        </para>
+                        <para>
+                            API of this application is publicly avalibale - youcan add the application as a reference tou your project - see <codeEntityReference>N:Tools.SplashScreenGenerator</codeEntityReference>.
+                        </para>
+                    </content>
+                </section>
+                <section>
+                    <title>Version History</title>
+                    <content>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>1.5.4</para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>Fix: Typo in usage note generated to console.</para>
+                                    </listItem>
+                                    <listItem>
+                                        <para>Czech localization</para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <codeEntityReference>N:Tools.SplashScreenGenerator</codeEntityReference>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

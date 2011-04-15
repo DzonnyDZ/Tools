@@ -136,7 +136,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Legend.cs.txt" />
+    <Content Include="Resources\Legend.cs.txt">
+      <DependentUpon>Legend.txt</DependentUpon>
+    </Content>
     <Content Include="Resources\Legend.txt" />
     <Content Include="Resources\resx.ico" />
   </ItemGroup>

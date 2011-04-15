@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="923042ec-783b-47a0-91cd-d859e9354613" revisionNumber="1" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+    <introduction>
+      <para>
+                        This file describe all the changes in version 1.5.4. For brief description of changes see <link xlink:href="9b0f2e22-3088-4c9b-af71-51717771bb58" />.
+                    </para>
+    </introduction>
+    <section address="ChangeList">
+      <title>Changes in version 1.5.4</title>
+      <content />
+      <sections>
+        <section>
+          <title>Field Tools.Chars.LeftToRightEmbedding</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.LeftToRightEmbedding</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.LeftToRightMark</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.LeftToRightMark</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.LeftToRightOverride</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.LeftToRightOverride</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.PopDirectionalFormatting</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.PopDirectionalFormatting</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.RightToLeftEmbedding</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.RightToLeftEmbedding</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.RightToLeftMark</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.RightToLeftMark</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.RightToLeftOverride</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.RightToLeftOverride</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.WordJoiner</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.WordJoiner</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.ZeroWidthJoiner</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.ZeroWidthJoiner</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Field Tools.Chars.ZeroWidthNonJoiner</title>
+          <content>
+            <para>
+              <codeEntityReference>F:Tools.Chars.ZeroWidthNonJoiner</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+      </sections>
+    </section>
+    <relatedTopics />
+  </developerConceptualDocument>
+</topic>

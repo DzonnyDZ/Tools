@@ -17,7 +17,7 @@ namespace Tools.VisualStudioT.GeneratorsT {
     /// <version version="1.5.3">Class moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     [Guid("577A80C1-701B-4484-8277-9C6D03D04FFD")]
     [CustomTool("CodeDOMGenerator", "Code DOM generator")]
-    public class CodeDOMGenerator:CustomToolBase {
+    public class CodeDOMGenerator : CustomToolBase {
         /// <summary>
         /// Performs code generation
         /// </summary>
@@ -31,26 +31,26 @@ namespace Tools.VisualStudioT.GeneratorsT {
             System.IO.StringWriter outW = new System.IO.StringWriter();
             base.CodeProvider.GenerateCodeFromCompileUnit(cu, outW, new System.CodeDom.Compiler.CodeGeneratorOptions());
             return outW.ToString();
-            }
+        }
 
         /// <summary>Called when assembly is registeered with COM</summary>
         /// <param name="t">Type to be registered</param>
         [ComRegisterFunction]
         private static void ComRegister(Type t) {
-            if(t.Equals(typeof(CodeDOMGenerator))) {
+            if (t.Equals(typeof(CodeDOMGenerator))) {
                 RegisterCustomTool(t, true);
                 Console.WriteLine("Custom tool {0} registered.", t.FullName);
-                }
             }
+        }
         /// <summary>Called when assembly is un-registeered with COM</summary>
         /// <param name="t">Type to be un-registered</param>
         [ComUnregisterFunction]
         private static void ComUnRegister(Type t) {
-            if(t.Equals(typeof(CodeDOMGenerator))) {
+            if (t.Equals(typeof(CodeDOMGenerator))) {
                 RegisterCustomTool(t, false);
                 Console.WriteLine("Custom tool {0} un-registered.", t.FullName);
-                }
             }
         }
     }
-        
+}
+

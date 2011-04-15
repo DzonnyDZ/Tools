@@ -1,8 +1,8 @@
 ﻿Usage:
-{0} infile outfile arguments   
+{0} infile outfile arguments
 - infile - path to original image
 - outfile - path to store generated image
-- arguments - specifiedas -argName, arg name is case insensitive
+- arguments - specified as -argName, arg name is case insensitive
     -assemblyInfo assemblyInfo (must be specified at least once, can be specified multiple times, short form is -a)
         assemblyInfo - path to source file containing assembly info
             if specified multiple times all files must have same extension
@@ -10,9 +10,9 @@
         replace -type with one of following: -CompanyName, -Copyright, -Description, -ProductName, -Title, -Trademark, -Version, -Text
             Values correspond to properties of Microsoft.VisualBasic.ApplicationServices.AssemblyInfo, -Text means text printed unchanged
         fontSize - mandatory, font size in points
-        offset - mandatory, offset in fixels to print text to (value is passed to TypeConverter of System.DrawinfPoint)
+        offset - mandatory, offset in fixels to print text to (value is passed to TypeConverter of System.DrawinfPoint using invariant culture)
         foregroundColor - text color (value is passed to TypeConverter of System.Drawing.Color; default Black)
         backgroundColor - text background color (value is passed to TypeConverter of System.Drawing.Color; default Transparent)
         font - name of font (default Arial)
-        fontStyle - forn style (value is parsed as System.Drawing.FontStyle; default Regular)
+        fontStyle - font style (value is parsed as System.Drawing.FontStyle; default Regular)
         format - template for String.Format (default '{0}')

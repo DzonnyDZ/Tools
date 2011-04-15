@@ -42,11 +42,11 @@ Friend Module VersionUpdater
                 Case ".vb", ".bas" : text = GetVB(newVersion)
                 Case ".cs", ".c#" : text = GetCS(newVersion)
                 Case ".c", ".cpp", ".h", ".c++" : text = GetCPP(newVersion)
-                Case ".il", ".msil" : text = GetIL(newVersion)
+                Case ".il", ".msil", ".cil" : text = GetIL(newVersion)
                 Case ".js" : text = GetJS(newVersion)
                 Case ".fs", ".f#" : text = GetFS(newVersion)
                 Case ".java", ".j#" : text = GetJSharp(newVersion)
-                Case ".php" : text = GetPHP(newVersion)
+                Case ".php", ".inc", ".php3", "php4", ".php5", "php6" : text = GetPHP(newVersion)
                 Case ".xml" : text = GetXml(newVersion)
                 Case ".p" : text = GetPascal(newVersion)
                 Case Else : text = newVersion.ToString

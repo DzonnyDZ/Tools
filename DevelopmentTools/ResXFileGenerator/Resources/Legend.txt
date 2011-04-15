@@ -4,8 +4,8 @@ Parameters:
     /in <infile> - required, path of input resx file
     /out <outfile> - required, path of output file
     /lang <language> - optional, name of output lanuage. If not specified inferred form outfile extension
-        supported values (case-insensitive) are: vb, cs, c, cpp, h, cpp.7, cpp.vs, js, java, jsl
-        cpp.7 and cpp.vs are two alternative C++ providers
+        supported values (case-insensitive) are: vb, cs, c, cpp, h, cpp.7, js, java, jsl
+        cpp.7 is alternative C++ provider
         c, cpp and h have same meaning (C++)
         java and jsl have same meaning (J#)
     /nologo - optional, do not show version and copyright info

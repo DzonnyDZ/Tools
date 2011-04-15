@@ -61,6 +61,87 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Assembly info extensions must be same.
+        '''</summary>
+        Friend ReadOnly Property AssemblyInfoExtensionsMustBeSame() As String
+            Get
+                Return ResourceManager.GetString("AssemblyInfoExtensionsMustBeSame", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Assembly info missing.
+        '''</summary>
+        Friend ReadOnly Property AssemblyInfoMissing() As String
+            Get
+                Return ResourceManager.GetString("AssemblyInfoMissing", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to At least one assembly info is required.
+        '''</summary>
+        Friend ReadOnly Property AtLeastOneAssemblyInfoIsRequired() As String
+            Get
+                Return ResourceManager.GetString("AtLeastOneAssemblyInfoIsRequired", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Format was null.
+        '''</summary>
+        Friend ReadOnly Property FormatWasNull() As String
+            Get
+                Return ResourceManager.GetString("FormatWasNull", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error {0}: {1}.
+        '''</summary>
+        Friend ReadOnly Property GeneralError() As String
+            Get
+                Return ResourceManager.GetString("GeneralError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} is invalid format for {1}.
+        '''</summary>
+        Friend ReadOnly Property InvalidFormat() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Option missing for {0}.
+        '''</summary>
+        Friend ReadOnly Property OptionMissing() As String
+            Get
+                Return ResourceManager.GetString("OptionMissing", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} not suppported: {1}.
+        '''</summary>
+        Friend ReadOnly Property SomethingNotSuppported() As String
+            Get
+                Return ResourceManager.GetString("SomethingNotSuppported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unknown option: {0}.
+        '''</summary>
+        Friend ReadOnly Property UnknownOption() As String
+            Get
+                Return ResourceManager.GetString("UnknownOption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Usage:
         '''{0} infile outfile arguments   
         '''- infile - path to original image

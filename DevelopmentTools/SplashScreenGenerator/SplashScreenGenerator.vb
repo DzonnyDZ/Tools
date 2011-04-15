@@ -85,7 +85,7 @@ args:                   Select Case arg.ToLowerInvariant
                                     info.Add(New InfoItem With {.Type = itemType})
                                     state = CommandLineParsing.ii_FontSize
                                 Else
-                                    Console.WriteLine("Unknown option: {0}", arg)
+                                    Console.WriteLine(My.Resources.UnknownOption, arg)
                                     Environment.Exit(2)
                                     End
                                 End If
@@ -124,19 +124,19 @@ args:                   Select Case arg.ToLowerInvariant
             Select Case state
                 Case CommandLineParsing.ii_Background, CommandLineParsing.ii_Foreground, CommandLineParsing.ii_Font, CommandLineParsing.ii_FontStyle, CommandLineParsing.ii_Format  'are OK
                 Case Is <> CommandLineParsing.Args
-                    Console.WriteLine("Option missing for {0}", state)
+                    Console.WriteLine(My.Resources.OptionMissing, state)
                     Environment.Exit(3)
                     End
             End Select
 
             If assemblyInfo.Count = 0 Then
-                Console.WriteLine("Assembly info missing")
+                Console.WriteLine(My.Resources.AssemblyInfoMissing)
                 Environment.Exit(4)
             End If
 
             GenerateSplashScreen(infile, outfile, assemblyInfo, info)
         Catch ex As Exception
-            Console.WriteLine("Error {0}: {1}", ex.GetType.Name, ex.Message)
+            Console.WriteLine(My.Resources.GeneralError, ex.GetType.Name, ex.Message)
             Environment.Exit(8)
             End
         End Try
@@ -216,11 +216,11 @@ args:                   Select Case arg.ToLowerInvariant
             If i = 0 Then
                 extension = IO.Path.GetExtension(ai).ToLowerInvariant
             ElseIf IO.Path.GetExtension(ai).ToLowerInvariant <> extension Then
-                Throw New ArgumentException("Assembly info extensions must be same", "assemblyInfos")
+                Throw New ArgumentException(My.Resources.AssemblyInfoExtensionsMustBeSame, "assemblyInfos")
             End If
             i += 1
         Next
-        If i = 0 Then Throw New ArgumentException("At least one assembly info is required", "assemblyInfos")
+        If i = 0 Then Throw New ArgumentException(My.Resources.AtLeastOneAssemblyInfoIsRequired, "assemblyInfos")
 
         Dim provider As CodeDomProvider = CodeDomProvider.CreateProvider(extension.Substring(1))
         Dim pars As CompilerParameters = New CompilerParameters() With {.GenerateExecutable = False, .GenerateInMemory = True}
@@ -454,10 +454,10 @@ Public Class InfoItem
                 Case InfoItemType.Trademark : Return String.Format(Format, info.Trademark)
                 Case InfoItemType.Version : Return String.Format(Format, New VersionFormattable(info.Version))
                 Case InfoItemType.Text : Return String.Format(Format, Nothing)
-                Case Else : Throw New InvalidOperationException(String.Format("InfoItemType not suppported: {0}", Type))
+                Case Else : Throw New InvalidOperationException(String.Format(My.Resources.SomethingNotSuppported, GetType(InfoItemType).Name, Type))
             End Select
         Catch ex As ArgumentNullException
-            Throw New InvalidOperationException("Format was null", ex)
+            Throw New InvalidOperationException(My.Resources.FormatWasNull, ex)
         End Try
     End Function
 
@@ -507,7 +507,7 @@ Friend NotInheritable Class VersionFormattable
             Try
                 Return version.ToString(Integer.Parse(format, InvariantCulture))
             Catch ex As Exception When TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException OrElse TypeOf ex Is ArgumentException
-                Throw New FormatException("{0} is invalid format for {1}".f(format, MyClass.GetType.Name))
+                Throw New FormatException(My.Resources.InvalidFormat.f(format, MyClass.GetType.Name))
             End Try
         End If
     End Function
@@ -531,4 +531,3 @@ Friend NotInheritable Class VersionFormattable
         Return ToString(Nothing, CurrentCulture)
     End Function
 End Class
-

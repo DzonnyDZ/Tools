@@ -4,8 +4,8 @@ Parametry:
     /in <vstup> - požadováno, cesta ke vstupnímu resx souboru
     /out <výstup> - požadováno, cesta k výstupnímu souboru
     /lang <jazyk> - volitené, název výstupního jazyka. Pokud neudáno odvozena z přípony výstupního souboru
-        pdoporvané hodnoty (case-insensitive): vb, cs, c, cpp, h, cpp.7, cpp.vs, js, java, jsl
-        cpp.7 a cpp.vs jsou alternativní C++ providery
+        pdoporvané hodnoty (case-insensitive): vb, cs, c, cpp, h, cpp.7, js, java, jsl
+        cpp.7 je alternativní C++ provider
         c, cpp a h znamenají to samé (C++)
         java a jsl znamenají to samé (J#)
     /nologo - volitelné, nezobrazovat informaci o verzi a copyrightu

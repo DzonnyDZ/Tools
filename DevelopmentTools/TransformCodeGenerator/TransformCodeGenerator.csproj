@@ -198,7 +198,6 @@
     <None Include="..\..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
-    <None Include="TransformCodeGenerator.reg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -233,7 +232,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\TransforCodeGeneratorResources.cs.resx" />
+    <EmbeddedResource Include="Resources\TransforCodeGeneratorResources.cs.resx">
+      <DependentUpon>TransforCodeGeneratorResources.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\TransforCodeGeneratorResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TransforCodeGeneratorResources.Designer.cs</LastGenOutput>

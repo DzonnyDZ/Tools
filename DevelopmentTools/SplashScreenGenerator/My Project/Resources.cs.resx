@@ -117,35 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Usage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Usage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="UnknownOption" xml:space="preserve">
-    <value>Unknown option: {0}</value>
+    <value>Neznámá volba: {0}</value>
   </data>
   <data name="OptionMissing" xml:space="preserve">
-    <value>Option missing for {0}</value>
+    <value>Volba pro {0} chybí</value>
   </data>
   <data name="AssemblyInfoMissing" xml:space="preserve">
-    <value>Assembly info missing</value>
+    <value>Assembly info chybý</value>
   </data>
   <data name="GeneralError" xml:space="preserve">
-    <value>Error {0}: {1}</value>
+    <value>Chyba {0}: {1}</value>
   </data>
   <data name="AssemblyInfoExtensionsMustBeSame" xml:space="preserve">
-    <value>Assembly info extensions must be same</value>
+    <value>Přípony assembly inf musí být stejné</value>
   </data>
   <data name="AtLeastOneAssemblyInfoIsRequired" xml:space="preserve">
-    <value>At least one assembly info is required</value>
+    <value>Alespoň jedno assembly info musí být zadáno</value>
   </data>
   <data name="SomethingNotSuppported" xml:space="preserve">
-    <value>{0} not suppported: {1}</value>
+    <value>Nepodporovaná hodnota typu {0}: {1}</value>
   </data>
   <data name="FormatWasNull" xml:space="preserve">
-    <value>Format was null</value>
+    <value>Formát byl null</value>
   </data>
   <data name="InvalidFormat" xml:space="preserve">
-    <value>{0} is invalid format for {1}</value>
+    <value>{0} je neplatný formát pro {1}</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Usage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\usage.cs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

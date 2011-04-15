@@ -118,5 +118,37 @@ Public Module Chars
     ''' <summary>Unicode character No-break space (NBSP, 0xA0)</summary>
     ''' <version version="1.5.3">This constant is new in version 1.5.3</version>
     Public Const NoBreakSpace As Char = ChrW(&HA0)
+
+    ''' <summary>Unicode character Left-To-Right Embedding (LRE, 0x202A)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const LeftToRightEmbedding As Char = ChrW(&H202A)
+    ''' <summary>Unicode character Right-To-Left Embedding (RLE, 0x202B)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const RightToLeftEmbedding As Char = ChrW(&H202B)
+    ''' <summary>Unicode character Pop Directional Formatting (LRE, 0x202C)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const PopDirectionalFormatting As Char = ChrW(&H202C)
+    ''' <summary>Unicode character Left-To-Right Override (LRO, 0x202D)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const LeftToRightOverride As Char = ChrW(&H202D)
+    ''' <summary>Unicode character Right-To-Left Override (RLO, 0x202E)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const RightToLeftOverride As Char = ChrW(&H202E)
+    ''' <summary>Unicode character Left-To-Right Mark (LRM, 0x200E)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const LeftToRightMark As Char = ChrW(&H200E)
+    ''' <summary>Unicode character Right-To-Left Mark (RLM, 0x200F)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const RightToLeftMark As Char = ChrW(&H200F)
+
+    ''' <summary>Unicode character Zero Width Non-Joiner (ZWNJ, 0x200C)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const ZeroWidthNonJoiner As Char = ChrW(&H200C)
+    ''' <summary>Unicode character Zero Width Joiner (ZWJ, 0x200D)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const ZeroWidthJoiner As Char = ChrW(&H200D)
+    ''' <summary>Unicode character Word Joiner (WJ, 0x2060)</summary>
+    ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
+    Public Const WordJoiner As Char = ChrW(&H2060)
 End Module
 #End If

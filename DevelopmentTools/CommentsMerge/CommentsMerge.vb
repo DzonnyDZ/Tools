@@ -17,7 +17,6 @@ Friend Module CommentsMerge
             Environment.Exit(1)
             Exit Sub
         End Try
-        Dim mg As XDocument = Nothing
         For i As Integer = 1 To My.Application.CommandLineArgs.Count - 2
             Dim Sec As XDocument
             Console.WriteLine(My.Application.CommandLineArgs(i))
@@ -29,7 +28,7 @@ Friend Module CommentsMerge
                 Exit Sub
             End Try
             Try
-                mg = Merge(Pri, Sec)
+                Pri = Merge(Pri, Sec)
             Catch ex As Exception
                 Console.Error.WriteLine(My.Resources.Transformation01, ex.GetType.Name, ex.Message)
                 Environment.Exit(3)
@@ -37,7 +36,7 @@ Friend Module CommentsMerge
             End Try
         Next
         Try
-            mg.Save(My.Application.CommandLineArgs(My.Application.CommandLineArgs.Count - 1))
+            Pri.Save(My.Application.CommandLineArgs(My.Application.CommandLineArgs.Count - 1))
         Catch ex As Exception
             Console.Error.WriteLine(My.Resources.Save01, ex.GetType.Name, ex.Message)
             Environment.Exit(4)

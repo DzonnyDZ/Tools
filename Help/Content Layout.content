@@ -4,4 +4,5 @@
     <Topic id="87bfaabf-6850-42dd-9c91-815bd77b2aa4" visible="True" />
     <Topic id="A4257124-C37D-472d-B189-79528BC483B4" visible="True" />
   </Topic>
+  <Topic id="3b77b891-12ee-4be9-b6a2-374d8dfc09f8" visible="True" apiParentMode="InsertBefore" title="Development Tools" />
 </Topics>

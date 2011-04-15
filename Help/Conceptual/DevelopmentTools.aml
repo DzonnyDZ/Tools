@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="3b77b891-12ee-4be9-b6a2-374d8dfc09f8" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                ĐTools is not only library of several DLL files containing classes for performing various tasks.
+                It also contains several development tools (especially EXE files and Visual Studio Custom Tools).
+                These development tools vere usually developed either tu support development and build of ĐTools project or some other project.
+                These tools are shared as separate part of ĐTools library to give other developers them might find them useful access to them.
+            </para>
+        </introduction>
+        <section address="EXE">
+            <title>Standalone executables (EXE)</title>
+            <content>
+                <para>
+                    Those are command-line EXE programs specifically designed to perform some simple tasks such as merging files etc.
+                    Some of the programs expose public API and you can add them as a reference assembly to your project.
+                    Some of the programs are just tools based on an API exposed by other assemblies.
+                    And finally some of them do not expose any public API and you can use them only from command line.
+                </para>
+                <table>
+                    <tableHeader>
+                        <row>
+                            <entry>
+                                <para>Tool</para>
+                            </entry>
+                            <entry>
+                                <para>Purpose</para>
+                            </entry>
+                            <entry>
+                                <para>Notes</para>
+                            </entry>
+                        </row>
+                    </tableHeader>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="4e26733f-2506-42db-bc3c-f52a1a830a38">CommentsMerge</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Merges several XML comments files into one.</para>
+                        </entry>
+                        <entry>
+                            <para>Does not expose public API.</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="5a606e40-5300-49f8-bbbd-e9fd49f9edb0">PseudoZip</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>
+                                Does not expose public API. Based on <codeEntityReference qualifyHint="true">T:System.IO.Packaging.ZipPackage</codeEntityReference>.
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="45772b7f-ff09-4ba1-8add-0a7ef1ceaa59">ResXFileGenerator</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Generates code from managed resource (RESX) files.</para>
+                        </entry>
+                        <entry>
+                            <para>This is command-line wrapper around ResXFileCodeGeneratorEx custom tool.</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="a7050015-d5cf-4f91-9f00-847a82337096">SplashScreenGenerator</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Generates Splash Screens for WPF applications</para>
+                        </entry>
+                        <entry>
+                            <para>
+                                Public API exposed: <codeEntityReference qualifyHint="true">N:Tools.SplashScreenGenerator</codeEntityReference>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="9ca409ca-de9d-4ba1-bc84-0501796c46ea">VersionCorrector</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Changes version numbers in WPF resources in assemblies</para>
+                        </entry>
+                        <entry>
+                            <para>Does not expose public API.</para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="0a384324-351a-4fe9-9a73-7f71f8363c42">VersionUpdater</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Generates AssemblyInfo files with version information</para>
+                        </entry>
+                        <entry>
+                            <para>Does not expose public API.</para>
+                        </entry>
+                    </row>
+                </table>
+            </content>
+        </section>
+        <section address="CustomTools">
+            <title>Visual Studio Custom Tools</title>
+            <content>
+                <para>
+                    Visual Studio Custom Tools are DLLs which exposes API called by Visual Studio to transform a file content to another form.
+                    These tools are used expecially to generate code from XML (such as resources, settings etc.).
+                    The API exposed by these tools can be also consumed by your code, but be aware the these tools are usualy compiled only for x86 (32-bit) platform.
+                </para>
+                <table>
+                    <tableHeader>
+                        <row>
+                            <entry>
+                                <para>Tool</para>
+                            </entry>
+                            <entry>
+                                <para>Purpose</para>
+                            </entry>
+                            <entry>
+                                <para>Notes</para>
+                            </entry>
+                            <entry>
+                                <para>Public API</para>
+                            </entry>
+                        </row>
+                    </tableHeader>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="8d079304-ef0f-4f43-ac18-110080ea3592">ResXFileCodeGeneratorEx</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Enhanced generator for generating code from manager resource (RESX) files.</para>
+                        </entry>
+                        <entry>
+                            <para>
+                                Based on <codeInline>DMKSoftware.CodeGenerators.ResXFileCodeGeneratorEx</codeInline>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>
+                                <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</codeEntityReference>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="8aaeabbc-cfbf-4bc0-8824-b8b9d6aa3284">TransformCodeGenerator</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Generates code form any XML file using XSL Transformation.</para>
+                        </entry>
+                        <entry>
+                            <para>Based on Chris Stefano's TransformCodeGenerator.</para>
+                            <para>Consider employing Visual Studio Text templating instead.</para>
+                        </entry>
+                        <entry>
+                            <para>
+                                <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.TransformCodeGenerator</codeEntityReference>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
+                                <link xlink:href="6d0d5851-0c03-407f-b7bc-b8452beeacc2">XsdGenerator</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Generates code from XML schemas. Provides options for post-processing of generated code.</para>
+                        </entry>
+                        <entry>
+                            <para>Based of XSD Generator I found somewhere on the Internet.</para>
+                        </entry>
+                        <entry>
+                            <para>
+                                <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.GeneratorsT.XsdGenerator</codeEntityReference>
+                            </para>
+                        </entry>
+                    </row>
+                </table>
+            </content>
+            <sections>
+                <section address="CustomToolsInfo">
+                    <title>General note on Visual Studio Custom Tools</title>
+                    <content>
+                        <para>
+                            Visual Studio Custom Tools are esentially COM objects which Visual Studio calls when it needs to transform file content.
+                            This happens when the file to be transformed is being saved or when you force Visual Studio to run the transformation form Solution Explorer conetxt menu | <ui>Run Custom Tool</ui>.
+                        </para>
+                        <para>
+                            Since .NET Framework allows creation of COM libraries Visual Studio Custom Tools can be written in managed languages.
+                            COM libraries need to be registered at operation system-level.
+                        </para>
+                        <para>To register a custom tool invoke:</para>
+                        <para>
+                            <system>RegAsm CustomTool.dll /codebase</system>
+                        </para>
+                        <para>To unregister a custom tool invoke:</para>
+                        <para>
+                            <system>RegAsm CustomTool.dll /unregister</system>
+                        </para>
+                        <alert class="note">
+                            <para>
+                                You need administrators privileges to register or unregister an assembly.
+                                When User Accounts Control is in effect you have to run the comand in elevated mode.
+                            </para>
+                        </alert>
+                        <alert class="note">
+                            <para>
+                                The <command>RegAsm.exe</command> command line tool is part of .NET Framework and can be found in <localUri>%WinDir%\Microsoft.NET\Framework\{Version}\</localUri>.
+                            </para>
+                            <para>
+                                Always use 32-bit (x86) version of <command>RegAsm</command> to register Visual Studio Custom Tools (even on 64-system).
+                                This is because Visual Studio itself is 32-bit application and Custom Tool assemblies are usually compiled as 32-bit (x86) rather than AnyCPU.
+                            </para>
+                        </alert>
+                        <para>
+                            When a COM library containing Visual Studio Custom Tool is registered and the Custom Tool is well-designed it also registers itself with Visual Studio.
+                            This is done by invoking necessary commands in <codeEntityReference>T:System.Runtime.InteropServices.ComRegisterFunctionAttribute</codeEntityReference> function.
+                            Similar process is done when a Tool is unregistered (<codeEntityReference>T:System.Runtime.InteropServices.ComUnregisterFunctionAttribute</codeEntityReference>).
+                        </para>
+                        <para>However if something wents wrong and you need to (un)register a Custom Tool manually, or if you are writing your own custom tool and you want to write (un)registration code here is how:</para>
+                        <alert class="tip">
+                            <para>
+                                When implementing custom Custom Tools you may utilize <codeEntityReference qualifyHint="true">M:Tools.VisualStudioT.GeneratorsT.CustomToolBase.RegisterCustomTool(System.Type,System.Boolean)</codeEntityReference> method (or its overload).
+                            </para>
+                        </alert>
+                        <para>
+                            Custom tools are registered in registry in key <localUri>HKEY_LOCAL_MACHINE\Software\Microsoft\VisualStudio\{Version}\Generators\{LanguageGuid}\{Name}</localUri>.
+                        </para>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>{Version}</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    A version of Visual Studio to register a Custom Tool for.
+                                    If a Custom Tool supports more versions of Visual Studio it must be registered for each version separately.
+                                </para>
+                            </definition>
+                            <definedTerm>{LanguageGuid}</definedTerm>
+                            <definition>
+                                <para>
+                                    A GUID (in form {00000000-0000-0000-0000-000000000000}) identifying a programming language a Custom Tool is registered for.
+                                    If a Custom Tool supports more languages it must be registered for each language separately.
+                                </para>
+                                <definitionTable>
+                                    <definedTerm>Visual Basic</definedTerm>
+                                    <definition>
+                                        <para>{164B10B9-B200-11D0-8C61-00A0C91E29D5}</para>
+                                    </definition>
+                                    <definedTerm>C#</definedTerm>
+                                    <definition>
+                                        <para>{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}</para>
+                                    </definition>
+                                </definitionTable>
+                            </definition>
+                            <definedTerm>{Name}</definedTerm>
+                            <definition>
+                                <para>
+                                    Name of the Custom Tool as used in <externalLink>
+                                        <linkText>Custom Tool property</linkText>
+                                        <linkUri>http://msdn.microsoft.com/en-us/library/0c6xyb66.aspx#sectionToggle3</linkUri>
+                                    </externalLink> of project item in Visual Studio.
+                                </para>
+                            </definition>
+                        </definitionTable>
+                        <para>Each registry key of custom tool registration has following values:</para>
+                        <definitionTable>
+                            <definedTerm>(Default)</definedTerm>
+                            <definition>
+                                <para>(Default value of the key). REG_SZ. Contains human-readable name of the Custom Tool.</para>
+                            </definition>
+                            <definedTerm>CLSID</definedTerm>
+                            <definition>
+                                <para>
+                                    REG_SZ. A GUID (in form {00000000-0000-0000-0000-000000000000}).
+                                    This must be same GUID as GUID in <codeEntityReference>T:System.Runtime.InteropServices.GuidAttribute</codeEntityReference> applied on a class implementing the Custom Tool.
+                                </para>
+                            </definition>
+                            <definedTerm>GeneratesDesignTimeSource</definedTerm>
+                            <definition>
+                                <para>REG_DWORD. In fact boolean values (1 or 0) indicating if this code generator provides design-time source code.</para>
+                                <para>
+                                    See also <codeEntityReference>P:Microsoft.VisualStudio.TextTemplating.VSHost.ProvideCodeGeneratorAttribute.GeneratesDesignTimeSource</codeEntityReference>.
+                                </para>
+                            </definition>
+                        </definitionTable>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <relatedTopics>
+            <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.MacrosT</codeEntityReference>
+            <externalLink>
+                <linkText>Implementing Single-File Generators</linkText>
+                <linkUri>http://msdn.microsoft.com/en-us/library/bb166817.aspx</linkUri>
+            </externalLink>
+            <externalLink>
+                <linkText>Regasm.exe (Assembly Registration Tool)</linkText>
+                <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
+            </externalLink>
+            <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT</codeEntityReference>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

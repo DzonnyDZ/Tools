@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="5a606e40-5300-49f8-bbbd-e9fd49f9edb0" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                PseudoZip.exe is a command line application for creating and unpacking ZIP-like archives using <codeEntityReference>T:System.IO.Packaging.ZipPackage</codeEntityReference>.
+                Advantage of pagackes created using this tool it that they can be programatically unpacked using <codeEntityReference>T:System.IO.Packaging.ZipPackage</codeEntityReference>.
+                Inherent disadvantage of <codeEntityReference>T:System.IO.Packaging.ZipPackage</codeEntityReference> that it does not support real ZIP format.
+                Resulting files can be unpacked by any ZIP tool but not all ZIP archives can be unpacked by this tool.
+            </para>
+        </introduction>
+        <section>
+            <title>PseudoZip</title>
+            <content>
+                <para>Usage:</para>
+                <para>
+                    <system>
+                        PseudoZip command archive folder [-r] [masks]
+                    </system>
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>command</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>a</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>Create archive - pack given files and folders and stores them in a ZIP-like archive</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>e</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>Extract archive - gest a pseudo-ZIP archive in supportd format and extracts it's content to given folder.</para>
+                            </definition>
+                        </definitionTable>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>archive</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>A path to pseudozip archive to be created or unpacked.</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>folder</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Path to a folder to compress files form or path to a folder to store uncompressed files in.</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>-r</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            (optional) Only to be used with command <codeInline>a</codeInline> - pack file recursivelly from subfolders.
+                        </para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>masks</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            (optinal, repeatable) Only to be used with command <codeInline>a</codeInline>.
+                            Masks of files to be included in archive. If ommited <localUri>*.*</localUri> is used.
+                        </para>
+                    </definition>
+                </definitionTable>
+            </content>
+            <sections>
+                <section>
+                    <title>Remarks</title>
+                    <content>
+                        <para>If any argument contains spaces it must be enclosed in quotes.</para>
+                        <para>
+                            This tool is as stupid as <codeEntityReference qualifyHint="true">T:System.IO.Packaging.ZipPackage</codeEntityReference> is.
+                            The limitation not to be capable of wirking with real ZIP files is built in <codeEntityReference>T:System.IO.Packaging.ZipPackage</codeEntityReference> and cannot be easily overcome.
+                            If you need mor advanced options consider using 3rd party ZIP tool or library.
+                        </para>
+                        <para>
+                            PseudoZip.exe does not expose public API, however it's only tiny wrapper around <codeEntityReference qualifyHint="true">T:System.IO.Packaging.ZipPackage</codeEntityReference> class.
+                        </para>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <codeEntityReference qualifyHint="true">T:System.IO.Packaging.ZipPackage</codeEntityReference>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

@@ -112,6 +112,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Usage.cs.txt">
+      <DependentUpon>Usage.txt</DependentUpon>
+    </Content>
     <Content Include="Resources\Usage.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

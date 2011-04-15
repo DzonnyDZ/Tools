@@ -1,0 +1,282 @@
+﻿/*
+This stylesheet is intended to provide visual representation to MAML (conceptual documentation) files.
+It's not intended as Sandcastle replacement.
+Attach this stylesheet to your MAML file like <?xml-stylesheet href="conceptual.css" type="text/css" ?> and open the file in a good web browser.
+Best choise browser for this seems to be Google Chrome (FF does not interpert local *.aml files as XML)
+*/
+
+@namespace url("http://ddue.schemas.microsoft.com/authoring/2003/5");
+@namespace xlink url("http://www.w3.org/1999/xlink");
+@namespace xsd url("http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3");
+
+*{
+    display:inline;
+}
+
+|topic{/*correct selector is |topic:root but | and :root does not seem to work together in Chrome :-(*/
+    background-color:White;
+    color:Black;    
+    display:block;
+    font-family:Serif;
+    text-align:left;
+    padding:0 1EM 0 1EM;
+}
+|topic[id]:before{/*Does not work in Chrome*/
+    content: "Topic ID" attr(id);
+    display:block;
+    font-family:Sans-Serif;
+    font-size:178%;
+    margin-bottom:.561EM;    
+}
+
+|topic > *{
+    display:block;
+}
+
+introduction, para, section, title, sections, alert, summary{
+    display:block;
+}
+para{
+    margin-bottom:1ex;
+}
+title{
+    font-family:Sans-Serif;
+    font-weight:bold;
+    font-size:155%;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+}
+section > title{
+    margin-left:-1EM;
+}
+section > sections > section > title{
+    font-size:128%;
+}
+section{
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+    padding-left:1EM;
+}
+
+/*alerts*/
+alert{
+    background:F7F7FF;
+    border:1px solid #DDD;
+    padding:0 1EM .5EM 1EM;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+    border-collapse:collapse;
+    border-spacing:0;
+}
+alert[class]:before{
+    display:block;
+    content: attr(class) ": ";
+    font-weight:bold;
+    background-color:#EFEFF7;
+    border: gray 1px solid;
+    border-bottom: 1px solid #C8CDDE;
+    margin-bottom:.5EM;
+    margin-left:-1EM;
+    margin-right:-1EM;
+    padding-left:1EM;
+    padding-right:1EM;
+    color:#006;
+    position:relative;
+    top:-1px;
+    left:-1px;
+}
+alert[class]:before:first-letter{
+    font-weight:normal;
+}
+
+alert[class='note']:before{
+    content:"✎ Note:";
+}
+alert[class='caution']:before{
+    content:"❢ Caution:";
+}
+alert[class='important']:before{
+    content:"☝ Important:";
+}
+alert[class='tip']:before{
+    content:"☞ Tip:";
+}
+alert[class='warning']:before{
+    content:"‼ Warning:";
+}
+alert[class='security note']:before{
+    content:"♝ Security Note:";
+}
+alert[class='visual basic note']:before{
+    content:"✎ Visual Basic:";
+}
+alert[class='visual c# note']:before{
+    content:"✎ C#:";
+}
+alert[class='visual c++ note']:before{
+    content:"✎ C++/CLI:";
+}
+alert[class='visual j# note']:before{
+    content:"✎ J#:";
+}
+
+/*tables*/
+table{display:table;}
+table > tableHeader{
+    display:table-header-group;
+    font-weight:bold;
+    background-color:#CCC;
+    color:#006;
+}
+table > row, table > tableHeader > row{
+    display:table-row;
+    border-collapse:collapse;
+    border-spacing:0;
+    empty-cells:show;
+}
+table > row > entry, table > tableHeader > row > entry{
+    display: table-cell;
+    padding:0 .5ex 0 .5ex;
+}
+table > row > entry > *, table > tableHeader > row > entry > *{
+    margin:0;
+}
+table > tableHeader > row > entry{
+    vertical-align:middle;
+    padding-top:4px;
+}
+table > row > entry{
+    border:solid 1px #D5D5D3; 
+    border-spacing:0;   
+    border-collapse:collapse;
+    vertical-align:top;
+}
+table > row:hover{
+    background-color:Yellow;
+}
+
+/*Definition table*/
+definitionTable{
+    display:block;
+    margin-left:2EM;
+    padding-right:2EM;
+    border:solid 1px #D5D5D3;
+    border-collapse:collapse;
+    border-spacing:0;
+}
+definitionTable > definedTerm{
+    display:block;
+    font-weight:bold;
+}
+definitionTable > definition{
+    display:block;
+    padding-left:2EM;
+}
+definitionTable > definition:not(:last-child){
+    border-bottom:solid 1px #D5D5D3;
+}
+definitionTable > definition > *{
+    margin:0;
+}
+definitionTable > definition > alert + alert,
+definitionTable > definition > alert + code,
+definitionTable > definition > code + alert
+definitionTable > definition > code + code{
+    margin-top:1ex;
+}
+definitionTable > definition > definitionTable:not(:only-child){
+    margin-left:2EM;
+}
+
+/*links*/
+codeEntityReference, link, externalLink, xsd|xmlEntityReference{
+    color:Blue;
+    text-decoration:underline;
+    cursor:pointer;
+}
+link:empty:before{
+    content:"Link to topic";/*for browsers which does not support next line*/
+    content:"Topic id " attr(xlink|href);
+}
+externalLink > linkText + linkUri{display:none;}
+
+/*code*/
+codeInline{
+    font-family:Monospace;
+}
+system, code{
+    font-family:Monospace;
+    background-color:#DDD;
+    display:block;
+    padding:.5EM 1EM .5EM 1EM;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+    white-space:pre-wrap;
+}
+code[language]:before{
+    content:attr(language) ":";
+    font-weight:bold;
+    display:block;
+    font-family:Sans-Serif;
+    text-transform:uppercase;
+}
+languageKeyword{
+    font-family:Monospace;
+    color:Blue;
+}
+
+/*list*/
+list{
+    display:block;
+    margin-left:2EM;
+}
+list > listItem{
+    display:list-item;
+}
+list[class='nobullet'] > listItem{
+    list-style-type:none;
+}
+list[class='nobullet'] > listItem{
+    list-style-type:none;
+}
+list[class='bullet'] > listItem{
+    list-style-type:disc;
+}
+list[class='ordered'] > listItem{
+    list-style-type:decimal;
+}
+list > listItem > *{
+    margin:0;
+}
+list > listItem > alert + alert,
+list > listItem > alert + code,
+list > listItem > code + alert
+list > listItem > code + code{
+    margin-top:1ex;
+}
+list > listItem > list{
+    margin-left:2EM;
+}
+
+/*footer items*/
+relatedTopics{
+    display:block;
+    margin-top:1EM;
+}
+relatedTopics:not(:empty):before{
+    content: "Related Topics";
+    display:block;
+    font-weight:bold;
+    font-size:125%;
+    font-family:Sans-Serif;
+}
+relatedTopics > *|*{
+    display:list-item;
+    list-style-type:disc;
+    margin-left:3EM;
+}
+
+/*formatting*/
+legacyBold{font-weight:bold}
+legacyItalic{font-style:normal}
+legacyUnderline{text-decoration:underline}

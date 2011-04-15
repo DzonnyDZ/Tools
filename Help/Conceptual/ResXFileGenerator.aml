@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="45772b7f-ff09-4ba1-8add-0a7ef1ceaa59" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                ResXFileGenerator.exe as a command line wrapper around <link xlink:href="8d079304-ef0f-4f43-ac18-110080ea3592">ResXFileCodeGeneratorEx</link> Visual Studio Custom Tool.
+                It's purpose is to take a managed resources (RESX) file and using given <codeEntityReference>T:System.CodeDom.Compiler.CodeDomProvider</codeEntityReference> generate code file for it.
+            </para>
+        </introduction>
+        <section>
+            <title>ResXFileGenerator</title>
+            <content>
+                <para>Usage:</para>
+                <para>
+                    <system>ResXFileGenerator parameters</system>
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>parameters</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>/in infile</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (required) <codeInline>infile</codeInline> specifies path to input manages resources (RESX) file.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/out outfile</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (required) <codeInline>outfile</codeInline> specifies path to output file to be generated.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/lang language</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (optional) <codeInline>language</codeInline> identifies a programming language to generate code in. Supported values are (case-insensitive):
+                                </para>
+                                <definitionTable>
+                                    <definedTerm>vb</definedTerm>
+                                    <definition>
+                                        <para>
+                                            Visual Basic using <codeEntityReference qualifyHint="true">T:Microsoft.VisualBasic.VBCodeProvider</codeEntityReference>
+                                        </para>
+                                    </definition>
+                                    <definedTerm>cs</definedTerm>
+                                    <definition>
+                                        <para>
+                                            C# using <codeEntityReference qualifyHint="true">T:Microsoft.CSharp.CSharpCodeProvider</codeEntityReference>
+                                        </para>
+                                    </definition>
+                                    <definedTerm>c, cpp, h</definedTerm>
+                                    <definition>
+                                        <para>
+                                            C++/CLI using <codeEntityReference qualifyHint="true">T:Microsoft.VisualC.CppCodeProvider</codeEntityReference>
+                                        </para>
+                                    </definition>
+                                    <definedTerm>cpp.7</definedTerm>
+                                    <definition>
+                                        <para>
+                                            C++/CLI using <codeEntityReference qualifyHint="true">T:Microsoft.VisualC.CppCodeProvider7</codeEntityReference>
+                                        </para>
+                                    </definition>
+                                    <definedTerm>js</definedTerm>
+                                    <definition>
+                                        <para>
+                                            JScript.NET using <codeEntityReference qualifyHint="true">T:Microsoft.JScript.JScriptCodeProvider</codeEntityReference>
+                                        </para>
+                                    </definition>
+                                    <definedTerm>jsl, java</definedTerm>
+                                    <definition>
+                                        <para>
+                                            J# using <codeEntityReference qualifyHint="true">Microsoft.VJSharp.VJSharpCodeProvider</codeEntityReference>
+                                        </para>
+                                        <alert class="important">
+                                            <para>
+                                                J# provider is loaded dynamically.
+                                                It fails to load when <localUri>VJSharpCodeProvider.dll</localUri> is neither in GAC nor in application directory.
+                                            </para>
+                                        </alert>
+                                    </definition>
+                                </definitionTable>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/nologo</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>(optional) do not show version and copyright info</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/internal</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    If specified <languageKeyword>internal</languageKeyword> class is generated. <languageKeyword>public</languageKeyword> otherwise.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/ns namespace</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (optional) <codeInline>namespace</codeInline> specifies namespace to place generated class into.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/name resource_name</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (optional) <codeInline>resource_name</codeInline> specifies name of embdeded resource as it is embdeded in an assembly.
+                                    Generated class reffers to the resource using this name.
+                                </para>
+                                <para>If ommited resource name is infered form file name.</para>
+                                <alert class="warning">
+                                    <para>
+                                        The inference of resource name from input file name is likly to be incorrect.
+                                        So, it's advised to always use <codeInline>/name</codeInline>.
+                                    </para>
+                                </alert>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/firstline text</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (optional) adds <codeInline>text</codeInline> as first line of generated file.
+                                    When combined with <codeInline>/spliton</codeInline> the line is added to 1st part only.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/l part line text</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (optional, repeatable) inserts <codeInline>text</codeInline> at <codeInline>line</codeInline> of code.
+                                </para>
+                                <definitionTable>
+                                    <definedTerm>
+                                        <codeInline>part</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>Indicaates part to insert text into</para>
+                                        <definitionTable>
+                                            <definedTerm>
+                                                <codeInline>a</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    1st part (only option when <codeInline>/spliton</codeInline> is not used
+                                                </para>
+                                            </definition>
+                                            <definedTerm>
+                                                <codeInline>b</codeInline>
+                                            </definedTerm>
+                                            <definition>
+                                                <para>
+                                                    Only when <codeInline>/spliton</codeInline> is used. Text is inserted into 2nd part.
+                                                </para>
+                                            </definition>
+                                        </definitionTable>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>line</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>Number of line (1-based) to insert text at</para>
+                                    </definition>
+                                    <definedTerm>
+                                        <codeInline>text</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>The text to be inserted</para>
+                                    </definition>
+                                </definitionTable>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/spliton text</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (optional; required if <codeInline>/out2</codeInline> is specified)
+                                    Splits resulting files into two files. <codeInline>text</codeInline> indicates a string to be used to split the files.
+                                    The <codeInline>text</codeInline> itself will be included in 2nd part.
+                                </para>
+                                <para>
+                                    <codeInline>text</codeInline> can contain escape characters -
+                                    <codeInline>\\</codeInline> for backslash (\),
+                                    <codeInline>\n</codeInline> for line feed,
+                                    <codeInline>\r</codeInline> for carriage return
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/out2 outfile</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    (optional; required if <codeInline>/spliton</codeInline> is specified)
+                                    Same as <codeInline>/out</codeInline> but used for 2nd part of output file split to two parts using <codeInline>/spliton</codeInline>.
+                                </para>
+                            </definition>
+                        </definitionTable>
+                    </definition>
+                </definitionTable>
+            </content>
+            <sections>
+                <section>
+                    <title>Remarks</title>
+                    <content>
+                        <para>
+                            <codeInline>/out2</codeInline> and <codeInline>/spliton</codeInline> together can be used to split C++/CLI output to <localUri>*.h</localUri> and <localUri>*.cpp</localUri> files.
+                        </para>
+                        <para>If any argument contains space it must be enclosed in quotes.</para>
+                        <para>
+                            ResXFileGenerator.exe does not provide public API, but it's based on <link xlink:href="8d079304-ef0f-4f43-ac18-110080ea3592">ResXFileCodeGeneratorEx</link> Custom Tool which contains API uased by this application.
+                        </para>
+                        <para>
+                            The goal of this application is to allow generation of code from RESX files from languages which does not support Custom Tools in Visual Studio (such as C++/CLI).
+                            Include call to this application in Pre-Build event to achieve this goal.
+                        </para>
+                    </content>
+                </section>
+                <section>
+                    <title>Example</title>
+                    <content>
+                        <para>The Tools.TotalCommander C++/CLI project from ĐTools library uses this tool to generated C++/CLI code form RESX file. The command used in Pre-Build event follows:</para>
+                        <code>"ResXFileGenerator /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name ToolsTotalCommander.Exceptions.resources /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</code>
+                    </content>
+                </section>
+                <section>
+                    <title>Version History</title>
+                    <content>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>1.5.4</para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>
+                                            Fix: Usage notes shown in console reported that thare is another recognized value for <codeInline>/lang</codeInline> switch - cpp.vs.
+                                            The information was removed from console usage info because <codeEntityReference qualifyHint="true">T:Microsoft.VisualC.VSCodeProvider</codeEntityReference> is not supported (and it was not in 1.5.3).
+                                        </para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <link xlink:href="8d079304-ef0f-4f43-ac18-110080ea3592"/>
+            <codeEntityReference qualifyHint="true">N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</codeEntityReference>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

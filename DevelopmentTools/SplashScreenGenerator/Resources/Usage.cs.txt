@@ -1,0 +1,18 @@
+﻿Použití:
+{0} vstup výstup argumenty
+- vstup - cestak k původnímu obrazovému souboru
+- výstup - cesta kam uložit generovaný obraz
+- argumenty - zadány jako -názevArgumentu, název argumentu je case-insensitive
+    -assemblyInfo assemblyInfo (musí být zadáno alespoň jednou, může se opakovat, zkrácená forma je -a)
+        assemblyInfo - cesta ke zrojáku obsahujícímu assembly info
+            pokud je specifikováno vícekrát, všechny soubory musí mít stejnou příponu
+    -typ velikostPísma offset [barvaPísma [barvaPozadí [font [řezPísma [formát]]]]] (specifikuje položku vypisující text do obrázku, může se opakovat)
+        nahraďte -typ za jeden z: -CompanyName, -Copyright, -Description, -ProductName, -Title, -Trademark, -Version, -Text
+            Hodnoty odpovídají vlastnostem Microsoft.VisualBasic.ApplicationServices.AssemblyInfo, -Text znamená text vytištěný beze změny
+        velikostPísma - povinné, velikost písma v bodech
+        offset - povinné, offset v pixelech kam bude text vytištěn (hodnota je poslána TypeConverteru pro System.DrawinfPoint při invariantní kultuře)
+        barvaPísma - barva textu (hodnota je poslána do TypeConverteru pro System.Drawing.Color; výchozí je Black - černá)
+        barvaPozadí - barva pozadí textu (hodnota je poslána do TypeConverteru pro System.Drawing.Color; výchozí je Transparent - průhledná)
+        font - název písma (výchozí je Arial)
+        řezPísma - formát písma (hodnota je naparzována jako System.Drawing.FontStyle; výchozí je Regular - obyčejné)
+        formát - formátovací řetězec pro String.Format (výchozí je '{0}')

@@ -1,0 +1,4 @@
+﻿CommentsMerge: Slučuje soubory s XML kometáři
+Použití: CommenstMerge VstupníSoubor1 VstupníSoubor2 ... VstupníSouborN VýstupníSoubor
+    Je potřeba specifikovat nejméně dva vstupní soubory
+Soubory by měly být bez jmenného prostoru nebo používat jmenný prostor http://dzonny.cz/xml/schemas/intellisense

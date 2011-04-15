@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="8d079304-ef0f-4f43-ac18-110080ea3592" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>ResXFileCodeGeneratorEx Custom Tool is Visual Studio Custom Tool used for generating code from managed resource (RESX) files.</para>
+        </introduction>
+        <section>
+            <title>ResXFileCodeGeneratorEx Custom Tool</title>
+            <content>
+                <para>
+                    This Custom Tool is similar to ResXFileCodeGenerator wich is built-in in Visual Studio.
+                    But ResXFileCodeGeneratorEx has extended functionality.
+                </para>
+                <list class="bullet">
+                    <listItem>
+                        <para>
+                            When <codeInline>&lt;LogicalName></codeInline> of RESX file is specified, this tool uses its value as name of embedded resource.
+                        </para>
+                        <alert class="note">
+                            <para>
+                                Embedded resource logical name (manifest name) cannot be changed from within Wisual Studio.
+                                It's necessray to edit *.*proj file and add <codeInline>&lt;LogicalName></codeInline> as child element of <codeInline>&lt;EmbeddedResource></codeInline> element.
+                            </para>
+                            <para>
+                                For more information about <codeInline>&lt;EmbeddedResource></codeInline> and <codeInline>&lt;LogicalName></codeInline> see
+                                <externalLink>
+                                    <linkText>Common MSBuild Project Items</linkText>
+                                    <linkUri>http://msdn.microsoft.com/en-us/library/bb629388.aspx</linkUri>
+                                </externalLink>.
+                            </para>
+                        </alert>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            When used with Visual Basic generates <languageKeyword>Module</languageKeyword>.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            For string resources containign <codeInline>M:System.String.Format</codeInline> placeholdres ({0}, {1}, etc.) not only properties but also methods accepting arguments for placeholders are generated.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>Generated code is thread-safe.</para>
+                    </listItem>
+                    <listItem>
+                        <para>Generated code is compatible with .NET Compact Framework</para>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        <section>
+            <title>Custom Tool information</title>
+            <content>
+                <para>Following Custom Tools are defined:</para>
+                <definitionTable>
+                    <definedTerm>ResXFileCodeGeneratorEx</definedTerm>
+                    <definition>
+                        <para>
+                            Generates <languageKeyword>public</languageKeyword> <languageKeyword>class</languageKeyword>es (<languageKeyword>Module</languageKeyword>s when used with Visual Basic).
+                            Implemented in <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResXFileCodeGeneratorEx</codeEntityReference>.
+                        </para>
+                    </definition>
+                    <definedTerm>InternalResXFileCodeGeneratorEx</definedTerm>
+                    <definition>
+                        <para>
+                            Generates <languageKeyword>internal</languageKeyword> <languageKeyword>class</languageKeyword>es (<languageKeyword>Module</languageKeyword>s when used with Visual Basic).
+                            Implemented in <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.InternalResXFileCodeGeneratorEx</codeEntityReference>.
+                        </para>
+                    </definition>
+                </definitionTable>
+                <para>
+                    Implemented in <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</codeEntityReference> (ResXFileCodeGeneratorEx.dll).
+                    This Custom Tool is implemented in managed code.
+                </para>
+                <para>
+                    When registered using <externalLink>
+                        <linkText>Regasm.exe</linkText>
+                        <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
+                    </externalLink> both Custom Tools are registered for Visual Studio 8 (2005), Visual Studio 9 (2008) and Visual Studio 10 (2010) (if registry key for appropriate Visual Studio version is present (i.e. it's installed)).
+                    Supported languages this custom tool automatically installs for are: C#, J#, Visual Basic.
+                    However this custom tool uses CodeDom so it can be used with any .NET language with code generator defined when manually registered for that language.
+                </para>
+                <alert class="note">
+                    <para>
+                        For more information about Custom Tools see <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8#CustomToolsInfo"/>.
+                    </para>
+                </alert>
+            </content>
+        </section>
+        <section>
+            <title>License</title>
+            <content>
+                <para>
+                    This Custom Tool is based on
+                    <externalLink>
+                        <linkText>DMK Software Extended Strongly Typed Resource Generator</linkText>
+                        <linkUri>http://sites.google.com/site/dmytrokryvko/</linkUri>
+                    </externalLink>. This implementation extends support to Visual Studio 2010 and adds support of <codeInline>&lt;LogicalName></codeInline>.
+                </para>
+                <para>
+                    This is original license agreement of <externalLink>
+                        <linkText>DMK Software Extended Strongly Typed Resource Generator</linkText>
+                        <linkUri>http://sites.google.com/site/dmytrokryvko/</linkUri>
+                    </externalLink>:
+                </para>
+                <para>
+                    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to
+                    deal in the Software without restriction, including without limitation the rights to use, copy, distribute, and to permit persons to whom the Software
+                    is furnished to do so, subject to the following conditions:
+                </para>
+                <para>
+                    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+                </para>
+                <para>
+                    The software is provided "as is", wothout warranty of any kind, express or implied, including but not limited to the warranties of merchantability,
+                    fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other
+                    liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings
+                    in the software.
+                </para>
+                <para>
+                    The authors are pretty confident in its software and services, but if it happens to entirely accidentally turn your machine into a cold fusion
+                    reactor and open a giant hole in space that endangers the worls as we know it, then the authors cannot in any way be made responsible.
+                </para>
+            </content>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8#CustomToolsInfo"/>
+            <externalLink>
+                <linkText>Common MSBuild Project Items</linkText>
+                <linkUri>http://msdn.microsoft.com/en-us/library/bb629388.aspx</linkUri>
+            </externalLink>
+            <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</codeEntityReference>
+            <codeEntityReference>T:System.CodeDom.Compiler.CodeGenerator</codeEntityReference>
+            <externalLink>
+                <linkText>Regasm.exe (Assembly Registration Tool)</linkText>
+                <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
+            </externalLink>
+            <externalLink>
+                <linkText>DMK Software Extended Strongly Typed Resource Generator</linkText>
+                <linkUri>http://sites.google.com/site/dmytrokryvko/</linkUri>
+            </externalLink>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>
