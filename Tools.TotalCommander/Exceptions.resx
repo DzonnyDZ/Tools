@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CannotBeRepresented" xml:space="preserve">
     <value>{0} cannot be represented as {1}, use {2} and {3} instead.</value>
@@ -126,8 +126,17 @@
   <data name="ColumnDefinitionStringTooLong" xml:space="preserve">
     <value>Column definition string returned by {0} is too long.</value>
   </data>
+  <data name="CryptoAlreadyInitialized" xml:space="preserve">
+    <value>Cryptography for this plugin has already been initialized.</value>
+  </data>
+  <data name="CryptoNotInitialized" xml:space="preserve">
+    <value>Crypto was not initialized</value>
+  </data>
   <data name="DefaultTextTooLong" xml:space="preserve">
     <value>Default text is too long.</value>
+  </data>
+  <data name="EncryptDecryptFailed" xml:space="preserve">
+    <value>Encrypt/Decrypt failed</value>
   </data>
   <data name="FieldNameTooLong" xml:space="preserve">
     <value>{0} returned fields which's name is longer than {1}</value>
@@ -156,6 +165,9 @@
   <data name="NameTooLong" xml:space="preserve">
     <value>Name too long. Mamximum allowed length is {0}</value>
   </data>
+  <data name="NoMasterPassword" xml:space="preserve">
+    <value>No master password entered yet</value>
+  </data>
   <data name="ParamAssignedTooLong" xml:space="preserve">
     <value>The {0} parameter of the {1} method was assigned to long string.</value>
   </data>
@@ -174,6 +186,9 @@
   <data name="PropertyWasNull" xml:space="preserve">
     <value>{0} was null.</value>
   </data>
+  <data name="ReadPasswordStoreFailed" xml:space="preserve">
+    <value>Password not found in password store</value>
+  </data>
   <data name="ReturnedArrayToLong" xml:space="preserve">
     <value>Array returned by {0} is too long.</value>
   </data>
@@ -185,5 +200,14 @@
   </data>
   <data name="UnitNamesTooLong" xml:space="preserve">
     <value>{0} returned unit names sum of which's length plus number of them minus 1 is more than {1}</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>Unknown error</value>
+  </data>
+  <data name="ValueNotSupported" xml:space="preserve">
+    <value>Value {0} is not supported</value>
+  </data>
+  <data name="WritePasswordStoreFailed" xml:space="preserve">
+    <value>Could not write password to password store</value>
   </data>
 </root>

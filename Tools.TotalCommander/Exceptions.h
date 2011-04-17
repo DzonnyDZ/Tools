@@ -20,7 +20,7 @@ namespace Tools {
     // Pro přidání nebo odebrání člena editujte váš .resx soubor a pak spusťte custom tool InternalResXFileCodeGeneratorEx nebo přebuildujte váš projek ve VS.NET.
     // Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-2011 (http://tools.codeplex.com)
     [System::CodeDom::Compiler::GeneratedCodeAttribute(L"Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx", 
-    L"1.5.3.38916"), 
+    L"1.5.4.22138"), 
     System::Diagnostics::DebuggerNonUserCodeAttribute, 
     System::Diagnostics::CodeAnalysis::SuppressMessageAttribute(L"Microsoft.Naming", L"CA1724:TypeNamesShouldNotMatchNamespaces")]
     ref class Exceptions {
@@ -80,9 +80,30 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Cryptography for this plugin has already been initialized.'.
+        /// </summary>
+        public: static property System::String^  CryptoAlreadyInitialized {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Crypto was not initialized'.
+        /// </summary>
+        public: static property System::String^  CryptoNotInitialized {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Default text is too long.'.
         /// </summary>
         public: static property System::String^  DefaultTextTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Encrypt/Decrypt failed'.
+        /// </summary>
+        public: static property System::String^  EncryptDecryptFailed {
             System::String^  get();
         }
         
@@ -150,6 +171,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'No master password entered yet'.
+        /// </summary>
+        public: static property System::String^  NoMasterPassword {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'The {0} parameter of the {1} method was assigned to long string.'.
         /// </summary>
         public: static property System::String^  ParamAssignedTooLong {
@@ -192,6 +220,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Password not found in password store'.
+        /// </summary>
+        public: static property System::String^  ReadPasswordStoreFailed {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Array returned by {0} is too long.'.
         /// </summary>
         public: static property System::String^  ReturnedArrayToLong {
@@ -216,6 +251,27 @@ namespace Tools {
         /// Najde lokalizivaný řetězec podobný '{0} returned unit names sum of which&apos;s length plus number of them minus 1 is more than {1}'.
         /// </summary>
         public: static property System::String^  UnitNamesTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Unknown error'.
+        /// </summary>
+        public: static property System::String^  UnknownError {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Value {0} is not supported'.
+        /// </summary>
+        public: static property System::String^  ValueNotSupported {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Could not write password to password store'.
+        /// </summary>
+        public: static property System::String^  WritePasswordStoreFailed {
             System::String^  get();
         }
         
@@ -247,10 +303,28 @@ namespace Tools {
         public: static System::String^  ColumnDefinitionStringTooLongFormat(System::Object^  arg0);
         
         /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti CryptoAlreadyInitialized.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti CryptoAlreadyInitialized.</returns>
+        public: static System::String^  CryptoAlreadyInitializedFormat();
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti CryptoNotInitialized.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti CryptoNotInitialized.</returns>
+        public: static System::String^  CryptoNotInitializedFormat();
+        
+        /// <summary>
         /// Pahýl formátovací metody vracející hodnotu vlastnosti DefaultTextTooLong.
         /// </summary>
         /// <returns>Hodnota vlastnosti DefaultTextTooLong.</returns>
         public: static System::String^  DefaultTextTooLongFormat();
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti EncryptDecryptFailed.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti EncryptDecryptFailed.</returns>
+        public: static System::String^  EncryptDecryptFailedFormat();
         
         /// <summary>
         /// Formátuje lokalizovaný řetězec podobný '{0} returned fields which&apos;s name is longer than {1}'.
@@ -317,6 +391,12 @@ namespace Tools {
         public: static System::String^  NameTooLongFormat(System::Object^  arg0);
         
         /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti NoMasterPassword.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti NoMasterPassword.</returns>
+        public: static System::String^  NoMasterPasswordFormat();
+        
+        /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'The {0} parameter of the {1} method was assigned to long string.'.
         /// </summary>
         /// <param name="arg0">Objekt (0) pro formátování.</param>
@@ -358,6 +438,12 @@ namespace Tools {
         public: static System::String^  PropertyWasNullFormat(System::Object^  arg0);
         
         /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti ReadPasswordStoreFailed.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti ReadPasswordStoreFailed.</returns>
+        public: static System::String^  ReadPasswordStoreFailedFormat();
+        
+        /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'Array returned by {0} is too long.'.
         /// </summary>
         /// <param name="arg0">Objekt (0) pro formátování.</param>
@@ -387,6 +473,25 @@ namespace Tools {
         /// <param name="arg1">Objekt (1) pro formátování.</param>
         /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
         public: static System::String^  UnitNamesTooLongFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti UnknownError.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti UnknownError.</returns>
+        public: static System::String^  UnknownErrorFormat();
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Value {0} is not supported'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  ValueNotSupportedFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti WritePasswordStoreFailed.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti WritePasswordStoreFailed.</returns>
+        public: static System::String^  WritePasswordStoreFailedFormat();
     };
         }
     }

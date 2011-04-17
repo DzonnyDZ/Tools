@@ -8,6 +8,7 @@ namespace Tools{namespace TotalCommanderT{
     using namespace System;
     using namespace System::ComponentModel;
    
+#pragma region "Enums"
     /// <summary>Result of file system operation</summary>
     public enum class FileSystemExitCode{
         /// <summary>The file was copied/moved OK</summary>
@@ -39,6 +40,46 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>This was a (symbolic) link or .lnk file pointing to a different directory</summary>
         Symlink = FS_EXEC_SYMLINK
     };
+
+    /// <summary>Defines a result of cryptography operation</summary>
+    /// <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    public enum class CryptResult{
+        /// <summary>The operation succeeded</summary>
+        OK = FS_FILE_OK,
+        /// <summary>Encrypt/Decrypt failed</summary>
+        Fail = FS_FILE_NOTSUPPORTED,
+        /// <summary>Could not write password to password store</summary>
+        WriteError = FS_FILE_WRITEERROR,
+        /// <summary>Password not found in password store</summary>
+        ReadError = FS_FILE_READERROR,
+        /// <summary>No master password entered yet</summary>
+        NoMasterPassword = FS_FILE_NOTFOUND
+    };
+
+    /// <summary>Indicates currrent status of Total Commander secure password store</summary>
+    /// <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    [Flags]
+    public enum class CryptFlags{
+        /// <summary>The user already has a master password defined</summary>
+        MasterPasswordSet = FS_CRYPTOPT_MASTERPASS_SET
+    };
+
+    /// <summary>Modes of crypto operations</summary>
+    /// <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    public enum class CryptMode{
+        /// <summary>Save password to password store</summary>
+        SavePassword = FS_CRYPT_SAVE_PASSWORD,
+        /// <summary>Load password from password store</summary>
+        LoadPassword = FS_CRYPT_LOAD_PASSWORD,
+        /// <summary>Load password only if master password has already been entered</summary>
+	    LoadPasswordNoUI = FS_CRYPT_LOAD_PASSWORD_NO_UI,
+        /// <summary>Copy password to new connection. Here the second string parameter <c>Password</c> is not a password, but the name of the target connection</summary>
+        CopyPassword = FS_CRYPT_COPY_PASSWORD,
+        /// <summary>Copy password to new connection and delete source password. Here the second string parameter <c>Password</c> is not a password, but the name of the target connection</summary>
+	    MovePassword = FS_CRYPT_MOVE_PASSWORD,
+        /// <summary>Delete the password of the given connection</summary>
+        DeletePassword = FS_CRYPT_DELETE_PASSWORD
+    };
     
     /// <summary>Cfalg used when copying or moving file or directory</summary>
     [FlagsAttribute()] 
@@ -54,6 +95,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Different casing</summary>
         DifferentCase = FS_COPYFLAGS_EXISTS_DIFFERENTCASE
     };
+
     /// <summary>File attributes</summary>
     [FlagsAttribute]
     [CLSCompliantAttribute(false)]
@@ -125,7 +167,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Microsoft-defined reparse tag - symbolic link</summary>
 	    Symlink = IO_REPARSE_TAG_SYMLINK
     };
-   
+#pragma endregion
+
     /// <summary>Contains information about the file that is found by the <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindFirst(System.String,Tools.TotalCommanderT.FindData@)"/>, or <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindNext(System.Object,Tools.TotalCommanderT.FindData@)"/> function.</summary>
     public value class FindData {
     private:
@@ -261,7 +304,7 @@ namespace Tools{namespace TotalCommanderT{
 #pragma endregion
     };
 
-   
+#pragma region "More enums"   
     /// <summary>When user input is requested by plugin, one of those values may be used</summary>
     public enum class InputRequestKind{
         /// <summary>The requested string is none of the default types</summary>
@@ -353,6 +396,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Synchronize: Deleting files from plugin</summary>
         SyncDelete = FS_STATUS_OP_SYNC_DELETE	
     };
+#pragma end region
 
     /// <summary>Arguments of operation status notifications</summary>
     public ref class OperationEventArgs : EventArgs{
@@ -552,9 +596,35 @@ namespace Tools{namespace TotalCommanderT{
         BitmapHandling GetFlag();
     };
 
+    /// <summary>Exception thrown when there is problem in crypt functions (Total Commander secure passsword store)</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    public ref class CryptException sealed: System::Security::Cryptography::CryptographicException{
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="CryptException"/> class from error message and reason code</summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="reason">One of <seee cref="CryptResult"/> values indicating kind of failure</param>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref="CryptResult::OK"/></exception>
+        /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
+        CryptException(String^ message, CryptResult reason);
+        /// <summary>CTor - creates a new instance of the <see cref="CryptException"/> class from error reason</summary>
+        /// <param name="reason">One of <seee cref="CryptResult"/> values indicating kind of failure</param>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref="CryptResult::OK"/></exception>
+        /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
+        CryptException(CryptResult reason);
+        /// <summary>Gets value indicating why the operation failed</summary>
+        property CryptResult Reason{ CryptResult get(); }
+    private:
+        /// <summary>Gets default string error message from <see cref="CryptResult"/></summary>
+        /// <param name="reason">Indicates why the crypto operation failed</param>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref="CryptResult::OK"/></exception>
+        /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
+        static String^ GetMessage(CryptResult reason);
+    };
+
 #pragma region "Delegates"
     ref class FileSystemPlugin;//Forward declaration
     /// <summary>Callback function, which the plugin can call to show copy progress.</summary>
+    /// <param name="sender">The plugin requesting the operation</param>
     /// <param name="SourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plugin file system.</param>
     /// <param name="TargetName">Name to which the file is copied.</param>
     /// <param name="PercentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
@@ -563,6 +633,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <para>During the <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindFirst(System.String,Tools.TotalCommanderT.FindData@)"/>/<see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindNext(System.Object,Tools.TotalCommanderT.FindData@)"/>/<see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindClose(System.Object)"/> loop, the plugin may now call the <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.ProgressProc(System.String,System.String,System.Int32)"/> to make a progess dialog appear. This is useful for very slow connections. Don't call <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.ProgressProc(System.String,System.String,System.Int32)"/> for fast connections! The progress dialog will only be shown for normal dir changes, not for compound operations like get/put. The calls to <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.ProgressProc(System.String,System.String,System.Int32)"/> will also be ignored during the first 5 seconds, so the user isn't bothered with a progress dialog on every dir change.</para></remarks>
     public delegate bool ProgressCallback(FileSystemPlugin^ sender, String^ SourceName, String^ TargetName,int PercentDone);
     /// <summary>Callback function, which the plugin can call to show the FTP connections toolbar, and to pass log messages to it. Totalcmd can show these messages in the log window (ftp toolbar) and write them to a log file.</summary>
+    /// <param name="sender">The plugin requesting the operation</param>
     /// <param name="MsgType">Can be one of the <see cref="LogKind"/> flags</param>
     /// <param name="LogString">String which should be logged.
     /// <para>When <paramref name="MsgType"/>is <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the string MUST have a specific format:</para>
@@ -570,7 +641,8 @@ namespace Tools{namespace TotalCommanderT{
     /// <para>When <paramref name="MsgType"/> is <see2 cref2="F:Tools.TotalCommanderT.LogKind.TransferComplete"/>, this parameter should contain both the source and target names, separated by an arrow <c>" -> "</c>, e.g. <c>Download complete: \Filesystem\dir1\file1.txt -> c:\localdir\file1.txt</c></para></param>
     /// <remarks>Do NOT call <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.LogProc(Tools.TotalCommanderT.LogKind,System.String)"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect! If you call it with <paramref name="MsgType"/> <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the function <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.Disconnect(System.String)"/> will be called (if defined) when the user presses the Disconnect button.</remarks>
     public delegate void LogCallback(FileSystemPlugin^ sender, LogKind MsgType,String^ LogString);
-    /// <summary>callback function, which the plugin can call to request input from the user. When using one of the standard parameters, the request will be in the selected language.</summary>
+    /// <summary>Callback function, which the plugin can call to request input from the user. When using one of the standard parameters, the request will be in the selected language.</summary>
+    /// <param name="sender">The plugin requesting the operation</param>
     /// <param name="RequestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
     /// <param name="CustomTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>
     /// <param name="CustomText">Override the text defined with <paramref name="RequestType"/>. Set this to NULL or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
@@ -581,6 +653,17 @@ namespace Tools{namespace TotalCommanderT{
     /// <exception cref="ArgumentException"><paramref name="DefaultText"/> is longer than <paramref name="maxlen"/></exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxlen"/> is less than 1</exception>
     public delegate String^ RequestCallback(FileSystemPlugin^ sender, InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen);
+    /// <summary>Callback function, which the plugin can call to store passwords in the secure password store, read them back, or copy them to a new connection.</summary>
+    /// <param name="sender">The plugin requesting the operation</param>
+    /// <param name="mode">The mode of operation</param>
+    /// <param name="connectionName">Name of the connection for this operation</param>
+    /// <param name="password">Operation-specific, usually the password to be stored, or the target connection when copying/moving a connection</param>
+    /// <param name="maxlen">Maximum length, in characters, the password buffer can store when calling one of the load functions</param>
+    /// <returns>Password retrieved. Only when <paramref name="mode"> is <see cref="CryptMode::LoadPassword"/> or <see cref="CryptMode::LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
+    /// <exception cref="CryptException">Crypto operation failed.</exception>
+    /// <remarks>This delegate is used only when Total Commander plugin is used outside Total Commander.</remarks>
+    /// <version version="1.5.4">This delegate is new in version 1.5.4</version>
+    public delegate String^ CryptCallback(FileSystemPlugin^ sender, CryptMode mode, String^ connectionName, String^ password, int maxlen);  
 #pragma endregion
 
 #pragma region "View definition"

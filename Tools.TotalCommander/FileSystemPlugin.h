@@ -13,7 +13,8 @@ namespace Tools{namespace TotalCommanderT{
     public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
         FileSystemPlugin();
-#pragma region "TC functions (required)"
+
+#pragma region TC functions (required)
     private:
         /// <summary>Pointer to progress procedure</summary>
         tProgressProc pProgressProc;
@@ -58,6 +59,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         property bool IsInTotalCommander{bool get();}
+
         /// <summary>Called to retrieve the first file in a directory of the plugin's file system.</summary>
         /// <param name="Path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
         /// <para>As root, a single backslash is passed to the plugin. The root items appear in the plugin base directory retrieved by <see cref="FsGetDefRootName"/> at installation time. This default root name is NOT part of the path passed to the plugin!</para>
@@ -91,15 +93,17 @@ namespace Tools{namespace TotalCommanderT{
         [PluginMethod("TC_FS_FINDCLOSE")]
         int FsFindClose(HANDLE Hdl);
 #pragma endregion
-#pragma region ".NET Functions (required)"
+
+#pragma region .NET Functions (required)
     private:
         /// <summary>Contains value of the <see cref="Initialized"/> property</summary>
         bool initialized;
         /// <summary>Contains value of the <see cref="PluginNr"/> property</summary>
         int pluginNr;
-    protected:
+    public:
         /// <summary>Gets plugin number this plugin instance is recognized by Total Commender under</summary>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
+        /// <version version="1.5.4">Accessibility changed from <see langword="protected"/> to <see langword="public"/></version>
         property int PluginNr{int get();}
     public:
         /// <summary>Gets value indicating if this plugin instance was initialized or not</summary>
@@ -110,7 +114,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>Default implementation of this method does nothing.</para>
         /// <para>This method implements plugin function <see cref="FsInit"/> (alternatively <see cref="InitializePlugin"/>)</para></remarks>
         virtual void OnInit();
-#pragma region "Callbacks"
+
+#pragma region Callbacks
         /// <summary>Callback function, which the plugin can call to show copy progress.</summary>
         /// <param name="SourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plugin file system.</param>
         /// <param name="TargetName">Name to which the file is copied.</param>
@@ -154,7 +159,63 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="ArgumentException"><paramref name="DefaultText"/> is longer than <paramref name="maxlen"/></exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxlen"/> is less than 1</exception>
         String^ RequestProc(InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen);
+
+#pragma region Crypto
+    protected:
+        /// <summary>Performs a cryptography operation using Total Commander</summary>
+        /// <param name="mode">Then mode of operation</param>
+        /// <param name="connectionName">Name of the connection for this operation</param>
+        /// <param name="password">Operation-specific, usually the password to be stored, or the target connection when copying/moving a connection</param>
+        /// <returns>Password retrieved. Only when <paramref name="mode"> is <see cref="CryptMode::LoadPassword"/> or <see cref="CryptMode::LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
+        /// <exception cref="CryptException">Crypto operation failed.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
+        /// <remarks>This is lower-level function which calls directly Total Commander callback. It's preffered to use other crypto functions instead.</remarks>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [EditorBrowsable(EditorBrowsableState::Advanced)]
+        String^ PerformCryptoOperation(CryptMode mode, String^ connectionName, String^ password, int maxlen);
+        /// <summary>Saves a password for given connection is Total Commander secure password store</summary>
+        /// <param name="connectionName">Name of the connection to save password for</param>
+        /// <param name="password">The password to be saved</param>
+        /// <exception cref="CryptException">Crypto operation failed.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> or <paramref name="password"/> is null</exception>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        void SavePassword(String^ connectioName, String^ password);
+        /// <summary>Loads a password form Total Commander secure password store for given connection</summary>
+        /// <paramm name="connectionName">Name of the connection to load password for</param>
+        /// <param name="maxlen">Maximum lenght, in characters, retireved password can have</param>
+        /// <param name="showUI">True to ask user for master password, false to load password only when master password was already enetered</param>
+        /// <exception cref="CryptException">Crypto operation failed.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
+        /// <remarks>
+        /// When showing details of an existing connection this function should be first called with <paramref name="showUI"/> false.
+        /// In case ith throws an <see cref="CryptException"/> with <see cref="CryptException::Reason"/> <see cref="CryptResult::NoMasterPassword"/> show a button "Edit password".
+        /// Only call this function with <paramref name="showUI"/> true when user clicks that button, or tries to connect.
+        /// This way the user does not have to enter the master password if he just wanted to make some other changes to the connection settings.
+        /// </remarks>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        String^ LoadPassword(String^ connectionName, int maxlen, bool showUI);
+        /// <summary>Copies or moves the password form one connection in Total Commander safe password store to the other</summary>
+        /// <param name="sourceConnectionName">Name of the source connection to take a password from</param>
+        /// <param name="targetConnectionName">Name of the target connection to copy/move connection to</param>
+        /// <param name="deleteOriginal">True to move the password, false to copy it</param>
+        /// <exception cref="CryptException">Crypto operation failed.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="sourceConnectionName"/> or <paramref name="targetConnectionName"/> is null</exception>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        void MovePassword(String^ sourceConnectionName, String^ targetConnectionName, bool deleteOriginal);
+        /// <summary>Deletes a passowrd stored for given connection in Total Commander safe password store</summary>
+        /// <param name="connectionName">Name of connection to delete the password of</param>
+        /// <exception cref="CryptException">Crypto operation failed.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        void DeletePassword(String^ connectionName);
 #pragma endregion
+#pragma endregion
+
     private:
         /// <summary>Contains handle-object dictionary for objects returned by <see cref="FindFirst"/> and <see cref="FindNext"/></summary>
         Collections::Generic::Dictionary<int,Object^>^ handleDictionary ;
@@ -243,7 +304,65 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="Status">The object returned by <see cref="FindFirst"/>; null when Total Commander supplied handle that is  not in <see cref="HandleDictionary"/>. When this function exists, <paramref name="Status"/> automatically removed from <see cref="HandleDictionary"/></param>
         virtual void FindClose(Object^ Status);
 #pragma endregion
-#pragma region "Optional methods"
+
+#pragma region Optional methods
+#pragma region Crypt
+    private:
+        tCryptProc cryptProc;
+        CryptCallback^ dCryptProc;
+        int cryptoNr;
+        bool cryptInitialized;
+    public:
+        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. This function is only needed if you want to use the secure password store in Total Commander.</summary>
+        /// <param name="pCryptProc">Pointer to the crypto callback function. See <see cref="CryptProc"/> for a description of this function</param>
+        /// <param name="CryptoNr">A parameter which needs to be passed to the callback function</param>
+        /// <param name="Flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
+        /// <exception cref="NotSupportedException">Most-derived implementation of
+        /// <remarks><para>This method is called by Total Commander and is not intended for direct use</para>
+        /// This plugin function is implemented by <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/>.</remarks>
+        /// <version version="1.5.4">This method is new in 1.5.4</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("OnInitializeCryptography","TC_FS_SETCRYPTCALLBACK")]
+        void FsSetCryptCallback(tCryptProc pCryptProc,int CryptoNr,int Flags);
+        
+        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. Use this function instead of <see cref="FsSetCryptCallback"/> when using the plugin outside of Total Commander.</summary>
+        /// <param name="cryptProc">Crypto callback delegate. See <see cref="CryptCallback"/> for a description of this function.</param>
+        /// <param name="CryptoNr">A parameter which needs to be passed to the callback function</param>
+        /// <param name="Flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
+        /// <exception cref="ArgumentNullexception"><paramref name="cryptProc"> is null and this plugin implementation supports crypto</exception>
+        /// <remarks><para>Use this function to initialize the plugin when used outside of Total Commander.</para>
+        /// This plugin function is implemented by <see cref="OnInitializeCryptography"/>
+        /// <para>When you call this method and plugin does not support crypto (i.e. most-derived implementation of <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/> the call to this method is ignored and related crypto properties (such as <see cref="CryptInitialized"/> or <see cref="CryptoNr"/>) are not initialized</para></remarks>
+        /// <version version="1.5.4">This method is new in 1.5.4</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void InitializeCryptography(CryptCallback^ cryptProc, int cryptoNr, CryptFlags flags); 
+        /// <summary>Gets value indicating if crypt was initialized (<see cref="InitializeCryptography"/> or <see cref="FsSetCryptCallback"/> has already been called</summary>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        property bool CryptInitialized{bool get();}
+        /// <summary>Gets crypto number that needs to be passed to crypto functions</summary>
+        /// <returns>An integer number identifying this plugin instance inside Total Commander for crypto purposes. 0 when crypto was not initialized (i.e. <see creff="CryptInitialized"/> is false.</returns>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        property int CryptoNr{int get();}
+    protected:
+        /// <summary>When overriden in derived class this method is called when loading the plugin after plugin cryptography was initialized.</summary>
+        /// <param name="flags">Flags regarding the crypto connection</param>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <remarks>
+        /// This function is only needed if you want to use the secure password store in Total Commander.
+        /// No special code is needed in this function. You even don't have to call base class method.
+        /// However it is necessary to override this function in derived class and NOT to decorate it with <seee cref="MethodNotSupportedAttribute"/> to indicate that your plugin wants to the secure password store in Total Commander.
+        /// In older versions of Total Commmander (prior TC 7.55 / plugin interface 2.0) this function is never called (indicating that the secure password store is not supported by that version of Total Commander).
+        /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+        /// <note type="inheritinfo">Do not thow any exceptions from this method. Any exceptions thrown will be passed to Total Commander which cannot handle them.</note>
+        /// </remarks>
+        /// <version version="1.5.4">This method is new in 1.5.4</version>
+        [MethodNotSupportedAttribute]
+        virtual void OnInitializeCryptography(CryptFlags flags);
+#pragma endregion
+#pragma region MkDir
     public:
         /// <summary>Create a directory on the plugin's file system.</summary>
         /// <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
@@ -265,7 +384,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool MkDir(String^ Path);
-    public:
+#pragma endregion
+#pragma region ExecuteFile    
+public:
         /// <summary>Called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="MainWin">Parent window which can be used for showing a property sheet.</param>
         /// <param name="RemoteName">Name of the file to be executed, with full path.</param>
@@ -328,18 +449,21 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>Authors of <see cref="FileSystemPlugin"/>-derived classes can chose either to implement <see cref="ExecuteFile"/> functionality on theri own directly in this method or call base class method and implement functionality in methods mentioned above.</para></note></remarks>
         [MethodNotSupportedAttribute]
         virtual ExecExitCode ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb);
+
 #pragma region "ExecuteFile helper methods"
     private:
         /// <summary>Contains value indicating if the <see cref="FtpModeAdvertisement"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        bool FtpModeAdvertisementImplemented;
+        initonly bool FtpModeAdvertisementImplemented;
         /// <summary>Contains value indicating if the <see cref="OpenFile"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        bool OpenFileImplemented;
+        initonly bool OpenFileImplemented;
         /// <summary>Contains value indicating if the <see cref="ShowFileInfo"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        bool ShowFileInfoImplemented;
+        initonly bool ShowFileInfoImplemented;
         /// <summary>Contains value indicating if the <see cref="ExecuteCommand"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        bool ExecuteCommandImplemented;
+        initonly bool ExecuteCommandImplemented;
         /// <summary>Contains value indicating if the <see cref="ExecuteFile"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        bool ExecuteFileImplemented;
+        initonly bool ExecuteFileImplemented;
+        /// <summary>Contains value indicating if the <see cref="OnInitializeCryptography"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
+        initonly bool OnInitializeCryptographyImplemented;
     protected:
         /// <summary>When overriden in derived class called when Total COmmander advertises FTP conection mode to plugin via <see cref="ExecuteFile"/></summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
@@ -393,6 +517,8 @@ namespace Tools{namespace TotalCommanderT{
         [MethodNotSupportedAttribute]
         virtual ExecExitCode ExecuteCommand(IntPtr hMainWin, String^% RemoteName, String^ command);
 #pragma endregion
+#pragma endregion
+#pragma region RenMovFile
     public:
         /// <summary>Called to transfer (copy or move) a file within the plugin's file system.</summary>
         /// <param name="OldName">Name of the remote source file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
@@ -434,6 +560,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode RenMovFile(String^ OldName, String^ NewName, bool Move, bool OverWrite, RemoteInfo info);
+#pragma endregion
+#pragma region getFile
     public:
         /// <summary>Called to transfer a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
@@ -481,6 +609,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode GetFile(String^ RemoteName, String^% LocalName, CopyFlags CopyFlags, RemoteInfo info);
+#pragma endregion
+#pragma region PutFile    
     public:
         /// <summary>Called to transfer a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
         /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
@@ -526,6 +656,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode PutFile(String^ LocalName, String^% RemoteName, CopyFlags CopyFlags);
+#pragma endregion
+#pragma region DeleteFile
     public:
         /// <summary>Called to delete a file from the plugin's file system</summary>
         /// <param name="RemoteName">Name of the file to be deleted, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes</param>
@@ -547,6 +679,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool DeleteFile(String^ RemoteName);
+#pragma endregion
+#pragma region RemoveDir
     public:
         /// <summary>Called to remove a directory from the plugin's file system.</summary>
         /// <param name="RemoteName">Name of the directory to be removed, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
@@ -568,6 +702,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool RemoveDir(String^ RemoteName);
+#pragma endregion
+#pragma region Disconnect
     public:
         /// <summary>Called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
         /// <param name="DisconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plugin to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
@@ -597,6 +733,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool Disconnect(String^ DisconnectRoot);
+#pragma endregion
+#pragma region SetAttr
     public:
         /// <summary>Called to set the (Windows-Style) file attributes of a file/dir. <see cref="FsExecuteFile(HWND,char*,char*)"/> is called for Unix-style attributes.</summary>
         /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
@@ -619,6 +757,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual void SetAttr(String^ RemoteName, StandardFileAttributes NewAttr);
+#pragma endregion
+#pragma region SetTime
     public:
         /// <summary>Called to set the (Windows-Style) file times of a file/dir.</summary>
         /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
@@ -645,6 +785,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual void SetTime(String^ RemoteName, Nullable<DateTime> CreationTime, Nullable<DateTime> LastAccessTime, Nullable<DateTime> LastWriteTime);
+#pragma endregion
+#pragma region StatusInfo
     public:
         /// <summary>called just as an information to the plugin that a certain operation starts or ends. It can be used to allocate/free buffers, and/or to flush data from a cache. There is no need to implement this function if the plugin doesn't require it.</summary>
         /// <param name="RemoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
@@ -679,6 +821,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</para></remarks>
         /// <param name="e">Event arguments</param>
         virtual void OnOperationFinished(OperationEventArgs^ e);
+#pragma endregion
+#pragma region GetDefRoootName
     public:
         /// <summary>Called only when the plugin is installed. It asks the plugin for the default root name which should appear in the Network Neighborhood. This root name is NOT part of the path passed to the plugin when Totalcmd accesses the plugin file system! The root will always be "\", and all subpaths will be built from the directory names returned by the plugin.</summary>
         /// <param name="DefRootName">Pointer to a buffer (allocated by the calling program) which can receive the root name.</param>
@@ -689,6 +833,8 @@ namespace Tools{namespace TotalCommanderT{
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_GETDEFROOTNAME")]
         void FsGetDefRootName(char* DefRootName,int maxlen);
+#pragma endregion
+#pragma region ExtractCustomIcon
     public:
         /// <summary>Called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
         /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> characters (including terminating 0!). The icon handle must still be returned in <paramref name="TheIcon"/>!</param>
@@ -714,6 +860,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         [MethodNotSupportedAttribute]
         virtual IconExtractResult ExctractCustomIcon(String^% RemoteName, IconExtractFlags ExtractFlags, Drawing::Icon^% TheIcon);
+#pragma endregion
+#pragma region SetDefaultParams
+public:
         /// <summary>Called immediately after <see cref="FsInit"/>.</summary>
         /// <param name="dps">This structure of type <see cref="FsDefaultParamStruct"/> currently contains the version number of the plugin interface, and the suggested location for the settings file (ini file). It is recommended to store any plugin-specific information either directly in that file, or in that directory under a different name. Make sure to use a unique header when storing data in this file, because it is shared by other file system plugins! If your plugin needs more than 1kbyte of data, you should use your own ini file because ini files are limited to 64k.</param>
         /// <remarks>
@@ -742,6 +891,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Always call base class method. When base class method is not called, the <see cref="PluginParams"/> property does not have valid value.</note></remarks>
         /// <exception cref="InvalidOperationException">This method is called when it was already called. This method can be called only once on each instance.</exception>
         virtual void SetDefaultParams(DefaultParams dps);
+#pragma endregion
+#pragma region GetPreviewBitmap
+    public:
         /// <summary>Called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
         /// <param name="RemoteName">This is the full path to the file or directory whose bitmap is to be retrieved. When extracting a bitmap, you can return a bitmap name here - this ensures that the icon is only cached once in the calling program. The returned bitmap name must not be longer than <see cref="FindData::MaxPath"/> characters (including terminating 0!). The bitmap handle must still be returned in <paramref name="ReturnedBitmap"/>!</param>
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
@@ -777,6 +929,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         [MethodNotSupportedAttribute]
         virtual BitmapResult^ GetPreviewBitmap(String^ RemoteName, int width, int height);
+#pragma endregion
+#pragma region LinksToLocalFiles
+    public:
         /// <summary>Indicates if plugin is temporary panel-style plugin</summary>
         /// <returns>True if the plugin is a temporary panel-style plugin; false if the plugin is a normal file system plugin</returns>
         /// <remarks><see cref="FsLinksToLocalFiles"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
@@ -818,6 +973,9 @@ namespace Tools{namespace TotalCommanderT{
             [MethodNotSupportedAttribute]
             virtual bool get();
         }
+#pragma endregion
+#pragma region GetLocalName
+    public:
         /// <summary>Gets local name of plugin file</summary>
         /// <param name="RemoteName">
         /// <para>In: Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</para>
@@ -842,6 +1000,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual String^ GetLocalName(String^ RemoteName, int maxlen);
+#pragma endregion
+#pragma region ContentgetDefaultView
+    public:
         /// <summary>Called to get the default view to which Total Commander should switch when this file system plugin is entered.</summary>
         /// <param name="ViewContents">Return the default fields for this plugin here, e.g. "<c>[=&lt;fs>.size.bkM2]\n[=fs.writetime]</c>"
         /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note></param>
@@ -868,6 +1029,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks><note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual ViewDefinition^ GetDefaultView(int maxlen);
+#pragma endregion
 #pragma endregion
     };
 }}

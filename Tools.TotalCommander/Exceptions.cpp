@@ -50,8 +50,20 @@ namespace Tools {
         return ResourceManager->GetString(L"ColumnDefinitionStringTooLong", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::CryptoAlreadyInitialized::get() {
+        return ResourceManager->GetString(L"CryptoAlreadyInitialized", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::CryptoNotInitialized::get() {
+        return ResourceManager->GetString(L"CryptoNotInitialized", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::DefaultTextTooLong::get() {
         return ResourceManager->GetString(L"DefaultTextTooLong", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::EncryptDecryptFailed::get() {
+        return ResourceManager->GetString(L"EncryptDecryptFailed", _resourceCulture);
     }
     
     inline System::String^  Exceptions::FieldNameTooLong::get() {
@@ -90,6 +102,10 @@ namespace Tools {
         return ResourceManager->GetString(L"NameTooLong", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::NoMasterPassword::get() {
+        return ResourceManager->GetString(L"NoMasterPassword", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::ParamAssignedTooLong::get() {
         return ResourceManager->GetString(L"ParamAssignedTooLong", _resourceCulture);
     }
@@ -114,6 +130,10 @@ namespace Tools {
         return ResourceManager->GetString(L"PropertyWasNull", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::ReadPasswordStoreFailed::get() {
+        return ResourceManager->GetString(L"ReadPasswordStoreFailed", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::ReturnedArrayToLong::get() {
         return ResourceManager->GetString(L"ReturnedArrayToLong", _resourceCulture);
     }
@@ -130,6 +150,18 @@ namespace Tools {
         return ResourceManager->GetString(L"UnitNamesTooLong", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::UnknownError::get() {
+        return ResourceManager->GetString(L"UnknownError", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::ValueNotSupported::get() {
+        return ResourceManager->GetString(L"ValueNotSupported", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::WritePasswordStoreFailed::get() {
+        return ResourceManager->GetString(L"WritePasswordStoreFailed", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::CannotBeRepresentedFormat(System::Object^  arg0, System::Object^  arg1, System::Object^  arg2, 
                 System::Object^  arg3) {
         return System::String::Format(_resourceCulture, CannotBeRepresented, arg0, arg1, arg2, arg3);
@@ -143,8 +175,20 @@ namespace Tools {
         return System::String::Format(_resourceCulture, ColumnDefinitionStringTooLong, arg0);
     }
     
+    inline System::String^  Exceptions::CryptoAlreadyInitializedFormat() {
+        return CryptoAlreadyInitialized;
+    }
+    
+    inline System::String^  Exceptions::CryptoNotInitializedFormat() {
+        return CryptoNotInitialized;
+    }
+    
     inline System::String^  Exceptions::DefaultTextTooLongFormat() {
         return DefaultTextTooLong;
+    }
+    
+    inline System::String^  Exceptions::EncryptDecryptFailedFormat() {
+        return EncryptDecryptFailed;
     }
     
     inline System::String^  Exceptions::FieldNameTooLongFormat(System::Object^  arg0, System::Object^  arg1) {
@@ -183,6 +227,10 @@ namespace Tools {
         return System::String::Format(_resourceCulture, NameTooLong, arg0);
     }
     
+    inline System::String^  Exceptions::NoMasterPasswordFormat() {
+        return NoMasterPassword;
+    }
+    
     inline System::String^  Exceptions::ParamAssignedTooLongFormat(System::Object^  arg0, System::Object^  arg1) {
         return System::String::Format(_resourceCulture, ParamAssignedTooLong, arg0, arg1);
     }
@@ -207,6 +255,10 @@ namespace Tools {
         return System::String::Format(_resourceCulture, PropertyWasNull, arg0);
     }
     
+    inline System::String^  Exceptions::ReadPasswordStoreFailedFormat() {
+        return ReadPasswordStoreFailed;
+    }
+    
     inline System::String^  Exceptions::ReturnedArrayToLongFormat(System::Object^  arg0) {
         return System::String::Format(_resourceCulture, ReturnedArrayToLong, arg0);
     }
@@ -221,6 +273,18 @@ namespace Tools {
     
     inline System::String^  Exceptions::UnitNamesTooLongFormat(System::Object^  arg0, System::Object^  arg1) {
         return System::String::Format(_resourceCulture, UnitNamesTooLong, arg0, arg1);
+    }
+    
+    inline System::String^  Exceptions::UnknownErrorFormat() {
+        return UnknownError;
+    }
+    
+    inline System::String^  Exceptions::ValueNotSupportedFormat(System::Object^  arg0) {
+        return System::String::Format(_resourceCulture, ValueNotSupported, arg0);
+    }
+    
+    inline System::String^  Exceptions::WritePasswordStoreFailedFormat() {
+        return WritePasswordStoreFailed;
     }
         }
     }

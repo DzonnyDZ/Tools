@@ -25,6 +25,7 @@ namespace Tools{namespace TotalCommanderT{
          this->ShowFileInfoImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ShowFileInfo",flags),this->GetType()),false) == nullptr;
          this->ExecuteCommandImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteCommand", flags),this->GetType()),false) == nullptr;
     }
+
 #pragma region "TC functions"
     int FileSystemPlugin::FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
         this->pluginNr = PluginNr;
@@ -96,6 +97,7 @@ namespace Tools{namespace TotalCommanderT{
         return 0;
     }
 #pragma endregion
+
 #pragma region ".NET Functions"
     int FileSystemPlugin::PluginNr::get(){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
@@ -217,22 +219,96 @@ namespace Tools{namespace TotalCommanderT{
             return this->dRequestProc(this, RequestType, CustomTitle, CustomText, DefaultText, maxlen);
         }
     }
+#pragma region Crypto
+    String^ FileSystemPlugin::PerformCryptoOperation(CryptMode mode, String^ connectionName, String^ password, int maxlen){
+        if(!this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoNotInitialized);
+        if(this->IsInTotalCommander){
+            char* conn = NULL;
+            if(connectionName != nullptr) (char*)(void*)Marshal::StringToHGlobalAnsi(connectionName);
+            char* pwdBuffer = NULL;
+            if(password != nullptr){
+                pwdBuffer = new char[Math::Max(maxlen, password->Length)];
+                for(int i = 0; i < password->Length; i++)
+                    pwdBuffer[i] = password[i];
+            }
+            else if(maxlen > 0){
+                pwdBuffer = new char[maxlen];
+                pwdBuffer[0] = (char)0;
+            }
+            CryptResult ret = (CryptResult)this->cryptProc(this->PluginNr, this->CryptoNr, (int)mode, conn, pwdBuffer, maxlen);
+            switch(ret){
+                case CryptResult::OK: return pwdBuffer == NULL ? nullptr : gcnew String(pwdBuffer);
+                case CryptResult::Fail:
+                case CryptResult::WriteError:
+                case CryptResult::ReadError:
+                case CryptResult::NoMasterPassword:
+                    throw gcnew CryptException(ret);
+                default: throw gcnew CryptException(ResourcesT::Exceptions::UnknownError, CryptResult::Fail);
+            }
+        }else{
+            return this->dCryptProc(this, mode, connectionName, password, maxlen);
+        }
+    }
+    void FileSystemPlugin::SavePassword(String^ connectioName, String^ password){
+        if(connectioName == nullptr) throw gcnew ArgumentNullException("connectionName");
+        if(password == nullptr) throw gcnew ArgumentNullException("password");
+        this->PerformCryptoOperation(CryptMode::SavePassword, connectioName, password, password->Length);
+    }
+    String^ FileSystemPlugin::LoadPassword(String^ connectionName, int maxlen, bool showUI){
+        if(connectionName == nullptr) throw gcnew ArgumentNullException("connectionName");
+        return this->PerformCryptoOperation(showUI ? CryptMode::LoadPassword : CryptMode::LoadPasswordNoUI, connectionName, nullptr, maxlen);
+    }
+    void FileSystemPlugin::MovePassword(String^ sourceConnectionName, String^ targetConnectionName, bool deleteOriginal){
+        if(sourceConnectionName == nullptr) throw gcnew ArgumentNullException("sourceConnectionName");
+        if(targetConnectionName == nullptr) throw gcnew ArgumentNullException("targetConnectionName");
+        this->PerformCryptoOperation(deleteOriginal ? CryptMode::MovePassword : CryptMode::CopyPassword, sourceConnectionName, targetConnectionName, Math::Max(sourceConnectionName->Length, targetConnectionName->Length));
+    }
+    void FileSystemPlugin::DeletePassword(String^ connectionName){
+        if(connectionName == nullptr) throw gcnew ArgumentNullException("connectionName");
+        this->PerformCryptoOperation(CryptMode::DeletePassword, connectionName, nullptr, connectionName->Length);
+    }
+#pragma endregion
 #pragma endregion
     inline void FileSystemPlugin::FindClose(Object^ Status){/*do nothing*/}
 #pragma endregion
+
 #pragma region "Optional functions"
+#pragma region "Crypto"
+    //SetCryptCallback
+    void FileSystemPlugin::FsSetCryptCallback(tCryptProc pCryptProc,int CryptoNr,int Flags){
+        if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
+        this->cryptProc = pCryptProc;
+        this->cryptoNr = CryptoNr;
+        this->OnInitializeCryptography((CryptFlags)Flags);
+    }
+    void FileSystemPlugin::InitializeCryptography(CryptCallback^ cryptProc, int cryptoNr, CryptFlags flags){
+        if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
+        if(this->OnInitializeCryptographyImplemented){
+            if(cryptProc == nullptr) throw gcnew ArgumentNullException("cryptProc");
+            this->dCryptProc = cryptProc;
+            this->cryptoNr = cryptoNr;
+            this->OnInitializeCryptography(flags);
+            this->cryptInitialized = true;
+        }
+    }
+    inline bool FileSystemPlugin::CryptInitialized::get(){return this->cryptInitialized;}
+    inline int FileSystemPlugin::CryptoNr::get(){return this->cryptoNr;}
+    inline void FileSystemPlugin::OnInitializeCryptography(CryptFlags flags){ throw gcnew NotSupportedException();}
+#pragma endregion
 
     //MkDir
     BOOL FileSystemPlugin::FsMkDir(char* Path){
         Exception^ ex=nullptr;
         try{
             return this->MkDir(gcnew String(Path));
-        }catch(IO::IOException^ ex__){ex=ex__;}catch(Security::SecurityException^ ex__){ex=ex__;}catch(UnauthorizedAccessException^ ex__){ex=ex__;} if(ex!=nullptr){
-            return false;
-        }
+        }catch(IO::IOException^ ex__){ex=ex__;}
+        catch(Security::SecurityException^ ex__){ex=ex__;}
+        catch(UnauthorizedAccessException^ ex__){ex=ex__;}
+        if(ex!=nullptr) return false; 
         return true;
     }
     inline bool FileSystemPlugin::MkDir(String^ Path){ throw gcnew NotSupportedException(); }
+
     //ExecuteFile
     int FileSystemPlugin::FsExecuteFile(HWND MainWin,char* RemoteName,char* Verb){
         Exception^ ex=nullptr;

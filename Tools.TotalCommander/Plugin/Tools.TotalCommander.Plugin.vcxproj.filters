@@ -44,6 +44,12 @@
     <ClInclude Include="TCHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WFXFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WFX+WDXFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">

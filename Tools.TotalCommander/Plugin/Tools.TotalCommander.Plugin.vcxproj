@@ -105,6 +105,8 @@
     <ClInclude Include="plug_common.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="TCHeaders.h" />
+    <ClInclude Include="WFX+WDXFunctions.h" />
+    <ClInclude Include="WFXFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />

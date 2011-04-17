@@ -10,6 +10,7 @@ using namespace System::Runtime::InteropServices;
 using namespace Tools::TotalCommanderT::ResourcesT;
 using namespace Tools::ExtensionsT;
 using namespace Microsoft::VisualBasic;
+using namespace System::ComponentModel;
 
 namespace Tools{namespace TotalCommanderT{
     //RemoteInfo
@@ -271,5 +272,28 @@ namespace Tools{namespace TotalCommanderT{
     inline String^ ViewDefinition::GetOptionsString(){
         return (this->AutoAdjust ? "auto-adjust-width" : "-1") + "|" + (this->HorizontalScroll ? "1" : "0");
     }
+#pragma endregion
+
+#pragma region "CryptException"
+    CryptException::CryptException(String^ message, CryptResult reason):
+        System::Security::Cryptography::CryptographicException(message){
+        CryptException::GetMessage(reason);
+        this->HResult = (int)reason;
+    }
+    CryptException::CryptException(CryptResult reason):
+        System::Security::Cryptography::CryptographicException(CryptException::GetMessage(reason)){
+        this->HResult = (int)reason;
+    }
+    String^ CryptException::GetMessage(CryptResult reason){
+        switch(reason){
+        case CryptResult::Fail: return ResourcesT::Exceptions::EncryptDecryptFailed;
+        case CryptResult::WriteError: return ResourcesT::Exceptions::WritePasswordStoreFailed;
+        case CryptResult::ReadError: return ResourcesT::Exceptions::ReadPasswordStoreFailed;
+        case CryptResult::NoMasterPassword: return ResourcesT::Exceptions::NoMasterPassword;
+        case CryptResult::OK: throw gcnew ArgumentException(String::Format(ResourcesT::Exceptions::ValueNotSupported, reason), "reason");
+        default: throw gcnew InvalidEnumArgumentException("reason", (int)reason, reason.GetType());
+        }
+    }
+    inline CryptResult CryptException::Reason::get(){ return (CryptResult) this->HResult; }
 #pragma endregion
 }}
