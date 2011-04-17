@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="0bd478b6-3b43-4a8f-9f3c-3ad344bfbba4" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                Total Commander Plugin Builder (TCPluginBuilder.exe) is a command line utility which builds managed Total Commander plugins (wfx/wcx/wlx/wdx files).
+            </para>
+        </introduction>
+        <section address="TCPluginBuilder">
+            <title>Total Commander Plugin Builder</title>
+            <content>
+                <para>Usage:</para>
+                <para>
+                    <system>{0} assembly parameters</system>
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>assembly</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Path to a DLL assembly containing plugin definition</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>parameters</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            Defines additional parameters of Total Commander Plugin Builder. Parameters are defined in any order.
+                            Eacch parameter name is preceded with slash (<codeInline>/</codeInline>).
+                            Parameter names are case-sensitive.
+                            If parameter value contains spaces it should be enclosed in double quotes.
+                        </para>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>/out outdir</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    <codeInline>outdir</codeInline> specifies path of output directory plugin files will be generated to.
+                                    When not set same directory as directory of <codeInline>assembly</codeInline> is used (recomended).
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/t type</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    If specified at least once only types defined by <codeInline>type</codeInline> are used to generate plugins from them.
+                                    <codeInline>type</codeInline> is name of single type to generate plugin for.
+                                    Use same format as for <codeEntityReference>M:System.Type.GetType(System.String)</codeEntityReference>.
+                                </para>
+                                <para>When not specified all types uasble as Total Commander plugin implementation from the assembly are used.</para>
+                                <para>This parameter can be used multiple times. Plugin exclusion (see below) still apply.</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/-wfx</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>If specified wfx (filesystem) plugins are exluded</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/-wlx</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>If specified wlx (lister) plugins are excluded</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/-wcx</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>If specified wcx (packer) plugins are excluded</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/-wdx</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>If specified wdx (metadata columns) plugins are excluded</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/n type name</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>Allows to specify name of plugin generated for given type.</para>
+                                <para>
+                                    <codeInline>name</codeInline> sets name (without extension) of plugin file generated for type <codeInline>type</codeInline>.
+                                    <codeInline>type</codeInline> is name of type as reported by <codeEntityReference>P:System.Type.FullName</codeEntityReference>.
+                                    <codeInline>name</codeInline> shan't contain special characters (not allowed in filenames on Windows).
+                                </para>
+                                <para>
+                                    When <codeInline>/n</codeInline> is not set for particural class implementing Total Commander plugin the name of the plugin is autogenerated from class name.
+                                    Special characters (not suitable for Windows filenames) are replaced in this case.
+                                </para>
+                                <para>
+                                    This parameter can be used multiple times. Independedn on <codeInline>/t</codeInline>.
+                                </para>
+                                <para>
+                                    Naming behavior can be changed by <codeEntityReference>T:Tools.TotalCommanderT.TotalCommanderPluginAttribute</codeEntityReference> but <codeInline>/n</codeInline> takes precedence.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/int path</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    <codeInline>path</codeInline> specified path to intermediate directory used during plugin build process. If not specified temporary directory is used.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/keepint</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Use only when <codeInline>/int</codeInline> is used.
+                                    When used files are not deleted from build intermediate directory when build finishes.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/templ path</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    <codeInline>path</codeInline> specifies path to a directory which contains project template.
+                                    Total Commander plugin is built as C++/CLI project using <externalLink>
+                                        <linkText>MSBuild</linkText>
+                                        <linkUri>http://msdn.microsoft.com/en-us/library/dd393574.aspx</linkUri>
+                                    </externalLink>.
+                                    The project is normally loaded to intermediate directory from built-in template.
+                                    This parameter allows you to use custom project template instead.
+                                </para>
+                                <alert class="caution">
+                                    <para>
+                                        The project is expected to have cerian structure which can change without notice in any future version of this tool.
+                                        <externalLink>
+                                            <linkText>See source code of ĐTools project</linkText>
+                                            <linkUri>http://tools.codeplex.com/SourceControl/BrowseLatest</linkUri>
+                                        </externalLink>, project Tools.TotalCommander.folder/Tools.TotalCommander.Plugin to see how the project looks like or extract and unzip embeded resource <codeInline>Tools.TotalCommanderT.PluginBuilder.Template.pseudozip</codeInline> from TCPluginBuilder.exe assembly.
+                                    </para>
+                                </alert>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/pdb</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    When specified plugin PDB file (debuggin information) is copied to output directory.
+                                    This is usefull when you need to debug plugin assembly (wfx/wlx/wcx/wdx) code.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/key path</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Signs plugin assembly (wfx/wcx/wdx/wlx assembly).
+                                    <codeInline>path</codeInline> is path to snk file.
+                                </para>
+                                <alert class="note">
+                                    <para>
+                                        You must be generating the plugin(s) from strongly-named assembly if <codeInline>/key</codeInline> is used.
+                                    </para>
+                                </alert>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>/cou path</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Copies all the content form output directory to another directory.
+                                    The target directory specified by <codeInline>path</codeInline> is cleared first.
+                                </para>
+                                <para>
+                                    If <codeInline>path</codeInline> starts with <environmentVariable>%TOTALCMD%</environmentVariable>, it's replaced with Total Commander directory as specified in Windows registry value <localUri>HKEY_LOCAL_MACHINE\SOFTWARE\Ghisler\Total Commander\InstallDir</localUri> (<localUri>HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Ghisler\Total Commander\InstallDir</localUri> on 64-bit machine).
+                                </para>
+                            </definition>
+                        </definitionTable>
+                    </definition>
+                </definitionTable>
+                <alert class="note">
+                    <para>
+                        If your DLL contains more than one classes suitable as Total Commander plugin implementation, more wfx/wlx/wcx/wdx files are generated (unless all but one classes are excluded e.g. using <codeInline>/t</codeInline> or <codeInline>/-wfx</codeInline> etc.).
+                    </para>
+                </alert>
+                <para>Classes that are considered for plugin creation must:</para>
+                <list class="bullet">
+                    <listItem>
+                        <para>Be non-abstract and have public parameter-less constructor.</para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Not be open generic type. Closed generic types (generic type instances) can be used only via <codeInline>/t</codeInline>.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Derive from one of plugin base types such ase <codeEntityReference>T:Tools.TotalCommander.FileSystemPlugin</codeEntityReference>.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Must not be decorated with <codeEntityReference>T:Tools.TotalCommander.NotAPluginAttribute</codeEntityReference>.
+                            The <codeEntityReference>T:Tools.TotalCommander.NotAPluginAttribute</codeEntityReference> allows to exclude certain types that fulfill other criteria from plugin generation for them.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Optionally the plugin class may be decorated with <codeEntityReference>T:Tools.TotalCommander.TotalCommanderPluginAttribute</codeEntityReference>.
+                        </para>
+                    </listItem>
+                </list>
+                <para>
+                    You can also generate Total Comander plugin programatically using <codeEntityReference>T:Tools.TotalCommanderT.PluginBuilder.Generator</codeEntityReference> class from TCPluginBuilder.exe assembly, which providdes public API used by this command line tool.
+                </para>
+            </content>
+        </section>
+        <section>
+            <title>Plugin architecture</title>
+            <content>
+                <para>
+                    Basically Total Commmander plugin is an unmanaged 32-bit DLL writen in language like C, C++, Delphi or any other language that gen export function in C-style (Win32 API) way.
+                    Writing Total Commander plugin in managed language thus requires injection of managed code to unmanaged process (AFAIK Total Commander is written in Delphi).
+                    It also requires the managed assembly to export functions in C way.
+                    Managed languages such as Visual Basic or C# does not support C-style exports.
+                    Especially Visual Basic even does not support pointers which are passed between Total Commander and plugin on several places.
+                </para>
+                <para>
+                    There are basically two ways how to export unmanaged functions from managed code:
+                </para>
+                <list class="bullet">
+                    <listItem>
+                        <para>
+                            Write a mixed assembly in a language that supports it (AFAIK only C++/CLI) and export the functions from that language.
+                            Such assembly is basically only wrapper around some other assembly (DLL) which contains actual plugin implementation.
+                            The wrapper assembly can aslo programatically perform some marshalling from/to unmanaged types to/from managed types.
+                        </para>
+                        <para>
+                            This is pretty straightforward approach for somebody familiar with C++, C++/CLI and the implementation language.
+                            User can be confued why they have two files - WFX/WCX/WDX/WLX and DLL.
+                        </para>
+                    </listItem>
+                    <listItem>
+                        <para>
+                            Generate the plugin assembly in any managed language and then post-process generated assembly and add export calls to it.
+                            This way only the plugin is self-contained (the plugin assembly contains actual plugin implementation).
+                            This requires some attributes-based marshalling to be done - especially if implementation language does not support pointers.
+                        </para>
+                        <para>
+                            This approach is described in <externalLink>
+                                <linkText>How to Automate Exporting .NET Function to Unmanaged Programs</linkText>
+                                <linkUri>http://www.codeproject.com/KB/dotnet/DllExport.aspx</linkUri>
+                            </externalLink>.
+                        </para>
+                    </listItem>
+                </list>
+                <para>
+                    I've chose the first approach (wrapper mixed mode assembly written in C++/CLI).
+                    Pratially because I was not aware of the other method in that time. And anyway I still think that it's easier to implement it this way.
+                </para>
+                <mediaLink>
+                    <caption>Managed Total Commmander plugin architecture using Tools.TotalCommander</caption>
+                    <image xlink:href="Total Commander Plugin Builder"/>
+                </mediaLink>
+                <para>
+                    Assembly Tools.TotalCommander is written in C++/CLI and contains all the plugin functions with their unmanaged signatures as members of plugin classes.
+                    This allows for wrapper assembly to be tiny and not to perform any marshalling.
+                    It just passes parameters passed by total commander to exported static functions to instance functions of class implementing the plugin (actually base class methods).
+                    The base class (such as <codeEntityReference>T:Tools.TotalCommanderT.FileSystemPlugin</codeEntityReference>) is responsible for marshalling values to corresponding functions with CLS-compliant signatures.
+                    Responsibilities of wrapper assembly are to create separate application domain for each plugin, to create instance of the plugin and to passs values passed by Total Commander to plugin base class methods and pass return values back.
+                </para>
+                <para>
+                    So, basically when Total Commander wants to invoke a plugin function the chain is as follows:
+                </para>
+                <list class="ordered">
+                    <listItem>
+                        <para>Total Commander calls function exported in C-way by wrapper assembly.</para>
+                    </listItem>
+                    <listItem>
+                        <para>Wrapper assembly passes values to instance function with same in plugin base class.</para>
+                    </listItem>
+                    <listItem>
+                        <para>Plugin base class programatically marshalls values from unmanaged/unfriendly types to managed CLS-compliant types and calls appropriate virtual function implemented in derived class.</para>
+                    </listItem>
+                    <listItem>
+                        <para>Derived class processes the request from Total Commander and in some cases returns a value. In some cases throws an exception.</para>
+                    </listItem>
+                    <listItem>
+                        <para>If value was returned from plugin implementation base class marshalls it back to unmanaged types (often output parameters are used).</para>
+                        <para>
+                            If an exception was thrown, some base class methods does exception handling (some can handle only certain exception types).
+                            If current base class method can processs the exception that was thrown it processes it (usually to return Total Commander error code).
+                        </para>
+                        <alert class="important">
+                            <para>
+                                Do not throw (let been thrown) random exception from plugin function.
+                                Only throw exception that are documented that they are handled by base class.
+                                Unhandled exceptions are passed to Total Commander, but it does not know what to do with managed exceptions and can become unstable.
+                            </para>
+                        </alert>
+                    </listItem>
+                    <listItem>
+                        <para>Wrapper assembly just passes any return values of functions back to Total Commander.</para>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        <relatedTopics>
+            <codeEntityReference>T:Tools.TotalCommanderT.PluginBuilder.Generator</codeEntityReference>
+            <codeEntityReference>N:Tools.TotalCommanderT</codeEntityReference>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <externalLink>
+                <linkText>Total Commander</linkText>
+                <linkUri>http://www.ghisler.com/</linkUri>
+            </externalLink>
+            <externalLink>
+                <linkText>FS-Plugin writer's guide 2.0</linkText>
+                <linkUri>http://ghisler.fileburst.com/fsplugins/fspluginhelp2.1.zip</linkUri>
+            </externalLink>
+            <externalLink>
+                <linkText>Packer extensions (plugins) Interface description 2.1</linkText>
+                <linkUri>http://ghisler.fileburst.com/plugins/wcx_ref2.21.zip</linkUri>
+            </externalLink>
+            <externalLink>
+                <linkText>LS-Plugin writer's guide 2.0</linkText>
+                <linkUri>http://ghisler.fileburst.com/lsplugins/listplughelp2.0.zip</linkUri>
+            </externalLink>
+            <externalLink>
+                <linkText>Content-Plugin writer's guide 2.1</linkText>
+                <linkUri>http://ghisler.fileburst.com/content/contentpluginhelp2.1.zip</linkUri>
+            </externalLink>
+            <externalLink>
+                <linkText>Writing a Total Commander plug-in in Visual Basic (or C#)</linkText>
+                <linkUri>http://www.codeproject.com/KB/files/ManagedTCPLugin.aspx</linkUri>
+            </externalLink>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>

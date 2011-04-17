@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../Conceptual/conceptual.css" type="text/css"?>
 <topic id="87bfaabf-6850-42dd-9c91-815bd77b2aa4" revisionNumber="1" xmlns:xlink="http://www.w3.org/1999/xlink">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
     <introduction>
@@ -4844,10 +4845,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -4876,10 +4877,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToGenericCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToGenericCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToGenericCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToGenericCollectionsExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -4934,28 +4935,15 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
                 <para>Added documentation</para>
               </listItem>
-              <listItem>
-                <para>Parameter <codeInline>Parameters</codeInline> renamed to <codeInline>parameters</codeInline></para>
-              </listItem>
-            </list>
-          </content>
-        </section>
-        <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IPostExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
-          <content>
-            <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IPostExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
-            </para>
-            <list class="bullet">
               <listItem>
                 <para>Parameter <codeInline>Parameters</codeInline> renamed to <codeInline>parameters</codeInline></para>
               </listItem>
@@ -4992,10 +4980,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.FieldsToPropertiesExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.FieldsToPropertiesExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.FieldsToPropertiesExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.FieldsToPropertiesExtension.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5024,10 +5012,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NoEmptyRemarks.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NoEmptyRemarks.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NoEmptyRemarks.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NoEmptyRemarks.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5056,10 +5044,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NumericEnums.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NumericEnums.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NumericEnums.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.NumericEnums.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5088,10 +5076,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnAfterInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnAfterInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnAfterInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnAfterInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5120,10 +5108,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnBeforeInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnBeforeInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnBeforeInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnBeforeInitCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5168,10 +5156,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnChangingCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnChangingCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnChangingCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnChangingCall.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5200,10 +5188,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OverridableProperties.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OverridableProperties.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OverridableProperties.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OverridableProperties.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5345,26 +5333,10 @@
           </content>
         </section>
         <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.TypeList.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.TypeList.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.TypeList.Tools#VisualStudioT#GeneratorsT#XsdGenerator#ICodeExtension#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
-            </para>
-            <list class="bullet">
-              <listItem>
-                <para>Added documentation</para>
-              </listItem>
-              <listItem>
-                <para>Parameter <codeInline>Parameters</codeInline> renamed to <codeInline>parameters</codeInline></para>
-              </listItem>
-            </list>
-          </content>
-        </section>
-        <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.ICodeExtension.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
-          <content>
-            <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.ICodeExtension.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.TypeList.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
@@ -5393,25 +5365,15 @@
           </content>
         </section>
         <section>
-          <title>Type Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension</title>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
           <content>
             <para>
-              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension</codeEntityReference>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
             </para>
             <list class="bullet">
               <listItem>
                 <para>Added documentation</para>
               </listItem>
-            </list>
-          </content>
-        </section>
-        <section>
-          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
-          <content>
-            <para>
-              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
-            </para>
-            <list class="bullet">
               <listItem>
                 <para>Parameter <codeInline>Parameters</codeInline> renamed to <codeInline>parameters</codeInline></para>
               </listItem>

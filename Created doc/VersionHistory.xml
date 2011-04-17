@@ -56,4 +56,7 @@
         <vh:i>Many new extension methods</vh:i>
         <vh:i>Bugfixes and new support classes.</vh:i>
     </vh:Version>
+    <vh:Version Major="1" Minor="5" Build="4">
+        <vh:i>Added documentation for development tools - EXE command line tools and Visual Studio Custom Tools</vh:i>
+    </vh:Version>
 </vh:VersionHistory>

@@ -6,8 +6,14 @@ using System.CodeDom.Compiler;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Aters property in various ways</summary>
-    /// <remarks>NewType recognizes last character ? as System.Nullable`1.
-    /// FieldName is used only with NewType.</remarks>
+    /// <remarks>
+    /// NewType recognizes last character ? as System.Nullable`1.
+    /// FieldName is used only with NewType.
+    /// <para>This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.</para>
+    /// </remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.AlterProperty" PropertyName="..." TypeName="..." NewName=".." OrAttributes="..." AndAttributes="..." NewType="..." FieldName="..."?>]]></code></example>
     /// <version version="1.5.3">This class was re-introduced in version 1.5.3</version>
     public class AlterProperty : ICodeExtension {
         /// <summary>Initializes the extension</summary>
@@ -24,7 +30,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
         /// <exception cref="KeyNotFoundException">A required parameter is not present in the <paramref name="parameters"/> dictionary.</exception>
         /// <exception cref="FormatException">Value for <c>AndAttributes</c> or <c>OrAttributes</c> cannot be parsed as integer in invariant culture.</exception>
         /// <exception cref="OverflowException">Value for <c>AndAttributes</c> or <c>OrAttributes</c> does not fall to range of <see cref="int"/>.</exception>
-     public  void Initialize(System.Collections.Generic.IDictionary<string, string> parameters) {
+        public void Initialize(System.Collections.Generic.IDictionary<string, string> parameters) {
             propertyName = parameters["PropertyName"];
             typeName = parameters["TypeName"];
             if (parameters.ContainsKey("NewName")) newName = parameters["NewName"];

@@ -4,6 +4,12 @@ using System.CodeDom.Compiler;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Converts the default public fields into properties backed by a private field.</summary>
+    /// <remarks>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.FieldsToPropertiesExtension?>]]></code></example>
     public class FieldsToPropertiesExtension : ICodeExtension {
         /// <summary>Called when extension shall processs generated CodeDOM</summary>
         /// <param name="code">Object tree representing generated CodeDOM</param>
@@ -71,6 +77,6 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
         /// <param name="parameters">Initialization parameters (ignored)</param>
         /// <version version="1.5.3">Added documentation</version>
         /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        void IExtensionBase.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
     }
 }

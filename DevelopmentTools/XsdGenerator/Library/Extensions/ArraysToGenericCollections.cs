@@ -6,6 +6,12 @@ using System.CodeDom.Compiler;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Converts array-based properties into List`1-based ones</summary>
+    /// <remarks>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToGenericCollectionsExtension?>]]></code></example>
     public class ArraysToGenericCollectionsExtension : ICodeExtension {
         /// <summary>Called when extension shall processs generated CodeDOM</summary>
         /// <param name="code">Object tree representing generated CodeDOM</param>
@@ -43,7 +49,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
         /// <param name="parameters">Initialization parameters</param>
         /// <version version="1.5.3">Added documentation</version>
         /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        void IExtensionBase.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
         public CodeTypeReference GetCollection(CodeTypeReference forType) {
             CodeTypeReference col = new CodeTypeReference(typeof(System.Collections.Generic.List<>));
             col.TypeArguments.Add(forType);

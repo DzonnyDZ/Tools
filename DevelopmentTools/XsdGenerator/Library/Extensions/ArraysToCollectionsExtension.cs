@@ -9,6 +9,12 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// Converts array-based properties into collection-based ones, and 
     /// creates a typed <see cref="CollectionBase"/> inherited class for it.
     /// </summary>
+    /// <remarks>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.ArraysToCollectionsExtension?>]]></code></example>
     public class ArraysToCollectionsExtension : ICodeExtension {
         #region ICodeExtension Members
 
@@ -63,7 +69,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
         /// <param name="parameters">Initialization parameters (ignored)</param>
         /// <version version="1.5.3">Added documentation</version>
         /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        void IExtensionBase.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
         #endregion
 
         /// <summary>Creates a collection type</summary>

@@ -321,6 +321,7 @@
                 <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
             </externalLink>
             <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT</codeEntityReference>
+            <link xlink:href="0bd478b6-3b43-4a8f-9f3c-3ad344bfbba4"/>
         </relatedTopics>
     </developerConceptualDocument>
 </topic>

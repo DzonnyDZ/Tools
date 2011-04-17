@@ -200,6 +200,40 @@ link:empty:before{
 }
 externalLink > linkText + linkUri{display:none;}
 
+/*Images*/
+mediaLink{
+    display:block;
+    caption-side:bottom;
+    width:100%;
+    padding: 1ex 1ex 1.5EM 1ex;
+    position:relative;
+    border:1px solid #C8CDDE;
+}
+mediaLink > caption{
+    display:block;
+    position:absolute;
+    bottom:0;
+    background-color:#C8CDDE;
+    width:100%;
+    margin-left:-1ex;
+    padding:2px 1ex 2px 1ex;
+    font-size:85%;
+}
+mediaLink > image:before{
+    display: block;
+    content: "<image goes here>";
+    content: "<image '" attr(xlink|href) "' goes here>";
+    content: url(attr(xlink|href) ".png");
+    content: url(attr(xlink|href) ".jpeg");
+    content: url(attr(xlink|href) ".jpg");
+    content: url(attr(xlink|href) ".gif");
+    content: url(attr(xlink|href) ".bmp");
+    content: url(attr(xlink|href) ".tif");
+    content: url(attr(xlink|href) ".tiff");
+    content: url(attr(xlink|href) ".svg");
+}
+display
+
 /*code*/
 codeInline{
     font-family:Monospace;

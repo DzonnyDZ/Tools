@@ -5,8 +5,14 @@ using System.Xml.Schema;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 
-///<summary>This extension removed all attributes of given type from all types</summary>
-///<summary>Attributes are combated only by <see cref="CodeAttributeDeclaration.AttributeType">.<see cref="CodeTypeReference.BaseType">BaseType</see>
+/// <summary>This extension removed all attributes of given type from all types</summary>
+/// <remarks>Attributes are combated only by <see cref="CodeAttributeDeclaration.AttributeType">.<see cref="CodeTypeReference.BaseType">BaseType</see>
+/// <para>
+/// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+/// To use it add a processing instruction to your XSD file.
+/// </para></remarks>
+/// <example>How to use this extension in XSD file.
+/// <code language="xml"><![CDATA[<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.RemoveTypeAttribute" type="..."?>]]></code></example>
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Removes attribute from all types</summary>
     public class RemoveTypeAttribute : ICodeExtension {

@@ -11,6 +11,12 @@ using System.ComponentModel;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Renames given property of type string and adds property of type <see cref="DateTime"/>? backed by original property holding either an empty string or <see cref="DateTime"/> in XSD format</summary>
+    /// <remarks>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DateNullableByEmptyString" PropertyName="..." TypeName="..." Kind=".." Empty="..."?>]]></code></example>
     /// <version version="1.5.3">This class was re-introduced in version 1.5.3</version>
     public class DateNullableByEmptyString : ICodeExtension {
         /// <summary>Initializes the extension</summary>

@@ -1,82 +1,203 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
 <topic id="6d0d5851-0c03-407f-b7bc-b8452beeacc2" revisionNumber="1">
-  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!--
-    <summary>
-      <para>Optional summary abstract</para>
-    </summary>
-    -->
-    <introduction>
-      <!-- Uncomment this to generate an outline of the section and sub-section
-           titles.  Specify a numeric value as the inner text to limit it to
-           a specific number of sub-topics when creating the outline.  Specify
-           zero (0) to limit it to top-level sections only.  -->
-      <!-- <autoOutline /> -->
-      <para>Required introduction</para>
-    </introduction>
-    <!-- Add one or more top-level section elements.  These are collapsible.
-         If using <autoOutline />, add an address attribute to identify it
-         and specify a title so that it can be jumped to with a hyperlink. -->
-    <section address="Section1">
-      <title>Optional section title</title>
-      <content>
-        <!-- Uncomment this to create a sub-section outline
-        <autoOutline /> -->
-        <para>Add one or more sections with content</para>
-      </content>
-      <!-- If a section contains a sections element, its content creates
-           sub-sections.  These are not collapsible.
-      <sections>
-          <section address="SubSection1">
-              <title>Sub-section 1</title>
-              <content>
-                  <para>Sub-section content.</para>
-              </content>
-          </section>
-          <section address="SubSection2">
-              <title>Sub-section 2</title>
-              <content>
-                  <para>Sub-section content.</para>
-              </content>
-          </section>
-      </sections> -->
-    </section>
-    <relatedTopics>
-      <!-- One or more of the following:
-           - A local link
-           - An external link
-           - A code entity reference
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>
+                XsdGenerator Custom Tool is Visual Studio Custom Tool used to generate classes source code form XML-Schema (XSD) files.
+                It's based on the same API <externalLink>
+                    <linkText>xsd.exe</linkText>
+                    <linkUri>http://msdn.microsoft.com/en-us/library/x6c1kb0s.aspx</linkUri>
+                </externalLink> is.
+                Power and limitations of this Custom tool come from this fact.
+            </para>
+        </introduction>
 
-      <link xlink:href="Other Topic's ID"/>
-      <link xlink:href="Other Topic's ID">Link inner text</link>
+        <!--XsdGenerator Custom Tool-->
+        <section address="main">
+            <title>XsdGenerator Custom Tool</title>
+            <content>
+                <para>
+                    Apply this custom to onto XML-Schema definition file (XSD) to generate XML-Serializabla classes from it.
+                </para>
+                <para>
+                    Unfortunatelly the process of generation of classes from XML-Schema is not customizable.
+                    All customization points of this Custom Tool are therefore limited to CodeDOM and text post-processing.
+                    Unfortunatelly postprocessing does have no information about relation between original XML schema and generated classes, so all post-processing tools are basically all-classes-wide (some with filters).
+                </para>
+            </content>
+        </section>
 
-      <externalLink>
-          <linkText>Link text</linkText>
-          <linkAlternateText>Optional alternate link text</linkAlternateText>
-          <linkUri>URI</linkUri>
-      </externalLink>
+        <!--Processing Instructions-->
+        <section address="PIs">
+            <title>Processing Instructions &amp; extensions</title>
+            <content>
+                <para>
+                    Post-processing of generated CodeDOM and code is defined by processing instructions placed at very beginning of XSD file.
+                    XsdGenerator custom tool uses two processing instructions - both with the same syntax.
+                </para>
+                <para>All processing instructions are namespace-less.</para>
+            </content>
+            <sections>
+                <section address="pi-syntax">
+                    <title>Processing instruction sytnax</title>
+                    <content>
+                        <para>Both processing instruction used by XsdGenerator custom tool share same syntax.</para>
+                        <para>
+                            Basically two syntaxes are possible depending on if a post-processing tool requires additional parameters or not.
+                        </para>
+                        <code language="xml"><![CDATA[<?pi-name type [attr="value"]*?>]]></code>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>pi-name</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>Name of the processing instruction - see below</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>type</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Name of type (class) that implements the post-processsing tool.
+                                    <codeInline>type</codeInline> may or may not be enclosed in single or double quotation marks.
+                                    It must be enclosed in either of them if additional attributes are used.
+                                </para>
+                                <alert class="note">
+                                    <para>
+                                        If <codeInline>type</codeInline> is enclosed in either single or double quotes it must follow rules for XML attribute values.
+                                        Namely it cannot contain respective quote (it must be replaced with appropriate XML entity) and it cannot contain &lt; or &amp; (these characters must be replaced as well).
+                                        It also means that all XML entities are expanded if <codeInline>type</codeInline> is single or double-quoted.
+                                    </para>
+                                </alert>
+                                <para>
+                                    The name must be suitable for <codeEntityReference>M:System.Type.GetType(System.String)</codeEntityReference>.
+                                    The type can be defined either in the same assembly as the Custom Tool (built-in extensions; see <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions</codeEntityReference> for list of them) or it must be defined in an assembly that is visible to the Custom Tool.
+                                    The type must implement an interface depending on type of tool it implements.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>attr="value"</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Defines additional attributes passed to a post-processing tool.
+                                    If you want use additional attributes <codeInline>type</codeInline> must be either single- or double-quoted.
+                                    Attribute names and values as well as whitespaces characters between them (and between <codeInline>type</codeInline> and rest of attributes) must follow rules for normal XML attributes.
+                                    Attribute names should not contain namespace prefix.
+                                </para>
+                                <para>
+                                    Post-processing tools receive additional arguments through <codeInline>parameters</codeInline> parameter of <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase.Initialize</codeEntityReference> method.
+                                </para>
+                            </definition>
+                        </definitionTable>
+                    </content>
+                </section>
+                <!--<?extension?>-->
+                <section address="extension">
+                    <title><![CDATA[<?extension?>]]></title>
+                    <content>
+                        <para>
+                            Defines CodeDOM post-processing tool.
+                            Post-processing defined by this processing instrruction is run agains CodeDOM objects.
+                        </para>
+                        <para>
+                            For common syntax of processing instructions used by XsdGenerator custom tool see <link xlink:href="#pi-syntax">Processing Instructions Syntax</link>.
+                            <codeInline>type</codeInline> must implement <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.ICodeExtension</codeEntityReference> interface.
+                        </para>
+                    </content>
+                </section>
+                <!--<?post-process?>-->
+                <section address="post-process">
+                    <title><![CDATA[<?post-process?>]]></title>
+                    <content>
+                        <para>
+                            Defines text post-processing tool.
+                            Post processing defined by this processing instruction is run agaist text of code generated from CodeDOM.
+                        </para>
+                        <para>
+                            For common syntax of processing instructions used by XsdGenerator custom tool see <link xlink:href="#pi-syntax">Processing Instructions Syntax</link>.
+                            <codeInline>type</codeInline> must implement <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension</codeEntityReference> interface.
+                        </para>
+                    </content>
+                </section>
+                <section>
+                    <title>Implementing custom extension</title>
+                    <content>
+                        <para>
+                            To implement CodeDOM-based post-processing extension implement the <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.ICodeExtension</codeEntityReference> interface in your class.
+                            To implement text-based post-processing extension implement the <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension</codeEntityReference> interface in your class.
+                            All CodeDOM-based extensions are run before any text-based extension.
+                        </para>
+                        <para>
+                            If your extension needs parameters to be passed inside, use the <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase.Initialize</codeEntityReference> method's parameter <codeInline>parameters</codeInline>.
+                            All additional parameters from processing instruction are passed to this dictionary.
+                        </para>
+                    </content>
+                </section>
+            </sections>
+        </section>
 
-      <codeEntityReference>API member ID</codeEntityReference>
+        <!--Custom Tool information-->
+        <section address="custom-tool">
+            <title>Custom Tool information</title>
+            <content>
+                <para>Following Custom Tools are defined:</para>
+                <definitionTable>
+                    <definedTerm address="XsdGenerator">XsdGenerator</definedTerm>
+                    <definition>
+                        <para>
+                            Generates classes from XML-Schema definition (XSD) file.
+                        </para>
+                        <para>
+                            Implemented by <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.XsdCodeGenerator</codeEntityReference>.
+                        </para>
+                    </definition>
+                </definitionTable>
+                <para>
+                    Implemented in <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT.XsdGenerator</codeEntityReference> (in XsdGenerator.dll).
+                    This Custom Tool is implemented in managed code.
+                </para>
+                <para>
+                    When registered using <externalLink>
+                        <linkText>Regasm.exe</linkText>
+                        <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
+                    </externalLink> Custom Tool is registered for Visual Studio versions 2005, 2008, and 2010 (8, 9, and 10) for C# and Visual Basic.
+                    However since XsdGenerator uses CodeDOM it can be used with any language CodeDOM is implemented for (when manually registered).
+                </para>
+                <alert class="note">
+                    <para>
+                        For more information about Custom Tools see <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8#CustomToolsInfo"/>.
+                    </para>
+                </alert>
+            </content>
+        </section>
 
-      Examples:
-
-      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8270" />
-      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8278">Some other topic</link>
-
-      <externalLink>
-          <linkText>SHFB on CodePlex</linkText>
-          <linkAlternateText>Go to CodePlex</linkAlternateText>
-          <linkUri>http://shfb.codeplex.com</linkUri>
-      </externalLink>
-
-      <codeEntityReference>T:TestDoc.TestClass</codeEntityReference>
-      <codeEntityReference>P:TestDoc.TestClass.SomeProperty</codeEntityReference>
-      <codeEntityReference>M:TestDoc.TestClass.#ctor</codeEntityReference>
-      <codeEntityReference>M:TestDoc.TestClass.#ctor(System.String,System.Int32)</codeEntityReference>
-      <codeEntityReference>M:TestDoc.TestClass.ToString</codeEntityReference>
-      <codeEntityReference>M:TestDoc.TestClass.FirstMethod</codeEntityReference>
-      <codeEntityReference>M:TestDoc.TestClass.SecondMethod(System.Int32,System.String)</codeEntityReference>
-      -->
-    </relatedTopics>
-  </developerConceptualDocument>
+        <!--Version History-->
+        <section address="version-history">
+            <title>Version History</title>
+            <content>
+                <list class="nobullet">
+                    <listItem>
+                        <para>1.5.4</para>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Type of extension now can be specified single-quoted (in addition to being unquoted or double-quoted).
+                                </para>
+                            </listItem>
+                        </list>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8#CustomToolsInfo"/>
+            <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT.XsdGenerator</codeEntityReference>
+            <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.XsdCodeGenerator</codeEntityReference>
+            <codeEntityReference>N:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions</codeEntityReference>
+            <codeEntityReference>N:System.CodeDom</codeEntityReference>
+        </relatedTopics>
+    </developerConceptualDocument>
 </topic>

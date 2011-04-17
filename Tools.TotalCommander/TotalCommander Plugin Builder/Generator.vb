@@ -17,11 +17,11 @@ Imports Microsoft.Build.Utilities
 ''' </list>
 ''' Following rules apply to plugin being generated:
 ''' <list type="bullet">
-''' <item>Plugin class must be non-abstract, must have defualt (parameter-less) constructor and must notbe open generic type. When class that looks like plugin class is found, but does not meet these requirements it is ignored.</item>
+''' <item>Plugin class must be non-abstract, must have defualt (parameter-less) constructor and must not be open generic type. When class that looks like plugin class is found, but does not meet these requirements it is ignored.</item>
 ''' <item>Plugin class must derive from one of plugin types like <see cref="FileSystemPlugin"/>.</item>
 ''' <item>Plugin class overrides its's base class methods to define plugin functionality. A few methods must be overriden. Majority of methods is optional.</item>
 ''' <item>When non-compulsory method is overriden in derived class, wrapped generator examines it. When it is decorated with <see cref="MethodNotSupportedAttribute"/> it is NOT generated for the plugin; otherwise it is.</item>
-''' <item>Plugin class can, of course, define as many as you want additional methoda, but those methods are not part of plugin contract. When a new version of Total Commander is issued that defines more plugin API functions, those functions are not automatically supported by the generator. A new version of generator must be issued as well.</item>
+''' <item>Plugin class can, of course, define as many as you want additional methods, but those methods are not part of plugin contract. When a new version of Total Commander is issued that defines more plugin API functions, those functions are not automatically supported by the generator. A new version of generator must be issued as well.</item>
 ''' <item>When plugin class is decorated with <see cref="NotAPluginAttribute"/>, it is skipped from plugin generation.</item>
 ''' <item>Optionaly plugin class can be decorated with <see cref="TotalCommanderPluginAttribute"/> to precise plugin generation.</item>
 ''' <item>Plugin assembly is given correct plugin extension by plugin type.</item>
@@ -33,7 +33,7 @@ Imports Microsoft.Build.Utilities
 ''' <item><term><see cref="AssemblyTitleAttribute"/>, <see cref="AssemblyDescriptionAttribute"/></term><description>Got from <see cref="TotalCommanderPluginAttribute.AssemblyTitle"/> and <see cref="TotalCommanderPluginAttribute.AssemblyDescription"/> of plugin type when set; otherwise got from appropriate assembly attributes when set; otherwise ignored.</description></item>
 ''' </list>
 ''' </item>
-''' <item>When giving wrapper asembly a string name (using <see cref="Generator.SnkPath"/>) the assembly plugin is defined in must have string name as well.</item>
+''' <item>When giving wrapper asembly a strong name (using <see cref="Generator.SnkPath"/>) the assembly plugin is defined in must have strong name as well.</item>
 ''' <item>Wrapper name is specified by (in order of presedence): <see cref="Generator.RenamingDictionary"/>, <see cref="TotalCommanderPluginAttribute.Name"/>, <see cref="Type.FullName"/>.</item>
 ''' </list>
 ''' Wrapped debugging info is copied to target only when <see cref="Generator.CopyPDB"/> is set. Do not set this to true when name of your plugin DLL and plugin wrapper are same but the extension. (Your debugging info will be overwritten with almost useless debugging info of wrapper.)

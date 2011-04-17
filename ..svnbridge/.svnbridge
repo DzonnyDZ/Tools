@@ -60,4 +60,14 @@ desktop.ini
 obj
 prebuild
 *.shfbproj_*
+</Value></Property><Property><Name>svn:ignore</Name><Value>bin
+Debug
+desktop.ini
+*.shfbproj_Honza
+obj
+TestResults
+Tools.sdf
+Tools.opensdf
+prebuild
+*.suo
 </Value></Property></Properties></ItemProperties>

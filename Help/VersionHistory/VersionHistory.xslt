@@ -17,6 +17,7 @@
     </xsl:template>
 
     <xsl:template match="vh:VersionHistory">
+        <xsl:processing-instruction name="xml-stylesheet">href="../Conceptual/conceptual.css" type="text/css"</xsl:processing-instruction>
         <topic id="9b0f2e22-3088-4c9b-af71-51717771bb58" revisionNumber="1" xmlns="">
             <developerConceptualDocument
               xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">

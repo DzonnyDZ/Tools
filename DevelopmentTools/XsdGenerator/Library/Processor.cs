@@ -12,9 +12,8 @@ using System.Xml.XPath;
 using System.Collections.Generic;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
-    /// <summary>
-    /// Processes WXS files and builds code for them.
-    /// </summary>
+    /// <summary>Processes XSD files and builds code for them.</summary>
+    /// <version version="1.5.4">Type name in processing instructions now can be enclosed in single quotes in addition to double quotes.</version>
     public sealed class Processor {
         public const string ExtensionNamespace = "http://weblogs.asp.net/cazzu";
         private static XPathExpression Extensions;
@@ -106,7 +105,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
         /// <returns>Dictionary of attribute - value. 1st item has always key extension-type and contains type of extension</returns>
         private static Dictionary<string, string> ParsePEValue(string PEvalue) {
             Dictionary<string, string> ret = new Dictionary<string, string>();
-            if (PEvalue.TrimStart().StartsWith("\"")) {
+            if (PEvalue.TrimStart().StartsWith("\"") || PEvalue.TrimStart().StartsWith("'")) {
                 string PeValue2 = "<x extension-type=" + PEvalue + "/>";
                 XmlDocument tmpdoc = new XmlDocument();
                 tmpdoc.LoadXml(PeValue2);

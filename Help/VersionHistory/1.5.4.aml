@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../Conceptual/conceptual.css" type="text/css"?>
 <topic id="923042ec-783b-47a0-91cd-d859e9354613" revisionNumber="1" xmlns:xlink="http://www.w3.org/1999/xlink">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
     <introduction>
@@ -136,6 +137,58 @@
             <list class="bullet">
               <listItem>
                 <para>This constant is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <content>
+            <para>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.DebuggerStepThrough.Tools#VisualStudioT#GeneratorsT#XsdGenerator#IExtensionBase#Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Implementations of <codeInline>Initialize</codeInline> method for <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.ICodeExtension</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension</codeEntityReference> merged.</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Type Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase</title>
+          <content>
+            <para>
+              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>This interface is new in version 1.5.4</para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title> Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</title>
+          <content>
+            <para>
+              <codeEntityReference>M:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IExtensionBase.Initialize(System.Collections.Generic.IDictionary{System.String,System.String})</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Method moved and merged from interfaces <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.ICodeExtension</codeEntityReference> and <codeEntityReference qualifyHint="true">T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.IPostExtension</codeEntityReference></para>
+              </listItem>
+            </list>
+          </content>
+        </section>
+        <section>
+          <title>Type Tools.VisualStudioT.GeneratorsT.XsdGenerator.Processor</title>
+          <content>
+            <para>
+              <codeEntityReference>T:Tools.VisualStudioT.GeneratorsT.XsdGenerator.Processor</codeEntityReference>
+            </para>
+            <list class="bullet">
+              <listItem>
+                <para>Type name in processing instructions now can be enclosed in single quotes in addition to double quotes.</para>
               </listItem>
             </list>
           </content>

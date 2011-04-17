@@ -9,13 +9,18 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions{
     /// <remarks>
     /// List of types is generated as static class (standard module in VB).
     /// The class is called <c>misc</c> and contains one static field initialized to array of all types in generated namespace.
-    /// </remarks>
+    /// <para>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </para></remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.TypeList?>]]></code></example>
     public class TypeList : ICodeExtension	{
         /// <summary>Initializes the extension (this implementation does nothing)</summary>
         /// <param name="parameters">Initialization parameters (ignored)</param>
         /// <version version="1.5.3">Added documentation</version>
         /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        void IExtensionBase.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
 
         /// <summary>Called when extension shall processs generated CodeDOM</summary>
         /// <param name="code">Object tree representing generated CodeDOM</param>

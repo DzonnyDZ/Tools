@@ -7,7 +7,13 @@ using System.Collections.Generic;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Removes member of type</summary>
-    /// <remarks>This extension can remove multiple members of one type. If you need to remove members from multiple types use this extension multiple times.</remarks>
+    /// <remarks>This extension can remove multiple members of one type. If you need to remove members from multiple types use this extension multiple times.
+    /// <para>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </para></remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.RemoveMembers" Name="..." Type="..."?>]]></code></example>
     /// <version version="1.5.3">This class was re-introduced in version 1.5.3</version>
     public class RemoveMembers : ICodeExtension {
         /// <summary>Initializes the extension</summary>

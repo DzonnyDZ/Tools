@@ -184,6 +184,38 @@
     <Folder Include="Help\VersionHistory\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Help\Conceptual\XsdGenerator.aml" />
+    <None Include="Help\Conceptual\VersionUpdater.aml" />
+    <None Include="Help\Conceptual\VersionCorrector.aml" />
+    <None Include="Help\Conceptual\TransformCodeGenerator.aml" />
+    <None Include="Help\Conceptual\Total Commander Plugin Builder.aml" />
+    <None Include="Help\Conceptual\SplashScreenGenerator.aml" />
+    <None Include="Help\Conceptual\ResXFileGenerator.aml" />
+    <None Include="Help\Conceptual\ResXFileCodeGeneratorEx.aml" />
+    <None Include="Help\Conceptual\PseudoZip.aml" />
+    <None Include="Help\Conceptual\License.aml" />
+    <None Include="Help\Conceptual\CommentsMerge.aml" />
+    <None Include="Help\Conceptual\Total Commander Plugin Builder.aml" />
+    <None Include="Help\Conceptual\License.aml" />
+    <None Include="Help\Conceptual\XsdGenerator.aml" />
+    <None Include="Help\Conceptual\VersionUpdater.aml" />
+    <None Include="Help\Conceptual\VersionCorrector.aml" />
+    <None Include="Help\Conceptual\TransformCodeGenerator.aml" />
+    <None Include="Help\Conceptual\SplashScreenGenerator.aml" />
+    <None Include="Help\Conceptual\ResXFileGenerator.aml" />
+    <None Include="Help\Conceptual\ResXFileCodeGeneratorEx.aml" />
+    <None Include="Help\Conceptual\PseudoZip.aml" />
+    <None Include="Help\Conceptual\CommentsMerge.aml" />
+    <None Include="Help\Conceptual\XsdGenerator.aml" />
+    <None Include="Help\Conceptual\VersionUpdater.aml" />
+    <None Include="Help\Conceptual\VersionCorrector.aml" />
+    <None Include="Help\Conceptual\TransformCodeGenerator.aml" />
+    <None Include="Help\Conceptual\SplashScreenGenerator.aml" />
+    <None Include="Help\Conceptual\ResXFileGenerator.aml" />
+    <None Include="Help\Conceptual\ResXFileCodeGeneratorEx.aml" />
+    <None Include="Help\Conceptual\PseudoZip.aml" />
+    <None Include="Help\Conceptual\License.aml" />
+    <None Include="Help\Conceptual\CommentsMerge.aml" />
     <None Include="Help\Conceptual\DevelopmentTools.aml" />
     <None Include="Help\Conceptual\DevelopmentTools.aml" />
     <None Include="Help\Conceptual\DevelopmentTools.aml" />
@@ -211,6 +243,12 @@
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="Help\Content Layout.content" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Help\Conceptual\Total Commander Plugin Builder.png">
+      <ImageId>Total Commander Plugin Builder</ImageId>
+      <AlternateText>Total Commander Plugin Builder Architecture</AlternateText>
+    </Image>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

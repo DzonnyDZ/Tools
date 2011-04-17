@@ -12,7 +12,13 @@ using System.ComponentModel;
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Renames given property of type string and adds property of type T? backed by original property holding either an empty string / null or <typeparamref name="T"/>. Custom format may be used for storing value.</summary>
     /// <typeparam name="T">Type of property</typeparam>
-    /// <remarks>This extension applies only to one property by name. If you need to alter more properties, use the extension multiple times.</remarks>
+    /// <remarks>This extension applies only to one property by name. If you need to alter more properties, use the extension multiple times.
+    /// <para>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </para></remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.TNullableByEmptyString`1[System.Int32]" PropertyName="..." TypeName="..." Empty="..." Format="..."?>]]></code></example>
     /// <version version="1.5.3">This class is re-introduced in version 1.5.3</version>
     public class TNullableByEmptyString<T> : ICodeExtension where T : struct, IFormattable {
         /// <summary>Initializes the extension</summary>

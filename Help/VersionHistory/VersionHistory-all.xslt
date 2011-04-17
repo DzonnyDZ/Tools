@@ -19,6 +19,7 @@
     <xsl:param name="guid"/>
 
     <xsl:template match="/doc">
+        <xsl:processing-instruction name="xml-stylesheet">href="../Conceptual/conceptual.css" type="text/css"</xsl:processing-instruction>
         <topic id="{$guid}" revisionNumber="1" xmlns="">
             <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
                 <introduction>

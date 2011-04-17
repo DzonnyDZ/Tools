@@ -11,7 +11,13 @@ using System.ComponentModel;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Makes property backed by string property with given format</summary>
-    /// <remarks>Use only for <see cref="IFormattable"/> with Parse static function!</remarks>
+    /// <remarks>Use only for <see cref="IFormattable"/> with Parse static function!
+    /// <para>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </para></remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.StringBackedProperty" PropertyName="..." TypeName="..." Format="..."?>]]></code></example>
     /// <version version="1.5.3">This class was re-introduced in version 1.5.3</version>
     public class StringBackedProperty : ICodeExtension {
         /// <summary>Initializes the extension</summary>

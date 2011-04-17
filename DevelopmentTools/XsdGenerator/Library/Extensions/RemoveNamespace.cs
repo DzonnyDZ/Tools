@@ -8,6 +8,12 @@ using System.Collections.Generic;
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// <summary>Removes specified XML namespace from XML serialization attribute <see cref="XmlTypeAttribute"/></summary>
+    /// <remarks>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension "Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.RemoveNamespace" ns="..."?>]]></code></example>
     /// <version version="1.5.3">This class was re-introduced in version 1.5.3</version>
     public class RemoveNamespace : ICodeExtension {
         private string ns;

@@ -4,5 +4,17 @@
     <Topic id="87bfaabf-6850-42dd-9c91-815bd77b2aa4" visible="True" />
     <Topic id="A4257124-C37D-472d-B189-79528BC483B4" visible="True" />
   </Topic>
-  <Topic id="3b77b891-12ee-4be9-b6a2-374d8dfc09f8" visible="True" apiParentMode="InsertBefore" title="Development Tools" />
+  <Topic id="3b77b891-12ee-4be9-b6a2-374d8dfc09f8" visible="True" apiParentMode="InsertBefore" title="Development Tools">
+    <Topic id="4e26733f-2506-42db-bc3c-f52a1a830a38" visible="True" />
+    <Topic id="5a606e40-5300-49f8-bbbd-e9fd49f9edb0" visible="True" />
+    <Topic id="45772b7f-ff09-4ba1-8add-0a7ef1ceaa59" visible="True" />
+    <Topic id="a7050015-d5cf-4f91-9f00-847a82337096" visible="True" />
+    <Topic id="9ca409ca-de9d-4ba1-bc84-0501796c46ea" visible="True" />
+    <Topic id="0a384324-351a-4fe9-9a73-7f71f8363c42" visible="True" />
+    <Topic id="8d079304-ef0f-4f43-ac18-110080ea3592" visible="True" />
+    <Topic id="8aaeabbc-cfbf-4bc0-8824-b8b9d6aa3284" visible="True" />
+    <Topic id="6d0d5851-0c03-407f-b7bc-b8452beeacc2" visible="True" />
+    <Topic id="0bd478b6-3b43-4a8f-9f3c-3ad344bfbba4" visible="True" />
+  </Topic>
+  <Topic id="cab7bff3-b8ec-4032-8ae1-1aa836c83531" visible="True" />
 </Topics>

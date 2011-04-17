@@ -13,6 +13,12 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
     /// Adds corresponding virtual <c>On{0}Changing</c> methods raising <c>{0}ChangingEvents</c> and adds the events.
     /// Also implements the <see cref="INotifyPropertyChanging"/> interface.
     /// </summary>
+    /// <remarks>
+    /// This class implements CodeDOM-based post-processing extension for <see cref="XsdCodeGenerator"/> Visual Studio Custom Tool.
+    /// To use it add a processing instruction to your XSD file.
+    /// </remarks>
+    /// <example>How to use this extension in XSD file.
+    /// <code language="xml"><![CDATA[<?extension Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions.OnChangingCall?>]]></code></example>
     /// <version version="1.5.3">Added implemetation for <see cref="INotifyPropertyChanging"/></version>
     /// <version version="1.5.3">Fiexd type of event arguments (changed from <c>EOS.PropertyChangingEventArgs</c> ro <see cref="T:Tools.ComponentModelT.PropertyChangingEventArgsEx"/>.</version>
     public class OnChangingCall : ICodeExtension {
@@ -20,7 +26,7 @@ namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator.Extensions {
         /// <param name="parameters">Initialization parameters (ignored)</param>
         /// <version version="1.5.3">Added documentation</version>
         /// <version version="1.5.3">Parameter <c>Parameters</c> renamed to <c>parameters</c></version>
-        void ICodeExtension.Initialize(System.Collections.Generic.IDictionary<string, string> parameters) { }
+        void IExtensionBase.Initialize (System.Collections.Generic.IDictionary<string, string> parameters) { }
         /// <summary>Called when extension shall processs generated CodeDOM</summary>
         /// <param name="code">Object tree representing generated CodeDOM</param>
         /// <param name="schema">Input XML schema</param>
