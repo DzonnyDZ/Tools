@@ -346,7 +346,7 @@ Public Class Generator
             Dim ProjectFile = IO.Path.Combine(ProjectDirectory, "Tools.TotalCommander.Plugin.vcxproj")
             Dim binDirectory = IO.Path.Combine(ProjectDirectory, "bin")
             Dim objDirectory = IO.Path.Combine(ProjectDirectory, "obj")
-            Log(My.Resources.I_CreateProjectDir, ProjectDirectory)
+            Log(My.Resources.i_CreateProjectDir, ProjectDirectory)
             IO.Directory.CreateDirectory(ProjectDirectory)
             If Me.ProjectTemplateDirectory IsNot Nothing Then 'Copy
                 Log(My.Resources.i_CopyTemplate, Me.ProjectTemplateDirectory)
@@ -494,13 +494,13 @@ Public Class Generator
         End Using
         Dim ia = Type.GetAttribute(Of PluginIconBaseAttribute)()
         If ia IsNot Nothing Then
-            Log("Extracting icon")
+            Log(My.Resources.i_ExtractingIcon)
             Try
                 Using pIcon = ia.getIcon(Type), IconFile = IO.File.Open(IO.Path.Combine(ProjectDirectory, "Icon.ico"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read)
                     pIcon.Save(IconFile)
                 End Using
             Catch ex As Exception
-                Log("Error while extracting icon using {0}: {1}: {2}", ia.GetType.Name, ex.GetType.Name, ex.Message)
+                Log(My.Resources.e_ExtractingIcon, ia.GetType.Name, ex.GetType.Name, ex.Message)
                 Throw
             End Try
         End If

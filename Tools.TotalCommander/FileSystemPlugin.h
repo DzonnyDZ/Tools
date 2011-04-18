@@ -175,7 +175,7 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsable(EditorBrowsableState::Advanced)]
         String^ PerformCryptoOperation(CryptMode mode, String^ connectionName, String^ password, int maxlen);
         /// <summary>Saves a password for given connection is Total Commander secure password store</summary>
-        /// <param name="connectionName">Name of the connection to save password for</param>
+        /// <param name="connectioName">Name of the connection to save password for</param>
         /// <param name="password">The password to be saved</param>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
@@ -183,7 +183,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         void SavePassword(String^ connectioName, String^ password);
         /// <summary>Loads a password form Total Commander secure password store for given connection</summary>
-        /// <paramm name="connectionName">Name of the connection to load password for</param>
+        /// <para name="connectionName">Name of the connection to load password for</param>
         /// <param name="maxlen">Maximum lenght, in characters, retireved password can have</param>
         /// <param name="showUI">True to ask user for master password, false to load password only when master password was already enetered</param>
         /// <exception cref="CryptException">Crypto operation failed.</exception>

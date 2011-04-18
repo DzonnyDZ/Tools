@@ -169,7 +169,7 @@
   <data name="i_CeateUserDefinedIntermediateDir" xml:space="preserve">
     <value>Creating user-defined intermediate directory {0}</value>
   </data>
-  <data name="I_CreateProjectDir" xml:space="preserve">
+  <data name="i_CreateProjectDir" xml:space="preserve">
     <value>Create project directory {0}</value>
   </data>
   <data name="i_CopyTemplate" xml:space="preserve">
@@ -243,5 +243,11 @@
   </data>
   <data name="i_CopyAppConfig" xml:space="preserve">
     <value>Copying app.config file from {0} to {1}</value>
+  </data>
+  <data name="i_ExtractingIcon" xml:space="preserve">
+    <value>Extracting icon</value>
+  </data>
+  <data name="e_ExtractingIcon" xml:space="preserve">
+    <value>Error while extracting icon using {0}: {1}: {2}</value>
   </data>
 </root>

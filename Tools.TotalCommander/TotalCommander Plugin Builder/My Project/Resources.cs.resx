@@ -165,7 +165,7 @@
   <data name="i_CeateUserDefinedIntermediateDir" xml:space="preserve">
     <value>Vytvářím uživatelem definovanou přechodnou složku {0}</value>
   </data>
-  <data name="I_CreateProjectDir" xml:space="preserve">
+  <data name="i_CreateProjectDir" xml:space="preserve">
     <value>Vytvářím složku projektu {0}</value>
   </data>
   <data name="i_CopyTemplate" xml:space="preserve">

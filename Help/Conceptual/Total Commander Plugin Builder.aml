@@ -170,8 +170,14 @@
                                     The target directory specified by <codeInline>path</codeInline> is cleared first.
                                 </para>
                                 <para>
-                                    If <codeInline>path</codeInline> starts with <environmentVariable>%TOTALCMD%</environmentVariable>, it's replaced with Total Commander directory as specified in Windows registry value <localUri>HKEY_LOCAL_MACHINE\SOFTWARE\Ghisler\Total Commander\InstallDir</localUri> (<localUri>HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Ghisler\Total Commander\InstallDir</localUri> on 64-bit machine).
+                                    If <codeInline>path</codeInline> starts with <environmentVariable>%TOTALCMD%</environmentVariable> or <environmentVariable>{TOTALCMD}</environmentVariable>, it's replaced with Total Commander directory as specified in Windows registry value <localUri>HKEY_LOCAL_MACHINE\SOFTWARE\Ghisler\Total Commander\InstallDir</localUri> (<localUri>HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Ghisler\Total Commander\InstallDir</localUri> on 64-bit machine).
                                 </para>
+                                <alert class="note">
+                                    <para>
+                                        Use <environmentVariable>{TOTALCMD}</environmentVariable> when <environmentVariable>%TOTALCMD%</environmentVariable> does not work for you.
+                                        It sometimes happed that <environmentVariable>%TOTALCMD%</environmentVariable> is replaced by system (to empty string).
+                                    </para>
+                                </alert>
                             </definition>
                         </definitionTable>
                     </definition>
@@ -299,6 +305,23 @@
                     </listItem>
                     <listItem>
                         <para>Wrapper assembly just passes any return values of functions back to Total Commander.</para>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        <section address="versionhistory">
+            <title>Version History</title>
+            <content>
+                <list class="nobullet">
+                    <listItem>
+                        <para>1.5.4</para>
+                        <list class="bullet">
+                            <listItem>
+                                <para>
+                                    Added option to use <environmentVariable>{TOTALCMD}</environmentVariable> instead of <codeEntityReference>%TOTALCMD%</codeEntityReference>
+                                </para>
+                            </listItem>
+                        </list>
                     </listItem>
                 </list>
             </content>

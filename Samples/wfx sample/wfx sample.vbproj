@@ -106,6 +106,12 @@
     <Compile Include="AddFavoriteItemDialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CryptTestForm.Designer.vb">
+      <DependentUpon>CryptTestForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CryptTestForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SampleFileSystemPlugin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -124,6 +130,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CryptTestForm.resx">
+      <DependentUpon>CryptTestForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -182,6 +191,9 @@
   <ItemGroup>
     <None Include="Resources\computer.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\CryptTestIcon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -191,6 +203,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "%25TOTALCMD%25\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
+    <PostBuildEvent>ECHO "$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"
+
+"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

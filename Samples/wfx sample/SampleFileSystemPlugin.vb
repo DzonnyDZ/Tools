@@ -73,7 +73,7 @@ Public Class SampleFileSystemPlugin
         Dim RealPath = GetRealPath(Path)
         If Path = "\" Then
             Dim ContentEnumerator = (From drv In IO.DriveInfo.GetDrives Select CObj(drv)) _
-                .Union(New Object() {My.Resources.AddNewFavoriteItem}) _
+                .Union(New Object() {My.Resources.AddNewFavoriteItem, My.Resources.CryptTest}) _
                 .Union(From fi In FavoriteItems Select CObj(fi)) _
             .GetEnumerator()
             If ContentEnumerator.MoveNext Then
@@ -118,10 +118,10 @@ Public Class SampleFileSystemPlugin
     Private Function GetObjItemInfo(ByVal objItem As Object) As FindData
         If TypeOf objItem Is IO.DriveInfo Then
             Return GetFindData(DirectCast(objItem, IO.DriveInfo).Name)
-        ElseIf TypeOf objItem Is String Then
+        ElseIf TypeOf objItem Is String Then 'Special build-in items
             Dim ret As New FindData
             ret.Attributes = FileAttributes.ReadOnly Or FileAttributes.Virtual
-            ret.FileName = My.Resources.AddNewFavoriteItem
+            ret.FileName = objItem
             Return ret
         ElseIf TypeOf objItem Is FavoriteItem Then
             Dim ret As New FindData
@@ -149,7 +149,7 @@ Public Class SampleFileSystemPlugin
     Private Function GetRealPath(ByVal Path$) As String
         If Path = "\" Then Return ""
         If Path = "" Then Return ""
-        If IsFavoriteAdd(Path) Then Return Path
+        If IsBuiltInSpecial(Path) Then Return Path
         If IsFavorite(Path) Then
             Dim fi = GetFavoriteItem(Path.Substring(1))
             If fi IsNot Nothing Then Return fi.Target
@@ -161,9 +161,21 @@ Public Class SampleFileSystemPlugin
     End Function
     ''' <summary>Gets value indicating if path of an item is add favorite</summary>
     ''' <param name="Path">Path to examine (in TC plugin format - with leading \)</param>
-    ''' <returns>True if path represents add favorite item; false othervise</returns>
-    Private Function IsFavoriteAdd(ByVal Path$) As Boolean
-        Return Path = "\" & My.Resources.AddNewFavoriteItem
+    ''' <returns>True if <paramref name="path"/> represents add favorite item; false othervise</returns>
+    Private Function IsFavoriteAdd(ByVal path$) As Boolean
+        Return path = "\" & My.Resources.AddNewFavoriteItem
+    End Function
+    ''' <summary>Gets value indicating if path of an item is crypt tes</summary>
+    ''' <param name="path">Path to examine (in TC plugin format - with leading \)</param>
+    ''' <returns>True if <paramref name="path"/> represents crypt test item; false otherwise</returns>
+    Private Function IsCryptTest(path$) As Boolean
+        Return path = "\" & My.Resources.CryptTest
+    End Function
+    ''' <summary>Gets value indicating if path of an item represents special built-in item such as favorite add or crypt test</summary>
+    ''' <param name="path">Path to examine (in TC plugin format - with leading \)</param>
+    ''' <returns>True if <paramref name="path"/> represents special built-in item such as favorite add or crypt tes; false otherwise</returns>
+    Private Function IsBuiltInSpecial(path$) As Boolean
+        Return IsFavoriteAdd(path) OrElse IsCryptTest(path)
     End Function
     ''' <summary>Gets value indicating if path of an item is path of favorite item</summary>
     ''' <param name="Path">Path to examine (in TC plugin format - with leading \)</param>
@@ -264,7 +276,7 @@ Public Class SampleFileSystemPlugin
     ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function DeleteFile(ByVal RemoteName As String) As Boolean
-        If IsFavoriteAdd(RemoteName) Then Return False
+        If IsBuiltInSpecial(RemoteName) Then Return False
         If IsFavorite(RemoteName) Then
             Dim fi = GetFavoriteItem(RemoteName.Substring(1))
             If fi IsNot Nothing Then FavoriteItems.Remove(fi) : SaveSettings()
@@ -289,7 +301,7 @@ Public Class SampleFileSystemPlugin
     ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function RemoveDir(ByVal RemoteName As String) As Boolean
-        If IsFavoriteAdd(RemoteName) OrElse IsFavorite(RemoteName) Then Return False
+        If IsBuiltInSpecial(RemoteName) OrElse IsFavorite(RemoteName) Then Return False
         Try
             IO.Directory.Delete(GetRealPath(RemoteName), True)
         Catch ex As Exception When TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is IO.IOException
@@ -374,6 +386,10 @@ Public Class SampleFileSystemPlugin
                 SaveSettings()
             End If
             Return ExecExitCode.OK
+        ElseIf IsCryptTest(RemoteName) Then
+            Dim dlg As New CryptTestForm(Me)
+            dlg.ShowDialog(New WindowsT.NativeT.Win32Window(hMainWin))
+            Return ExecExitCode.OK
         ElseIf IsFavorite(RemoteName) Then
             Dim fi = GetFavoriteItem(RemoteName.Substring(1))
             If fi IsNot Nothing Then
@@ -390,7 +406,7 @@ Public Class SampleFileSystemPlugin
                     Return ExecExitCode.Error
                 End If
             End If
-                Return ExecExitCode.Error
+            Return ExecExitCode.Error
             End If
 Normal:     If IO.Path.GetExtension(Path).ToLower = ".lnk" Then 'Follow link
                 Try
@@ -486,7 +502,7 @@ ExecFile:       Dim p As New Process
     ''' <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
     Protected Overrides Function ShowFileInfo(ByVal hMainWin As System.IntPtr, ByVal RemoteName As String) As ExecExitCode
-        If IsFavoriteAdd(RemoteName) OrElse IsFavorite(RemoteName) Then Return ExecExitCode.Error
+        If IsBuiltInSpecial(RemoteName) OrElse IsFavorite(RemoteName) Then Return ExecExitCode.Error
         Dim Path = GetRealPath(RemoteName)
         Try
             IOt.FileSystemTools.ShowProperties(Path, New WindowsT.NativeT.Win32Window(hMainWin))
@@ -519,7 +535,7 @@ ExecFile:       Dim p As New Process
     ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function RenMovFile(ByVal OldName As String, ByVal NewName As String, ByVal Move As Boolean, ByVal OverWrite As Boolean, ByVal info As RemoteInfo) As FileSystemExitCode
-        If IsFavoriteAdd(OldName) Then Return FileSystemExitCode.ReadError
+        If IsBuiltInSpecial(OldName) Then Return FileSystemExitCode.ReadError
         If NewName.IndexOf("\"c, 1) < 0 Then Return FileSystemExitCode.WriteError
         Dim SourceName = GetRealPath(OldName)
         Dim TargetName = GetRealPath(NewName)
@@ -598,7 +614,7 @@ ExecFile:       Dim p As New Process
     ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
     Public Overrides Function GetFile(ByVal RemoteName As String, ByRef LocalName As String, ByVal CopyFlags As CopyFlags, ByVal info As RemoteInfo) As FileSystemExitCode
-        If IsFavoriteAdd(RemoteName) Then Return FileSystemExitCode.ReadError
+        If IsBuiltInSpecial(RemoteName) Then Return FileSystemExitCode.ReadError
         Dim SourcePath = GetRealPath(RemoteName)
         Try
             Return FileOperation(LocalName, SourcePath, LocalName, RemoteName, CopyFlags)
@@ -751,6 +767,9 @@ ExecFile:       Dim p As New Process
         If IsFavoriteAdd(RemoteName) Then
             TheIcon = My.Resources.Favorites
             Return IconExtractResult.ExtractedDestroy
+        ElseIf IsCryptTest(RemoteName) Then
+            TheIcon = My.Resources.CryptTestIcon
+            Return IconExtractResult.ExtractedDestroy
         End If
         'If (RemoteName.Length = 2 OrElse (RemoteName.Length > 2 And RemoteName(2) <> "C"c)) AndAlso RemoteName.IndexOf("\", 1) < 0 Then
         '    'UNC computer
@@ -788,7 +807,7 @@ ExecFile:       Dim p As New Process
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
     Public Overrides Function GetPreviewBitmap(ByVal RemoteName As String, ByVal width As Integer, ByVal height As Integer) As BitmapResult
-        If IsFavoriteAdd(RemoteName) Then Return Nothing
+        If IsBuiltInSpecial(RemoteName) Then Return Nothing
         Dim Path = GetRealPath(RemoteName)
         Dim ext = IO.Path.GetExtension(Path)
         Try
@@ -839,4 +858,55 @@ ExecFile:       Dim p As New Process
             Return IO.Path.Combine(IO.Path.GetDirectoryName(PluginParams.DefaultIniName), "wfxSample.config")
         End Get
     End Property
+
+#Region "Make crypto public"
+    ''' <summary>Saves a password for given connection is Total Commander secure password store</summary>
+    ''' <param name="connectioName">Name of the connection to save password for</param>
+    ''' <param name="password">The password to be saved</param>
+    ''' <exception cref="CryptException">Crypto operation failed.</exception>
+    ''' <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="connectionName"/> or <paramref name="password"/> is null</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Shadows Sub SavePassword(connectioName$, password$)
+        MyBase.SavePassword(connectioName, password)
+    End Sub
+    ''' <summary>Loads a password form Total Commander secure password store for given connection</summary>
+    ''' <param name="connectionName">Name of the connection to load password for</param>
+    ''' <param name="maxlen">Maximum lenght, in characters, retireved password can have</param>
+    ''' <param name="showUI">True to ask user for master password, false to load password only when master password was already enetered</param>
+    ''' <exception cref="CryptException">Crypto operation failed.</exception>
+    ''' <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
+    ''' <remarks>
+    ''' When showing details of an existing connection this function should be first called with <paramref name="showUI"/> false.
+    ''' In case ith throws an <see cref="CryptException"/> with <see cref="CryptException.Reason"/> <see cref="CryptResult.NoMasterPassword"/> show a button "Edit password".
+    ''' Only call this function with <paramref name="showUI"/> true when user clicks that button, or tries to connect.
+    ''' This way the user does not have to enter the master password if he just wanted to make some other changes to the connection settings.
+    ''' </remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Shadows Function LoadPassword(connectionName$, maxlen%, showUI As Boolean) As String
+        Return MyBase.LoadPassword(connectionName, maxlen, showUI)
+    End Function
+
+    ''' <summary>Copies or moves the password form one connection in Total Commander safe password store to the other</summary>
+    ''' <param name="sourceConnectionName">Name of the source connection to take a password from</param>
+    ''' <param name="targetConnectionName">Name of the target connection to copy/move connection to</param>
+    ''' <param name="deleteOriginal">True to move the password, false to copy it</param>
+    ''' <exception cref="CryptException">Crypto operation failed.</exception>
+    ''' <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="sourceConnectionName"/> or <paramref name="targetConnectionName"/> is null</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Shadows Sub MovePassword(sourceConnectionName$, targetConnectionName$, deleteOriginal As Boolean)
+        MyBase.MovePassword(sourceConnectionName, targetConnectionName, deleteOriginal)
+    End Sub
+    ''' <summary>Deletes a passowrd stored for given connection in Total Commander safe password store</summary>
+    ''' <param name="connectionName">Name of connection to delete the password of</param>
+    ''' <exception cref="CryptException">Crypto operation failed.</exception>
+    ''' <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Shadows Sub DeletePassword(connectionName$)
+        MyBase.DeleteFile(connectionName)
+    End Sub
+#End Region
 End Class

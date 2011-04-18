@@ -117,41 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNewFavoriteItem" xml:space="preserve">
-    <value>Add new favorite item</value>
+  <data name="lblI.Text" xml:space="preserve">
+    <value>This window allows testing of Total Commander secure password store. It has no functionaloity related to rest of the plugin (i.e. this plugin does not support accessing files and folders under different credentials).</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="openHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\openHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Favorites" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Favorites.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DocumentHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DocumentHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Error_" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="SelectValidFileOrDirectoryPlase" xml:space="preserve">
-    <value>Select valid file or directory, plase.</value>
-  </data>
-  <data name="CharactersNotAllowed" xml:space="preserve">
-    <value>Characters \, : and nullchar are not allowed in item names.</value>
-  </data>
-  <data name="EnterName" xml:space="preserve">
-    <value>Enter name, please.</value>
-  </data>
-  <data name="ItemAlreadyExists" xml:space="preserve">
-    <value>Item already exists.</value>
-  </data>
-  <data name="computer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\computer.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CryptTest" xml:space="preserve">
-    <value>Crypt Test</value>
-  </data>
-  <data name="CryptTestIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\crypttesticon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <metadata name="totTooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAIAEBAQAAAABAAoAQAAJgAAACAgEAAAAAQA6AIAAE4BAAAoAAAAEAAAACAAAAABAAQAAAAAAIAA
+        AAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAgAAAgAAAAICAAIAAAACAAIAAgIAAAICAgADAwMAAAAD/AAD/
+        AAAA//8A/wAAAP8A/wD//wAA////AAMzMzMzMzMwAwAAAAAIiDALC7u4u7O4MAsLiIiIu7gwCwi4g3i7
+        uDAICIiDeIu4MAgIuIt4u7gwCAiIiIiLuDAIAAAAAAAAMAh3eIu7d3cwAHhwAAAHhwAAeIAAAAeHAAAI
+        hwAAeHAAAAiIh3eIcAAAAIiIiIcAAAAACHd3cAAAgAEAAL/hAACgAQAAoAEAAKABAACgAQAAoAEAAKAB
+        AAC//QAAgAEAAMfjAADH4wAA48cAAOAHAADwDwAA+B8AACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAAAAA
+        AAAAAAAAEAAAABAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD/
+        /wD/AAAA/wD/AP//AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIgAAAAAAAAAAAAAAAAAh3d3iIgA
+        AAAAAAAAAAAACIczM3d3eIAAAAAAAAAAAHOIiIi7M3d4gAAAAAAAAAgziIiIiIizN3iAAAAAAAALu4iI
+        iIiIiIs3eAAAAAAAC7uIiIiIu4iIs3eAAAAAAAu7iIiIiHuIiIg3gAAAAAALu4iIiIhziIiIN4AAAAAA
+        C7uAiIiIM4iIiDeAAAAAAAu7gIiIiDN4iIg3gAAAAAALu4CIiIhziIiIN4AAAAAAC4iAiIiId4iIiDeA
+        AAAAAAuIgIiIiIeIiIg3gAAAAAALiIAAAACIgAAIN4AAAAAAC4iIiIAAAAAACDeAAAAAAAu7Mze7uIAA
+        AAg3gAAAAAALuDMzi7u7uAAIN4AAAAAACLizO4iLuzM7ADeAAAAAAAAIu7iIiLMzMzg4AAAAAAAAAIu7
+        iIiIOzOzeAAAAAAAAACLszu4iLs7s4AAAAAAAAAAi7dwiLs7uzgAAAAAAAAAAIuzeAAAu7eAAAAAAAAA
+        AAALg3gAALi3gAAAAAAAAAAAC4g3iAB4t4AAAAAAAAAAAAi4s3eHuLeAAAAAAAAAAAAAiIszc4g4AAAA
+        AAAAAAAAAAiIiIiLgAAAAAAAAAAAAAAAi4iIuAAAAAAAAAAAAAAAAACIiIAAAAAAAAD//////4P///8A
+        P//+AAf//AAB//gAAH/4AAA/+AAAH/gAAB/4AAAf+EAAH/hAAB/4QAAf+EAAH/hAAB/4fx4f+Af+H/gA
+        fh/4AA4f+AADH/4AAD//AAA//wAAf/8EAP//A8H//4PB//+Awf//gAH//8AD///gB///8A////wf/w==
+</value>
   </data>
 </root>
