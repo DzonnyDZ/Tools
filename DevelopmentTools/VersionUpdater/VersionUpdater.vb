@@ -51,7 +51,14 @@ Friend Module VersionUpdater
                 Case ".p" : text = GetPascal(newVersion)
                 Case Else : text = newVersion.ToString
             End Select
-            My.Computer.FileSystem.WriteAllText(file, text, False)
+            Dim write = True
+            If IO.File.Exists(file) Then
+                Try
+                    write = text <> My.Computer.FileSystem.ReadAllText(file)
+                Catch :End Try
+            End If
+            If write Then _
+                My.Computer.FileSystem.WriteAllText(file, text, False)
         Next
     End Sub
 

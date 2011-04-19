@@ -285,7 +285,7 @@ namespace Tools.VisualStudioT.GeneratorsT {
         /// <param name="keyPath">Full (startring with base key) path of registry key in which the language is defined.</param>
         /// <exception cref="FormatException">Last segment of path does not represent valid <see cref="System.Guid"/></exception>
         /// <exception cref="OverflowException">Last segment of path is invalid <see cref="System.Guid"/></exception>
-        /// <exception cref="ArgumentNullException"><paramref name="keypath"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyPath"/> is null</exception>
         public VisualStudioCustomToolLanguage(string keyPath) {
             if (keyPath == null) throw new ArgumentNullException("keyPath");
             this.keyPath = keyPath;
@@ -416,7 +416,7 @@ namespace Tools.VisualStudioT.GeneratorsT {
         /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
         /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
         /// <exception cref="InvalidOperationException">Registry operation error caused by invalid registry key name ocured. (This is caused by <see cref="ArgumentException"/> thrown by registry operation. See <see cref="Exception.InnerException"/>.)</exception>
-        /// <exception cref="TypeLoadException">An exception was thrown by <see cref="Type.GetTypeFromCLSID(System.Guid,System.Boolean)"/> (with <paramref name="throwOnError"/> set to true). See <see cref="Exception.InnerException"/> for details.</exception>
+        /// <exception cref="TypeLoadException">An exception was thrown by <see cref="Type.GetTypeFromCLSID(System.Guid,System.Boolean)"/> (with <c>throwOnError</c> set to true). See <see cref="Exception.InnerException"/> for details.</exception>
         /// <exception cref="System.Reflection.TargetInvocationException">The constructor of custom tool class being called throws an exception. See <see cref="Exception.InnerException"/> for details.</exception>
         /// <exception cref="System.MethodAccessException">The caller does not have permission to call custom tool class constructor.</exception>
         /// <exception cref="System.MemberAccessException">Custom tool class was abstract .NET class</exception>

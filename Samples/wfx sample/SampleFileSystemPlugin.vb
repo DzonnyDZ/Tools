@@ -1,6 +1,7 @@
 ﻿Imports Tools.ExtensionsT, Tools.DrawingT
 Imports Tools.IOt, System.Xml.Linq
 Imports <xmlns:ws="http://dzonny.cz/xml/schemas/WfxSampleSettings.xsd">
+Imports mBox = Tools.WindowsT.IndependentT.MessageBox
 
 ''' <summary>Sample Total Commander file system plugin (just works over local file system)</summary>
 <TotalCommanderPlugin("wfxSample")> _
@@ -387,9 +388,14 @@ Public Class SampleFileSystemPlugin
             End If
             Return ExecExitCode.OK
         ElseIf IsCryptTest(RemoteName) Then
-            Dim dlg As New CryptTestForm(Me)
-            dlg.ShowDialog(New WindowsT.NativeT.Win32Window(hMainWin))
-            Return ExecExitCode.OK
+            If CryptInitialized Then
+                Dim dlg As New CryptTestForm(Me)
+                dlg.ShowDialog(New WindowsT.NativeT.Win32Window(hMainWin))
+                Return ExecExitCode.OK
+            Else
+                mBox.MsgBox("Crypto was not initialized. An old Total Commmander? Forgott to override OnInitializeCryptography?", MsgBoxStyle.Exclamation, "Crypto", New WindowsT.NativeT.Win32Window(hMainWin))
+                Return ExecExitCode.Error
+            End If
         ElseIf IsFavorite(RemoteName) Then
             Dim fi = GetFavoriteItem(RemoteName.Substring(1))
             If fi IsNot Nothing Then
@@ -407,35 +413,51 @@ Public Class SampleFileSystemPlugin
                 End If
             End If
             Return ExecExitCode.Error
-            End If
-Normal:     If IO.Path.GetExtension(Path).ToLower = ".lnk" Then 'Follow link
-                Try
-                    Dim lnk As IOt.ShellLink
-                    Try : lnk = New IOt.ShellLink(Path)
-                    Catch : GoTo ExecFile : End Try
-                    Dim newPath = lnk.TargetPath
-                    If Not IO.Directory.Exists(newPath) Then GoTo ExecFile
-                    RemoteName = "\" & newPath
-                    Return ExecExitCode.Symlink
-                Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
-                    Throw
-                Catch
-                    Return ExecExitCode.Error
-                End Try
-            Else 'Open/execute file
-ExecFile:       Dim p As New Process
-                p.StartInfo.FileName = Path
-                p.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(Path)
-                Try
-                    p.Start()
-                Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
-                    Throw
-                Catch
-                    Return ExecExitCode.Error
-                End Try
-                Return ExecExitCode.OK
-            End If
+        End If
+Normal: If IO.Path.GetExtension(Path).ToLower = ".lnk" Then 'Follow link
+            Try
+                Dim lnk As IOt.ShellLink
+                Try : lnk = New IOt.ShellLink(Path)
+                Catch : GoTo ExecFile : End Try
+                Dim newPath = lnk.TargetPath
+                If Not IO.Directory.Exists(newPath) Then GoTo ExecFile
+                RemoteName = "\" & newPath
+                Return ExecExitCode.Symlink
+            Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
+                Throw
+            Catch
+                Return ExecExitCode.Error
+            End Try
+        Else 'Open/execute file
+ExecFile:   Dim p As New Process
+            p.StartInfo.FileName = Path
+            p.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(Path)
+            Try
+                p.Start()
+            Catch ex As Exception When TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is InvalidOperationException
+                Throw
+            Catch
+                Return ExecExitCode.Error
+            End Try
+            Return ExecExitCode.OK
+        End If
     End Function
+    ''' <summary>This method is called when loading the plugin after plugin cryptography was initialized.</summary>
+    ''' <param name="flags">Flags regarding the crypto connection</param>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. This implementation does not throw this exception.</exception>
+    ''' <remarks>
+    ''' This function is only needed if you want to use the secure password store in Total Commander.
+    ''' No special code is needed in this function. You even don't have to call base class method.
+    ''' However it is necessary to override this function in derived class and NOT to decorate it with <seee cref="MethodNotSupportedAttribute"/> to indicate that your plugin wants to the secure password store in Total Commander.
+    ''' In older versions of Total Commmander (prior TC 7.55 / plugin interface 2.0) this function is never called (indicating that the secure password store is not supported by that version of Total Commander).
+    ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+    ''' <note type="inheritinfo">Do not thow any exceptions from this method. Any exceptions thrown will be passed to Total Commander which cannot handle them.</note>
+    ''' </remarks>
+    ''' <version version="1.5.4">This method is new in 1.5.4</version>
+    Protected Overrides Sub OnInitializeCryptography(flags As CryptFlags)
+        MyBase.OnInitializeCryptography(flags)
+    End Sub
+
     ''' <summary>Executes command in plugin space</summary>
     ''' <param name="hMainWin">Handle to Total Commander window.</param>
     ''' <param name="RemoteName">Full path of currently show directory in Total Commander. Includes trailing \. If command changes current directory (like cd in Total Commander) asingn full path of new directory to this parameter. Total COmmander will navigate there.

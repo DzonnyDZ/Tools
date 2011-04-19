@@ -77,7 +77,14 @@ Friend Class CryptTestForm
         mBox.MsgBox("Password copyied", MsgBoxStyle.Information, "Password", Me)
     End Sub
 
+    Private allowClose As Boolean
     Private Sub cmdClose_Click(sender As System.Object, e As System.EventArgs) Handles cmdClose.Click
+        allowClose = True
         Me.Close()
     End Sub
+
+    Private Sub CryptTestForm_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        If e.CloseReason = Windows.Forms.CloseReason.None AndAlso Not allowClose Then e.Cancel = True
+    End Sub
+
 End Class

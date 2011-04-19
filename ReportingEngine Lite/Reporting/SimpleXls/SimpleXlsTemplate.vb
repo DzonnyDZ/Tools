@@ -210,7 +210,8 @@ Namespace ReportingT.ReportingEngineLite
         ''' <param name="context">Report context. The template MUST call <see cref="IReportGeneratorContext.OnRead"/> for every line read from <paramref name="data"/>!</param>
         ''' <exception cref="Exception">There was an error during export</exception>
         ''' <exception cref="OperationCanceledException">Background operation was cancelled (using <paramref name="Context"/>.<see cref="IReportGeneratorContext.BackgroundWorker">BackgroundWorker</see>.<see cref="System.ComponentModel.BackgroundWorker.CancellationPending">CancellationPending</see>)</exception>
-        Public Overridable Sub Export(ByVal Data As IDataReader, ByVal Count%, ByVal TemplatePath As String, ByVal TargetFilePath As String, ByVal OpenWhenDone As Boolean, ByVal Context As IReportGeneratorContext) Implements IReportTemplate.Export
+        ''' <version version="1.5.4">Arguments renamed: All firts letters changed to lowercase</version>
+        Public Overridable Sub Export(ByVal data As IDataReader, ByVal count%, ByVal templatePath As String, ByVal targetFilePath As String, ByVal openWhenDone As Boolean, ByVal context As IReportGeneratorContext) Implements IReportTemplate.Export
             If Data Is Nothing Then Throw New ArgumentNullException("data")
             If TemplatePath <> "" AndAlso Not IO.File.Exists(TemplatePath) Then Throw New IO.FileNotFoundException(My.Resources.ex_TemplateNotFound, TemplatePath)
             If Context Is Nothing Then Throw New ArgumentNullException("Context")
@@ -346,20 +347,23 @@ Namespace ReportingT.ReportingEngineLite
             End Get
         End Property
         ''' <summary>Exports data to selected Excel list</summary>
-        ''' <param name="Data">Data to export</param>
-        ''' <param name="Count">Number of rows in<paramref name="Data"/>, -1 if unknown</param>
-        ''' <param name="List">Target list</param>
-        ''' <param name="Context">A context</param>
+        ''' <param name="data">Data to export</param>
+        ''' <param name="count">Number of rows in<paramref name="Data"/>, -1 if unknown</param>
+        ''' <param name="worksheet">Target list</param>
+        ''' <param name="context">A context</param>
         ''' <exception cref="OperationCanceledException">Background operation was cancelled</exception>
-        Protected Overridable Sub Export(ByVal Data As IDataReader, ByVal Count%, ByVal List As Excel.Worksheet, ByVal Context As IReportGeneratorContext)
-            If Data Is Nothing Then Throw New ArgumentNullException("data")
-            If List Is Nothing Then Throw New ArgumentNullException("List")
-            If Context.BackgroundWorker IsNot Nothing Then
-                Context.BackgroundWorker.ReportProgress(-1, ProgressBarStyle.Marquee)
-                Context.BackgroundWorker.ReportProgress(-1, String.Format(My.Resources.msg_PreparingTemplateList, Me.Name, List.Name))
+        ''' <version version="1.5.4">Arguments renamed: <c>Data</c> to <c>data</c>, <c>Count</c> to <c>count</c>, <c>List</c> to <c>worksheet</c>, <c>Context</c> to <c>context</c></version>
+        ''' <version version="1.5.4">Added <see cref="CLSCompliantAttribute"/>(False) (because <paramref name="worksheet"/> argument is not CLS-compliant</version>
+        <CLSCompliant(False)>
+        Protected Overridable Sub Export(ByVal data As IDataReader, ByVal count%, ByVal worksheet As Excel.Worksheet, ByVal context As IReportGeneratorContext)
+            If data Is Nothing Then Throw New ArgumentNullException("data")
+            If worksheet Is Nothing Then Throw New ArgumentNullException("List")
+            If context.BackgroundWorker IsNot Nothing Then
+                context.BackgroundWorker.ReportProgress(-1, ProgressBarStyle.Marquee)
+                context.BackgroundWorker.ReportProgress(-1, String.Format(My.Resources.msg_PreparingTemplateList, Me.Name, worksheet.Name))
             End If
-            If Context.BackgroundWorker IsNot Nothing AndAlso Context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
-            If TypeOf Data Is DbDataReader AndAlso Not DirectCast(Data, DbDataReader).HasRows Then Return
+            If context.BackgroundWorker IsNot Nothing AndAlso context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
+            If TypeOf data Is DbDataReader AndAlso Not DirectCast(data, DbDataReader).HasRows Then Return
             Dim Column As Integer = Me.Settings.Col1
             Dim Row As Integer = Me.Settings.Row1
             Dim ColMap As New Dictionary(Of Integer, Integer)
@@ -367,99 +371,99 @@ Namespace ReportingT.ReportingEngineLite
             Row1 = Row
             Dim SkipCollumns As List(Of String) = Me.SkippedColumns
             If Settings.SuspendRecalculations Then
-                List.Application.Calculation = Excel.XlCalculation.xlCalculationManual
+                worksheet.Application.Calculation = Excel.XlCalculation.xlCalculationManual
             End If
-            Dim FilledColumns(Data.FieldCount - 1) As Integer
+            Dim FilledColumns(data.FieldCount - 1) As Integer
             Try
                 'Create a column map (valid for all rows)
                 If Me.Settings.SkipFilled Then 'Skipping of filled columns, copying
                     Dim coli% = Column
-                    For i As Integer = 0 To Data.FieldCount - 1
-                        If SkipCollumns.Contains(Data.GetName(i)) Then Continue For
-                        If Context.BackgroundWorker IsNot Nothing AndAlso Context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
-                        While DirectCast(List.Cells.Item(Row, coli), Excel.Range).Value IsNot Nothing OrElse CBool(DirectCast(List.Cells.Item(Row, coli), Excel.Range).HasFormula)
+                    For i As Integer = 0 To data.FieldCount - 1
+                        If SkipCollumns.Contains(data.GetName(i)) Then Continue For
+                        If context.BackgroundWorker IsNot Nothing AndAlso context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
+                        While DirectCast(worksheet.Cells.Item(Row, coli), Excel.Range).Value IsNot Nothing OrElse CBool(DirectCast(worksheet.Cells.Item(Row, coli), Excel.Range).HasFormula)
                             coli += 1
                         End While
                         ColMap.Add(i, coli) : FilledColumns(i) = coli
                         If i = 1 Then Col1 = coli
-                        If i = Data.FieldCount - 1 Then Coln = coli
+                        If i = data.FieldCount - 1 Then Coln = coli
                         If Me.Settings.CopyColumnsFrom > 0 AndAlso coli >= Me.Settings.CopyColumnsFrom Then 'Copy a column
                             'List.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "C[{0}]", coli)).EntireColumn.Insert(Excel.XlInsertShiftDirection.xlShiftDown, Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove)
-                            DirectCast(List.Columns(coli), Excel.Range).Insert(Excel.XlInsertShiftDirection.xlShiftDown, Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove)
+                            DirectCast(worksheet.Columns(coli), Excel.Range).Insert(Excel.XlInsertShiftDirection.xlShiftDown, Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove)
                             'List.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "C[{0}]", coli - 1)).EntireColumn.Copy(List.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "C[{0}]", coli)))
-                            DirectCast(List.Columns(coli - 1), Excel.Range).Copy(List.Columns(coli))
+                            DirectCast(worksheet.Columns(coli - 1), Excel.Range).Copy(worksheet.Columns(coli))
                         End If
                         coli += 1
                     Next
                 Else 'No skipping
                     Dim iminus% = 0
-                    For i As Integer = 0 To Data.FieldCount - 1
-                        If SkipCollumns.Contains(Data.GetName(i)) Then iminus += 1 : Continue For
-                        If Context.BackgroundWorker IsNot Nothing AndAlso Context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
+                    For i As Integer = 0 To data.FieldCount - 1
+                        If SkipCollumns.Contains(data.GetName(i)) Then iminus += 1 : Continue For
+                        If context.BackgroundWorker IsNot Nothing AndAlso context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
                         Dim coli% = Column + i - iminus
                         ColMap.Add(i, coli)
                         FilledColumns(i) = coli
                         If Me.Settings.CopyColumnsFrom > 0 AndAlso coli >= Me.Settings.CopyColumnsFrom Then 'Copy a column
-                            DirectCast(List.Cells(coli), Excel.Range).EntireColumn.Insert(Excel.XlInsertShiftDirection.xlShiftDown, Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove)
-                            DirectCast(List.Cells(coli - 1), Excel.Range).EntireColumn.Copy(DirectCast(List.Cells(coli), Excel.Range).EntireColumn)
+                            DirectCast(worksheet.Cells(coli), Excel.Range).EntireColumn.Insert(Excel.XlInsertShiftDirection.xlShiftDown, Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove)
+                            DirectCast(worksheet.Cells(coli - 1), Excel.Range).EntireColumn.Copy(DirectCast(worksheet.Cells(coli), Excel.Range).EntireColumn)
                         End If
                     Next
-                    Coln = Column + Data.FieldCount - 1
+                    Coln = Column + data.FieldCount - 1
                 End If
                 'Column names
                 If Me.Settings.ColumnNameRow >= 1 Then
-                    For i As Integer = 0 To Data.FieldCount - 1
-                        If SkipCollumns.Contains(Data.GetName(i)) Then Continue For
-                        If Context.BackgroundWorker IsNot Nothing AndAlso Context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
-                        With DirectCast(List.Cells(Me.Settings.ColumnNameRow, ColMap(i)), Excel.Range)
+                    For i As Integer = 0 To data.FieldCount - 1
+                        If SkipCollumns.Contains(data.GetName(i)) Then Continue For
+                        If context.BackgroundWorker IsNot Nothing AndAlso context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
+                        With DirectCast(worksheet.Cells(Me.Settings.ColumnNameRow, ColMap(i)), Excel.Range)
                             If .Value Is Nothing AndAlso Not CBool(.HasFormula) Then _
-                                .Value = Data.GetName(i)
+                                .Value = data.GetName(i)
                         End With
                     Next
                 End If
                 'Data
                 Dim rowi As Integer = 0
                 Dim rowiTotal% = 0
-                If Count >= 0 AndAlso Context.BackgroundWorker IsNot Nothing Then
-                    Context.BackgroundWorker.ReportProgress(0, ProgressBarStyle.Blocks)
-                    Context.BackgroundWorker.ReportProgress(0, String.Format(My.Resources.msg_WritingTemplateList, Me.Name, List.Name))
-                ElseIf Context.BackgroundWorker IsNot Nothing Then
-                    Context.BackgroundWorker.ReportProgress(-1, ProgressBarStyle.Marquee)
-                    Context.BackgroundWorker.ReportProgress(-1, String.Format(My.Resources.msg_WritingTemplateList, Me.Name, List.Name))
+                If count >= 0 AndAlso context.BackgroundWorker IsNot Nothing Then
+                    context.BackgroundWorker.ReportProgress(0, ProgressBarStyle.Blocks)
+                    context.BackgroundWorker.ReportProgress(0, String.Format(My.Resources.msg_WritingTemplateList, Me.Name, worksheet.Name))
+                ElseIf context.BackgroundWorker IsNot Nothing Then
+                    context.BackgroundWorker.ReportProgress(-1, ProgressBarStyle.Marquee)
+                    context.BackgroundWorker.ReportProgress(-1, String.Format(My.Resources.msg_WritingTemplateList, Me.Name, worksheet.Name))
                 End If
-                While Data.Read
-                    Context.OnRead(Data)
-                    Dim OldList As Excel.Worksheet = List
-                    Select Case BeforeWriteRow(Data, List, Context)
+                While data.Read
+                    context.OnRead(data)
+                    Dim OldList As Excel.Worksheet = worksheet
+                    Select Case BeforeWriteRow(data, worksheet, context)
                         Case BeforeAction.Reset
-                            FinishList(Count, OldList, Context, Col1, Coln, Row1, Rown, FilledColumns, False)
+                            FinishList(count, OldList, context, Col1, Coln, Row1, Rown, FilledColumns, False)
                             rowi = 0
                             Row = Row1
                         Case BeforeAction.Terminate : Exit While
                         Case Else 'Do nothing
                     End Select
                     If rowi = 0 AndAlso Settings.NameColumn <> "" Then
-                        List.Name = String.Format(Settings.NameFormat, Data(Data.GetOrdinal(Settings.NameColumn)))
+                        worksheet.Name = String.Format(Settings.NameFormat, data(data.GetOrdinal(Settings.NameColumn)))
                         'If(TypeOf Data Is OracleDataReader, _
                         '   GetValueFromOracle(Data, Data.GetOrdinal(Settings.NameColumn)), _
                         '   Data(Data.GetOrdinal(Settings.NameColumn))))
-                        If Context.BackgroundWorker IsNot Nothing Then Context.BackgroundWorker.ReportProgress(-1, String.Format(My.Resources.msg_WritingTemplateList, Me.Name, List.Name))
+                        If context.BackgroundWorker IsNot Nothing Then context.BackgroundWorker.ReportProgress(-1, String.Format(My.Resources.msg_WritingTemplateList, Me.Name, worksheet.Name))
                     End If
-                    If Context.BackgroundWorker IsNot Nothing AndAlso Context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
+                    If context.BackgroundWorker IsNot Nothing AndAlso context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
                     If Me.Settings.InsertRows AndAlso rowi > 0 Then 'Copy a row
-                        List.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}:{0}", Row)).EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown, Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove)
-                        List.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}:{0}", Row - 1)).EntireRow.Copy(List.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}:{0}", Row)))
+                        worksheet.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}:{0}", Row)).EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown, Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove)
+                        worksheet.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}:{0}", Row - 1)).EntireRow.Copy(worksheet.Range(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}:{0}", Row)))
                     End If
                     Dim Values As New List(Of Object)
                     Dim FirstJ% = -1
-                    For j As Integer = 0 To Data.FieldCount - 1
-                        If SkipCollumns.Contains(Data.GetName(j)) Then
+                    For j As Integer = 0 To data.FieldCount - 1
+                        If SkipCollumns.Contains(data.GetName(j)) Then
                             'If FirstJ = 0 Then FirstJ = j + 1
                             Continue For
                         ElseIf FirstJ < 0 Then
                             FirstJ = j
                         End If
-                        Dim Value As Object = Data(j) 'If(TypeOf Data Is OracleDataReader, Helper.GetValueFromOracle(Data, j), Data(j))
+                        Dim Value As Object = data(j) 'If(TypeOf Data Is OracleDataReader, Helper.GetValueFromOracle(Data, j), Data(j))
                         If TypeOf Value Is Double OrElse TypeOf Value Is Single OrElse TypeOf Value Is Byte OrElse TypeOf Value Is SByte OrElse TypeOf Value Is Int16 OrElse TypeOf Value Is Int32 OrElse TypeOf Value Is Int64 OrElse TypeOf Value Is UInt16 OrElse TypeOf Value Is UInt32 OrElse TypeOf Value Is UInt64 OrElse TypeOf Value Is Decimal OrElse TypeOf Value Is Boolean OrElse TypeOf Value Is DateTime OrElse TypeOf Value Is Char OrElse TypeOf Value Is String Then
                             Values.Add(Value)
                         ElseIf TypeOf Value Is TimeSpan Then
@@ -480,11 +484,11 @@ Namespace ReportingT.ReportingEngineLite
                             Values.Add(Value.ToString)
                         End If
                         Dim NextJ% = j + 1
-                        While NextJ < Data.FieldCount AndAlso SkipCollumns.Contains(Data.GetName(NextJ))
+                        While NextJ < data.FieldCount AndAlso SkipCollumns.Contains(data.GetName(NextJ))
                             NextJ += 1
                         End While
-                        If NextJ >= Data.FieldCount OrElse ColMap(j) + 1 <> ColMap(NextJ) Then
-                            Dim ArrRange As Excel.Range = List.Range(List.Cells(Row, ColMap(FirstJ)), List.Cells(Row, ColMap(j)))
+                        If NextJ >= data.FieldCount OrElse ColMap(j) + 1 <> ColMap(NextJ) Then
+                            Dim ArrRange As Excel.Range = worksheet.Range(worksheet.Cells(Row, ColMap(FirstJ)), worksheet.Cells(Row, ColMap(j)))
                             ArrRange.Value = Values.ToArray
                             FirstJ = NextJ
                             Values.Clear()
@@ -493,25 +497,27 @@ Namespace ReportingT.ReportingEngineLite
                     Next
                     Rown = Row
                     Row += 1 : rowi += 1 : rowiTotal += 1
-                    If Context.BackgroundWorker IsNot Nothing AndAlso Count > 0 Then
-                        Context.BackgroundWorker.ReportProgress(rowiTotal / Count * 100)
+                    If context.BackgroundWorker IsNot Nothing AndAlso count > 0 Then
+                        context.BackgroundWorker.ReportProgress(rowiTotal / count * 100)
                     End If
                 End While
             Finally
                 If Settings.SuspendRecalculations Then
-                    If Context.BackgroundWorker IsNot Nothing Then Context.BackgroundWorker.ReportProgress(-1, My.Resources.Recomputing)
-                    List.Application.Calculation = Excel.XlCalculation.xlCalculationAutomatic
+                    If context.BackgroundWorker IsNot Nothing Then context.BackgroundWorker.ReportProgress(-1, My.Resources.Recomputing)
+                    worksheet.Application.Calculation = Excel.XlCalculation.xlCalculationAutomatic
                 End If
             End Try
-            FinishList(Count, List, Context, Col1, Coln, Row1, Rown, FilledColumns, True)
+            FinishList(count, worksheet, context, Col1, Coln, Row1, Rown, FilledColumns, True)
         End Sub
         ''' <summary>Thius method is called before a row is written to a list - in case it's overriden in derived class  it allows to perform various actionsrùzné akce before a row is written</summary>
-        ''' <param name="Reader">A datasource pointing to current column</param>
-        ''' <param name="List">Current list (worksheet), when function returns it can change the list</param>
-        ''' <param name="Context">Context</param>
+        ''' <param name="reader">A datasource pointing to current column</param>
+        ''' <param name="worksheet">Current list (worksheet), when function returns it can change the list</param>
+        ''' <param name="context">Context</param>
         ''' <returns>An action toi be performed by caller. This implementation always returns <see cref="BeforeAction.None"/></returns>
+        ''' <version version="1.5.4">Arguments rernamed: <c>Reader</c> to <c>reader</c>, <c>List</c> to <c>worksheet</c>, <c>Context</c> to <c>context</c></version>
+        ''' <version version="1.5.4">Added <see cref="CLSCompliantAttribute"/>(False) (because <paramref name="worksheet"/> argument is not CLS-compliant</version>
         <CLSCompliant(False)>
-        Protected Overridable Function BeforeWriteRow(ByVal Reader As IDataReader, <[In](), Out()> ByRef List As Excel.Worksheet, ByVal Context As IReportGeneratorContext) As BeforeAction
+        Protected Overridable Function BeforeWriteRow(ByVal reader As IDataReader, <[In](), Out()> ByRef worksheet As Excel.Worksheet, ByVal context As IReportGeneratorContext) As BeforeAction
             Return BeforeAction.None
         End Function
 
@@ -526,30 +532,33 @@ Namespace ReportingT.ReportingEngineLite
         End Enum
 
         ''' <summary>Performs finishbing operations on a worksheet</summary>
-        ''' <param name="Count">Total number of rows in data source (-1 if unknows)</param>
-        ''' <param name="List">A list (worksheet)</param>
-        ''' <param name="Context">Report-generation context</param>
-        ''' <param name="Col1">First filled collumn</param>
-        ''' <param name="Row1">First filled row</param>
-        ''' <param name="Coln">Number of columns written</param>
-        ''' <param name="Rown">Last written column</param>
-        ''' <param name="FilledColumns">Indexes of colllumns data were written to</param>
-        ''' <param name="IsEnd">True in case this operation is called because the datasource contains no more records, false otherwise</param>
-        Protected Sub FinishList(ByVal count%, ByVal list As Excel.Worksheet, ByVal context As IReportGeneratorContext, ByVal col1%, ByVal coln%, ByVal row1%, ByVal rown%, ByVal filledColumns As Integer(), ByVal isEnd As Boolean)
+        ''' <param name="count">Total number of rows in data source (-1 if unknows)</param>
+        ''' <param name="worksheet">A list (worksheet)</param>
+        ''' <param name="context">Report-generation context</param>
+        ''' <param name="col1">First filled collumn</param>
+        ''' <param name="row1">First filled row</param>
+        ''' <param name="coln">Number of columns written</param>
+        ''' <param name="rown">Last written column</param>
+        ''' <param name="filledColumns">Indexes of colllumns data were written to</param>
+        ''' <param name="isEnd">True in case this operation is called because the datasource contains no more records, false otherwise</param>
+        ''' <version version="1.5.4">Argument <c>list</c> renamed to <c>worksheet</c></version>
+        ''' <version version="1.5.4">Added <see cref="CLSCompliantAttribute"/>(False) (because <paramref name="worksheet"/> argument is not CLS-compliant</version>
+        <CLSCompliant(False)>
+        Protected Sub FinishList(ByVal count%, ByVal worksheet As Excel.Worksheet, ByVal context As IReportGeneratorContext, ByVal col1%, ByVal coln%, ByVal row1%, ByVal rown%, ByVal filledColumns As Integer(), ByVal isEnd As Boolean)
             'Finalizing operations
             If context.BackgroundWorker IsNot Nothing AndAlso isEnd Then
                 If count < 0 Then context.BackgroundWorker.ReportProgress(100, ProgressBarStyle.Continuous)
-                context.BackgroundWorker.ReportProgress(100, String.Format(My.Resources.msg_FinalizeTemplateList, list.Name, Me.Name))
+                context.BackgroundWorker.ReportProgress(100, String.Format(My.Resources.msg_FinalizeTemplateList, worksheet.Name, Me.Name))
             End If
             'Autowdths
             For Each ColToSet As Integer In Settings.GetAutoWidthColumns(filledColumns)
                 If context.BackgroundWorker IsNot Nothing AndAlso context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
-                CType(list.Columns(ColToSet), Excel.Range).AutoFit()
+                CType(worksheet.Columns(ColToSet), Excel.Range).AutoFit()
             Next
             'Print area
             Dim PrintArea As Nullable(Of Rectangle) = Settings.GetPrintArea(col1, coln, row1, rown)
             If PrintArea.HasValue Then
-                list.PageSetup.PrintArea = list.Range(list.Cells(PrintArea.Value.Y, PrintArea.Value.X), list.Cells(PrintArea.Value.Bottom, PrintArea.Value.Right)).Address(True, True, Excel.XlReferenceStyle.xlA1)
+                worksheet.PageSetup.PrintArea = worksheet.Range(worksheet.Cells(PrintArea.Value.Y, PrintArea.Value.X), worksheet.Cells(PrintArea.Value.Bottom, PrintArea.Value.Right)).Address(True, True, Excel.XlReferenceStyle.xlA1)
             End If
         End Sub
         ''' <summary>Gets a value which indicates if the template is intended for sub-reports or top-level reports</summary>
@@ -574,7 +583,8 @@ Namespace ReportingT.ReportingEngineLite
         ''' <exception cref="IndexOutOfRangeException">List (worksheet) is set by index ant there are not enough worksheet in the workbook</exception>
         ''' <exception cref="NotSupportedException">Sub-report template is not suported. -or- The procedure for sub-report data preparation requires a parameter of type cursor or count.</exception>
         ''' <exception cref="OperationCanceledException">Background operation was cancelled</exception>
-        Private Sub Subreports(ByVal Workbook As Excel.Workbook, ByVal Context As IReportGeneratorContext)
+        ''' <version version="1.5.4">Arguments renamed: All firts letters changed to lowercase</version>
+        Private Sub Subreports(ByVal workbook As Excel.Workbook, ByVal context As IReportGeneratorContext)
             For Each subreport As ISubReport In Context.Subreports
                 If Context.BackgroundWorker IsNot Nothing AndAlso Context.BackgroundWorker.CancellationPending Then Throw New OperationCanceledException(My.Resources.ex_OperationCancelled)
                 If Context.BackgroundWorker IsNot Nothing Then
@@ -788,18 +798,21 @@ Namespace ReportingT.ReportingEngineLite
             End Set
         End Property
         ''' <summary>Thius method is called before a row is written to a list - in case it's overriden in derived class  it allows to perform various actionsrùzné akce before a row is written</summary>
-        ''' <param name="Reader">A datasource pointing to current column</param>
-        ''' <param name="List">Current list (worksheet), when function returns it can change the list</param>
-        ''' <param name="Context">Context</param>
+        ''' <param name="reader">A datasource pointing to current column</param>
+        ''' <param name="worksheet">Current list (worksheet), when function returns it can change the list</param>
+        ''' <param name="context">Context</param>
         ''' <returns>An action toi be performed by caller. This implementation always returns <see cref="BeforeAction.None"/></returns>
-        Protected Overrides Function BeforeWriteRow(ByVal Reader As IDataReader, ByRef List As Microsoft.Office.Interop.Excel.Worksheet, ByVal Context As IReportGeneratorContext) As SimpleXlsTemplate.BeforeAction
-            RowI += 1
-            If RowI = 0 Then originalList = List
-            Dim Reset As Boolean = RowI = 0
+        ''' <version version="1.5.4">Parameters renamed: <c>Reader</c> to <c>reader</c>, <c>List</c> to <c>worksheet</c>, <c>Context</c> to <c>context</c></version>
+        ''' <version version="1.5.4">Added <see cref="CLSCompliantAttribute"/>(False) (because <paramref name="worksheet"/> argument is not CLS-compliant</version>
+        <CLSCompliant(False)>
+        Protected Overrides Function BeforeWriteRow(ByVal reader As IDataReader, ByRef worksheet As Microsoft.Office.Interop.Excel.Worksheet, ByVal context As IReportGeneratorContext) As SimpleXlsTemplate.BeforeAction
+            rowI += 1
+            If rowI = 0 Then originalList = worksheet
+            Dim Reset As Boolean = rowI = 0
             Dim Value As Object = Nothing
             Dim idx%
             Try
-                idx = Reader.GetOrdinal(Settings.BreakColumn)
+                idx = reader.GetOrdinal(Settings.BreakColumn)
             Catch ex As IndexOutOfRangeException
                 idx = -1
             End Try
@@ -807,17 +820,17 @@ Namespace ReportingT.ReportingEngineLite
             '    Value = DirectCast(Reader, OracleDataReader).GetOracleValue(idx)
             'Else
             If idx >= 0 Then
-                Value = Reader.GetValue(idx)
+                Value = reader.GetValue(idx)
             End If
-            If idx >= 0 AndAlso RowI > 0 Then
+            If idx >= 0 AndAlso rowI > 0 Then
                 If (rowValue Is Nothing) <> (Value Is Nothing) OrElse (rowValue IsNot Nothing AndAlso Not rowValue.Equals(Value)) Then
                     Reset = True
                 End If
             End If
             Dim ret As BeforeAction = BeforeAction.None
             If Reset Then
-                originalList.Copy(After:=List)
-                List = List.Next
+                originalList.Copy(After:=worksheet)
+                worksheet = worksheet.Next
                 'List.Name = Reader(Settings.NameColumn).ToString
                 ret = BeforeAction.Reset
                 'If Context.BackgroundWorker IsNot Nothing Then Context.BackgroundWorker.ReportProgress(-1, String.Format("Zápis dat šablony {0}, list {1}", Me.Name, List.Name))

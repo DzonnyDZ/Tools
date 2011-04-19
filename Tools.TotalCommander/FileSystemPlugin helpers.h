@@ -396,7 +396,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Synchronize: Deleting files from plugin</summary>
         SyncDelete = FS_STATUS_OP_SYNC_DELETE	
     };
-#pragma end region
+#pragma endregion
 
     /// <summary>Arguments of operation status notifications</summary>
     public ref class OperationEventArgs : EventArgs{
@@ -603,12 +603,12 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>CTor - creates a new instance of the <see cref="CryptException"/> class from error message and reason code</summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">One of <seee cref="CryptResult"/> values indicating kind of failure</param>
-        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref="CryptResult::OK"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommander.CryptResult.OK"/></exception>
         /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
         CryptException(String^ message, CryptResult reason);
         /// <summary>CTor - creates a new instance of the <see cref="CryptException"/> class from error reason</summary>
         /// <param name="reason">One of <seee cref="CryptResult"/> values indicating kind of failure</param>
-        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref="CryptResult::OK"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommander.CryptResult.OK"/></exception>
         /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
         CryptException(CryptResult reason);
         /// <summary>Gets value indicating why the operation failed</summary>
@@ -616,7 +616,7 @@ namespace Tools{namespace TotalCommanderT{
     private:
         /// <summary>Gets default string error message from <see cref="CryptResult"/></summary>
         /// <param name="reason">Indicates why the crypto operation failed</param>
-        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref="CryptResult::OK"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommander.CryptResult.OK"/></exception>
         /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
         static String^ GetMessage(CryptResult reason);
     };
@@ -659,7 +659,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <param name="connectionName">Name of the connection for this operation</param>
     /// <param name="password">Operation-specific, usually the password to be stored, or the target connection when copying/moving a connection</param>
     /// <param name="maxlen">Maximum length, in characters, the password buffer can store when calling one of the load functions</param>
-    /// <returns>Password retrieved. Only when <paramref name="mode"> is <see cref="CryptMode::LoadPassword"/> or <see cref="CryptMode::LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
+    /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommander.CryptMode.LoadPassword"/> or <see cref2="F:Tools.TotalCommander.CryptMode.LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
     /// <exception cref="CryptException">Crypto operation failed.</exception>
     /// <remarks>This delegate is used only when Total Commander plugin is used outside Total Commander.</remarks>
     /// <version version="1.5.4">This delegate is new in version 1.5.4</version>

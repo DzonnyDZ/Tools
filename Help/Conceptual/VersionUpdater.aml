@@ -215,6 +215,9 @@ assembly: System.Reflection.AssemblyFileVersion("{0}")]]></code>
                                     <listItem>
                                         <para>Added support for extensions: il, inc, php3, php4, php5, php6</para>
                                     </listItem>
+                                    <listItem>
+                                        <para>Target file is overwritten only if it's content differs from newly generated text. This prevents Visual Studio from constant rebuilds of whole solution.</para>
+                                    </listItem>
                                 </list>
                             </listItem>
                         </list>

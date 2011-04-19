@@ -18,7 +18,7 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <param name="parameter">The converter parameter to use.</param>
         ''' <param name="culture">The culture to use in the converter.</param>
         ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>
-        ''' <remarks>For Greater, Greater or equal, Less and Less or equal comparisons either <paramref name="value"/> or <paramref name="parameter"/> must be <see cref="IComparable"/>.</remarks>
+        ''' <remarks>For Greater, Greater or equal, Less and Less or equal comparisons either <paramref name="value"/> or <paramref name="parameter"/> must be <see cref="System.IComparable"/>.</remarks>
         Protected NotOverridable Overloads Overrides Function Convert(ByVal value As Object, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Boolean?
             Select Case Operation
                 Case ComparisonOperation.True : Return True

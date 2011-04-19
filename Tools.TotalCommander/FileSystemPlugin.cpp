@@ -229,7 +229,7 @@ namespace Tools{namespace TotalCommanderT{
             if(password != nullptr){
                 pwdBuffer = new char[Math::Max(maxlen, password->Length)];
                 for(int i = 0; i < password->Length; i++)
-                    pwdBuffer[i] = password[i];
+                    pwdBuffer[i] = (char)password[i];
             }
             else if(maxlen > 0){
                 pwdBuffer = new char[maxlen];

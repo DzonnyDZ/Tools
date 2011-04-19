@@ -80,8 +80,9 @@ Namespace WindowsT.WPF
         Public Property OverrideCulture As CultureInfo
 
         ''' <summary>Regardless of another settings, always allow empty string as valid input (also allows null)</summary>
-        <defaultvalue(False)>
-        Public Property AllowEmptyString = False
+        ''' <version version="1.5.4">Fix: Property type changed from <see cref="Object"/> to <see cref="Boolean"/>.</version>
+        <DefaultValue(False)>
+        Public Property AllowEmptyString As Boolean = False
 
         ''' <summary>Performs validation checks on a value.</summary>
         ''' <returns>A <see cref="T:System.Windows.Controls.ValidationResult" /> object.</returns>

@@ -79,7 +79,7 @@ Namespace LinqT
 
         ''' <summary>True indicates that iteration has started (<see cref="initialize"/> was executed)</summary>
         Private started As Boolean
-        ''' <summary>True indicatees that iteration has finished (<see cref="condition"/> returned false or <see cref="[loop]"/> returned <see cref="LoopState.[Exit]"/> or <see cref="LoopState.Break"/>).</summary>
+        ''' <summary>True indicatees that iteration has finished (<see cref="condition"/> returned false or <see cref="[loop]"/> returned <see cref="LoopState.[Exit]"/> or <see cref="LoopState.Exit"/>).</summary>
         Private finished As Boolean
         ''' <summary>Current value obtained from loop</summary>
         Private currVal As TReturn

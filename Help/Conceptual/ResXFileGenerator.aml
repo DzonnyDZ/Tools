@@ -232,7 +232,7 @@
                     <title>Example</title>
                     <content>
                         <para>The Tools.TotalCommander C++/CLI project from ĐTools library uses this tool to generated C++/CLI code form RESX file. The command used in Pre-Build event follows:</para>
-                        <code>"ResXFileGenerator /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name ToolsTotalCommander.Exceptions.resources /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</code>
+                        <code>ResXFileGenerator /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name Tools.TotalCommanderT.Exceptions /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</code>
                     </content>
                 </section>
                 <section>

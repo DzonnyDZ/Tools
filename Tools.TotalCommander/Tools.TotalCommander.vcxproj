@@ -97,7 +97,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>"$(SolutionDir)DevelopmentTools\ResXFileGenerator\bin\Debug\x86\ResXFileGenerator.exe" /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name ToolsTotalCommander.Exceptions.resources /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</Command>
+      <Command>"$(SolutionDir)DevelopmentTools\ResXFileGenerator\bin\Debug\x86\ResXFileGenerator.exe" /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name Tools.TotalCommanderT.Exceptions /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>

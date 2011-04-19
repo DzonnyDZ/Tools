@@ -166,7 +166,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="mode">Then mode of operation</param>
         /// <param name="connectionName">Name of the connection for this operation</param>
         /// <param name="password">Operation-specific, usually the password to be stored, or the target connection when copying/moving a connection</param>
-        /// <returns>Password retrieved. Only when <paramref name="mode"> is <see cref="CryptMode::LoadPassword"/> or <see cref="CryptMode::LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
+        /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommander.CryptMode.LoadPassword"/> or <see cref="F:Tools.TotalCommander.CryptMode.LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
         /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
@@ -183,7 +183,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         void SavePassword(String^ connectioName, String^ password);
         /// <summary>Loads a password form Total Commander secure password store for given connection</summary>
-        /// <para name="connectionName">Name of the connection to load password for</param>
+        /// <param name="connectionName">Name of the connection to load password for</param>
         /// <param name="maxlen">Maximum lenght, in characters, retireved password can have</param>
         /// <param name="showUI">True to ask user for master password, false to load password only when master password was already enetered</param>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
@@ -314,11 +314,11 @@ namespace Tools{namespace TotalCommanderT{
         bool cryptInitialized;
     public:
         /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. This function is only needed if you want to use the secure password store in Total Commander.</summary>
-        /// <param name="pCryptProc">Pointer to the crypto callback function. See <see cref="CryptProc"/> for a description of this function</param>
+        /// <param name="pCryptProc">Pointer to the crypto callback function. See <see cref="tCryptProc"/> for a description of this function</param>
         /// <param name="CryptoNr">A parameter which needs to be passed to the callback function</param>
         /// <param name="Flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
-        /// <exception cref="NotSupportedException">Most-derived implementation of
+        /// <exception cref="NotSupportedException">Most-derived implementation of</exception>
         /// <remarks><para>This method is called by Total Commander and is not intended for direct use</para>
         /// This plugin function is implemented by <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/>.</remarks>
         /// <version version="1.5.4">This method is new in 1.5.4</version>
@@ -332,7 +332,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="CryptoNr">A parameter which needs to be passed to the callback function</param>
         /// <param name="Flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
-        /// <exception cref="ArgumentNullexception"><paramref name="cryptProc"> is null and this plugin implementation supports crypto</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="cryptProc"/> is null and this plugin implementation supports crypto</exception>
         /// <remarks><para>Use this function to initialize the plugin when used outside of Total Commander.</para>
         /// This plugin function is implemented by <see cref="OnInitializeCryptography"/>
         /// <para>When you call this method and plugin does not support crypto (i.e. most-derived implementation of <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/> the call to this method is ignored and related crypto properties (such as <see cref="CryptInitialized"/> or <see cref="CryptoNr"/>) are not initialized</para></remarks>

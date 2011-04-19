@@ -1,5 +1,4 @@
 Imports System.ComponentModel
-Imports Tools.ReportingT.ReportingEngineLite.ReportingResources
 Imports System.Xml.Serialization
 Imports Tools.ComponentModelT
 

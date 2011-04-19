@@ -20,7 +20,7 @@ namespace Tools {
             ::System::Threading::Monitor::Enter(InternalSyncObject);
             try {
                 if (System::Object::ReferenceEquals(_resourceManager, nullptr)) {
-                    ::System::Threading::Interlocked::Exchange(_resourceManager, (gcnew ::System::Resources::ResourceManager(L"ToolsTotalCommander.Exceptions.resources", 
+                    ::System::Threading::Interlocked::Exchange(_resourceManager, (gcnew ::System::Resources::ResourceManager(L"Tools.TotalCommanderT.Exceptions", 
                             Tools::TotalCommanderT::ResourcesT::Exceptions::typeid->Assembly)));
                 }
             }
