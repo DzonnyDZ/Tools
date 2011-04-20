@@ -226,16 +226,19 @@ namespace Tools{namespace TotalCommanderT{
             char* conn = NULL;
             if(connectionName != nullptr) (char*)(void*)Marshal::StringToHGlobalAnsi(connectionName);
             char* pwdBuffer = NULL;
+            int len = maxlen + 1;
             if(password != nullptr){
-                pwdBuffer = new char[Math::Max(maxlen, password->Length)];
-                for(int i = 0; i < password->Length; i++)
-                    pwdBuffer[i] = (char)password[i];
+                len = Math::Max(maxlen, password->Length) + 1;
+                pwdBuffer = new char[len];
+                for(int i = 0; i < len; i++)
+                    pwdBuffer[i] = i < password->Length ? (char)password[i] : (char)0;
             }
             else if(maxlen > 0){
                 pwdBuffer = new char[maxlen];
-                pwdBuffer[0] = (char)0;
+                for(int i = 0; i < maxlen; i++)
+                pwdBuffer[i] = (char)0;
             }
-            CryptResult ret = (CryptResult)this->cryptProc(this->PluginNr, this->CryptoNr, (int)mode, conn, pwdBuffer, maxlen);
+            CryptResult ret = (CryptResult)this->cryptProc(this->PluginNr, this->CryptoNr, (int)mode, conn, pwdBuffer, len);
             switch(ret){
                 case CryptResult::OK: return pwdBuffer == NULL ? nullptr : gcnew String(pwdBuffer);
                 case CryptResult::Fail:
@@ -279,6 +282,7 @@ namespace Tools{namespace TotalCommanderT{
         if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
         this->cryptProc = pCryptProc;
         this->cryptoNr = CryptoNr;
+        this->cryptInitialized = true;
         this->OnInitializeCryptography((CryptFlags)Flags);
     }
     void FileSystemPlugin::InitializeCryptography(CryptCallback^ cryptProc, int cryptoNr, CryptFlags flags){
@@ -287,8 +291,8 @@ namespace Tools{namespace TotalCommanderT{
             if(cryptProc == nullptr) throw gcnew ArgumentNullException("cryptProc");
             this->dCryptProc = cryptProc;
             this->cryptoNr = cryptoNr;
-            this->OnInitializeCryptography(flags);
             this->cryptInitialized = true;
+            this->OnInitializeCryptography(flags);
         }
     }
     inline bool FileSystemPlugin::CryptInitialized::get(){return this->cryptInitialized;}

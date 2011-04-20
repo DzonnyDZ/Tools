@@ -447,7 +447,7 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. This implementation does not throw this exception.</exception>
     ''' <remarks>
     ''' This function is only needed if you want to use the secure password store in Total Commander.
-    ''' No special code is needed in this function. You even don't have to call base class method.
+    ''' No special code is needed in this function. 
     ''' However it is necessary to override this function in derived class and NOT to decorate it with <seee cref="MethodNotSupportedAttribute"/> to indicate that your plugin wants to the secure password store in Total Commander.
     ''' In older versions of Total Commmander (prior TC 7.55 / plugin interface 2.0) this function is never called (indicating that the secure password store is not supported by that version of Total Commander).
     ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
@@ -455,7 +455,6 @@ ExecFile:   Dim p As New Process
     ''' </remarks>
     ''' <version version="1.5.4">This method is new in 1.5.4</version>
     Protected Overrides Sub OnInitializeCryptography(flags As CryptFlags)
-        MyBase.OnInitializeCryptography(flags)
     End Sub
 
     ''' <summary>Executes command in plugin space</summary>
@@ -928,7 +927,7 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
     ''' <version version="1.5.4">This function is new in version 1.5.4</version>
     Public Shadows Sub DeletePassword(connectionName$)
-        MyBase.DeleteFile(connectionName)
+        MyBase.DeletePassword(connectionName)
     End Sub
 #End Region
 End Class

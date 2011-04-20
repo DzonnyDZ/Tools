@@ -10,6 +10,7 @@ namespace Tools{namespace TotalCommanderT{
     using namespace System::ComponentModel;
     /// <summary>Abstract base class for Total Commander file-system plugins (wfx)</summary>
     /// <remarks>See <see2 cref2="T:Tools.TotalCommanderT.PluginBuilder.Generator"/> for more information about how to generate Total Commander plugin from .NET</remarks>
+    /// <version version="1.5.4">Added support for crypro (Total Commander secure password store)</version>
     public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
         FileSystemPlugin();
@@ -352,7 +353,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>
         /// This function is only needed if you want to use the secure password store in Total Commander.
-        /// No special code is needed in this function. You even don't have to call base class method.
+        /// No special code is needed in this function. If you derived directly from <see cref="FIleSystemPlugin"/> do not call base class method as it throws <see cref="NotSupportedException"/>.
         /// However it is necessary to override this function in derived class and NOT to decorate it with <seee cref="MethodNotSupportedAttribute"/> to indicate that your plugin wants to the secure password store in Total Commander.
         /// In older versions of Total Commmander (prior TC 7.55 / plugin interface 2.0) this function is never called (indicating that the secure password store is not supported by that version of Total Commander).
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>

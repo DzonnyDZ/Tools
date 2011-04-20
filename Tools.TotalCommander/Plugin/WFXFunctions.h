@@ -309,7 +309,7 @@
 #endif
 #ifdef TC_FS_SETCRYPTCALLBACK
     #ifdef TC_FNC_HEADER
-        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+        TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsSetCryptCallback
     #ifdef TC_FNC_HEADER
