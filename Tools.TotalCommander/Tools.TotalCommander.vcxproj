@@ -229,12 +229,17 @@ move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Comma
     <ClInclude Include="ContentPluginBase.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Exceptions.h" />
-    <ClInclude Include="FileSystemPlugin helpers.h" />
-    <ClInclude Include="FileSystemPlugin.h" />
     <ClInclude Include="PluginBase.h" />
+    <ClInclude Include="PluginMethodAttribute.h" />
     <ClInclude Include="Plugin\contplug.h" />
     <ClInclude Include="Plugin\fsplugin.h" />
     <ClInclude Include="Plugin\plug_common.h" />
+    <ClInclude Include="WFX\FileSystemPlugin.h" />
+    <ClInclude Include="WFX\FindData.h" />
+    <ClInclude Include="WFX\RemoteInfo.h" />
+    <ClInclude Include="WFX\ViewDefinition.h" />
+    <ClInclude Include="WFX\WFX common.h" />
+    <ClInclude Include="WFX\WFX Enums.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Doc\Content.wdx.hlp" />
@@ -253,9 +258,14 @@ move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Comma
     <ClCompile Include="ContentPluginBase.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Exceptions.cpp" />
-    <ClCompile Include="FileSystemPlugin helpers.cpp" />
-    <ClCompile Include="FileSystemPlugin.cpp" />
     <ClCompile Include="PluginBase.cpp" />
+    <ClCompile Include="PluginMethodAttribute.cpp" />
+    <ClCompile Include="WFX\FileSystemPlugin.cpp" />
+    <ClCompile Include="WFX\FindData.cpp" />
+    <ClCompile Include="WFX\RemoteInfo.cpp" />
+    <ClCompile Include="WFX\ViewDefinition.cpp" />
+    <ClCompile Include="WFX\WFX common.cpp" />
+    <ClCompile Include="WFX\WFX Enums.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

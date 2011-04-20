@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Plugin\fsplugin.h"
-#include "Common.h"
-#include "ContentPluginBase.h"
-#include "FileSystemPlugin helpers.h"
+#include "..\Plugin\fsplugin.h"
+#include "..\Common.h"
+#include "..\ContentPluginBase.h"
+#include "WFX common.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -562,7 +562,7 @@ public:
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode RenMovFile(String^ OldName, String^ NewName, bool Move, bool OverWrite, RemoteInfo info);
 #pragma endregion
-#pragma region getFile
+#pragma region GetFile
     public:
         /// <summary>Called to transfer a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
@@ -799,7 +799,7 @@ public:
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("StatusInfo","TC_FS_STATUSINFO")]
-        void FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation);
+        void FsStatusInfo(char* RemoteDir, int InfoStartEnd, int InfoOperation);
     public:
         /// <summary>Called instead of <see cref="FsStatusInfo"/> when plugin is used outside of Total Commander.</summary>
         /// <param name="RemoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
@@ -807,7 +807,7 @@ public:
         /// <param name="InfoOperation">Information of which operaration starts/ends</param>
         /// <remarks>Please note that future versions of the framework may send additional values!</remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
-        void StatusInfo(String^ RemoteDir,OperationStatus InfoStartEnd,OperationKind InfoOperation);
+        void StatusInfo(String^ RemoteDir, OperationStatus InfoStartEnd, OperationKind InfoOperation);
         /// <summary>When overiden in derived class handles operation status change reported by Total Commaner</summary>
         /// <param name="e">Event arguments</param>
         /// <remarks>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</remarks>
@@ -1030,6 +1030,70 @@ public:
         /// <remarks><note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual ViewDefinition^ GetDefaultView(int maxlen);
+#pragma endregion
+#pragma region GetBackgroundFlags
+    public:
+        /// <summary>Called by Total Commander 7.51 or newer to determine whether the plugin supports background operations (uploads and downloads), and if yes, how they are supported.</summary>
+        /// <returns>A combination of <see cref="BackgroundTransferSupport"/> flags</returns>
+        /// <remarks>
+        /// <para>
+        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is set and the user checks the option to transfer the file in background,
+        /// Total Commander starts a background thread and calls <see cref="FsStatusInfo"/> with parameters
+        /// <see cref2="F:Tools.TotalCommander.OperationStatus.Start"/> and 
+        /// <see cref2="F:Tools.TotalCommander.OperationKind.GetMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.GetMulti"/> for downloads,
+        /// and <see cref2="F:Tools.TotalCommander.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.PutMulti"/> for uploads.
+        /// A corresponding <see cref2="F:Tools.TotalCommander.OperationStatus.End"/> is sent when the transfer is done.
+        /// These notifications can be used to build up the background connection and to close it when done.
+        /// You need to use <see cref="System.Threading.Thread"/> to recognize a background operation.
+        /// Same thread is used for the entire operation in <see cref="FsStatusInfo"/>, <see cref="FsGetFile"/> and <see cref="FsPutFile"/>.
+        /// </para>
+        /// <para>
+        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is NOT set, all uploads and downloads with F5 or F6 will be started in a background thread.
+        /// Initially the normal foreground transfer window will be shown, which will be changed to a background transfer window when the user clicks on "Background".
+        /// For the plugin, the entire operation will take place in the same background thread, though.
+        /// This method is recommended only for plugins where no extra connections are needed for multiple parallel transfers, or where the additional connections
+        /// are built up very quickly. Example of a plugin using this method is the WinCE plugin for Windows Mobile devices.
+        /// </para>
+        /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via getter of the <see cref="BackgroundFlags"/> property.</para>
+        /// </remarks>
+        /// <seealso cref="BackgroundFlags"/>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        [PluginMethod("get_BackgroundFlags","TC_FS_GETBACKGROUNDFLAGS")]
+        int FsGetBackgroundFlags(void);
+        
+        /// <summary>When implemneted in derived class gets value indicating whether the plugin supports background operations (uploads and downloads), and if yes, how they are supported.</summmary>
+        /// <returns>A combination of <see cref="BackgroundTransferSupport"/> flags</returns>
+        /// <exception cref="NotSupportedException">The actual implementation of getter is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <remarks>
+        /// <para>
+        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is set and the user checks the option to transfer the file in background,
+        /// Total Commander starts a background thread and calls <see cref="FsStatusInfo"/> with parameters
+        /// <see cref2="F:Tools.TotalCommander.OperationStatus.Start"/> and 
+        /// <see cref2="F:Tools.TotalCommander.OperationKind.GetMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.GetMulti"/> for downloads,
+        /// and <see cref2="F:Tools.TotalCommander.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.PutMulti"/> for uploads.
+        /// A corresponding <see cref2="F:Tools.TotalCommander.OperationStatus.End"/> is sent when the transfer is done.
+        /// These notifications can be used to build up the background connection and to close it when done.
+        /// You need to use <see cref="System.Threading.Thread"/> to recognize a background operation.
+        /// Same thread is used for the entire operation in <see cref="FsStatusInfo"/>, <see cref="FsGetFile"/> and <see cref="FsPutFile"/>.
+        /// </para>
+        /// <para>
+        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is NOT set, all uploads and downloads with F5 or F6 will be started in a background thread.
+        /// Initially the normal foreground transfer window will be shown, which will be changed to a background transfer window when the user clicks on "Background".
+        /// For the plugin, the entire operation will take place in the same background thread, though.
+        /// This method is recommended only for plugins where no extra connections are needed for multiple parallel transfers, or where the additional connections
+        /// are built up very quickly. Example of a plugin using this method is the WinCE plugin for Windows Mobile devices.
+        /// </para>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// <para>Unlike in case of methods, this is property. But the possible <see cref="MethodNotSupportedAttribute"/> must be applied onto method - this is the getter of this property.</para>
+        /// <para>This property implements plugin function <see cref="FsGetBackgroundFlags"/></para>.
+        /// </remarks>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        property BackgroundTransferSupport BackgroundFlags{
+            [MethodNotSupportedAttribute]
+            virtual BackgroundTransferSupport get();
+        }
 #pragma endregion
 #pragma endregion
     };

@@ -1,9 +1,9 @@
 //#include "stdafx.h"
 #include "FileSystemPlugin.h"
-#include "Plugin\fsplugin.h"
-#include "Exceptions.h"
+#include "..\Plugin\fsplugin.h"
+#include "..\Exceptions.h"
 #include <vcclr.h>
-#include "Common.h"
+#include "..\Common.h"
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
@@ -534,6 +534,9 @@ namespace Tools{namespace TotalCommanderT{
         return (BOOL)true;
     }
     inline ViewDefinition^ FileSystemPlugin::GetDefaultView(int maxlen){throw gcnew NotSupportedException();}
+
+    inline int FileSystemPlugin::FsGetBackgroundFlags(void){return (int)this->BackgroundFlags;}
+    inline BackgroundTransferSupport FileSystemPlugin::BackgroundFlags::get(){throw gcnew NotSupportedException();}
 #pragma endregion
 #pragma endregion
 

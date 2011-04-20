@@ -16,6 +16,12 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Header Files\WFX">
+      <UniqueIdentifier>{f72845f3-d2c0-4944-adf9-3ceaa1cfdb3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WFX">
+      <UniqueIdentifier>{49ab9988-b9cd-4d82-ac1f-356315e7fc27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -33,12 +39,6 @@
     <ClInclude Include="Exceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystemPlugin helpers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileSystemPlugin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PluginBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -50,6 +50,27 @@
     </ClInclude>
     <ClInclude Include="Plugin\plug_common.h">
       <Filter>Header Files\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="PluginMethodAttribute.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WFX\FileSystemPlugin.h">
+      <Filter>Header Files\WFX</Filter>
+    </ClInclude>
+    <ClInclude Include="WFX\WFX Enums.h">
+      <Filter>Header Files\WFX</Filter>
+    </ClInclude>
+    <ClInclude Include="WFX\ViewDefinition.h">
+      <Filter>Header Files\WFX</Filter>
+    </ClInclude>
+    <ClInclude Include="WFX\FindData.h">
+      <Filter>Header Files\WFX</Filter>
+    </ClInclude>
+    <ClInclude Include="WFX\RemoteInfo.h">
+      <Filter>Header Files\WFX</Filter>
+    </ClInclude>
+    <ClInclude Include="WFX\WFX common.h">
+      <Filter>Header Files\WFX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -85,14 +106,29 @@
     <ClCompile Include="Exceptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystemPlugin helpers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileSystemPlugin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PluginBase.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PluginMethodAttribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WFX\FileSystemPlugin.cpp">
+      <Filter>Source Files\WFX</Filter>
+    </ClCompile>
+    <ClCompile Include="WFX\WFX Enums.cpp">
+      <Filter>Source Files\WFX</Filter>
+    </ClCompile>
+    <ClCompile Include="WFX\ViewDefinition.cpp">
+      <Filter>Source Files\WFX</Filter>
+    </ClCompile>
+    <ClCompile Include="WFX\FindData.cpp">
+      <Filter>Source Files\WFX</Filter>
+    </ClCompile>
+    <ClCompile Include="WFX\RemoteInfo.cpp">
+      <Filter>Source Files\WFX</Filter>
+    </ClCompile>
+    <ClCompile Include="WFX\WFX common.cpp">
+      <Filter>Source Files\WFX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

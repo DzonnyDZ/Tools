@@ -321,3 +321,17 @@
         ;
     #endif
 #endif
+#ifdef TC_FS_GETBACKGROUNDFLAGS
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsGetBackgroundFlags
+    #ifdef TC_FNC_HEADER
+        (void)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->FsGetBackgroundFlags();}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+#endif

@@ -321,6 +321,9 @@
                                     Added option to use <environmentVariable>{TOTALCMD}</environmentVariable> instead of <codeEntityReference>%TOTALCMD%</codeEntityReference>
                                 </para>
                             </listItem>
+                            <listItem>
+                                <para>Added support for background-thread file transfers (see <codeEntityReference>P:Tools.TotalCommander.FileSystemPlugin.BackgroundFlags</codeEntityReference>)</para>
+                            </listItem>
                         </list>
                     </listItem>
                 </list>
