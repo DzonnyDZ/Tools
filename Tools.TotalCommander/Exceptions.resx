@@ -168,6 +168,9 @@
   <data name="NoMasterPassword" xml:space="preserve">
     <value>No master password entered yet</value>
   </data>
+  <data name="NotInitialized" xml:space="preserve">
+    <value>The class was not initialized</value>
+  </data>
   <data name="ParamAssignedTooLong" xml:space="preserve">
     <value>The {0} parameter of the {1} method was assigned to long string.</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="PluginNotInitialized" xml:space="preserve">
     <value>Plugin was not initialized.</value>
+  </data>
+  <data name="PluginNotRegistered" xml:space="preserve">
+    <value>Plugin number {0} is not registered.</value>
   </data>
   <data name="PropertyWasInitialized" xml:space="preserve">
     <value>The {0} property have already been initialized.</value>

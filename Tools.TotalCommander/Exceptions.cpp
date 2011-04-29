@@ -106,6 +106,10 @@ namespace Tools {
         return ResourceManager->GetString(L"NoMasterPassword", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::NotInitialized::get() {
+        return ResourceManager->GetString(L"NotInitialized", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::ParamAssignedTooLong::get() {
         return ResourceManager->GetString(L"ParamAssignedTooLong", _resourceCulture);
     }
@@ -116,6 +120,10 @@ namespace Tools {
     
     inline System::String^  Exceptions::PluginNotInitialized::get() {
         return ResourceManager->GetString(L"PluginNotInitialized", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::PluginNotRegistered::get() {
+        return ResourceManager->GetString(L"PluginNotRegistered", _resourceCulture);
     }
     
     inline System::String^  Exceptions::PropertyWasInitialized::get() {
@@ -231,6 +239,10 @@ namespace Tools {
         return NoMasterPassword;
     }
     
+    inline System::String^  Exceptions::NotInitializedFormat() {
+        return NotInitialized;
+    }
+    
     inline System::String^  Exceptions::ParamAssignedTooLongFormat(System::Object^  arg0, System::Object^  arg1) {
         return System::String::Format(_resourceCulture, ParamAssignedTooLong, arg0, arg1);
     }
@@ -241,6 +253,10 @@ namespace Tools {
     
     inline System::String^  Exceptions::PluginNotInitializedFormat() {
         return PluginNotInitialized;
+    }
+    
+    inline System::String^  Exceptions::PluginNotRegisteredFormat(System::Object^  arg0) {
+        return System::String::Format(_resourceCulture, PluginNotRegistered, arg0);
     }
     
     inline System::String^  Exceptions::PropertyWasInitializedFormat(System::Object^  arg0) {

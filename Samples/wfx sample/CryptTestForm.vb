@@ -15,7 +15,7 @@ Friend Class CryptTestForm
     Private Sub cmdGet_Click(sender As System.Object, e As System.EventArgs) Handles cmdGet.Click
         Dim pwd As String
         Try
-            pwd = plugin.LoadPassword(txtConnection.Text, 256, True)
+            pwd = plugin.LoadPassword(txtConnection.Text, True)
         Catch ex As Exception
             mBox.Error_XW(ex, Me)
             Exit Sub
@@ -26,7 +26,7 @@ Friend Class CryptTestForm
     Private Sub cmdGetNoUI_Click(sender As System.Object, e As System.EventArgs) Handles cmdGetNoUI.Click
         Dim pwd As String
         Try
-            pwd = plugin.LoadPassword(txtConnection.Text, 256, False)
+            pwd = plugin.LoadPassword(txtConnection.Text, False)
         Catch ex As CryptException When ex.Reason = CryptResult.NoMasterPassword
             mBox.Error_XPTIBWO(ex, "You should consider allowing user interface", "Error", Owner:=Me)
             Exit Sub

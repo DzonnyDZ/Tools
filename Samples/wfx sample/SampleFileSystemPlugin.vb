@@ -893,7 +893,6 @@ ExecFile:   Dim p As New Process
     End Sub
     ''' <summary>Loads a password form Total Commander secure password store for given connection</summary>
     ''' <param name="connectionName">Name of the connection to load password for</param>
-    ''' <param name="maxlen">Maximum lenght, in characters, retireved password can have</param>
     ''' <param name="showUI">True to ask user for master password, false to load password only when master password was already enetered</param>
     ''' <exception cref="CryptException">Crypto operation failed.</exception>
     ''' <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
@@ -905,8 +904,8 @@ ExecFile:   Dim p As New Process
     ''' This way the user does not have to enter the master password if he just wanted to make some other changes to the connection settings.
     ''' </remarks>
     ''' <version version="1.5.4">This function is new in version 1.5.4</version>
-    Public Shadows Function LoadPassword(connectionName$, maxlen%, showUI As Boolean) As String
-        Return MyBase.LoadPassword(connectionName, maxlen, showUI)
+    Public Shadows Function LoadPassword(connectionName$, showUI As Boolean) As String
+        Return MyBase.LoadPassword(connectionName, showUI)
     End Function
 
     ''' <summary>Copies or moves the password form one connection in Total Commander safe password store to the other</summary>

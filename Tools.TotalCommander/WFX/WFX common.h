@@ -114,12 +114,12 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>CTor - creates a new instance of the <see cref="CryptException"/> class from error message and reason code</summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">One of <seee cref="CryptResult"/> values indicating kind of failure</param>
-        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommander.CryptResult.OK"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommanderT.CryptResult.OK"/></exception>
         /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
         CryptException(String^ message, CryptResult reason);
         /// <summary>CTor - creates a new instance of the <see cref="CryptException"/> class from error reason</summary>
         /// <param name="reason">One of <seee cref="CryptResult"/> values indicating kind of failure</param>
-        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommander.CryptResult.OK"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommanderT.CryptResult.OK"/></exception>
         /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
         CryptException(CryptResult reason);
         /// <summary>Gets value indicating why the operation failed</summary>
@@ -127,7 +127,7 @@ namespace Tools{namespace TotalCommanderT{
     private:
         /// <summary>Gets default string error message from <see cref="CryptResult"/></summary>
         /// <param name="reason">Indicates why the crypto operation failed</param>
-        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommander.CryptResult.OK"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="reason"/> is <see cref2="F:Tools.TotalCommanderT.CryptResult.OK"/></exception>
         /// <exception cref="InvalidEnumArgumentException"><paramref name="reason"/> is not one of <see cref="CryptResult"/> values</exception>
         static String^ GetMessage(CryptResult reason);
     };
@@ -136,41 +136,44 @@ namespace Tools{namespace TotalCommanderT{
     ref class FileSystemPlugin;//Forward declaration
     /// <summary>Callback function, which the plugin can call to show copy progress.</summary>
     /// <param name="sender">The plugin requesting the operation</param>
-    /// <param name="SourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plugin file system.</param>
-    /// <param name="TargetName">Name to which the file is copied.</param>
-    /// <param name="PercentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
+    /// <param name="sourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plugin file system.</param>
+    /// <param name="targetName">Name to which the file is copied.</param>
+    /// <param name="percentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
     /// <returns>Total Commander returns <c>true</c> if the user wants to abort copying, and <c>false</c> if the operation can continue.</returns>
     /// <remarks>You should call this function at least twice in the copy functions <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.GetFile(System.String,System.String@,Tools.TotalCommanderT.CopyFlags,Tools.TotalCommanderT.RemoteInfo)"/>, <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.PutFile(System.String,System.String@,Tools.TotalCommanderT.CopyFlags)"/> and <see2 cref2="M:Tools.TotalCommanderT.RenMovFile(System.String,System.String,System.Boolean,System.Boolean,Tools.TotalCommanderT.RemoteInfo)"/>, at the beginning and at the end. If you can't determine the progress, call it with 0% at the beginning and 100% at the end.
     /// <para>During the <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindFirst(System.String,Tools.TotalCommanderT.FindData@)"/>/<see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindNext(System.Object,Tools.TotalCommanderT.FindData@)"/>/<see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindClose(System.Object)"/> loop, the plugin may now call the <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.ProgressProc(System.String,System.String,System.Int32)"/> to make a progess dialog appear. This is useful for very slow connections. Don't call <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.ProgressProc(System.String,System.String,System.Int32)"/> for fast connections! The progress dialog will only be shown for normal dir changes, not for compound operations like get/put. The calls to <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.ProgressProc(System.String,System.String,System.Int32)"/> will also be ignored during the first 5 seconds, so the user isn't bothered with a progress dialog on every dir change.</para></remarks>
-    public delegate bool ProgressCallback(FileSystemPlugin^ sender, String^ SourceName, String^ TargetName,int PercentDone);
+    /// <version version="1.5.4">Parameters renamed: <c>SourceName</c> to <c>sourceName</c>, <c>TargetName</c> to <c>targetName</c>, <c>PercentDone</c> to <c>percentDone</c>.</version>
+    public delegate bool ProgressCallback(FileSystemPlugin^ sender, String^ sourceName, String^ targetName, int percentDone);
     /// <summary>Callback function, which the plugin can call to show the FTP connections toolbar, and to pass log messages to it. Totalcmd can show these messages in the log window (ftp toolbar) and write them to a log file.</summary>
     /// <param name="sender">The plugin requesting the operation</param>
-    /// <param name="MsgType">Can be one of the <see cref="LogKind"/> flags</param>
-    /// <param name="LogString">String which should be logged.
+    /// <param name="msgType">Can be one of the <see cref="LogKind"/> flags</param>
+    /// <param name="logString">String which should be logged.
     /// <para>When <paramref name="MsgType"/>is <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the string MUST have a specific format:</para>
     /// <para><c>"CONNECT"</c> followed by a single whitespace, then the root of the file system which was connected, without trailing backslash. Example: <c>CONNECT \Filesystem</c></para>
     /// <para>When <paramref name="MsgType"/> is <see2 cref2="F:Tools.TotalCommanderT.LogKind.TransferComplete"/>, this parameter should contain both the source and target names, separated by an arrow <c>" -> "</c>, e.g. <c>Download complete: \Filesystem\dir1\file1.txt -> c:\localdir\file1.txt</c></para></param>
     /// <remarks>Do NOT call <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.LogProc(Tools.TotalCommanderT.LogKind,System.String)"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect! If you call it with <paramref name="MsgType"/> <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the function <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.Disconnect(System.String)"/> will be called (if defined) when the user presses the Disconnect button.</remarks>
-    public delegate void LogCallback(FileSystemPlugin^ sender, LogKind MsgType,String^ LogString);
+    /// <version version="1.5.4">Parameters renamed: <c>MsgType</c> to <c>msgType</c>, <c>LogString</c> to <c>logString</c>.</version>
+    public delegate void LogCallback(FileSystemPlugin^ sender, LogKind msgType,String^ logString);
     /// <summary>Callback function, which the plugin can call to request input from the user. When using one of the standard parameters, the request will be in the selected language.</summary>
     /// <param name="sender">The plugin requesting the operation</param>
-    /// <param name="RequestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
-    /// <param name="CustomTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>
-    /// <param name="CustomText">Override the text defined with <paramref name="RequestType"/>. Set this to NULL or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
-    /// <param name="DefaultText">This string contains the default text presented to the user. Set <paramref name="DefaultText"/>[0]=0 to have no default text.</param>
+    /// <param name="requestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
+    /// <param name="customTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>
+    /// <param name="customText">Override the text defined with <paramref name="RequestType"/>. Set this to NULL or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
+    /// <param name="defaultText">This string contains the default text presented to the user. Set <paramref name="DefaultText"/>[0]=0 to have no default text.</param>
     /// <param name="maxlen">Maximum length allowed for returned text.</param>
     /// <returns>User-entered text if user clicked Yes or OK. Null otherwise</returns>
     /// <remarks>Leave <paramref name="CustomText"/> empty if you want to use the (translated) default strings!</remarks>
     /// <exception cref="ArgumentException"><paramref name="DefaultText"/> is longer than <paramref name="maxlen"/></exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxlen"/> is less than 1</exception>
-    public delegate String^ RequestCallback(FileSystemPlugin^ sender, InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen);
+    /// <version version="1.5.4">Parameters renamed: <c>RequestType</c> to <c>requestType</c>, <c>CustomTitle</c> to <c>customTitle</c>, <c>CustomText</c> to <c>customText</c>, <c>DefaultText</c> to <c>defaultText</c>.</version>
+    public delegate String^ RequestCallback(FileSystemPlugin^ sender, InputRequestKind requestType,String^ customTitle, String^ customText, String^ defaultText, int maxlen);
     /// <summary>Callback function, which the plugin can call to store passwords in the secure password store, read them back, or copy them to a new connection.</summary>
     /// <param name="sender">The plugin requesting the operation</param>
     /// <param name="mode">The mode of operation</param>
     /// <param name="connectionName">Name of the connection for this operation</param>
     /// <param name="password">Operation-specific, usually the password to be stored, or the target connection when copying/moving a connection</param>
     /// <param name="maxlen">Maximum length, in characters, the password buffer can store when calling one of the load functions</param>
-    /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommander.CryptMode.LoadPassword"/> or <see cref2="F:Tools.TotalCommander.CryptMode.LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
+    /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommanderT.CryptMode.LoadPassword"/> or <see cref2="F:Tools.TotalCommanderT.CryptMode.LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
     /// <exception cref="CryptException">Crypto operation failed.</exception>
     /// <remarks>This delegate is used only when Total Commander plugin is used outside Total Commander.</remarks>
     /// <version version="1.5.4">This delegate is new in version 1.5.4</version>

@@ -8,29 +8,39 @@
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
     using namespace System::ComponentModel;
+    using namespace System::Collections::Generic;
+
+    ref class ProgressProcWrapper;
+    ref class LogProcWrapper;
+    ref class RequestProcWrapper;
+    ref class CryptProcWrapper;
+
     /// <summary>Abstract base class for Total Commander file-system plugins (wfx)</summary>
     /// <remarks>See <see2 cref2="T:Tools.TotalCommanderT.PluginBuilder.Generator"/> for more information about how to generate Total Commander plugin from .NET</remarks>
     /// <version version="1.5.4">Added support for crypro (Total Commander secure password store)</version>
     public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
         FileSystemPlugin();
+    private:
+        /// <summary>Holds plugin IDs and instances of all registered plugins</summary>
+        static Dictionary<int, FileSystemPlugin^>^ registeredPlugins = gcnew Dictionary<int, FileSystemPlugin^>();
+    public:
+        /// <summary>Gets plugin by number</summary>
+        /// <param name="pluginNr">Number of plugin as passed to <see cref="FsInit"/></param>
+        /// <returns>Instance of file system plugin registered with given number, null if no plugin was registered under given number</returns>
+        /// <remarks>When used from Total Commander only one plugin is registered per application domain</remarks>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [EditorBrowsable(EditorBrowsableState::Advanced)]
+        static FileSystemPlugin^ GetPluginByNumber(int pluginNr);
 
 #pragma region TC functions (required)
     private:
-        /// <summary>Pointer to progress procedure</summary>
-        tProgressProc pProgressProc;
-        /// <summary>Pointer to log procedure</summary>
-        tLogProc pLogProc;
-        /// <summary>Pointer to request procedure</summary>
-        tRequestProc pRequestProc;
-        /// <summary>When plugin is used outside of Total Commander, used instead of <see cref="pProgressProc"/></summary>
-        ProgressCallback^ dProgressProc;
-        /// <summary>When plugin is used outside of Total Commander, used instead of <see cref="pLogProc"/></summary>
-        LogCallback^ dLogProc;
-        /// <summary>When plugin is used outside of Total Commander, used instead of <see cref="pRequestProc"/></summary>
-        RequestCallback^ dRequestProc;
+        ProgressProcWrapper^ progressProc;
+        LogProcWrapper^ logProc;
+        RequestProcWrapper^ requestProc;
+        CryptProcWrapper^ cryptProc;
     public:
-        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use.</summary>
+        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. (Unicode implementation)</summary>
         /// <param name="PluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
         /// <param name="pProgressProc">Pointer to the progress callback function.</param>
         /// <param name="pLogProc">Pointer to the logging function</param>
@@ -38,12 +48,30 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>The return value is currently unused. You should return 0 when successful.</returns>
         /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plugin. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plugin DLL is unloaded again. The plugin DLL is loaded when the user enters the plugin root in Network Neighborhood.
         /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plugin outside of Total Commander use <see cref="InitializePlugin"/> instead.</para>
-        /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para></remarks>
+        /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para>
+        /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preffered.</para></remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
+        /// <version version="1.5.4">This overload is new in version 1.5.4</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_INIT")]
-        int FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc);
+        int FsInit(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc);
+        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. (ANSI implementation)</summary>
+        /// <param name="PluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
+        /// <param name="pProgressProc">Pointer to the progress callback function.</param>
+        /// <param name="pLogProc">Pointer to the logging function</param>
+        /// <param name="pRequestProc">Pointer to the request text proc</param>
+        /// <returns>The return value is currently unused. You should return 0 when successful.</returns>
+        /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plugin. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plugin DLL is unloaded again. The plugin DLL is loaded when the user enters the plugin root in Network Neighborhood.
+        /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plugin outside of Total Commander use <see cref="InitializePlugin"/> instead.</para>
+        /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para>
+        /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preffered.</para></remarks>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
+        /// <version version="1.5.4">Added <see cref="ObsoleteAttribute"/></version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false), Obsolete("This is ANSI function. Use Unicode overload instead")]
+        [PluginMethod("TC_FS_INIT")]
+        int FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc);
         /// <summary>Called when loading the plugin outside of Total Comander environment instead of <see cref="FsInit"/>. The passed values should be stored in the plugin for later use.</summary>
         /// <param name="PluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
         /// <param name="progress">Delegate to the progress callback function.</param>
@@ -55,11 +83,11 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para></remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void InitializePlugin(int PluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
-        /// <summary>When plugin is initialized, gets value indicating if it was initialiuzed by Total Commander or .NET application</summary>
-        /// <returns>True if plugin was initialized by Total Commander; false when it was initialized by .NET application</returns>
-        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
-        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
-        property bool IsInTotalCommander{bool get();}
+        ///// <summary>When plugin is initialized, gets value indicating if it was initialiuzed by Total Commander or .NET application</summary>
+        ///// <returns>True if plugin was initialized by Total Commander; false when it was initialized by .NET application</returns>
+        ///// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
+        //[EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        //property bool IsInTotalCommander{bool get();}
 
         /// <summary>Called to retrieve the first file in a directory of the plugin's file system.</summary>
         /// <param name="Path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
@@ -125,6 +153,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>You should call this function at least twice in the copy functions <see cref="GetFile"/>, <see cref="PutFile"/> and <see cref="RenMovFile"/>, at the beginning and at the end. If you can't determine the progress, call it with 0% at the beginning and 100% at the end.
         /// <para>During the <see cref="FindFirst"/>/<see cref="FindNext"/>/<see cref="FindClose"/> loop, the plugin may now call the <see cref="ProgressProc"/> to make a progess dialog appear. This is useful for very slow connections. Don't call <see cref="ProgressProc"/> for fast connections! The progress dialog will only be shown for normal dir changes, not for compound operations like get/put. The calls to <see cref="ProgressProc"/> will also be ignored during the first 5 seconds, so the user isn't bothered with a progress dialog on every dir change.</para></remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
+        /// <version version="1.5.4">The function now supports Unicode</version>
         bool ProgressProc(String^ SourceName, String^ TargetName,int PercentDone);
         /// <summary>Callback function, which the plugin can call to show the FTP connections toolbar, and to pass log messages to it. Totalcmd can show these messages in the log window (ftp toolbar) and write them to a log file.</summary>
         /// <param name="MsgType">Can be one of the <see cref="LogKind"/> flags</param>
@@ -134,6 +163,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>When <paramref name="MsgType"/> is <see2 cref2="F:Tools.TotalCommanderT.LogKind.TransferComplete"/>, this parameter should contain both the source and target names, separated by an arrow <c>" -> "</c>, e.g. <c>Download complete: \Filesystem\dir1\file1.txt -> c:\localdir\file1.txt</c></para></param>
         /// <remarks>Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect! If you call it with <paramref name="MsgType"/> <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the function <see cref="Disconnect"/> will be called (if defined) when the user presses the Disconnect button.</remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
+        /// <version version="1.5.4">The method now supports Unicode</version>
         void LogProc(LogKind MsgType,String^ LogString);
         /// <summary>Specialized version of the <see cref="LogProc"/> function used for logging conection open.</summary>
         /// <param name="FileSystem">Name of the filesystem plugin has connected to. The name must start with a backslash.</param>
@@ -159,6 +189,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <exception cref="ArgumentException"><paramref name="DefaultText"/> is longer than <paramref name="maxlen"/></exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxlen"/> is less than 1</exception>
+        /// <version version="1.5.4">The function now supports Unicode</version>
         String^ RequestProc(InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen);
 
 #pragma region Crypto
@@ -167,14 +198,15 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="mode">Then mode of operation</param>
         /// <param name="connectionName">Name of the connection for this operation</param>
         /// <param name="password">Operation-specific, usually the password to be stored, or the target connection when copying/moving a connection</param>
-        /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommander.CryptMode.LoadPassword"/> or <see cref="F:Tools.TotalCommander.CryptMode.LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
+        /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommanderT.CryptMode.LoadPassword"/> or <see cref="F:Tools.TotalCommanderT.CryptMode.LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
         /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
         /// <remarks>This is lower-level function which calls directly Total Commander callback. It's preffered to use other crypto functions instead.</remarks>
+        /// <sealso cref="SavePassword"/><sealso cref="LoadPassword"/><sealso cref="MovePassword"/><sealso cref="DeletePassword"/>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         [EditorBrowsable(EditorBrowsableState::Advanced)]
-        String^ PerformCryptoOperation(CryptMode mode, String^ connectionName, String^ password, int maxlen);
+        String^ CryptProc(CryptMode mode, String^ connectionName, String^ password, int maxlen);
         /// <summary>Saves a password for given connection is Total Commander secure password store</summary>
         /// <param name="connectioName">Name of the connection to save password for</param>
         /// <param name="password">The password to be saved</param>
@@ -185,7 +217,6 @@ namespace Tools{namespace TotalCommanderT{
         void SavePassword(String^ connectioName, String^ password);
         /// <summary>Loads a password form Total Commander secure password store for given connection</summary>
         /// <param name="connectionName">Name of the connection to load password for</param>
-        /// <param name="maxlen">Maximum lenght, in characters, retireved password can have</param>
         /// <param name="showUI">True to ask user for master password, false to load password only when master password was already enetered</param>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
@@ -197,7 +228,7 @@ namespace Tools{namespace TotalCommanderT{
         /// This way the user does not have to enter the master password if he just wanted to make some other changes to the connection settings.
         /// </remarks>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
-        String^ LoadPassword(String^ connectionName, int maxlen, bool showUI);
+        String^ LoadPassword(String^ connectionName, bool showUI);
         /// <summary>Copies or moves the password form one connection in Total Commander safe password store to the other</summary>
         /// <param name="sourceConnectionName">Name of the source connection to take a password from</param>
         /// <param name="targetConnectionName">Name of the target connection to copy/move connection to</param>
@@ -309,24 +340,37 @@ namespace Tools{namespace TotalCommanderT{
 #pragma region Optional methods
 #pragma region Crypt
     private:
-        tCryptProc cryptProc;
-        CryptCallback^ dCryptProc;
         int cryptoNr;
         bool cryptInitialized;
     public:
-        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. This function is only needed if you want to use the secure password store in Total Commander.</summary>
+        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. This function is only needed if you want to use the secure password store in Total Commander. (ANSI implementation)</summary>
         /// <param name="pCryptProc">Pointer to the crypto callback function. See <see cref="tCryptProc"/> for a description of this function</param>
-        /// <param name="CryptoNr">A parameter which needs to be passed to the callback function</param>
-        /// <param name="Flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
+        /// <param name="cryptoNr">A parameter which needs to be passed to the callback function</param>
+        /// <param name="flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
         /// <exception cref="NotSupportedException">Most-derived implementation of</exception>
         /// <remarks><para>This method is called by Total Commander and is not intended for direct use</para>
-        /// This plugin function is implemented by <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/>.</remarks>
+        /// This plugin function is implemented by <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/>.
+        /// <para>This function has two implementations - <see cref="FsSetCryptCallback">ANSI</see> and <see cref="FsSetCryptCallbackW">Unicode</see> Use of <see cref="FsSetCryptCallbackW">Unicode</see> is preffered..</para></remarks>
+        /// <version version="1.5.4">This method is new in 1.5.4</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false), Obsolete("This is ANSI function. Use Unicode overload instead")]
+        [PluginMethod("OnInitializeCryptography","TC_FS_SETCRYPTCALLBACK")]
+        void FsSetCryptCallback(tCryptProc pCryptProc, int cryptoNr, int flags);
+        /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. This function is only needed if you want to use the secure password store in Total Commander. (Unicode implementation)</summary>
+        /// <param name="pCryptProc">Pointer to the crypto callback function. See <see cref="tCryptProc"/> for a description of this function</param>
+        /// <param name="cryptoNr">A parameter which needs to be passed to the callback function</param>
+        /// <param name="flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
+        /// <exception cref="NotSupportedException">Most-derived implementation of</exception>
+        /// <remarks><para>This method is called by Total Commander and is not intended for direct use</para>
+        /// This plugin function is implemented by <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/>.
+        /// <para>This function has two implementations - <see cref="FsSetCryptCallback">ANSI</see> and <see cref="FsSetCryptCallbackW">Unicode</see> Use of <see cref="FsSetCryptCallbackW">Unicode</see> is preffered..</para></remarks>
         /// <version version="1.5.4">This method is new in 1.5.4</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("OnInitializeCryptography","TC_FS_SETCRYPTCALLBACK")]
-        void FsSetCryptCallback(tCryptProc pCryptProc,int CryptoNr,int Flags);
+        void FsSetCryptCallbackW(tCryptProcW pCryptProc, int cryptoNr, int flags);
         
         /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. Use this function instead of <see cref="FsSetCryptCallback"/> when using the plugin outside of Total Commander.</summary>
         /// <param name="cryptProc">Crypto callback delegate. See <see cref="CryptCallback"/> for a description of this function.</param>
@@ -399,11 +443,11 @@ public:
         /// <list type="bulet">
         /// <item>For internal commands like "Add new connection", execute it in the plugin and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/></item>
         /// <item>Let Total Commander download the file and execute it locally: return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/></item>
-        /// <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is MAX_PATH-1 = 259 characters!</item>
+        /// <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is <see cref="FindData::MaxPath"/> - 1 characters!</item>
         /// </list></description></item>
         /// <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
         /// <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FsFindFirst"/>/<see cref="FsFindNext"/></description></item>
-        /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in RemoteName (max 259 characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
+        /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="FindData::MaxPath"/> - 1 characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
         /// </list>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
@@ -789,7 +833,7 @@ public:
 #pragma endregion
 #pragma region StatusInfo
     public:
-        /// <summary>called just as an information to the plugin that a certain operation starts or ends. It can be used to allocate/free buffers, and/or to flush data from a cache. There is no need to implement this function if the plugin doesn't require it.</summary>
+        /// <summary>Called just as an information to the plugin that a certain operation starts or ends. It can be used to allocate/free buffers, and/or to flush data from a cache. There is no need to implement this function if the plugin doesn't require it.</summary>
         /// <param name="RemoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
         /// <param name="InfoStartEnd">Information whether the operation starts or ends</param>
         /// <param name="InfoOperation">Information of which operaration starts/ends</param>
@@ -1037,18 +1081,18 @@ public:
         /// <returns>A combination of <see cref="BackgroundTransferSupport"/> flags</returns>
         /// <remarks>
         /// <para>
-        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is set and the user checks the option to transfer the file in background,
+        /// If the flag <see cref2="F:Tools.TotalCommanderT.BackgroundTransferSupport.AskUser"/> is set and the user checks the option to transfer the file in background,
         /// Total Commander starts a background thread and calls <see cref="FsStatusInfo"/> with parameters
-        /// <see cref2="F:Tools.TotalCommander.OperationStatus.Start"/> and 
-        /// <see cref2="F:Tools.TotalCommander.OperationKind.GetMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.GetMulti"/> for downloads,
-        /// and <see cref2="F:Tools.TotalCommander.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.PutMulti"/> for uploads.
-        /// A corresponding <see cref2="F:Tools.TotalCommander.OperationStatus.End"/> is sent when the transfer is done.
+        /// <see cref2="F:Tools.TotalCommanderT.OperationStatus.Start"/> and 
+        /// <see cref2="F:Tools.TotalCommanderT.OperationKind.GetMultiThread"/> instead of <see cref2="F:Tools.TotalCommanderT.OperationKind.GetMulti"/> for downloads,
+        /// and <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMulti"/> for uploads.
+        /// A corresponding <see cref2="F:Tools.TotalCommanderT.OperationStatus.End"/> is sent when the transfer is done.
         /// These notifications can be used to build up the background connection and to close it when done.
         /// You need to use <see cref="System.Threading.Thread"/> to recognize a background operation.
         /// Same thread is used for the entire operation in <see cref="FsStatusInfo"/>, <see cref="FsGetFile"/> and <see cref="FsPutFile"/>.
         /// </para>
         /// <para>
-        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is NOT set, all uploads and downloads with F5 or F6 will be started in a background thread.
+        /// If the flag <see cref2="F:Tools.TotalCommanderT.BackgroundTransferSupport.AskUser"/> is NOT set, all uploads and downloads with F5 or F6 will be started in a background thread.
         /// Initially the normal foreground transfer window will be shown, which will be changed to a background transfer window when the user clicks on "Background".
         /// For the plugin, the entire operation will take place in the same background thread, though.
         /// This method is recommended only for plugins where no extra connections are needed for multiple parallel transfers, or where the additional connections
@@ -1068,18 +1112,18 @@ public:
         /// <exception cref="NotSupportedException">The actual implementation of getter is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>
         /// <para>
-        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is set and the user checks the option to transfer the file in background,
+        /// If the flag <see cref2="F:Tools.TotalCommanderT.BackgroundTransferSupport.AskUser"/> is set and the user checks the option to transfer the file in background,
         /// Total Commander starts a background thread and calls <see cref="FsStatusInfo"/> with parameters
-        /// <see cref2="F:Tools.TotalCommander.OperationStatus.Start"/> and 
-        /// <see cref2="F:Tools.TotalCommander.OperationKind.GetMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.GetMulti"/> for downloads,
-        /// and <see cref2="F:Tools.TotalCommander.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommander.OperationKind.PutMulti"/> for uploads.
-        /// A corresponding <see cref2="F:Tools.TotalCommander.OperationStatus.End"/> is sent when the transfer is done.
+        /// <see cref2="F:Tools.TotalCommanderT.OperationStatus.Start"/> and 
+        /// <see cref2="F:Tools.TotalCommanderT.OperationKind.GetMultiThread"/> instead of <see cref2="F:Tools.TotalCommanderT.OperationKind.GetMulti"/> for downloads,
+        /// and <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMulti"/> for uploads.
+        /// A corresponding <see cref2="F:Tools.TotalCommanderT.OperationStatus.End"/> is sent when the transfer is done.
         /// These notifications can be used to build up the background connection and to close it when done.
         /// You need to use <see cref="System.Threading.Thread"/> to recognize a background operation.
         /// Same thread is used for the entire operation in <see cref="FsStatusInfo"/>, <see cref="FsGetFile"/> and <see cref="FsPutFile"/>.
         /// </para>
         /// <para>
-        /// If the flag <see cref2="F:Tools.TotalCommander.BackgroundTransferSupport.AskUser"/> is NOT set, all uploads and downloads with F5 or F6 will be started in a background thread.
+        /// If the flag <see cref2="F:Tools.TotalCommanderT.BackgroundTransferSupport.AskUser"/> is NOT set, all uploads and downloads with F5 or F6 will be started in a background thread.
         /// Initially the normal foreground transfer window will be shown, which will be changed to a background transfer window when the user clicks on "Background".
         /// For the plugin, the entire operation will take place in the same background thread, though.
         /// This method is recommended only for plugins where no extra connections are needed for multiple parallel transfers, or where the additional connections

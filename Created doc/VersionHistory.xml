@@ -58,5 +58,6 @@
     </vh:Version>
     <vh:Version Major="1" Minor="5" Build="4">
         <vh:i>Added documentation for development tools - EXE command line tools and Visual Studio Custom Tools</vh:i>
+        <vh:i>Total Commander WFX plugin framework extended for Crypto and background transfers.</vh:i>
     </vh:Version>
 </vh:VersionHistory>

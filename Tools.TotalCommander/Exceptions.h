@@ -178,6 +178,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'The class was not initialized'.
+        /// </summary>
+        public: static property System::String^  NotInitialized {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'The {0} parameter of the {1} method was assigned to long string.'.
         /// </summary>
         public: static property System::String^  ParamAssignedTooLong {
@@ -195,6 +202,13 @@ namespace Tools {
         /// Najde lokalizivaný řetězec podobný 'Plugin was not initialized.'.
         /// </summary>
         public: static property System::String^  PluginNotInitialized {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Plugin number {0} is not registered.'.
+        /// </summary>
+        public: static property System::String^  PluginNotRegistered {
             System::String^  get();
         }
         
@@ -397,6 +411,12 @@ namespace Tools {
         public: static System::String^  NoMasterPasswordFormat();
         
         /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti NotInitialized.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti NotInitialized.</returns>
+        public: static System::String^  NotInitializedFormat();
+        
+        /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'The {0} parameter of the {1} method was assigned to long string.'.
         /// </summary>
         /// <param name="arg0">Objekt (0) pro formátování.</param>
@@ -415,6 +435,13 @@ namespace Tools {
         /// </summary>
         /// <returns>Hodnota vlastnosti PluginNotInitialized.</returns>
         public: static System::String^  PluginNotInitializedFormat();
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Plugin number {0} is not registered.'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  PluginNotRegisteredFormat(System::Object^  arg0);
         
         /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'The {0} property have already been initialized.'.

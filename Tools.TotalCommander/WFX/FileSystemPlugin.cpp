@@ -4,6 +4,7 @@
 #include "..\Exceptions.h"
 #include <vcclr.h>
 #include "..\Common.h"
+#include "WFX Callback Wrappers.h"
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
@@ -26,13 +27,28 @@ namespace Tools{namespace TotalCommanderT{
          this->ExecuteCommandImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteCommand", flags),this->GetType()),false) == nullptr;
     }
 
+    FileSystemPlugin^ FileSystemPlugin::GetPluginByNumber(int pluginNr){
+        if(FileSystemPlugin::registeredPlugins->ContainsKey(pluginNr)) return FileSystemPlugin::registeredPlugins[pluginNr];
+        return nullptr;
+    }
 #pragma region "TC functions"
-    int FileSystemPlugin::FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+    int FileSystemPlugin::FsInit(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
         this->pluginNr = PluginNr;
-        this->pProgressProc = pProgressProc;
-        this->pLogProc  = pLogProc;
-        this->pRequestProc = pRequestProc;
+        this->progressProc = gcnew ProgressProcWrapper(pProgressProc);
+        this->logProc  = gcnew LogProcWrapper(pLogProc);
+        this->requestProc = gcnew RequestProcWrapper(pRequestProc);
         this->initialized = true;
+        FileSystemPlugin::registeredPlugins->Add(PluginNr, this);
+        this->OnInit();
+        return 0;
+    }
+    int FileSystemPlugin::FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc){
+        this->pluginNr = PluginNr;
+        this->progressProc = gcnew ProgressProcWrapper(pProgressProc);
+        this->logProc  = gcnew LogProcWrapper(pLogProc);
+        this->requestProc = gcnew RequestProcWrapper(pRequestProc);
+        this->initialized = true;
+        FileSystemPlugin::registeredPlugins->Add(PluginNr, this);
         this->OnInit();
         return 0;
     }
@@ -41,16 +57,17 @@ namespace Tools{namespace TotalCommanderT{
         if(log == nullptr) throw gcnew ArgumentNullException("log");
         if(request == nullptr) throw gcnew ArgumentNullException("request");
         this->pluginNr = PluginNr;
-        this->dProgressProc = progress;
-        this->dLogProc  = log;
-        this->dRequestProc = request;
+        this->progressProc = gcnew ProgressProcWrapper(progress);
+        this->logProc = gcnew LogProcWrapper(log);
+        this->requestProc = gcnew RequestProcWrapper(request);
         this->initialized = true;
+        FileSystemPlugin::registeredPlugins->Add(PluginNr, this);
         this->OnInit();
     }
-    bool FileSystemPlugin::IsInTotalCommander::get(){
+    /*bool FileSystemPlugin::IsInTotalCommander::get(){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
         return this->dProgressProc == nullptr;
-    }
+    }*/
     HANDLE FileSystemPlugin::FsFindFirst(char* Path,WIN32_FIND_DATA *FindData){
         Tools::TotalCommanderT::FindData% findData = Tools::TotalCommanderT::FindData();// *gcnew Tools::TotalCommanderT::FindData(*FindData);
         Object^ object;
@@ -164,26 +181,11 @@ namespace Tools{namespace TotalCommanderT{
 #pragma region "Callbacks"
     bool FileSystemPlugin::ProgressProc(String^ SourceName, String^ TargetName,int PercentDone){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        if(this->IsInTotalCommander){
-            char* sourceName = (char*)(void*)Marshal::StringToHGlobalAnsi(SourceName);
-            char* targetName = (char*)(void*)Marshal::StringToHGlobalAnsi(TargetName);
-            bool ret = this->pProgressProc(this->PluginNr,sourceName,targetName,PercentDone) == 1 ? true : false;
-            Marshal::FreeHGlobal((IntPtr)sourceName);
-            Marshal::FreeHGlobal((IntPtr)targetName);
-            return ret;
-        }else{
-            return this->dProgressProc(this, SourceName, TargetName, PercentDone);
-        }
+        return this->progressProc(this, SourceName, TargetName, PercentDone);
     }
     void FileSystemPlugin::LogProc(LogKind MsgType,String^ LogString){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        if(this->IsInTotalCommander){
-            char* logString = (char*)(void*)Marshal::StringToHGlobalAnsi(LogString);
-            this->pLogProc(this->PluginNr,(int)MsgType,logString);
-            Marshal::FreeHGlobal((IntPtr)logString);
-        }else{
-            this->dLogProc(this, MsgType, LogString);
-        }
+        this->logProc(this, MsgType, LogString);
     }
     void FileSystemPlugin::LogProcConnect(String^ FileSystem){
         if(FileSystem == nullptr) throw gcnew ArgumentNullException("FileSystem");
@@ -195,80 +197,32 @@ namespace Tools{namespace TotalCommanderT{
         if(Target == nullptr) throw gcnew ArgumentNullException("Target");
         this->LogProc(LogKind::TransferComplete,String::Format("{0} -> {1}",Source,Target));
     }
-    String^ FileSystemPlugin::RequestProc(InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen){
+    String^ FileSystemPlugin::RequestProc(InputRequestKind RequestType, String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        if(this->IsInTotalCommander){
-            if(DefaultText->Length > maxlen) throw gcnew ArgumentException(Exceptions::DefaultTextTooLong);
-            if(maxlen < 1) throw gcnew ArgumentOutOfRangeException("maxlen");
-            char* customTitle = (char*)(void*)Marshal::StringToHGlobalAnsi(CustomTitle);
-            char* customText = (char*)(void*)Marshal::StringToHGlobalAnsi(CustomText);
-            char* defaultText = new char[maxlen];
-            if(DefaultText != nullptr)
-                for(int i = 0; i < DefaultText->Length; i++)
-                    defaultText[i] = (char)DefaultText[i];
-            Marshal::FreeHGlobal((IntPtr)customTitle);
-            Marshal::FreeHGlobal((IntPtr)customText);
-            if(this->pRequestProc(this->PluginNr, (int)RequestType, customTitle, customText, defaultText, maxlen)){
-                String^ ret = gcnew String(defaultText);
-                delete defaultText;
-                return ret;
-            }
-            delete defaultText;
-            return nullptr;
-        }else{
-            return this->dRequestProc(this, RequestType, CustomTitle, CustomText, DefaultText, maxlen);
-        }
+        return this->requestProc(this, RequestType, CustomTitle, CustomText, DefaultText, maxlen);            
     }
 #pragma region Crypto
-    String^ FileSystemPlugin::PerformCryptoOperation(CryptMode mode, String^ connectionName, String^ password, int maxlen){
+    String^ FileSystemPlugin::CryptProc(CryptMode mode, String^ connectionName, String^ password, int maxlen){
         if(!this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoNotInitialized);
-        if(this->IsInTotalCommander){
-            char* conn = NULL;
-            if(connectionName != nullptr) (char*)(void*)Marshal::StringToHGlobalAnsi(connectionName);
-            char* pwdBuffer = NULL;
-            int len = maxlen + 1;
-            if(password != nullptr){
-                len = Math::Max(maxlen, password->Length) + 1;
-                pwdBuffer = new char[len];
-                for(int i = 0; i < len; i++)
-                    pwdBuffer[i] = i < password->Length ? (char)password[i] : (char)0;
-            }
-            else if(maxlen > 0){
-                pwdBuffer = new char[maxlen];
-                for(int i = 0; i < maxlen; i++)
-                pwdBuffer[i] = (char)0;
-            }
-            CryptResult ret = (CryptResult)this->cryptProc(this->PluginNr, this->CryptoNr, (int)mode, conn, pwdBuffer, len);
-            switch(ret){
-                case CryptResult::OK: return pwdBuffer == NULL ? nullptr : gcnew String(pwdBuffer);
-                case CryptResult::Fail:
-                case CryptResult::WriteError:
-                case CryptResult::ReadError:
-                case CryptResult::NoMasterPassword:
-                    throw gcnew CryptException(ret);
-                default: throw gcnew CryptException(ResourcesT::Exceptions::UnknownError, CryptResult::Fail);
-            }
-        }else{
-            return this->dCryptProc(this, mode, connectionName, password, maxlen);
-        }
+        return this->cryptProc(this, mode, connectionName, password, maxlen);
     }
     void FileSystemPlugin::SavePassword(String^ connectioName, String^ password){
         if(connectioName == nullptr) throw gcnew ArgumentNullException("connectionName");
         if(password == nullptr) throw gcnew ArgumentNullException("password");
-        this->PerformCryptoOperation(CryptMode::SavePassword, connectioName, password, password->Length);
+        this->CryptProc(CryptMode::SavePassword, connectioName, password, password->Length);
     }
-    String^ FileSystemPlugin::LoadPassword(String^ connectionName, int maxlen, bool showUI){
+    String^ FileSystemPlugin::LoadPassword(String^ connectionName, bool showUI){
         if(connectionName == nullptr) throw gcnew ArgumentNullException("connectionName");
-        return this->PerformCryptoOperation(showUI ? CryptMode::LoadPassword : CryptMode::LoadPasswordNoUI, connectionName, nullptr, maxlen);
+        return this->CryptProc(showUI ? CryptMode::LoadPassword : CryptMode::LoadPasswordNoUI, connectionName, nullptr, FindData::MaxPath);
     }
     void FileSystemPlugin::MovePassword(String^ sourceConnectionName, String^ targetConnectionName, bool deleteOriginal){
         if(sourceConnectionName == nullptr) throw gcnew ArgumentNullException("sourceConnectionName");
         if(targetConnectionName == nullptr) throw gcnew ArgumentNullException("targetConnectionName");
-        this->PerformCryptoOperation(deleteOriginal ? CryptMode::MovePassword : CryptMode::CopyPassword, sourceConnectionName, targetConnectionName, Math::Max(sourceConnectionName->Length, targetConnectionName->Length));
+        this->CryptProc(deleteOriginal ? CryptMode::MovePassword : CryptMode::CopyPassword, sourceConnectionName, targetConnectionName, Math::Max(sourceConnectionName->Length, targetConnectionName->Length));
     }
     void FileSystemPlugin::DeletePassword(String^ connectionName){
         if(connectionName == nullptr) throw gcnew ArgumentNullException("connectionName");
-        this->PerformCryptoOperation(CryptMode::DeletePassword, connectionName, nullptr, connectionName->Length);
+        this->CryptProc(CryptMode::DeletePassword, connectionName, nullptr, connectionName->Length);
     }
 #pragma endregion
 #pragma endregion
@@ -278,18 +232,25 @@ namespace Tools{namespace TotalCommanderT{
 #pragma region "Optional functions"
 #pragma region "Crypto"
     //SetCryptCallback
-    void FileSystemPlugin::FsSetCryptCallback(tCryptProc pCryptProc,int CryptoNr,int Flags){
+    void FileSystemPlugin::FsSetCryptCallback(tCryptProc pCryptProc, int cryptoNr, int flags){
         if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
-        this->cryptProc = pCryptProc;
+        this->cryptProc = gcnew CryptProcWrapper(pCryptProc);
         this->cryptoNr = CryptoNr;
         this->cryptInitialized = true;
-        this->OnInitializeCryptography((CryptFlags)Flags);
+        this->OnInitializeCryptography((CryptFlags)flags);
+    }
+    void FileSystemPlugin::FsSetCryptCallbackW(tCryptProcW pCryptProc, int cryptoNr, int flags){
+        if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
+        this->cryptProc = gcnew CryptProcWrapper(pCryptProc);
+        this->cryptoNr = CryptoNr;
+        this->cryptInitialized = true;
+        this->OnInitializeCryptography((CryptFlags)flags);
     }
     void FileSystemPlugin::InitializeCryptography(CryptCallback^ cryptProc, int cryptoNr, CryptFlags flags){
         if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
         if(this->OnInitializeCryptographyImplemented){
             if(cryptProc == nullptr) throw gcnew ArgumentNullException("cryptProc");
-            this->dCryptProc = cryptProc;
+            this->cryptProc = gcnew CryptProcWrapper(cryptProc);
             this->cryptoNr = cryptoNr;
             this->cryptInitialized = true;
             this->OnInitializeCryptography(flags);

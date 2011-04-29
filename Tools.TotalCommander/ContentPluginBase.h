@@ -233,7 +233,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="FieldType">The type of data passed to the plugin in <paramref name="FieldValue"/> - one of the <see cref="ContentFieldType"/> values. This is the same type as returned by the plugin via <see cref="ContentGetSupportedField"/>. If the plugin returned a different type via <see cref="ContentGetValue"/>, the the <paramref name="FieldType"/> <strong>may</strong> be of that type too.</param>
         /// <param name="FieldValue">Here the plugin receives the data to be changed. The data format depends on the field type.</param>
         /// <param namne="flags">One of the <see cref="SetValueFlags"/> values</param>
-        /// <returns><see2 cref2="F:Tools.TotalCommander.GetContentFieldValueReturnCode.NoSuchField"/>, <see2 cref2="F:Tools.TotalCommander.GetContentFieldValueReturnCode.FileError"/> or <see cref="ContentSetValueSuccess"/>.</returns>
+        /// <returns><see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.NoSuchField"/>, <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FileError"/> or <see cref="ContentSetValueSuccess"/>.</returns>
         /// <remarks><note><strong>About caching the data</strong>: Total Commander will not call a mix <see cref="ContentSetValue"/> for different files, it will only call it for the next file when the previous file can be closed. Therefore a single cache per running Total Commander should be sufficient.</note>
         /// <note><strong>About the flags</strong>: If the <paramref name="flags"/> <see2 cref2="F:Tools.TotalCommanderT.SetValueFlags.First"/> and <see2 cref2="F:Tools.TotalCommanderT.SetValueFlags.Last"/> are both set, then this is the only attribute of this plugin which is changed for this file.</note>
         /// <para><paramref name="FileName"/> is set to NULL and <paramref name="FieldIndex"/> to -1 to signal to the plugin that the change attributes operation has ended. This can be used to flush unsaved data to disk, e.g. when setting comments for multiple files.</para>
@@ -252,16 +252,16 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="value">Here the plugin receives the data to be changed. The type depends on the field type. Field type is inferred from <see cref="ContentFieldSpecification::FieldType"/>. When <see cref="GetValue"/> returns different type it may be passed here as well.
         /// <para>Data types are</para>
         /// <list><listheader><term>Data type passed</term><description>Corresponding field type</description></listheader>
-        /// <item><term><see cref="Boolean"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.Boolean"/></description></item>
-        /// <item><term><see cref="Date"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.Date"/></description></item>
-        /// <item><term><see cref="DateTime"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.DateAndTime"/></description></item>
-        /// <item><term><see cref="Double"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.Double"/></description></item>
-        /// <item><term>Array of <see cref="String"/> (usually one item; in fact string passed by Total Commander split by "<c>, </c>" (comma+space))</term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.Enum"/></description></item>
-        /// <item><term>Array of <see cref="Byte"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.FullText"/> (Total Commander never passes that)</description></item>
-        /// <item><term><see cref="Int32"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.Integer32"/></description></item>
-        /// <item><term><see cref="Int64"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.Integer64"/></description></item>
-        /// <item><term><see cref="String"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.String"/></description></item>
-        /// <item><term><see cref="TimeSpan"/></term><description><see2 cref2="F:Tools.TotalCommander.ContentFieldType.Time"/></description></item>
+        /// <item><term><see cref="Boolean"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Boolean"/></description></item>
+        /// <item><term><see cref="Date"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Date"/></description></item>
+        /// <item><term><see cref="DateTime"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.DateAndTime"/></description></item>
+        /// <item><term><see cref="Double"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Double"/></description></item>
+        /// <item><term>Array of <see cref="String"/> (usually one item; in fact string passed by Total Commander split by "<c>, </c>" (comma+space))</term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/></description></item>
+        /// <item><term>Array of <see cref="Byte"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> (Total Commander never passes that)</description></item>
+        /// <item><term><see cref="Int32"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Integer32"/></description></item>
+        /// <item><term><see cref="Int64"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Integer64"/></description></item>
+        /// <item><term><see cref="String"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.String"/></description></item>
+        /// <item><term><see cref="TimeSpan"/></term><description><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Time"/></description></item>
         /// <item><term><see cref="IntPtr"/></term><description>Total Commander have passed unknown type (should not happen)</description></item>
         /// </list></param>
         /// <param namne="flags">One of the <see cref="SetValueFlags"/> values</param>

@@ -45,7 +45,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>If this flag is set, the plugin should return <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.Delayed"/> for fields which take a long time to extract, like file version information. Total Commander will then call the function again in a background thread without the <see cref="DelayIfSlow"/> flag. This means that your plugin must be implemented thread-safe if you plan to return <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.Delayed"/>.
         /// <para>The plugin may also reutrn <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.OnDemand"/> if <see cref="DelayIfSlow"/> is set. In this case, the field will only be retrieved when the user presses &lt;SPACEBAR>. This is only recommended for fields which take a VERY long time, e.g. directory content size. You should offer the same field twice in this case, once as delayed, and once as on demand. The field will be retrieved in the background thread also in this case.</para></summary>
         DelayIfSlow = CONTENT_DELAYIFSLOW,
-        /// <summary>If this flag is set, the <c>FieldValueOriginal</c> passes the file size to the plugin as <see cref="Double"/>. This value is only set if you have returned the flag <see2 cref2="F:Tools.TotalCommanderT.FieldFlags.PassThroughSizeFloat"/> from the function <see2 cref2="M:Tools.TotalCommander.ContentPluginBase.GetSupportedFieldFlags(System.Int32)"/>. No units have been applied yet, the size is passed to the plugin as bytes. You then need to apply the appropriate unit, and set the additional string field. This option is used to display the size even in locations where the plugin doesn't work, e.g. on ftp connections or inside archives.</summary>
+        /// <summary>If this flag is set, the <c>FieldValueOriginal</c> passes the file size to the plugin as <see cref="Double"/>. This value is only set if you have returned the flag <see2 cref2="F:Tools.TotalCommanderT.FieldFlags.PassThroughSizeFloat"/> from the function <see2 cref2="M:Tools.TotalCommanderT.ContentPluginBase.GetSupportedFieldFlags(System.Int32)"/>. No units have been applied yet, the size is passed to the plugin as bytes. You then need to apply the appropriate unit, and set the additional string field. This option is used to display the size even in locations where the plugin doesn't work, e.g. on ftp connections or inside archives.</summary>
         PassThrough = CONTENT_PASSTHROUGH
     };
 
@@ -158,7 +158,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <seealso cref2="T:System.Windows.Forms.SortOrder"/>
     /// <version version="1.5.3">This enumeration is new in version 1.5.3</version>
     public enum class SortOrder : Int32{
-        /// <summary>Sort order is not set. May default to <see cref2="F:Tools.TotalCommander.SortOrder.Ascending"/></summary>
+        /// <summary>Sort order is not set. May default to <see cref2="F:Tools.TotalCommanderT.SortOrder.Ascending"/></summary>
         unknown = 0,
         /// <summary>Items are sorted in ascending order (from lower to greater)</summary>
         Ascending = 1,

@@ -1,14 +1,30 @@
 //To be included in AllTCFunctions.h
 #ifdef TC_FS_INIT
+    //ANSI
+    #ifdef TC_FNC_HEADER
+        [Obsolete("This is ANSI function. Use Unicode overload instead")]
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsInit
+    #ifdef TC_FNC_HEADER
+        (int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->FsInit(PluginNr, pProgressProc, pLogProc, pRequestProc);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //Unicode
+    //Note: FsInit-specific - names of the functions ANSI and Unicode are same
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsInit
     #ifdef TC_FNC_HEADER
-        (int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc)
+        (int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc)
     #endif
     #if defined(TC_FNC_BODY)
-        {return TC_FUNCTION_TARGET->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);}
+        {return TC_FUNCTION_TARGET->FsInit(PluginNr, pProgressProc, pLogProc, pRequestProc);}
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
@@ -308,15 +324,30 @@
     #endif
 #endif
 #ifdef TC_FS_SETCRYPTCALLBACK
+    //ANSI
     #ifdef TC_FNC_HEADER
+        [Obsolete("This is ANSI function. Use Unicode overload instead")]
         TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsSetCryptCallback
     #ifdef TC_FNC_HEADER
-        (tCryptProc pCryptProc,int CryptoNr,int Flags)
+        (tCryptProc pCryptProc, int CryptoNr, int Flags)
     #endif
     #if defined(TC_FNC_BODY)
         {return TC_FUNCTION_TARGET->FsSetCryptCallback(pCryptProc, CryptoNr, Flags);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsSetCryptCallbackW
+    #ifdef TC_FNC_HEADER
+        (tCryptProcW pCryptProc, int CryptoNr, int Flags)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->FsSetCryptCallbackW(pCryptProc, CryptoNr, Flags);}
     #elif defined(TC_FNC_HEADER)
         ;
     #endif

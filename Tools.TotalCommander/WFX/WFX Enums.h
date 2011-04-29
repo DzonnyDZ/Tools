@@ -218,7 +218,7 @@ namespace Tools{namespace TotalCommanderT{
         End = FS_STATUS_END
     };
     /// <summary>Kinds of operations</summary>
-    /// <version version="1.5.4">Constants <see cref2="F:Tools.TotalCommander.PutMultiThread"/> and <see cref2="F:Tools.TotalCommander.GetMultiThread"/> for background thread transfers added</version>
+    /// <version version="1.5.4">Constants <see cref2="F:Tools.TotalCommanderT.PutMultiThread"/> and <see cref2="F:Tools.TotalCommanderT.GetMultiThread"/> for background thread transfers added</version>
     /// <version version="1.5.4">Fix: Constants renamed <c>PuSingle</c> to <c>PutSingle</c>, <c>PuMulti</c> to <c>PutMulti</c></version>
     public enum class OperationKind{
         /// <summary>Retrieve a directory listing</summary>

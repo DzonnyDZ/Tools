@@ -1,7 +1,7 @@
 #include "define.h"
 #include "Helper.h"
 #ifdef TC_WFX
-
+//This file defines Total Commander File System (WFX) plugin
 #include "fsplugin.h"
 #include <vcclr.h>
 #include "AssemblyResolver.h"
@@ -20,21 +20,27 @@ using namespace Tools::TotalCommanderT;
 #define TC_FNC_BODY
 
 #pragma unmanaged
-/// <summary>Unmanaged DLL entry point. This method canot contain calls to managed code.</summary>
-BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved){return TRUE;}
+    /// <summary>Unmanaged DLL entry point. This method canot contain calls to managed code.</summary>
+    /// <param name="hModule">A handle to the DLL module. The value is the base address of the DLL.</param>
+    /// <param name="ul_reason_for_call">The reason code that indicates why the DLL entry-point function is being called.</param>
+    /// <param name="lpReserved">
+    /// <para>If <paramref name="fdwReason"/> is <c>DLL_PROCESS_ATTACH</c>, <paramref name="lpvReserved"/> is null for dynamic loads and non-null for static loads.</para>
+    /// <para>If <paramref name="fdwReason"/> is <c>DLL_PROCESS_DETACH</c>, <paramref name="lpvReserved"/> is nulll if <c>FreeLibrary</c> has been called or the DLL load failed and non-null if the process is terminating.</para>
+    /// </param>
+    /// <returns>This implementation always returns true</returns>
+    BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved){return TRUE;}
 #pragma managed
-///// <summary>Contains value indicationg if it is necessary to initialize runtime environment and plugin instance</summary>
-//bool RequireInitialize = true;
 
-///// <summary>FileSystem plugin helper class - holds file system plugin instance</summary>
-//private ref struct FSHelper{
-//    /// <summary>Instance of file system plugin class</summary>
-//    static FileSystemPlugin^ wfx;
-//};
-/// <summary>Backs the <see cref="FsGetDefRootName"/> method</summary>
-void GetDefRootName(char* DefRootName,int maxlen);
-/// <summary>Backs the <see ctef="FsInit"/> function</summary>
-int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc);
+
+#ifdef TC_FS_INIT
+    /// <summary>Backs the <see ctef="FsInit"/> function</summary>
+    int Init(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc);
+#endif
+
+#ifdef TC_FS_GETDEFROOTNAME
+    /// <summary>Backs the <see cref="FsGetDefRootName"/> method</summary>
+    void GetDefRootName(char* DefRootName,int maxlen);
+#endif
 
 #define TC_NAME_PREFIX __stdcall
 #define TC_FUNCTION_TARGET Tools::TotalCommanderT::holder 
@@ -44,12 +50,21 @@ int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestPro
 #define TC_FUNC_PREFIX_B
 
 #ifdef TC_FS_INIT
-    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInitW(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc,tRequestProcW pRequestProc){
         Initialize();
-        return Init(PluginNr,pProgressProc,pLogProc,pRequestProc);
+        return Init(PluginNr, pProgressProc, pLogProc, pRequestProc);
     }
-    int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
-        return TC_FUNCTION_TARGET->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);
+    inline int Init(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
+        return TC_FUNCTION_TARGET->FsInit(PluginNr, pProgressProc, pLogProc, pRequestProc);
+    }
+    [Obsolete("This is ANSI function. Use Unicode overload instead")]
+    inline int Init(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc){
+        return TC_FUNCTION_TARGET->FsInit(PluginNr, pProgressProc, pLogProc, pRequestProc);
+    }
+    [Obsolete("This is ANSI function. Use Unicode overload instead")]
+    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+        Initialize();
+        return Init(PluginNr, pProgressProc, pLogProc, pRequestProc);
     }
 #endif
 #ifdef TC_FS_GETDEFROOTNAME

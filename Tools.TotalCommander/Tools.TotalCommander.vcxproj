@@ -238,6 +238,7 @@ move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Comma
     <ClInclude Include="WFX\FindData.h" />
     <ClInclude Include="WFX\RemoteInfo.h" />
     <ClInclude Include="WFX\ViewDefinition.h" />
+    <ClInclude Include="WFX\WFX Callback Wrappers.h" />
     <ClInclude Include="WFX\WFX common.h" />
     <ClInclude Include="WFX\WFX Enums.h" />
   </ItemGroup>
@@ -264,6 +265,7 @@ move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Comma
     <ClCompile Include="WFX\FindData.cpp" />
     <ClCompile Include="WFX\RemoteInfo.cpp" />
     <ClCompile Include="WFX\ViewDefinition.cpp" />
+    <ClCompile Include="WFX\WFX Callback Wrappers.cpp" />
     <ClCompile Include="WFX\WFX common.cpp" />
     <ClCompile Include="WFX\WFX Enums.cpp" />
   </ItemGroup>
