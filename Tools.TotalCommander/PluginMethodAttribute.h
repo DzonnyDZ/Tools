@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace ::System::Text::RegularExpressions;
+
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
 
@@ -12,6 +14,8 @@ namespace Tools{namespace TotalCommanderT{
         initonly String^ definedBy;
         /// <summary>Contains value of the <see cref="ImplementedBy"/> property</summary>
         initonly String^ implementedBy;
+        /// <summary>A reguler expression to detect if macro name is OK</summary>
+        static initonly Regex^ macroRegex = gcnew Regex("^[A-Za-z_][A-Za-z_0-9]*$", RegexOptions::Compiled | RegexOptions::CultureInvariant);
         /*/// <summary>Contains value of the <see cref="ExportedAs"/> property</summary>
         String^ exportedAs;
         /// <summary>Initializes newly created instance</summary>

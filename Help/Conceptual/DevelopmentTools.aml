@@ -36,6 +36,22 @@
                     <row>
                         <entry>
                             <para>
+                                <link xlink:href="0af0e98d-01c3-4251-a021-93c84ad6ed61">AssemblyPostprocessor</link>
+                            </para>
+                        </entry>
+                        <entry>
+                            <para>Performs various postprocessing tasks on compiled assemblies</para>
+                        </entry>
+                        <entry>
+                            <para>
+                                Public API exposed: <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor</codeEntityReference>.
+                                Based on Mono.Cecil (<codeEntityReference>N:Mono.Cecil</codeEntityReference>)
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <para>
                                 <link xlink:href="4e26733f-2506-42db-bc3c-f52a1a830a38">CommentsMerge</link>
                             </para>
                         </entry>

@@ -129,8 +129,16 @@
       <KeyFile>..\SharedFiles\Tools.snk</KeyFile>
     </Link>
     <PostBuildEvent>
-      <Command>"$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
-move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Command>
+      <Command>ECHO "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
+"$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
+IF ERRORLEVEL 0 (
+    ECHO "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
+    "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
+)
+IF ERRORLEVEL 0 (
+    ECHO move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
+    move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
+)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -224,6 +232,7 @@ move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Comma
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Attributes.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="ContentPluginBase helpers.h" />
     <ClInclude Include="ContentPluginBase.h" />
@@ -254,6 +263,7 @@ move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"</Comma
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="Attributes.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="ContentPluginBase helpers.cpp" />
     <ClCompile Include="ContentPluginBase.cpp" />

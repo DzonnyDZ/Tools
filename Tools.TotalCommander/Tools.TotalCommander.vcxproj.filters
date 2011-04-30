@@ -75,6 +75,9 @@
     <ClInclude Include="WFX\WFX Callback Wrappers.h">
       <Filter>Header Files\WFX</Filter>
     </ClInclude>
+    <ClInclude Include="Attributes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Doc\Content.wdx.hlp">
@@ -135,6 +138,9 @@
     </ClCompile>
     <ClCompile Include="WFX\WFX Callback Wrappers.cpp">
       <Filter>Source Files\WFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Attributes.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

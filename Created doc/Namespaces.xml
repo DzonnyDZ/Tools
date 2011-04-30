@@ -264,7 +264,7 @@
             <version version="1.5.3" stage="Alpha">This namespace is new in version 1.5.3</version>
         </member>
         <!--ReflectionT-->
-        <member name="N:Tools.ReflectionsT">
+        <member name="N:Tools.ReflectionT">
             <summary>Contains various reflection tools.</summary>
             <remarks>
                 Tools related to <see cref="T:System.Type"/> and <see cref="T:System.Enum"/> can be found in the <see cref="T:Tools.TypeTools"/> module.
@@ -288,6 +288,17 @@
                 Highly specialized resources may be found in specialized namespaces. Another, usually private, resources may be found in the <see cref="N:Tools.My.Resources"/> namespace.
             </remarks>
             <seealso cref="N:System.Resources"/>
+        </member>
+        <!--RuntimeT-->
+        <member name="N:Tools.RuntimeT">
+            <summary>Contains advanced types that support diverse namespaces</summary>
+            <version version="1.5.4">This namespace is new in version 1.5.4</version>
+            <seealso cref="N:System.Runtime"/>
+        </member>
+        <member name="N:Tools.RuntimeT.CompilerServicesT">
+            <summary>Provides functionality for compiler writers who use managed code to specify attributes in metadata that affect the run-time behavior of the common language runtime</summary>
+            <version version="1.5.4">This namespace is new in version 1.5.4</version>
+            <seealso cref="N:System.Runtime.CompilerServices"/>
         </member>
         <!--SecurityT-->
         <member name="N:Tools.SecurityT">

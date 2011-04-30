@@ -4,6 +4,7 @@
 #include "..\Common.h"
 #include "..\ContentPluginBase.h"
 #include "WFX common.h"
+#include "..\Attributes.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;

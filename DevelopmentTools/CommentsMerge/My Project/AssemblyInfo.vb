@@ -9,11 +9,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("CommentsMerge")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyDescription("Tools for merging XML comments files")> 
+<Assembly: AssemblyCompany("Đonny")> 
 <Assembly: AssemblyProduct("CommentsMerge")> 
-<Assembly: AssemblyCopyright("Copyright ©  2008")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyCopyright("Copyright © Đonny 2008-11")> 
 
 <Assembly: ComVisible(False)>
 

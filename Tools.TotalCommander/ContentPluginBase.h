@@ -4,6 +4,7 @@
 #include "Plugin/contplug.h"
 #include "ContentPluginBase helpers.h"
 #include "PluginMethodAttribute.h"
+#include "Attributes.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;

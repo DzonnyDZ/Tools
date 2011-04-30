@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Plugin\fsplugin.h"
+#include "..\Common.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -306,7 +307,8 @@ namespace Tools{namespace TotalCommanderT{
     /// <param name="a">Reference to <see cref="BitmapHandling"/> to be updated</param>
     /// <param name="b">Value to be added to <paramref name="b"/></param>
     /// <returns>a + b</returns>
-    BitmapHandling& operator += (BitmapHandling& a, const BitmapHandling& b);
+    /// <version version="1.5.4">The limitation of C++/CLI (unable to create public methods) was worked around (via <see cref="Tools::RuntimeT::CompilerServicesT::MakePublicAttribute"/>), so this method is now public.</version>
+    MAKE_PUBLIC BitmapHandling& operator += (BitmapHandling& a, const BitmapHandling& b);
 
     /// <summary>Flags determining if and how plugin supports background transfers</summary>
     /// <version version="1.5.4">This enumeration is new in version 1.5.4</version>

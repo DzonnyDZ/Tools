@@ -10,16 +10,17 @@ using namespace Tools::ExtensionsT;
 
 namespace Tools{namespace TotalCommanderT{
 
-    gcroot<Regex^> MacroRegex = gcnew Regex("^[A-Za-z_][A-Za-z_0-9]*$", RegexOptions::Compiled | RegexOptions::CultureInvariant);
+    //Do not use gcroot<> in this porject because Mono.Cecil currupts it (http://groups.google.com/group/mono-cecil/browse_thread/thread/69533d20197fed58)
+    //gcroot<Regex^> MacroRegex = gcnew Regex("^[A-Za-z_][A-Za-z_0-9]*$", RegexOptions::Compiled | RegexOptions::CultureInvariant);
     
     inline PluginMethodAttribute::PluginMethodAttribute(String^ DefinedBy){
         if(DefinedBy == nullptr) throw gcnew ArgumentNullException("DefinedBy");
-        if(!MacroRegex->IsMatch(DefinedBy)) throw gcnew FormatException(Exceptions::InvalidMacroNameFormat(DefinedBy));
+        if(!PluginMethodAttribute::macroRegex->IsMatch(DefinedBy)) throw gcnew FormatException(Exceptions::InvalidMacroNameFormat(DefinedBy));
         this->definedBy = DefinedBy;
     }
     PluginMethodAttribute::PluginMethodAttribute(String^ ImplementedBy, String^ DefinedBy){
         if(DefinedBy == nullptr) throw gcnew ArgumentNullException("DefinedBy");
-        if(!MacroRegex->IsMatch(DefinedBy)) throw gcnew FormatException(Exceptions::InvalidMacroNameFormat(DefinedBy));
+        if(!PluginMethodAttribute::macroRegex->IsMatch(DefinedBy)) throw gcnew FormatException(Exceptions::InvalidMacroNameFormat(DefinedBy));
         this->definedBy = DefinedBy;
         this->implementedBy = ImplementedBy;
     }

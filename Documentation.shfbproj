@@ -184,6 +184,8 @@
     <Folder Include="Help\VersionHistory\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Help\Conceptual\AssemblyPostprocessor.aml" />
+    <None Include="Help\Conceptual\AssemblyPostprocessor.aml" />
     <None Include="Help\Conceptual\XsdGenerator.aml" />
     <None Include="Help\Conceptual\VersionUpdater.aml" />
     <None Include="Help\Conceptual\VersionCorrector.aml" />

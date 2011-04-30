@@ -222,6 +222,12 @@
     <Compile Include="misc\VersionPart.vb" />
     <Compile Include="Numerics\IntegerUnion.vb" />
     <Compile Include="Numerics\Rational.vb" />
+    <Compile Include="Reflection\NamespaceInfo.vb" />
+    <Compile Include="Reflection\Operators.vb" />
+    <Compile Include="Runtime\CompilerServices\IPostprocessorContext.vb" />
+    <Compile Include="Runtime\CompilerServices\MakePublicAttribute.vb" />
+    <Compile Include="Runtime\CompilerServices\PostprocessingAttribute.vb" />
+    <Compile Include="Runtime\CompilerServices\PostprocessorAttribute.vb" />
     <Compile Include="Security\Cryptography\Encryption\Asymmetric.vb" />
     <Compile Include="Security\Cryptography\Encryption\EncryptionData.vb" />
     <Compile Include="Security\Cryptography\Encryption\EncryptionUtilities.vb" />

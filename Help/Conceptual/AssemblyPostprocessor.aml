@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="conceptual.css" type="text/css" ?>
+<topic id="0af0e98d-01c3-4251-a021-93c84ad6ed61" revisionNumber="1">
+    <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <introduction>
+            <para>AssemblyPostprocessor.exe is an extensible command line application that processed compiled managed assemblies (i.e. DLL or EXE) and changes metadata or CIL code.</para>
+        </introduction>
+        <section>
+            <title>AssemblyPostprocessor</title>
+            <content>
+                <para>Usage:</para>
+                <para>
+                    <system>AssemblyPostprocessor arg1|param1 arg2|param2 ...</system>
+                </para>
+                <definitionTable>
+                    <definedTerm>
+                        <codeInline>argX</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>Any number of arguments can be specified. Each argument is a path to a file containin an assembly to be post-processed</para>
+                    </definition>
+                    <definedTerm>
+                        <codeInline>paramX</codeInline>
+                    </definedTerm>
+                    <definition>
+                        <para>
+                            Any number of parameters can be specified. Each parameter consists of two parts - parameter name and parameter value.
+                            Parameters and argumenst can be specified in any order an intermixed any way (however the order of arguments and parameters can affect results of the program).
+                        </para>
+                        <definitionTable>
+                            <definedTerm>
+                                <codeInline>/snk snkfile</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    The <codeInline>/snk</codeInline> parameter specifies a path to a strong name key (SNK) file.
+                                    This file will be used to sign assemblies after post-processing havs been done.
+                                    The <codeInline>/snk</codeInline> parameter only applies to assemblies specified right of it.
+                                    You can specify <codeInline>/snk</codeInline> multiple times.
+                                    The new value always overrides preceding value for assemblies specified right of it on command line.
+                                    To stop signing assemblies right of any <codeInline>/snk</codeInline> parameter pass en empty string as <codeInline>snkfile</codeInline>.
+                                </para>
+                                <alert class="important">
+                                    <para>
+                                        If the assembly was strongly name prior post-processing you should re-sign it using <codeInline>/snk</codeInline> otherwise it will be invalid (unless you sign it later using <externalLink>
+                                            <linkText>snk tool</linkText>
+                                            <linkUri>http://msdn.microsoft.com/en-us/library/k5b5tt23.aspx</linkUri>
+                                        </externalLink>.
+                                    </para>
+                                </alert>
+                            </definition>
+                        </definitionTable>
+                    </definition>
+                </definitionTable>
+            </content>
+            <sections>
+                <section>
+                    <title>Remarks</title>
+                    <content>
+                        <para>
+                            The purpose of this tool is to perform operations on compiled assembly that cannot be achieved in a programming language the assembly was originally written in.
+                            However the tool can hardly be used on 3rd party assemblies you does not have access to source code of because it relies on attributes applied on various code constructs inside the assembly.
+                        </para>
+                        <para>
+                            The architecture and workflow is following:
+                        </para>
+                        <list class="ordered">
+                            <listItem>
+                                <para>
+                                    First you need an attribute you'll decorate a construct with.
+                                    The attribute only adds metadata to come piece of code it does not perform any change itself.
+                                    AssemblyPostprocessor is very flexible on actual attribute type.
+                                    If your programming language does not prevent it the attribute even does not have to derive from <codeEntityReference>T:System.Attribute</codeEntityReference> (but it typically does).
+                                    Some additional semantic (the attribute can automatically be removed from metadata after post-processing is doe if you wish) is added to <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.PostprocessingAttribute</codeEntityReference>-derived attributes.
+                                </para>
+                                <para>
+                                    The key for working post-processing is to use such attribute that the class implementing the attribute has itself one attribute applied - <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.PostprocessorAttribute</codeEntityReference>.
+                                    It specifies where to find code to call to do the actual post-processing.
+                                </para>
+                                <para>ĐTools library defines a few such attributes, but you can define your own.</para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    So, you have <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.PostprocessorAttribute</codeEntityReference>-decorated attribute (such as <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.MakePublicAttribute</codeEntityReference>).
+                                </para>
+                                <para>
+                                    Now you have to implement a code that will do the post-processing.
+                                    The code an the attribute can be placed in independent assemblies (so your production assembly can have only reference to the attribute but not to post-processing code).
+                                    This feature is usefull because post-processing code must depend on <codeEntityReference>N:Mono.Cecil</codeEntityReference> (while the attribute and you code does not have to).
+                                </para>
+                                <para>
+                                    Post-processing code built-in to ĐTools library is implemented in AssemblyPostprocessor.exe assembly itself and it is publicly available through the <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.Postprocessors</codeEntityReference>.
+                                </para>
+                                <para>
+                                    To implement the actual post-processing code you must implement a method.
+                                    The method must be <languageKeyword>public</languageKeyword> (though the type implementing the method does not have to) and <languageKeyword>static</languageKeyword>.
+                                    It must have 2 or 3 attributes. 1st must be <codeEntityReference>T:Mono.Cecil.ICustomAttributeProvider</codeEntityReference>.
+                                    2nd must be assignable from actual attribute type (it can be <codeEntityReference>T:System.Object</codeEntityReference>, actual attribute type or anything between on inherinace hierarchy).
+                                    3rd (if present) must be asssignable from <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.IPostprocessorContext</codeEntityReference> (in case of AssemblyResolver <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor</codeEntityReference> is always passed there).
+                                </para>
+                            </listItem>
+                            <listItem>
+                                <para>
+                                    Finally you have to perform actual post processing. Either do it running this tool against the assembly (typically in post-build event) or you can do it programatically using the <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor</codeEntityReference> class.
+                                </para>
+                            </listItem>
+                        </list>
+                        <para>
+                            Public API of AssemblyPostprocessor is exposed via the <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor</codeEntityReference> class.
+                        </para>
+                    </content>
+                </section>
+                <section>
+                    <title>Version History</title>
+                    <content>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>1.5.4</para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>This tool is new in version 1.5.4</para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                        </list>
+                    </content>
+                </section>
+            </sections>
+        </section>
+        <relatedTopics>
+            <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
+            <codeEntityReference>N:Tools.RuntimeT.CompilerServicesT</codeEntityReference>
+            <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor</codeEntityReference>
+            <codeEntityReference>T:Tools.RuntimeT.CompilerServicesT.Postprocessors</codeEntityReference>
+            <codeEntityReference>N:Mono.Cecil</codeEntityReference>
+            <externalLink>
+                <linkText>Mono.Cecil</linkText>
+                <linkUri>http://www.mono-project.com/Cecil</linkUri>
+            </externalLink>
+        </relatedTopics>
+    </developerConceptualDocument>
+</topic>
