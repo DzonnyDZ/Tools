@@ -199,6 +199,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'The plugin was already initialized.'.
+        /// </summary>
+        public: static property System::String^  PluginInitialized {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Plugin was not initialized.'.
         /// </summary>
         public: static property System::String^  PluginNotInitialized {
@@ -429,6 +436,12 @@ namespace Tools {
         /// </summary>
         /// <returns>Hodnota vlastnosti PathTooLong.</returns>
         public: static System::String^  PathTooLongFormat();
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti PluginInitialized.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti PluginInitialized.</returns>
+        public: static System::String^  PluginInitializedFormat();
         
         /// <summary>
         /// Pahýl formátovací metody vracející hodnotu vlastnosti PluginNotInitialized.

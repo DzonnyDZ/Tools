@@ -177,6 +177,9 @@
   <data name="PathTooLong" xml:space="preserve">
     <value>String returned by plugin is longer than maximal path length alowed.</value>
   </data>
+  <data name="PluginInitialized" xml:space="preserve">
+    <value>The plugin was already initialized.</value>
+  </data>
   <data name="PluginNotInitialized" xml:space="preserve">
     <value>Plugin was not initialized.</value>
   </data>

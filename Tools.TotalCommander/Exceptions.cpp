@@ -118,6 +118,10 @@ namespace Tools {
         return ResourceManager->GetString(L"PathTooLong", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::PluginInitialized::get() {
+        return ResourceManager->GetString(L"PluginInitialized", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::PluginNotInitialized::get() {
         return ResourceManager->GetString(L"PluginNotInitialized", _resourceCulture);
     }
@@ -249,6 +253,10 @@ namespace Tools {
     
     inline System::String^  Exceptions::PathTooLongFormat() {
         return PathTooLong;
+    }
+    
+    inline System::String^  Exceptions::PluginInitializedFormat() {
+        return PluginInitialized;
     }
     
     inline System::String^  Exceptions::PluginNotInitializedFormat() {

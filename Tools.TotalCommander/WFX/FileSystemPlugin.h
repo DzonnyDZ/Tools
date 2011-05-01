@@ -69,6 +69,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preffered.</para></remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
         /// <version version="1.5.4">Added <see cref="ObsoleteAttribute"/></version>
+        /// <version version="1.5.4">The <see cref="InvalidOperationException"/> is nor really thrown when plugin was already initialized before. (It was documented to be thrown in previosu versions but it actually wasn't.)</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false), Obsolete("This is ANSI function. Use Unicode overload instead")]
         [PluginMethod("TC_FS_INIT")]
@@ -82,13 +83,48 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="ArgumentNullException"><paramref name="progress"/>, <paramref name="log"/> or <paramref name="request"/> is null</exception>
         /// <remarks>Use this function to initialize the plugin when used outside of Total Commander.
         /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para></remarks>
+        /// <version version="1.5.4">The <see cref="InvalidOperationException"/> is nor really thrown when plugin was already initialized before. (It was documented to be thrown in previosu versions but it actually wasn't.)</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void InitializePlugin(int PluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
-        ///// <summary>When plugin is initialized, gets value indicating if it was initialiuzed by Total Commander or .NET application</summary>
-        ///// <returns>True if plugin was initialized by Total Commander; false when it was initialized by .NET application</returns>
-        ///// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
-        //[EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
-        //property bool IsInTotalCommander{bool get();}
+    private:
+        bool isInTotalCommander;
+        bool unicode;
+    public:
+        /// <summary>When plugin is initialized, gets value indicating if it was initialized by Total Commander or .NET application</summary>
+        /// <returns>
+        /// True if plugin was initialized by Total Commander; false when it was initialized by .NET application.
+        /// This property also returns false until the class instance is initialized (while <see cref="Initialized"/> is false).
+        /// </returns>
+        /// <remarks>
+        /// The plugin determines wheather it is in Total Commander or if it was initialized by managed application depending on which function was used to initialize the plugin.
+        /// If <see cref="FsInit"/> was used this property returns true. If <see cref"InitializePlugin"/> was used this property returns false.
+        /// So, this property also returns true if the plugin was loaded by any other unmanaged application capable of using Total Commander plugins or a managed application which either loads plugin unmanaged way or calls <see cref="FsInit"/> instead of <see cref"InitializePlugin"/>.
+        /// </remarks>
+        /// <version version="1.5.4"><see cref="InvalidOperationException"/> is no longer thrown if <see cref="Initialized"/> is false</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        property bool IsInTotalCommander{bool get();}
+        /// <summary>When plugin is initialized, gets value indicating if it lives in Unicode or ANSI environment</summary>
+        /// <returns>
+        /// True if plugin was initialized by version of Total Commander which supports Unicode plugins (7.5 or newer, plugin interface 2.0 or newer). False if it was initialized by an application that communicates with plugins in ANSI only.
+        /// This property always returns true if <see cref="IsInTotalCommander"/> is false (managed environment is always considered Unicode-aware).
+        /// This property returns true until the plugin is initialized (while <see cref="Initialized"/> is false).
+        /// <returns>
+        /// <remarks>
+        /// The plugin determines wheather it is in ANSI or Unicode environment depending on which function was used to initialize it.
+        /// If <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> or <see cref="InitializePlugin"/> was used environment is considered Unicode.
+        /// Otherwise (if <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)"/> was used) environment is considered ANSI.
+        /// <para>
+        /// ANSI environment means that plugin will never receive characters not covered by current system-default encoding (<see cref="System::Text::Encoding::Default"/>) and
+        /// that any non-ANSI characters passed from plugin to Total Commander will be converted by default conversion process (usually co question marks (?)).
+        /// </para>
+        /// <para>
+        /// Beaware that even though the plugin is in Unicode mode, not all methods of Total Commander plufin interface are Unicode.
+        /// E.g. in version 2.0 of plugin interface the <see cref="ContentGetSupportedField"/> function is ANSI-only.
+        /// This may (or may not) change in later version of Total Commander but it will NOT make this enhancement automatically available to your plugin until managed plugin framework is updated too.
+        /// <para>
+        /// </remarks>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        property bool Unicode{bool get();}
 
         /// <summary>Called to retrieve the first file in a directory of the plugin's file system.</summary>
         /// <param name="path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
@@ -110,22 +146,29 @@ namespace Tools{namespace TotalCommanderT{
         [PluginMethod("TC_FS_FINDFIRST")]
         HANDLE FsFindFirst(wchar_t* path, WIN32_FIND_DATAW *findData);
         /// <summary>Called to retrieve the next file in a directory of the plugin's file system</summary>
-        /// <param name="Hdl">The find handle returned by <see cref="FsFindFirst"/>.</param>
-        /// <param name="FindData">A standard <see cref="WIN32_FIND_DATA"/> struct as defined in the Windows SDK, which contains the file or directory details. Use the dwFileAttributes field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the dwFileAttributes field with 0x80000000 and set the dwReserved0 parameter to the Unix file mode (permissions).</param>
-        /// <returns>Return FALSE if an error occurs or if there are no more files, and TRUE otherwise. <see cref="SetLastError"/>() does not need to be called.</returns>
+        /// <param name="hdl">The find handle returned by <see cref="FsFindFirst"/>.</param>
+        /// <param name="findData">A standard <see cref="WIN32_FIND_DATAW"/> struct as defined in the Windows SDK, which contains the file or directory details.
+        /// Use the <see cref="WIN32_FIND_DATAW.dwFileAttributes"/> field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories.
+        /// On Unix systems, you can | (OR) the <see cref="WIN32_FIND_DATAW.dwFileAttributes"/> field with <c>0x80000000</c> and set the <see cref="WIN32_FIND_DATAW.dwReserved0"/> parameter to the Unix file mode (permissions).</param>
+        /// <returns>Return <c>FALSE</c> if an error occurs or if there are no more files, and <c>TRUE</c> otherwise. <see cref="SetLastError"/>() does not need to be called.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
+        /// <version version="1.5.4">Type of argument <paramref name="findData"/> formally changed from <see cref="WIN32_FIND_DATA"/> to <see cref="WIN32_FIND_DATAW"/> (but there's no difference between the two types).</version>
+        /// <version version="1.5.4">Function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_FINDNEXT")]
-        BOOL FsFindNext(HANDLE Hdl,WIN32_FIND_DATA *FindData);
+        BOOL FsFindNext(HANDLE hdl, WIN32_FIND_DATAW *findData);
         /// <summary>Called to end a <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> loop, either after retrieving all files, or when the user aborts it</summary>
-        /// <param name="Hdl">The find handle returned by <see cref="FsFindFirst"/>.</param>
+        /// <param name="hdl">The find handle returned by <see cref="FsFindFirst"/>.</param>
         /// <returns>Currently unused, should return 0.</returns>
-        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para>
+        /// <para>This function is ANSI/Unicode-agnostic.</para></remarks>
+        /// <version version="1.5.4">Parameter renamed: <c>Hdl</c> to <c>hdl</c></version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_FINDCLOSE")]
-        int FsFindClose(HANDLE Hdl);
+        int FsFindClose(HANDLE hdl);
 #pragma endregion
 
 #pragma region .NET Functions (required)
@@ -503,17 +546,17 @@ public:
 #pragma region "ExecuteFile helper methods"
     private:
         /// <summary>Contains value indicating if the <see cref="FtpModeAdvertisement"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool FtpModeAdvertisementImplemented;
+        initonly bool ftpModeAdvertisementImplemented;
         /// <summary>Contains value indicating if the <see cref="OpenFile"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool OpenFileImplemented;
+        initonly bool openFileImplemented;
         /// <summary>Contains value indicating if the <see cref="ShowFileInfo"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool ShowFileInfoImplemented;
+        initonly bool showFileInfoImplemented;
         /// <summary>Contains value indicating if the <see cref="ExecuteCommand"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool ExecuteCommandImplemented;
+        initonly bool executeCommandImplemented;
         /// <summary>Contains value indicating if the <see cref="ExecuteFile"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool ExecuteFileImplemented;
+        initonly bool executeFileImplemented;
         /// <summary>Contains value indicating if the <see cref="OnInitializeCryptography"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool OnInitializeCryptographyImplemented;
+        initonly bool onInitializeCryptographyImplemented;
     protected:
         /// <summary>When overriden in derived class called when Total COmmander advertises FTP conection mode to plugin via <see cref="ExecuteFile"/></summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
@@ -628,10 +671,12 @@ public:
         /// </list>
         /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names changed to camelCase</version>
+        /// <version version="1.5.4">Types of parameters <paramref name="remoteName"/> and <paramref name="localName"/> changed from <c>char*</c> to <c>wchar_t*</c> - this function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetFile","TC_FS_GETFILE")]
-        int FsGetFile(char* RemoteName,char* LocalName,int CopyFlags, RemoteInfoStruct* ri);
+        int FsGetFile(wchar_t* remoteName, wchar_t* localName, int copyFlags, RemoteInfoStruct* ri);
     public:
         /// <summary>When overriden in derived class transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
@@ -657,8 +702,9 @@ public:
         /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
         /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
+        /// <version version="1.5.4">Paramter names (<c>RemoteName</c>, <c>LocalName</c> and <c>CopyFlags</c>) converted to camelCase</version>
         [MethodNotSupportedAttribute]
-        virtual FileSystemExitCode GetFile(String^ RemoteName, String^% LocalName, CopyFlags CopyFlags, RemoteInfo info);
+        virtual FileSystemExitCode GetFile(String^ remoteName, String^% localName, CopyFlags copyFlags, RemoteInfo info);
 #pragma endregion
 #pragma region PutFile    
     public:

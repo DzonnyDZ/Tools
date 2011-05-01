@@ -28,6 +28,7 @@
         ;
     #endif
 #endif
+
 #ifdef TC_FS_FINDFIRST
     //Unicode
     #ifdef TC_FNC_HEADER
@@ -43,48 +44,68 @@
         ;
     #endif
     //ANSI
-    #if !defined(TC_A2W) || (defined(TC_A2W) && !defined(TC_FNC_BODY))                              
-        #ifdef TC_FNC_HEADER                                                                        
-            TC_LINE_PREFIX HANDLE TC_NAME_PREFIX TC_FUNC_MEMBEROF                                  
-        #endif                                                                                      
-        FsFindFirst                                                               
-        #ifdef TC_FNC_HEADER                                                                        
-            (char* Path, WIN32_FIND_DATAA *FindData)                                                                                
-        #endif                                                                                      
-        #if defined(TC_FNC_BODY)                                                                                                                             
-            {return TC_FUNCTION_TARGET->FsFindFirst(Path, FindData);}                                          
-        #elif defined(TC_FNC_HEADER)                                                                
-            ;                                                                                       
-        #endif                                                                                      
-    #else //Call from ANSI to Unicode - this is tricky
-        TC_LINE_PREFIX HANDLE TC_NAME_PREFIX TC_FUNC_MEMBEROF FsFindFirst(char* Path, WIN32_FIND_DATAA *FindData){
-            wchar_t* pt = GF::AnsiToUnicode(Path);
-            try{
-                WIN32_FIND_DATAW* fd = new WIN32_FIND_DATAW;
-                try{
-                    FindData::FindDataToUnicode(*FindData, *fd);
-                    HANDLE ret = TC_FUNCTION_TARGET->FsFindFirst(pt, fd);
-                    FindData::FindDataToAnsi(*fd, *FindData);
-                    return ret;
-                }finally{ delete fd;}
-            }finally{ delete[] pt; }
-        }                                                                                           
-    #endif   
+    #ifdef TC_FNC_HEADER                                                                        
+        TC_LINE_PREFIX HANDLE TC_NAME_PREFIX TC_FUNC_MEMBEROF                                  
+    #endif                                                                                      
+    FsFindFirst                                                               
+    #ifdef TC_FNC_HEADER                                                                        
+        (char* Path, WIN32_FIND_DATAA *FindData)                                                                                
+    #endif                                                                                      
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                                                                                                                             
+        {return TC_FUNCTION_TARGET->FsFindFirst(Path, FindData);}                                          
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        wchar_t* pt = GF::AnsiToUnicode(Path);
+        try{
+            WIN32_FIND_DATAW fd;
+            FindData::FindDataToUnicode(*FindData, fd);
+            HANDLE ret = TC_FUNCTION_TARGET->FsFindFirst(pt, &fd);
+            FindData::FindDataToAnsi(fd, *FindData);
+            return ret;
+        }finally{ delete[] pt; }
+    }
+    #elif defined(TC_FNC_HEADER)                                                                
+        ;                                                                                       
+    #endif                                                                                      
 #endif
+
 #ifdef TC_FS_FINDNEXT
+    //Unicode
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
-    FsFindNext
+    FsFindNextW
     #ifdef TC_FNC_HEADER
-        (HANDLE Hdl,WIN32_FIND_DATA *FindData)
+        (HANDLE Hdl, WIN32_FIND_DATAW *FindData)
     #endif
     #if defined(TC_FNC_BODY)
-        {return TC_FUNCTION_TARGET->FsFindNext(Hdl, FindData);}
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsFindNext)(Hdl, FindData);}
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
+    //ANSI
+    #ifdef TC_FNC_HEADER                                                                        
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF                                  
+    #endif                                                                                      
+    FsFindNext                                                               
+    #ifdef TC_FNC_HEADER                                                                        
+        (HANDLE Hdl, WIN32_FIND_DATAA *FindData)
+    #endif                                                                                      
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                                                                                                                             
+        {return TC_FUNCTION_TARGET->FsFindNext(Hdl, FindData);}                                          
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        WIN32_FIND_DATAW fd;
+        FindData::FindDataToUnicode(*FindData, fd);
+        BOOL ret = TC_FUNCTION_TARGET->FsFindNext(Hdl, &fd);
+        FindData::FindDataToAnsi(fd, *FindData);
+        return ret;
+    }
+    #elif defined(TC_FNC_HEADER)                                                                
+        ;                                                                                       
+    #endif
 #endif
+
 #ifdef TC_FS_FINDCLOSE
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
@@ -141,20 +162,50 @@
         ;
     #endif
 #endif
+
 #ifdef TC_FS_GETFILE
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsGetFileW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName, wchar_t* LocalName, int CopyFlags, RemoteInfoStruct* ri)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsGetFile)(RemoteName, LocalName, CopyFlags, ri);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsGetFile
     #ifdef TC_FNC_HEADER
-        (char* RemoteName,char* LocalName,int CopyFlags, RemoteInfoStruct* ri)
+        (char* RemoteName, char* LocalName, int CopyFlags, RemoteInfoStruct* ri)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)
         {return TC_FUNCTION_TARGET->FsGetFile(RemoteName, LocalName, CopyFlags, ri);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)                   
+    {   //ANSI to Unicode
+        wchar_t* rn = GF::AnsiToUnicode(RemoteName);
+        try{
+            int lnSize = Math::Max((size_t)FindData::MaxPath, strlen(LocalName) + 1);
+            wchar_t* ln = new wchar_t[lnSize];
+            try{
+                GF::AnsiToUnicode(LocalName, ln, lnSize - 1);
+                int ret = TC_FUNCTION_TARGET->FsGetFile(rn, ln, CopyFlags, ri);
+                GF::UnicodeToAnsi(ln, LocalName, lnSize - 1);
+                return ret;
+            }finally{ delete[] ln; }
+        }finally{ delete[] rn; }
+    }
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_PUTFILE
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF

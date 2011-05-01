@@ -30,6 +30,7 @@ namespace Tools{namespace TotalCommanderT{
         try{
             this->holder = gcnew PluginInstanceHolder();
         }catch(Exception^ ex){
+            __noop(ex);
             //This line is here just as a place where one can place a breakpoint
             throw;
         }
@@ -47,6 +48,7 @@ namespace Tools{namespace TotalCommanderT{
         try{
             iholder = (AppDomainHolder^)pluginDomain->CreateInstanceFromAndUnwrap(currentAssembly->CodeBase, AppDomainHolder::typeid->FullName);
         }catch(Exception^ ex){
+            __noop(ex);
             //This line is here just as a place where one can place a breakpoint
             throw;            
         }

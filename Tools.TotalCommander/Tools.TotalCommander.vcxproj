@@ -245,7 +245,7 @@ IF ERRORLEVEL 0 (
     <ClInclude Include="Date.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="GlobalFunctions.h">
-      <FileType>CppCode</FileType>
+      <FileType>CppHeader</FileType>
     </ClInclude>
     <ClInclude Include="PluginBase.h" />
     <ClInclude Include="PluginMethodAttribute.h" />
