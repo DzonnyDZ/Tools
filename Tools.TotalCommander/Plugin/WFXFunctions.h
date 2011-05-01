@@ -2,7 +2,6 @@
 #ifdef TC_FS_INIT
     //ANSI
     #ifdef TC_FNC_HEADER
-        [Obsolete("This is ANSI function. Use Unicode overload instead")]
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsInit
@@ -30,18 +29,47 @@
     #endif
 #endif
 #ifdef TC_FS_FINDFIRST
+    //Unicode
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX HANDLE TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
-    FsFindFirst
+    FsFindFirstW
     #ifdef TC_FNC_HEADER
-        (char* Path,WIN32_FIND_DATA *FindData)
+        (wchar_t* Path, WIN32_FIND_DATAW *FindData)
     #endif
     #if defined(TC_FNC_BODY)
-        {return TC_FUNCTION_TARGET->FsFindFirst(Path, FindData);}
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsFindFirst)(Path, FindData);}
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
+    //ANSI
+    #if !defined(TC_A2W) || (defined(TC_A2W) && !defined(TC_FNC_BODY))                              
+        #ifdef TC_FNC_HEADER                                                                        
+            TC_LINE_PREFIX HANDLE TC_NAME_PREFIX TC_FUNC_MEMBEROF                                  
+        #endif                                                                                      
+        FsFindFirst                                                               
+        #ifdef TC_FNC_HEADER                                                                        
+            (char* Path, WIN32_FIND_DATAA *FindData)                                                                                
+        #endif                                                                                      
+        #if defined(TC_FNC_BODY)                                                                                                                             
+            {return TC_FUNCTION_TARGET->FsFindFirst(Path, FindData);}                                          
+        #elif defined(TC_FNC_HEADER)                                                                
+            ;                                                                                       
+        #endif                                                                                      
+    #else //Call from ANSI to Unicode - this is tricky
+        TC_LINE_PREFIX HANDLE TC_NAME_PREFIX TC_FUNC_MEMBEROF FsFindFirst(char* Path, WIN32_FIND_DATAA *FindData){
+            wchar_t* pt = GF::AnsiToUnicode(Path);
+            try{
+                WIN32_FIND_DATAW* fd = new WIN32_FIND_DATAW;
+                try{
+                    FindData::FindDataToUnicode(*FindData, *fd);
+                    HANDLE ret = TC_FUNCTION_TARGET->FsFindFirst(pt, fd);
+                    FindData::FindDataToAnsi(*fd, *FindData);
+                    return ret;
+                }finally{ delete fd;}
+            }finally{ delete[] pt; }
+        }                                                                                           
+    #endif   
 #endif
 #ifdef TC_FS_FINDNEXT
     #ifdef TC_FNC_HEADER
@@ -326,7 +354,6 @@
 #ifdef TC_FS_SETCRYPTCALLBACK
     //ANSI
     #ifdef TC_FNC_HEADER
-        [Obsolete("This is ANSI function. Use Unicode overload instead")]
         TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsSetCryptCallback

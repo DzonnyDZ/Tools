@@ -6,12 +6,16 @@ using namespace System;
 using namespace Tools::TotalCommanderT;
 using namespace System::Reflection;
 using namespace System::Runtime::Remoting;
+#define GF Tools::TotalCommanderT::GlobalFunctions
 
 #undef TC_FNC_HEADER
 #undef TC_LINE_PREFIX
 #undef TC_NAME_PREFIX
 #undef TC_FUNC_MEMBEROF
 #undef TC_FNC_BODY
+#ifdef TC_A2W
+    #undef TC_A2W
+#endif
 
 namespace Tools{namespace TotalCommanderT{
     /// <summary>Holds plugin Application domain. Instantiated in plugin application domain.</summary>
@@ -54,6 +58,7 @@ namespace Tools{namespace TotalCommanderT{
 #undef TC_NAME_PREFIX
 #undef TC_FUNC_MEMBEROF
 #undef TC_FNC_BODY
+#define TC_A2W
 
     private ref struct AppDomainHolder : MarshalByRefObject {
         /// <summary>CTor</summary>

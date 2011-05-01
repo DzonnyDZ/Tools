@@ -102,30 +102,30 @@
       </ComponentConfig>
     </ComponentConfigurations>
     <DocumentationSources>
-      <DocumentationSource sourceFile="Experimental\Experimental.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="Projects\Metanol2\Metanol2.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="Created doc\Namespaces.xml" />
-      <DocumentationSource sourceFile="ReportingEngine Lite\ReportingEngineLite.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj" configuration="Debug" platform="x86" />
-      <DocumentationSource sourceFile="DevelopmentTools\SplashScreenGenerator\SplashScreenGenerator.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.dll" />
-      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.xml" />
-      <DocumentationSource sourceFile="Tools.Metadata\Tools.Metadata.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.dll" />
-      <DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.xml" />
-      <DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.dll" />
-      <DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.xml" />
-      <DocumentationSource sourceFile="Tools\Tools.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="Tools VisualStudio CS\Tools.VisualStudio.CS.csproj" configuration="Debug" platform="x86" />
-      <DocumentationSource sourceFile="DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="Tools Visual Studio\Tools.VisualStudio.vbproj" configuration="Debug" platform="x86" />
-      <DocumentationSource sourceFile="Tools Win\Tools.Win.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="Tools.Windows\Tools.Windows.vbproj" configuration="Debug" platform="Any CPU" />
-      <DocumentationSource sourceFile="Tools.TotalCommander\TotalCommander Plugin Builder\TotalCommander Plugin Builder.vbproj" configuration="Debug" platform="x86" />
-      <DocumentationSource sourceFile="DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj" configuration="Debug" platform="x86" />
-      <DocumentationSource sourceFile="DevelopmentTools\XsdGenerator\XsdGenerator.csproj" configuration="Debug" platform="x86" />
-    </DocumentationSources>
+      <DocumentationSource sourceFile="DevelopmentTools\AssemblyPostprocessor\AssemblyPostprocessor.vbproj" />
+<DocumentationSource sourceFile="Experimental\Experimental.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Projects\Metanol2\Metanol2.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Created doc\Namespaces.xml" />
+<DocumentationSource sourceFile="ReportingEngine Lite\ReportingEngineLite.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\SplashScreenGenerator\SplashScreenGenerator.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.dll" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.Hardcore.xml" />
+<DocumentationSource sourceFile="Tools.Metadata\Tools.Metadata.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.dll" />
+<DocumentationSource sourceFile="bin\Debug\AnyCPU\Tools.SqlServer.xml" />
+<DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.dll" />
+<DocumentationSource sourceFile="bin\Debug\x86\Tools.TotalCommander.xml" />
+<DocumentationSource sourceFile="Tools\Tools.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools VisualStudio CS\Tools.VisualStudio.CS.csproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools Visual Studio\Tools.VisualStudio.vbproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="Tools Win\Tools.Win.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools.Windows\Tools.Windows.vbproj" configuration="Debug" platform="Any CPU" />
+<DocumentationSource sourceFile="Tools.TotalCommander\TotalCommander Plugin Builder\TotalCommander Plugin Builder.vbproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj" configuration="Debug" platform="x86" />
+<DocumentationSource sourceFile="DevelopmentTools\XsdGenerator\XsdGenerator.csproj" configuration="Debug" platform="x86" /></DocumentationSources>
     <PlugInConfigurations>
       <PlugInConfig id="Hierarchical Table of Contents" enabled="True">
         <configuration>
@@ -251,6 +251,16 @@
       <ImageId>Total Commander Plugin Builder</ImageId>
       <AlternateText>Total Commander Plugin Builder Architecture</AlternateText>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="DLLs\Mono.Cecil\Mono.Cecil.csproj">
+      <Name>(Invalid project type)</Name>
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+    </ProjectReference>
+    <ProjectReference Include="DLLs\Mono.Cecil\dbg\dbg.csproj">
+      <Name>(Invalid project type)</Name>
+      <Project>{89A775F3-64AB-485E-B958-60C25254B732}</Project>
+    </ProjectReference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

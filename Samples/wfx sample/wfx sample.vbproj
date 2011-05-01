@@ -203,8 +203,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>ECHO "$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"
+    <PostBuildEvent>ECHO "$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"
 
-"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
+"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

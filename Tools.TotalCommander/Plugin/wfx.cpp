@@ -39,7 +39,7 @@ using namespace Tools::TotalCommanderT;
 
 #ifdef TC_FS_GETDEFROOTNAME
     /// <summary>Backs the <see cref="FsGetDefRootName"/> method</summary>
-    void GetDefRootName(char* DefRootName,int maxlen);
+    void GetDefRootName(char* DefRootName, int maxlen);
 #endif
 
 #define TC_NAME_PREFIX __stdcall
@@ -48,8 +48,12 @@ using namespace Tools::TotalCommanderT;
 #define TC_FUNC_MEMBEROF
 #define TC_FUNC_PREFIX_A Fs
 #define TC_FUNC_PREFIX_B
+#ifdef TC_A2W
+    #undef TC_A2W
+#endif
 
 #ifdef TC_FS_INIT
+    //Unicode
     TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInitW(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc,tRequestProcW pRequestProc){
         Initialize();
         return Init(PluginNr, pProgressProc, pLogProc, pRequestProc);
@@ -57,11 +61,10 @@ using namespace Tools::TotalCommanderT;
     inline int Init(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
         return TC_FUNCTION_TARGET->FsInit(PluginNr, pProgressProc, pLogProc, pRequestProc);
     }
-    [Obsolete("This is ANSI function. Use Unicode overload instead")]
+    //ANSI
     inline int Init(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc){
         return TC_FUNCTION_TARGET->FsInit(PluginNr, pProgressProc, pLogProc, pRequestProc);
     }
-    [Obsolete("This is ANSI function. Use Unicode overload instead")]
     TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
         Initialize();
         return Init(PluginNr, pProgressProc, pLogProc, pRequestProc);

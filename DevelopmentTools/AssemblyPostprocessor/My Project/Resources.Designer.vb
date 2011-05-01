@@ -131,5 +131,14 @@ Namespace My.Resources
                 Return ResourceManager.GetString("wrn_AttributeAppliedOnUnsupportedItem", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to WARNING: Type {0} not found.
+        '''</summary>
+        Friend ReadOnly Property wrn_TypeNotFound() As String
+            Get
+                Return ResourceManager.GetString("wrn_TypeNotFound", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

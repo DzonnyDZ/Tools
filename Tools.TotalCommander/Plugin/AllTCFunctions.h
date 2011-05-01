@@ -1,19 +1,66 @@
 /*
 TC_WFX, TC_WDX, TC_WLX, TC_WCX - plugin type
-Single function constants
-#ifdef TC_FNC_HEADER
-TC_LINE_PREFIX rettype TC_NAME_PREFIX TC_FUNC_MEMBEROF
-#endif
-[TC_FUNC_PREFIX_A]name
-#ifdef TC_FNC_HEADER
-(params)
-#ednif
-#if defined(TC_FNC_BODY)
-{return TC_FUNCTION_TARGET->[TC_FUNC_PREFIX_B]name(callparams);}
-#elif defined(TC_FNC_HEADER)
-;
-#endif
-*/
+Single function constants (there is a constant defined for each TC function do determine if it should be included or not)
+
+#ifdef TC_SingleFunctionConstant                                                                      
+    //universal                                                                                       
+    #ifdef TC_FNC_HEADER                                                                              
+        TC_LINE_PREFIX rettype TC_NAME_PREFIX TC_FUNC_MEMBEROF                                        
+    #endif                                                                                            
+    TC_GETFNAME_A(name) -or- name                                                                     
+    #ifdef TC_FNC_HEADER                                                                              
+        (params)                                                                                      
+    #ednif                                                                                            
+    #if defined(TC_FNC_BODY)                                                                          
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_B(name)(callparams);}                                 
+        -or-                                                                                          
+        {return TC_FUNCTION_TARGET->name(callparams);}                                                
+    #elif defined(TC_FNC_HEADER)                                                                      
+        ;                                                                                             
+    #endif                                                                                            
+
+    //Unicode                                                                                         
+    #ifdef TC_FNC_HEADER                                                                              
+        TC_LINE_PREFIX rettype TC_NAME_PREFIX TC_FUNC_MEMBEROF                                        
+    #endif                                                                                            
+    TC_GETFNAME_A(nameW) -or- nameW                                                                   
+    #ifdef TC_FNC_HEADER                                                                              
+        (params)                                                                                      
+    #ednif                                                                                            
+    #if defined(TC_FNC_BODY)                                                                          
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_BW(name)(callparams);}                                
+        -or-                                                                                          
+        {return TC_FUNCTION_TARGET->TC_GETNAME_W(name)(callparams);}                                  
+    #elif defined(TC_FNC_HEADER)                                                                      
+        ;                                                                                             
+    #endif                                                                                            
+
+    //ANSI version of Unicode function                                                                
+    #if !defined(TC_A2W) || (defined(TC_A2W) && !defined(TC_FNC_BODY))                                
+        #ifdef TC_FNC_HEADER                                                                          
+            TC_LINE_PREFIX rettype TC_NAME_PREFIX TC_FUNC_MEMBEROF                                    
+        #endif                                                                                        
+        TC_GETFNAME_A(name) -or- name                                                                 
+        #ifdef TC_FNC_HEADER                                                                          
+            (params)                                                                                  
+        #endif                                                                                        
+        #if defined(TC_FNC_BODY)                                                                      
+            {return TC_FUNCTION_TARGET->TC_GETFNAME_B(name)(callparams);}                             
+            -or-                                                                                      
+            {return TC_FUNCTION_TARGET->name(callparams);}                                            
+        #elif defined(TC_FNC_HEADER)                                                                  
+            ;                                                                                         
+        #endif                                                                                        
+    #else //Call from ANSI to Unicode - this is tricky                                                
+        TC_LINE_PREFIX rettype TC_NAME_PREFIX TC_FUNC_MEMBEROF TC_GETFNAME_A(name) -or- name (params){
+            return TC_FUNCTION_TARGET->TC_GETFNAME_B(nameW)(callparams);                              
+            -or-                                                                                      
+            return TC_FUNCTION_TARGET->nameW(callparams);                                             
+        }                                                                                             
+    #endif                                                                                            
+#endif                                                                                                
+
+*/                                                                                                  
 //Definitions
 #ifdef TC_GETFNAME_A
     #undef TC_GETFNAME_A
@@ -21,8 +68,21 @@ TC_LINE_PREFIX rettype TC_NAME_PREFIX TC_FUNC_MEMBEROF
 #ifdef TC_GETFNAME_B
     #undef TC_GETFNAME_B
 #endif
+#ifdef TC_GETFNAME_BW
+    #undef TC_GETFNAME_BW
+#endif
+#ifdef TC_GETFNAME_W
+    #undef TC_GETFNAME_W
+#endif
 #define TC_GETFNAME_A(name) TC_FUNC_PREFIX_A##name
 #define TC_GETFNAME_B(name) TC_FUNC_PREFIX_B##name
+#if defined(TC_A2W)
+    #define TC_GETFNAME_W(name) name
+    #define TC_GETFNAME_BW(name) TC_FUNC_PREFIX_B##name
+#else
+    #define TC_GETFNAME_W(name) name##W
+#define TC_GETFNAME_BW(name) TC_FUNC_PREFIX_B##name##W
+#endif
 //File system  wfx
 #ifdef TC_WFX
     #include "WFXFunctions.h"

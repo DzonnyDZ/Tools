@@ -91,20 +91,24 @@ namespace Tools{namespace TotalCommanderT{
         //property bool IsInTotalCommander{bool get();}
 
         /// <summary>Called to retrieve the first file in a directory of the plugin's file system.</summary>
-        /// <param name="Path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
+        /// <param name="path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
         /// <para>As root, a single backslash is passed to the plugin. The root items appear in the plugin base directory retrieved by <see cref="FsGetDefRootName"/> at installation time. This default root name is NOT part of the path passed to the plugin!</para>
         /// <para>All subdirs are built from the directory names the plugin returns through <see cref="FsFindFirst"/> and <see cref="FsFindNext"/>, separated by single backslashes, e.g. \Some server\c:\subdir</para></param>
-        /// <param name="FindData">A standard <see cref="WIN32_FIND_DATA"/> struct as defined in the Windows SDK, which contains the file or directory details. Use the dwFileAttributes field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the dwFileAttributes field with 0x80000000 and set the dwReserved0 parameter to the Unix file mode (permissions).</param>
+        /// <param name="findData">A standard <see cref="WIN32_FIND_DATA"/> struct as defined in the Windows SDK, which contains the file or directory details. Use the dwFileAttributes field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the dwFileAttributes field with 0x80000000 and set the dwReserved0 parameter to the Unix file mode (permissions).</param>
         /// <returns>Return INVALID_HANDLE_VALUE (==-1, not zero!) if an error occurs, or a number of your choice if not. It is recommended to pass a pointer to an internal structure as this handle, which stores the current state of the search. This will allow recursive directory searches needed for copying whole trees. This handle will be passed to <see cref="FsFindNext"/> by the calling program.
         /// <para>When an error occurs, call <see cref="SetLastError"/> to set the reason of the error. Total Commander checks for the following two errors:</para>
         /// <list type="numbered"><item>ERROR_NO_MORE_FILES: The directory exists, but it's empty (Totalcmd can open it, e.g. to copy files to it)</item>
         /// <item>Any other error: The directory does not exist, and Total Commander will not try to open it.</item></list></returns>
         /// <remarks><see cref="FsFindFirst"/> may be called directly with a subdirectory of the plugin! You cannot rely on it being called with the root \ after it is loaded. Reason: Users may have saved a subdirectory to the plugin in the Ctrl+D directory hotlist in a previous session with the plugin.
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
+        /// <version version="1.5.4">Type of argument <paramref name="path"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/>.</version>
+        /// <version version="1.5.4">Type of argument <paramref name="findData"/> formally changed from <see cref="WIN32_FIND_DATA"/> to <see cref="WIN32_FIND_DATAW"/> (but there's no difference between the two types).</version>
+        /// <version version="1.5.4">Function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_FINDFIRST")]
-        HANDLE FsFindFirst(char* Path,WIN32_FIND_DATA *FindData);
+        HANDLE FsFindFirst(wchar_t* path, WIN32_FIND_DATAW *findData);
         /// <summary>Called to retrieve the next file in a directory of the plugin's file system</summary>
         /// <param name="Hdl">The find handle returned by <see cref="FsFindFirst"/>.</param>
         /// <param name="FindData">A standard <see cref="WIN32_FIND_DATA"/> struct as defined in the Windows SDK, which contains the file or directory details. Use the dwFileAttributes field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the dwFileAttributes field with 0x80000000 and set the dwReserved0 parameter to the Unix file mode (permissions).</param>

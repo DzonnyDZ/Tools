@@ -1,21 +1,27 @@
-typedef unsigned __int64 QWORD; 
 #pragma once
-#include "Plugin\fsplugin.h"
-#include "Plugin\contplug.h"
-#include "Date.h"
+#ifndef STRINGONLY
+    typedef unsigned __int64 QWORD; 
+    #include "Plugin\fsplugin.h"
+    #include "Plugin\contplug.h"
+    #include "Date.h"
 
-#pragma make_public(WIN32_FIND_DATA)
-#pragma make_public(RemoteInfoStruct)
-#pragma make_public(FILETIME)
-#pragma make_public(HICON__)
-#pragma make_public(FsDefaultParamStruct)
-#pragma make_public(HBITMAP__)
+    #pragma make_public(WIN32_FIND_DATA)
+    #pragma make_public(RemoteInfoStruct)
+    #pragma make_public(FILETIME)
+    #pragma make_public(HICON__)
+    #pragma make_public(FsDefaultParamStruct)
+    #pragma make_public(HBITMAP__)
+    [module: Tools::RuntimeT::CompilerServicesT::MakeTypePublic("<Module>")];
+#endif
 
-#define MAKE_PUBLIC [Tools::RuntimeT::CompilerServicesT::MakePublicAttribute(Remove = true)] 
+#ifndef MAKE_PUBLIC
+    #define MAKE_PUBLIC [Tools::RuntimeT::CompilerServicesT::MakePublicAttribute(Remove = true)] 
+#endif
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
 
+#ifndef STRINGONLY
     /// <summary>Converts <see cref="FILETIME"/> to <see cref="DateTime"/></summary>
     /// <param name="value">A <see cref="FILETIME"/></param>
     /// <returns>Corresponding <see cref="DateTime"/></returns>
@@ -26,6 +32,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <returns>Corresponding <see cref="FILETIME"/></returns>
     /// <version version="1.5.4">The limitation of C++/CLI (unable to create public methods) was worked around (via <see cref="Tools::RuntimeT::CompilerServicesT::MakePublicAttribute"/>), so this method is now public.</version>
     MAKE_PUBLIC FILETIME DateTimeToFileTime(Nullable<DateTime> value);
+#endif
 
     /// <summary>Copies ANSI characters from string to character array</summary>
     /// <param name="source"><see cref="String"/> to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
@@ -68,13 +75,13 @@ namespace Tools{namespace TotalCommanderT{
     /// <returns>An array of ANSI characters. Null if <paramref name="source"/> is null</returns>
     /// <remarks>Caller is responsible for disposing returned array</remarks>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
-    MAKE_PUBLIC char* UnicodeToAnsi(const wchar_t* source);
+    MAKE_PUBLIC char* __clrcall UnicodeToAnsi(const wchar_t* source);
     /// <summary>Converts array of ANSI characters to array of Unicode characters</summary>
     /// <param name="source">An array of ANSI characters to convert to Unicode</param>
     /// <returns>An array of Unicode characters. Null if <paramref name="source"/> is null</returns>
     /// <remarks>Caller is responsible for disposing returned array</remarks>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
-    MAKE_PUBLIC wchar_t* AnsiToUnicode(const char* source);
+    MAKE_PUBLIC wchar_t* __clrcall AnsiToUnicode(const char* source);
 
     /// <summary>Converts array of Unicode characters to array of ANSI characters and reserves ANSI buffer of given size.</summary>
     /// <param name="source">Pointer to an array of Unicode characters to convert to ANSI</param>
@@ -82,27 +89,27 @@ namespace Tools{namespace TotalCommanderT{
     /// <returns>An array of ANSI characters of lenght <paramref name="maxlen"/>. A nullchar is placed after last character from <paramref name="source"/>. If <paramref name="source"/> is null first char of returned array is nullchar. Null if <paramref name="maxlen"/> is &lt;= 0.</returns>
     /// <remarks>Caller is responsible for disposing returned array</remarks>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
-    MAKE_PUBLIC char* UnicodeToAnsi(const wchar_t* source, int maxlen);
+    MAKE_PUBLIC char* __clrcall UnicodeToAnsi(const wchar_t* source, int maxlen);
     /// <summary>Converts array of ANSI characters to array of Unicode characters and reserves Unicode buffer of given size.</summary>
     /// <param name="source">Pointer to an array of ANSI characters to convert to Unicode</param>
     /// <param name="maxlen">Lenght of buffer to reserve (including terminating nullchar). Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copied to returned array.</param>
     /// <returns>An array of Unicode characters of lenght <paramref name="maxlen"/>. A nullchar is placed after last character from <paramref name="source"/>. If <paramref name="source"/> is null first char of returned array is nullchar. Null if <paramref name="maxlen"/> is &lt;= 0.</returns>
     /// <remarks>Caller is responsible for disposing returned array</remarks>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
-    MAKE_PUBLIC wchar_t* AnsiToUnicode(const char* source, int maxlen);
+    MAKE_PUBLIC wchar_t* __clrcall AnsiToUnicode(const char* source, int maxlen);
 
     /// <summary>Copies given number of characters from Unicode character buffer to ANSI character buffer</summary>
     /// <param name="source">Pointer to a Unicode character buffer to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
     /// <param name="target">Pointer to an ANSI character buffer of size <paramref name="maxlen"/> to copy characters to. The buffer must be pre-initialized!</param>
     /// <param name="maxlen">Size of <paramref name="target"/> buffer. Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copyied to <paramref name="target"/>. if &lt;= 0 nothing is copyied.</param>
     /// <version version="1.5.4">This method is new in version 1.5.4</version>
-    MAKE_PUBLIC void UnicodeToAnsi(const wchar_t* source, char* target, int maxlen);
+    MAKE_PUBLIC void __clrcall UnicodeToAnsi(const wchar_t* source, char* target, int maxlen);
     /// <summary>Copies given number of characters from ANSI character buffer to Unicode character buffer</summary>
     /// <param name="source">Pointer to an ANSI character buffer to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
     /// <param name="target">Pointer to a Unicode character buffer of size <paramref name="maxlen"/> to copy characters to. The buffer must be pre-initialized!</param>
     /// <param name="maxlen">Size of <paramref name="target"/> buffer. Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copyied to <paramref name="target"/>. if &lt;= 0 nothing is copyied.</param>
     /// <version version="1.5.4">This method is new in version 1.5.4</version>
-    MAKE_PUBLIC void AnsiToUnicode(const char* source, wchar_t* target, int maxlen);
+    MAKE_PUBLIC void __clrcall AnsiToUnicode(const char* source, wchar_t* target, int maxlen);
     
     /// <summary>Creates a new instance of the <see cref="String"/> class to the value indicated by a specified pointer to an array of Unicode characters.</summary>
     /// <param name="source">A pointer to a null-terminated array of Unicode characters.</param>
@@ -124,6 +131,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <version version="1.5.4">This overload is new in version 1.5.4</version>
     MAKE_PUBLIC String^ StringCopy(const char* source) throw(ArgumentOutOfRangeException, ArgumentException, AccessViolationException);
 
+#ifndef STRINGONLY
     /// <summary>Recognized Total Commander plugin types</summary>
     [FlagsAttribute]
     public enum class PluginType{
@@ -155,6 +163,6 @@ namespace Tools{namespace TotalCommanderT{
     TimeSpan TimeToTimeSpan(ptimeformat source) throw(ArgumentNullException);
 #pragma warning(default : 4290)
 #pragma warning (pop)
-    
 
+#endif
 }}

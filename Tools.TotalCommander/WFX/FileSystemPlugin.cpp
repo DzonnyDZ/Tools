@@ -68,12 +68,12 @@ namespace Tools{namespace TotalCommanderT{
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
         return this->dProgressProc == nullptr;
     }*/
-    HANDLE FileSystemPlugin::FsFindFirst(char* Path,WIN32_FIND_DATA *FindData){
-        Tools::TotalCommanderT::FindData% findData = Tools::TotalCommanderT::FindData();// *gcnew Tools::TotalCommanderT::FindData(*FindData);
+    HANDLE FileSystemPlugin::FsFindFirst(wchar_t* path,WIN32_FIND_DATAW *findData){
+        Tools::TotalCommanderT::FindData% fd = Tools::TotalCommanderT::FindData();// *gcnew Tools::TotalCommanderT::FindData(*FindData);
         Object^ object;
         Exception^ exception = nullptr;
         try{
-            object = this->FindFirst(gcnew String(Path),findData);
+            object = this->FindFirst(gcnew String(path), fd);
         }catch(IO::DirectoryNotFoundException^ ex){exception=ex;
         }catch(UnauthorizedAccessException^ ex){exception=ex;
         }catch(Security::SecurityException^ ex){exception=ex;
@@ -86,7 +86,7 @@ namespace Tools{namespace TotalCommanderT{
             return INVALID_HANDLE_VALUE;
         }else{
             int handle = this->HandleAdd(object);
-            findData.Populate(*FindData);
+            fd.Populate(*findData);
             return (HANDLE)handle;
         }
     }

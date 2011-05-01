@@ -14,23 +14,37 @@ using namespace System::ComponentModel;
 
 namespace Tools{namespace TotalCommanderT{
 
-    FindData::FindData(WIN32_FIND_DATA& Original){
-        this->cAlternateFileName = gcnew String(Original.cAlternateFileName);
-        this->cFileName = gcnew String(Original.cFileName);
-        this->dwFileAttributes = (FileAttributes) Original.dwFileAttributes;
-        this->dwReserved0 = (ReparsePointTags) Original.dwReserved0;
-        this->dwReserved1 = Original.dwReserved1;
-        this->ftCreationTime = FileTimeToDateTime(Original.ftCreationTime);
-        this->ftLastAccessTime = FileTimeToDateTime(Original.ftLastAccessTime);
-        this->ftLastAccessTime = FileTimeToDateTime(Original.ftLastWriteTime);
-        this->nFileSizeLow = Original.nFileSizeLow;
-        this->nFileSizeHigh = Original.nFileSizeHigh;
+    FindData::FindData(const WIN32_FIND_DATAW& original){
+        this->cAlternateFileName = gcnew String(original.cAlternateFileName);
+        this->cFileName = gcnew String(original.cFileName);
+        this->dwFileAttributes = (FileAttributes) original.dwFileAttributes;
+        this->dwReserved0 = (ReparsePointTags) original.dwReserved0;
+        this->dwReserved1 = original.dwReserved1;
+        this->ftCreationTime = FileTimeToDateTime(original.ftCreationTime);
+        this->ftLastAccessTime = FileTimeToDateTime(original.ftLastAccessTime);
+        this->ftLastAccessTime = FileTimeToDateTime(original.ftLastWriteTime);
+        this->nFileSizeLow = original.nFileSizeLow;
+        this->nFileSizeHigh = original.nFileSizeHigh;
     }
-    void FindData::Populate(WIN32_FIND_DATA &target){
-        StringCopy(this->FileName,target.cFileName,FindData::MaxPath);
-        for(int i=(this->FileName==nullptr?0:this->FileName->Length); i<FindData::MaxPath; i++)target.cFileName[i]=0;
-        StringCopy(this->AlternateFileName,target.cAlternateFileName,14);
-        for(int i=(this->AlternateFileName==nullptr?0:this->AlternateFileName->Length); i<14; i++)target.cAlternateFileName[i]=0;
+    FindData::FindData(const WIN32_FIND_DATAA& original){
+        this->cAlternateFileName = gcnew String(original.cAlternateFileName);
+        this->cFileName = gcnew String(original.cFileName);
+        this->dwFileAttributes = (FileAttributes) original.dwFileAttributes;
+        this->dwReserved0 = (ReparsePointTags) original.dwReserved0;
+        this->dwReserved1 = original.dwReserved1;
+        this->ftCreationTime = FileTimeToDateTime(original.ftCreationTime);
+        this->ftLastAccessTime = FileTimeToDateTime(original.ftLastAccessTime);
+        this->ftLastAccessTime = FileTimeToDateTime(original.ftLastWriteTime);
+        this->nFileSizeLow = original.nFileSizeLow;
+        this->nFileSizeHigh = original.nFileSizeHigh;
+    }
+    void FindData::Populate(WIN32_FIND_DATAW &target){
+        StringCopy(this->FileName, target.cFileName, FindData::MaxPath);
+        for(int i = (this->FileName == nullptr ? 0 : this->FileName->Length); i < FindData::MaxPath; i++)
+            target.cFileName[i] = 0;
+        StringCopy(this->AlternateFileName, target.cAlternateFileName, 14);
+        for(int i = (this->AlternateFileName == nullptr ? 0 : this->AlternateFileName->Length); i<14; i++)
+            target.cAlternateFileName[i] = 0;
        /* for(int i = 0; i < this->cFileName->Length; i++) target.cFileName[i] = this->cFileName[i];
         for(int i = this->cFileName->Length; i < MaxPath; i++) target.cFileName[i] = 0;
         for(int i = 0; i < this->cAlternateFileName->Length; i++) target.cAlternateFileName[i] = this->cAlternateFileName[i];
@@ -45,8 +59,29 @@ namespace Tools{namespace TotalCommanderT{
         target.nFileSizeHigh = this->nFileSizeHigh;
     }
 
-    WIN32_FIND_DATA FindData::ToFindData(){
-        WIN32_FIND_DATA ret;
+    void FindData::Populate(WIN32_FIND_DATAA &target){
+        StringCopy(this->FileName, target.cFileName, FindData::MaxPath);
+        for(int i=(this->FileName == nullptr ? 0 : this->FileName->Length); i<FindData::MaxPath; i++)
+            target.cFileName[i] = 0;
+        StringCopy(this->AlternateFileName, target.cAlternateFileName, 14);
+        for(int i = (this->AlternateFileName == nullptr ? 0 : this->AlternateFileName->Length); i < 14; i++)
+            target.cAlternateFileName[i] = 0;
+       /* for(int i = 0; i < this->cFileName->Length; i++) target.cFileName[i] = this->cFileName[i];
+        for(int i = this->cFileName->Length; i < MaxPath; i++) target.cFileName[i] = 0;
+        for(int i = 0; i < this->cAlternateFileName->Length; i++) target.cAlternateFileName[i] = this->cAlternateFileName[i];
+        for(int i = this->cAlternateFileName->Length; i < 14; i++) target.cAlternateFileName[i] = 0;*/
+        target.dwFileAttributes = (DWORD) this->dwFileAttributes;
+        target.dwReserved0 = (DWORD) this->dwReserved0;
+        target.dwReserved1 = this->dwReserved1;
+        target.ftCreationTime = DateTimeToFileTime(this->ftCreationTime);
+        target.ftLastAccessTime = DateTimeToFileTime(this->ftLastAccessTime);
+        target.ftLastWriteTime = DateTimeToFileTime(this->ftLastAccessTime);
+        target.nFileSizeLow = this->nFileSizeLow;
+        target.nFileSizeHigh = this->nFileSizeHigh;
+    }
+
+    WIN32_FIND_DATAW FindData::ToFindData(){
+        WIN32_FIND_DATAW ret;
         Populate(ret);
         return ret;
     }
@@ -104,5 +139,28 @@ namespace Tools{namespace TotalCommanderT{
     inline Int32 FindData::GetReparsePointTag(){return Numbers::BitwiseSame((UInt32)this->ReparsePointTag);}
     inline void FindData::SetReparsePointTag(Int32 value){this->ReparsePointTag = (ReparsePointTags)Numbers::BitwiseSame(value);}
 
-
+    void FindData::FindDataToAnsi(const WIN32_FIND_DATAW& source, WIN32_FIND_DATAA& target){
+        target.dwFileAttributes = source.dwFileAttributes;
+        target.ftCreationTime = source.ftCreationTime;
+        target.ftLastAccessTime = source.ftLastAccessTime;
+        target.ftLastWriteTime = source.ftLastWriteTime;
+        target.nFileSizeHigh = source.nFileSizeHigh;
+        target.nFileSizeLow = source.nFileSizeLow;
+        target.dwReserved0 = source.dwReserved0;
+        target.dwReserved1 = source.dwReserved1;
+        UnicodeToAnsi(source.cFileName, target.cFileName, MAX_PATH);
+        UnicodeToAnsi(source.cAlternateFileName, target.cAlternateFileName, 14);
+    }
+    void FindData::FindDataToUnicode(const WIN32_FIND_DATAA& source, WIN32_FIND_DATAW& target){
+        target.dwFileAttributes = source.dwFileAttributes;
+        target.ftCreationTime = source.ftCreationTime;
+        target.ftLastAccessTime = source.ftLastAccessTime;
+        target.ftLastWriteTime = source.ftLastWriteTime;
+        target.nFileSizeHigh = source.nFileSizeHigh;
+        target.nFileSizeLow = source.nFileSizeLow;
+        target.dwReserved0 = source.dwReserved0;
+        target.dwReserved1 = source.dwReserved1;
+        AnsiToUnicode(source.cFileName, target.cFileName, MAX_PATH);
+        AnsiToUnicode(source.cAlternateFileName, target.cAlternateFileName, 14);
+    }
 }}

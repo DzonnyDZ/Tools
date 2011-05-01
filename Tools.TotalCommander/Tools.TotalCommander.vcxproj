@@ -127,6 +127,8 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
       <KeyFile>..\SharedFiles\Tools.snk</KeyFile>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>ECHO "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
@@ -160,6 +162,7 @@ IF ERRORLEVEL 0 (
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ModuleDefinitionFile>exxports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Alpha|Win32'">
@@ -183,6 +186,7 @@ IF ERRORLEVEL 0 (
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ModuleDefinitionFile>exxports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Beta|Win32'">
@@ -206,6 +210,7 @@ IF ERRORLEVEL 0 (
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ModuleDefinitionFile>exxports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">
@@ -229,6 +234,7 @@ IF ERRORLEVEL 0 (
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ModuleDefinitionFile>exxports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -238,6 +244,9 @@ IF ERRORLEVEL 0 (
     <ClInclude Include="ContentPluginBase.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Exceptions.h" />
+    <ClInclude Include="GlobalFunctions.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
     <ClInclude Include="PluginBase.h" />
     <ClInclude Include="PluginMethodAttribute.h" />
     <ClInclude Include="Plugin\contplug.h" />
@@ -269,6 +278,7 @@ IF ERRORLEVEL 0 (
     <ClCompile Include="ContentPluginBase.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Exceptions.cpp" />
+    <ClCompile Include="GlobalFunctions.cpp" />
     <ClCompile Include="PluginBase.cpp" />
     <ClCompile Include="PluginMethodAttribute.cpp" />
     <ClCompile Include="WFX\FileSystemPlugin.cpp" />

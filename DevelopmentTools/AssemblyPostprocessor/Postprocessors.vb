@@ -1,4 +1,5 @@
 ﻿Imports Mono.Cecil
+Imports Tools.ExtensionsT
 
 Namespace RuntimeT.CompilerServicesT
 
@@ -30,8 +31,10 @@ Namespace RuntimeT.CompilerServicesT
         ''' <param name="item">An item to post-process</param>
         ''' <param name="attr">Instance of <see cref="MakePublicAttribute"/> (ignored)</param>
         ''' <param name="context">Postprocessing context</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="item"/> is null</exception>
         ''' <remarks>Only items of type <see cref="MethodDefinition"/>, <see cref="FieldDefinition"/> and <see cref="TypeDefinition"/> are processed</remarks>
         Public Sub MakePublic(item As ICustomAttributeProvider, attr As MakePublicAttribute, context As IPostprocessorContext)
+            If item Is Nothing Then Throw New ArgumentNullException("item")
             Dim originalAttributes As [Enum], newAttributes As [Enum]
             If TypeOf item Is MethodDefinition Then
                 Dim mtd As MethodDefinition = DirectCast(item, MethodDefinition)
@@ -49,11 +52,38 @@ Namespace RuntimeT.CompilerServicesT
                 td.Attributes = (td.Attributes And Not TypeAttributes.VisibilityMask) Or If(td.IsNested, TypeAttributes.NestedPublic, TypeAttributes.Public)
                 newAttributes = td.Attributes
             Else
-                context.LogInfo(item, String.Format(My.Resources.wrn_AttributeAppliedOnUnsupportedItem, GetType(MakePublicAttribute).Name, item.GetType.Name))
+                If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.wrn_AttributeAppliedOnUnsupportedItem, GetType(MakePublicAttribute).Name, item.GetType.Name))
                 Return
             End If
-            context.LogInfo(item, String.Format(My.Resources.msg_Transform, originalAttributes, newAttributes))
+            If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.msg_Transform, originalAttributes, newAttributes))
         End Sub
 
+        ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
+        Public Sub MakeTypePublic(item As ICustomAttributeProvider, attr As MakeTypePublicAttribute, context As IPostprocessorContext)
+            If attr Is Nothing Then Throw New ArgumentNullException("attr")
+            If item Is Nothing Then Throw New ArgumentNullException("item")
+            If TypeOf item Is ModuleDefinition Then
+                Dim mdl As ModuleDefinition = item
+                Dim type As TypeDefinition = Nothing
+                If mdl.HasTypes Then
+                    For Each t In mdl.Types
+                        If t.FullName = attr.TypeName Then
+                            type = t
+                            Exit For
+                        End If
+                    Next
+                End If
+                If type Is Nothing Then
+                    If context IsNot Nothing Then context.LogInfo(item, My.Resources.wrn_TypeNotFound.f(attr.TypeName))
+                    Return
+                End If
+                Dim originalAttributes = type.Attributes
+                type.Attributes = (type.Attributes And Not TypeAttributes.VisibilityMask) Or If(type.IsNested, TypeAttributes.NestedPublic, TypeAttributes.Public)
+                Dim newAttributes = type.Attributes
+                If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.msg_Transform, originalAttributes, newAttributes))
+            Else
+                If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.wrn_AttributeAppliedOnUnsupportedItem, GetType(MakeTypePublicAttribute).Name, item.GetType.Name))
+            End If
+        End Sub
     End Module
 End Namespace

@@ -79,21 +79,21 @@ namespace Tools{namespace TotalCommanderT{
         return ret;
     }
 
-    char* UnicodeToAnsi(const wchar_t* source){
+    char* __clrcall UnicodeToAnsi(const wchar_t* source){
         return source == NULL ? NULL : StringCopyA(gcnew String(source));
     }
-    wchar_t* AnsiToUnicode(const char* source){
+    wchar_t* __clrcall AnsiToUnicode(const char* source){
         return source == NULL ? NULL : StringCopyW(gcnew String(source));
     }
 
-    char* UnicodeToAnsi(const wchar_t* source, int maxlen){
+    char* __clrcall UnicodeToAnsi(const wchar_t* source, int maxlen){
         if(maxlen <= 0) return NULL;
         char* ret = new char[maxlen];
         if(source == NULL) ret[0] = 0;
         else StringCopy(gcnew String(source), ret, maxlen);
         return ret;
     }
-    wchar_t* AnsiToUnicode(const char* source, int maxlen){
+    wchar_t* __clrcall AnsiToUnicode(const char* source, int maxlen){
         if(maxlen <= 0) return NULL;
         wchar_t* ret = new wchar_t[maxlen];
         if(source == NULL) ret[0] = 0;
@@ -101,12 +101,12 @@ namespace Tools{namespace TotalCommanderT{
         return ret;
     }
 
-    void UnicodeToAnsi(const wchar_t* source, char* target, int maxlen){
+    void __clrcall UnicodeToAnsi(const wchar_t* source, char* target, int maxlen){
         if(maxlen = 0) return;
         if(source == NULL) target[0] = 0;
         else StringCopy(gcnew String(source), target, maxlen);
     }
-    void AnsiToUnicode(const char* source, wchar_t* target, int maxlen){
+    void __clrcall AnsiToUnicode(const char* source, wchar_t* target, int maxlen){
         if(maxlen <= 0) return;
         if(source == NULL) target[0] = 0;
         else StringCopy(gcnew String(source), target, maxlen);

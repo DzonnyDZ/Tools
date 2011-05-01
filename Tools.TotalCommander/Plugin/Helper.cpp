@@ -5,6 +5,11 @@
 using namespace System;
 using namespace System::Reflection;
 using namespace System::Runtime::Remoting;
+using namespace Tools::TotalCommanderT;
+
+//#define MAKE_PUBLIC extern "C++" 
+//#define STRINGONLY
+//#include "D:\Users\Honza\Documents\Programy\Tools\Tools.TotalCommander\Common.h"
 
 #undef TC_FNC_HEADER
 #undef TC_FNC_BODY
@@ -56,11 +61,15 @@ namespace Tools{namespace TotalCommanderT{
 #define TC_FUNC_PREFIX_A
 #define TC_FUNC_PREFIX_B
 #define TC_FUNCTION_TARGET this->holder
+#ifdef TC_A2W
+    #undef TC_A2W
+#endif
 #include "AllTCFunctions.h"
 
 #undef TC_FUNC_MEMBEROF
 #define TC_FUNC_MEMBEROF PluginInstanceHolder::
 #undef TC_FUNCTION_TARGET
 #define TC_FUNCTION_TARGET this->instance
+#define TC_A2W
 #include "AllTCFunctions.h"
 }}

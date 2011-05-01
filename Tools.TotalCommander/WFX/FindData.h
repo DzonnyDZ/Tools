@@ -6,6 +6,9 @@
 #include "WFX Enums.h"
 #include "ViewDefinition.h"
 
+#pragma make_public(WIN32_FIND_DATAA)
+#pragma make_public(WIN32_FIND_DATAW)
+
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
     using namespace System::ComponentModel;
@@ -35,20 +38,37 @@ namespace Tools{namespace TotalCommanderT{
         String^ cFileName;
         /// <summary>Contains value of the <see cref="AlternateFileName"/> property</summary>
         String^ cAlternateFileName;
-    internal:
-        /// <summary>Ceates new instance of <see cref="FindData"/> from <see cref="WIN32_FIND_DATA"/></summary>
-        /// <param name="Original"><see cref="WIN32_FIND_DATA"/> to initialize new instnce with</param>
-        FindData(WIN32_FIND_DATA& Original);
+    public:
+        /// <summary>Ceates new instance of <see cref="FindData"/> from <see cref="WIN32_FIND_DATAW"/></summary>
+        /// <param name="original"><see cref="WIN32_FIND_DATAW"/> to initialize new instnce with</param>
+        /// <version version="1.5.4">Accessiblity changed from <see langword="friend"/> to <see langword="public"/>.<version>
+        [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
+        FindData(const WIN32_FIND_DATAW& original);
         /// <summary>Converts <see cref="FindData"/> to <see cref="WIN32_FIND_DATA"/></summary>
-        /// <returns><see cref="WIN32_FIND_DATA"/> created from this instance</returns>
-        WIN32_FIND_DATA ToFindData();
-        /// <summary>Populates given <see cref="WIN32_FIND_DATA"/> with data stored in current instance</summary>
-        /// <param name="target">A <see cref="WIN32_FIND_DATA"/> to be populated</param>
-        void Populate(WIN32_FIND_DATA& target);
+        /// <returns><see cref="WIN32_FIND_DATAW"/> created from this instance</returns>
+        /// <version version="1.5.4">Accessiblity changed from <see langword="friend"/> to <see langword="public"/>.<version>
+        [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
+        WIN32_FIND_DATAW ToFindData();
+        /// <summary>Populates given <see cref="WIN32_FIND_DATAW"/> with data stored in current instance</summary>
+        /// <param name="target">A <see cref="WIN32_FIND_DATAW"/> to be populated</param>
+        /// <version version="1.5.4">Accessiblity changed from <see langword="friend"/> to <see langword="public"/>.<version>
+        [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
+        void Populate(WIN32_FIND_DATAW& target);
+
+        /// <summary>Ceates new instance of <see cref="FindData"/> from <see cref="WIN32_FIND_DATAA"/></summary>
+        /// <param name="original"><see cref="WIN32_FIND_DATAA"/> to initialize new instnce with</param>
+        /// <version version="1.5.4">This CTor is new in version 1.5.4<version>
+        [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
+        FindData(const WIN32_FIND_DATAA& original);
+        /// <summary>Populates given <see cref="WIN32_FIND_DATAA"/> with data stored in current instance</summary>
+        /// <param name="target">A <see cref="WIN32_FIND_DATAA"/> to be populated</param>
+        /// <version version="1.5.4">This overload is new in version 1.5.4<version>
+        [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
+        void Populate(WIN32_FIND_DATAA& target);
     public:
         /// <summary>The file attributes of a file.</summary>
         /// <remarks>This property is not CLS-copliant. CLS-copliant alternatives are <see cref="GetAttributes"/> and <see cref="SetAttributes"/>.</remarks>
-        [CLSCompliantAttribute(false)]
+        [CLSCompliant(false)]
         property FileAttributes Attributes{FileAttributes get();void set(FileAttributes);}
         /// <summary>Specifies when a file or directory was created.</summary>
         /// <remarks>If the underlying file system does not support creation time, this member is zero.</remarks>
@@ -62,16 +82,16 @@ namespace Tools{namespace TotalCommanderT{
         property Nullable<DateTime> WriteTime{Nullable<DateTime> get(); void set(Nullable<DateTime>);}
         /// <summary>Size of file in bytes</summary>
         /// <remarks>This property is not CLS-compliant. CLS-cmplant alternative is to use some of following functions: <see cref="SetFileSize"/>, <see cref="GetFileSize"/>, <see cref="SetFileSizeLow"/>, <see cref="SetFileSizeHigh"/>, <see cref="GetFileSizeLow"/>, <see cref="GetFileSizeHigh"/>.</remarks>
-        [CLSCompliantAttribute(false)]
+        [CLSCompliant(false)]
         property QWORD FileSize{QWORD get(); void set(QWORD);}
         /// <summary>If the <see cref="Attributes"/> member includes the <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.ReparsePoint"/> attribute, this member specifies the reparse point tag. Otherwise, this value is undefined and should not be used.</summary>
         /// <remarks>This property is not CLS-copliant. CLS-copliant alternatives are <see cref="GetReparsePointTag"/> and <see cref="SetReparsePointTag"/>.</remarks>
-        [CLSCompliantAttribute(false)]
+        [CLSCompliant(false)]
         property ReparsePointTags ReparsePointTag{ReparsePointTags get(); void set(ReparsePointTags);}
         /// <summary>Reserved for future use.</summary>
         /// <remarks>This property is not CLS-copliant. CLS-copliant alternatives are <see cref="GetReserved1"/> and <see cref="SetReserved1"/>.</remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
-        [CLSCompliantAttribute(false)]
+        [CLSCompliant(false)]
         property DWORD Reserved1{
             [EditorBrowsableAttribute(EditorBrowsableState::Never)] DWORD get();
             void set(DWORD);
@@ -97,7 +117,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="MaxPathA"/><seealso cref="MaxPathW"/>
         /// <version version="1.5.4">Value changed from 260 (<c>MAX_PATH</>) to 1024 (<see cref="MaxPatW"/>)</version>
         static const int MaxPath = MaxPathW;
-#pragma region "CLS-compliance"
+#pragma region CLS-compliance
+    public:
         /// <summary>Gets bitwise same value as <see cref="ReparsePointTag"/> as CLS-compliant type</summary>
         /// <returns>Bitwise same value as <see cref="ReparsePointTag"/></returns>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
@@ -153,5 +174,19 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>High word of <see cref="FileSize"/></returns>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         __int64 GetFileSizeHigh();
+#pragma endregion
+    public:
+        /// <summary>Converts Unicode version of <see cref="WIN32_FIND_DATAW"/> to ANSI <see cref="WIN32_FIND_DATAA"/></summary>
+        /// <param name="source">A <see cref="WIN32_FIND_DATAW"/> to read</param>
+        /// <param name="target">A <see cref="WIN32_FIND_DATAA"/> to write to</param>
+        /// <version version="1.5.4">This method is new in version 1.5.4</version>
+        [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
+        static void FindDataToAnsi(const WIN32_FIND_DATAW& source, WIN32_FIND_DATAA& target);
+        /// <summary>Converts ANSI version of <see cref="WIN32_FIND_DATAW"/> to Unicode <see cref="WIN32_FIND_DATAA"/></summary>
+        /// <param name="source">A <see cref="WIN32_FIND_DATAA"/> to read</param>
+        /// <param name="target">A <see cref="WIN32_FIND_DATAW"/> to write to</param>
+        /// <version version="1.5.4">This method is new in version 1.5.4</version>
+        [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
+        static void FindDataToUnicode(const WIN32_FIND_DATAA& source, WIN32_FIND_DATAW& target);
     };
 }}

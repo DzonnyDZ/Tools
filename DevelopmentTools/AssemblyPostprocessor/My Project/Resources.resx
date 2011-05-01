@@ -141,4 +141,7 @@
   <data name="msg_ProcessingAssembly" xml:space="preserve">
     <value>Processing assembly ...</value>
   </data>
+  <data name="wrn_TypeNotFound" xml:space="preserve">
+    <value>WARNING: Type {0} not found</value>
+  </data>
 </root>
