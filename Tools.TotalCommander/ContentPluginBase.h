@@ -36,7 +36,7 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("get_SupportedFields","TC_C_GETSUPPORTEDFIELD")]
-        int ContentGetSupportedField(int FieldIndex,char* FieldName, char* Units,int maxlen);
+        int ContentGetSupportedField(int FieldIndex, char* FieldName, char* Units,int maxlen);
         /// <summary>When overriden in derived class gets all supported custom fields.</summary>
         /// <returns>Array columns specifications supported by this plugin. Null or an empty array where there are no plugin-specified columns.
         /// <note>When array returned contains columns of type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> there shall be no non-<see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> columns at higher index than column of type <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/>. This is required for Total Commander by way it handles fulltext columns.</note>

@@ -179,11 +179,13 @@
         {return TC_FUNCTION_TARGET->FsExecuteFile(/*(HANDLE)*/MainWin, RemoteName, Verb);}
     #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
     {   //ANSI to Unicode
-        wchar_t rn[FindData::MaxPath];
-        GF::AnsiToUnicode(RemoteName, rn, FindData::MaxPath);
-        auto ret = TC_FUNCTION_TARGET->FsExecuteFile(/*(HANDLE)*/MainWin, rn, GF::AnsiToUnicode(Verb));
-        GF::UnicodeToAnsi(rn, RemoteName, FindData::MaxPath);
-        return ret;
+        wchar_t* rn = new wchar_t[TC_FUNCTION_TARGET->MaxPath];
+        try{
+            GF::AnsiToUnicode(RemoteName, rn, TC_FUNCTION_TARGET->MaxPath);
+            auto ret = TC_FUNCTION_TARGET->FsExecuteFile(/*(HANDLE)*/MainWin, rn, GF::AnsiToUnicode(Verb));
+            GF::UnicodeToAnsi(rn, RemoteName, TC_FUNCTION_TARGET->MaxPath);
+            return ret;
+        }finally{ delete[] rn;}
     }
     #elif defined(TC_FNC_HEADER)
         ;
@@ -251,7 +253,7 @@
     {   //ANSI to Unicode
         wchar_t* rn = GF::AnsiToUnicode(RemoteName);
         try{
-            int lnSize = Math::Max((size_t)FindData::MaxPath, strlen(LocalName) + 1);
+            int lnSize = Math::Max((size_t)TC_FUNCTION_TARGET->MaxPath, strlen(LocalName) + 1);
             wchar_t* ln = new wchar_t[lnSize];
             try{
                 GF::AnsiToUnicode(LocalName, ln, lnSize - 1);
@@ -294,7 +296,7 @@
     {   //ANSI to Unicode
         auto ln = GF::AnsiToUnicode(LocalName);
         try{
-            int rnSize = Math::Max((size_t)FindData::MaxPath, strlen(RemoteName) + 1);
+            int rnSize = Math::Max((size_t)TC_FUNCTION_TARGET->MaxPath, strlen(RemoteName) + 1);
             wchar_t* rn = new wchar_t[rnSize];
             try{
                 GF::AnsiToUnicode(RemoteName, rn, rnSize - 1);
@@ -501,7 +503,7 @@
         {return TC_FUNCTION_TARGET->FsStatusInfo(RemoteDir, InfoStartEnd, InfoOperation);}
         #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
     {   //ANSI to Unicode
-        return TC_FUNCTION_TARGET->FsStatusInfo(GF::AnsiToUnicode(RemoteDir), InfoStartEnd, InfoOperation);}
+        return TC_FUNCTION_TARGET->FsStatusInfo(GF::AnsiToUnicode(RemoteDir), InfoStartEnd, InfoOperation);
     }          
     #elif defined(TC_FNC_HEADER)
         ;
@@ -522,20 +524,46 @@
         ;
     #endif
 #endif
+
 #ifdef TC_FS_EXTRACTCUSTOMICON
+        //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsExtractCustomIconW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName,int ExtractFlags,HICON* TheIcon)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsExtractCustomIcon)(RemoteName, ExtractFlags, TheIcon);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsExtractCustomIcon
-    #ifdef TC_FNC_HEADER
+    #ifdef TC_FNC_HEADER                                              
         (char* RemoteName,int ExtractFlags,HICON* TheIcon)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsExtractCustomIcon(RemoteName, ExtractFlags, TheIcon);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        wchar_t* rn = new wchar_t[TC_FUNCTION_TARGET->MaxPath];
+        try{
+            GF::AnsiToUnicode(RemoteName, rn, TC_FUNCTION_TARGET->MaxPath);
+            auto ret = TC_FUNCTION_TARGET->FsExtractCustomIcon(rn, ExtractFlags, TheIcon);
+            GF::UnicodeToAnsi(rn, RemoteName, TC_FUNCTION_TARGET->MaxPath);
+            return ret;
+        }finally{ delete[] rn; }
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_SETDEFAULTPARAMS
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
@@ -550,20 +578,46 @@
         ;
     #endif
 #endif
+
 #ifdef TC_FS_GETPREVIEWBITMAP
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsGetPreviewBitmapW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName, int width, int height, HBITMAP* ReturnedBitmap)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsGetPreviewBitmap)(RemoteName, width, height, ReturnedBitmap);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsGetPreviewBitmap
     #ifdef TC_FNC_HEADER
-        (char* RemoteName,int width,int height,HBITMAP* ReturnedBitmap)
+        (char* RemoteName, int width, int height, HBITMAP* ReturnedBitmap)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsGetPreviewBitmap(RemoteName, width, height, ReturnedBitmap);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        wchar_t* rn = new wchar_t[TC_FUNCTION_TARGET->MaxPath];
+        try{
+            GF::AnsiToUnicode(RemoteName, rn, TC_FUNCTION_TARGET->MaxPath);
+            auto ret = TC_FUNCTION_TARGET->FsGetPreviewBitmap(rn, width, height, ReturnedBitmap);
+            GF::UnicodeToAnsi(rn, RemoteName, TC_FUNCTION_TARGET->MaxPath);
+            return ret;
+        }finally{ delete[] rn; }
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_LINKSTOLOCALFILES
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
@@ -578,7 +632,22 @@
         ;
     #endif
 #endif
+
 #ifdef TC_FS_GETLOCALNAME
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsGetLocalNameW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName,int maxlen)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsGetLocalName)(RemoteName, maxlen);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
@@ -586,12 +655,23 @@
     #ifdef TC_FNC_HEADER
         (char* RemoteName,int maxlen)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsGetLocalName(RemoteName, maxlen);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        wchar_t* rn = new wchar_t[maxlen];
+        try{
+            GF::AnsiToUnicode(RemoteName, rn, maxlen);
+            auto ret TC_FUNCTION_TARGET->FsGetLocalName(rn, maxlen);
+            GF::UnicodeToAnsi(rn, RemoteName, maxlen);
+            return ret;
+        }finally{ delete[] rn; }
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_GETDEFAULTVIEW
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
@@ -606,6 +686,7 @@
         ;
     #endif
 #endif
+
 #ifdef TC_FS_SETCRYPTCALLBACK
     //ANSI
     #ifdef TC_FNC_HEADER
@@ -634,6 +715,7 @@
         ;
     #endif
 #endif
+
 #ifdef TC_FS_GETBACKGROUNDFLAGS
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF

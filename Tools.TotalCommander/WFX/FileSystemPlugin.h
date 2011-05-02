@@ -47,7 +47,11 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Gets flags indicating which of supported Total Commander files system functions (from TC plugin interface point-of-view) are implemented by current plugin</summary>
         /// <version version="1.5.4">This property is new version 1.5.4</version>
         property WfxFunctions ImplementedFunctions{WfxFunctions get();}
-
+        /// <summary>Gets maximum allowed length of string based on if current environment is ANSI or Unicode</summary>
+        /// <returns><see cref="FindData::MaxPathW"/> in Unicode environment and <see cref="FindData::MaxPathA"/> in ANSI environment.</returns>
+        /// <remarks>Returned maxilam length of string includes terminating nullchar used in C++. So the actual maxilam allowed lenght of string is <see cref="MaxPath"/> - 1.</remarks>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        property int MaxPath {int get();}
 #pragma region TC functions (required)
     private:
         ProgressProcWrapper^ progressProc;
@@ -508,11 +512,11 @@ public:
         /// <list type="bulet">
         /// <item>For internal commands like "Add new connection", execute it in the plugin and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/></item>
         /// <item>Let Total Commander download the file and execute it locally: return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/></item>
-        /// <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is <see cref="FindData::MaxPath"/> - 1 characters!</item>
+        /// <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is <see cref="MaxPath"/> - 1 characters!</item>
         /// </list></description></item>
         /// <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
         /// <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FsFindFirst"/>/<see cref="FsFindNext"/></description></item>
-        /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="FindData::MaxPath"/> - 1 characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
+        /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="MaxPath"/> - 1 characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
         /// </list>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter names changed to camelCase</version>
@@ -537,7 +541,7 @@ public:
     public:
         /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
-        /// <param name="remoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
+        /// <param name="remoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c> number", "<c>quote</c> commandline" or "<c>mode</c> type" (case-insensitive).</param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
@@ -556,13 +560,13 @@ public:
         ///             If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>.
         ///             Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk!
         ///             To do this, return a path starting either with a drive letter, or an UNC location (\\server\share).
-        ///             The maximum allowed length of such a path is <see cref="FindData::MaxPath"/>-1 characters!
+        ///             The maximum allowed length of such a path is <see cref="MaxPath"/>-1 characters!
         ///         </item>
         ///     </list>
         /// </description></item>
         /// <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
         /// <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FindFirst"/>/<see cref="FindNext"/></description></item>
-        /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="FindData::MaxPath"/>-1 (= 259) characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
+        /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="MaxPath"/>-1 (= 259) characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
         /// <item><term>mode X</term><description>Sends information to plugin about FTP transfer mode set up in Total Commander. Plugin can safelly ignore it. X is I for binary, A for text and X*.txt *.log *.php etc. (X followed by list of masks separated by space) fro text mode.</description></item>
         /// </list>
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
@@ -617,7 +621,7 @@ public:
         /// <summary>When overriden in derived class opens or executes given file.</summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
         /// <param name="remoteName">Full path of file to be opened or executed. In case the file is link (like *.lnk files in Windows) method should assignt link target path to this argument and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. It will make Total Commander navigate to a new path.
-        /// <para>Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</para></param>
+        /// <para>Do not assign string longer than <see cref="MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</para></param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
         /// <remarks>
         /// <note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note>
@@ -650,7 +654,7 @@ public:
         /// <summary>When overriden in derived class executes command in plugin space</summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
         /// <param name="remoteName">Full path of currently show directory in Total Commander. Includes trailing \. If command changes current directory (like cd in Total Commander) asingn full path of new directory to this parameter. Total COmmander will navigate there.
-        /// <para>Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</para></param>
+        /// <para>Do not assign string longer than <see cref="MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</para></param>
         /// <param name="command">Text of command to be executed. It's up to plugin authow which commads to support, but cd is very common.</param>
         /// <remarks>
         /// <note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note>
@@ -738,7 +742,7 @@ public:
     public:
         /// <summary>When overriden in derived class transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="remoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
-        /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData::MaxPath"/> or uncatchable <see cref="System::IO::PathTooLongException"/> will be thrown.</param>
+        /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="MaxPath"/> or uncatchable <see cref="System::IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="copyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
         /// <param name="info">This parameter contains information about the remote file which was previously retrieved via <see cref="FindFirst"/>/<see cref="FindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
@@ -789,7 +793,7 @@ public:
     public:
         /// <summary>When overriden in derived class transfers a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
         /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
-        /// <param name="remoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign string longer than <see cref="FindData::MaxPath"/> to this parameter or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
+        /// <param name="remoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign string longer than <see cref="MaxPath"/> to this parameter or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="copyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
         /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
@@ -1024,20 +1028,22 @@ public:
 #pragma region ExtractCustomIcon
     public:
         /// <summary>Called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
-        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> characters (including terminating 0!). The icon handle must still be returned in <paramref name="TheIcon"/>!</param>
-        /// <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
-        /// <param name="TheIcon">Here you need to return the icon handle.</param>
+        /// <param name="remoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="MaxPath"/> characters (including terminating 0!). The icon handle must still be returned in <paramref name="TheIcon"/>!</param>
+        /// <param name="extractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
+        /// <param name="theIcon">Here you need to return the icon handle.</param>
         /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
         /// <remarks>If you return <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/>, <see cref="FsExtractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="FsExtractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see2 cref2="F:Tools.TotalCommanderT.IconExtractFlags.BackgroundThread"/> flag.
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
         /// <para>This function is new in wfx version 1.1. It requires Total Commander >=5.51, but is ignored by older versions.</para></remarks>
-        /// <exception cref="IO::PathTooLongException">String passed by plugin function <see cref="ExctractCustomIcon"/> to <paramref name="RemoteName"/> is longer than <see cref="FindData::MaxPath"/> - 1.</exception> 
+        /// <exception cref="IO::PathTooLongException">String passed by plugin function <see cref="ExctractCustomIcon"/> to <paramref name="RemoteName"/> is longer than <see cref="MaxPath"/> - 1.</exception> 
+        /// <version version="1.5.4">Parameter namemes converted to camelCase</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> converted from <see cref="char*"/> to <see cref="wchar_t*"/> - this function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("ExctractCustomIcon", "TC_FS_EXTRACTCUSTOMICON")]
-        int FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon);
+        int FsExtractCustomIcon(wchar_t* remoteName, int extractFlags, HICON* theIcon);
         /// <summary>When overriden in derived class, called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
-        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
+        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="theIcon"/>!</param>
         /// <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
         /// <param name="TheIcon">Here you need to return the icon, unless return value is <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/> or <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.UseDefault"/></param>
         /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
@@ -1045,8 +1051,9 @@ public:
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <version version="1.5.4">Parameter namemes converted to camelCase</version>
         [MethodNotSupportedAttribute]
-        virtual IconExtractResult ExctractCustomIcon(String^% RemoteName, IconExtractFlags ExtractFlags, Drawing::Icon^% TheIcon);
+        virtual IconExtractResult ExctractCustomIcon(String^% remoteName, IconExtractFlags extractFlags, Drawing::Icon^% theIcon);
 #pragma endregion
 #pragma region SetDefaultParams
 public:
@@ -1082,10 +1089,10 @@ public:
 #pragma region GetPreviewBitmap
     public:
         /// <summary>Called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
-        /// <param name="RemoteName">This is the full path to the file or directory whose bitmap is to be retrieved. When extracting a bitmap, you can return a bitmap name here - this ensures that the icon is only cached once in the calling program. The returned bitmap name must not be longer than <see cref="FindData::MaxPath"/> characters (including terminating 0!). The bitmap handle must still be returned in <paramref name="ReturnedBitmap"/>!</param>
+        /// <param name="remoteName">This is the full path to the file or directory whose bitmap is to be retrieved. When extracting a bitmap, you can return a bitmap name here - this ensures that the icon is only cached once in the calling program. The returned bitmap name must not be longer than <see cref="MaxPath"/> characters (including terminating 0!). The bitmap handle must still be returned in <paramref name="ReturnedBitmap"/>!</param>
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
-        /// <param name="ReturnedBitmap">Here you need to return the bitmap handle.</param>
+        /// <param name="returnedBitmap">Here you need to return the bitmap handle.</param>
         /// <returns>The <see cref="BitmapHandling"/> value</returns>
         /// <remarks>This function is new in version 1.4. It requires Total Commander >=7.0, but is ignored by older versions.
         /// <para>Inportant notes</para>
@@ -1096,11 +1103,14 @@ public:
         /// </list>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
         /// </remarks>
+        /// <version version="1.5.4">Parameter names <c>RemoteName</c> and <c>ReturnedBitmap</c> converted to camelCase</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> converted from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supporst Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetPreviewBitmap", "TC_FS_GETPREVIEWBITMAP")]
-        int FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap);
+        int FsGetPreviewBitmap(wchar_t* remoteName, int width, int height, HBITMAP* returnedBitmap);
         /// <summary>When overriden in derved class called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
+        /// <param name="remoteName">This is the full path to the file or directory whose bitmap is to be retrieved.</param>
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <returns>The <see cref="BitmapResult"/> indicating where to obtain the bitmap or the bitmap itself; null when default image shuld be used.</returns>
@@ -1114,8 +1124,9 @@ public:
         /// </list>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <version version="1.5.4">Parameter name<c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual BitmapResult^ GetPreviewBitmap(String^ RemoteName, int width, int height);
+        virtual BitmapResult^ GetPreviewBitmap(String^ remoteName, int width, int height);
 #pragma endregion
 #pragma region LinksToLocalFiles
     public:
@@ -1174,19 +1185,22 @@ public:
         /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToLocalFiles"/> property.</para></remarks>
         /// <seelaso cref="FsLinksToLocalFiles"/><seealso cref="GetLocalName"/>
         /// <exception cref="IO::PathTooLongException">String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - this function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetLocalName", "TC_FS_GETLOCALNAME")]
-        BOOL FsGetLocalName(char* RemoteName,int maxlen);
+        BOOL FsGetLocalName(wchar_t* remoteName, int maxlen);
         /// <summary>When overriden in derved class gets local name of plugin file</summary>
         /// <param name="RemoteName">Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</param>
         /// <param name="maxlen">Maximum number of characters you can return. Do not return longer strings because uncatchable <see cref="IO::PathTooLongException"/> will be throw by <see cref="FsGetLocalName"/>.</param>
-        /// <returns>Return the path of the file on the local file system, e.g. c:\windows\file.ext; null if the name does not point to a local file. Do not return paths longer than <see cref="FindData::MaxPath"/> - 1 otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</returns>
+        /// <returns>Return the path of the file on the local file system, e.g. c:\windows\file.ext; null if the name does not point to a local file. Do not return paths longer than <see cref="FindData:MaxPath"/> - 1 otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</returns>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual String^ GetLocalName(String^ RemoteName, int maxlen);
+        virtual String^ GetLocalName(String^ remoteName, int maxlen);
 #pragma endregion
 #pragma region ContentgetDefaultView
     public:

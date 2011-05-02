@@ -41,6 +41,7 @@ namespace Tools{namespace TotalCommanderT{
     }
     inline Type^ FileSystemPlugin::PluginBaseClass::get(){ return FileSystemPlugin::typeid; }
     inline WfxFunctions FileSystemPlugin::ImplementedFunctions::get(){ return this->implementedFunctions; }
+    inline int FileSystemPlugin::MaxPath::get(){ return this->Unicode ? FindData::MaxPathW : FindData::MaxPathA; }
 #pragma region TC functions
 #pragma region Initialization
     int FileSystemPlugin::FsInit(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
@@ -237,7 +238,7 @@ namespace Tools{namespace TotalCommanderT{
     }
     String^ FileSystemPlugin::LoadPassword(String^ connectionName, bool showUI){
         if(connectionName == nullptr) throw gcnew ArgumentNullException("connectionName");
-        return this->CryptProc(showUI ? CryptMode::LoadPassword : CryptMode::LoadPasswordNoUI, connectionName, nullptr, FindData::MaxPath);
+        return this->CryptProc(showUI ? CryptMode::LoadPassword : CryptMode::LoadPasswordNoUI, connectionName, nullptr, this->MaxPath);
     }
     void FileSystemPlugin::MovePassword(String^ sourceConnectionName, String^ targetConnectionName, bool deleteOriginal){
         if(sourceConnectionName == nullptr) throw gcnew ArgumentNullException("sourceConnectionName");
@@ -303,8 +304,8 @@ namespace Tools{namespace TotalCommanderT{
             ExecExitCode ret =  this->ExecuteFile((IntPtr)mainWin, rn, gcnew String(verb));
             String^ old = gcnew String(remoteName);
             if(old != rn) {
-                if(rn->Length > FindData::MaxPath - 1) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("remoteName", "ExecuteFile"));
-                StringCopy(rn, remoteName, FindData::MaxPath);
+                if(rn->Length > this->MaxPath - 1) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("remoteName", "ExecuteFile"));
+                StringCopy(rn, remoteName, this->MaxPath);
             }
             return (int) ret;
         }
@@ -357,8 +358,8 @@ namespace Tools{namespace TotalCommanderT{
             FileSystemExitCode ret = this->GetFile(gcnew String(remoteName), ln, (CopyFlags)copyFlags, RemoteInfo(*ri));
             String^ old = gcnew String(localName);
             if(old != ln){
-                if(ln->Length >= FindData::MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("localName", "GetFile"));
-                StringCopy(ln, localName, FindData::MaxPath);
+                if(ln->Length >= this->MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("localName", "GetFile"));
+                StringCopy(ln, localName, this->MaxPath);
             }
             return (int)ret;
         }
@@ -378,8 +379,8 @@ namespace Tools{namespace TotalCommanderT{
             FileSystemExitCode ret = this->PutFile(gcnew String(localName), rn, (CopyFlags)copyFlags);
             String^ old = gcnew String(remoteName);
             if(old != rn){
-                if(rn->Length >= FindData::MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("remoteName", "PutFile"));
-                StringCopy(rn,remoteName, FindData::MaxPath);
+                if(rn->Length >= this->MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("remoteName", "PutFile"));
+                StringCopy(rn,remoteName, this->MaxPath);
             }
             return (int) ret;
         }
@@ -454,16 +455,16 @@ namespace Tools{namespace TotalCommanderT{
         StringCopy(this->Name, DefRootName, maxlen);
     }
 
-    int FileSystemPlugin::FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon){
-        String^ remoteName = gcnew String(RemoteName);
+    int FileSystemPlugin::FsExtractCustomIcon(wchar_t* remoteName, int extractFlags, HICON* theIcon){
+        String^ rn = gcnew String(remoteName);
         Drawing::Icon^ icon = nullptr;
-        IconExtractResult ret = this->ExctractCustomIcon(remoteName, (IconExtractFlags)ExtractFlags, icon);
-        String^ old = gcnew String(RemoteName);
-        if(old != remoteName){
-            if(remoteName->Length > FindData::MaxPath - 1) throw gcnew IO::PathTooLongException(ResourcesT::Exceptions::PathTooLong);
-            StringCopy(remoteName,RemoteName,FindData::MaxPath);
+        IconExtractResult ret = this->ExctractCustomIcon(rn, (IconExtractFlags)extractFlags, icon);
+        String^ old = gcnew String(remoteName);
+        if(old != rn){
+            if(rn->Length > this->MaxPath - 1) throw gcnew IO::PathTooLongException(ResourcesT::Exceptions::PathTooLong);
+            StringCopy(rn, remoteName, this->MaxPath);
         }
-        if(icon != nullptr) TheIcon[0] = (HICON)(Int32)icon->Handle; else TheIcon[0] = NULL;
+        if(icon != nullptr) theIcon[0] = (HICON)(Int32)icon->Handle; else theIcon[0] = NULL;
         return (int)ret;
     }
     inline IconExtractResult FileSystemPlugin::ExctractCustomIcon(String^%, IconExtractFlags, Drawing::Icon^%){ throw gcnew NotSupportedException(); }
@@ -481,17 +482,17 @@ namespace Tools{namespace TotalCommanderT{
         return this->pluginParams.Value;
     }
 
-    int FileSystemPlugin::FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap){
-        BitmapResult^ bmp = this->GetPreviewBitmap(gcnew String(RemoteName), width, height);
+    int FileSystemPlugin::FsGetPreviewBitmap(wchar_t* remoteName, int width, int height, HBITMAP* returnedBitmap){
+        BitmapResult^ bmp = this->GetPreviewBitmap(gcnew String(remoteName), width, height);
         if(bmp == nullptr){
             return (int)BitmapHandling::None;
         }
-        if(bmp->ImageKey != nullptr){
-            StringCopy(bmp->ImageKey,RemoteName,FindData::MaxPath);
-        }
+        if(bmp->ImageKey != nullptr)
+            StringCopy(bmp->ImageKey, remoteName, this->MaxPath);
         if(bmp->Image != nullptr) 
-            ReturnedBitmap[0] = (HBITMAP)(int)bmp->Image->GetHbitmap();
-        else ReturnedBitmap[0] = nullptr;
+            returnedBitmap[0] = (HBITMAP)(int)bmp->Image->GetHbitmap();
+        else
+            returnedBitmap[0] = nullptr;
         return (int)bmp->GetFlag();
     }
     inline BitmapResult^ FileSystemPlugin::GetPreviewBitmap(String^, int, int){throw gcnew NotSupportedException();}
@@ -499,11 +500,11 @@ namespace Tools{namespace TotalCommanderT{
     inline BOOL FileSystemPlugin::FsLinksToLocalFiles(void){ return this->LinksToLocalFiles ? 1 : 0;}
     inline bool FileSystemPlugin::LinksToLocalFiles::get(){throw gcnew NotSupportedException();} 
 
-    BOOL FileSystemPlugin::FsGetLocalName(char* RemoteName,int maxlen){
-        String^ ret = this->GetLocalName(gcnew String(RemoteName), maxlen - 1);
+    BOOL FileSystemPlugin::FsGetLocalName(wchar_t* remoteName, int maxlen){
+        String^ ret = this->GetLocalName(gcnew String(remoteName), maxlen - 1);
         if(ret != nullptr){
-            if(ret->Length > FindData::MaxPath-1) throw gcnew IO::PathTooLongException(Exceptions::PathTooLong);
-            StringCopy(ret,RemoteName, FindData::MaxPath);
+            if(ret->Length > this->MaxPath - 1) throw gcnew IO::PathTooLongException(Exceptions::PathTooLong);
+            StringCopy(ret, remoteName, this->MaxPath);
             return TRUE;
         }
         return FALSE;

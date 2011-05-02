@@ -114,7 +114,7 @@ namespace Tools{namespace TotalCommanderT{
         literal const int MaxPathW = 1024;
         /// <summary>Maximal length of path in characters (generally used by managed Total Commander plugins) including terminating nullchar (so <see cref="MaxPath"/> - 1 is typically usable from managed code)</summary>
         /// <remarks>Because managed Total Commander plugins support Unicode since version 1.5.4, <see cref="MaxPath"/> equals to <see cref="MaxPathW"/></remarks>
-        /// <seealso cref="MaxPathA"/><seealso cref="MaxPathW"/>
+        /// <seealso cref="MaxPathA"/><seealso cref="MaxPathW"/><seealso cref="FileSystemPlugin::MaxPath"/>
         /// <version version="1.5.4">Value changed from 260 (<c>MAX_PATH</>) to 1024 (<see cref="MaxPatW"/>)</version>
         /// <version version="1.5.4">Field type changed to .NET constant (it was previously by mistake C++/CLI <c>const</c> instead of <c>literal</c>)</version>
         literal const int MaxPath = MaxPathW;
