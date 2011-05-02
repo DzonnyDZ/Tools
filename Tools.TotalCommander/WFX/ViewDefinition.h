@@ -64,6 +64,11 @@ namespace Tools{namespace TotalCommanderT{
         property ColumnSource^ Source{ColumnSource^ get();}
         /// <summary>Gets name of column as show to user</summary>
         /// <returns>Header name of column</returns>
+        /// <remarks>
+        /// This name may be passed to Total Commander.
+        /// Because of limitations of Total Commander interface plugin you should use only ASNI-defined (i.e. in <see cref="System::Text::Encoding::Default"/>) characters.
+        /// E.g. in file system plugin, this value is returned from <see cref="FileSystemPlugin::FsGetDefRootName"/> (an ANSI-only function).
+        /// </remarks>
         property String^ Name{String^ get();}
         /// <summary>Gets width of column</summary>
         /// <returns>Initial width of column. Negative for right align.</returns>

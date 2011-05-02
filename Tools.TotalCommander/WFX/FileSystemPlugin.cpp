@@ -451,8 +451,8 @@ namespace Tools{namespace TotalCommanderT{
     void FileSystemPlugin::OnOperationStarting(OperationEventArgs^ e){/*Do nothing*/}
     void FileSystemPlugin::OnOperationFinished(OperationEventArgs^ e){/*Do nothing*/}
     //GetDefRootName
-    void FileSystemPlugin::FsGetDefRootName(char* DefRootName,int maxlen){
-        StringCopy(this->Name, DefRootName, maxlen);
+    void FileSystemPlugin::FsGetDefRootName(char* defRootName, int maxlen){
+        StringCopy(this->Name, defRootName, maxlen);
     }
 
     int FileSystemPlugin::FsExtractCustomIcon(wchar_t* remoteName, int extractFlags, HICON* theIcon){

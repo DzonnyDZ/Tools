@@ -29,5 +29,31 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         generic <class T> where T:Enum, gcnew()
         T GetSupportedFunctions();
+    
+    public:
+        /// <summary>When override in derived class gest, when plugin is initialized, value indicating if it lives in Unicode or ANSI environment</summary>
+        /// <returns>True if plugin is used from version of Total Commander which supports Unicode (7.5 or newer, version 2.0 or newer of unmanaged plugin interface); false if not. Also returns true if <see cref="IsInTotalCommander"/> is false (plugin is used from nanaged code). Also returns true before the plugin is initialized.</returns>
+        /// <remarks>
+        /// Derived class detects Unicode usage depending on which function was used to initialize the plugin.
+        /// This way it is possible to initialize plugin in ANSI mode even from managed code (when initialization function intended for unamnaged ANSI code is called).
+        /// </remarks>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        virtual property bool Unicode{bool get() abstract;}
+        /// <summary>When overriden in derived class gets, when plugin is initialized, value indicating if it was initialized by Total Commander or .NET application</summary>
+        /// <returns>True if plugin is used from Total Commander, false if it is used from managed code. Also feruens false before the plugin instance is initialized.</returns>
+        /// <remarks>
+        /// Derived class detects whether plugin is in Total Commander or on depending on which function was used to initiallize the plugin.
+        /// Therefore if the plugin is initialized unmanaged way from managed code this property will return true.
+        /// This property also returns true if plugin is used form any unmanaged application capable of using Total Commander plugins.
+        /// </remarks>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        virtual property bool IsInTotalCommander{bool get() abstract;}
+        /// <summary>When overriden in derived class gets value indicating if the plugin was already initialized</summary>
+        /// <remarks>
+        /// Because Total Commander iztself does not use managed objects (or any objects in terms of classes as a matter of fact) in it's plugin interface, Total Commander plugins are not initialized using constructor but rather using special instance methods.
+        /// After this plugin-type-specific method is called by Total Commander this property is set to true.
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        virtual property bool Initialized{bool get() abstract;}
     };
 }}

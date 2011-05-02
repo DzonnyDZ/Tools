@@ -120,7 +120,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <version version="1.5.4"><see cref="InvalidOperationException"/> is no longer thrown if <see cref="Initialized"/> is false</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
-        property bool IsInTotalCommander{bool get();}
+        virtual property bool IsInTotalCommander{bool get() override sealed;}
         /// <summary>When plugin is initialized, gets value indicating if it lives in Unicode or ANSI environment</summary>
         /// <returns>
         /// True if plugin was initialized by version of Total Commander which supports Unicode plugins (7.5 or newer, plugin interface 2.0 or newer). False if it was initialized by an application that communicates with plugins in ANSI only.
@@ -142,7 +142,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>
         /// </remarks>
         /// <version version="1.5.4">This property is new in version 1.5.4</version>
-        property bool Unicode{bool get();}
+        property bool Unicode{virtual bool get() override sealed;}
 
         /// <summary>Called to retrieve the first file in a directory of the plugin's file system.</summary>
         /// <param name="path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
@@ -202,7 +202,7 @@ namespace Tools{namespace TotalCommanderT{
         property int PluginNr{int get();}
     public:
         /// <summary>Gets value indicating if this plugin instance was initialized or not</summary>
-        property bool Initialized{bool get();}
+        property bool Initialized{virtual bool get()override sealed;}
     protected:
         /// <summary>When overriden in derived class provides custom code invoked when plugin is initialized.</summary>
         /// <remarks>When this method is called the <see cref="Initialized"/> property has value true and <see cref="PluginNr"/> is already set.
@@ -1019,11 +1019,13 @@ public:
         /// <param name="DefRootName">Pointer to a buffer (allocated by the calling program) which can receive the root name.</param>
         /// <param name="maxlen">Maximum number of characters (including the final 0) which fit in the buffer."</param>
         /// <remarks>Example: The root name may be "Linux file system" for a plugin which accesses Linux drives. If this function isn't implemented, Totalcmd will suggest the name of the DLL (without extension .DLL) as the plugin root. This function is called directly after loading the plugin (when the user installs it), <see cref="FsInit"/> is NOT called when installing the plugin.
-        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <para>This function is called by Total Commander and is not intended for direct use</para>
+        /// <para>This function is ASNI-only.</para></remarks>
+        /// <version version="1.5.4"/>Parameter name <c>DefRootName</c> changed to <c>defRootName</c></version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_GETDEFROOTNAME")]
-        void FsGetDefRootName(char* DefRootName,int maxlen);
+        void FsGetDefRootName(char* defRootName, int maxlen);
 #pragma endregion
 #pragma region ExtractCustomIcon
     public:
@@ -1062,6 +1064,7 @@ public:
         /// <remarks>
         /// <para>This function is new in wfx version 1.3. It requires Total Commander >=5.51, but is ignored by older versions.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
+        /// <para>This is ANSI-only function.</para>
         /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
@@ -1144,6 +1147,7 @@ public:
         /// <para>This means that when uploading subdirectories from your plugin to FTP in the background, Total Commander will call these functions in a background thread. If the user continues to work in the foreground, calls to <see cref="FsFindFirst"/> and <see cref="FsFindNext"/> may be occuring at the same time! Therefore it's very important to use the search handle to keep temporary information about the search.</para>
         /// <para><see cref="FsStatusInfo"/> will NOT be called from the background thread!</para>
         /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToLocalFiles"/> property.</para>
+        /// <para>This function is ANSI/Unicode-agnostic.</para>
         /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]

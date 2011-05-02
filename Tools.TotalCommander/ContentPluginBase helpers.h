@@ -119,8 +119,10 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="ArgumentNullException"><paramref name="FieldName"/> is null</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="FieldIndex"/> is less than zero</exception>
         /// <exception cref="ArgumentException"><paramref name="FieldName"/> or <paramref name="Units"/> contains dot (.), pipe (|), colon (:) or nullchar. -or- <paramref name="FieldType"/> is <see2 cref2="F:Tools.TotalCommanderT.NoMoreFields"/>.</exception>
-        /// <remarks>More and uncatchable exceptions can be thrown when newly created instance is passed to Total Commander nd it violates another restrictions as restriction of length of <paramref name="FieldName"/> or accumulated length of <paramref name="Units"/>.</remarks>
-        ContentFieldSpecification(int FieldIndex, ContentFieldType FieldType, String^ FieldName, FieldFlags Flags, ... cli::array<String^>^ Units);
+        /// <remarks>More and uncatchable exceptions can be thrown when newly created instance is passed to Total Commander nd it violates another restrictions as restriction of length of <paramref name="FieldName"/> or accumulated length of <paramref name="Units"/>.
+        /// <note type="warning">Dues to Total Commander plugin interface limitations <paramref name="filedName"/> and <paramref name="units"/> should be ANSI strings (i.e. contain only characters from <see cref="System::Text::Encoding::default"/>).</note></remarks>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
+        ContentFieldSpecification(int fieldIndex, ContentFieldType fieldType, String^ fieldName, FieldFlags flags, ... cli::array<String^>^ units);
         /// <summary>Gets index of this columns</summary>
         /// <returns>Index of this column when this instance is returned by <see2 cref2="P:Tools.TotalCommanderT.ContentPluginBase.SupportedFields"/>.</returns>
         property int FieldIndex{int get();}
