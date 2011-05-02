@@ -6,8 +6,10 @@ namespace Tools{namespace TotalCommanderT{
     using namespace System;
 
     /// <summary>When applied onto method, identifies the method as part of plugin contract</summary>
-    /// <remarks>All plugin methods (from Total Commander point of view - not the methods derived class implements) must me marked with this attribute. Do not use this attribute of multiple methods serving same purpose (i.e. when method is overloaded to be calable from outside of assembly).</remarks>
-    [AttributeUsageAttribute(AttributeTargets::Method, Inherited=false)]
+    /// <remarks>All plugin methods (from Total Commander point-of-view - not the methods derived class implements) must me marked with this attribute. Do not use this attribute of multiple methods serving same purpose (i.e. when method is overloaded to be calable from outside of assembly).
+    /// <para>This attribute can be also applied on fields. It's intended only for internal use by plugin framework. It's applied on some enum members to indicate that given enum member means given method in plugin contract.</para></remarks>
+    /// <version version="1.5.4">It's now possible to apply this attribute on field</version>
+    [AttributeUsageAttribute(AttributeTargets::Method | AttributeTargets::Field, Inherited=false)]
     private ref class PluginMethodAttribute : Attribute{ 
     private:
         /// <summary>Contains value of the <see cref="DefinedBy"/> property</summary>

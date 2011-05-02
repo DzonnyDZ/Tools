@@ -81,6 +81,12 @@
     <ClInclude Include="GlobalFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WFX\WfxFunctions.h">
+      <Filter>Header Files\WFX</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Doc\Content.wdx.hlp">

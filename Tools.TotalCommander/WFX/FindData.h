@@ -107,16 +107,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Maximal length of path in characters (used by non-Unicode plugin) including terminating nullchar (so <see cref="MaxPathA"/> - 1 is typically usable from managed code)</summary>
         /// <seealso cref="MaxPath"/><seealso cref="MaxPathW"/>
         /// <version version="1.5.4">This constant is new in version 1.5.4</version>
-        static const int MaxPathA = MAX_PATH;
+        literal const int MaxPathA = MAX_PATH;
         /// <summary>Maximal length of path in characters (used by Unicode plugin) including terminating nullchar (so <see cref="MaxPathW"/> - 1 is typically usable from managed code)</summary>
         /// <seealso cref="MaxPathA"/><seealso cref="MaxPath"/>
         /// <version version="1.5.4">This constant is new in version 1.5.4</version>
-        static const int MaxPathW = 1024;
+        literal const int MaxPathW = 1024;
         /// <summary>Maximal length of path in characters (generally used by managed Total Commander plugins) including terminating nullchar (so <see cref="MaxPath"/> - 1 is typically usable from managed code)</summary>
         /// <remarks>Because managed Total Commander plugins support Unicode since version 1.5.4, <see cref="MaxPath"/> equals to <see cref="MaxPathW"/></remarks>
         /// <seealso cref="MaxPathA"/><seealso cref="MaxPathW"/>
         /// <version version="1.5.4">Value changed from 260 (<c>MAX_PATH</>) to 1024 (<see cref="MaxPatW"/>)</version>
-        static const int MaxPath = MaxPathW;
+        /// <version version="1.5.4">Field type changed to .NET constant (it was previously by mistake C++/CLI <c>const</c> instead of <c>literal</c>)</version>
+        literal const int MaxPath = MaxPathW;
 #pragma region CLS-compliance
     public:
         /// <summary>Gets bitwise same value as <see cref="ReparsePointTag"/> as CLS-compliant type</summary>

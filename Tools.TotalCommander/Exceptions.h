@@ -220,6 +220,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Plugin type {0} is not supported'.
+        /// </summary>
+        public: static property System::String^  PluginTypeNotSupported {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'The {0} property have already been initialized.'.
         /// </summary>
         public: static property System::String^  PropertyWasInitialized {
@@ -455,6 +462,13 @@ namespace Tools {
         /// <param name="arg0">Objekt (0) pro formátování.</param>
         /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
         public: static System::String^  PluginNotRegisteredFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Plugin type {0} is not supported'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  PluginTypeNotSupportedFormat(System::Object^  arg0);
         
         /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'The {0} property have already been initialized.'.

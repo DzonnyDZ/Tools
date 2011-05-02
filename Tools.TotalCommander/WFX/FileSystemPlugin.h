@@ -5,6 +5,7 @@
 #include "..\ContentPluginBase.h"
 #include "WFX common.h"
 #include "..\Attributes.h"
+#include "WfxFunctions.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -25,6 +26,7 @@ namespace Tools{namespace TotalCommanderT{
     private:
         /// <summary>Holds plugin IDs and instances of all registered plugins</summary>
         static Dictionary<int, FileSystemPlugin^>^ registeredPlugins = gcnew Dictionary<int, FileSystemPlugin^>();
+        initonly WfxFunctions implementedFunctions;
     public:
         /// <summary>Gets plugin by number</summary>
         /// <param name="pluginNr">Number of plugin as passed to <see cref="FsInit"/></param>
@@ -33,6 +35,18 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         [EditorBrowsable(EditorBrowsableState::Advanced)]
         static FileSystemPlugin^ GetPluginByNumber(int pluginNr);
+
+        /// <summary>Gets basic type of the plugin</summary>
+        /// <returns>This implementation always returns <see cref2="F:Tools::TotalCommanderT::PluginType::FileSystem"/></returns>
+        /// <version version="1.5.4">This property is new in version 1.5.4</version>
+        virtual property Tools::TotalCommanderT::PluginType PluginType{Tools::TotalCommanderT::PluginType get() override sealed;}
+        /// <summary>Gets a base class of plugin type</summary>
+        /// <returns>THis implementation always returns <see cref="FileSystemPlugin"/></returns>
+        /// <version version="1.5.4">This property is new version 1.5.4</version>
+        virtual property Type^ PluginBaseClass{Type^ get() override sealed;}
+        /// <summary>Gets flags indicating which of supported Total Commander files system functions (from TC plugin interface point-of-view) are implemented by current plugin</summary>
+        /// <version version="1.5.4">This property is new version 1.5.4</version>
+        property WfxFunctions ImplementedFunctions{WfxFunctions get();}
 
 #pragma region TC functions (required)
     private:
@@ -403,7 +417,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">This method is new in 1.5.4</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false), Obsolete("This is ANSI function. Use Unicode overload instead")]
-        [PluginMethod("OnInitializeCryptography","TC_FS_SETCRYPTCALLBACK")]
+        [PluginMethod("OnInitializeCryptography", "TC_FS_SETCRYPTCALLBACK")]
         void FsSetCryptCallback(tCryptProc pCryptProc, int cryptoNr, int flags);
         /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. This function is only needed if you want to use the secure password store in Total Commander. (Unicode implementation)</summary>
         /// <param name="pCryptProc">Pointer to the crypto callback function. See <see cref="tCryptProc"/> for a description of this function</param>
@@ -417,7 +431,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">This method is new in 1.5.4</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("OnInitializeCryptography","TC_FS_SETCRYPTCALLBACK")]
+        [PluginMethod("OnInitializeCryptography", "TC_FS_SETCRYPTCALLBACK")]
         void FsSetCryptCallbackW(tCryptProcW pCryptProc, int cryptoNr, int flags);
         
         /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. Use this function instead of <see cref="FsSetCryptCallback"/> when using the plugin outside of Total Commander.</summary>
@@ -461,10 +475,12 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
         /// <returns>Return TRUE if the directory could be created, FALSE if not.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter name <c>Path</c> changed to <c>path</c></version>
+        /// <version version="1.5.4">Type of parameter <paramref name="path"/> chaanged from <see cref="char*"/> to <see cref="wchar_t*/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("MkDir","TC_FS_MKDIR")]
-        BOOL FsMkDir(char* Path);
+        [PluginMethod("MkDir", "TC_FS_MKDIR")]
+        BOOL FsMkDir(wchar_t* path);
     public:
         /// <summary>When overriden in derived class creates a directory on the plugin's file system.</summary>
         /// <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
@@ -475,15 +491,16 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.4">Parameter name <c>Path</c> changed to <c>path</c></version>
         [MethodNotSupportedAttribute]
-        virtual bool MkDir(String^ Path);
+        virtual bool MkDir(String^ path);
 #pragma endregion
 #pragma region ExecuteFile    
 public:
         /// <summary>Called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
-        /// <param name="MainWin">Parent window which can be used for showing a property sheet.</param>
-        /// <param name="RemoteName">Name of the file to be executed, with full path.</param>
-        /// <param name="Verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
+        /// <param name="mainWin">Parent window which can be used for showing a property sheet.</param>
+        /// <param name="remoteName">Name of the file to be executed, with full path.</param>
+        /// <param name="verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
         /// <remarks>Meaning of verbs:
         /// <list type="table"><listheader><term>verb</term><description>meaning</description></listheader>
@@ -498,25 +515,30 @@ public:
         /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="FindData::MaxPath"/> - 1 characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
         /// </list>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names changed to camelCase</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="remoteName"/> and <paramref name="verb"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("ExecuteFile","TC_FS_EXECUTEFILE")]
-        int FsExecuteFile(HWND MainWin,char* RemoteName,char* Verb);
-        /// <summary>Alternative function to <see cref="FsExecuteFile(HWND,char*,char*)"/> because ha have problems with exposing HWND type to managed code</summary>
-        /// <param name="MainWin">Parent window which can be used for showing a property sheet.</param>
-        /// <param name="RemoteName">Name of the file to be executed, with full path.</param>
-        /// <param name="Verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
+        [PluginMethod("ExecuteFile", "TC_FS_EXECUTEFILE")]
+        int FsExecuteFile(HWND mainWin, wchar_t* remoteName, wchar_t* verb);
+        /// <summary>Alternative function to <see cref="FsExecuteFile(HWND,char*,char*)"/> because there are problems with exposing HWND type to managed code</summary>
+        /// <param name="mainWin">Parent window which can be used for showing a property sheet.</param>
+        /// <param name="remoteName">Name of the file to be executed, with full path.</param>
+        /// <param name="verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
-        /// <remarks>This function is called by Total Commander and is not intended for direct use</remarks>
+        /// <remarks>This function is called by Total Commander and is not intended for direct use.
+        /// <para>See <see cref="FsExecuteFile(HWND,char*,char*)"/> for details.</para></remarks>
         /// <seelaso cref="FsExecuteFile(HWND,char*,char*)"/>
+        /// <version version="1.5.4">Parameter names changed to camelCase</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="remoteName"/> and <paramref name="verb"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        int FsExecuteFile(HANDLE MainWin,char* RemoteName,char* Verb); 
+        int FsExecuteFile(HANDLE mainWin, wchar_t* remoteName, wchar_t* verb); 
     public:
         /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
-        /// <param name="RemoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
-        /// <param name="Verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c> number", "<c>quote</c> commandline" or "<c>mode</c> type" (case-insensitive).</param>
+        /// <param name="remoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
+        /// <param name="verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c> number", "<c>quote</c> commandline" or "<c>mode</c> type" (case-insensitive).</param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
@@ -524,13 +546,20 @@ public:
         /// <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
         /// <remarks>Meaning of verbs:
-        /// <list type="table"><listheader><term>verb</term><description>meaning</description></listheader>
+        /// <list type="table">
+        /// <listheader><term>verb</term><description>meaning</description></listheader>
         /// <item><term>open</term><description>This is called when the user presses ENTER on a file. There are three ways to handle it:
-        /// <list type="bulet">
-        /// <item>For internal commands like "Add new connection", execute it in the plugin and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/></item>
-        /// <item>Let Total Commander download the file and execute it locally: return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/></item>
-        /// <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is <see cref="FindData::MaxPath"/>-1 (= 259) characters!</item>
-        /// </list></description></item>
+        ///     <list type="bulet">
+        ///         <item>For internal commands like "Add new connection", execute it in the plugin and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/></item>
+        ///         <item>Let Total Commander download the file and execute it locally: return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/></item>
+        ///         <item>
+        ///             If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>.
+        ///             Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk!
+        ///             To do this, return a path starting either with a drive letter, or an UNC location (\\server\share).
+        ///             The maximum allowed length of such a path is <see cref="FindData::MaxPath"/>-1 characters!
+        ///         </item>
+        ///     </list>
+        /// </description></item>
         /// <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
         /// <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FindFirst"/>/<see cref="FindNext"/></description></item>
         /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in <paramref name="RemoteName"/> (max <see cref="FindData::MaxPath"/>-1 (= 259) characters), and give <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
@@ -538,10 +567,24 @@ public:
         /// </list>
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
-        /// <note type="inheritinfo">Plugin must implement this method and call base class method to <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/> and <see cref="ExecuteCommand"/> to be called. Method implementation contained in <see cref="FileSystemPlugin"/> must be overriden.
-        /// <para>Authors of <see cref="FileSystemPlugin"/>-derived classes can chose either to implement <see cref="ExecuteFile"/> functionality on theri own directly in this method or call base class method and implement functionality in methods mentioned above.</para></note></remarks>
+        /// <note type="inheritinfo">
+        /// If plugin supports <see cref="ExecuteFile"/>-based operations it must implement this method.
+        /// If you do not want to parse <paramref name="verb"/> yourself you don't have to. 
+        /// Just call base class method and it'll parse the <paramref name="verb"/> and call appropriate method (if it implemented in your class):
+        /// <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/> or <see cref="ExecuteCommand"/>.
+        /// Because of the plugin architecture you must still override this method even if only think you do in your implementation is calling base class method.
+        /// (The difference would be the <see cref="MethodNotSupportedAttribute"/>.)
+        /// <para>Authors of <see cref="FileSystemPlugin"/>-derived classes can chose either to implement <see cref="ExecuteFile"/> functionality on their own directly in this method or call base class method and implement functionality in methods mentioned above.</para>
+        /// </note>
+        /// <para>
+        /// Theoretically it is possible that Total Commander will and a new supported <paramref name="verb"/> in future version and that this verb will get supported by <see cref="FileSystemPlugin"/>.
+        /// If you want to be prepared for this situation now and to let <see cref="FileSystemPlugin"/> handle that verba nd you also want do do your own processing in <see cref="ExecuteFile"/>, call base class method first and do your own processing only in case it returns <see cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/>.
+        /// </para>
+        /// </remarks>
+        /// <version version="1.5.4">Parameter names <c>RemoteName</c> and <c>Verb</c> changed to camelCase</version>
+        /// <version version="1.5.4">Fix: If <see cref="ExecuteFile"/> is implemented in derived class but neither of is implemented in derived class <see cref="NotSupportedException"/> is thrown by this implementation. Since version 1.5.4 this implementation no longer throws that exception, but it still returns <see cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> because it does not know how perform the action being requested.</version>
         [MethodNotSupportedAttribute]
-        virtual ExecExitCode ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb);
+        virtual ExecExitCode ExecuteFile(IntPtr hMainWin, String^% remoteName, String^ verb);
 
 #pragma region "ExecuteFile helper methods"
     private:
@@ -553,71 +596,83 @@ public:
         initonly bool showFileInfoImplemented;
         /// <summary>Contains value indicating if the <see cref="ExecuteCommand"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
         initonly bool executeCommandImplemented;
-        /// <summary>Contains value indicating if the <see cref="ExecuteFile"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool executeFileImplemented;
-        /// <summary>Contains value indicating if the <see cref="OnInitializeCryptography"/> method is implemented (not marked with <see cref="MethodNotSupportedAttribute"/>) and so can be called.</summary>
-        initonly bool onInitializeCryptographyImplemented;
     protected:
         /// <summary>When overriden in derived class called when Total COmmander advertises FTP conection mode to plugin via <see cref="ExecuteFile"/></summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
-        /// <param name="RemoteName">Name of current file or directrory. This can be an empty string.</param>
+        /// <param name="remoteName">Name of current file or directrory. This can be an empty string.</param>
         /// <param name="mode">FTP mode. I for binary, A for text and X*.txt *.whatever (X followed by list of masks separated by space) fro text mode. Plugin can ignore this.</param>
         /// <returns>One of <see cref="ExecExitCode"/> values.</returns>
-        /// <remarks><note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note></remarks>
+        /// <remarks>
+        /// <note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and that function calls base class method.</note>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
         /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual ExecExitCode FtpModeAdvertisement(IntPtr hMainWin, String^ RemoteName, String^ mode);
+        virtual ExecExitCode FtpModeAdvertisement(IntPtr hMainWin, String^ remoteName, String^ mode);
         /// <summary>When overriden in derived class opens or executes given file.</summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
-        /// <param name="RemoteName">Full path of file to be opened or executed. In case the file is link (like *.lnk files in Windows) method should assignt link target path to this argument and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. It will make Total Commander navigate to a new path.
+        /// <param name="remoteName">Full path of file to be opened or executed. In case the file is link (like *.lnk files in Windows) method should assignt link target path to this argument and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. It will make Total Commander navigate to a new path.
         /// <para>Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</para></param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
-        /// <remarks><note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note></remarks>
+        /// <remarks>
+        /// <note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
         /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual ExecExitCode OpenFile(IntPtr hMainWin, String^% RemoteName);
+        virtual ExecExitCode OpenFile(IntPtr hMainWin, String^% remoteName);
         /// <summary>When overriden in derived class shows file properties for given file or directory.</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
-        /// <param name="RemoteName">Full path of file or directory to show properties of</param>
+        /// <param name="remoteName">Full path of file or directory to show properties of</param>
         /// <returns>One of <see cref="ExecExitCode"/> values.</returns>
-        /// <remarks><note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note></remarks>
+        /// <remarks>
+        /// <note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
         /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual ExecExitCode ShowFileInfo(IntPtr hMainWin, String^ RemoteName);
+        virtual ExecExitCode ShowFileInfo(IntPtr hMainWin, String^ remoteName);
         /// <summary>When overriden in derived class executes command in plugin space</summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
-        /// <param name="RemoteName">Full path of currently show directory in Total Commander. Includes trailing \. If command changes current directory (like cd in Total Commander) asingn full path of new directory to this parameter. Total COmmander will navigate there.
+        /// <param name="remoteName">Full path of currently show directory in Total Commander. Includes trailing \. If command changes current directory (like cd in Total Commander) asingn full path of new directory to this parameter. Total COmmander will navigate there.
         /// <para>Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</para></param>
         /// <param name="command">Text of command to be executed. It's up to plugin authow which commads to support, but cd is very common.</param>
-        /// <remarks><note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note></remarks>
+        /// <remarks>
+        /// <note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
         /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual ExecExitCode ExecuteCommand(IntPtr hMainWin, String^% RemoteName, String^ command);
+        virtual ExecExitCode ExecuteCommand(IntPtr hMainWin, String^% remoteName, String^ command);
 #pragma endregion
 #pragma endregion
 #pragma region RenMovFile
     public:
         /// <summary>Called to transfer (copy or move) a file within the plugin's file system.</summary>
-        /// <param name="OldName">Name of the remote source file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
-        /// <param name="NewName">Name of the remote destination file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
-        /// <param name="Move">If true, the file needs to be moved to the new location and name. Many file systems allow to rename/move a file without actually moving any of its data, only the pointer to it.</param>
-        /// <param name="OverWrite">Tells the function whether it should overwrite the target file or not. See notes below on how this parameter is used.</param>
+        /// <param name="oldName">Name of the remote source file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
+        /// <param name="newName">Name of the remote destination file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
+        /// <param name="move">If true, the file needs to be moved to the new location and name. Many file systems allow to rename/move a file without actually moving any of its data, only the pointer to it.</param>
+        /// <param name="overWrite">Tells the function whether it should overwrite the target file or not. See notes below on how this parameter is used.</param>
         /// <param name="ri">A structure of type <see cref="RemoteInfoStruct"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <c>RemoteInfoStruct::SizeLow = 0</c>, <c>RemoteInfoStruct::SizeHigh = 0xFFFFFFFF</c></param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
@@ -625,21 +680,23 @@ public:
         /// <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
         /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="oldName"/> and <paramref name="newName"/> changed from <see cref="char*"/> to <see cref="wchar_t*/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("RenMovFile","TC_FS_RENMOVFILE")]
-        int FsRenMovFile(char* OldName,char* NewName,BOOL Move, BOOL OverWrite,RemoteInfoStruct* ri);
+        [PluginMethod("RenMovFile", "TC_FS_RENMOVFILE")]
+        int FsRenMovFile(wchar_t* oldName, wchar_t* newName, BOOL move, BOOL overWrite, RemoteInfoStruct* ri);
     public:
         /// <summary>When overriden in derived class called to transfer (copy or move) a file within the plugin's file system.</summary>
-        /// <param name="OldName">Name of the remote source file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
-        /// <param name="NewName">Name of the remote destination file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
-        /// <param name="Move">If true, the file needs to be moved to the new location and name. Many file systems allow to rename/move a file without actually moving any of its data, only the pointer to it.</param>
-        /// <param name="OverWrite">Tells the function whether it should overwrite the target file or not. See notes below on how this parameter is used.</param>
+        /// <param name="oldName">Name of the remote source file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
+        /// <param name="newName">Name of the remote destination file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
+        /// <param name="move">If true, the file needs to be moved to the new location and name. Many file systems allow to rename/move a file without actually moving any of its data, only the pointer to it.</param>
+        /// <param name="overWrite">Tells the function whether it should overwrite the target file or not. See notes below on how this parameter is used.</param>
         /// <param name="info">A structure of type <see cref="RemoteInfo"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <see cref="RemoteInfo::SizeLow"/>=0, <see cref="RemoteInfo::SizeHigh"/>=0xFFFFFFFF</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
-        /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
-        /// <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
+        /// <list tpe="bullet"><item>once with <paramref name="overWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
+        /// <item>a second time with <paramref name="overWrite"/>==true, if the user chose to overwrite the file.</item></list>
         /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
@@ -651,8 +708,9 @@ public:
         /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
         /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
         [MethodNotSupportedAttribute]
-        virtual FileSystemExitCode RenMovFile(String^ OldName, String^ NewName, bool Move, bool OverWrite, RemoteInfo info);
+        virtual FileSystemExitCode RenMovFile(String^ oldName, String^ newName, bool move, bool overWrite, RemoteInfo info);
 #pragma endregion
 #pragma region GetFile
     public:
@@ -675,13 +733,13 @@ public:
         /// <version version="1.5.4">Types of parameters <paramref name="remoteName"/> and <paramref name="localName"/> changed from <c>char*</c> to <c>wchar_t*</c> - this function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("GetFile","TC_FS_GETFILE")]
+        [PluginMethod("GetFile", "TC_FS_GETFILE")]
         int FsGetFile(wchar_t* remoteName, wchar_t* localName, int copyFlags, RemoteInfoStruct* ri);
     public:
         /// <summary>When overriden in derived class transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
-        /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
-        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData::MaxPath"/> or uncatchable <see cref="System::IO::PathTooLongException"/> will be thrown.</param>
-        /// <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
+        /// <param name="remoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
+        /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData::MaxPath"/> or uncatchable <see cref="System::IO::PathTooLongException"/> will be thrown.</param>
+        /// <param name="copyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
         /// <param name="info">This parameter contains information about the remote file which was previously retrieved via <see cref="FindFirst"/>/<see cref="FindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
@@ -709,11 +767,11 @@ public:
 #pragma region PutFile    
     public:
         /// <summary>Called to transfer a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
-        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
-        /// <param name="RemoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
-        /// <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
+        /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
+        /// <param name="remoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
+        /// <param name="copyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
-        /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
+        /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="copyFlags"/>:
         /// <list type="bullet">
         /// <item>once with neither <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
         /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
@@ -722,15 +780,17 @@ public:
         /// </list>
         /// <para>While copying the file, but at least at the beginning and the end, call ProgressProc to show the copy progress and allow the user to abort the operation.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names converter to camelCase</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="localName"/> and <paramref name="remoteName"/> changed from <c>char*</c> to <c>wchar_t*</c> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("PutFile","TC_FS_PUTFILE")]
-        int FsPutFile(char* LocalName,char* RemoteName,int CopyFlags);
+        [PluginMethod("PutFile", "TC_FS_PUTFILE")]
+        int FsPutFile(wchar_t* localName, wchar_t* remoteName, int copyFlags);
     public:
         /// <summary>When overriden in derived class transfers a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
-        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
-        /// <param name="RemoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign string longer than <see cref="FindData::MaxPath"/> to this parameter or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
-        /// <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
+        /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
+        /// <param name="remoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign string longer than <see cref="FindData::MaxPath"/> to this parameter or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
+        /// <param name="copyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
         /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
         /// <list type="bullet">
@@ -750,22 +810,25 @@ public:
         /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
         /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
         [MethodNotSupportedAttribute]
-        virtual FileSystemExitCode PutFile(String^ LocalName, String^% RemoteName, CopyFlags CopyFlags);
+        virtual FileSystemExitCode PutFile(String^ localName, String^% remoteName, CopyFlags copyFlags);
 #pragma endregion
 #pragma region DeleteFile
     public:
         /// <summary>Called to delete a file from the plugin's file system</summary>
-        /// <param name="RemoteName">Name of the file to be deleted, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes</param>
+        /// <param name="remoteName">Name of the file to be deleted, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes</param>
         /// <returns>Return TRUE if the file could be deleted, FALSE if not.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("DeleteFile","TC_FS_DELETEFILE")]
-        BOOL FsDeleteFile(char* RemoteName);
+        [PluginMethod("DeleteFile", "TC_FS_DELETEFILE")]
+        BOOL FsDeleteFile(wchar_t* remoteName);
     public:
         /// <summary>When overriden in derived class deletes a file from the plugin's file system</summary>
-        /// <param name="RemoteName">Name of the file to be deleted, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes</param>
+        /// <param name="remoteName">Name of the file to be deleted, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes</param>
         /// <returns>Return true if the file could be deleted, false if not.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
@@ -773,19 +836,22 @@ public:
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual bool DeleteFile(String^ RemoteName);
+        virtual bool DeleteFile(String^ remoteName);
 #pragma endregion
 #pragma region RemoveDir
     public:
         /// <summary>Called to remove a directory from the plugin's file system.</summary>
-        /// <param name="RemoteName">Name of the directory to be removed, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
+        /// <param name="remoteName">Name of the directory to be removed, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
         /// <returns>Return TRUE if the directory could be removed, FALSE if not.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("RemoveDir","TC_FS_REMOVEDIR")]
-        BOOL FsRemoveDir(char* RemoteName);
+        [PluginMethod("RemoveDir", "TC_FS_REMOVEDIR")]
+        BOOL FsRemoveDir(wchar_t* remoteName);
     public:
         /// <summary>When overriden in derived class removes a directory from the plugin's file system.</summary>
         /// <param name="RemoteName">Name of the directory to be removed, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
@@ -796,8 +862,9 @@ public:
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
         [MethodNotSupportedAttribute]
-        virtual bool RemoveDir(String^ RemoteName);
+        virtual bool RemoveDir(String^ remoteName);
 #pragma endregion
 #pragma region Disconnect
     public:
@@ -810,10 +877,12 @@ public:
         /// <item>FTP requires connect/disconnect. Connect can be done automatically when the user enters a subdir, disconnect when the user clicks the Disconnect button.</item>
         /// <item>Access to local file systems (e.g. Linux EXT2) does not require connect/disconnect, so don't call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>.</item></list>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter name <c>DisconnectRoot</c> changed to <c>disconnectRoot</c></version>
+        /// <version version="1.5.4">Type of parameter <paramref name="disconnectRoot"/> changed form <see cref="char*"/> to <see cref="wchar_t*/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("Disconnect","TC_FS_DISCONNECT")]
-        BOOL FsDisconnect(char* DisconnectRoot);
+        [PluginMethod("Disconnect", "TC_FS_DISCONNECT")]
+        BOOL FsDisconnect(wchar_t* disconnectRoot);
     public:
         /// <summary>When overridden in derived class, called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
         /// <param name="DisconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plugin to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
@@ -827,95 +896,117 @@ public:
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.4">Parameter name <c>DisconnectRoot</c> changed to <c>disconnectRoot</c></version>
         [MethodNotSupportedAttribute]
-        virtual bool Disconnect(String^ DisconnectRoot);
+        virtual bool Disconnect(String^ disconnectRoot);
 #pragma endregion
 #pragma region SetAttr
     public:
         /// <summary>Called to set the (Windows-Style) file attributes of a file/dir. <see cref="FsExecuteFile(HWND,char*,char*)"/> is called for Unix-style attributes.</summary>
-        /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
-        /// <param name="NewAttr">New file attributes</param>
+        /// <param name="remoteName">Name of the file/directory whose attributes have to be set</param>
+        /// <param name="newAttr">New file attributes</param>
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names converter to camelCase</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("SetAttr","TC_FS_SETATTR")]
-        BOOL FsSetAttr(char* RemoteName,int NewAttr);
+        [PluginMethod("SetAttr", "TC_FS_SETATTR")]
+        BOOL FsSetAttr(wchar_t* remoteName, int newAttr);
     public:
         /// <summary>When overriden in derived class sets the (Windows-Style) file attributes of a file/dir. <see cref="ExecuteFile"/> is called for Unix-style attributes.</summary>
-        /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
-        /// <param name="NewAttr">New file attributes</param>
+        /// <param name="remoteName">Name of the file/directory whose attributes have to be set</param>
+        /// <param name="newAttr">New file attributes</param>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
         /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.4">Parameter names converter to camelCase</version>
         [MethodNotSupportedAttribute]
-        virtual void SetAttr(String^ RemoteName, StandardFileAttributes NewAttr);
+        virtual void SetAttr(String^ remoteName, StandardFileAttributes newAttr);
 #pragma endregion
 #pragma region SetTime
     public:
         /// <summary>Called to set the (Windows-Style) file times of a file/dir.</summary>
-        /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
-        /// <param name="CreationTime">Creation time of the file. May be NULL to leave it unchanged.</param>
-        /// <param name="LastAccessTime">Last access time of the file. May be NULL to leave it unchanged.</param>
-        /// <param name="LastWriteTime">Last write time of the file. May be NULL to leave it unchanged. If your file system only supports one time, use this parameter!</param>
+        /// <param name="remoteName">Name of the file/directory whose attributes have to be set</param>
+        /// <param name="creationTime">Creation time of the file. May be NULL to leave it unchanged.</param>
+        /// <param name="lastAccessTime">Last access time of the file. May be NULL to leave it unchanged.</param>
+        /// <param name="lastWriteTime">Last write time of the file. May be NULL to leave it unchanged. If your file system only supports one time, use this parameter!</param>
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        /// <version version="1.5.4">Parameter names converter to camelCase</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("SetTime","TC_FS_SETTIME")]
-        BOOL FsSetTime(char* RemoteName,FILETIME *CreationTime, FILETIME *LastAccessTime,FILETIME *LastWriteTime);
+        [PluginMethod("SetTime", "TC_FS_SETTIME")]
+        BOOL FsSetTime(wchar_t* remoteName, FILETIME *creationTime, FILETIME *lastAccessTime, FILETIME *lastWriteTime);
     public:
         /// <summary>When overriden in derived class sets the (Windows-Style) file times of a file/dir.</summary>
-        /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
-        /// <param name="CreationTime">Creation time of the file. May be NULL to leave it unchanged.</param>
-        /// <param name="LastAccessTime">Last access time of the file. May be NULL to leave it unchanged.</param>
-        /// <param name="LastWriteTime">Last write time of the file. May be NULL to leave it unchanged. If your file system only supports one time, use this parameter!</param>
+        /// <param name="remoteName">Name of the file/directory whose attributes have to be set</param>
+        /// <param name="creationTime">Creation time of the file. May be NULL to leave it unchanged.</param>
+        /// <param name="lastAccessTime">Last access time of the file. May be NULL to leave it unchanged.</param>
+        /// <param name="lastWriteTime">Last write time of the file. May be NULL to leave it unchanged. If your file system only supports one time, use this parameter!</param>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
         /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <version version="1.5.4">Parameter names converter to camelCase</version>
         [MethodNotSupportedAttribute]
-        virtual void SetTime(String^ RemoteName, Nullable<DateTime> CreationTime, Nullable<DateTime> LastAccessTime, Nullable<DateTime> LastWriteTime);
+        virtual void SetTime(String^ remoteName, Nullable<DateTime> creationTime, Nullable<DateTime> lastAccessTime, Nullable<DateTime> lastWriteTime);
 #pragma endregion
 #pragma region StatusInfo
     public:
         /// <summary>Called just as an information to the plugin that a certain operation starts or ends. It can be used to allocate/free buffers, and/or to flush data from a cache. There is no need to implement this function if the plugin doesn't require it.</summary>
-        /// <param name="RemoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
-        /// <param name="InfoStartEnd">Information whether the operation starts or ends</param>
-        /// <param name="InfoOperation">Information of which operaration starts/ends</param>
+        /// <param name="remoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
+        /// <param name="infoStartEnd">Information whether the operation starts or ends</param>
+        /// <param name="infoOperation">Information of which operaration starts/ends</param>
         /// <remarks>Please note that future versions of the framework may send additional values!
         /// <para>This function has been added for the convenience of plugin writers. All calls to plugin functions will be enclosed in a pair of <see cref="FsStatusInfo"/> calls: At the start, <see cref="FsStatusInfo"/>(...,FS_STATUS_START,...) and when the operation is done FsStatusInfo(...,FS_STATUS_END,...). Multiple plugin calls can be between these two calls. For example, a download may contain multiple calls to <see cref="FsGetFile"/>, and <see cref="FsFindFirst"/>, <see cref="FsFindNext"/>, <see cref="FsFindClose"/> (for copying subdirs).</para>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para></remarks>
+        /// <version version="1.5.4">Parameter names converter to camelCase</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteDir"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supporst Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("StatusInfo","TC_FS_STATUSINFO")]
-        void FsStatusInfo(char* RemoteDir, int InfoStartEnd, int InfoOperation);
+        [PluginMethod("StatusInfo", "TC_FS_STATUSINFO")]
+        void FsStatusInfo(wchar_t* remoteDir, int infoStartEnd, int infoOperation);
     public:
         /// <summary>Called instead of <see cref="FsStatusInfo"/> when plugin is used outside of Total Commander.</summary>
-        /// <param name="RemoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
-        /// <param name="InfoStartEnd">Information whether the operation starts or ends</param>
-        /// <param name="InfoOperation">Information of which operaration starts/ends</param>
-        /// <remarks>Please note that future versions of the framework may send additional values!</remarks>
+        /// <param name="remoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
+        /// <param name="infoStartEnd">Information whether the operation starts or ends</param>
+        /// <param name="infoOperation">Information of which operaration starts/ends</param>
+        /// <exception cref="NotSupportedException">This implementation does not throw this exception. Derived implementation may throw it if it's decorated with <see cref="MethodNotSupportedAttribute"/>.</exception>
+        /// <remarks>Please note that future versions of the framework may send additional values!
+        /// <para>Unlike majority of Total Commander functions - this function is implemented automatically by this base class. You may or may not to override it.</para>
+        /// <note type="inheritinfo">
+        /// Consider inheriting <see cref="OnOperationStatusChanged"/>, <see cref="OnOperationStarting"/> and/or <see cref="OnOperationFinished"/> instead of overriding this method.
+        /// That event-like functions provide more .NET-friendly signatures.
+        /// </note>
+        /// If you want prevent Total Commander from calling this function (and <see cref="FsStatusInfo"/>), override it in derived class and apply <see cref="MethodNotSupportedAttribute"/> on it.
+        /// </remarks>
+        /// <version version="1.5.4">Parameter names converter to camelCase</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
-        void StatusInfo(String^ RemoteDir, OperationStatus InfoStartEnd, OperationKind InfoOperation);
+        void StatusInfo(String^ remoteDir, OperationStatus infoStartEnd, OperationKind infoOperation);
+    protected:
         /// <summary>When overiden in derived class handles operation status change reported by Total Commaner</summary>
         /// <param name="e">Event arguments</param>
         /// <remarks>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</remarks>
+        /// <version version="1.5.4">Accessibility level changed from <see langword="public"/> to <see langword="protected"/>.</version>
         virtual void OnOperationStatusChanged(OperationEventArgs^ e);
         /// <summary>When overriden in derived class handles start of operation reported by Total Commander</summary>
         /// <remarks>This method is called before operation sarts. Call of this method is always fololowed by call of <see cref="OnOperationStatusChanged"/>.
         /// <para>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</para></remarks>
         /// <param name="e">Event arguments</param>
+        /// <version version="1.5.4">Accessibility level changed from <see langword="public"/> to <see langword="protected"/>.</version>
         virtual void OnOperationStarting(OperationEventArgs^ e);
         /// <summary>When overriden in derived class handles end of operation reported by Total Commander</summary>
         /// <remarks>This method is called after operation finishes.  Call of this method is always fololowed by call of <see cref="OnOperationStatusChanged"/>.
         /// <para>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</para></remarks>
         /// <param name="e">Event arguments</param>
+        /// <version version="1.5.4">Accessibility level changed from <see langword="public"/> to <see langword="protected"/>.</version>
         virtual void OnOperationFinished(OperationEventArgs^ e);
 #pragma endregion
 #pragma region GetDefRoootName
@@ -943,7 +1034,7 @@ public:
         /// <exception cref="IO::PathTooLongException">String passed by plugin function <see cref="ExctractCustomIcon"/> to <paramref name="RemoteName"/> is longer than <see cref="FindData::MaxPath"/> - 1.</exception> 
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("ExctractCustomIcon","TC_FS_EXTRACTCUSTOMICON")]
+        [PluginMethod("ExctractCustomIcon", "TC_FS_EXTRACTCUSTOMICON")]
         int FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon);
         /// <summary>When overriden in derived class, called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
         /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
@@ -1007,7 +1098,7 @@ public:
         /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("GetPreviewBitmap","TC_FS_GETPREVIEWBITMAP")]
+        [PluginMethod("GetPreviewBitmap", "TC_FS_GETPREVIEWBITMAP")]
         int FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap);
         /// <summary>When overriden in derved class called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
@@ -1045,7 +1136,7 @@ public:
         /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("get_LinksToLocalFiles","TC_FS_LINKSTOLOCALFILES")]
+        [PluginMethod("get_LinksToLocalFiles", "TC_FS_LINKSTOLOCALFILES")]
         BOOL FsLinksToLocalFiles(void);
         /// <summary>When overriden in derived class gets valud indicating if plugin is temporary panel-style plugin.</summary>
         /// <returns>True if the plugin is a temporary panel-style plugin; false if the plugin is a normal file system plugin</returns>
@@ -1085,7 +1176,7 @@ public:
         /// <exception cref="IO::PathTooLongException">String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("GetLocalName","TC_FS_GETLOCALNAME")]
+        [PluginMethod("GetLocalName", "TC_FS_GETLOCALNAME")]
         BOOL FsGetLocalName(char* RemoteName,int maxlen);
         /// <summary>When overriden in derved class gets local name of plugin file</summary>
         /// <param name="RemoteName">Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</param>
@@ -1116,7 +1207,7 @@ public:
         /// <seealso cref="GetDefaultView"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("GetDefaultView","TC_FS_GETDEFAULTVIEW")]
+        [PluginMethod("GetDefaultView", "TC_FS_GETDEFAULTVIEW")]
         BOOL FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);
         /// <summary>When overriden in derived class called to get the default view to which Total Commander should switch when this file system plugin is entered.</summary>
         /// <param name="maxlen">Maximum length if sting accepted by total commander. Lenghts of <see cref="ViewDefinition::GetColumnSourcesString"/>, <see cref="ViewDefinition::GetNamesString"/>, <see cref="ViewDefinition::GetWidthsString"/> and <see cref="ViewDefinition::GetOptionsString"/> returned shall not exceed this lenght or uncatchable exception will be thrown.</param>
@@ -1155,7 +1246,7 @@ public:
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("get_BackgroundFlags","TC_FS_GETBACKGROUNDFLAGS")]
+        [PluginMethod("get_BackgroundFlags", "TC_FS_GETBACKGROUNDFLAGS")]
         int FsGetBackgroundFlags(void);
         
         /// <summary>When implemneted in derived class gets value indicating whether the plugin supports background operations (uploads and downloads), and if yes, how they are supported.</summmary>

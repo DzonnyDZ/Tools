@@ -186,6 +186,9 @@
   <data name="PluginNotRegistered" xml:space="preserve">
     <value>Plugin number {0} is not registered.</value>
   </data>
+  <data name="PluginTypeNotSupported" xml:space="preserve">
+    <value>Plugin type {0} is not supported</value>
+  </data>
   <data name="PropertyWasInitialized" xml:space="preserve">
     <value>The {0} property have already been initialized.</value>
   </data>

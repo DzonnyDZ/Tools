@@ -19,21 +19,28 @@ namespace Tools{namespace TotalCommanderT{
          this->handleDictionary = gcnew Collections::Generic::Dictionary<int,Object^>();
          this->MaxHandle = 0;
          this->HandleSyncObj = gcnew Object();
+
+         this->implementedFunctions = this->GetSupportedFunctions<WfxFunctions>();
+
          const Reflection::BindingFlags flags = Reflection::BindingFlags::Instance | Reflection::BindingFlags::Public | Reflection::BindingFlags::NonPublic;
-         this->executeFileImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteFile", flags),this->GetType()),false) == nullptr;
          this->ftpModeAdvertisementImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("FtpModeAdvertisement", flags),this->GetType()),false) == nullptr;
          this->openFileImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("OpenFile", flags),this->GetType()),false) == nullptr;
          this->showFileInfoImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ShowFileInfo",flags),this->GetType()),false) == nullptr;
          this->executeCommandImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteCommand", flags),this->GetType()),false) == nullptr;
-         this->onInitializeCryptographyImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^> (Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("OnInitializeCryptography", flags), this->GetType()), false) == nullptr;
+
          this->unicode = true;
          this->isInTotalCommander = false;
     }
 
-    FileSystemPlugin^ FileSystemPlugin::GetPluginByNumber(int pluginNr){
-        if(FileSystemPlugin::registeredPlugins->ContainsKey(pluginNr)) return FileSystemPlugin::registeredPlugins[pluginNr];
-        return nullptr;
+    inline FileSystemPlugin^ FileSystemPlugin::GetPluginByNumber(int pluginNr){
+        return FileSystemPlugin::registeredPlugins->ContainsKey(pluginNr) ? FileSystemPlugin::registeredPlugins[pluginNr] : nullptr;
     }
+
+    inline Tools::TotalCommanderT::PluginType FileSystemPlugin::PluginType::get(){
+        return Tools::TotalCommanderT::PluginType::FileSystem;
+    }
+    inline Type^ FileSystemPlugin::PluginBaseClass::get(){ return FileSystemPlugin::typeid; }
+    inline WfxFunctions FileSystemPlugin::ImplementedFunctions::get(){ return this->implementedFunctions; }
 #pragma region TC functions
 #pragma region Initialization
     int FileSystemPlugin::FsInit(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
@@ -265,7 +272,7 @@ namespace Tools{namespace TotalCommanderT{
     }
     void FileSystemPlugin::InitializeCryptography(CryptCallback^ cryptProc, int cryptoNr, CryptFlags flags){
         if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
-        if(this->onInitializeCryptographyImplemented){
+        if(this->ImplementedFunctions.HasFlag(WfxFunctions::SetCryptCallback)){
             if(cryptProc == nullptr) throw gcnew ArgumentNullException("cryptProc");
             this->cryptProc = gcnew CryptProcWrapper(cryptProc);
             this->cryptoNr = cryptoNr;
@@ -275,69 +282,73 @@ namespace Tools{namespace TotalCommanderT{
     }
     inline bool FileSystemPlugin::CryptInitialized::get(){return this->cryptInitialized;}
     inline int FileSystemPlugin::CryptoNr::get(){return this->cryptoNr;}
-    inline void FileSystemPlugin::OnInitializeCryptography(CryptFlags flags){ throw gcnew NotSupportedException();}
+    inline void FileSystemPlugin::OnInitializeCryptography(CryptFlags){ throw gcnew NotSupportedException();}
 #pragma endregion
 
     //MkDir
-    BOOL FileSystemPlugin::FsMkDir(char* Path){
-        Exception^ ex=nullptr;
-        try{
-            return this->MkDir(gcnew String(Path));
-        }catch(IO::IOException^ ex__){ex=ex__;}
-        catch(Security::SecurityException^ ex__){ex=ex__;}
-        catch(UnauthorizedAccessException^ ex__){ex=ex__;}
-        if(ex!=nullptr) return false; 
-        return true;
+    BOOL FileSystemPlugin::FsMkDir(wchar_t* path){
+        try{ return this->MkDir(gcnew String(path)); }
+        catch(IO::IOException^){return FALSE;}
+        catch(Security::SecurityException^){return FALSE;}
+        catch(UnauthorizedAccessException^){return FALSE;}
+        return TRUE;
     }
-    inline bool FileSystemPlugin::MkDir(String^ Path){ throw gcnew NotSupportedException(); }
+    inline bool FileSystemPlugin::MkDir(String^){ throw gcnew NotSupportedException(); }
 
     //ExecuteFile
-    int FileSystemPlugin::FsExecuteFile(HWND MainWin,char* RemoteName,char* Verb){
-        Exception^ ex=nullptr;
-        String^% remoteName = gcnew String(RemoteName);
+    int FileSystemPlugin::FsExecuteFile(HWND mainWin, wchar_t* remoteName, wchar_t* verb){
+        Exception^ ex = nullptr;
+        String^% rn = gcnew String(remoteName);
         try{
-            ExecExitCode ret =  this->ExecuteFile((IntPtr)MainWin, remoteName, gcnew String(Verb));
-            String^ old = gcnew String(RemoteName);
-            if(old != remoteName) {
-                if(remoteName->Length > FindData::MaxPath-1) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("RemoteName","ExecuteFile"));
-                StringCopy(remoteName,RemoteName,FindData::MaxPath);
+            ExecExitCode ret =  this->ExecuteFile((IntPtr)mainWin, rn, gcnew String(verb));
+            String^ old = gcnew String(remoteName);
+            if(old != rn) {
+                if(rn->Length > FindData::MaxPath - 1) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("remoteName", "ExecuteFile"));
+                StringCopy(rn, remoteName, FindData::MaxPath);
             }
             return (int) ret;
-        }catch(InvalidOperationException^ ex__){ ex=ex__;
-        }catch(IO::IOException^ ex__){ex=ex__;}catch(Security::SecurityException^ ex__){ex=ex__;}catch(UnauthorizedAccessException^ ex__){ex=ex__;} if(ex!=nullptr){}
-        return (int) ExecExitCode::Error;
+        }
+        catch(InvalidOperationException^){}
+        catch(IO::IOException^){}
+        catch(Security::SecurityException^){}
+        catch(UnauthorizedAccessException^){}
+        return (int)ExecExitCode::Error;
     }
-    inline int FileSystemPlugin::FsExecuteFile(HANDLE MainWin,char* RemoteName,char* Verb){return this->FsExecuteFile((HWND)MainWin, RemoteName, Verb);}
-    inline ExecExitCode FileSystemPlugin::ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb){
-        if(!executeFileImplemented || (!ftpModeAdvertisementImplemented && !openFileImplemented && !showFileInfoImplemented && !executeCommandImplemented)) throw gcnew NotSupportedException();
-        if(Verb->ToLower()->StartsWith("mode ") && ftpModeAdvertisementImplemented){
-            return this->FtpModeAdvertisement(hMainWin,RemoteName,Verb->Substring(5));
-        }else if(Verb->ToLower() == "open" && openFileImplemented){
-            return this->OpenFile(hMainWin,RemoteName);
-        }else if(Verb->ToLower() == "properties" && showFileInfoImplemented){
-            return this->ShowFileInfo(hMainWin, RemoteName);
-        }else if(Verb->ToLower()->StartsWith("quote ") && executeCommandImplemented){
-            return this->ExecuteCommand(hMainWin, RemoteName, Verb->Substring(6));
-        }else return ExecExitCode::Error;
+    inline int FileSystemPlugin::FsExecuteFile(HANDLE mainWin, wchar_t* remoteName, wchar_t* verb){return this->FsExecuteFile((HWND)mainWin, remoteName, verb);}
+    inline ExecExitCode FileSystemPlugin::ExecuteFile(IntPtr hMainWin, String^% remoteName, String^ verb){
+        if(!this->ImplementedFunctions.HasFlag(WfxFunctions::ExecuteFile))
+            throw gcnew NotSupportedException();
+        if(verb->ToLower()->StartsWith("mode ") && ftpModeAdvertisementImplemented)
+            return this->FtpModeAdvertisement(hMainWin, remoteName, verb->Substring(5));
+        else if(verb->ToLower() == "open" && openFileImplemented)
+            return this->OpenFile(hMainWin, remoteName);
+        else if(verb->ToLower() == "properties" && showFileInfoImplemented)
+            return this->ShowFileInfo(hMainWin, remoteName);
+        else if(verb->ToLower()->StartsWith("quote ") && executeCommandImplemented)
+            return this->ExecuteCommand(hMainWin, remoteName, verb->Substring(6));
+        else
+            return ExecExitCode::Error;
     }
 #pragma region "ExecuteFile helper methods"
-        ExecExitCode FileSystemPlugin::FtpModeAdvertisement(IntPtr hMainWin, String^ RemoteName, String^ mode){throw gcnew NotSupportedException();}
-        ExecExitCode FileSystemPlugin::OpenFile(IntPtr hMainWin, String^% RemoteName){throw gcnew NotSupportedException();}
-        ExecExitCode FileSystemPlugin::ShowFileInfo(IntPtr hMainWin, String^ RemoteName){throw gcnew NotSupportedException();}
-        ExecExitCode FileSystemPlugin::ExecuteCommand(IntPtr hMainWin, String^% RemoteName, String^ command){throw gcnew NotSupportedException();}
+        ExecExitCode FileSystemPlugin::FtpModeAdvertisement(IntPtr, String^, String^){throw gcnew NotSupportedException();}
+        ExecExitCode FileSystemPlugin::OpenFile(IntPtr, String^%){throw gcnew NotSupportedException();}
+        ExecExitCode FileSystemPlugin::ShowFileInfo(IntPtr, String^){throw gcnew NotSupportedException();}
+        ExecExitCode FileSystemPlugin::ExecuteCommand(IntPtr, String^%, String^){throw gcnew NotSupportedException();}
 #pragma endregion
+
     //RenMovFile
-    int FileSystemPlugin::FsRenMovFile(char* OldName,char* NewName,BOOL Move, BOOL OverWrite,RemoteInfoStruct* ri){
+    int FileSystemPlugin::FsRenMovFile(wchar_t* oldName, wchar_t* newName, BOOL move, BOOL overWrite, RemoteInfoStruct* ri){
         try{
-            return (int)this->RenMovFile(gcnew String(OldName), gcnew String(NewName), Move==0?false:true, OverWrite==0?false:true, RemoteInfo(*ri));
-        }catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
+            return (int)this->RenMovFile(gcnew String(oldName), gcnew String(newName), move == 0 ? false : true, overWrite == 0 ? false : true, RemoteInfo(*ri));
+        }
+        catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
         catch(Security::SecurityException^){ return (int)FileSystemExitCode::ReadError; }
         catch(IO::FileNotFoundException^){ return (int)FileSystemExitCode::FileNotFound; }
         catch(IO::DirectoryNotFoundException^){ return (int)FileSystemExitCode::WriteError; }
         catch(IO::IOException^){ return (int)FileSystemExitCode::ReadError; }
         catch(InvalidOperationException^){ return (int)FileSystemExitCode::NotSupported; }
     }
-    inline FileSystemExitCode FileSystemPlugin::RenMovFile(String^ OldName, String^ NewName, bool move, bool OverWrite, RemoteInfo info){ throw gcnew NotSupportedException(); }
+    inline FileSystemExitCode FileSystemPlugin::RenMovFile(String^, String^, bool, bool, RemoteInfo){ throw gcnew NotSupportedException(); }
     
     //GetFile
     int FileSystemPlugin::FsGetFile(wchar_t* remoteName, wchar_t* localName, int copyFlags, RemoteInfoStruct* ri){
@@ -358,79 +369,79 @@ namespace Tools{namespace TotalCommanderT{
         catch(IO::IOException^){ return (int)FileSystemExitCode::ReadError; }
         catch(InvalidOperationException^){ return (int)FileSystemExitCode::NotSupported; }
     }
-    inline FileSystemExitCode FileSystemPlugin::GetFile(String^ remoteName, String^% localName, CopyFlags copyFlags, RemoteInfo info){ throw gcnew NotSupportedException(); }
+    inline FileSystemExitCode FileSystemPlugin::GetFile(String^, String^%, CopyFlags, RemoteInfo){ throw gcnew NotSupportedException(); }
     
     //PutFile
-    int FileSystemPlugin::FsPutFile(char* LocalName,char* RemoteName,int CopyFlags){
-        String^% remoteName = gcnew String(RemoteName);
+    int FileSystemPlugin::FsPutFile(wchar_t* localName, wchar_t* remoteName, int copyFlags){
+        String^% rn = gcnew String(remoteName);
         try{
-            FileSystemExitCode ret = this->PutFile(gcnew String(LocalName), remoteName, (Tools::TotalCommanderT::CopyFlags)CopyFlags);
-            String^ old = gcnew String(RemoteName);
-            if(old != remoteName){
-                if(remoteName->Length >= FindData::MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("RemoteName","PutFile"));
-                StringCopy(remoteName,RemoteName, FindData::MaxPath);
+            FileSystemExitCode ret = this->PutFile(gcnew String(localName), rn, (CopyFlags)copyFlags);
+            String^ old = gcnew String(remoteName);
+            if(old != rn){
+                if(rn->Length >= FindData::MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("remoteName", "PutFile"));
+                StringCopy(rn,remoteName, FindData::MaxPath);
             }
             return (int) ret;
-        }catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
+        }
+        catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
         catch(Security::SecurityException^){ return (int)FileSystemExitCode::ReadError; }
         catch(IO::FileNotFoundException^){ return (int)FileSystemExitCode::FileNotFound; }
         catch(IO::DirectoryNotFoundException^){ return (int)FileSystemExitCode::WriteError; }
         catch(IO::IOException^){ return (int)FileSystemExitCode::ReadError; }
         catch(InvalidOperationException^){ return (int)FileSystemExitCode::NotSupported; }
     }
-    inline FileSystemExitCode FileSystemPlugin::PutFile(String^ LocalName, String^% RemoteName, CopyFlags CopyFlags){ throw gcnew NotSupportedException(); }
+    inline FileSystemExitCode FileSystemPlugin::PutFile(String^, String^%, CopyFlags){ throw gcnew NotSupportedException(); }
     //Delete file
-    BOOL FileSystemPlugin::FsDeleteFile(char* RemoteName){
-        try{ return this->DeleteFile(gcnew String(RemoteName)); }
+    BOOL FileSystemPlugin::FsDeleteFile(wchar_t* remoteName){
+        try{ return this->DeleteFile(gcnew String(remoteName)); }
         catch(UnauthorizedAccessException^){ return false; }
         catch(Security::SecurityException^){ return false; }
         catch(IO::IOException^){ return false; }
     }
-    inline bool FileSystemPlugin::DeleteFile(String^ RemoteName){ throw gcnew NotSupportedException(); }
+    inline bool FileSystemPlugin::DeleteFile(String^){ throw gcnew NotSupportedException(); }
     //RemoveDir
-    BOOL FileSystemPlugin::FsRemoveDir(char* RemoteName){
-        try{ return this->RemoveDir(gcnew String(RemoteName)); }
+    BOOL FileSystemPlugin::FsRemoveDir(wchar_t* remoteName){
+        try{ return this->RemoveDir(gcnew String(remoteName)); }
         catch(UnauthorizedAccessException^){ return false; }
         catch(Security::SecurityException^){ return false; }
         catch(IO::IOException^){ return false; }
     }
-    inline bool FileSystemPlugin::RemoveDir(String^ RemoteName){ throw gcnew NotSupportedException(); }
+    inline bool FileSystemPlugin::RemoveDir(String^){ throw gcnew NotSupportedException(); }
     //Disconect
-    inline BOOL FileSystemPlugin::FsDisconnect(char* DisconnectRoot){
-        return this->Disconnect(gcnew String(DisconnectRoot));
+    inline BOOL FileSystemPlugin::FsDisconnect(wchar_t* disconnectRoot){
+        return this->Disconnect(gcnew String(disconnectRoot));
     }
-    inline bool FileSystemPlugin::Disconnect(String^ DisconnectRoot){ throw gcnew NotSupportedException(); }
+    inline bool FileSystemPlugin::Disconnect(String^){ throw gcnew NotSupportedException(); }
     //SetAttr
-    BOOL FileSystemPlugin::FsSetAttr(char* RemoteName,int NewAttr){
-        try{
-            this->SetAttr(gcnew String(RemoteName), (StandardFileAttributes) NewAttr);}
-        catch(UnauthorizedAccessException^){ return false; }
-        catch(Security::SecurityException^){ return false; }
-        catch(IO::IOException^){ return false; }
-        return true;
+    BOOL FileSystemPlugin::FsSetAttr(wchar_t* remoteName, int newAttr){
+        try{ this->SetAttr(gcnew String(remoteName), (StandardFileAttributes)newAttr);}
+        catch(UnauthorizedAccessException^){ return FALSE; }
+        catch(Security::SecurityException^){ return FALSE; }
+        catch(IO::IOException^){ return FALSE; }
+        return TRUE;
     }
-    inline void FileSystemPlugin::SetAttr(String^ RemoteName, StandardFileAttributes NewAttr){ throw gcnew NotSupportedException(); }
+    inline void FileSystemPlugin::SetAttr(String^, StandardFileAttributes){ throw gcnew NotSupportedException(); }
     //SetTime
-    BOOL FileSystemPlugin::FsSetTime(char* RemoteName,::FILETIME *CreationTime, ::FILETIME *LastAccessTime,::FILETIME *LastWriteTime){
+    BOOL FileSystemPlugin::FsSetTime(wchar_t* remoteName, ::FILETIME *creationTime, ::FILETIME *lastAccessTime, ::FILETIME *lastWriteTime){
         Nullable<DateTime> create = Nullable<DateTime>();
         Nullable<DateTime> access = Nullable<DateTime>();
         Nullable<DateTime> write = Nullable<DateTime>();
-        if(CreationTime!=nullptr) create = Nullable<DateTime>(FileTimeToDateTime(*CreationTime));
-        if(LastAccessTime!=nullptr) access = Nullable<DateTime>(FileTimeToDateTime(*LastAccessTime));
-        if(LastWriteTime!=nullptr) write = Nullable<DateTime>(FileTimeToDateTime(*LastWriteTime));
-        try{ this->SetTime(gcnew String(RemoteName), create, access, write);}
-        catch(UnauthorizedAccessException^){ return false; }
-        catch(Security::SecurityException^){ return false; }
-        catch(IO::IOException^){ return false; }
-        return true;
+        if(creationTime!=nullptr) create = Nullable<DateTime>(FileTimeToDateTime(*creationTime));
+        if(lastAccessTime!=nullptr) access = Nullable<DateTime>(FileTimeToDateTime(*lastAccessTime));
+        if(lastWriteTime!=nullptr) write = Nullable<DateTime>(FileTimeToDateTime(*lastWriteTime));
+        try{ this->SetTime(gcnew String(remoteName), create, access, write);}
+        catch(UnauthorizedAccessException^){ return FALSE; }
+        catch(Security::SecurityException^){ return FALSE; }
+        catch(IO::IOException^){ return FALSE; }
+        return TRUE;
     }
-    inline void FileSystemPlugin::SetTime(String^ RemoteName, Nullable<DateTime> CreationTime, Nullable<DateTime> LastAccessTime, Nullable<DateTime> LastWriteTime){ throw gcnew NotSupportedException(); }
+    inline void FileSystemPlugin::SetTime(String^, Nullable<DateTime>, Nullable<DateTime>, Nullable<DateTime>){ throw gcnew NotSupportedException(); }
     //StatusInfo
-    void FileSystemPlugin::FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation){
-        this->StatusInfo(gcnew String(RemoteDir),(OperationStatus)InfoStartEnd,(OperationKind)InfoOperation);     
+    void FileSystemPlugin::FsStatusInfo(wchar_t* remoteDir, int infoStartEnd, int infoOperation){
+        this->StatusInfo(gcnew String(remoteDir), (OperationStatus)infoStartEnd, (OperationKind)infoOperation);     
     }
-    void FileSystemPlugin::StatusInfo(String^ RemoteDir,OperationStatus InfoStartEnd,OperationKind InfoOperation){
-        OperationEventArgs^ e = gcnew OperationEventArgs(RemoteDir,InfoOperation, InfoStartEnd);
+    void FileSystemPlugin::StatusInfo(String^ remoteDir, OperationStatus infoStartEnd, OperationKind infoOperation){
+        OperationEventArgs^ e = gcnew OperationEventArgs(remoteDir, infoOperation, infoStartEnd);
         if(e->Status == OperationStatus::Start) this->OnOperationStarting(e);
         else if(e->Status == OperationStatus::End) this->OnOperationFinished(e);
         this->OnOperationStatusChanged(e);
@@ -440,7 +451,7 @@ namespace Tools{namespace TotalCommanderT{
     void FileSystemPlugin::OnOperationFinished(OperationEventArgs^ e){/*Do nothing*/}
     //GetDefRootName
     void FileSystemPlugin::FsGetDefRootName(char* DefRootName,int maxlen){
-        StringCopy(this->Name,DefRootName,maxlen);
+        StringCopy(this->Name, DefRootName, maxlen);
     }
 
     int FileSystemPlugin::FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon){
@@ -455,7 +466,7 @@ namespace Tools{namespace TotalCommanderT{
         if(icon != nullptr) TheIcon[0] = (HICON)(Int32)icon->Handle; else TheIcon[0] = NULL;
         return (int)ret;
     }
-    inline IconExtractResult FileSystemPlugin::ExctractCustomIcon(String^% RemoteName, IconExtractFlags ExtractFlags, Drawing::Icon^% TheIcon){ throw gcnew NotSupportedException(); }
+    inline IconExtractResult FileSystemPlugin::ExctractCustomIcon(String^%, IconExtractFlags, Drawing::Icon^%){ throw gcnew NotSupportedException(); }
 
     inline void FileSystemPlugin::FsSetDefaultParams(FsDefaultParamStruct* dps){
         this->SetDefaultParams(DefaultParams(*dps));
@@ -483,7 +494,7 @@ namespace Tools{namespace TotalCommanderT{
         else ReturnedBitmap[0] = nullptr;
         return (int)bmp->GetFlag();
     }
-    inline BitmapResult^ FileSystemPlugin::GetPreviewBitmap(String^ RemoteName, int width, int height){throw gcnew NotSupportedException();}
+    inline BitmapResult^ FileSystemPlugin::GetPreviewBitmap(String^, int, int){throw gcnew NotSupportedException();}
     
     inline BOOL FileSystemPlugin::FsLinksToLocalFiles(void){ return this->LinksToLocalFiles ? 1 : 0;}
     inline bool FileSystemPlugin::LinksToLocalFiles::get(){throw gcnew NotSupportedException();} 
@@ -497,7 +508,7 @@ namespace Tools{namespace TotalCommanderT{
         }
         return FALSE;
     }
-    inline String^ FileSystemPlugin::GetLocalName(String^ RemoteName, int maxlen){throw gcnew NotSupportedException();}
+    inline String^ FileSystemPlugin::GetLocalName(String^, int){throw gcnew NotSupportedException();}
 
     BOOL FileSystemPlugin::FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen){
         ViewDefinition^ vd = GetDefaultView(maxlen-1);
@@ -514,7 +525,7 @@ namespace Tools{namespace TotalCommanderT{
         StringCopy(options,ViewOptions,maxlen);
         return (BOOL)true;
     }
-    inline ViewDefinition^ FileSystemPlugin::GetDefaultView(int maxlen){throw gcnew NotSupportedException();}
+    inline ViewDefinition^ FileSystemPlugin::GetDefaultView(int){throw gcnew NotSupportedException();}
 
     inline int FileSystemPlugin::FsGetBackgroundFlags(void){return (int)this->BackgroundFlags;}
     inline BackgroundTransferSupport FileSystemPlugin::BackgroundFlags::get(){throw gcnew NotSupportedException();}

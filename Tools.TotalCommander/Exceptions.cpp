@@ -130,6 +130,10 @@ namespace Tools {
         return ResourceManager->GetString(L"PluginNotRegistered", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::PluginTypeNotSupported::get() {
+        return ResourceManager->GetString(L"PluginTypeNotSupported", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::PropertyWasInitialized::get() {
         return ResourceManager->GetString(L"PropertyWasInitialized", _resourceCulture);
     }
@@ -265,6 +269,10 @@ namespace Tools {
     
     inline System::String^  Exceptions::PluginNotRegisteredFormat(System::Object^  arg0) {
         return System::String::Format(_resourceCulture, PluginNotRegistered, arg0);
+    }
+    
+    inline System::String^  Exceptions::PluginTypeNotSupportedFormat(System::Object^  arg0) {
+        return System::String::Format(_resourceCulture, PluginTypeNotSupported, arg0);
     }
     
     inline System::String^  Exceptions::PropertyWasInitializedFormat(System::Object^  arg0) {

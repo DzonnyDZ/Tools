@@ -121,6 +121,20 @@
     #endif
 #endif
 #ifdef TC_FS_MKDIR
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsMkDirW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* Path)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsMkDir)(Path);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
@@ -128,36 +142,82 @@
     #ifdef TC_FNC_HEADER
         (char* Path)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsMkDir(Path);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsMkDir(GF::AnsiToUnicode(Path));
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_EXECUTEFILE
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsExecuteFileW
+    #ifdef TC_FNC_HEADER
+        (HWND MainWin, wchar_t* RemoteName, wchar_t* Verb)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsExecuteFile)(/*(HANDLE)*/MainWin, RemoteName, Verb);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsExecuteFile
     #ifdef TC_FNC_HEADER
-        (HWND MainWin,char* RemoteName,char* Verb)
+        (HWND MainWin, char* RemoteName, char* Verb)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsExecuteFile(/*(HANDLE)*/MainWin, RemoteName, Verb);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        wchar_t rn[FindData::MaxPath];
+        GF::AnsiToUnicode(RemoteName, rn, FindData::MaxPath);
+        auto ret = TC_FUNCTION_TARGET->FsExecuteFile(/*(HANDLE)*/MainWin, rn, GF::AnsiToUnicode(Verb));
+        GF::UnicodeToAnsi(rn, RemoteName, FindData::MaxPath);
+        return ret;
+    }
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_RENMOVFILE
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsRenMovFileW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* OldName, wchar_t* NewName, BOOL Move, BOOL OverWrite, RemoteInfoStruct* ri)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsRenMovFile)(OldName, NewName, Move, OverWrite, ri);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsRenMovFile
     #ifdef TC_FNC_HEADER
-        (char* OldName,char* NewName,BOOL Move,  BOOL OverWrite,RemoteInfoStruct* ri)
+        (char* OldName, char* NewName, BOOL Move, BOOL OverWrite, RemoteInfoStruct* ri)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsRenMovFile(OldName, NewName, Move, OverWrite, ri);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsRenMovFile(GF::AnsiToUnicode(OldName), GF::AnsiToUnicode(NewName), Move, OverWrite, ri);
+    }   
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
@@ -207,20 +267,64 @@
 #endif
 
 #ifdef TC_FS_PUTFILE
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsPutFileW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* LocalName, wchar_t* RemoteName, int CopyFlags)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsPutFile)(LocalName, RemoteName, CopyFlags);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsPutFile
     #ifdef TC_FNC_HEADER
-        (char* LocalName,char* RemoteName,int CopyFlags)
+        (char* LocalName, char* RemoteName, int CopyFlags)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)
         {return TC_FUNCTION_TARGET->FsPutFile(LocalName, RemoteName, CopyFlags);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        auto ln = GF::AnsiToUnicode(LocalName);
+        try{
+            int rnSize = Math::Max((size_t)FindData::MaxPath, strlen(RemoteName) + 1);
+            wchar_t* rn = new wchar_t[rnSize];
+            try{
+                GF::AnsiToUnicode(RemoteName, rn, rnSize - 1);
+                int ret = TC_FUNCTION_TARGET->FsPutFile(ln, rn, CopyFlags);
+                GF::UnicodeToAnsi(rn, RemoteName, rnSize - 1);
+                return ret;
+            }finally{ delete[] rn; }
+
+        }finally{ delete[] ln; }
+    }      
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_DELETEFILE
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsDeleteFileW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsDeleteFile)(RemoteName);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
@@ -228,13 +332,32 @@
     #ifdef TC_FNC_HEADER
         (char* RemoteName)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)
         {return TC_FUNCTION_TARGET->FsDeleteFile(RemoteName);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsDeleteFile(GF::AnsiToUnicode(RemoteName));
+    }
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_REMOVEDIR
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsRemoveDirW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsRemoveDir)(RemoteName);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    ///ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
@@ -242,13 +365,32 @@
     #ifdef TC_FNC_HEADER
         (char* RemoteName)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsRemoveDir(RemoteName);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsRemoveDir(GF::AnsiToUnicode(RemoteName));
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_DISCONNECT
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsDisconnectW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* DisconnectRoot)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsDisconnect)(DisconnectRoot);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
@@ -256,13 +398,32 @@
     #ifdef TC_FNC_HEADER
         (char* DisconnectRoot)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsDisconnect(DisconnectRoot);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsDisconnect(GF::AnsiToUnicode(DisconnectRoot));
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_SETATTR 
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsSetAttrW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName, int NewAttr)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsSetAttr)(RemoteName, NewAttr);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
@@ -270,13 +431,32 @@
     #ifdef TC_FNC_HEADER
         (char* RemoteName,int NewAttr)
     #endif
-    #if defined(TC_FNC_BODY)
-        {return TC_FUNCTION_TARGET->FsSetAttr(RemoteName,NewAttr);}
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
+        {return TC_FUNCTION_TARGET->FsSetAttr(RemoteName, NewAttr);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsSetAttr(GF::AnsiToUnicode(RemoteName), NewAttr);
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_SETTIME
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsSetTimeW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteName, ::FILETIME *CreationTime, ::FILETIME *LastAccessTime, ::FILETIME *LastWriteTime)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsSetTime)(RemoteName, CreationTime, LastAccessTime, LastWriteTime);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
@@ -284,26 +464,50 @@
     #ifdef TC_FNC_HEADER
         (char* RemoteName,::FILETIME *CreationTime,::FILETIME *LastAccessTime,::FILETIME *LastWriteTime)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsSetTime(RemoteName, CreationTime, LastAccessTime, LastWriteTime);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsSetTime(GF::AnsiToUnicode(RemoteName), CreationTime, LastAccessTime, LastWriteTime);
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_STATUSINFO
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsStatusInfoW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* RemoteDir, int InfoStartEnd, int InfoOperation)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsStatusInfo)(RemoteDir, InfoStartEnd, InfoOperation);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsStatusInfo
     #ifdef TC_FNC_HEADER
-        (char* RemoteDir,int InfoStartEnd,int InfoOperation)
+        (char* RemoteDir, int InfoStartEnd, int InfoOperation)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsStatusInfo(RemoteDir, InfoStartEnd, InfoOperation);}
+        #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        return TC_FUNCTION_TARGET->FsStatusInfo(GF::AnsiToUnicode(RemoteDir), InfoStartEnd, InfoOperation);}
+    }          
     #elif defined(TC_FNC_HEADER)
         ;
     #endif
 #endif
+
 #ifdef TC_FS_GETDEFROOTNAME
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
