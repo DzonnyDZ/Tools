@@ -134,6 +134,7 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceProcess" />
@@ -215,6 +216,8 @@
     <Compile Include="ComponentModel\ValueContainer.vb" />
     <Compile Include="Data\DataExtensions.vb" />
     <Compile Include="Extensions\DateTimeExtensions.vb" />
+    <Compile Include="Extensions\IFormattableExtensions.vb" />
+    <Compile Include="Extensions\StringParsing.vb" />
     <Compile Include="Globalization\Arabic.vb" />
     <Compile Include="Linq\ForEnumerator.vb" />
     <Compile Include="misc\Operators.vb" />

@@ -4,6 +4,7 @@
 Namespace ExtensionsT
     ''' <summary>General extension funcions</summary>
     Public Module General
+#Region "New if null"
         ''' <summary>If given object is null creates new instance of it</summary>
         ''' <param name="obj">Object to test</param>
         ''' <typeparam name="T">Type of object</typeparam>
@@ -28,6 +29,9 @@ Namespace ExtensionsT
         Public Function NewIfNull(Of T As {Structure})(ByVal obj As T?) As T
             Return If(obj, New T)
         End Function
+#End Region
+
+#Region "Throw"
         ''' <summary>Throws given exception</summary>
         ''' <param name="ex">Exception to be thrown</param>
         ''' <typeparam name="T">Type of exception to be thrown</typeparam>
@@ -48,7 +52,7 @@ Namespace ExtensionsT
         ''' <version version="1.5.3">Documentation fix: Throws <see cref="ArgumentNullException"/> when <paramref name="arg"/> is null. Originally documentation stated tha <see cref="ArgumentException"/> is thrown, which was not accurate.</version>
         <Extension()> _
         Public Function ThrowIfNull(Of T As Class)(ByVal arg As T, Optional ByVal argumentName$ = Nothing) As T
-            If arg Is Nothing Then Throw New ArgumentNullException(If(ArgumentName, "arg"))
+            If arg Is Nothing Then Throw New ArgumentNullException(If(argumentName, "arg"))
             Return arg
         End Function
         ''' <summary>Throws an <see cref="ArgumentNullException"/> if given objects is null, if it is not null returns another given object</summary>
@@ -65,6 +69,9 @@ Namespace ExtensionsT
             If valueToTest Is Nothing Then Throw New ArgumentNullException(If(argumentName, "valueToTest"))
             Return valueToReturn
         End Function
+#End Region
+
+
     End Module
 End Namespace
 #End If
