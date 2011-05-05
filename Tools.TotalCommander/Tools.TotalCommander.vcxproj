@@ -240,8 +240,8 @@ IF ERRORLEVEL 0 (
   <ItemGroup>
     <ClInclude Include="Attributes.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="ContentFieldSpecification.h" />
     <ClInclude Include="ContentFunctions.h" />
-    <ClInclude Include="ContentPluginBase helpers.h" />
     <ClInclude Include="ContentPluginBase.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Exceptions.h" />
@@ -276,7 +276,7 @@ IF ERRORLEVEL 0 (
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Attributes.cpp" />
     <ClCompile Include="Common.cpp" />
-    <ClCompile Include="ContentPluginBase helpers.cpp" />
+    <ClCompile Include="ContentFieldSpecification.cpp" />
     <ClCompile Include="ContentPluginBase.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Exceptions.cpp" />

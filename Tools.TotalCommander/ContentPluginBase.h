@@ -2,7 +2,7 @@
 #include "Common.h"
 #include "PluginBase.h"
 #include "Plugin/contplug.h"
-#include "ContentPluginBase helpers.h"
+#include "ContentFieldSpecification.h"
 #include "PluginMethodAttribute.h"
 #include "Attributes.h"
 

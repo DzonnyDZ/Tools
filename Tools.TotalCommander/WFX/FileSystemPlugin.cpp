@@ -511,19 +511,19 @@ namespace Tools{namespace TotalCommanderT{
     }
     inline String^ FileSystemPlugin::GetLocalName(String^, int){throw gcnew NotSupportedException();}
 
-    BOOL FileSystemPlugin::FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen){
-        ViewDefinition^ vd = GetDefaultView(maxlen-1);
+    BOOL FileSystemPlugin::FsContentGetDefaultView(wchar_t* ViewContents, wchar_t* ViewHeaders, wchar_t* ViewWidths, wchar_t* ViewOptions, int maxlen){
+        ViewDefinition^ vd = GetDefaultView(maxlen - 1);
         if(vd == nullptr) return (BOOL)false;
         String^ contents = vd->GetColumnSourcesString();
         String^ headers = vd->GetNamesString();
         String^ widths = vd->GetWidthsString();
         String^ options = vd->GetOptionsString();
-        if(contents->Length > maxlen-1 || headers->Length > maxlen-1 || widths->Length > maxlen-1 || options->Length > maxlen-1)
+        if(contents->Length > maxlen-1 || headers->Length > maxlen - 1 || widths->Length > maxlen - 1 || options->Length > maxlen - 1)
             throw gcnew InvalidOperationException(ResourcesT::Exceptions::ColumnDefinitionStringTooLongFormat("GetDefaultView"));
-        StringCopy(contents,ViewContents,maxlen);
-        StringCopy(headers,ViewHeaders,maxlen);
-        StringCopy(widths,ViewWidths,maxlen);
-        StringCopy(options,ViewOptions,maxlen);
+        StringCopy(contents, ViewContents, maxlen);
+        StringCopy(headers, ViewHeaders, maxlen);
+        StringCopy(widths, ViewWidths, maxlen);
+        StringCopy(options, ViewOptions, maxlen);
         return (BOOL)true;
     }
     inline ViewDefinition^ FileSystemPlugin::GetDefaultView(int){throw gcnew NotSupportedException();}

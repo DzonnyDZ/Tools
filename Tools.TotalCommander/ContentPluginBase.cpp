@@ -1,6 +1,6 @@
 //#include "stdafx.h"
 #include "ContentPluginBase.h"
-#include "ContentPluginBase helpers.h"
+#include "ContentFieldSpecification.h"
 #include "Exceptions.h"
 #include "Common.h"
 

@@ -673,15 +673,50 @@
 #endif
 
 #ifdef TC_FS_GETDEFAULTVIEW
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    FsContentGetDefaultViewW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* ViewContents, wchar_t* ViewHeaders, wchar_t* ViewWidths, wchar_t* ViewOptions, int maxlen)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {return TC_FUNCTION_TARGET->TC_GETFNAME_W(FsContentGetDefaultView)(ViewContents, ViewHeaders, ViewWidths, ViewOptions, maxlen);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX BOOL TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
     FsContentGetDefaultView
     #ifdef TC_FNC_HEADER
-        (char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen)
+        (char* ViewContents, char* ViewHeaders, char* ViewWidths, char* ViewOptions, int maxlen)
     #endif
-    #if defined(TC_FNC_BODY)
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)                      
         {return TC_FUNCTION_TARGET->FsContentGetDefaultView(ViewContents, ViewHeaders, ViewWidths, ViewOptions, maxlen);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        wchar_t* vc = NULL, *vh = NULL, *vw = NULLL, *vo = NULL;
+        try{
+            vc = new new wchar_t[maxlen];
+            vh = new new wchar_t[maxlen];
+            vw = new new wchar_t[maxlen];
+            vo = new new wchar_t[maxlen];
+            auto ret = TC_FUNCTION_TARGET->FsContentGetDefaultView(vc, vh, vw, vo, maxlen);
+            GF::UnicodeToAnsi(vc, ViewContents, maxlen);
+            GF::UnicodeToAnsi(vh, ViewHeaders, maxlen);
+            GF::UnicodeToAnsi(vw, ViewHeaders, maxlen);
+            GF::UnicodeToAnsi(vo, ViewOptions, maxlen);
+            return ret;
+        }finally{
+            if(vc != NULL) delete[] vc;
+            if(vh != NULL) delete[] vh;
+            if(vw != NULL) delete[] vw;
+            if(vo != NULL) delete[] vo;
+        }
+    } 
     #elif defined(TC_FNC_HEADER)
         ;
     #endif

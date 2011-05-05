@@ -1221,12 +1221,14 @@ public:
         /// <remarks>It's best to create a custom columns view in Total Commander, save it, and then copy the definitions from the Wincmd.ini to your plugin. The values in <paramref name="ViewContents"/> and <paramref name="ViewHeaders"/> are separated by a backslash and lowercase 'n' character.
         /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para></remarks>
-        /// <version version="1.5.3">This function is new in version 1.5.3</version>
         /// <seealso cref="GetDefaultView"/>
+        /// <version version="1.5.3">This function is new in version 1.5.3</version>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="viewContents"/>, <paramref name="viewHeaders"/>, <paramref name="viewWidths"/>, <paramref name="viewOptions"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetDefaultView", "TC_FS_GETDEFAULTVIEW")]
-        BOOL FsContentGetDefaultView(char* ViewContents,char* ViewHeaders,char* ViewWidths,char* ViewOptions,int maxlen);
+        BOOL FsContentGetDefaultView(wchar_t* viewContents, wchar_t* viewHeaders, wchar_t* viewWidths, wchar_t* viewOptions, int maxlen);
         /// <summary>When overriden in derived class called to get the default view to which Total Commander should switch when this file system plugin is entered.</summary>
         /// <param name="maxlen">Maximum length if sting accepted by total commander. Lenghts of <see cref="ViewDefinition::GetColumnSourcesString"/>, <see cref="ViewDefinition::GetNamesString"/>, <see cref="ViewDefinition::GetWidthsString"/> and <see cref="ViewDefinition::GetOptionsString"/> returned shall not exceed this lenght or uncatchable exception will be thrown.</param>
         /// <returns>A <see cref="ViewDefinition"/> specifying default view to be used. Null not to show any specific view</returns>

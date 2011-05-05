@@ -1,6 +1,6 @@
 #include "Common.h"
 #include "PluginBase.h"
-#include "ContentPluginBase helpers.h"
+#include "ContentFieldSpecification.h"
 #include "Exceptions.h"
 
 namespace Tools{namespace TotalCommanderT{

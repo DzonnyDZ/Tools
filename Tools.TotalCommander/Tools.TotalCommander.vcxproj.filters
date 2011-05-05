@@ -27,9 +27,6 @@
     <ClInclude Include="Common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ContentPluginBase helpers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ContentPluginBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,6 +84,9 @@
     <ClInclude Include="ContentFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ContentFieldSpecification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Doc\Content.wdx.hlp">
@@ -107,9 +107,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Common.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ContentPluginBase helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ContentPluginBase.cpp">
@@ -152,6 +149,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GlobalFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentFieldSpecification.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
