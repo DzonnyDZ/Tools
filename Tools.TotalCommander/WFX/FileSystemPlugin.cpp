@@ -44,22 +44,31 @@ namespace Tools{namespace TotalCommanderT{
     inline int FileSystemPlugin::MaxPath::get(){ return this->Unicode ? FindData::MaxPathW : FindData::MaxPathA; }
 #pragma region TC functions
 #pragma region Initialization
-    int FileSystemPlugin::FsInit(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
-        if(this->Initialized == true) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitialized);
-        this->pluginNr = PluginNr;
+    int FileSystemPlugin::FsInit(int pluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
+        bool reinitialization;
+        if(this->Initialized && this->IsInTotalCommander && !this->Unicode){ //TC does this (1st calls FsInit and then FsInitW
+            if(this->PluginNr != pluginNr) throw gcnew InvalidOperationException(String.Format(ResourcesT::Exceptions::InvalidPluginNumberReinitialization, this->PluginNr, pluginNr));
+            reinitialization = true;
+        }else{
+            if(this->Initialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitialized);
+            reinitialization = false;
+        }
+        if(!reinitialization)
+            this->pluginNr = pluginNr;
         this->progressProc = gcnew ProgressProcWrapper(pProgressProc);
         this->logProc  = gcnew LogProcWrapper(pLogProc);
         this->requestProc = gcnew RequestProcWrapper(pRequestProc);
         this->initialized = true;
         this->isInTotalCommander = true;
         this->unicode = true;
-        FileSystemPlugin::registeredPlugins->Add(PluginNr, this);
+        if(!reinitialization)
+            FileSystemPlugin::registeredPlugins->Add(PluginNr, this);
         this->OnInit();
         return 0;
     }
-    int FileSystemPlugin::FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc){
+    int FileSystemPlugin::FsInit(int pluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc){
         if(this->Initialized == true) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitialized);
-        this->pluginNr = PluginNr;
+        this->pluginNr = pluginNr;
         this->progressProc = gcnew ProgressProcWrapper(pProgressProc);
         this->logProc  = gcnew LogProcWrapper(pLogProc);
         this->requestProc = gcnew RequestProcWrapper(pRequestProc);
@@ -70,12 +79,12 @@ namespace Tools{namespace TotalCommanderT{
         this->OnInit();
         return 0;
     }
-    void FileSystemPlugin::InitializePlugin(int PluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request){
+    void FileSystemPlugin::InitializePlugin(int pluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request){
         if(progress == nullptr) throw gcnew ArgumentNullException("progress");
         if(log == nullptr) throw gcnew ArgumentNullException("log");
         if(request == nullptr) throw gcnew ArgumentNullException("request");
         if(this->Initialized == true) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitialized);
-        this->pluginNr = PluginNr;
+        this->pluginNr = pluginNr;
         this->progressProc = gcnew ProgressProcWrapper(progress);
         this->logProc = gcnew LogProcWrapper(log);
         this->requestProc = gcnew RequestProcWrapper(request);
@@ -258,6 +267,7 @@ namespace Tools{namespace TotalCommanderT{
 #pragma region "Crypto"
     //SetCryptCallback
     void FileSystemPlugin::FsSetCryptCallback(tCryptProc pCryptProc, int cryptoNr, int flags){
+        if(this->CryptInitialized && this->IsInTotalCommander && this->Unicode) return;        
         if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
         this->cryptProc = gcnew CryptProcWrapper(pCryptProc);
         this->cryptoNr = CryptoNr;

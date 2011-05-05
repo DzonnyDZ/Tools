@@ -54,7 +54,7 @@ using namespace Tools::TotalCommanderT;
 
 #ifdef TC_FS_INIT
     //Unicode
-    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInitW(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc,tRequestProcW pRequestProc){
+    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInitW(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
         Initialize();
         return Init(PluginNr, pProgressProc, pLogProc, pRequestProc);
     }
@@ -65,7 +65,7 @@ using namespace Tools::TotalCommanderT;
     inline int Init(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc){
         return TC_FUNCTION_TARGET->FsInit(PluginNr, pProgressProc, pLogProc, pRequestProc);
     }
-    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+    TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc){
         Initialize();
         return Init(PluginNr, pProgressProc, pLogProc, pRequestProc);
     }

@@ -68,15 +68,16 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plugin. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plugin DLL is unloaded again. The plugin DLL is loaded when the user enters the plugin root in Network Neighborhood.
         /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plugin outside of Total Commander use <see cref="InitializePlugin"/> instead.</para>
         /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para>
-        /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preffered.</para></remarks>
-        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
+        /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preffered.</para>
+        /// <para>It seems that Total Commander calls this function in Unicode environment after it calls ANSI overload.</para></remarks>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true (his exception is not thrown when <see cref="IsInTotalCommander"/> is true, <see cref="Unicode"/> is false and <see cref="PluginNr"/> is same as <paramref name="pluginNr"/>.</exception>
         /// <version version="1.5.4">This overload is new in version 1.5.4</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_INIT")]
-        int FsInit(int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc);
+        int FsInit(int pluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc);
         /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. (ANSI implementation)</summary>
-        /// <param name="PluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
+        /// <param name="pluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
         /// <param name="pProgressProc">Pointer to the progress callback function.</param>
         /// <param name="pLogProc">Pointer to the logging function</param>
         /// <param name="pRequestProc">Pointer to the request text proc</param>
@@ -84,14 +85,16 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plugin. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plugin DLL is unloaded again. The plugin DLL is loaded when the user enters the plugin root in Network Neighborhood.
         /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plugin outside of Total Commander use <see cref="InitializePlugin"/> instead.</para>
         /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para>
-        /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preffered.</para></remarks>
+        /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preffered.</para>
+        /// <para>It seems that in Unicode environment Total COmmander first calls this (ANSI) function and then it calls Unicode overload.</para></remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
         /// <version version="1.5.4">Added <see cref="ObsoleteAttribute"/></version>
         /// <version version="1.5.4">The <see cref="InvalidOperationException"/> is nor really thrown when plugin was already initialized before. (It was documented to be thrown in previosu versions but it actually wasn't.)</version>
+        /// <version version="1.5.4">Parameter <c>PluginNr</c> renamed to <c>pluginNr</c></version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false), Obsolete("This is ANSI function. Use Unicode overload instead")]
         [PluginMethod("TC_FS_INIT")]
-        int FsInit(int PluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc);
+        int FsInit(int pluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc);
         /// <summary>Called when loading the plugin outside of Total Comander environment instead of <see cref="FsInit"/>. The passed values should be stored in the plugin for later use.</summary>
         /// <param name="PluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
         /// <param name="progress">Delegate to the progress callback function.</param>
@@ -102,8 +105,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>Use this function to initialize the plugin when used outside of Total Commander.
         /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para></remarks>
         /// <version version="1.5.4">The <see cref="InvalidOperationException"/> is nor really thrown when plugin was already initialized before. (It was documented to be thrown in previosu versions but it actually wasn't.)</version>
+        /// <version version="1.5.4">Parameter <c>PluginNr</c> renamed to <c>pluginNr</c></version>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
-        void InitializePlugin(int PluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
+        void InitializePlugin(int pluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
     private:
         bool isInTotalCommander;
         bool unicode;
@@ -207,7 +211,15 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>When overriden in derived class provides custom code invoked when plugin is initialized.</summary>
         /// <remarks>When this method is called the <see cref="Initialized"/> property has value true and <see cref="PluginNr"/> is already set.
         /// <para>Default implementation of this method does nothing.</para>
-        /// <para>This method implements plugin function <see cref="FsInit"/> (alternatively <see cref="InitializePlugin"/>)</para></remarks>
+        /// <para>This method implements plugin function <see cref="FsInit"/> (alternatively <see cref="InitializePlugin"/>)</para>
+        /// <note>
+        /// Because of way how Total Commander initializes the plugin this function can be called twice in Unicode environment (TC newer than 7.5 (plugin interface 2.0+), Windows NT-based system).
+        /// First time it's called with <see cref="Unicode"/> false. Second time it's called with <see cref="Unicode"/> true.
+        /// This behavior gives you an oportunity to handle ANSI-to-Unicode change eary in plugin live cyclus. But you must be careful and perform any initialization just once.
+        /// <para>You cannot rely on 2nd call being done! It maybe unwanted behavior of Total Commander and it may change in future.
+        /// Also managed plugin framework many change in future and block second call. And finally 2 calls are not done in ANSI environment.</para>
+        /// </note></remarks>
+        /// <version version="1.5.4">The cunction can now be called twice in Unicode environment.</version>
         virtual void OnInit();
 
 #pragma region Callbacks
@@ -413,7 +425,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="pCryptProc">Pointer to the crypto callback function. See <see cref="tCryptProc"/> for a description of this function</param>
         /// <param name="cryptoNr">A parameter which needs to be passed to the callback function</param>
         /// <param name="flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
-        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
+        /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true (the exception is not thrown when <see cref="IsInTotalCommander"/> is true and <see cref="Unicode"/> is true (Total Commander seems to call <see cref="FsSetCryptCallbackW"/> and then <see cref="FsSetCryptCallback"/> as well.)</exception>
         /// <exception cref="NotSupportedException">Most-derived implementation of</exception>
         /// <remarks><para>This method is called by Total Commander and is not intended for direct use</para>
         /// This plugin function is implemented by <see cref="OnInitializeCryptography"/> is decorated with <see cref="MethodNotSupportedAttribute"/>.

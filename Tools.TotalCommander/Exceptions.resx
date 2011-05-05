@@ -159,6 +159,9 @@
   <data name="InvalidPathFormat" xml:space="preserve">
     <value>The path {0} has invalid format.</value>
   </data>
+  <data name="InvalidPluginNumberReinitialization" xml:space="preserve">
+    <value>Attempt to reinitialize plugin with different number (old {0}, new {1})</value>
+  </data>
   <data name="InvalidUnitNameCharacter" xml:space="preserve">
     <value>Unit name contains invalid character.</value>
   </data>

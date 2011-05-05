@@ -18,7 +18,11 @@
     #ifdef TC_FNC_HEADER
         TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
     #endif
-    FsInit
+    #if defined(TC_EXPORT)
+        FsInitW
+    #else
+        FsInit
+    #endif
     #ifdef TC_FNC_HEADER
         (int PluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc)
     #endif
