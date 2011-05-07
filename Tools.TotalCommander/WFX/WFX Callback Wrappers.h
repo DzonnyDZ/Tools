@@ -20,12 +20,15 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::ProgressProc"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class ProgressProcWrapper sealed: ICallbackWrapper{
+    public ref class ProgressProcWrapper sealed: CallbackWrapperBase{
     private:
         tProgressProc ansi;
         tProgressProcW unicode;
         ProgressCallback^ managed;
-        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
+    protected:
+        /// <summary>Gets the delegate wrapped by this wrapper</summary>
+        /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() override sealed;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="ProgressProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>
@@ -84,12 +87,15 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::LogProc"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class LogProcWrapper sealed: ICallbackWrapper{
+    public ref class LogProcWrapper sealed: CallbackWrapperBase{
     private:
         tLogProc ansi;
         tLogProcW unicode;
         LogCallback^ managed;
-        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
+    protected:
+        /// <summary>Gets the delegate wrapped by this wrapper</summary>
+        /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() override sealed;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="LogProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>
@@ -142,12 +148,15 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::RequestProc"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class RequestProcWrapper sealed: ICallbackWrapper{
+    public ref class RequestProcWrapper sealed: CallbackWrapperBase{
     private:
         tRequestProc ansi;
         tRequestProcW unicode;
         RequestCallback^ managed;
-        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
+    protected:
+        /// <summary>Gets the delegate wrapped by this wrapper</summary>
+        /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() override sealed;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="RequestProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>
@@ -218,12 +227,15 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::PerformCryptoOperation"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class CryptProcWrapper sealed: ICallbackWrapper{
+    public ref class CryptProcWrapper sealed: CallbackWrapperBase{
     private:
         tCryptProc ansi;
         tCryptProcW unicode;
         CryptCallback^ managed;
-        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
+    protected:
+        /// <summary>Gets the delegate wrapped by this wrapper</summary>
+        /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() override sealed;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="RequestProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>

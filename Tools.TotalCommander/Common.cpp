@@ -124,4 +124,8 @@ namespace Tools{namespace TotalCommanderT{
         if(source==NULL) throw gcnew ArgumentNullException("source");
         return TimeSpan(source->wHour,source->wMinute,source->wSecond);
     }
+
+    inline Object^ CallbackWrapperBase::Invoke(... cli::array<Object^>^ args){
+        return this->Delegate->DynamicInvoke(args);
+    }
 }}

@@ -18,6 +18,8 @@
     #define MAKE_PUBLIC [Tools::RuntimeT::CompilerServicesT::MakePublicAttribute(Remove = true)] 
 #endif
 
+    using namespace System::ComponentModel;
+
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
 
@@ -166,11 +168,48 @@ namespace Tools{namespace TotalCommanderT{
 
     /// <summary>An interface for callback wrapper which wraps one of: Unicode function pointer, ANSI function pointer, managed delegate</summary>
     /// <version version="1.5.4">This interface is new in version 1.5.4</version>
-    [CLSCompliant(false)]
+    [EditorBrowsable(EditorBrowsableState::Advanced)]
     public interface struct ICallbackWrapper{
         /// <summary>Gets the delegate wrapped by this wrapper</summary>
         /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
         property System::Delegate^ Delegate{System::Delegate^ get();}
+        /// <summary>Calls internal function</summary>
+        /// <param name="">Parameters for internal managed function (delegate)</param>
+        /// <returns>Delegate call result, null if delegate returns <see cref="Void"/></returns>
+        /// <exception cref="MemberAccessException">The caller does not have access to the method represented by <see cref="Delegate"/> (for example, if the method is private).-or- The number, order, or type of parameters listed in args is invalid.</exception>
+        /// <exception cref="System::Reflection::TargetException">The method represented by <see cref="Delegate"/> is an instance method and the target object is null.-or- The method represented by <see cref="Delegate"/> is invoked on an object or a class that does not support it. (both situations mean that delegate was not properly created in implementing class)</exception>
+        /// <exception cref="System::Reflection::TargetInvocationException">Call to <see cref="Delegate"/> has thrown an exception.</exception>
+        /// <remarks><see cref="operator()"/> and <see cref="Invoke"/> should be implemented the same way</remarks>
+        /// <seealso cref="Invoke"/>
+        Object^ operator()(... cli::array<Object^>^);
+        /// <summary>Calls internal function</summary>
+        /// <param name="">Parameters for internal managed function (delegate)</param>
+        /// <returns>Delegate call result, null if delegate returns <see cref="Void"/></returns>
+        /// <exception cref="MemberAccessException">The caller does not have access to the method represented by <see cref="Delegate"/> (for example, if the method is private).-or- The number, order, or type of parameters listed in args is invalid.</exception>
+        /// <exception cref="System::Reflection::TargetException">The method represented by <see cref="Delegate"/> is an instance method and the target object is null.-or- The method represented by <see cref="Delegate"/> is invoked on an object or a class that does not support it. (both situations mean that delegate was not properly created in implementing class)</exception>
+        /// <exception cref="System::Reflection::TargetInvocationException">Call to <see cref="Delegate"/> has thrown an exception.</exception>
+        /// <remarks>This is just helper function for languages that cannot sonsume C++ functors. <see cref="Invoke"/> should be implemented same way as <see cref="operator()"/></remarks>
+        /// <seelaso cref="operator()"/>
+        Object^ Invoke(... cli::array<Object^>^);
+    };
+
+    /// <summary>Provides basic abstract implementation of the <see cref="ICallbackWrapperBase"/> interface</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    [EditorBrowsable(EditorBrowsableState::Advanced)]
+    public ref class CallbackWrapperBase abstract: ICallbackWrapper{
+    protected: 
+        /// <summary>When overriden in derived class gets the delegate wrapped by this wrapper</summary>
+        /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
+        virtual property System::Delegate^ Delegate{System::Delegate^ get() abstract = ICallbackWrapper::Delegate::get;}
+
+        /// <summary>Calls internal function</summary>
+        /// <param name="">Parameters for internal managed function (delegate)</param>
+        /// <returns>Delegate call result, null if delegate returns <see cref="Void"/></returns>
+        /// <exception cref="MemberAccessException">The caller does not have access to the method represented by <see cref="Delegate"/> (for example, if the method is private).-or- The number, order, or type of parameters listed in args is invalid.</exception>
+        /// <exception cref="System::Reflection::TargetException">The method represented by <see cref="Delegate"/> is an instance method and the target object is null.-or- The method represented by <see cref="Delegate"/> is invoked on an object or a class that does not support it. (both situations mean that delegate was not properly created in derived class)</exception>
+        /// <exception cref="System::Reflection::TargetInvocationException">Call to <see cref="Delegate"/> has thrown an exception.</exception>
+        /// <remarks>Default implementation uses <see cref="Delegate"/>.<see cref="System::Delegate::DynamicInvoke"/></remarks>
+        virtual Object^ Invoke(... cli::array<Object^>^) = ICallbackWrapper::Invoke, ICallbackWrapper::operator();
     };
 
 #endif
