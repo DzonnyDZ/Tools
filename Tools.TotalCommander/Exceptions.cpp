@@ -94,6 +94,10 @@ namespace Tools {
         return ResourceManager->GetString(L"InvalidPathFormat", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::InvalidPluginNumberReinitialization::get() {
+        return ResourceManager->GetString(L"InvalidPluginNumberReinitialization", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::InvalidUnitNameCharacter::get() {
         return ResourceManager->GetString(L"InvalidUnitNameCharacter", _resourceCulture);
     }
@@ -233,6 +237,10 @@ namespace Tools {
     
     inline System::String^  Exceptions::InvalidPathFormatFormat(System::Object^  arg0) {
         return System::String::Format(_resourceCulture, InvalidPathFormat, arg0);
+    }
+    
+    inline System::String^  Exceptions::InvalidPluginNumberReinitializationFormat(System::Object^  arg0, System::Object^  arg1) {
+        return System::String::Format(_resourceCulture, InvalidPluginNumberReinitialization, arg0, arg1);
     }
     
     inline System::String^  Exceptions::InvalidUnitNameCharacterFormat() {

@@ -232,7 +232,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>During the <see cref="FindFirst"/>/<see cref="FindNext"/>/<see cref="FindClose"/> loop, the plugin may now call the <see cref="ProgressProc"/> to make a progess dialog appear. This is useful for very slow connections. Don't call <see cref="ProgressProc"/> for fast connections! The progress dialog will only be shown for normal dir changes, not for compound operations like get/put. The calls to <see cref="ProgressProc"/> will also be ignored during the first 5 seconds, so the user isn't bothered with a progress dialog on every dir change.</para></remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <version version="1.5.4">The function now supports Unicode</version>
-        bool ProgressProc(String^ SourceName, String^ TargetName,int PercentDone);
+        /// <version version="1.5.4">Parameter names changed to camelCase</version>
+        bool ProgressProc(String^ sourceName, String^ targetName,int percentDone);
         /// <summary>Callback function, which the plugin can call to show the FTP connections toolbar, and to pass log messages to it. Totalcmd can show these messages in the log window (ftp toolbar) and write them to a log file.</summary>
         /// <param name="MsgType">Can be one of the <see cref="LogKind"/> flags</param>
         /// <param name="LogString">String which should be logged.
@@ -242,20 +243,23 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect! If you call it with <paramref name="MsgType"/> <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the function <see cref="Disconnect"/> will be called (if defined) when the user presses the Disconnect button.</remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <version version="1.5.4">The method now supports Unicode</version>
-        void LogProc(LogKind MsgType,String^ LogString);
+        /// <version version="1.5.4">Parameter names changed to camelCase</version>
+        void LogProc(LogKind msgType, String^ logString);
         /// <summary>Specialized version of the <see cref="LogProc"/> function used for logging conection open.</summary>
         /// <param name="FileSystem">Name of the filesystem plugin has connected to. The name must start with a backslash.</param>
         /// <remarks>Do not call this function when file system implemeneted by the plugin does not reguire connection</remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <exception cref="ArgumentNullException"><paramref name="FileSystem"/> is null</exception>
         /// <exception cref="ArgumentException"><paramref name="FileSystem"/> either starts with \\ or it does not start with \</exception>
-        void LogProcConnect(String^ FileSystem);
+        /// <version version="1.5.4">Parameter name <c>FileSystem</c> changed to <c>fileSystem</c></version>
+        void LogProcConnect(String^ fileSystem);
         /// <summary>Specialized version of the <see cref="LogProc"/> function used for transfer completion advertisement.</summary>
         /// <param name="Source">Path of source file. It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
         /// <param name="Target">Path of destination file.  It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
-        void LogProcTransferComplete(String^ Source, String^ Target);
+        /// <version version="1.5.4">Parameter names changed to camelCase</version>
+        void LogProcTransferComplete(String^ source, String^ target);
         /// <summary>callback function, which the plugin can call to request input from the user. When using one of the standard parameters, the request will be in the selected language.</summary>
         /// <param name="RequestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
         /// <param name="CustomTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>
@@ -268,7 +272,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="ArgumentException"><paramref name="DefaultText"/> is longer than <paramref name="maxlen"/></exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxlen"/> is less than 1</exception>
         /// <version version="1.5.4">The function now supports Unicode</version>
-        String^ RequestProc(InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen);
+        /// <version version="1.5.4">Parameter names (but <paramref name="maxlen"/> which was already OK) changed to camelCase</version>
+        String^ RequestProc(InputRequestKind requestType, String^ customTitle, String^ customText, String^ defaultText, int maxlen);
 
 #pragma region Crypto
     protected:

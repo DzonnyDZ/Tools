@@ -24,8 +24,8 @@ using namespace Tools::TotalCommanderT;
     /// <param name="hModule">A handle to the DLL module. The value is the base address of the DLL.</param>
     /// <param name="ul_reason_for_call">The reason code that indicates why the DLL entry-point function is being called.</param>
     /// <param name="lpReserved">
-    /// <para>If <paramref name="fdwReason"/> is <c>DLL_PROCESS_ATTACH</c>, <paramref name="lpvReserved"/> is null for dynamic loads and non-null for static loads.</para>
-    /// <para>If <paramref name="fdwReason"/> is <c>DLL_PROCESS_DETACH</c>, <paramref name="lpvReserved"/> is nulll if <c>FreeLibrary</c> has been called or the DLL load failed and non-null if the process is terminating.</para>
+    /// <para>If <paramref name="ul_reason_for_call"/> is <c>DLL_PROCESS_ATTACH</c>, <paramref name="lpReserved"/> is null for dynamic loads and non-null for static loads.</para>
+    /// <para>If <paramref name="ul_reason_for_call"/> is <c>DLL_PROCESS_DETACH</c>, <paramref name="lpReserved"/> is null if <c>FreeLibrary</c> has been called or the DLL load failed and non-null if the process is terminating.</para>
     /// </param>
     /// <returns>This implementation always returns true</returns>
     BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved){return TRUE;}

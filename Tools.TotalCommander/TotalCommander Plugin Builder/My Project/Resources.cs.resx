@@ -187,7 +187,7 @@
     <value>Spouštím kompilátor</value>
   </data>
   <data name="i_CopyOutput" xml:space="preserve">
-    <value>Kopírují výstup z {0} do {1}</value>
+    <value>Kopíruji výstup z {0} do {1}</value>
   </data>
   <data name="i_CopyPDB" xml:space="preserve">
     <value>Kopíruji pdb soubor z {0} do {1}</value>
@@ -226,13 +226,13 @@
     <value>Cíl započat:</value>
   </data>
   <data name="i_ProjectFinished" xml:space="preserve">
-    <value>Projek skončen:</value>
+    <value>Projekt skončen:</value>
   </data>
   <data name="e_CannotExpand" xml:space="preserve">
     <value>Nemohu expandovat {0}: {1}</value>
   </data>
   <data name="i_CleanCopyDirectory" xml:space="preserve">
-    <value>Nemohu zkopírovat složku {0}</value>
+    <value>Čistění složky kopie {0}</value>
   </data>
   <data name="i_CopyOutputTo" xml:space="preserve">
     <value>Kopírování výstupu do {0}</value>

@@ -157,6 +157,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Attempt to reinitialize plugin with different number (old {0}, new {1})'.
+        /// </summary>
+        public: static property System::String^  InvalidPluginNumberReinitialization {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Unit name contains invalid character.'.
         /// </summary>
         public: static property System::String^  InvalidUnitNameCharacter {
@@ -404,6 +411,14 @@ namespace Tools {
         /// <param name="arg0">Objekt (0) pro formátování.</param>
         /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
         public: static System::String^  InvalidPathFormatFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Attempt to reinitialize plugin with different number (old {0}, new {1})'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <param name="arg1">Objekt (1) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  InvalidPluginNumberReinitializationFormat(System::Object^  arg0, System::Object^  arg1);
         
         /// <summary>
         /// Pahýl formátovací metody vracející hodnotu vlastnosti InvalidUnitNameCharacter.

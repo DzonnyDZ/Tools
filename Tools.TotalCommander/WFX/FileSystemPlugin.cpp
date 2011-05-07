@@ -46,8 +46,8 @@ namespace Tools{namespace TotalCommanderT{
 #pragma region Initialization
     int FileSystemPlugin::FsInit(int pluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc){
         bool reinitialization;
-        if(this->Initialized && this->IsInTotalCommander && !this->Unicode){ //TC does this (1st calls FsInit and then FsInitW
-            if(this->PluginNr != pluginNr) throw gcnew InvalidOperationException(String.Format(ResourcesT::Exceptions::InvalidPluginNumberReinitialization, this->PluginNr, pluginNr));
+        if(this->Initialized && this->IsInTotalCommander && !this->Unicode){ //TC does this (1st calls FsInit and then FsInitW)
+            if(this->PluginNr != pluginNr) throw gcnew InvalidOperationException(String::Format(ResourcesT::Exceptions::InvalidPluginNumberReinitialization, this->PluginNr, pluginNr));
             reinitialization = true;
         }else{
             if(this->Initialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitialized);
@@ -213,27 +213,27 @@ namespace Tools{namespace TotalCommanderT{
 #pragma endregion
     inline bool FileSystemPlugin::Initialized::get(){return this->initialized;}
 #pragma region "Callbacks"
-    bool FileSystemPlugin::ProgressProc(String^ SourceName, String^ TargetName,int PercentDone){
+    bool FileSystemPlugin::ProgressProc(String^ sourceName, String^ targetName, int percentDone){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        return this->progressProc(this, SourceName, TargetName, PercentDone);
+        return this->progressProc(this, sourceName, targetName, percentDone);
     }
-    void FileSystemPlugin::LogProc(LogKind MsgType,String^ LogString){
+    void FileSystemPlugin::LogProc(LogKind msgType,String^ logString){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        this->logProc(this, MsgType, LogString);
+        this->logProc(this, msgType, logString);
     }
-    void FileSystemPlugin::LogProcConnect(String^ FileSystem){
-        if(FileSystem == nullptr) throw gcnew ArgumentNullException("FileSystem");
-        if(!FileSystem->StartsWith("\\") || FileSystem->StartsWith("\\\\")) throw gcnew ArgumentException(Exceptions::InvalidPathFormatFormat(FileSystem),"FileSystem");
-        this->LogProc(LogKind::Connect, "CONNECT " + FileSystem);
+    void FileSystemPlugin::LogProcConnect(String^ fileSystem){
+        if(fileSystem == nullptr) throw gcnew ArgumentNullException("FileSystem");
+        if(!fileSystem->StartsWith("\\") || fileSystem->StartsWith("\\\\")) throw gcnew ArgumentException(Exceptions::InvalidPathFormatFormat(fileSystem), "fileSystem");
+        this->LogProc(LogKind::Connect, "CONNECT " + fileSystem);
     }
-    void FileSystemPlugin::LogProcTransferComplete(String^ Source, String^ Target){
-        if(Source == nullptr) throw gcnew ArgumentNullException("Source");
-        if(Target == nullptr) throw gcnew ArgumentNullException("Target");
-        this->LogProc(LogKind::TransferComplete,String::Format("{0} -> {1}",Source,Target));
+    void FileSystemPlugin::LogProcTransferComplete(String^ source, String^ target){
+        if(source == nullptr) throw gcnew ArgumentNullException("source");
+        if(target == nullptr) throw gcnew ArgumentNullException("target");
+        this->LogProc(LogKind::TransferComplete, String::Format("{0} -> {1}", source, target));
     }
-    String^ FileSystemPlugin::RequestProc(InputRequestKind RequestType, String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen){
+    String^ FileSystemPlugin::RequestProc(InputRequestKind requestType, String^ customTitle, String^ customText, String^ defaultText, int maxlen){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        return this->requestProc(this, RequestType, CustomTitle, CustomText, DefaultText, maxlen);            
+        return this->requestProc(this, requestType, customTitle, customText, defaultText, maxlen);            
     }
 #pragma region Crypto
     String^ FileSystemPlugin::CryptProc(CryptMode mode, String^ connectionName, String^ password, int maxlen){

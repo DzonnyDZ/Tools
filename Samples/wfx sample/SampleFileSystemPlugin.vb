@@ -555,7 +555,7 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="IO.DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.WriteError"/>.</exception>
     ''' <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/>.</exception>
     ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see cref="Tools.TotalCommanderT.FileSystemExitCode.NotSupported"/> - it has completelly different effect.</exception>
-    Public Overrides Function RenMovFile(ByVal OldName As String, ByVal NewName As String, ByVal Move As Boolean, ByVal OverWrite As Boolean, ByVal info As RemoteInfo) As FileSystemExitCode
+    Public Overrides Function RenMovFile(ByVal oldName As String, ByVal newName As String, ByVal move As Boolean, ByVal overWrite As Boolean, ByVal info As RemoteInfo) As FileSystemExitCode
         If IsBuiltInSpecial(OldName) Then Return FileSystemExitCode.ReadError
         If NewName.IndexOf("\"c, 1) < 0 Then Return FileSystemExitCode.WriteError
         Dim SourceName = GetRealPath(OldName)
@@ -566,19 +566,21 @@ ExecFile:   Dim p As New Process
         Dim KnownError As FileSystemExitCode?
         Try
             IOt.Copy(SourceName, TargetName, _
-                    Function(SourceFileName, TotalSize, BytesCopyed, TargetFileName) _
-                        If(Me.ProgressProc(OldName, NewName, BytesCopyed / TotalSize * 100), PathCopyCallbackResult.Abort, PathCopyCallbackResult.Ignore), _
-                    Function(SourceFileName, TargetFileName, Stage, Exception) _
-                        If(Stage = PathCopyStages.CheckTagretFileExists AndAlso TypeOf Exception Is FileAlreadyExistsException AndAlso OverWrite, _
-                           PathCopyCallbackResult.Retry, _
-                        If( _
-                            If(Stage = PathCopyStages.Read OrElse Stage = PathCopyStages.OpenSourceFile, _
-                                Write(Of FileSystemExitCode?)(FileSystemExitCode.ReadError, KnownError), _
-                            If(Stage = PathCopyStages.Write OrElse Stage = PathCopyStages.OpenTargetFile, _
-                               Write(Of FileSystemExitCode?)(FileSystemExitCode.WriteError, KnownError), _
-                               FileSystemExitCode.OK)) = FileSystemExitCode.OK, _
-                            PathCopyCallbackResult.Abort, PathCopyCallbackResult.Abort)), _
-                     Move)
+                     Function(sourceFileName, totalSize, bytesCopyed, targetFileName) _
+                          If(Me.ProgressProc(oldName, newName, If(totalSize = 0, 0, bytesCopyed / totalSize * 100)), PathCopyCallbackResult.Abort, PathCopyCallbackResult.Ignore),
+                     Function(sourceFileName, targetFileName, stage, exception)
+                         Select Case stage
+                             Case PathCopyStages.CheckTagretFileExists
+                                 If TypeOf exception Is FileAlreadyExistsException AndAlso overWrite Then Return PathCopyCallbackResult.Retry
+                             Case PathCopyStages.Read, PathCopyStages.OpenSourceFile
+                                 KnownError = FileSystemExitCode.ReadError
+                             Case PathCopyStages.Write, PathCopyStages.OpenTargetFile
+                                 KnownError = FileSystemExitCode.WriteError
+                         End Select
+                         Return PathCopyCallbackResult.Abort
+                     End Function,
+                     move
+                   )
         Catch ex As OperationCanceledException
             Return FileSystemExitCode.UserAbort
         Catch ex As Exception When TypeOf ex Is IO.IOException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException
@@ -598,16 +600,6 @@ ExecFile:   Dim p As New Process
             End Try
         End If
         Return FileSystemExitCode.OK
-    End Function
-    ''' <summary>Writes value to target and returns it</summary>
-    ''' <param name="Value">Value to be written</param>
-    ''' <param name="Target">Target to write <paramref name="Value"/> to</param>
-    ''' <typeparam name="T">Type of value</typeparam>
-    ''' <returns><paramref name="Value"/></returns>
-    ''' <remarks><note>This is helper function</note></remarks>
-    Private Function Write(Of T)(ByVal Value As T, ByRef Target As T) As T
-        Target = Value
-        Return Value
     End Function
 
     ''' <summary>Transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
