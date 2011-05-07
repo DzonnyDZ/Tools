@@ -20,11 +20,12 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::ProgressProc"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class ProgressProcWrapper sealed{
+    public ref class ProgressProcWrapper sealed: ICallbackWrapper{
     private:
         tProgressProc ansi;
         tProgressProcW unicode;
         ProgressCallback^ managed;
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="ProgressProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>
@@ -83,11 +84,12 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::LogProc"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class LogProcWrapper sealed{
+    public ref class LogProcWrapper sealed: ICallbackWrapper{
     private:
         tLogProc ansi;
         tLogProcW unicode;
         LogCallback^ managed;
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="LogProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>
@@ -140,11 +142,12 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::RequestProc"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class RequestProcWrapper sealed{
+    public ref class RequestProcWrapper sealed: ICallbackWrapper{
     private:
         tRequestProc ansi;
         tRequestProcW unicode;
         RequestCallback^ managed;
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="RequestProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>
@@ -215,11 +218,12 @@ namespace Tools{ namespace TotalCommanderT{
     /// <seealso cref="FileSystemPlugin::PerformCryptoOperation"/>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     [EditorBrowsable(EditorBrowsableState::Advanced)]
-    public ref class CryptProcWrapper sealed{
+    public ref class CryptProcWrapper sealed: ICallbackWrapper{
     private:
         tCryptProc ansi;
         tCryptProcW unicode;
         CryptCallback^ managed;
+        virtual property System::Delegate^ Delegate {System::Delegate^ get() sealed = ICallbackWrapper::Delegate::get;}
     public:
         /// <summary>CTor - creates a new instance of the <see cref="RequestProcWrapper"/> class from ANSI function pointer</summary>
         /// <param name="method">Pointer to an ANSI function</param>
@@ -284,5 +288,4 @@ namespace Tools{ namespace TotalCommanderT{
         /// <remarks>This is CLS compliant alternative of <see cref="operator()"/></remarks>
         String^ Invoke(FileSystemPlugin^ sender, CryptMode mode, String^ connectionName, String^ password, int maxlen);
     };
-
 }}

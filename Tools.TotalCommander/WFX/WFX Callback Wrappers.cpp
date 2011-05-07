@@ -8,6 +8,10 @@ using namespace System::ComponentModel;
 namespace Tools{ namespace TotalCommanderT{
 
 #pragma region ProgressProcWrapper
+    Delegate^ ProgressProcWrapper::Delegate::get(){
+        return this->managed != nullptr ? this->managed : gcnew ProgressCallback(this, &ProgressProcWrapper::operator());
+    }
+
     ProgressProcWrapper::ProgressProcWrapper(tProgressProc method){
         if(method == NULL) throw gcnew ArgumentNullException("method");
         this->ansi = method;
@@ -84,6 +88,10 @@ namespace Tools{ namespace TotalCommanderT{
 #pragma endregion
 
 #pragma region LogProcWrapper
+    Delegate^ LogProcWrapper::Delegate::get(){
+        return this->managed != nullptr ? this->managed : gcnew LogCallback(this, &LogProcWrapper::operator());
+    }
+
     LogProcWrapper::LogProcWrapper(tLogProc method){
         if(method == NULL) throw gcnew ArgumentNullException("method");
         this->ansi = method;
@@ -149,6 +157,10 @@ namespace Tools{ namespace TotalCommanderT{
 #pragma endregion
 
 #pragma region RequestProcWrapper
+    Delegate^ RequestProcWrapper::Delegate::get(){
+        return this->managed != nullptr ? this->managed : gcnew RequestCallback(this, &RequestProcWrapper::operator());
+    }
+
     RequestProcWrapper::RequestProcWrapper(tRequestProc method){
         if(method == NULL) throw gcnew ArgumentNullException("method");
         this->ansi = method;
@@ -250,6 +262,10 @@ namespace Tools{ namespace TotalCommanderT{
 #pragma endregion
 
 #pragma region CryptProcWrapper
+    Delegate^ CryptProcWrapper::Delegate::get(){
+        return this->managed != nullptr ? this->managed : gcnew CryptCallback(this, &CryptProcWrapper::operator());
+    }
+
     CryptProcWrapper::CryptProcWrapper(tCryptProc method){
         if(method == NULL) throw gcnew ArgumentNullException("method");
         this->ansi = method;
@@ -366,5 +382,4 @@ namespace Tools{ namespace TotalCommanderT{
         return this(sender, mode, connectionName, password, maxlen);
     }
 #pragma endregion
-
 }}

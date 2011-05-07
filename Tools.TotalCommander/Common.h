@@ -164,5 +164,14 @@ namespace Tools{namespace TotalCommanderT{
 #pragma warning(default : 4290)
 #pragma warning (pop)
 
+    /// <summary>An interface for callback wrapper which wraps one of: Unicode function pointer, ANSI function pointer, managed delegate</summary>
+    /// <version version="1.5.4">This interface is new in version 1.5.4</version>
+    [CLSCompliant(false)]
+    public interface struct ICallbackWrapper{
+        /// <summary>Gets the delegate wrapped by this wrapper</summary>
+        /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
+        property System::Delegate^ Delegate{System::Delegate^ get();}
+    };
+
 #endif
 }}
