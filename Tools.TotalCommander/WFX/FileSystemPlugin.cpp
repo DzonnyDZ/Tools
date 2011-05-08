@@ -270,14 +270,14 @@ namespace Tools{namespace TotalCommanderT{
         if(this->CryptInitialized && this->IsInTotalCommander && this->Unicode) return;        
         if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
         this->cryptProc = gcnew CryptProcWrapper(pCryptProc);
-        this->cryptoNr = CryptoNr;
+        this->cryptoNr = cryptoNr;
         this->cryptInitialized = true;
         this->OnInitializeCryptography((CryptFlags)flags);
     }
     void FileSystemPlugin::FsSetCryptCallbackW(tCryptProcW pCryptProc, int cryptoNr, int flags){
         if(this->CryptInitialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::CryptoAlreadyInitialized);
         this->cryptProc = gcnew CryptProcWrapper(pCryptProc);
-        this->cryptoNr = CryptoNr;
+        this->cryptoNr = cryptoNr;
         this->cryptInitialized = true;
         this->OnInitializeCryptography((CryptFlags)flags);
     }
