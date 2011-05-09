@@ -23,7 +23,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">This property is new version 1.5.4</version>
         virtual property Type^ PluginBaseClass{Type^ get() abstract;}
 
-    protected:
+    protected private:
         /// <summary>Computes flags indicating which functions are supported by current plugin</summary>
         /// <returns>Flags indicating which functions are supported by current plugin</returns>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
@@ -55,5 +55,11 @@ namespace Tools{namespace TotalCommanderT{
         /// After this plugin-type-specific method is called by Total Commander this property is set to true.
         /// <version version="1.5.4">This property is new in version 1.5.4</version>
         virtual property bool Initialized{bool get() abstract;}
+    protected:
+        /// <summary>When overriden in derived class provides custom code invoked when plugin is initialized.</summary>
+        /// <remarks>When this method is called the <see cref="Initialized"/> property has value true.
+        /// <para>Default implementation of this method does nothing.</para></remarks>
+        /// <version version="1.5.4">This method is new in version 1.5.4 (it was previously implemented at <see cref="FileSystemPlugin"/> level).</version>
+        virtual void OnInit();
     };
 }}

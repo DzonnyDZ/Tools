@@ -14,6 +14,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <remarks><note type="inheritinfo">Do not derive directly from this class as it does not represent any concrete plugin</note>
     /// <note>Total Commander Plugin Builder emits content plugin functions only when both <see cref="ContentPluginBase::SupportedFields"/>'s getter and <see cref="ContentPluginBase::GetValue"/> functions are implemented in derived class. To be implemented means that the most derived implementation of the function is not marked <see cref="MethodNotSupportedAttribute"/>.</note></remarks>
     /// <version version="1.5.3">Added necessary functions and properties. Before 1.5.3 this class was empty, it had no members not derived from <see cref="PluginBase"/>.</version>.
+    /// <version version="1.5.4">Added Unicode support</version>
     public ref class ContentPluginBase abstract : PluginBase{
     internal:
         /// <summary>CTor - creates new instance of the <see cref="ContentPluginBase"/> class</summary>

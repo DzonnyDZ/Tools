@@ -33,4 +33,6 @@ namespace Tools{namespace TotalCommanderT{
          }
          return (T)Enum::ToObject(T::typeid, ret);
      }
+
+     inline void PluginBase::OnInit(){/*do nothing*/}
 }}

@@ -25,10 +25,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary><see cref="ContentPluginBase::GetSupportedFieldFlags"/></summary>
         [PluginMethod("GetSupportedFieldFlags","TC_C_GETSUPPORTEDFIELDFLAGS")] GetSupportedFieldFlags = 1<<27,
         /// <summary><see cref="ContentPluginBase::SetValue"/></summary>
-        [PluginMethod("SetValue","TC_C_SETVALUE")] SetValue = 1<<28,
-        /// <summary>Reserved for future used when <c>ContentGetDefaultView<c/> would be implemented</summary>
-        /// <remarks>Name of the enum member will change in future</remarks>
-        _GetDefaultView = 1<<29
+        [PluginMethod("SetValue","TC_C_SETVALUE")] SetValue = 1<<28
     };
 
 }}

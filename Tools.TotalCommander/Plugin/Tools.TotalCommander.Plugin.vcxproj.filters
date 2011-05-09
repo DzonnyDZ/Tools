@@ -50,6 +50,12 @@
     <ClInclude Include="AllTCFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="listplug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WLXFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -65,6 +71,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="wfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wlx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

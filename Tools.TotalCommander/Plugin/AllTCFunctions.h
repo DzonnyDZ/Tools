@@ -92,7 +92,7 @@ Single function constants (there is a constant defined for each TC function do d
 #endif
 //Lister wlx
 #ifdef TC_WLX
-    //TODO:WLX
+    #include "WLXFunctions.h"
 #endif
 //Pack wcx
 #ifdef TC_WCX

@@ -248,7 +248,7 @@ namespace Tools{namespace TotalCommanderT{
     String^ FileSystemPlugin::LoadPassword(String^ connectionName, bool showUI){
         if(connectionName == nullptr) throw gcnew ArgumentNullException("connectionName");
         return this->CryptProc(showUI ? CryptMode::LoadPassword : CryptMode::LoadPasswordNoUI, connectionName, nullptr, this->MaxPath);
-    }
+    }                                                                                   
     void FileSystemPlugin::MovePassword(String^ sourceConnectionName, String^ targetConnectionName, bool deleteOriginal){
         if(sourceConnectionName == nullptr) throw gcnew ArgumentNullException("sourceConnectionName");
         if(targetConnectionName == nullptr) throw gcnew ArgumentNullException("targetConnectionName");

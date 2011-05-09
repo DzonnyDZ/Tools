@@ -80,11 +80,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary><see cref="ContentPluginBase::SetValue"/></summary>
         /// <seelaso cref="ContentFunctions::SetValue"/>
         [PluginMethod("SetValue","TC_C_SETVALUE")] SetValue = (int)ContentFunctions::SetValue,
+
         /// <summary>Reserved for future used when <c>FsContentGetDefaultView<c/> would be implemented</summary>
-        /// <remarks>Name of the enum member will change in future</remarks>
-        /// <seelaso cref="ContentFunctions::_GetDefaultView"/>
-        _GetDefaultView = (int)ContentFunctions::_GetDefaultView,
-            
+        [PluginMethod("GetDefaultView", "TC_FS_GETDEFAULTVIEW")] GetDefaultView = 1<<29,
         /// <summary><see cref="FileSystemPlugin::BackgroundFlags"/> (getter)</summary>
         [PluginMethod("get_BackgroundFlags", "TC_FS_GETBACKGROUNDFLAGS")] GetBackgroundFlags = 1<<30
     };

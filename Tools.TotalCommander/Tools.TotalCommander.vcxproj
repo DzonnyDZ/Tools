@@ -252,6 +252,7 @@ IF ERRORLEVEL 0 (
     <ClInclude Include="PluginMethodAttribute.h" />
     <ClInclude Include="Plugin\contplug.h" />
     <ClInclude Include="Plugin\fsplugin.h" />
+    <ClInclude Include="Plugin\listplug.h" />
     <ClInclude Include="Plugin\plug_common.h" />
     <ClInclude Include="WFX\FileSystemPlugin.h" />
     <ClInclude Include="WFX\FindData.h" />
@@ -261,6 +262,9 @@ IF ERRORLEVEL 0 (
     <ClInclude Include="WFX\WFX common.h" />
     <ClInclude Include="WFX\WFX Enums.h" />
     <ClInclude Include="WFX\WfxFunctions.h" />
+    <ClInclude Include="WLX\ListerPlugin.h" />
+    <ClInclude Include="WLX\WLX common.h" />
+    <ClInclude Include="WLX\WlxFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Doc\Content.wdx.hlp" />
@@ -290,6 +294,7 @@ IF ERRORLEVEL 0 (
     <ClCompile Include="WFX\WFX Callback Wrappers.cpp" />
     <ClCompile Include="WFX\WFX common.cpp" />
     <ClCompile Include="WFX\WFX Enums.cpp" />
+    <ClCompile Include="WLX\ListerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

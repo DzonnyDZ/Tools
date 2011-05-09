@@ -20,8 +20,11 @@ namespace Tools{namespace TotalCommanderT{
     /// <summary>Abstract base class for Total Commander file-system plugins (wfx)</summary>
     /// <remarks>See <see2 cref2="T:Tools.TotalCommanderT.PluginBuilder.Generator"/> for more information about how to generate Total Commander plugin from .NET</remarks>
     /// <version version="1.5.4">Added support for crypro (Total Commander secure password store)</version>
+    /// <version version="1.5.4">Added Unicode support</version>
     public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
+        /// <summary>CTor - creates a new instance of the <see cref="FileSystemPlugin"/> class</summary>
+        /// <remarks>The plugin instance is not ready to be used untill <see cref="OnInit"/> is called.</remarks>
         FileSystemPlugin();
     private:
         /// <summary>Holds plugin IDs and instances of all registered plugins</summary>
@@ -206,7 +209,7 @@ namespace Tools{namespace TotalCommanderT{
         property int PluginNr{int get();}
     public:
         /// <summary>Gets value indicating if this plugin instance was initialized or not</summary>
-        property bool Initialized{virtual bool get()override sealed;}
+        property bool Initialized{virtual bool get() override sealed;}
     protected:
         /// <summary>When overriden in derived class provides custom code invoked when plugin is initialized.</summary>
         /// <remarks>When this method is called the <see cref="Initialized"/> property has value true and <see cref="PluginNr"/> is already set.
@@ -219,8 +222,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>You cannot rely on 2nd call being done! It maybe unwanted behavior of Total Commander and it may change in future.
         /// Also managed plugin framework many change in future and block second call. And finally 2 calls are not done in ANSI environment.</para>
         /// </note></remarks>
-        /// <version version="1.5.4">The cunction can now be called twice in Unicode environment.</version>
-        virtual void OnInit();
+        /// <version version="1.5.4">The function can now be called twice in Unicode environment.</version>
+        virtual void OnInit() override;
 
 #pragma region Callbacks
         /// <summary>Callback function, which the plugin can call to show copy progress.</summary>

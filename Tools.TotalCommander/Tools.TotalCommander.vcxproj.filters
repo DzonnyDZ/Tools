@@ -22,6 +22,12 @@
     <Filter Include="Source Files\WFX">
       <UniqueIdentifier>{49ab9988-b9cd-4d82-ac1f-356315e7fc27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\WLX">
+      <UniqueIdentifier>{1a804a67-7cf3-41f9-ae95-f22483afdfab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WLX">
+      <UniqueIdentifier>{2bf056ba-cbe9-4065-854b-cf1fb233b551}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -86,6 +92,18 @@
     </ClInclude>
     <ClInclude Include="ContentFieldSpecification.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\listplug.h">
+      <Filter>Header Files\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\ListerPlugin.h">
+      <Filter>Header Files\WLX</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\WlxFunctions.h">
+      <Filter>Header Files\WLX</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\WLX common.h">
+      <Filter>Header Files\WLX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="ContentFieldSpecification.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WLX\ListerPlugin.cpp">
+      <Filter>Source Files\WLX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

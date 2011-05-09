@@ -108,12 +108,14 @@
     <ClInclude Include="Export.h" />
     <ClInclude Include="fsplugin.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="listplug.h" />
     <ClInclude Include="Misc.h" />
     <ClInclude Include="plug_common.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="TCHeaders.h" />
     <ClInclude Include="WFX+WDXFunctions.h" />
     <ClInclude Include="WFXFunctions.h" />
+    <ClInclude Include="WLXFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
@@ -121,6 +123,7 @@
     <ClCompile Include="AssemblyResolver.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="wfx.cpp" />
+    <ClCompile Include="wlx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
