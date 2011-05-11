@@ -20,52 +20,54 @@ namespace Tools{namespace TotalCommanderT{
         this->implementedFunctions = this->GetSupportedFunctions<WlxFunctions>();
         this->unicode = true;
         this->isInTotalCommander = false;
+        loadedWindows = gcnew Dictionary<IntPtr, IListerUI^>();
     }
 
     HWND ListerPlugin::ListLoad(HWND parentWin, wchar_t* fileToLoad, int showFlags, bool wide){
-        if(this->Initialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitialized);
+        if(this->Initialized && !this->IsInTotalCommander)
+            throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitializedNotForTC);
+        if(this->Initialized && this->Unicode != wide)
+            throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitializedAnsiUnicode);
         this->initialized = true;
         this->unicode = wide;
         this->isInTotalCommander = true;
 
-        this->parentWindowHandle = (IntPtr)parentWin;
-        this->fileName = gcnew String(fileToLoad);
-        this->options = (ListerShowFlags) showFlags;
-
-        IntPtr hWnd = this->OnInit();
-        this->controlHandle = hWnd;
-        return (HWND)(void *)hWnd;
+        return (HWND)(void*)this->LoadInternal((IntPtr)parentWin, gcnew String(fileToLoad), (ListerShowFlags) showFlags);
     }
 
     IntPtr ListerPlugin::Load(IntPtr parentWin, String^ fileToLoad, ListerShowFlags showFlags){
-        if(this->Initialized) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitialized);
+        if(this->Initialized && this->IsInTotalCommander)
+            throw gcnew InvalidOperationException(ResourcesT::Exceptions::PluginInitializedForTC);
         if(fileToLoad == nullptr) throw gcnew ArgumentNullException("fileToLoad");
         if(parentWin == IntPtr::Zero) throw gcnew ArgumentNullException("parentWin");
         this->initialized = true;
         this->unicode = true;
         this->isInTotalCommander = false;
 
-        this->parentWindowHandle = parentWin;
-        this->fileName = fileToLoad;
-        this->options = showFlags;
-
-        IntPtr hWnd = this->OnInit();
-        this->controlHandle = hWnd;
-        return hWnd;
+        return this->LoadInternal(parentWin, fileToLoad, showFlags);
     }
 
-    inline IntPtr ListerPlugin::ParentWindowHandle::get(){ return this->parentWindowHandle; }
-    inline String^ ListerPlugin::FileName::get(){ return this->fileName; }
-    inline ListerShowFlags ListerPlugin::Options::get(){ return this->options; }
+    IntPtr ListerPlugin::LoadInternal(IntPtr parentWin, String^ fileToLoad, ListerShowFlags showFlags){
+        auto e = gcnew ListerPluginInitEventArgs(parentWin, fileToLoad, showFlags);
+        this->OnInit(e);
+        if(e->PluginWindow == nullptr){
+            return IntPtr::Zero;
+        }else{
+            loadedWindows->Add(e->PluginWindow->Handle, e->PluginWindow);
+            return e->PluginWindow->Handle;
+        }
+    }
+
     inline bool ListerPlugin::Initialized::get(){ return this->initialized; }
-    inline IntPtr ListerPlugin::ControlHandle::get() {return this->controlHandle; }
     void ListerPlugin::OnInitInternal(){ this->OnInit(); }
-    IntPtr ListerPlugin::OnInit(){
+    void ListerPlugin::OnInit(ListerPluginInitEventArgs^){
         if(this->ImplementedFunctions.HasFlag(WlxFunctions::Load))
             __super::OnInit();    
         else throw gcnew NotSupportedException();
-        return IntPtr::Zero;
     }
+    inline int ListerPlugin::LoadedWindowsCount::get(){return this->loadedWindows->Count;}
+    inline IEnumerator<KeyValuePair<IntPtr, IListerUI^>>^ ListerPlugin::LoadedWindows::get(){return this->loadedWindows->GetEnumerator();}
+    inline IListerUI^ ListerPlugin::LoadedWindows::get(IntPtr hWnd){return this->loadedWindows->ContainsKey(hWnd) ? this->loadedWindows[hWnd] : nullptr; }
 
 #pragma endregion
 }}

@@ -213,6 +213,27 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Attempt to re-initialize plugin with different ANSI/Unicode settings.'.
+        /// </summary>
+        public: static property System::String^  PluginInitializedAnsiUnicode {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Attempt to re-initialize plugin in managed mode when it was already initialized in Total Commander mode.'.
+        /// </summary>
+        public: static property System::String^  PluginInitializedForTC {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Attempt to re-initialize plugin in Total Commander mode when it was alreay initialized in managed mode.'.
+        /// </summary>
+        public: static property System::String^  PluginInitializedNotForTC {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Plugin was not initialized.'.
         /// </summary>
         public: static property System::String^  PluginNotInitialized {
@@ -464,6 +485,24 @@ namespace Tools {
         /// </summary>
         /// <returns>Hodnota vlastnosti PluginInitialized.</returns>
         public: static System::String^  PluginInitializedFormat();
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti PluginInitializedAnsiUnicode.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti PluginInitializedAnsiUnicode.</returns>
+        public: static System::String^  PluginInitializedAnsiUnicodeFormat();
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti PluginInitializedForTC.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti PluginInitializedForTC.</returns>
+        public: static System::String^  PluginInitializedForTCFormat();
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti PluginInitializedNotForTC.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti PluginInitializedNotForTC.</returns>
+        public: static System::String^  PluginInitializedNotForTCFormat();
         
         /// <summary>
         /// Pahýl formátovací metody vracející hodnotu vlastnosti PluginNotInitialized.

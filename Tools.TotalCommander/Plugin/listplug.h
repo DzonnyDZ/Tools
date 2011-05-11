@@ -1,4 +1,5 @@
 #pragma once
+#include "plug_common.h"
 /* Contents of file listplug.h */
 
 #define lc_copy		1

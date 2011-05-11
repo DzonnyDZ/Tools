@@ -44,7 +44,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="showFlags">A combination of <see cref="ListerShowFlags"/> flags. You may ignore these parameters if they don't apply to your document type.</param>
         /// <param name="wide">True when plugin is loaded for Unicode environment, false if it is loaded for ANSI environment. This parameter is not part of Total Commander plugin interface constract, but it is used to distinguish between the two situations.</param>
         /// <returns>Return a handle to your window if load succeeds, null otherwise. If null is returned, Lister will try the next plugin.</returns>
-        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true and <see cref="IsInTotalCommander"/> is false. -or- <see cref="Initialized"/> is true and <see cref="Unicode"/> differes from <paramref name="wide"/>.</exception>
         /// <remarks>
         /// <para>Lister will subclass your window to catch some hotkeys like 'n' or 'p'.</para>
         /// <para>When lister is activated, it will set the focus to your window. If your window contains child windows, then make sure that you set the focus to the correct child when your main window receives the focus!</para>
@@ -52,6 +52,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>Lister plugins which only create thumbnail images do not need to implement this function. To instantiate a plugin outside Total Commander from managed code use <see cref="Load"/>.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
         /// <para>This plugin function is implemented by <see cref="Load"/>.</para>
+        /// <para>This function can be called multiple times on one plugin class instance.</para>
         /// </remarks>
         /// <seealso cref="Load"/><seealso cref="OnLoad"/>
         [EditorBrowsable(EditorBrowsableState::Never)]
@@ -63,35 +64,25 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="fileToLoad">The name of the file which has to be loaded.</param>
         /// <param name="showFlags">A combination of <see cref="ListerShowFlags"/> flags.</param>
         /// <returns>Handle to window created by the plugin if plugin is loaded successfully, <see cref="IntPtr::Zero"/> otherwise. If <see cref="IntPtr::Zero"/> is returned it' signal for owner application to try next plugin.</returns>
-        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
         /// <exception cref="ArgumentNullException"><paramref name="parentWin"/> is <see cref="IntPtr::Zero"/> or <paramref name="fileToLoad"/> is null.</exception>
-        /// <remarks>Use this function when loading plugin from managed environment instead of <see cref="ListLoad"/>. For details about this function see <see cref="ListLoad"/></remarks>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true and <see cref="IsInTotalCommander"/> is true.</exception>
+        /// <remarks>Use this function when loading plugin from managed environment instead of <see cref="ListLoad"/>. For details about this function see <see cref="ListLoad"/>
+        /// <para>This function can be called multiple times on one plugin class instance.</para></remarks>
         /// <seealso cref="ListLoad"/><seealso cref="OnLoad"/>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         IntPtr Load(IntPtr parentWin, String^ fileToLoad, ListerShowFlags showFlags);
     private:
-        IntPtr parentWindowHandle;
-        String^ fileName;
-        ListerShowFlags options;
-        IntPtr controlHandle;
-    public:
-        /// <summary>Get handle to parent window lister plugin UI should be rendered inside</summary>
-        /// <returns>Handle to parent window. <see cref="IntPtr::Zero"/> if <see cref="Initialized"/> is false.</returns>
-        property IntPtr ParentWindowHandle{ IntPtr get(); }
-        /// <summary>Gets path of file to provide preview for</summary>
-        /// <returns>Path of file to provide preview for. Null if <see cref="Initialized"/> is false.</returns>
-        property String^ FileName{ String^ get(); }
-        /// <summary>Gets options set to the plugin at time of load</summary>
-        /// <returns>Plugin options set when Total Commander initialized it. <see cref="ListerShowFlags::none"/> if <see cref="Initialized"/> si false.</returns>
-        property ListerShowFlags Options{ ListerShowFlags get(); }
-        /// <summary>After successfull initialization retuns handle of control which represents user interface of the plugin</summary>
-        /// <returns>Handle of a control which represents a user interface of the plugin instance.
-        /// Returns <see cref="IntPtr::Zero"/> when <see cref="OnInit"/> was not called yet or it was called but returned <see cref="IntPtr::Zero"/>.</returns>
-        property IntPtr ControlHandle{ IntPtr get(); }
+        /// <summary>Internaly performs the initialization operations</summary>
+        /// <param name="parentWin">Handle to lister window. Create your plugin window as a child of this window.</param>
+        /// <param name="fileToLoad">The name of the file which has to be loaded.</param>
+        /// <param name="showFlags">A combination of <see cref="ListerShowFlags"/> flags.</param>
+        /// <returns>Handle to window created by the plugin if plugin is loaded successfully, <see cref="IntPtr::Zero"/> otherwise. If <see cref="IntPtr::Zero"/> is returned it' signal for owner application to try next plugin.</returns>
+        IntPtr LoadInternal(IntPtr parentWin, String^ fileToLoad, ListerShowFlags showFlags);
     private:
         bool initialized;
         bool unicode;
         bool isInTotalCommander;
+        Dictionary<IntPtr, IListerUI^>^ loadedWindows;
     public:
         /// <summary>Gets value indicating if this plugin instance was initialized or not</summary>
         property bool Initialized{virtual bool get() override sealed;}
@@ -101,28 +92,35 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsable(EditorBrowsableState::Never)]
         virtual void OnInitInternal() sealed = PluginBase::OnInit;
         /// <summary>When overriden in derived class called when user opens lister.</summary>
-        /// <returns>
-        /// Handle of window (control) that lister plugin uses to display it's content.
-        /// <note>For Win32 point-of-view WinForms controls are windows, WPF controls are not windows. WinForms froms are windows, WPF windows are windows (but it needs some work to get handle from them).</note>
-        /// Returns <see cref="IntPtr::Zero"/> if plugin load was unsuccessfull (i.e. plugin does not support this file type). In this case Total Commander will attempt to load next plugin.
-        /// </returns>
+        /// <param name="e">Event arguments. You must populate them with information about plugin UI to load the plugin. If you don't populate it your plugin is not loaded and Total Commander tries next plugin.</param>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>
-        /// Use <see cref="ParentWindowHandle"/>, <see cref="FileName"/> and <see cref="Options"/> properties to detect which file and under which conditions you should display.
         /// <para>You tipically MUST override this function in your derived plugin class. Lister plugins which only create thumbnail images do not need to implement this function. But then plugin functionality is limited.</para>
         /// <para>When this method is called, <see cref="Initialized"/> is true.</para>
         /// <para>Lister will subclass your window to catch some hotkeys like 'n' or 'p'.</para>
         /// <para>When lister is activated, it will set the focus to your window. If your window contains child windows, then make sure that you set the focus to the correct child when your main window receives the focus!</para>
-        /// <para>If <see cref="Options"/> has <see cref="ListerShowFlags::ForceShow"/> flag set, you may try to load the file even if the plugin wasn't made for it. Example: A plugin with line numbers may only show the file as such when the user explicitly chooses 'Image/Multimedia' from the menu.</para>
+        /// <para>If <paramref name="e"/>.<see cref="ListerPluginInitEventArgs::Options"/> has <see cref="ListerShowFlags::ForceShow"/> flag set, you may try to load the file even if the plugin wasn't made for it. Example: A plugin with line numbers may only show the file as such when the user explicitly chooses 'Image/Multimedia' from the menu.</para>
         /// <note type="inheritinfo">Do not throw any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// <note>WinForms controls can be placed directly inside lister window. With WPF controls some kind of interop is necessary - the easiest option is probably to place WPF control onto WinForms control.</note>
         /// <para>Please note that multiple Lister windows can be open at the same time!</para>
+        /// <para>This function can be called multiple times on one plugin class instance.</para>
         /// </remarks>
         /// <seealso cref="Load"/><seealso cref="ListLoad"/>
         /// <seelaso cref="T:System::Windows::Forms::IWin32Window"/><seealso cref="System::Windows::Interop::IWin32Window"/>
         /// <seealso cref="T:System::Windows::Forms::Control"/><seelalso cref="System::Windows::Control"/>
         [MethodNotSupported]
-        virtual IntPtr OnInit() new;
+        virtual void OnInit(ListerPluginInitEventArgs^ e) new;
+    public:
+        /// <summary>Gets count of successfully loaded, not yett unloaded, plugin windows (UIs)</summary>
+        property int LoadedWindowsCount{int get();}
+        /// <summary>Gets enumerator that iterrates through all currently lloaded plugin windows (UIs)</summary>
+        property IEnumerator<KeyValuePair<IntPtr, IListerUI^>>^ LoadedWindows {
+            IEnumerator<KeyValuePair<IntPtr, IListerUI^>>^ get();
+        }
+        /// <summary>Gets lister plugin windows by handle</summary>
+        /// <param name="hWnd">Handle of lister plugin window (control, UI) to load</param>
+        /// <returns>An object representing UI of lister plugin of given handle. Nulll if window with given handle is not currently loaded</returns>
+        property IListerUI^ LoadedWindows[IntPtr]{IListerUI^ get(IntPtr hWnd);}
 #pragma endregion
     };
 }}

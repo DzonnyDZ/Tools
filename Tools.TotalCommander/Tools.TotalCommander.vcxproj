@@ -295,6 +295,7 @@ IF ERRORLEVEL 0 (
     <ClCompile Include="WFX\WFX common.cpp" />
     <ClCompile Include="WFX\WFX Enums.cpp" />
     <ClCompile Include="WLX\ListerPlugin.cpp" />
+    <ClCompile Include="WLX\WLX common.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

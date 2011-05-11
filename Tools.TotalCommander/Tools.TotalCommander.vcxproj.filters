@@ -175,6 +175,9 @@
     <ClCompile Include="WLX\ListerPlugin.cpp">
       <Filter>Source Files\WLX</Filter>
     </ClCompile>
+    <ClCompile Include="WLX\WLX common.cpp">
+      <Filter>Source Files\WLX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Exceptions.cs.resx" />

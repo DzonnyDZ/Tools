@@ -183,6 +183,15 @@
   <data name="PluginInitialized" xml:space="preserve">
     <value>The plugin was already initialized.</value>
   </data>
+  <data name="PluginInitializedAnsiUnicode" xml:space="preserve">
+    <value>Attempt to re-initialize plugin with different ANSI/Unicode settings.</value>
+  </data>
+  <data name="PluginInitializedForTC" xml:space="preserve">
+    <value>Attempt to re-initialize plugin in managed mode when it was already initialized in Total Commander mode.</value>
+  </data>
+  <data name="PluginInitializedNotForTC" xml:space="preserve">
+    <value>Attempt to re-initialize plugin in Total Commander mode when it was alreay initialized in managed mode.</value>
+  </data>
   <data name="PluginNotInitialized" xml:space="preserve">
     <value>Plugin was not initialized.</value>
   </data>

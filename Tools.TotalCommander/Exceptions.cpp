@@ -126,6 +126,18 @@ namespace Tools {
         return ResourceManager->GetString(L"PluginInitialized", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::PluginInitializedAnsiUnicode::get() {
+        return ResourceManager->GetString(L"PluginInitializedAnsiUnicode", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::PluginInitializedForTC::get() {
+        return ResourceManager->GetString(L"PluginInitializedForTC", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::PluginInitializedNotForTC::get() {
+        return ResourceManager->GetString(L"PluginInitializedNotForTC", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::PluginNotInitialized::get() {
         return ResourceManager->GetString(L"PluginNotInitialized", _resourceCulture);
     }
@@ -269,6 +281,18 @@ namespace Tools {
     
     inline System::String^  Exceptions::PluginInitializedFormat() {
         return PluginInitialized;
+    }
+    
+    inline System::String^  Exceptions::PluginInitializedAnsiUnicodeFormat() {
+        return PluginInitializedAnsiUnicode;
+    }
+    
+    inline System::String^  Exceptions::PluginInitializedForTCFormat() {
+        return PluginInitializedForTC;
+    }
+    
+    inline System::String^  Exceptions::PluginInitializedNotForTCFormat() {
+        return PluginInitializedNotForTC;
     }
     
     inline System::String^  Exceptions::PluginNotInitializedFormat() {
