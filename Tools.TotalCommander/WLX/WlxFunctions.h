@@ -10,10 +10,11 @@ namespace Tools{namespace TotalCommanderT{
     [Flags]
     public enum class WlxFunctions{
         /// <summary><see cref="ListerPlugin::ListLoad"/></summary>
-        [PluginMethod("OnInit", "TC_L_LOAD")]
-        Load = 1,
-        LoadNext = 2,
-        CloseWindow = 4,
+        [PluginMethod("OnInit", "TC_L_LOAD")] Load = 1,
+        /// <summary><see cref="ListerPlugin::LoadNext"/></summary>
+        [PluginMethod("LoadNext", "TC_L_LOADNEXT")] LoadNext = 2,
+        /// <summary><see cref="ListerPlugin::CloseWindow"/></summary>
+        [PluginMethod("OnInit", "TC_L_LOAD")] CloseWindow = 4,
         GetDetectString = 8,
         SerachText = 16,
         SendCommand = 32,

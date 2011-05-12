@@ -70,4 +70,42 @@ namespace Tools{namespace TotalCommanderT{
     inline IListerUI^ ListerPlugin::LoadedWindows::get(IntPtr hWnd){return this->loadedWindows->ContainsKey(hWnd) ? this->loadedWindows[hWnd] : nullptr; }
 
 #pragma endregion
+
+    int ListerPlugin::ListLoadNext(HWND parentWin, HWND listWin, wchar_t* fileToLoad, int showFlags){
+        try{
+            return this->LoadNext(%ListerPluginReInitEventArgs((IntPtr)parentWin, %String(fileToLoad), (ListerShowFlags)showFlags, (IntPtr)listWin, this->LoadedWindows[(IntPtr)listWin])) ? LISTPLUGIN_OK : LISTPLUGIN_ERROR;
+        }catch(NotSupportedException^){
+            throw;
+        }catch(...){
+            return LISTPLUGIN_ERROR;
+        }
+    }
+
+    bool ListerPlugin::LoadNext(ListerPluginReInitEventArgs^ e){
+        if(!this->ImplementedFunctions.HasFlag(WlxFunctions::LoadNext)) throw gcnew NotSupportedException();
+        if(e->PluginWindow != nullptr){
+            return e->PluginWindow->LoadNext(e);
+        }
+        return false;
+    }
+
+    inline void ListerPlugin::ListCloseWindow(HWND listWin){
+        this->CloseWindow(this->LoadedWindows[(IntPtr)listWin], (IntPtr)listWin);
+    }
+
+    void ListerPlugin::CloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle){
+        if(listerUI != nullptr){
+            try{
+                this->DispatchCloseWindow(listerUI, listerUIHandle);
+                DestroyWindow((HWND)(void*)listerUIHandle);
+            }finally{
+                this->loadedWindows->Remove(listerUIHandle);
+            }
+        }
+    }
+    void ListerPlugin::DispatchCloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle){
+        if(listerUI == nullptr) throw gcnew ArgumentNullException("listerUI");
+        listerUI->OnBeforeClose();
+    }
+
 }}

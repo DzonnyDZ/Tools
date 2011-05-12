@@ -3,6 +3,7 @@
 #include "..\Plugin\listplug.h"
 
 using namespace System;
+using namespace System::ComponentModel;
 
 namespace Tools{namespace TotalCommanderT{
 
@@ -31,6 +32,8 @@ namespace Tools{namespace TotalCommanderT{
         ForceShow = lcp_forceshow
     };
 
+    ref class ListerPluginReInitEventArgs;
+
     /// <summary>Provides basic information about lister plugin user interface</summary>
     /// <version version="1.5.4">This interface is new in version 1.5.4</version>
     public interface struct IListerUIInfo{
@@ -53,15 +56,23 @@ namespace Tools{namespace TotalCommanderT{
         /// This property is meant to implement <see cref="IListerUIInfo::PluginWindowHandle"/>.</remarks>
         /// <seelaso cref="T:System.Windows.Forms.IWin32Window.Handle"/>
         property IntPtr Handle{IntPtr get() = IListerUIInfo::PluginWindowHandle::get;}
+        /// <summmary>Called by Total Commander plugin implementation when user wants to load different file to the same plugin instance</summary>
+        /// <param name="e">Event arguments describe conditions of loading new file</param>
+        /// <returns>True when the file was successfully loaded, false when this implementation cannot load it. Returning false is equivalent of throwing anny exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="Exception">Any axception but <see cref="NotSupportedException"/> and exceptions that are not caught by .NET framework by default can be thrown from implementing method to indicate that the file cannot be loaded. It's equivalent to returning false from this method.</exception>
+        bool LoadNext(ListerPluginReInitEventArgs^ e);
+        /// <summary>Called just before the lister UI is unloaded</summary>
+        /// <remarks>There is no way to prevent unload! Just do any necessary cleanup in this method because the control/window/UI is gonna be destroyed using <c>DestroyWindow</c>.</remarks>
+        void OnBeforeClose();
     };
 
     /// <summary>Event arguments describing an environment to load lister plugin to</summary>
     /// <version version="1.5.4">This class is new in version 1.5.4</version>
     public ref class ListerPluginInitEventArgs : EventArgs, IListerUIInfo{
     private:
-        ListerShowFlags options;
-        IntPtr parentWindowHandle;
-        String^ fileToLoad;
+        initonly ListerShowFlags options;
+        initonly IntPtr parentWindowHandle;
+        initonly String^ fileToLoad;
         IListerUI^ pluginWindow;
     public:
         /// <summary>CTor - creates a new instance of the <see cref="ListerPluginInitEventArgs"/> class</summary>
@@ -76,9 +87,34 @@ namespace Tools{namespace TotalCommanderT{
         property IntPtr ParentWindowHandle{virtual IntPtr get() sealed;}
         /// <summary>Gets the name and path of the file which has to be loaded.</summary>
         property String^ FileToLoad{virtual String^ get() sealed = IListerUIInfo::FileName::get;}
-        /// <summary>Set this property to instance of <see cref="IListerUI"/> implementation to indicate that your plugin is loaded. Set to (keep) nulll to indicate that plugin load failed (e.g. the plugin does not support file of given type).</summary>
+        /// <summary>Set this property to instance of <see cref="IListerUI"/> implementation to indicate that your plugin is loaded. Set to (keep) null to indicate that plugin load failed (e.g. the plugin does not support file of given type).</summary>
         virtual property IListerUI^ PluginWindow;
+    protected:
+        /// <summary>Gets handle of control (window) representing plugin UI</summary>
+        /// <returns>This implementation returns <see cref="PluginWindow"/>.<see cref="IListerUI::Handle">Handle</see>, <see cref="IntPtr::Zero"/> if <see cref="PluginWindow"/> is null.</returns>
+        property IntPtr PluginWindowHandle{virtual IntPtr get() = IListerUIInfo::PluginWindowHandle::get;}
+    };
+
+    /// <summary>Event arguments describing environment for loading different file to a plugin</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    public ref class ListerPluginReInitEventArgs : ListerPluginInitEventArgs{
     private:
-        property IntPtr PluginWindowHandle{virtual IntPtr get() sealed = IListerUIInfo::PluginWindowHandle::get;}
+        initonly IntPtr pluginWindowHandle;
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="ListerPluginReInitEventArgs"/> class</summary>
+        /// <param name="parentWindowHandle">Handler of lister lister's window</param>
+        /// <param name="fileToLoad">The name and path of the file which has to be loaded</param>
+        /// <param name="options">Flags indicating various options to for lister plugin being loaded</param>
+        /// <param name="pluginWindowHandle">Handle of window (control) representing target plugin UI</param>
+        /// <param name="pluginWindow">An object representing window (control) representing plugin UI. This is an object previously created in <see cref="ListerPlugin::OnInit"/></param>
+        ListerPluginReInitEventArgs(IntPtr parentWindowHandle, String^ fileToLoad, ListerShowFlags options, IntPtr pluginWindowHandle, IListerUI^ pluginWindow);
+        /// <summary>Overrides setter of <see cref="ListerPluginInitEventArgs::PluginWindow"/> to make the property read-only</summary>
+        /// <param name="">Ignored</param>
+        /// <exception cref="NotSupportedException">Always, the <see cref="ListerPluginInitEventArgs::PluginWindow"/> property is read-only on <see cref="ListerPluginReInitEventArgs"/>.</exception>
+        [EditorBrowsable(EditorBrowsableState::Never)]
+        virtual void setPluginWindow(IListerUI^) sealed new = ListerPluginInitEventArgs::PluginWindow::set;
+        /// <summary>Gets handle of control (window) representing plugin UI</summary>
+        /// <returns>Handle of <see cref="ListerPluginInitEventArgs::PluginWindow"/>, null in rare (impossible?) cases when Total Commander calls <see cref="ListerPlugin::ListLoadNext"/> function for handles that are unknown to managed plugin framework.</returns>
+        property IntPtr PluginWindowHandle{virtual IntPtr get() override;}
     };
 }}

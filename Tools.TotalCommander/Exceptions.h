@@ -255,6 +255,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Property {0} is read-only on {1}'.
+        /// </summary>
+        public: static property System::String^  PropertyIsReadOnly {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'The {0} property have already been initialized.'.
         /// </summary>
         public: static property System::String^  PropertyWasInitialized {
@@ -523,6 +530,14 @@ namespace Tools {
         /// <param name="arg0">Objekt (0) pro formátování.</param>
         /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
         public: static System::String^  PluginTypeNotSupportedFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Property {0} is read-only on {1}'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <param name="arg1">Objekt (1) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  PropertyIsReadOnlyFormat(System::Object^  arg0, System::Object^  arg1);
         
         /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'The {0} property have already been initialized.'.

@@ -11,9 +11,6 @@ using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections::Generic;
 
-
-//TODO: CHange plugin phylosophy: One plugin instance per one TC instance. The one instance loads multiple windows.
-
 namespace Tools{namespace TotalCommanderT{
 
     /// <summary>Abstract base class for Total Commander lister plugins (wlx)</summary>
@@ -48,7 +45,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>
         /// <para>Lister will subclass your window to catch some hotkeys like 'n' or 'p'.</para>
         /// <para>When lister is activated, it will set the focus to your window. If your window contains child windows, then make sure that you set the focus to the correct child when your main window receives the focus!</para>
-        /// <para>If lcp_forceshow is defined, you may try to load the file even if the plugin wasn't made for it. Example: A plugin with line numbers may only show the file as such when the user explicitly chooses 'Image/Multimedia' from the menu.</para>
+        /// <para>If <see cref="ListerShowFlags::ForceShow"/> is defined, you may try to load the file even if the plugin wasn't made for it. Example: A plugin with line numbers may only show the file as such when the user explicitly chooses 'Image/Multimedia' from the menu.</para>
         /// <para>Lister plugins which only create thumbnail images do not need to implement this function. To instantiate a plugin outside Total Commander from managed code use <see cref="Load"/>.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
         /// <para>This plugin function is implemented by <see cref="Load"/>.</para>
@@ -95,7 +92,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="e">Event arguments. You must populate them with information about plugin UI to load the plugin. If you don't populate it your plugin is not loaded and Total Commander tries next plugin.</param>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>
-        /// <para>You tipically MUST override this function in your derived plugin class. Lister plugins which only create thumbnail images do not need to implement this function. But then plugin functionality is limited.</para>
+        /// <para>You typically MUST override this function in your derived plugin class. Lister plugins which only create thumbnail images do not need to implement this function. But then plugin functionality is limited.</para>
         /// <para>When this method is called, <see cref="Initialized"/> is true.</para>
         /// <para>Lister will subclass your window to catch some hotkeys like 'n' or 'p'.</para>
         /// <para>When lister is activated, it will set the focus to your window. If your window contains child windows, then make sure that you set the focus to the correct child when your main window receives the focus!</para>
@@ -119,8 +116,78 @@ namespace Tools{namespace TotalCommanderT{
         }
         /// <summary>Gets lister plugin windows by handle</summary>
         /// <param name="hWnd">Handle of lister plugin window (control, UI) to load</param>
-        /// <returns>An object representing UI of lister plugin of given handle. Nulll if window with given handle is not currently loaded</returns>
+        /// <returns>An object representing UI of lister plugin of given handle. Null if window with given handle is not currently loaded</returns>
         property IListerUI^ LoadedWindows[IntPtr]{IListerUI^ get(IntPtr hWnd);}
 #pragma endregion
+    public:
+        /// <summary>Called when a user switches to the next or previous file in lister with 'n' or 'p' keys, or goes to the next/previous file in the Quick View Panel, and when the definition string either doesn't exist, or its evaluation returns true.</summary>
+        /// <param name="parentWin">This is lister's window. Your plugin window needs to be a child of this window</param>
+        /// <param name="listWin">The plugin window returned by <see cref="ListLoad"/></param>
+        /// <param name="fileToLoad">The name of the file which has to be loaded.</param>
+        /// <param name="showFlags">A combination of <see cref="ListerShowFlags"/> flags.</param>
+        /// <returns>Return <c>LISTPLUGIN_OK</c> (0) if load succeeds, <c>LISTPLUGIN_ERROR</c> (1) otherwise. If <c>LISTPLUGIN_ERROR</c> (1) is returned, Lister will try to load the file with the normal <see cref="ListLoad"/> function (also with other plugins).</returns>
+        /// <remarks>
+        /// This function is new in Total Commander 7.
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para>
+        /// <para>This plugin function is implemented by <see cref="LoadNext"/>.</para>
+        /// <remarks>
+        /// <seelaso cref="LoadNext"/>
+        [EditorBrowsable(EditorBrowsableState::Never)]
+        [CLSCompliant(false)]
+        [PluginMethod("LoadNext", "TC_L_LOADNEXT")]
+        int ListLoadNext(HWND parentWin, HWND listWin, wchar_t* fileToLoad, int showFlags);
+        
+        /// <summary>Called when user switches to the next or previous file in lister using 'n' or 'p' keys, or goes to the next/previous file in the Quick View Panel, and when the definition string either doesn't exist, or its evaluation returns true.</summary>
+        /// <param name="e">Event arguments containing enformation about current lister window.</param>
+        /// <returns>True if current lister implementation can load the file, false otherwise. Returning false is equivalent to throwing any exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="NotSupportedException">The most-derived implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <exception cref="Exception">Any axception but <see cref="NotSupportedException"/> and exceptions that are not caught by .NET framework by default can be thrown from derived method to indicate that the file cannot be loaded. It's equivalent to returning false from this method.</exception>
+        /// <remarks>Only Total Commander 7 and newer calls this function.
+        /// <note type="inheritinfo">
+        /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::LoadNext"/>).
+        /// However you must still override this method and call base class method to prevent <see cref="NotSupportedException"/> exception from being thrown.
+        /// <para>You may also chose not to call base class method and dispatch the event to user interface yourself.</para>
+        /// </note>
+        /// </remarks>
+        /// <seealso cref="IListerUI::LoadNext"/>
+        [MethodNotSupported]
+        virtual bool LoadNext(ListerPluginReInitEventArgs^ e);
+
+    public:
+        /// <summary>Called when a user closes lister, or loads a different file.</summary>
+        /// <param name="listWin">This is the window handle which needs to be destroyed.</param>
+        /// <remarks>
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para>
+        /// <para>This plugin function is implemented by <see cref="CloseWindow"/>.</para>
+        /// </remarks>
+        /// <seealso cref="CloseWindow"/>
+        [EditorBrowsable(EditorBrowsableState::Never)]
+        [CLSCompliant(false)]
+        [PluginMethod("OnInit", "TC_L_LOAD")]
+        void ListCloseWindow(HWND listWin);
+
+        /// <summary>Called to unload lister UI window</summary>
+        /// <param name="listerUI">An instance of lister UI previously created in <see cref="OnInit"/>. It may be null in rare (impossible?) cases when Total Commmander callls <see cref="ListCloseWindow"/> for handle that is not known to managed plugin framework.</param>
+        /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
+        /// <exception cref="NotSupportedException"><see cref="OnInit"/> is not implemented</exception>
+        /// <remarks>
+        /// <para>This function is automaticallly implemented always when <see cref="OnInit"/> is implemented.</para>
+        /// <note type="inheritinfo">
+        /// You may override this function but you should always call base class method.
+        /// <para>Default implementation contains logic for cleaning up internal register of opened winodws. For event dispatching it calls <see cref="DispatchCloseWindow"/>.</para>
+        /// </note>
+        /// <note type="inheritinfo">Do not throw any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// </remarks>
+        /// <seealso cref="DispatchCloseWindow"/><seealso cref="IListerUI::OnBeforeClose"/>
+        virtual void CloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle);
+    protected:
+        /// <summary>Dispatches event informing lister plugin UI that it is about to close from Total Commander to lister UI implementation</summary>
+        /// <param name="listerUI">An instance of lister UI previously created in <see cref="OnInit"/>. It may be null in rare (impossible?) cases when Total Commmander callls <see cref="ListCloseWindow"/> for handle that is not known to managed plugin framework.</param>
+        /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
+        /// <exception cref="ArgumentNullException"><paramref name="listerUI"/> is null</exception>
+        /// <remarks>Default implementation contains logic for callling <see cref="IListerUI::OnBeforeClose"/> on <paramref name="listerUI"/>.</remarks>
+        /// <seealso cref="CloseWindow"/><seealso cref="IListerUI::OnBeforeClose"/>
+        [EditorBrowsable(EditorBrowsableState::Advanced)]
+        virtual void DispatchCloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle);
     };
 }}
