@@ -146,4 +146,24 @@ namespace Tools{namespace TotalCommanderT{
         if(listerUI != nullptr)
             return listerUI->OnCommand(gcnew ListerCommandEventArgs(command, parameter));
     }
+
+    int ListerPlugin::ListPrint(HWND listWin, wchar_t* fileToPrint, wchar_t* defPrinter, int printFlags, RECT* margins){
+        try{
+            return this->Print(this->LoadedWindows[(IntPtr)listWin], (IntPtr)listWin, gcnew String(fileToPrint),
+                               gcnew String(defPrinter), (PrintFlags) printFlags,
+                               gcnew System::Drawing::Printing::Margins((int)((Single)margins->left * 2.54), (int)((Single)margins->right * 2.54), (int)((Single)margins->top * 2.54), (int)((Single)margins->bottom * 2.54))
+                              ) ? LISTPLUGIN_OK : LISTPLUGIN_ERROR;
+        }catch(NotSupportedException^){
+            throw;
+        }catch(...){
+            return LISTPLUGIN_ERROR;
+        }
+    }
+
+    bool ListerPlugin::Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins){
+        if(!this->ImplementedFunctions.HasFlag(WlxFunctions::Print))
+            throw gcnew NotSupportedException();
+        if(listerUI != nullptr)
+            return listerUI->Print(gcnew PrintEventArgs(fileToPrint, defPrinter, printFlags, margins));
+    }
 }}

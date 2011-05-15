@@ -75,6 +75,7 @@ namespace Tools{namespace TotalCommanderT{
     };
 
     ref class ListerCommandEventArgs;
+    ref class PrintEventArgs;
 
     /// <summary>This interface defines minimum required interface for an object representing user interface of lister plugin</summary>
     /// <remarks>You typically implement this interface as <see cref="T:System.Windows.Forms.Control"/>-derived class.</remarks>
@@ -97,15 +98,28 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="searchString">String to search for</param>
         /// <param name="searchParameter">Indicates search options</param>
         /// <returns>True if search succeeded, false if it failed (nothing was found). Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
-        /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate search failure.</exception>
-        /// <remarks>If your plugin does not support search, just implement this method always returning false and do not override <see cref="ListerPlugin::SearchText"/>.</remarks>
+        /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate search failure.</exception>
+        /// <remarks>
+        /// <para>The plugin needs to highlight/select the found text by itself.</para>
+        /// If your plugin does not support search, just implement this method always returning false and do not override <see cref="ListerPlugin::SearchText"/>.
+        /// </remarks>
         bool SearchText(String^ serachString, TextSearchOptions searchParameter); 
         /// <summary>Called when the user changes some options in Lister's menu.</summary>
         /// <param name="e">Event arguments</param>
         /// <returns>True if command succeeded, false if it failed. Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
-        /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate commmand failure.</exception>
+        /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate commmand failure.</exception>
         /// <remarks>If your plugin does not support commanding, just implement this method always returning false and do not override <see cref="ListerPlugin::SendCommand"/>.</remarks>
         bool OnCommand(ListerCommandEventArgs^ e);
+        /// <summary>Called when the user chooses the print function.</summary>
+        /// <param name="e">Event arguments</param>
+        /// <returns>True if command succeeded, false if it failed. Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate commmand failure.</exception>
+        /// <remarks>
+        /// Total Commander is expected to pass same file name to <paramref name="e"/>.<see cref="PrintEventArgs::FileToPrint"/> as is name of file currently loaded in plugin UI. So, plugin UI implementation may chose either to ignore <paramref name="e"/>.<see cref="PrintEventArgs::FileToPrint"/>, throw an exception when it differs from expected value, or allow printing different file than currently opened in UI (but TC should not request this).
+        /// <para>You need to show a print dialog, in which the user can choose what to print, and select a different printer.</para>
+        /// <para>If your plugin does not support printing, just implement this method always returning false and do not override <see cref="ListerPlugin::Print"/>.</para>
+        /// </remarks>
+        bool Print(PrintEventArgs^ e);
     };
 
     /// <summary>Event arguments describing an environment to load lister plugin to</summary>
@@ -177,5 +191,42 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Gets combination of <see cref="ListerShowFlags"/>.</summary>
         /// <remarks>Used when <see cref="Command"/> is <see cref="ListerCommand::NewParams"/>.</remarks>
         property ListerShowFlags Parameter{ListerShowFlags get();}
+    };
+
+    /// <summary>Printing flags</summary>
+    /// <remarks>Currently (TC 7.56a / Plugin Interface 2.0) not used. May be used in future versions of Total Commander.</remarks>
+    /// <version version="1.5.4">This enum is new in version 1.5.4</version>
+    [Flags, EditorBrowsable(EditorBrowsableState::Never)]
+    public enum class PrintFlags{};
+
+    /// <summary>Event argumens of lister print event</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    public ref class PrintEventArgs{
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="PrintEventArgs"/> class</summary>
+        /// <param name="fileToPrint">The full name of the file which needs to be printed. This should be same file as the file opened in plugin UI.</param>
+        /// <param name="defPrinter">Name of the printer currently chosen in Total Commander. May be null (use default printer).</param>
+        /// <param name="printFlags">Currently not used (set to 0). May be used in a later version.</param>
+        /// <param name="margins">The left, top, right and bottom margins of the print area (in 1/100 of inch).</param>
+        PrintEventArgs(String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins);
+    private:
+        initonly String^ fileToPrint;
+        initonly String^ defPrinter;
+        initonly PrintFlags printFlags;
+        initonly System::Drawing::Printing::Margins^ margins;
+    public:
+        /// <summary>Gets the full name of the file which needs to be printed.</summary>
+        /// <remarks>This should be same file as the file opened in plugin UI. Plugin UI implementation may either ignore it or throw an exception if it has unexpected value. It may, of course, also be aple to print any file passed to this path, but Total Commander should pass only original file paths here.</param>
+        property String^ FileToPrint{String^ get();}
+        /// <summary>Gets name of the printer currently chosen in Total Commander.</summary>
+        /// <returns>Name of current printer selected in Total Commander. Null if default printer should be used.</returns>
+        property String^ DefPrinter{String^ get();}
+        /// <summary>Gets print flags</summary>
+        /// <remarks>Currently not used (TC 7.56a / Plugin Interface 2.0). May be used in future versions of TC</remarks>
+        [EditorBrowsable(EditorBrowsableState::Never)]
+        property Tools::TotalCommanderT::PrintFlags PrintFlags{Tools::TotalCommanderT::PrintFlags get();}
+        /// <summary>Gets the left, top, right and bottom margins of the print area (in 1/100 of inch).</summary>
+        /// <remarks>May be ignored by plugin UI implementation</remarks>
+        property System::Drawing::Printing::Margins^ Margins{System::Drawing::Printing::Margins^ get();}
     };
 }}

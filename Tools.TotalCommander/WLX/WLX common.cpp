@@ -40,4 +40,17 @@ namespace Tools{namespace TotalCommanderT{
     inline ListerShowFlags ListerCommandEventArgs::Parameter::get(){return this->parameter;}
 #pragma endregion
 
+#pragma region PrintEventArgs
+    PrintEventArgs::PrintEventArgs(String^ fileToPrint, String^ defPrinter, Tools::TotalCommanderT::PrintFlags printFlags, System::Drawing::Printing::Margins^ margins){
+        this->fileToPrint = fileToPrint;
+        this->defPrinter = defPrinter;
+        this->printFlags = printFlags;
+        this->margins = margins;
+    }
+    inline String^ PrintEventArgs::FileToPrint::get(){return this->fileToPrint;} 
+    inline String^ PrintEventArgs::DefPrinter::get(){return this->defPrinter;}
+    inline Tools::TotalCommanderT::PrintFlags PrintEventArgs::PrintFlags::get(){return this->printFlags;}
+    inline System::Drawing::Printing::Margins^ PrintEventArgs::Margins::get(){return this->margins;}
+#pragma endregion
+
 }}

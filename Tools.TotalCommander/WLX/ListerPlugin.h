@@ -119,6 +119,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>An object representing UI of lister plugin of given handle. Null if window with given handle is not currently loaded</returns>
         property IListerUI^ LoadedWindows[IntPtr]{IListerUI^ get(IntPtr hWnd);}
 #pragma endregion
+
+#pragma region LoadNext
     public:
         /// <summary>Called when a user switches to the next or previous file in lister with 'n' or 'p' keys, or goes to the next/previous file in the Quick View Panel, and when the definition string either doesn't exist, or its evaluation returns true.</summary>
         /// <param name="parentWin">This is lister's window. Your plugin window needs to be a child of this window</param>
@@ -152,7 +154,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="IListerUI::LoadNext"/>
         [MethodNotSupported]
         virtual bool LoadNext(ListerPluginReInitEventArgs^ e);
+#pragma endregion
 
+#pragma region CloseWindow
     public:
         /// <summary>Called when a user closes lister, or loads a different file.</summary>
         /// <param name="listWin">This is the window handle which needs to be destroyed.</param>
@@ -189,7 +193,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="CloseWindow"/><seealso cref="IListerUI::OnBeforeClose"/>
         [EditorBrowsable(EditorBrowsableState::Advanced)]
         virtual void DispatchCloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle);
+#pragma endregion
 
+#pragma region GetDetectString
     public:
         /// <summary>Called when the plugin is loaded for the first time.
         /// It should return a parse function which allows Lister to find out whether your plugin can probably handle the file or not.
@@ -280,7 +286,9 @@ namespace Tools{namespace TotalCommanderT{
         /// </list>
         /// </example>
         property String^ DetectString{ [MethodNotSupported] virtual String^ get(); }
+#pragma endregion
 
+#pragma region SearchText
     public:
         /// <summary>Called when the user tries to find text in the plugin.</summary>
         /// <param name="listWin">Hande to your list window created with <see cref="ListLoad"/></param>
@@ -290,7 +298,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>
         /// The plugin needs to highlight/select the found text by itself.
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
-        /// <para>This plugin function is implemented by getter of the <see cref="SearchText"/> property.</para>
+        /// <para>This plugin function is implemented by <see cref="SearchText"/>.</para>
         /// <remarks>
         /// <seealso cref="SearchText"/>
         [EditorBrowsable(EditorBrowsableState::Never)]
@@ -317,7 +325,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="IListerUI::SearchText"/>
         [MethodNotSupported]
         virtual bool SearchText(IListerUI^ listerUI, IntPtr listerUIHandle, String^ searchString, TextSearchOptions searchParameter);
+#pragma endregion
 
+#pragma region SendCommand
     public:
         /// <summary>Called when the user changes some options in Lister's menu.</summary>
         /// <param name="listWin">Hande to your list window created with <see cref="ListLoad"/></param>
@@ -326,7 +336,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>Either <c>LISTPLUGIN_OK</c> (0) or <c>LISTPLUGIN_ERROR</c> (1).</returns>
         /// <remarks>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
-        /// <para>This plugin function is implemented by getter of the <see cref="SendCommand"/> property.</para>
+        /// <para>This plugin function is implemented by <see cref="SendCommand"/>.</para>
         /// <remarks>
         /// <seealso cref="SendCommand"/>
         [EditorBrowsable(EditorBrowsableState::Never)]
@@ -340,7 +350,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="command">One of <see cref="ListerCommand"> commands</param>
         /// <param name="parameter">Used when <paramref name="command"/> is <see cref="ListerCommand::NewParams"/>. Combination of <see cref="ListerShowFlags"/>.</param>
         /// <returns>Value indicating if command succeeded. Raturning false is equal to throwing any exception but <see cref="NotSupportedException"/>.</returns>
-        /// <exception cref="NotSupportedException">Actual implementation of <see cref="SearchText"/> is decorated with <see cref="NotSupportedAttribute"/></exception>
+        /// <exception cref="NotSupportedException">Actual implementation of <see cref="SendCommand"/> is decorated with <see cref="NotSupportedAttribute"/></exception>
         /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate command failure.</exception>
         /// <remarks>
         /// <note type="inheritinfo">
@@ -352,5 +362,47 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="IListerUI::OnCommand"/>
         [MethodNotSupported]
         bool SendCommand(IListerUI^ listerUI, IntPtr listerUIHandle, ListerCommand command, ListerShowFlags parameter);
+#pragma endregion
+
+#pragma region Print
+        /// <summary>Called when the user chooses the print function.</summary>
+        /// <param name="listWin">Hande to your list window created with <see cref="ListLoad"/>.</param>
+        /// <param name="fileToPrint">The full name of the file which needs to be printed. This is the same file as loaded with <see cref="ListLoad"/>.</param>
+        /// <param name="defPrinter">Name of the printer currently chosen in Total Commander. May be null (use default printer).</param>
+        /// <param name="printFlags">Currently not used (set to 0). May be used in a later version.</param>
+        /// <param name="margins">The left, top, right and bottom margins of the print area, in <c>MM_LOMETRIC</c> measurement units (1/10 mm). May be ignored.</margins>
+        /// <returns>Either <c>LISTPLUGIN_OK</c> (0) or <c>LISTPLUGIN_ERROR</c> (1).</returns>
+        /// <remarks>
+        /// You need to show a print dialog, in which the user can choose what to print, and select a different printer.
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para>
+        /// <para>This plugin function is implemented by <see cref="Print"/>.</para>
+        /// </remarks>
+        /// <seealso cref="Print"/>
+        [EditorBrowsable(EditorBrowsableState::Never)]
+        [CLSCompliant(false)]
+        [PluginMethod("Print", "TC_L_PRINT")]
+        int ListPrint(HWND listWin, wchar_t* fileToPrint, wchar_t* defPrinter, int printFlags, RECT* margins);
+
+        /// <summary>When overriden in derived class called when the user chooses the print function.</summary>
+        /// <param name="listerUI">An instance of lister plugin UI. Null in rare cases whan Total Commander calls <see cref="ListSearchText"/> with handle unknown to managed plugin framework</param>
+        /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
+        /// <param name="fileToPrint">The full name of the file which needs to be printed. This is the same file as loaded with <see cref="OnInit"/>.</param>
+        /// <param name="defPrinter">Name of the printer currently chosen in Total Commander. May be null (use default printer).</param>
+        /// <param name="printFlags">Currently not used (set to 0). May be used in a later version of TC.</param>
+        /// <param name="margins">The left, top, right and bottom margins of the print area (in 1/100 of inch). May be ignored.</margins>
+        /// <returns>Value indicating if command succeeded. Raturning false is equal to throwing any exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="NotSupportedException">Actual implementation of <see cref="Print"/> is decorated with <see cref="NotSupportedAttribute"/></exception>
+        /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate command failure.</exception>
+        /// <remarks>
+        /// <note type="inheritinfo">
+        /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::Print"/>).
+        /// However you must still override this method and call base class method to prevent <see cref="NotSupportedException"/> exception from being thrown.
+        /// <para>You may also chose not to call base class method and dispatch the event to user interface yourself.</para>
+        /// </note>
+        /// </remarks>
+        /// <seealso cref="IListerUI::Print"/>
+        [MethodNotSupported]
+        bool Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins);
+#pragma endregion
     };
 }}

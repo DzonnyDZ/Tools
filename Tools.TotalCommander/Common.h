@@ -36,6 +36,7 @@ namespace Tools{namespace TotalCommanderT{
     MAKE_PUBLIC FILETIME DateTimeToFileTime(Nullable<DateTime> value);
 #endif
 
+#pragma region String
     /// <summary>Copies ANSI characters from string to character array</summary>
     /// <param name="source"><see cref="String"/> to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
     /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to.</param>
@@ -132,6 +133,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <seealso cref="String::.ctor(char*)"/>
     /// <version version="1.5.4">This overload is new in version 1.5.4</version>
     MAKE_PUBLIC String^ StringCopy(const char* source) throw(ArgumentOutOfRangeException, ArgumentException, AccessViolationException);
+#pragma endregion
 
 #ifndef STRINGONLY
     /// <summary>Recognized Total Commander plugin types</summary>

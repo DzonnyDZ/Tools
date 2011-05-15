@@ -21,7 +21,8 @@ namespace Tools{namespace TotalCommanderT{
         [PluginMethod("SearchText", "TC_L_SEARCHTEXT")] SearchText = 16,
         /// <summary><see cref="ListerPlugin::SendCommand"/></summary>
         [PluginMethod("SendCommand", "TC_L_SENDCOMMAND")] SendCommand = 32,
-        Print = 64,
+        /// <summary><see cref="ListerPlugin::Print"/></summary>
+        [PluginMethod("Print", "TC_L_PRINT")] Print = 64,
         NotificationReceived = 128,
         SetDefaultParams = 256,
         GetPreviewBitmap = 512,
