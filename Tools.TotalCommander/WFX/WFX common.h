@@ -36,28 +36,6 @@ namespace Tools{namespace TotalCommanderT{
         property OperationStatus Status{OperationStatus get();}
     };
 
-    /// <summary>Contains information about current plugin interface version and ini location</summary>
-    /// <seelaso cref="FileSystemPlugin::FsSetDefaultParams"/>
-    public value class DefaultParams{
-    private:
-        /// <summary>Contains value of the <see cref="Version"/> property</summary>
-        System::Version^ version;
-        /// <summary>Contains value of the <see cref="DefaultIniName"/> property</summary>
-        String^ defaultIniName;
-    internal:
-        /// <summary>CTor - populates new instance with data from <see cref="FsDefaultParamStruct"/></summary>
-        /// <param name="from">The <see cref="FsDefaultParamStruct"/></param>
-        DefaultParams(FsDefaultParamStruct& from);
-    public:
-        /// <summary>Gets the plugin interface version</summary>
-        /// <returns>Version of plugin intercase consisifting of Major.Minor.0.0</returns>
-        property System::Version^ Version{System::Version^ get();}
-        /// <summary>Suggested location+name of the ini file where the plugin could store its data.</summary>
-        /// <returns>A fully qualified path+file name, in the same directory as the wincmd.ini. It's recommended to store the plugin data in this file or at least in this directory, because the plugin directory or the Windows directory may not be writable!</returns>
-        /// <remarks>Since <see cref="FileSystemPlugin::FsSetDefaultParams"/> is ANSI-only function this string always contains only ANSI characters (i.e. those defined in <see cref="System::Text::Encoding::Default"/>)</remarks>
-        property String^ DefaultIniName{String^ get();}
-    };
-
     /// <summary>Holds reference to file miniature bitmap</summary>
     /// <remarks>If you do not provide bitmap for certain file/directory return null instead of instance of this class</remarks>
     public ref class BitmapResult{

@@ -102,6 +102,24 @@
     <ClInclude Include="WLX\WlxFunctions.h">
       <Filter>Header Files\WLX</Filter>
     </ClInclude>
+    <ClInclude Include="DefaultParams.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\WLX Enums.h">
+      <Filter>Header Files\WLX</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\WLX EventArgs.h">
+      <Filter>Header Files\WLX</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\ListerPluginBase.h">
+      <Filter>Header Files\WLX</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\IListerUI.h">
+      <Filter>Header Files\WLX</Filter>
+    </ClInclude>
+    <ClInclude Include="WLX\IListerUIInfo.h">
+      <Filter>Header Files\WLX</Filter>
+    </ClInclude>
     <ClInclude Include="WLX\WLX common.h">
       <Filter>Header Files\WLX</Filter>
     </ClInclude>
@@ -175,7 +193,13 @@
     <ClCompile Include="WLX\ListerPlugin.cpp">
       <Filter>Source Files\WLX</Filter>
     </ClCompile>
-    <ClCompile Include="WLX\WLX common.cpp">
+    <ClCompile Include="DefaultParams.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WLX\WLX EventArgs.cpp">
+      <Filter>Source Files\WLX</Filter>
+    </ClCompile>
+    <ClCompile Include="WLX\ListerPluginBase.cpp">
       <Filter>Source Files\WLX</Filter>
     </ClCompile>
   </ItemGroup>

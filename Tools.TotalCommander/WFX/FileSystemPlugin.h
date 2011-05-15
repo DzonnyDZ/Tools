@@ -6,6 +6,7 @@
 #include "WFX common.h"
 #include "..\Attributes.h"
 #include "WfxFunctions.h"
+#include "..\DefaultParams.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -21,6 +22,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <remarks>See <see2 cref2="T:Tools.TotalCommanderT.PluginBuilder.Generator"/> for more information about how to generate Total Commander plugin from .NET</remarks>
     /// <version version="1.5.4">Added support for crypro (Total Commander secure password store)</version>
     /// <version version="1.5.4">Added Unicode support</version>
+    /// <version version="1.5.4.">The <c>PluginParams</c> property moved to <see cref="PluginBase"/> class and changed to nullable. It no longer throws <see cref="InvalidOperationException"/>. And it's now <see langword="public"/>.</version>
     public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
         /// <summary>CTor - creates a new instance of the <see cref="FileSystemPlugin"/> class</summary>
@@ -1078,7 +1080,7 @@ public:
         virtual IconExtractResult ExctractCustomIcon(String^% remoteName, IconExtractFlags extractFlags, Drawing::Icon^% theIcon);
 #pragma endregion
 #pragma region SetDefaultParams
-public:
+    public:
         /// <summary>Called immediately after <see cref="FsInit"/>.</summary>
         /// <param name="dps">This structure of type <see cref="FsDefaultParamStruct"/> currently contains the version number of the plugin interface, and the suggested location for the settings file (ini file). It is recommended to store any plugin-specific information either directly in that file, or in that directory under a different name. Make sure to use a unique header when storing data in this file, because it is shared by other file system plugins! If your plugin needs more than 1kbyte of data, you should use your own ini file because ini files are limited to 64k.</param>
         /// <remarks>
@@ -1090,16 +1092,7 @@ public:
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_SETDEFAULTPARAMS")]
         void FsSetDefaultParams(FsDefaultParamStruct* dps);
-    private:
-        /// <summary>Contains value of the <see cref="PluginParams"/> property</summary>
-        Nullable<DefaultParams> pluginParams;
-    protected:
-        /// <summary>Gets default parameters of the plugin</summary>
-        /// <returns>Default parameters of the plugin</returns>
-        /// <remarks>Value of this property is only valid after the <see cref="SetDefaultParams"/> method was called</remarks>
-        /// <sealso cref="SetDefaultParams"/>
-        /// <exception cref="InvalidOperationException">Property have not been initialized yet. This property can be initialized by calling <see cref="SetDefaultParams"/></exception>
-        property DefaultParams PluginParams {DefaultParams get();}
+
     public:
         /// <summary>Called immediately after <see cref="OnInit"/>.</summary>
         /// <param name="dps">This structure curently contains version number of the Total Commander plugin interface (not this managed interface) and suggested location of settings file. It is recommended to store any plugin-specific information either directly in that file or in that directory under a different name.</param>
@@ -1107,7 +1100,8 @@ public:
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// <note type="inheritinfo">Always call base class method. When base class method is not called, the <see cref="PluginParams"/> property does not have valid value.</note></remarks>
         /// <exception cref="InvalidOperationException">This method is called when it was already called. This method can be called only once on each instance.</exception>
-        virtual void SetDefaultParams(DefaultParams dps);
+        /// <version version="1.5.4">This method now overrides <see cref="PluginBase::SetDefaultParams"/>.</version>
+        virtual void SetDefaultParams(DefaultParams dps) override;
 #pragma endregion
 #pragma region GetPreviewBitmap
     public:

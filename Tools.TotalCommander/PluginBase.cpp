@@ -35,4 +35,11 @@ namespace Tools{namespace TotalCommanderT{
      }
 
      inline void PluginBase::OnInit(){/*do nothing*/}
+
+     inline Nullable<DefaultParams> PluginBase::PluginParams::get(){return this->pluginParams;}
+
+     void PluginBase::SetDefaultParams(DefaultParams dps){
+        if(this->PluginParams.HasValue) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PropertyWasInitializedFormat("PluginParams"));
+        this->pluginParams = dps;
+    }
 }}

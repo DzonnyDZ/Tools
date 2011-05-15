@@ -194,3 +194,75 @@
         ;
     #endif
 #endif
+
+#ifdef TC_L_NOTIFICATIONRECEIVED
+    //ANSI only
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    ListNotificationReceived
+    #ifdef TC_FNC_HEADER
+        (HWND ListWin,int Message,WPARAM wParam,LPARAM lParam)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {TC_FUNCTION_TARGET->ListNotificationReceived(ListWin, Message, wParam, lParam);}
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+#endif
+
+#ifdef TC_L_SETDEFAULTPARAMS
+    //ANSI only
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX void TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    ListSetDefaultParams
+    #ifdef TC_FNC_HEADER
+        (ListDefaultParamStruct* dps)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {
+            TC_L_INIT_CALL;
+            TC_FUNCTION_TARGET->ListNotificationReceived(dps);
+        }
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+#endif
+
+#ifdef TC_L_GETPREVIEWBITMAP
+    //Unicode
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX HBITMAP TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    ListGetPreviewBitmapW
+    #ifdef TC_FNC_HEADER
+        (wchar_t* FileToLoad, int width, int height, char* contentbuf, int contentbuflen)
+    #endif
+    #if defined(TC_FNC_BODY)
+        {
+            TC_L_INIT_CALL;
+            return TC_FUNCTION_TARGET->TC_GETFNAME_W(ListGetPreviewBitmap)(FileToLoad, width, height, contentbuf, contentbuflen);
+        }
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+    //ANSI
+    #ifdef TC_FNC_HEADER
+        TC_LINE_PREFIX int TC_NAME_PREFIX TC_FUNC_MEMBEROF
+    #endif
+    ListGetPreviewBitmap
+    #ifdef TC_FNC_HEADER
+        (char* FileToLoad, int width, int height, char* contentbuf, int contentbuflen)
+    #endif
+    #if defined(TC_FNC_BODY) && !defined(TC_A2W)
+        {return TC_FUNCTION_TARGET->ListGetPreviewBitmap(GF:AnsiToUnicode(FileToLoad), width, height, contentbuf, contentbuflen);}
+    #elif defined(TC_FNC_BODY) //&& defined(TC_A2W)
+    {   //ANSI to Unicode
+        TC_L_INIT_CALL;
+        return TC_FUNCTION_TARGET->ListGetPreviewBitmap(FileToLoad, width, height, contentbuf, contentbuflen);
+    } 
+    #elif defined(TC_FNC_HEADER)
+        ;
+    #endif
+#endif

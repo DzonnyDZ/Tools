@@ -868,7 +868,7 @@ ExecFile:   Dim p As New Process
     ''' <exception cref="InvalidOperationException">Value is being got before <see cref="FileSystemPlugin.SetDefaultParams"/> was called</exception>
     Private ReadOnly Property ConfigPath() As String
         Get
-            Return IO.Path.Combine(IO.Path.GetDirectoryName(PluginParams.DefaultIniName), "wfxSample.config")
+            Return IO.Path.Combine(IO.Path.GetDirectoryName(PluginParams.Value.DefaultIniName), "wfxSample.config")
         End Get
     End Property
 

@@ -27,16 +27,6 @@ namespace Tools{namespace TotalCommanderT{
     inline OperationStatus OperationEventArgs::Status::get(){return this->status;}
 #pragma endregion
 
-    //DefaultParams
-#pragma region "DefaultParams"
-    DefaultParams::DefaultParams(FsDefaultParamStruct& from){
-        this->defaultIniName = gcnew String(from.DefaultIniName);
-        this->version = gcnew System::Version(from.PluginInterfaceVersionHi,from.PluginInterfaceVersionLow,0,0);
-    }
-    inline System::Version^ DefaultParams::Version::get(){return this->version;}
-    inline String^ DefaultParams::DefaultIniName::get(){return this->defaultIniName;}
-#pragma endregion
-
     //BitmapResult
 #pragma region "BitmapResult"
      BitmapResult::BitmapResult(String^ ImagePath, bool Temporary){

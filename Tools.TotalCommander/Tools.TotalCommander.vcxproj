@@ -243,6 +243,7 @@ IF ERRORLEVEL 0 (
     <ClInclude Include="ContentFunctions.h" />
     <ClInclude Include="ContentPluginBase.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="DefaultParams.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="GlobalFunctions.h">
       <FileType>CppHeader</FileType>
@@ -261,8 +262,13 @@ IF ERRORLEVEL 0 (
     <ClInclude Include="WFX\WFX common.h" />
     <ClInclude Include="WFX\WFX Enums.h" />
     <ClInclude Include="WFX\WfxFunctions.h" />
+    <ClInclude Include="WLX\IListerUI.h" />
+    <ClInclude Include="WLX\IListerUIInfo.h" />
     <ClInclude Include="WLX\ListerPlugin.h" />
+    <ClInclude Include="WLX\ListerPluginBase.h" />
     <ClInclude Include="WLX\WLX common.h" />
+    <ClInclude Include="WLX\WLX Enums.h" />
+    <ClInclude Include="WLX\WLX EventArgs.h" />
     <ClInclude Include="WLX\WlxFunctions.h" />
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +288,7 @@ IF ERRORLEVEL 0 (
     <ClCompile Include="ContentFieldSpecification.cpp" />
     <ClCompile Include="ContentPluginBase.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="DefaultParams.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="GlobalFunctions.cpp" />
     <ClCompile Include="PluginBase.cpp" />
@@ -294,7 +301,8 @@ IF ERRORLEVEL 0 (
     <ClCompile Include="WFX\WFX common.cpp" />
     <ClCompile Include="WFX\WFX Enums.cpp" />
     <ClCompile Include="WLX\ListerPlugin.cpp" />
-    <ClCompile Include="WLX\WLX common.cpp" />
+    <ClCompile Include="WLX\ListerPluginBase.cpp" />
+    <ClCompile Include="WLX\WLX EventArgs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

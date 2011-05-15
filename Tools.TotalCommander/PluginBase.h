@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include "DefaultParams.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -61,5 +62,36 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>Default implementation of this method does nothing.</para></remarks>
         /// <version version="1.5.4">This method is new in version 1.5.4 (it was previously implemented at <see cref="FileSystemPlugin"/> level).</version>
         virtual void OnInit();
+    private:
+        Nullable<DefaultParams> pluginParams;
+    public:
+        /// <summary>Gets default parameters of the plugin</summary>
+        /// <returns>Default parameters of the plugin, nulll if the propert has not been initialized yet.</returns>
+        /// <remarks>
+        /// Value of this property is only valid after the <see cref="SetDefaultParams"/> method was called.
+        /// This happens in different (but always early) phases of plugin instance live cycle for different plugin types.
+        /// Some older versions of Total Commander (different for different plugin types) do initialize this method at all.
+        /// </remarks>
+        /// <sealso cref="SetDefaultParams"/>
+        /// <version version="1.5.4">This property is new in version 1.5.4. It was previously declared at <see cref="FileSystemPlugin"/> level and <see langword="protected"/>.</version>
+        property Nullable<DefaultParams> PluginParams {Nullable<DefaultParams> get();}
+    public:
+        /// <summary>Called to initialize the <see cref="DefaultParams"/> property</summary>
+        /// <param name="dps">
+        /// This structure currently contains the version number of the plugin interface, and the suggested location for the settings file (ini file).
+        /// It is recommended to store any plugin-specific information either directly in that file, or in that directory under a different name.
+        /// </param>
+        /// <remarks>
+        /// Make sure to use a unique header when storing data in this file, because it is shared by other plugins!
+        /// If your plugin needs more than 1kbyte of data, you should use your own ini file because ini files are limited to 64k.
+        /// <note type="inheritinfo">Do not thow any exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// <note type="inheritinfo">Always call base class method. When base class method is not called, the <see cref="PluginParams"/> property does not have valid value.</note>
+        /// For different plugin types this method is called at different stages of their live-cycle.
+        /// Some older versions of Total Commander (different for different plugin types) do not call this method at all.
+        /// <para>This is managed-signature implementation of Total Commander plugin interface function. Native-signature functions are implemented in individual plugin types because their signatures are different. They all call this method.</para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">This method is called when it was already called. This method can be called only once on each instance.</exception>
+        /// <version version="1.5.4">This method is new in version 1.5.4. It was previosuly declared at <see cref="FileSystemPlugin"/> level.</version>
+        virtual void SetDefaultParams(DefaultParams dps);
     };
 }}
