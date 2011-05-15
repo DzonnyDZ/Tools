@@ -31,4 +31,13 @@ namespace Tools{namespace TotalCommanderT{
 
 #pragma endregion
 
+#pragma region ListerCommandEventArgs
+    ListerCommandEventArgs::ListerCommandEventArgs(ListerCommand command, ListerShowFlags parameter){
+        this->command = command;
+        this->parameter = parameter;
+    }
+    inline ListerCommand ListerCommandEventArgs::Command::get(){return this->command;}
+    inline ListerShowFlags ListerCommandEventArgs::Parameter::get(){return this->parameter;}
+#pragma endregion
+
 }}

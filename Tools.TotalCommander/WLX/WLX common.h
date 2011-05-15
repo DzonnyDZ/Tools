@@ -47,10 +47,39 @@ namespace Tools{namespace TotalCommanderT{
         property IntPtr ParentWindowHandle{IntPtr get();}
     };
 
+    /// <summary>Test serach options used by Lister plugin</summary>
+    /// <version version="1.5.4">This enum is new in version 1.5.4</version>
+    [Flags]
+    public enum class TextSearchOptions{
+        /// <summary>Search from the beginning of the first displayed line (not set: find next)</summary>
+        FindFirst = lcs_findfirst,
+        /// <summary>The search string is to be treated case-sensitively.</summary>
+        MatchCase = lcs_matchcase,
+        /// <summary>Find whole words only.</summary>
+        WholeWords = lcs_wholewords,
+        /// <summary>Search backwards towards the beginning of the file.</summary>
+        Backwards = lcs_backwards
+    };
+
+    /// <summary>Enumerates predefined Lister plugin commands</summary>
+    /// <version version="1.5.4">This enum is new in version 1.5.4</version>
+    public enum class ListerCommand{
+        /// <summary>Copy current selection to the clipboard</summary>
+        Copy = lc_copy,
+        /// <summary>New parameters passed to plugin</summary>
+        NewParams = lc_newparams,
+        /// <summary>Select the whole contents</summary>
+        SelectAll = lc_selectall,
+        /// <summary>Go to new position in document (in percent).</summary>
+        SetPercent = lc_setpercent
+    };
+
+    ref class ListerCommandEventArgs;
+
     /// <summary>This interface defines minimum required interface for an object representing user interface of lister plugin</summary>
     /// <remarks>You typically implement this interface as <see cref="T:System.Windows.Forms.Control"/>-derived class.</remarks>
     /// <version version="1.5.4">This interface is new in version 1.5.4</version>
-    public interface struct IListerUI:IListerUIInfo{
+    public interface struct IListerUI : IListerUIInfo{
         /// <summary>Gets handle of control (window) representing plugin UI</summary>
         /// <remarks>When implemented by a class implementing <see cref="T:System.Windows.Forms.IWin32Window"/> this property should be implemented by the same property as <see cref="T:System.Windows.Forms.IWin32Window.Handle"/>.
         /// This property is meant to implement <see cref="IListerUIInfo::PluginWindowHandle"/>.</remarks>
@@ -64,6 +93,19 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Called just before the lister UI is unloaded</summary>
         /// <remarks>There is no way to prevent unload! Just do any necessary cleanup in this method because the control/window/UI is gonna be destroyed using <c>DestroyWindow</c>.</remarks>
         void OnBeforeClose();
+        /// <summary>Called when the user tries to find text in the plugin.</summary>
+        /// <param name="searchString">String to search for</param>
+        /// <param name="searchParameter">Indicates search options</param>
+        /// <returns>True if search succeeded, false if it failed (nothing was found). Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate search failure.</exception>
+        /// <remarks>If your plugin does not support search, just implement this method always returning false and do not override <see cref="ListerPlugin::SearchText"/>.</remarks>
+        bool SearchText(String^ serachString, TextSearchOptions searchParameter); 
+        /// <summary>Called when the user changes some options in Lister's menu.</summary>
+        /// <param name="e">Event arguments</param>
+        /// <returns>True if command succeeded, false if it failed. Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate commmand failure.</exception>
+        /// <remarks>If your plugin does not support commanding, just implement this method always returning false and do not override <see cref="ListerPlugin::SendCommand"/>.</remarks>
+        bool OnCommand(ListerCommandEventArgs^ e);
     };
 
     /// <summary>Event arguments describing an environment to load lister plugin to</summary>
@@ -116,5 +158,24 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Gets handle of control (window) representing plugin UI</summary>
         /// <returns>Handle of <see cref="ListerPluginInitEventArgs::PluginWindow"/>, null in rare (impossible?) cases when Total Commander calls <see cref="ListerPlugin::ListLoadNext"/> function for handles that are unknown to managed plugin framework.</returns>
         property IntPtr PluginWindowHandle{virtual IntPtr get() override;}
+    };
+
+    /// <summary>Event argumenst carrying lister plugin command</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    public ref class ListerCommandEventArgs : EventArgs{
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="ListerCommandEventArgs"/> class</summary>
+        /// <param name="command">One of <see cref="ListerCommand"> commands</param>
+        /// <param name="parameter">Used when <paramref name="command"/> is <see cref="ListerCommand::NewParams"/>. Combination of <see cref="ListerShowFlags"/>.</param>
+        ListerCommandEventArgs(ListerCommand command, ListerShowFlags parameter);
+    private:
+        initonly ListerCommand command;
+        initonly ListerShowFlags parameter;
+    public:
+        /// <summary>Gets of <see cref="ListerCommand"> commands - the command that occured</summary>
+        property ListerCommand Command{ListerCommand get();}
+        /// <summary>Gets combination of <see cref="ListerShowFlags"/>.</summary>
+        /// <remarks>Used when <see cref="Command"/> is <see cref="ListerCommand::NewParams"/>.</remarks>
+        property ListerShowFlags Parameter{ListerShowFlags get();}
     };
 }}

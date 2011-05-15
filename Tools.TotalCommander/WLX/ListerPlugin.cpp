@@ -103,9 +103,47 @@ namespace Tools{namespace TotalCommanderT{
             }
         }
     }
-    void ListerPlugin::DispatchCloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle){
+    void ListerPlugin::DispatchCloseWindow(IListerUI^ listerUI, IntPtr){
         if(listerUI == nullptr) throw gcnew ArgumentNullException("listerUI");
         listerUI->OnBeforeClose();
     }
 
+    void ListerPlugin::ListGetDetectString(char* detectString, int maxlen){
+        this->detectStringMaxLen = maxlen;
+        StringCopy(this->DetectString, detectString, maxlen);
+    }
+    inline Nullable<int> ListerPlugin::DetectStringMaxLen::get() {return this->detectStringMaxLen; }
+    inline String^ ListerPlugin::DetectString::get(){ throw gcnew NotSupportedException(); }
+
+    int ListerPlugin::ListSearchText(HWND listWin, wchar_t* searchString, int searchParameter){
+        try{
+            return this->SearchText(this->LoadedWindows[(IntPtr)listWin], (IntPtr)listWin, gcnew String(searchString), (TextSearchOptions)searchParameter) ? LISTPLUGIN_OK : LISTPLUGIN_ERROR;
+        }catch(NotSupportedException^){
+            throw;
+        }catch(...){
+            return LISTPLUGIN_ERROR;
+        }
+    }
+    bool ListerPlugin::SearchText(IListerUI^ listerUI, IntPtr, String^ searchString, TextSearchOptions searchParameter){
+        if(!this->ImplementedFunctions.HasFlag(WlxFunctions::SearchText))
+            throw gcnew NotSupportedException();
+        if(listerUI != nullptr)
+            return listerUI->SearchText(searchString, searchParameter);
+    }
+
+    int ListerPlugin::ListSendCommand(HWND listWin, int command, int parameter){
+        try{
+            return this->SendCommand(this->LoadedWindows[(IntPtr)listWin], (IntPtr)listWin, (ListerCommand)command, (ListerShowFlags)parameter) ? LISTPLUGIN_OK : LISTPLUGIN_ERROR;
+        }catch(NotSupportedException^){
+            throw;
+        }catch(...){
+            return LISTPLUGIN_ERROR;
+        }
+    }
+    bool ListerPlugin::SendCommand(IListerUI^ listerUI, IntPtr, ListerCommand command, ListerShowFlags parameter){
+        if(!this->ImplementedFunctions.HasFlag(WlxFunctions::SendCommand))
+            throw gcnew NotSupportedException();
+        if(listerUI != nullptr)
+            return listerUI->OnCommand(gcnew ListerCommandEventArgs(command, parameter));
+    }
 }}
