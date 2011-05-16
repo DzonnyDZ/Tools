@@ -83,7 +83,8 @@
       <ProgramDatabaseFile>$(TargetDir)$(PluginOutputName).pdb</ProgramDatabaseFile>
       <ProfileGuidedDatabase>
       </ProfileGuidedDatabase>
-      <EntryPointSymbol>DllMain</EntryPointSymbol>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
       <NoEntryPoint>false</NoEntryPoint>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>

@@ -135,11 +135,17 @@
   <data name="DefaultTextTooLong" xml:space="preserve">
     <value>Default text is too long.</value>
   </data>
+  <data name="DerivedMehtodNotFound" xml:space="preserve">
+    <value>Method implementing or overriding {0}.{1} cannot be found on type {2}.</value>
+  </data>
   <data name="EncryptDecryptFailed" xml:space="preserve">
     <value>Encrypt/Decrypt failed</value>
   </data>
   <data name="FieldNameTooLong" xml:space="preserve">
     <value>{0} returned fields which's name is longer than {1}</value>
+  </data>
+  <data name="GenericParameterNotFound" xml:space="preserve">
+    <value>Generic parameters {0} not found on type {1}</value>
   </data>
   <data name="InvalidCharacter" xml:space="preserve">
     <value>Value "{0}" contains invalid character.</value>
@@ -221,6 +227,18 @@
   </data>
   <data name="ReturnedStringTooLongForChoice" xml:space="preserve">
     <value>The string returned by {0} for the {1} type is too long.</value>
+  </data>
+  <data name="ToManyAttributes" xml:space="preserve">
+    <value>To many {0} attributes specified on {1}.</value>
+  </data>
+  <data name="TypeDoesNotDeriveFrom" xml:space="preserve">
+    <value>Type {0} neither derives from nor implements {1}</value>
+  </data>
+  <data name="TypeIsNotGeneric" xml:space="preserve">
+    <value>Type {0} is not generic</value>
+  </data>
+  <data name="TypeMustBeSpecifiedForGlobalMethods" xml:space="preserve">
+    <value>Type must be specified for global methods</value>
   </data>
   <data name="UnexpectedType" xml:space="preserve">
     <value>Unexteced type {0} retunrned by {1}</value>

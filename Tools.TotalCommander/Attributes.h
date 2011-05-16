@@ -15,6 +15,85 @@ namespace Tools{namespace TotalCommanderT{
     public:
         /// <summary>CTor - creates new instance of the <see cref="MethodNotSupportedAttribute"/> class</summary>
         MethodNotSupportedAttribute();
+        /// <summary>Gets value indicating if given method is supported.</summary>
+        /// <param name="method">A method to be checked. Usually the most derived method is passed here</param>
+        /// <returns>
+        /// True if the method is supported, false if it is not supported.
+        /// Returns tur if the method is not decorated with <see cref="MethodNotSupportedAttribute"/>.
+        /// If it is decorated with <see cref="MethodNotSupportedAttribute"/> or derived attribute returns its <see cref="IsSupported"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNulllException"><paramref name="method"/> is null</exception>
+        /// <exception cref="InvalidOperationException"><see cref="MethodNotSupportedAttribute"/> is specified more than once on <paramref name="method"/></exception>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        static bool Supported(Reflection::MethodInfo^ method);
+        /// <summary>Gets value indicating if this instance of <see cref="MethodNotSupportedAttribute"/> indicates supported or unsupported method</summary>
+        /// <param name="method">Pass actual method this instance was applied on here. Derived implementation may use it or may ignore it. This implementation ignores it.</param>
+        /// <exception cref="ArgumentNulllException">Derived class may throw this exception if <paramref name="method"/> is null</exception>
+        /// <returns>True if this instance indicates supported method, false if this instance indicates non supported method. This implementation always returns true.</returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        virtual bool IsSupported(Reflection::MethodInfo^ method);
+    };
+
+    /// <summary>Allows to read <see cref="MethodNotSupportedAttribute"/> from different code member (redirect it)</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    [AttributeUsageAttribute(AttributeTargets::Method, Inherited=false)]
+    public ref class MethodNotSupportedRedirectAttribute sealed: MethodNotSupportedAttribute{
+    private:
+        initonly String^ method;
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="MethodNotSupportedRedirectAttribute"/> class</summary>
+        /// <param name="method">Name of method to read <see cref="MethodNotSupportedAttribute"/> from.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="method"/> is null</exception>
+        /// <remarks>You should specify target type using various properties of this class. If no target target type is not specified actual type method this attribute is applied on is member of will be used.</remarks>
+        MethodNotSupportedRedirectAttribute(String^ method);
+
+        /// <summary>Gets or sets type to redirect attribute lookup to</summary>
+        /// <remarks>If null the type method the attribute is specified on is member of is used</remarks>
+        property System::Type^ Type;
+        /// <summary>Gets or sets name of <see cref="Type"/>'s generic parameter to redirect lookup to actual type of.</summary>
+        /// <remarks>
+        /// If this property is not null the attribute is redirected to method of type supplied for generic parameter named <see cref="GPar"/> of type <see cref="Type"/>.
+        /// If this property is null the attribute is redirected to method of type <see cref="Type"/>.
+        /// </remarks>
+        property String^ GPar;
+        /// <summary>Name of method to redirect attribute to</summary>
+        /// <remarks>If multiple methods of this name are difined on traget type specify method signature using <see cref="MethodParameters"/> otherwise <see cref="System::Reflection::AmbiguousMatchException"/> will be thrown.</remarks>
+        property String^ Method{String^ get();}
+        /// <summary>Gets or sets types of method parameters used to find appropriate method to read <see cref="MethodNotSupportedAttribute"/> from</summary>
+        /// <value>An array of types indicating method signature. Null to ignore method parameter types.</value>
+        /// <remarks>
+        /// When not null <see cref="IsSupported"/> looks only for methods that have the same number and types of arguments.
+        /// <note>Number any types of arguments are theoretically not unique identification of method by signature, so <see cref="System::Reflection::AmbiguousMatchException"/> can still be thrown.</note>
+        /// </remarks>
+        property cli::array<System::Type^>^ MethodParameters;
+        /// <summary>Gets or sets base type which is used for method lookup</summary>
+        /// <remarks>If <see cref="Hint"/> is not null method to provide attributes is firts sought at this type and then method which overrides/implements this method is located on target type.</remarks>
+        property System::Type^ Hint;
+        
+        /// <summary>Gets value indicating if this instance of <see cref="MethodNotSupportedAttribute"/> indicates supported or unsupported method</summary>
+        /// <param name="method">Pass actual method this instance was applied on here.</param>
+        /// <exception cref="ArgumentNulllException"><paramref name="method"/> is null</exception>
+        /// <returns>True if this instance indicates supported method, false if this instance indicates non supported method.</returns>
+        /// <exception cref="System::Reflection::AmbiguousMatchException">Either <see cref="MethodParameters"/> is null and more methods with name <see cref="Method"/> exist on target type or method identification using parameter types is not unique.</exception>
+        /// <exception cref="InvalidOperationException">
+        /// <paramref name="method"/> is global method and <see cref="Type"/> is null. -or-
+        /// One of items in <see cref="MethodParameters"/> is null. -or-
+        /// <see cref="Hint"/> is not null and target type neither inherits from nor implements it.
+        /// </exception>
+        /// <exception cref="MissingMethodException">Method not found on tagre type or <see cref="Hint"/> -or- Method was found on <see cref="Hint"/> but method which overrides or implements in was not found on target type (it might be found of one of target type's base types, but such methods are excluded from lookup).</exception>
+        virtual bool IsSupported(Reflection::MethodInfo^ method) override;
+        /// <summary>Gets method this attribute redirects to</summary>
+        /// <param name="attributeMethod">Pass actual method this instance was applied on here.</param>
+        /// <exception cref="ArgumentNulllException"><paramref name="method"/> is null</exception>
+        /// <returns>A method this attribute redirects to</returns>
+        /// <exception cref="System::Reflection::AmbiguousMatchException">Either <see cref="MethodParameters"/> is null and more methods with name <see cref="Method"/> exist on target type or method identification using parameter types is not unique.</exception>
+        /// <exception cref="InvalidOperationException">
+        /// <paramref name="method"/> is global method and <see cref="Type"/> is null. -or-
+        /// One of items in <see cref="MethodParameters"/> is null. -or-
+        /// <see cref="Hint"/> is not null and target type neither inherits from nor implements it.
+        /// </exception>
+        /// <exception cref="MissingMethodException">Method not found on tagre type or <see cref="Hint"/> -or- Method was found on <see cref="Hint"/> but method which overrides or implements in was not found on target type (it might be found of one of target type's base types, but such methods are excluded from lookup).</exception>
+        System::Reflection::MethodInfo^ GetTargetMethod(Reflection::MethodInfo^ attributeMethod);
     };
 
     ref class PluginIconBaseAttribute;
@@ -23,8 +102,9 @@ namespace Tools{namespace TotalCommanderT{
 
     /// <summary>Apply this attribute to class implementing Total Commander plugin to precise how the plugin is generated.</summary>
     /// <remarks>To set plugin icon use one of <see cref="PluginIconBaseAttribute"/>-derived classes such as <see cref="FilePluginIconAttribute"/> or <see cref="ResourcePluginIconAttribute"/>.</remarks>
+    /// <version version="1.5.4">The class is now <see langword="selaed"/></version>
     [AttributeUsageAttribute(AttributeTargets::Class, Inherited=false)]
-    public ref class TotalCommanderPluginAttribute : Attribute{
+    public ref class TotalCommanderPluginAttribute sealed: Attribute{
     private:
         /// <summary>Contains value of the <see ctef="Name"/> property</summary>
         initonly String^ name;
@@ -47,8 +127,9 @@ namespace Tools{namespace TotalCommanderT{
 
     /// <summary>Apply this attribute to Total Commander plugin class to make plugin generator ignore it</summary>
     /// <remarks>This attribute may be usefull when you have non-abstract base class that you don't wan't plugin to be generated for</remarks>
+    /// <version version="1.5.4">The class is now <see langword="selaed"/></version>
     [AttributeUsage(AttributeTargets::Class, Inherited=false)]
-    public ref class NotAPluginAttribute : Attribute{
+    public ref class NotAPluginAttribute sealed: Attribute{
     public:
         /// <summary>CTor - creates new instance of the <see cref="NotAPluginAttribute"/> class</summary>
         NotAPluginAttribute();

@@ -23,10 +23,10 @@ namespace Tools{namespace TotalCommanderT{
          this->implementedFunctions = this->GetSupportedFunctions<WfxFunctions>();
 
          const Reflection::BindingFlags flags = Reflection::BindingFlags::Instance | Reflection::BindingFlags::Public | Reflection::BindingFlags::NonPublic;
-         this->ftpModeAdvertisementImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("FtpModeAdvertisement", flags),this->GetType()),false) == nullptr;
-         this->openFileImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("OpenFile", flags),this->GetType()),false) == nullptr;
-         this->showFileInfoImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ShowFileInfo",flags),this->GetType()),false) == nullptr;
-         this->executeCommandImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteCommand", flags),this->GetType()),false) == nullptr;
+         this->ftpModeAdvertisementImplemented = MethodNotSupportedAttribute::Supported(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("FtpModeAdvertisement", flags), this->GetType()));
+         this->openFileImplemented = MethodNotSupportedAttribute::Supported(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("OpenFile", flags), this->GetType()));
+         this->showFileInfoImplemented = MethodNotSupportedAttribute::Supported(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ShowFileInfo",flags), this->GetType()));
+         this->executeCommandImplemented = MethodNotSupportedAttribute::Supported(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteCommand", flags), this->GetType()));
 
          this->unicode = true;
          this->isInTotalCommander = false;

@@ -81,4 +81,16 @@ Tools.opensdf
 prebuild
 *.suo
 debug
+</Value></Property><Property><Name>svn:ignore</Name><Value>bin
+Debug
+desktop.ini
+*.shfbproj_Honza
+obj
+TestResults
+Tools.sdf
+Tools.opensdf
+prebuild
+*.suo
+debug
+*.docstates
 </Value></Property></Properties></ItemProperties>

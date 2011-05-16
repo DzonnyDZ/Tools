@@ -143,7 +143,7 @@ namespace Tools{namespace TotalCommanderT{
         [PluginMethod("LoadNext", "TC_L_LOADNEXT")]
         int ListLoadNext(HWND parentWin, HWND listWin, wchar_t* fileToLoad, int showFlags);
         
-        /// <summary>Called when user switches to the next or previous file in lister using 'n' or 'p' keys, or goes to the next/previous file in the Quick View Panel, and when the definition string either doesn't exist, or its evaluation returns true.</summary>
+        /// <summary>When overriden in derived class called when user switches to the next or previous file in lister using 'n' or 'p' keys, or goes to the next/previous file in the Quick View Panel, and when the definition string either doesn't exist, or its evaluation returns true.</summary>
         /// <param name="e">Event arguments containing enformation about current lister window.</param>
         /// <returns>True if current lister implementation can load the file, false otherwise. Returning false is equivalent to throwing any exception but <see cref="NotSupportedException"/>.</returns>
         /// <exception cref="NotSupportedException">The most-derived implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>

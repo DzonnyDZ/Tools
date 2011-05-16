@@ -715,7 +715,17 @@ Public Module TypeTools
         End If
         Return get_IsSzArray.Invoke(Type)
     End Function
+
+    ''' <summary>Gets value indicating of given object is of given type</summary>
+    ''' <typeparam name="T">Type to test if given object is of that type</typeparam>
+    ''' <param name="obj">An object to test if it is of type <typeparamref name="T"/></param>
+    ''' <returns>True if <paramref name="obj"/> is of type (is assignable to variable of type) <typeparamref name="T"/>; false otherwise or if <paramref name="obj"/> is null.</returns>
+    ''' <remarks>Purpose of this function is to expose functionality of Visual Basic <c>TypeOf ... Is</c> or C# <c>is</c> operator to languages that does not support it (e.g. C++/CLI). From languages with native support for testing if object is of given type, you should use language-native functionality.</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
+    Public Function [Is](Of T)(obj As Object) As Boolean
+        Return TypeOf obj Is T
+    End Function
+
 End Module
-
-
 #End If

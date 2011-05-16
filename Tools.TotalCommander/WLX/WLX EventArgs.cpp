@@ -1,4 +1,5 @@
 #include "WLX common.h"
+#include "..\Common.h"
 #include "..\Exceptions.h"
 
 namespace Tools{namespace TotalCommanderT{
@@ -14,6 +15,24 @@ namespace Tools{namespace TotalCommanderT{
     inline IntPtr ListerPluginInitEventArgs::ParentWindowHandle::get(){ return this->parentWindowHandle; }
     inline String^ ListerPluginInitEventArgs::FileToLoad::get(){ return this->fileToLoad; }
     inline IntPtr ListerPluginInitEventArgs::PluginWindowHandle::get(){ return this->PluginWindow == nullptr ? IntPtr::Zero : this->PluginWindow->Handle; }
+
+#pragma endregion
+
+#pragma region ListerPluginInitEventArgsSpecialized
+    generic<class TUI>
+    inline ListerPluginInitEventArgsSpecialized<TUI>::ListerPluginInitEventArgsSpecialized(IntPtr parentWindowHandle, String^ fileToLoad, ListerShowFlags options):ListerPluginInitEventArgs(parentWindowHandle, fileToLoad, options){}
+    
+    generic<class TUI>
+    void ListerPluginInitEventArgsSpecialized<TUI>::PluginWindowInternal::set(IListerUI^ value){
+        if(!Tools::TypeTools::Is<TUI>(value)) throw gcnew Tools::TypeMismatchException(value, "value", TUI::typeid);
+        __super::PluginWindow = value;
+    }
+    
+    generic<class TUI> where TUI: IListerUI, ref class
+    inline TUI ListerPluginInitEventArgsSpecialized<TUI>::PluginWindow::get(){return (TUI)__super::PluginWindow;}
+    
+    generic<class TUI> where TUI: IListerUI, ref class
+    inline void ListerPluginInitEventArgsSpecialized<TUI>::PluginWindow::set(TUI value){__super::PluginWindow = value;}
 
 #pragma endregion
 

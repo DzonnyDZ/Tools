@@ -28,7 +28,7 @@ namespace Tools{namespace TotalCommanderT{
                 continue;
             }
             const Reflection::BindingFlags flags = Reflection::BindingFlags::Instance | Reflection::BindingFlags::Public | Reflection::BindingFlags::NonPublic;
-            bool implemented = TypeTools::GetAttribute<MethodNotSupportedAttribute^>(ReflectionTools::GetOverridingMethod(this->PluginBaseClass->GetMethod(attr->ImplementedBy, flags), this->GetType()), false) == nullptr;
+            bool implemented = MethodNotSupportedAttribute::Supported(ReflectionTools::GetOverridingMethod(this->PluginBaseClass->GetMethod(attr->ImplementedBy, flags), this->GetType()));
             if(implemented) ret |= ((IConvertible^)constant->GetValue(nullptr))->ToInt32(nullptr);
          }
          return (T)Enum::ToObject(T::typeid, ret);

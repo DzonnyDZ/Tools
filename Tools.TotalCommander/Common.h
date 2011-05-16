@@ -1,5 +1,4 @@
 #pragma once
-#ifndef STRINGONLY
     typedef unsigned __int64 QWORD; 
     #include "Plugin\fsplugin.h"
     #include "Plugin\contplug.h"
@@ -12,7 +11,6 @@
     #pragma make_public(FsDefaultParamStruct)
     #pragma make_public(HBITMAP__)
     [module: Tools::RuntimeT::CompilerServicesT::MakeTypePublic("<Module>")];
-#endif
 
 #ifndef MAKE_PUBLIC
     #define MAKE_PUBLIC [Tools::RuntimeT::CompilerServicesT::MakePublicAttribute(Remove = true)] 
@@ -23,7 +21,6 @@
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
 
-#ifndef STRINGONLY
     /// <summary>Converts <see cref="FILETIME"/> to <see cref="DateTime"/></summary>
     /// <param name="value">A <see cref="FILETIME"/></param>
     /// <returns>Corresponding <see cref="DateTime"/></returns>
@@ -34,7 +31,6 @@ namespace Tools{namespace TotalCommanderT{
     /// <returns>Corresponding <see cref="FILETIME"/></returns>
     /// <version version="1.5.4">The limitation of C++/CLI (unable to create public methods) was worked around (via <see cref="Tools::RuntimeT::CompilerServicesT::MakePublicAttribute"/>), so this method is now public.</version>
     MAKE_PUBLIC FILETIME DateTimeToFileTime(Nullable<DateTime> value);
-#endif
 
 #pragma region String
     /// <summary>Copies ANSI characters from string to character array</summary>
@@ -135,7 +131,6 @@ namespace Tools{namespace TotalCommanderT{
     MAKE_PUBLIC String^ StringCopy(const char* source) throw(ArgumentOutOfRangeException, ArgumentException, AccessViolationException);
 #pragma endregion
 
-#ifndef STRINGONLY
     /// <summary>Recognized Total Commander plugin types</summary>
     [FlagsAttribute]
     public enum class PluginType{
@@ -214,5 +209,4 @@ namespace Tools{namespace TotalCommanderT{
         virtual Object^ Invoke(... cli::array<Object^>^) = ICallbackWrapper::Invoke, ICallbackWrapper::operator();
     };
 
-#endif
 }}

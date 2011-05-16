@@ -20,7 +20,7 @@ namespace Tools {
     // Pro přidání nebo odebrání člena editujte váš .resx soubor a pak spusťte custom tool InternalResXFileCodeGeneratorEx nebo přebuildujte váš projek ve VS.NET.
     // Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-2011 (http://tools.codeplex.com)
     [System::CodeDom::Compiler::GeneratedCodeAttribute(L"Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx", 
-    L"1.5.4.22754"), 
+    L"1.5.4.23310"), 
     System::Diagnostics::DebuggerNonUserCodeAttribute, 
     System::Diagnostics::CodeAnalysis::SuppressMessageAttribute(L"Microsoft.Naming", L"CA1724:TypeNamesShouldNotMatchNamespaces")]
     ref class Exceptions {
@@ -101,6 +101,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Method implementing or overriding {0}.{1} cannot be found on type {2}.'.
+        /// </summary>
+        public: static property System::String^  DerivedMehtodNotFound {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Encrypt/Decrypt failed'.
         /// </summary>
         public: static property System::String^  EncryptDecryptFailed {
@@ -111,6 +118,13 @@ namespace Tools {
         /// Najde lokalizivaný řetězec podobný '{0} returned fields which&apos;s name is longer than {1}'.
         /// </summary>
         public: static property System::String^  FieldNameTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Generic parameters {0} not found on type {1}'.
+        /// </summary>
+        public: static property System::String^  GenericParameterNotFound {
             System::String^  get();
         }
         
@@ -304,6 +318,34 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'To many {0} attributes specified on {1}.'.
+        /// </summary>
+        public: static property System::String^  ToManyAttributes {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Type {0} neither derives from nor implements {1}'.
+        /// </summary>
+        public: static property System::String^  TypeDoesNotDeriveFrom {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Type {0} is not generic'.
+        /// </summary>
+        public: static property System::String^  TypeIsNotGeneric {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Type must be specified for global methods'.
+        /// </summary>
+        public: static property System::String^  TypeMustBeSpecifiedForGlobalMethods {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Unexteced type {0} retunrned by {1}'.
         /// </summary>
         public: static property System::String^  UnexpectedType {
@@ -384,6 +426,15 @@ namespace Tools {
         public: static System::String^  DefaultTextTooLongFormat();
         
         /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Method implementing or overriding {0}.{1} cannot be found on type {2}.'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <param name="arg1">Objekt (1) pro formátování.</param>
+        /// <param name="arg2">Objekt (2) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  DerivedMehtodNotFoundFormat(System::Object^  arg0, System::Object^  arg1, System::Object^  arg2);
+        
+        /// <summary>
         /// Pahýl formátovací metody vracející hodnotu vlastnosti EncryptDecryptFailed.
         /// </summary>
         /// <returns>Hodnota vlastnosti EncryptDecryptFailed.</returns>
@@ -396,6 +447,14 @@ namespace Tools {
         /// <param name="arg1">Objekt (1) pro formátování.</param>
         /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
         public: static System::String^  FieldNameTooLongFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Generic parameters {0} not found on type {1}'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <param name="arg1">Objekt (1) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  GenericParameterNotFoundFormat(System::Object^  arg0, System::Object^  arg1);
         
         /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'Value &quot;{0}&quot; contains invalid character.'.
@@ -580,6 +639,35 @@ namespace Tools {
         /// <param name="arg1">Objekt (1) pro formátování.</param>
         /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
         public: static System::String^  ReturnedStringTooLongForChoiceFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'To many {0} attributes specified on {1}.'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <param name="arg1">Objekt (1) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  ToManyAttributesFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Type {0} neither derives from nor implements {1}'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <param name="arg1">Objekt (1) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  TypeDoesNotDeriveFromFormat(System::Object^  arg0, System::Object^  arg1);
+        
+        /// <summary>
+        /// Formátuje lokalizovaný řetězec podobný 'Type {0} is not generic'.
+        /// </summary>
+        /// <param name="arg0">Objekt (0) pro formátování.</param>
+        /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
+        public: static System::String^  TypeIsNotGenericFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti TypeMustBeSpecifiedForGlobalMethods.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti TypeMustBeSpecifiedForGlobalMethods.</returns>
+        public: static System::String^  TypeMustBeSpecifiedForGlobalMethodsFormat();
         
         /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'Unexteced type {0} retunrned by {1}'.

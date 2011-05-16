@@ -105,7 +105,10 @@
         (char* DetectString, int maxlen)
     #endif
     #if defined(TC_FNC_BODY)
-        {TC_FUNCTION_TARGET->ListGetDetectString(DetectString, maxlen)
+        {
+            TC_L_INIT_CALL;
+            return TC_FUNCTION_TARGET->ListGetDetectString(DetectString, maxlen);
+        }
     #elif defined(TC_FNC_HEADER)
         ;
     #endif

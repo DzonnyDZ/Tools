@@ -33,11 +33,31 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Gets the name and path of the file which has to be loaded.</summary>
         property String^ FileToLoad{virtual String^ get() sealed = IListerUIInfo::FileName::get;}
         /// <summary>Set this property to instance of <see cref="IListerUI"/> implementation to indicate that your plugin is loaded. Set to (keep) null to indicate that plugin load failed (e.g. the plugin does not support file of given type).</summary>
+        /// <value>Instance of <see cref="IListerUI"/> implementation if plugin was loaded, nulll if load failed</value>
         virtual property IListerUI^ PluginWindow;
     protected:
         /// <summary>Gets handle of control (window) representing plugin UI</summary>
         /// <returns>This implementation returns <see cref="PluginWindow"/>.<see cref="IListerUI::Handle">Handle</see>, <see cref="IntPtr::Zero"/> if <see cref="PluginWindow"/> is null.</returns>
         property IntPtr PluginWindowHandle{virtual IntPtr get() = IListerUIInfo::PluginWindowHandle::get;}
+    };
+
+    /// <summary>Generic specialized type-safe implementation of <see cref="ListerPluginInitEventArgs"/> class</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    generic<class TUI> where TUI: IListerUI, ref class
+    public ref class ListerPluginInitEventArgsSpecialized : ListerPluginInitEventArgs{
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="ListerPluginInitEventArgs"/> class</summary>
+        /// <param name="parentWindowHandle">Handler of lister lister's window</param>
+        /// <param name="fileToLoad">The name and path of the file which has to be loaded</param>
+        /// <param name="options">Flags indicating various options to for lister plugin being loaded</param>
+        ListerPluginInitEventArgsSpecialized(IntPtr parentWindowHandle, String^ fileToLoad, ListerShowFlags options);
+        /// <summary>Internally implements the <see cref="ListerPluginInitEventArgs::PluginWindow"/> property</summary>
+        /// <exception cref="TypeMismatchException">Value being set is not of type <typeparamref name="TUI"/></exception>
+        [EditorBrowsable(EditorBrowsableState::Never)]
+        property IListerUI^ PluginWindowInternal{virtual void set(IListerUI^) sealed = ListerPluginInitEventArgs::PluginWindow::set;}
+        /// <summary>Set this property to instance of <typeparamref name="TUI"/> to indicate that your plugin is loaded. Set to (keep) null to indicate that plugin load failed (e.g. the plugin does not support file of given type).</summary>
+        /// <value>Instance of <typeparamref name="TUI"/> if plugin was loaded, nulll if load failed</value>
+        property TUI PluginWindow{TUI get() new; void set(TUI) new;}
     };
 
     /// <summary>Event arguments describing environment for loading different file to a plugin</summary>

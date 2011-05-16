@@ -62,12 +62,20 @@ namespace Tools {
         return ResourceManager->GetString(L"DefaultTextTooLong", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::DerivedMehtodNotFound::get() {
+        return ResourceManager->GetString(L"DerivedMehtodNotFound", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::EncryptDecryptFailed::get() {
         return ResourceManager->GetString(L"EncryptDecryptFailed", _resourceCulture);
     }
     
     inline System::String^  Exceptions::FieldNameTooLong::get() {
         return ResourceManager->GetString(L"FieldNameTooLong", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::GenericParameterNotFound::get() {
+        return ResourceManager->GetString(L"GenericParameterNotFound", _resourceCulture);
     }
     
     inline System::String^  Exceptions::InvalidCharacter::get() {
@@ -178,6 +186,22 @@ namespace Tools {
         return ResourceManager->GetString(L"ReturnedStringTooLongForChoice", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::ToManyAttributes::get() {
+        return ResourceManager->GetString(L"ToManyAttributes", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::TypeDoesNotDeriveFrom::get() {
+        return ResourceManager->GetString(L"TypeDoesNotDeriveFrom", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::TypeIsNotGeneric::get() {
+        return ResourceManager->GetString(L"TypeIsNotGeneric", _resourceCulture);
+    }
+    
+    inline System::String^  Exceptions::TypeMustBeSpecifiedForGlobalMethods::get() {
+        return ResourceManager->GetString(L"TypeMustBeSpecifiedForGlobalMethods", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::UnexpectedType::get() {
         return ResourceManager->GetString(L"UnexpectedType", _resourceCulture);
     }
@@ -223,12 +247,20 @@ namespace Tools {
         return DefaultTextTooLong;
     }
     
+    inline System::String^  Exceptions::DerivedMehtodNotFoundFormat(System::Object^  arg0, System::Object^  arg1, System::Object^  arg2) {
+        return System::String::Format(_resourceCulture, DerivedMehtodNotFound, arg0, arg1, arg2);
+    }
+    
     inline System::String^  Exceptions::EncryptDecryptFailedFormat() {
         return EncryptDecryptFailed;
     }
     
     inline System::String^  Exceptions::FieldNameTooLongFormat(System::Object^  arg0, System::Object^  arg1) {
         return System::String::Format(_resourceCulture, FieldNameTooLong, arg0, arg1);
+    }
+    
+    inline System::String^  Exceptions::GenericParameterNotFoundFormat(System::Object^  arg0, System::Object^  arg1) {
+        return System::String::Format(_resourceCulture, GenericParameterNotFound, arg0, arg1);
     }
     
     inline System::String^  Exceptions::InvalidCharacterFormat(System::Object^  arg0) {
@@ -337,6 +369,22 @@ namespace Tools {
     
     inline System::String^  Exceptions::ReturnedStringTooLongForChoiceFormat(System::Object^  arg0, System::Object^  arg1) {
         return System::String::Format(_resourceCulture, ReturnedStringTooLongForChoice, arg0, arg1);
+    }
+    
+    inline System::String^  Exceptions::ToManyAttributesFormat(System::Object^  arg0, System::Object^  arg1) {
+        return System::String::Format(_resourceCulture, ToManyAttributes, arg0, arg1);
+    }
+    
+    inline System::String^  Exceptions::TypeDoesNotDeriveFromFormat(System::Object^  arg0, System::Object^  arg1) {
+        return System::String::Format(_resourceCulture, TypeDoesNotDeriveFrom, arg0, arg1);
+    }
+    
+    inline System::String^  Exceptions::TypeIsNotGenericFormat(System::Object^  arg0) {
+        return System::String::Format(_resourceCulture, TypeIsNotGeneric, arg0);
+    }
+    
+    inline System::String^  Exceptions::TypeMustBeSpecifiedForGlobalMethodsFormat() {
+        return TypeMustBeSpecifiedForGlobalMethods;
     }
     
     inline System::String^  Exceptions::UnexpectedTypeFormat(System::Object^  arg0, System::Object^  arg1) {
