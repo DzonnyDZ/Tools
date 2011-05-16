@@ -88,7 +88,100 @@ namespace Tools{namespace TotalCommanderT{
         /// If you do not want to loose this automatic redirection you should decorate your method with <see cref="MethodNotSupportedRedirectAttribute"/> as well.
         /// </para></note></remarks>
         /// <seealso cref="IListerUI::SearchText"/><seelaso cref="ShowSearchDialog"/>
-        [MethodNotSupportedRedirect("SearchText", GPar="TUI")]
+        [MethodNotSupportedRedirect("SearchText", GPar = "TUI", Hint = IListerUI::typeid)]
         virtual bool SearchText(IListerUI^ listerUI, IntPtr listerUIHandle, String^ searchString, TextSearchOptions searchParameter) override;
+
+        /// <summary>Called when the user changes some options in Lister's menu.</summary>
+        /// <param name="listerUI">An instance of lister plugin UI. Null in rare cases whan Total Commander calls <see cref="ListSearchText"/> with handle unknown to managed plugin framework</param>
+        /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
+        /// <param name="command">One of <see cref="ListerCommand"> commands</param>
+        /// <param name="parameter">Used when <paramref name="command"/> is <see cref="ListerCommand::NewParams"/>. Combination of <see cref="ListerShowFlags"/>.</param>
+        /// <returns>Value indicating if command succeeded. Raturning false is equal to throwing any exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="NotSupportedException">Most-derived implementation of <see cref="SendCommand"/> is decorated with <see cref="MethodNotSupportedAttribute"/> or this method is not overriden and method implementing <see cref="IListerUI::OnCOmmand"/> on <typeparamref name="TUI"/> is decorated with <see cref="MethodNotSupportedAttribute"/>.</exception>
+        /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate command failure.</exception>
+        /// <remarks>
+        /// <note type="inheritinfo">
+        /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::OnCommand"/>).
+        /// You usually does not need to override it.
+        /// <para>When you override this method you typically should call base class method to use default event dispatching logic.</para>
+        /// <para>
+        /// This method is decorated with <see cref="MethodNotSupportedRedirectAttribute"/> which causes actual <see cref="MethodNotSupportedAttribute"/> value to be read form method which implements <see cref="IListerUI::SearchText"/> on type <typeparamref name="TUI"/>.
+        /// If you do not want to loose this automatic redirection you should decorate your method with <see cref="MethodNotSupportedRedirectAttribute"/> as well.
+        /// </para></note></remarks>
+        /// <seealso cref="IListerUI::OnCommand"/>
+        [MethodNotSupportedRedirect("OnCommand", GPar = "TUI", Hint = IListerUI::typeid)]
+        virtual bool SendCommand(IListerUI^ listerUI, IntPtr listerUIHandle, ListerCommand command, ListerShowFlags parameter) override;
+
+        /// <summary>Called when the user chooses the print function.</summary>
+        /// <param name="listerUI">An instance of lister plugin UI. Null in rare cases whan Total Commander calls <see cref="ListSearchText"/> with handle unknown to managed plugin framework</param>
+        /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
+        /// <param name="fileToPrint">The full name of the file which needs to be printed. This is the same file as loaded with <see cref="OnInit"/>.</param>
+        /// <param name="defPrinter">Name of the printer currently chosen in Total Commander. May be null (use default printer).</param>
+        /// <param name="printFlags">Currently not used (set to 0). May be used in a later version of TC.</param>
+        /// <param name="margins">The left, top, right and bottom margins of the print area (in 1/100 of inch). May be ignored.</margins>
+        /// <returns>Value indicating if command succeeded. Raturning false is equal to throwing any exception but <see cref="NotSupportedException"/>.</returns>
+        /// <exception cref="NotSupportedException">Actual implementation of <see cref="Print"/> is decorated with <see cref="NotSupportedAttribute"/></exception>
+        /// <exception cref="Exception">Any other exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate command failure.</exception>
+        /// <remarks>
+        /// <note type="inheritinfo">
+        /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::Print"/>).
+        /// You usually does not need to override it.
+        /// <para>When you override this method you typically should call base class method to use default event dispatching logic.</para>
+        /// <para>
+        /// This method is decorated with <see cref="MethodNotSupportedRedirectAttribute"/> which causes actual <see cref="MethodNotSupportedAttribute"/> value to be read form method which implements <see cref="IListerUI::SearchText"/> on type <typeparamref name="TUI"/>.
+        /// If you do not want to loose this automatic redirection you should decorate your method with <see cref="MethodNotSupportedRedirectAttribute"/> as well.
+        /// </para></note></remarks>
+        /// <seealso cref="IListerUI::Print"/>
+        [MethodNotSupportedRedirect("Print", GPar = "TUI", Hint = IListerUI::typeid)]
+        virtual bool Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins) override;
+
+        /// <summary>Called when the parent window receives a notification message from the child window.</summary>
+        /// <param name="listerUI">An instance of lister plugin UI. Null in rare cases whan Total Commander calls <see cref="ListSearchText"/> with handle unknown to managed plugin framework</param>
+        /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
+        /// <param name="message">The received message, one of the following.</param>
+        /// <param name="wParam">The wParam parameter of the message.</param>
+        /// <param name="lParam">The lParam parameter of the message.</param>
+        /// <returns>Return the value described for that message in the Windows API help.</returns>
+        /// <remarks>
+        /// Do not implement this function if you don't use any owner-drawn controls and don't require any notification messages! Possible applications: Owner-drawn Listview control, reacting to scroll messages, etc.
+        /// <para>Tocal Commanders sends only certain windows messages this way: <c>WM_COMMAND</c>, <c>WM_NOTIFY</c>, <c>WM_MEASUREITEM</c> or <c>WM_DRAWITEM</c></para>
+        /// <note type="inheritinfo">
+        /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::OnNotificationReceived"/>).
+        /// You usually does not need to override it.
+        /// <para>When you override this method you typically should call base class method to use default event dispatching logic.</para>
+        /// <para>
+        /// This method is decorated with <see cref="MethodNotSupportedRedirectAttribute"/> which causes actual <see cref="MethodNotSupportedAttribute"/> value to be read form method which implements <see cref="IListerUI::SearchText"/> on type <typeparamref name="TUI"/>.
+        /// If you do not want to loose this automatic redirection you should decorate your method with <see cref="MethodNotSupportedRedirectAttribute"/> as well.
+        /// </para></note></remarks>
+        /// <seealso cref="IListerUI::OnNotificationreceived"/>
+        [MethodNotSupportedRedirect("OnNotificationreceived", GPar = "TUI", Hint = IListerUI::typeid)]
+        [EditorBrowsable(EditorBrowsableState::Advanced)]
+        virtual int NotificationReceived(IListerUI^ listerUI, IntPtr listerUIHandle, int message, UIntPtr wParam, IntPtr lParam) override;
+
+        /// <summary>Called when the user tries to find text in the plugin.</summary>
+        /// <param name="listerUI">An instance of lister plugin UI. Null in rare cases whan Total Commander calls <see cref="SearchDialog"/> with handle unknown to managed plugin framework</param>
+        /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
+        /// <param name="findNext">True if Find next was chosen from the menu, false if find first was chosen by the user</param>
+        /// <returns>
+        /// True if this plugin instance (UI instance) shows the search dialog itself (it must show it in this function), false if Total Commander should show it's own dialog and call <see cref="SearchText"/>.
+        /// This behavior allows to use both - <see cref="ShowSearchDialog"/> and <see cref="SearchText"/> in one plugin/UI instance.
+        /// Do not return false if search fails. (Return true anyway.)
+        /// </returns>
+        /// <exception cref="NotSupportedException">Most-derived implementation of <see cref="ShowSearchDialog"/> is decorated with <see cref="MethodNotSupportedAttribute"/></exception>
+        /// <remarks>
+        /// <para>Only implement this function if your plugin requires a plugin-specific search dialog! For searching text, please implement <see cref="SearchText"/> instead!</para>
+        /// <para>The plugin needs to show the search dialog and highlight/select the found text by itself. Requires Total Commander 7 or later.</para>
+        /// <note type="inheritinfo">Do not throw any exceptions from this function. It'd be passed to Total Commander which cannot handle it.</note>
+        /// <note type="inheritinfo">
+        /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::ShowSearchDialog"/>).
+        /// You usually does not need to override it.
+        /// <para>When you override this method you typically should call base class method to use default event dispatching logic.</para>
+        /// <para>
+        /// This method is decorated with <see cref="MethodNotSupportedRedirectAttribute"/> which causes actual <see cref="MethodNotSupportedAttribute"/> value to be read form method which implements <see cref="IListerUI::SearchText"/> on type <typeparamref name="TUI"/>.
+        /// If you do not want to loose this automatic redirection you should decorate your method with <see cref="MethodNotSupportedRedirectAttribute"/> as well.
+        /// </para></note></remarks>
+        /// <seealso cref="SearchText"/><seealso cref="IListerUI::ShowSerachDialog"/>
+        [MethodNotSupportedRedirect("ShowSerachDialog", GPar = "TUI", Hint = IListerUI::typeid)]
+        virtual bool ShowSearchDialog(IListerUI^ listerUI, IntPtr listerUIHandle, bool findNext) override;
     };
 }}

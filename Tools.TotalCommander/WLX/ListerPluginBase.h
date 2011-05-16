@@ -365,7 +365,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <seealso cref="IListerUI::OnCommand"/>
         [MethodNotSupported]
-        bool SendCommand(IListerUI^ listerUI, IntPtr listerUIHandle, ListerCommand command, ListerShowFlags parameter);
+        virtual bool SendCommand(IListerUI^ listerUI, IntPtr listerUIHandle, ListerCommand command, ListerShowFlags parameter);
 #pragma endregion
 
 #pragma region Print
@@ -406,7 +406,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <seealso cref="IListerUI::Print"/>
         [MethodNotSupported]
-        bool Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins);
+        virtual bool Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins);
 #pragma endregion
 
 #pragma region NotificationReceived
@@ -446,7 +446,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <seealso cref="IListerUI::OnNotificationreceived"/>
         [MethodNotSupported, EditorBrowsable(EditorBrowsableState::Advanced)]
-        int NotificationReceived(IListerUI^ listerUI, IntPtr listerUIHandle, int message, UIntPtr wParam, IntPtr lParam);
+        virtual int NotificationReceived(IListerUI^ listerUI, IntPtr listerUIHandle, int message, UIntPtr wParam, IntPtr lParam);
 #pragma endregion
 
 #pragma region SetDefaultParams
@@ -514,7 +514,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not throw any nother exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// </remarks>
         [MethodNotSupported]
-        System::Drawing::Bitmap^ GetPreviewBitmap(String^ fileToLoad, int width, int height, cli::array<Byte>^ contentbuf);
+        virtual System::Drawing::Bitmap^ GetPreviewBitmap(String^ fileToLoad, int width, int height, cli::array<Byte>^ contentbuf);
 #pragma endregion
 
 #pragma region SearchDialog
@@ -537,7 +537,7 @@ namespace Tools{namespace TotalCommanderT{
         [CLSCompliant(false)]
         [PluginMethod("ShowSearchDialog", "TC_L_SHOWSEARCHDIALOG")]
         int ListSearchDialog(HWND listWin, int findNext);
-        /// <summary>Called when the user tries to find text in the plugin.</summary>
+        /// <summary>When overriden in derived class called when the user tries to find text in the plugin.</summary>
         /// <param name="listerUI">An instance of lister plugin UI. Null in rare cases whan Total Commander calls <see cref="SearchDialog"/> with handle unknown to managed plugin framework</param>
         /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
         /// <param name="findNext">True if Find next was chosen from the menu, false if find first was chosen by the user</param>
@@ -559,7 +559,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <seealso cref="SearchText"/><seealso cref="IListerUI::ShowSerachDialog"/>
         [MethodNotSupported]
-        bool ShowSearchDialog(IListerUI^ listerUI, IntPtr listerUIHandle, bool findNext);
+        virtual bool ShowSearchDialog(IListerUI^ listerUI, IntPtr listerUIHandle, bool findNext);
 #pragma endregion
     };
 }}

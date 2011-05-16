@@ -29,5 +29,25 @@ namespace Tools{namespace TotalCommanderT{
     inline bool ListerPlugin<TUI>::SearchText(IListerUI^ listerUI, IntPtr listerUIHandle, String^ searchString, TextSearchOptions searchParameter){
         return __super::SearchText(listerUI, listerUIHandle, searchString, searchParameter);
     }
+
+    generic <class TUI>
+    inline bool ListerPlugin<TUI>::SendCommand(IListerUI^ listerUI, IntPtr listerUIHandle, ListerCommand command, ListerShowFlags parameter){
+        return __super::SendCommand(listerUI, listerUIHandle, command, parameter);
+    }
+
+    generic <class TUI>
+    inline bool ListerPlugin<TUI>::Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins){
+        return __super::Print(listerUI, listerUIHandle, fileToPrint, defPrinter, printFlags, margins);
+    }
+
+    generic <class TUI>
+    inline int ListerPlugin<TUI>::NotificationReceived(IListerUI^ listerUI, IntPtr listerUIHandle, int message, UIntPtr wParam, IntPtr lParam){
+        return __super::NotificationReceived(listerUI, listerUIHandle, message, wParam, lParam);
+    }
+
+    generic <class TUI>
+    inline bool ListerPlugin<TUI>::ShowSearchDialog(IListerUI^ listerUI, IntPtr listerUIHandle, bool findNext){
+        return __super::ShowSearchDialog(listerUI, listerUIHandle, findNext);
+    }
  
 }}
