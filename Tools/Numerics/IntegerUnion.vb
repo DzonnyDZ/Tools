@@ -233,13 +233,13 @@ Namespace NumericsT
         ''' <param name="unsigned">An <see cref="Long"/></param>
         ''' <returns>Signed value with same bitwise representation as <paramref name="a"/></returns>
         <CLSCompliant(False)> Public Shared Function BitwiseSame(ByVal unsigned As ULong) As Long
-            Return New LongUnion(unsigned).Long
+            Return New LongUnion(unsigned).long
         End Function
         ''' <summary>Bitwise converts value of type <see cref="Long"/> to <see cref="ULong"/></summary>
         ''' <param name="signed">A <see cref="ULong"/></param>
         ''' <returns>Unsigned value with same bitwise representation as <paramref name="a"/></returns>
         <CLSCompliant(False)> Public Shared Function BitwiseSame(ByVal signed As Long) As ULong
-            Return New LongUnion(signed).uLong
+            Return New LongUnion(signed).ulong
         End Function
     End Structure
 
@@ -481,13 +481,13 @@ Namespace NumericsT
         ''' <param name="a">A <see cref="ShortUnion"/></param>
         ''' <returns><paramref name="a"/>.<see cref="[uShort]">ulong</see></returns>
         <CLSCompliant(False)> Public Shared Widening Operator CType(ByVal a As ShortUnion) As UShort
-            Return a.uShort
+            Return a.ushort
         End Operator
         ''' <summary>Converts <see cref="ShortUnion"/> to <see cref="Short"/></summary>
         ''' <param name="a">A <see cref="ShortUnion"/></param>
         ''' <returns><paramref name="a"/>.<see cref="[Short]">ulong</see></returns>
         Public Shared Widening Operator CType(ByVal a As ShortUnion) As Short
-            Return a.Short
+            Return a.short
         End Operator
 
         ''' <summary>Compares two instances of <see cref="ShortUnion"/> for equality</summary>
@@ -495,14 +495,14 @@ Namespace NumericsT
         ''' <param name="b">A <see cref="ShortUnion"/></param>
         ''' <returns>True if values represented by <paramref name="a"/> and <paramref name="b"/> are same</returns>
         Public Shared Operator =(ByVal a As ShortUnion, ByVal b As ShortUnion) As Boolean
-            Return a.Short = b.Short
+            Return a.short = b.short
         End Operator
         ''' <summary>Compares two instances of <see cref="ShortUnion"/> for inequality</summary>
         ''' <param name="a">A <see cref="ShortUnion"/></param>
         ''' <param name="b">A <see cref="ShortUnion"/></param>
         ''' <returns>True if values represented by <paramref name="a"/> and <paramref name="b"/> differ</returns>
         Public Shared Operator <>(ByVal a As ShortUnion, ByVal b As ShortUnion) As Boolean
-            Return a.Short <> b.Short
+            Return a.short <> b.short
         End Operator
 #End Region
 
@@ -531,13 +531,13 @@ Namespace NumericsT
         ''' <param name="unsigned">An <see cref="Short"/></param>
         ''' <returns>Signed value with same bitwise representation as <paramref name="a"/></returns>
         <CLSCompliant(False)> Public Shared Function BitwiseSame(ByVal unsigned As UShort) As Short
-            Return New ShortUnion(unsigned).Short
+            Return New ShortUnion(unsigned).short
         End Function
         ''' <summary>Bitwise converts value of type <see cref="Short"/> to <see cref="UShort"/></summary>
         ''' <param name="signed">A <see cref="UShort"/></param>
         ''' <returns>Unsigned value with same bitwise representation as <paramref name="a"/></returns>
         <CLSCompliant(False)> Public Shared Function BitwiseSame(ByVal signed As Short) As UShort
-            Return New ShortUnion(signed).uShort
+            Return New ShortUnion(signed).ushort
         End Function
     End Structure
 
@@ -642,6 +642,99 @@ Namespace NumericsT
         <CLSCompliant(False)> Public Shared Function BitwiseSame(ByVal signed As SByte) As Byte
             Return New ByteUnion(signed).byte
         End Function
+    End Structure
+
+    ''' <summary>4- or 8-byte uinion of unsigned and signed native integer</summary>
+    ''' <remarks>You can use this union for bitwise operations</remarks>
+    ''' <version version="1.5.4">This structure is new in version 1.5.4</version>
+    <StructLayout(LayoutKind.Sequential)>
+    Public Structure NativeUnion
+#Region "Fields"
+        ''' <summary>Signed native integer value</summary>
+        Public signed As IntPtr
+        ''' <summary>Unsigned native integer value</summary>
+        <CLSCompliant(False)>
+        <FieldOffset(0)> Public unsigned As UIntPtr
+#End Region
+#Region "CTors"
+        ''' <summary>CTor - creates a new instance of the <see cref="NativeUnion"/> structure from <see cref="IntPtr"/> value</summary>
+        ''' <param name="value">A value to populate this structure with</param>
+        Public Sub New(value As IntPtr)
+            signed = value
+        End Sub
+        ''' <summary>CTor - creates a new instance of the <see cref="NativeUnion"/> structure from <see cref="IntPtr"/> value</summary>
+        ''' <param name="value">A value to populate this structure with</param>
+        <CLSCompliant(False)>
+        Public Sub New(value As UIntPtr)
+            unsigned = value
+        End Sub
+#End Region
+#Region "Operators"
+        ''' <summary>Converts <see cref="IntPtr"/> to <see  cref="NativeUnion"/></summary>
+        ''' <param name="a">A <see cref="IntPtr"/></param>
+        ''' <returns>A <see cref="NativeUnion"/> with <see cref="Signed"/> initialized to <paramref name="a"/></returns>
+        Public Shared Widening Operator CType(a As IntPtr) As NativeUnion
+            Return New NativeUnion(a)
+        End Operator
+        ''' <summary>Converts <see cref="UIntPtr"/> to <see  cref="NativeUnion"/></summary>
+        ''' <param name="a">A <see cref="UIntPtr"/></param>
+        ''' <returns>A <see cref="NativeUnion"/> with <see cref="Unsigned"/> initialized to <paramref name="a"/></returns>
+        <CLSCompliant(False)>
+        Public Shared Widening Operator CType(a As UIntPtr) As NativeUnion
+            Return New NativeUnion(a)
+        End Operator
+        ''' <summary>Converts <see cref="NativeUnion"/> to <see cref="IntPtr"/></summary>
+        ''' <param name="a">A <see cref="NativeUnion"/></param>
+        ''' <returns><paramref name="a"/>.<see cref="signed">signed</see></returns>
+        Public Shared Widening Operator CType(a As NativeUnion) As IntPtr
+            Return a.signed
+        End Operator
+        ''' <summary>Converts <see cref="NativeUnion"/> to <see cref="UIntPtr"/></summary>
+        ''' <param name="a">A <see cref="NativeUnion"/></param>
+        ''' <returns><paramref name="a"/>.<see cref="unsigned">unsigned</see></returns>
+        <CLSCompliant(False)>
+        Public Shared Widening Operator CType(a As NativeUnion) As UIntPtr
+            Return a.unsigned
+        End Operator
+        ''' <summary>Compares two <see cref="NativeUnion"/> objects for equality</summary>
+        ''' <param name="a">A <see cref="NativeUnion"/></param>
+        ''' <param name="b">A <see cref="NativeUnion"/></param>
+        ''' <returns>True if <paramref name="a"/> and <paramref name="b"/> are equal, false if they are not</returns>
+        Public Shared Operator =(a As NativeUnion, b As NativeUnion) As Boolean
+            Return a.signed = b.signed
+        End Operator
+        ''' <summary>Compares two <see cref="NativeUnion"/> objects for inequality</summary>
+        ''' <param name="a">A <see cref="NativeUnion"/></param>
+        ''' <param name="b">A <see cref="NativeUnion"/></param>
+        ''' <returns>False if <paramref name="a"/> and <paramref name="b"/> are equal, true if they are not</returns>
+        Public Shared Operator <>(a As NativeUnion, b As NativeUnion) As Boolean
+            Return a.signed <> b.signed
+        End Operator
+#End Region
+#Region "Overrides"
+        ''' <summary>Returns the hash code for this instance.</summary>
+        ''' <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Function GetHashCode() As Integer
+            Return signed.GetHashCode
+        End Function
+        ''' <summary>Indicates whether this instance and a specified object are equal.</summary>
+        ''' <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.</returns>
+        ''' <param name="obj">Another object to compare to. </param>
+        ''' <filterpriority>2</filterpriority>
+        Public Overloads Overrides Function Equals(obj As Object) As Boolean
+            If TypeOf obj Is NativeUnion Then Return Me = DirectCast(obj, NativeUnion)
+            If TypeOf obj Is IntPtr Then Return Me.signed = DirectCast(obj, IntPtr)
+            If TypeOf obj Is UIntPtr Then Return Me.unsigned = DirectCast(obj, UIntPtr)
+            Return False
+        End Function
+        ''' <summary>Returns the fully qualified type name of this instance.</summary>
+        ''' <returns>A <see cref="T:System.String" /> containing a fully qualified type name.</returns>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Function ToString() As String
+            Return String.Format("{0}/{1}; {0:X}/{1:X}", Me.signed, Me.unsigned)
+        End Function
+#End Region
     End Structure
 End Namespace
 #End If

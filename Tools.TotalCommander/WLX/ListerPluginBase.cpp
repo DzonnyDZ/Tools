@@ -50,6 +50,7 @@ namespace Tools{namespace TotalCommanderT{
     IntPtr ListerPluginBase::LoadInternal(IntPtr parentWin, String^ fileToLoad, ListerShowFlags showFlags){
         auto e = gcnew ListerPluginInitEventArgs(parentWin, fileToLoad, showFlags);
         this->OnInit(e);
+        this->OnLoaded(e);
         if(e->PluginWindow == nullptr){
             return IntPtr::Zero;
         }else{
@@ -57,6 +58,8 @@ namespace Tools{namespace TotalCommanderT{
             return e->PluginWindow->Handle;
         }
     }
+
+    inline void ListerPluginBase::OnLoaded(ListerPluginInitEventArgs^ e){ this->Loaded(this, e); }
 
     inline bool ListerPluginBase::Initialized::get(){ return this->initialized; }
     void ListerPluginBase::OnInitInternal(){ this->OnInit(); }
@@ -83,11 +86,21 @@ namespace Tools{namespace TotalCommanderT{
 
     bool ListerPluginBase::LoadNext(ListerPluginReInitEventArgs^ e){
         if(!this->ImplementedFunctions.HasFlag(WlxFunctions::LoadNext)) throw gcnew NotSupportedException();
+        bool ret = false;
         if(e->PluginWindow != nullptr){
-            return e->PluginWindow->LoadNext(e);
-        }
-        return false;
+            try{
+                ret = e->PluginWindow->LoadNext(e);
+            }catch(NotSupportedException^){
+                throw;
+            }catch(...){
+                this->OnNextLoaded(gcnew ListerPluginReInitInfoEventArgs(e->ParentWindowHandle, e->FileToLoad, e->Options, e->PluginWindowHandle, e->PluginWindow, false));
+                throw;
+            }
+        } 
+        this->OnNextLoaded(gcnew ListerPluginReInitInfoEventArgs(e->ParentWindowHandle, e->FileToLoad, e->Options, e->PluginWindowHandle, e->PluginWindow, ret));
+        return ret;
     }
+    inline void ListerPluginBase::OnNextLoaded(ListerPluginReInitInfoEventArgs^ e){ this->NextLoaded(this, e); }
 
     inline void ListerPluginBase::ListCloseWindow(HWND listWin){
         this->CloseWindow(this->LoadedWindows[(IntPtr)listWin], (IntPtr)listWin);
@@ -96,17 +109,25 @@ namespace Tools{namespace TotalCommanderT{
     void ListerPluginBase::CloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle){
         if(listerUI != nullptr){
             try{
-                this->DispatchCloseWindow(listerUI, listerUIHandle);
-                DestroyWindow((HWND)(void*)listerUIHandle);
+                try{
+                    this->DispatchCloseWindow(listerUI, listerUIHandle);
+                }finally{
+                    DestroyWindow((HWND)(void*)listerUIHandle);
+                }
             }finally{
-                this->loadedWindows->Remove(listerUIHandle);
+                this->NotifyUIClose(listerUIHandle);
             }
         }
+        this->OnWindowClosed(gcnew ListerPluginUIEventArgs(listerUIHandle, listerUI));
+    }
+    inline void ListerPluginBase::NotifyUIClose(IntPtr listerUIHandle){
+        if(this->loadedWindows->ContainsKey(listerUIHandle)) this->loadedWindows->Remove(listerUIHandle);
     }
     void ListerPluginBase::DispatchCloseWindow(IListerUI^ listerUI, IntPtr){
         if(listerUI == nullptr) throw gcnew ArgumentNullException("listerUI");
         listerUI->OnBeforeClose();
     }
+    inline void ListerPluginBase::OnWindowClosed(ListerPluginUIEventArgs^ e){ this->WindowClosed(this, e); }
 
     void ListerPluginBase::ListGetDetectString(char* detectString, int maxlen){
         this->detectStringMaxLen = maxlen;
@@ -124,13 +145,25 @@ namespace Tools{namespace TotalCommanderT{
             return LISTPLUGIN_ERROR;
         }
     }
-    bool ListerPluginBase::SearchText(IListerUI^ listerUI, IntPtr, String^ searchString, TextSearchOptions searchParameter){
+    bool ListerPluginBase::SearchText(IListerUI^ listerUI, IntPtr listerUIHandle, String^ searchString, TextSearchOptions searchParameter){
         if(!this->ImplementedFunctions.HasFlag(WlxFunctions::SearchText))
             throw gcnew NotSupportedException();
-        if(listerUI != nullptr)
-            return listerUI->SearchText(searchString, searchParameter);
-        return false;
+        bool ret = false;
+        if(listerUI != nullptr){
+            try{
+                ret =  listerUI->SearchText(gcnew TextSearchEventArgs(listerUIHandle, listerUI, searchString, searchParameter));
+            }catch(NotSupportedException^){
+                throw;
+            }catch(...){
+                this->OnTextSearched(gcnew TextSearchInfoEventArgs(listerUIHandle, listerUI, searchString, searchParameter, false));
+                throw;
+            }
+        }
+        this->OnTextSearched(gcnew TextSearchInfoEventArgs(listerUIHandle, listerUI, searchString, searchParameter, ret));
+        return ret;
     }
+
+    inline void ListerPluginBase::OnTextSearched(TextSearchInfoEventArgs^ e){this->TextSearched(this, e); }
 
     int ListerPluginBase::ListSendCommand(HWND listWin, int command, int parameter){
         try{
@@ -141,13 +174,25 @@ namespace Tools{namespace TotalCommanderT{
             return LISTPLUGIN_ERROR;
         }
     }
-    bool ListerPluginBase::SendCommand(IListerUI^ listerUI, IntPtr, ListerCommand command, ListerShowFlags parameter){
+    bool ListerPluginBase::SendCommand(IListerUI^ listerUI, IntPtr listerUIHandle, ListerCommand command, ListerShowFlags parameter){
         if(!this->ImplementedFunctions.HasFlag(WlxFunctions::SendCommand))
             throw gcnew NotSupportedException();
-        if(listerUI != nullptr)
-            return listerUI->OnCommand(gcnew ListerCommandEventArgs(command, parameter));
-        return false;
+        bool ret = false;
+        if(listerUI != nullptr){
+            try{
+                ret = listerUI->OnCommand(gcnew ListerCommandEventArgs(listerUIHandle, listerUI, command, parameter));
+            }catch(NotSupportedException^){
+                throw;
+            }catch(...){
+                this->OnCommandSent(gcnew ListerCommandInfoEventArgs(listerUIHandle, listerUI, command, parameter, false));
+                throw;
+            }
+        }
+        this->OnCommandSent(gcnew ListerCommandInfoEventArgs(listerUIHandle, listerUI, command, parameter, ret));
+        return ret;
     }
+
+    inline void ListerPluginBase::OnCommandSent(ListerCommandInfoEventArgs^ e){ CommandSent(this, e); }
 
     int ListerPluginBase::ListPrint(HWND listWin, wchar_t* fileToPrint, wchar_t* defPrinter, int printFlags, RECT* margins){
         try{
@@ -161,14 +206,26 @@ namespace Tools{namespace TotalCommanderT{
             return LISTPLUGIN_ERROR;
         }
     }
-
+    
     bool ListerPluginBase::Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins){
         if(!this->ImplementedFunctions.HasFlag(WlxFunctions::Print))
             throw gcnew NotSupportedException();
-        if(listerUI != nullptr)
-            return listerUI->Print(gcnew PrintEventArgs(fileToPrint, defPrinter, printFlags, margins));
-        return false;
+        bool ret;
+        if(listerUI != nullptr){
+            try{
+                ret = listerUI->Print(gcnew PrintEventArgs(listerUIHandle, listerUI, fileToPrint, defPrinter, printFlags, margins));
+            }catch(NotSupportedException^){
+                throw;
+            }catch(...){
+                this->OnPrinted(gcnew PrintInfoEventArgs(listerUIHandle, listerUI, fileToPrint, defPrinter, printFlags, margins, false));
+                throw;
+            }
+        }
+        this->OnPrinted(gcnew PrintInfoEventArgs(listerUIHandle, listerUI, fileToPrint, defPrinter, printFlags, margins, ret));
+        return ret;
     }
+
+    void ListerPluginBase::OnPrinted(PrintInfoEventArgs^ e){this->Printed(this, e);}
 
     inline int ListerPluginBase::ListNotificationReceived(HWND listWin, int message, WPARAM wParam, LPARAM lParam){
         return this->NotificationReceived(this->LoadedWindows[(IntPtr)listWin], (IntPtr)listWin, message, (UIntPtr)wParam, (IntPtr)lParam);
@@ -176,8 +233,11 @@ namespace Tools{namespace TotalCommanderT{
     int ListerPluginBase::NotificationReceived(IListerUI^ listerUI, IntPtr listerUIHandle, int message, UIntPtr wParam, IntPtr lParam){
         if(!this->ImplementedFunctions.HasFlag(WlxFunctions::NotificationReceived))
             throw gcnew NotSupportedException();
+        auto e = gcnew MessageEventArgs(listerUIHandle, listerUI, message, wParam, lParam);
         if(listerUI != nullptr)
-            return listerUI->OnNotificationReceived(message, wParam, lParam);
+            listerUI->OnNotificationReceived(e);
+        this->OnNotification(e);
+        if(e->Result.HasValue) return e->Result.Value.ToInt32();
         switch(message){
             case WM_COMMAND: return 1;
             case WM_NOTIFY: return 0;
@@ -186,6 +246,7 @@ namespace Tools{namespace TotalCommanderT{
             default: return 0;
         }
     }
+    inline void ListerPluginBase::OnNotification(MessageEventArgs^ e){this->Notification(this, e);}
 
     inline void ListerPluginBase::ListSetDefaultParams(ListDefaultParamStruct* dps){
         this->SetDefaultParams(DefaultParams(*dps));

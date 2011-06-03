@@ -112,6 +112,18 @@ namespace Tools{namespace TotalCommanderT{
         [MethodNotSupported]
         virtual void OnInit(ListerPluginInitEventArgs^ e);
     public:
+        /// <summary>Raised after Total Commander requested plugin UI to be loaded</summary>
+        /// <remarks>This event is raised after a plugin UI was loaded (or when it ws not loaded at all).
+        /// <para>Primary way of handling this event is overriding <see cref="OnInit"/> method in derived class.</para>
+        /// <note>Do not throw any exceptions from event handler. Such exception would be passed to Total Commander which cannot handle it.</note></remarks>
+        event EventHandler<ListerPluginBase^, ListerPluginInitEventArgs^>^ Loaded;
+    protected:
+        /// <summary>Raises the <see cref="Loaded"/> event</summary>
+        /// <param name="e">Event arguments</param>
+        /// <remarks>The only purpose of this method is to raise the <see cref="Loaded"/> event. Primary way of handling this event is overriding <see cref="OnInit"/> method in derived class.
+        /// <note type="inheritinfo">Do not throw nay exceptions from this method. Such exception would be passed to Total Commander which cannot handle it.</note></remarks>
+        virtual void OnLoaded(ListerPluginInitEventArgs^ e);
+    public:
         /// <summary>Gets count of successfully loaded, not yett unloaded, plugin windows (UIs)</summary>
         property int LoadedWindowsCount{int get();}
         /// <summary>Gets enumerator that iterrates through all currently lloaded plugin windows (UIs)</summary>
@@ -152,12 +164,23 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">
         /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::LoadNext"/>).
         /// However you must still override this method and call base class method to prevent <see cref="NotSupportedException"/> exception from being thrown.
-        /// <para>You may also chose not to call base class method and dispatch the event to user interface yourself.</para>
+        /// <para>You may also chose not to call base class method and dispatch the event to user interface yourself. In this case you should consider calling <see cref="OnNextLoaded"/> to raise the <see cref="NextLoaded"/> event.</para>
         /// </note>
         /// </remarks>
         /// <seealso cref="IListerUI::LoadNext"/>
         [MethodNotSupported]
         virtual bool LoadNext(ListerPluginReInitEventArgs^ e);
+
+        /// <summary>Raised after plugin implementation decides whether it can or cannot load next document into same plugin UI</summary>
+        /// <remarks>Primary way of handling this event is overriding <see cref="LoadNext"/> in derived class.
+        /// <note>If you want to prevent document loading throw any (but <see cref="NotSupportedException"/>) exception from event handler.</note></remarks>
+        event EventHandler<ListerPluginBase^, ListerPluginReInitInfoEventArgs^>^ NextLoaded;
+    protected:
+        /// <summary>Raises the <see cref="NextLoaded"/> event</summary>
+        /// <param name="e">Event arguments</param>
+        /// <exception type="Exception">Any exception but <see cref="NotSUpportedException"/> and exception types commonly not caught in .NET FRamework (such as <see cref="StackOverflowException"/>) can be thrown to prevent document from being loaded.</exception>
+        /// <remarks>The only purpose of this method is to raise the <see cref="NextLoaded"/> event. Primary way of handling this event is overriding <see cref="LoadNext"/> in derived class.</remarks>
+        virtual void OnNextLoaded(ListerPluginReInitInfoEventArgs^ e);
 #pragma endregion
 
 #pragma region CloseWindow
@@ -175,20 +198,33 @@ namespace Tools{namespace TotalCommanderT{
         void ListCloseWindow(HWND listWin);
 
         /// <summary>Called to unload lister UI window</summary>
-        /// <param name="listerUI">An instance of lister UI previously created in <see cref="OnInit"/>. It may be null in rare (impossible?) cases when Total Commmander callls <see cref="ListCloseWindow"/> for handle that is not known to managed plugin framework.</param>
+        /// <param name="listerUI">An instance of lister UI previously created in <see cref="OnInit"/>. It may be null in rare (impossible?) cases when Total Commmander calls <see cref="ListCloseWindow"/> for handle that is not known to managed plugin framework.</param>
         /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
         /// <exception cref="NotSupportedException"><see cref="OnInit"/> is not implemented</exception>
         /// <remarks>
         /// <para>This function is automatically implemented always when <see cref="OnInit"/> is implemented.</para>
         /// <note type="inheritinfo">
         /// You may override this function but you should always call base class method.
-        /// <para>Default implementation contains logic for cleaning up internal register of opened winodws. For event dispatching it calls <see cref="DispatchCloseWindow"/>.</para>
+        /// <para>Default implementation contains logic for cleaning up internal register of opened winodws and for destroing the window (using unmanaged <c>DestroyWindow</c>).
+        /// For event dispatching it calls <see cref="DispatchCloseWindow"/>.</para>
+        /// <para>If you override this method and do not call base class method you should:</para>
+        /// <list type="number">
+        /// <item>If <paramref name="listerUI"/> is not null call <see cref="DispatchCloseWindow"/> to notify the UI of being closed.</item>
+        /// <item>Close the UI, e.g. by calling <c>DestroyWindow</c> Win32 API.</item>
+        /// <item>Call <see cref="NotifyUIClose"/> to remove the UI from <see cref="LoadedWindows"/>.</item>
+        /// </list>
         /// </note>
         /// <note type="inheritinfo">Do not throw any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// <note type="inheritinfo">This implementation of this method raises the <see cref="WindowClosed"/> event by calling <see cref="OnWindowClosed"/>. If you do not call base class method you should cosider calling <see cref="OnWindowClosed"/> to raise the event.</note>
         /// </remarks>
         /// <seealso cref="DispatchCloseWindow"/><seealso cref="IListerUI::OnBeforeClose"/>
         virtual void CloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle);
     protected:
+        /// <summary>Called when lister UI is closed (destroyed/removed). THis method removes the UI from <see cref="LoadedWindows"/> collection.</summary>
+        /// <param name="listerUIHandle">Handle of lister UI to remove. Ignored if unknown.</param>
+        /// <remarks>Yo do not need to call this method unless you override <see cref="CloseWindow"/> without calling base class method.</remarks>
+        [EditorBrowsable(EditorBrowsableState::Advanced)]
+        void NotifyUIClose(IntPtr listerUIHandle);
         /// <summary>Dispatches event informing lister plugin UI that it is about to close from Total Commander to lister UI implementation</summary>
         /// <param name="listerUI">An instance of lister UI previously created in <see cref="OnInit"/>. It may be null in rare (impossible?) cases when Total Commmander callls <see cref="ListCloseWindow"/> for handle that is not known to managed plugin framework.</param>
         /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
@@ -197,6 +233,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="CloseWindow"/><seealso cref="IListerUI::OnBeforeClose"/>
         [EditorBrowsable(EditorBrowsableState::Advanced)]
         virtual void DispatchCloseWindow(IListerUI^ listerUI, IntPtr listerUIHandle);
+     public:
+         /// <summary>Raised after plugin UI is closed (notified on close)</summary>
+         /// <remarks>Primary way of handling this event is overriding <see cref="CloseWindow"/> in derived class.
+         /// <note>Do not throw any exceptions form event handler. Such exception would be passed to Total Commander which cannot handle it.</note></remarks>
+         event EventHandler<ListerPluginBase^, ListerPluginUIEventArgs^>^ WindowClosed;
+     protected:
+         /// <summary>Raises the <see cref="WindowClosed"/> event</summary>
+         /// <param name="e">Event arguments</param>
+         /// <remarks>The only purpose of this method is to raise the <see cref="WindowClosed"/> event. Primary way of handling this event is overriding <see cref="CloseWindow"/> in derived class.
+         /// <note type="inheritinfo">Do not throw any exceptions from this method. Such exception would be passed to Total Commander which cannot handle it.</note></remarks>
+         virtual void OnWindowClosed(ListerPluginUIEventArgs^ e);
 #pragma endregion
 
 #pragma region GetDetectString
@@ -323,12 +370,22 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">
         /// This default implementation contains dispatching logic for dispatching this function call to appropriate <see cref="IListerUI"/> instance (<see cref="IListerUI::SearchText"/>).
         /// However you must still override this method and call base class method to prevent <see cref="NotSupportedException"/> exception from being thrown.
-        /// <para>You may also chose not to call base class method and dispatch the event to user interface yourself.</para>
+        /// <para>You may also chose not to call base class method and dispatch the event to user interface yourself. In this case you should consider calling <see cref="OnTextSearched"/> to raise the <see cref="TextSearched"/> event.</para>
         /// </note>
         /// </remarks>
         /// <seealso cref="IListerUI::SearchText"/><seelaso cref="ShowSearchDialog"/>
         [MethodNotSupported]
         virtual bool SearchText(IListerUI^ listerUI, IntPtr listerUIHandle, String^ searchString, TextSearchOptions searchParameter);
+        /// <summary>Raised after text is sought in plugin window (using TC-supplied dialog)</summary>
+        /// <remarks>Primary way of handling this event is to override <see cref="SearchText"/> in derived class.
+        /// <para>To force text-sreach to fail throw any exception (but <see cref="NotSupportedException"/> from event handler).</para>
+        event EventHandler<ListerPluginBase^, TextSearchInfoEventArgs^>^ TextSearched;
+    protected:
+        /// <summary>Raises the <see cref="TextSearched"/> event</summary>
+        /// <param name="e">Event arguments</param>
+        /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions commonly uncaught by .NET Framewor (such as <see cref="StackOverflowException"/>) can be thrown to indicate search failure</exception>
+        /// <remarks>The only purpose of this method is to raise the <see cref="TextSearched"/> event. Primary way of handling this event is to override <see cref="SearchText"/> in derived class.</remarks>
+        virtual void OnTextSearched(TextSearchInfoEventArgs^ e);
 #pragma endregion
 
 #pragma region SendCommand
@@ -366,6 +423,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="IListerUI::OnCommand"/>
         [MethodNotSupported]
         virtual bool SendCommand(IListerUI^ listerUI, IntPtr listerUIHandle, ListerCommand command, ListerShowFlags parameter);
+
+        /// <summary>Raised when a command was sent by Total Commander tu plugin UI</summary>
+        /// <remarks>Primary way of handlig this event is override <see cref="SendCommand"/> in derived class.
+        /// <para>To cancel command (from Total Commander point-of-view, it the plugin has taken anny action, you canno undo it) throw any exception but <see cref="NotSupportedException"/> from event handler.</para></remarks>
+        event EventHandler<ListerPluginBase^, ListerCommandInfoEventArgs^>^ CommandSent;
+    protected:
+        /// <summary>Raises the <see cref="CommandSent"/> event</summary>
+        /// <param name="e">Event aeguments</param>
+        /// <exception cref="Exception">Any axception but <see cref="NotSupportedException"/> and exceptions not commonly caught by .NET Framework (such as <see cref="StackOverflowException"/>) can be thrown from this method to prevent Total Commander from thinking that the command was exceuted successfully. However in case the plugin UI did action it cannot be undone.</exception>
+        /// <remarks>Primary way of handlig this event is override <see cref="SendCommand"/> in derived class. The only pusrpose of this method is to raise the <see cref="CommandSent"/> event.</remarks>
+        virtual void OnCommandSent(ListerCommandInfoEventArgs^ e);
 #pragma endregion
 
 #pragma region Print
@@ -407,6 +475,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="IListerUI::Print"/>
         [MethodNotSupported]
         virtual bool Print(IListerUI^ listerUI, IntPtr listerUIHandle, String^ fileToPrint, String^ defPrinter, PrintFlags printFlags, System::Drawing::Printing::Margins^ margins);
+
+        /// <summary>Raised after print operation is initialized</summary>
+        /// <remarks>Primary way of handling this event is to override the <see cref="Print"/> method.
+        /// <para>You can throw any exception (but <see cref="NotSupportedException"/>) to indicate to Total Commander that print operation failed. However you canot abort the print operation.</para></remarks>
+        event EventHandler<ListerPluginBase^, PrintInfoEventArgs^>^ Printed;
+    protected:
+        /// <summary>Raises the <see cref="Printed"/> event</summary>
+        /// <param name="e">Event aguments</param>
+        /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions not commonly caught by .NET Framework (such as <see cref="StackOverflowException"/>) can be thrown to indicate for Total Commander that the print operation failed. However if the plugin UI has already started the print operation you cannot abort it.</exception>
+        /// <remarks>The only purpose of this method is to raise the <see cref="Printed"/> event. Primary way of handling this event is to override the <see cref="Print"/> method.</remarks>
+        void OnPrinted(PrintInfoEventArgs^ e);
 #pragma endregion
 
 #pragma region NotificationReceived
@@ -430,7 +509,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>When overriden in derived class called when the parent window receives a notification message from the child window.</summary>
         /// <param name="listerUI">An instance of lister plugin UI. Null in rare cases whan Total Commander calls <see cref="ListSearchText"/> with handle unknown to managed plugin framework</param>
         /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
-        /// <param name="message">The received message, one of the following.</param>
+        /// <param name="message">The received message</param>
         /// <param name="wParam">The wParam parameter of the message.</param>
         /// <param name="lParam">The lParam parameter of the message.</param>
         /// <returns>Return the value described for that message in the Windows API help.</returns>
@@ -447,6 +526,19 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="IListerUI::OnNotificationreceived"/>
         [MethodNotSupported, EditorBrowsable(EditorBrowsableState::Advanced)]
         virtual int NotificationReceived(IListerUI^ listerUI, IntPtr listerUIHandle, int message, UIntPtr wParam, IntPtr lParam);
+    private:
+        EventHandler<ListerPluginBase^, MessageEventArgs^>^ notification;
+    public:
+        /// <summary>Raised when Total Commander passes a window message to plugin</summary>
+        /// <remarks>Primary way of handling this event is to override the <see cref="NotificationReceived"/> method.
+        /// <para>Do not throw any exceptions from event handler. Such exception is passed to Total Commander which cannot handle it.</para>
+        event EventHandler<ListerPluginBase^, MessageEventArgs^>^ Notification;
+    protected:
+        /// <summary>Raises the <see cref="NotificationReceived"/> event</summary>
+        /// <param name="e">Event aguments</param>
+        /// <remarks>The only purpose of this method is to raise the <see cref="Notification"/> event. Primary way of handling this event is to override the <see cref="NotificationReceived"/> method.
+        /// <note type="inheritinfo">Do not throw any exceptions from this method. The exeption would be passed to Total Commander which cannot handle it.</note></remarks>
+        void OnNotification(MessageEventArgs^ e);
 #pragma endregion
 
 #pragma region SetDefaultParams

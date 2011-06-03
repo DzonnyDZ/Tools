@@ -158,6 +158,10 @@ namespace Tools {
         return ResourceManager->GetString(L"PluginTypeNotSupported", _resourceCulture);
     }
     
+    inline System::String^  Exceptions::PluginWindowHandleMismatch::get() {
+        return ResourceManager->GetString(L"PluginWindowHandleMismatch", _resourceCulture);
+    }
+    
     inline System::String^  Exceptions::PropertyIsReadOnly::get() {
         return ResourceManager->GetString(L"PropertyIsReadOnly", _resourceCulture);
     }
@@ -341,6 +345,10 @@ namespace Tools {
     
     inline System::String^  Exceptions::PluginTypeNotSupportedFormat(System::Object^  arg0) {
         return System::String::Format(_resourceCulture, PluginTypeNotSupported, arg0);
+    }
+    
+    inline System::String^  Exceptions::PluginWindowHandleMismatchFormat() {
+        return PluginWindowHandleMismatch;
     }
     
     inline System::String^  Exceptions::PropertyIsReadOnlyFormat(System::Object^  arg0, System::Object^  arg1) {

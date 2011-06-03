@@ -207,6 +207,9 @@
   <data name="PluginTypeNotSupported" xml:space="preserve">
     <value>Plugin type {0} is not supported</value>
   </data>
+  <data name="PluginWindowHandleMismatch" xml:space="preserve">
+    <value>Plugin window handle mismatch</value>
+  </data>
   <data name="PropertyIsReadOnly" xml:space="preserve">
     <value>Property {0} is read-only on {1}</value>
   </data>

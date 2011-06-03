@@ -28,8 +28,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>There is no way to prevent unload! Just do any necessary cleanup in this method because the control/window/UI is gonna be destroyed using <c>DestroyWindow</c>.</remarks>
         void OnBeforeClose();
         /// <summary>Called when the user tries to find text in the plugin.</summary>
-        /// <param name="searchString">String to search for</param>
-        /// <param name="searchParameter">Indicates search options</param>
+        /// <param name="e">Event argumnets</param>
         /// <returns>True if search succeeded, false if it failed (nothing was found). Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
         /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate search failure.</exception>
         /// <remarks>
@@ -37,7 +36,7 @@ namespace Tools{namespace TotalCommanderT{
         /// If your plugin does not support search, just implement this method always returning false and do not override <see cref="ListerPluginBase::SearchText"/>.
         /// </remarks>
         /// <seelaso cref="ShowSearchDialog"/>
-        bool SearchText(String^ serachString, TextSearchOptions searchParameter); 
+        bool SearchText(TextSearchEventArgs^ e); 
         /// <summary>Called when the user changes some options in Lister's menu.</summary>
         /// <param name="e">Event arguments</param>
         /// <returns>True if command succeeded, false if it failed. Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
@@ -55,16 +54,13 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         bool Print(PrintEventArgs^ e);
         /// <summary>Called when the parent window receives a notification message from the child window.</summary>
-        /// <param name="message">The received message</param>
-        /// <param name="wParam">The wParam parameter of the message</param>
-        /// <param name="lParam">The lParam parameter of the message</param>
-        /// <returns>Return the value described for that message in the Windows API help.</returns>
+        /// <param name="e">Event arguments. You should set <paramref name="e"/>.<see cref="MessageEventArgs::Result">Result</see> to indicate result of the message.</param>
         /// <remarks>
         /// Total Commander passes only certain messages here: <c>WM_COMMAND</c>, <c>WM_NOTIFY</c>, <c>WM_MEASUREITEM</c> or <c>WM_DRAWITEM</c>.
         /// <para>Possible applications: Owner-drawn Listview control, reacting to scroll messages, etc.</para>
-        /// <para>If you don't want to implement this method, do not override <see cref="ListerPluginBase::NotificationReceived"/> in the first place. That this function is never called and it does not matter waht you return from here (preferrably 0).</para>
+        /// <para>If you don't want to implement this method, do not override <see cref="ListerPluginBase::NotificationReceived"/> in the first place. In such case this function is never called and it does not matter what you return from here (preferrably 0).</para>
         /// </remarks>
-        int OnNotificationReceived(int message, UIntPtr wParam, IntPtr lParam);
+        void OnNotificationReceived(MessageEventArgs^ e);
         /// <summary>Called when user tries to find text in the plugin.</summary>
         /// <param name="findNext">True if Find next was chosen from the menu, false if find first was chosen by the user</param>
         /// <returns>

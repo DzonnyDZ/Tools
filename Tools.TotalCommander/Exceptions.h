@@ -269,6 +269,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Najde lokalizivaný řetězec podobný 'Plugin window handle mismatch'.
+        /// </summary>
+        public: static property System::String^  PluginWindowHandleMismatch {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Najde lokalizivaný řetězec podobný 'Property {0} is read-only on {1}'.
         /// </summary>
         public: static property System::String^  PropertyIsReadOnly {
@@ -589,6 +596,12 @@ namespace Tools {
         /// <param name="arg0">Objekt (0) pro formátování.</param>
         /// <returns>Kopie ofrmátovacího řetězce, kde formátovací položky byly nahrazeny řetězcovými ekvivalenty instancí objektů předaných do parametrů.</returns>
         public: static System::String^  PluginTypeNotSupportedFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Pahýl formátovací metody vracející hodnotu vlastnosti PluginWindowHandleMismatch.
+        /// </summary>
+        /// <returns>Hodnota vlastnosti PluginWindowHandleMismatch.</returns>
+        public: static System::String^  PluginWindowHandleMismatchFormat();
         
         /// <summary>
         /// Formátuje lokalizovaný řetězec podobný 'Property {0} is read-only on {1}'.
