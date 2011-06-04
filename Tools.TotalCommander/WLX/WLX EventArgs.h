@@ -295,7 +295,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="lParam">The lParam parameter of the message.</param>
         /// <exception cref="ArgumentException"><paramref name="pluginWindow"/> is not null and <paramref name="pluginWindowHandle"/> is different than <paramref name="pluginWindow"/>.<see cref="ILitserUI.Handle">Handle</see>.</exception>
         [CLSCompliant(false)]
-        MessageEventArgs(IntPtr pluginWindowHandle, IListerUI^ pluginWindow , int message, UIntPtr wParam, IntPtr lParam);
+        MessageEventArgs(IntPtr pluginWindowHandle, IListerUI^ pluginWindow, int message, UIntPtr wParam, IntPtr lParam);
         /// <summary>CTor - creates a new instance of the <see cref="MessageEventArgs"/> class (CLS-compliant version)</summary>
         /// <param name="pluginWindow"/>An instance of <see cref="IListerUI"/> an event relates to. May be null.</param>
         /// <param name="pluginWindowHandle">Handle to plugin UI this instance relates to. If <paramref name="pluginWindow"/> is not null must be same as <paramref name="pluginWindow"/>.<see cref="ILitserUI.Handle">Handle</see>.</param>
@@ -322,4 +322,36 @@ namespace Tools{namespace TotalCommanderT{
         property Nullable<IntPtr> Result;
     };
 
+    /// <summary>Event arguments describing context for showing custom search dialog</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    public ref class SearchDialogEventArgs : ListerPluginUIEventArgs{
+    private:
+        bool findNext;
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="SearchDialogEventArgs"/> class</summary>
+        /// <param name="pluginWindow"/>An instance of <see cref="IListerUI"/> an event relates to. May be null.</param>
+        /// <param name="pluginWindowHandle">Handle to plugin UI this instance relates to. If <paramref name="pluginWindow"/> is not null must be same as <paramref name="pluginWindow"/>.<see cref="ILitserUI.Handle">Handle</see>.</param>
+        /// <param name="findNext">True if Find next was chosen from the menu, false if find first was chosen by the user</param>
+        /// <exception cref="ArgumentException"><paramref name="pluginWindow"/> is not null and <paramref name="pluginWindowHandle"/> is different than <paramref name="pluginWindow"/>.<see cref="ILitserUI.Handle">Handle</see>.</exception>
+        SearchDialogEventArgs(IntPtr pluginWindowHandle, IListerUI^ pluginWindow, bool findNext);
+        /// <summary>Copy CTor - creates a new instance of the <see cref="SearchDialogEventArgs"/> as copy of existing instance</summary>
+        /// <param name="other">An instance to clone</param>
+        /// <exception cref="ArgumentNullException"><paramref name="other"/> is null</exception>
+        SearchDialogEventArgs(SearchDialogEventArgs% other);
+        /// <summary>Gets value indica</summary>
+        property bool FindNext{bool get();} 
+    };
+
+    /// <summary>Event arguments describing context for showing custom search dialog and result of the operation</summary>
+    /// <version version="1.5.4">This class is new in version 1.5.4</version>
+    public ref class SearchDialogInfoEventArgs:InfoEventArgs<SearchDialogEventArgs>{
+    public:
+        /// <summary>CTor - creates a new instance of the <see cref="SearchDialogInfoEventArgs"/> class</summary>
+        /// <param name="pluginWindow"/>An instance of <see cref="IListerUI"/> an event relates to. May be null.</param>
+        /// <param name="pluginWindowHandle">Handle to plugin UI this instance relates to. If <paramref name="pluginWindow"/> is not null must be same as <paramref name="pluginWindow"/>.<see cref="ILitserUI.Handle">Handle</see>.</param>
+        /// <param name="findNext">True if Find next was chosen from the menu, false if find first was chosen by the user</param>
+        /// <param name="result">Result of search operation</param>
+        /// <exception cref="ArgumentException"><paramref name="pluginWindow"/> is not null and <paramref name="pluginWindowHandle"/> is different than <paramref name="pluginWindow"/>.<see cref="ILitserUI.Handle">Handle</see>.</exception>
+        SearchDialogInfoEventArgs(IntPtr pluginWindowHandle, IListerUI^ pluginWindow, bool findNext, bool result);
+    };
 }}

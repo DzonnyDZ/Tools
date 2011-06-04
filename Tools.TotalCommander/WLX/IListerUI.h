@@ -62,7 +62,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         void OnNotificationReceived(MessageEventArgs^ e);
         /// <summary>Called when user tries to find text in the plugin.</summary>
-        /// <param name="findNext">True if Find next was chosen from the menu, false if find first was chosen by the user</param>
+        /// <param name="e">Event arguments</param>
         /// <returns>
         /// True if this plugin instance (UI instance) shows the search dialog itself (it must show it in this function), false if Total Commander should show it's own dialog and call <see cref="SearchText"/>.
         /// This behavior allows to use both - <see cref="ShowSearchDialog"/> and <see cref="SearchText"/> in one plugin/UI instance.
@@ -70,6 +70,6 @@ namespace Tools{namespace TotalCommanderT{
         /// </returns>
         /// <remarks>If you don't want to implement your own custom search dialog, just return false from this function and implement <see cref="SearchText"/> instead.</remarks>
         /// <seealso cref="SearchText"/>
-        bool ShowSearchDialog(bool findNext);
+        bool ShowSearchDialog(SearchDialogEventArgs^ e);
     };
 }}

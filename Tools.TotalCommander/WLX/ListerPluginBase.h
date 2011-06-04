@@ -652,6 +652,15 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="SearchText"/><seealso cref="IListerUI::ShowSerachDialog"/>
         [MethodNotSupported]
         virtual bool ShowSearchDialog(IListerUI^ listerUI, IntPtr listerUIHandle, bool findNext);
+        /// <summary>Raised when user requests to search for a text</summary>
+        /// <remarks>Primary way of handling this event is to override <see cref="ShowSearchDialog"/>. This event is raised only if that function is overriden.
+        /// <para>Do not throw any exceptions form event handler. Such exception'd be passed to Total Commander which cannot handle it.</para></remarks>
+        event EventHandler<ListerPluginBase^, SearchDialogInfoEventArgs^>^ SearchDialogShowing;
+    protected:
+        /// <summary>Raises the <see cref="SearchDialogShowing"/> event</summary>
+        /// <remarks>Only purpose of this method is to raise the <see cref="SearchDialogShowing"/>. Primary way of handlig this event is to override <see cref="ShowSearchDialog"/>. This method is called only if <paramref name="ShowSearchDialog"/> is overriden.
+        /// <note type="inheritinfo">Do not throw anny exceptions form overriden method. Such exception would be passed to Total Commander which cannot handle it.</note></para>
+        virtual void OnSearchDialogShowing(SearchDialogInfoEventArgs^ e);
 #pragma endregion
     };
 }}

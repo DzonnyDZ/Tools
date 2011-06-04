@@ -181,4 +181,21 @@ namespace Tools{namespace TotalCommanderT{
     inline int MessageEventArgs::Message::get(){return this->message;}
 #pragma endregion
 
+#pragma region SearchDialogEventArgs
+    SearchDialogEventArgs::SearchDialogEventArgs(IntPtr pluginWindowHandle, IListerUI^ pluginWindow, bool findNext)
+        :ListerPluginUIEventArgs(pluginWindowHandle, pluginWindow){
+            this->findNext = findNext;
+    }
+    SearchDialogEventArgs::SearchDialogEventArgs(SearchDialogEventArgs% other)
+        :ListerPluginUIEventArgs(Tools::ExtensionsT::General::ThrowIfNull(%other, "other")->PluginWindowHandle, other.PluginWindow){
+        this->findNext = other.FindNext;
+    }
+    bool SearchDialogEventArgs::FindNext::get(){return this->findNext;}
+#pragma endregion
+
+#pragma region SearchDialogInfoEventArgs
+    SearchDialogInfoEventArgs::SearchDialogInfoEventArgs(IntPtr pluginWindowHandle, IListerUI^ pluginWindow, bool findNext, bool result)
+        :InfoEventArgs<SearchDialogEventArgs>(SearchDialogEventArgs(pluginWindowHandle, pluginWindow, findNext), result){}
+#pragma endregion
+
 }}

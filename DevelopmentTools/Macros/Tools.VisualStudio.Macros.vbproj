@@ -135,6 +135,8 @@
       <CustomToolNamespace>ccccccc</CustomToolNamespace>
     </Compile>
     <None Include="EnvironmentEvents.VB" />
+    <Compile Include="ClassMemberProvider.VB" />
+    <Compile Include="ClassProvider.VB" />
     <Compile Include="fake helper.vb" />
     <Compile Include="InteractionHelpers.VB">
       <SubType>Form</SubType>

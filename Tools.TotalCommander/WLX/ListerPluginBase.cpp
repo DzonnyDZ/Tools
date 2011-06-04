@@ -271,10 +271,14 @@ namespace Tools{namespace TotalCommanderT{
     }
 
     bool ListerPluginBase::ShowSearchDialog(IListerUI^ listerUI, IntPtr listerUIHandle, bool findNext){
-         if(!this->ImplementedFunctions.HasFlag(WlxFunctions::SearchDialog))
+        if(!this->ImplementedFunctions.HasFlag(WlxFunctions::SearchDialog))
             throw gcnew NotSupportedException();
+        auto e = gcnew SearchDialogEventArgs(listerUIHandle, listerUI, findNext);
+        bool ret = false;
         if(listerUI != nullptr)
-            return listerUI->ShowSearchDialog(findNext);
-        return false;
+            ret = listerUI->ShowSearchDialog(e);
+        auto e2 = gcnew SearchDialogInfoEventArgs(listerUIHandle, listerUI, findNext, ret);
+        return e2->Result;
     }
+    inline void ListerPluginBase::OnSearchDialogShowing(SearchDialogInfoEventArgs^ e){SearchDialogShowing(this, e);}
 }}
