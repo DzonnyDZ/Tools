@@ -1,6 +1,5 @@
 ﻿Imports Mono.Cecil
 Imports Tools.RuntimeT.CompilerServicesT
-Imports Tools.ExtensionsT
 
 Namespace RuntimeT.CompilerServicesT
     ''' <summary>Implements assembly post-processor. It walks an assembly, reads attributes decorated with <see cref="PostprocessorAttribute"/> and takes actions based on them.</summary>
@@ -212,7 +211,7 @@ Namespace RuntimeT.CompilerServicesT
                                 Dim what = InstantiateAttribute(attr)
                                 Dim ppMethod As System.Reflection.MethodInfo = pa.GetMethod()
                                 Dim args As Object() = If(ppMethod.GetParameters.Length = 2, New Object() {item, what}, New Object() {item, what, Me})
-                                If InfoSink IsNot Nothing Then InfoSink()(item, My.Resources.msg_Apply.f(attr.AttributeType.Name))
+                                If InfoSink IsNot Nothing Then InfoSink()(item, String.Format(My.Resources.msg_Apply, attr.AttributeType.Name))
                                 ppMethod.Invoke(Nothing, args)
                                 If TypeOf what Is PostprocessingAttribute AndAlso DirectCast(what, PostprocessingAttribute).Remove Then
                                     attributesToRemove.Add(attr)
@@ -260,7 +259,7 @@ Namespace RuntimeT.CompilerServicesT
                                 Throw New InvalidOperationException(ex.Message, ex)
                             End Try
                         Else
-                            Throw New MissingMemberException(My.Resources.ex_PropertyOrFieldNotFound.f(prp.Name))
+                            Throw New MissingMemberException(String.Format(My.Resources.ex_PropertyOrFieldNotFound, prp.Name))
                         End If
                     Else
                         Try

@@ -1,7 +1,7 @@
 ﻿Namespace RuntimeT.CompilerServicesT
-    ''' <summary>Defines an interface of context of post-processor</summary>
     ''' <remarks>This interface is used when post-processing an assembly using <see cref="T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor"/></remarks>
     ''' <seealso cref="T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor"/>
+    ''' <version version="1.5.4">This interface is new in version 1.5.4</version>
     Public Interface IPostprocessorContext
         ''' <summary>Passes an informative messsage to context. This is used to inform about post-processing operation.</summary>
         ''' <param name="item">Current item being processed. May be null. Sould be <see cref="T:Mono.Cecil.ICustomAttributeProvider"/> otherwise it may be treated as null by implementation.</param>

@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Linq
+Imports System.ComponentModel
 
 Namespace RuntimeT.CompilerServicesT
     ''' <summary>

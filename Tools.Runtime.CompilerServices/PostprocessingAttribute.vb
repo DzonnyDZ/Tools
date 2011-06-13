@@ -1,4 +1,6 @@
-﻿Namespace RuntimeT.CompilerServicesT
+﻿Imports System.ComponentModel
+Namespace RuntimeT.CompilerServicesT
+
 
     ''' <summary>Abstract base class for post-processing attributes. This class defines common properties of postprocessing attributes.</summary>
     ''' <remarks>You typically want to apply <see cref="AttributeUsageAttribute"/> and <see cref="PostprocessorAttribute"/> attributes on class derived from this class.</remarks>

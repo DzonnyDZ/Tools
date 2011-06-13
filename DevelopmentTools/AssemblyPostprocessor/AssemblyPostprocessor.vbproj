@@ -73,6 +73,8 @@
     <AssemblyOriginatorKeyFile>..\..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -95,6 +97,7 @@
     <Compile Include="..\..\SharedFiles\Version.vb">
       <Link>My Project\Version.vb</Link>
     </Compile>
+    <Compile Include="AssemblyPostprocessorTask.vb" />
     <Compile Include="Postprocessors.vb" />
     <Compile Include="AssemblyPostporcessor.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -126,6 +129,9 @@
       <Link>Tools.snk</Link>
     </None>
     <None Include="app.config" />
+    <Content Include="AssemblyPostprocessor.tasks">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -145,9 +151,9 @@
       <Project>{63E6915C-7EA4-4D76-AB28-0D7191EEA626}</Project>
       <Name>Mono.Cecil.Pdb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Tools\Tools.vbproj">
-      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
+    <ProjectReference Include="..\..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
+      <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
+      <Name>Tools.Runtime.CompilerServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

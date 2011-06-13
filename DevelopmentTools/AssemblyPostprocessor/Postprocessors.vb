@@ -1,5 +1,4 @@
 ﻿Imports Mono.Cecil
-Imports Tools.ExtensionsT
 
 Namespace RuntimeT.CompilerServicesT
 
@@ -74,7 +73,7 @@ Namespace RuntimeT.CompilerServicesT
                     Next
                 End If
                 If type Is Nothing Then
-                    If context IsNot Nothing Then context.LogInfo(item, My.Resources.wrn_TypeNotFound.f(attr.TypeName))
+                    If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.wrn_TypeNotFound, attr.TypeName))
                     Return
                 End If
                 Dim originalAttributes = type.Attributes
