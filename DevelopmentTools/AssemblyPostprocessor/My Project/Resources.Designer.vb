@@ -70,6 +70,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Generic parameters on {0} are not supported.
+        '''</summary>
+        Friend ReadOnly Property GenParsNotSupported() As String
+            Get
+                Return ResourceManager.GetString("GenParsNotSupported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Apply {0}.
         '''</summary>
         Friend ReadOnly Property msg_Apply() As String

@@ -19,6 +19,7 @@ Namespace RuntimeT.CompilerServicesT
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public Class AssemblyPostporcessor
+        Inherits MarshalByRefObject
         Implements IPostprocessorContext
         ''' <summary>Entry point method for EXE application</summary>
         Friend Shared Sub Main()
@@ -38,6 +39,7 @@ Namespace RuntimeT.CompilerServicesT
                                      Console.Error.WriteLine(My.Resources.msg_InnerException)
                                      Console.Error.WriteLine("{0}: {1}", ex.GetType.Name, ex.Message)
                                      Console.WriteLine(ex.StackTrace)
+                                     ex = ex.InnerException
                                  End While
                                  Console.WriteLine()
                                  Return True
@@ -90,6 +92,26 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
         ''' <exception cref="Exception">Many exceptions can occurr in IO sub-system, <see cref="Mono.Cecil"/> or processors. Some of them can be caught by <see cref="ErrorSink"/>.</exception>
         Public Sub PostProcess(filename$, Optional snk As String = Nothing)
+
+            Dim processDomain = AppDomain.CreateDomain("postprocessor")
+            Dim oh = processDomain.CreateInstance(GetType(Continuer).Assembly.FullName, GetType(Continuer).FullName, False,
+                                      Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic,
+                                      Nothing, New Object() {Me}, System.Globalization.CultureInfo.CurrentCulture, New Object() {}
+                                     )
+
+            Dim modulefile = Nothing
+            Try
+                modulefile = DirectCast(oh.Unwrap, Continuer).Continue(filename, snk)
+
+                AppDomain.Unload(processDomain)
+
+                IO.File.Copy(modulefile, filename, True)
+            Finally
+                If modulefile IsNot Nothing AndAlso IO.File.Exists(modulefile) Then IO.File.Delete(modulefile)
+            End Try
+        End Sub
+
+        Private Function ContinuePostProcess(filename$, snk$) As String
             Dim rp As New ReaderParameters
             Dim ar As New DefaultAssemblyResolver
             ar.AddSearchDirectory(IO.Path.GetDirectoryName(filename))
@@ -98,13 +120,17 @@ Namespace RuntimeT.CompilerServicesT
             'rp.SymbolReaderProvider = New Pdb.PdbReaderProvider()
             Dim [module] = ModuleDefinition.ReadModule(filename, rp)
             If InfoSink IsNot Nothing Then InfoSink()([module].Assembly, My.Resources.msg_ProcessingAssembly)
-            ProcessItem([module].Assembly)
-            For Each mod2 In [module].Assembly.Modules
-                ProcessItem(mod2)
+
+            For Each mod2 In [module].Assembly.Modules.ToArray
                 For Each type In mod2.Types
-                    ProcessType(type)
+                    Me.ProcessType(type)
                 Next
+                Me.ProcessItem(mod2)
             Next
+            Me.ProcessItem([module].Assembly)
+
+            Dim tmpModule = IO.Path.GetTempFileName
+
             Using snkStream = If(snk Is Nothing, Nothing, IO.File.OpenRead(snk))
                 Dim wp As WriterParameters = New WriterParameters
                 If snkStream IsNot Nothing Then
@@ -113,10 +139,10 @@ Namespace RuntimeT.CompilerServicesT
                 wp.WriteSymbols = True
                 'wp.SymbolWriterProvider = New Pdb.PdbWriterProvider
                 'wp.SymbolStream = rp.SymbolStream
-                [module].Assembly.Write(filename, wp)
+                [module].Assembly.Write(tmpModule, wp)
             End Using
-        End Sub
-
+            Return tmpModule
+        End Function
 
         ''' <summary>Processes single type (recursive)</summary>
         ''' <param name="type">A type to post-process</param>
@@ -133,17 +159,16 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
         ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
         Public Sub ProcessType(ByVal type As TypeDefinition)
-            ProcessItem(type)
             If type.HasMethods Then
                 For Each mtd In type.Methods
                     ProcessItem(mtd)
                     If mtd.HasParameters Then
-                        For Each par In mtd.Parameters
+                        For Each par In mtd.Parameters.ToArray
                             ProcessItem(par)
                         Next
                     End If
                     If mtd.HasGenericParameters Then
-                        For Each gpar In mtd.GenericParameters
+                        For Each gpar In mtd.GenericParameters.ToArray
                             ProcessItem(gpar)
                         Next
                     End If
@@ -151,7 +176,7 @@ Namespace RuntimeT.CompilerServicesT
                 Next
             End If
             If type.HasProperties Then
-                For Each prp In type.Properties
+                For Each prp In type.Properties.ToArray
                     ProcessItem(prp)
                     If prp.HasParameters Then
                         For Each par In prp.Parameters
@@ -161,25 +186,26 @@ Namespace RuntimeT.CompilerServicesT
                 Next
             End If
             If type.HasEvents Then
-                For Each evt In type.Events
+                For Each evt In type.Events.ToArray
                     ProcessItem(evt)
                 Next
             End If
             If type.HasFields Then
-                For Each fld In type.Fields
+                For Each fld In type.Fields.ToArray
                     ProcessItem(fld)
                 Next
             End If
             If type.HasNestedTypes Then
-                For Each ntp In type.NestedTypes
+                For Each ntp In type.NestedTypes.ToArray
                     ProcessType(ntp)
                 Next
             End If
             If type.HasGenericParameters Then
-                For Each gpar In type.GenericParameters
+                For Each gpar In type.GenericParameters.ToArray
                     ProcessItem(gpar)
                 Next
             End If
+            ProcessItem(type)
         End Sub
         ''' <summary>Post-processes single item, non-recursive</summary>
         ''' <param name="item">An item to post-process</param>
@@ -244,9 +270,16 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only</exception>
         Private Shared Function InstantiateAttribute(attr As CustomAttribute) As Object
             If attr Is Nothing Then Throw New ArgumentNullException("attr")
-            Dim attrType = [GetType](attr.AttributeType)
-            Dim ctor = attrType.GetConstructor(If(attr.Constructor.HasParameters, (From cpar In attr.Constructor.Parameters Select [GetType](cpar.ParameterType)).ToArray, Type.EmptyTypes))
-            Dim ainst = ctor.Invoke((From a In attr.ConstructorArguments Select a.Value).ToArray)
+            Dim attrType = CecilHelpers.[GetType](attr.AttributeType)
+            Dim ctor = attrType.GetConstructor(If(attr.Constructor.HasParameters, (From cpar In attr.Constructor.Parameters Select CecilHelpers.[GetType](cpar.ParameterType)).ToArray, Type.EmptyTypes))
+            Dim ctorArgs = (From a In attr.ConstructorArguments
+                            Select If(TypeOf a.Value Is TypeReference,
+                                     CecilHelpers.[GetType](DirectCast(a.Value, TypeReference)),
+                                   If(TypeOf a.Value Is TypeReference(),
+                                      (From itm In DirectCast(a.Value, TypeReference()) Select If(itm Is Nothing, Nothing, CecilHelpers.[GetType](itm))).ToArray,
+                                      a.Value))
+                           ).ToArray
+            Dim ainst = ctor.Invoke(ctorArgs)
             If attr.HasProperties Then
                 For Each prp In attr.Properties
                     Dim propertyToSet = attrType.GetProperty(prp.Name, Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic, Nothing, Nothing, Type.EmptyTypes, New System.Reflection.ParameterModifier() {})
@@ -273,19 +306,26 @@ Namespace RuntimeT.CompilerServicesT
             Return ainst
         End Function
 
-        ''' <summary>Gets <see cref="Type"/> from <see cref="TypeReference"/></summary>
-        ''' <param name="type">A <see cref="TypeReference"/> to resolve</param>
-        ''' <returns>A <see cref="Type"/> representing the <paramref name="type"/> <see cref="TypeReference"/></returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="type"/> is null</exception>
-        ''' <exception cref="IO.FileNotFoundException">Cannot find assembly for type -or- type requires a dependent assembly that could not be found</exception>
-        ''' <exception cref="IO.FileLoadException">An assembly file (or dependent assembly file) that was found could not be loaded.</exception>
-        ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version.</exception>
-        Private Overloads Shared Function [GetType](type As TypeReference) As Type
-            If type Is Nothing Then Throw New ArgumentNullException("type")
-            type = type.Resolve
-            Dim asm = System.Reflection.Assembly.Load(type.Module.Assembly.FullName)
-            Return asm.GetType(type.FullName)
-        End Function
+        ''' <summary>CTor - creates a new instance of the <see cref="AssemblyPostporcessor"/> class</summary>
+        Public Sub New()
+        End Sub
+
+
+        Partial Private Class Continuer
+            Inherits MarshalByRefObject
+            Private processor As AssemblyPostporcessor
+            Public Sub New(processor As AssemblyPostporcessor)
+                Me.processor = New AssemblyPostporcessor() With {
+                    .InfoSink = processor.InfoSink,
+                    .ErrorSink = processor.ErrorSink
+                }
+            End Sub
+
+            Public Function [Continue](filename$, snk$) As String
+                Return processor.ContinuePostProcess(filename, snk)
+            End Function
+
+        End Class
 
     End Class
 End Namespace

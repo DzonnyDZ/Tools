@@ -144,4 +144,8 @@
   <data name="wrn_TypeNotFound" xml:space="preserve">
     <value>WARNING: Type {0} not found</value>
   </data>
+  <data name="GenParsNotSupported" xml:space="preserve">
+    <value>Generic parameters on {0} are not supported</value>
+    <comment>GenParsNotSupported description</comment>
+  </data>
 </root>

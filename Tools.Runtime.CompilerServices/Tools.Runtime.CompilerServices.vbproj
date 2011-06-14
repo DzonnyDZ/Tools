@@ -76,6 +76,7 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>MyProject\Version.vb</Link>
     </Compile>
+    <Compile Include="ImplementsAttribute.vb" />
     <Compile Include="IPostprocessorContext.vb" />
     <Compile Include="MakePublicAttribute.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -95,6 +96,8 @@
     </Compile>
     <Compile Include="PostprocessingAttribute.vb" />
     <Compile Include="PostprocessorAttribute.vb" />
+    <Compile Include="RemoveAttribute.vb" />
+    <Compile Include="RemoveReferenceAttribute.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

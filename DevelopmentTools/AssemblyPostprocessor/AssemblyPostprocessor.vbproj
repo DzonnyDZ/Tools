@@ -98,6 +98,7 @@
       <Link>My Project\Version.vb</Link>
     </Compile>
     <Compile Include="AssemblyPostprocessorTask.vb" />
+    <Compile Include="Helpers.vb" />
     <Compile Include="Postprocessors.vb" />
     <Compile Include="AssemblyPostporcessor.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

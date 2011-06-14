@@ -19,12 +19,12 @@ Namespace RuntimeT.CompilerServicesT
 
             Dim postProcessor As New AssemblyPostporcessor()
             Dim errors% = 0
-            postProcessor.ErrorSink = Function(ex, provider)
+            postProcessor.ErrorSink = Function(ex, item)
                                           errors += 1
                                           Me.BuildEngine3.LogErrorEvent(New BuildErrorEventArgs(Nothing, Nothing, Assembly, 0, 0, 0, 0, ex.Message, ex.HelpLink, GetType(AssemblyPostporcessorTask).Name))
                                           Return True
                                       End Function
-            postProcessor.InfoSink = Function(provider, message)
+            postProcessor.InfoSink = Function(item, message)
                                          Me.BuildEngine3.LogWarningEvent(New BuildWarningEventArgs(Nothing, Nothing, Assembly, 0, 0, 0, 0, message, Nothing, GetType(AssemblyPostporcessorTask).Name))
                                          Return True
                                      End Function
