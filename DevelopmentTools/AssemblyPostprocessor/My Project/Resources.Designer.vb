@@ -79,6 +79,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Message processor must derive from {0}.
+        '''</summary>
+        Friend ReadOnly Property MessageProcessorTypeError() As String
+            Get
+                Return ResourceManager.GetString("MessageProcessorTypeError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Apply {0}.
         '''</summary>
         Friend ReadOnly Property msg_Apply() As String
@@ -120,6 +129,15 @@ Namespace My.Resources
         Friend ReadOnly Property msg_Transform() As String
             Get
                 Return ResourceManager.GetString("msg_Transform", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Type of Receiver must be {0}.
+        '''</summary>
+        Friend ReadOnly Property TaskReceiverTypeError() As String
+            Get
+                Return ResourceManager.GetString("TaskReceiverTypeError", resourceCulture)
             End Get
         End Property
         

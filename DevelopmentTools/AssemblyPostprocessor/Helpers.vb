@@ -12,24 +12,28 @@ Public Module CecilHelpers
     ''' <exception cref="IO.FileLoadException">An assembly file (or dependent assembly file) that was found could not be loaded.</exception>
     ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version.</exception>
     ''' <exception cref="NotSupportedException"><paramref name="type"/> is generic parameter defined on somethiong else than type (e.g. method) - this is not supported yet.</exception>
-    Public Function [GetType](type As TypeReference) As Type
+    Public Function [GetType](type As TypeReference) As Type ', currentModule$
         If type Is Nothing Then Throw New ArgumentNullException("type")
         Dim resolvedType = type.Resolve
         If type.IsGenericParameter Then
             Dim type_gen As GenericParameter = type
             If TypeOf type_gen.Owner Is TypeReference Then
-                Dim owner = [GetType](DirectCast(type_gen.Owner, TypeReference))
+                Dim owner = [GetType](DirectCast(type_gen.Owner, TypeReference)) ', currentModule)
                 Return owner.GetGenericArguments()(type_gen.Position)
             Else
                 Throw New NotSupportedException(String.Format(My.Resources.Resources.GenParsNotSupported, type_gen.Owner.GetType.Name))
             End If
         End If
-        Dim asm As System.Reflection.Assembly
-        Try
+        Dim asm As System.Reflection.Assembly = Nothing
+
+        For Each lasm In My.Application.Info.LoadedAssemblies
+            If lasm.FullName = resolvedType.Module.Assembly.FullName Then
+                asm = lasm
+                Exit For
+            End If
+        Next
+        If asm Is Nothing Then _
             asm = System.Reflection.Assembly.LoadFrom(resolvedType.Module.Assembly.MainModule.FullyQualifiedName)
-        Catch ex As IO.FileNotFoundException
-            asm = System.Reflection.Assembly.Load(resolvedType.Module.Assembly.FullName)
-        End Try
         Dim ret = asm.GetType(resolvedType.FullName)
         If type.IsArray Then
             Return ret.MakeArrayType(DirectCast(type, ArrayType).Rank)
@@ -38,7 +42,7 @@ Public Module CecilHelpers
         ElseIf type.IsPointer Then
             Return ret.MakePointerType
         ElseIf type.IsGenericInstance Then
-            Return ret.MakeGenericType((From garg In DirectCast(type, GenericInstanceType).GenericArguments Select [GetType](garg)).ToArray)
+            Return ret.MakeGenericType((From garg In DirectCast(type, GenericInstanceType).GenericArguments Select [GetType](garg)).ToArray) 'currentModule
         Else
             Return ret
         End If

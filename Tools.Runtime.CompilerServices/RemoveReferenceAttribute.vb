@@ -15,7 +15,6 @@ Namespace RuntimeT.CompilerServicesT
 
         Public Sub New(assemblyFullName$)
             _assemblyName = assemblyFullName
-            Remove = True
         End Sub
         Public Sub New(typeFromAssembly As Type)
             Me.new(typeFromAssembly.Assembly)

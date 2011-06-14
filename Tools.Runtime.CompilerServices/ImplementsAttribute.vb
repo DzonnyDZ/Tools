@@ -12,7 +12,6 @@ Namespace RuntimeT.CompilerServicesT
         Public Sub New(base As Type, member As String)
             _base = base
             _member = member
-            Remove = True
         End Sub
 
 

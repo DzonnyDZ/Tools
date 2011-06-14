@@ -148,4 +148,12 @@
     <value>Generic parameters on {0} are not supported</value>
     <comment>GenParsNotSupported description</comment>
   </data>
+  <data name="MessageProcessorTypeError" xml:space="preserve">
+    <value>Message processor must derive from {0}</value>
+    <comment>MessageProcessorTypeError description</comment>
+  </data>
+  <data name="TaskReceiverTypeError" xml:space="preserve">
+    <value>Type of Receiver must be {0}</value>
+    <comment>TaskReceiverTypeError description</comment>
+  </data>
 </root>

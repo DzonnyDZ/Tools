@@ -13,7 +13,6 @@ Namespace RuntimeT.CompilerServicesT
         Inherits PostprocessingAttribute
 
         Public Sub New()
-            Remove = True
         End Sub
 
         Public Sub New(removeRelatedMetadata As Boolean)
