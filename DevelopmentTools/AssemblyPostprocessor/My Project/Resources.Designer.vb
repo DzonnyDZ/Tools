@@ -259,6 +259,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to More than one {0}.{1} method matches criteria.
+        '''</summary>
+        Friend ReadOnly Property MoreThanOneMethodFound() As String
+            Get
+                Return ResourceManager.GetString("MoreThanOneMethodFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Apply {0}.
         '''</summary>
         Friend ReadOnly Property msg_Apply() As String

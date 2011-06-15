@@ -51,35 +51,14 @@ Public Module CecilHelpers
 
     ''' <summary>Constructs <see cref="TypeReference"/> from <see cref="System.Type"/></summary>
     ''' <param name="type">A <see cref="Type"/> to mage <see cref="TypeReference"/> from</param>
+    ''' <param name="module">A module to import <see cref="TypeReference"/> for</param>
     ''' <returns>A <see cref="TypeReference"/> pointing to a type represented by <paramref name="type"/></returns>
     ''' <exception cref="ArgumentNullException"><paramref name="type"/> is null</exception>
-    ''' <exception cref="NotSupportedException"><paramref name="type"/> <see cref="Type.IsGenericParameter">is generic parameter</see> declared at method level (generic parameters of method are not supported yet)</exception>
+    ''' <seealso cref="M:Mono.Cecil.ModuleDefinition.Import(System.Type)"/>
     <Extension()>
-    Public Function ToTypeReference(type As Type) As TypeReference
+    Public Function ToTypeReference(type As Type, [module] As ModuleDefinition) As TypeReference
         If type Is Nothing Then Throw New ArgumentNullException("type")
-        If type.IsArray Then
-            Return New ArrayType(type.GetElementType.ToTypeReference, type.GetArrayRank)
-        ElseIf type.IsByRef Then
-            Return New ByReferenceType(type.GetElementType.ToTypeReference)
-        ElseIf type.IsPointer Then
-            Return New PointerType(type.GetElementType.ToTypeReference)
-        ElseIf type.IsGenericType AndAlso Not type.IsGenericTypeDefinition Then
-            Dim gtype = type.GetGenericTypeDefinition.ToTypeReference
-            Dim ret = New GenericInstanceType(gtype)
-            For Each gpar In type.GetGenericArguments
-                ret.GenericArguments.Add(gpar.ToTypeReference)
-            Next
-            Return ret
-        ElseIf type.IsGenericParameter Then
-            If type.DeclaringMethod Is Nothing Then
-                Return New GenericParameter(type.Name, type.DeclaringType.ToTypeReference)
-            Else
-                Throw New NotSupportedException
-            End If
-        Else
-            Dim [module] = ModuleDefinition.ReadModule(type.Module.FullyQualifiedName)
-            Return New TypeReference(type.Namespace, type.Name, [module], [module])
-        End If
+        Return [module].Import(type)
     End Function
 
     ''' <summary>Gets value indicating if two <see cref="TypeReference">TypeReferences</see> point to the same type</summary>
@@ -142,7 +121,7 @@ Public Module CecilHelpers
         ElseIf a.IsNested Then
             Return b.IsNested AndAlso a.DeclaringType.TypeEquals(b.DeclaringType) AndAlso a.Name = b.Name
         Else
-            Return a.FullName = b.FullName AndAlso a.Module.Assembly.FullName = b.Module.Assembly.FullName
+            Return a.FullName = b.FullName AndAlso a.Resolve.Module.Assembly.FullName = b.Resolve.Module.Assembly.FullName
         End If
     End Function
 
@@ -206,6 +185,59 @@ Public Module CecilHelpers
         End If
     End Function
 
+
+    ''' <summary>Supplies generic arguments for a type</summary>
+    ''' <param name="self">A type to supply generic arguments for</param>
+    ''' <param name="arguments">Types to be supplied for generic arguments</param>
+    ''' <returns>Type <paramref name="self"/> with generic arguments supplied; <paramref name="self"/> if <paramref name="arguments"/> is null or empty.</returns>
+    ''' <exception cref="ArgumentException">Number of generic arguments of type <paramref name="self"/> and number arguments passed in <paramref name="arguments"/> differ</exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="self"/></exception>
+    ''' <remarks>This method comes from Mono.Cecli test suite</remarks>
+    <Extension()> _
+    Public Function MakeGenericType(self As TypeReference, ParamArray arguments As TypeReference()) As GenericInstanceType
+        If self Is Nothing Then Throw New ArgumentNullException("self")
+        If arguments Is Nothing OrElse arguments.Length = 0 Then Return self
+
+        If self.GenericParameters.Count <> arguments.Length Then
+            Throw New ArgumentException()
+        End If
+
+        Dim instance = New GenericInstanceType(self)
+        For Each argument In arguments
+            instance.GenericArguments.Add(argument)
+        Next
+
+        Return instance
+    End Function
+
+    ''' <summary>Supplies generic arguments for a method and method declaring type</summary>
+    ''' <param name="self">A method to supply generic arguments for</param>
+    ''' <param name="arguments">Types to be supplied for generic arguments</param>
+    ''' <returns>Method reference to method that was made generic instance and which declaring type was made generic instance; <paramref name="self"/> if <paramref name="arguments"/> is null or empty</returns>
+    ''' <exception cref="ArgumentException">Number of arguments in <paramref name="arguments"/> is different than number of generic arguments in <paramref name="self"/>.<see cref="MethodReference.DeclaringType">DeclaringType</see>.</exception>
+    ''' <remarks>This method comes from Mono.Cecil test suite</remarks>
+    <Extension()>
+    Public Function MakeGeneric(self As MethodReference, ParamArray arguments As TypeReference()) As MethodReference
+        If self Is Nothing Then Throw New ArgumentNullException("self")
+        If arguments Is Nothing OrElse arguments.Length = 0 Then Return self
+        Dim reference = New MethodReference(self.Name, self.ReturnType) With { _
+          .DeclaringType = self.DeclaringType.MakeGenericType(arguments), _
+          .HasThis = self.HasThis, _
+          .ExplicitThis = self.ExplicitThis, _
+          .CallingConvention = self.CallingConvention _
+        }
+
+        For Each parameter In self.Parameters
+            reference.Parameters.Add(New ParameterDefinition(parameter.ParameterType))
+        Next
+
+        For Each generic_parameter In self.GenericParameters
+            reference.GenericParameters.Add(New GenericParameter(generic_parameter.Name, reference))
+        Next
+
+        Return reference
+    End Function
+
     ''' <summary>Gets all methods of a property</summary>
     ''' <param name="property">A property to get methods of</param>
     ''' <returns>All methods associated with property <paramref name="property"/></returns>
@@ -239,7 +271,7 @@ Public Module CecilHelpers
     ''' <param name="bGenParSupplier">Supplies generic parameters for <paramref name="b"/></param>
     ''' <returns>True if method signatures of <paramref name="a"/> and <paramref name="b"/> are same</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="a"/> or <paramref name="b"/> is null</exception>
-    Function IsSameSignature(a As MethodDefinition, b As MethodDefinition, Optional ByVal aGenParSupplier As GenericInstanceType = Nothing, Optional ByVal bGenParSupplier As GenericInstanceType = Nothing) As Boolean
+    Public Function IsSameSignature(a As MethodDefinition, b As MethodDefinition, Optional ByVal aGenParSupplier As GenericInstanceType = Nothing, Optional ByVal bGenParSupplier As GenericInstanceType = Nothing) As Boolean
         If a Is Nothing Then Throw New ArgumentNullException("a")
         If b Is Nothing Then Throw New ArgumentNullException("b")
         If a.Parameters.Count <> b.Parameters.Count Then Return False
@@ -251,4 +283,39 @@ Public Module CecilHelpers
         Next
         Return True
     End Function
+
+
+    ''' <summary>Adds explicit override to method</summary>
+    ''' <param name="derivedClassMethod">A method to add override to</param>
+    ''' <param name="baseClassMethod">A method which is overriden by <paramref name="derivedClassMethod"/></param>
+    ''' <param name="baseClassGenericArguments">
+    ''' If <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> <see cref="TypeDefinition.HasGenericParameters">has generic parameters</see> you can pass actual types for the parameters here.
+    ''' Ignored if null, empty or if <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> does not have generic arguments.
+    ''' </param>
+    ''' <exception cref="ArgumentNullException"><paramref name="derivedClassMethod"/> is null or <paramref name="baseClassMethod"/> is null.</exception>
+    ''' <exception cref="ArgumentException"><paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> <see cref="TypeDefinition.HasGenericParameters">has generic parameters</see>, <paramref name="baseClassGenericArguments"/> is neither null nor empty and number of generic arguments in <paramref name="baseClassGenericArguments"/> and of <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> differ.</exception>
+    <Extension()>
+    Public Sub AddOverride(derivedClassMethod As MethodDefinition, baseClassMethod As MethodReference, Optional baseClassGenericArguments As TypeReference() = Nothing)
+        If derivedClassMethod Is Nothing Then Throw New ArgumentNullException("derivedClassMethod")
+        If baseClassMethod Is Nothing Then Throw New ArgumentNullException("baseClassMethod")
+
+        If baseClassMethod.DeclaringType.HasGenericParameters AndAlso baseClassGenericArguments IsNot Nothing AndAlso baseClassGenericArguments.Length > 0 Then _
+                       baseClassMethod = baseClassMethod.MakeGeneric(baseClassGenericArguments)
+        derivedClassMethod.Overrides.Add(baseClassMethod)
+
+    End Sub
+
+    ''' <summary>Adds explicit override to method</summary>
+    ''' <param name="derivedClassMethod">A method to add override to</param>
+    ''' <param name="baseClassMethod">A method which is overriden by <paramref name="derivedClassMethod"/></param>
+    ''' <param name="baseClassGenericArgumentsSource">
+    ''' If <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> <see cref="TypeDefinition.HasGenericParameters">has generic parameters</see> this type serves as source of generic parameter types.
+    ''' Ignored if null or if <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> does not have generic arguments.
+    ''' </param>
+    ''' <exception cref="ArgumentNullException"><paramref name="derivedClassMethod"/> is null or <paramref name="baseClassMethod"/> is null.</exception>
+    ''' <exception cref="ArgumentException"><paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> <see cref="TypeDefinition.HasGenericParameters">has generic parameters</see>, <paramref name="baseClassGenericArgumentsSource"/> is not null <paramref name="baseClassGenericArgumentsSource"/>.<see cref="GenericInstanceType.GenericArguments">GenericArguments</see> and of <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> differ.</exception>
+    <Extension()>
+    Public Sub AddOverride(derivedClassMethod As MethodDefinition, baseClassMethod As MethodReference, baseClassGenericArgumentsSource As GenericInstanceType)
+        derivedClassMethod.AddOverride(baseClassMethod, If(baseClassGenericArgumentsSource Is Nothing, Nothing, baseClassGenericArgumentsSource.GenericArguments.ToArray))
+    End Sub
 End Module

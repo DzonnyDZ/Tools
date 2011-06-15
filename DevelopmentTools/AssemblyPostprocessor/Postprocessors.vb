@@ -111,11 +111,9 @@ Namespace RuntimeT.CompilerServicesT
             If attr Is Nothing Then Throw New ArgumentNullException("attr")
 
 
-            Dim base = attr.Base.ToTypeReference
-
             If TypeOf item Is IMemberDefinition Then
-
                 Dim member As IMemberDefinition = item
+                Dim base = attr.Base.ToTypeReference(member.DeclaringType.Module)
 
                 Dim baseResolved As TypeDefinition = base.Resolve
                 If baseResolved.IsInterface AndAlso Not (From iface In member.DeclaringType.Interfaces Where iface.TypeEquals(base)).Any Then
@@ -137,10 +135,9 @@ Namespace RuntimeT.CompilerServicesT
                     If Not candidates.Any Then Throw New MissingMethodException(base.FullName, attr.Member)
                     If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_MethodAmbiguous, base.FullName, attr.Member))
 
-                    Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.Name, method.ReturnType, candidates.Single.DeclaringType)
-                    method.Overrides.Add(method.Module.Import(implementedMethod))
-                    If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, method.FullName, implementedMethod.FullName))
+                    method.AddOverride(method.Module.Import(candidates.First), TryCast(base, GenericInstanceType))
 
+                    If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, method.FullName, candidates.First.FullName))
                 ElseIf TypeOf member Is PropertyDefinition Then
                     Dim propty As PropertyDefinition = member
 
@@ -167,24 +164,24 @@ Namespace RuntimeT.CompilerServicesT
 
                     If propty.GetMethod IsNot Nothing Then
                         Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.GetMethod.Name, propty.GetMethod.ReturnType, candidates.Single.GetMethod.DeclaringType)
-                        propty.GetMethod.Overrides.Add(propty.GetMethod.Module.Import(implementedMethod))
+                        propty.GetMethod.AddOverride(propty.GetMethod.Module.Import(candidates.First.GetMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, propty.GetMethod.FullName, implementedMethod.FullName))
                     End If
                     If propty.SetMethod IsNot Nothing Then
                         Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.SetMethod.Name, propty.SetMethod.ReturnType, candidates.Single.SetMethod.DeclaringType)
-                        propty.SetMethod.Overrides.Add(propty.SetMethod.Module.Import(implementedMethod))
+                        propty.SetMethod.AddOverride(propty.SetMethod.Module.Import(candidates.First.SetMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, propty.SetMethod.FullName, implementedMethod.FullName))
                     End If
                     If propty.OtherMethods.Count > 0 Then
                         For Each om In From propty_om In propty.OtherMethods Join cand_om In candidates.Single.OtherMethods On propty_om.Name Equals cand_om.Name
                             Dim implementedmethod As MethodReference = New MethodReference(om.cand_om.Name, om.propty_om.ReturnType, om.cand_om.DeclaringType)
-                            om.propty_om.Overrides.Add(om.propty_om.Module.Import(om.cand_om))
+                            om.propty_om.AddOverride(om.propty_om.Module.Import(om.cand_om), TryCast(base, GenericInstanceType))
                             If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, om.propty_om.FullName, implementedmethod.FullName))
                         Next
                     End If
                 ElseIf TypeOf member Is EventDefinition Then
                     Dim evt As EventDefinition = member
-                   
+
                     If evt.AddMethod Is Nothing AndAlso evt.RemoveMethod Is Nothing Then _
                                            Throw New NotSupportedException(My.Resources.ex_EventWOAddRemove)
                     If evt.AllMethods.Any(Function(m) m.IsStatic) Then _
@@ -209,23 +206,23 @@ Namespace RuntimeT.CompilerServicesT
 
                     If evt.AddMethod IsNot Nothing Then
                         Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.AddMethod.Name, evt.AddMethod.ReturnType, candidates.Single.AddMethod.DeclaringType)
-                        evt.AddMethod.Overrides.Add(evt.AddMethod.Module.Import(implementedMethod))
+                        evt.AddMethod.AddOverride(evt.AddMethod.Module.Import(candidates.First.AddMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, evt.AddMethod.FullName, implementedMethod.FullName))
                     End If
                     If evt.RemoveMethod IsNot Nothing Then
                         Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.RemoveMethod.Name, evt.RemoveMethod.ReturnType, candidates.Single.RemoveMethod.DeclaringType)
-                        evt.RemoveMethod.Overrides.Add(evt.RemoveMethod.Module.Import(implementedMethod))
+                        evt.RemoveMethod.AddOverride(evt.RemoveMethod.Module.Import(candidates.First.RemoveMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, evt.RemoveMethod.FullName, implementedMethod.FullName))
                     End If
                     If evt.InvokeMethod IsNot Nothing Then
                         Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.InvokeMethod.Name, evt.InvokeMethod.ReturnType, candidates.Single.InvokeMethod.DeclaringType)
-                        evt.RemoveMethod.Overrides.Add(evt.InvokeMethod.Module.Import(implementedMethod))
+                        evt.InvokeMethod.AddOverride(evt.InvokeMethod.Module.Import(candidates.First.InvokeMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, evt.InvokeMethod.FullName, implementedMethod.FullName))
                     End If
                     If evt.OtherMethods.Count > 0 Then
                         For Each om In From evt_om In evt.OtherMethods Join cand_om In candidates.Single.OtherMethods On evt_om.Name Equals cand_om.Name
                             Dim implementedmethod As MethodReference = New MethodReference(om.cand_om.Name, om.evt_om.ReturnType, om.cand_om.DeclaringType)
-                            om.evt_om.Overrides.Add(om.evt_om.Module.Import(om.cand_om))
+                            om.evt_om.AddOverride(om.evt_om.Module.Import(om.cand_om), TryCast(base, GenericInstanceType))
                             If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, om.evt_om.FullName, implementedmethod.FullName))
                         Next
                     End If
