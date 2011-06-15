@@ -1,7 +1,8 @@
 ﻿Imports Mono.Cecil
 Imports System.Runtime.CompilerServices
 
-
+''' <summary>Contains extension and other helper methods for working with <see cref="Mono.Cecil"/> and for <see cref="Mono.Cecil"/>-<see cref="System.Reflection"/> interop.</summary>
+''' <version version="1.5.4">This module is new in version 1.5.4</version>
 Public Module CecilHelpers
 
     ''' <summary>Gets <see cref="Type"/> from <see cref="TypeReference"/></summary>
@@ -12,13 +13,13 @@ Public Module CecilHelpers
     ''' <exception cref="IO.FileLoadException">An assembly file (or dependent assembly file) that was found could not be loaded.</exception>
     ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version.</exception>
     ''' <exception cref="NotSupportedException"><paramref name="type"/> is generic parameter defined on somethiong else than type (e.g. method) - this is not supported yet.</exception>
-    Public Function [GetType](type As TypeReference) As Type ', currentModule$
+    Public Function [GetType](type As TypeReference) As Type
         If type Is Nothing Then Throw New ArgumentNullException("type")
         Dim resolvedType = type.Resolve
         If type.IsGenericParameter Then
             Dim type_gen As GenericParameter = type
             If TypeOf type_gen.Owner Is TypeReference Then
-                Dim owner = [GetType](DirectCast(type_gen.Owner, TypeReference)) ', currentModule)
+                Dim owner = [GetType](DirectCast(type_gen.Owner, TypeReference))
                 Return owner.GetGenericArguments()(type_gen.Position)
             Else
                 Throw New NotSupportedException(String.Format(My.Resources.Resources.GenParsNotSupported, type_gen.Owner.GetType.Name))
@@ -42,15 +43,20 @@ Public Module CecilHelpers
         ElseIf type.IsPointer Then
             Return ret.MakePointerType
         ElseIf type.IsGenericInstance Then
-            Return ret.MakeGenericType((From garg In DirectCast(type, GenericInstanceType).GenericArguments Select [GetType](garg)).ToArray) 'currentModule
+            Return ret.MakeGenericType((From garg In DirectCast(type, GenericInstanceType).GenericArguments Select [GetType](garg)).ToArray)
         Else
             Return ret
         End If
     End Function
 
+    ''' <summary>Constructs <see cref="TypeReference"/> from <see cref="System.Type"/></summary>
+    ''' <param name="type">A <see cref="Type"/> to mage <see cref="TypeReference"/> from</param>
+    ''' <returns>A <see cref="TypeReference"/> pointing to a type represented by <paramref name="type"/></returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="type"/> is null</exception>
+    ''' <exception cref="NotSupportedException"><paramref name="type"/> <see cref="Type.IsGenericParameter">is generic parameter</see> declared at method level (generic parameters of method are not supported yet)</exception>
     <Extension()>
     Public Function ToTypeReference(type As Type) As TypeReference
-
+        If type Is Nothing Then Throw New ArgumentNullException("type")
         If type.IsArray Then
             Return New ArrayType(type.GetElementType.ToTypeReference, type.GetArrayRank)
         ElseIf type.IsByRef Then
@@ -76,6 +82,11 @@ Public Module CecilHelpers
         End If
     End Function
 
+    ''' <summary>Gets value indicating if two <see cref="TypeReference">TypeReferences</see> point to the same type</summary>
+    ''' <param name="a">A <see cref="TypeReference"/></param>
+    ''' <param name="b">A <see cref="TypeReference"/></param>
+    ''' <returns>Returns true if <paramref name="a"/> and <paramref name="b"/> represent the same type or are both null.</returns>
+    ''' <exception cref="NotSupportedException"><paramref name="a"/> <see cref="TypeReference.IsGenericParameter">is generic parameter</see> and <paramref name="a"/>.<see cref="GenericParameter.Owner">Owner</see> is neither <see cref="TypeReference"/> nor <see cref="MethodDefinition"/> (should not happen).</exception>
     <Extension()>
     Public Function TypeEquals(a As TypeReference, b As TypeReference) As Boolean
         If a Is Nothing OrElse b Is Nothing Then Return a Is Nothing AndAlso b Is Nothing
@@ -126,15 +137,20 @@ Public Module CecilHelpers
                 Dim bMethod As MethodDefinition = bg.Owner
                 Return aMethod.MetadataToken = bMethod.MetadataToken
             Else
-                Throw New NotSupportedException("Equality comparison of types representing generic arguments of something else then type and method is not supported")
+                Throw New NotSupportedException(My.Resources.ex_UnsupportedGParOwner)
             End If
         ElseIf a.IsNested Then
             Return b.IsNested AndAlso a.DeclaringType.TypeEquals(b.DeclaringType) AndAlso a.Name = b.Name
         Else
-            Return a.FullName = b.FullName
+            Return a.FullName = b.FullName AndAlso a.Module.Assembly.FullName = b.Module.Assembly.FullName
         End If
     End Function
 
+    ''' <summary>Supplies types for generic parameters used in a <see cref="TypeReference"/></summary>
+    ''' <param name="type">A type reference containing generic parameters (type placeholders)</param>
+    ''' <param name="source">Source of actual types for type parameters</param>
+    ''' <returns><paramref name="type"/> with generic parameters resolved from <paramref name="source"/>; <paramref name="source"/> if <paramref name="type"/> is null</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="type"/> is null</exception>
     <Extension()>
     Public Function SupplyGenericParameters(type As TypeReference, source As GenericInstanceType) As TypeReference
         If type Is Nothing Then Throw New ArgumentNullException("type")
@@ -163,7 +179,22 @@ Public Module CecilHelpers
         ElseIf type.IsRequiredModifier Then
             Return New RequiredModifierType(DirectCast(type, RequiredModifierType).ModifierType.SupplyGenericParameters(source), DirectCast(type, RequiredModifierType).ElementType.SupplyGenericParameters(source))
         ElseIf type.IsFunctionPointer Then
-            Throw New NotSupportedException("Function pointers are not supported yet")
+            Dim fp As FunctionPointerType = type
+            Dim ret As New FunctionPointerType()
+            ret.CallingConvention = fp.CallingConvention
+            ret.DeclaringType = fp.DeclaringType.SupplyGenericParameters(source)
+            ret.ExplicitThis = fp.ExplicitThis
+            For Each gpar In fp.GenericParameters
+                ret.GenericParameters.Add(New GenericParameter(gpar.Name, ret))
+            Next
+            ret.HasThis = fp.HasThis
+            ret.Name = fp.Name
+            ret.Namespace = fp.Namespace
+            For Each par In fp.Parameters
+                ret.Parameters.Add(New ParameterDefinition(par.Name, par.Attributes, par.ParameterType.SupplyGenericParameters(source)))
+            Next
+            ret.ReturnType = fp.ReturnType.SupplyGenericParameters(source)
+            Return ret
         ElseIf type.IsGenericInstance Then
             Dim ret = New GenericInstanceType(DirectCast(type, GenericInstanceType).ElementType)
             For Each gpar In DirectCast(type, GenericInstanceType).GenericArguments
@@ -175,6 +206,49 @@ Public Module CecilHelpers
         End If
     End Function
 
+    ''' <summary>Gets all methods of a property</summary>
+    ''' <param name="property">A property to get methods of</param>
+    ''' <returns>All methods associated with property <paramref name="property"/></returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="property"/> is null</exception>
+    <Extension()>
+    Function AllMethods([property] As PropertyDefinition) As IEnumerable(Of MethodDefinition)
+        If [property] Is Nothing Then Throw New ArgumentNullException("property")
+        Return If([property].GetMethod Is Nothing, New MethodDefinition() {}, New MethodDefinition() {[property].GetMethod}).Union(
+               If([property].SetMethod Is Nothing, New MethodDefinition() {}, New MethodDefinition() {[property].SetMethod})).Union(
+               [property].OtherMethods)
+    End Function
+
+    ''' <summary>Gets all methods of an event</summary>
+    ''' <param name="event">An event to get methods of</param>
+    ''' <returns>All methods associated with event <paramref name="event"/></returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="event"/> is null</exception>
+    <Extension()>
+    Public Function AllMethods([event] As EventDefinition) As IEnumerable(Of MethodDefinition)
+        If [event] Is Nothing Then Throw New ArgumentNullException("event")
+        Return If([event].AddMethod Is Nothing, New MethodDefinition() {}, New MethodDefinition() {[event].AddMethod}).Union(
+               If([event].RemoveMethod Is Nothing, New MethodDefinition() {}, New MethodDefinition() {[event].RemoveMethod})).Union(
+               If([event].InvokeMethod Is Nothing, New MethodDefinition() {}, New MethodDefinition() {[event].InvokeMethod})).Union(
+               [event].OtherMethods)
+    End Function
+
+
+    ''' <summary>Compares signatures of two methods and gets value indicating if they are same</summary>
+    ''' <param name="a">A method to compare signature of</param>
+    ''' <param name="b">A method to compare signature of</param>
+    ''' <param name="aGenParSupplier">Supplies generic parameters for <paramref name="a"/></param>
+    ''' <param name="bGenParSupplier">Supplies generic parameters for <paramref name="b"/></param>
+    ''' <returns>True if method signatures of <paramref name="a"/> and <paramref name="b"/> are same</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="a"/> or <paramref name="b"/> is null</exception>
+    Function IsSameSignature(a As MethodDefinition, b As MethodDefinition, Optional ByVal aGenParSupplier As GenericInstanceType = Nothing, Optional ByVal bGenParSupplier As GenericInstanceType = Nothing) As Boolean
+        If a Is Nothing Then Throw New ArgumentNullException("a")
+        If b Is Nothing Then Throw New ArgumentNullException("b")
+        If a.Parameters.Count <> b.Parameters.Count Then Return False
+        If Not a.ReturnType.SupplyGenericParameters(aGenParSupplier).TypeEquals(b.ReturnType.SupplyGenericParameters(bGenParSupplier)) Then Return False
+        For i = 0 To a.Parameters.Count - 1
+            If Not a.Parameters(i).ParameterType.SupplyGenericParameters(aGenParSupplier).TypeEquals(b.Parameters(i).ParameterType.SupplyGenericParameters(bGenParSupplier)) Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
 End Module
-
-

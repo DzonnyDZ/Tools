@@ -1,6 +1,7 @@
 ﻿Imports Mono.Cecil
 Imports Tools.RuntimeT.CompilerServicesT
 Imports System.Security.Policy
+Imports System.ComponentModel
 
 Namespace RuntimeT.CompilerServicesT
     ''' <summary>Implements assembly post-processor. It walks an assembly, reads attributes decorated with <see cref="PostprocessorAttribute"/> and takes actions based on them.</summary>
@@ -46,9 +47,33 @@ Namespace RuntimeT.CompilerServicesT
 
 
         Private _messageProcessor As Type
-        Public Sub SetMessageProcessor(Of T As MessageProcessor)()
+        ''' <summary>Sets type which's instance is late used for processing messages and errors</summary>
+        ''' <typeparam name="T">Type of message processor</typeparam>
+        ''' <remarks>Calling this method repeatedly resets message processor to new value.
+        ''' <para>
+        ''' Because <see cref="PostProcess"/> launches actual post-processing in separate application domain it's necessary to provide a way of passing message from that app domain to default app domain (or domain <see cref="AssemblyPostporcessor"/> was instantiated in).
+        ''' The architecture is following: Instance of type <typeparamref name="T"/> is instantiated in post-processing app domain.
+        ''' Instance of <see cref="RuntimeT.CompilerServicesT.MessageReceiver"/>-derived class is instantiated by caller in caller's app domain and set to <see cref="MessageReceiver"/>.
+        ''' <typeparamref name="T"/> instance is told about current message receiver by setting it's <see cref="MessageProcessor.Receiver"/> property.
+        ''' Message processor's job is to convert information passed to its methods to a form that a) is understood by message receiver b) can pass app domain boundary (i.e. it's serializable, primitive type or <see cref="MarshalByRefObject"/>).
+        ''' Message processor can also process the message itlsef and do not use message receiver. (E.g. <see cref="ConsoleMessageProcesor"/> writes the information to a console and does not use receiver.)
+        ''' </para></remarks>
+        ''' <seelaso cref="ItemPostprocessor.MessageProcessor"/>
+        Public Sub SetMessageProcessor(Of T As {MessageProcessor, New})()
             _messageProcessor = GetType(T)
         End Sub
+        ''' <summary>Gets type which's instance becomes message processor</summary>
+        ''' <remarks>To set this property call <see cref="SetMessageProcessor"/>.</remarks>
+        ''' <seelaso cref="SetMessageProcessor"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public ReadOnly Property MessageProcessorType As Type
+            Get
+                Return _messageProcessor
+            End Get
+        End Property
+        ''' <summary>Gets or sets instance which receives messages processed by message processor</summary>
+        ''' <remarks>Only used if <see cref="MessageProcessor"/> is not null.
+        ''' <note>Depending on type of <see cref="MessageProcessorType">message processor</see> this property may be optional, required or ignored (e.g. <see cref="ConsoleMessageProcesor"/> ignores it).</note></remarks>
         Public Property MessageReceiver As MessageReceiver
 
         ''' <summary>Recursivelly postprocesses a single assembly and saves changes</summary>
@@ -118,6 +143,7 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="MemberAccessException"><paramref name="messageProcessor"/> represents an abstract class.</exception>
         ''' <exception cref="MissingMethodException"><paramref name="messageProcessor"/> does not have public default constructor.</exception>
         ''' <exception cref="TypeLoadException"><paramref name="messageProcessor"/> is not valid type</exception>
+        ''' <remarks>This CTor is used by <see cref="AssemblyPostporcessor"/>.</remarks>
         Public Sub New(messageReceiver As MessageReceiver, messageProcessor As Type)
             If messageProcessor IsNot Nothing Then
                 If Not GetType(MessageProcessor).IsAssignableFrom(messageProcessor) Then Throw New ArgumentException(String.Format(My.Resources.Resources.MessageProcessorTypeError, GetType(MessageProcessor).Name, "messageProcessor"))
@@ -368,7 +394,8 @@ Namespace RuntimeT.CompilerServicesT
         End Function
     End Class
 
-    ''' <summary>Processems messages from post-processing process and passes them to <see cref="MessageReceiver"/></summary>
+    ''' <summary>Processes messages from post-processing process and passes them to <see cref="MessageReceiver"/></summary>
+    ''' <remarks>The job of this class is to convert messages from postprocessing to a form which a) the message is understood by associated message receiver b) the message can pass app-domain boundary.</remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public MustInherit Class MessageProcessor
         Inherits MarshalByRefObject
@@ -376,6 +403,7 @@ Namespace RuntimeT.CompilerServicesT
         ''' <summary>Gets or sets instance of <see cref="MessageReceiver"/>-derived class to pass messages to</summary>
         ''' <remarks>Can be null.
         ''' <para>Messages must be passes in a for in which thay can pass application domain boundary.</para></remarks>
+        ''' <exception cref="ArgumentException">When overriden in derived class derived class implementation can throw this exception in it does not accept receiver being set.</exception>
         Public Overridable Property Receiver As MessageReceiver
 
 

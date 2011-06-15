@@ -156,4 +156,64 @@
     <value>Type of Receiver must be {0}</value>
     <comment>TaskReceiverTypeError description</comment>
   </data>
+  <data name="ex_UnsupportedGParOwner" xml:space="preserve">
+    <value>Equality comparison of types representing generic arguments of something else then type and method is not supported</value>
+  </data>
+  <data name="ex_TypeDoesNotImplement" xml:space="preserve">
+    <value>{0} does not implement {1}</value>
+  </data>
+  <data name="ex_TypeDoesNotInherit" xml:space="preserve">
+    <value>{0} does not derive from {1}</value>
+  </data>
+  <data name="ex_StaticMethodCannotImplement" xml:space="preserve">
+    <value>Static method {0} cannot implement base member</value>
+  </data>
+  <data name="ex_CannotImplement" xml:space="preserve">
+    <value>{0} cannot be implemented</value>
+  </data>
+  <data name="ex_MethodAmbiguous" xml:space="preserve">
+    <value>More than one {0}.{1} method matches criteria</value>
+  </data>
+  <data name="ex_PropertyAmbiguous" xml:space="preserve">
+    <value>More than one {0}.{1} property matches criteria</value>
+  </data>
+  <data name="ex_PropertyWOGetterSetter" xml:space="preserve">
+    <value>Only properties with setter or getter or both are supported.</value>
+  </data>
+  <data name="ex_PropertyMixedAccessorStaticInstance" xml:space="preserve">
+    <value>Only properties with all accessors instance (non-static) are supported.</value>
+  </data>
+  <data name="ex_PropertyExternalAccessor" xml:space="preserve">
+    <value>Only properties where all methods are implemented in the same type as the property itself are supported.</value>
+  </data>
+  <data name="ex_EventWOAddRemove" xml:space="preserve">
+    <value>Only events with added or remover are supported</value>
+  </data>
+  <data name="ex_EventMixedAccessorStaticInstance" xml:space="preserve">
+    <value>Only events with all instance (non-static) methods are supported</value>
+  </data>
+  <data name="ex_EventExternalAccessor" xml:space="preserve">
+    <value>Only events with all accessoers declared in the same type as the event itself are supported.</value>
+  </data>
+  <data name="ex_EventAmbiguous" xml:space="preserve">
+    <value>More than one {0}.{1} event matches criteria</value>
+  </data>
+  <data name="ex_OnylAssemblyAndModule" xml:space="preserve">
+    <value>{0} supports only assemblies and modules</value>
+  </data>
+  <data name="ex_RemovalNotSupported" xml:space="preserve">
+    <value>Removal of {0} is not supported</value>
+  </data>
+  <data name="ex_UnsupportedGParRemoval" xml:space="preserve">
+    <value>Removal of generic parameters of {0} is not supported</value>
+  </data>
+  <data name="Implements" xml:space="preserve">
+    <value>{0} implements {1}</value>
+  </data>
+  <data name="Removed" xml:space="preserve">
+    <value>{0} removed from {1}</value>
+  </data>
+  <data name="ex_RemoveReturnValue" xml:space="preserve">
+    <value>Return value cannot be removed</value>
+  </data>
 </root>

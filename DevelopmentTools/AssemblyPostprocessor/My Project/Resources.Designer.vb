@@ -61,11 +61,182 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} implements {1}.
+        '''</summary>
+        Friend ReadOnly Property _Implements() As String
+            Get
+                Return ResourceManager.GetString("Implements", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} cannot be implemented.
+        '''</summary>
+        Friend ReadOnly Property ex_CannotImplement() As String
+            Get
+                Return ResourceManager.GetString("ex_CannotImplement", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to More than one {0}.{1} event matches criteria.
+        '''</summary>
+        Friend ReadOnly Property ex_EventAmbiguous() As String
+            Get
+                Return ResourceManager.GetString("ex_EventAmbiguous", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only events with all accessoers declared in the same type as the event itself are supported..
+        '''</summary>
+        Friend ReadOnly Property ex_EventExternalAccessor() As String
+            Get
+                Return ResourceManager.GetString("ex_EventExternalAccessor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only events with all instance (non-static) methods are supported.
+        '''</summary>
+        Friend ReadOnly Property ex_EventMixedAccessorStaticInstance() As String
+            Get
+                Return ResourceManager.GetString("ex_EventMixedAccessorStaticInstance", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only events with added or remover are supported.
+        '''</summary>
+        Friend ReadOnly Property ex_EventWOAddRemove() As String
+            Get
+                Return ResourceManager.GetString("ex_EventWOAddRemove", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to More than one {0}.{1} method matches criteria.
+        '''</summary>
+        Friend ReadOnly Property ex_MethodAmbiguous() As String
+            Get
+                Return ResourceManager.GetString("ex_MethodAmbiguous", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} supports only assemblies and modules.
+        '''</summary>
+        Friend ReadOnly Property ex_OnylAssemblyAndModule() As String
+            Get
+                Return ResourceManager.GetString("ex_OnylAssemblyAndModule", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to More than one {0}.{1} property matches criteria.
+        '''</summary>
+        Friend ReadOnly Property ex_PropertyAmbiguous() As String
+            Get
+                Return ResourceManager.GetString("ex_PropertyAmbiguous", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only properties where all methods are implemented in the same type as the property itself are supported..
+        '''</summary>
+        Friend ReadOnly Property ex_PropertyExternalAccessor() As String
+            Get
+                Return ResourceManager.GetString("ex_PropertyExternalAccessor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only properties with all accessors instance (non-static) are supported..
+        '''</summary>
+        Friend ReadOnly Property ex_PropertyMixedAccessorStaticInstance() As String
+            Get
+                Return ResourceManager.GetString("ex_PropertyMixedAccessorStaticInstance", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Neither field nor property named &apos;{0}&apos; was found.
         '''</summary>
         Friend ReadOnly Property ex_PropertyOrFieldNotFound() As String
             Get
                 Return ResourceManager.GetString("ex_PropertyOrFieldNotFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only properties with setter or getter or both are supported..
+        '''</summary>
+        Friend ReadOnly Property ex_PropertyWOGetterSetter() As String
+            Get
+                Return ResourceManager.GetString("ex_PropertyWOGetterSetter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Removal of {0} is not supported.
+        '''</summary>
+        Friend ReadOnly Property ex_RemovalNotSupported() As String
+            Get
+                Return ResourceManager.GetString("ex_RemovalNotSupported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Return value cannot be removed.
+        '''</summary>
+        Friend ReadOnly Property ex_RemoveReturnValue() As String
+            Get
+                Return ResourceManager.GetString("ex_RemoveReturnValue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Static method {0} cannot implement base member.
+        '''</summary>
+        Friend ReadOnly Property ex_StaticMethodCannotImplement() As String
+            Get
+                Return ResourceManager.GetString("ex_StaticMethodCannotImplement", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} does not implement {1}.
+        '''</summary>
+        Friend ReadOnly Property ex_TypeDoesNotImplement() As String
+            Get
+                Return ResourceManager.GetString("ex_TypeDoesNotImplement", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} does not derive from {1}.
+        '''</summary>
+        Friend ReadOnly Property ex_TypeDoesNotInherit() As String
+            Get
+                Return ResourceManager.GetString("ex_TypeDoesNotInherit", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Equality comparison of types representing generic arguments of something else then type and method is not supported.
+        '''</summary>
+        Friend ReadOnly Property ex_UnsupportedGParOwner() As String
+            Get
+                Return ResourceManager.GetString("ex_UnsupportedGParOwner", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Removal of generic parameters of {0} is not supported.
+        '''</summary>
+        Friend ReadOnly Property ex_UnsupportedGParRemoval() As String
+            Get
+                Return ResourceManager.GetString("ex_UnsupportedGParRemoval", resourceCulture)
             End Get
         End Property
         
@@ -129,6 +300,15 @@ Namespace My.Resources
         Friend ReadOnly Property msg_Transform() As String
             Get
                 Return ResourceManager.GetString("msg_Transform", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} removed from {1}.
+        '''</summary>
+        Friend ReadOnly Property Removed() As String
+            Get
+                Return ResourceManager.GetString("Removed", resourceCulture)
             End Get
         End Property
         
