@@ -7,10 +7,13 @@ Imports Tools.WindowsT.NativeT
 ''' <version version="1.5.4">This class is new in version 1.5.4</version>
 <NotAPlugin()>
 Public MustInherit Class ListerPluginWinForms
-    Inherits ListerPluginBase
+    Inherits ListerPlugin(Of ListerPluginUIWinForms)
+
 
 #Region "Load"
- 
+
 
 #End Region
+
+  
 End Class

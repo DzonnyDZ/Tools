@@ -153,6 +153,9 @@
     <Compile Include="..\..\..\SharedFiles\Version.vb">
       <Link>My Project\Version.vb</Link>
     </Compile>
+    <Compile Include="ListerPluginUIWinForms.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ListerPluginWinForms.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

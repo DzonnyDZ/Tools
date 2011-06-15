@@ -59,5 +59,14 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This method is not supported.
+        '''</summary>
+        Friend ReadOnly Property MethodNotSupported() As String
+            Get
+                Return ResourceManager.GetString("MethodNotSupported", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace
