@@ -378,5 +378,25 @@ Namespace RuntimeT.CompilerServicesT
             End If
 
         End Sub
+
+        Public Sub Rename(item As ICustomAttributeProvider, attr As RenameAttribute, context As IPostprocessorContext)
+
+            If TypeOf item Is TypeDefinition Then
+                DirectCast(item, TypeDefinition).Name = attr.NewName
+            ElseIf TypeOf item Is MethodDefinition Then
+                DirectCast(item, MethodDefinition).Name = attr.NewName
+            ElseIf TypeOf item Is PropertyDefinition Then
+                DirectCast(item, PropertyDefinition).Name = attr.NewName
+            ElseIf TypeOf item Is EventDefinition Then
+                DirectCast(item, EventDefinition).Name = attr.NewName
+            ElseIf TypeOf item Is FieldDefinition Then
+                DirectCast(item, FieldDefinition).Name = attr.NewName
+            ElseIf TypeOf item Is ParameterDefinition Then
+                DirectCast(item, ParameterDefinition).Name = attr.NewName
+            ElseIf TypeOf item Is GenericParameter Then
+                DirectCast(item, GenericParameter).Name = attr.NewName
+            End If
+
+        End Sub
     End Module
 End Namespace

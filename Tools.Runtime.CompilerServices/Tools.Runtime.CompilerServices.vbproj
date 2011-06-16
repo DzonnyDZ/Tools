@@ -98,6 +98,7 @@
     <Compile Include="PostprocessorAttribute.vb" />
     <Compile Include="RemoveAttribute.vb" />
     <Compile Include="RemoveReferenceAttribute.vb" />
+    <Compile Include="RenameAttribute.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
