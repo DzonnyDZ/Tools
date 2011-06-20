@@ -188,8 +188,8 @@ Namespace RuntimeT.CompilerServicesT
             Dim ar As New DefaultAssemblyResolver
             ar.AddSearchDirectory(IO.Path.GetDirectoryName(filename))
             rp.AssemblyResolver = ar
-            rp.ReadSymbols = True
-            'rp.SymbolReaderProvider = New Pdb.PdbReaderProvider()
+            Dim pdb As Boolean = IO.File.Exists(IO.Path.Combine(IO.Path.GetDirectoryName(filename), IO.Path.GetFileNameWithoutExtension(filename) & ".pdb"))
+            rp.ReadSymbols = pdb
             Dim [module] = ModuleDefinition.ReadModule(filename, rp)
             If MessageProcessor IsNot Nothing Then MessageProcessor.ProcessInfo([module].Assembly, My.Resources.msg_ProcessingAssembly)
 
@@ -208,9 +208,7 @@ Namespace RuntimeT.CompilerServicesT
                 If snkStream IsNot Nothing Then
                     wp.StrongNameKeyPair = New Reflection.StrongNameKeyPair(snkStream)
                 End If
-                wp.WriteSymbols = True
-                'wp.SymbolWriterProvider = New Pdb.PdbWriterProvider
-                'wp.SymbolStream = rp.SymbolStream
+                wp.WriteSymbols = pdb
                 [module].Assembly.Write(tmpModule, wp)
             End Using
             Return tmpModule
