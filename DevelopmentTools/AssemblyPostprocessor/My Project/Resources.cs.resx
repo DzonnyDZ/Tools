@@ -213,4 +213,22 @@
   <data name="ex_RemoveReturnValue" xml:space="preserve">
     <value>Návratová hodnota nemůže být odebrána</value>
   </data>
+  <data name="ex_AttrIsNotSupportedOnItem" xml:space="preserve">
+    <value>{0} není podporováno na {1}</value>
+  </data>
+  <data name="msg_Rename" xml:space="preserve">
+    <value>Přejmenování {0} -&gt; {1}</value>
+  </data>
+  <data name="msg_AddedResource" xml:space="preserve">
+    <value>Přídán {0} zdroj {1} z {2}.</value>
+  </data>
+  <data name="resource_embeded" xml:space="preserve">
+    <value>vestavěný</value>
+  </data>
+  <data name="resource_linked" xml:space="preserve">
+    <value>linkovaný</value>
+  </data>
+  <data name="msg_RemoveReference" xml:space="preserve">
+    <value>Odstranit referenci {0} z {1}</value>
+  </data>
 </root>

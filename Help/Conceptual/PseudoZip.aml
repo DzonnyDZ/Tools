@@ -9,6 +9,7 @@
                 Inherent disadvantage of <codeEntityReference>T:System.IO.Packaging.ZipPackage</codeEntityReference> that it does not support real ZIP format.
                 Resulting files can be unpacked by any ZIP tool but not all ZIP archives can be unpacked by this tool.
             </para>
+            <para>This tool aso supports (un)packing of single compressed files from/to gz (GZip) format.</para>
         </introduction>
         <section>
             <title>PseudoZip</title>
@@ -16,7 +17,7 @@
                 <para>Usage:</para>
                 <para>
                     <system>
-                        PseudoZip command archive folder [-r] [masks]
+                        PseudoZip command archive folder [-r|-sd|-sg] [masks]
                     </system>
                 </para>
                 <definitionTable>
@@ -52,11 +53,34 @@
                         <para>Path to a folder to compress files form or path to a folder to store uncompressed files in.</para>
                     </definition>
                     <definedTerm>
-                        <codeInline>-r</codeInline>
+                        <codeInline>-r|-sd|-sg</codeInline>
                     </definedTerm>
                     <definition>
                         <para>
-                            (optional) Only to be used with command <codeInline>a</codeInline> - pack file recursivelly from subfolders.
+                            (optional) Spefified mode of operation
+                        </para>
+                        <definitionTable>
+                            <definedTerm>-r</definedTerm>
+                            <definition>
+                                <para>
+                                    Only to be used with command <codeInline>a</codeInline> - pack file recursivelly from subfolders.
+                                </para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>-sd</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>Compress/uncompress only one file to/from raw Deflate stream.</para>
+                            </definition>
+                            <definedTerm>
+                                <codeInline>-sg</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>Compress/uncompress only one file to/from raw GZip stream.</para>
+                            </definition>
+                        </definitionTable>
+                        <para>
+                            Options <codeInline>-sd</codeInline> and <codeInline>-sg</codeInline> changes semantic of other command line arguments - see below.
                         </para>
                     </definition>
                     <definedTerm>
@@ -72,6 +96,35 @@
             </content>
             <sections>
                 <section>
+                    <title>Single file operation modes</title>
+                    <content>
+                        <para>
+                            When <codeInline>-sd</codeInline> or <codeInline>-sg</codeInline> is specified the tool operates in single file mode.
+                            When compressing data it takes one file (from folder, name specified by 1st mask) and compresses it to Deflate or GZip stream.
+                            The stream is saved to archive file.
+                            When uncompressing data it tages the archive file as raw Deflate or GZip stream, decompresses it and saves it to file specified by folder (folder must be file in this case).
+                        </para>
+                        <alert class="caution">
+                            <para>
+                                Parameters have different meaning when <codeInline>-sd</codeInline> or <codeInline>-sg</codeInline> is spefified:
+                            </para>
+                            <list class="nobullet">
+                                <listItem>
+                                    <para>
+                                        When command is <codeInline>e</codeInline> <codeInline>folder</codeInline> spefifies name of file to decompress data to.
+                                    </para>
+                                </listItem>
+                                <listItem>
+                                    <para>
+                                        When command is <codeInline>a</codeInline> <codeInline>masks</codeInline> is mandatory and only 1st "mask" is used.
+                                        Mask must in this case be axact name of file to compress.
+                                    </para>
+                                </listItem>
+                            </list>
+                        </alert>
+                    </content>
+                </section>
+                <section>
                     <title>Remarks</title>
                     <content>
                         <para>If any argument contains spaces it must be enclosed in quotes.</para>
@@ -83,6 +136,27 @@
                         <para>
                             PseudoZip.exe does not expose public API, however it's only tiny wrapper around <codeEntityReference qualifyHint="true">T:System.IO.Packaging.ZipPackage</codeEntityReference> class.
                         </para>
+                        <para>
+                            Content type for GZip (gz) files is <codeInline>application/x-gzip</codeInline>.
+                            For pseudo-zip (oficially Open Packaging Conventions) application/zip can be used.
+                        </para>
+                    </content>
+                </section>
+                <section>
+                    <title>Version History</title>
+                    <content>
+                        <list class="nobullet">
+                            <listItem>
+                                <para>1.5.4</para>
+                                <list class="bullet">
+                                    <listItem>
+                                        <para>
+                                            Added options <codeInline>-sd</codeInline> and <codeInline>-sg</codeInline>.
+                                        </para>
+                                    </listItem>
+                                </list>
+                            </listItem>
+                        </list>
                     </content>
                 </section>
             </sections>

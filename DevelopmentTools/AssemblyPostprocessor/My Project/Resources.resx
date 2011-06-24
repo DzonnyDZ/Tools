@@ -216,4 +216,22 @@
   <data name="ex_RemoveReturnValue" xml:space="preserve">
     <value>Return value cannot be removed</value>
   </data>
+  <data name="ex_AttrIsNotSupportedOnItem" xml:space="preserve">
+    <value>{0} is not supported on {1}</value>
+  </data>
+  <data name="msg_Rename" xml:space="preserve">
+    <value>Rename {0} -&gt; {1}</value>
+  </data>
+  <data name="msg_AddedResource" xml:space="preserve">
+    <value>Added {0} resource {1} from {2}.</value>
+  </data>
+  <data name="resource_embeded" xml:space="preserve">
+    <value>embeded</value>
+  </data>
+  <data name="resource_linked" xml:space="preserve">
+    <value>linked</value>
+  </data>
+  <data name="msg_RemoveReference" xml:space="preserve">
+    <value>Remove reference {0} from {1}</value>
+  </data>
 </root>

@@ -1,14 +1,20 @@
-﻿Usage: {0} command archive folder [-r] [masks]
+﻿Usage: {0} command archive folder [-r|-sd|-sg] [masks]
 Commands:
     a - create archive
     e - extract archive
 Archive: Path to pseudo zip file to compress files to | extract files from
 Folder: Path to folder to compres files from | extract files to
+        In case of comman e and -sg or -sd this must be file name to decompress to.
 -r  Only with command a.
     Pack files recursivelly from folder.
+-sd Compress only single file using Deflate method
+-sg Compress only single file using GZip method
 Masks: Only with command a.
        Masks of files to include in archive. When ommitted * is used.
+       Required for command a and -sd or -sg - only 1st mask is considered and it must be name of file to pack.
        
+When neither -sd nor -sg is used:
 Note: This tool uses ZIP compresion, but does not use ZIP format.
 Created archive can be read by any ZIP tool, but this tool can read only archives created by tools based on System.IO.Packaging.ZipPackage.
 This tool is as stupid as System.IO.Packaging.ZipPackage, don't blame me. I simply needed lightweight packaking tool that can be used from command line and from code.       
+When -sd or -sg is used only one file can be (un)compressed. Compressed file represents raw Deflate or GZip stream.

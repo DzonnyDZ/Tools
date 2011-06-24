@@ -76,6 +76,7 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>MyProject\Version.vb</Link>
     </Compile>
+    <Compile Include="AddResource.vb" />
     <Compile Include="ImplementsAttribute.vb" />
     <Compile Include="IPostprocessorContext.vb" />
     <Compile Include="MakePublicAttribute.vb" />

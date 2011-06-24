@@ -365,6 +365,7 @@ Namespace RuntimeT.CompilerServicesT
                 Dim m As ModuleDefinition = item
                 For Each ar In m.AssemblyReferences
                     If ar.FullName = attr.AssemblyName Then
+                        If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.msg_RemoveReference, ar, m))
                         m.AssemblyReferences.Remove(ar)
                         Return
                     End If
@@ -379,7 +380,15 @@ Namespace RuntimeT.CompilerServicesT
 
         End Sub
 
+        ''' <summary>Implements postprocessing defined by <see cref="RenameAttribute"/></summary>
+        ''' <param name="item">An item to be renamed</param>
+        ''' <param name="attr">Instance of <see cref="RenameAttribute"/></param>
+        ''' <param name="context">Postprocessing context</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="item"/> is not of supported type</exception>
         Public Sub Rename(item As ICustomAttributeProvider, attr As RenameAttribute, context As IPostprocessorContext)
+            If item Is Nothing Then Throw New ArgumentNullException("item")
+            If attr Is Nothing Then Throw New ArgumentNullException("attr")
 
             If TypeOf item Is TypeDefinition Then
                 DirectCast(item, TypeDefinition).Name = attr.NewName
@@ -395,8 +404,40 @@ Namespace RuntimeT.CompilerServicesT
                 DirectCast(item, ParameterDefinition).Name = attr.NewName
             ElseIf TypeOf item Is GenericParameter Then
                 DirectCast(item, GenericParameter).Name = attr.NewName
+            Else
+                Throw New NotSupportedException(String.Format(My.Resources.ex_AttrIsNotSupportedOnItem, GetType(RenameAttribute).Name, item.GetType.Name))
             End If
 
+            If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.msg_Rename, item, attr.NewName))
+        End Sub
+
+        ''' <summary>Implements postprocessing defined by <see cref="AddResourceAttribute"/></summary>
+        ''' <param name="item">An item to postprocess</param>
+        ''' <param name="attr">A <see cref="AddResourceAttribute"/></param>
+        ''' <param name="context">Postprocessing context</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
+        Public Sub AddResource(item As ICustomAttributeProvider, attr As AddResourceAttribute, context As IPostprocessorContext)
+            If item Is Nothing Then Throw New ArgumentNullException("item")
+            If attr Is Nothing Then Throw New ArgumentNullException("attr")
+            If TypeOf item Is AssemblyDefinition Then
+                AddResource(DirectCast(item, AssemblyDefinition).MainModule, attr, context)
+            ElseIf TypeOf item Is ModuleDefinition Then
+                Dim [module] As ModuleDefinition = DirectCast(item, ModuleDefinition)
+                [module].Resources.Add(If(attr.Embedded,
+                                          DirectCast(
+                                              New EmbeddedResource(attr.Name, If(attr.Private, ManifestResourceAttributes.Private, ManifestResourceAttributes.Public),
+                                                                   IO.File.ReadAllBytes(If(IO.Path.IsPathRooted(attr.File), attr.File,
+                                                                                           IO.Path.Combine(IO.Path.GetDirectoryName([module].FullyQualifiedName), attr.File)
+                                                                  ))), 
+                                              Resource),
+                                          DirectCast(
+                                              New LinkedResource(attr.Name, If(attr.Private, ManifestResourceAttributes.Private, ManifestResourceAttributes.Public), attr.File), 
+                                              Resource)
+                                      ))
+                If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.msg_AddedResource, If(attr.Embedded, My.Resources.resource_embeded, My.Resources.resource_linked), attr.Name, attr.File))
+            Else
+                Throw New NotSupportedException(String.Format(My.Resources.ex_OnylAssemblyAndModule, GetType(AddResourceAttribute).Name))
+            End If
         End Sub
     End Module
 End Namespace

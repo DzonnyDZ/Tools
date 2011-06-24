@@ -233,6 +233,7 @@
     <Compile Include="Security\Cryptography\Encryption\Hash.vb" />
     <Compile Include="Security\Cryptography\Encryption\Symmetric.vb" />
     <Compile Include="Text\Escaping.vb" />
+    <Compile Include="Text\Unicode\UnicodeCharacterDatabase.vb" />
     <Compile Include="Threading\IInvoke.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
@@ -363,6 +364,9 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="Text\Unicode\ucd.all.grouped.xml.gz">
+      <DependentUpon>ucd.all.grouped.xml</DependentUpon>
+    </None>
     <None Include="Web\Css\Lexical\SelectorsFSA.vsd" />
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +389,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Text\Unicode\ucd.all.grouped.xml" />
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
@@ -581,6 +586,12 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
+      <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
+      <Name>Tools.Runtime.CompilerServices</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -590,7 +601,10 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
+copy "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(TargetDir)ucd.all.grouped.xml.gz" /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

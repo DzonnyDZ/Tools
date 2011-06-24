@@ -313,6 +313,9 @@ IF ERRORLEVEL 0 (
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
+      <Project>{97e0dd39-aa48-4288-82ad-3753c178c70a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{fcf346ac-d1c3-42db-9026-9144240fb766}</Project>
     </ProjectReference>
