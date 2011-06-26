@@ -88,17 +88,17 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="UnauthorizedAccessException">The access requested is not permitted by the operating system for the specified <paramref name="filename"/>.</exception>
         ''' <exception cref="IO.PathTooLongException">The specified <paramref name="filename"/> exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
         ''' <exception cref="IO.FileNotFoundException">
-        ''' Cannot find assembly for attribute type or required dependent type or parameter type. (Under this circumstances this exception is only thrown if <see cref="ErrorSink"/> is null or returns false.) -or-
+        ''' Cannot find assembly for attribute type or required dependent type or parameter type. (Under this circumstances this exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.) -or-
         ''' The file <paramref name="filename"/> cannot be found.</exception>
-        ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="MemberAccessException"><paramref name="attr"/> is abstract class. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="Reflection.TargetInvocationException">Error while invoking attribute class constructor -or- Error when setting property value for named attribute argument. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="Security.SecurityException">The caller does not have the necessary code access permission. (This exception can be caugnt by <see cref="ErrorSink"/> if it does not occure for entire module or assembly.)</exception>
-        ''' <exception cref="Reflection.AmbiguousMatchException">More than one property found for named attribute argument. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="Exception">Many exceptions can occurr in IO sub-system, <see cref="Mono.Cecil"/> or processors. Some of them can be caught by <see cref="ErrorSink"/>.</exception>
+        ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
+        ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version. (This exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
+        ''' <exception cref="MemberAccessException"><paramref name="attr"/> is abstract class. (This exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
+        ''' <exception cref="Reflection.TargetInvocationException">Error while invoking attribute class constructor -or- Error when setting property value for named attribute argument. (This exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
+        ''' <exception cref="Security.SecurityException">The caller does not have the necessary code access permission. (This exception can be caugnt if <see cref="MessageProcessorType"/> is set if it does not occur for entire module or assembly.)</exception>
+        ''' <exception cref="Reflection.AmbiguousMatchException">More than one property found for named attribute argument. (This exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
+        ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
+        ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="MessageProcessorType"/> was not set or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
+        ''' <exception cref="Exception">Many exceptions can occurr in IO sub-system, <see cref="Mono.Cecil"/> or processors. Some of them can be caught if <see cref="MessageProcessorType"/> is set.</exception>
         ''' <remarks>If PDB file exists for assembly given in <paramref name="filename"/> it's updated to reflect code changes.</remarks>
         Public Sub PostProcess(filename$, Optional snk As String = Nothing)
 
@@ -118,24 +118,23 @@ Namespace RuntimeT.CompilerServicesT
             Dim myMsgProcessor As MessageProcessor = Activator.CreateInstance(_messageProcessor)
             myMsgProcessor.Receiver = MessageReceiver
 
-            Dim modulefile$ = Nothing
-            Dim pdbsource$ = Nothing
+            Dim folder$ = Nothing
             Dim pdbTarget = IO.Path.Combine(IO.Path.GetDirectoryName(filename), IO.Path.GetFileNameWithoutExtension(filename) & ".pdb")
             Try
-                modulefile = DirectCast(oh.Unwrap, ItemPostprocessor).PostProcess(filename, snk)
+                folder = DirectCast(oh.Unwrap, ItemPostprocessor).PostProcess(filename, snk)
+                Dim modulefile$ = IO.Path.Combine(folder, IO.Path.GetFileName(filename))
 
                 AppDomain.Unload(processDomain)
 
                 IO.File.Copy(modulefile, filename, True)
                 myMsgProcessor.ProcessInfo(Nothing, IO.Path.GetFileName(filename))
-                pdbsource = IO.Path.Combine(IO.Path.GetDirectoryName(modulefile), IO.Path.GetFileNameWithoutExtension(modulefile) & ".pdb")
+                Dim pdbsource$ = IO.Path.Combine(folder, IO.Path.GetFileNameWithoutExtension(filename) & ".pdb")
                 If IO.File.Exists(pdbsource) Then
                     IO.File.Copy(pdbsource, pdbTarget, True)
                     myMsgProcessor.ProcessInfo(Nothing, IO.Path.GetFileName(pdbTarget))
                 End If
             Finally
-                If modulefile IsNot Nothing AndAlso IO.File.Exists(modulefile) Then IO.File.Delete(modulefile)
-                If pdbsource IsNot Nothing AndAlso IO.File.Exists(pdbsource) Then IO.File.Delete(pdbsource)
+                If folder IsNot Nothing AndAlso IO.Directory.Exists(folder) Then IO.Directory.Delete(folder, True)
             End Try
         End Sub
     End Class
@@ -177,7 +176,10 @@ Namespace RuntimeT.CompilerServicesT
         ''' <summary>Recursivelly postprocesses a single assembly and saves changes</summary>
         ''' <param name="filename">Name of file of module from assembly</param>
         ''' <param name="snk">Path to SNK key to (re-)sign assembly with (ignored if null)</param>
-        ''' <returns>Name of temporary file where altered module was saved. Caller is responsible of disposing the file (and corresponding PDB file if it was created).</returns>
+        ''' <returns>
+        ''' Name of temporary folder where altered module was saved. Caller is responsible of disposing the folder.
+        ''' The folder contains file with same name as file passed in <paramref name="filename"/> and PDB file with same name but PDB extension (only if it existed for original assembly).
+        ''' </returns>
         ''' <exception cref="ArgumentNullException"><paramref name="filename"/> is null</exception>
         ''' <exception cref="ArgumentException"><paramref name="filename"/> is an empty string, contains only white space, or contains one or more invalid characters. -or- <paramref name="filename"/> refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in an NTFS environment.</exception>
         ''' <exception cref="NotSupportedException"><paramref name="filename"/> refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a non-NTFS environment.</exception>
@@ -186,7 +188,7 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="UnauthorizedAccessException">The access requested is not permitted by the operating system for the specified <paramref name="filename"/>.</exception>
         ''' <exception cref="IO.PathTooLongException">The specified <paramref name="filename"/> exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
         ''' <exception cref="IO.FileNotFoundException">
-        ''' Cannot find assembly for attribute type or required dependent type or parameter type. (Under this circumstances this exception is only thrown if <see cref="ErrorSink"/> is null or returns false.) -or-
+        ''' Cannot find assembly for attribute type or required dependent type or parameter type. (Under this circumstances this exception is only thrown if <see cref="MessageProcessor.ProcessError"/> is null or returns false.) -or-
         ''' The file <paramref name="filename"/> cannot be found.</exception>
         ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <see cref="MessageProcessor"/> is null or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
         ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version. (This exception is only thrown if <see cref="MessageProcessor"/> is null or <see cref="MessageProcessor.ProcessError"/> returns false.)</exception>
@@ -199,7 +201,7 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="Exception">Many exceptions can occurr in IO sub-system, <see cref="Mono.Cecil"/> or processors. Some of them can be caught by <see cref="MessageProcessor"/>.</exception>
         ''' <remarks>
         ''' If PDB file exists for assembly given in <paramref name="filename"/> corresponding PDB files is generated with updated debugging info.
-        ''' When this method finishes ucan locate it in file with same name as filename returned by this method but PDB extension.
+        ''' When this function finishes you can locate it in directory indicated by function return value. It has same name if name of file specified in <paramref name="filename"/> but PDB extension.
         ''' </remarks>
         Public Function PostProcess(filename$, snk$) As String
             Dim rp As New ReaderParameters
@@ -219,17 +221,24 @@ Namespace RuntimeT.CompilerServicesT
             Next
             Me.ProcessItem([module].Assembly)
 
-            Dim tmpModule = IO.Path.GetTempFileName
+            Dim tmpFolder = IO.Path.Combine(IO.Path.GetTempPath, Guid.NewGuid.ToString)
+            IO.Directory.CreateDirectory(tmpFolder)
+            Try
+                Dim tmpModule = IO.Path.Combine(tmpFolder, IO.Path.GetFileName(filename))
 
-            Using snkStream = If(snk Is Nothing, Nothing, IO.File.OpenRead(snk))
-                Dim wp As WriterParameters = New WriterParameters
-                If snkStream IsNot Nothing Then
-                    wp.StrongNameKeyPair = New Reflection.StrongNameKeyPair(snkStream)
-                End If
-                wp.WriteSymbols = pdb
-                [module].Assembly.Write(tmpModule, wp)
-            End Using
-            Return tmpModule
+                Using snkStream = If(snk Is Nothing, Nothing, IO.File.OpenRead(snk))
+                    Dim wp As WriterParameters = New WriterParameters
+                    If snkStream IsNot Nothing Then
+                        wp.StrongNameKeyPair = New Reflection.StrongNameKeyPair(snkStream)
+                    End If
+                    wp.WriteSymbols = pdb
+                    [module].Assembly.Write(tmpModule, wp)
+                End Using
+                Return tmpFolder
+            Catch
+                Try : IO.Directory.Delete(tmpFolder, True) : Catch : End Try
+                Throw
+            End Try
         End Function
 
         ''' <summary>Passes an informative messsage to context. This is used to inform about post-processing operation.</summary>

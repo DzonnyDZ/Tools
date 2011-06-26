@@ -468,6 +468,12 @@
     <Compile Include="Tests\StaticProperiesTest.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Text\Unicode\frmUnicodeCharacterDatabaseTest.Designer.vb">
+      <DependentUpon>frmUnicodeCharacterDatabaseTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Text\Unicode\frmUnicodeCharacterDatabaseTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="VisualStudio\Generators\frmCustomToolBase.Designer.vb">
       <DependentUpon>frmCustomToolBase.vb</DependentUpon>
     </Compile>
@@ -702,6 +708,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\StaticProperiesTest.resx">
       <DependentUpon>StaticProperiesTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\frmUnicodeCharacterDatabaseTest.resx">
+      <DependentUpon>frmUnicodeCharacterDatabaseTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VisualStudio\Generators\frmCustomToolBase.resx">
       <DependentUpon>frmCustomToolBase.vb</DependentUpon>

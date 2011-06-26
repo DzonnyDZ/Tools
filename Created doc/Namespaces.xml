@@ -344,7 +344,11 @@
             <seealso cref="N:System.Text"/>
         </member>
         <member name="N:Tools.TextT.EncodingT">
-            <summary>Contains classes fro working with different text encodings.</summary>
+            <summary>Contains classes for working with different text encodings.</summary>
+        </member>
+        <member name="N:Tools.TextT.UnicodeT">
+            <summary>Contains Unicode-specific functionality</summary>
+            <version version="1.5.4">This namespace is new in version 1.5.4</version>
         </member>
         <!--ThreadingT-->
         <member name="N:Tools.ThreadingT">

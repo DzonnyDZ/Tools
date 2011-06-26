@@ -63,7 +63,12 @@
             <node name="AttributeTest" image="Class" tag="Tools.Tests.TestsT.AttributeTest.Test"/>
             <node name="CLSComplianceChecker" image="Class" tag="Tools.Tests.TestsT.CLSComplianceCheckerTest.Test"/>
             <node name="StaticPropertiesTest" image="Class" tag="Tools.Tests.TestsT.frmStaticProperiesTest.Test"/>
-        </node> 
+        </node>
+        <node name="TextT" image="Namespace">
+            <node name="UnicodeT" image="Namespace">
+                <node name="UnicodeCharacterDatabase" image="Class" tag="Tools.Tests.TextT.UnicodeT.frmUnicodeCharacterDatabaseTest.Test"/>
+            </node>
+        </node>
         <node name="TimesSpanFormattable" image="Structure" tag="Tools.Tests.frmTimeSpanFormattable.Test" />
         <node name="VisualBasicT" image="Namespace">
             <node name="Interaction" image="Module">

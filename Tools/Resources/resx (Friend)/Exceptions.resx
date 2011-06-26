@@ -1432,4 +1432,7 @@
   <data name="VersionPartToVersionMinorNull" xml:space="preserve">
     <value>Cannot convert VersionPart to Version when Minor is not set.</value>
   </data>
+  <data name="CannotLoadManifestResourceStream" xml:space="preserve">
+    <value>Cannot load manifest resource stream {0}</value>
+  </data>
 </root>

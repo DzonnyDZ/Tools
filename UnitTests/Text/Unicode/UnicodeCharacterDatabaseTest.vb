@@ -29,32 +29,28 @@ Public Class UnicodeCharacterDatabaseTest
         End Set
     End Property
 
-#Region "Additional test attributes"
-    '
-    'You can use the following additional attributes as you write your tests:
-    '
-    'Use ClassInitialize to run code before running the first test in the class
-    '<ClassInitialize()>  _
-    'Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
-    'End Sub
-    '
-    'Use ClassCleanup to run code after all tests in a class have run
-    '<ClassCleanup()>  _
-    'Public Shared Sub MyClassCleanup()
-    'End Sub
-    '
-    'Use TestInitialize to run code before running each test
-    '<TestInitialize()>  _
-    'Public Sub MyTestInitialize()
-    'End Sub
-    '
-    'Use TestCleanup to run code after each test has run
-    '<TestCleanup()>  _
-    'Public Sub MyTestCleanup()
-    'End Sub
-    '
-#End Region
+    '#Region "Additional test attributes"
 
+
+
+    '    ''' <summary>Use ClassInitialize to run code before running the first test in the class</summary>
+    '    <ClassInitialize()> _
+    '    Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
+    '        AddHandler AppDomain.CurrentDomain.ResourceResolve, AddressOf CurrentDomain_ResourceResolve
+    '    End Sub
+
+    '    ''' <summary>Use ClassCleanup to run code after all tests in a class have run</summary>
+    '    <ClassCleanup()> _
+    '    Public Shared Sub MyClassCleanup()
+    '        RemoveHandler AppDomain.CurrentDomain.ResourceResolve, AddressOf CurrentDomain_ResourceResolve
+    '    End Sub
+
+    '#End Region
+    '    Private Shared Function CurrentDomain_ResourceResolve(sender As Object, e As ResolveEventArgs) As Reflection.Assembly
+    '        If e.RequestingAssembly.Equals(GetType(UnicodeCharacterDatabase).Assembly) AndAlso e.Name = UnicodeCharacterDatabase.UnicodeXmlDatabaseResourceName Then _
+    '            Return GetType(UnicodeCharacterDatabase).Assembly
+    '        Return Nothing
+    '    End Function
 
     '''<summary>
     '''A test for GetXml
@@ -63,4 +59,8 @@ Public Class UnicodeCharacterDatabaseTest
     Public Sub GetXmlTest()
         Assert.IsNotNull(UnicodeCharacterDatabase.GetXml)
     End Sub
+
+
+
+
 End Class
