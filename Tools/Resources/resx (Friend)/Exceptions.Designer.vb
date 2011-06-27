@@ -2246,6 +2246,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Not allowed for placeholder characters.'.
+        '''</summary>
+        Public ReadOnly Property NotAllowedForPlaceholderCharacters() As String
+            Get
+                Return ResourceManager.GetString("NotAllowedForPlaceholderCharacters", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Not enough space in destination array.'.
+        '''</summary>
+        Public ReadOnly Property NotEnoughSpaceInDestinationArray() As String
+            Get
+                Return ResourceManager.GetString("NotEnoughSpaceInDestinationArray", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '{0} not found in {1}'.
         '''</summary>
         Public ReadOnly Property NotFoundIn1() As String
@@ -2683,6 +2701,15 @@ Namespace ResourcesT
         Public ReadOnly Property RootElementOf0MustBe1() As String
             Get
                 Return ResourceManager.GetString("RootElementOf0MustBe1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Sequence contains placeholder'.
+        '''</summary>
+        Public ReadOnly Property SequenceContainsPlaceholder() As String
+            Get
+                Return ResourceManager.GetString("SequenceContainsPlaceholder", _resourceCulture)
             End Get
         End Property
         
@@ -6213,6 +6240,22 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the NotAllowedForPlaceholderCharacters property value.
+        '''</summary>
+        '''<returns>The NotAllowedForPlaceholderCharacters property value.</returns>
+        Public Function NotAllowedForPlaceholderCharactersFormat() As String
+            Return NotAllowedForPlaceholderCharacters
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the NotEnoughSpaceInDestinationArray property value.
+        '''</summary>
+        '''<returns>The NotEnoughSpaceInDestinationArray property value.</returns>
+        Public Function NotEnoughSpaceInDestinationArrayFormat() As String
+            Return NotEnoughSpaceInDestinationArray
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to '{0} not found in {1}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -6635,6 +6678,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function RootElementOf0MustBe1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, RootElementOf0MustBe1, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the SequenceContainsPlaceholder property value.
+        '''</summary>
+        '''<returns>The SequenceContainsPlaceholder property value.</returns>
+        Public Function SequenceContainsPlaceholderFormat() As String
+            Return SequenceContainsPlaceholder
         End Function
         
         '''<summary>

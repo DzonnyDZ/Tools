@@ -1465,4 +1465,14 @@
   <data name="CannotFindCodePoint" xml:space="preserve">
     <value>Cannot find code point represented by {0}. {1} instance was either initialized without XML document or information is not available for current code point.</value>
   </data>
+  <data name="NotEnoughSpaceInDestinationArray" xml:space="preserve">
+    <value>Not enough space in destination array.</value>
+  </data>
+  <data name="NotAllowedForPlaceholderCharacters" xml:space="preserve">
+    <value>Not allowed for placeholder characters.</value>
+  </data>
+  <data name="SequenceContainsPlaceholder" xml:space="preserve">
+    <value>Sequence contains placeholder</value>
+    <comment>SequenceContainsPlaceholder description</comment>
+  </data>
 </root>

@@ -194,6 +194,18 @@ Namespace TextT.UnicodeT
                 Return value.Value.BitwiseSame
             End Get
         End Property
+
+        ''' <summary>Gets collection of characters that forms canonic decomposition of this charatcer</summary>
+        ''' <remarks>Underlying XML attribute is @dm.
+        ''' <para>If this character is not range character this impementation replaces #s with <see cref="CodePoint"/>.</para></remarks>
+        Public Overrides ReadOnly Property DecompositionMapping As CodePointInfoCollection
+            Get
+                Dim value = GetPropertyValue("dm")
+                If value = "" Then Return Nothing
+                If value.Contains("#") AndAlso CodePoint.HasValue Then value = value.Replace("#", CodePoint.Value.ToString("X", InvariantCulture))
+                Return New CodePointInfoCollection(Element.Document, value)
+            End Get
+        End Property
 #End Region
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
         ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>

@@ -3,6 +3,7 @@ Imports Tools.ExtensionsT
 Imports System.Xml.Linq
 Imports System.Globalization.CultureInfo
 Imports Tools.NumericsT
+Imports System.Xml.Serialization
 
 Namespace TextT.UnicodeT
     ''' <summary>Common base class for Unicode code points and groups. This class holds character properties</summary>
@@ -56,6 +57,7 @@ Namespace TextT.UnicodeT
         ''' <returns>Version of Unicode standard or null. Null is retuened also when underlying XML attribute has value "unassigned".</returns>
         ''' <remarks>Unicode standard defines values this property can have (i.e. it cannot have any version number and typically only <see cref="Version.Major"/> and <see cref="Version.Minor"/> numbers are used.
         ''' <para>Underlying XML attribute is @age.</para></remarks>
+        <XmlAttribute("age")>
         Public ReadOnly Property Age As Version
             Get
                 Dim value = GetPropertyValue("age")
@@ -70,6 +72,7 @@ Namespace TextT.UnicodeT
         ''' <para>Unicode character names are usually uppercase.</para>
         ''' <para>Underlying XML attribute is @na.</para>
         ''' </remarks>
+        <XmlEnum("na")>
         Public Overridable ReadOnly Property Name As String
             Get
                 Return GetPropertyValue("na")
@@ -82,6 +85,7 @@ Namespace TextT.UnicodeT
         ''' If specified on group or range can contain character #. When specified on individual code point, character # is replaced with value of current code point.
         ''' <para>Underlying XML attribute is @na1.</para>
         ''' </remarks>
+        <XmlEnum("na1")>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Overridable ReadOnly Property Name1 As String
             Get
@@ -90,13 +94,16 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets general category of code point</summary>
-        ''' <exception cref="InvalidOperationException">Vallue of underlying attribute cannot be mapped to <see cref="Globalization.UnicodeCategory"/> enumeration value.</exception>
+        ''' <value>Default value when not assigned in Unicode Character Database is <see cref="Globalization.UnicodeCategory.OtherNotAssigned"/></value>
+        ''' <exception cref="InvalidOperationException">Value of underlying attribute cannot be mapped to <see cref="Globalization.UnicodeCategory"/> enumeration value.</exception>
         ''' <remarks>Underlying XML attribute is @gc.</remarks>
         ''' <seelaso cref="System.Char.GetUnicodeCategory"/>
-        Public ReadOnly Property GeneralCategory As Globalization.UnicodeCategory?
+        <XmlEnum("gc")>
+        <DefaultValue(Globalization.UnicodeCategory.OtherNotAssigned)>
+        Public ReadOnly Property GeneralCategory As Globalization.UnicodeCategory
             Get
                 Dim value = GetPropertyValue("gc")
-                If value = "" Then Return Nothing
+                If value = "" Then Return Globalization.UnicodeCategory.OtherNotAssigned
                 Select Case value
                     Case "Lu" : Return Globalization.UnicodeCategory.UppercaseLetter
                     Case "Ll" : Return Globalization.UnicodeCategory.LowercaseLetter
@@ -140,27 +147,33 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets generalized unicode category of code point</summary>
+        ''' <value>Default value if <see cref="GeneralCategory"/> is not assigned in Unicode Character Database is <see cref="UnicodeGeneralCategoryClass.Other"/>.</value>
         ''' <seelaso cref="UnicodeExtensions.GetClass"/>
-        Public ReadOnly Property GeneralCategoryClass As UnicodeGeneralCategoryClass?
+        <XmlIgnore()>
+        <DefaultValue(UnicodeGeneralCategoryClass.Other)>
+        Public ReadOnly Property GeneralCategoryClass As UnicodeGeneralCategoryClass
             Get
-                Dim gc = GeneralCategory
-                If gc.HasValue Then Return gc.Value.GetClass Else Return Nothing
+                Return GeneralCategory.GetClass
             End Get
         End Property
 
         ''' <summary>Gets combining class of the character</summary>
         ''' <remarks>Underlying XML attribute is @ccc.</remarks>
-        Public ReadOnly Property CombiningClass As Byte?
+        <XmlAttribute("ccc")>
+        Public ReadOnly Property CombiningClass As UnicodeCombiningClass
             Get
                 Dim value = GetPropertyValue("ccc")
-                If value = "" Then Return Nothing
+                If value = "" Then Return 0
                 Return Byte.Parse(value, InvariantCulture)
             End Get
         End Property
 
+#Region "Bidi"
         ''' <summary>Gets bidirectional category of the character</summary>
+        ''' <returns>Unicode bidirectional category specified for current character. Null if bidi class is not specified in Unicode Character Database - in this case Unicode Bidirectional Alghoritm should be used to determine default value of bidi class of character.</returns>
         ''' <remarks>Underlying XML attributes is @bc</remarks>
         ''' <exception cref="InvalidOperationException">Underlying XML attribute value cannot be mapped to <see cref="UnicodeBidiCategory"/> value</exception>
+        <XmlAttribute("bc")>
         Public ReadOnly Property BidiCategory As UnicodeBidiCategory?
             Get
                 Dim value = GetPropertyValue("bc")
@@ -203,6 +216,7 @@ Namespace TextT.UnicodeT
         End Function
 
         ''' <summary>Gets bidirectional strenght of the character</summary>
+        <XmlIgnore()>
         Public ReadOnly Property BidiStrength As UnicodeBidiCategoryStrenght?
             Get
                 Dim value = BidiCategory
@@ -213,23 +227,81 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character should be mirrored horizontally when rendering in right-to-left text</summary>
         ''' <remarks>Note that for some characters the mirroring is not exact mirroring but e.g. mirroring only of part of a glyph.
         ''' <para>Underlying XML attributes is @Bidi_M.</para></remarks>
-        Public ReadOnly Property Mirrored As Boolean?
+        <XmlAttribute("Bidi_M")>
+        Public ReadOnly Property Mirrored As Boolean
             Get
-                Dim value = GetPropertyValue("Bidi_M")
-                If value = "" Then Return Nothing
-                Return value = "Y"
+                Return GetPropertyValue("Bidi_M") = "Y"
             End Get
         End Property
 
+        ''' <summary>Gets a code point of glyph that is typically mirrored version of this glyph when used in right-to-left text</summary>
+        ''' <remarks>Underlying XML attribute is @bmg.</remarks>
+        <XmlAttribute("bmg")>
         Public ReadOnly Property BidiMirroringGlyph As CodePointInfo
             Get
                 Dim value = GetPropertyValue("bmg")
                 If value = "" Then Return Nothing
-                Return New codepointinfo(Element.Document, UInteger.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Element.Document, UInteger.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 
+        ''' <summary>Gets value indicating if code point is bidirectional control character</summary>
+        ''' <remarks>Underlying XML attribute is @Bidi_C</remarks>
+        <XmlAttribute("Bidi_C")>
+        Public ReadOnly Property BidiControl As Boolean?
+            Get
+                Dim value = GetPropertyValue("Bidi_C")
+                If value = "" Then Return Nothing
+                Return value = "Y"
+            End Get
+        End Property
+#End Region
+#Region "Decomposition"
 
+        ''' <summary>Gets decomposition type of character</summary>
+        ''' <remarks>Underlying XML atttributes is @dt.</remarks>
+        <XmlAttribute("dt"), DefaultValue(UnicodeDecompositionType.none)>
+        Public ReadOnly Property DecompositionType As UnicodeDecompositionType?
+            Get
+                Dim value = GetPropertyValue("dt")
+                If value = "" Then Return UnicodeDecompositionType.none
+                Select Case value
+                    Case "can" : Return UnicodeDecompositionType.Canonical
+                    Case "com" : Return UnicodeDecompositionType.Compatibility
+                    Case "enc" : Return UnicodeDecompositionType.Circle
+                    Case "fin" : Return UnicodeDecompositionType.Final
+                    Case "font" : Return UnicodeDecompositionType.Font
+                    Case "fra" : Return UnicodeDecompositionType.Fraction
+                    Case "init" : Return UnicodeDecompositionType.Initial
+                    Case "iso" : Return UnicodeDecompositionType.Isolated
+                    Case "med" : Return UnicodeDecompositionType.Medial
+                    Case "nar" : Return UnicodeDecompositionType.Narrow
+                    Case "nb" : Return UnicodeDecompositionType.NoBreak
+                    Case "sml" : Return UnicodeDecompositionType.Small
+                    Case "sqr" : Return UnicodeDecompositionType.Square
+                    Case "sub" : Return UnicodeDecompositionType.Sub
+                    Case "sup" : Return UnicodeDecompositionType.Super
+                    Case "vert" : Return UnicodeDecompositionType.Vertical
+                    Case "wide" : Return UnicodeDecompositionType.Wide
+                    Case "none" : Return UnicodeDecompositionType.none
+                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.CannotBeInterpretedAs1.f(value, GetType(UnicodeDecompositionType).Name))
+                End Select
+            End Get
+        End Property
+
+        ''' <summary>Gets collection of characters that forms canonic decomposition of this charatcer</summary>
+        ''' <remarks>Underlying XML attribute is @dm.</remarks>
+        <XmlAttribute("dm")>
+        Public Overridable ReadOnly Property DecompositionMapping As CodePointInfoCollection
+            Get
+                Dim value = GetPropertyValue("dm")
+                If value = "" Then Return Nothing
+                Return New CodePointInfoCollection(Element.Document, value)
+            End Get
+        End Property
+
+#End Region
+        'TODO:
 #End Region
 
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
