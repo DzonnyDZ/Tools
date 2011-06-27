@@ -20,6 +20,13 @@ Namespace ExtensionsT
         <Extension()> Public Function UnicodeCategory(ByVal c As Char) As Globalization.UnicodeCategory
             Return Char.GetUnicodeCategory(c)
         End Function
+        ''' <summary>Gets generalized Unicode category of character</summary>
+        ''' <param name="c">A Unicode character</param>
+        ''' <returns>Generalized unicode category <paramref name="c"/> belongs to</returns>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        <Extension()> Public Function GeneralUnicodeCategory(c As Char) As TextT.UnicodeT.UnicodeGeneralCategoryClass
+            Return TextT.UnicodeT.UnicodeExtensions.GetClass(Char.GetUnicodeCategory(c))
+        End Function
         ''' <summary>Indicates whether the specified Unicode character is categorized as a control character.</summary>
         ''' <param name="c">A Unicode character.</param>
         ''' <returns>true if c is a control character; otherwise, false.</returns>

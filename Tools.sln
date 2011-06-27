@@ -50,7 +50,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		SharedFiles\AssemblyStage.vb = SharedFiles\AssemblyStage.vb
 		SharedFiles\FixXmlComments.xslt = SharedFiles\FixXmlComments.xslt
 		SharedFiles\Tools.snk = SharedFiles\Tools.snk
-		SharedFiles\Version.cpp = SharedFiles\Version.cpp
 		SharedFiles\Version.cs = SharedFiles\Version.cs
 		SharedFiles\Version.il = SharedFiles\Version.il
 		SharedFiles\Version.txt = SharedFiles\Version.txt

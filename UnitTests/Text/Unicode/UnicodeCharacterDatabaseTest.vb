@@ -55,7 +55,8 @@ Public Class UnicodeCharacterDatabaseTest
     '''<summary>
     '''A test for GetXml
     '''</summary>
-    <TestMethod()> _
+    <TestMethod()>
+    <DeploymentItem("..\Tools\Text\Unicode\ucd.all.grouped.xml.gz")>
     Public Sub GetXmlTest()
         Assert.IsNotNull(UnicodeCharacterDatabase.GetXml)
     End Sub

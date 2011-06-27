@@ -1435,4 +1435,34 @@
   <data name="CannotLoadManifestResourceStream" xml:space="preserve">
     <value>Cannot load manifest resource stream {0}</value>
   </data>
+  <data name="UnsupportedElement" xml:space="preserve">
+    <value>Unsupported element {0}.</value>
+  </data>
+  <data name="ElementMustBe" xml:space="preserve">
+    <value>Element must be {0}</value>
+  </data>
+  <data name="PropertyWasAlreadySet" xml:space="preserve">
+    <value>Property {0} was already set</value>
+  </data>
+  <data name="UnsuppportedGeneralCategory" xml:space="preserve">
+    <value>Unsuppported general category {0}</value>
+  </data>
+  <data name="UnsupportedBidirectionalCategory" xml:space="preserve">
+    <value>Unsupported bidirectional category {0}</value>
+  </data>
+  <data name="CharacterRepresentsSurrogatePair" xml:space="preserve">
+    <value>Character represents surrogate pair</value>
+  </data>
+  <data name="OperationIsNotValidForCharacterRanges" xml:space="preserve">
+    <value>Operation is not valid for character ranges.</value>
+  </data>
+  <data name="MakeSingleFromSingle" xml:space="preserve">
+    <value>Only range characters can be used to make single characters.</value>
+  </data>
+  <data name="RangeNotFullySpecified" xml:space="preserve">
+    <value>This range is not fully specified. Either first or last codepoint is not specified.</value>
+  </data>
+  <data name="CannotFindCodePoint" xml:space="preserve">
+    <value>Cannot find code point represented by {0}. {1} instance was either initialized without XML document or information is not available for current code point.</value>
+  </data>
 </root>

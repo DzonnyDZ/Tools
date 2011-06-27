@@ -212,6 +212,7 @@
     <Compile Include="ComponentModel\CustomTypeDescriptorBase.vb" />
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
+    <Compile Include="ComponentModel\IXmlWrapper.vb" />
     <Compile Include="ComponentModel\PropertyChangingEventArgsEx.vb" />
     <Compile Include="ComponentModel\ValueContainer.vb" />
     <Compile Include="Data\DataExtensions.vb" />
@@ -233,7 +234,12 @@
     <Compile Include="Security\Cryptography\Encryption\Hash.vb" />
     <Compile Include="Security\Cryptography\Encryption\Symmetric.vb" />
     <Compile Include="Text\Escaping.vb" />
+    <Compile Include="Text\Unicode\CodePointInfo.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterDatabase.vb" />
+    <Compile Include="Text\Unicode\UnicodeCharacterGroup.vb" />
+    <Compile Include="Text\Unicode\UnicodeCodePoint.vb" />
+    <Compile Include="Text\Unicode\UnicodeExtensions.vb" />
+    <Compile Include="Text\Unicode\UnicodePropertiesProvider.vb" />
     <Compile Include="Threading\IInvoke.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />

@@ -557,6 +557,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Cannot find code point represented by {0}. {1} instance was either initialized without XML document or information is not available for current code point.'.
+        '''</summary>
+        Public ReadOnly Property CannotFindCodePoint() As String
+            Get
+                Return ResourceManager.GetString("CannotFindCodePoint", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Cannot get base class method of global method'.
         '''</summary>
         Public ReadOnly Property CannotGetBaseClassMethodOfGlobalMethod() As String
@@ -707,6 +716,15 @@ Namespace ResourcesT
         Public ReadOnly Property ChangingWasCanceledInEventhandler() As String
             Get
                 Return ResourceManager.GetString("ChangingWasCanceledInEventhandler", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Character represents surrogate pair'.
+        '''</summary>
+        Public ReadOnly Property CharacterRepresentsSurrogatePair() As String
+            Get
+                Return ResourceManager.GetString("CharacterRepresentsSurrogatePair", _resourceCulture)
             End Get
         End Property
         
@@ -942,6 +960,15 @@ Namespace ResourcesT
         Public ReadOnly Property EachGroupMustHaveAtLeast0Tags() As String
             Get
                 Return ResourceManager.GetString("EachGroupMustHaveAtLeast0Tags", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Element must be {0}'.
+        '''</summary>
+        Public ReadOnly Property ElementMustBe() As String
+            Get
+                Return ResourceManager.GetString("ElementMustBe", _resourceCulture)
             End Get
         End Property
         
@@ -1850,6 +1877,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Only range characters can be used to make single characters.'.
+        '''</summary>
+        Public ReadOnly Property MakeSingleFromSingle() As String
+            Get
+                Return ResourceManager.GetString("MakeSingleFromSingle", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Menu item doesn&apos;t exist'.
         '''</summary>
         Public ReadOnly Property MenuItemDoesnTExist() As String
@@ -2372,6 +2408,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Operation is not valid for character ranges.'.
+        '''</summary>
+        Public ReadOnly Property OperationIsNotValidForCharacterRanges() As String
+            Get
+                Return ResourceManager.GetString("OperationIsNotValidForCharacterRanges", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Operation was cancelled.'.
         '''</summary>
         Public ReadOnly Property OperationWasCancelled() As String
@@ -2498,11 +2543,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Property {0} was already set'.
+        '''</summary>
+        Public ReadOnly Property PropertyWasAlreadySet() As String
+            Get
+                Return ResourceManager.GetString("PropertyWasAlreadySet", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Provider does not provider service {0}'.
         '''</summary>
         Public ReadOnly Property ProviderDoesNotProviderService() As String
             Get
                 Return ResourceManager.GetString("ProviderDoesNotProviderService", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'This range is not fully specified. Either first or last codepoint is not specified.'.
+        '''</summary>
+        Public ReadOnly Property RangeNotFullySpecified() As String
+            Get
+                Return ResourceManager.GetString("RangeNotFullySpecified", _resourceCulture)
             End Get
         End Property
         
@@ -3710,11 +3773,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Unsupported bidirectional category {0}'.
+        '''</summary>
+        Public ReadOnly Property UnsupportedBidirectionalCategory() As String
+            Get
+                Return ResourceManager.GetString("UnsupportedBidirectionalCategory", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unsupported CodeDom object {0}'.
         '''</summary>
         Public ReadOnly Property UnsupportedCodeDomObject0() As String
             Get
                 Return ResourceManager.GetString("UnsupportedCodeDomObject0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Unsupported element {0}.'.
+        '''</summary>
+        Public ReadOnly Property UnsupportedElement() As String
+            Get
+                Return ResourceManager.GetString("UnsupportedElement", _resourceCulture)
             End Get
         End Property
         
@@ -3751,6 +3832,15 @@ Namespace ResourcesT
         Public ReadOnly Property UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute() As String
             Get
                 Return ResourceManager.GetString("UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Unsuppported general category {0}'.
+        '''</summary>
+        Public ReadOnly Property UnsuppportedGeneralCategory() As String
+            Get
+                Return ResourceManager.GetString("UnsuppportedGeneralCategory", _resourceCulture)
             End Get
         End Property
         
@@ -4532,6 +4622,16 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Cannot find code point represented by {0}. {1} instance was either initialized without XML document or information is not available for current code point.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function CannotFindCodePointFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, CannotFindCodePoint, arg0, arg1)
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the CannotGetBaseClassMethodOfGlobalMethod property value.
         '''</summary>
         '''<returns>The CannotGetBaseClassMethodOfGlobalMethod property value.</returns>
@@ -4671,6 +4771,14 @@ Namespace ResourcesT
         '''<returns>The ChangingWasCanceledInEventhandler property value.</returns>
         Public Function ChangingWasCanceledInEventhandlerFormat() As String
             Return ChangingWasCanceledInEventhandler
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the CharacterRepresentsSurrogatePair property value.
+        '''</summary>
+        '''<returns>The CharacterRepresentsSurrogatePair property value.</returns>
+        Public Function CharacterRepresentsSurrogatePairFormat() As String
+            Return CharacterRepresentsSurrogatePair
         End Function
         
         '''<summary>
@@ -4887,6 +4995,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function EachGroupMustHaveAtLeast0TagsFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, EachGroupMustHaveAtLeast0Tags, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Element must be {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ElementMustBeFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ElementMustBe, arg0)
         End Function
         
         '''<summary>
@@ -5713,6 +5830,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the MakeSingleFromSingle property value.
+        '''</summary>
+        '''<returns>The MakeSingleFromSingle property value.</returns>
+        Public Function MakeSingleFromSingleFormat() As String
+            Return MakeSingleFromSingle
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the MenuItemDoesnTExist property value.
         '''</summary>
         '''<returns>The MenuItemDoesnTExist property value.</returns>
@@ -6248,6 +6373,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the OperationIsNotValidForCharacterRanges property value.
+        '''</summary>
+        '''<returns>The OperationIsNotValidForCharacterRanges property value.</returns>
+        Public Function OperationIsNotValidForCharacterRangesFormat() As String
+            Return OperationIsNotValidForCharacterRanges
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the OperationWasCancelled property value.
         '''</summary>
         '''<returns>The OperationWasCancelled property value.</returns>
@@ -6366,12 +6499,29 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Property {0} was already set'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function PropertyWasAlreadySetFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, PropertyWasAlreadySet, arg0)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Provider does not provider service {0}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function ProviderDoesNotProviderServiceFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, ProviderDoesNotProviderService, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the RangeNotFullySpecified property value.
+        '''</summary>
+        '''<returns>The RangeNotFullySpecified property value.</returns>
+        Public Function RangeNotFullySpecifiedFormat() As String
+            Return RangeNotFullySpecified
         End Function
         
         '''<summary>
@@ -7527,12 +7677,30 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Unsupported bidirectional category {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function UnsupportedBidirectionalCategoryFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnsupportedBidirectionalCategory, arg0)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Unsupported CodeDom object {0}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function UnsupportedCodeDomObject0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, UnsupportedCodeDomObject0, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Unsupported element {0}.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function UnsupportedElementFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnsupportedElement, arg0)
         End Function
         
         '''<summary>
@@ -7566,6 +7734,15 @@ Namespace ResourcesT
         '''<returns>The UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute property value.</returns>
         Public Function UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttributeFormat() As String
             Return UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Unsuppported general category {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function UnsuppportedGeneralCategoryFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnsuppportedGeneralCategory, arg0)
         End Function
         
         '''<summary>
