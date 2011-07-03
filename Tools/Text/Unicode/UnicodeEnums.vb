@@ -511,24 +511,24 @@ Namespace TextT.UnicodeT
     ''' <version version="1.5.4">This enum is new in version 1.5.4</version>
     Public Enum UnicodeHangulSyllableType
         ''' <summary>This is not a Hangul syllable</summary>
-        <XmlEnum("NA")> NA
+        <XmlEnum("NA")> notApplicable
         ''' <summary>Hangul syllable type L</summary>
-        <XmlEnum("L")> L
+        <XmlEnum("L")> LeadingJamo
         ''' <summary>Hangul syllable type V</summary>
-        <XmlEnum("V")> V
+        <XmlEnum("V")> VowelJamo
         ''' <summary>Hangul syllable type LV</summary>
         <XmlEnum("LV")> Lv
         ''' <summary>Hangul syllable type LVT</summary>
         <XmlEnum("LVT")> Lvt
         ''' <summary>Hangul syllable type T</summary>
-        <XmlEnum("T")> T
+        <XmlEnum("T")> TrailingJamo
     End Enum
 
     ''' <summary>Values of <see cref="UnicodePropertiesProvider.GraphemeClusterBreak"/> property</summary>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum UnicodeGraphemeClusterBreak
         ''' <summary>No indication</summary>
-        <XmlEnum("XX")> none
+        <XmlEnum("XX")> other
         ''' <summary>Carriage Return</summary>
         <XmlEnum("CR")> Cr
         ''' <summary>Line Feed</summary>
@@ -541,11 +541,11 @@ Namespace TextT.UnicodeT
         <XmlEnum("PP")> Prepend
         ''' <summary>General category is specing mark plus few other characters</summary>
         <XmlEnum("SM")> SpacingMark
-        ''' <summary><see cref="UnicodeHangulSyllableType.L"/></summary>
+        ''' <summary><see cref="UnicodeHangulSyllableType.LeadingJamo"/></summary>
         <XmlEnum("L")> HangulL
-        ''' <summary><see cref="UnicodeHangulSyllableType.V"/></summary>
+        ''' <summary><see cref="UnicodeHangulSyllableType.VowelJamo"/></summary>
         <XmlEnum("V")> HangulV
-        ''' <summary><see cref="UnicodeHangulSyllableType.T"/></summary>
+        ''' <summary><see cref="UnicodeHangulSyllableType.TrailingJamo"/></summary>
         <XmlEnum("T")> HangulT
         ''' <summary><see cref="UnicodeHangulSyllableType.Lv"/></summary>
         <XmlEnum("LV")> HangulLv
@@ -553,20 +553,70 @@ Namespace TextT.UnicodeT
         <XmlEnum("LVT")> HangulLvt
     End Enum
 
+    ''' <summary>Specifies Unicode word-breaky types</summary>
+    ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum UnicodeWordBreakType
-        Cr
-        Lf
-        NewLine
-        Extend
-        Format
-        Katakana
-        ALetter
-        MidNumLet
-        MidLetter
-        MidNum
-        Numeric
-        ExtendNumSet
+        ''' <summary>No word-break type</summary>
+        <XmlEnum("XX")> other
+        ''' <summary>Carriage Return (CR)</summary>
+        <XmlEnum("CR")> Cr
+        ''' <summary>Line Feed (LF)</summary>
+        <XmlEnum("LF")> Lf
+        ''' <summary>Several other new line characters (vertical TAB, FF, NEL, LS, PS)</summary>
+        <XmlEnum("NL")> NewLine
+        ''' <summary>Extended Graphemes ans Spacing Marks</summary>
+        <XmlEnum("Extend")> Extend
+        ''' <summary><see cref="Globalization.UnicodeCategory.Format"/> but ZWSP, ZWNJ, ZWJ</summary>
+        <XmlEnum("FO")> Format
+        ''' <summary>Katakana-script characters plus several others</summary>
+        <XmlEnum("KA")> Katakana
+        ''' <summary>Alphabetic but U+05F3, ideographs <see cref="Katakana"/>, <see cref="UnicodeLineBreakType.ComplexContextDependent"/>, Hiragana, <see cref="Extend"/></summary>
+        <XmlEnum("LE")> ALetter
+        ''' <summary>Defined characters (', ., ‘, ’, ․, ﹒, ＇, ．)</summary>
+        <XmlEnum("MB")> MidNumLet
+        ''' <summary>Defined characters (·, ״, ‧, :, ·, ︓, ﹕, ：)</summary>
+        <XmlEnum("ML")> MidLetter
+        ''' <summary><see cref="UnicodeLineBreakType.InfixNumericSeparator"/> (but :, ︓, .) plus fe other characters</summary>
+        <XmlEnum("MN")> MidNum
+        ''' <summary><see cref="UnicodeLineBreakType.Numeric"/> but U+066C</summary>
+        <XmlEnum("NM")> Numeric
+        ''' <summary><see cref="Globalization.UnicodeCategory.ConnectorPunctuation"/></summary>
+        <XmlEnum("EX")> ExtendNumSet
+    End Enum
 
+    ''' <summary>Specifies sentence break types</summary>
+    ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    Public Enum UnicodeSentenceBreakType
+        ''' <summary>Not specifed</summary>
+        <XmlEnum("XX")> other
+        ''' <summary>Carriage Return (CR)</summary>
+        <XmlEnum("CR")> Cr
+        ''' <summary>Line Feed (LF)</summary>
+        <XmlEnum("LF")> Lf
+        ''' <summary>Extended graphemes and spacing marks</summary>
+        <XmlEnum("EX")> Extend
+        ''' <summary>New-line-like separators (NEL, LS, PS)</summary>
+        <XmlEnum("SE")> Separator
+        ''' <summary><see cref="Globalization.UnicodeCategory.Format"/> but ZWNJ, ZWJ</summary>
+        <XmlEnum("FO")> Format
+        ''' <summary>Whitespaces not in other categories (excludes lines separators, CR, LF)</summary>
+        <XmlEnum("SP")> Space
+        ''' <summary>Lowercase but extended graphemes</summary>
+        <XmlEnum("LO")> Lower
+        ''' <summary>Upppercase and tilecase</summary>
+        <XmlEnum("UP")> Upper
+        ''' <summary>Alphabetic neither <see cref="Lower"/> nor <see cref="Upper"/> nor <see cref="Extend"/> plus NBSP and U+05F3</summary>
+        <XmlEnum("LE")> OLetter
+        ''' <summary><see cref="UnicodeLineBreakType.Numeric"/></summary>
+        <XmlEnum("NU")> Numeric
+        ''' <summary>Full stop, One dot leader, Small full stop, Fulllwidth full stop</summary>
+        <XmlEnum("AT")> ATerm
+        ''' <summary>Characters (usually punctuation) used inside sentences</summary>
+        <XmlEnum("SC")> [Continue]
+        ''' <summary><see cref="UnicodePropertiesProvider.IsSentenceTerminal"/> = true</summary>
+        <XmlEnum("ST")> STerm
+        ''' <summary><see cref="Globalization.UnicodeCategory.OpenPunctuation"/> or <see cref="Globalization.UnicodeCategory.ClosePunctuation"/> or <see cref="UnicodeLineBreakType.Quotation"/> but U+05F3 (exluding <see cref="ATerm"/> and <see cref="STerm"/>)</summary>
+        <XmlEnum("CL")> Close
     End Enum
 
 End Namespace

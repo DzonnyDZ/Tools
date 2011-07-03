@@ -7,6 +7,7 @@ Imports System.Xml.Serialization
 
 'List of all properties http://www.unicode.org/reports/tr44/#Properties
 'XML format specification http://www.unicode.org/reports/tr42/
+'Property value aliases http://www.unicode.org/Public/6.0.0/ucd/PropertyValueAliases.txt
 
 Namespace TextT.UnicodeT
     ''' <summary>Common base class for Unicode code points and groups. This class holds character properties</summary>
@@ -874,13 +875,22 @@ Namespace TextT.UnicodeT
 #End Region
 #Region "Hangul"
         ''' <summary>Gets Hangul syllable type as used in Chapter 3 of Unicode 6</summary>
+        ''' <exception cref="InvalidOperationException">Underlying XML attribute value is neither of NA, L, V, LV, LVT, T</exception>
         ''' <remarks>Underlying XML attribute is @hst</remarks>
         <XmlAttribute("hst")>
         Public ReadOnly Property HangulSyllableType As UnicodeHangulSyllableType
             Get
                 Dim value = GetPropertyValue("hst")
-                If value = "" Then Return UnicodeHangulSyllableType.NA
-                Return [Enum].Parse(GetType(UnicodeHangulSyllableType), value, True)
+                If value = "" Then Return UnicodeHangulSyllableType.notApplicable
+                Select Case value
+                    Case "NA" : Return UnicodeHangulSyllableType.notApplicable
+                    Case "L" : Return UnicodeHangulSyllableType.LeadingJamo
+                    Case "V" : Return UnicodeHangulSyllableType.VowelJamo
+                    Case "LV" : Return UnicodeHangulSyllableType.Lv
+                    Case "LVT" : Return UnicodeHangulSyllableType.Lvt
+                    Case "T" : Return UnicodeHangulSyllableType.TrailingJamo
+                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
+                End Select
             End Get
         End Property
 
@@ -1174,11 +1184,11 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets type of grapheme cluster break</summary>
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
         ''' <remarks>Underlying XML attribute is @GCB</remarks>
-        <XmlAttribute("GCB")>
+        <XmlAttribute("GCB"), DefaultValue(UnicodeGraphemeClusterBreak.other)>
         Public ReadOnly Property GraphemeClusterBreak As UnicodeGraphemeClusterBreak
             Get
                 Dim value = GetPropertyValue("GCB")
-                If value = "" Then Return UnicodeGraphemeClusterBreak.none
+                If value = "" Then Return UnicodeGraphemeClusterBreak.other
                 Select Case value
                     Case "CN" : Return UnicodeGraphemeClusterBreak.Control
                     Case "CR" : Return UnicodeGraphemeClusterBreak.Cr
@@ -1191,13 +1201,139 @@ Namespace TextT.UnicodeT
                     Case "SM" : Return UnicodeGraphemeClusterBreak.SpacingMark
                     Case "T" : Return UnicodeGraphemeClusterBreak.HangulT
                     Case "V" : Return UnicodeGraphemeClusterBreak.HangulV
-                    Case "XX" : Return UnicodeGraphemeClusterBreak.none
+                    Case "XX" : Return UnicodeGraphemeClusterBreak.other
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
         End Property
 
+        ''' <summary>Gets type of word break</summary>
+        ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
+        ''' <remarks>Underlying XML attribute is @WB</remarks>
+        <XmlAttribute("WB"), DefaultValue(UnicodeWordBreakType.other)>
+        Public ReadOnly Property WordBreak As UnicodeWordBreakType
+            Get
+                Dim value = GetPropertyValue("WB")
+                If value = "" Then Return UnicodeWordBreakType.other
+                Select Case value
+                    Case "XX" : Return UnicodeWordBreakType.other
+                    Case "CR" : Return UnicodeWordBreakType.Cr
+                    Case "LF" : Return UnicodeWordBreakType.Lf
+                    Case "NL" : Return UnicodeWordBreakType.NewLine
+                    Case "Extend" : Return UnicodeWordBreakType.Extend
+                    Case "FO" : Return UnicodeWordBreakType.Format
+                    Case "KA" : Return UnicodeWordBreakType.Katakana
+                    Case "LE" : Return UnicodeWordBreakType.ALetter
+                    Case "MB" : Return UnicodeWordBreakType.MidNumLet
+                    Case "ML" : Return UnicodeWordBreakType.MidLetter
+                    Case "MN" : Return UnicodeWordBreakType.MidNum
+                    Case "NM" : Return UnicodeWordBreakType.Numeric
+                    Case "EX" : Return UnicodeWordBreakType.ExtendNumSet
+                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
+                End Select
+            End Get
+        End Property
+
+        ''' <summary>Gets type of sentence break</summary>
+        ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
+        ''' <remarks>Underlying XML attribute is @SB</remarks>
+        <XmlAttribute("SB")>
+        Public ReadOnly Property SentenceBreak As UnicodeSentenceBreakType
+            Get
+                Dim value = GetPropertyValue("SB")
+                If value = "" Then Return UnicodeSentenceBreakType.other
+                Select Case value
+                    Case "XX" : Return UnicodeSentenceBreakType.other
+                    Case "CR" : Return UnicodeSentenceBreakType.Cr
+                    Case "LF" : Return UnicodeSentenceBreakType.Lf
+                    Case "EX" : Return UnicodeSentenceBreakType.Extend
+                    Case "SE" : Return UnicodeSentenceBreakType.Separator
+                    Case "FO" : Return UnicodeSentenceBreakType.Format
+                    Case "SP" : Return UnicodeSentenceBreakType.Space
+                    Case "LO" : Return UnicodeSentenceBreakType.Lower
+                    Case "UP" : Return UnicodeSentenceBreakType.Upper
+                    Case "LE" : Return UnicodeSentenceBreakType.OLetter
+                    Case "NU" : Return UnicodeSentenceBreakType.Numeric
+                    Case "AT" : Return UnicodeSentenceBreakType.ATerm
+                    Case "SC" : Return UnicodeSentenceBreakType.[Continue]
+                    Case "ST" : Return UnicodeSentenceBreakType.STerm
+                    Case "CL" : Return UnicodeSentenceBreakType.Close
+                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
+                End Select
+            End Get
+        End Property
         'TODO: 4.4.18
+#End Region
+#Region "Properties related to ideographs"
+        ''' <summary>Gets value indicating if the character is CKJV ideograph</summary>
+        ''' <remarks>Underlying XML attribute is @Ideo</remarks>
+        <XmlAttribute("Ideo")>
+        Public ReadOnly Property IsIdeograph As Boolean
+            Get
+                Return GetPropertyValue("Ideo") = "Y"
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if the character is unified CJK ideograph</summary>
+        ''' <remarks>Underlying XML attribute is @UIdeo</remarks>
+        <XmlAttribute("UIdeo")>
+        Public ReadOnly Property IsUnifiedIdeograph As Boolean
+            Get
+                Return GetPropertyValue("UIdeo") = "Y"
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if character is ideographic descriptionsequence binary operator</summary>
+        ''' <remarks>Underlying XML attribute is @ISDB</remarks>
+        <XmlAttribute("ISDB")>
+        Public ReadOnly Property IsIdsBinaryOperator As Boolean
+            Get
+                Return GetPropertyValue("ISDB") = "Y"
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if character is ideographic description sequence trinary operator</summary>
+        ''' <remarks>Underlying XML attribute is @ISDT</remarks>
+        <XmlAttribute("ISDT")>
+        Public ReadOnly Property IsIdsTrinaryOperator As Boolean
+            Get
+                Return GetPropertyValue("ISDT") = "Y"
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if character is radical (for ideographic description sequences)</summary>
+        ''' <remarks>Underlying XML attribute is @Radical</remarks>
+        <XmlAttribute("Radical")>
+        Public ReadOnly Property IsRadical As Boolean
+            Get
+                Return GetPropertyValue("Radical") = "Y"
+            End Get
+        End Property
+#End Region
+#Region "Misc"
+        ''' <summary>Gets value indicating if the character is deprecated</summary>
+        ''' <remarks>Underlying XML attribute is @Dep</remarks>
+        <XmlAttribute("Dep")>
+        Public ReadOnly Property IsDeprecated As Boolean
+            Get
+                Return GetPropertyValue("Dep") = "Y"
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if the character is Variation Selector</summary>
+        ''' <remarks>Underlying XML attribute is @VS</remarks>
+        <XmlAttribute("VS")>
+        Public ReadOnly Property IsVariationSelector As Boolean
+            Get
+                Return GetPropertyValue("VS") = "Y"
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if a code point is permanent non-character (i.e. the code point is permanently reserved ofr internal use)</summary>
+        ''' <remarks>Underlying XML attribute is @NChar</remarks>
+        <XmlAttribute("NChar")>
+        Public ReadOnly Property IsNonCharacter As Boolean
+            Get
+                Return GetPropertyValue("NChar") = "Y"
+            End Get
+        End Property
+#End Region
+#Region "Unihan"
+        'TODO: 4.4.21
 #End Region
 #End Region
 
