@@ -238,6 +238,7 @@
     <Compile Include="Text\Unicode\UnicodeCharacterDatabase.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterGroup.vb" />
     <Compile Include="Text\Unicode\UnicodeCodePoint.vb" />
+    <Compile Include="Text\Unicode\UnicodeEnums.vb" />
     <Compile Include="Text\Unicode\UnicodeExtensions.vb" />
     <Compile Include="Text\Unicode\UnicodePropertiesProvider.vb" />
     <Compile Include="Threading\IInvoke.vb" />
@@ -607,7 +608,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml</PreBuildEvent>
+    <PreBuildEvent>"$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>"$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"

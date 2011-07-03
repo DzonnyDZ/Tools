@@ -54,6 +54,23 @@ Namespace TextT.UnicodeT
             Return New CodePointInfo(xml)
         End Function
 
+        ''' <summary>Creates a new instance of the <see cref="CodePointInfo"/> class by parsing string containing code point value</summary>
+        ''' <param name="value">Code point value (hexadecimal number without leading hexadecimal specifier), or placeholder sign (#)</param>
+        ''' <param name="xml">XML document all characters were loaded from</param>
+        ''' <returns>
+        ''' Null if <paramref name="value"/> is null or an empty string.
+        ''' <see cref="CreatePlaceholder">Placeholder</see> codepoint if <paramref name="value"/> is #.
+        ''' A new instance of <see cref="CodePointInfo"/> othwerwise.
+        ''' </returns>
+        ''' <exception cref="FormatException"><paramref name="value"/> is not in expected format (of hex numbert e.g. 1, A 00AF, 0014, 1FA03 etc.)</exception>
+        ''' <exception cref="OverflowException"><paramref name="value"/> represents hex number that does not fit to <see cref="UInt32"/> data type.</exception>
+        Public Shared Function Parse(value As String, Optional xml As XDocument = Nothing) As CodePointInfo
+            If value = "" Then Return Nothing
+            If value = "#" Then Return CreatePlaceholder(xml)
+            Return New CodePointInfo(xml, UInt32.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture))
+        End Function
+
+
         ''' <summary>Gets value of current code point</summary>
         ''' <remarks>This property is not CLS-compilant. CLS-compliant alternative is <see cref="CodepointSigned"/></remarks>
         ''' <exception cref="InvalidOperationException"><see cref="IsPlaceholder"/> is true</exception>

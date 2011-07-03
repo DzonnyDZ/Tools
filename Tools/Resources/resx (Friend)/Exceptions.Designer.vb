@@ -3728,6 +3728,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Unexpedted value {0}'.
+        '''</summary>
+        Public ReadOnly Property UnexpedtedValue0() As String
+            Get
+                Return ResourceManager.GetString("UnexpedtedValue0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unknown base type of enum'.
         '''</summary>
         Public ReadOnly Property UnknownBaseTypeOfEnum() As String
@@ -7656,6 +7665,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function UnexpectedCharacters0InRomanNumeralFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, UnexpectedCharacters0InRomanNumeral, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Unexpedted value {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function UnexpedtedValue0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnexpedtedValue0, arg0)
         End Function
         
         '''<summary>

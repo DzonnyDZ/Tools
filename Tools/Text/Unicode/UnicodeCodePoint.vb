@@ -82,6 +82,17 @@ Namespace TextT.UnicodeT
             Return attr.Value
         End Function
 
+        ''' <summary>Get value of given property (attributes) resolving or not resolving placeholders in property value</summary>
+        ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
+        ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it.</param>
+        ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
+        ''' <remarks>Placeholder # is replace only if <see cref="CodePoint"/> is not null.</remarks>
+        Protected Overrides Function GetPropertyValue(name As String, allowResolving As Boolean) As String
+            Dim ret = GetPropertyValue(name, allowResolving)
+            If ret <> "" AndAlso ret.Contains("#") AndAlso CodePoint.HasValue Then Return ret.Replace("#", CodePoint.Value.ToString("X", InvariantCulture))
+            Return ret
+        End Function
+
 #Region "Properties"
         ''' <summary>Gets name of the character in current version of Unicode standard</summary>
         ''' <remarks>
