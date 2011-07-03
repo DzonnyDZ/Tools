@@ -520,6 +520,53 @@ Namespace TextT.UnicodeT
         <XmlEnum("LV")> Lv
         ''' <summary>Hangul syllable type LVT</summary>
         <XmlEnum("LVT")> Lvt
+        ''' <summary>Hangul syllable type T</summary>
+        <XmlEnum("T")> T
+    End Enum
+
+    ''' <summary>Values of <see cref="UnicodePropertiesProvider.GraphemeClusterBreak"/> property</summary>
+    ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    Public Enum UnicodeGraphemeClusterBreak
+        ''' <summary>No indication</summary>
+        <XmlEnum("XX")> none
+        ''' <summary>Carriage Return</summary>
+        <XmlEnum("CR")> Cr
+        ''' <summary>Line Feed</summary>
+        <XmlEnum("LF")> Lf
+        ''' <summary>General categoties Zl, Zp, Cc, Cf excluding characters CR, LF, ZWNJ, ZWJ</summary>
+        <XmlEnum("CN")> Control
+        ''' <summary>General categories <see cref="System.Globalization.UnicodeCategory.NonSpacingMark"/> or <see cref="Globalization.UnicodeCategory.EnclosingMark"/>, characters <see cref="Chars.ZeroWidthNonJoiner"/> and <see cref="Chars.ZeroWidthJoiner"/> and a few spacing marks needed for canonical equivalence.</summary>
+        <XmlEnum("EX")> Extend
+        ''' <summary>Some characters which represents logical order exceptions</summary>
+        <XmlEnum("PP")> Prepend
+        ''' <summary>General category is specing mark plus few other characters</summary>
+        <XmlEnum("SM")> SpacingMark
+        ''' <summary><see cref="UnicodeHangulSyllableType.L"/></summary>
+        <XmlEnum("L")> HangulL
+        ''' <summary><see cref="UnicodeHangulSyllableType.V"/></summary>
+        <XmlEnum("V")> HangulV
+        ''' <summary><see cref="UnicodeHangulSyllableType.T"/></summary>
+        <XmlEnum("T")> HangulT
+        ''' <summary><see cref="UnicodeHangulSyllableType.Lv"/></summary>
+        <XmlEnum("LV")> HangulLv
+        ''' <summary><see cref="UnicodeHangulSyllableType.Lvt"/></summary>
+        <XmlEnum("LVT")> HangulLvt
+    End Enum
+
+    Public Enum UnicodeWordBreakType
+        Cr
+        Lf
+        NewLine
+        Extend
+        Format
+        Katakana
+        ALetter
+        MidNumLet
+        MidLetter
+        MidNum
+        Numeric
+        ExtendNumSet
+
     End Enum
 
 End Namespace

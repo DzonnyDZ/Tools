@@ -827,14 +827,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets value indicating if the character may change when it undergoes case mapping</summary>
-        ''' <remarks>Underlying XML attribute is @CWCM</remarks> 
-        <XmlAttribute("CWCM")>
-        Public ReadOnly Property ChangesWhenCasemapped As Boolean
-            Get
-                Return GetPropertyValue("CWCM") = "Y"
-            End Get
-        End Property
+
 
         ''' <summary>Gets value indicating if character is not identical to its Normalization Form KC casefold mapping</summary>
         ''' <returns>True if character is not identical to its Normalization Form KC casefold mapping.</returns>
@@ -1054,7 +1047,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @SD
         ''' <para>An accent placed on this character causes the dot to disappear. Explicit dot above can be added if required.</para></remarks>
         <XmlAttribute("SD")>
-        Public ReadOnly Property IsDash As Boolean
+        Public ReadOnly Property IsSoftDotted As Boolean
             Get
                 Return GetPropertyValue("SD") = "Y"
             End Get
@@ -1145,6 +1138,65 @@ Namespace TextT.UnicodeT
         End Property
 #End Region
 #Region "Properties related to boundaries"
+        ''' <summary>Gets value indicating if this character is grapheme base.</summary>
+        ''' <remarks>Underlying XML attribute is @Gr_Base</remarks>
+        <XmlAttribute("Gr_Base")>
+        Public ReadOnly Property IsGraphemeBase As Boolean
+            Get
+                Return GetPropertyValue("Gr_Base") = "Y"
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if this character is grapheme extend.</summary>
+        ''' <remarks>Underlying XML attribute is @Gr_Ext</remarks>
+        <XmlAttribute("Gr_Ext")>
+        Public ReadOnly Property IsGraphemeExtend As Boolean
+            Get
+                Return GetPropertyValue("Gr_Ext") = "Y"
+            End Get
+        End Property
+        ''' <summary>Used in deriving the <see cref="IsGraphemeExtend"/> property.</summary>
+        ''' <remarks>Underlying XML attribute is @OGr_Ext</remarks>
+        <XmlAttribute("OGr_Ext"), EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public ReadOnly Property IsOtherGraphemeExtend As Boolean
+            Get
+                Return GetPropertyValue("OGr_Ext") = "Y"
+            End Get
+        End Property
+        ''' <summary>Formerly proposed for programatic determination of grapheme cluster boundaries.</summary>
+        ''' <remarks>Underlying XML attribute is @Gr_Link<para>This property is deprecated as of Unicode 5.0</para></remarks>
+        <XmlAttribute("Gr_Link"), Obsolete("Deprecated as of Unicode 5.0")>
+        Public ReadOnly Property IsGraphemeLink As Boolean
+            Get
+                Return GetPropertyValue("Gr_Link") = "Y"
+            End Get
+        End Property
+
+        ''' <summary>Gets type of grapheme cluster break</summary>
+        ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
+        ''' <remarks>Underlying XML attribute is @GCB</remarks>
+        <XmlAttribute("GCB")>
+        Public ReadOnly Property GraphemeClusterBreak As UnicodeGraphemeClusterBreak
+            Get
+                Dim value = GetPropertyValue("GCB")
+                If value = "" Then Return UnicodeGraphemeClusterBreak.none
+                Select Case value
+                    Case "CN" : Return UnicodeGraphemeClusterBreak.Control
+                    Case "CR" : Return UnicodeGraphemeClusterBreak.Cr
+                    Case "EX" : Return UnicodeGraphemeClusterBreak.Extend
+                    Case "L" : Return UnicodeGraphemeClusterBreak.HangulL
+                    Case "LF" : Return UnicodeGraphemeClusterBreak.Lf
+                    Case "LV" : Return UnicodeGraphemeClusterBreak.HangulLv
+                    Case "LVT" : Return UnicodeGraphemeClusterBreak.HangulLvt
+                    Case "PP" : Return UnicodeGraphemeClusterBreak.Prepend
+                    Case "SM" : Return UnicodeGraphemeClusterBreak.SpacingMark
+                    Case "T" : Return UnicodeGraphemeClusterBreak.HangulT
+                    Case "V" : Return UnicodeGraphemeClusterBreak.HangulV
+                    Case "XX" : Return UnicodeGraphemeClusterBreak.none
+                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
+                End Select
+            End Get
+        End Property
+
         'TODO: 4.4.18
 #End Region
 #End Region
