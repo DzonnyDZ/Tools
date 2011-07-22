@@ -130,10 +130,10 @@ Namespace RuntimeT.CompilerServicesT
 
 
                     Dim candidates = From m In baseResolved.Methods
-                                 Where Not m.IsStatic AndAlso m.Name = attr.Member AndAlso (baseResolved.IsInterface OrElse m.IsVirtual) AndAlso
+                                 Where Not m.IsStatic AndAlso m.Name = If(attr.Member, member.Name) AndAlso (baseResolved.IsInterface OrElse m.IsVirtual) AndAlso
                                        IsSameSignature(method, m, , TryCast(base, GenericInstanceType))
-                    If Not candidates.Any Then Throw New MissingMethodException(base.FullName, attr.Member)
-                    If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_MethodAmbiguous, base.FullName, attr.Member))
+                    If Not candidates.Any Then Throw New MissingMethodException(base.FullName, If(attr.Member, member.Name))
+                    If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_MethodAmbiguous, base.FullName, If(attr.Member, member.Name)))
 
                     method.AddOverride(method.Module.Import(candidates.First), TryCast(base, GenericInstanceType))
 
@@ -149,7 +149,7 @@ Namespace RuntimeT.CompilerServicesT
                         Throw New NotSupportedException(My.Resources.ex_PropertyExternalAccessor)
 
                     Dim candidates = From p In baseResolved.Properties
-                                     Where p.Name = attr.Member AndAlso p.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
+                                     Where p.Name = If(attr.Member, member.Name) AndAlso p.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
                                            (propty.GetMethod Is Nothing) = (p.GetMethod Is Nothing) AndAlso (propty.SetMethod Is Nothing) = (p.SetMethod Is Nothing) AndAlso
                                            (p.SetMethod IsNot Nothing OrElse p.GetMethod IsNot Nothing) AndAlso p.OtherMethods.Count = propty.OtherMethods.Count AndAlso
                                            (p.GetMethod Is Nothing OrElse IsSameSignature(propty.GetMethod, p.GetMethod, , TryCast(base, GenericInstanceType))) AndAlso
@@ -159,8 +159,8 @@ Namespace RuntimeT.CompilerServicesT
                                                    Function(om) IsSameSignature(om.propty_om, om.p_om, , TryCast(base, GenericInstanceType))
                                                )
                                            ))
-                    If Not candidates.Any Then Throw New MissingMemberException(base.FullName, attr.Member)
-                    If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_PropertyAmbiguous, base.FullName, attr.Member))
+                    If Not candidates.Any Then Throw New MissingMemberException(base.FullName, If(attr.Member, member.Name))
+                    If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_PropertyAmbiguous, base.FullName, If(attr.Member, member.Name)))
 
                     If propty.GetMethod IsNot Nothing Then
                         Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.GetMethod.Name, propty.GetMethod.ReturnType, candidates.Single.GetMethod.DeclaringType)
@@ -190,7 +190,7 @@ Namespace RuntimeT.CompilerServicesT
                         Throw New NotSupportedException(My.Resources.ex_EventExternalAccessor)
 
                     Dim candidates = From e In baseResolved.Events
-                                     Where e.Name = attr.Member AndAlso e.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
+                                     Where e.Name = If(attr.Member, member.Name) AndAlso e.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
                                            (evt.AddMethod Is Nothing) = (e.AddMethod Is Nothing) AndAlso (evt.RemoveMethod Is Nothing) = (e.RemoveMethod Is Nothing) AndAlso (evt.InvokeMethod Is Nothing) = (e.InvokeMethod Is Nothing) AndAlso
                                            (e.RemoveMethod IsNot Nothing OrElse e.AddMethod IsNot Nothing) AndAlso e.OtherMethods.Count = evt.OtherMethods.Count AndAlso
                                            (e.AddMethod Is Nothing OrElse IsSameSignature(evt.AddMethod, e.AddMethod, , TryCast(base, GenericInstanceType))) AndAlso
@@ -201,8 +201,8 @@ Namespace RuntimeT.CompilerServicesT
                                                    Function(om) IsSameSignature(om.evt_om, om.e_om, , TryCast(base, GenericInstanceType))
                                                )
                                            ))
-                    If Not candidates.Any Then Throw New MissingMemberException(base.FullName, attr.Member)
-                    If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_EventAmbiguous, base.FullName, attr.Member))
+                    If Not candidates.Any Then Throw New MissingMemberException(base.FullName, If(attr.Member, member.Name))
+                    If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_EventAmbiguous, base.FullName, If(attr.Member, member.Name)))
 
                     If evt.AddMethod IsNot Nothing Then
                         Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.AddMethod.Name, evt.AddMethod.ReturnType, candidates.Single.AddMethod.DeclaringType)
