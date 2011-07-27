@@ -1478,4 +1478,7 @@
   <data name="UnexpedtedValue0" xml:space="preserve">
     <value>Unexpedted value {0}</value>
   </data>
+  <data name="ArrayMustHaveExactlyXBytes" xml:space="preserve">
+    <value>Array must have exactly {0} bytes</value>
+  </data>
 </root>

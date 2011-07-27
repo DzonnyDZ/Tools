@@ -1108,7 +1108,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is an ASCII character used commonly to represent hexadigit</summary>
         ''' <remarks>Underlying XML attribute is @AHex</remarks>
         <XmlAttribute("AHex")>
-        Public ReadOnly Property IsDash As Boolean
+        Public ReadOnly Property IsAsciiHey As Boolean
             Get
                 Return GetPropertyValue("AHex") = "Y"
             End Get

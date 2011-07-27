@@ -12,7 +12,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <xsl:output method="text" version="1.0" encoding="UTF-8" indent="no" omit-xml-declaration="yes"/>
 
     <!-- parameters passed in by the TransformCodeGenerator -->
-    <xsl:param name="generator"></xsl:param>         
+    <xsl:param name="generator"></xsl:param>
     <xsl:param name="version"></xsl:param>
     <xsl:param name="fullfilename"></xsl:param>
     <xsl:param name="filename"></xsl:param>
@@ -93,7 +93,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>Imports Tools.MetadataT.IptcT.IptcDataTypes&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.MetadataT.IptcT.Iptc&#xD;&#xA;</xsl:text>
     </xsl:template>
-    
+
     <!--Main content-creating templates:-->
     <!--Generates enums for tags-->
     <xsl:template name="Tag-enums">
@@ -235,7 +235,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <xsl:template name="Enums">
         <xsl:text>#Region "Enums"&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
-                <xsl:for-each select="I:Root/I:record/I:enum">
+        <xsl:for-each select="I:Root/I:record/I:enum">
             <xsl:sort select="@name" order="ascending" data-type="text"/>
             <xsl:call-template name="XML-Doc">
                 <xsl:with-param name="Tab" select="2"/>
@@ -755,7 +755,9 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                     <xsl:value-of select="@name"/>
                     <xsl:text>Group In Items&#xD;&#xA;</xsl:text>
                     <xsl:for-each select="I:tag">
-                        <xsl:if test="position()>1"><xsl:call-template name="nl"/></xsl:if>
+                        <xsl:if test="position()>1">
+                            <xsl:call-template name="nl"/>
+                        </xsl:if>
                         <xsl:variable name="type">
                             <xsl:call-template name="UnderlyingType">
                                 <xsl:with-param name="type" select="@type"/>
@@ -909,7 +911,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
         <!--Set-->
         <xsl:text>&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;&#9;&#9;Try&#xD;&#xA;</xsl:text>        
+        <xsl:text>&#9;&#9;&#9;&#9;Try&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;&#9;&#9;</xsl:text>
         <xsl:value-of select="$Type/type/@set"/>
         <xsl:text> = </xsl:text>
@@ -1129,6 +1131,45 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                     </xsl:attribute>
                     <xsl:attribute name="attr">
                         <xsl:text>&lt;CLSCompliant(False)></xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <!--UInt-binary-->
+                <xsl:when test="$type='UInt-binary'">
+                    <xsl:attribute name="type">
+                        <xsl:text>UInteger</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UInt_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UInt_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="attr">
+                        <xsl:text>&lt;CLSCompliant(False)></xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <!--UInt-binary-->
+                <xsl:when test="$type='Byte-binary'">
+                    <xsl:attribute name="type">
+                        <xsl:text>Byte</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Byte_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Byte_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--NumericChar-->
@@ -1541,6 +1582,24 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--PictureNumber-->
+                <xsl:when test="$type='PictureNumber'">
+                    <xsl:attribute name="type">
+                        <xsl:text>iptcPictureNumber</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>PictureNumber_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>PictureNumber_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:message>
                         <xsl:text>Unknown type </xsl:text>
@@ -1558,7 +1617,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <param name="Item">Identifies data set by its record number and data set number</param>]]>&#xD;&#xA;</xsl:text>
         <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <returns>Value of property identified by <paramref name="Item"/>. If there is not property appropriate for <paramref name="item"/> value is returned as string. If there is no such value, null is returned.</returns>]]>&#xD;&#xA;</xsl:text>
         <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid according to its type (if it is know tag) or as string (if it is unknown tag).</exception>]]>&#xD;&#xA;</xsl:text>
-        <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <version version="1.5.2">Function introduced</version>]]>&#xD;&#xA;</xsl:text>        
+        <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <version version="1.5.2">Function introduced</version>]]>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;Public Function GetTypedValue(Item as DataSetIdentification) As Object&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;If Me.Contains(Item) = 0 Then Return Nothing&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;Select Case Item&#xD;&#xA;</xsl:text>
@@ -1580,7 +1639,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
-    
+
     <!--Supporting templates (common):-->
     <!--Generates end of line-->
     <xsl:template name="nl">
@@ -1632,7 +1691,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <!--Supporting templates (specific):-->
     <!--Creates <summary> from <desc>-->
     <xsl:template name="Tag-Summary">
@@ -1772,7 +1831,23 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <!--Renders DisplayNameAttribute-->
     <xsl:template name="DisplayName">
         <xsl:text>&lt;FieldDisplayName("</xsl:text>
-        <xsl:value-of select="@human-name"/>
+        <xsl:call-template name="replace">
+            <xsl:with-param name="str">
+                <xsl:call-template name="replace">
+                    <xsl:with-param name="str">
+                        <xsl:call-template name="replace">
+                            <xsl:with-param name="str" select="@human-name"/>
+                            <xsl:with-param name="search">”</xsl:with-param>
+                            <xsl:with-param name="replace">””</xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:with-param>
+                    <xsl:with-param name="search">“</xsl:with-param>
+                    <xsl:with-param name="replace">““</xsl:with-param>
+                </xsl:call-template>
+            </xsl:with-param>
+            <xsl:with-param name="search">"</xsl:with-param>
+            <xsl:with-param name="replace">""</xsl:with-param>
+        </xsl:call-template>
         <xsl:text>")> </xsl:text>
     </xsl:template>
     <!--Renders CategoryAttribute-->
@@ -1869,6 +1944,22 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         </xsl:variable>
         <xsl:value-of select="normalize-space($Ret)"/>
     </xsl:template>
+
+    <xsl:template name="replace">
+        <!--Replaces all occurences of one string with different-->
+        <!--TODO: This does not work as expected-->
+        <xsl:param name="str"/>
+        <xsl:param name="search"/>
+        <xsl:param name="replace"/>
+        <xsl:if test="contains($str,$search)">
+            <xsl:variable name="rest">
+                <xsl:call-template name="replace">
+                    <xsl:with-param name="str" select="substring-after($str,$search)"/>
+                    <xsl:with-param name="search" select="$search"/>
+                    <xsl:with-param name="replace" select="$replace"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <xsl:value-of select="concat(substring-before($str,$search),$replace,$rest)"/>
+        </xsl:if>
+    </xsl:template>
 </xsl:stylesheet>
-
-

@@ -425,9 +425,14 @@
         <desc>This record contain informative data about content. Whole record is optional, but when any tag is used then mandatory tags are mandatory.</desc>
         <tag number="0" name="RecordVersion" human-name="Record Version" type="UShort-binary" mandatory="true" repeatable="false" fixed="true" length="2" category="Internal">
             <desc>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</desc>
-            <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
+            <remarks>
+                Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).
+                <para>
+                    Same tag called <see cref="RecordVersion3">Record Version"</see> also exists in record no. 3.
+                </para>
+            </remarks>
         </tag>
-       <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr2`1;Tools.MetadataT.IptcT.Iptc+ObjectTypes;02;")>'>
+        <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr2`1;Tools.MetadataT.IptcT.Iptc+ObjectTypes;02;")>'>
             <desc>The Object Type is used to distinguish between different types of objects within the IIM.</desc>
             <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>
@@ -476,7 +481,9 @@
             <desc>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (&lt;see cref='ARM'/>)), according to the practices of the provider.</desc>
         </tag>
         <enum name="EditorialUpdateValues" type="Byte">
-            <desc>Values for <see cref='EditorialUpdate'/></desc>
+            <desc>
+                Values for <see cref='EditorialUpdate'/>
+            </desc>
             <item value="1" name="AdditionalLanguage" desc="Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - &lt;see cref='LanguageIdentifier'/>)." human-name="Additional language"/>
         </enum>
         <tag number="10" name="Urgency" human-name="Urgency" type="NumericChar" mandatory="false" repeatable="false" fixed="true" length="1" category="Status">
@@ -1193,10 +1200,14 @@
         </tag>
         <tag number="42" name="ActionAdvised" human-name="Action Advised" type="Enum-NumChar" mandatory="false" repeatable="false" fixed="true" length="2" enum="AdvisedActions" category="Other">
             <desc>Indicates the type of action that this object provides to a previous object.</desc>
-            <remarks>The link to the previous object is made using the <see cref="ARM"/> (DataSets 1:120 (<see cref="ARMIdentifier"/>) and 1:122 (<see cref="ARMVersion"/>)), according to the practices of the provider.</remarks>
+            <remarks>
+                The link to the previous object is made using the <see cref="ARM"/> (DataSets 1:120 (<see cref="ARMIdentifier"/>) and 1:122 (<see cref="ARMVersion"/>)), according to the practices of the provider.
+            </remarks>
         </tag>
         <enum name="AdvisedActions" type="Byte">
-            <desc>Possible values of <see cref="ActionAdvised"/></desc>
+            <desc>
+                Possible values of <see cref="ActionAdvised"/>
+            </desc>
             <item value="1" name="ObjectKill" human-name="Object Kill" desc="Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.">
                 <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
             </item>
@@ -1250,7 +1261,9 @@
             <desc>Virtually only used in North America.</desc>
         </tag>
         <senum name="ObjectCycleValues" type="String">
-            <desc>Values of <see cref="ObjectCycle"/></desc>
+            <desc>
+                Values of <see cref="ObjectCycle"/>
+            </desc>
             <item name="Morning" human-name="morning" value="a" desc="Morning"/>
             <item name="Evening" human-name="evening" value="p" desc="Evening"/>
             <item name="Both" human-name="both" value="b" desc="Both"/>
@@ -1262,7 +1275,9 @@
             </tag>
             <tag number="85" name="ByLineTitle" human-name="By-line Title" type="TextWithSpaces" mandatory="false" repeatable="false" length="32" fixed="false" category="Author">
                 <desc>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</desc>
-                <remarks>Examples: <example>"Staff Photographer", "Corresponsal", "Envoyé Spécial"</example></remarks>
+                <remarks>
+                    Examples: <example>"Staff Photographer", "Corresponsal", "Envoyé Spécial"</example>
+                </remarks>
             </tag>
         </group>
         <tag number="90" name="City" human-name="City" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Location">
@@ -1290,7 +1305,9 @@
         </tag>
         <tag number="103" name="OriginalTransmissionReference" human-name="Original Transmission Refrence" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Location">
             <desc>A code representing the location of original transmission according to practices of the provider.</desc>
-            <remarks>Examples: <example>BER-5, PAR-12-11-01</example></remarks>
+            <remarks>
+                Examples: <example>BER-5, PAR-12-11-01</example>
+            </remarks>
         </tag>
         <tag number="105" name="Headline" human-name="Headline" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="256" category="Title">
             <desc>A publishable entry providing a synopsis of the contents of the objectdata.</desc>
@@ -1395,7 +1412,9 @@
                 <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
             </tag>
             <tag number="201" name="ObjectDataPreviewFileFormatVersion" human-name="ObjectData Preview File Format Version" mandatory="true" fixed="true" type="Enum-binary" enum="FileFormatVersions" category="Embeded object" length="2" repeatable="false">
-                <desc>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></desc>
+                <desc>
+                    The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/>
+                </desc>
                 <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
             </tag>
             <tag number="202" name="ObjectDataPreviewData" human-name="ObjectData Preview Data" type="ByteArray" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object" attributes="&lt;Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> &lt;TypeConverter(GetType(FileByteConverter))>">
@@ -1403,7 +1422,379 @@
             </tag>
         </group>
     </record>
-    <!--TODO:Record number 3-->
+    <record number="3" name="DigitalNewsphotoParameter" human-name="Digital Newsphoto Parameter">
+        <desc>This record provides image parameters. The record is optional however when used some datasets are mandatory.</desc>
+        <version version="1.5.4">Record number 3 is newly included in version 1.5.4</version>
+        <tag number="0" name="RecordVersion3" human-name="Record Version (3)" type="UShort-binary" mandatory="true" repeatable="false" fixed="true" length="2" category="Internal">
+            <desc>A binary number representing the version of the Digital Newsphoto Parameter Record utilised by the provider.</desc>
+            <remarks>
+                Version numbers are assigned by IPTC and NAA. The version of this record is four (4).
+                <para>
+                    Same tag called <see cref="RecordVersion">"Record Version"</see> also exists in record no. 2.
+                </para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="10" name="PictureNumber" human-name="Picture Number" type="PictureNumber" mandatory="true" repeatable="false" length="16" category="Old IPTC" fixed="true">
+            <desc>The picture number provides a universally unique reference to an image.</desc>
+            <remarks>For example, colour images, when split with colour components into multiple objects, i.e. envelopes, would carry the same Picture Number.</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="20" name="PixelsPerLine" human-name="Pixels Per Line" type="UShort-binary" mandatory="true" repeatable="false" length="2" category="Image 3" fixed="true">
+            <desc>A number representing the number of pixels in a scan line for the component with the highest resolution.</desc>
+            <remarks>
+                Not valid when DataSet 3:60 (<see cref="ColourRepresentation"/>) octet zero (0) is 0 (zero).<para>NCPS values are 1024 or 2048.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="30" name="NumberOfLines" human-name="Number of Lines" type="UShort-binary" mandatory="true" repeatable="false" length="2" category="Image 3" fixed="true">
+            <desc>A number representing the number of scan lines comprising the image for the component with the highest resolution.</desc>
+            <remarks>
+                Not valid when DataSet 3:60 (<see cref="ColourRepresentation"/>) octet zero (0) is 0 (zero).<para>NCPS range is 1 to 2048.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="40" name="PixelSizeInScanningDirection" human-name="Pixel Size In Scanning Direction" type="UShort-binary" mandatory="true" repeatable="false" category="Image 3" fixed="true" length="2">
+            <desc>A number indicating the number of pixels per unit length in the scanning direction.</desc>
+            <remarks>
+                Not valid when DataSet 3:60 (<see cref="ColourRepresentation"/>) octet zero (0) is 0 (zero).
+                <para>NCPS value is 1.</para>
+                <note>Pixel Size is a relative size expressed as the ratio of 3:40 to 3:50 (3:40/3:50).</note>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="50" name="PixelSizePerpendicularToScanningDirection" human-name="Pixel Size Perpendicular To Scanning Direction" type="UShort-binary" mandatory="true" repeatable="false" category="Image 3" fixed="true" length="2">
+            <desc>A number indicating the number of pixels per unit length perpendicular to the scanning direction.</desc>
+            <remarks>
+                Not valid when DataSet 3:60 (<see cref="ColourRepresentation"/>) octet zero (0) is 0 (zero).
+                <para>NCPS value is 1.</para>
+                <note>Pixel Size is a relative size expressed as the ratio of 3:40 to 3:50 (3:40/3:50).</note>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="55" name="SupplementType" human-name="Supplement Type" length="1" type="Enum-binary" category="Image 3" fixed="true" mandatory="false" repeatable="false" enum="SupplementTypeValue">
+            <desc>A number indicating the image content.</desc>
+            <remarks>
+                Mandatory when the numeric character in DataSet 2:130 (<see cref="ImageType"/>) is ‘9’ (<see cref="ImageTypeComponents.SuplementaryData"/>)
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="SupplementTypeValue" type="Byte" restrict="true">
+            <desc>Numbers indicating image content</desc>
+            <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+            <item name="Unknown" desc="Value is used if the first octet of DataSet 2:130 (&lt;see cref='ImageType'/>) &amp;lt;> 9 (&lt;see cref='ImageTypeComponents.SuplementaryData'/>)" value="0" human-name="unknown"/>
+            <item name="ReducedResolutionImage" desc="Reduced resolution image." human-name="Reduced resolution image" value="1"/>
+            <item name="Logo" desc="Logo" human-name="Logo" value="2"/>
+            <item name="RasterizedCaption" human-name="Rasterized caption" desc="Rasterized caption." value="3"/>
+        </enum>
+        <tag number="60" name="ColourRepresentation" mandatory="true" length="2" type="Enum-binary" category="Image 3" enum="ColourRepresentations" fixed="true" human-name="Colour Representation" repeatable="false">
+            <desc>Indicates colour representation</desc>
+            <remarks>
+                The special interleaving structures refer to defined methods
+                given in Appendix G according to the value in the sampling
+                structure DataSet 3:90. Allowed combinations are:
+                <list type="bullet">
+                    <item>0,0</item>
+                    <item>1,0</item>
+                    <item>3,0 - 4,0 (In a single-frame colour image, a colour is described with a single sample per pixel.)</item>
+                    <item>3,1 - 3,2 - 3,3 - 3,4 - 3,5</item>
+                    <item>4,1 - 4,2 - 4,3 - 4,4 - 4,5</item>
+                </list>
+                <para>NCPS values are 1,0 , 3,1 or 3,5.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="ColourRepresentations" attributes="&lt;Flags()>" restrict="false" type="Short">
+            <desc>Indicates colour representations</desc>
+            <remarks>The value is composed from two parts - number of components and buid-up structure of image. Use masks to get these componets.</remarks>
+            <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+            <item name="NumberOfComponentsMask" attributes="&lt;Browsable(false),EditorBrowsable(EditorBrowsableState.Advanced)>" value="&amp;hFF00S" desc="Mask for getting number of components" human-name="Number of components mask">
+                <remarks>To get number of components AND enumeration value with this mask. To get numeric value right-shift AND-ed value by 8 bits.</remarks>
+            </item>
+            <item name="ImageBuildUpStructureMask" attributes="&lt;Browsable(false),EditorBrowsable(EditorBrowsableState.Advanced)>" value="&amp;h00FFS" desc="Mask for getting buid-up structure of image" human-name="Image build-up structure mask">
+                <remarks>To get image build-up structure AND enumeration value with this mask.</remarks>
+            </item>
+            <item name="NoImage" human-name="No Image" value="0" desc="No Image"/>
+            <item name="Monochrome" human-name="Monochrome" value="&amp;h100" desc="Monochrome"/>
+            <item name="ThreeComponents" human-name="Three components" value="&amp;h300" desc="Three componnets"/>
+            <item name="FourComponents" human-name="Four components" value="&amp;h400" desc="Four components"/>
+            <item name="SingleFrame" human-name="Single frame" value="0" desc="Single frame."/>
+            <item name="SequentialFrameMultipleObjects" human-name="Sequential frame (multiple objects)" desc="Frame sequential in multiple objects (one component per object)" value="1">
+                <remarks>Only one component of a colour image in one envelope</remarks>
+            </item>
+            <item name="SequentialFrameOneObject" human-name="Sequential frame (one object)" desc="Frame sequential in one object" value="2">
+                <remarks>All components of a colour imagein one envelope.</remarks>
+            </item>
+            <item name="LineSequential" human-name="Line sequential" desc="Line sequential" value="3"/>
+            <item name="PixelSequential" human-name="Pixel sequential" desc="Pixel sequential" value="4"/>
+            <item name="SpecialStructure" human-name="Special structure" desc="Special interleaving structure" value="5">
+                <remarks>The special interleaving structures refer to defined methods given in Appendix G according to the value in the sampling structure DataSet 3:90</remarks>
+            </item>
+        </enum>
+        <tag number="64" name="InterchangeColourSpace" length="1" human-name="Interchange Colour Space" category="Image 3" fixed="true" repeatable="false" mandatory="false" type="Enum-binary" enum="ColourSpaceValue">
+            <desc>A value indicating the colour space in which the pixel values are expressed for each component in the image.</desc>
+            <remarks>
+                Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image. Not valid when DataSet 3:60 octet zero (0) is 0 (zero).
+                <para>
+                    NCPS values are 0, 4 or 7 (<see cref="ColourSpaceValue.none"/>, <see cref="ColourSpaceValue.Rgb"/> or <see cref="ColourSpaceValue.YCbCr"/>).
+                </para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="ColourSpaceValue" restrict="true" type="Byte">
+            <desc>Allowed Interchange Colour Space values</desc>
+            <remarks>Other values are reserved for future use.</remarks>
+            <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+            <item name="none" human-name="none" desc="No colour space set" value="0"/>
+            <item name="XyzCie" human-name="X,Y,Z CIE" desc="X,Y,Z CIE colour space (default illuminant D50)" value="1"/>
+            <item name="RgbSmpte" human-name="RGB SMPTE" desc="RGB SMPTE" value="2"/>
+            <item name="YuvK" human-name="Y,U,V (K)" desc="Y,U,V (K) (default illuminant D65)" value="3"/>
+            <item name="Rgb" human-name="RGB" desc="RGB device dependent" value="4"/>
+            <item name="Cmyk" human-name="CMY(K)" desc="CMY(K) device dependent" value="5"/>
+            <item name="LabKCie" human-name="L*a*b* (K) CIE" desc="L*a*b* (K) CIE colour space (default illuminant D50)" value="6"/>
+            <item name="YCbCr" human-name="YCbCr" desc="YCbCr" value="7"/>
+            <item name="sRgb" human-name="sRGB" desc="sRGB" value="8"/>
+        </enum>
+        <tag number="65" name="ColourSequence" human-name="Colour Sequence" category="Image 3" repeatable="false" fixed ="false" length="4" mandatory="false" type="UnsignedBinaryNumber">
+            <desc>Each of 1 to four octets contains a binary number that relates to the colour component using the identification number assigned to it in the appendix for each colour space.</desc>
+            <remarks>
+                <para>The sequence specifies the sequence of the components as they appear in the objectdata</para>
+                <para>For frame sequential components, only one octet is set to identify the current colour component in the objectdata.</para>
+                <para>Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, 1, 2, 3, or 4, i.e. single frame, frame sequential, line sequential or pixel sequential. Not valid when DataSet 3:60 octet zero (0) is 0 (zero).</para>
+                <para>Allowed values are: 0 - 1 - 2 - 3 - 4; 0 - may be used for “monochrome” or “no image” representations. Other values are reserved.</para>
+                <para>NCPS values are 0,1,2,3 or 123.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="66" name="IccInputColourProfile" human-name="ICC Input Colour Profile" category="Image 3" repeatable="false" length="0" fixed="false" mandatory="false" type="ByteArray">
+            <!--TODO: Property support correct lenght: 512000 (or 524288?)-->
+            <desc>Specifies the International Color Consortium profile for the scanning/source device used to generate the digital image files.</desc>
+            <remarks>
+                <para>Valid when DataSet 3:64 has values 1,2,4,5 or 8.</para>
+                <para>This profile can be used to translate the image colour information from the input device colour space into another device's native colour space. The ICC profile is specified in ISO/TC 130/WG2N562.</para>
+                <note>Maximul alloved lenght of this field according to IPCT IIM standard is 512K. However current implementation does not allow such big fields.</note>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="70" name="ColourCalibrationMatrixTable" human-name="Colour Calibration Matrix Table" category="Image 3" length="0" fixed="false" mandatory="false" repeatable="false" type="ByteArray" attributes='&lt;Obsolete("This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).")>'>
+            <desc>This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).</desc>
+            <remarks>This DataSet will be removed from the next Version of this Standard.</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="80" name="LookupTable" human-name="Lookup Table" category="Image 3" length="0" fixed="false" mandatory="false" repeatable="false" type="ByteArray">
+            <!--TODO: Property support correct lenght: 131072-->
+            <desc>Consists of one, three or four one-dimensional lookup tables (LUT).</desc>
+            <remarks>
+                The LUT relates to the image data in the colour space defined in DataSet 3:64 and specifies the correction to apply to the pixel values before display or printing of the image. Not applicable if the colour space requires converting before display or printing.
+                <note>Maximul alloved lenght of this field according to IPCT IIM standard is 131072. However current implementation does not allow such big fields.</note>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="84" name="NumberOfIndexEntries" human-name="Number of Index Entries" category="Image 3" fixed="true" length="2" type="UShort-binary" mandatory="false" repeatable="false">
+            <desc>
+                A binary number representing the number of index entries in the DataSet 3:85 (<see cref="ColourPalette"/>).
+            </desc>
+            <remarks>
+                <para>Mandatory where DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, i.e. single-frame. Not relevant for other image types.</para>
+                <para>0 - No Colour Palette contained in DataSet 3:85. A default palette should be used. 1 - 65535 - valid numbers.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="85" name="ColourPalette" human-name="Colour Pallette" category="Image 3" fixed="false" length="0" mandatory="false" repeatable="false" type="ByteArray">
+            <!--TODO: Property support correct lenght: 524288-->
+            <desc>In a single-frame colour image, a colour is described with a single sample per pixel.</desc>
+            <remarks>
+                <para>Mandatory if 3:84 exists and is non zero.</para>
+                <para>The pixel value is used as an index into the Colour Palette.</para>
+                <para>The purpose of the Colour Palette is to act as a lookup table mapping the pixel values into the Colour Space defined in 3:64.</para>
+                <para>The number of index entries is defined in DataSet 3:84.</para>
+                <para>The number of output values is defined in octet zero of DataSet 3:60.</para>
+                <para>The number of octets used for each output value is deducted from 3:135.</para>
+                <para>The colour sequence of the output values is defined in 3:65. A default palette may be referenced if this DataSet is omitted. A number of default palettes may be held to be selected according to the device identifier component of the Picture Number 3:10.</para>
+                <note>Maximul alloved lenght of this field according to IPCT IIM standard is 524288. However current implementation does not allow such big fields.</note>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="86" name="NumberOfBitsPerSample" human-name="Number of Bits per Sample" category="Image 3" fixed="true" length="1" type="Byte-binary" mandatory="false" repeatable="false">
+            <desc>A number between 1 and 16 that indicates the number of bits per pixel value used as entries in the Colour Palette. These values are found in the objectdata itself.</desc>
+            <remarks>
+                <para>Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, i.e. single frame. Not relevant for other image types.</para>
+                <para>Each entry should be in one octet if number of bits is less than or equal to 8 and in two octets if number of bits is between 9 and 16, the least significant bit should always be aligned on the least significant bit of the least significant octet.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="90" name="SamplingStructure" human-name="Sampling Structure" category="Image 3" mandatory="true" repeatable="false" fixed="true" length="1" type="Enum-binary" enum="SamplingStructureType">
+            <desc>A number defining the spatial and temporal relationship between pixels.</desc>
+            <remarks>NCPS values are 0 or 2.</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="SamplingStructureType" type="Byte" restrict="true">
+            <desc>Enumerates possible spatial and temporal relations between pixels</desc>
+            <remarks>Other values are reserved for future use.</remarks>
+            <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+            <item value="0" name="OrthogonalSame" human-name="Orthogonal - same" desc="Orthogonal with the same relative sampling frequencies on each component."/>
+            <item value="1" name="OrthogonalRatio" human-name="Orthogonal - ration" desc="Orthogonal with the sampling frequencies in the ratio of 4:2:2:(4) as described in Appendix G. This structure can only be used with the YUV(K) or LAB(K) colour spaces."/>
+            <item value="2" name="Custom" human-name="Custom" desc="defined within the compression process."/>
+        </enum>
+        <tag number="100" name="ScanningDirection" human-name="Scanning Direction" mandatory="true" repeatable="false" length="1" fixed="true" category="Image 3" enum="ScanningDirectionValue" type="Enum-binary">
+            <desc>A number indicating the correct relative two dimensional order of the pixels in the objectdata. Eight possibilities exist.</desc>
+            <remarks>
+                Not valid when DataSet 3:60 octet zero (0) is 0 (zero).<para>NCPS value is 0.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="ScanningDirectionValue" type="Byte" restrict="true">
+            <desc>Possible scanning directions</desc>
+            <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+            <item value="0" name="LeftRightTopBottom" human-name="left to right, top to bottom." desc="left to right, top to bottom."/>
+            <item value="1" name="RightLeftTopBottom" human-name="right to left, top to bottom." desc="right to left, top to bottom."/>
+            <item value="2" name="LeftRightBottomTop" human-name="left to right, bottom to top." desc="left to right, bottom to top."/>
+            <item value="3" name="RightLeftBottomTop" human-name="right to left, bottom to top." desc="right to left, bottom to top."/>
+            <item value="4" name="TopBottomLeftRight" human-name="top to bottom, left to right." desc="top to bottom, left to right."/>
+            <item value="5" name="BottomTopLeftRight" human-name="bottom to top, left to right." desc="bottom to top, left to right."/>
+            <item value="6" name="TopBottomRightLeft" human-name="top to bottom, right to left." desc="top to bottom, right to left."/>
+            <item value="7" name="BottomTopRightLeft" human-name="bottom to top, right to left." desc="bottom to top, right to left."/>
+        </enum>
+        <tag number="102" name="ImageRotation" human-name="Image Rotation" mandatory="false" repeatable="false" length="1" fixed="true" category="Image 3" enum="ImageRotationValue" type="Enum-binary">
+            <desc>A number indicating the clockwise rotation applied to the image for presentation.</desc>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="ImageRotationValue" type="Byte" restrict="true">
+            <desc>Possible inage rotations in clockwise direction</desc>
+            <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+            <item value="0" name="None" human-name="None" desc="no rotation"/>
+            <item value="1" name="Rot90" human-name="90 degrees" desc="90 degrees rotation"/>
+            <item value="2" name="Rot180" human-name="180 degrees" desc="180 degrees rotation"/>
+            <item value="3" name="Rot270" human-name="270 degrees" desc="270 degrees rotation"/>
+        </enum>
+        <tag name="DataCompressionMethod" number="110" human-name="Data Compression Method" mandatory="true" repeatable="false" length="4" fixed="true" category="Image 3" type="UInt-binary">
+            <desc>Specifies data compression method</desc>
+            <remarks>
+                <para>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).</para>
+                <para>Octets 0-1 contain a binary number identifying the providerowner of the algorithm.</para>
+                <para>Octet 2 contains a binary number identifying the type of compression algorithm.</para>
+                <para>Octet 3 contains a binary number identifying the revision number of the algorithm.</para>
+                <para>An identification number is issued by IPTC-NAA to providersowners of compression algorithms upon request (see Appendix A). The numbers identifying type and revision of algorithms are managed by the providers-owners.</para>
+                <para>A zero (0) value of all octets in this DataSet identifies an uncompressed image. In this case the component values should be in one octet if number of bits is less than or equal to 8 and in two octets if number of bits is between 9 and 16, the least significant bit always being aligned on the least significant bit of the least significant octet.</para>
+                <para>NCPS values are 0000 or 0121.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag name="QuantisationMethod" human-name="Quantisation Method" number="120" category="Image 3" fixed="true" length="1" mandatory="true" repeatable="false" type="Enum-binary" enum="QuantisationMethodValue">
+            <desc>Contains a binary number identifying the quantisation law.</desc>
+            <remarks>
+                The relations between different quantisation methods are described in DNPR Guideline 1.
+                <para>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).</para>
+                <para>NCPS values are 0 or 5.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="QuantisationMethodValue" type="Byte" restrict="true">
+            <desc>Possible qantisation methods</desc>
+            <remarks>
+                Other values are reserved for future use.
+                <para>For quantisation methods 0 and 1, ascending values correspond to increasing reflectance/transmittance.</para>
+            </remarks>
+            <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+            <item value="0" name="LinearReflectanceTransmittance" human-name="Linear reflectance/transmittance" desc="Linear reflectance/transmittance (The domain in which the relative reflectance/transmittance of an image is mapped linearly onto a finite scale of integers (CCITT T1).)"/>
+            <item value="1" name="LinearDensity" human-name="Linear density" desc="Linear density (The domain in which the relative density of an image is mapped linearly onto a finite scale of integers.)"/>
+            <item value="2" name="IPTCRefB" human-name="IPTC ref “B”" desc="IPTC ref “B” (Defined by IPTC in 1985 and amended in January 1990 to suppress reference to “Pixel Density.”)">
+                <remarks>see Appendix H</remarks>
+            </item>
+            <item value="3" name="LinearDotPercent" human-name="Linear Dot Percent" desc="Linear Dot Percent (The domain in which the relative dot percent of an image is mapped linearly onto a finite scale of integers.)"/>
+            <item value="4" name="ApDomesticAnalogue" human-name="AP Domestic Analogue" desc="AP Domestic Analogue (This may be described mathematically as either [√(linear density)] or [√(log (reflectance/transmittance))].)"/>
+            <item value="5" name="CompressionMethodSpecific" human-name="Compression method specific" desc="Compression method specific (Defined within the compression method.)">
+                <remarks>Refer to Appendix A</remarks>
+            </item>
+            <item value="6" name="ColourSpaceSpecific" human-name="Colour Space Specific" desc="Colour Space Specific (quantisation method is contained within the Colour Space definition for DataSet 3:64 values of 1,2,3,6 or 7.)"/>
+            <item value="7" name="GammaCompensated" human-name="Gamma Compensated" desc="Gamma Compensated (the domain in which the relative reflectance/transmittance is raised to the power of the inverse of gamma.)"/>
+        </enum>
+        <tag number="125" name="EndPoints" human-name="End Points" category="Image 3" mandatory="true" repeatable="false" fixed="false" type="ByteArray" length="0">
+            <desc>These end points apply to the coding process.</desc>
+            <remarks>
+                2n octets. Valid only when DataSet 3:64 has a value of 0,1,2,4 or 5. Not relevant for other colour spaces.
+                <para>n = the number of octets per component as derived from 3:135 multiplied by the number of components. The number of components is 1 when octet one (1) of DataSet 3:60 has a value of one (1), in all other cases the number is defined in octet zero (0) of DataSet 3:60.</para>
+                <para>The first n octets contain the values representing the minimum density that is encoded for each component in the order specified in DataSet 3:65.</para>
+                <para>The second n octets contain the values representing the maximum density that is encoded for each component in the order specified in DataSet 3:65.</para>
+                <para>The difference between the maximum and minimum density for every component is the same and given by the Maximum Density Range value in DataSet 3:140.</para>
+                <para>NCPS end point values are 255 and 0.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="130" name="ExcursionTolerance" human-name="Excursion Tolerance" mandatory="true" repeatable="false" fixed="true" length="1" type="Boolean-binary" category="Image 3">
+            <desc>Indicates if values outside the range defined by the end points in DataSet 3:125 may occur.</desc>
+            <remarks>NCPS value is false</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="135" name="BitsPerComponent" human-name="Bits Per Component" category="Image 3" mandatory="true" repeatable="false" length="0" fixed="0" type="ByteArray">
+            <desc>
+                Contains a sequence of one or more octets describing the
+                number of bits used to encode each component. The sequence
+                is specified by the order of components in DataSet
+                3:65.
+            </desc>
+            <remarks>
+                <para>The number of octets is 1 when octet one (1) of DataSet 3:60 has a value of one (1), in all other cases the number of octets is equivalent to the number of components specified in octet zero (0) of DataSet 3:60.</para>
+                <para>Each octet contains a binary value between one and 16.</para>
+                <para>NCPS values are 8 or 888.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="140" name="MaximumDensityRange" human-name="Maximum Density Range" category="Image 3" mandatory="true" repeatable="false" fixed="true" length="2" type="UShort-binary">
+            <desc>A binary value which specifies the maximum density range multiplied by 100.</desc>
+            <remarks>
+                <para>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).</para>
+                <para>The value represents the difference between the lowest density and the highest density points that can be encoded by the originating system.</para>
+                <para>NCPS value is 160.</para>
+            </remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="145" name="GammaCompensatedValue" human-name="Gamma Compensated Value" category="Image 3" mandatory="false" repeatable="false" length="2" fixed="true" type="UShort-binary">
+            <desc>A binary value which specifies the value of gamma for the device multiplied by 100.</desc>
+            <remarks>
+                <para>Valid only when DataSet 3:120 has a value of 5 or 7.</para>
+                <para>If this DataSet is omitted receiving equipment should assume that a gamma value of 2.22 applies</para>
+                <para>NCPS value is 222</para>
+            </remarks>
+        </tag>
+    </record>
+
+    <record number="5" name="NotAllocated5" human-name="Not Allocated (5)">
+        <desc>Unallocated IPTC Record. <see cref="MetadataT.IptcT"/> uses it for custom proprietary properties.</desc>
+        <version version="1.5.4">This record is added in version 1.5.4</version>
+        <tag number="101" name="OverlallRating" human-name="Overall Rating" category="Status" fixed="true" mandatory="false" repeatable="false" type="Enum-binary" length="1" enum="CustomRating">
+            <desc>Overll rating of the subject</desc>
+            <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <enum name="CustomRating" restrict="true" type="SByte">
+            <desc>Custom rating values</desc>
+            <version version="1.5.4">This enum is new in version 1.5.4</version>
+            <item value="0" name="NotRated" human-name="&lt;not rated>" desc="Rating was not set yet"/>
+            <item value="-1" name="Rejected" human-name="Rejected" desc="User rated the subject as rejected"/>
+            <item value="1" name="Star1" human-name="*" desc="User rated the subject with 1 star"/>
+            <item value="2" name="Star2" human-name="*" desc="User rated the subject with 2 stars"/>
+            <item value="3" name="Star3" human-name="*" desc="User rated the subject with 3 stars"/>
+            <item value="4" name="Star4" human-name="*" desc="User rated the subject with 4 stars"/>
+            <item value="5" name="Star5" human-name="*" desc="User rated the subject with 5 stars"/>
+        </enum>
+        <tag number="102" name="TechnicalQuality" human-name="Technical Quality" category="Status" fixed="true" mandatory="false" repeatable="false" type="Enum-binary" length="1" enum="CustomRating">
+            <desc>Rates technical quality of subject data (e.g. Is the photo sharp?)</desc>
+            <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="103" name="ArtQuality" human-name="Art Quality" category="Status" fixed="true" mandatory="false" repeatable="false" type="Enum-binary" length="1" enum="CustomRating">
+            <desc>Rates artistic quality of subject data (i.e. How nice it is?)</desc>
+            <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+        <tag number="104" name="InformationValue" human-name="Information Value" category="Status" fixed="true" mandatory="false" repeatable="false" type="Enum-binary" length="1" enum="CustomRating">
+            <desc>Rates information value of subject data (i.e. Does it provide any valuable information?)</desc>
+            <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+            <version version="1.5.4">This property is new in version 1.5.4</version>
+        </tag>
+    </record>
+    
     <record number="7" name="PreObjectDataDescriptorRecord" human-name="Pre-ObjectData descriptor record">
         <desc>Information about ObjectData (before object has been sent)</desc>
         <tag number="10" name="SizeMode" human-name="Size Mode" type="Boolean-binary" mandatory="true" fixed="true" length="1" repeatable="false" category="Embeded object" attributes="&lt;[ReadOnly](True)>">
@@ -1421,7 +1812,9 @@
         </tag>
         <tag number="90" name="ObjectDataSizeAnnounced" human-name="ObjectData Size Announced" mandatory="false" repeatable="false" fixed="false" length="0" type="UnsignedBinaryNumber" category="Embeded object" attributes="&lt;[ReadOnly](True)>">
             <desc>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</desc>
-            <remarks>Mandatory if DataSet <see cref="SizeMode"/> has value '1' and not allowed if DataSet <see cref="SizeMode"/> has value '0'.</remarks>
+            <remarks>
+                Mandatory if DataSet <see cref="SizeMode"/> has value '1' and not allowed if DataSet <see cref="SizeMode"/> has value '0'.
+            </remarks>
         </tag>
         <tag number="95" name="MaximumObjectDataSize" human-name="Maximum ObjectData Size" mandatory="false" repeatable="false" fixed="false" type="UnsignedBinaryNumber" category="Embeded object" length="0" attributes="&lt;[ReadOnly](True)>">
             <desc>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</desc>
@@ -1438,7 +1831,9 @@
         <desc>Confirmation of size of ObjectData</desc>
         <tag number="10" name="ConfirmedObjectDataSize" human-name="Confirmed ObjectData Size" type="UnsignedBinaryNumber" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object" attributes="&lt;[ReadOnly](True)>">
             <desc>Total size of the objectdata, in octets, without tags.</desc>
-            <remarks>This number should equal the number in DataSet <see cref="ObjectDataSizeAnnounced"/> if the size of the objectdata is known and has been provided.</remarks>
+            <remarks>
+                This number should equal the number in DataSet <see cref="ObjectDataSizeAnnounced"/> if the size of the objectdata is known and has been provided.
+            </remarks>
         </tag>
     </record>
 </Root>

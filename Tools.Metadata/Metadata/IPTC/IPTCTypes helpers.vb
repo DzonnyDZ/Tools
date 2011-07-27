@@ -256,6 +256,8 @@ Namespace MetadataT.IptcT
 #End Region
     End Class
     ''' <summary>Types od data used by IPTC tags</summary>
+    ''' <version version="1.5.4">Added <see cref="IptcTypes.PictureNumber"/></version>
+    ''' <version version="1.5.4">Added <see cref="IptcTypes.UInt_Binary"/></version>
     Public Enum IptcTypes
         ''' <summary>Unsigned binary number of unknown length (represented by <see cref="ULong"/>)</summary>
         UnsignedBinaryNumber
@@ -265,6 +267,9 @@ Namespace MetadataT.IptcT
         Byte_Binary
         ''' <summary>Binary stored 2 byte long unsigned integer (represented by <see cref="UShort"/>)</summary>
         UShort_Binary
+        ''' <summary>Binary stored 4 byte long unsigned integer (represented by <see cref="UInteger"/>)</summary>
+        ''' <version version="1.5.4">This enum member is new in version 1.5.4</version>
+        UInt_Binary
         ''' <summary>Number of variable length stored as string.</summary>
         ''' <remarks>
         ''' <list type="table"><listheader><term>Length up to characters</term><description>Represented by</description></listheader>
@@ -315,6 +320,9 @@ Namespace MetadataT.IptcT
         AudioType
         ''' <summary>Duration in hours, minutes and seconds. Represented by <see cref="TimeSpan"/></summary>
         HHMMSS
+        ''' <summary>The picture number provides a universally unique reference to an image</summary>
+        ''' <version version="1.5.4">This enumeration member is new in version 1.5.4</version>
+        PictureNumber
     End Enum
 #End If
 End Namespace

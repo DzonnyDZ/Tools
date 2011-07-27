@@ -192,6 +192,35 @@ Namespace MetadataT.IptcT
                 Tag(Key) = values
             End Set
         End Property
+
+        ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.UInt_Binary"/></summary>
+        ''' <param name="Key">Record and dataset number</param>
+        ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
+        ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Overridable Property UInt_Binary_Value(ByVal Key As DataSetIdentification) As List(Of UInt32)
+            Get
+                Dim values As List(Of Byte()) = Tag(Key)
+                If values Is Nothing OrElse values.Count = 0 Then Return Nothing
+                Dim ret As New List(Of UInt32)(values.Count)
+                For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
+                    ret.Add(UIntFromBytes(item.Length, item))
+                Next item
+                If ret.Count = 0 Then Return Nothing
+                Return ret
+            End Get
+            Set(value As List(Of UInt32))
+                Dim values As New List(Of Byte())
+                If value IsNot Nothing Then
+                    For Each item As ULong In value
+                        values.Add(ToBytes(CByte(2), item))
+                    Next item
+                End If
+                Tag(Key) = values
+            End Set
+        End Property
+
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.NumericChar"/></summary>
         ''' <param name="key">Record and dataset number</param>
         ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
@@ -911,6 +940,34 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
                 If value IsNot Nothing Then
                     For Each item As IptcSubjectReference In value
                         values.Add(item.ToBytes(Encoding))
+                    Next item
+                End If
+                Tag(Key) = values
+            End Set
+        End Property
+
+        ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.PictureNumber"/> type</summary>
+        ''' <param name="Key">Record and dataset number</param>
+        ''' <exception cref="ArgumentException">In getter: Value of dataset does not have exactly 15 octets</exception>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Overridable Property PictureNumber_Value(ByVal Key As DataSetIdentification) As List(Of IptcPictureNumber)
+            Get
+                Dim values As List(Of Byte()) = Tag(Key)
+                If values Is Nothing OrElse values.Count = 0 Then Return Nothing
+                Dim ret As New List(Of IptcPictureNumber)(values.Count)
+                For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
+                    ret.Add(New IptcPictureNumber(item))
+                Next item
+                If ret.Count = 0 Then Return Nothing
+                Return ret
+            End Get
+            Set(value As List(Of IptcPictureNumber))
+                Dim values As New List(Of Byte())
+                If value IsNot Nothing Then
+                    For Each item As IptcPictureNumber In value
+                        values.Add(item.Octets)
                     Next item
                 End If
                 Tag(Key) = values

@@ -3,6 +3,8 @@ Imports Tools.VisualBasicT.Interaction, Tools.ComponentModelT, Tools.DrawingT.De
 Imports System.Drawing.Design, System.Windows.Forms, System.Drawing
 Imports Tools.MetadataT.IptcT
 Imports Tools.MetadataT.IptcT.Iptc
+Imports Tools.ExtensionsT
+
 Namespace MetadataT.IptcT.IptcDataTypes
 #If Congig <= Nightly Then 'Stage: Nightly
 
@@ -215,6 +217,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             Return arr
         End Function
     End Class
+
     ''' <summary>Common base for classes that have the <see cref="WithIPR.IPR"/> property</summary>
     <EditorBrowsable(EditorBrowsableState.Never)> _
     Public MustInherit Class WithIpr
@@ -281,15 +284,17 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <summary>When overriden in derived class gets actual lenght limit for <see cref="IPR"/></summary>
         Protected MustOverride ReadOnly Property IPRLengthLimit() As Byte
     End Class
+
     ''' <summary>Represents IPTC UNO unique object identifier (IPTC type <see cref="IPTCTypes.UNO"/>)</summary>
     ''' <remarks>
     ''' <para>The first three elements of the UNO (the UCD, the IPR and the ODE) together are allocated to the editorial content of the object.</para>
     ''' <para>Any technical variants or changes in the presentation of an object, e.g. a picture being presented by a different file format, does not require the allocation of a new ODE but can be indicated by only generating a new OVI.</para>
     ''' <para>Links may be set up to the complete UNO but the structure provides for linking to selected elements, e.g. to all objects of a specified provider.</para>
     ''' </remarks>
+
     <DebuggerDisplay("{ToString}")> _
     <TypeConverter(GetType(IptcUno.Converter))> _
-    Public Class IptcUno : Inherits WithIpr
+   Public Class IptcUno : Inherits WithIpr
         ''' <summary>Contains value of the <see cref="UCD"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _UCD As Date = Now.Date
         ''' <summary>UNO Creation Date Specifies a 24 hour period in which the further elements of the UNO have to be unique.</summary>            
@@ -608,6 +613,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         End Class
 
     End Class
+
     ''' <summary>Represents combination of number and string</summary>
     ''' <remarks>This class is abstract, derived class mus specify number of digits of <see cref="NumStr.Number"/></remarks>
     <TypeConverter(GetType(NumStr.Converter))> _
@@ -767,6 +773,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             Me.String = Str
         End Sub
     End Class
+
     ''' <summary>Represents combination of 2-digits numer and string (IPTC type <see cref="IPTCTypes.Num2_Str"/>)</summary>
     <TypeConverter(GetType(NumStr.Converter))> _
     <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
@@ -790,6 +797,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             MyBase.New(Num, Str)
         End Sub
     End Class
+
     ''' <summary><see cref="T:NumStr2"/> with numbers from enum</summary>
     <CLSCompliant(False), TypeConverter(GetType(NumStr.Converter))> _
     <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
@@ -837,6 +845,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             Me.String = Str
         End Sub
     End Class
+
     ''' <summary><see cref="T:NumStr3"/> with numbers from enum</summary>
     <CLSCompliant(False), TypeConverter(GetType(NumStr.Converter))> _
     <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
@@ -884,6 +893,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             Me.String = Str
         End Sub
     End Class
+
     ''' <summary>Represents combination of 3-digits numer and string (IPTC type <see cref="IPTCTypes.Num3_Str"/>)</summary>
     <TypeConverter(GetType(NumStr.Converter))> _
     <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
@@ -907,6 +917,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             MyBase.New(Num, Str)
         End Sub
     End Class
+
     ''' <summary>Represents common interface for media types</summary>
     <CLSCompliant(False)> _
     Public Interface IMediaType(Of TNumChar As {IConvertible, Structure}, TAlpha As {IConvertible, Structure})
@@ -917,6 +928,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <summary>Type code as character</summary>
         Property CodeString() As Char
     End Interface
+
     ''' <summary>Represents date (Year, Month and Day) which's parts can be ommited by setting value to 0 (IPTC type <see cref="IPTCTypes.CCYYMMDDOmmitable"/>)</summary>
     ''' <remarks>Date represented by this structure can be invalid (e.g. 31.2.2008)</remarks>
     <Editor(GetType(OmmitableDate.TypeEditor), GetType(UITypeEditor))> _
@@ -1443,6 +1455,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             End Function
         End Class
     End Structure
+
     ''' <summary>IPTC image type (IPTC type <see cref="IPTCTypes.ImageType"/>)</summary>
     <TypeConverter(GetType(IptcImageType.Converter))> _
     <DebuggerDisplay("{ToString}")> _
@@ -1791,6 +1804,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             End Function
         End Class
     End Class
+
     ''' <summary>Type that can contain value of "string enum" even when such value is not member of this enum</summary>
     ''' <typeparam name="TEnum">Type of <see cref="P:StringEnum`0.EnumValue"/>. Must inherit from <see cref="[Enum]"/></typeparam>
     <CLSCompliant(False), DebuggerDisplay("{ToString}")> _
@@ -2233,5 +2247,157 @@ Namespace MetadataT.IptcT.IptcDataTypes
 #End Region
         End Class
     End Class
+
+#Region "Record 3"
+
+    ''' <summary>The picture number provides a universally unique reference to an image</summary>
+    ''' <version version="1.5.4">This structure is new in version 1.5.4</version>
+    <Serializable()>
+    Public Structure IptcPictureNumber
+        Private _octets As Byte()
+        ''' <summary>Gets octets (bytes) that forms value of  <see cref="PictureNumber"/></summary>
+        <Browsable(False)>
+        Public ReadOnly Property Octets As Byte()
+            Get
+                If _octets Is Nothing Then ReDim _octets(0 To 15)
+                Return _octets
+            End Get
+        End Property
+
+        ''' <summary>CTor - creates a new instance of the <see cref="PictureNumber"/> structure from byte array</summary>
+        ''' <param name="octets">Array of 16 bytes representing underlying value of this property</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="octets"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="octets"/> does not contain exactly 16 bytes</exception>
+        Public Sub New(octets As Byte())
+            If octets Is Nothing Then Throw New ArgumentNullException("octets")
+            If octets.Length <> 16 Then Throw New ArgumentException(ResourcesT.Exceptions.ArrayMustHaveExactlyXBytes.f(16), "octets")
+            _octets = octets
+        End Sub
+        ''' <summary>CTor - creates a new instance of the <see cref="PictureNumber"/> structure from property values</summary>
+        ''' <param name="manufacturer">Identifies manufacturer</param>
+        ''' <param name="equipment">Identifies equipment (manufacturer-specific)</param>
+        ''' <param name="dateIdentifier">Indicates year, month and day the picture number was generated</param>
+        ''' <param name="numericIdentifier">Number generated for each picture by the same manufacturer and equipment in given day</param>
+        Public Sub New(manufacturer As ManufacturersIdentificationNumber, equipment As Short, dateIdentifier As Date, numericIdentifier As Short)
+            Me.Manufacturer = manufacturer
+            Me.Equipment = equipment
+            Me.DateIdentifier = dateIdentifier
+            Me.NumericIdentifier = numericIdentifier
+        End Sub
+
+        ''' <summary>Gets or sets Manufacturer’s Unique Identity (issued by IPTC)</summary>
+        <LDisplayName(GetType(IptcResources), "ManufacturersUniqueIdentity_n")>
+        <LDescription(GetType(IptcResources), "ManufacturerdUniqueIdentity_d")>
+        Public Property Manufacturer As ManufacturersIdentificationNumber
+            Get
+                Return (CShort(Octets(0)) << 8) Or CShort(Octets(1))
+            End Get
+            Set(value As ManufacturersIdentificationNumber)
+                Octets(0) = (value And &HFF00S) >> 8
+                Octets(1) = value And &HFFS
+            End Set
+        End Property
+
+        ''' <summary>Gets or sets equipment identifier</summary>
+        ''' <remarks>Used to indicate equipment type and managed by Manufacturer.</remarks>
+        <LDisplayName(GetType(IptcResources), "Equipment_n")>
+        <LDescription(GetType(IptcResources), "Equipment_d")>
+        Public Property Equipment As Integer
+            Get
+                Return (CInt(Octets(2)) << 24) Or (CInt(Octets(3)) << 16) Or (CInt(Octets(4)) << 8) Or CInt(Octets(5))
+            End Get
+            Set(value As Integer)
+                Octets(2) = (value And &HFF000000I) >> 24
+                Octets(3) = (value And &HFF0000I) >> 16
+                Octets(4) = (value And &HFF00I) >> 8
+                Octets(5) = value And &HFFI
+            End Set
+        End Property
+
+        ''' <summary>Gets or sets value indicating year, month and day the picture number was generated.</summary>
+        ''' <remarks>Sub-day part of <see cref="Date"/> value is truncated.</remarks>
+        ''' <exception cref="FormatException">Octets 6 to 13 does not contain date in yyyyMMdd format.</exception>
+        <LDisplayName(GetType(IptcResources), "DateIdentifier_n")>
+        <LDescription(GetType(IptcResources), "DateIdentifier_d")>
+        Public Property DateIdentifier As DateTime
+            Get
+                Dim numericCharacters = System.Text.Encoding.ASCII.GetString(Octets, 6, 8)
+                Return Date.ParseExact(numericCharacters, "yyyyMMdd", InvariantCulture)
+            End Get
+            Set(value As DateTime)
+                Dim array = System.Text.Encoding.ASCII.GetBytes(value.ToString("yyyyMMdd"))
+                For i As Integer = 0 To 7
+                    Octets(i + 6) = array(i)
+                Next
+            End Set
+        End Property
+
+        ''' <summary>Gets or sets a binary number generated each time a picture number is created and being unique for the same device and for the date contained in this DataSet.</summary>
+        ''' <remarks>When the originating device (scanner) is not able to generate a relevant picture number, each octet of the picture number should be set to value zero, i.e. a null value.</remarks>
+        <LDisplayName(GetType(IptcResources), "NumericIdentifier_n")>
+        <LDescription(GetType(IptcResources), "NumericIdentifier_d")>
+        Public Property NumericIdentifier As Short
+            Get
+                Return (CShort(Octets(14)) << 8) Or CShort(Octets(15))
+            End Get
+            Set(value As Short)
+                Octets(14) = (value And &HFF00S) >> 8
+                Octets(15) = value And &HFFS
+            End Set
+        End Property
+
+        ''' <summary>Gets string representation of this object</summary>
+        ''' <returns>String representation of this object</returns>
+        Public Overrides Function ToString() As String
+            Return String.Format("{0} - {1} {2} {2}", Manufacturer, Equipment, DateIdentifier, NumericIdentifier)
+        End Function
+    End Structure
+
+    ''' <summary>Numbers assigned by IPTC-NAA for manufacturers of image originating devices</summary>
+    ''' <remarks>The following series of numbers have been assigned by IPTC-NAA for manufacturers of image originating devices.
+    ''' <para>These numbers are used for manufacturer identification used in <see cref="DeviceIdentifier"/>.</para></remarks>
+    ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    Public Enum ManufacturersIdentificationNumber As Short
+        ''' <summary>Associated Press, East Brunswick, NJ, USA</summary>
+        <FieldDisplayName("Associated Press")>
+        AssociatedPress = 1
+        ''' <summary>Eastman Kodak Co, Rochester, NY, USA</summary>
+        <FieldDisplayName("Eastman Kodak")>
+        EastmanKodak = 2
+        ''' <summary>Hasselblad Electronic Imaging, Göteborg, Sweden</summary>
+        <FieldDisplayName("Hasselblad Electronic Imaging")>
+        HaselbaldElectronicImaging = 3
+        ''' <summary>Tecnavia SA, Agno, Switzerland</summary>
+        <FieldDisplayName("Tecnavia")>
+        Tecnavia = 4
+        ''' <summary>Nikon Corporation, Tokyo, Japan</summary>
+        <FieldDisplayName("Nikon")>
+        Nikon = 5
+        ''' <summary>Coatsworth Communications Inc. Canada</summary>
+        <FieldDisplayName("Coatsworth Communications")>
+        CoatsworthCommunications = 6
+        ''' <summary>Agence France Presse, Paris, France</summary>
+        <FieldDisplayName("Agence France Presse")>
+        AgenceFrancePresse = 7
+        ''' <summary>T/One Inc. c/o SEG, Cambridge, MA, USA</summary>
+        <FieldDisplayName("T/One")>
+        TOne = 8
+        ''' <summary>Associated Newspapers, UK</summary>
+        <FieldDisplayName("Associated Newspapers")>
+        AssociatedNewspapers = 9
+        ''' <summary>Reuters London</summary>
+        <FieldDisplayName("Reuters")>
+        Reuters = 10
+        ''' <summary>Sandia Imaging Systems Inc, Carrollton, TX, USA</summary>
+        <FieldDisplayName("Sandia Imaging Systems")>
+        SandiaImagingSystems = 11
+        ''' <summary>Deutsche Presse-Agentur GmbH, Hamburg, Germany</summary>
+        <FieldDisplayName("Deutsche Presse-Agentur")>
+        DeutschePresseAgentur = 12
+        ''' <summary>Visualize, Madrid, Spain</summary>
+        <FieldDisplayName("Visualize")>
+        Visualize = 13
+    End Enum
+#End Region
 #End If
 End Namespace

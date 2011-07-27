@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SubjectNumber_n" xml:space="preserve">
     <value>Subject Number</value>
@@ -185,5 +185,29 @@
   </data>
   <data name="StringValueOfTheProperty0CanBeMaximally1BytesLong" xml:space="preserve">
     <value>String value of the property {0} can be maximally {1} bytes long.</value>
+  </data>
+  <data name="ManufacturersUniqueIdentity_d" xml:space="preserve">
+    <value>Manufacturer’s Unique Identity (issued by IPTC)</value>
+  </data>
+  <data name="ManufacturerdUniqueIdentity_n" xml:space="preserve">
+    <value>Manufacturer’s Unique Identity</value>
+  </data>
+  <data name="Equipment_n" xml:space="preserve">
+    <value>Equipment</value>
+  </data>
+  <data name="Equipment_d" xml:space="preserve">
+    <value>Used to indicate equipment type and managed by Manufacturer.</value>
+  </data>
+  <data name="DateIdentifier_n" xml:space="preserve">
+    <value>Date Identifier</value>
+  </data>
+  <data name="DateIdentifier_d" xml:space="preserve">
+    <value>Indicates year, month and day the picture number was generated.</value>
+  </data>
+  <data name="NumericIdentifier_n" xml:space="preserve">
+    <value>Numeric Identifier</value>
+  </data>
+  <data name="NumericIdentifier_d" xml:space="preserve">
+    <value>A binary number generated each time a picture number is created and being unique for the same device and for the date contained in this DataSet.</value>
   </data>
 </root>

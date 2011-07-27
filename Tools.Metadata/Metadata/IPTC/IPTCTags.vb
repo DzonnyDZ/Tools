@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 1. září 2010
+' Created: 27. července 2011
 ' By:BiggerBook\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
@@ -24,261 +24,361 @@ Namespace MetadataT.IptcT
 		''' <summary>Numbers of IPTC records (groups of tags)</summary>
 		Public Enum RecordNumbers As Byte
 			''' <summary>Contains internal IPTC data used formerly in telecommunications. Now it is considered being deprecated and is not widely in use.</summary>
-			<FieldDisplayName("Envelope record")> Envelope = 1
+			<FieldDisplayName("")> Envelope = 1
 			''' <summary>This record contain informative data about content. Whole record is optional, but when any tag is used then mandatory tags are mandatory.</summary>
-			<FieldDisplayName("Application Record No. 2")> Application = 2
+			<FieldDisplayName("")> Application = 2
+			''' <summary>This record provides image parameters. The record is optional however when used some datasets are mandatory.</summary>
+			<FieldDisplayName("")> DigitalNewsphotoParameter = 3
+			''' <summary>Unallocated IPTC Record. <see cref="MetadataT.IptcT"/> uses it for custom proprietary properties.</summary>
+			<FieldDisplayName("")> NotAllocated5 = 5
 			''' <summary>Information about ObjectData (before object has been sent)</summary>
-			<FieldDisplayName("Pre-ObjectData descriptor record")> PreObjectDataDescriptorRecord = 7
+			<FieldDisplayName("")> PreObjectDataDescriptorRecord = 7
 			''' <summary>Contains embeded object</summary>
-			<FieldDisplayName("ObjectData Record")> ObjectDataRecord = 8
+			<FieldDisplayName("")> ObjectDataRecord = 8
 			''' <summary>Confirmation of size of ObjectData</summary>
-			<FieldDisplayName("Pos-ObjectData Descriptor Record")> PostObjectDataDescriptorRecord = 9
+			<FieldDisplayName("")> PostObjectDataDescriptorRecord = 9
 		End Enum
 		''' <summary>Numbers of data sets (tags) inside record <see cref="RecordNumbers.Envelope"/> (1)</summary>
 		Public Enum EnvelopeTags As Byte
 			''' <summary>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.ModelVersion"/> for more info.</remarks>
-			<FieldDisplayName("Model Version")> <Category("Internal")> ModelVersion = 0
+			<FieldDisplayName("")> <Category("Internal")> ModelVersion = 0
 			''' <summary>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</summary>
 			''' <remarks>See <seealso cref="IPTC.Destination"/> for more info.</remarks>
-			<FieldDisplayName("Destination")> <Category("Old IPTC")> Destination = 5
+			<FieldDisplayName("")> <Category("Old IPTC")> Destination = 5
 			''' <summary>A number representing the file format.</summary>
 			''' <remarks>See <seealso cref="IPTC.FileFormat"/> for more info.</remarks>
-			<FieldDisplayName("File Format")> <Category("Embeded object")> FileFormat = 20
+			<FieldDisplayName("")> <Category("Embeded object")> FileFormat = 20
 			''' <summary>A binary number representing the particular version of the <see cref="FileFormat"/></summary>
 			''' <remarks>See <seealso cref="IPTC.FileFormatVersion"/> for more info.</remarks>
-			<FieldDisplayName("File Format Version")> <Category("Embeded object")> FileFormatVersion = 22
+			<FieldDisplayName("")> <Category("Embeded object")> FileFormatVersion = 22
 			''' <summary>Identifies the provider and product.</summary>
 			''' <remarks>See <seealso cref="IPTC.ServiceIdentifier"/> for more info.</remarks>
-			<FieldDisplayName("Service Identifier")> <Category("Old IPTC")> ServiceIdentifier = 30
+			<FieldDisplayName("")> <Category("Old IPTC")> ServiceIdentifier = 30
 			''' <summary>The characters form a number that will be unique for the date specified in <see cref="DateSent"/> and for the Service Identifier specified in <see cref="ServiceIdentifier"/>.</summary>
 			''' <remarks>See <seealso cref="IPTC.EnvelopeNumber"/> for more info.</remarks>
-			<FieldDisplayName("Envelope Number")> <Category("Old IPTC")> EnvelopeNumber = 40
+			<FieldDisplayName("")> <Category("Old IPTC")> EnvelopeNumber = 40
 			''' <summary>Allows a provider to identify subsets of its overall service.</summary>
 			''' <remarks>See <seealso cref="IPTC.ProductID"/> for more info.</remarks>
-			<FieldDisplayName("Product I.D.")> <Category("Old IPTC")> ProductID = 50
+			<FieldDisplayName("")> <Category("Old IPTC")> ProductID = 50
 			''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, <see cref="Urgency"/>).</summary>
 			''' <remarks>See <seealso cref="IPTC.EnvelopePriority"/> for more info.</remarks>
-			<FieldDisplayName("Envelope Priority")> <Category("Status")> EnvelopePriority = 60
+			<FieldDisplayName("")> <Category("Status")> EnvelopePriority = 60
 			''' <summary>Indicates year, month and day the service sent the material.</summary>
 			''' <remarks>See <seealso cref="IPTC.DateSent"/> for more info.</remarks>
-			<FieldDisplayName("Date Sent")> <Category("Date")> DateSent = 70
+			<FieldDisplayName("")> <Category("Date")> DateSent = 70
 			''' <summary>This is the time the service sent the material.</summary>
 			''' <remarks>See <seealso cref="IPTC.TimeSent"/> for more info.</remarks>
-			<FieldDisplayName("Time Sent")> <Category("Date")> TimeSent = 80
+			<FieldDisplayName("")> <Category("Date")> TimeSent = 80
 			''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
 			''' <remarks>See <seealso cref="IPTC.CodedCharacterSet"/> for more info.</remarks>
-			<FieldDisplayName("CodedCharacterSet")> <Category("Old IPTC")> CodedCharacterSet = 90
+			<FieldDisplayName("")> <Category("Old IPTC")> CodedCharacterSet = 90
 			''' <summary>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</summary>
 			''' <remarks>See <seealso cref="IPTC.UNO"/> for more info.</remarks>
-			<FieldDisplayName("UNO")> <Category("Old IPTC")> UNO = 100
+			<FieldDisplayName("")> <Category("Old IPTC")> UNO = 100
 			''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
 			''' <remarks>See <seealso cref="IPTC.ARMIdentifier"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ARM Identifier")> <Category("Old IPTC")> ARMIdentifier = 120
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Old IPTC")> ARMIdentifier = 120
 			''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
 			''' <remarks>See <seealso cref="IPTC.ARMVersion"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ARM Version")> <Category("Old IPTC")> ARMVersion = 122
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Old IPTC")> ARMVersion = 122
 		End Enum
 		''' <summary>Numbers of data sets (tags) inside record <see cref="RecordNumbers.Application"/> (2)</summary>
 		Public Enum ApplicationTags As Byte
 			''' <summary>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.RecordVersion"/> for more info.</remarks>
-			<FieldDisplayName("Record Version")> <Category("Internal")> RecordVersion = 0
+			<FieldDisplayName("")> <Category("Internal")> RecordVersion = 0
 			''' <summary>The Object Type is used to distinguish between different types of objects within the IIM.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectTypeReference"/> for more info.</remarks>
-			<FieldDisplayName("Object Type Reference")> <Category("Category")> ObjectTypeReference = 3
+			<FieldDisplayName("")> <Category("Category")> ObjectTypeReference = 3
 			''' <summary>The Object Attribute defines the nature of the object independent of the Subject.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectAttributeReference"/> for more info.</remarks>
-			<FieldDisplayName("Object Attribute Reference")> <Category("Category")> ObjectAttributeReference = 4
+			<FieldDisplayName("")> <Category("Category")> ObjectAttributeReference = 4
 			''' <summary>Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectName"/> for more info.</remarks>
-			<FieldDisplayName("Object Name")> <Category("Title")> ObjectName = 5
+			<FieldDisplayName("")> <Category("Title")> ObjectName = 5
 			''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.EditStatus"/> for more info.</remarks>
-			<FieldDisplayName("Edit Status")> <Category("Status")> EditStatus = 7
+			<FieldDisplayName("")> <Category("Status")> EditStatus = 7
 			''' <summary>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.EditorialUpdate"/> for more info.</remarks>
-			<FieldDisplayName("Editorial Update")> <Category("Status")> EditorialUpdate = 8
+			<FieldDisplayName("")> <Category("Status")> EditorialUpdate = 8
 			''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, <see cref="EnvelopePriority"/>).</summary>
 			''' <remarks>See <seealso cref="IPTC.Urgency"/> for more info.</remarks>
-			<FieldDisplayName("Urgency")> <Category("Status")> Urgency = 10
+			<FieldDisplayName("")> <Category("Status")> Urgency = 10
 			''' <summary>The Subject Reference is a structured definition of the subject matter.</summary>
 			''' <remarks>See <seealso cref="IPTC.SubjectReference"/> for more info.</remarks>
-			<FieldDisplayName("Subject Reference")> <Category("Old IPTC")> SubjectReference = 12
+			<FieldDisplayName("")> <Category("Old IPTC")> SubjectReference = 12
 			''' <summary>Identifies the subject of the objectdata in the opinion of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.Category"/> for more info.</remarks>
-			<FieldDisplayName("Category")> <Category("Category")> Category = 15
+			<FieldDisplayName("")> <Category("Category")> Category = 15
 			''' <summary>Supplemental categories further refine the subject of an objectdata.</summary>
 			''' <remarks>See <seealso cref="IPTC.SupplementalCategory"/> for more info.</remarks>
-			<FieldDisplayName("Supplemental Category")> <Category("Category")> SupplementalCategory = 20
+			<FieldDisplayName("")> <Category("Category")> SupplementalCategory = 20
 			''' <summary>Identifies objectdata that recurs often and predictably.</summary>
 			''' <remarks>See <seealso cref="IPTC.FixtureIdentifier"/> for more info.</remarks>
-			<FieldDisplayName("Fixture Identifier")> <Category("Category")> FixtureIdentifier = 22
+			<FieldDisplayName("")> <Category("Category")> FixtureIdentifier = 22
 			''' <summary>Used to indicate specific information retrieval words.</summary>
 			''' <remarks>See <seealso cref="IPTC.Keywords"/> for more info.</remarks>
-			<FieldDisplayName("Keywords")> <Category("Category")> Keywords = 25
+			<FieldDisplayName("")> <Category("Category")> Keywords = 25
 			''' <summary>Indicates the code of a country/geographical location referenced by the content of the object.</summary>
 			''' <remarks>See <seealso cref="IPTC.ContentLocationCode"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("Content Location Code")> <Category("Location")> ContentLocationCode = 26
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Location")> ContentLocationCode = 26
 			''' <summary>Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.ContentLocationName"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("Content Location Name")> <Category("Location")> ContentLocationName = 27
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Location")> ContentLocationName = 27
 			''' <summary>The earliest date the provider intends the object to be used.</summary>
 			''' <remarks>See <seealso cref="IPTC.ReleaseDate"/> for more info.</remarks>
-			<FieldDisplayName("Release Date")> <Category("Date")> ReleaseDate = 30
+			<FieldDisplayName("")> <Category("Date")> ReleaseDate = 30
 			''' <summary>The earliest time the provider intends the object to be used.</summary>
 			''' <remarks>See <seealso cref="IPTC.ReleaseTime"/> for more info.</remarks>
-			<FieldDisplayName("Release Time")> <Category("Date")> ReleaseTime = 32
+			<FieldDisplayName("")> <Category("Date")> ReleaseTime = 32
 			''' <summary>The latest date the provider or owner intends the objectdata to be used.</summary>
 			''' <remarks>See <seealso cref="IPTC.ExpirationDate"/> for more info.</remarks>
-			<FieldDisplayName("Expiration Date")> <Category("Date")> ExpirationDate = 37
+			<FieldDisplayName("")> <Category("Date")> ExpirationDate = 37
 			''' <summary>The latest time the provider or owner intends the objectdata to be used.</summary>
 			''' <remarks>See <seealso cref="IPTC.ExpirationTime"/> for more info.</remarks>
-			<FieldDisplayName("Expiration Time")> <Category("Date")> ExpirationTime = 38
+			<FieldDisplayName("")> <Category("Date")> ExpirationTime = 38
 			''' <summary>Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.</summary>
 			''' <remarks>See <seealso cref="IPTC.SpecialInstructions"/> for more info.</remarks>
-			<FieldDisplayName("Special Instructions")> <Category("Other")> SpecialInstructions = 40
+			<FieldDisplayName("")> <Category("Other")> SpecialInstructions = 40
 			''' <summary>Indicates the type of action that this object provides to a previous object.</summary>
 			''' <remarks>See <seealso cref="IPTC.ActionAdvised"/> for more info.</remarks>
-			<FieldDisplayName("Action Advised")> <Category("Other")> ActionAdvised = 42
+			<FieldDisplayName("")> <Category("Other")> ActionAdvised = 42
 			''' <summary>Identifies the Service Identifier of a prior envelope to which the current object refers.</summary>
 			''' <remarks>See <seealso cref="IPTC.ReferenceService"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("Reference Service")> <Category("Old IPTC")> ReferenceService = 45
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Old IPTC")> ReferenceService = 45
 			''' <summary>Identifies the date of a prior envelope to which the current object refers.</summary>
 			''' <remarks>See <seealso cref="IPTC.ReferenceDate"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("Reference Date")> <Category("Old IPTC")> ReferenceDate = 47
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Old IPTC")> ReferenceDate = 47
 			''' <summary>Identifies the Envelope Number of a prior envelope to which the current object refers.</summary>
 			''' <remarks>See <seealso cref="IPTC.ReferenceNumber"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("Reference Number")> <Category("Old IPTC")> ReferenceNumber = 50
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Old IPTC")> ReferenceNumber = 50
 			''' <summary>The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.</summary>
 			''' <remarks>See <seealso cref="IPTC.DateCreated"/> for more info.</remarks>
-			<FieldDisplayName("Date Created")> <Category("Date")> DateCreated = 55
+			<FieldDisplayName("")> <Category("Date")> DateCreated = 55
 			''' <summary>The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.</summary>
 			''' <remarks>See <seealso cref="IPTC.TimeCreated"/> for more info.</remarks>
-			<FieldDisplayName("Time Created")> <Category("Date")> TimeCreated = 60
+			<FieldDisplayName("")> <Category("Date")> TimeCreated = 60
 			''' <summary>The date the digital representation of the objectdata was created.</summary>
 			''' <remarks>See <seealso cref="IPTC.DigitalCreationDate"/> for more info.</remarks>
-			<FieldDisplayName("Digital Creation Date")> <Category("Date")> DigitalCreationDate = 62
+			<FieldDisplayName("")> <Category("Date")> DigitalCreationDate = 62
 			''' <summary>The time the digital representation of the objectdata was created.</summary>
 			''' <remarks>See <seealso cref="IPTC.DigitalCreationTime"/> for more info.</remarks>
-			<FieldDisplayName("Digital Creation Time")> <Category("Date")> DigitalCreationTime = 63
+			<FieldDisplayName("")> <Category("Date")> DigitalCreationTime = 63
 			''' <summary>Identifies the type of program used to originate the objectdata.</summary>
 			''' <remarks>See <seealso cref="IPTC.OriginatingProgram"/> for more info.</remarks>
-			<FieldDisplayName("Originating Program")> <Category("Other")> OriginatingProgram = 65
+			<FieldDisplayName("")> <Category("Other")> OriginatingProgram = 65
 			''' <summary>Identifies the type of program used to originate the objectdata.</summary>
 			''' <remarks>See <seealso cref="IPTC.ProgramVersion"/> for more info.</remarks>
-			<FieldDisplayName("Program Version")> <Category("Other")> ProgramVersion = 70
+			<FieldDisplayName("")> <Category("Other")> ProgramVersion = 70
 			''' <summary>Virtually only used in North America.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectCycle"/> for more info.</remarks>
-			<FieldDisplayName("Object Cycle")> <Category("Status")> ObjectCycle = 75
+			<FieldDisplayName("")> <Category("Status")> ObjectCycle = 75
 			''' <summary>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</summary>
 			''' <remarks>See <seealso cref="IPTC.ByLine"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("By-line")> <Category("Author")> ByLine = 80
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Author")> ByLine = 80
 			''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
 			''' <remarks>See <seealso cref="IPTC.ByLineTitle"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("By-line Title")> <Category("Author")> ByLineTitle = 85
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Author")> ByLineTitle = 85
 			''' <summary>Identifies city of objectdata origin according to guidelines established by the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.City"/> for more info.</remarks>
-			<FieldDisplayName("City")> <Category("Location")> City = 90
+			<FieldDisplayName("")> <Category("Location")> City = 90
 			''' <summary>Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.SubLocation"/> for more info.</remarks>
-			<FieldDisplayName("Sublocation")> <Category("Location")> SubLocation = 92
+			<FieldDisplayName("")> <Category("Location")> SubLocation = 92
 			''' <summary>Identifies Province/State of origin according to guidelines established by the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.ProvinceState"/> for more info.</remarks>
-			<FieldDisplayName("Province/State")> <Category("Location")> ProvinceState = 95
+			<FieldDisplayName("")> <Category("Location")> ProvinceState = 95
 			''' <summary>Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.</summary>
 			''' <remarks>See <seealso cref="IPTC.CountryPrimaryLocationCode"/> for more info.</remarks>
-			<FieldDisplayName("Country/Primary Location Code")> <Category("Location")> CountryPrimaryLocationCode = 100
+			<FieldDisplayName("")> <Category("Location")> CountryPrimaryLocationCode = 100
 			''' <summary>Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.CountryPrimaryLocationName"/> for more info.</remarks>
-			<FieldDisplayName("Country/Primary Location Name")> <Category("Location")> CountryPrimaryLocationName = 101
+			<FieldDisplayName("")> <Category("Location")> CountryPrimaryLocationName = 101
 			''' <summary>A code representing the location of original transmission according to practices of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.OriginalTransmissionReference"/> for more info.</remarks>
-			<FieldDisplayName("Original Transmission Refrence")> <Category("Location")> OriginalTransmissionReference = 103
+			<FieldDisplayName("")> <Category("Location")> OriginalTransmissionReference = 103
 			''' <summary>A publishable entry providing a synopsis of the contents of the objectdata.</summary>
 			''' <remarks>See <seealso cref="IPTC.Headline"/> for more info.</remarks>
-			<FieldDisplayName("Headline")> <Category("Title")> Headline = 105
+			<FieldDisplayName("")> <Category("Title")> Headline = 105
 			''' <summary>Identifies the provider of the objectdata, not necessarily the owner/creator.</summary>
 			''' <remarks>See <seealso cref="IPTC.Credit"/> for more info.</remarks>
-			<FieldDisplayName("Credit")> <Category("Author")> Credit = 110
+			<FieldDisplayName("")> <Category("Author")> Credit = 110
 			''' <summary>Identifies the original owner of the intellectual content of the objectdata.</summary>
 			''' <remarks>See <seealso cref="IPTC.Source"/> for more info.</remarks>
-			<FieldDisplayName("Source")> <Category("Author")> Source = 115
+			<FieldDisplayName("")> <Category("Author")> Source = 115
 			''' <summary>Contains any necessary copyright notice.</summary>
 			''' <remarks>See <seealso cref="IPTC.CopyrightNotice"/> for more info.</remarks>
-			<FieldDisplayName("Copyright Notice")> <Category("Author")> CopyrightNotice = 116
+			<FieldDisplayName("")> <Category("Author")> CopyrightNotice = 116
 			''' <summary>Identifies the person or organisation which can provide further background information on the objectdata.</summary>
 			''' <remarks>See <seealso cref="IPTC.Contact"/> for more info.</remarks>
-			<FieldDisplayName("Contact")> <Category("Author")> Contact = 118
+			<FieldDisplayName("")> <Category("Author")> Contact = 118
 			''' <summary>A textual description of the objectdata, particularly used where the object is not text.</summary>
 			''' <remarks>See <seealso cref="IPTC.CaptionAbstract"/> for more info.</remarks>
-			<FieldDisplayName("Caption/Abstract")> <Category("Title")> CaptionAbstract = 120
+			<FieldDisplayName("")> <Category("Title")> CaptionAbstract = 120
 			''' <summary>Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.</summary>
 			''' <remarks>See <seealso cref="IPTC.WriterEditor"/> for more info.</remarks>
-			<FieldDisplayName("Writer/Editor")> <Category("Author")> WriterEditor = 122
+			<FieldDisplayName("")> <Category("Author")> WriterEditor = 122
 			''' <summary>Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.</summary>
 			''' <remarks>See <seealso cref="IPTC.RasterizedeCaption"/> for more info.</remarks>
-			<FieldDisplayName("Rasterized Caption")> <Category("Title")> RasterizedeCaption = 125
+			<FieldDisplayName("")> <Category("Title")> RasterizedeCaption = 125
 			''' <summary>Image Type</summary>
 			''' <remarks>See <seealso cref="IPTC.ImageType"/> for more info.</remarks>
-			<FieldDisplayName("Image Type")> <Category("Image")> ImageType = 130
+			<FieldDisplayName("")> <Category("Image")> ImageType = 130
 			''' <summary>Indicates the layout of the image area.</summary>
 			''' <remarks>See <seealso cref="IPTC.ImageOrientation"/> for more info.</remarks>
-			<FieldDisplayName("Image Orientation")> <Category("Image")> ImageOrientation = 131
+			<FieldDisplayName("")> <Category("Image")> ImageOrientation = 131
 			''' <summary>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</summary>
 			''' <remarks>See <seealso cref="IPTC.LanguageIdentifier"/> for more info.</remarks>
-			<FieldDisplayName("Language Identifier")> <Category("Other")> LanguageIdentifier = 135
+			<FieldDisplayName("")> <Category("Other")> LanguageIdentifier = 135
 			''' <summary>Type of audio in objectdata</summary>
 			''' <remarks>See <seealso cref="IPTC.AudioType"/> for more info.</remarks>
-			<FieldDisplayName("Audio Type")> <Category("Audio")> AudioType = 150
+			<FieldDisplayName("")> <Category("Audio")> AudioType = 150
 			''' <summary>Sampling rate, representing the sampling rate in hertz (Hz).</summary>
 			''' <remarks>See <seealso cref="IPTC.AudioSamplingRate"/> for more info.</remarks>
-			<FieldDisplayName("Audio Sampling Rate")> <Category("Audio")> AudioSamplingRate = 151
+			<FieldDisplayName("")> <Category("Audio")> AudioSamplingRate = 151
 			''' <summary>The number of bits in each audio sample.</summary>
 			''' <remarks>See <seealso cref="IPTC.AudioSamplingResolution"/> for more info.</remarks>
-			<FieldDisplayName("Audio Sampling Resolution")> <Category("Audio")> AudioSamplingResolution = 152
+			<FieldDisplayName("")> <Category("Audio")> AudioSamplingResolution = 152
 			''' <summary>The running time of an audio objectdata when played back at the speed at which it was recorded.</summary>
 			''' <remarks>See <seealso cref="IPTC.AudioDuration"/> for more info.</remarks>
-			<FieldDisplayName("Audio Duration")> <Category("Audio")> AudioDuration = 153
+			<FieldDisplayName("")> <Category("Audio")> AudioDuration = 153
 			''' <summary>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.AudioOutcue"/> for more info.</remarks>
-			<FieldDisplayName("Audio Outcue")> <Category("Audio")> AudioOutcue = 154
+			<FieldDisplayName("")> <Category("Audio")> AudioOutcue = 154
 			''' <summary>The file format of the ObjectData Preview.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectDataPreviewFileFormat"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ObjectData Preview File Format")> <Category("Embeded object")> ObjectDataPreviewFileFormat = 200
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Embeded object")> ObjectDataPreviewFileFormat = 200
 			''' <summary>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectDataPreviewFileFormatVersion"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ObjectData Preview File Format Version")> <Category("Embeded object")> ObjectDataPreviewFileFormatVersion = 201
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Embeded object")> ObjectDataPreviewFileFormatVersion = 201
 			''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectDataPreviewData"/> for more info.</remarks>
-			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ObjectData Preview Data")> <Category("Embeded object")> ObjectDataPreviewData = 202
+			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> <Category("Embeded object")> ObjectDataPreviewData = 202
+		End Enum
+		''' <summary>Numbers of data sets (tags) inside record <see cref="RecordNumbers.DigitalNewsphotoParameter"/> (3)</summary>
+		Public Enum DigitalNewsphotoParameterTags As Byte
+			''' <summary>A binary number representing the version of the Digital Newsphoto Parameter Record utilised by the provider.</summary>
+			''' <remarks>See <seealso cref="IPTC.RecordVersion3"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Internal")> RecordVersion3 = 0
+			''' <summary>The picture number provides a universally unique reference to an image.</summary>
+			''' <remarks>See <seealso cref="IPTC.PictureNumber"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Old IPTC")> PictureNumber = 10
+			''' <summary>A number representing the number of pixels in a scan line for the component with the highest resolution.</summary>
+			''' <remarks>See <seealso cref="IPTC.PixelsPerLine"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> PixelsPerLine = 20
+			''' <summary>A number representing the number of scan lines comprising the image for the component with the highest resolution.</summary>
+			''' <remarks>See <seealso cref="IPTC.NumberOfLines"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> NumberOfLines = 30
+			''' <summary>A number indicating the number of pixels per unit length in the scanning direction.</summary>
+			''' <remarks>See <seealso cref="IPTC.PixelSizeInScanningDirection"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> PixelSizeInScanningDirection = 40
+			''' <summary>A number indicating the number of pixels per unit length perpendicular to the scanning direction.</summary>
+			''' <remarks>See <seealso cref="IPTC.PixelSizePerpendicularToScanningDirection"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> PixelSizePerpendicularToScanningDirection = 50
+			''' <summary>A number indicating the image content.</summary>
+			''' <remarks>See <seealso cref="IPTC.SupplementType"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> SupplementType = 55
+			''' <summary>Indicates colour representation</summary>
+			''' <remarks>See <seealso cref="IPTC.ColourRepresentation"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> ColourRepresentation = 60
+			''' <summary>A value indicating the colour space in which the pixel values are expressed for each component in the image.</summary>
+			''' <remarks>See <seealso cref="IPTC.InterchangeColourSpace"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> InterchangeColourSpace = 64
+			''' <summary>Each of 1 to four octets contains a binary number that relates to the colour component using the identification number assigned to it in the appendix for each colour space.</summary>
+			''' <remarks>See <seealso cref="IPTC.ColourSequence"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> ColourSequence = 65
+			''' <summary>Specifies the International Color Consortium profile for the scanning/source device used to generate the digital image files.</summary>
+			''' <remarks>See <seealso cref="IPTC.IccInputColourProfile"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> IccInputColourProfile = 66
+			''' <summary>This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).</summary>
+			''' <remarks>See <seealso cref="IPTC.ColourCalibrationMatrixTable"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> ColourCalibrationMatrixTable = 70
+			''' <summary>Consists of one, three or four one-dimensional lookup tables (LUT).</summary>
+			''' <remarks>See <seealso cref="IPTC.LookupTable"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> LookupTable = 80
+			''' <summary>A binary number representing the number of index entries in the DataSet 3:85 (<see cref="ColourPalette"/>).</summary>
+			''' <remarks>See <seealso cref="IPTC.NumberOfIndexEntries"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> NumberOfIndexEntries = 84
+			''' <summary>In a single-frame colour image, a colour is described with a single sample per pixel.</summary>
+			''' <remarks>See <seealso cref="IPTC.ColourPalette"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> ColourPalette = 85
+			''' <summary>A number between 1 and 16 that indicates the number of bits per pixel value used as entries in the Colour Palette. These values are found in the objectdata itself.</summary>
+			''' <remarks>See <seealso cref="IPTC.NumberOfBitsPerSample"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> NumberOfBitsPerSample = 86
+			''' <summary>A number defining the spatial and temporal relationship between pixels.</summary>
+			''' <remarks>See <seealso cref="IPTC.SamplingStructure"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> SamplingStructure = 90
+			''' <summary>A number indicating the correct relative two dimensional order of the pixels in the objectdata. Eight possibilities exist.</summary>
+			''' <remarks>See <seealso cref="IPTC.ScanningDirection"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> ScanningDirection = 100
+			''' <summary>A number indicating the clockwise rotation applied to the image for presentation.</summary>
+			''' <remarks>See <seealso cref="IPTC.ImageRotation"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> ImageRotation = 102
+			''' <summary>Specifies data compression method</summary>
+			''' <remarks>See <seealso cref="IPTC.DataCompressionMethod"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> DataCompressionMethod = 110
+			''' <summary>Contains a binary number identifying the quantisation law.</summary>
+			''' <remarks>See <seealso cref="IPTC.QuantisationMethod"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> QuantisationMethod = 120
+			''' <summary>These end points apply to the coding process.</summary>
+			''' <remarks>See <seealso cref="IPTC.EndPoints"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> EndPoints = 125
+			''' <summary>Indicates if values outside the range defined by the end points in DataSet 3:125 may occur.</summary>
+			''' <remarks>See <seealso cref="IPTC.ExcursionTolerance"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> ExcursionTolerance = 130
+			''' <summary>Contains a sequence of one or more octets describing the number of bits used to encode each component. The sequence is specified by the order of components in DataSet 3:65.</summary>
+			''' <remarks>See <seealso cref="IPTC.BitsPerComponent"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> BitsPerComponent = 135
+			''' <summary>A binary value which specifies the maximum density range multiplied by 100.</summary>
+			''' <remarks>See <seealso cref="IPTC.MaximumDensityRange"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> MaximumDensityRange = 140
+			''' <summary>A binary value which specifies the value of gamma for the device multiplied by 100.</summary>
+			''' <remarks>See <seealso cref="IPTC.GammaCompensatedValue"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Image 3")> GammaCompensatedValue = 145
+		End Enum
+		''' <summary>Numbers of data sets (tags) inside record <see cref="RecordNumbers.NotAllocated5"/> (5)</summary>
+		Public Enum NotAllocated5Tags As Byte
+			''' <summary>Overll rating of the subject</summary>
+			''' <remarks>See <seealso cref="IPTC.OverlallRating"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Status")> OverlallRating = 101
+			''' <summary>Rates technical quality of subject data (e.g. Is the photo sharp?)</summary>
+			''' <remarks>See <seealso cref="IPTC.TechnicalQuality"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Status")> TechnicalQuality = 102
+			''' <summary>Rates artistic quality of subject data (i.e. How nice it is?)</summary>
+			''' <remarks>See <seealso cref="IPTC.ArtQuality"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Status")> ArtQuality = 103
+			''' <summary>Rates information value of subject data (i.e. Does it provide any valuable information?)</summary>
+			''' <remarks>See <seealso cref="IPTC.InformationValue"/> for more info.</remarks>
+			<FieldDisplayName("")> <Category("Status")> InformationValue = 104
 		End Enum
 		''' <summary>Numbers of data sets (tags) inside record <see cref="RecordNumbers.PreObjectDataDescriptorRecord"/> (7)</summary>
 		Public Enum PreObjectDataDescriptorRecordTags As Byte
 			''' <summary>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</summary>
 			''' <remarks>See <seealso cref="IPTC.SizeMode"/> for more info.</remarks>
-			<FieldDisplayName("Size Mode")> <Category("Embeded object")> SizeMode = 10
+			<FieldDisplayName("")> <Category("Embeded object")> SizeMode = 10
 			''' <summary>The maximum size for the following Subfile DataSet(s).</summary>
 			''' <remarks>See <seealso cref="IPTC.MaxSubfileSize"/> for more info.</remarks>
-			<FieldDisplayName("Max Subfile Size")> <Category("Embeded object")> MaxSubfileSize = 20
+			<FieldDisplayName("")> <Category("Embeded object")> MaxSubfileSize = 20
 			''' <summary>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectDataSizeAnnounced"/> for more info.</remarks>
-			<FieldDisplayName("ObjectData Size Announced")> <Category("Embeded object")> ObjectDataSizeAnnounced = 90
+			<FieldDisplayName("")> <Category("Embeded object")> ObjectDataSizeAnnounced = 90
 			''' <summary>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</summary>
 			''' <remarks>See <seealso cref="IPTC.MaximumObjectDataSize"/> for more info.</remarks>
-			<FieldDisplayName("Maximum ObjectData Size")> <Category("Embeded object")> MaximumObjectDataSize = 95
+			<FieldDisplayName("")> <Category("Embeded object")> MaximumObjectDataSize = 95
 		End Enum
 		''' <summary>Numbers of data sets (tags) inside record <see cref="RecordNumbers.ObjectDataRecord"/> (8)</summary>
 		Public Enum ObjectDataRecordTags As Byte
 			''' <summary>Subfile DataSet containing the objectdata itself.</summary>
 			''' <remarks>See <seealso cref="IPTC.Subfile"/> for more info.</remarks>
-			<FieldDisplayName("Subfile")> <Category("Embeded object")> Subfile = 10
+			<FieldDisplayName("")> <Category("Embeded object")> Subfile = 10
 		End Enum
 		''' <summary>Numbers of data sets (tags) inside record <see cref="RecordNumbers.PostObjectDataDescriptorRecord"/> (9)</summary>
 		Public Enum PostObjectDataDescriptorRecordTags As Byte
 			''' <summary>Total size of the objectdata, in octets, without tags.</summary>
 			''' <remarks>See <seealso cref="IPTC.ConfirmedObjectDataSize"/> for more info.</remarks>
-			<FieldDisplayName("Confirmed ObjectData Size")> <Category("Embeded object")> ConfirmedObjectDataSize = 10
+			<FieldDisplayName("")> <Category("Embeded object")> ConfirmedObjectDataSize = 10
 		End Enum
 	Partial Class Iptc
 		''' <summary>Gets Enum that contains list of tags for specific record (group of tags)</summary>
@@ -288,6 +388,8 @@ Namespace MetadataT.IptcT
 			Select Case Record
 				Case RecordNumbers.Envelope : Return GetType(EnvelopeTags)
 				Case RecordNumbers.Application : Return GetType(ApplicationTags)
+				Case RecordNumbers.DigitalNewsphotoParameter : Return GetType(DigitalNewsphotoParameterTags)
+				Case RecordNumbers.NotAllocated5 : Return GetType(NotAllocated5Tags)
 				Case RecordNumbers.PreObjectDataDescriptorRecord : Return GetType(PreObjectDataDescriptorRecordTags)
 				Case RecordNumbers.ObjectDataRecord : Return GetType(ObjectDataRecordTags)
 				Case RecordNumbers.PostObjectDataDescriptorRecord : Return GetType(PostObjectDataDescriptorRecordTags)
@@ -393,7 +495,7 @@ Namespace MetadataT.IptcT
 				End Get
 			End Property
 			''' <summary>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</summary>
-			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
+			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4). Same tag called Record Version" also exists in record no. 3.</remarks>
 			Public Shared ReadOnly Property RecordVersion As DataSetIdentification
 				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.RecordVersion, "RecordVersion", "Record Version")
@@ -778,6 +880,244 @@ Namespace MetadataT.IptcT
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectDataPreviewData, "ObjectDataPreviewData", "ObjectData Preview Data")
 				End Get
 			End Property
+			''' <summary>A binary number representing the version of the Digital Newsphoto Parameter Record utilised by the provider.</summary>
+			''' <remarks>Version numbers are assigned by IPTC and NAA. The version of this record is four (4). Same tag called "Record Version" also exists in record no. 2.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property RecordVersion3 As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.RecordVersion3, "RecordVersion3", "Record Version (3)")
+				End Get
+			End Property
+			''' <summary>The picture number provides a universally unique reference to an image.</summary>
+			''' <remarks>For example, colour images, when split with colour components into multiple objects, i.e. envelopes, would carry the same Picture Number.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property PictureNumber As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.PictureNumber, "PictureNumber", "Picture Number")
+				End Get
+			End Property
+			''' <summary>A number representing the number of pixels in a scan line for the component with the highest resolution.</summary>
+			''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero).NCPS values are 1024 or 2048.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property PixelsPerLine As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.PixelsPerLine, "PixelsPerLine", "Pixels Per Line")
+				End Get
+			End Property
+			''' <summary>A number representing the number of scan lines comprising the image for the component with the highest resolution.</summary>
+			''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero).NCPS range is 1 to 2048.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property NumberOfLines As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.NumberOfLines, "NumberOfLines", "Number of Lines")
+				End Get
+			End Property
+			''' <summary>A number indicating the number of pixels per unit length in the scanning direction.</summary>
+			''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero). NCPS value is 1.Pixel Size is a relative size expressed as the ratio of 3:40 to 3:50 (3:40/3:50).</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property PixelSizeInScanningDirection As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.PixelSizeInScanningDirection, "PixelSizeInScanningDirection", "Pixel Size In Scanning Direction")
+				End Get
+			End Property
+			''' <summary>A number indicating the number of pixels per unit length perpendicular to the scanning direction.</summary>
+			''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero). NCPS value is 1.Pixel Size is a relative size expressed as the ratio of 3:40 to 3:50 (3:40/3:50).</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property PixelSizePerpendicularToScanningDirection As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.PixelSizePerpendicularToScanningDirection, "PixelSizePerpendicularToScanningDirection", "Pixel Size Perpendicular To Scanning Direction")
+				End Get
+			End Property
+			''' <summary>A number indicating the image content.</summary>
+			''' <remarks>Mandatory when the numeric character in DataSet 2:130 () is ‘9’ ()</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property SupplementType As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.SupplementType, "SupplementType", "Supplement Type")
+				End Get
+			End Property
+			''' <summary>Indicates colour representation</summary>
+			''' <remarks>The special interleaving structures refer to defined methods given in Appendix G according to the value in the sampling structure DataSet 3:90. Allowed combinations are: 0,01,03,0 - 4,0 (In a single-frame colour image, a colour is described with a single sample per pixel.)3,1 - 3,2 - 3,3 - 3,4 - 3,54,1 - 4,2 - 4,3 - 4,4 - 4,5NCPS values are 1,0 , 3,1 or 3,5.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ColourRepresentation As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.ColourRepresentation, "ColourRepresentation", "Colour Representation")
+				End Get
+			End Property
+			''' <summary>A value indicating the colour space in which the pixel values are expressed for each component in the image.</summary>
+			''' <remarks>Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image. Not valid when DataSet 3:60 octet zero (0) is 0 (zero). NCPS values are 0, 4 or 7 (, or ).</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property InterchangeColourSpace As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.InterchangeColourSpace, "InterchangeColourSpace", "Interchange Colour Space")
+				End Get
+			End Property
+			''' <summary>Each of 1 to four octets contains a binary number that relates to the colour component using the identification number assigned to it in the appendix for each colour space.</summary>
+			''' <remarks>The sequence specifies the sequence of the components as they appear in the objectdataFor frame sequential components, only one octet is set to identify the current colour component in the objectdata.Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, 1, 2, 3, or 4, i.e. single frame, frame sequential, line sequential or pixel sequential. Not valid when DataSet 3:60 octet zero (0) is 0 (zero).Allowed values are: 0 - 1 - 2 - 3 - 4; 0 - may be used for “monochrome” or “no image” representations. Other values are reserved.NCPS values are 0,1,2,3 or 123.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ColourSequence As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.ColourSequence, "ColourSequence", "Colour Sequence")
+				End Get
+			End Property
+			''' <summary>Specifies the International Color Consortium profile for the scanning/source device used to generate the digital image files.</summary>
+			''' <remarks>Valid when DataSet 3:64 has values 1,2,4,5 or 8.This profile can be used to translate the image colour information from the input device colour space into another device's native colour space. The ICC profile is specified in ISO/TC 130/WG2N562.Maximul alloved lenght of this field according to IPCT IIM standard is 512K. However current implementation does not allow such big fields.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property IccInputColourProfile As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.IccInputColourProfile, "IccInputColourProfile", "ICC Input Colour Profile")
+				End Get
+			End Property
+			''' <summary>This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).</summary>
+			''' <remarks>This DataSet will be removed from the next Version of this Standard.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ColourCalibrationMatrixTable As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.ColourCalibrationMatrixTable, "ColourCalibrationMatrixTable", "Colour Calibration Matrix Table")
+				End Get
+			End Property
+			''' <summary>Consists of one, three or four one-dimensional lookup tables (LUT).</summary>
+			''' <remarks>The LUT relates to the image data in the colour space defined in DataSet 3:64 and specifies the correction to apply to the pixel values before display or printing of the image. Not applicable if the colour space requires converting before display or printing. Maximul alloved lenght of this field according to IPCT IIM standard is 131072. However current implementation does not allow such big fields.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property LookupTable As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.LookupTable, "LookupTable", "Lookup Table")
+				End Get
+			End Property
+			''' <summary>A binary number representing the number of index entries in the DataSet 3:85 (<see cref="ColourPalette"/>).</summary>
+			''' <remarks>Mandatory where DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, i.e. single-frame. Not relevant for other image types.0 - No Colour Palette contained in DataSet 3:85. A default palette should be used. 1 - 65535 - valid numbers.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property NumberOfIndexEntries As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.NumberOfIndexEntries, "NumberOfIndexEntries", "Number of Index Entries")
+				End Get
+			End Property
+			''' <summary>In a single-frame colour image, a colour is described with a single sample per pixel.</summary>
+			''' <remarks>Mandatory if 3:84 exists and is non zero.The pixel value is used as an index into the Colour Palette.The purpose of the Colour Palette is to act as a lookup table mapping the pixel values into the Colour Space defined in 3:64.The number of index entries is defined in DataSet 3:84.The number of output values is defined in octet zero of DataSet 3:60.The number of octets used for each output value is deducted from 3:135.The colour sequence of the output values is defined in 3:65. A default palette may be referenced if this DataSet is omitted. A number of default palettes may be held to be selected according to the device identifier component of the Picture Number 3:10.Maximul alloved lenght of this field according to IPCT IIM standard is 524288. However current implementation does not allow such big fields.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ColourPalette As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.ColourPalette, "ColourPalette", "Colour Pallette")
+				End Get
+			End Property
+			''' <summary>A number between 1 and 16 that indicates the number of bits per pixel value used as entries in the Colour Palette. These values are found in the objectdata itself.</summary>
+			''' <remarks>Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, i.e. single frame. Not relevant for other image types.Each entry should be in one octet if number of bits is less than or equal to 8 and in two octets if number of bits is between 9 and 16, the least significant bit should always be aligned on the least significant bit of the least significant octet.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property NumberOfBitsPerSample As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.NumberOfBitsPerSample, "NumberOfBitsPerSample", "Number of Bits per Sample")
+				End Get
+			End Property
+			''' <summary>A number defining the spatial and temporal relationship between pixels.</summary>
+			''' <remarks>NCPS values are 0 or 2.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property SamplingStructure As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.SamplingStructure, "SamplingStructure", "Sampling Structure")
+				End Get
+			End Property
+			''' <summary>A number indicating the correct relative two dimensional order of the pixels in the objectdata. Eight possibilities exist.</summary>
+			''' <remarks>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).NCPS value is 0.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ScanningDirection As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.ScanningDirection, "ScanningDirection", "Scanning Direction")
+				End Get
+			End Property
+			''' <summary>A number indicating the clockwise rotation applied to the image for presentation.</summary>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ImageRotation As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.ImageRotation, "ImageRotation", "Image Rotation")
+				End Get
+			End Property
+			''' <summary>Specifies data compression method</summary>
+			''' <remarks>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).Octets 0-1 contain a binary number identifying the providerowner of the algorithm.Octet 2 contains a binary number identifying the type of compression algorithm.Octet 3 contains a binary number identifying the revision number of the algorithm.An identification number is issued by IPTC-NAA to providersowners of compression algorithms upon request (see Appendix A). The numbers identifying type and revision of algorithms are managed by the providers-owners.A zero (0) value of all octets in this DataSet identifies an uncompressed image. In this case the component values should be in one octet if number of bits is less than or equal to 8 and in two octets if number of bits is between 9 and 16, the least significant bit always being aligned on the least significant bit of the least significant octet.NCPS values are 0000 or 0121.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property DataCompressionMethod As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.DataCompressionMethod, "DataCompressionMethod", "Data Compression Method")
+				End Get
+			End Property
+			''' <summary>Contains a binary number identifying the quantisation law.</summary>
+			''' <remarks>The relations between different quantisation methods are described in DNPR Guideline 1. Not valid when DataSet 3:60 octet zero (0) is 0 (zero).NCPS values are 0 or 5.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property QuantisationMethod As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.QuantisationMethod, "QuantisationMethod", "Quantisation Method")
+				End Get
+			End Property
+			''' <summary>These end points apply to the coding process.</summary>
+			''' <remarks>2n octets. Valid only when DataSet 3:64 has a value of 0,1,2,4 or 5. Not relevant for other colour spaces. n = the number of octets per component as derived from 3:135 multiplied by the number of components. The number of components is 1 when octet one (1) of DataSet 3:60 has a value of one (1), in all other cases the number is defined in octet zero (0) of DataSet 3:60.The first n octets contain the values representing the minimum density that is encoded for each component in the order specified in DataSet 3:65.The second n octets contain the values representing the maximum density that is encoded for each component in the order specified in DataSet 3:65.The difference between the maximum and minimum density for every component is the same and given by the Maximum Density Range value in DataSet 3:140.NCPS end point values are 255 and 0.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property EndPoints As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.EndPoints, "EndPoints", "End Points")
+				End Get
+			End Property
+			''' <summary>Indicates if values outside the range defined by the end points in DataSet 3:125 may occur.</summary>
+			''' <remarks>NCPS value is false</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ExcursionTolerance As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.ExcursionTolerance, "ExcursionTolerance", "Excursion Tolerance")
+				End Get
+			End Property
+			''' <summary>Contains a sequence of one or more octets describing the number of bits used to encode each component. The sequence is specified by the order of components in DataSet 3:65.</summary>
+			''' <remarks>The number of octets is 1 when octet one (1) of DataSet 3:60 has a value of one (1), in all other cases the number of octets is equivalent to the number of components specified in octet zero (0) of DataSet 3:60.Each octet contains a binary value between one and 16.NCPS values are 8 or 888.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property BitsPerComponent As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.BitsPerComponent, "BitsPerComponent", "Bits Per Component")
+				End Get
+			End Property
+			''' <summary>A binary value which specifies the maximum density range multiplied by 100.</summary>
+			''' <remarks>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).The value represents the difference between the lowest density and the highest density points that can be encoded by the originating system.NCPS value is 160.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property MaximumDensityRange As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.MaximumDensityRange, "MaximumDensityRange", "Maximum Density Range")
+				End Get
+			End Property
+			''' <summary>A binary value which specifies the value of gamma for the device multiplied by 100.</summary>
+			''' <remarks>Valid only when DataSet 3:120 has a value of 5 or 7.If this DataSet is omitted receiving equipment should assume that a gamma value of 2.22 appliesNCPS value is 222</remarks>
+			Public Shared ReadOnly Property GammaCompensatedValue As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.DigitalNewsphotoParameter, DigitalNewsphotoParametertags.GammaCompensatedValue, "GammaCompensatedValue", "Gamma Compensated Value")
+				End Get
+			End Property
+			''' <summary>Overll rating of the subject</summary>
+			''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property OverlallRating As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.NotAllocated5, NotAllocated5tags.OverlallRating, "OverlallRating", "Overall Rating")
+				End Get
+			End Property
+			''' <summary>Rates technical quality of subject data (e.g. Is the photo sharp?)</summary>
+			''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property TechnicalQuality As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.NotAllocated5, NotAllocated5tags.TechnicalQuality, "TechnicalQuality", "Technical Quality")
+				End Get
+			End Property
+			''' <summary>Rates artistic quality of subject data (i.e. How nice it is?)</summary>
+			''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property ArtQuality As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.NotAllocated5, NotAllocated5tags.ArtQuality, "ArtQuality", "Art Quality")
+				End Get
+			End Property
+			''' <summary>Rates information value of subject data (i.e. Does it provide any valuable information?)</summary>
+			''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+			''' <version version="1.5.4">This property is new in version 1.5.4</version>
+			Public Shared ReadOnly Property InformationValue As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.NotAllocated5, NotAllocated5tags.InformationValue, "InformationValue", "Information Value")
+				End Get
+			End Property
 			''' <summary>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</summary>
 			Public Shared ReadOnly Property SizeMode As DataSetIdentification
 				<DebuggerStepThrough()> Get
@@ -822,9 +1162,9 @@ Namespace MetadataT.IptcT
 			''' <param name="Hidden">Returns also datasets that are within groups</param>
 			Public Shared Function KnownDataSets(Optional ByVal Hidden As Boolean = False) As DataSetIdentification()
 				If Hidden Then
-					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, ARMIdentifier, ARMVersion, RecordVersion, ObjectTypeReference, ObjectAttributeReference, ObjectName, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ContentLocationCode, ContentLocationName, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, ReferenceService, ReferenceDate, ReferenceNumber, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, ByLine, ByLineTitle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, ObjectDataPreviewFileFormat, ObjectDataPreviewFileFormatVersion, ObjectDataPreviewData, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
+					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, ARMIdentifier, ARMVersion, RecordVersion, ObjectTypeReference, ObjectAttributeReference, ObjectName, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ContentLocationCode, ContentLocationName, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, ReferenceService, ReferenceDate, ReferenceNumber, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, ByLine, ByLineTitle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, ObjectDataPreviewFileFormat, ObjectDataPreviewFileFormatVersion, ObjectDataPreviewData, RecordVersion3, PictureNumber, PixelsPerLine, NumberOfLines, PixelSizeInScanningDirection, PixelSizePerpendicularToScanningDirection, SupplementType, ColourRepresentation, InterchangeColourSpace, ColourSequence, IccInputColourProfile, ColourCalibrationMatrixTable, LookupTable, NumberOfIndexEntries, ColourPalette, NumberOfBitsPerSample, SamplingStructure, ScanningDirection, ImageRotation, DataCompressionMethod, QuantisationMethod, EndPoints, ExcursionTolerance, BitsPerComponent, MaximumDensityRange, GammaCompensatedValue, OverlallRating, TechnicalQuality, ArtQuality, InformationValue, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
 				Else
-					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, RecordVersion, ObjectTypeReference, ObjectAttributeReference, ObjectName, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
+					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, RecordVersion, ObjectTypeReference, ObjectAttributeReference, ObjectName, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, RecordVersion3, PictureNumber, PixelsPerLine, NumberOfLines, PixelSizeInScanningDirection, PixelSizePerpendicularToScanningDirection, SupplementType, ColourRepresentation, InterchangeColourSpace, ColourSequence, IccInputColourProfile, ColourCalibrationMatrixTable, LookupTable, NumberOfIndexEntries, ColourPalette, NumberOfBitsPerSample, SamplingStructure, ScanningDirection, ImageRotation, DataCompressionMethod, QuantisationMethod, EndPoints, ExcursionTolerance, BitsPerComponent, MaximumDensityRange, GammaCompensatedValue, OverlallRating, TechnicalQuality, ArtQuality, InformationValue, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
 				End If
 			End Function
 		End Structure
@@ -835,862 +1175,1015 @@ Namespace MetadataT.IptcT
 		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of AdvisedActions)))> Public Enum AdvisedActions As Byte
 			''' <summary>Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.</summary>
 			''' <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
-			<FieldDisplayName("Object Kill")> ObjectKill = 1
+			<FieldDisplayName("")> ObjectKill = 1
 			''' <summary>Object Replace. Signifies that the provider wants to replace the referenced object with the object provided under the current envelope.</summary>
-			<FieldDisplayName("Object Replace")> ObjectReplace = 2
+			<FieldDisplayName("")> ObjectReplace = 2
 			''' <summary>Object Append. Signifies that the provider wants to append to the referenced object information provided in the objectdata of the current envelope.</summary>
-			<FieldDisplayName("Object Append")> ObjectAppend = 3
+			<FieldDisplayName("")> ObjectAppend = 3
 			''' <summary>Object Reference. Signifies that the provider wants to make reference to objectdata in a different envelope.</summary>
-			<FieldDisplayName("Object Reference")> ObjectReference = 4
+			<FieldDisplayName("")> ObjectReference = 4
 		End Enum
 		''' <summary>Abstract Relation Methods Identifiers</summary>
 		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ARMMethods)))> Public Enum ARMMethods As UShort
 			''' <summary>Using DataSets 2:45, 2:47 and 2:50 (<see cref='ReferenceService'/>, <see cref='ReferenceDate'/> and <see cref='ReferenceNumber'/>)</summary>
-			<FieldDisplayName("Method 1 (Reference service, date, number)")> IPTCMethod1 = 1
+			<FieldDisplayName("")> IPTCMethod1 = 1
 			''' <summary>Using DataSet 1:100 (<see cref='UNO'/>)</summary>
-			<FieldDisplayName("Method 2 (UNO)")> IPTCMethod2 = 2
+			<FieldDisplayName("")> IPTCMethod2 = 2
 		End Enum
 		''' <summary>Abstract Relation Method Versions</summary>
 		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ARMVersions)))> Public Enum ARMVersions As UShort
 			''' <summary>The only ARM version</summary>
-			<FieldDisplayName("Version 1")> ARM1 = 1
+			<FieldDisplayName("")> ARM1 = 1
+		End Enum
+		''' <summary>Indicates colour representations</summary>
+		''' <remarks>The value is composed from two parts - number of components and buid-up structure of image. Use masks to get these componets.</remarks>
+		''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+		<Flags()> <Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ColourRepresentations)))> Public Enum ColourRepresentations As Short
+			''' <summary>Mask for getting number of components</summary>
+			''' <remarks>To get number of components AND enumeration value with this mask. To get numeric value right-shift AND-ed value by 8 bits.</remarks>
+			<Browsable(false),EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> NumberOfComponentsMask = &hFF00S
+			''' <summary>Mask for getting buid-up structure of image</summary>
+			''' <remarks>To get image build-up structure AND enumeration value with this mask.</remarks>
+			<Browsable(false),EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("")> ImageBuildUpStructureMask = &h00FFS
+			''' <summary>Monochrome</summary>
+			<FieldDisplayName("")> Monochrome = &h100
+			''' <summary>Three componnets</summary>
+			<FieldDisplayName("")> ThreeComponents = &h300
+			''' <summary>Four components</summary>
+			<FieldDisplayName("")> FourComponents = &h400
+			''' <summary>No Image</summary>
+			<FieldDisplayName("")> NoImage = 0
+			''' <summary>Single frame.</summary>
+			<FieldDisplayName("")> SingleFrame = 0
+			''' <summary>Frame sequential in multiple objects (one component per object)</summary>
+			''' <remarks>Only one component of a colour image in one envelope</remarks>
+			<FieldDisplayName("")> SequentialFrameMultipleObjects = 1
+			''' <summary>Frame sequential in one object</summary>
+			''' <remarks>All components of a colour imagein one envelope.</remarks>
+			<FieldDisplayName("")> SequentialFrameOneObject = 2
+			''' <summary>Line sequential</summary>
+			<FieldDisplayName("")> LineSequential = 3
+			''' <summary>Pixel sequential</summary>
+			<FieldDisplayName("")> PixelSequential = 4
+			''' <summary>Special interleaving structure</summary>
+			''' <remarks>The special interleaving structures refer to defined methods given in Appendix G according to the value in the sampling structure DataSet 3:90</remarks>
+			<FieldDisplayName("")> SpecialStructure = 5
+		End Enum
+		''' <summary>Allowed Interchange Colour Space values</summary>
+		''' <remarks>Other values are reserved for future use.</remarks>
+		''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ColourSpaceValue)))> Public Enum ColourSpaceValue As Byte
+			''' <summary>No colour space set</summary>
+			<FieldDisplayName("")> none = 0
+			''' <summary>X,Y,Z CIE colour space (default illuminant D50)</summary>
+			<FieldDisplayName("")> XyzCie = 1
+			''' <summary>RGB SMPTE</summary>
+			<FieldDisplayName("")> RgbSmpte = 2
+			''' <summary>Y,U,V (K) (default illuminant D65)</summary>
+			<FieldDisplayName("")> YuvK = 3
+			''' <summary>RGB device dependent</summary>
+			<FieldDisplayName("")> Rgb = 4
+			''' <summary>CMY(K) device dependent</summary>
+			<FieldDisplayName("")> Cmyk = 5
+			''' <summary>L*a*b* (K) CIE colour space (default illuminant D50)</summary>
+			<FieldDisplayName("")> LabKCie = 6
+			''' <summary>YCbCr</summary>
+			<FieldDisplayName("")> YCbCr = 7
+			''' <summary>sRGB</summary>
+			<FieldDisplayName("")> sRgb = 8
+		End Enum
+		''' <summary>Custom rating values</summary>
+		''' <version version="1.5.4">This enum is new in version 1.5.4</version>
+		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of CustomRating)))> Public Enum CustomRating As SByte
+			''' <summary>User rated the subject as rejected</summary>
+			<FieldDisplayName("")> Rejected = -1
+			''' <summary>Rating was not set yet</summary>
+			<FieldDisplayName("")> NotRated = 0
+			''' <summary>User rated the subject with 1 star</summary>
+			<FieldDisplayName("")> Star1 = 1
+			''' <summary>User rated the subject with 2 stars</summary>
+			<FieldDisplayName("")> Star2 = 2
+			''' <summary>User rated the subject with 3 stars</summary>
+			<FieldDisplayName("")> Star3 = 3
+			''' <summary>User rated the subject with 4 stars</summary>
+			<FieldDisplayName("")> Star4 = 4
+			''' <summary>User rated the subject with 5 stars</summary>
+			<FieldDisplayName("")> Star5 = 5
 		End Enum
 		''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</summary>
 		<Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of EconomySubjectDetail)))> Public Enum EconomySubjectDetail As Integer
 			''' <summary>Arable Farming</summary>
-			<FieldDisplayName("Arable Farming")> ArableFarming = 04001001
+			<FieldDisplayName("")> ArableFarming = 04001001
 			''' <summary>Fishing Industry</summary>
-			<FieldDisplayName("Fishing Industry")> FishingIndustry = 04001002
+			<FieldDisplayName("")> FishingIndustry = 04001002
 			''' <summary>Forestry &amp; Timber</summary>
-			<FieldDisplayName("Forestry & Timber")> ForestryAndTimber = 04001003
+			<FieldDisplayName("")> ForestryAndTimber = 04001003
 			''' <summary>Livestock Farming</summary>
-			<FieldDisplayName("Livestock Farming")> LivestockFarming = 04001004
+			<FieldDisplayName("")> LivestockFarming = 04001004
 			''' <summary>Biotechnology</summary>
-			<FieldDisplayName("Biotechnology")> Biotechnology = 04002001
+			<FieldDisplayName("")> Biotechnology = 04002001
 			''' <summary>Fertilisers</summary>
-			<FieldDisplayName("Fertilisers")> Fertilisers = 04002002
+			<FieldDisplayName("")> Fertilisers = 04002002
 			''' <summary>Health &amp; Beauty products</summary>
-			<FieldDisplayName("Health & Beauty products")> HealthAndBeautyProducts = 04002003
+			<FieldDisplayName("")> HealthAndBeautyProducts = 04002003
 			''' <summary>Inorganic chemicals</summary>
-			<FieldDisplayName("Inorganic chemicals")> InorganicChemicals = 04002004
+			<FieldDisplayName("")> InorganicChemicals = 04002004
 			''' <summary>Organic chemicals</summary>
-			<FieldDisplayName("Organic chemicals")> OrganicChemicals = 04002005
+			<FieldDisplayName("")> OrganicChemicals = 04002005
 			''' <summary>Pharmaceuticals</summary>
-			<FieldDisplayName("Pharmaceuticals")> Pharmaceuticals = 04002006
+			<FieldDisplayName("")> Pharmaceuticals = 04002006
 			''' <summary>Synthetics &amp; Plastics</summary>
-			<FieldDisplayName("Synthetics & Plastics")> SyntheticsAndPlastics = 04002007
+			<FieldDisplayName("")> SyntheticsAndPlastics = 04002007
 			''' <summary>Hardware</summary>
-			<FieldDisplayName("Hardware")> Hardware = 04003001
+			<FieldDisplayName("")> Hardware = 04003001
 			''' <summary>Networking</summary>
-			<FieldDisplayName("Networking")> Networking = 04003002
+			<FieldDisplayName("")> Networking = 04003002
 			''' <summary>Satellite technology</summary>
-			<FieldDisplayName("Satellite technology")> SatelliteTechnology = 04003003
+			<FieldDisplayName("")> SatelliteTechnology = 04003003
 			''' <summary>Semiconductors &amp; active components</summary>
-			<FieldDisplayName("Semiconductors & active components")> SemiconductorsAndActiveComponents = 04003004
+			<FieldDisplayName("")> SemiconductorsAndActiveComponents = 04003004
 			''' <summary>Software</summary>
-			<FieldDisplayName("Software")> Software = 04003005
+			<FieldDisplayName("")> Software = 04003005
 			''' <summary>Telecommunications Equipment</summary>
-			<FieldDisplayName("Telecommunications Equipment")> TelecommunicationsEquipment = 04003006
+			<FieldDisplayName("")> TelecommunicationsEquipment = 04003006
 			''' <summary>Telecommunications Services</summary>
-			<FieldDisplayName("Telecommunications Services")> TelecommunicationsServices = 04003007
+			<FieldDisplayName("")> TelecommunicationsServices = 04003007
 			''' <summary>Heavy construction</summary>
-			<FieldDisplayName("Heavy construction")> HeavyConstruction = 04004001
+			<FieldDisplayName("")> HeavyConstruction = 04004001
 			''' <summary>House building</summary>
-			<FieldDisplayName("House building")> HouseBuilding = 04004002
+			<FieldDisplayName("")> HouseBuilding = 04004002
 			''' <summary>Real Estate</summary>
-			<FieldDisplayName("Real Estate")> RealEstate = 04004003
+			<FieldDisplayName("")> RealEstate = 04004003
 			''' <summary>Alternative energy</summary>
-			<FieldDisplayName("Alternative energy")> AlternativeEnergy = 04005001
+			<FieldDisplayName("")> AlternativeEnergy = 04005001
 			''' <summary>Coal</summary>
-			<FieldDisplayName("Coal")> Coal = 04005002
+			<FieldDisplayName("")> Coal = 04005002
 			''' <summary>Oil &amp; Gas - Downstream activities</summary>
-			<FieldDisplayName("Oil & Gas - Downstream activities")> OilAndGasDownstreamActivities = 04005003
+			<FieldDisplayName("")> OilAndGasDownstreamActivities = 04005003
 			''' <summary>Oil &amp; Gas - Upstream activities</summary>
-			<FieldDisplayName("Oil & Gas - Upstream activities")> OilAndGasUpstreamActivities = 04005004
+			<FieldDisplayName("")> OilAndGasUpstreamActivities = 04005004
 			''' <summary>Nuclear power</summary>
-			<FieldDisplayName("Nuclear power")> NuclearPower = 04005005
+			<FieldDisplayName("")> NuclearPower = 04005005
 			''' <summary>Electricity Production &amp; Distribution</summary>
-			<FieldDisplayName("Electricity Production & Distribution")> ElectricityProductionAndDistribution = 04005006
+			<FieldDisplayName("")> ElectricityProductionAndDistribution = 04005006
 			''' <summary>Waste Management &amp; Pollution Control</summary>
-			<FieldDisplayName("Waste Management & Pollution Control")> WasteManagementAndPollutionControl = 04005007
+			<FieldDisplayName("")> WasteManagementAndPollutionControl = 04005007
 			''' <summary>Water Supply</summary>
-			<FieldDisplayName("Water Supply")> WaterSupply = 04005008
+			<FieldDisplayName("")> WaterSupply = 04005008
 			''' <summary>Accountancy &amp; Auditing</summary>
-			<FieldDisplayName("Accountancy & Auditing")> AccountancyAndAuditing = 04006001
+			<FieldDisplayName("")> AccountancyAndAuditing = 04006001
 			''' <summary>Banking</summary>
-			<FieldDisplayName("Banking")> Banking = 04006002
+			<FieldDisplayName("")> Banking = 04006002
 			''' <summary>Consultancy Services</summary>
-			<FieldDisplayName("Consultancy Services")> ConsultancyServices = 04006003
+			<FieldDisplayName("")> ConsultancyServices = 04006003
 			''' <summary>Employment Agencies</summary>
-			<FieldDisplayName("Employment Agencies")> EmploymentAgencies = 04006004
+			<FieldDisplayName("")> EmploymentAgencies = 04006004
 			''' <summary>Healthcare Providers</summary>
-			<FieldDisplayName("Healthcare Providers")> HealthcareProviders = 04006005
+			<FieldDisplayName("")> HealthcareProviders = 04006005
 			''' <summary>Insurance</summary>
-			<FieldDisplayName("Insurance")> Insurance = 04006006
+			<FieldDisplayName("")> Insurance = 04006006
 			''' <summary>Legal services</summary>
-			<FieldDisplayName("Legal services")> LegalServices = 04006007
+			<FieldDisplayName("")> LegalServices = 04006007
 			''' <summary>Market research</summary>
-			<FieldDisplayName("Market research")> MarketResearch = 04006008
+			<FieldDisplayName("")> MarketResearch = 04006008
 			''' <summary>Stock broking</summary>
-			<FieldDisplayName("Stock broking")> StockBroking = 04006009
+			<FieldDisplayName("")> StockBroking = 04006009
 			''' <summary>Clothing</summary>
-			<FieldDisplayName("Clothing")> Clothing = 04007001
+			<FieldDisplayName("")> Clothing = 04007001
 			''' <summary>Department stores</summary>
-			<FieldDisplayName("Department stores")> DepartmentStores = 04007002
+			<FieldDisplayName("")> DepartmentStores = 04007002
 			''' <summary>Food</summary>
-			<FieldDisplayName("Food (distribution)")> FoodDistribution = 04007003
+			<FieldDisplayName("")> FoodDistribution = 04007003
 			''' <summary>Mail Order</summary>
-			<FieldDisplayName("Mail Order")> MailOrder = 04007004
+			<FieldDisplayName("")> MailOrder = 04007004
 			''' <summary>Retail</summary>
-			<FieldDisplayName("Retail")> Retail = 04007005
+			<FieldDisplayName("")> Retail = 04007005
 			''' <summary>Speciality stores</summary>
-			<FieldDisplayName("Speciality stores")> SpecialityAtores = 04007006
+			<FieldDisplayName("")> SpecialityAtores = 04007006
 			''' <summary>Wholesale</summary>
-			<FieldDisplayName("Wholesale")> Wholesale = 04007007
+			<FieldDisplayName("")> Wholesale = 04007007
 			''' <summary>Central Banks</summary>
-			<FieldDisplayName("Central Banks")> CentralBanks = 04008001
+			<FieldDisplayName("")> CentralBanks = 04008001
 			''' <summary>Consumer Issues</summary>
-			<FieldDisplayName("Consumer Issues")> ConsumerIssues = 04008002
+			<FieldDisplayName("")> ConsumerIssues = 04008002
 			''' <summary>Debt Markets</summary>
-			<FieldDisplayName("Debt Markets")> DebtMarkets = 04008003
+			<FieldDisplayName("")> DebtMarkets = 04008003
 			''' <summary>Economic Indicators</summary>
-			<FieldDisplayName("Economic Indicators")> EconomicIndicators = 04008004
+			<FieldDisplayName("")> EconomicIndicators = 04008004
 			''' <summary>Emerging Markets Debt</summary>
-			<FieldDisplayName("Emerging Markets Debt")> EmergingMarketsDebt = 04008005
+			<FieldDisplayName("")> EmergingMarketsDebt = 04008005
 			''' <summary>Foreign Exchange Markets</summary>
-			<FieldDisplayName("Foreign Exchange Markets")> ForeignExchangeMarkets = 04008006
+			<FieldDisplayName("")> ForeignExchangeMarkets = 04008006
 			''' <summary>Government Aid</summary>
-			<FieldDisplayName("Government Aid")> GovernmentAid = 04008007
+			<FieldDisplayName("")> GovernmentAid = 04008007
 			''' <summary>Government Debt</summary>
-			<FieldDisplayName("Government Debt")> GovernmentDebt = 04008008
+			<FieldDisplayName("")> GovernmentDebt = 04008008
 			''' <summary>Interest Rates</summary>
-			<FieldDisplayName("Interest Rates")> InterestRates = 04008009
+			<FieldDisplayName("")> InterestRates = 04008009
 			''' <summary>International Economic Institutions</summary>
-			<FieldDisplayName("International Economic Institutions")> InternationalEconomicInstitutions = 04008010
+			<FieldDisplayName("")> InternationalEconomicInstitutions = 04008010
 			''' <summary>International Trade Issues</summary>
-			<FieldDisplayName("International Trade Issues")> InternationalTradeIssues = 04008011
+			<FieldDisplayName("")> InternationalTradeIssues = 04008011
 			''' <summary>Loan Markets</summary>
-			<FieldDisplayName("Loan Markets")> LoanMarkets = 04008012
+			<FieldDisplayName("")> LoanMarkets = 04008012
 			''' <summary>Energy</summary>
-			<FieldDisplayName("Energy")> Energy = 04009001
+			<FieldDisplayName("")> Energy = 04009001
 			''' <summary>Metals</summary>
-			<FieldDisplayName("Metals")> Metals = 04009002
+			<FieldDisplayName("")> Metals = 04009002
 			''' <summary>Securities</summary>
-			<FieldDisplayName("Securities")> Securities = 04009003
+			<FieldDisplayName("")> Securities = 04009003
 			''' <summary>Soft Commodities</summary>
-			<FieldDisplayName("Soft Commodities")> SoftCommodities = 04009004
+			<FieldDisplayName("")> SoftCommodities = 04009004
 			''' <summary>Advertising</summary>
-			<FieldDisplayName("Advertising")> Advertising = 04010001
+			<FieldDisplayName("")> Advertising = 04010001
 			''' <summary>Books</summary>
-			<FieldDisplayName("Books")> Books = 04010002
+			<FieldDisplayName("")> Books = 04010002
 			''' <summary>Cinema</summary>
-			<FieldDisplayName("Cinema")> Cinema = 04010003
+			<FieldDisplayName("")> Cinema = 04010003
 			''' <summary>News Agencies</summary>
-			<FieldDisplayName("News Agencies")> NewsAgencies = 04010004
+			<FieldDisplayName("")> NewsAgencies = 04010004
 			''' <summary>Newspaper &amp; Magazines</summary>
-			<FieldDisplayName("Newspaper & Magazines")> NewspaperAndMagazines = 04010005
+			<FieldDisplayName("")> NewspaperAndMagazines = 04010005
 			''' <summary>Online</summary>
-			<FieldDisplayName("Online")> Online = 04010006
+			<FieldDisplayName("")> Online = 04010006
 			''' <summary>Public Relations</summary>
-			<FieldDisplayName("Public Relations")> PublicRelations = 04010007
+			<FieldDisplayName("")> PublicRelations = 04010007
 			''' <summary>Radio</summary>
-			<FieldDisplayName("Radio")> Radio = 04010008
+			<FieldDisplayName("")> Radio = 04010008
 			''' <summary>Satellite &amp; Cable Services</summary>
-			<FieldDisplayName("Satellite & Cable Services")> SatelliteAndCableServices = 04010009
+			<FieldDisplayName("")> SatelliteAndCableServices = 04010009
 			''' <summary>Television</summary>
-			<FieldDisplayName("Television")> Television = 04010010
+			<FieldDisplayName("")> Television = 04010010
 			''' <summary>Aerospace</summary>
-			<FieldDisplayName("Aerospace")> Aerospace = 04011001
+			<FieldDisplayName("")> Aerospace = 04011001
 			''' <summary>Automotive Equipment</summary>
-			<FieldDisplayName("Automotive Equipment")> AutomotiveEquipment = 04011002
+			<FieldDisplayName("")> AutomotiveEquipment = 04011002
 			''' <summary>Defence Equipment</summary>
-			<FieldDisplayName("Defence Equipment")> DefenceEquipment = 04011003
+			<FieldDisplayName("")> DefenceEquipment = 04011003
 			''' <summary>Electrical Appliances</summary>
-			<FieldDisplayName("Electrical Appliances")> ElectricalAppliances = 04011004
+			<FieldDisplayName("")> ElectricalAppliances = 04011004
 			''' <summary>Heavy engineering</summary>
-			<FieldDisplayName("Heavy engineering")> HeavyEngineering = 04011005
+			<FieldDisplayName("")> HeavyEngineering = 04011005
 			''' <summary>Industrial components</summary>
-			<FieldDisplayName("Industrial components")> IndustrialComponents = 04011006
+			<FieldDisplayName("")> IndustrialComponents = 04011006
 			''' <summary>Instrument engineering</summary>
-			<FieldDisplayName("Instrument engineering")> InstrumentEngineering = 04011007
+			<FieldDisplayName("")> InstrumentEngineering = 04011007
 			''' <summary>Shipbuilding</summary>
-			<FieldDisplayName("Shipbuilding")> Shipbuilding = 04011008
+			<FieldDisplayName("")> Shipbuilding = 04011008
 			''' <summary>Building materials</summary>
-			<FieldDisplayName("Building materials")> BuildingMaterials = 04012001
+			<FieldDisplayName("")> BuildingMaterials = 04012001
 			''' <summary>Gold &amp; Precious Materials</summary>
-			<FieldDisplayName("Gold & Precious Materials")> GoldAndPreciousMaterials = 04012002
+			<FieldDisplayName("")> GoldAndPreciousMaterials = 04012002
 			''' <summary>Iron &amp; Steel</summary>
-			<FieldDisplayName("Iron & Steel")> IronAndSteel = 04012003
+			<FieldDisplayName("")> IronAndSteel = 04012003
 			''' <summary>Non ferrous metals</summary>
-			<FieldDisplayName("Non ferrous metals")> NonFerrousMetals = 04012004
+			<FieldDisplayName("")> NonFerrousMetals = 04012004
 			''' <summary>Alcoholic Drinks</summary>
-			<FieldDisplayName("Alcoholic Drinks")> AlcoholicDrinks = 04013001
+			<FieldDisplayName("")> AlcoholicDrinks = 04013001
 			''' <summary>Food</summary>
-			<FieldDisplayName("Food (industry)")> FoodIndustry = 04013002
+			<FieldDisplayName("")> FoodIndustry = 04013002
 			''' <summary>Furnishings &amp; Furniture</summary>
-			<FieldDisplayName("Furnishings & Furniture")> FurnishingsAndFurniture = 04013003
+			<FieldDisplayName("")> FurnishingsAndFurniture = 04013003
 			''' <summary>Paper &amp; packaging products</summary>
-			<FieldDisplayName("Paper & packaging products")> PaperAndPackagingProducts = 04013004
+			<FieldDisplayName("")> PaperAndPackagingProducts = 04013004
 			''' <summary>Rubber products</summary>
-			<FieldDisplayName("Rubber products")> Rubberproducts = 04013005
+			<FieldDisplayName("")> Rubberproducts = 04013005
 			''' <summary>Soft Drinks</summary>
-			<FieldDisplayName("Soft Drinks")> SoftDrinks = 04013006
+			<FieldDisplayName("")> SoftDrinks = 04013006
 			''' <summary>Textiles &amp; Clothing</summary>
-			<FieldDisplayName("Textiles & Clothing")> TextilesAndClothing = 04013007
+			<FieldDisplayName("")> TextilesAndClothing = 04013007
 			''' <summary>Tobacco</summary>
-			<FieldDisplayName("Tobacco")> Tobacco = 04013008
+			<FieldDisplayName("")> Tobacco = 04013008
 			''' <summary>Casinos &amp; Gambling</summary>
-			<FieldDisplayName("Casinos & Gambling")> CasinosAndGambling = 04014001
+			<FieldDisplayName("")> CasinosAndGambling = 04014001
 			''' <summary>Hotels &amp; accommodation</summary>
-			<FieldDisplayName("Hotels & mp; accommodation")> HotelsAndAccommodation = 04014002
+			<FieldDisplayName("")> HotelsAndAccommodation = 04014002
 			''' <summary>Recreational &amp; Sports goods</summary>
-			<FieldDisplayName("Recreational & Sports goods")> RecreationalAndSportsGoods = 04014003
+			<FieldDisplayName("")> RecreationalAndSportsGoods = 04014003
 			''' <summary>Restaurants &amp; catering</summary>
-			<FieldDisplayName("Restaurants & catering")> RestaurantsAndCatering = 04014004
+			<FieldDisplayName("")> RestaurantsAndCatering = 04014004
 			''' <summary>Tour operators</summary>
-			<FieldDisplayName("Tour operators")> TourOperators = 04014005
+			<FieldDisplayName("")> TourOperators = 04014005
 			''' <summary>Air Transport</summary>
-			<FieldDisplayName("Air Transport")> AirTransport = 04015001
+			<FieldDisplayName("")> AirTransport = 04015001
 			''' <summary>Railway</summary>
-			<FieldDisplayName("Railway")> Railway = 04015002
+			<FieldDisplayName("")> Railway = 04015002
 			''' <summary>Road Transport</summary>
-			<FieldDisplayName("Road Transport")> RoadTransport = 04015003
+			<FieldDisplayName("")> RoadTransport = 04015003
 			''' <summary>Waterway &amp; Maritime Transport</summary>
-			<FieldDisplayName("Waterway & Maritime Transport")> WaterwayAndMaritimeTransport = 04015004
+			<FieldDisplayName("")> WaterwayAndMaritimeTransport = 04015004
 		End Enum
 		''' <summary>Values for <see cref="EditorialUpdate"/></summary>
 		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of EditorialUpdateValues)))> Public Enum EditorialUpdateValues As Byte
 			''' <summary>Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - <see cref='LanguageIdentifier'/>).</summary>
-			<FieldDisplayName("Additional language")> AdditionalLanguage = 1
+			<FieldDisplayName("")> AdditionalLanguage = 1
 		End Enum
 		''' <summary>Registered file formats by IPTC and NAA</summary>
 		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of FileFormats)))> Public Enum FileFormats As UShort
 			''' <summary>No Object Data</summary>
-			<FieldDisplayName("No Object Data")> NoObjectData = 0
+			<FieldDisplayName("")> NoObjectData = 0
 			''' <summary>IPTC-NAA Digital Newsphoto Parameter Record</summary>
-			<FieldDisplayName("Digital Newsphoto Parameter Record")> NewsphotoParameterRecord = 01
+			<FieldDisplayName("")> NewsphotoParameterRecord = 01
 			''' <summary>IPTC7901 Recommended Message Format</summary>
-			<FieldDisplayName("Recommended Message Format")> RecommendedMessageFormat = 02
+			<FieldDisplayName("")> RecommendedMessageFormat = 02
 			''' <summary>Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)</summary>
-			<FieldDisplayName("TIFF")> TIFF = 03
+			<FieldDisplayName("")> TIFF = 03
 			''' <summary>Illustrator (Adobe Graphics data)</summary>
-			<FieldDisplayName("Adobe Illustrator")> AdobeIllustrator = 04
+			<FieldDisplayName("")> AdobeIllustrator = 04
 			''' <summary>AppleSingle (Apple Computer Inc)</summary>
-			<FieldDisplayName("Apple Single")> AppleSingle = 05
+			<FieldDisplayName("")> AppleSingle = 05
 			''' <summary>NAA 89-3 (ANPA 1312)</summary>
-			<FieldDisplayName("NAA 89-3")> NAA89_3 = 06
+			<FieldDisplayName("")> NAA89_3 = 06
 			''' <summary>MacBinary II</summary>
-			<FieldDisplayName("MAcBinary II")> MacBinary = 07
+			<FieldDisplayName("")> MacBinary = 07
 			''' <summary>IPTC Unstructured Character Oriented File Format (UCOFF)</summary>
-			<FieldDisplayName("IPTC Unstructured Character Oriented File Format")> UCOFF = 08
+			<FieldDisplayName("")> UCOFF = 08
 			''' <summary>United Press International ANPA 1312 variant</summary>
-			<FieldDisplayName("United Press International ANPA 1312")> UnitedPressInternationalANPA1312 = 09
+			<FieldDisplayName("")> UnitedPressInternationalANPA1312 = 09
 			''' <summary>United Press International Down-Load Message</summary>
-			<FieldDisplayName("Down-Load message")> UnitedPressInternationalDownLoadMessage = 10
+			<FieldDisplayName("")> UnitedPressInternationalDownLoadMessage = 10
 			''' <summary>¤ JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)</summary>
-			<FieldDisplayName("JPEG")> JPEG = 11
+			<FieldDisplayName("")> JPEG = 11
 			''' <summary>Photo-CD Image-Pac (Eastman Kodak)</summary>
-			<FieldDisplayName("Koned Photo-CD Image-Pac")> PhotoCDImagePac = 12
+			<FieldDisplayName("")> PhotoCDImagePac = 12
 			''' <summary>¤ Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)</summary>
-			<FieldDisplayName("BMP")> BMP = 13
+			<FieldDisplayName("")> BMP = 13
 			''' <summary>Digital Audio File [*.WAV] (Microsoft &amp; Creative Labs)</summary>
-			<FieldDisplayName("WAV")> WAV = 14
+			<FieldDisplayName("")> WAV = 14
 			''' <summary>Audio plus Moving Video [*.AVI] (Microsoft)</summary>
-			<FieldDisplayName("AVI")> AVI = 15
+			<FieldDisplayName("")> AVI = 15
 			''' <summary>PC DOS/Windows Executable Files [*.COM][*.EXE]</summary>
-			<FieldDisplayName("EXE, COM")> EXE = 16
+			<FieldDisplayName("")> EXE = 16
 			''' <summary>Compressed Binary File [*.ZIP] (PKWare Inc)</summary>
-			<FieldDisplayName("ZIP")> ZIP = 17
+			<FieldDisplayName("")> ZIP = 17
 			''' <summary>Audio Interchange File Format AIFF (Apple Computer Inc)</summary>
-			<FieldDisplayName("AIFF (Apple)")> AIFF = 18
+			<FieldDisplayName("")> AIFF = 18
 			''' <summary>RIFF Wave (Microsoft Corporation)</summary>
-			<FieldDisplayName("RIFF Wave")> RIFFWave = 19
+			<FieldDisplayName("")> RIFFWave = 19
 			''' <summary>Freehand (Macromedia/Aldus)</summary>
-			<FieldDisplayName("Freehand")> Freehand = 20
+			<FieldDisplayName("")> Freehand = 20
 			''' <summary>Hypertext Markup Language "HTML" (The Internet Society)</summary>
-			<FieldDisplayName("HTML")> HTML = 21
+			<FieldDisplayName("")> HTML = 21
 			''' <summary>MPEG 2 Audio Layer 2 (Musicom), ISO/IEC</summary>
-			<FieldDisplayName("MPEG 2 Audio")> MP2 = 22
+			<FieldDisplayName("")> MP2 = 22
 			''' <summary>MPEG 2 Audio Layer 3, ISO/IEC</summary>
-			<FieldDisplayName("MP3")> MP3 = 23
+			<FieldDisplayName("")> MP3 = 23
 			''' <summary>Portable Document File (*.PDF) Adobe</summary>
-			<FieldDisplayName("PDF")> PDF = 24
+			<FieldDisplayName("")> PDF = 24
 			''' <summary>News Industry Text Format (NITF)</summary>
-			<FieldDisplayName("News Industry Text Format")> NITF = 25
+			<FieldDisplayName("")> NITF = 25
 			''' <summary>Tape Archive (*.TAR)</summary>
-			<FieldDisplayName("TAR")> TAR = 26
+			<FieldDisplayName("")> TAR = 26
 			''' <summary>Tidningarnas Telegrambyrå NITF version (TTNITF DTD)</summary>
-			<FieldDisplayName("TINITF DTD")> TTNITF_DTD = 27
+			<FieldDisplayName("")> TTNITF_DTD = 27
 			''' <summary>Ritzaus Bureau NITF version (RBNITF DTD)</summary>
-			<FieldDisplayName("RBNITF DTD")> RBNITF_DTD = 28
+			<FieldDisplayName("")> RBNITF_DTD = 28
 			''' <summary>Corel Draw [*.CDR]</summary>
-			<FieldDisplayName("Corel Draw")> CorelDraw = 29
+			<FieldDisplayName("")> CorelDraw = 29
 		End Enum
 		''' <summary>File format version registered for NAA and IPTC</summary>
 		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of FileFormatVersions)))> Public Enum FileFormatVersions As UShort
 			''' <summary>Version 1 for FileFormat <see cref="FileFormats.NoObjectData"/></summary>
-			<FieldDisplayName("1 (No Object Data)")> V0 = 0
+			<FieldDisplayName("")> V0 = 0
 			''' <summary>Version 1 for file fromat <see cref="FileFormats.NewsphotoParameterRecord"/> and <see cref="FileFormats.NAA89_3"/>, 5.0 for <see cref="FileFormats.TIFF"/>, 1.40 for <see cref="FileFormats.AdobeIllustrator"/>, 2 for <see cref="FileFormats.AppleSingle"/>, 1.02 for <see cref="FileFormats.JPEG"/> and 3.1 for <see cref="FileFormats.Freehand"/></summary>
-			<FieldDisplayName("1 (IPTC-NAA Digital Newsphoto Parameter Record, NAA 89-3), 5.0 (TIFF), 1.40 (Adobe Illustrator), 2 (Apple Single), 1.02 (JPEG), 3.1 (Freehand)")> V1 = 1
+			<FieldDisplayName("")> V1 = 1
 			''' <summary>Version 2 for file format <see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for <see cref="FileFormats.TIFF"/>, 4.0 for <see cref="FileFormats.Freehand"/> and 2.0 for <see cref="FileFormats.HTML"/></summary>
-			<FieldDisplayName("2 (IPTC-NAA Digital Newsphoto Parameter Record), 6.0 (TIFF), 4.0 (Freehand), 2.0 (HTML)")> V2 = 2
+			<FieldDisplayName("")> V2 = 2
 			''' <summary>Version 3 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for <see cref="FileFormats.Freehand"/></summary>
-			<FieldDisplayName("3 (IPTC-NAA Digital Newsphoto Parameter Record), 5.0 (Freehand)")> V3 = 3
+			<FieldDisplayName("")> V3 = 3
 			''' <summary>Version 4 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and <see cref="FileFormats.RecommendedMessageFormat"/> and 5.5 for <see cref="FileFormats.Freehand"/></summary>
-			<FieldDisplayName("4 (IPTC-NAA Digital Newsphoto Parameter Record, Recommended Message Format), 5.5 (Freehand)")> V4 = 4
+			<FieldDisplayName("")> V4 = 4
+		End Enum
+		''' <summary>Possible inage rotations in clockwise direction</summary>
+		''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ImageRotationValue)))> Public Enum ImageRotationValue As Byte
+			''' <summary>no rotation</summary>
+			<FieldDisplayName("")> None = 0
+			''' <summary>90 degrees rotation</summary>
+			<FieldDisplayName("")> Rot90 = 1
+			''' <summary>180 degrees rotation</summary>
+			<FieldDisplayName("")> Rot180 = 2
+			''' <summary>270 degrees rotation</summary>
+			<FieldDisplayName("")> Rot270 = 3
 		End Enum
 		''' <summary>Number of components in image and special meanings of some numbers</summary>
 		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ImageTypeComponents)))> Public Enum ImageTypeComponents As Byte
 			''' <summary>Record 2 caption for specific image</summary>
-			<FieldDisplayName("NoObjectData")> NoObjectData = 0
+			<FieldDisplayName("")> NoObjectData = 0
 			''' <summary>Image has 1 component</summary>
-			<FieldDisplayName("Black and White")> BW = 1
+			<FieldDisplayName("")> BW = 1
 			''' <summary>Image has 2 components</summary>
-			<FieldDisplayName("2 components")> Component2 = 2
+			<FieldDisplayName("")> Component2 = 2
 			''' <summary>Image has 3 components</summary>
-			<FieldDisplayName("3 components")> Component3 = 3
+			<FieldDisplayName("")> Component3 = 3
 			''' <summary>Image has 4 components</summary>
-			<FieldDisplayName("4 components")> Component4 = 4
+			<FieldDisplayName("")> Component4 = 4
 			''' <summary>the objectdata contains supplementary data to an image</summary>
-			<FieldDisplayName("Suplementary data")> SuplementaryData = 9
+			<FieldDisplayName("")> SuplementaryData = 9
 		End Enum
 		''' <summary>Object Attribute Number abd Object Name relationship</summary>
 		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ObjectAttributes)))> Public Enum ObjectAttributes As Byte
 			''' <summary>Current</summary>
-			<FieldDisplayName("Current")> Current = 01
+			<FieldDisplayName("")> Current = 01
 			''' <summary>Analysis</summary>
-			<FieldDisplayName("Analysis")> Analysis = 02
+			<FieldDisplayName("")> Analysis = 02
 			''' <summary>Archive material</summary>
-			<FieldDisplayName("Archive material")> ArchiveMaterial = 03
+			<FieldDisplayName("")> ArchiveMaterial = 03
 			''' <summary>Background</summary>
-			<FieldDisplayName("Background")> Background = 04
+			<FieldDisplayName("")> Background = 04
 			''' <summary>Feature</summary>
-			<FieldDisplayName("Feature")> Feature = 05
+			<FieldDisplayName("")> Feature = 05
 			''' <summary>Forecast</summary>
-			<FieldDisplayName("Forecast")> Forecast = 06
+			<FieldDisplayName("")> Forecast = 06
 			''' <summary>History</summary>
-			<FieldDisplayName("History")> History = 07
+			<FieldDisplayName("")> History = 07
 			''' <summary>Obituary</summary>
-			<FieldDisplayName("Obituary")> Obituary = 08
+			<FieldDisplayName("")> Obituary = 08
 			''' <summary>Opinion</summary>
-			<FieldDisplayName("Opinion")> Opinion = 09
+			<FieldDisplayName("")> Opinion = 09
 			''' <summary>Polls &amp; Surveys</summary>
-			<FieldDisplayName("Polls & Survays")> PollsAndSurveys = 10
+			<FieldDisplayName("")> PollsAndSurveys = 10
 			''' <summary>Profile</summary>
-			<FieldDisplayName("Profile")> Profile = 11
+			<FieldDisplayName("")> Profile = 11
 			''' <summary>Results Listings &amp; Tables</summary>
-			<FieldDisplayName("Results Listings & Tables")> ResultsListingsAndTables = 12
+			<FieldDisplayName("")> ResultsListingsAndTables = 12
 			''' <summary>Side bar &amp; Supporting information</summary>
-			<FieldDisplayName("Side bar & Supporting information")> SideBarAndSupportingInformation = 13
+			<FieldDisplayName("")> SideBarAndSupportingInformation = 13
 			''' <summary>Summary</summary>
-			<FieldDisplayName("Summary")> Summary = 14
+			<FieldDisplayName("")> Summary = 14
 			''' <summary>Transcript &amp; Verbatim</summary>
-			<FieldDisplayName("Transcript & Verbatim")> TranscriptAndVerbatim = 15
+			<FieldDisplayName("")> TranscriptAndVerbatim = 15
 			''' <summary>Interview</summary>
-			<FieldDisplayName("Interview")> Interview = 16
+			<FieldDisplayName("")> Interview = 16
 			''' <summary>From the Scene</summary>
-			<FieldDisplayName("From the Scene")> FromTheScene = 17
+			<FieldDisplayName("")> FromTheScene = 17
 			''' <summary>Retrospective</summary>
-			<FieldDisplayName("Retrospective")> Retrospective = 18
+			<FieldDisplayName("")> Retrospective = 18
 			''' <summary>Statistics</summary>
-			<FieldDisplayName("Statistics")> Statistics = 19
+			<FieldDisplayName("")> Statistics = 19
 			''' <summary>Update</summary>
-			<FieldDisplayName("Update")> Update = 20
+			<FieldDisplayName("")> Update = 20
 			''' <summary>Wrap-up</summary>
-			<FieldDisplayName("Wrap-up")> WrapUp = 21
+			<FieldDisplayName("")> WrapUp = 21
 			''' <summary>Press Release</summary>
-			<FieldDisplayName("Press Release")> PressRelease = 22
+			<FieldDisplayName("")> PressRelease = 22
 		End Enum
 		''' <summary>Object Type Number and Object Type Name relationship</summary>
 		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ObjectTypes)))> Public Enum ObjectTypes As Byte
 			''' <summary>News</summary>
-			<FieldDisplayName("News")> News = 1
+			<FieldDisplayName("")> News = 1
 			''' <summary>Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate.</summary>
-			<FieldDisplayName("Data")> Data = 2
+			<FieldDisplayName("")> Data = 2
 			''' <summary>Advisory</summary>
-			<FieldDisplayName("Advisory")> Advisory = 3
+			<FieldDisplayName("")> Advisory = 3
+		End Enum
+		''' <summary>Possible qantisation methods</summary>
+		''' <remarks>Other values are reserved for future use. For quantisation methods 0 and 1, ascending values correspond to increasing reflectance/transmittance.</remarks>
+		''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of QuantisationMethodValue)))> Public Enum QuantisationMethodValue As Byte
+			''' <summary>Linear reflectance/transmittance (The domain in which the relative reflectance/transmittance of an image is mapped linearly onto a finite scale of integers (CCITT T1).)</summary>
+			<FieldDisplayName("")> LinearReflectanceTransmittance = 0
+			''' <summary>Linear density (The domain in which the relative density of an image is mapped linearly onto a finite scale of integers.)</summary>
+			<FieldDisplayName("")> LinearDensity = 1
+			''' <summary>IPTC ref “B” (Defined by IPTC in 1985 and amended in January 1990 to suppress reference to “Pixel Density.”)</summary>
+			''' <remarks>see Appendix H</remarks>
+			<FieldDisplayName("")> IPTCRefB = 2
+			''' <summary>Linear Dot Percent (The domain in which the relative dot percent of an image is mapped linearly onto a finite scale of integers.)</summary>
+			<FieldDisplayName("")> LinearDotPercent = 3
+			''' <summary>AP Domestic Analogue (This may be described mathematically as either [√(linear density)] or [√(log (reflectance/transmittance))].)</summary>
+			<FieldDisplayName("")> ApDomesticAnalogue = 4
+			''' <summary>Compression method specific (Defined within the compression method.)</summary>
+			''' <remarks>Refer to Appendix A</remarks>
+			<FieldDisplayName("")> CompressionMethodSpecific = 5
+			''' <summary>Colour Space Specific (quantisation method is contained within the Colour Space definition for DataSet 3:64 values of 1,2,3,6 or 7.)</summary>
+			<FieldDisplayName("")> ColourSpaceSpecific = 6
+			''' <summary>Gamma Compensated (the domain in which the relative reflectance/transmittance is raised to the power of the inverse of gamma.)</summary>
+			<FieldDisplayName("")> GammaCompensated = 7
+		End Enum
+		''' <summary>Enumerates possible spatial and temporal relations between pixels</summary>
+		''' <remarks>Other values are reserved for future use.</remarks>
+		''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of SamplingStructureType)))> Public Enum SamplingStructureType As Byte
+			''' <summary>Orthogonal with the same relative sampling frequencies on each component.</summary>
+			<FieldDisplayName("")> OrthogonalSame = 0
+			''' <summary>Orthogonal with the sampling frequencies in the ratio of 4:2:2:(4) as described in Appendix G. This structure can only be used with the YUV(K) or LAB(K) colour spaces.</summary>
+			<FieldDisplayName("")> OrthogonalRatio = 1
+			''' <summary>defined within the compression process.</summary>
+			<FieldDisplayName("")> Custom = 2
+		End Enum
+		''' <summary>Possible scanning directions</summary>
+		''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ScanningDirectionValue)))> Public Enum ScanningDirectionValue As Byte
+			''' <summary>left to right, top to bottom.</summary>
+			<FieldDisplayName("")> LeftRightTopBottom = 0
+			''' <summary>right to left, top to bottom.</summary>
+			<FieldDisplayName("")> RightLeftTopBottom = 1
+			''' <summary>left to right, bottom to top.</summary>
+			<FieldDisplayName("")> LeftRightBottomTop = 2
+			''' <summary>right to left, bottom to top.</summary>
+			<FieldDisplayName("")> RightLeftBottomTop = 3
+			''' <summary>top to bottom, left to right.</summary>
+			<FieldDisplayName("")> TopBottomLeftRight = 4
+			''' <summary>bottom to top, left to right.</summary>
+			<FieldDisplayName("")> BottomTopLeftRight = 5
+			''' <summary>top to bottom, right to left.</summary>
+			<FieldDisplayName("")> TopBottomRightLeft = 6
+			''' <summary>bottom to top, right to left.</summary>
+			<FieldDisplayName("")> BottomTopRightLeft = 7
 		End Enum
 		''' <summary>Subject Matter Name and Subject Reference Number relationship</summary>
 		<Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of SubjectMatterNumbers)))> Public Enum SubjectMatterNumbers As Integer
 			''' <summary>Archaeology</summary>
-			<FieldDisplayName("Archaeology")> Archaeology = 01001000
+			<FieldDisplayName("")> Archaeology = 01001000
 			''' <summary>Architecture</summary>
-			<FieldDisplayName("Architecture")> Architecture = 01002000
+			<FieldDisplayName("")> Architecture = 01002000
 			''' <summary>Bullfighting</summary>
-			<FieldDisplayName("Bullfighting")> Bullfighting = 01003000
+			<FieldDisplayName("")> Bullfighting = 01003000
 			''' <summary>Carnival</summary>
-			<FieldDisplayName("Carnival")> Carnival = 01004000
+			<FieldDisplayName("")> Carnival = 01004000
 			''' <summary>Cinema</summary>
-			<FieldDisplayName("Cinema")> Cinema = 01005000
+			<FieldDisplayName("")> Cinema = 01005000
 			''' <summary>Dance</summary>
-			<FieldDisplayName("Dance")> Dance = 01006000
+			<FieldDisplayName("")> Dance = 01006000
 			''' <summary>Fashion</summary>
-			<FieldDisplayName("Fashion")> Fashion = 01007000
+			<FieldDisplayName("")> Fashion = 01007000
 			''' <summary>Language</summary>
-			<FieldDisplayName("Language")> Language = 01008000
+			<FieldDisplayName("")> Language = 01008000
 			''' <summary>Libraries &amp; Museums</summary>
-			<FieldDisplayName("Libraries & Museums")> LibrariesMuseums = 01009000
+			<FieldDisplayName("")> LibrariesMuseums = 01009000
 			''' <summary>Literature</summary>
-			<FieldDisplayName("Literature")> Literature = 01010000
+			<FieldDisplayName("")> Literature = 01010000
 			''' <summary>Music</summary>
-			<FieldDisplayName("Music")> Music = 01011000
+			<FieldDisplayName("")> Music = 01011000
 			''' <summary>Painting</summary>
-			<FieldDisplayName("Painting")> Painting = 01012000
+			<FieldDisplayName("")> Painting = 01012000
 			''' <summary>Photography</summary>
-			<FieldDisplayName("Photography")> Photography = 01013000
+			<FieldDisplayName("")> Photography = 01013000
 			''' <summary>Radio</summary>
-			<FieldDisplayName("Radio")> Radio = 01014000
+			<FieldDisplayName("")> Radio = 01014000
 			''' <summary>Sculpture</summary>
-			<FieldDisplayName("Sculpture")> Sculpture = 01015000
+			<FieldDisplayName("")> Sculpture = 01015000
 			''' <summary>Television</summary>
-			<FieldDisplayName("Television")> Television = 01016000
+			<FieldDisplayName("")> Television = 01016000
 			''' <summary>Theatre</summary>
-			<FieldDisplayName("Theatre")> Theatre = 01017000
+			<FieldDisplayName("")> Theatre = 01017000
 			''' <summary>Crime</summary>
-			<FieldDisplayName("Crime")> Crime = 02001000
+			<FieldDisplayName("")> Crime = 02001000
 			''' <summary>Judiciary</summary>
-			<FieldDisplayName("Judiciary")> Judiciary = 02002000
+			<FieldDisplayName("")> Judiciary = 02002000
 			''' <summary>Police</summary>
-			<FieldDisplayName("Police")> Police = 02003000
+			<FieldDisplayName("")> Police = 02003000
 			''' <summary>Punishment</summary>
-			<FieldDisplayName("Punishment")> Punishment = 02004000
+			<FieldDisplayName("")> Punishment = 02004000
 			''' <summary>Prison</summary>
-			<FieldDisplayName("Prison")> Prison = 02005000
+			<FieldDisplayName("")> Prison = 02005000
 			''' <summary>Drought</summary>
-			<FieldDisplayName("Drought")> Drought = 03001000
+			<FieldDisplayName("")> Drought = 03001000
 			''' <summary>Earthquake</summary>
-			<FieldDisplayName("Earthquake")> Earthquake = 03002000
+			<FieldDisplayName("")> Earthquake = 03002000
 			''' <summary>Famine</summary>
-			<FieldDisplayName("Famine")> Famine = 03003000
+			<FieldDisplayName("")> Famine = 03003000
 			''' <summary>Fire</summary>
-			<FieldDisplayName("Fire")> Fire = 03004000
+			<FieldDisplayName("")> Fire = 03004000
 			''' <summary>Flood</summary>
-			<FieldDisplayName("Flood")> Flood = 03005000
+			<FieldDisplayName("")> Flood = 03005000
 			''' <summary>Industrial accident</summary>
-			<FieldDisplayName("Industrial accident")> IndustrialAccident = 03006000
+			<FieldDisplayName("")> IndustrialAccident = 03006000
 			''' <summary>Meteorological disaster</summary>
-			<FieldDisplayName("Meteorological disaster")> MeteorologicalDisaster = 03007000
+			<FieldDisplayName("")> MeteorologicalDisaster = 03007000
 			''' <summary>Nuclear accident</summary>
-			<FieldDisplayName("Nuclear accident")> NuclearAccident = 03008000
+			<FieldDisplayName("")> NuclearAccident = 03008000
 			''' <summary>Pollution</summary>
-			<FieldDisplayName("Pollution")> Pollution = 03009000
+			<FieldDisplayName("")> Pollution = 03009000
 			''' <summary>Transport accident</summary>
-			<FieldDisplayName("Transport accident")> TransportAccident = 03010000
+			<FieldDisplayName("")> TransportAccident = 03010000
 			''' <summary>Volcanic eruption</summary>
-			<FieldDisplayName("Volcanic eruption")> VolcanicEruption = 03011000
+			<FieldDisplayName("")> VolcanicEruption = 03011000
 			''' <summary>Agriculture</summary>
-			<FieldDisplayName("Agriculture")> Agriculture = 04001000
+			<FieldDisplayName("")> Agriculture = 04001000
 			''' <summary>Chemicals</summary>
-			<FieldDisplayName("Chemicals")> Chemicals = 04002000
+			<FieldDisplayName("")> Chemicals = 04002000
 			''' <summary>Computing &amp; Information Technology</summary>
-			<FieldDisplayName("Computing & Information Technology")> ComputingAndInformationTechnology = 04003000
+			<FieldDisplayName("")> ComputingAndInformationTechnology = 04003000
 			''' <summary>Construction &amp; Property</summary>
-			<FieldDisplayName("Construction & Property")> ConstructionAndProperty = 04004000
+			<FieldDisplayName("")> ConstructionAndProperty = 04004000
 			''' <summary>Energy &amp; Resources</summary>
-			<FieldDisplayName("Energy & Resources")> EnergyAndResources = 04005000
+			<FieldDisplayName("")> EnergyAndResources = 04005000
 			''' <summary>Financial &amp; Business Services</summary>
-			<FieldDisplayName("Financial & Business Services")> FinancialAndBusinessServices = 04006000
+			<FieldDisplayName("")> FinancialAndBusinessServices = 04006000
 			''' <summary>Goods Distribution</summary>
-			<FieldDisplayName("Goods Distribution")> GoodsDistribution = 04007000
+			<FieldDisplayName("")> GoodsDistribution = 04007000
 			''' <summary>Macro Economics</summary>
-			<FieldDisplayName("Macro Economics")> MacroEconomics = 04008000
+			<FieldDisplayName("")> MacroEconomics = 04008000
 			''' <summary>Markets</summary>
-			<FieldDisplayName("Markets")> Markets = 04009000
+			<FieldDisplayName("")> Markets = 04009000
 			''' <summary>Media</summary>
-			<FieldDisplayName("Media")> Media = 04010000
+			<FieldDisplayName("")> Media = 04010000
 			''' <summary>Metal Goods &amp; Engineering</summary>
-			<FieldDisplayName("Metal Goods & Engineering")> MetalGoodsAndEngineering = 04011000
+			<FieldDisplayName("")> MetalGoodsAndEngineering = 04011000
 			''' <summary>Metals &amp; Minerals</summary>
-			<FieldDisplayName("Metals & Minerals")> MetalsAndMinerals = 04012000
+			<FieldDisplayName("")> MetalsAndMinerals = 04012000
 			''' <summary>Process Industries</summary>
-			<FieldDisplayName("Process Industries")> ProcessIndustries = 04013000
+			<FieldDisplayName("")> ProcessIndustries = 04013000
 			''' <summary>Tourism &amp; Leisure</summary>
-			<FieldDisplayName("Tourism & Leisure")> TourismAndLeisure = 04014000
+			<FieldDisplayName("")> TourismAndLeisure = 04014000
 			''' <summary>Transport</summary>
-			<FieldDisplayName("Transport")> Transport = 04015000
+			<FieldDisplayName("")> Transport = 04015000
 			''' <summary>Adult Education</summary>
-			<FieldDisplayName("Adult Education")> AdultEducation = 05001000
+			<FieldDisplayName("")> AdultEducation = 05001000
 			''' <summary>Further Education</summary>
-			<FieldDisplayName("Further Education")> FurtherEducation = 05002000
+			<FieldDisplayName("")> FurtherEducation = 05002000
 			''' <summary>Parent Organisations</summary>
-			<FieldDisplayName("Parent Organisations")> ParentOrganisations = 05003000
+			<FieldDisplayName("")> ParentOrganisations = 05003000
 			''' <summary>Preschooling</summary>
-			<FieldDisplayName("Preschooling")> Preschooling = 05004000
+			<FieldDisplayName("")> Preschooling = 05004000
 			''' <summary>Schools</summary>
-			<FieldDisplayName("Schools")> Schools = 05005000
+			<FieldDisplayName("")> Schools = 05005000
 			''' <summary>Teachers Unions</summary>
-			<FieldDisplayName("Teachers Unions")> TeachersUnions = 05006000
+			<FieldDisplayName("")> TeachersUnions = 05006000
 			''' <summary>University</summary>
-			<FieldDisplayName("University")> University = 05007000
+			<FieldDisplayName("")> University = 05007000
 			''' <summary>Alternative Energy</summary>
-			<FieldDisplayName("Alternative Energy")> AlternativeEnergy = 06001000
+			<FieldDisplayName("")> AlternativeEnergy = 06001000
 			''' <summary>Conservation</summary>
-			<FieldDisplayName("Conservation")> Conservation = 06002000
+			<FieldDisplayName("")> Conservation = 06002000
 			''' <summary>Energy Savings</summary>
-			<FieldDisplayName("Energy Savings")> EnergySavings = 06003000
+			<FieldDisplayName("")> EnergySavings = 06003000
 			''' <summary>Environmental Politics</summary>
-			<FieldDisplayName("Environmental Politics")> EnvironmentalPolitics = 06004000
+			<FieldDisplayName("")> EnvironmentalPolitics = 06004000
 			''' <summary>Environmental pollution</summary>
-			<FieldDisplayName("Environmental pollution")> EnvironmentalPollution = 06005000
+			<FieldDisplayName("")> EnvironmentalPollution = 06005000
 			''' <summary>Natural resources</summary>
-			<FieldDisplayName("Natural resources")> NaturalResources = 06006000
+			<FieldDisplayName("")> NaturalResources = 06006000
 			''' <summary>Nature</summary>
-			<FieldDisplayName("Nature")> Nature = 06007000
+			<FieldDisplayName("")> Nature = 06007000
 			''' <summary>Population</summary>
-			<FieldDisplayName("Population")> Population = 06008000
+			<FieldDisplayName("")> Population = 06008000
 			''' <summary>Waste</summary>
-			<FieldDisplayName("Waste")> Waste = 06009000
+			<FieldDisplayName("")> Waste = 06009000
 			''' <summary>Water Supplies</summary>
-			<FieldDisplayName("Water Supplies")> WaterSupplies = 06010000
+			<FieldDisplayName("")> WaterSupplies = 06010000
 			''' <summary>Diseases</summary>
-			<FieldDisplayName("Diseases")> Diseases = 07001000
+			<FieldDisplayName("")> Diseases = 07001000
 			''' <summary>Epidemic &amp; Plague</summary>
-			<FieldDisplayName("Epidemic & Plague")> EpidemicAndPlague = 07002000
+			<FieldDisplayName("")> EpidemicAndPlague = 07002000
 			''' <summary>Health treatment</summary>
-			<FieldDisplayName("Health treatment")> HealthTreatment = 07003000
+			<FieldDisplayName("")> HealthTreatment = 07003000
 			''' <summary>Health organisations</summary>
-			<FieldDisplayName("Health organisations")> HealthOrganisations = 07004000
+			<FieldDisplayName("")> HealthOrganisations = 07004000
 			''' <summary>Medical research</summary>
-			<FieldDisplayName("Medical research")> MedicalResearch = 07005000
+			<FieldDisplayName("")> MedicalResearch = 07005000
 			''' <summary>Medical staff</summary>
-			<FieldDisplayName("Medical staff")> MedicalStaff = 07006000
+			<FieldDisplayName("")> MedicalStaff = 07006000
 			''' <summary>Medicines</summary>
-			<FieldDisplayName("Medicines")> Medicines = 07007000
+			<FieldDisplayName("")> Medicines = 07007000
 			''' <summary>Preventative medicine</summary>
-			<FieldDisplayName("Preventative medicine")> PreventativeMedicine = 07008000
+			<FieldDisplayName("")> PreventativeMedicine = 07008000
 			''' <summary>Animals</summary>
-			<FieldDisplayName("Animals")> Animals = 08001000
+			<FieldDisplayName("")> Animals = 08001000
 			''' <summary>Curiosities</summary>
-			<FieldDisplayName("Curiosities")> Curiosities = 08002000
+			<FieldDisplayName("")> Curiosities = 08002000
 			''' <summary>People</summary>
-			<FieldDisplayName("People")> People = 08003000
+			<FieldDisplayName("")> People = 08003000
 			''' <summary>Apprentices</summary>
-			<FieldDisplayName("Apprentices")> Apprentices = 09001000
+			<FieldDisplayName("")> Apprentices = 09001000
 			''' <summary>Collective contracts</summary>
-			<FieldDisplayName("Collective contracts")> CollectiveContracts = 09002000
+			<FieldDisplayName("")> CollectiveContracts = 09002000
 			''' <summary>Employment</summary>
-			<FieldDisplayName("Employment")> Employment = 09003000
+			<FieldDisplayName("")> Employment = 09003000
 			''' <summary>Labour dispute</summary>
-			<FieldDisplayName("Labour dispute")> LabourDispute = 09004000
+			<FieldDisplayName("")> LabourDispute = 09004000
 			''' <summary>Labour legislation</summary>
-			<FieldDisplayName("Labour legislation")> LabourLegislation = 09005000
+			<FieldDisplayName("")> LabourLegislation = 09005000
 			''' <summary>Retirement</summary>
-			<FieldDisplayName("Retirement")> Retirement = 09006000
+			<FieldDisplayName("")> Retirement = 09006000
 			''' <summary>Retraining</summary>
-			<FieldDisplayName("Retraining")> Retraining = 09007000
+			<FieldDisplayName("")> Retraining = 09007000
 			''' <summary>Strike</summary>
-			<FieldDisplayName("Strike")> Strike = 09008000
+			<FieldDisplayName("")> Strike = 09008000
 			''' <summary>Unemployment</summary>
-			<FieldDisplayName("Unemployment")> Unemployment = 09009000
+			<FieldDisplayName("")> Unemployment = 09009000
 			''' <summary>Unions</summary>
-			<FieldDisplayName("Unions")> Unions = 09010000
+			<FieldDisplayName("")> Unions = 09010000
 			''' <summary>Wages &amp; Pensions</summary>
-			<FieldDisplayName("Wages & Pensions")> WagesAndPensions = 09011000
+			<FieldDisplayName("")> WagesAndPensions = 09011000
 			''' <summary>Work Relations</summary>
-			<FieldDisplayName("Work Relations")> WorkRelations = 09012000
+			<FieldDisplayName("")> WorkRelations = 09012000
 			''' <summary>Games</summary>
-			<FieldDisplayName("Games")> Games = 10001000
+			<FieldDisplayName("")> Games = 10001000
 			''' <summary>Gaming &amp; Lotteries</summary>
-			<FieldDisplayName("Gaming & Lotteries")> GamingAndLotteries = 10002000
+			<FieldDisplayName("")> GamingAndLotteries = 10002000
 			''' <summary>Gastronomy</summary>
-			<FieldDisplayName("Gastronomy")> Gastronomy = 10003000
+			<FieldDisplayName("")> Gastronomy = 10003000
 			''' <summary>Hobbies</summary>
-			<FieldDisplayName("Hobbies")> Hobbies = 10004000
+			<FieldDisplayName("")> Hobbies = 10004000
 			''' <summary>Holidays or vacations</summary>
-			<FieldDisplayName("Holidays or vacations")> HolidaysOrVacations = 10005000
+			<FieldDisplayName("")> HolidaysOrVacations = 10005000
 			''' <summary>Tourism</summary>
-			<FieldDisplayName("Tourism")> Tourism = 10006000
+			<FieldDisplayName("")> Tourism = 10006000
 			''' <summary>Defence</summary>
-			<FieldDisplayName("Defence")> Defence = 11001000
+			<FieldDisplayName("")> Defence = 11001000
 			''' <summary>Diplomacy</summary>
-			<FieldDisplayName("Diplomacy")> Diplomacy = 11002000
+			<FieldDisplayName("")> Diplomacy = 11002000
 			''' <summary>Elections</summary>
-			<FieldDisplayName("Elections")> Elections = 11003000
+			<FieldDisplayName("")> Elections = 11003000
 			''' <summary>Espionage &amp; Intelligence</summary>
-			<FieldDisplayName("Espionage & Intelligence")> EspionageAndIntelligence = 11004000
+			<FieldDisplayName("")> EspionageAndIntelligence = 11004000
 			''' <summary>Foreign Aid</summary>
-			<FieldDisplayName("Foreign Aid")> ForeignAid = 11005000
+			<FieldDisplayName("")> ForeignAid = 11005000
 			''' <summary>Government</summary>
-			<FieldDisplayName("Government")> Government = 11006000
+			<FieldDisplayName("")> Government = 11006000
 			''' <summary>Human Rights</summary>
-			<FieldDisplayName("Human Rights")> HumanRights = 11007000
+			<FieldDisplayName("")> HumanRights = 11007000
 			''' <summary>Local authorities</summary>
-			<FieldDisplayName("Local authorities")> LocalAuthorities = 11008000
+			<FieldDisplayName("")> LocalAuthorities = 11008000
 			''' <summary>Parliament</summary>
-			<FieldDisplayName("Parliament")> Parliament = 11009000
+			<FieldDisplayName("")> Parliament = 11009000
 			''' <summary>Parties</summary>
-			<FieldDisplayName("Parties")> Parties = 11010000
+			<FieldDisplayName("")> Parties = 11010000
 			''' <summary>Refugees</summary>
-			<FieldDisplayName("Refugees")> Refugees = 11011000
+			<FieldDisplayName("")> Refugees = 11011000
 			''' <summary>Regional authorities</summary>
-			<FieldDisplayName("Regional authorities")> RegionalAuthorities = 11012000
+			<FieldDisplayName("")> RegionalAuthorities = 11012000
 			''' <summary>State Budget</summary>
-			<FieldDisplayName("State Budget")> StateBudget = 11013000
+			<FieldDisplayName("")> StateBudget = 11013000
 			''' <summary>Treaties &amp; Organisations</summary>
-			<FieldDisplayName("Treaties & Organisations")> TreatiesAndOrganisations = 11014000
+			<FieldDisplayName("")> TreatiesAndOrganisations = 11014000
 			''' <summary>Cults &amp; sects</summary>
-			<FieldDisplayName("Cults & sects")> CultsAndSects = 12001000
+			<FieldDisplayName("")> CultsAndSects = 12001000
 			''' <summary>Faith</summary>
-			<FieldDisplayName("Faith")> Faith = 12002000
+			<FieldDisplayName("")> Faith = 12002000
 			''' <summary>Free masonry</summary>
-			<FieldDisplayName("Free masonry")> FreeMasonry = 12003000
+			<FieldDisplayName("")> FreeMasonry = 12003000
 			''' <summary>Religious institutions</summary>
-			<FieldDisplayName("Religious institutions")> ReligiousInstitutions = 12004000
+			<FieldDisplayName("")> ReligiousInstitutions = 12004000
 			''' <summary>Applied Sciences</summary>
-			<FieldDisplayName("Applied Sciences")> AppliedSciences = 13001000
+			<FieldDisplayName("")> AppliedSciences = 13001000
 			''' <summary>Engineering</summary>
-			<FieldDisplayName("Engineering")> Engineering = 13002000
+			<FieldDisplayName("")> Engineering = 13002000
 			''' <summary>Human Sciences</summary>
-			<FieldDisplayName("Human Sciences")> HumanSciences = 13003000
+			<FieldDisplayName("")> HumanSciences = 13003000
 			''' <summary>Natural Sciences</summary>
-			<FieldDisplayName("Natural Sciences")> NaturalSciences = 13004000
+			<FieldDisplayName("")> NaturalSciences = 13004000
 			''' <summary>Philosophical Sciences</summary>
-			<FieldDisplayName("Philosophical Sciences")> PhilosophicalSciences = 13005000
+			<FieldDisplayName("")> PhilosophicalSciences = 13005000
 			''' <summary>Research</summary>
-			<FieldDisplayName("Research")> Research = 13006000
+			<FieldDisplayName("")> Research = 13006000
 			''' <summary>Scientific exploration</summary>
-			<FieldDisplayName("Scientific exploration")> ScientificExploration = 13007000
+			<FieldDisplayName("")> ScientificExploration = 13007000
 			''' <summary>Space programmes</summary>
-			<FieldDisplayName("Space programmes")> SpaceProgrammes = 13008000
+			<FieldDisplayName("")> SpaceProgrammes = 13008000
 			''' <summary>Addiction</summary>
-			<FieldDisplayName("Addiction")> Addiction = 14001000
+			<FieldDisplayName("")> Addiction = 14001000
 			''' <summary>Charity</summary>
-			<FieldDisplayName("Charity")> Charity = 14002000
+			<FieldDisplayName("")> Charity = 14002000
 			''' <summary>Demographics</summary>
-			<FieldDisplayName("Demographics")> Demographics = 14003000
+			<FieldDisplayName("")> Demographics = 14003000
 			''' <summary>Disabled</summary>
-			<FieldDisplayName("Disabled")> Disabled = 14004000
+			<FieldDisplayName("")> Disabled = 14004000
 			''' <summary>Euthanasia</summary>
-			<FieldDisplayName("Euthanasia")> Euthanasia = 14005000
+			<FieldDisplayName("")> Euthanasia = 14005000
 			''' <summary>Family</summary>
-			<FieldDisplayName("Family")> Family = 14006000
+			<FieldDisplayName("")> Family = 14006000
 			''' <summary>Family planning</summary>
-			<FieldDisplayName("Family planning")> FamilyPlanning = 14007000
+			<FieldDisplayName("")> FamilyPlanning = 14007000
 			''' <summary>Health insurance</summary>
-			<FieldDisplayName("Health insurance")> HealthInsurance = 14008000
+			<FieldDisplayName("")> HealthInsurance = 14008000
 			''' <summary>Homelessness</summary>
-			<FieldDisplayName("Homelessness")> Homelessness = 14009000
+			<FieldDisplayName("")> Homelessness = 14009000
 			''' <summary>Minority groups</summary>
-			<FieldDisplayName("Minority groups")> MinorityGroups = 14010000
+			<FieldDisplayName("")> MinorityGroups = 14010000
 			''' <summary>Pornography</summary>
-			<FieldDisplayName("Pornography")> Pornography = 14011000
+			<FieldDisplayName("")> Pornography = 14011000
 			''' <summary>Poverty</summary>
-			<FieldDisplayName("Poverty")> Poverty = 14012000
+			<FieldDisplayName("")> Poverty = 14012000
 			''' <summary>Prostitution</summary>
-			<FieldDisplayName("Prostitution")> Prostitution = 14013000
+			<FieldDisplayName("")> Prostitution = 14013000
 			''' <summary>Racism</summary>
-			<FieldDisplayName("Racism")> Racism = 14014000
+			<FieldDisplayName("")> Racism = 14014000
 			''' <summary>Welfare</summary>
-			<FieldDisplayName("Welfare")> Welfare = 14015000
+			<FieldDisplayName("")> Welfare = 14015000
 			''' <summary>Aero and Aviation Sports</summary>
-			<FieldDisplayName("Aero and Aviation Sports")> Aero = 15001000
+			<FieldDisplayName("")> Aero = 15001000
 			''' <summary>Alpine Skiing</summary>
-			<FieldDisplayName("Alpine Skiing")> AlpineSkiing = 15002000
+			<FieldDisplayName("")> AlpineSkiing = 15002000
 			''' <summary>American Football</summary>
-			<FieldDisplayName("American Football")> AmericanFootball = 15003000
+			<FieldDisplayName("")> AmericanFootball = 15003000
 			''' <summary>Archery</summary>
-			<FieldDisplayName("Archery")> Archery = 15004000
+			<FieldDisplayName("")> Archery = 15004000
 			''' <summary>Athletics, Track &amp; Field</summary>
-			<FieldDisplayName("Athletics, Track & Field")> AthleticsTrackAndField = 15005000
+			<FieldDisplayName("")> AthleticsTrackAndField = 15005000
 			''' <summary>Badminton</summary>
-			<FieldDisplayName("Badminton")> Badminton = 15006000
+			<FieldDisplayName("")> Badminton = 15006000
 			''' <summary>Baseball</summary>
-			<FieldDisplayName("Baseball")> Baseball = 15007000
+			<FieldDisplayName("")> Baseball = 15007000
 			''' <summary>Basketball</summary>
-			<FieldDisplayName("Basketball")> Basketball = 15008000
+			<FieldDisplayName("")> Basketball = 15008000
 			''' <summary>Biathlon</summary>
-			<FieldDisplayName("Biathlon")> Biathlon = 15009000
+			<FieldDisplayName("")> Biathlon = 15009000
 			''' <summary>Billiards, Snooker and Pool</summary>
-			<FieldDisplayName("Billiards, Snooker and Pool")> BilliardsSnookerPool = 15010000
+			<FieldDisplayName("")> BilliardsSnookerPool = 15010000
 			''' <summary>Bobsleigh</summary>
-			<FieldDisplayName("Bobsleigh")> Bobsleigh = 15011000
+			<FieldDisplayName("")> Bobsleigh = 15011000
 			''' <summary>Bowling</summary>
-			<FieldDisplayName("Bowling")> Bowling = 15012000
+			<FieldDisplayName("")> Bowling = 15012000
 			''' <summary>Bowls &amp; Petanque</summary>
-			<FieldDisplayName("Bowls & Petanque")> BowlsAndPetanque = 15013000
+			<FieldDisplayName("")> BowlsAndPetanque = 15013000
 			''' <summary>Boxing</summary>
-			<FieldDisplayName("Boxing")> Boxing = 15014000
+			<FieldDisplayName("")> Boxing = 15014000
 			''' <summary>Canoeing &amp; Kayaking</summary>
-			<FieldDisplayName("Canoeing & Kayaking")> CanoeingAndKayaking = 15015000
+			<FieldDisplayName("")> CanoeingAndKayaking = 15015000
 			''' <summary>Climbing</summary>
-			<FieldDisplayName("Climbing")> Climbing = 15016000
+			<FieldDisplayName("")> Climbing = 15016000
 			''' <summary>Cricket</summary>
-			<FieldDisplayName("Cricket")> Cricket = 15017000
+			<FieldDisplayName("")> Cricket = 15017000
 			''' <summary>Curling</summary>
-			<FieldDisplayName("Curling")> Curling = 15018000
+			<FieldDisplayName("")> Curling = 15018000
 			''' <summary>Cycling</summary>
-			<FieldDisplayName("Cycling")> Cycling = 15019000
+			<FieldDisplayName("")> Cycling = 15019000
 			''' <summary>Dancing</summary>
-			<FieldDisplayName("Dancing")> Dancing = 15020000
+			<FieldDisplayName("")> Dancing = 15020000
 			''' <summary>Diving</summary>
-			<FieldDisplayName("Diving")> Diving = 15021000
+			<FieldDisplayName("")> Diving = 15021000
 			''' <summary>Equestrian</summary>
-			<FieldDisplayName("Equestrian")> Equestrian = 15022000
+			<FieldDisplayName("")> Equestrian = 15022000
 			''' <summary>Fencing</summary>
-			<FieldDisplayName("Fencing")> Fencing = 15023000
+			<FieldDisplayName("")> Fencing = 15023000
 			''' <summary>Field Hockey</summary>
-			<FieldDisplayName("Field Hockey")> FieldHockey = 15024000
+			<FieldDisplayName("")> FieldHockey = 15024000
 			''' <summary>Figure Skating</summary>
-			<FieldDisplayName("Figure Skating")> FigureSkating = 15025000
+			<FieldDisplayName("")> FigureSkating = 15025000
 			''' <summary>Freestyle Skiing</summary>
-			<FieldDisplayName("Freestyle Skiing")> FreestyleSkiing = 15026000
+			<FieldDisplayName("")> FreestyleSkiing = 15026000
 			''' <summary>Golf</summary>
-			<FieldDisplayName("Golf")> Golf = 15027000
+			<FieldDisplayName("")> Golf = 15027000
 			''' <summary>Gymnastics</summary>
-			<FieldDisplayName("Gymnastics")> Gymnastics = 15028000
+			<FieldDisplayName("")> Gymnastics = 15028000
 			''' <summary>Handball (Team)</summary>
-			<FieldDisplayName("Handball")> Handball = 15029000
+			<FieldDisplayName("")> Handball = 15029000
 			''' <summary>Horse Racing, Harness Racing</summary>
-			<FieldDisplayName("Horse Racing, Harness Racing")> Horse = 15030000
+			<FieldDisplayName("")> Horse = 15030000
 			''' <summary>Ice Hockey</summary>
-			<FieldDisplayName("Ice Hockey")> IceHockey = 15031000
+			<FieldDisplayName("")> IceHockey = 15031000
 			''' <summary>Jai Alai (Pelota)</summary>
-			<FieldDisplayName("Jai Alai (Pelota)")> JaiAlai = 15032000
+			<FieldDisplayName("")> JaiAlai = 15032000
 			''' <summary>Judo</summary>
-			<FieldDisplayName("Judo")> Judo = 15033000
+			<FieldDisplayName("")> Judo = 15033000
 			''' <summary>Karate</summary>
-			<FieldDisplayName("Karate")> Karate = 15034000
+			<FieldDisplayName("")> Karate = 15034000
 			''' <summary>Lacrosse</summary>
-			<FieldDisplayName("Lacrosse")> Lacrosse = 15035000
+			<FieldDisplayName("")> Lacrosse = 15035000
 			''' <summary>Luge</summary>
-			<FieldDisplayName("Luge")> Luge = 15036000
+			<FieldDisplayName("")> Luge = 15036000
 			''' <summary>Marathon</summary>
-			<FieldDisplayName("Marathon")> Marathon = 15037000
+			<FieldDisplayName("")> Marathon = 15037000
 			''' <summary>Modern Pentathlon</summary>
-			<FieldDisplayName("Modern Pentathlon")> ModernPentathlon = 15038000
+			<FieldDisplayName("")> ModernPentathlon = 15038000
 			''' <summary>Motor Racing</summary>
-			<FieldDisplayName("Motor Racing")> MotorRacing = 15039000
+			<FieldDisplayName("")> MotorRacing = 15039000
 			''' <summary>Motor Rallying</summary>
-			<FieldDisplayName("Motor Rallying")> MotorRallying = 15040000
+			<FieldDisplayName("")> MotorRallying = 15040000
 			''' <summary>Motorcycling</summary>
-			<FieldDisplayName("Motorcycling")> Motorcycling = 15041000
+			<FieldDisplayName("")> Motorcycling = 15041000
 			''' <summary>Netball</summary>
-			<FieldDisplayName("Netball")> Netball = 15042000
+			<FieldDisplayName("")> Netball = 15042000
 			''' <summary>Nordic Skiing</summary>
-			<FieldDisplayName("Nordic Skiing")> NordicSkiing = 15043000
+			<FieldDisplayName("")> NordicSkiing = 15043000
 			''' <summary>Orienteering</summary>
-			<FieldDisplayName("Orienteering")> Orienteering = 15044000
+			<FieldDisplayName("")> Orienteering = 15044000
 			''' <summary>Polo</summary>
-			<FieldDisplayName("Polo")> Polo = 15045000
+			<FieldDisplayName("")> Polo = 15045000
 			''' <summary>Power Boating</summary>
-			<FieldDisplayName("Power Boating")> PowerBoating = 15046000
+			<FieldDisplayName("")> PowerBoating = 15046000
 			''' <summary>Rowing</summary>
-			<FieldDisplayName("Rowing")> Rowing = 15047000
+			<FieldDisplayName("")> Rowing = 15047000
 			''' <summary>Rugby League</summary>
-			<FieldDisplayName("Rugby League")> RugbyLeague = 15048000
+			<FieldDisplayName("")> RugbyLeague = 15048000
 			''' <summary>Rugby Union</summary>
-			<FieldDisplayName("Rugby Union")> RugbyUnion = 15049000
+			<FieldDisplayName("")> RugbyUnion = 15049000
 			''' <summary>Sailing</summary>
-			<FieldDisplayName("Sailing")> Sailing = 15050000
+			<FieldDisplayName("")> Sailing = 15050000
 			''' <summary>Shooting</summary>
-			<FieldDisplayName("Shooting")> Shooting = 15051000
+			<FieldDisplayName("")> Shooting = 15051000
 			''' <summary>Ski Jumping</summary>
-			<FieldDisplayName("Ski Jumping")> SkiJumping = 15052000
+			<FieldDisplayName("")> SkiJumping = 15052000
 			''' <summary>Snow Boarding</summary>
-			<FieldDisplayName("Snow Boarding")> SnowBoarding = 15053000
+			<FieldDisplayName("")> SnowBoarding = 15053000
 			''' <summary>Soccer</summary>
-			<FieldDisplayName("Soccer")> Soccer = 15054000
+			<FieldDisplayName("")> Soccer = 15054000
 			''' <summary>Softball</summary>
-			<FieldDisplayName("Softball")> Softball = 15055000
+			<FieldDisplayName("")> Softball = 15055000
 			''' <summary>Speed Skating</summary>
-			<FieldDisplayName("Speed Skating")> SpeedSkating = 15056000
+			<FieldDisplayName("")> SpeedSkating = 15056000
 			''' <summary>Speedway</summary>
-			<FieldDisplayName("Speedway")> Speedway = 15057000
+			<FieldDisplayName("")> Speedway = 15057000
 			''' <summary>Sports Organisations</summary>
-			<FieldDisplayName("Sports Organisations")> SportsOrganisations = 15058000
+			<FieldDisplayName("")> SportsOrganisations = 15058000
 			''' <summary>Squash</summary>
-			<FieldDisplayName("Squash")> Squash = 15059000
+			<FieldDisplayName("")> Squash = 15059000
 			''' <summary>Sumo Wrestling</summary>
-			<FieldDisplayName("Sumo Wrestling")> SumoWrestling = 15060000
+			<FieldDisplayName("")> SumoWrestling = 15060000
 			''' <summary>Surfing</summary>
-			<FieldDisplayName("Surfing")> Surfing = 15061000
+			<FieldDisplayName("")> Surfing = 15061000
 			''' <summary>Swimming</summary>
-			<FieldDisplayName("Swimming")> Swimming = 15062000
+			<FieldDisplayName("")> Swimming = 15062000
 			''' <summary>Table Tennis</summary>
-			<FieldDisplayName("Table Tennis")> TableTennis = 15063000
+			<FieldDisplayName("")> TableTennis = 15063000
 			''' <summary>Taekwon-Do</summary>
-			<FieldDisplayName("Taekwon-Do")> TaekwonDo = 15064000
+			<FieldDisplayName("")> TaekwonDo = 15064000
 			''' <summary>Tennis</summary>
-			<FieldDisplayName("Tennis")> Tennis = 15065000
+			<FieldDisplayName("")> Tennis = 15065000
 			''' <summary>Triathlon</summary>
-			<FieldDisplayName("Triathlon")> Triathlon = 15066000
+			<FieldDisplayName("")> Triathlon = 15066000
 			''' <summary>Volleyball</summary>
-			<FieldDisplayName("Volleyball")> Volleyball = 15067000
+			<FieldDisplayName("")> Volleyball = 15067000
 			''' <summary>Water Polo</summary>
-			<FieldDisplayName("Water Polo")> WaterPolo = 15068000
+			<FieldDisplayName("")> WaterPolo = 15068000
 			''' <summary>Water Skiing</summary>
-			<FieldDisplayName("Water Skiing")> WaterSkiing = 15069000
+			<FieldDisplayName("")> WaterSkiing = 15069000
 			''' <summary>Weightlifting</summary>
-			<FieldDisplayName("Weightlifting")> Weightlifting = 15070000
+			<FieldDisplayName("")> Weightlifting = 15070000
 			''' <summary>Windsurfing</summary>
-			<FieldDisplayName("Windsurfing")> Windsurfing = 15071000
+			<FieldDisplayName("")> Windsurfing = 15071000
 			''' <summary>Wrestling</summary>
-			<FieldDisplayName("Wrestling")> Wrestling = 15072000
+			<FieldDisplayName("")> Wrestling = 15072000
 			''' <summary>Acts of terror</summary>
-			<FieldDisplayName("Acts of terror")> ActsOfTerror = 16001000
+			<FieldDisplayName("")> ActsOfTerror = 16001000
 			''' <summary>Armed conflict</summary>
-			<FieldDisplayName("Armed conflict")> ArmedConflict = 16002000
+			<FieldDisplayName("")> ArmedConflict = 16002000
 			''' <summary>Civil unrest</summary>
-			<FieldDisplayName("Civil unrest")> CivilUnrest = 16003000
+			<FieldDisplayName("")> CivilUnrest = 16003000
 			''' <summary>Coup d'Etat</summary>
-			<FieldDisplayName("Coup d'Etat")> CoupDEtat = 16004000
+			<FieldDisplayName("")> CoupDEtat = 16004000
 			''' <summary>Guerrilla activities</summary>
-			<FieldDisplayName("Guerrilla activities")> GuerrillaActivities = 16005000
+			<FieldDisplayName("")> GuerrillaActivities = 16005000
 			''' <summary>Massacre</summary>
-			<FieldDisplayName("Massacre")> Massacre = 16006000
+			<FieldDisplayName("")> Massacre = 16006000
 			''' <summary>Riots</summary>
-			<FieldDisplayName("Riots")> Riots = 16007000
+			<FieldDisplayName("")> Riots = 16007000
 			''' <summary>Violent demonstrations</summary>
-			<FieldDisplayName("Violent demonstrations")> ViolentDemonstrations = 16008000
+			<FieldDisplayName("")> ViolentDemonstrations = 16008000
 			''' <summary>War</summary>
-			<FieldDisplayName("War")> War = 16009000
+			<FieldDisplayName("")> War = 16009000
 			''' <summary>Forecasts</summary>
-			<FieldDisplayName("Forecasts")> Forecasts = 17001000
+			<FieldDisplayName("")> Forecasts = 17001000
 			''' <summary>Global change</summary>
-			<FieldDisplayName("Global change")> GlobalChange = 17002000
+			<FieldDisplayName("")> GlobalChange = 17002000
 			''' <summary>Reports</summary>
-			<FieldDisplayName("Reports")> Reports = 17003000
+			<FieldDisplayName("")> Reports = 17003000
 			''' <summary>Statistics</summary>
-			<FieldDisplayName("Statistics")> Statistics = 17004000
+			<FieldDisplayName("")> Statistics = 17004000
 			''' <summary>Warnings</summary>
-			<FieldDisplayName("Warnings")> Warnings = 17005000
+			<FieldDisplayName("")> Warnings = 17005000
 		End Enum
 		''' <summary>Subject Reference Number and Subject Name relationship (version IPTC/1)</summary>
 		<Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of SubjectReferenceNumbers)))> Public Enum SubjectReferenceNumbers As Integer
 			''' <summary>Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions</summary>
-			<FieldDisplayName("Arts, Culture & Entertainment")> ArtsCultureEntertainment = 01000000
+			<FieldDisplayName("")> ArtsCultureEntertainment = 01000000
 			''' <summary>Establishment and/or statement of the rules of behaviour in society, the enforcement of these rules, breaches of the rules and the punishment of offenders. Organisations and bodies involved in these activities.</summary>
-			<FieldDisplayName("Crime, Law & Justice")> CrimeLawJustice = 02000000
+			<FieldDisplayName("")> CrimeLawJustice = 02000000
 			''' <summary>Man made and natural events resulting in loss of life or injury to living creatures and/or damage to inanimate objects or property.</summary>
-			<FieldDisplayName("Disasters & Accidents")> DisastersAccidents = 03000000
+			<FieldDisplayName("")> DisastersAccidents = 03000000
 			''' <summary>All matters concerning the planning, production and exchange of wealth.</summary>
-			<FieldDisplayName("Economy, Business & Finance")> EconomyBusinessFinance = 04000000
+			<FieldDisplayName("")> EconomyBusinessFinance = 04000000
 			''' <summary>All aspects of furthering knowledge of human individuals from birth to death.</summary>
-			<FieldDisplayName("Education")> Education = 05000000
+			<FieldDisplayName("")> Education = 05000000
 			''' <summary>All aspects of protection, damage, and condition of the ecosystem of the planet earth and its surroundings.</summary>
-			<FieldDisplayName("Environmental Issues")> EnvironmentalIssues = 06000000
+			<FieldDisplayName("")> EnvironmentalIssues = 06000000
 			''' <summary>All aspects pertaining to the physical and mental welfare of human beings.</summary>
-			<FieldDisplayName("Health")> Health = 07000000
+			<FieldDisplayName("")> Health = 07000000
 			''' <summary>Lighter items about individuals, groups, animals or objects.</summary>
-			<FieldDisplayName("Human Interest")> HumanInterest = 08000000
+			<FieldDisplayName("")> HumanInterest = 08000000
 			''' <summary>Social aspects, organisations, rules and conditions affecting the employment of human effort for the generation of wealth or provision of services and the economic support of the unemployed.</summary>
-			<FieldDisplayName("Labour")> Labour = 09000000
+			<FieldDisplayName("")> Labour = 09000000
 			''' <summary>Activities undertaken for pleasure, relaxation or recreation outside paid employment, including eating and travel.</summary>
-			<FieldDisplayName("Lifestyle & Leisure")> LifestyleAndLeisure = 10000000
+			<FieldDisplayName("")> LifestyleAndLeisure = 10000000
 			''' <summary>Local, regional, national and international exercise of power, or struggle for power, and the relationships between governing bodies and states.</summary>
-			<FieldDisplayName("Politics")> Politics = 11000000
+			<FieldDisplayName("")> Politics = 11000000
 			''' <summary>All aspects of human existence involving theology, philosophy, ethics and spirituality.</summary>
-			<FieldDisplayName("Religion & Belief")> ReligionBelief = 12000000
+			<FieldDisplayName("")> ReligionBelief = 12000000
 			''' <summary>All aspects pertaining to human understanding of nature and the physical world and the development and application of this knowledge</summary>
-			<FieldDisplayName("Science & Technology")> ScienceTechnology = 13000000
+			<FieldDisplayName("")> ScienceTechnology = 13000000
 			''' <summary>Aspects of the behaviour of humans affecting the quality of life.</summary>
-			<FieldDisplayName("Social Issues")> SocialIssues = 14000000
+			<FieldDisplayName("")> SocialIssues = 14000000
 			''' <summary>Competitive exercise involving physical effort. Organisations and bodies involved in these activities.</summary>
-			<FieldDisplayName("Sport")> Sport = 15000000
+			<FieldDisplayName("")> Sport = 15000000
 			''' <summary>Acts of socially or politically motivated protest and/or violence.</summary>
-			<FieldDisplayName("Unrest, Conflicts & War")> UnrestConflictsWar = 16000000
+			<FieldDisplayName("")> UnrestConflictsWar = 16000000
 			''' <summary>The study, reporting and predic meteorological phenomena.</summary>
-			<FieldDisplayName("Weather")> Weather = 17000000
+			<FieldDisplayName("")> Weather = 17000000
+		End Enum
+		''' <summary>Numbers indicating image content</summary>
+		''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of SupplementTypeValue)))> Public Enum SupplementTypeValue As Byte
+			''' <summary>Value is used if the first octet of DataSet 2:130 (<see cref='ImageType'/>) &amp;lt;> 9 (<see cref='ImageTypeComponents.SuplementaryData'/>)</summary>
+			<FieldDisplayName("")> Unknown = 0
+			''' <summary>Reduced resolution image.</summary>
+			<FieldDisplayName("")> ReducedResolutionImage = 1
+			''' <summary>Logo</summary>
+			<FieldDisplayName("")> Logo = 2
+			''' <summary>Rasterized caption.</summary>
+			<FieldDisplayName("")> RasterizedCaption = 3
 		End Enum
 	End Class
 #End Region
@@ -1699,633 +2192,633 @@ Namespace MetadataT.IptcT
 		''' <summary>The exact type of audio contained in the current objectdata.</summary>
 		<Restrict(True)> Public Enum AudioDataType
 			''' <summary>Actuality</summary>
-			<FieldDisplayName("Actuality")> <XmlEnum("A")> Actuality
+			<FieldDisplayName("")> <XmlEnum("A")> Actuality
 			''' <summary>Question and answer session</summary>
-			<FieldDisplayName("Question and answer session")> <XmlEnum("C")> QuestionAndAnswer
+			<FieldDisplayName("")> <XmlEnum("C")> QuestionAndAnswer
 			''' <summary>Music, transmitted by itself</summary>
-			<FieldDisplayName("Music")> <XmlEnum("M")> Music
+			<FieldDisplayName("")> <XmlEnum("M")> Music
 			''' <summary>Response to a question</summary>
-			<FieldDisplayName("Response to a question")> <XmlEnum("Q")> Response
+			<FieldDisplayName("")> <XmlEnum("Q")> Response
 			''' <summary>Raw sound</summary>
-			<FieldDisplayName("Raw sound")> <XmlEnum("R")> RawSound
+			<FieldDisplayName("")> <XmlEnum("R")> RawSound
 			''' <summary>Scener</summary>
-			<FieldDisplayName("Scener")> <XmlEnum("S")> Scener
+			<FieldDisplayName("")> <XmlEnum("S")> Scener
 			''' <summary>Text only</summary>
-			<FieldDisplayName("Text only")> <XmlEnum("T")> TextOnly
+			<FieldDisplayName("")> <XmlEnum("T")> TextOnly
 			''' <summary>Voicer</summary>
-			<FieldDisplayName("Voicer")> <XmlEnum("V")> Voicer
+			<FieldDisplayName("")> <XmlEnum("V")> Voicer
 			''' <summary>Wrap</summary>
-			<FieldDisplayName("Wrap")> <XmlEnum("W")> Wrap
+			<FieldDisplayName("")> <XmlEnum("W")> Wrap
 		End Enum
 		''' <summary>Exact content of the current objectdata in terms of colour composition.</summary>
 		<Restrict(True)> Public Enum ImageTypeContents
 			''' <summary>Monochrome</summary>
-			<FieldDisplayName("Monochrome")> <XmlEnum("W")> Monochrome
+			<FieldDisplayName("")> <XmlEnum("W")> Monochrome
 			''' <summary>Yellow component</summary>
-			<FieldDisplayName("Yellow")> <XmlEnum("Y")> Yellow
+			<FieldDisplayName("")> <XmlEnum("Y")> Yellow
 			''' <summary>Magenta component</summary>
-			<FieldDisplayName("Magenta")> <XmlEnum("M")> Magenta
+			<FieldDisplayName("")> <XmlEnum("M")> Magenta
 			''' <summary>Cyan component</summary>
-			<FieldDisplayName("Cyan")> <XmlEnum("C")> Cyan
+			<FieldDisplayName("")> <XmlEnum("C")> Cyan
 			''' <summary>Black component</summary>
-			<FieldDisplayName("Black")> <XmlEnum("K")> Black
+			<FieldDisplayName("")> <XmlEnum("K")> Black
 			''' <summary>Red component</summary>
-			<FieldDisplayName("Red")> <XmlEnum("R")> Red
+			<FieldDisplayName("")> <XmlEnum("R")> Red
 			''' <summary>Green component</summary>
-			<FieldDisplayName("Green")> <XmlEnum("G")> Green
+			<FieldDisplayName("")> <XmlEnum("G")> Green
 			''' <summary>Blue component</summary>
-			<FieldDisplayName("Blue")> <XmlEnum("B")> Blue
+			<FieldDisplayName("")> <XmlEnum("B")> Blue
 			''' <summary>Text only</summary>
-			<FieldDisplayName("text only")> <XmlEnum("T")> Text
+			<FieldDisplayName("")> <XmlEnum("T")> Text
 			''' <summary>Full colour composite, frame sequential</summary>
-			<FieldDisplayName("Frame Sequential")> <XmlEnum("F")> FrameSequential
+			<FieldDisplayName("")> <XmlEnum("F")> FrameSequential
 			''' <summary>Full colour composite, line sequential</summary>
-			<FieldDisplayName("Line Sequential")> <XmlEnum("L")> LineSequential
+			<FieldDisplayName("")> <XmlEnum("L")> LineSequential
 			''' <summary>Full colour composite, pixel sequential</summary>
-			<FieldDisplayName("Pixel Sequential")> <XmlEnum("P")> PixesSequential
+			<FieldDisplayName("")> <XmlEnum("P")> PixesSequential
 			''' <summary>Full colour composite, special sequential</summary>
-			<FieldDisplayName("Special Sequential")> <XmlEnum("S")> SpecialSequential
+			<FieldDisplayName("")> <XmlEnum("S")> SpecialSequential
 		End Enum
 		''' <summary>Information Providers Reference</summary>
 		<Restrict(False)> Public Enum InformationProviders
 			''' <summary>Agence France Presse</summary>
-			<FieldDisplayName("AFP")> <XmlEnum("AFP")> AFP
+			<FieldDisplayName("")> <XmlEnum("AFP")> AFP
 			''' <summary>Associated Press</summary>
-			<FieldDisplayName("AP")> <XmlEnum("AP")> AP
+			<FieldDisplayName("")> <XmlEnum("AP")> AP
 			''' <summary>Associated Press</summary>
-			<FieldDisplayName("APD")> <XmlEnum("APD")> APD
+			<FieldDisplayName("")> <XmlEnum("APD")> APD
 			''' <summary>Associated Press</summary>
-			<FieldDisplayName("APE")> <XmlEnum("APE")> APE
+			<FieldDisplayName("")> <XmlEnum("APE")> APE
 			''' <summary>Associated Press</summary>
-			<FieldDisplayName("APF")> <XmlEnum("APF")> APF
+			<FieldDisplayName("")> <XmlEnum("APF")> APF
 			''' <summary>Associated Press</summary>
-			<FieldDisplayName("APS")> <XmlEnum("APS")> APS
+			<FieldDisplayName("")> <XmlEnum("APS")> APS
 			''' <summary>Canadian Press</summary>
-			<FieldDisplayName("BN")> <XmlEnum("BN")> BN
+			<FieldDisplayName("")> <XmlEnum("BN")> BN
 			''' <summary>Canadian Press</summary>
-			<FieldDisplayName("CP")> <XmlEnum("CP")> CP
+			<FieldDisplayName("")> <XmlEnum("CP")> CP
 			''' <summary>Czech News Agency</summary>
-			<FieldDisplayName("CTK")> <XmlEnum("CTK")> CTK
+			<FieldDisplayName("")> <XmlEnum("CTK")> CTK
 			''' <summary>Deutsche Presse-Agentur GmbH</summary>
-			<FieldDisplayName("dpa")> <XmlEnum("dpa")> dpa
+			<FieldDisplayName("")> <XmlEnum("dpa")> dpa
 			''' <summary>Croatian News Agency</summary>
-			<FieldDisplayName("HNA")> <XmlEnum("HNA")> HNA
+			<FieldDisplayName("")> <XmlEnum("HNA")> HNA
 			''' <summary>International Press Telecommunications Council</summary>
-			<FieldDisplayName("IPTC")> <XmlEnum("IPTC")> IPTC
+			<FieldDisplayName("")> <XmlEnum("IPTC")> IPTC
 			''' <summary>Magyar Távirati Iroda / Hungarian News Agency</summary>
-			<FieldDisplayName("MTI")> <XmlEnum("MTI")> MTI
+			<FieldDisplayName("")> <XmlEnum("MTI")> MTI
 			''' <summary>Canadian Press</summary>
-			<FieldDisplayName("PC")> <XmlEnum("PC")> PC
+			<FieldDisplayName("")> <XmlEnum("PC")> PC
 			''' <summary>Canadian Press</summary>
-			<FieldDisplayName("PN")> <XmlEnum("PN")> PN
+			<FieldDisplayName("")> <XmlEnum("PN")> PN
 			''' <summary>Reuters</summary>
-			<FieldDisplayName("REUTERS")> <XmlEnum("REUTERS")> REUTERS
+			<FieldDisplayName("")> <XmlEnum("REUTERS")> REUTERS
 			''' <summary>Slovenska Tiskovna Agencija</summary>
-			<FieldDisplayName("STA")> <XmlEnum("STA")> STA
+			<FieldDisplayName("")> <XmlEnum("STA")> STA
 			''' <summary>Tidningarnas Telegrambyrå</summary>
-			<FieldDisplayName("TT")> <XmlEnum("TT")> TT
+			<FieldDisplayName("")> <XmlEnum("TT")> TT
 			''' <summary>United Press International</summary>
-			<FieldDisplayName("UP")> <XmlEnum("UP")> UP
+			<FieldDisplayName("")> <XmlEnum("UP")> UP
 			''' <summary>United Press International</summary>
-			<FieldDisplayName("UPI")> <XmlEnum("UPI")> UPI
+			<FieldDisplayName("")> <XmlEnum("UPI")> UPI
 		End Enum
 		''' <summary>ISO 3166-1 alpha-3 codes used by <see cref="ContentLocationCode"/> with addition of some spacial codes used there.</summary>
 		''' <remarks>Reserved code elements are codes which, while not ISO 3166-1 codes, are in use for some applications in conjunction with the ISO 3166 codes. The ISO 3166/MA therefore reserves them, so that they are not used for new official ISO 3166 codes, thereby creating conflicts between the standard and those applications.</remarks>
 		<Restrict(False)> Public Enum ISO3166
 			''' <summary>Aruba</summary>
-			<FieldDisplayName("Aruba")> <XmlEnum("ABW")> Aruba
+			<FieldDisplayName("")> <XmlEnum("ABW")> Aruba
 			''' <summary>Afghanistan</summary>
-			<FieldDisplayName("Afghanistan")> <XmlEnum("AFG")> Afghanistan
+			<FieldDisplayName("")> <XmlEnum("AFG")> Afghanistan
 			''' <summary>Angola</summary>
-			<FieldDisplayName("Angola")> <XmlEnum("AGO")> Angola
+			<FieldDisplayName("")> <XmlEnum("AGO")> Angola
 			''' <summary>Anguilla</summary>
-			<FieldDisplayName("Anguilla")> <XmlEnum("AIA")> Anguilla
+			<FieldDisplayName("")> <XmlEnum("AIA")> Anguilla
 			''' <summary>Åland Islands</summary>
-			<FieldDisplayName("Åland")> <XmlEnum("ALA")> Åland
+			<FieldDisplayName("")> <XmlEnum("ALA")> Åland
 			''' <summary>Albania</summary>
-			<FieldDisplayName("Albania")> <XmlEnum("ALB")> Albania
+			<FieldDisplayName("")> <XmlEnum("ALB")> Albania
 			''' <summary>Andorra</summary>
-			<FieldDisplayName("Andorra")> <XmlEnum("AND")> Andorra
+			<FieldDisplayName("")> <XmlEnum("AND")> Andorra
 			''' <summary>Netherlands Antilles</summary>
-			<FieldDisplayName("Netherlands Antilles")> <XmlEnum("ANT")> NetherlandsAntilles
+			<FieldDisplayName("")> <XmlEnum("ANT")> NetherlandsAntilles
 			''' <summary>United Arab Emirates</summary>
-			<FieldDisplayName("United Arab Emirates")> <XmlEnum("ARE")> UnitedArabEmirates
+			<FieldDisplayName("")> <XmlEnum("ARE")> UnitedArabEmirates
 			''' <summary>Argentina</summary>
-			<FieldDisplayName("Argentina")> <XmlEnum("ARG")> Argentina
+			<FieldDisplayName("")> <XmlEnum("ARG")> Argentina
 			''' <summary>Armenia</summary>
-			<FieldDisplayName("Armenia")> <XmlEnum("ARM")> Armenia
+			<FieldDisplayName("")> <XmlEnum("ARM")> Armenia
 			''' <summary>American Samoa</summary>
-			<FieldDisplayName("American Samoa")> <XmlEnum("ASM")> AmericanSamoa
+			<FieldDisplayName("")> <XmlEnum("ASM")> AmericanSamoa
 			''' <summary>Antarctica</summary>
-			<FieldDisplayName("Antarctica")> <XmlEnum("ATA")> Antarctica
+			<FieldDisplayName("")> <XmlEnum("ATA")> Antarctica
 			''' <summary>French Southern Territories</summary>
-			<FieldDisplayName("French Southern Territories")> <XmlEnum("ATF")> FrenchSouthernTerritories
+			<FieldDisplayName("")> <XmlEnum("ATF")> FrenchSouthernTerritories
 			''' <summary>Antigua and Barbuda</summary>
-			<FieldDisplayName("Antigua and Barbuda")> <XmlEnum("ATG")> AntiguaAndBarbuda
+			<FieldDisplayName("")> <XmlEnum("ATG")> AntiguaAndBarbuda
 			''' <summary>Australia</summary>
-			<FieldDisplayName("Australia")> <XmlEnum("AUS")> Australia
+			<FieldDisplayName("")> <XmlEnum("AUS")> Australia
 			''' <summary>Austria</summary>
-			<FieldDisplayName("Austria")> <XmlEnum("AUT")> Austria
+			<FieldDisplayName("")> <XmlEnum("AUT")> Austria
 			''' <summary>Azerbaijan</summary>
-			<FieldDisplayName("Azerbaijan")> <XmlEnum("AZE")> Azerbaijan
+			<FieldDisplayName("")> <XmlEnum("AZE")> Azerbaijan
 			''' <summary>Burundi</summary>
-			<FieldDisplayName("Burundi")> <XmlEnum("BDI")> Burundi
+			<FieldDisplayName("")> <XmlEnum("BDI")> Burundi
 			''' <summary>Belgium</summary>
-			<FieldDisplayName("Belgium")> <XmlEnum("BEL")> Belgium
+			<FieldDisplayName("")> <XmlEnum("BEL")> Belgium
 			''' <summary>Benin</summary>
-			<FieldDisplayName("Benin")> <XmlEnum("BEN")> Benin
+			<FieldDisplayName("")> <XmlEnum("BEN")> Benin
 			''' <summary>Burkina Faso</summary>
-			<FieldDisplayName("Burkina Faso")> <XmlEnum("BFA")> BurkinaFaso
+			<FieldDisplayName("")> <XmlEnum("BFA")> BurkinaFaso
 			''' <summary>Bangladesh</summary>
-			<FieldDisplayName("Bangladesh")> <XmlEnum("BGD")> Bangladesh
+			<FieldDisplayName("")> <XmlEnum("BGD")> Bangladesh
 			''' <summary>Bulgaria</summary>
-			<FieldDisplayName("Bulgaria")> <XmlEnum("BGR")> Bulgaria
+			<FieldDisplayName("")> <XmlEnum("BGR")> Bulgaria
 			''' <summary>Bahrain</summary>
-			<FieldDisplayName("Bahrain")> <XmlEnum("BHR")> Bahrain
+			<FieldDisplayName("")> <XmlEnum("BHR")> Bahrain
 			''' <summary>Bahamas</summary>
-			<FieldDisplayName("Bahamas")> <XmlEnum("BHS")> Bahamas
+			<FieldDisplayName("")> <XmlEnum("BHS")> Bahamas
 			''' <summary>Bosnia and Herzegovina</summary>
-			<FieldDisplayName("Bosnia and Herzegovina")> <XmlEnum("BIH")> BosniaAndHerzegovina
+			<FieldDisplayName("")> <XmlEnum("BIH")> BosniaAndHerzegovina
 			''' <summary>Belarus</summary>
-			<FieldDisplayName("Belarus")> <XmlEnum("BLR")> Belarus
+			<FieldDisplayName("")> <XmlEnum("BLR")> Belarus
 			''' <summary>Belize</summary>
-			<FieldDisplayName("Belize")> <XmlEnum("BLZ")> Belize
+			<FieldDisplayName("")> <XmlEnum("BLZ")> Belize
 			''' <summary>Bermuda</summary>
-			<FieldDisplayName("Bermuda")> <XmlEnum("BMU")> Bermuda
+			<FieldDisplayName("")> <XmlEnum("BMU")> Bermuda
 			''' <summary>Bolivia</summary>
-			<FieldDisplayName("Bolivia")> <XmlEnum("BOL")> Bolivia
+			<FieldDisplayName("")> <XmlEnum("BOL")> Bolivia
 			''' <summary>Brazil</summary>
-			<FieldDisplayName("Brazil")> <XmlEnum("BRA")> Brazil
+			<FieldDisplayName("")> <XmlEnum("BRA")> Brazil
 			''' <summary>Barbados</summary>
-			<FieldDisplayName("Barbados")> <XmlEnum("BRB")> Barbados
+			<FieldDisplayName("")> <XmlEnum("BRB")> Barbados
 			''' <summary>Brunei Darussalam</summary>
-			<FieldDisplayName("Brunei")> <XmlEnum("BRN")> Brunei
+			<FieldDisplayName("")> <XmlEnum("BRN")> Brunei
 			''' <summary>Bhutan</summary>
-			<FieldDisplayName("Bhutan")> <XmlEnum("BTN")> Bhutan
+			<FieldDisplayName("")> <XmlEnum("BTN")> Bhutan
 			''' <summary>Bouvet Island</summary>
-			<FieldDisplayName("Bouvet Island")> <XmlEnum("BVT")> BouvetIsland
+			<FieldDisplayName("")> <XmlEnum("BVT")> BouvetIsland
 			''' <summary>Botswana</summary>
-			<FieldDisplayName("Botswana")> <XmlEnum("BWA")> Botswana
+			<FieldDisplayName("")> <XmlEnum("BWA")> Botswana
 			''' <summary>Central African Republic</summary>
-			<FieldDisplayName("Central African Republic")> <XmlEnum("CAF")> CentralAfricanRepublic
+			<FieldDisplayName("")> <XmlEnum("CAF")> CentralAfricanRepublic
 			''' <summary>Canada</summary>
-			<FieldDisplayName("Canada")> <XmlEnum("CAN")> Canada
+			<FieldDisplayName("")> <XmlEnum("CAN")> Canada
 			''' <summary>Cocos (Keeling) Islands</summary>
-			<FieldDisplayName("Cocos Islands")> <XmlEnum("CCK")> CocosIslands
+			<FieldDisplayName("")> <XmlEnum("CCK")> CocosIslands
 			''' <summary>Switzerland</summary>
-			<FieldDisplayName("Switzerland")> <XmlEnum("CHE")> Switzerland
+			<FieldDisplayName("")> <XmlEnum("CHE")> Switzerland
 			''' <summary>Chile</summary>
-			<FieldDisplayName("Chile")> <XmlEnum("CHL")> Chile
+			<FieldDisplayName("")> <XmlEnum("CHL")> Chile
 			''' <summary>China</summary>
-			<FieldDisplayName("China")> <XmlEnum("CHN")> China
+			<FieldDisplayName("")> <XmlEnum("CHN")> China
 			''' <summary>Côte d'Ivoire</summary>
-			<FieldDisplayName("Côte d'Ivoire")> <XmlEnum("CIV")> CôteDIvoire
+			<FieldDisplayName("")> <XmlEnum("CIV")> CôteDIvoire
 			''' <summary>Cameroon</summary>
-			<FieldDisplayName("Cameroon")> <XmlEnum("CMR")> Cameroon
+			<FieldDisplayName("")> <XmlEnum("CMR")> Cameroon
 			''' <summary>Congo, the Democratic Republic of the[1]</summary>
-			<FieldDisplayName("Congo-Zaire")> <XmlEnum("COD")> Zaire
+			<FieldDisplayName("")> <XmlEnum("COD")> Zaire
 			''' <summary>Congo</summary>
-			<FieldDisplayName("Congo")> <XmlEnum("COG")> Congo
+			<FieldDisplayName("")> <XmlEnum("COG")> Congo
 			''' <summary>Cook Islands</summary>
-			<FieldDisplayName("Cook Islands")> <XmlEnum("COK")> CookIslands
+			<FieldDisplayName("")> <XmlEnum("COK")> CookIslands
 			''' <summary>Colombia</summary>
-			<FieldDisplayName("Colombia")> <XmlEnum("COL")> Colombia
+			<FieldDisplayName("")> <XmlEnum("COL")> Colombia
 			''' <summary>Comoros</summary>
-			<FieldDisplayName("Comoros")> <XmlEnum("COM")> Comoros
+			<FieldDisplayName("")> <XmlEnum("COM")> Comoros
 			''' <summary>Cape Verde</summary>
-			<FieldDisplayName("Cape Verde")> <XmlEnum("CPV")> CapeVerde
+			<FieldDisplayName("")> <XmlEnum("CPV")> CapeVerde
 			''' <summary>Costa Rica</summary>
-			<FieldDisplayName("Costa Rica")> <XmlEnum("CRI")> CostaRica
+			<FieldDisplayName("")> <XmlEnum("CRI")> CostaRica
 			''' <summary>Cuba</summary>
-			<FieldDisplayName("Cuba")> <XmlEnum("CUB")> Cuba
+			<FieldDisplayName("")> <XmlEnum("CUB")> Cuba
 			''' <summary>Christmas Island</summary>
-			<FieldDisplayName("Christmas Island")> <XmlEnum("CXR")> ChristmasIsland
+			<FieldDisplayName("")> <XmlEnum("CXR")> ChristmasIsland
 			''' <summary>Cayman Islands</summary>
-			<FieldDisplayName("Cayman Islands")> <XmlEnum("CYM")> CaymanIslands
+			<FieldDisplayName("")> <XmlEnum("CYM")> CaymanIslands
 			''' <summary>Cyprus</summary>
-			<FieldDisplayName("Cyprus")> <XmlEnum("CYP")> Cyprus
+			<FieldDisplayName("")> <XmlEnum("CYP")> Cyprus
 			''' <summary>Czech Republic</summary>
-			<FieldDisplayName("Czech Republic")> <XmlEnum("CZE")> CzechRepublic
+			<FieldDisplayName("")> <XmlEnum("CZE")> CzechRepublic
 			''' <summary>Germany</summary>
-			<FieldDisplayName("Germany")> <XmlEnum("DEU")> Germany
+			<FieldDisplayName("")> <XmlEnum("DEU")> Germany
 			''' <summary>Djibouti</summary>
-			<FieldDisplayName("Djibouti")> <XmlEnum("DJI")> Djibouti
+			<FieldDisplayName("")> <XmlEnum("DJI")> Djibouti
 			''' <summary>Dominica</summary>
-			<FieldDisplayName("Dominica")> <XmlEnum("DMA")> Dominica
+			<FieldDisplayName("")> <XmlEnum("DMA")> Dominica
 			''' <summary>Denmark</summary>
-			<FieldDisplayName("Denmark")> <XmlEnum("DNK")> Denmark
+			<FieldDisplayName("")> <XmlEnum("DNK")> Denmark
 			''' <summary>Dominican Republic</summary>
-			<FieldDisplayName("Dominican Republic")> <XmlEnum("DOM")> DominicanRepublic
+			<FieldDisplayName("")> <XmlEnum("DOM")> DominicanRepublic
 			''' <summary>Algeria</summary>
-			<FieldDisplayName("Algeria")> <XmlEnum("DZA")> Algeria
+			<FieldDisplayName("")> <XmlEnum("DZA")> Algeria
 			''' <summary>Ecuador</summary>
-			<FieldDisplayName("Ecuador")> <XmlEnum("ECU")> Ecuador
+			<FieldDisplayName("")> <XmlEnum("ECU")> Ecuador
 			''' <summary>Egypt</summary>
-			<FieldDisplayName("Egypt")> <XmlEnum("EGY")> Egypt
+			<FieldDisplayName("")> <XmlEnum("EGY")> Egypt
 			''' <summary>Eritrea</summary>
-			<FieldDisplayName("Eritrea")> <XmlEnum("ERI")> Eritrea
+			<FieldDisplayName("")> <XmlEnum("ERI")> Eritrea
 			''' <summary>Western Sahara</summary>
-			<FieldDisplayName("Western Sahara")> <XmlEnum("ESH")> WesternSahara
+			<FieldDisplayName("")> <XmlEnum("ESH")> WesternSahara
 			''' <summary>Spain</summary>
-			<FieldDisplayName("Spain")> <XmlEnum("ESP")> Spain
+			<FieldDisplayName("")> <XmlEnum("ESP")> Spain
 			''' <summary>Estonia</summary>
-			<FieldDisplayName("Estonia")> <XmlEnum("EST")> Estonia
+			<FieldDisplayName("")> <XmlEnum("EST")> Estonia
 			''' <summary>Ethiopia</summary>
-			<FieldDisplayName("Ethiopia")> <XmlEnum("ETH")> Ethiopia
+			<FieldDisplayName("")> <XmlEnum("ETH")> Ethiopia
 			''' <summary>Finland</summary>
-			<FieldDisplayName("Finland")> <XmlEnum("FIN")> Finland
+			<FieldDisplayName("")> <XmlEnum("FIN")> Finland
 			''' <summary>Fiji</summary>
-			<FieldDisplayName("Fiji")> <XmlEnum("FJI")> Fiji
+			<FieldDisplayName("")> <XmlEnum("FJI")> Fiji
 			''' <summary>Falkland Islands (Malvinas)</summary>
-			<FieldDisplayName("Falkland Islands (Malvinas)")> <XmlEnum("FLK")> FalklandIslands
+			<FieldDisplayName("")> <XmlEnum("FLK")> FalklandIslands
 			''' <summary>France</summary>
-			<FieldDisplayName("France")> <XmlEnum("FRA")> France
+			<FieldDisplayName("")> <XmlEnum("FRA")> France
 			''' <summary>Faroe Islands</summary>
-			<FieldDisplayName("Faroe Islands")> <XmlEnum("FRO")> FaroeIslands
+			<FieldDisplayName("")> <XmlEnum("FRO")> FaroeIslands
 			''' <summary>Micronesia, Federated States of</summary>
-			<FieldDisplayName("Micronesia")> <XmlEnum("FSM")> Micronesia
+			<FieldDisplayName("")> <XmlEnum("FSM")> Micronesia
 			''' <summary>Gabon</summary>
-			<FieldDisplayName("Gabon")> <XmlEnum("GAB")> Gabon
+			<FieldDisplayName("")> <XmlEnum("GAB")> Gabon
 			''' <summary>United Kingdom</summary>
-			<FieldDisplayName("United Kingdom")> <XmlEnum("GBR")> UnitedKingdom
+			<FieldDisplayName("")> <XmlEnum("GBR")> UnitedKingdom
 			''' <summary>Georgia</summary>
-			<FieldDisplayName("Georgia")> <XmlEnum("GEO")> Georgia
+			<FieldDisplayName("")> <XmlEnum("GEO")> Georgia
 			''' <summary>Guernsey</summary>
-			<FieldDisplayName("Guernsey")> <XmlEnum("GGY")> Guernsey
+			<FieldDisplayName("")> <XmlEnum("GGY")> Guernsey
 			''' <summary>Ghana</summary>
-			<FieldDisplayName("Ghana")> <XmlEnum("GHA")> Ghana
+			<FieldDisplayName("")> <XmlEnum("GHA")> Ghana
 			''' <summary>Gibraltar</summary>
-			<FieldDisplayName("Gibraltar")> <XmlEnum("GIB")> Gibraltar
+			<FieldDisplayName("")> <XmlEnum("GIB")> Gibraltar
 			''' <summary>Guinea</summary>
-			<FieldDisplayName("Guinea")> <XmlEnum("GIN")> Guinea
+			<FieldDisplayName("")> <XmlEnum("GIN")> Guinea
 			''' <summary>Guadeloupe</summary>
-			<FieldDisplayName("Guadeloupe")> <XmlEnum("GLP")> Guadeloupe
+			<FieldDisplayName("")> <XmlEnum("GLP")> Guadeloupe
 			''' <summary>Gambia</summary>
-			<FieldDisplayName("Gambia")> <XmlEnum("GMB")> Gambia
+			<FieldDisplayName("")> <XmlEnum("GMB")> Gambia
 			''' <summary>Guinea-Bissau</summary>
-			<FieldDisplayName("Guinea-Bissau")> <XmlEnum("GNB")> GuineaBissau
+			<FieldDisplayName("")> <XmlEnum("GNB")> GuineaBissau
 			''' <summary>Equatorial Guinea</summary>
-			<FieldDisplayName("Equatorial Guinea")> <XmlEnum("GNQ")> EquatorialGuinea
+			<FieldDisplayName("")> <XmlEnum("GNQ")> EquatorialGuinea
 			''' <summary>Greece</summary>
-			<FieldDisplayName("Greece")> <XmlEnum("GRC")> Greece
+			<FieldDisplayName("")> <XmlEnum("GRC")> Greece
 			''' <summary>Grenada</summary>
-			<FieldDisplayName("Grenada")> <XmlEnum("GRD")> Grenada
+			<FieldDisplayName("")> <XmlEnum("GRD")> Grenada
 			''' <summary>Greenland</summary>
-			<FieldDisplayName("Greenland")> <XmlEnum("GRL")> Greenland
+			<FieldDisplayName("")> <XmlEnum("GRL")> Greenland
 			''' <summary>Guatemala</summary>
-			<FieldDisplayName("Guatemala")> <XmlEnum("GTM")> Guatemala
+			<FieldDisplayName("")> <XmlEnum("GTM")> Guatemala
 			''' <summary>French Guiana</summary>
-			<FieldDisplayName("French Guiana")> <XmlEnum("GUF")> FrenchGuiana
+			<FieldDisplayName("")> <XmlEnum("GUF")> FrenchGuiana
 			''' <summary>Guam</summary>
-			<FieldDisplayName("Guam")> <XmlEnum("GUM")> Guam
+			<FieldDisplayName("")> <XmlEnum("GUM")> Guam
 			''' <summary>Guyana</summary>
-			<FieldDisplayName("Guyana")> <XmlEnum("GUY")> Guyana
+			<FieldDisplayName("")> <XmlEnum("GUY")> Guyana
 			''' <summary>Hong Kong</summary>
-			<FieldDisplayName("Hong Kong")> <XmlEnum("HKG")> HongKong
+			<FieldDisplayName("")> <XmlEnum("HKG")> HongKong
 			''' <summary>Heard Island and McDonald Islands</summary>
-			<FieldDisplayName("Heard Island and McDonald Islands")> <XmlEnum("HMD")> HeardIslandAndMcDonaldIslands
+			<FieldDisplayName("")> <XmlEnum("HMD")> HeardIslandAndMcDonaldIslands
 			''' <summary>Honduras</summary>
-			<FieldDisplayName("Honduras")> <XmlEnum("HND")> Honduras
+			<FieldDisplayName("")> <XmlEnum("HND")> Honduras
 			''' <summary>Croatia</summary>
-			<FieldDisplayName("Croatia")> <XmlEnum("HRV")> Croatia
+			<FieldDisplayName("")> <XmlEnum("HRV")> Croatia
 			''' <summary>Haiti</summary>
-			<FieldDisplayName("Haiti")> <XmlEnum("HTI")> Haiti
+			<FieldDisplayName("")> <XmlEnum("HTI")> Haiti
 			''' <summary>Hungary</summary>
-			<FieldDisplayName("Hungary")> <XmlEnum("HUN")> Hungary
+			<FieldDisplayName("")> <XmlEnum("HUN")> Hungary
 			''' <summary>Indonesia</summary>
-			<FieldDisplayName("Indonesia")> <XmlEnum("IDN")> Indonesia
+			<FieldDisplayName("")> <XmlEnum("IDN")> Indonesia
 			''' <summary>Isle of Man</summary>
-			<FieldDisplayName("Isle of Man")> <XmlEnum("IMN")> Man
+			<FieldDisplayName("")> <XmlEnum("IMN")> Man
 			''' <summary>India</summary>
-			<FieldDisplayName("India")> <XmlEnum("IND")> India
+			<FieldDisplayName("")> <XmlEnum("IND")> India
 			''' <summary>British Indian Ocean Territory</summary>
-			<FieldDisplayName("British Indian Ocean Territory")> <XmlEnum("IOT")> BritishIndianOceanTerritory
+			<FieldDisplayName("")> <XmlEnum("IOT")> BritishIndianOceanTerritory
 			''' <summary>Ireland</summary>
-			<FieldDisplayName("Ireland")> <XmlEnum("IRL")> Ireland
+			<FieldDisplayName("")> <XmlEnum("IRL")> Ireland
 			''' <summary>Iran, Islamic Republic of</summary>
-			<FieldDisplayName("Iran")> <XmlEnum("IRN")> Iran
+			<FieldDisplayName("")> <XmlEnum("IRN")> Iran
 			''' <summary>Iraq</summary>
-			<FieldDisplayName("Iraq")> <XmlEnum("IRQ")> Iraq
+			<FieldDisplayName("")> <XmlEnum("IRQ")> Iraq
 			''' <summary>Iceland</summary>
-			<FieldDisplayName("Iceland")> <XmlEnum("ISL")> Iceland
+			<FieldDisplayName("")> <XmlEnum("ISL")> Iceland
 			''' <summary>Israel</summary>
-			<FieldDisplayName("Israel")> <XmlEnum("ISR")> Israel
+			<FieldDisplayName("")> <XmlEnum("ISR")> Israel
 			''' <summary>Italy</summary>
-			<FieldDisplayName("Italy")> <XmlEnum("ITA")> Italy
+			<FieldDisplayName("")> <XmlEnum("ITA")> Italy
 			''' <summary>Jamaica</summary>
-			<FieldDisplayName("Jamaica")> <XmlEnum("JAM")> Jamaica
+			<FieldDisplayName("")> <XmlEnum("JAM")> Jamaica
 			''' <summary>Jersey</summary>
-			<FieldDisplayName("Jersey")> <XmlEnum("JEY")> Jersey
+			<FieldDisplayName("")> <XmlEnum("JEY")> Jersey
 			''' <summary>Jordan</summary>
-			<FieldDisplayName("Jordan")> <XmlEnum("JOR")> Jordan
+			<FieldDisplayName("")> <XmlEnum("JOR")> Jordan
 			''' <summary>Japan</summary>
-			<FieldDisplayName("Japan")> <XmlEnum("JPN")> Japan
+			<FieldDisplayName("")> <XmlEnum("JPN")> Japan
 			''' <summary>Kazakhstan</summary>
-			<FieldDisplayName("Kazakhstan")> <XmlEnum("KAZ")> Kazakhstan
+			<FieldDisplayName("")> <XmlEnum("KAZ")> Kazakhstan
 			''' <summary>Kenya</summary>
-			<FieldDisplayName("Kenya")> <XmlEnum("KEN")> Kenya
+			<FieldDisplayName("")> <XmlEnum("KEN")> Kenya
 			''' <summary>Kyrgyzstan</summary>
-			<FieldDisplayName("Kyrgyzstan")> <XmlEnum("KGZ")> Kyrgyzstan
+			<FieldDisplayName("")> <XmlEnum("KGZ")> Kyrgyzstan
 			''' <summary>Cambodia</summary>
-			<FieldDisplayName("Cambodia")> <XmlEnum("KHM")> Cambodia
+			<FieldDisplayName("")> <XmlEnum("KHM")> Cambodia
 			''' <summary>Kiribati</summary>
-			<FieldDisplayName("Kiribati")> <XmlEnum("KIR")> Kiribati
+			<FieldDisplayName("")> <XmlEnum("KIR")> Kiribati
 			''' <summary>Saint Kitts and Nevis</summary>
-			<FieldDisplayName("Saint Kitts and Nevis")> <XmlEnum("KNA")> SaintKittsAndNevis
+			<FieldDisplayName("")> <XmlEnum("KNA")> SaintKittsAndNevis
 			''' <summary>Korea, Republic of</summary>
-			<FieldDisplayName("Korea")> <XmlEnum("KOR")> Korea
+			<FieldDisplayName("")> <XmlEnum("KOR")> Korea
 			''' <summary>Kuwait</summary>
-			<FieldDisplayName("Kuwait")> <XmlEnum("KWT")> Kuwait
+			<FieldDisplayName("")> <XmlEnum("KWT")> Kuwait
 			''' <summary>Lao People's Democratic Republic</summary>
-			<FieldDisplayName("Laos")> <XmlEnum("LAO")> Laos
+			<FieldDisplayName("")> <XmlEnum("LAO")> Laos
 			''' <summary>Lebanon</summary>
-			<FieldDisplayName("Lebanon")> <XmlEnum("LBN")> Lebanon
+			<FieldDisplayName("")> <XmlEnum("LBN")> Lebanon
 			''' <summary>Liberia</summary>
-			<FieldDisplayName("Liberia")> <XmlEnum("LBR")> Liberia
+			<FieldDisplayName("")> <XmlEnum("LBR")> Liberia
 			''' <summary>Libyan Arab Jamahiriya</summary>
-			<FieldDisplayName("Libya")> <XmlEnum("LBY")> Libya
+			<FieldDisplayName("")> <XmlEnum("LBY")> Libya
 			''' <summary>Saint Lucia</summary>
-			<FieldDisplayName("Saint Lucia")> <XmlEnum("LCA")> SaintLucia
+			<FieldDisplayName("")> <XmlEnum("LCA")> SaintLucia
 			''' <summary>Liechtenstein</summary>
-			<FieldDisplayName("Liechtenstein")> <XmlEnum("LIE")> Liechtenstein
+			<FieldDisplayName("")> <XmlEnum("LIE")> Liechtenstein
 			''' <summary>Sri Lanka</summary>
-			<FieldDisplayName("Sri Lanka")> <XmlEnum("LKA")> SriLanka
+			<FieldDisplayName("")> <XmlEnum("LKA")> SriLanka
 			''' <summary>Lesotho</summary>
-			<FieldDisplayName("Lesotho")> <XmlEnum("LSO")> Lesotho
+			<FieldDisplayName("")> <XmlEnum("LSO")> Lesotho
 			''' <summary>Lithuania</summary>
-			<FieldDisplayName("Lithuania")> <XmlEnum("LTU")> Lithuania
+			<FieldDisplayName("")> <XmlEnum("LTU")> Lithuania
 			''' <summary>Luxembourg</summary>
-			<FieldDisplayName("Luxembourg")> <XmlEnum("LUX")> Luxembourg
+			<FieldDisplayName("")> <XmlEnum("LUX")> Luxembourg
 			''' <summary>Latvia</summary>
-			<FieldDisplayName("Latvia")> <XmlEnum("LVA")> Latvia
+			<FieldDisplayName("")> <XmlEnum("LVA")> Latvia
 			''' <summary>Macao</summary>
-			<FieldDisplayName("Macao")> <XmlEnum("MAC")> Macao
+			<FieldDisplayName("")> <XmlEnum("MAC")> Macao
 			''' <summary>Morocco</summary>
-			<FieldDisplayName("Morocco")> <XmlEnum("MAR")> Morocco
+			<FieldDisplayName("")> <XmlEnum("MAR")> Morocco
 			''' <summary>Monaco</summary>
-			<FieldDisplayName("Monaco")> <XmlEnum("MCO")> Monaco
+			<FieldDisplayName("")> <XmlEnum("MCO")> Monaco
 			''' <summary>Moldova, Republic of</summary>
-			<FieldDisplayName("Moldova")> <XmlEnum("MDA")> Moldova
+			<FieldDisplayName("")> <XmlEnum("MDA")> Moldova
 			''' <summary>Madagascar</summary>
-			<FieldDisplayName("Madagascar")> <XmlEnum("MDG")> Madagascar
+			<FieldDisplayName("")> <XmlEnum("MDG")> Madagascar
 			''' <summary>Maldives</summary>
-			<FieldDisplayName("Maldives")> <XmlEnum("MDV")> Maldives
+			<FieldDisplayName("")> <XmlEnum("MDV")> Maldives
 			''' <summary>Mexico</summary>
-			<FieldDisplayName("Mexico")> <XmlEnum("MEX")> Mexico
+			<FieldDisplayName("")> <XmlEnum("MEX")> Mexico
 			''' <summary>Marshall Islands</summary>
-			<FieldDisplayName("Marshall Islands")> <XmlEnum("MHL")> MarshallIslands
+			<FieldDisplayName("")> <XmlEnum("MHL")> MarshallIslands
 			''' <summary>Macedonia</summary>
-			<FieldDisplayName("Macedonia")> <XmlEnum("MKD")> Macedonia
+			<FieldDisplayName("")> <XmlEnum("MKD")> Macedonia
 			''' <summary>Mali</summary>
-			<FieldDisplayName("Mali")> <XmlEnum("MLI")> Mali
+			<FieldDisplayName("")> <XmlEnum("MLI")> Mali
 			''' <summary>Malta</summary>
-			<FieldDisplayName("Malta")> <XmlEnum("MLT")> Malta
+			<FieldDisplayName("")> <XmlEnum("MLT")> Malta
 			''' <summary>Myanmar</summary>
-			<FieldDisplayName("Myanmar")> <XmlEnum("MMR")> Myanmar
+			<FieldDisplayName("")> <XmlEnum("MMR")> Myanmar
 			''' <summary>Montenegro</summary>
-			<FieldDisplayName("Montenegro")> <XmlEnum("MNE")> Montenegro
+			<FieldDisplayName("")> <XmlEnum("MNE")> Montenegro
 			''' <summary>Mongolia</summary>
-			<FieldDisplayName("Mongolia")> <XmlEnum("MNG")> Mongolia
+			<FieldDisplayName("")> <XmlEnum("MNG")> Mongolia
 			''' <summary>Northern Mariana Islands</summary>
-			<FieldDisplayName("Northern Mariana Islands")> <XmlEnum("MNP")> NorthernMarianaIslands
+			<FieldDisplayName("")> <XmlEnum("MNP")> NorthernMarianaIslands
 			''' <summary>Mozambique</summary>
-			<FieldDisplayName("Mozambique")> <XmlEnum("MOZ")> Mozambique
+			<FieldDisplayName("")> <XmlEnum("MOZ")> Mozambique
 			''' <summary>Mauritania</summary>
-			<FieldDisplayName("Mauritania")> <XmlEnum("MRT")> Mauritania
+			<FieldDisplayName("")> <XmlEnum("MRT")> Mauritania
 			''' <summary>Montserrat</summary>
-			<FieldDisplayName("Montserrat")> <XmlEnum("MSR")> Montserrat
+			<FieldDisplayName("")> <XmlEnum("MSR")> Montserrat
 			''' <summary>Martinique</summary>
-			<FieldDisplayName("Martinique")> <XmlEnum("MTQ")> Martinique
+			<FieldDisplayName("")> <XmlEnum("MTQ")> Martinique
 			''' <summary>Mauritius</summary>
-			<FieldDisplayName("Mauritius")> <XmlEnum("MUS")> Mauritius
+			<FieldDisplayName("")> <XmlEnum("MUS")> Mauritius
 			''' <summary>Malawi</summary>
-			<FieldDisplayName("Malawi")> <XmlEnum("MWI")> Malawi
+			<FieldDisplayName("")> <XmlEnum("MWI")> Malawi
 			''' <summary>Malaysia</summary>
-			<FieldDisplayName("Malaysia")> <XmlEnum("MYS")> Malaysia
+			<FieldDisplayName("")> <XmlEnum("MYS")> Malaysia
 			''' <summary>Mayotte</summary>
-			<FieldDisplayName("Mayotte")> <XmlEnum("MYT")> Mayotte
+			<FieldDisplayName("")> <XmlEnum("MYT")> Mayotte
 			''' <summary>Namibia</summary>
-			<FieldDisplayName("Namibia")> <XmlEnum("NAM")> Namibia
+			<FieldDisplayName("")> <XmlEnum("NAM")> Namibia
 			''' <summary>New Caledonia</summary>
-			<FieldDisplayName("New Caledonia")> <XmlEnum("NCL")> NewCaledonia
+			<FieldDisplayName("")> <XmlEnum("NCL")> NewCaledonia
 			''' <summary>Niger</summary>
-			<FieldDisplayName("Niger")> <XmlEnum("NER")> Niger
+			<FieldDisplayName("")> <XmlEnum("NER")> Niger
 			''' <summary>Norfolk Island</summary>
-			<FieldDisplayName("Norfolk")> <XmlEnum("NFK")> Norfolk
+			<FieldDisplayName("")> <XmlEnum("NFK")> Norfolk
 			''' <summary>Nigeria</summary>
-			<FieldDisplayName("Nigeria")> <XmlEnum("NGA")> Nigeria
+			<FieldDisplayName("")> <XmlEnum("NGA")> Nigeria
 			''' <summary>Nicaragua</summary>
-			<FieldDisplayName("Nicaragua")> <XmlEnum("NIC")> Nicaragua
+			<FieldDisplayName("")> <XmlEnum("NIC")> Nicaragua
 			''' <summary>Niue</summary>
-			<FieldDisplayName("Niue")> <XmlEnum("NIU")> Niue
+			<FieldDisplayName("")> <XmlEnum("NIU")> Niue
 			''' <summary>Netherlands</summary>
-			<FieldDisplayName("Netherlands")> <XmlEnum("NLD")> Netherlands
+			<FieldDisplayName("")> <XmlEnum("NLD")> Netherlands
 			''' <summary>Norway</summary>
-			<FieldDisplayName("Norway")> <XmlEnum("NOR")> Norway
+			<FieldDisplayName("")> <XmlEnum("NOR")> Norway
 			''' <summary>Nepal</summary>
-			<FieldDisplayName("Nepal")> <XmlEnum("NPL")> Nepal
+			<FieldDisplayName("")> <XmlEnum("NPL")> Nepal
 			''' <summary>Nauru</summary>
-			<FieldDisplayName("Nauru")> <XmlEnum("NRU")> Nauru
+			<FieldDisplayName("")> <XmlEnum("NRU")> Nauru
 			''' <summary>New Zealand</summary>
-			<FieldDisplayName("New Zealand")> <XmlEnum("NZL")> NewZealand
+			<FieldDisplayName("")> <XmlEnum("NZL")> NewZealand
 			''' <summary>Oman</summary>
-			<FieldDisplayName("Oman")> <XmlEnum("OMN")> Oman
+			<FieldDisplayName("")> <XmlEnum("OMN")> Oman
 			''' <summary>Pakistan</summary>
-			<FieldDisplayName("Pakistan")> <XmlEnum("PAK")> Pakistan
+			<FieldDisplayName("")> <XmlEnum("PAK")> Pakistan
 			''' <summary>Panama</summary>
-			<FieldDisplayName("Panama")> <XmlEnum("PAN")> Panama
+			<FieldDisplayName("")> <XmlEnum("PAN")> Panama
 			''' <summary>Pitcairn</summary>
-			<FieldDisplayName("Pitcairn")> <XmlEnum("PCN")> Pitcairn
+			<FieldDisplayName("")> <XmlEnum("PCN")> Pitcairn
 			''' <summary>Peru</summary>
-			<FieldDisplayName("Peru")> <XmlEnum("PER")> Peru
+			<FieldDisplayName("")> <XmlEnum("PER")> Peru
 			''' <summary>Philippines</summary>
-			<FieldDisplayName("Philippines")> <XmlEnum("PHL")> Philippines
+			<FieldDisplayName("")> <XmlEnum("PHL")> Philippines
 			''' <summary>Palau</summary>
-			<FieldDisplayName("Palau")> <XmlEnum("PLW")> Palau
+			<FieldDisplayName("")> <XmlEnum("PLW")> Palau
 			''' <summary>Papua New Guinea</summary>
-			<FieldDisplayName("Papua New Guinea")> <XmlEnum("PNG")> PapuaNewGuinea
+			<FieldDisplayName("")> <XmlEnum("PNG")> PapuaNewGuinea
 			''' <summary>Poland</summary>
-			<FieldDisplayName("Poland")> <XmlEnum("POL")> Poland
+			<FieldDisplayName("")> <XmlEnum("POL")> Poland
 			''' <summary>Puerto Rico</summary>
-			<FieldDisplayName("Puerto Rico")> <XmlEnum("PRI")> PuertoRico
+			<FieldDisplayName("")> <XmlEnum("PRI")> PuertoRico
 			''' <summary>Korea, Democratic People's Republic of</summary>
-			<FieldDisplayName("North Korea")> <XmlEnum("PRK")> NortKorea
+			<FieldDisplayName("")> <XmlEnum("PRK")> NortKorea
 			''' <summary>Portugal</summary>
-			<FieldDisplayName("Portugal")> <XmlEnum("PRT")> Portugal
+			<FieldDisplayName("")> <XmlEnum("PRT")> Portugal
 			''' <summary>Paraguay</summary>
-			<FieldDisplayName("Paraguay")> <XmlEnum("PRY")> Paraguay
+			<FieldDisplayName("")> <XmlEnum("PRY")> Paraguay
 			''' <summary>Palestinian Territory, Occupied</summary>
-			<FieldDisplayName("Palestina")> <XmlEnum("PSE")> Palestina
+			<FieldDisplayName("")> <XmlEnum("PSE")> Palestina
 			''' <summary>French Polynesia</summary>
-			<FieldDisplayName("French Polynesia")> <XmlEnum("PYF")> FrenchPolynesia
+			<FieldDisplayName("")> <XmlEnum("PYF")> FrenchPolynesia
 			''' <summary>Qatar</summary>
-			<FieldDisplayName("Qatar")> <XmlEnum("QAT")> Qatar
+			<FieldDisplayName("")> <XmlEnum("QAT")> Qatar
 			''' <summary>Réunion</summary>
-			<FieldDisplayName("Réunion")> <XmlEnum("REU")> Réunion
+			<FieldDisplayName("")> <XmlEnum("REU")> Réunion
 			''' <summary>Romania</summary>
-			<FieldDisplayName("Romania")> <XmlEnum("ROU")> Romania
+			<FieldDisplayName("")> <XmlEnum("ROU")> Romania
 			''' <summary>Russian Federation</summary>
-			<FieldDisplayName("Russia")> <XmlEnum("RUS")> Russiaa
+			<FieldDisplayName("")> <XmlEnum("RUS")> Russiaa
 			''' <summary>Rwanda</summary>
-			<FieldDisplayName("Rwanda")> <XmlEnum("RWA")> Rwanda
+			<FieldDisplayName("")> <XmlEnum("RWA")> Rwanda
 			''' <summary>Saudi Arabia</summary>
-			<FieldDisplayName("Saudi Arabia")> <XmlEnum("SAU")> SaudiArabia
+			<FieldDisplayName("")> <XmlEnum("SAU")> SaudiArabia
 			''' <summary>Sudan</summary>
-			<FieldDisplayName("Sudan")> <XmlEnum("SDN")> Sudan
+			<FieldDisplayName("")> <XmlEnum("SDN")> Sudan
 			''' <summary>Senegal</summary>
-			<FieldDisplayName("Senegal")> <XmlEnum("SEN")> Senegal
+			<FieldDisplayName("")> <XmlEnum("SEN")> Senegal
 			''' <summary>Singapore</summary>
-			<FieldDisplayName("Singapore")> <XmlEnum("SGP")> Singapore
+			<FieldDisplayName("")> <XmlEnum("SGP")> Singapore
 			''' <summary>South Georgia and the South Sandwich Islands</summary>
-			<FieldDisplayName("South Georgia and the South Sandwich Islands")> <XmlEnum("SGS")> SouthGeorgiaAndTheSouthSandwichIslands
+			<FieldDisplayName("")> <XmlEnum("SGS")> SouthGeorgiaAndTheSouthSandwichIslands
 			''' <summary>Saint Helena</summary>
-			<FieldDisplayName("Saint Helena")> <XmlEnum("SHN")> SaintHelena
+			<FieldDisplayName("")> <XmlEnum("SHN")> SaintHelena
 			''' <summary>Svalbard and Jan Mayen</summary>
-			<FieldDisplayName("Svalbard and Jan Mayen")> <XmlEnum("SJM")> SvalbardAndJanMayen
+			<FieldDisplayName("")> <XmlEnum("SJM")> SvalbardAndJanMayen
 			''' <summary>Solomon Islands</summary>
-			<FieldDisplayName("Solomon Islands")> <XmlEnum("SLB")> SolomonIslands
+			<FieldDisplayName("")> <XmlEnum("SLB")> SolomonIslands
 			''' <summary>Sierra Leone</summary>
-			<FieldDisplayName("Sierra Leone")> <XmlEnum("SLE")> SierraLeone
+			<FieldDisplayName("")> <XmlEnum("SLE")> SierraLeone
 			''' <summary>El Salvador</summary>
-			<FieldDisplayName("El Salvador")> <XmlEnum("SLV")> Salvador
+			<FieldDisplayName("")> <XmlEnum("SLV")> Salvador
 			''' <summary>San Marino</summary>
-			<FieldDisplayName("San Marino")> <XmlEnum("SMR")> SanMarino
+			<FieldDisplayName("")> <XmlEnum("SMR")> SanMarino
 			''' <summary>Somalia</summary>
-			<FieldDisplayName("Somalia")> <XmlEnum("SOM")> Somalia
+			<FieldDisplayName("")> <XmlEnum("SOM")> Somalia
 			''' <summary>Saint Pierre and Miquelon</summary>
-			<FieldDisplayName("Saint Pierre and Miquelon")> <XmlEnum("SPM")> SaintPierreAndMiquelon
+			<FieldDisplayName("")> <XmlEnum("SPM")> SaintPierreAndMiquelon
 			''' <summary>Serbia</summary>
-			<FieldDisplayName("Serbia")> <XmlEnum("SRB")> Serbia
+			<FieldDisplayName("")> <XmlEnum("SRB")> Serbia
 			''' <summary>Sao Tome and Principe</summary>
-			<FieldDisplayName("Sao Tome and Principe")> <XmlEnum("STP")> SaoTomeAndPrincipe
+			<FieldDisplayName("")> <XmlEnum("STP")> SaoTomeAndPrincipe
 			''' <summary>Suriname</summary>
-			<FieldDisplayName("Suriname")> <XmlEnum("SUR")> Suriname
+			<FieldDisplayName("")> <XmlEnum("SUR")> Suriname
 			''' <summary>Slovakia</summary>
-			<FieldDisplayName("Slovakia")> <XmlEnum("SVK")> Slovakia
+			<FieldDisplayName("")> <XmlEnum("SVK")> Slovakia
 			''' <summary>Slovenia</summary>
-			<FieldDisplayName("Slovenia")> <XmlEnum("SVN")> Slovenia
+			<FieldDisplayName("")> <XmlEnum("SVN")> Slovenia
 			''' <summary>Sweden</summary>
-			<FieldDisplayName("Sweden")> <XmlEnum("SWE")> Sweden
+			<FieldDisplayName("")> <XmlEnum("SWE")> Sweden
 			''' <summary>Swaziland</summary>
-			<FieldDisplayName("Swaziland")> <XmlEnum("SWZ")> Swaziland
+			<FieldDisplayName("")> <XmlEnum("SWZ")> Swaziland
 			''' <summary>Seychelles</summary>
-			<FieldDisplayName("Seychelles")> <XmlEnum("SYC")> Seychelles
+			<FieldDisplayName("")> <XmlEnum("SYC")> Seychelles
 			''' <summary>Syrian Arab Republic</summary>
-			<FieldDisplayName("Syria")> <XmlEnum("SYR")> Syria
+			<FieldDisplayName("")> <XmlEnum("SYR")> Syria
 			''' <summary>Turks and Caicos Islands</summary>
-			<FieldDisplayName("Turks and Caicos")> <XmlEnum("TCA")> TurksAndCaicos
+			<FieldDisplayName("")> <XmlEnum("TCA")> TurksAndCaicos
 			''' <summary>Chad</summary>
-			<FieldDisplayName("Chad")> <XmlEnum("TCD")> Chad
+			<FieldDisplayName("")> <XmlEnum("TCD")> Chad
 			''' <summary>Togo</summary>
-			<FieldDisplayName("Togo")> <XmlEnum("TGO")> Togo
+			<FieldDisplayName("")> <XmlEnum("TGO")> Togo
 			''' <summary>Thailand</summary>
-			<FieldDisplayName("Thailand")> <XmlEnum("THA")> Thailand
+			<FieldDisplayName("")> <XmlEnum("THA")> Thailand
 			''' <summary>Tajikistan</summary>
-			<FieldDisplayName("Tajikistan")> <XmlEnum("TJK")> Tajikistan
+			<FieldDisplayName("")> <XmlEnum("TJK")> Tajikistan
 			''' <summary>Tokelau</summary>
-			<FieldDisplayName("Tokelau")> <XmlEnum("TKL")> Tokelau
+			<FieldDisplayName("")> <XmlEnum("TKL")> Tokelau
 			''' <summary>Turkmenistan</summary>
-			<FieldDisplayName("Turkmenistan")> <XmlEnum("TKM")> Turkmenistan
+			<FieldDisplayName("")> <XmlEnum("TKM")> Turkmenistan
 			''' <summary>Timor-Leste</summary>
-			<FieldDisplayName("Timor-Leste")> <XmlEnum("TLS")> TimorLeste
+			<FieldDisplayName("")> <XmlEnum("TLS")> TimorLeste
 			''' <summary>Tonga</summary>
-			<FieldDisplayName("Tonga")> <XmlEnum("TON")> Tonga
+			<FieldDisplayName("")> <XmlEnum("TON")> Tonga
 			''' <summary>Trinidad and Tobago</summary>
-			<FieldDisplayName("Trinidad and Tobago")> <XmlEnum("TTO")> TrinidadAndTobago
+			<FieldDisplayName("")> <XmlEnum("TTO")> TrinidadAndTobago
 			''' <summary>Tunisia</summary>
-			<FieldDisplayName("Tunisia")> <XmlEnum("TUN")> Tunisia
+			<FieldDisplayName("")> <XmlEnum("TUN")> Tunisia
 			''' <summary>Turkey</summary>
-			<FieldDisplayName("Turkey")> <XmlEnum("TUR")> Turkey
+			<FieldDisplayName("")> <XmlEnum("TUR")> Turkey
 			''' <summary>Tuvalu</summary>
-			<FieldDisplayName("Tuvalu")> <XmlEnum("TUV")> Tuvalu
+			<FieldDisplayName("")> <XmlEnum("TUV")> Tuvalu
 			''' <summary>Taiwan (ROC)</summary>
-			<FieldDisplayName("Taiwan")> <XmlEnum("TWN")> Taiwan
+			<FieldDisplayName("")> <XmlEnum("TWN")> Taiwan
 			''' <summary>Tanzania, United Republic of</summary>
-			<FieldDisplayName("Tanzania")> <XmlEnum("TZA")> Tanzania
+			<FieldDisplayName("")> <XmlEnum("TZA")> Tanzania
 			''' <summary>Uganda</summary>
-			<FieldDisplayName("Uganda")> <XmlEnum("UGA")> Uganda
+			<FieldDisplayName("")> <XmlEnum("UGA")> Uganda
 			''' <summary>Ukraine</summary>
-			<FieldDisplayName("Ukraine")> <XmlEnum("UKR")> Ukraine
+			<FieldDisplayName("")> <XmlEnum("UKR")> Ukraine
 			''' <summary>United States Minor Outlying Islands</summary>
-			<FieldDisplayName("United States Minor Outlying Islands")> <XmlEnum("UMI")> UnitedStatesMinorOutlyingIslands
+			<FieldDisplayName("")> <XmlEnum("UMI")> UnitedStatesMinorOutlyingIslands
 			''' <summary>Uruguay</summary>
-			<FieldDisplayName("Uruguay")> <XmlEnum("URY")> Uruguay
+			<FieldDisplayName("")> <XmlEnum("URY")> Uruguay
 			''' <summary>United States</summary>
-			<FieldDisplayName("United States")> <XmlEnum("USA")> USA
+			<FieldDisplayName("")> <XmlEnum("USA")> USA
 			''' <summary>Uzbekistan</summary>
-			<FieldDisplayName("Uzbekistan")> <XmlEnum("UZB")> Uzbekistan
+			<FieldDisplayName("")> <XmlEnum("UZB")> Uzbekistan
 			''' <summary>Vatican City State (Holy See)</summary>
-			<FieldDisplayName("Vatican")> <XmlEnum("VAT")> Vatican
+			<FieldDisplayName("")> <XmlEnum("VAT")> Vatican
 			''' <summary>Saint Vincent and the Grenadines</summary>
-			<FieldDisplayName("Saint Vincent and the Grenadines")> <XmlEnum("VCT")> SaintVincentAndTheGrenadines
+			<FieldDisplayName("")> <XmlEnum("VCT")> SaintVincentAndTheGrenadines
 			''' <summary>Venezuela</summary>
-			<FieldDisplayName("Venezuela")> <XmlEnum("VEN")> Venezuela
+			<FieldDisplayName("")> <XmlEnum("VEN")> Venezuela
 			''' <summary>Virgin Islands, British</summary>
-			<FieldDisplayName("Virgin Islands, British")> <XmlEnum("VGB")> BritishVirginIslands
+			<FieldDisplayName("")> <XmlEnum("VGB")> BritishVirginIslands
 			''' <summary>Virgin Islands, U.S.</summary>
-			<FieldDisplayName("Virgin Islands, U.S.")> <XmlEnum("VIR")> AmericanVirginIslands
+			<FieldDisplayName("")> <XmlEnum("VIR")> AmericanVirginIslands
 			''' <summary>Viet Nam</summary>
-			<FieldDisplayName("Viet Nam")> <XmlEnum("VNM")> VietNam
+			<FieldDisplayName("")> <XmlEnum("VNM")> VietNam
 			''' <summary>Vanuatu</summary>
-			<FieldDisplayName("Vanuatu")> <XmlEnum("VUT")> Vanuatu
+			<FieldDisplayName("")> <XmlEnum("VUT")> Vanuatu
 			''' <summary>Wallis and Futuna</summary>
-			<FieldDisplayName("Wallis and Futuna")> <XmlEnum("WLF")> WallisAndFutuna
+			<FieldDisplayName("")> <XmlEnum("WLF")> WallisAndFutuna
 			''' <summary>Samoa</summary>
-			<FieldDisplayName("Samoa")> <XmlEnum("WSM")> Samoa
+			<FieldDisplayName("")> <XmlEnum("WSM")> Samoa
 			''' <summary>Yemen</summary>
-			<FieldDisplayName("Yemen")> <XmlEnum("YEM")> Yemen
+			<FieldDisplayName("")> <XmlEnum("YEM")> Yemen
 			''' <summary>South Africa</summary>
-			<FieldDisplayName("South Africa")> <XmlEnum("ZAF")> SouthAfrica
+			<FieldDisplayName("")> <XmlEnum("ZAF")> SouthAfrica
 			''' <summary>Zambia</summary>
-			<FieldDisplayName("Zambia")> <XmlEnum("ZMB")> Zambia
+			<FieldDisplayName("")> <XmlEnum("ZMB")> Zambia
 			''' <summary>Zimbabwe</summary>
-			<FieldDisplayName("Zimbabwe")> <XmlEnum("ZWE")> Zimbabwe
+			<FieldDisplayName("")> <XmlEnum("ZWE")> Zimbabwe
 			''' <summary>Ascension Island — Reserved on request of UPU, also used by ITU</summary>
-			<FieldDisplayName("Ascension")> <XmlEnum("ASC")> Ascension
+			<FieldDisplayName("")> <XmlEnum("ASC")> Ascension
 			''' <summary>Clipperton Island — Reserved on request of ITU</summary>
-			<FieldDisplayName("Clipperton")> <XmlEnum("CPT")> Clipperton
+			<FieldDisplayName("")> <XmlEnum("CPT")> Clipperton
 			''' <summary>Diego Garcia — Reserved on request of ITU</summary>
-			<FieldDisplayName("Diego Garcia")> <XmlEnum("DGA")> DiegoGarcia
+			<FieldDisplayName("")> <XmlEnum("DGA")> DiegoGarcia
 			''' <summary>France, Metropolitan — Reserved on request of France</summary>
-			<FieldDisplayName("France, Metropolitan")> <XmlEnum("FXX")> FranceMetropolitan
+			<FieldDisplayName("")> <XmlEnum("FXX")> FranceMetropolitan
 			''' <summary>Tristan da Cunha — Reserved on request of UPU</summary>
-			<FieldDisplayName("Tristan da Cunha")> <XmlEnum("TAA")> TristanDaCunha
+			<FieldDisplayName("")> <XmlEnum("TAA")> TristanDaCunha
 			''' <summary>United Nations</summary>
-			<FieldDisplayName("United Nations")> <XmlEnum("XUN")> UnitedNations
+			<FieldDisplayName("")> <XmlEnum("XUN")> UnitedNations
 			''' <summary>European Union (formerly known as the EC and before that the EEC)</summary>
-			<FieldDisplayName("European Union")> <XmlEnum("XEU")> EuropeanUnion
+			<FieldDisplayName("")> <XmlEnum("XEU")> EuropeanUnion
 			''' <summary>Space</summary>
-			<FieldDisplayName("Space")> <XmlEnum("XSP")> Space
+			<FieldDisplayName("")> <XmlEnum("XSP")> Space
 			''' <summary>at Sea</summary>
-			<FieldDisplayName("at Sea")> <XmlEnum("XSE")> AtSea
+			<FieldDisplayName("")> <XmlEnum("XSE")> AtSea
 			''' <summary>In Flight</summary>
-			<FieldDisplayName("In Flight")> <XmlEnum("XIF")> InFlight
+			<FieldDisplayName("")> <XmlEnum("XIF")> InFlight
 			''' <summary>England (where greater granularity than Great Britain is desired)</summary>
-			<FieldDisplayName("England")> <XmlEnum("XEN")> England
+			<FieldDisplayName("")> <XmlEnum("XEN")> England
 			''' <summary>- Scotland</summary>
-			<FieldDisplayName("- Scotland")> <XmlEnum("XSC")> Scotland
+			<FieldDisplayName("")> <XmlEnum("XSC")> Scotland
 			''' <summary>Northern Ireland</summary>
-			<FieldDisplayName("NorthernIreland")> <XmlEnum("XNI")> NorthernIreland
+			<FieldDisplayName("")> <XmlEnum("XNI")> NorthernIreland
 			''' <summary>Wales</summary>
-			<FieldDisplayName("Wales")> <XmlEnum("XWA")> Wales
+			<FieldDisplayName("")> <XmlEnum("XWA")> Wales
 		End Enum
 		''' <summary>Values of <see cref="ObjectCycle"/></summary>
 		<Restrict(True)> Public Enum ObjectCycleValues
 			''' <summary>Morning</summary>
-			<FieldDisplayName("morning")> <XmlEnum("a")> Morning
+			<FieldDisplayName("")> <XmlEnum("a")> Morning
 			''' <summary>Evening</summary>
-			<FieldDisplayName("evening")> <XmlEnum("p")> Evening
+			<FieldDisplayName("")> <XmlEnum("p")> Evening
 			''' <summary>Both</summary>
-			<FieldDisplayName("both")> <XmlEnum("b")> Both
+			<FieldDisplayName("")> <XmlEnum("b")> Both
 		End Enum
 		''' <summary>Possible orientations of image</summary>
 		<Restrict(True)> Public Enum Orientations
 			''' <summary>Portrait</summary>
-			<FieldDisplayName("Portrait")> <XmlEnum("P")> Portrait
+			<FieldDisplayName("")> <XmlEnum("P")> Portrait
 			''' <summary>Landscape</summary>
-			<FieldDisplayName("Landscape")> <XmlEnum("L")> Landscape
+			<FieldDisplayName("")> <XmlEnum("L")> Landscape
 			''' <summary>Square</summary>
-			<FieldDisplayName("Square")> <XmlEnum("S")> Square
+			<FieldDisplayName("")> <XmlEnum("S")> Square
 		End Enum
 	End Class
 #End Region
@@ -2416,6 +2909,44 @@ Namespace MetadataT.IptcT
 						Case ApplicationTags.ObjectDataPreviewData : Return New IPTCTag(Number:=ApplicationTags.ObjectDataPreviewData, Record:=RecordNumbers.Application, Name:="ObjectDataPreviewData", HumanName:="ObjectData Preview Data", Type:=IPTCTypes.ByteArray, Mandatory:=true, Repeatable:=false, Length:=0, Fixed:=false, Category:="Embeded object", Description:="Maximum size of 256000 octets consisting of binary data.", Group:=If(UseThisGroup,GroupInfo.ObjectDataPreview), Lock:=True)
 						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(ApplicationTags))
 					End Select
+				Case RecordNumbers.DigitalNewsphotoParameter
+					Select Case TagNumber
+						Case DigitalNewsphotoParameterTags.RecordVersion3 : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.RecordVersion3, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="RecordVersion3", HumanName:="Record Version (3)", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Internal", Description:="A binary number representing the version of the Digital Newsphoto Parameter Record utilised by the provider.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.PictureNumber : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.PictureNumber, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="PictureNumber", HumanName:="Picture Number", Type:=IPTCTypes.PictureNumber, Mandatory:=true, Repeatable:=false, Length:=16, Fixed:=true, Category:="Old IPTC", Description:="The picture number provides a universally unique reference to an image.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.PixelsPerLine : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.PixelsPerLine, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="PixelsPerLine", HumanName:="Pixels Per Line", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="A number representing the number of pixels in a scan line for the component with the highest resolution.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.NumberOfLines : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.NumberOfLines, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="NumberOfLines", HumanName:="Number of Lines", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="A number representing the number of scan lines comprising the image for the component with the highest resolution.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.PixelSizeInScanningDirection : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.PixelSizeInScanningDirection, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="PixelSizeInScanningDirection", HumanName:="Pixel Size In Scanning Direction", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="A number indicating the number of pixels per unit length in the scanning direction.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.PixelSizePerpendicularToScanningDirection : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.PixelSizePerpendicularToScanningDirection, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="PixelSizePerpendicularToScanningDirection", HumanName:="Pixel Size Perpendicular To Scanning Direction", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="A number indicating the number of pixels per unit length perpendicular to the scanning direction.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.SupplementType : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.SupplementType, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="SupplementType", HumanName:="Supplement Type", Type:=IPTCTypes.Enum_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="A number indicating the image content.", [Enum]:=GetType(SupplementTypeValue), Lock:=True)
+						Case DigitalNewsphotoParameterTags.ColourRepresentation : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.ColourRepresentation, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="ColourRepresentation", HumanName:="Colour Representation", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="Indicates colour representation", [Enum]:=GetType(ColourRepresentations), Lock:=True)
+						Case DigitalNewsphotoParameterTags.InterchangeColourSpace : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.InterchangeColourSpace, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="InterchangeColourSpace", HumanName:="Interchange Colour Space", Type:=IPTCTypes.Enum_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="A value indicating the colour space in which the pixel values are expressed for each component in the image.", [Enum]:=GetType(ColourSpaceValue), Lock:=True)
+						Case DigitalNewsphotoParameterTags.ColourSequence : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.ColourSequence, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="ColourSequence", HumanName:="Colour Sequence", Type:=IPTCTypes.UnsignedBinaryNumber, Mandatory:=false, Repeatable:=false, Length:=4, Fixed:=false, Category:="Image 3", Description:="Each of 1 to four octets contains a binary number that relates to the colour component using the identification number assigned to it in the appendix for each colour space.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.IccInputColourProfile : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.IccInputColourProfile, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="IccInputColourProfile", HumanName:="ICC Input Colour Profile", Type:=IPTCTypes.ByteArray, Mandatory:=false, Repeatable:=false, Length:=0, Fixed:=false, Category:="Image 3", Description:="Specifies the International Color Consortium profile for the scanning/source device used to generate the digital image files.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.ColourCalibrationMatrixTable : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.ColourCalibrationMatrixTable, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="ColourCalibrationMatrixTable", HumanName:="Colour Calibration Matrix Table", Type:=IPTCTypes.ByteArray, Mandatory:=false, Repeatable:=false, Length:=0, Fixed:=false, Category:="Image 3", Description:="This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).", Lock:=True)
+						Case DigitalNewsphotoParameterTags.LookupTable : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.LookupTable, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="LookupTable", HumanName:="Lookup Table", Type:=IPTCTypes.ByteArray, Mandatory:=false, Repeatable:=false, Length:=0, Fixed:=false, Category:="Image 3", Description:="Consists of one, three or four one-dimensional lookup tables (LUT).", Lock:=True)
+						Case DigitalNewsphotoParameterTags.NumberOfIndexEntries : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.NumberOfIndexEntries, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="NumberOfIndexEntries", HumanName:="Number of Index Entries", Type:=IPTCTypes.UShort_binary, Mandatory:=false, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="A binary number representing the number of index entries in the DataSet 3:85 (ColourPalette).", Lock:=True)
+						Case DigitalNewsphotoParameterTags.ColourPalette : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.ColourPalette, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="ColourPalette", HumanName:="Colour Pallette", Type:=IPTCTypes.ByteArray, Mandatory:=false, Repeatable:=false, Length:=0, Fixed:=false, Category:="Image 3", Description:="In a single-frame colour image, a colour is described with a single sample per pixel.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.NumberOfBitsPerSample : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.NumberOfBitsPerSample, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="NumberOfBitsPerSample", HumanName:="Number of Bits per Sample", Type:=IPTCTypes.Byte_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="A number between 1 and 16 that indicates the number of bits per pixel value used as entries in the Colour Palette. These values are found in the objectdata itself.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.SamplingStructure : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.SamplingStructure, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="SamplingStructure", HumanName:="Sampling Structure", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="A number defining the spatial and temporal relationship between pixels.", [Enum]:=GetType(SamplingStructureType), Lock:=True)
+						Case DigitalNewsphotoParameterTags.ScanningDirection : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.ScanningDirection, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="ScanningDirection", HumanName:="Scanning Direction", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="A number indicating the correct relative two dimensional order of the pixels in the objectdata. Eight possibilities exist.", [Enum]:=GetType(ScanningDirectionValue), Lock:=True)
+						Case DigitalNewsphotoParameterTags.ImageRotation : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.ImageRotation, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="ImageRotation", HumanName:="Image Rotation", Type:=IPTCTypes.Enum_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="A number indicating the clockwise rotation applied to the image for presentation.", [Enum]:=GetType(ImageRotationValue), Lock:=True)
+						Case DigitalNewsphotoParameterTags.DataCompressionMethod : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.DataCompressionMethod, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="DataCompressionMethod", HumanName:="Data Compression Method", Type:=IPTCTypes.UInt_binary, Mandatory:=true, Repeatable:=false, Length:=4, Fixed:=true, Category:="Image 3", Description:="Specifies data compression method", Lock:=True)
+						Case DigitalNewsphotoParameterTags.QuantisationMethod : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.QuantisationMethod, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="QuantisationMethod", HumanName:="Quantisation Method", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="Contains a binary number identifying the quantisation law.", [Enum]:=GetType(QuantisationMethodValue), Lock:=True)
+						Case DigitalNewsphotoParameterTags.EndPoints : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.EndPoints, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="EndPoints", HumanName:="End Points", Type:=IPTCTypes.ByteArray, Mandatory:=true, Repeatable:=false, Length:=0, Fixed:=false, Category:="Image 3", Description:="These end points apply to the coding process.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.ExcursionTolerance : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.ExcursionTolerance, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="ExcursionTolerance", HumanName:="Excursion Tolerance", Type:=IPTCTypes.Boolean_binary, Mandatory:=true, Repeatable:=false, Length:=1, Fixed:=true, Category:="Image 3", Description:="Indicates if values outside the range defined by the end points in DataSet 3:125 may occur.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.BitsPerComponent : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.BitsPerComponent, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="BitsPerComponent", HumanName:="Bits Per Component", Type:=IPTCTypes.ByteArray, Mandatory:=true, Repeatable:=false, Length:=0, Fixed:=0, Category:="Image 3", Description:="Contains a sequence of one or more octets describing the number of bits used to encode each component. The sequence is specified by the order of components in DataSet 3:65.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.MaximumDensityRange : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.MaximumDensityRange, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="MaximumDensityRange", HumanName:="Maximum Density Range", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="A binary value which specifies the maximum density range multiplied by 100.", Lock:=True)
+						Case DigitalNewsphotoParameterTags.GammaCompensatedValue : Return New IPTCTag(Number:=DigitalNewsphotoParameterTags.GammaCompensatedValue, Record:=RecordNumbers.DigitalNewsphotoParameter, Name:="GammaCompensatedValue", HumanName:="Gamma Compensated Value", Type:=IPTCTypes.UShort_binary, Mandatory:=false, Repeatable:=false, Length:=2, Fixed:=true, Category:="Image 3", Description:="A binary value which specifies the value of gamma for the device multiplied by 100.", Lock:=True)
+						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(DigitalNewsphotoParameterTags))
+					End Select
+				Case RecordNumbers.NotAllocated5
+					Select Case TagNumber
+						Case NotAllocated5Tags.OverlallRating : Return New IPTCTag(Number:=NotAllocated5Tags.OverlallRating, Record:=RecordNumbers.NotAllocated5, Name:="OverlallRating", HumanName:="Overall Rating", Type:=IPTCTypes.Enum_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Status", Description:="Overll rating of the subject", [Enum]:=GetType(CustomRating), Lock:=True)
+						Case NotAllocated5Tags.TechnicalQuality : Return New IPTCTag(Number:=NotAllocated5Tags.TechnicalQuality, Record:=RecordNumbers.NotAllocated5, Name:="TechnicalQuality", HumanName:="Technical Quality", Type:=IPTCTypes.Enum_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Status", Description:="Rates technical quality of subject data (e.g. Is the photo sharp?)", [Enum]:=GetType(CustomRating), Lock:=True)
+						Case NotAllocated5Tags.ArtQuality : Return New IPTCTag(Number:=NotAllocated5Tags.ArtQuality, Record:=RecordNumbers.NotAllocated5, Name:="ArtQuality", HumanName:="Art Quality", Type:=IPTCTypes.Enum_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Status", Description:="Rates artistic quality of subject data (i.e. How nice it is?)", [Enum]:=GetType(CustomRating), Lock:=True)
+						Case NotAllocated5Tags.InformationValue : Return New IPTCTag(Number:=NotAllocated5Tags.InformationValue, Record:=RecordNumbers.NotAllocated5, Name:="InformationValue", HumanName:="Information Value", Type:=IPTCTypes.Enum_binary, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Status", Description:="Rates information value of subject data (i.e. Does it provide any valuable information?)", [Enum]:=GetType(CustomRating), Lock:=True)
+						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(NotAllocated5Tags))
+					End Select
 				Case RecordNumbers.PreObjectDataDescriptorRecord
 					Select Case TagNumber
 						Case PreObjectDataDescriptorRecordTags.SizeMode : Return New IPTCTag(Number:=PreObjectDataDescriptorRecordTags.SizeMode, Record:=RecordNumbers.PreObjectDataDescriptorRecord, Name:="SizeMode", HumanName:="Size Mode", Type:=IPTCTypes.Boolean_binary, Mandatory:=true, Repeatable:=false, Length:=1, Fixed:=true, Category:="Embeded object", Description:="The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.", Lock:=True)
@@ -2447,6 +2978,16 @@ Namespace MetadataT.IptcT
 		Public Shared Function GetTag(ByVal Number As ApplicationTags) As IPTCTag
 			Return GetTag(RecordNumbers.Application, Number)
 		End Function
+		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.DigitalNewsphotoParameter"/></summary>
+		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="DigitalNewsphotoParameterTags"/></exception>
+		Public Shared Function GetTag(ByVal Number As DigitalNewsphotoParameterTags) As IPTCTag
+			Return GetTag(RecordNumbers.DigitalNewsphotoParameter, Number)
+		End Function
+		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.NotAllocated5"/></summary>
+		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="NotAllocated5Tags"/></exception>
+		Public Shared Function GetTag(ByVal Number As NotAllocated5Tags) As IPTCTag
+			Return GetTag(RecordNumbers.NotAllocated5, Number)
+		End Function
 		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.PreObjectDataDescriptorRecord"/></summary>
 		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="PreObjectDataDescriptorRecordTags"/></exception>
 		Public Shared Function GetTag(ByVal Number As PreObjectDataDescriptorRecordTags) As IPTCTag
@@ -2468,15 +3009,15 @@ Namespace MetadataT.IptcT
 		''' <summary>Groups of tags</summary>
 		Public Enum Groups
 			''' <summary>Abstract Relation Method</summary>
-			<Category("Old IPTC")> <FieldDisplayName("ARM")> ARM
+			<Category("Old IPTC")> <FieldDisplayName("")> ARM
 			''' <summary>Country/geographical location referenced by the content of the object</summary>
-			<Category("Location")> <FieldDisplayName("Content Location")> ContentLocation
+			<Category("Location")> <FieldDisplayName("")> ContentLocation
 			''' <summary>Identifies a prior envelope to which the current object refers.</summary>
-			<Category("Old IPTC")> <FieldDisplayName("Reference")> Reference
+			<Category("Old IPTC")> <FieldDisplayName("")> Reference
 			''' <summary>Creator of the object data</summary>
-			<Category("Author")> <FieldDisplayName("By-line info")> ByLineInfo
+			<Category("Author")> <FieldDisplayName("")> ByLineInfo
 			''' <summary>Preview of embeded object</summary>
-			<Category("Embeded object")> <FieldDisplayName("ObjectData Preview")> ObjectDataPreview
+			<Category("Embeded object")> <FieldDisplayName("")> ObjectDataPreview
 		End Enum
 		Partial Class GroupInfo
 			''' <summary>Abstract Relation Method</summary>
@@ -2545,7 +3086,7 @@ Namespace MetadataT.IptcT
 		End Function
 #Region "Classes"
 		''' <summary>Abstract Relation Method</summary>
-		<FieldDisplayName("ARM")> <Category("Old IPTC")> <TypeConverter(GetType(ARMGroup.Converter))> Partial Public NotInheritable Class ARMGroup : Inherits Group
+		<FieldDisplayName("")> <Category("Old IPTC")> <TypeConverter(GetType(ARMGroup.Converter))> Partial Public NotInheritable Class ARMGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2572,7 +3113,7 @@ Namespace MetadataT.IptcT
 				''' <summary>Contains value of the <see cref="ARMIdentifier"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ARMIdentifier As ARMMethods
 				''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
-				<Category("Old IPTC")> <FieldDisplayName("ARM Identifier")> <CLSCompliant(False)>Public Property ARMIdentifier As ARMMethods
+				<Category("Old IPTC")> <FieldDisplayName("")> <CLSCompliant(False)>Public Property ARMIdentifier As ARMMethods
 					Get
 						Return _ARMIdentifier
 					End Get
@@ -2584,7 +3125,7 @@ Namespace MetadataT.IptcT
 				''' <summary>Contains value of the <see cref="ARMVersion"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ARMVersion As ARMVersions
 				''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
-				<Category("Old IPTC")> <FieldDisplayName("ARM Version")> <CLSCompliant(False)>Public Property ARMVersion As ARMVersions
+				<Category("Old IPTC")> <FieldDisplayName("")> <CLSCompliant(False)>Public Property ARMVersion As ARMVersions
 					Get
 						Return _ARMVersion
 					End Get
@@ -2595,7 +3136,7 @@ Namespace MetadataT.IptcT
 
 		End Class
 		''' <summary>Country/geographical location referenced by the content of the object</summary>
-		<FieldDisplayName("Content Location")> <Category("Location")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ContentLocationGroup : Inherits Group
+		<FieldDisplayName("")> <Category("Location")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ContentLocationGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2623,7 +3164,7 @@ Namespace MetadataT.IptcT
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ContentLocationCode As StringEnum(Of ISO3166)
 				''' <summary>Indicates the code of a country/geographical location referenced by the content of the object.</summary>
 				''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a country, e.g. ships at sea, space, IPTC will assign an appropriate threecharacter code under the provisions of ISO3166 to avoid conflicts. (see Appendix D) .</remarks>
-				<Category("Location")> <FieldDisplayName("Content Location Code")> <CLSCompliant(False)>Public Property ContentLocationCode As StringEnum(Of ISO3166)
+				<Category("Location")> <FieldDisplayName("")> <CLSCompliant(False)>Public Property ContentLocationCode As StringEnum(Of ISO3166)
 					Get
 						Return _ContentLocationCode
 					End Get
@@ -2636,7 +3177,7 @@ Namespace MetadataT.IptcT
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ContentLocationName As String
 				''' <summary>Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.</summary>
 				''' <remarks>If used in the same object with DataSet , must immediately follow and correspond to it.</remarks>
-				<Category("Location")> <FieldDisplayName("Content Location Name")> Public Property ContentLocationName As String
+				<Category("Location")> <FieldDisplayName("")> Public Property ContentLocationName As String
 					Get
 						Return _ContentLocationName
 					End Get
@@ -2648,7 +3189,7 @@ Namespace MetadataT.IptcT
 		End Class
 		''' <summary>Identifies a prior envelope to which the current object refers.</summary>
 		''' <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
-		<FieldDisplayName("Reference")> <Category("Old IPTC")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ReferenceGroup : Inherits Group
+		<FieldDisplayName("")> <Category("Old IPTC")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ReferenceGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2677,7 +3218,7 @@ Namespace MetadataT.IptcT
 				''' <summary>Contains value of the <see cref="ReferenceService"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ReferenceService As String
 				''' <summary>Identifies the Service Identifier of a prior envelope to which the current object refers.</summary>
-				<Category("Old IPTC")> <FieldDisplayName("Reference Service")> Public Property ReferenceService As String
+				<Category("Old IPTC")> <FieldDisplayName("")> Public Property ReferenceService As String
 					Get
 						Return _ReferenceService
 					End Get
@@ -2689,7 +3230,7 @@ Namespace MetadataT.IptcT
 				''' <summary>Contains value of the <see cref="ReferenceDate"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ReferenceDate As Date
 				''' <summary>Identifies the date of a prior envelope to which the current object refers.</summary>
-				<Category("Old IPTC")> <FieldDisplayName("Reference Date")> Public Property ReferenceDate As Date
+				<Category("Old IPTC")> <FieldDisplayName("")> Public Property ReferenceDate As Date
 					Get
 						Return _ReferenceDate
 					End Get
@@ -2701,7 +3242,7 @@ Namespace MetadataT.IptcT
 				''' <summary>Contains value of the <see cref="ReferenceNumber"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ReferenceNumber As Decimal
 				''' <summary>Identifies the Envelope Number of a prior envelope to which the current object refers.</summary>
-				<Category("Old IPTC")> <FieldDisplayName("Reference Number")> Public Property ReferenceNumber As Decimal
+				<Category("Old IPTC")> <FieldDisplayName("")> Public Property ReferenceNumber As Decimal
 					Get
 						Return _ReferenceNumber
 					End Get
@@ -2712,7 +3253,7 @@ Namespace MetadataT.IptcT
 
 		End Class
 		''' <summary>Creator of the object data</summary>
-		<FieldDisplayName("By-line info")> <Category("Author")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ByLineInfoGroup : Inherits Group
+		<FieldDisplayName("")> <Category("Author")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ByLineInfoGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2739,7 +3280,7 @@ Namespace MetadataT.IptcT
 				''' <summary>Contains value of the <see cref="ByLine"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ByLine As String
 				''' <summary>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</summary>
-				<Category("Author")> <FieldDisplayName("By-line")> Public Property ByLine As String
+				<Category("Author")> <FieldDisplayName("")> Public Property ByLine As String
 					Get
 						Return _ByLine
 					End Get
@@ -2752,7 +3293,7 @@ Namespace MetadataT.IptcT
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ByLineTitle As String
 				''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
 				''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
-				<Category("Author")> <FieldDisplayName("By-line Title")> Public Property ByLineTitle As String
+				<Category("Author")> <FieldDisplayName("")> Public Property ByLineTitle As String
 					Get
 						Return _ByLineTitle
 					End Get
@@ -2763,7 +3304,7 @@ Namespace MetadataT.IptcT
 
 		End Class
 		''' <summary>Preview of embeded object</summary>
-		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> <TypeConverter(GetType(ObjectDataPreviewGroup.Converter))> Partial Public NotInheritable Class ObjectDataPreviewGroup : Inherits Group
+		<FieldDisplayName("")> <Category("Embeded object")> <TypeConverter(GetType(ObjectDataPreviewGroup.Converter))> Partial Public NotInheritable Class ObjectDataPreviewGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2793,7 +3334,7 @@ Namespace MetadataT.IptcT
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewFileFormat As FileFormats
 				''' <summary>The file format of the ObjectData Preview.</summary>
 				''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
-				<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format")> <CLSCompliant(False)>Public Property ObjectDataPreviewFileFormat As FileFormats
+				<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)>Public Property ObjectDataPreviewFileFormat As FileFormats
 					Get
 						Return _ObjectDataPreviewFileFormat
 					End Get
@@ -2806,7 +3347,7 @@ Namespace MetadataT.IptcT
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewFileFormatVersion As FileFormatVersions
 				''' <summary>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></summary>
 				''' <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
-				<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format Version")> <CLSCompliant(False)>Public Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
+				<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)>Public Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
 					Get
 						Return _ObjectDataPreviewFileFormatVersion
 					End Get
@@ -2818,7 +3359,7 @@ Namespace MetadataT.IptcT
 				''' <summary>Contains value of the <see cref="ObjectDataPreviewData"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewData As Byte()
 				''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
-				<Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> <Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> Public Property ObjectDataPreviewData As Byte()
+				<Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> <Category("Embeded object")> <FieldDisplayName("")> Public Property ObjectDataPreviewData As Byte()
 					Get
 						Return _ObjectDataPreviewData
 					End Get
@@ -2831,7 +3372,7 @@ Namespace MetadataT.IptcT
 #End Region
 #Region "Properties"
 		''' <summary>Abstract Relation Method</summary>
-		<FieldDisplayName("ARM")> <Category("Old IPTC")> Public Property ARM As ARMGroup
+		<FieldDisplayName("")> <Category("Old IPTC")> Public Property ARM As ARMGroup
 			Get
 				Dim v As List(Of ARMGroup)=ARMGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2843,7 +3384,7 @@ Namespace MetadataT.IptcT
 			End Set
 		End Property
 		''' <summary>Country/geographical location referenced by the content of the object</summary>
-		<FieldDisplayName("Content Location")> <Category("Location")> <TypeConverter(GetType(TypeConverter))> Public Property ContentLocation As ContentLocationGroup()
+		<FieldDisplayName("")> <Category("Location")> <TypeConverter(GetType(TypeConverter))> Public Property ContentLocation As ContentLocationGroup()
 			Get
 				Dim v As List(Of ContentLocationGroup)=ContentLocationGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2872,7 +3413,7 @@ Namespace MetadataT.IptcT
 		End Property
 		''' <summary>Identifies a prior envelope to which the current object refers.</summary>
 		''' <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
-		<FieldDisplayName("Reference")> <Category("Old IPTC")> <TypeConverter(GetType(TypeConverter))> Public Property Reference As ReferenceGroup()
+		<FieldDisplayName("")> <Category("Old IPTC")> <TypeConverter(GetType(TypeConverter))> Public Property Reference As ReferenceGroup()
 			Get
 				Dim v As List(Of ReferenceGroup)=ReferenceGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2907,7 +3448,7 @@ Namespace MetadataT.IptcT
 			End Set
 		End Property
 		''' <summary>Creator of the object data</summary>
-		<FieldDisplayName("By-line info")> <Category("Author")> Public Property ByLineInfo As ByLineInfoGroup()
+		<FieldDisplayName("")> <Category("Author")> Public Property ByLineInfo As ByLineInfoGroup()
 			Get
 				Dim v As List(Of ByLineInfoGroup)=ByLineInfoGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2935,7 +3476,7 @@ Namespace MetadataT.IptcT
 			End Set
 		End Property
 		''' <summary>Preview of embeded object</summary>
-		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> <Editor(GetType(NewEditor),GetType(System.Drawing.Design.UITypeEditor))> Public Property ObjectDataPreview As ObjectDataPreviewGroup
+		<FieldDisplayName("")> <Category("Embeded object")> <Editor(GetType(NewEditor),GetType(System.Drawing.Design.UITypeEditor))> Public Property ObjectDataPreview As ObjectDataPreviewGroup
 			Get
 				Dim v As List(Of ObjectDataPreviewGroup)=ObjectDataPreviewGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2958,7 +3499,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.")> _
-		<Category("Internal")> <FieldDisplayName("Model Version")> <CLSCompliant(False)>Public Overridable Property ModelVersion As UShort
+		<Category("Internal")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property ModelVersion As UShort
 			Get
 				Try
 					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.ModelVersion)
@@ -2980,7 +3521,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Destination")> Public Overridable Property Destination As String()
+		<Category("Old IPTC")> <FieldDisplayName("")> Public Overridable Property Destination As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.Destination)
@@ -3004,7 +3545,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number representing the file format.")> _
-		<Category("Embeded object")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Overridable Property FileFormat As FileFormats
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property FileFormat As FileFormats
 			Get
 				Try
 					Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)))
@@ -3026,7 +3567,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A binary number representing the particular version of the File Format")> _
-		<Category("Embeded object")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Overridable Property FileFormatVersion As FileFormatVersions
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property FileFormatVersion As FileFormatVersions
 			Get
 				Try
 					Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)))
@@ -3048,7 +3589,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the provider and product.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Service Identifier")> Public Overridable Property ServiceIdentifier As String
+		<Category("Old IPTC")> <FieldDisplayName("")> Public Overridable Property ServiceIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ServiceIdentifier)
@@ -3071,7 +3612,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The characters form a number that will be unique for the date specified in Date Sentand for the Service Identifier specified in Service Identifier.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Envelope Number")> Public Overridable Property EnvelopeNumber As Decimal
+		<Category("Old IPTC")> <FieldDisplayName("")> Public Overridable Property EnvelopeNumber As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopeNumber)
@@ -3094,7 +3635,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Allows a provider to identify subsets of its overall service.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Product I.D.")> Public Overridable Property ProductID As String()
+		<Category("Old IPTC")> <FieldDisplayName("")> Public Overridable Property ProductID As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ProductID)
@@ -3118,7 +3659,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Specifies the envelope handling priority and not the editorial urgency (see 2:10, Urgency).")> _
-		<Category("Status")> <FieldDisplayName("Envelope Priority")> Public Overridable Property EnvelopePriority As Decimal
+		<Category("Status")> <FieldDisplayName("")> Public Overridable Property EnvelopePriority As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopePriority)
@@ -3140,7 +3681,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates year, month and day the service sent the material.")> _
-		<Category("Date")> <FieldDisplayName("Date Sent")> Public Overridable Property DateSent As Date
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property DateSent As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DateSent)
@@ -3164,7 +3705,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("This is the time the service sent the material.")> _
-		<Category("Date")> <FieldDisplayName("Time Sent")> Public Overridable Property TimeSent As Time
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property TimeSent As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeSent)
@@ -3188,7 +3729,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.")> _
-		<Category("Old IPTC")> <FieldDisplayName("CodedCharacterSet")> <TypeConverter(GetType(HexaConverter))> <Editor(GetType(Drawing.Design.UITypeEditor), GetType(Drawing.Design.UITypeEditor))> Public Overridable Property CodedCharacterSet As Byte()
+		<Category("Old IPTC")> <FieldDisplayName("")> <TypeConverter(GetType(HexaConverter))> <Editor(GetType(Drawing.Design.UITypeEditor), GetType(Drawing.Design.UITypeEditor))> Public Overridable Property CodedCharacterSet As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.CodedCharacterSet)
@@ -3211,7 +3752,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.")> _
-		<Category("Old IPTC")> <FieldDisplayName("UNO")> Public Overridable Property UNO As iptcUNO
+		<Category("Old IPTC")> <FieldDisplayName("")> Public Overridable Property UNO As iptcUNO
 			Get
 				Try
 					Dim AllValues As List(Of iptcUNO) = UNO_Value(DataSetIdentification.UNO)
@@ -3229,12 +3770,12 @@ Namespace MetadataT.IptcT
 			End Set
 		End Property
 		''' <summary>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</summary>
-		''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
+		''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4). Same tag called Record Version" also exists in record no. 3.</remarks>
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.")> _
-		<Category("Internal")> <FieldDisplayName("Record Version")> <CLSCompliant(False)>Public Overridable Property RecordVersion As UShort
+		<Category("Internal")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property RecordVersion As UShort
 			Get
 				Try
 					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.RecordVersion)
@@ -3257,7 +3798,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Type is used to distinguish between different types of objects within the IIM.")> _
-		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr2`1;Tools.MetadataT.IptcT.Iptc+ObjectTypes;02;")> Public Overridable Property ObjectTypeReference As NumStr2(Of ObjectTypes)
+		<Category("Category")> <FieldDisplayName("")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr2`1;Tools.MetadataT.IptcT.Iptc+ObjectTypes;02;")> Public Overridable Property ObjectTypeReference As NumStr2(Of ObjectTypes)
 			Get
 				Try
 					Dim AllValues As List(Of NumStr2(Of ObjectTypes)) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(Num2_Str_Value(DataSetIdentification.ObjectTypeReference))
@@ -3280,7 +3821,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Attribute defines the nature of the object independent of the Subject.")> _
-		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr3`1;Tools.MetadataT.IptcT.Iptc+ObjectAttributes;001;")> Public Overridable Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
+		<Category("Category")> <FieldDisplayName("")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr3`1;Tools.MetadataT.IptcT.Iptc+ObjectAttributes;001;")> Public Overridable Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
 			Get
 				Try
 					Dim AllValues As List(Of NumStr3(Of ObjectAttributes)) = ConvertNumStrList(Of NumStr3, NumStr3(Of ObjectAttributes))(Num3_Str_Value(DataSetIdentification.ObjectAttributeReference))
@@ -3303,7 +3844,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.")> _
-		<Category("Title")> <FieldDisplayName("Object Name")> Public Overridable Property ObjectName As String
+		<Category("Title")> <FieldDisplayName("")> Public Overridable Property ObjectName As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ObjectName)
@@ -3325,7 +3866,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Status of the objectdata, according to the practice of the provider.")> _
-		<Category("Status")> <FieldDisplayName("Edit Status")> Public Overridable Property EditStatus As String
+		<Category("Status")> <FieldDisplayName("")> Public Overridable Property EditStatus As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.EditStatus)
@@ -3347,7 +3888,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.")> _
-		<Category("Status")> <FieldDisplayName("Editorial Update")> Public Overridable Property EditorialUpdate As EditorialUpdateValues
+		<Category("Status")> <FieldDisplayName("")> Public Overridable Property EditorialUpdate As EditorialUpdateValues
 			Get
 				Try
 					Dim AllValues As List(Of EditorialUpdateValues) = ConvertEnumList(Of EditorialUpdateValues)(Enum_NumChar_Value(DataSetIdentification.EditorialUpdate, GetType(EditorialUpdateValues)))
@@ -3370,7 +3911,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, Envelope Priority).")> _
-		<Category("Status")> <FieldDisplayName("Urgency")> Public Overridable Property Urgency As Decimal
+		<Category("Status")> <FieldDisplayName("")> Public Overridable Property Urgency As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.Urgency)
@@ -3393,7 +3934,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Subject Reference is a structured definition of the subject matter.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Subject Reference")> Public Overridable Property SubjectReference As iptcSubjectReference()
+		<Category("Old IPTC")> <FieldDisplayName("")> Public Overridable Property SubjectReference As iptcSubjectReference()
 			Get
 				Try
 					Dim AllValues As List(Of iptcSubjectReference) = SubjectReference_Value(DataSetIdentification.SubjectReference)
@@ -3417,7 +3958,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the subject of the objectdata in the opinion of the provider.")> _
-		<Category("Category")> <FieldDisplayName("Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Overridable Property Category As String
+		<Category("Category")> <FieldDisplayName("")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Overridable Property Category As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.Category)
@@ -3440,7 +3981,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Supplemental categories further refine the subject of an objectdata.")> _
-		<Category("Category")> <FieldDisplayName("Supplemental Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Overridable Property SupplementalCategory As String()
+		<Category("Category")> <FieldDisplayName("")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Overridable Property SupplementalCategory As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SupplementalCategory)
@@ -3464,7 +4005,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies objectdata that recurs often and predictably.")> _
-		<Category("Category")> <FieldDisplayName("Fixture Identifier")> Public Overridable Property FixtureIdentifier As String
+		<Category("Category")> <FieldDisplayName("")> Public Overridable Property FixtureIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.FixtureIdentifier)
@@ -3487,7 +4028,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Used to indicate specific information retrieval words.")> _
-		<Category("Category")> <FieldDisplayName("Keywords")> Public Overridable Property Keywords As String()
+		<Category("Category")> <FieldDisplayName("")> Public Overridable Property Keywords As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Keywords)
@@ -3510,7 +4051,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The earliest date the provider intends the object to be used.")> _
-		<Category("Date")> <FieldDisplayName("Release Date")> Public Overridable Property ReleaseDate As Date
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property ReleaseDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ReleaseDate)
@@ -3534,7 +4075,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The earliest time the provider intends the object to be used.")> _
-		<Category("Date")> <FieldDisplayName("Release Time")> Public Overridable Property ReleaseTime As Time
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property ReleaseTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ReleaseTime)
@@ -3556,7 +4097,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The latest date the provider or owner intends the objectdata to be used.")> _
-		<Category("Date")> <FieldDisplayName("Expiration Date")> Public Overridable Property ExpirationDate As Date
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property ExpirationDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ExpirationDate)
@@ -3580,7 +4121,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The latest time the provider or owner intends the objectdata to be used.")> _
-		<Category("Date")> <FieldDisplayName("Expiration Time")> Public Overridable Property ExpirationTime As Time
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property ExpirationTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ExpirationTime)
@@ -3602,7 +4143,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.")> _
-		<Category("Other")> <FieldDisplayName("Special Instructions")> Public Overridable Property SpecialInstructions As String
+		<Category("Other")> <FieldDisplayName("")> Public Overridable Property SpecialInstructions As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SpecialInstructions)
@@ -3625,7 +4166,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the type of action that this object provides to a previous object.")> _
-		<Category("Other")> <FieldDisplayName("Action Advised")> Public Overridable Property ActionAdvised As AdvisedActions
+		<Category("Other")> <FieldDisplayName("")> Public Overridable Property ActionAdvised As AdvisedActions
 			Get
 				Try
 					Dim AllValues As List(Of AdvisedActions) = ConvertEnumList(Of AdvisedActions)(Enum_NumChar_Value(DataSetIdentification.ActionAdvised, GetType(AdvisedActions)))
@@ -3648,7 +4189,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.")> _
-		<Category("Date")> <FieldDisplayName("Date Created")> Public Overridable Property DateCreated As OmmitableDate
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property DateCreated As OmmitableDate
 			Get
 				Try
 					Dim AllValues As List(Of OmmitableDate) = CCYYMMDDOmmitable_Value(DataSetIdentification.DateCreated)
@@ -3672,7 +4213,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.")> _
-		<Category("Date")> <FieldDisplayName("Time Created")> Public Overridable Property TimeCreated As Time
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property TimeCreated As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeCreated)
@@ -3695,7 +4236,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The date the digital representation of the objectdata was created.")> _
-		<Category("Date")> <FieldDisplayName("Digital Creation Date")> Public Overridable Property DigitalCreationDate As Date
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property DigitalCreationDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DigitalCreationDate)
@@ -3719,7 +4260,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The time the digital representation of the objectdata was created.")> _
-		<Category("Date")> <FieldDisplayName("Digital Creation Time")> Public Overridable Property DigitalCreationTime As Time
+		<Category("Date")> <FieldDisplayName("")> Public Overridable Property DigitalCreationTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.DigitalCreationTime)
@@ -3742,7 +4283,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the type of program used to originate the objectdata.")> _
-		<Category("Other")> <FieldDisplayName("Originating Program")> Public Overridable Property OriginatingProgram As String
+		<Category("Other")> <FieldDisplayName("")> Public Overridable Property OriginatingProgram As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginatingProgram)
@@ -3765,7 +4306,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the type of program used to originate the objectdata.")> _
-		<Category("Other")> <FieldDisplayName("Program Version")> Public Overridable Property ProgramVersion As String
+		<Category("Other")> <FieldDisplayName("")> Public Overridable Property ProgramVersion As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProgramVersion)
@@ -3787,7 +4328,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Virtually only used in North America.")> _
-		<Category("Status")> <FieldDisplayName("Object Cycle")> <CLSCompliant(False)>Public Overridable Property ObjectCycle As StringEnum(Of ObjectCycleValues)
+		<Category("Status")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property ObjectCycle As StringEnum(Of ObjectCycleValues)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of ObjectCycleValues)) = ConvertEnumList(Of ObjectCycleValues)(StringEnum_Value(DataSetIdentification.ObjectCycle, GetType(ObjectCycleValues)))
@@ -3809,7 +4350,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies city of objectdata origin according to guidelines established by the provider.")> _
-		<Category("Location")> <FieldDisplayName("City")> Public Overridable Property City As String
+		<Category("Location")> <FieldDisplayName("")> Public Overridable Property City As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.City)
@@ -3831,7 +4372,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.")> _
-		<Category("Location")> <FieldDisplayName("Sublocation")> Public Overridable Property SubLocation As String
+		<Category("Location")> <FieldDisplayName("")> Public Overridable Property SubLocation As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SubLocation)
@@ -3853,7 +4394,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies Province/State of origin according to guidelines established by the provider.")> _
-		<Category("Location")> <FieldDisplayName("Province/State")> Public Overridable Property ProvinceState As String
+		<Category("Location")> <FieldDisplayName("")> Public Overridable Property ProvinceState As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProvinceState)
@@ -3876,7 +4417,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.")> _
-		<Category("Location")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>Public Overridable Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
+		<Category("Location")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166)))
@@ -3898,7 +4439,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.")> _
-		<Category("Location")> <FieldDisplayName("Country/Primary Location Name")> Public Overridable Property CountryPrimaryLocationName As String
+		<Category("Location")> <FieldDisplayName("")> Public Overridable Property CountryPrimaryLocationName As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CountryPrimaryLocationName)
@@ -3921,7 +4462,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A code representing the location of original transmission according to practices of the provider.")> _
-		<Category("Location")> <FieldDisplayName("Original Transmission Refrence")> Public Overridable Property OriginalTransmissionReference As String
+		<Category("Location")> <FieldDisplayName("")> Public Overridable Property OriginalTransmissionReference As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginalTransmissionReference)
@@ -3943,7 +4484,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A publishable entry providing a synopsis of the contents of the objectdata.")> _
-		<Category("Title")> <FieldDisplayName("Headline")> Public Overridable Property Headline As String
+		<Category("Title")> <FieldDisplayName("")> Public Overridable Property Headline As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Headline)
@@ -3965,7 +4506,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the provider of the objectdata, not necessarily the owner/creator.")> _
-		<Category("Author")> <FieldDisplayName("Credit")> Public Overridable Property Credit As String
+		<Category("Author")> <FieldDisplayName("")> Public Overridable Property Credit As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Credit)
@@ -3988,7 +4529,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the original owner of the intellectual content of the objectdata.")> _
-		<Category("Author")> <FieldDisplayName("Source")> Public Overridable Property Source As String
+		<Category("Author")> <FieldDisplayName("")> Public Overridable Property Source As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Source)
@@ -4010,7 +4551,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Contains any necessary copyright notice.")> _
-		<Category("Author")> <FieldDisplayName("Copyright Notice")> Public Overridable Property CopyrightNotice As String
+		<Category("Author")> <FieldDisplayName("")> Public Overridable Property CopyrightNotice As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CopyrightNotice)
@@ -4032,7 +4573,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the person or organisation which can provide further background information on the objectdata.")> _
-		<Category("Author")> <FieldDisplayName("Contact")> Public Overridable Property Contact As String()
+		<Category("Author")> <FieldDisplayName("")> Public Overridable Property Contact As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Contact)
@@ -4055,7 +4596,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A textual description of the objectdata, particularly used where the object is not text.")> _
-		<Category("Title")> <FieldDisplayName("Caption/Abstract")> <Editor(gettype(System.ComponentModel.Design.MultilineStringEditor),gettype(System.Drawing.Design.UITypeEditor))> <TypeConverter(gettype(MultilineStringConverter ))> Public Overridable Property CaptionAbstract As String
+		<Category("Title")> <FieldDisplayName("")> <Editor(gettype(System.ComponentModel.Design.MultilineStringEditor),gettype(System.Drawing.Design.UITypeEditor))> <TypeConverter(gettype(MultilineStringConverter ))> Public Overridable Property CaptionAbstract As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Text_Value(DataSetIdentification.CaptionAbstract)
@@ -4077,7 +4618,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.")> _
-		<Category("Author")> <FieldDisplayName("Writer/Editor")> Public Overridable Property WriterEditor As String()
+		<Category("Author")> <FieldDisplayName("")> Public Overridable Property WriterEditor As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.WriterEditor)
@@ -4101,7 +4642,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.")> _
-		<Category("Title")> <FieldDisplayName("Rasterized Caption")> <Editor(GetType(EmbededImageEditor), GetType(System.Drawing.Design.UITypeEditor))> Public Overridable Property RasterizedeCaption As Drawing.Bitmap
+		<Category("Title")> <FieldDisplayName("")> <Editor(GetType(EmbededImageEditor), GetType(System.Drawing.Design.UITypeEditor))> Public Overridable Property RasterizedeCaption As Drawing.Bitmap
 			Get
 				Try
 					Dim AllValues As List(Of Drawing.Bitmap) = BW460_Value(DataSetIdentification.RasterizedeCaption)
@@ -4123,7 +4664,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Image Type")> _
-		<Category("Image")> <FieldDisplayName("Image Type")> Public Overridable Property ImageType As iptcImageType
+		<Category("Image")> <FieldDisplayName("")> Public Overridable Property ImageType As iptcImageType
 			Get
 				Try
 					Dim AllValues As List(Of iptcImageType) = ImageType_Value(DataSetIdentification.ImageType)
@@ -4145,7 +4686,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the layout of the image area.")> _
-		<Category("Image")> <FieldDisplayName("Image Orientation")> <CLSCompliant(False)>Public Overridable Property ImageOrientation As StringEnum(Of Orientations)
+		<Category("Image")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property ImageOrientation As StringEnum(Of Orientations)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of Orientations)) = ConvertEnumList(Of Orientations)(StringEnum_Value(DataSetIdentification.ImageOrientation, GetType(Orientations)))
@@ -4168,7 +4709,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.")> _
-		<Category("Other")> <FieldDisplayName("Language Identifier")> Public Overridable Property LanguageIdentifier As String
+		<Category("Other")> <FieldDisplayName("")> Public Overridable Property LanguageIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.LanguageIdentifier)
@@ -4191,7 +4732,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Type of audio in objectdata")> _
-		<Category("Audio")> <FieldDisplayName("Audio Type")> Public Overridable Property AudioType As iptcAudioType
+		<Category("Audio")> <FieldDisplayName("")> Public Overridable Property AudioType As iptcAudioType
 			Get
 				Try
 					Dim AllValues As List(Of iptcAudioType) = Audiotype_Value(DataSetIdentification.AudioType)
@@ -4213,7 +4754,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Sampling rate, representing the sampling rate in hertz (Hz).")> _
-		<Category("Audio")> <FieldDisplayName("Audio Sampling Rate")> Public Overridable Property AudioSamplingRate As Decimal
+		<Category("Audio")> <FieldDisplayName("")> Public Overridable Property AudioSamplingRate As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingRate)
@@ -4235,7 +4776,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The number of bits in each audio sample.")> _
-		<Category("Audio")> <FieldDisplayName("Audio Sampling Resolution")> Public Overridable Property AudioSamplingResolution As Decimal
+		<Category("Audio")> <FieldDisplayName("")> Public Overridable Property AudioSamplingResolution As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingResolution)
@@ -4257,7 +4798,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The running time of an audio objectdata when played back at the speed at which it was recorded.")> _
-		<Category("Audio")> <FieldDisplayName("Audio Duration")> Public Overridable Property AudioDuration As TimeSpan
+		<Category("Audio")> <FieldDisplayName("")> Public Overridable Property AudioDuration As TimeSpan
 			Get
 				Try
 					Dim AllValues As List(Of TimeSpan) = HHMMSS_Value(DataSetIdentification.AudioDuration)
@@ -4280,7 +4821,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.")> _
-		<Category("Audio")> <FieldDisplayName("Audio Outcue")> Public Overridable Property AudioOutcue As String
+		<Category("Audio")> <FieldDisplayName("")> Public Overridable Property AudioOutcue As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.AudioOutcue)
@@ -4297,12 +4838,730 @@ Namespace MetadataT.IptcT
 				End Try
 			End Set
 		End Property
+		''' <summary>A binary number representing the version of the Digital Newsphoto Parameter Record utilised by the provider.</summary>
+		''' <remarks>Version numbers are assigned by IPTC and NAA. The version of this record is four (4). Same tag called "Record Version" also exists in record no. 2.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A binary number representing the version of the Digital Newsphoto Parameter Record utilised by the provider.")> _
+		<Category("Internal")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property RecordVersion3 As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.RecordVersion3)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.RecordVersion3) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>The picture number provides a universally unique reference to an image.</summary>
+		''' <remarks>For example, colour images, when split with colour components into multiple objects, i.e. envelopes, would carry the same Picture Number.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("The picture number provides a universally unique reference to an image.")> _
+		<Category("Old IPTC")> <FieldDisplayName("")> Public Overridable Property PictureNumber As iptcPictureNumber
+			Get
+				Try
+					Dim AllValues As List(Of iptcPictureNumber) = PictureNumber_Value(DataSetIdentification.PictureNumber)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					PictureNumber_Value(DataSetIdentification.PictureNumber) = New List(Of iptcPictureNumber)(New iptcPictureNumber(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number representing the number of pixels in a scan line for the component with the highest resolution.</summary>
+		''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero).NCPS values are 1024 or 2048.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number representing the number of pixels in a scan line for the component with the highest resolution.")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property PixelsPerLine As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.PixelsPerLine)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.PixelsPerLine) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number representing the number of scan lines comprising the image for the component with the highest resolution.</summary>
+		''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero).NCPS range is 1 to 2048.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number representing the number of scan lines comprising the image for the component with the highest resolution.")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property NumberOfLines As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.NumberOfLines)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.NumberOfLines) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number indicating the number of pixels per unit length in the scanning direction.</summary>
+		''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero). NCPS value is 1.Pixel Size is a relative size expressed as the ratio of 3:40 to 3:50 (3:40/3:50).</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number indicating the number of pixels per unit length in the scanning direction.")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property PixelSizeInScanningDirection As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.PixelSizeInScanningDirection)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.PixelSizeInScanningDirection) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number indicating the number of pixels per unit length perpendicular to the scanning direction.</summary>
+		''' <remarks>Not valid when DataSet 3:60 () octet zero (0) is 0 (zero). NCPS value is 1.Pixel Size is a relative size expressed as the ratio of 3:40 to 3:50 (3:40/3:50).</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number indicating the number of pixels per unit length perpendicular to the scanning direction.")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property PixelSizePerpendicularToScanningDirection As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.PixelSizePerpendicularToScanningDirection)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.PixelSizePerpendicularToScanningDirection) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number indicating the image content.</summary>
+		''' <remarks>Mandatory when the numeric character in DataSet 2:130 () is ‘9’ ()</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number indicating the image content.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property SupplementType As SupplementTypeValue
+			Get
+				Try
+					Dim AllValues As List(Of SupplementTypeValue) = ConvertEnumList(Of SupplementTypeValue)(Enum_Binary_Value(DataSetIdentification.SupplementType, GetType(SupplementTypeValue)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.SupplementType, GetType(SupplementTypeValue)) = ConvertEnumList(New List(Of SupplementTypeValue)(New SupplementTypeValue(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Indicates colour representation</summary>
+		''' <remarks>The special interleaving structures refer to defined methods given in Appendix G according to the value in the sampling structure DataSet 3:90. Allowed combinations are: 0,01,03,0 - 4,0 (In a single-frame colour image, a colour is described with a single sample per pixel.)3,1 - 3,2 - 3,3 - 3,4 - 3,54,1 - 4,2 - 4,3 - 4,4 - 4,5NCPS values are 1,0 , 3,1 or 3,5.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Indicates colour representation")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property ColourRepresentation As ColourRepresentations
+			Get
+				Try
+					Dim AllValues As List(Of ColourRepresentations) = ConvertEnumList(Of ColourRepresentations)(Enum_Binary_Value(DataSetIdentification.ColourRepresentation, GetType(ColourRepresentations)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.ColourRepresentation, GetType(ColourRepresentations)) = ConvertEnumList(New List(Of ColourRepresentations)(New ColourRepresentations(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A value indicating the colour space in which the pixel values are expressed for each component in the image.</summary>
+		''' <remarks>Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image. Not valid when DataSet 3:60 octet zero (0) is 0 (zero). NCPS values are 0, 4 or 7 (, or ).</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A value indicating the colour space in which the pixel values are expressed for each component in the image.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property InterchangeColourSpace As ColourSpaceValue
+			Get
+				Try
+					Dim AllValues As List(Of ColourSpaceValue) = ConvertEnumList(Of ColourSpaceValue)(Enum_Binary_Value(DataSetIdentification.InterchangeColourSpace, GetType(ColourSpaceValue)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.InterchangeColourSpace, GetType(ColourSpaceValue)) = ConvertEnumList(New List(Of ColourSpaceValue)(New ColourSpaceValue(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Each of 1 to four octets contains a binary number that relates to the colour component using the identification number assigned to it in the appendix for each colour space.</summary>
+		''' <remarks>The sequence specifies the sequence of the components as they appear in the objectdataFor frame sequential components, only one octet is set to identify the current colour component in the objectdata.Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, 1, 2, 3, or 4, i.e. single frame, frame sequential, line sequential or pixel sequential. Not valid when DataSet 3:60 octet zero (0) is 0 (zero).Allowed values are: 0 - 1 - 2 - 3 - 4; 0 - may be used for “monochrome” or “no image” representations. Other values are reserved.NCPS values are 0,1,2,3 or 123.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Each of 1 to four octets contains a binary number that relates to the colour component using the identification number assigned to it in the appendix for each colour space.")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property ColourSequence As ULong
+			Get
+				Try
+					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ColourSequence)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UnsignedBinaryNumber_Value(DataSetIdentification.ColourSequence) = New List(Of ULong)(New ULong(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Specifies the International Color Consortium profile for the scanning/source device used to generate the digital image files.</summary>
+		''' <remarks>Valid when DataSet 3:64 has values 1,2,4,5 or 8.This profile can be used to translate the image colour information from the input device colour space into another device's native colour space. The ICC profile is specified in ISO/TC 130/WG2N562.Maximul alloved lenght of this field according to IPCT IIM standard is 512K. However current implementation does not allow such big fields.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Specifies the International Color Consortium profile for the scanning/source device used to generate the digital image files.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property IccInputColourProfile As Byte()
+			Get
+				Try
+					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.IccInputColourProfile)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Bytearray_Value(DataSetIdentification.IccInputColourProfile, 0, false) = New List(Of Byte())(New Byte()(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).</summary>
+		''' <remarks>This DataSet will be removed from the next Version of this Standard.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).")> _
+		<Category("Image 3")> <FieldDisplayName("")> <Obsolete("This DataSet is no longer required as its contents have been rendered obsolete by the introduction of DataSet P3:66 (ICC Input Colour Profile).")> Public Overridable Property ColourCalibrationMatrixTable As Byte()
+			Get
+				Try
+					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.ColourCalibrationMatrixTable)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Bytearray_Value(DataSetIdentification.ColourCalibrationMatrixTable, 0, false) = New List(Of Byte())(New Byte()(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Consists of one, three or four one-dimensional lookup tables (LUT).</summary>
+		''' <remarks>The LUT relates to the image data in the colour space defined in DataSet 3:64 and specifies the correction to apply to the pixel values before display or printing of the image. Not applicable if the colour space requires converting before display or printing. Maximul alloved lenght of this field according to IPCT IIM standard is 131072. However current implementation does not allow such big fields.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Consists of one, three or four one-dimensional lookup tables (LUT).")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property LookupTable As Byte()
+			Get
+				Try
+					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.LookupTable)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Bytearray_Value(DataSetIdentification.LookupTable, 0, false) = New List(Of Byte())(New Byte()(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A binary number representing the number of index entries in the DataSet 3:85 (<see cref="ColourPalette"/>).</summary>
+		''' <remarks>Mandatory where DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, i.e. single-frame. Not relevant for other image types.0 - No Colour Palette contained in DataSet 3:85. A default palette should be used. 1 - 65535 - valid numbers.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A binary number representing the number of index entries in the DataSet 3:85 ( Colour Pallette).")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property NumberOfIndexEntries As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.NumberOfIndexEntries)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.NumberOfIndexEntries) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>In a single-frame colour image, a colour is described with a single sample per pixel.</summary>
+		''' <remarks>Mandatory if 3:84 exists and is non zero.The pixel value is used as an index into the Colour Palette.The purpose of the Colour Palette is to act as a lookup table mapping the pixel values into the Colour Space defined in 3:64.The number of index entries is defined in DataSet 3:84.The number of output values is defined in octet zero of DataSet 3:60.The number of octets used for each output value is deducted from 3:135.The colour sequence of the output values is defined in 3:65. A default palette may be referenced if this DataSet is omitted. A number of default palettes may be held to be selected according to the device identifier component of the Picture Number 3:10.Maximul alloved lenght of this field according to IPCT IIM standard is 524288. However current implementation does not allow such big fields.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("In a single-frame colour image, a colour is described with a single sample per pixel.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property ColourPalette As Byte()
+			Get
+				Try
+					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.ColourPalette)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Bytearray_Value(DataSetIdentification.ColourPalette, 0, false) = New List(Of Byte())(New Byte()(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number between 1 and 16 that indicates the number of bits per pixel value used as entries in the Colour Palette. These values are found in the objectdata itself.</summary>
+		''' <remarks>Mandatory if DataSet 3:60 octet zero (0) has a value greater than one, i.e. a multi-component image AND the value of octet one (1) is 0, i.e. single frame. Not relevant for other image types.Each entry should be in one octet if number of bits is less than or equal to 8 and in two octets if number of bits is between 9 and 16, the least significant bit should always be aligned on the least significant bit of the least significant octet.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number between 1 and 16 that indicates the number of bits per pixel value used as entries in the Colour Palette. These values are found in the objectdata itself.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property NumberOfBitsPerSample As Byte
+			Get
+				Try
+					Dim AllValues As List(Of Byte) = Byte_Binary_Value(DataSetIdentification.NumberOfBitsPerSample)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Byte_Binary_Value(DataSetIdentification.NumberOfBitsPerSample) = New List(Of Byte)(New Byte(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number defining the spatial and temporal relationship between pixels.</summary>
+		''' <remarks>NCPS values are 0 or 2.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number defining the spatial and temporal relationship between pixels.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property SamplingStructure As SamplingStructureType
+			Get
+				Try
+					Dim AllValues As List(Of SamplingStructureType) = ConvertEnumList(Of SamplingStructureType)(Enum_Binary_Value(DataSetIdentification.SamplingStructure, GetType(SamplingStructureType)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.SamplingStructure, GetType(SamplingStructureType)) = ConvertEnumList(New List(Of SamplingStructureType)(New SamplingStructureType(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number indicating the correct relative two dimensional order of the pixels in the objectdata. Eight possibilities exist.</summary>
+		''' <remarks>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).NCPS value is 0.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number indicating the correct relative two dimensional order of the pixels in the objectdata. Eight possibilities exist.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property ScanningDirection As ScanningDirectionValue
+			Get
+				Try
+					Dim AllValues As List(Of ScanningDirectionValue) = ConvertEnumList(Of ScanningDirectionValue)(Enum_Binary_Value(DataSetIdentification.ScanningDirection, GetType(ScanningDirectionValue)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.ScanningDirection, GetType(ScanningDirectionValue)) = ConvertEnumList(New List(Of ScanningDirectionValue)(New ScanningDirectionValue(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A number indicating the clockwise rotation applied to the image for presentation.</summary>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A number indicating the clockwise rotation applied to the image for presentation.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property ImageRotation As ImageRotationValue
+			Get
+				Try
+					Dim AllValues As List(Of ImageRotationValue) = ConvertEnumList(Of ImageRotationValue)(Enum_Binary_Value(DataSetIdentification.ImageRotation, GetType(ImageRotationValue)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.ImageRotation, GetType(ImageRotationValue)) = ConvertEnumList(New List(Of ImageRotationValue)(New ImageRotationValue(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Specifies data compression method</summary>
+		''' <remarks>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).Octets 0-1 contain a binary number identifying the providerowner of the algorithm.Octet 2 contains a binary number identifying the type of compression algorithm.Octet 3 contains a binary number identifying the revision number of the algorithm.An identification number is issued by IPTC-NAA to providersowners of compression algorithms upon request (see Appendix A). The numbers identifying type and revision of algorithms are managed by the providers-owners.A zero (0) value of all octets in this DataSet identifies an uncompressed image. In this case the component values should be in one octet if number of bits is less than or equal to 8 and in two octets if number of bits is between 9 and 16, the least significant bit always being aligned on the least significant bit of the least significant octet.NCPS values are 0000 or 0121.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Specifies data compression method")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property DataCompressionMethod As UInteger
+			Get
+				Try
+					Dim AllValues As List(Of UInteger) = UInt_Binary_Value(DataSetIdentification.DataCompressionMethod)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UInt_Binary_Value(DataSetIdentification.DataCompressionMethod) = New List(Of UInteger)(New UInteger(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Contains a binary number identifying the quantisation law.</summary>
+		''' <remarks>The relations between different quantisation methods are described in DNPR Guideline 1. Not valid when DataSet 3:60 octet zero (0) is 0 (zero).NCPS values are 0 or 5.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Contains a binary number identifying the quantisation law.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property QuantisationMethod As QuantisationMethodValue
+			Get
+				Try
+					Dim AllValues As List(Of QuantisationMethodValue) = ConvertEnumList(Of QuantisationMethodValue)(Enum_Binary_Value(DataSetIdentification.QuantisationMethod, GetType(QuantisationMethodValue)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.QuantisationMethod, GetType(QuantisationMethodValue)) = ConvertEnumList(New List(Of QuantisationMethodValue)(New QuantisationMethodValue(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>These end points apply to the coding process.</summary>
+		''' <remarks>2n octets. Valid only when DataSet 3:64 has a value of 0,1,2,4 or 5. Not relevant for other colour spaces. n = the number of octets per component as derived from 3:135 multiplied by the number of components. The number of components is 1 when octet one (1) of DataSet 3:60 has a value of one (1), in all other cases the number is defined in octet zero (0) of DataSet 3:60.The first n octets contain the values representing the minimum density that is encoded for each component in the order specified in DataSet 3:65.The second n octets contain the values representing the maximum density that is encoded for each component in the order specified in DataSet 3:65.The difference between the maximum and minimum density for every component is the same and given by the Maximum Density Range value in DataSet 3:140.NCPS end point values are 255 and 0.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("These end points apply to the coding process.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property EndPoints As Byte()
+			Get
+				Try
+					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.EndPoints)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Bytearray_Value(DataSetIdentification.EndPoints, 0, false) = New List(Of Byte())(New Byte()(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Indicates if values outside the range defined by the end points in DataSet 3:125 may occur.</summary>
+		''' <remarks>NCPS value is false</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Indicates if values outside the range defined by the end points in DataSet 3:125 may occur.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property ExcursionTolerance As Boolean
+			Get
+				Try
+					Dim AllValues As List(Of Boolean) = Boolean_Binary_Value(DataSetIdentification.ExcursionTolerance)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Boolean_Binary_Value(DataSetIdentification.ExcursionTolerance, 1) = New List(Of Boolean)(New Boolean(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Contains a sequence of one or more octets describing the number of bits used to encode each component. The sequence is specified by the order of components in DataSet 3:65.</summary>
+		''' <remarks>The number of octets is 1 when octet one (1) of DataSet 3:60 has a value of one (1), in all other cases the number of octets is equivalent to the number of components specified in octet zero (0) of DataSet 3:60.Each octet contains a binary value between one and 16.NCPS values are 8 or 888.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Contains a sequence of one or more octets describing the number of bits used to encode each component. The sequence is specified by the order of components in DataSet 3:65.")> _
+		<Category("Image 3")> <FieldDisplayName("")> Public Overridable Property BitsPerComponent As Byte()
+			Get
+				Try
+					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.BitsPerComponent)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Bytearray_Value(DataSetIdentification.BitsPerComponent, 0, 0) = New List(Of Byte())(New Byte()(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A binary value which specifies the maximum density range multiplied by 100.</summary>
+		''' <remarks>Not valid when DataSet 3:60 octet zero (0) is 0 (zero).The value represents the difference between the lowest density and the highest density points that can be encoded by the originating system.NCPS value is 160.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A binary value which specifies the maximum density range multiplied by 100.")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property MaximumDensityRange As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.MaximumDensityRange)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.MaximumDensityRange) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>A binary value which specifies the value of gamma for the device multiplied by 100.</summary>
+		''' <remarks>Valid only when DataSet 3:120 has a value of 5 or 7.If this DataSet is omitted receiving equipment should assume that a gamma value of 2.22 appliesNCPS value is 222</remarks>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A binary value which specifies the value of gamma for the device multiplied by 100.")> _
+		<Category("Image 3")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property GammaCompensatedValue As UShort
+			Get
+				Try
+					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.GammaCompensatedValue)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					UShort_Binary_Value(DataSetIdentification.GammaCompensatedValue) = New List(Of UShort)(New UShort(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Overll rating of the subject</summary>
+		''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Overll rating of the subject")> _
+		<Category("Status")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property OverlallRating As CustomRating
+			Get
+				Try
+					Dim AllValues As List(Of CustomRating) = ConvertEnumList(Of CustomRating)(Enum_Binary_Value(DataSetIdentification.OverlallRating, GetType(CustomRating)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.OverlallRating, GetType(CustomRating)) = ConvertEnumList(New List(Of CustomRating)(New CustomRating(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Rates technical quality of subject data (e.g. Is the photo sharp?)</summary>
+		''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Rates technical quality of subject data (e.g. Is the photo sharp?)")> _
+		<Category("Status")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property TechnicalQuality As CustomRating
+			Get
+				Try
+					Dim AllValues As List(Of CustomRating) = ConvertEnumList(Of CustomRating)(Enum_Binary_Value(DataSetIdentification.TechnicalQuality, GetType(CustomRating)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.TechnicalQuality, GetType(CustomRating)) = ConvertEnumList(New List(Of CustomRating)(New CustomRating(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Rates artistic quality of subject data (i.e. How nice it is?)</summary>
+		''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Rates artistic quality of subject data (i.e. How nice it is?)")> _
+		<Category("Status")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property ArtQuality As CustomRating
+			Get
+				Try
+					Dim AllValues As List(Of CustomRating) = ConvertEnumList(Of CustomRating)(Enum_Binary_Value(DataSetIdentification.ArtQuality, GetType(CustomRating)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.ArtQuality, GetType(CustomRating)) = ConvertEnumList(New List(Of CustomRating)(New CustomRating(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
+		''' <summary>Rates information value of subject data (i.e. Does it provide any valuable information?)</summary>
+		''' <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
+		''' <version version="1.5.4">This property is new in version 1.5.4</version>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Rates information value of subject data (i.e. Does it provide any valuable information?)")> _
+		<Category("Status")> <FieldDisplayName("")> <CLSCompliant(False)>Public Overridable Property InformationValue As CustomRating
+			Get
+				Try
+					Dim AllValues As List(Of CustomRating) = ConvertEnumList(Of CustomRating)(Enum_Binary_Value(DataSetIdentification.InformationValue, GetType(CustomRating)))
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					Enum_Binary_Value(DataSetIdentification.InformationValue, GetType(CustomRating)) = ConvertEnumList(New List(Of CustomRating)(New CustomRating(){value}))
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
 		''' <summary>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</summary>
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.")> _
-		<Category("Embeded object")> <FieldDisplayName("Size Mode")> <[ReadOnly](True)> Public Overridable Property SizeMode As Boolean
+		<Category("Embeded object")> <FieldDisplayName("")> <[ReadOnly](True)> Public Overridable Property SizeMode As Boolean
 			Get
 				Try
 					Dim AllValues As List(Of Boolean) = Boolean_Binary_Value(DataSetIdentification.SizeMode)
@@ -4325,7 +5584,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The maximum size for the following Subfile DataSet(s).")> _
-		<Category("Embeded object")> <FieldDisplayName("Max Subfile Size")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property MaxSubfileSize As ULong
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property MaxSubfileSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaxSubfileSize)
@@ -4348,7 +5607,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.")> _
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Size Announced")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property ObjectDataSizeAnnounced As ULong
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property ObjectDataSizeAnnounced As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ObjectDataSizeAnnounced)
@@ -4370,7 +5629,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.")> _
-		<Category("Embeded object")> <FieldDisplayName("Maximum ObjectData Size")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property MaximumObjectDataSize As ULong
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property MaximumObjectDataSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaximumObjectDataSize)
@@ -4393,7 +5652,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Subfile DataSet containing the objectdata itself.")> _
-		<Category("Embeded object")> <FieldDisplayName("Subfile")> <Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> Public Overridable Property Subfile As Byte()
+		<Category("Embeded object")> <FieldDisplayName("")> <Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> Public Overridable Property Subfile As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.Subfile)
@@ -4416,7 +5675,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Total size of the objectdata, in octets, without tags.")> _
-		<Category("Embeded object")> <FieldDisplayName("Confirmed ObjectData Size")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property ConfirmedObjectDataSize As ULong
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property ConfirmedObjectDataSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ConfirmedObjectDataSize)
@@ -4439,7 +5698,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.")> _
-		<Category("Old IPTC")> <FieldDisplayName("ARM Identifier")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMIdentifier As ARMMethods
+		<Category("Old IPTC")> <FieldDisplayName("")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMIdentifier As ARMMethods
 			Get
 				Try
 					Dim AllValues As List(Of ARMMethods) = ConvertEnumList(Of ARMMethods)(Enum_Binary_Value(DataSetIdentification.ARMIdentifier, GetType(ARMMethods)))
@@ -4461,7 +5720,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.")> _
-		<Category("Old IPTC")> <FieldDisplayName("ARM Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMVersion As ARMVersions
+		<Category("Old IPTC")> <FieldDisplayName("")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMVersion As ARMVersions
 			Get
 				Try
 					Dim AllValues As List(Of ARMVersions) = ConvertEnumList(Of ARMVersions)(Enum_Binary_Value(DataSetIdentification.ARMVersion, GetType(ARMVersions)))
@@ -4484,7 +5743,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the code of a country/geographical location referenced by the content of the object.")> _
-		<Category("Location")> <FieldDisplayName("Content Location Code")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationCode As StringEnum(Of ISO3166)()
+		<Category("Location")> <FieldDisplayName("")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationCode As StringEnum(Of ISO3166)()
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.ContentLocationCode, GetType(ISO3166)))
@@ -4508,7 +5767,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.")> _
-		<Category("Location")> <FieldDisplayName("Content Location Name")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationName As String()
+		<Category("Location")> <FieldDisplayName("")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationName As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ContentLocationName)
@@ -4531,7 +5790,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the Service Identifier of a prior envelope to which the current object refers.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Reference Service")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceService As String()
+		<Category("Old IPTC")> <FieldDisplayName("")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceService As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ReferenceService)
@@ -4554,7 +5813,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the date of a prior envelope to which the current object refers.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Reference Date")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceDate As Date()
+		<Category("Old IPTC")> <FieldDisplayName("")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceDate As Date()
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ReferenceDate)
@@ -4577,7 +5836,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the Envelope Number of a prior envelope to which the current object refers.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Reference Number")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceNumber As Decimal()
+		<Category("Old IPTC")> <FieldDisplayName("")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceNumber As Decimal()
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.ReferenceNumber)
@@ -4600,7 +5859,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.")> _
-		<Category("Author")> <FieldDisplayName("By-line")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLine As String()
+		<Category("Author")> <FieldDisplayName("")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLine As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ByLine)
@@ -4624,7 +5883,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.")> _
-		<Category("Author")> <FieldDisplayName("By-line Title")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLineTitle As String()
+		<Category("Author")> <FieldDisplayName("")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLineTitle As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ByLineTitle)
@@ -4648,7 +5907,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The file format of the ObjectData Preview.")> _
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormat As FileFormats
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormat As FileFormats
 			Get
 				Try
 					Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormat, GetType(FileFormats)))
@@ -4671,7 +5930,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The particular version of the ObjectData Preview File Format specified in ObjectData Preview File Format")> _
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
+		<Category("Embeded object")> <FieldDisplayName("")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
 			Get
 				Try
 					Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormatVersion, GetType(FileFormatVersions)))
@@ -4693,7 +5952,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Maximum size of 256000 octets consisting of binary data.")> _
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> <Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewData As Byte()
+		<Category("Embeded object")> <FieldDisplayName("")> <Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewData As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.ObjectDataPreviewData)
@@ -4794,6 +6053,36 @@ Namespace MetadataT.IptcT
 				Case DataSetIdentification.ObjectDataPreviewFileFormat : Return Me.ObjectDataPreviewFileFormat
 				Case DataSetIdentification.ObjectDataPreviewFileFormatVersion : Return Me.ObjectDataPreviewFileFormatVersion
 				Case DataSetIdentification.ObjectDataPreviewData : Return Me.ObjectDataPreviewData
+				Case DataSetIdentification.RecordVersion3 : Return Me.RecordVersion3
+				Case DataSetIdentification.PictureNumber : Return Me.PictureNumber
+				Case DataSetIdentification.PixelsPerLine : Return Me.PixelsPerLine
+				Case DataSetIdentification.NumberOfLines : Return Me.NumberOfLines
+				Case DataSetIdentification.PixelSizeInScanningDirection : Return Me.PixelSizeInScanningDirection
+				Case DataSetIdentification.PixelSizePerpendicularToScanningDirection : Return Me.PixelSizePerpendicularToScanningDirection
+				Case DataSetIdentification.SupplementType : Return Me.SupplementType
+				Case DataSetIdentification.ColourRepresentation : Return Me.ColourRepresentation
+				Case DataSetIdentification.InterchangeColourSpace : Return Me.InterchangeColourSpace
+				Case DataSetIdentification.ColourSequence : Return Me.ColourSequence
+				Case DataSetIdentification.IccInputColourProfile : Return Me.IccInputColourProfile
+				Case DataSetIdentification.ColourCalibrationMatrixTable : Return Me.ColourCalibrationMatrixTable
+				Case DataSetIdentification.LookupTable : Return Me.LookupTable
+				Case DataSetIdentification.NumberOfIndexEntries : Return Me.NumberOfIndexEntries
+				Case DataSetIdentification.ColourPalette : Return Me.ColourPalette
+				Case DataSetIdentification.NumberOfBitsPerSample : Return Me.NumberOfBitsPerSample
+				Case DataSetIdentification.SamplingStructure : Return Me.SamplingStructure
+				Case DataSetIdentification.ScanningDirection : Return Me.ScanningDirection
+				Case DataSetIdentification.ImageRotation : Return Me.ImageRotation
+				Case DataSetIdentification.DataCompressionMethod : Return Me.DataCompressionMethod
+				Case DataSetIdentification.QuantisationMethod : Return Me.QuantisationMethod
+				Case DataSetIdentification.EndPoints : Return Me.EndPoints
+				Case DataSetIdentification.ExcursionTolerance : Return Me.ExcursionTolerance
+				Case DataSetIdentification.BitsPerComponent : Return Me.BitsPerComponent
+				Case DataSetIdentification.MaximumDensityRange : Return Me.MaximumDensityRange
+				Case DataSetIdentification.GammaCompensatedValue : Return Me.GammaCompensatedValue
+				Case DataSetIdentification.OverlallRating : Return Me.OverlallRating
+				Case DataSetIdentification.TechnicalQuality : Return Me.TechnicalQuality
+				Case DataSetIdentification.ArtQuality : Return Me.ArtQuality
+				Case DataSetIdentification.InformationValue : Return Me.InformationValue
 				Case DataSetIdentification.SizeMode : Return Me.SizeMode
 				Case DataSetIdentification.MaxSubfileSize : Return Me.MaxSubfileSize
 				Case DataSetIdentification.ObjectDataSizeAnnounced : Return Me.ObjectDataSizeAnnounced

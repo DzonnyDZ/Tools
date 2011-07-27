@@ -5,11 +5,13 @@
                   xmlns="http://codeplex.com/DTools/IPTCTags"
                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
                   xmlns:IPTC="http://codeplex.com/DTools/IPTCTags"
+                  xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3"
+                  xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5"
            >
     <xs:annotation>
         <xs:documentation>This XML schema defines structure of file used to generate classes and enums to work with IPTC tags. This schema is designed for private use when developing this project only.</xs:documentation>
     </xs:annotation>
-    
+
     <!--Simple types:-->
     <xs:simpleType name="Categories">
         <xs:restriction base="xs:token">
@@ -73,6 +75,31 @@
                     <xs:documentation>Data related to object embeded in IPTC stream</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="Image 3">
+                <xs:annotation>
+                    <xs:documentation>Image related data from IPTC Record № 3</xs:documentation>
+                    <xs:appinfo>
+                        <sd:schemaDoc>
+                            <ddue:summary>
+                                <ddue:para>Image related data from IPTC Record № 3</ddue:para>
+                            </ddue:summary>
+                            <ddue:remarks>
+                                <ddue:content>
+                                    <ddue:para>
+                                        <ddue:legacyBold>Version History</ddue:legacyBold>
+                                    </ddue:para>
+                                    <ddue:definitionTable>
+                                        <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                        <ddue:definition>
+                                            <ddue:para>This enumeration member is new in version 1.5.4</ddue:para>
+                                        </ddue:definition>
+                                    </ddue:definitionTable>
+                                </ddue:content>
+                            </ddue:remarks>
+                        </sd:schemaDoc>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <!--Sepecification of attribute-->
@@ -124,6 +151,31 @@
             <xs:enumeration value="UShort-binary">
                 <xs:annotation>
                     <xs:documentation>2 Byte unsigned integer stored binary (must have fixed length 2 bytes)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UInt-binary">
+                <xs:annotation>
+                    <xs:documentation>4 Byte unsigned integer stored binary (must have fixed length 4 bytes)</xs:documentation>
+                    <xs:appinfo>
+                        <sd:schemaDoc>
+                            <ddue:summary>
+                                <ddue:para>4 Byte unsigned integer stored binary (must have fixed length 4 bytes)</ddue:para>
+                            </ddue:summary>
+                            <ddue:remarks>
+                                <ddue:content>
+                                    <ddue:para>
+                                        <ddue:legacyBold>Version History</ddue:legacyBold>
+                                    </ddue:para>
+                                    <ddue:definitionTable>
+                                        <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                        <ddue:definition>
+                                            <ddue:para>This enumeration members is new in version 1.5.4</ddue:para>
+                                        </ddue:definition>
+                                    </ddue:definitionTable>
+                                </ddue:content>
+                            </ddue:remarks>
+                        </sd:schemaDoc>
+                    </xs:appinfo>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="NumericChar">
@@ -224,6 +276,31 @@
             <xs:enumeration value="HHMMSS">
                 <xs:annotation>
                     <xs:documentation>Six octets, consisting of numeric characters. Duration Designates in the form HHMMSS</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PictureNumber">
+                <xs:annotation>
+                    <xs:documentation>16 octets compusing picture number with internal structure</xs:documentation>
+                    <xs:appinfo>
+                        <sd:schemaDoc>
+                            <ddue:summary>
+                                <ddue:para>16 octets compusing picture number with internal structure</ddue:para>
+                            </ddue:summary>
+                            <ddue:remarks>
+                                <ddue:content>
+                                    <ddue:para>
+                                        <ddue:legacyBold>Version History</ddue:legacyBold>
+                                    </ddue:para>
+                                    <ddue:definitionTable>
+                                        <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                        <ddue:definition>
+                                            <ddue:para>This enumeration member is new in version 1.5.4</ddue:para>
+                                        </ddue:definition>
+                                    </ddue:definitionTable>
+                                </ddue:content>
+                            </ddue:remarks>
+                        </sd:schemaDoc>
+                    </xs:appinfo>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
@@ -449,7 +526,7 @@
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
-    
+
     <!--Record (number group of tags)-->
     <xs:element name="record">
         <xs:annotation>
@@ -496,13 +573,35 @@
                         </xs:sequence>
                         <xs:attributeGroup ref="Names"/>
                         <xs:attributeGroup ref="attributes"/>
-                        <xs:attribute name="value" type="xs:long" use="required">
+                        <xs:attribute name="value" type="vb-number" use="required">
                             <xs:annotation>
                                 <xs:documentation>Value of enum item</xs:documentation>
+                                <xs:appinfo>
+                                    <sd:schemaDoc>
+                                        <ddue:summary>
+                                            <ddue:para>Value of enum item</ddue:para>
+                                        </ddue:summary>
+                                        <ddue:remarks>
+                                            <ddue:content>
+                                                <ddue:para>
+                                                    <ddue:legacyBold>Version history</ddue:legacyBold>
+                                                </ddue:para>
+                                                <ddue:definitionTable>
+                                                    <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                                    <ddue:definition>
+                                                        <ddue:para>
+                                                            Type changed from <sd:xmlEntityReference>xs:long</sd:xmlEntityReference> to <sd:xmlEntityReference>vb-number</sd:xmlEntityReference>.
+                                                        </ddue:para>
+                                                    </ddue:definition>
+                                                </ddue:definitionTable>
+                                            </ddue:content>
+                                        </ddue:remarks>
+                                    </sd:schemaDoc>
+                                </xs:appinfo>
                             </xs:annotation>
                         </xs:attribute>
                         <xs:attributeGroup ref="desc"/>
-                    </xs:complexType>                    
+                    </xs:complexType>
                 </xs:element>
             </xs:sequence>
             <xs:attributeGroup ref="EnumAttrs"/>
@@ -516,10 +615,10 @@
             <xs:selector xpath="IPTC:item"/>
             <xs:field xpath="@name"/>
         </xs:unique>
-        <xs:unique name="unqInEnumValue">
+        <!--<xs:unique name="unqInEnumValue">
             <xs:selector xpath="IPTC:item"/>
             <xs:field xpath="@value"/>
-        </xs:unique>
+        </xs:unique>-->
     </xs:element>
     <xs:attributeGroup name="EnumAttrs">
         <xs:attributeGroup ref="attributes"/>
@@ -598,7 +697,7 @@
                                 <xs:attribute name="repeatable" use="required">
                                     <xs:simpleType>
                                         <xs:restriction base="xs:boolean">
-                                            <xs:pattern value="0|false"/> 
+                                            <xs:pattern value="0|false"/>
                                         </xs:restriction>
                                     </xs:simpleType>
                                 </xs:attribute>
@@ -631,7 +730,7 @@
             </xs:attribute>
         </xs:complexType>
     </xs:element>
-    
+
     <!--Attribute groups:-->
     <!--name and human-name-->
     <xs:attributeGroup name="Names">
@@ -675,7 +774,7 @@
             </xs:annotation>
         </xs:attribute>
     </xs:attributeGroup>
-   
+
     <!--Embeded XML docummentation:-->
     <xs:group name="XMLDoc">
         <xs:sequence>
@@ -864,16 +963,65 @@
         </xs:choice>
     </xs:complexType>
     <xs:complexType name="reference">
-        <xs:attribute name="cref" use="required">
-            <xs:annotation>
-                <xs:documentation>Referenced item</xs:documentation>
-            </xs:annotation>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:pattern value="([\p{L}_]+|\[[\p{L}_]+\])(\.[\p{L}_]+)*"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
+        <xs:annotation>
+            <xs:documentation>Reference to code item (like &lt;see> or &lt;seealso>)</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc>
+                    <ddue:summary>
+                        <ddue:para>Reference to code item (like &lt;see> or &lt;seealso>)</ddue:para>
+                    </ddue:summary>
+                    <ddue:remarks>
+                        <ddue:content>
+                            <ddue:para>
+                                <ddue:legacyBold>Version history</ddue:legacyBold>
+                            </ddue:para>
+                            <ddue:definitionTable>
+                                <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                <ddue:definition>
+                                    <ddue:para>The type now allows string content</ddue:para>
+                                </ddue:definition>
+                            </ddue:definitionTable>
+                        </ddue:content>
+                    </ddue:remarks>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="cref" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Referenced item</xs:documentation>
+                        <xs:appinfo>
+                            <sd:schemaDoc>
+                                <ddue:summary>
+                                    <ddue:para>Referenced item</ddue:para>
+                                </ddue:summary>
+                                <ddue:remarks>
+                                    <ddue:content>
+                                        <ddue:para>
+                                            <ddue:legacyBold>Version history</ddue:legacyBold>
+                                        </ddue:para>
+                                        <ddue:definitionTable>
+                                            <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                            <ddue:definition>
+                                                <ddue:para>
+                                                    Pattern changed from <ddue:codeInline>([\p{L}_]+|\[[\p{L}_]+\])(\.[\p{L}_]+)*</ddue:codeInline> to <ddue:codeInline>([MPFETN]\:.+)|([\p{L}_][\p{L}_\p{N}]*(\.[\p{L}_][\p{L}_\p{N}]*)*)</ddue:codeInline>.
+                                                </ddue:para>
+                                            </ddue:definition>
+                                        </ddue:definitionTable>
+                                    </ddue:content>
+                                </ddue:remarks>
+                            </sd:schemaDoc>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="([MPFETN]\:.+)|([\p{L}_][\p{L}_\p{N}]*(\.[\p{L}_][\p{L}_\p{N}]*)*)"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
     <xs:complexType name="listItem">
         <xs:complexContent mixed="true">
@@ -893,4 +1041,115 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+
+    <xs:simpleType name="vb-number">
+        <xs:annotation>
+            <xs:documentation>Simple Visual Basic number</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc>
+                    <ddue:summary>
+                        <ddue:para>Simple Visual Basic number</ddue:para>
+                    </ddue:summary>
+                    <ddue:remarks>
+                        <ddue:content>
+                            <ddue:para>
+                                <ddue:legacyBold>Version History</ddue:legacyBold>
+                            </ddue:para>
+                            <ddue:definitionTable>
+                                <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                <ddue:definition>
+                                    <ddue:para>This simple type is new in version 1.5.4</ddue:para>
+                                </ddue:definition>
+                            </ddue:definitionTable>
+                        </ddue:content>
+                    </ddue:remarks>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:union memberTypes="xs:long vb-hex vb-dec vb-oct"></xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="vb-hex">
+        <xs:annotation>
+            <xs:documentation>Hexadecimal Visual Basic number</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc>
+                    <ddue:summary>
+                        <ddue:para>Hexadecimal Visual Basic number</ddue:para>
+                    </ddue:summary>
+                    <ddue:remarks>
+                        <ddue:content>
+                            <ddue:para>
+                                <ddue:legacyBold>Version History</ddue:legacyBold>
+                            </ddue:para>
+                            <ddue:definitionTable>
+                                <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                <ddue:definition>
+                                    <ddue:para>This simple type is new in version 1.5.4</ddue:para>
+                                </ddue:definition>
+                            </ddue:definitionTable>
+                        </ddue:content>
+                    </ddue:remarks>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="&amp;[hH][0-9a-fA-F]+(([Uu]?[SLIsli])|([%&amp;]))?"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="vb-oct">
+        <xs:annotation>
+            <xs:documentation>Octal Visual Basic number</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc>
+                    <ddue:summary>
+                        <ddue:para>Octal Visual Basic number</ddue:para>
+                    </ddue:summary>
+                    <ddue:remarks>
+                        <ddue:content>
+                            <ddue:para>
+                                <ddue:legacyBold>Version History</ddue:legacyBold>
+                            </ddue:para>
+                            <ddue:definitionTable>
+                                <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                <ddue:definition>
+                                    <ddue:para>This simple type is new in version 1.5.4</ddue:para>
+                                </ddue:definition>
+                            </ddue:definitionTable>
+                        </ddue:content>
+                    </ddue:remarks>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="&amp;[oO][0-7]+(([Uu]?[SLIsli])|([%&amp;]))?"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="vb-dec">
+        <xs:annotation>
+            <xs:documentation>Decimal integral Visual Basic number with optional type letters</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc>
+                    <ddue:summary>
+                        <ddue:para>Decimal integral Visual Basic number with optional type letters</ddue:para>
+                    </ddue:summary>
+                    <ddue:remarks>
+                        <ddue:content>
+                            <ddue:para>
+                                <ddue:legacyBold>Version History</ddue:legacyBold>
+                            </ddue:para>
+                            <ddue:definitionTable>
+                                <ddue:definedTerm>1.5.4</ddue:definedTerm>
+                                <ddue:definition>
+                                    <ddue:para>This simple type is new in version 1.5.4</ddue:para>
+                                </ddue:definition>
+                            </ddue:definitionTable>
+                        </ddue:content>
+                    </ddue:remarks>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+(([Uu]?[SLIsli])|([%&amp;]))?"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
