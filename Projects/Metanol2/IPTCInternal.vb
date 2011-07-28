@@ -97,6 +97,10 @@ Public Class IptcInternal
                 Case CommonIPTCProperties.Province : Return ProvinceState
                 Case CommonIPTCProperties.Sublocation : Return SubLocation
                 Case CommonIPTCProperties.ObjectName : Return ObjectName
+                Case CommonIPTCProperties.RatingTechnical : Return TechnicalQuality.ToString
+                Case CommonIPTCProperties.RatingArt : Return ArtQuality.ToString
+                Case CommonIPTCProperties.RatingInfo : Return InformationValue.ToString
+                Case CommonIPTCProperties.RatingOverall : Return OverallRating.ToString
                 Case Else : Throw New InvalidEnumArgumentException("Property", [Property], [Property].GetType)
             End Select
         End Get
@@ -114,6 +118,10 @@ Public Class IptcInternal
                 Case CommonIPTCProperties.Province : If value <> ProvinceState Then ProvinceState = value
                 Case CommonIPTCProperties.Sublocation : If value <> SubLocation Then SubLocation = value
                 Case CommonIPTCProperties.Urgency : If value <> Urgency Then Urgency = value
+                Case CommonIPTCProperties.RatingTechnical : If value <> TechnicalQuality.ToString Then TechnicalQuality = [Enum].Parse(GetType(CustomRating), value)
+                Case CommonIPTCProperties.RatingArt : If value <> ArtQuality.ToString Then ArtQuality = [Enum].Parse(GetType(CustomRating), value)
+                Case CommonIPTCProperties.RatingInfo : If value <> InformationValue.ToString Then InformationValue = [Enum].Parse(GetType(CustomRating), value)
+                Case CommonIPTCProperties.RatingOverall : If value <> OverallRating.ToString Then OverallRating = [Enum].Parse(GetType(CustomRating), value)
                 Case Else : Throw New InvalidEnumArgumentException("Property", [Property], [Property].GetType)
             End Select
         End Set

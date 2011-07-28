@@ -108,6 +108,9 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Metanol, Version=2.0.5.34506, Culture=neutral, PublicKeyToken=373c02ac923768e6, processorArchitecture=MSIL">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq">
@@ -148,6 +151,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\IExportFormatConfigurator.vb" />
+    <Compile Include="Controls\Rating.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Database\DatabaseAccess.designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

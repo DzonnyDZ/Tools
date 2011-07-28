@@ -79,10 +79,14 @@ Public Class frmMain
         nudUrgency.Tag = CommonIPTCProperties.Urgency
         kweKeywords.Tag = CommonIPTCProperties.Keywords
         cmbCountryCode.Tag = CommonIPTCProperties.CountryCode
+        rtgArt.Tag = CommonIPTCProperties.RatingArt
+        rtgInfo.Tag = CommonIPTCProperties.RatingInfo
+        rtgTechnical.Tag = CommonIPTCProperties.RatingTechnical
+        rtgOverall.Tag = CommonIPTCProperties.RatingOverall
         Editors = New Control() {txtSublocation, txtProvince, txtObjectName, _
             txtEditStatus, txtCredit, txtCountry, _
             txtCopyright, txtCity, txtCaption, _
-            nudUrgency, kweKeywords, cmbCountryCode}
+            nudUrgency, kweKeywords, cmbCountryCode, rtgArt, rtgInfo, rtgOverall, rtgTechnical}
     End Sub
     ''' <summary>Current folder</summary>
     Private CurrentFolder$
@@ -574,55 +578,76 @@ Public Class frmMain
         Dim ObjectName = New With {.Value = CStr(Nothing), .Same = True}
         Dim Caption = New With {.Value = CStr(Nothing), .Same = True}
         Dim Keywords As New List(Of String)
+        Dim RTech = New With {.value = Iptc.CustomRating.NotRated, .Same = True}
+        Dim RArt = New With {.value = Iptc.CustomRating.NotRated, .Same = True}
+        Dim RInfo = New With {.value = Iptc.CustomRating.NotRated, .Same = True}
+        Dim ROver = New With {.value = Iptc.CustomRating.NotRated, .Same = True}
         Dim i = 0
         For Each IPTC In IPTCs
             If i = 0 Then
-                If Filter And CommonIPTCProperties.Copyright Then Copyright.Value = IPTC.CopyrightNotice
-                If Filter And CommonIPTCProperties.Credit Then Credit.Value = IPTC.Credit
-                If Filter And CommonIPTCProperties.City Then City.Value = IPTC.City
-                If Filter And CommonIPTCProperties.CountryCode Then CountryCode.Value = IPTC.CountryPrimaryLocationCode
-                If Filter And CommonIPTCProperties.Country Then Country.Value = IPTC.CountryPrimaryLocationName
-                If Filter And CommonIPTCProperties.Province Then Province.Value = IPTC.ProvinceState
-                If Filter And CommonIPTCProperties.Sublocation Then Sublocation.Value = IPTC.SubLocation
-                If Filter And CommonIPTCProperties.EditStatus Then EditStatus.Value = IPTC.EditStatus
-                If Filter And CommonIPTCProperties.Urgency Then Urgency.Value = IPTC.Urgency
-                If Filter And CommonIPTCProperties.ObjectName Then ObjectName.Value = IPTC.ObjectName
-                If Filter And CommonIPTCProperties.Caption Then Caption.Value = IPTC.CaptionAbstract
-                If Filter And CommonIPTCProperties.Keywords Then Keywords.AddRange(IPTC.Keywords.NewIfNull)
+                If Filter.HasFlag(CommonIPTCProperties.Copyright) Then Copyright.Value = IPTC.CopyrightNotice
+                If Filter.HasFlag(CommonIPTCProperties.Credit) Then Credit.Value = IPTC.Credit
+                If Filter.HasFlag(CommonIPTCProperties.City) Then City.Value = IPTC.City
+                If Filter.HasFlag(CommonIPTCProperties.CountryCode) Then CountryCode.Value = IPTC.CountryPrimaryLocationCode
+                If Filter.HasFlag(CommonIPTCProperties.Country) Then Country.Value = IPTC.CountryPrimaryLocationName
+                If Filter.HasFlag(CommonIPTCProperties.Province) Then Province.Value = IPTC.ProvinceState
+                If Filter.HasFlag(CommonIPTCProperties.Sublocation) Then Sublocation.Value = IPTC.SubLocation
+                If Filter.HasFlag(CommonIPTCProperties.EditStatus) Then EditStatus.Value = IPTC.EditStatus
+                If Filter.HasFlag(CommonIPTCProperties.Urgency) Then Urgency.Value = IPTC.Urgency
+                If Filter.HasFlag(CommonIPTCProperties.ObjectName) Then ObjectName.Value = IPTC.ObjectName
+                If Filter.HasFlag(CommonIPTCProperties.Caption) Then Caption.Value = IPTC.CaptionAbstract
+                If Filter.HasFlag(CommonIPTCProperties.Keywords) Then Keywords.AddRange(IPTC.Keywords.NewIfNull)
+                If Filter.HasFlag(CommonIPTCProperties.RatingArt) Then RArt.value = IPTC.ArtQuality
+                If Filter.HasFlag(CommonIPTCProperties.RatingInfo) Then RInfo.value = IPTC.InformationValue
+                If Filter.HasFlag(CommonIPTCProperties.RatingTechnical) Then RTech.value = IPTC.TechnicalQuality
+                If Filter.HasFlag(CommonIPTCProperties.RatingOverall) Then ROver.value = IPTC.OverallRating
             Else
-                If Filter And CommonIPTCProperties.Copyright Then Copyright.Same = Copyright.Same AndAlso IPTC.CopyrightNotice = Copyright.Value
-                If Filter And CommonIPTCProperties.Credit Then Credit.Same = Credit.Same AndAlso IPTC.Credit = Credit.Value
-                If Filter And CommonIPTCProperties.City Then City.Same = City.Same AndAlso IPTC.City = City.Value
-                If Filter And CommonIPTCProperties.CountryCode Then CountryCode.Same = CountryCode.Same AndAlso IPTC.CountryPrimaryLocationCode = CountryCode.Value
-                If Filter And CommonIPTCProperties.Country Then Country.Same = Country.Same AndAlso IPTC.CountryPrimaryLocationName = Country.Value
-                If Filter And CommonIPTCProperties.Province Then Province.Same = Province.Same AndAlso IPTC.ProvinceState = Province.Value
-                If Filter And CommonIPTCProperties.Sublocation Then Sublocation.Same = Sublocation.Same AndAlso IPTC.SubLocation = Sublocation.Value
-                If Filter And CommonIPTCProperties.EditStatus Then EditStatus.Same = EditStatus.Same AndAlso IPTC.EditStatus = EditStatus.Value
-                If Filter And CommonIPTCProperties.Urgency Then Urgency.Same = Urgency.Same AndAlso IPTC.Urgency = Urgency.Value
-                If Filter And CommonIPTCProperties.ObjectName Then ObjectName.Same = ObjectName.Same AndAlso IPTC.ObjectName = ObjectName.Value
-                If Filter And CommonIPTCProperties.Caption Then Caption.Same = Caption.Same AndAlso IPTC.CaptionAbstract = Caption.Value
-                If Filter And CommonIPTCProperties.Keywords Then
+                If Filter.HasFlag(CommonIPTCProperties.Copyright) Then Copyright.Same = Copyright.Same AndAlso IPTC.CopyrightNotice = Copyright.Value
+                If Filter.HasFlag(CommonIPTCProperties.Credit) Then Credit.Same = Credit.Same AndAlso IPTC.Credit = Credit.Value
+                If Filter.HasFlag(CommonIPTCProperties.City) Then City.Same = City.Same AndAlso IPTC.City = City.Value
+                If Filter.HasFlag(CommonIPTCProperties.CountryCode) Then CountryCode.Same = CountryCode.Same AndAlso IPTC.CountryPrimaryLocationCode = CountryCode.Value
+                If Filter.HasFlag(CommonIPTCProperties.Country) Then Country.Same = Country.Same AndAlso IPTC.CountryPrimaryLocationName = Country.Value
+                If Filter.HasFlag(CommonIPTCProperties.Province) Then Province.Same = Province.Same AndAlso IPTC.ProvinceState = Province.Value
+                If Filter.HasFlag(CommonIPTCProperties.Sublocation) Then Sublocation.Same = Sublocation.Same AndAlso IPTC.SubLocation = Sublocation.Value
+                If Filter.HasFlag(CommonIPTCProperties.EditStatus) Then EditStatus.Same = EditStatus.Same AndAlso IPTC.EditStatus = EditStatus.Value
+                If Filter.HasFlag(CommonIPTCProperties.Urgency) Then Urgency.Same = Urgency.Same AndAlso IPTC.Urgency = Urgency.Value
+                If Filter.HasFlag(CommonIPTCProperties.ObjectName) Then ObjectName.Same = ObjectName.Same AndAlso IPTC.ObjectName = ObjectName.Value
+                If Filter.HasFlag(CommonIPTCProperties.Caption) Then Caption.Same = Caption.Same AndAlso IPTC.CaptionAbstract = Caption.Value
+                If Filter.HasFlag(CommonIPTCProperties.Keywords) Then
                     Dim kws As New List(Of String)(If(IPTC.Keywords, New String() {}))
                     Keywords.RemoveAll(Function(kw As String) Not kws.Contains(kw))
                 End If
+                If Filter.HasFlag(CommonIPTCProperties.RatingTechnical) Then RTech.Same = RTech.Same AndAlso IPTC.TechnicalQuality = RTech.value
+                If Filter.HasFlag(CommonIPTCProperties.RatingOverall) Then ROver.Same = ROver.Same AndAlso IPTC.OverallRating = ROver.value
+                If Filter.HasFlag(CommonIPTCProperties.RatingInfo) Then RInfo.Same = RInfo.Same AndAlso IPTC.InformationValue = RInfo.value
+                If Filter.HasFlag(CommonIPTCProperties.RatingArt) Then RArt.Same = RArt.Same AndAlso IPTC.ArtQuality = RArt.value
             End If
             i += 1
         Next
-        If Filter And CommonIPTCProperties.Copyright Then txtCopyright.Text = If(Copyright.Same, Copyright.Value, "")
-        If Filter And CommonIPTCProperties.Credit Then txtCredit.Text = If(Credit.Same, Credit.Value, "")
-        If Filter And CommonIPTCProperties.City Then txtCity.Text = If(City.Same, City.Value, "")
-        If Filter And CommonIPTCProperties.CountryCode Then cmbCountryCode.Text = If(CountryCode.Same, CountryCode.Value, "")
-        If Filter And CommonIPTCProperties.Country Then txtCountry.Text = If(Country.Same, Country.Value, "")
-        If Filter And CommonIPTCProperties.Province Then txtProvince.Text = If(Province.Same, Province.Value, "")
-        If Filter And CommonIPTCProperties.Sublocation Then txtSublocation.Text = If(Sublocation.Same, Sublocation.Value, "")
-        If Filter And CommonIPTCProperties.EditStatus Then txtEditStatus.Text = If(EditStatus.Same, EditStatus.Value, "")
-        If Filter And CommonIPTCProperties.Urgency Then nudUrgency.Text = If(Urgency.Same, Urgency.Value.ToString, "") 'TODO: Does it work?
-        If Filter And CommonIPTCProperties.ObjectName Then txtObjectName.Text = If(ObjectName.Same, ObjectName.Value, "")
-        If Filter And CommonIPTCProperties.Caption Then txtCaption.Text = If(Caption.Same, Caption.Value, "")
-        If Filter And CommonIPTCProperties.Keywords Then
+        If Filter.HasFlag(CommonIPTCProperties.Copyright) Then txtCopyright.Text = If(Copyright.Same, Copyright.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.Credit) Then txtCredit.Text = If(Credit.Same, Credit.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.City) Then txtCity.Text = If(City.Same, City.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.CountryCode) Then cmbCountryCode.Text = If(CountryCode.Same, CountryCode.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.Country) Then txtCountry.Text = If(Country.Same, Country.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.Province) Then txtProvince.Text = If(Province.Same, Province.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.Sublocation) Then txtSublocation.Text = If(Sublocation.Same, Sublocation.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.EditStatus) Then txtEditStatus.Text = If(EditStatus.Same, EditStatus.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.Urgency) Then nudUrgency.Text = If(Urgency.Same, Urgency.Value.ToString, "") 'TODO: Does it work?
+        If Filter.HasFlag(CommonIPTCProperties.ObjectName) Then txtObjectName.Text = If(ObjectName.Same, ObjectName.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.Caption) Then txtCaption.Text = If(Caption.Same, Caption.Value, "")
+        If Filter.HasFlag(CommonIPTCProperties.Keywords) Then
             kweKeywords.KeyWords.Clear()
             kweKeywords.KeyWords.AddRange(Keywords)
         End If
+        suspendAutoRating = True
+        Try
+            If Filter.HasFlag(CommonIPTCProperties.RatingTechnical) Then If RTech.Same Then rtgTechnical.Rating = RTech.value Else rtgTechnical.SelectedIndex = -1
+            If Filter.HasFlag(CommonIPTCProperties.RatingInfo) Then If RInfo.Same Then rtgInfo.Rating = RInfo.value Else rtgInfo.SelectedIndex = -1
+            If Filter.HasFlag(CommonIPTCProperties.RatingArt) Then If RArt.Same Then rtgArt.Rating = RArt.value Else rtgArt.SelectedIndex = -1
+            If Filter.HasFlag(CommonIPTCProperties.RatingOverall) Then If ROver.Same Then rtgOverall.Rating = ROver.value Else rtgOverall.SelectedIndex = -1
+        Finally
+            suspendAutoRating = False
+        End Try
     End Sub
     ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
     Private _Changed As Boolean
@@ -738,7 +763,8 @@ Public Class frmMain
         Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, _
             txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, _
             txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, _
-            nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
+            nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating,
+            rtgArt.Validating, rtgInfo.Validating, rtgOverall.Validating, rtgTechnical.Validating
         e.Cancel = Not StoreControl_IPTC(sender)
     End Sub
     ''' <summary>Stores value of given editor control to all items in <see cref="SelectedMetadata"/></summary>
@@ -786,6 +812,12 @@ Public Class frmMain
                         Next
                         If added Then currentitem.Keywords = newList.ToArray
                     End If
+                ElseIf TypeOf ctl Is Rating Then
+                    Try
+                        currentitem.Common(Prp) = DirectCast(ctl, Rating).Rating.ToString
+                    Catch ex As Exception
+                        If ex.InnerException IsNot Nothing Then Throw ex.InnerException Else Throw
+                    End Try
                 Else
                     Try
                         currentitem.Common(Prp) = ctl.Text
@@ -1074,14 +1106,6 @@ Retry:              item.Save()
         HTMLDialog.ShowModal(d.ToString, Me)
     End Sub
 
-    Private Sub lvwImages_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub lvwImages_DrawItem(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DrawListViewItemEventArgs) Handles lvwImages.DrawItem
-
-    End Sub
-
     Private Sub tmiSynchronizeWithDatabase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiSynchronizeWithDatabase.Click
         SynchronizeWithDatabase()
     End Sub
@@ -1098,6 +1122,31 @@ Retry:              item.Save()
             frm.showdialog()
         End Using
     End Sub
+    Private suspendAutoRating As Boolean = False
+    Private Sub rtgSpecific_RatingChanged(sender As System.Object, e As System.EventArgs) Handles rtgTechnical.SelectedIndexChanged, rtgInfo.SelectedIndexChanged, rtgArt.SelectedIndexChanged
+        If suspendAutoRating Then Exit Sub
+        If rtgTechnical.Rating <> Iptc.CustomRating.NotRated AndAlso rtgInfo.Rating <> Iptc.CustomRating.NotRated AndAlso rtgArt.Rating <> Iptc.CustomRating.NotRated AndAlso rtgOverall.Rating = Iptc.CustomRating.NotRated Then
+            Dim proposedValue = Math.Round((If(rtgTechnical.Rating = Iptc.CustomRating.Rejected, 0, rtgTechnical.Rating) +
+                                            If(rtgArt.Rating = Iptc.CustomRating.Rejected, 0, rtgArt.Rating) +
+                                            If(rtgInfo.Rating = Iptc.CustomRating.Rejected, 0, rtgInfo.Rating)
+                                           ) / 3, MidpointRounding.AwayFromZero)
+            If proposedValue = 0 Then proposedValue = Iptc.CustomRating.Rejected
+            rtgOverall.Rating = proposedValue
+            StoreControl_IPTC(rtgOverall)
+        End If
+    End Sub
+
+    Private Sub Control_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, rtgTechnical.Validating, rtgOverall.Validating, rtgInfo.Validating, rtgArt.Validating, nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
+
+    End Sub
+
+    Private Sub lvwImages_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub lvwImages_DrawItem(sender As System.Object, e As System.Windows.Forms.DrawListViewItemEventArgs) Handles lvwImages.DrawItem
+
+    End Sub
 End Class
 
 ''' <summary>Common IPTC properties displayed at common tab of <see cref="frmMain"/></summary>
@@ -1106,7 +1155,7 @@ Friend Enum CommonIPTCProperties
     ''' <summary>No property</summary>
     <EditorBrowsable(EditorBrowsableState.Never)> None = 0
     ''' <summary>All properties</summary>
-    All = Copyright Or Credit Or City Or CountryCode Or Country Or Province Or Sublocation Or EditStatus Or Urgency Or ObjectName Or Caption Or Keywords
+    All = Copyright Or Credit Or City Or CountryCode Or Country Or Province Or Sublocation Or EditStatus Or Urgency Or ObjectName Or Caption Or Keywords Or RatingTechnical Or RatingInfo Or RatingArt Or RatingOverall
     ''' <summary><see cref="IPTC.CopyrightNotice"/></summary>
     Copyright = 1
     ''' <summary><see cref="IPTC.Credit"/></summary>
@@ -1130,5 +1179,13 @@ Friend Enum CommonIPTCProperties
     ''' <summary><see cref="IPTC.CaptionAbstract"/></summary>
     Caption = 2048
     ''' <summary><see cref="IPTC.Keywords"/></summary>
-    Keywords = 1096
+    Keywords = 4096
+    ''' <summary><see cref="Iptc.TechnicalQuality"/></summary>
+    RatingTechnical = 8192
+    ''' <summary><see cref="Iptc.ArtQuality"/></summary>
+    RatingArt = 16384
+    ''' <summary><see cref="Iptc.InformationValue"/></summary>
+    RatingInfo = 32768
+    ''' <summary><see cref="Iptc.OverallRating"/></summary>
+    RatingOverall = 65536
 End Enum

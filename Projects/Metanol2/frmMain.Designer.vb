@@ -31,6 +31,7 @@ Partial Class frmMain
         Me.lvwImages = New Tools.Metanol.TotalCommanderListView()
         Me.cmsImages = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.tmiMerge = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tmiExport = New System.Windows.Forms.ToolStripMenuItem()
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
         Me.tabInfo = New System.Windows.Forms.TabControl()
         Me.tapCommon = New System.Windows.Forms.TabPage()
@@ -75,6 +76,14 @@ Partial Class frmMain
         Me.txtEditStatus = New System.Windows.Forms.TextBox()
         Me.lblUrgency = New System.Windows.Forms.Label()
         Me.nudUrgency = New System.Windows.Forms.NumericUpDown()
+        Me.lblTechnicalRating = New System.Windows.Forms.Label()
+        Me.rtgTechnical = New Tools.Metanol.Rating()
+        Me.lblArtRating = New System.Windows.Forms.Label()
+        Me.rtgArt = New Tools.Metanol.Rating()
+        Me.lblInfoRating = New System.Windows.Forms.Label()
+        Me.rtgInfo = New Tools.Metanol.Rating()
+        Me.lblOverallRating = New System.Windows.Forms.Label()
+        Me.rtgOverall = New Tools.Metanol.Rating()
         Me.tapIPTC = New System.Windows.Forms.TabPage()
         Me.prgIPTC = New System.Windows.Forms.PropertyGrid()
         Me.tapExif = New System.Windows.Forms.TabPage()
@@ -119,7 +128,6 @@ Partial Class frmMain
         Me.bgwImages = New System.ComponentModel.BackgroundWorker()
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog()
         Me.bgwSave = New System.ComponentModel.BackgroundWorker()
-        Me.tmiExport = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.splMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
@@ -168,12 +176,13 @@ Partial Class frmMain
         '
         'splMain.Panel1
         '
+        resources.ApplyResources(Me.splMain.Panel1, "splMain.Panel1")
         Me.splMain.Panel1.Controls.Add(Me.splBrowser)
         '
         'splMain.Panel2
         '
-        Me.splMain.Panel2.Controls.Add(Me.tabInfo)
         resources.ApplyResources(Me.splMain.Panel2, "splMain.Panel2")
+        Me.splMain.Panel2.Controls.Add(Me.tabInfo)
         Me.splMain.TabStop = False
         '
         'splBrowser
@@ -183,10 +192,12 @@ Partial Class frmMain
         '
         'splBrowser.Panel1
         '
+        resources.ApplyResources(Me.splBrowser.Panel1, "splBrowser.Panel1")
         Me.splBrowser.Panel1.Controls.Add(Me.lvwFolders)
         '
         'splBrowser.Panel2
         '
+        resources.ApplyResources(Me.splBrowser.Panel2, "splBrowser.Panel2")
         Me.splBrowser.Panel2.Controls.Add(Me.lvwImages)
         Me.splBrowser.TabStop = False
         '
@@ -208,8 +219,8 @@ Partial Class frmMain
         '
         'lvwImages
         '
-        Me.lvwImages.ContextMenuStrip = Me.cmsImages
         resources.ApplyResources(Me.lvwImages, "lvwImages")
+        Me.lvwImages.ContextMenuStrip = Me.cmsImages
         Me.lvwImages.HideSelection = False
         Me.lvwImages.LargeImageList = Me.imlImages
         Me.lvwImages.Name = "lvwImages"
@@ -220,14 +231,19 @@ Partial Class frmMain
         '
         'cmsImages
         '
+        resources.ApplyResources(Me.cmsImages, "cmsImages")
         Me.cmsImages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiMerge, Me.tmiExport})
         Me.cmsImages.Name = "cmsImages"
-        resources.ApplyResources(Me.cmsImages, "cmsImages")
         '
         'tmiMerge
         '
-        Me.tmiMerge.Name = "tmiMerge"
         resources.ApplyResources(Me.tmiMerge, "tmiMerge")
+        Me.tmiMerge.Name = "tmiMerge"
+        '
+        'tmiExport
+        '
+        resources.ApplyResources(Me.tmiExport, "tmiExport")
+        Me.tmiExport.Name = "tmiExport"
         '
         'imlImages
         '
@@ -237,23 +253,24 @@ Partial Class frmMain
         '
         'tabInfo
         '
+        resources.ApplyResources(Me.tabInfo, "tabInfo")
         Me.tabInfo.Controls.Add(Me.tapCommon)
         Me.tabInfo.Controls.Add(Me.tapIPTC)
         Me.tabInfo.Controls.Add(Me.tapExif)
-        resources.ApplyResources(Me.tabInfo, "tabInfo")
         Me.tabInfo.Name = "tabInfo"
         Me.tabInfo.SelectedIndex = 0
         Me.tabInfo.TabStop = False
         '
         'tapCommon
         '
-        Me.tapCommon.Controls.Add(Me.flpCommon)
         resources.ApplyResources(Me.tapCommon, "tapCommon")
+        Me.tapCommon.Controls.Add(Me.flpCommon)
         Me.tapCommon.Name = "tapCommon"
         Me.tapCommon.UseVisualStyleBackColor = True
         '
         'flpCommon
         '
+        resources.ApplyResources(Me.flpCommon, "flpCommon")
         Me.flpCommon.Controls.Add(Me.panImage)
         Me.flpCommon.Controls.Add(Me.sptImage)
         Me.flpCommon.Controls.Add(Me.fraTitle)
@@ -263,16 +280,15 @@ Partial Class frmMain
         Me.flpCommon.Controls.Add(Me.sptKeywords)
         Me.flpCommon.Controls.Add(Me.fraAuthor)
         Me.flpCommon.Controls.Add(Me.fraStatus)
-        resources.ApplyResources(Me.flpCommon, "flpCommon")
         Me.flpCommon.Name = "flpCommon"
         '
         'panImage
         '
+        resources.ApplyResources(Me.panImage, "panImage")
         Me.panImage.Controls.Add(Me.lblExifDateTime)
         Me.panImage.Controls.Add(Me.picPreview)
         Me.panImage.Controls.Add(Me.llbLarge)
         Me.panImage.Controls.Add(Me.cmdErrInfo)
-        resources.ApplyResources(Me.panImage, "panImage")
         Me.panImage.MinimumSize = New System.Drawing.Size(0, 32)
         Me.panImage.Name = "panImage"
         '
@@ -305,8 +321,8 @@ Partial Class frmMain
         '
         'sptImage
         '
-        Me.sptImage.Cursor = System.Windows.Forms.Cursors.HSplit
         resources.ApplyResources(Me.sptImage, "sptImage")
+        Me.sptImage.Cursor = System.Windows.Forms.Cursors.HSplit
         Me.sptImage.Name = "sptImage"
         Me.sptImage.TabStop = False
         '
@@ -351,8 +367,8 @@ Partial Class frmMain
         '
         'sptTitle
         '
-        Me.sptTitle.Cursor = System.Windows.Forms.Cursors.HSplit
         resources.ApplyResources(Me.sptTitle, "sptTitle")
+        Me.sptTitle.Cursor = System.Windows.Forms.Cursors.HSplit
         Me.sptTitle.Name = "sptTitle"
         Me.sptTitle.TabStop = False
         '
@@ -431,24 +447,24 @@ Partial Class frmMain
         '
         'fraKeywords
         '
-        Me.fraKeywords.Controls.Add(Me.kweKeywords)
         resources.ApplyResources(Me.fraKeywords, "fraKeywords")
+        Me.fraKeywords.Controls.Add(Me.kweKeywords)
         Me.fraKeywords.MinimumSize = New System.Drawing.Size(0, 100)
         Me.fraKeywords.Name = "fraKeywords"
         Me.fraKeywords.TabStop = False
         '
         'kweKeywords
         '
+        resources.ApplyResources(Me.kweKeywords, "kweKeywords")
         Me.kweKeywords.AutoCompleteCacheName = "Keywords"
         Me.kweKeywords.AutomaticsLists_Designer = True
-        resources.ApplyResources(Me.kweKeywords, "kweKeywords")
         Me.kweKeywords.Name = "kweKeywords"
         Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         '
         'sptKeywords
         '
-        Me.sptKeywords.Cursor = System.Windows.Forms.Cursors.HSplit
         resources.ApplyResources(Me.sptKeywords, "sptKeywords")
+        Me.sptKeywords.Cursor = System.Windows.Forms.Cursors.HSplit
         Me.sptKeywords.Name = "sptKeywords"
         Me.sptKeywords.TabStop = False
         '
@@ -502,6 +518,14 @@ Partial Class frmMain
         Me.tlpStatus.Controls.Add(Me.txtEditStatus, 1, 0)
         Me.tlpStatus.Controls.Add(Me.lblUrgency, 0, 1)
         Me.tlpStatus.Controls.Add(Me.nudUrgency, 1, 1)
+        Me.tlpStatus.Controls.Add(Me.lblTechnicalRating, 0, 2)
+        Me.tlpStatus.Controls.Add(Me.rtgTechnical, 1, 2)
+        Me.tlpStatus.Controls.Add(Me.lblArtRating, 0, 3)
+        Me.tlpStatus.Controls.Add(Me.rtgArt, 1, 3)
+        Me.tlpStatus.Controls.Add(Me.lblInfoRating, 0, 4)
+        Me.tlpStatus.Controls.Add(Me.rtgInfo, 1, 4)
+        Me.tlpStatus.Controls.Add(Me.lblOverallRating, 0, 5)
+        Me.tlpStatus.Controls.Add(Me.rtgOverall, 1, 5)
         Me.tlpStatus.Name = "tlpStatus"
         '
         'lblEditStatus
@@ -524,10 +548,62 @@ Partial Class frmMain
         resources.ApplyResources(Me.nudUrgency, "nudUrgency")
         Me.nudUrgency.Name = "nudUrgency"
         '
+        'lblTechnicalRating
+        '
+        resources.ApplyResources(Me.lblTechnicalRating, "lblTechnicalRating")
+        Me.lblTechnicalRating.Name = "lblTechnicalRating"
+        '
+        'rtgTechnical
+        '
+        resources.ApplyResources(Me.rtgTechnical, "rtgTechnical")
+        Me.rtgTechnical.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.rtgTechnical.Items.AddRange(New Object() {resources.GetString("rtgTechnical.Items"), resources.GetString("rtgTechnical.Items1"), resources.GetString("rtgTechnical.Items2"), resources.GetString("rtgTechnical.Items3"), resources.GetString("rtgTechnical.Items4"), resources.GetString("rtgTechnical.Items5"), resources.GetString("rtgTechnical.Items6"), resources.GetString("rtgTechnical.Items7"), resources.GetString("rtgTechnical.Items8"), resources.GetString("rtgTechnical.Items9"), resources.GetString("rtgTechnical.Items10"), resources.GetString("rtgTechnical.Items11"), resources.GetString("rtgTechnical.Items12"), resources.GetString("rtgTechnical.Items13"), resources.GetString("rtgTechnical.Items14"), resources.GetString("rtgTechnical.Items15"), resources.GetString("rtgTechnical.Items16"), resources.GetString("rtgTechnical.Items17"), resources.GetString("rtgTechnical.Items18"), resources.GetString("rtgTechnical.Items19"), resources.GetString("rtgTechnical.Items20"), resources.GetString("rtgTechnical.Items21"), resources.GetString("rtgTechnical.Items22"), resources.GetString("rtgTechnical.Items23"), resources.GetString("rtgTechnical.Items24"), resources.GetString("rtgTechnical.Items25"), resources.GetString("rtgTechnical.Items26"), resources.GetString("rtgTechnical.Items27")})
+        Me.rtgTechnical.Name = "rtgTechnical"
+        Me.rtgTechnical.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
+        '
+        'lblArtRating
+        '
+        resources.ApplyResources(Me.lblArtRating, "lblArtRating")
+        Me.lblArtRating.Name = "lblArtRating"
+        '
+        'rtgArt
+        '
+        resources.ApplyResources(Me.rtgArt, "rtgArt")
+        Me.rtgArt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.rtgArt.Items.AddRange(New Object() {resources.GetString("rtgArt.Items"), resources.GetString("rtgArt.Items1"), resources.GetString("rtgArt.Items2"), resources.GetString("rtgArt.Items3"), resources.GetString("rtgArt.Items4"), resources.GetString("rtgArt.Items5"), resources.GetString("rtgArt.Items6"), resources.GetString("rtgArt.Items7"), resources.GetString("rtgArt.Items8"), resources.GetString("rtgArt.Items9"), resources.GetString("rtgArt.Items10"), resources.GetString("rtgArt.Items11"), resources.GetString("rtgArt.Items12"), resources.GetString("rtgArt.Items13"), resources.GetString("rtgArt.Items14"), resources.GetString("rtgArt.Items15"), resources.GetString("rtgArt.Items16"), resources.GetString("rtgArt.Items17"), resources.GetString("rtgArt.Items18"), resources.GetString("rtgArt.Items19"), resources.GetString("rtgArt.Items20"), resources.GetString("rtgArt.Items21"), resources.GetString("rtgArt.Items22"), resources.GetString("rtgArt.Items23"), resources.GetString("rtgArt.Items24"), resources.GetString("rtgArt.Items25"), resources.GetString("rtgArt.Items26"), resources.GetString("rtgArt.Items27")})
+        Me.rtgArt.Name = "rtgArt"
+        Me.rtgArt.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
+        '
+        'lblInfoRating
+        '
+        resources.ApplyResources(Me.lblInfoRating, "lblInfoRating")
+        Me.lblInfoRating.Name = "lblInfoRating"
+        '
+        'rtgInfo
+        '
+        resources.ApplyResources(Me.rtgInfo, "rtgInfo")
+        Me.rtgInfo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.rtgInfo.Items.AddRange(New Object() {resources.GetString("rtgInfo.Items"), resources.GetString("rtgInfo.Items1"), resources.GetString("rtgInfo.Items2"), resources.GetString("rtgInfo.Items3"), resources.GetString("rtgInfo.Items4"), resources.GetString("rtgInfo.Items5"), resources.GetString("rtgInfo.Items6"), resources.GetString("rtgInfo.Items7"), resources.GetString("rtgInfo.Items8"), resources.GetString("rtgInfo.Items9"), resources.GetString("rtgInfo.Items10"), resources.GetString("rtgInfo.Items11"), resources.GetString("rtgInfo.Items12"), resources.GetString("rtgInfo.Items13"), resources.GetString("rtgInfo.Items14"), resources.GetString("rtgInfo.Items15"), resources.GetString("rtgInfo.Items16"), resources.GetString("rtgInfo.Items17"), resources.GetString("rtgInfo.Items18"), resources.GetString("rtgInfo.Items19"), resources.GetString("rtgInfo.Items20"), resources.GetString("rtgInfo.Items21"), resources.GetString("rtgInfo.Items22"), resources.GetString("rtgInfo.Items23"), resources.GetString("rtgInfo.Items24"), resources.GetString("rtgInfo.Items25"), resources.GetString("rtgInfo.Items26"), resources.GetString("rtgInfo.Items27")})
+        Me.rtgInfo.Name = "rtgInfo"
+        Me.rtgInfo.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
+        '
+        'lblOverallRating
+        '
+        resources.ApplyResources(Me.lblOverallRating, "lblOverallRating")
+        Me.lblOverallRating.Name = "lblOverallRating"
+        '
+        'rtgOverall
+        '
+        resources.ApplyResources(Me.rtgOverall, "rtgOverall")
+        Me.rtgOverall.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.rtgOverall.Items.AddRange(New Object() {resources.GetString("rtgOverall.Items"), resources.GetString("rtgOverall.Items1"), resources.GetString("rtgOverall.Items2"), resources.GetString("rtgOverall.Items3"), resources.GetString("rtgOverall.Items4"), resources.GetString("rtgOverall.Items5"), resources.GetString("rtgOverall.Items6"), resources.GetString("rtgOverall.Items7"), resources.GetString("rtgOverall.Items8"), resources.GetString("rtgOverall.Items9"), resources.GetString("rtgOverall.Items10"), resources.GetString("rtgOverall.Items11"), resources.GetString("rtgOverall.Items12"), resources.GetString("rtgOverall.Items13"), resources.GetString("rtgOverall.Items14"), resources.GetString("rtgOverall.Items15"), resources.GetString("rtgOverall.Items16"), resources.GetString("rtgOverall.Items17"), resources.GetString("rtgOverall.Items18"), resources.GetString("rtgOverall.Items19"), resources.GetString("rtgOverall.Items20"), resources.GetString("rtgOverall.Items21"), resources.GetString("rtgOverall.Items22"), resources.GetString("rtgOverall.Items23"), resources.GetString("rtgOverall.Items24"), resources.GetString("rtgOverall.Items25"), resources.GetString("rtgOverall.Items26"), resources.GetString("rtgOverall.Items27")})
+        Me.rtgOverall.Name = "rtgOverall"
+        Me.rtgOverall.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
+        '
         'tapIPTC
         '
-        Me.tapIPTC.Controls.Add(Me.prgIPTC)
         resources.ApplyResources(Me.tapIPTC, "tapIPTC")
+        Me.tapIPTC.Controls.Add(Me.prgIPTC)
         Me.tapIPTC.Name = "tapIPTC"
         Me.tapIPTC.UseVisualStyleBackColor = True
         '
@@ -538,26 +614,26 @@ Partial Class frmMain
         '
         'tapExif
         '
-        Me.tapExif.Controls.Add(Me.tabExif)
         resources.ApplyResources(Me.tapExif, "tapExif")
+        Me.tapExif.Controls.Add(Me.tabExif)
         Me.tapExif.Name = "tapExif"
         Me.tapExif.UseVisualStyleBackColor = True
         '
         'tabExif
         '
+        resources.ApplyResources(Me.tabExif, "tabExif")
         Me.tabExif.Controls.Add(Me.tapExifMain)
         Me.tabExif.Controls.Add(Me.tapExifExif)
         Me.tabExif.Controls.Add(Me.tapExifGPS)
         Me.tabExif.Controls.Add(Me.tapExifInterop)
         Me.tabExif.Controls.Add(Me.tapExifThumbnail)
-        resources.ApplyResources(Me.tabExif, "tabExif")
         Me.tabExif.Name = "tabExif"
         Me.tabExif.SelectedIndex = 0
         '
         'tapExifMain
         '
-        Me.tapExifMain.Controls.Add(Me.prgExifMain)
         resources.ApplyResources(Me.tapExifMain, "tapExifMain")
+        Me.tapExifMain.Controls.Add(Me.prgExifMain)
         Me.tapExifMain.Name = "tapExifMain"
         Me.tapExifMain.UseVisualStyleBackColor = True
         '
@@ -568,8 +644,8 @@ Partial Class frmMain
         '
         'tapExifExif
         '
-        Me.tapExifExif.Controls.Add(Me.prgExifExif)
         resources.ApplyResources(Me.tapExifExif, "tapExifExif")
+        Me.tapExifExif.Controls.Add(Me.prgExifExif)
         Me.tapExifExif.Name = "tapExifExif"
         Me.tapExifExif.UseVisualStyleBackColor = True
         '
@@ -580,8 +656,8 @@ Partial Class frmMain
         '
         'tapExifGPS
         '
-        Me.tapExifGPS.Controls.Add(Me.prgExifGPS)
         resources.ApplyResources(Me.tapExifGPS, "tapExifGPS")
+        Me.tapExifGPS.Controls.Add(Me.prgExifGPS)
         Me.tapExifGPS.Name = "tapExifGPS"
         Me.tapExifGPS.UseVisualStyleBackColor = True
         '
@@ -592,8 +668,8 @@ Partial Class frmMain
         '
         'tapExifInterop
         '
-        Me.tapExifInterop.Controls.Add(Me.prgExifInterop)
         resources.ApplyResources(Me.tapExifInterop, "tapExifInterop")
+        Me.tapExifInterop.Controls.Add(Me.prgExifInterop)
         Me.tapExifInterop.Name = "tapExifInterop"
         Me.tapExifInterop.UseVisualStyleBackColor = True
         '
@@ -604,8 +680,8 @@ Partial Class frmMain
         '
         'tapExifThumbnail
         '
-        Me.tapExifThumbnail.Controls.Add(Me.prgExifThumbnail)
         resources.ApplyResources(Me.tapExifThumbnail, "tapExifThumbnail")
+        Me.tapExifThumbnail.Controls.Add(Me.prgExifThumbnail)
         Me.tapExifThumbnail.Name = "tapExifThumbnail"
         Me.tapExifThumbnail.UseVisualStyleBackColor = True
         '
@@ -616,20 +692,30 @@ Partial Class frmMain
         '
         'tscMain
         '
+        resources.ApplyResources(Me.tscMain, "tscMain")
         '
         'tscMain.BottomToolStripPanel
         '
+        resources.ApplyResources(Me.tscMain.BottomToolStripPanel, "tscMain.BottomToolStripPanel")
         Me.tscMain.BottomToolStripPanel.Controls.Add(Me.stsStatus)
         '
         'tscMain.ContentPanel
         '
-        Me.tscMain.ContentPanel.Controls.Add(Me.splMain)
         resources.ApplyResources(Me.tscMain.ContentPanel, "tscMain.ContentPanel")
-        resources.ApplyResources(Me.tscMain, "tscMain")
+        Me.tscMain.ContentPanel.Controls.Add(Me.splMain)
+        '
+        'tscMain.LeftToolStripPanel
+        '
+        resources.ApplyResources(Me.tscMain.LeftToolStripPanel, "tscMain.LeftToolStripPanel")
         Me.tscMain.Name = "tscMain"
+        '
+        'tscMain.RightToolStripPanel
+        '
+        resources.ApplyResources(Me.tscMain.RightToolStripPanel, "tscMain.RightToolStripPanel")
         '
         'tscMain.TopToolStripPanel
         '
+        resources.ApplyResources(Me.tscMain.TopToolStripPanel, "tscMain.TopToolStripPanel")
         Me.tscMain.TopToolStripPanel.Controls.Add(Me.msnMain)
         Me.tscMain.TopToolStripPanel.Controls.Add(Me.tosMain)
         '
@@ -642,18 +728,18 @@ Partial Class frmMain
         '
         'tpbLoading
         '
-        Me.tpbLoading.Name = "tpbLoading"
         resources.ApplyResources(Me.tpbLoading, "tpbLoading")
+        Me.tpbLoading.Name = "tpbLoading"
         '
         'tslFolder
         '
-        Me.tslFolder.Name = "tslFolder"
         resources.ApplyResources(Me.tslFolder, "tslFolder")
+        Me.tslFolder.Name = "tslFolder"
         '
         'tslNoFiles
         '
-        Me.tslNoFiles.Name = "tslNoFiles"
         resources.ApplyResources(Me.tslNoFiles, "tslNoFiles")
+        Me.tslNoFiles.Name = "tslNoFiles"
         '
         'msnMain
         '
@@ -663,91 +749,91 @@ Partial Class frmMain
         '
         'tmiFile
         '
+        resources.ApplyResources(Me.tmiFile, "tmiFile")
         Me.tmiFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiBrowse, Me.tmiGoTo, Me.tmiSaveAll, Me.tssFileSep1, Me.tmiExit})
         Me.tmiFile.Name = "tmiFile"
-        resources.ApplyResources(Me.tmiFile, "tmiFile")
         '
         'tmiBrowse
         '
-        Me.tmiBrowse.Name = "tmiBrowse"
         resources.ApplyResources(Me.tmiBrowse, "tmiBrowse")
+        Me.tmiBrowse.Name = "tmiBrowse"
         '
         'tmiGoTo
         '
-        Me.tmiGoTo.Name = "tmiGoTo"
         resources.ApplyResources(Me.tmiGoTo, "tmiGoTo")
+        Me.tmiGoTo.Name = "tmiGoTo"
         '
         'tmiSaveAll
         '
+        resources.ApplyResources(Me.tmiSaveAll, "tmiSaveAll")
         Me.tmiSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
         Me.tmiSaveAll.Name = "tmiSaveAll"
-        resources.ApplyResources(Me.tmiSaveAll, "tmiSaveAll")
         '
         'tssFileSep1
         '
-        Me.tssFileSep1.Name = "tssFileSep1"
         resources.ApplyResources(Me.tssFileSep1, "tssFileSep1")
+        Me.tssFileSep1.Name = "tssFileSep1"
         '
         'tmiExit
         '
-        Me.tmiExit.Name = "tmiExit"
         resources.ApplyResources(Me.tmiExit, "tmiExit")
+        Me.tmiExit.Name = "tmiExit"
         '
         'tmiView
         '
+        resources.ApplyResources(Me.tmiView, "tmiView")
         Me.tmiView.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiRefresh, Me.tmiNext, Me.tmiPrevious})
         Me.tmiView.Name = "tmiView"
-        resources.ApplyResources(Me.tmiView, "tmiView")
         '
         'tmiRefresh
         '
+        resources.ApplyResources(Me.tmiRefresh, "tmiRefresh")
         Me.tmiRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
         Me.tmiRefresh.Name = "tmiRefresh"
-        resources.ApplyResources(Me.tmiRefresh, "tmiRefresh")
         '
         'tmiNext
         '
+        resources.ApplyResources(Me.tmiNext, "tmiNext")
         Me.tmiNext.Image = Global.Tools.Metanol.My.Resources.Resources.RightArrowHS
         Me.tmiNext.Name = "tmiNext"
-        resources.ApplyResources(Me.tmiNext, "tmiNext")
         '
         'tmiPrevious
         '
-        Me.tmiPrevious.Image = Global.Tools.Metanol.My.Resources.Resources.LeftArrowHS
         resources.ApplyResources(Me.tmiPrevious, "tmiPrevious")
+        Me.tmiPrevious.Image = Global.Tools.Metanol.My.Resources.Resources.LeftArrowHS
         Me.tmiPrevious.Name = "tmiPrevious"
         '
         'tmiTools
         '
+        resources.ApplyResources(Me.tmiTools, "tmiTools")
         Me.tmiTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiOptions, Me.tmiSynchronizeWithDatabase})
         Me.tmiTools.Name = "tmiTools"
-        resources.ApplyResources(Me.tmiTools, "tmiTools")
         '
         'tmiOptions
         '
-        Me.tmiOptions.Name = "tmiOptions"
         resources.ApplyResources(Me.tmiOptions, "tmiOptions")
+        Me.tmiOptions.Name = "tmiOptions"
         '
         'tmiSynchronizeWithDatabase
         '
-        Me.tmiSynchronizeWithDatabase.Name = "tmiSynchronizeWithDatabase"
         resources.ApplyResources(Me.tmiSynchronizeWithDatabase, "tmiSynchronizeWithDatabase")
+        Me.tmiSynchronizeWithDatabase.Name = "tmiSynchronizeWithDatabase"
         '
         'tmiHelp
         '
+        resources.ApplyResources(Me.tmiHelp, "tmiHelp")
         Me.tmiHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiAbout, Me.tmiVersionHistory})
         Me.tmiHelp.Name = "tmiHelp"
-        resources.ApplyResources(Me.tmiHelp, "tmiHelp")
         '
         'tmiAbout
         '
-        Me.tmiAbout.Name = "tmiAbout"
         resources.ApplyResources(Me.tmiAbout, "tmiAbout")
+        Me.tmiAbout.Name = "tmiAbout"
         '
         'tmiVersionHistory
         '
-        Me.tmiVersionHistory.Name = "tmiVersionHistory"
         resources.ApplyResources(Me.tmiVersionHistory, "tmiVersionHistory")
+        Me.tmiVersionHistory.Name = "tmiVersionHistory"
         '
         'tosMain
         '
@@ -757,30 +843,30 @@ Partial Class frmMain
         '
         'tsbBack
         '
-        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.tsbBack, "tsbBack")
+        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbBack.Image = Global.Tools.Metanol.My.Resources.Resources.NavBack
         Me.tsbBack.Name = "tsbBack"
         '
         'tsbForward
         '
-        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.tsbForward, "tsbForward")
+        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbForward.Image = Global.Tools.Metanol.My.Resources.Resources.NavForward
         Me.tsbForward.Name = "tsbForward"
         '
         'tsbRefresh
         '
+        resources.ApplyResources(Me.tsbRefresh, "tsbRefresh")
         Me.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
-        resources.ApplyResources(Me.tsbRefresh, "tsbRefresh")
         Me.tsbRefresh.Name = "tsbRefresh"
         '
         'tsbSaveAll
         '
+        resources.ApplyResources(Me.tsbSaveAll, "tsbSaveAll")
         Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
-        resources.ApplyResources(Me.tsbSaveAll, "tsbSaveAll")
         Me.tsbSaveAll.Name = "tsbSaveAll"
         '
         'bgwImages
@@ -788,14 +874,13 @@ Partial Class frmMain
         Me.bgwImages.WorkerReportsProgress = True
         Me.bgwImages.WorkerSupportsCancellation = True
         '
+        'fbdGoTo
+        '
+        resources.ApplyResources(Me.fbdGoTo, "fbdGoTo")
+        '
         'bgwSave
         '
         Me.bgwSave.WorkerReportsProgress = True
-        '
-        'tmiExport
-        '
-        Me.tmiExport.Name = "tmiExport"
-        resources.ApplyResources(Me.tmiExport, "tmiExport")
         '
         'frmMain
         '
@@ -959,5 +1044,13 @@ Partial Class frmMain
     Friend WithEvents tmiSynchronizeWithDatabase As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lblExifDateTime As System.Windows.Forms.Label
     Friend WithEvents tmiExport As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents lblTechnicalRating As System.Windows.Forms.Label
+    Friend WithEvents rtgTechnical As Tools.Metanol.Rating
+    Friend WithEvents lblArtRating As System.Windows.Forms.Label
+    Friend WithEvents rtgArt As Tools.Metanol.Rating
+    Friend WithEvents lblInfoRating As System.Windows.Forms.Label
+    Friend WithEvents rtgInfo As Tools.Metanol.Rating
+    Friend WithEvents lblOverallRating As System.Windows.Forms.Label
+    Friend WithEvents rtgOverall As Tools.Metanol.Rating
 
 End Class

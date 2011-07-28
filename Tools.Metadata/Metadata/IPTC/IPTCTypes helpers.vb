@@ -11,7 +11,8 @@ Namespace MetadataT.IptcT
         ''' <param name="Str">String to be verified</param>
         ''' <returns>True if string contains only graphic characters and spaces, false otherwise</returns>
         ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
-        Public Shared Function IsTextWithSpaces(ByVal Str As String) As Boolean
+        ''' <version version="1.5.4">Parameter <c>Str</c> renamed to <c>str</c></version>
+        Public Shared Function IsTextWithSpaces(ByVal str As String) As Boolean
             For Each ch As Char In Str
                 If AscW(ch) < AscW(" "c) Then Return False
             Next ch
@@ -21,7 +22,8 @@ Namespace MetadataT.IptcT
         ''' <param name="Str">String to be verified</param>
         ''' <returns>True if string contains only graphic characters, spaces, Crs and Lfs, false otherwise</returns>
         ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
-        Public Shared Function IsText(ByVal Str As String) As Boolean
+        ''' <version version="1.5.4">Parameter <c>Str</c> renamed to <c>str</c></version>
+        Public Shared Function IsText(ByVal str As String) As Boolean
             For Each ch As Char In Str
                 If AscW(ch) < AscW(" "c) AndAlso AscW(ch) <> AscW(vbCr) AndAlso AscW(ch) <> AscW(vbLf) Then Return False
             Next ch
@@ -31,7 +33,8 @@ Namespace MetadataT.IptcT
         ''' <param name="Str">String to be verified</param>
         ''' <returns>True if string contains only graphic characters, false otherwise</returns>
         ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
-        Public Shared Function IsGraphicCharacters(ByVal Str As String) As Boolean
+        ''' <version version="1.5.4">Parameter <c>Str</c> renamed to <c>str</c></version>
+        Public Shared Function IsGraphicCharacters(ByVal str As String) As Boolean
             For Each ch As Char In Str
                 If AscW(ch) < AscW(" "c) Then Return False
             Next ch
@@ -40,7 +43,8 @@ Namespace MetadataT.IptcT
         ''' <summary>Indicates if given string contains only alpha characters</summary>
         ''' <param name="Str">String to be verified</param>
         ''' <returns>True if string contains only alpha characters, false otherwise</returns>
-        Public Shared Function IsAlpha(ByVal Str As String) As Boolean
+        ''' <version version="1.5.4">Parameter <c>Str</c> renamed to <c>str</c></version>
+        Public Shared Function IsAlpha(ByVal str As String) As Boolean
             For Each ch As Char In Str
                 Select Case AscW(ch)
                     Case AscW("a"c) To AscW("z"c), AscW("A"c) To AscW("Z"c)
@@ -52,39 +56,41 @@ Namespace MetadataT.IptcT
         ''' <summary>Returns <see cref="Type"/> that is used to store values of particular <see cref="IPTCTypes">IPTC type</see></summary>
         ''' <param name="IPTCType">IPTC type to get <see cref="Type"/> for</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="IPTCType"/> is not member of <see cref="IPTCTypes"/></exception>
-        Public Shared Function GetUnderlyingType(ByVal IPTCType As IPTCTypes) As Type
+        ''' <version version="1.5.4">Parameter <c>IPTCType</c> renamed to <c>iptcType</c></version>
+        Public Shared Function GetUnderlyingType(ByVal iptcType As IptcTypes) As Type
             Select Case IPTCType
-                Case IPTCTypes.Alpha : Return GetType(String)
-                Case IPTCTypes.AudioType : Return GetType(iptcAudioType)
-                Case IPTCTypes.Boolean_Binary : Return GetType(Boolean)
-                Case IPTCTypes.BW460 : Return GetType(Drawing.Bitmap)
-                Case IPTCTypes.Byte_Binary : Return GetType(Byte)
-                Case IPTCTypes.ByteArray : Return GetType(Byte())
-                Case IPTCTypes.CCYYMMDD : Return GetType(Date)
-                Case IPTCTypes.CCYYMMDDOmmitable : Return GetType(OmmitableDate)
-                Case IPTCTypes.Enum_Binary : Return GetType([Enum])
-                Case IPTCTypes.Enum_NumChar : Return GetType([Enum])
-                Case IPTCTypes.GraphicCharacters : Return GetType(String)
-                Case IPTCTypes.HHMMSS : Return GetType(TimeSpan)
-                Case IPTCTypes.HHMMSS_HHMM : Return GetType(Time)
-                Case IPTCTypes.ImageType : Return GetType(iptcImageType)
-                Case IPTCTypes.Num2_Str : Return GetType(NumStr2)
-                Case IPTCTypes.Num3_Str : Return GetType(NumStr3)
-                Case IPTCTypes.NumericChar : Return GetType(IConvertible)
-                Case IPTCTypes.StringEnum : Return GetType(DataStructuresT.GenericT.T1orT2(Of [Enum], String))
-                Case IPTCTypes.SubjectReference : Return GetType(iptcSubjectReference)
-                Case IPTCTypes.Text : Return GetType(String)
-                Case IPTCTypes.TextWithSpaces : Return GetType(String)
-                Case IPTCTypes.UNO : Return GetType(iptcUNO)
-                Case IPTCTypes.UnsignedBinaryNumber : Return GetType(ULong)
-                Case IPTCTypes.UShort_Binary : Return GetType(UShort)
-                Case Else : Throw New InvalidEnumArgumentException("IPTCType", IPTCType, GetType(IPTCTypes))
+                Case IptcTypes.Alpha : Return GetType(String)
+                Case IptcTypes.AudioType : Return GetType(IptcAudioType)
+                Case IptcTypes.Boolean_Binary : Return GetType(Boolean)
+                Case IptcTypes.BW460 : Return GetType(Drawing.Bitmap)
+                Case IptcTypes.Byte_Binary : Return GetType(Byte)
+                Case IptcTypes.ByteArray : Return GetType(Byte())
+                Case IptcTypes.CCYYMMDD : Return GetType(Date)
+                Case IptcTypes.CCYYMMDDOmmitable : Return GetType(OmmitableDate)
+                Case IptcTypes.Enum_Binary : Return GetType([Enum])
+                Case IptcTypes.Enum_NumChar : Return GetType([Enum])
+                Case IptcTypes.GraphicCharacters : Return GetType(String)
+                Case IptcTypes.HHMMSS : Return GetType(TimeSpan)
+                Case IptcTypes.HHMMSS_HHMM : Return GetType(Time)
+                Case IptcTypes.ImageType : Return GetType(IptcImageType)
+                Case IptcTypes.Num2_Str : Return GetType(NumStr2)
+                Case IptcTypes.Num3_Str : Return GetType(NumStr3)
+                Case IptcTypes.NumericChar : Return GetType(IConvertible)
+                Case IptcTypes.StringEnum : Return GetType(DataStructuresT.GenericT.T1orT2(Of [Enum], String))
+                Case IptcTypes.SubjectReference : Return GetType(IptcSubjectReference)
+                Case IptcTypes.Text : Return GetType(String)
+                Case IptcTypes.TextWithSpaces : Return GetType(String)
+                Case IptcTypes.UNO : Return GetType(IptcUno)
+                Case IptcTypes.UnsignedBinaryNumber : Return GetType(ULong)
+                Case IptcTypes.UShort_Binary : Return GetType(UShort)
+                Case Else : Throw New InvalidEnumArgumentException("IPTCType", IPTCType, GetType(IptcTypes))
             End Select
         End Function
         ''' <summary>Gets details about tag format</summary>
         ''' <param name="Tag">tag to get details for</param>
         ''' <exception cref="InvalidEnumArgumentException">Either <see cref="DataSetIdentification.RecordNumber"/> of <paramref name="Tag"/> is unknown or <see cref="DataSetIdentification.DatasetNumber"/> of <paramref name="Tag"/> is unknown within <see cref="DataSetIdentification.RecordNumber"/> of <paramref name="Tag"/></exception>
-        Public Shared Function GetTag(ByVal Tag As DataSetIdentification) As IPTCTag
+        ''' <version version="1.5.4">Parameter <c>Tag</c> renamed to <c>tag</c></version>
+        Public Shared Function GetTag(ByVal tag As DataSetIdentification) As IptcTag
             Return GetTag(Tag.RecordNumber, Tag.DatasetNumber)
         End Function
         '#Region "Verificators"
@@ -131,7 +137,8 @@ Namespace MetadataT.IptcT
         ''' <returns>Signed integer stored in given byte array</returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="System.IO.EndOfStreamException">There are not enough bytes in <paramref name="Bytes"/></exception>
-        Protected Shared Function IntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As Long
+        ''' <version version="1.5.4">Parameter names changed: <c>Count</c> to <c>count</c>, <c>Bytes</c> to <c>bytes</c></version>
+        Protected Shared Function IntFromBytes(ByVal count As Byte, ByVal bytes As Byte()) As Long
             Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAlign.BigEndian)
             Select Case Count
                 Case 1 'SByte
@@ -152,8 +159,9 @@ Namespace MetadataT.IptcT
         ''' <returns>Unsigned integer stored in given byte array</returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="System.IO.EndOfStreamException">There are not enough bytes in <paramref name="Bytes"/></exception>
+        ''' <version version="1.5.4">Parameter names changed: <c>Count</c> to <c>count</c>, <c>Bytes</c> to <c>bytes</c></version>
         <CLSCompliant(False)> _
-        Protected Shared Function UIntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As ULong
+        Protected Shared Function UIntFromBytes(ByVal count As Byte, ByVal bytes As Byte()) As ULong
             Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAlign.BigEndian)
             Select Case Count
                 Case 1 'Byte
@@ -172,7 +180,8 @@ Namespace MetadataT.IptcT
         ''' <param name="Bytes">Bytest to be converted</param>
         ''' <returns>Number that can be converted at least to <see cref="Long"/> or <see cref="ULong"/></returns>
         ''' <exception cref="InvalidCastException">Cannot convert string stored in <paramref name="Bytes"/> to <see cref="Decimal"/></exception>
-        Protected Shared Function NumCharFromBytes(ByVal Bytes As Byte()) As Decimal
+        ''' <version version="1.5.4">Name of parameter <c>Bytes</c> changed to <c>bytes</c></version>
+        Protected Shared Function NumCharFromBytes(ByVal bytes As Byte()) As Decimal
             Dim Str As String = System.Text.Encoding.ASCII.GetString(Bytes)
             Return Str
         End Function
@@ -187,7 +196,8 @@ Namespace MetadataT.IptcT
         ''' <paramref name="Count"/> is 0 and <paramref name="Fixed"/> is True -or-
         ''' <paramref name="Count"/> is not 0 and number cannot be stored in number of bytes specified in <paramref name="Count"/>
         ''' </exception>
-        Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Number As Decimal, Optional ByVal Fixed As Boolean = True) As Byte()
+        ''' <version version="1.5.4">Parameter names changed to camelCase</version>
+        Protected Shared Function ToBytes(ByVal count As Byte, ByVal number As Decimal, Optional ByVal fixed As Boolean = True) As Byte()
             If Count = 0 And Fixed = True Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBe1When2Is3, "Len", 0, "Fixed", "true"))
             ToBytes = Nothing
             Try
@@ -207,11 +217,13 @@ Namespace MetadataT.IptcT
         ''' <returns>Array of bytes representing <paramref name="Int"/></returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="OverflowAction"><paramref name="Int"/>'s value does not fit into integral value of <paramref name="Count"/> bytes</exception>
-        Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Int As Long) As Byte()
+        ''' <version version="1.5.4">Fixed bug: Method didnt't worked property when <paramref name="Count"/> was 1 (it always stored 0)</version>
+        ''' <version version="1.5.4">Parameter names changed: <c>Count</c> to <c>count</c>, <c>Int</c> to <c>int</c></version>
+        Protected Shared Function ToBytes(ByVal count As Byte, ByVal int As Long) As Byte()
             Dim Str As New System.IO.BinaryWriter(New System.IO.MemoryStream(Count))
             Select Case Count
                 Case 1 'SByte
-                    Str.Write(MathT.LEBE(CSByte(Int)))
+                    Str.Write(CSByte(Int))
                 Case 2 'Short
                     Str.Write(MathT.LEBE(CShort(Int)))
                 Case 4 'Integer
@@ -232,24 +244,26 @@ Namespace MetadataT.IptcT
         ''' <returns>Array of bytes representing <paramref name="Int"/></returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="OverflowAction"><paramref name="Int"/>'s value does not fit into integral value of <paramref name="Count"/> bytes</exception>
-        <CLSCompliant(False)> _
-        Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Int As ULong) As Byte()
-            Dim Str As New System.IO.BinaryWriter(New System.IO.MemoryStream(Count))
-            Select Case Count
+        ''' <version version="1.5.4">Fixed bug: Method didnt't worked property when <paramref name="Count"/> was 1 (it always stored 0)</version>
+        ''' <version version="1.5.4">Parameter names changed: <c>Count</c> to <c>count</c>, <c>Int</c> to <c>int</c></version>
+        <CLSCompliant(False)>
+        Protected Shared Function ToBytes(ByVal count As Byte, ByVal int As ULong) As Byte()
+            Dim Str As New System.IO.BinaryWriter(New System.IO.MemoryStream(count))
+            Select Case count
                 Case 1 'SByte
-                    Str.Write(MathT.LEBE(CByte(Int)))
+                    Str.Write(CByte(int))
                 Case 2 'Short
-                    Str.Write(MathT.LEBE(CUShort(Int)))
+                    Str.Write(MathT.LEBE(CUShort(int)))
                 Case 4 'Integer
-                    Str.Write(MathT.LEBE(CUInt(Int)))
+                    Str.Write(MathT.LEBE(CUInt(int)))
                 Case 8 'Long
-                    Str.Write(MathT.LEBE(CULng(Int)))
+                    Str.Write(MathT.LEBE(CULng(int)))
                 Case Else
                     Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Only124And8BytesIntegersCanBeReadVia0, "ToBytes"))
             End Select
-            Dim Arr(Count - 1) As Byte
+            Dim Arr(count - 1) As Byte
             Dim Buff As Byte() = DirectCast(Str.BaseStream, System.IO.MemoryStream).GetBuffer
-            Array.ConstrainedCopy(Buff, 0, Arr, 0, Count)
+            Array.ConstrainedCopy(Buff, 0, Arr, 0, count)
             Return Arr
         End Function
 #End Region

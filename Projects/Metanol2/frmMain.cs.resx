@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="llbLarge.Size" type="System.Drawing.Size, System.Drawing">
     <value>33, 13</value>
   </data>
@@ -151,6 +151,9 @@
   <data name="fraTitle.Text" xml:space="preserve">
     <value>Název</value>
   </data>
+  <data name="lblCity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>37, 3</value>
+  </data>
   <data name="lblCity.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 13</value>
   </data>
@@ -160,6 +163,9 @@
   <data name="txtCity.Location" type="System.Drawing.Point, System.Drawing">
     <value>73, 0</value>
   </data>
+  <data name="lblCountryCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 24</value>
+  </data>
   <data name="lblCountryCode.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
   </data>
@@ -168,6 +174,9 @@
   </data>
   <data name="cmbCountryCode.Location" type="System.Drawing.Point, System.Drawing">
     <value>73, 20</value>
+  </data>
+  <data name="lblCountry.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 44</value>
   </data>
   <data name="lblCountry.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 13</value>
@@ -186,6 +195,9 @@
   </data>
   <data name="txtProvince.Location" type="System.Drawing.Point, System.Drawing">
     <value>73, 61</value>
+  </data>
+  <data name="lblSublocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 84</value>
   </data>
   <data name="lblSublocation.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 13</value>
@@ -223,8 +235,17 @@
   <data name="fraAuthor.Text" xml:space="preserve">
     <value>Autor</value>
   </data>
+  <data name="lblEditStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 3</value>
+  </data>
   <data name="lblEditStatus.Text" xml:space="preserve">
     <value>Ed&amp;it status</value>
+  </data>
+  <data name="txtEditStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>67, 0</value>
+  </data>
+  <data name="lblUrgency.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 23</value>
   </data>
   <data name="lblUrgency.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 13</value>
@@ -232,38 +253,149 @@
   <data name="lblUrgency.Text" xml:space="preserve">
     <value>Ur&amp;gence</value>
   </data>
+  <data name="nudUrgency.Location" type="System.Drawing.Point, System.Drawing">
+    <value>67, 20</value>
+  </data>
+  <data name="lblTechnicalRating.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 44</value>
+  </data>
+  <data name="lblTechnicalRating.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 13</value>
+  </data>
+  <data name="lblTechnicalRating.Text" xml:space="preserve">
+    <value>Te&amp;chnicky</value>
+  </data>
+  <data name="rtgTechnical.Items21" xml:space="preserve">
+    <value>&lt;not rated&gt;</value>
+  </data>
+  <data name="rtgTechnical.Items22" xml:space="preserve">
+    <value>☆☆☆☆☆ - rejected</value>
+  </data>
+  <data name="rtgTechnical.Items23" xml:space="preserve">
+    <value>★☆☆☆☆1</value>
+  </data>
+  <data name="rtgTechnical.Items24" xml:space="preserve">
+    <value>★★☆☆☆2</value>
+  </data>
+  <data name="rtgTechnical.Items25" xml:space="preserve">
+    <value>★★★☆☆3</value>
+  </data>
+  <data name="rtgTechnical.Items26" xml:space="preserve">
+    <value>★★★★☆4</value>
+  </data>
+  <data name="rtgTechnical.Items27" xml:space="preserve">
+    <value>★★★★★5</value>
+  </data>
+  <data name="rtgTechnical.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 40</value>
+  </data>
+  <data name="lblArtRating.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 65</value>
+  </data>
+  <data name="lblArtRating.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 13</value>
+  </data>
+  <data name="lblArtRating.Text" xml:space="preserve">
+    <value>Umě&amp;lecky</value>
+  </data>
+  <data name="rtgArt.Items21" xml:space="preserve">
+    <value>&lt;not rated&gt;</value>
+  </data>
+  <data name="rtgArt.Items22" xml:space="preserve">
+    <value>☆☆☆☆☆ - rejected</value>
+  </data>
+  <data name="rtgArt.Items23" xml:space="preserve">
+    <value>★☆☆☆☆1</value>
+  </data>
+  <data name="rtgArt.Items24" xml:space="preserve">
+    <value>★★☆☆☆2</value>
+  </data>
+  <data name="rtgArt.Items25" xml:space="preserve">
+    <value>★★★☆☆3</value>
+  </data>
+  <data name="rtgArt.Items26" xml:space="preserve">
+    <value>★★★★☆4</value>
+  </data>
+  <data name="rtgArt.Items27" xml:space="preserve">
+    <value>★★★★★5</value>
+  </data>
+  <data name="rtgArt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 61</value>
+  </data>
+  <data name="lblInfoRating.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 86</value>
+  </data>
+  <data name="rtgInfo.Items21" xml:space="preserve">
+    <value>&lt;not rated&gt;</value>
+  </data>
+  <data name="rtgInfo.Items22" xml:space="preserve">
+    <value>☆☆☆☆☆ - rejected</value>
+  </data>
+  <data name="rtgInfo.Items23" xml:space="preserve">
+    <value>★☆☆☆☆1</value>
+  </data>
+  <data name="rtgInfo.Items24" xml:space="preserve">
+    <value>★★☆☆☆2</value>
+  </data>
+  <data name="rtgInfo.Items25" xml:space="preserve">
+    <value>★★★☆☆3</value>
+  </data>
+  <data name="rtgInfo.Items26" xml:space="preserve">
+    <value>★★★★☆4</value>
+  </data>
+  <data name="rtgInfo.Items27" xml:space="preserve">
+    <value>★★★★★5</value>
+  </data>
+  <data name="rtgInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 82</value>
+  </data>
+  <data name="lblOverallRating.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 107</value>
+  </data>
+  <data name="lblOverallRating.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 13</value>
+  </data>
+  <data name="lblOverallRating.Text" xml:space="preserve">
+    <value>Dohromad&amp;y</value>
+  </data>
+  <data name="rtgOverall.Items21" xml:space="preserve">
+    <value>&lt;not rated&gt;</value>
+  </data>
+  <data name="rtgOverall.Items22" xml:space="preserve">
+    <value>☆☆☆☆☆ - rejected</value>
+  </data>
+  <data name="rtgOverall.Items23" xml:space="preserve">
+    <value>★☆☆☆☆1</value>
+  </data>
+  <data name="rtgOverall.Items24" xml:space="preserve">
+    <value>★★☆☆☆2</value>
+  </data>
+  <data name="rtgOverall.Items25" xml:space="preserve">
+    <value>★★★☆☆3</value>
+  </data>
+  <data name="rtgOverall.Items26" xml:space="preserve">
+    <value>★★★★☆4</value>
+  </data>
+  <data name="rtgOverall.Items27" xml:space="preserve">
+    <value>★★★★★5</value>
+  </data>
+  <data name="rtgOverall.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 103</value>
+  </data>
+  <data name="tlpStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>265, 124</value>
+  </data>
   <data name="fraStatus.Location" type="System.Drawing.Point, System.Drawing">
     <value>196, 159</value>
+  </data>
+  <data name="fraStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>267, 140</value>
   </data>
   <data name="tapCommon.Text" xml:space="preserve">
     <value>Obvyklé</value>
   </data>
   <data name="tapExifMain.Text" xml:space="preserve">
     <value>Obrázek</value>
-  </data>
-  <data name="prgExifExif.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
-  </data>
-  <data name="tapExifExif.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
-  </data>
-  <data name="prgExifGPS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
-  </data>
-  <data name="tapExifGPS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
-  </data>
-  <data name="prgExifInterop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
-  </data>
-  <data name="tapExifInterop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
-  </data>
-  <data name="prgExifThumbnail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 36</value>
-  </data>
-  <data name="tapExifThumbnail.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 42</value>
   </data>
   <data name="tapExifThumbnail.Text" xml:space="preserve">
     <value>Miniatura</value>
@@ -276,25 +408,6 @@
   </data>
   <data name="tslNoFiles.Text" xml:space="preserve">
     <value>0 souborů</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tosMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="tsbBack.Text" xml:space="preserve">
-    <value>Jít zpět</value>
-  </data>
-  <data name="tsbForward.Text" xml:space="preserve">
-    <value>Jít vpřed</value>
-  </data>
-  <data name="tsbRefresh.Text" xml:space="preserve">
-    <value>Obnovit adresář</value>
-  </data>
-  <data name="tsbSaveAll.Text" xml:space="preserve">
-    <value>Uložit vše</value>
-  </data>
-  <data name="msnMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
   </data>
   <data name="tmiBrowse.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 22</value>
@@ -353,17 +466,8 @@
   <data name="tmiView.Text" xml:space="preserve">
     <value>Zo&amp;brazit</value>
   </data>
-  <data name="tmiOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 22</value>
-  </data>
   <data name="tmiOptions.Text" xml:space="preserve">
     <value>&amp;Nastavení ...</value>
-  </data>
-  <data name="SynchronizeWithDatabaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 22</value>
-  </data>
-  <data name="SynchronizeWithDatabaseToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Synchronizovat s databází ...</value>
   </data>
   <data name="tmiTools.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 20</value>
@@ -388,6 +492,18 @@
   </data>
   <data name="tmiHelp.Text" xml:space="preserve">
     <value>Nápo&amp;věda</value>
+  </data>
+  <data name="tsbBack.Text" xml:space="preserve">
+    <value>Jít zpět</value>
+  </data>
+  <data name="tsbForward.Text" xml:space="preserve">
+    <value>Jít vpřed</value>
+  </data>
+  <data name="tsbRefresh.Text" xml:space="preserve">
+    <value>Obnovit adresář</value>
+  </data>
+  <data name="tsbSaveAll.Text" xml:space="preserve">
+    <value>Uložit vše</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

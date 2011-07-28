@@ -1762,8 +1762,8 @@
     <record number="5" name="NotAllocated5" human-name="Not Allocated (5)">
         <desc>Unallocated IPTC Record. <see cref="MetadataT.IptcT"/> uses it for custom proprietary properties.</desc>
         <version version="1.5.4">This record is added in version 1.5.4</version>
-        <tag number="101" name="OverlallRating" human-name="Overall Rating" category="Status" fixed="true" mandatory="false" repeatable="false" type="Enum-binary" length="1" enum="CustomRating">
-            <desc>Overll rating of the subject</desc>
+        <tag number="101" name="OverallRating" human-name="Overall Rating" category="Status" fixed="true" mandatory="false" repeatable="false" type="Enum-binary" length="1" enum="CustomRating">
+            <desc>Overall rating of the subject</desc>
             <remarks>This property is not part of IPTC IIM standard and other software may ignore or remove it.</remarks>
             <version version="1.5.4">This property is new in version 1.5.4</version>
         </tag>

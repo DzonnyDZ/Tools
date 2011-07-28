@@ -12,14 +12,14 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <xsl:output method="text" version="1.0" encoding="UTF-8" indent="no" omit-xml-declaration="yes"/>
 
     <!-- parameters passed in by the TransformCodeGenerator -->
-    <xsl:param name="generator"></xsl:param>
-    <xsl:param name="version"></xsl:param>
-    <xsl:param name="fullfilename"></xsl:param>
-    <xsl:param name="filename"></xsl:param>
-    <xsl:param name="date-created"></xsl:param>
-    <xsl:param name="created-by"></xsl:param>
-    <xsl:param name="namespace"></xsl:param>
-    <xsl:param name="classname"></xsl:param>
+    <xsl:param name="generator"/>
+    <xsl:param name="version"/>
+    <xsl:param name="fullfilename"/>
+    <xsl:param name="filename"/>
+    <xsl:param name="date-created"/>
+    <xsl:param name="created-by"/>
+    <xsl:param name="namespace"/>
+    <xsl:param name="classname"/>
 
     <!--Header templates:_-->
     <!--Main template-->
@@ -1947,19 +1947,23 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
 
     <xsl:template name="replace">
         <!--Replaces all occurences of one string with different-->
-        <!--TODO: This does not work as expected-->
         <xsl:param name="str"/>
         <xsl:param name="search"/>
         <xsl:param name="replace"/>
-        <xsl:if test="contains($str,$search)">
-            <xsl:variable name="rest">
-                <xsl:call-template name="replace">
-                    <xsl:with-param name="str" select="substring-after($str,$search)"/>
-                    <xsl:with-param name="search" select="$search"/>
-                    <xsl:with-param name="replace" select="$replace"/>
-                </xsl:call-template>
-            </xsl:variable>
-            <xsl:value-of select="concat(substring-before($str,$search),$replace,$rest)"/>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="contains($str,$search)">
+                <xsl:variable name="rest">
+                    <xsl:call-template name="replace">
+                        <xsl:with-param name="str" select="substring-after($str,$search)"/>
+                        <xsl:with-param name="search" select="$search"/>
+                        <xsl:with-param name="replace" select="$replace"/>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:value-of select="concat(substring-before($str,$search),$replace,$rest)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$str"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

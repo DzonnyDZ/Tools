@@ -59,5 +59,9 @@
     <vh:Version Major="1" Minor="5" Build="4">
         <vh:i>Added documentation for development tools - EXE command line tools and Visual Studio Custom Tools</vh:i>
         <vh:i>Total Commander WFX plugin framework extended for Crypto and background transfers.</vh:i>
+	<vh:i>Added support for WLX (Lister) plugins for Total Commander</vh:i>
+	<vh:i>Created binding to Unicode Character Database XML</vh:i>
+	<vh:i>Assembly Postrocessor tool that allows you to manipulate compiled assembly</vh:i>
+	<vh:i>Implemented IPTC IIM Record No. 3 properties</vh:i>
     </vh:Version>
 </vh:VersionHistory>

@@ -338,4 +338,10 @@
   <data name="CSV" xml:space="preserve">
     <value>CSV</value>
   </data>
+  <data name="NotRated" xml:space="preserve">
+    <value>&lt;not rated&gt;</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>☆☆☆☆☆ - rejected</value>
+  </data>
 </root>
