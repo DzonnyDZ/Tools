@@ -12,9 +12,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Metanol")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyCompany("Đonny")> 
 <Assembly: AssemblyProduct("Metanol")> 
-<Assembly: AssemblyCopyright("Copyright © Đonny 2007÷2008")> 
+<Assembly: AssemblyCopyright("Copyright © Đonny 2007÷2011")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 
@@ -34,6 +34,6 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 
-<Assembly: NeutralResourcesLanguage("en-US")> 
-<Assembly: AssemblyVersion("2.0.6.0")> 
-<Assembly: AssemblyFileVersion("2.0.6.0")> 
+<Assembly: NeutralResourcesLanguage("en")> 
+<Assembly: AssemblyVersion("2.0.7.0")> 
+<Assembly: AssemblyFileVersion("2.0.7.0")> 

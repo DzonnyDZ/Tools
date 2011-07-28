@@ -1262,13 +1262,13 @@ Namespace MetadataT.IptcT
 			''' <summary>User rated the subject with 1 star</summary>
 			<FieldDisplayName("*")> Star1 = 1
 			''' <summary>User rated the subject with 2 stars</summary>
-			<FieldDisplayName("*")> Star2 = 2
+            <FieldDisplayName("**")> Star2 = 2
 			''' <summary>User rated the subject with 3 stars</summary>
-			<FieldDisplayName("*")> Star3 = 3
+            <FieldDisplayName("***")> Star3 = 3
 			''' <summary>User rated the subject with 4 stars</summary>
-			<FieldDisplayName("*")> Star4 = 4
+            <FieldDisplayName("****")> Star4 = 4
 			''' <summary>User rated the subject with 5 stars</summary>
-			<FieldDisplayName("*")> Star5 = 5
+            <FieldDisplayName("*****")> Star5 = 5
 		End Enum
 		''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</summary>
 		<Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of EconomySubjectDetail)))> Public Enum EconomySubjectDetail As Integer

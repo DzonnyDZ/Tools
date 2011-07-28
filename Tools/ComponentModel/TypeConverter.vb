@@ -622,6 +622,7 @@ Namespace ComponentModelT
         ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
         ''' <param name="value">Value to be converted to type <typeparamref name="T"/></param>
         ''' <returns>Value of type <typeparamref name="T"/> initialized by <paramref name="value"/></returns>
+        ''' <version version="1.5.4">Added fallback support - <paramref name="value"/> can be now also any value that <see cref="[Enum].Parse"/> works with.</version>
         Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As T
             For Each cns As Reflection.FieldInfo In GetType(T).GetFields
                 If cns.IsLiteral AndAlso cns.IsPublic Then
@@ -633,8 +634,14 @@ Namespace ComponentModelT
                     End If
                 End If
             Next cns
+            Dim ev As T? = Nothing
+            Dim ev2 As T
+            If [Enum].TryParse(Of T)(value, ev2) Then ev = ev2
             Dim Rest As RestrictAttribute = GetAttribute(Of RestrictAttribute)(GetType(T))
-            If Rest Is Nothing OrElse Rest.Restrict Then
+            If ev.HasValue Then
+                If (Rest Is Nothing OrElse Rest.Restrict) AndAlso Not DirectCast(CObj(ev), [Enum]).IsDefined Then Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.CannotInterpretValue0As1, value, GetType(T).Name))
+                Return ev.Value
+            ElseIf Rest Is Nothing OrElse Rest.Restrict Then
                 Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.CannotInterpretValue0As1, value, GetType(T).Name))
             Else
                 Dim EType As Type = [Enum].GetUnderlyingType(GetType(T))

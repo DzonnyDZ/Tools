@@ -1,0 +1,150 @@
+﻿<UserControl x:Class="Rating"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:Tools.Metanol"
+             mc:Ignorable="d" 
+             Height="auto" Width="auto"
+             >
+    <UserControl.Resources>
+        <Style TargetType="{x:Type ToggleButton}" x:Key="bbase">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Yellow" />
+            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"/>
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource bbase}" x:Key="star">
+            <Setter Property="Content" Value="★"/>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Content" Value="☆"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <ToggleButton Name="btnNotRated" Content="?" Foreground="Blue" FontWeight="Bold" >
+            <ToggleButton.Style>
+                <Style BasedOn="{StaticResource bbase}" TargetType="{x:Type ToggleButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="NotRated">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+        <ToggleButton Name="btnRejected" Content="✖" Foreground="Red">
+            <ToggleButton.Style>
+                <Style BasedOn="{StaticResource bbase}" TargetType="{x:Type ToggleButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Rejected">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+        <ToggleButton Name="btn1">
+            <ToggleButton.Style>
+                <Style BasedOn="{StaticResource star}" TargetType="{x:Type ToggleButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star1">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star2">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star3">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star4">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star5">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Content" Value="☆"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+        <ToggleButton Name="btn2">
+            <ToggleButton.Style>
+                <Style BasedOn="{StaticResource star}" TargetType="{x:Type ToggleButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star2">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star3">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star4">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star5">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Content" Value="☆"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+        <ToggleButton Name="btn3">
+            <ToggleButton.Style>
+                <Style BasedOn="{StaticResource star}" TargetType="{x:Type ToggleButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star3">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star4">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star5">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Content" Value="☆"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+        <ToggleButton Name="btn4">
+            <ToggleButton.Style>
+                <Style BasedOn="{StaticResource star}" TargetType="{x:Type ToggleButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star4">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star5">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Content" Value="☆"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+        <ToggleButton Name="btn5">
+            <ToggleButton.Style>
+                <Style BasedOn="{StaticResource star}" TargetType="{x:Type ToggleButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:Rating}}, Path=Rating}" Value="Star5">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Content" Value="☆"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
+        </ToggleButton>
+    </StackPanel>
+</UserControl>

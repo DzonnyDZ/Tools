@@ -1,0 +1,3 @@
+﻿Class BrowserWindow
+
+End Class
