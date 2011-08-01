@@ -8,7 +8,8 @@
         ''' <summary>Gets value indicating if metadata of particular type are provided by this provider</summary>
         ''' <param name="MetadataName">Name of metadata type</param>
         ''' <returns>True if this provider contains metadata with given name</returns>
-        Function Contains(ByVal MetadataName$) As Boolean
+        ''' <version version="1.5.4">Parameter <c>MetadataName</c> renamed to <c>metadataName</c></version>
+        Function Contains(ByVal metadataName$) As Boolean
         ''' <summary>Gets names of metadata actually contained in metadata source represented by this provider</summary>
         ''' <returns>Names of metadata usefull with the <see cref="Metadata"/> function. Never returns null; may return an empty enumeration.</returns>
         Function GetContainedMetadataNames() As IEnumerable(Of String)
@@ -18,7 +19,8 @@
         ''' <summary>Gets metadata of particular type</summary>
         ''' <param name="MetadataName">Name of metadata to get (see <see cref="GetSupportedMetadataNames"/> for possible values)</param>
         ''' <returns>Metadata of requested type; or null if metadata of type <paramref name="MetadataName"/> are not contained in this instance or are not supported by this provider.</returns>
-        Default ReadOnly Property Metadata(ByVal MetadataName$) As IMetadata
+        ''' <version version="1.5.4">Parameter <c>MetadataName</c> renamed to <c>metadataName</c></version>
+        Default ReadOnly Property Metadata(ByVal metadataName$) As IMetadata
     End Interface
     ''' <summary>Represents kind of metadata provided by metadata provider (such as Exif or ID3)</summary>
     ''' <remarks>Purpose of this interface is read-only metadata retrieval</remarks>
@@ -34,13 +36,15 @@
         ''' <returns>Value of metadata item with given key; or null if given metadata value is not supported</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
         ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
-        Default ReadOnly Property Value(ByVal Key$) As Object
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Default ReadOnly Property Value(ByVal key$) As Object
         ''' <summary>Gets value indicating wheather metadata value with given key is present in current instance</summary>
         ''' <param name="Key">Key (or name) to check presence of (see <see cref="GetPredefinedKeys"/> for possible values)</param>
         ''' <returns>True when value for given key is present; false otherwise</returns>
         ''' <remarks>The <paramref name="Key"/> parameter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
-        Function ContainsKey(ByVal Key$) As Boolean
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Function ContainsKey(ByVal key$) As Boolean
         ''' <summary>Gets keys of all the metadata present in curent instance</summary>
         ''' <returns>Keys in metadata-specific format of all the metadata present in curent instance. Never returns null; may return anempt enumeration.</returns>
         Function GetContainedKeys() As IEnumerable(Of String)

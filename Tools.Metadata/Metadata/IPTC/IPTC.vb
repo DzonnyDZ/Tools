@@ -38,7 +38,8 @@ Namespace MetadataT.IptcT
 
         ''' <summary>CTor from <see cref="IPTCReader"/></summary>
         ''' <param name="Reader"><see cref="IPTCReader"/> to read all tags from</param>
-        Public Sub New(ByVal Reader As IptcReader)
+        ''' <version version="1.5.4">Parameter <c>Reader</c> renamed to <c>reader</c></version>
+        Public Sub New(ByVal reader As IptcReader)
             Me.New()
             For Each t As IptcRecord In Reader.Records
                 Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(DataSetIdentification.GetKnownDataSet(t.RecordNumber, t.Tag), t.Data))
@@ -49,7 +50,8 @@ Namespace MetadataT.IptcT
         ''' <param name="TagNumber">Number of tag within <paramref name="Record"></paramref></param>
         ''' <exception cref="InvalidEnumArgumentException">
         ''' <paramref name="Record"></paramref> is not member of <see cref="RecordNumbers"></see> -or- <paramref name="TagNumber"></paramref> is not tag within <paramref name="record"></paramref></exception>
-        Public Shared Function GetTag(ByVal Record As RecordNumbers, ByVal TagNumber As Byte) As IptcTag
+        ''' <version version="1.5.4">Parameters renamed: <c>Record</c> to <c>record</c>, <c>TagNumber</c> to <c>tagNumber</c></version>
+        Public Shared Function GetTag(ByVal record As RecordNumbers, ByVal tagNumber As Byte) As IptcTag
             Dim lUseThisGroup As GroupInfo = Nothing
             Return GetTag(Record, TagNumber, lUseThisGroup)
         End Function
@@ -58,12 +60,14 @@ Namespace MetadataT.IptcT
         ''' <exception cref="ArgumentNullException"><paramref name="Getter"/> is null</exception>
         ''' <exception cref="IO.InvalidDataException">Tag marker other than 1Ch found</exception>
         ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
-        Public Sub New(ByVal Getter As IIptcGetter)
+        ''' <version version="1.5.4">Parameter <c>Getter</c> renamed to <c>getter</c></version>
+        Public Sub New(ByVal getter As IIptcGetter)
             Me.New(New IptcReader(Getter))
         End Sub
         ''' <summary>Removes all occurences of specified tag</summary>         
         ''' <param name="Key">Tag to remove</param>                            
-        Public Overridable Sub Clear(ByVal Key As DataSetIdentification)
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Overridable Sub Clear(ByVal key As DataSetIdentification)
             _Tags.RemoveAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
         End Sub
         ''' <summary>Removes all tags</summary>
@@ -72,7 +76,8 @@ Namespace MetadataT.IptcT
         End Sub
         ''' <summary>Gets count of tags with specified key</summary>
         ''' <param name="Key">DataSet identification to count tags with</param>
-        Public Function Contains(ByVal Key As DataSetIdentification) As Integer
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function Contains(ByVal key As DataSetIdentification) As Integer
             Return _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key)).Count
         End Function
         ''' <summary>Called when value of any tag changes</summary>
@@ -81,7 +86,8 @@ Namespace MetadataT.IptcT
         ''' <para>Called by <see cref="Tag"/>'s setter.</para>
         ''' <para>Note for inheritors: Call base class method in order to automatically compute size of embdeded file and invalidate cache for <see cref="BW460_Value"/></para>
         ''' </remarks>
-        Protected Overridable Sub OnValueChanged(ByVal Tag As DataSetIdentification)
+        ''' <version version="1.5.4">Parameter <c>Tag</c> renamed to <c>tag</c></version>
+        Protected Overridable Sub OnValueChanged(ByVal tag As DataSetIdentification)
             Select Case Tag
                 Case DataSetIdentification.Subfile 'Subfile - change corresponding tags
                     Dim Subfile As Byte() = Me.Subfile
@@ -111,8 +117,9 @@ Namespace MetadataT.IptcT
         ''' <value>New values for particular tag. Values of tags are replaced with new values. If there was more tags with same <paramref name="Key"/> than is being set then the next tags are removed. If there was less tags with same <paramref name="Key"/> necessary items are added at the end of the stream</value>
         ''' <returns>List of values of tag or null if tag is missing</returns>
         ''' <exception cref="NotSupportedException">Setting byte array longer then 32767</exception>
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Default Protected Property Tag(ByVal Key As DataSetIdentification) As List(Of Byte())
+        Default Protected Property Tag(ByVal key As DataSetIdentification) As List(Of Byte())
             Get
                 Dim ret As List(Of KeyValuePair(Of DataSetIdentification, Byte())) = _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
                 If ret IsNot Nothing AndAlso ret.Count > 0 Then
@@ -208,7 +215,8 @@ Namespace MetadataT.IptcT
         ''' <returns>Parsed key</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> is not predefined key (or <paramref name="TryPredefined"/> is false) and is in invalid format for <see cref="DataSetIdentification"/>.</exception>
         ''' <version version="1.5.2">Function introduced</version>
-        Private Function ParseKey(ByVal Key As String, Optional ByVal TryPredefined As Boolean = True) As DataSetIdentification
+        ''' <version version="1.5.4">Parameter names converted to camelCase</version>
+        Private Function ParseKey(ByVal key As String, Optional ByVal tryPredefined As Boolean = True) As DataSetIdentification
             If TryPredefined Then
                 Dim Ret As DataSetIdentification? = KeyFromPredefinedName(Key)
                 If Ret.HasValue Then Return Ret.Value
@@ -223,7 +231,8 @@ Namespace MetadataT.IptcT
         ''' <param name="Key">Name of dataset identification to get</param>
         ''' <returns>Dataset identification or null if no dataset identification with given <see cref="DataSetIdentification.PropertyName"/> is in <see cref="DataSetIdentification.KnownDataSets"/>.</returns>
         ''' <version version="1.5.2">Function introduced</version>
-        Private Function KeyFromPredefinedName(ByVal Key$) As DataSetIdentification?
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Private Function KeyFromPredefinedName(ByVal key$) As DataSetIdentification?
             Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = Key Select New DataSetIdentification?(dsi)).FirstOrDefault
         End Function
 
@@ -233,7 +242,8 @@ Namespace MetadataT.IptcT
         ''' <remarks>The <paramref name="Key"/> parameter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
         ''' <version version="1.5.2">Function introduced</version>
-        Public Function ContainsKey(ByVal Key As String) As Boolean Implements IMetadata.ContainsKey
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function ContainsKey(ByVal key As String) As Boolean Implements IMetadata.ContainsKey
             Return Me.Contains(ParseKey(Key))
         End Function
 
@@ -249,7 +259,8 @@ Namespace MetadataT.IptcT
         ''' <returns>Localized description of purpose of metadata item identified by <paramref name="Key"/>; nul when description is not available.</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> is in invalid format or it is not one of predefined names.</exception>
         ''' <version version="1.5.2">Function introduced</version>
-        Public Function GetDescription(ByVal Key As String) As String Implements IMetadata.GetDescription
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function GetDescription(ByVal key As String) As String Implements IMetadata.GetDescription
             Dim KeyDsi = ParseKey(Key)
             Dim PropertyName = GetNameOfKey(KeyDsi.ToString)
             If PropertyName Is Nothing Then Return Nothing
@@ -265,7 +276,8 @@ Namespace MetadataT.IptcT
         ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="Key"/>; null when no such name is defined/known.</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid formar or it is not one of predefined names.</exception>
         ''' <version version="1.5.2">Function introduced</version>
-        Public Function GetHumanName(ByVal Key As String) As String Implements IMetadata.GetHumanName
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function GetHumanName(ByVal key As String) As String Implements IMetadata.GetHumanName
             Dim KeyDsi = ParseKey(Key)
             Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.RecordNumber Select dsi.DisplayName).FirstOrDefault
         End Function
@@ -275,7 +287,8 @@ Namespace MetadataT.IptcT
         ''' <returns>Key in metadata-specific format for given predefined metadata item name</returns>
         ''' <exception cref="ArgumentException"><paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
         ''' <version version="1.5.2">Function introduced</version>
-        Public Function GetKeyOfName(ByVal Name As String) As String Implements IMetadata.GetKeyOfName
+        ''' <version version="1.5.4">Parameter <c>Name</c> renamed to <c>name</c></version>
+        Public Function GetKeyOfName(ByVal name As String) As String Implements IMetadata.GetKeyOfName
             Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = Name Select Key = dsi.ToString).FirstOrDefault
         End Function
 
@@ -284,7 +297,8 @@ Namespace MetadataT.IptcT
         ''' <returns>One of predefined names to use instead of <paramref name="Key"/>; null when given key has no corresponding name.</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format</exception>
         ''' <version version="1.5.2">Function introduced</version>
-        Public Function GetNameOfKey(ByVal Key As String) As String Implements IMetadata.GetNameOfKey
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function GetNameOfKey(ByVal key As String) As String Implements IMetadata.GetNameOfKey
             Dim KeyDsi = ParseKey(Key, False)
             Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.RecordNumber Select dsi.PropertyName).FirstOrDefault
         End Function
@@ -323,7 +337,8 @@ Namespace MetadataT.IptcT
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
         ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <version version="1.5.2">Property introduced</version>
-        Public Overloads ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Overloads ReadOnly Property Value(ByVal key As String) As Object Implements IMetadata.Value
             Get
                 Return Me.GetTypedValue(ParseKey(Key))
             End Get
@@ -334,7 +349,8 @@ Namespace MetadataT.IptcT
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
         ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <version version="1.5.2">Function introduced</version>
-        Public Function GetStringValue(ByVal Key As String) As String Implements IMetadata.GetStringValue
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function GetStringValue(ByVal key As String) As String Implements IMetadata.GetStringValue
             Dim ret = Value(Key)
             If ret Is Nothing Then Return Nothing
             If TypeOf ret Is IEnumerable(Of Byte) Then
@@ -361,7 +377,8 @@ Namespace MetadataT.IptcT
     Public MustInherit Class IptcException : Inherits Exception
         ''' <summary>CTor</summary>
         ''' <param name="InnerException">Inner exception</param>
-        Friend Sub New(ByVal InnerException As Exception)
+        ''' <version version="1.5.4">Parameter <c>InnerException</c> renamed to <c>innerException</c></version>
+        Friend Sub New(ByVal innerException As Exception)
             MyBase.New(InnerException.Message, InnerException)
         End Sub
     End Class
@@ -369,7 +386,8 @@ Namespace MetadataT.IptcT
     Public Class IptcGetException : Inherits IptcException
         ''' <summary>CTor</summary>
         ''' <param name="InnerException">Inner exception</param>
-        Public Sub New(ByVal InnerException As Exception)
+        ''' <version version="1.5.4">Parameter <c>InnerException</c> renamed to <c>innerException</c></version>
+        Public Sub New(ByVal innerException As Exception)
             MyBase.New(InnerException)
         End Sub
     End Class
@@ -377,6 +395,7 @@ Namespace MetadataT.IptcT
     Public Class IptcSetException : Inherits IptcException
         ''' <summary>CTor</summary>
         ''' <param name="InnerException">Inner exception</param>
+        ''' <version version="1.5.4">Parameter <c>InnerException</c> renamed to <c>innerException</c></version>
         Public Sub New(ByVal InnerException As Exception)
             MyBase.New(InnerException)
         End Sub
@@ -385,7 +404,8 @@ Namespace MetadataT.IptcT
     ''' <summary>Identifies IPTC tag (DataSet). Used for indexing.</summary>
     ''' <completionlist cref="DataSetIdentification"/>
     <DebuggerDisplay("{RecordNumber}:{DatasetNumber} {DisplayName}")> _
-    Partial Public Structure DataSetIdentification : Implements IPair(Of RecordNumbers, Byte), IEquatable(Of IPair(Of RecordNumbers, Byte)), ICloneable(Of DataSetIdentification)
+    Partial Public Structure DataSetIdentification
+        Implements IPair(Of RecordNumbers, Byte), IEquatable(Of IPair(Of RecordNumbers, Byte)), ICloneable(Of DataSetIdentification)
 #Region "Parse"
         ''' <summary>CTor form string representation</summary>
         ''' <param name="RecordAndDataSet">String representation in format "RecordNumber:DatasetNumber"</param>
@@ -395,7 +415,8 @@ Namespace MetadataT.IptcT
         ''' <exception cref="ArgumentOutOfRangeException">RecordNumber-part is greater than 9</exception> 
         ''' <seelaso cref="Parse"/>
         ''' <version version="1.5.2">Constructor introduced</version>
-        Public Sub New(ByVal RecordAndDataSet As String)
+        ''' <version version="1.5.4">Parameter <c>RecordAndDataSet</c> renamed to <c>recordAndDataSet</c></version>
+        Public Sub New(ByVal recordAndDataSet As String)
             If RecordAndDataSet Is Nothing Then Throw New ArgumentNullException("RecordAndDataSet")
             Dim parts = RecordAndDataSet.Split(":"c)
             If parts.Length <> 2 Then Throw New FormatException(ResourcesT.Exceptions.String0IsNotValid1.f(RecordAndDataSet, GetType(DataSetIdentification).Name))
@@ -408,8 +429,9 @@ Namespace MetadataT.IptcT
         ''' <exception cref="formatexception"><paramref name="Value"/> does not contain 2 :-separated parts -or- any part of <paramref name="Value"/> is not in correct format for <see cref="Int32.Parse"/> in invariant culture.</exception>
         ''' <exception cref="overflowexception">Any part of <paramref name="Value"/> does not fit to <see cref="Int32"/> data type or to <see cref="Byte"/> data type.</exception>
         ''' <exception cref="ArgumentOutOfRangeException">RecordNumber-part is greater than 9</exception> 
-        ''' <version version="1.5.2">Function introduced</version>
         ''' <seelaso cref="TryParse"/>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <version version="1.5.4">Parameter <c>Value</c> renamed to <c>value</c></version>
         Public Shared Function Parse(ByVal Value As String) As DataSetIdentification
             Return New DataSetIdentification(Value)
         End Function
@@ -419,7 +441,8 @@ Namespace MetadataT.IptcT
         ''' <returns>True when successfull; false when <paramref name="Value"/> is invalid.</returns>
         ''' <seelaso cref="Parse"/>
         ''' <version version="1.5.2">Function introduced</version>
-        Public Shared Function TryParse(ByVal Value$, ByRef ParsedValue As DataSetIdentification) As Boolean
+        ''' <version version="1.5.4">Parameter names changed: <c>Value</c> to <c>value</c>, <c>ParsedValue</c> to <c>parsedValue</c></version>
+        Public Shared Function TryParse(ByVal value$, ByRef parsedValue As DataSetIdentification) As Boolean
             Try
                 ParsedValue = Parse(Value)
                 Return True
@@ -500,13 +523,15 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Copy CTor from <see cref="IPair(Of RecordNumbers, Byte)"/>[<see cref="RecordNumbers"/>, <see cref="Byte"/>]</summary>
         ''' <param name="From">Instance to be cloned</param>
-        Public Sub New(ByVal From As IPair(Of RecordNumbers, Byte))
+        ''' <version version="1.5.4">Parameter <c>From</c> renamed to <c>from</c></version>
+        Public Sub New(ByVal from As IPair(Of RecordNumbers, Byte))
             Me.RecordNumber = From.Value1
             Me.DatasetNumber = From.Value2
         End Sub
         ''' <summary>Copy CTor</summary>
         ''' <param name="From">Instance to be cloned</param>
-        Public Sub New(ByVal From As DataSetIdentification)
+        ''' <version version="1.5.4">Parameter <c>From</c> renamed to <c>from</c></version>
+        Public Sub New(ByVal from As DataSetIdentification)
             Me.New(DirectCast(From, IPair(Of RecordNumbers, Byte)))
             Me.DisplayName = From.DisplayName
             Me.PropertyName = From.PropertyName
@@ -605,8 +630,9 @@ Namespace MetadataT.IptcT
         ''' <param name="RecordNumber">Recor number</param>
         ''' <param name="Tag">Tag number</param>
         ''' <remarks>If dataset with given <paramref name="RecordNumber"/> and <paramref name="Tag"/> exists in <see cref="KnownDataSets"/> returns item from there, otherwise returns newly created instance of <see cref="DataSetIdentification"/> initialized with <paramref name="RecordNumber"/> nad <paramref name="Tag"/> (with null <see cref="DisplayName"/> and <see cref="PropertyName"/>).</remarks>
+        ''' <version version="1.5.4">Parameters renamed: <c>RecordNumber</c> to <c>recordNumber</c>, <c>Tag</c> to <c>tag</c></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function GetKnownDataSet(ByVal RecordNumber As RecordNumbers, ByVal Tag As Byte) As DataSetIdentification
+        Public Shared Function GetKnownDataSet(ByVal recordNumber As RecordNumbers, ByVal tag As Byte) As DataSetIdentification
             Dim WithSameHash As New DataSetIdentification(RecordNumber, Tag, Nothing, Nothing)
             If KnownDataSetsInternal.ContainsKey(WithSameHash) Then Return KnownDataSetsInternal(WithSameHash)
             Return WithSameHash
@@ -618,29 +644,33 @@ Namespace MetadataT.IptcT
             Public ReadOnly Match As DataSetIdentification
             ''' <summary>CTor</summary>
             ''' <param name="Match"><see cref="DataSetIdentification"/> to compare <see cref="KeyValuePair.Key"/> with</param>
+            ''' <version version="1.5.4">Parameter <c>Match</c> renamed to <c>match</c></version>
             <DebuggerStepThrough()> _
-            Public Sub New(ByVal Match As DataSetIdentification)
+            Public Sub New(ByVal match As DataSetIdentification)
                 Me.Match = Match
             End Sub
             ''' <summary>Function which's delegate can be passed for example to <see cref="List.FindAll"/></summary>
             ''' <param name="Pair">Item to match with <see cref="Match"/></param>
             ''' <typeparam name="T">Type of value stored in <see cref="KeyValuePair"/></typeparam>
-            Public Function Predicate(Of T)(ByVal Pair As KeyValuePair(Of DataSetIdentification, T)) As Boolean
+            ''' <version version="1.5.4">Parameter <c>Pair</c> renamed to <c>pair</c></version>
+            Public Function Predicate(Of T)(ByVal pair As KeyValuePair(Of DataSetIdentification, T)) As Boolean
                 Return Pair.Key = Match
             End Function
             ''' <summary>Returns delegate of <see cref="PairMatch.Predicate"/> of newly created instance of <see cref="PairMatch"/></summary>
             ''' <param name="Match">Key to compare with</param>
             ''' <returns>Delegate of <see cref="PairMatch.Predicate"/></returns>
             ''' <typeparam name="T">Type of value of <see cref="KeyValuePair"/> that can be passed to returned <see cref="System.Predicate"/></typeparam>
+            ''' <version version="1.5.4">Parameter <c>Match</c> renamed to <c>match</c></version>
             <DebuggerStepThrough()> _
-            Public Shared Function GetPredicate(Of T)(ByVal Match As DataSetIdentification) As System.Predicate(Of KeyValuePair(Of DataSetIdentification, T))
+            Public Shared Function GetPredicate(Of T)(ByVal match As DataSetIdentification) As System.Predicate(Of KeyValuePair(Of DataSetIdentification, T))
                 Return AddressOf New PairMatch(Match).Predicate(Of T)
             End Function
             ''' <summary>Gets indices of items in given <see cref="IEnumerable(Of KeyValuePair(Of DataSetIdentification, T))"/> which's <see cref="KeyValuePair.Key"/> matches <see cref="Match"/></summary>
             ''' <param name="List">List to search within</param>
             ''' <returns>List of indices of items which's <see cref="KeyValuePair.Key"/> matches <see cref="Match"/></returns>
             ''' <typeparam name="T">Type of value of <see cref="KeyValuePair(Of DataSetIdentification, T)"/></typeparam>
-            Public Function GetIndices(Of T)(ByVal List As IEnumerable(Of KeyValuePair(Of DataSetIdentification, T))) As IReadOnlyList(Of Integer)
+            ''' <version version="1.5.4">Parameter <c>List</c> renamed to <c>list</c></version>
+            Public Function GetIndices(Of T)(ByVal list As IEnumerable(Of KeyValuePair(Of DataSetIdentification, T))) As IReadOnlyList(Of Integer)
                 Dim i As Integer = 0
                 Dim ret As New List(Of Integer)
                 For Each Item As KeyValuePair(Of DataSetIdentification, T) In List
@@ -670,41 +700,42 @@ Namespace MetadataT.IptcT
         ''' <param name="Group">Group the tag ius member of (or null if tag is member of no group)</param>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Record"/> is greater than 9 -or- <paramref name="Length"/> is less than zero</exception>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="IPTCTypes"/></exception>
-        Public Sub New( _
-                ByVal Number As Byte, _
-                ByVal Record As RecordNumbers, _
-                ByVal Name As String, _
-                ByVal HumanName As String, _
-                ByVal Type As IptcTypes, _
-                ByVal Mandatory As Boolean, _
-                ByVal Repeatable As Boolean, _
-                ByVal Length As Short, _
-                ByVal Fixed As Boolean, _
-                ByVal Category As String, _
-                ByVal Description As String, _
-                Optional ByVal [Enum] As Type = Nothing, _
-                Optional ByVal Lock As Boolean = False, _
-                Optional ByVal Group As GroupInfo = Nothing _
+        ''' <version version="1.5.4">Parameter names changed to camelCase</version>
+        Public Sub New(
+                ByVal number As Byte,
+                ByVal record As RecordNumbers,
+                ByVal name As String,
+                ByVal humanName As String,
+                ByVal type As IptcTypes,
+                ByVal mandatory As Boolean,
+                ByVal repeatable As Boolean,
+                ByVal length As Short,
+                ByVal fixed As Boolean,
+                ByVal category As String,
+                ByVal description As String,
+                Optional ByVal [enum] As Type = Nothing,
+                Optional ByVal lock As Boolean = False,
+                Optional ByVal group As GroupInfo = Nothing
         )
-            Me.Number = Number
-            Me.Record = Record
-            Me.Name = Name
-            Me.HumanName = HumanName
-            Me.Type = Type
-            Me.Mandatory = Mandatory
-            Me.Repeatable = Repeatable
-            If Fixed Then
-                Me.Length = Length
-                Me.Fixed = Fixed
+            Me.Number = number
+            Me.Record = record
+            Me.Name = name
+            Me.HumanName = humanName
+            Me.Type = type
+            Me.Mandatory = mandatory
+            Me.Repeatable = repeatable
+            If fixed Then
+                Me.Length = length
+                Me.Fixed = fixed
             Else
-                Me.Fixed = Fixed
-                Me.Length = Length
+                Me.Fixed = fixed
+                Me.Length = length
             End If
-            Me.Category = Category
-            Me.Description = Description
-            Me.Enum = [Enum]
-            Me.Group = Group
-            Me._Locked = Lock
+            Me.Category = category
+            Me.Description = description
+            Me.Enum = [enum]
+            Me.Group = group
+            Me._Locked = lock
         End Sub
         ''' <summary>Contains value of the <see cref="Locked"/> property</summary>
         Private _Locked As Boolean

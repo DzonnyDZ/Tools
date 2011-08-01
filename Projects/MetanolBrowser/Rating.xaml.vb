@@ -1,4 +1,5 @@
 ﻿Imports CustomRating = Tools.MetadataT.IptcT.Iptc.CustomRating
+Imports Tools.ExtensionsT, Tools.TextT
 
 
 ''' <summary>Shows and edits value of type <see cref="CustomRating"/></summary>
@@ -55,7 +56,7 @@ Public Class Rating
 #End Region
 
 
-
+#Region "Button click"
     Private Sub btnNotRated_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles btnNotRated.Click
         Rating = CustomRating.NotRated
         e.Handled = True
@@ -89,5 +90,63 @@ Public Class Rating
     Private Sub btn5_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles btn5.Click
         Rating = CustomRating.Star5
         e.Handled = True
+    End Sub
+#End Region
+
+    ''' <summary>Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event. </summary>
+    ''' <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
+    Protected Overrides Sub OnPreviewKeyDown(e As System.Windows.Input.KeyEventArgs)
+        MyBase.OnPreviewKeyDown(e)
+        If e.Handled Then Return
+        If Keyboard.Modifiers <> ModifierKeys.None Then Return
+        Select Case e.Key
+            Case Key.Up, Key.Add : RatingPlus()
+            Case Key.Down, Key.Subtract : RatingMinus()
+            Case Key.Left : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then RatingPlus() Else RatingMinus()
+            Case Key.Right : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then RatingMinus() Else RatingPlus()
+            Case Key.NumPad0, Key.D0 : Rating = CustomRating.Rejected
+            Case Key.NumPad1 To Key.NumPad5 : Rating = e.Key - Key.NumPad1 + 1
+            Case Key.D1 To Key.D5 : Rating = e.Key - Key.D1 + 1
+            Case Key.Delete : Rating = CustomRating.NotRated
+            Case Else : Return
+        End Select
+        e.Handled = True
+    End Sub
+    ''' <summary>Invoked when an unhandled <see cref="E:System.Windows.Input.TextCompositionManager.PreviewTextInput" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event. </summary>
+    ''' <param name="e">The <see cref="T:System.Windows.Input.TextCompositionEventArgs" /> that contains the event data.</param>
+    Protected Overrides Sub OnPreviewTextInput(e As System.Windows.Input.TextCompositionEventArgs)
+        MyBase.OnPreviewTextInput(e)
+        If e.Handled Then Exit Sub
+        If e.Text.Length = 1 Then
+            If e.Text(0).IsNumber() Then
+                Select Case e.Text(0).NumericValue
+                    Case 0 : Rating = CustomRating.Rejected
+                    Case 1, 2, 3, 4, 5 : Rating = e.Text(0).NumericValue
+                    Case Else : Return
+                End Select
+            Else
+                Select Case e.Text(0)
+                    Case Chars.Delete : Rating = CustomRating.NotRated
+                    Case Else : Return
+                End Select
+            End If
+            e.Handled = True
+        End If
+    End Sub
+
+    ''' <summary>Increases <see cref="Rating"/> by one</summary>
+    Protected Sub RatingPlus()
+        Select Case Rating
+            Case CustomRating.NotRated, CustomRating.Rejected : Rating = CustomRating.Star1
+            Case CustomRating.Star1 To CustomRating.Star4 : Rating += 1
+        End Select
+    End Sub
+
+    ''' <summary>Decreases rating by one</summary>
+    Protected Sub RatingMinus()
+        Select Case Rating
+            Case CustomRating.NotRated, CustomRating.Star1 : Rating = CustomRating.Rejected
+            Case CustomRating.Star2 To CustomRating.Star5 : Rating -= 1
+        End Select
     End Sub
 End Class

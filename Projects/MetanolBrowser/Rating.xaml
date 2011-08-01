@@ -6,6 +6,7 @@
              xmlns:my="clr-namespace:Tools.Metanol"
              mc:Ignorable="d" 
              Height="auto" Width="auto"
+             IsTabStop="True" Focusable="True"
              >
     <UserControl.Resources>
         <Style TargetType="{x:Type ToggleButton}" x:Key="bbase">
@@ -13,6 +14,8 @@
             <Setter Property="Foreground" Value="Yellow" />
             <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"/>
             <Setter Property="Padding" Value="0" />
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>
         </Style>
         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource bbase}" x:Key="star">
             <Setter Property="Content" Value="★"/>
