@@ -159,6 +159,46 @@ Namespace LinqT
             End If
             Return IndexOf(DirectCast(collection, IEnumerable), DirectCast(item, Object))
         End Function
+
+        ''' <summary>Gets index of first occurence of given item in given collection using <see cref="IEqualityComparer(Of T)"/></summary>
+        ''' <typeparam name="T">Type of items in collection</typeparam>
+        ''' <param name="collection">Collection to find item in</param>
+        ''' <param name="item">Item to be found</param>
+        ''' <param name="comparer">An <see cref="IEqualityComparer(Of T)"/> to compare items</param>
+        ''' <returns>Index of first occurence of <paramref name="item"/> in <paramref name="collection"/> (compared using <paramref name="comparer"/>). -1 if <paramref name="item"/> is not found in <paramref name="collection"/>.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="collection"/> is null or <paramref name="comparer"/> is null.</exception>
+        ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+        <Extension()> Public Function IndexOf(Of T)(ByVal collection As IEnumerable(Of T), ByVal item As T, comparer As IEqualityComparer(Of T)) As Integer
+            If comparer Is Nothing Then Throw New InvalidEnumArgumentException("comparer")
+            Return collection.IndexOf(item, AddressOf comparer.Equals)
+        End Function
+        ''' <summary>Gets index of first occurence of given item in given collection using comparison method</summary>
+        ''' <typeparam name="T">Type of items in collection</typeparam>
+        ''' <param name="collection">Collection to find item in</param>
+        ''' <param name="item">Item to be found</param>
+        ''' <returns>Index of first occurence of <paramref name="item"/> in <paramref name="collection"/> (compared using <paramref name="compare"/>). -1 if <paramref name="item"/> is not found in <paramref name="collection"/>.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="collection"/> is null or <paramref name="compare"/> is null.</exception>
+        ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+        <Extension()> Public Function IndexOf(Of T)(ByVal collection As IEnumerable(Of T), ByVal item As T, compare As Func(Of T, T, Boolean)) As Integer
+            If compare Is Nothing Then Throw New InvalidEnumArgumentException("compare")
+            Return IndexOf(collection, Function(a) compare(a, item))
+        End Function
+        ''' <summary>Gets index of first occurence of item that matches predicate</summary>
+        ''' <typeparam name="T">Type of items in collection</typeparam>
+        ''' <param name="collection">Collection to find item in</param>
+        ''' <returns>Index of first itm in <paramref name="collection"/> for which <paramref name="compare"/> returns true. -1 if no such item was found</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="collection"/> is null or <paramref name="compare"/> is null.</exception>
+        ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+        <Extension()> Public Function IndexOf(Of T)(ByVal collection As IEnumerable(Of T), compare As Predicate(Of T)) As Integer
+            If collection Is Nothing Then Throw New InvalidEnumArgumentException("collection")
+            If compare Is Nothing Then Throw New InvalidEnumArgumentException("compare")
+            Dim i As Integer = 0
+            For Each i2 In collection
+                If compare(i2) Then Return i
+                i += 1
+            Next
+            Return -1
+        End Function
     End Module
 End Namespace
 #End If

@@ -4,7 +4,8 @@ Imports Tools.DataStructuresT.GenericT
 Namespace LinqT
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Contains miscaleneous LINQ extensions</summary>
-    Module LinqExtensions
+    ''' <version version="1.5.4">Fix: Module made public (it was internal before)</version>
+    Public Module LinqExtensions
         ''' <summary>Adds all items from given collection to given dictionary</summary>
         ''' <param name="Target">Collection which is target of adding</param>
         ''' <param name="Collection">Items to be added</param>

@@ -94,6 +94,9 @@
     <Compile Include="Rating.xaml.vb">
       <DependentUpon>Rating.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RatingEditor.xaml.vb">
+      <DependentUpon>RatingEditor.xaml</DependentUpon>
+    </Compile>
     <Page Include="BrowserWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Rating.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RatingEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

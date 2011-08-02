@@ -1,0 +1,39 @@
+﻿<Window x:Class="RatingEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:my="clr-namespace:Tools.Metanol"
+    Title="Rating" SizeToContent="WidthAndHeight" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </Style>
+        </Grid.Resources>
+        
+        <Label Grid.Column="0" Grid.Row="0" Target="{Binding ElementName=rtgTech}">_Technical</Label>
+        <my:Rating x:Name="rtgTech" Grid.Column="1" Grid.Row="0" Rating="{Binding TechnicalQuality, Mode=TwoWay}"/>
+
+        <Label Grid.Column="2" Grid.Row="0" Target="{Binding ElementName=rtgArt}">_Art</Label>
+        <my:Rating x:Name="rtgArt" Grid.Column="3" Grid.Row="0" Rating="{Binding ArtQuality, Mode=TwoWay}"/>
+
+        <Label Grid.Column="0" Grid.Row="1" Target="{Binding ElementName=rtgInfo}">_Info</Label>
+        <my:Rating x:Name="rtgInfo" Grid.Column="1" Grid.Row="1" Rating="{Binding InformationValue, Mode=TwoWay}"/>
+
+        <Label Grid.Column="2" Grid.Row="1" Target="{Binding ElementName=rtgOverall}">_Overall</Label>
+        <my:Rating x:Name="rtgOverall" Grid.Column="3" Grid.Row="1" Rating="{Binding OverallRating, Mode=TwoWay}"/>
+
+    </Grid>
+</Window>

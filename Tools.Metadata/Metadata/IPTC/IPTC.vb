@@ -38,9 +38,12 @@ Namespace MetadataT.IptcT
 
         ''' <summary>CTor from <see cref="IPTCReader"/></summary>
         ''' <param name="Reader"><see cref="IPTCReader"/> to read all tags from</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="reader"/> is null</exception>
         ''' <version version="1.5.4">Parameter <c>Reader</c> renamed to <c>reader</c></version>
+        ''' <version version="1.5.4">Changed exception when <paramref name="reader"/> is null. Now throws <see cref="ArgumentNullException"/>. Previoisly thrown <see cref="NullReferenceException"/>.</version>
         Public Sub New(ByVal reader As IptcReader)
             Me.New()
+            If reader Is Nothing Then Throw New ArgumentNullException("reader")
             For Each t As IptcRecord In Reader.Records
                 Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(DataSetIdentification.GetKnownDataSet(t.RecordNumber, t.Tag), t.Data))
             Next t
@@ -49,7 +52,8 @@ Namespace MetadataT.IptcT
         ''' <param name="Record">Recor number</param>
         ''' <param name="TagNumber">Number of tag within <paramref name="Record"></paramref></param>
         ''' <exception cref="InvalidEnumArgumentException">
-        ''' <paramref name="Record"></paramref> is not member of <see cref="RecordNumbers"></see> -or- <paramref name="TagNumber"></paramref> is not tag within <paramref name="record"></paramref></exception>
+        ''' <paramref name="Record"/> is not member of <see cref="RecordNumbers"/> -or- <paramref name="TagNumber"/> is not tag within <paramref name="record"/>.
+        ''' </exception>
         ''' <version version="1.5.4">Parameters renamed: <c>Record</c> to <c>record</c>, <c>TagNumber</c> to <c>tagNumber</c></version>
         Public Shared Function GetTag(ByVal record As RecordNumbers, ByVal tagNumber As Byte) As IptcTag
             Dim lUseThisGroup As GroupInfo = Nothing

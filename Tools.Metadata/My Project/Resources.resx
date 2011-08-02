@@ -117,19 +117,112 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="err_NotAJpegFile" xml:space="preserve">
-    <value>File {0} is not JPEG file.</value>
+  <data name="d_FullPath" xml:space="preserve">
+    <value>Full path to file</value>
   </data>
-  <data name="err_FileDoesNotExist" xml:space="preserve">
-    <value>File {0} does not exist.</value>
+  <data name="d_DirectoryName" xml:space="preserve">
+    <value>Path to directory file is saved in</value>
   </data>
-  <data name="err_LoadFile" xml:space="preserve">
-    <value>Error loading file {0}:</value>
+  <data name="d_FileName" xml:space="preserve">
+    <value>Name of the file with extension</value>
   </data>
-  <data name="txt_OpenFile" xml:space="preserve">
-    <value>Open File</value>
+  <data name="d_Size" xml:space="preserve">
+    <value>Size of the file in bytes</value>
   </data>
-  <data name="fil_Jpeg" xml:space="preserve">
-    <value>JPEG files (*.jpg, *.jpeg)</value>
+  <data name="d_CreationTime" xml:space="preserve">
+    <value>Date and time when the file was created</value>
+  </data>
+  <data name="d_CreationTimeUtc" xml:space="preserve">
+    <value>Date and time when the file was created coordibates in universal time (UTC)</value>
+  </data>
+  <data name="d_LastWriteTime" xml:space="preserve">
+    <value>Date and time when the file was last written to</value>
+  </data>
+  <data name="d_LastWriteTimeUtc" xml:space="preserve">
+    <value>Date and time coordinated in universal time (UTC) the file was last written to</value>
+  </data>
+  <data name="d_LastAccessTime" xml:space="preserve">
+    <value>Date and time the file was last accessed</value>
+  </data>
+  <data name="d_LastAccessTimeUtc" xml:space="preserve">
+    <value>Date and time coordinated in universal time (UTC) the file was last accesed</value>
+  </data>
+  <data name="d_Extension" xml:space="preserve">
+    <value>Extension part of file name. That's part after last dot.</value>
+  </data>
+  <data name="d_NameWithoutExtension" xml:space="preserve">
+    <value>File name without extension, that's exluding last dot and text after it.</value>
+  </data>
+  <data name="d_IsReadOnly" xml:space="preserve">
+    <value>Indicates if file is read only</value>
+  </data>
+  <data name="d_IsCompresses" xml:space="preserve">
+    <value>Indicates if file is compresed</value>
+  </data>
+  <data name="d_IsSystem" xml:space="preserve">
+    <value>Indicates if file is system file</value>
+  </data>
+  <data name="d_IsHidden" xml:space="preserve">
+    <value>Indicates if file is hidden</value>
+  </data>
+  <data name="d_IsEncrypted" xml:space="preserve">
+    <value>Indicates if file is encrypted</value>
+  </data>
+  <data name="d_Attributes" xml:space="preserve">
+    <value>All file attributes OR-ed</value>
+  </data>
+  <data name="n_FullPath" xml:space="preserve">
+    <value>Full path</value>
+  </data>
+  <data name="n_DirectoryName" xml:space="preserve">
+    <value>Directory</value>
+  </data>
+  <data name="n_FileName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="n_Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="n_CreationTime" xml:space="preserve">
+    <value>Creation time</value>
+  </data>
+  <data name="n_CreationTimeUtc" xml:space="preserve">
+    <value>Creation time UTC</value>
+  </data>
+  <data name="n_LastWriteTime" xml:space="preserve">
+    <value>Last change time</value>
+  </data>
+  <data name="n_LastWriteTimeUtc" xml:space="preserve">
+    <value>Last change time UTC</value>
+  </data>
+  <data name="n_LastAccessTime" xml:space="preserve">
+    <value>Last access time</value>
+  </data>
+  <data name="n_LastAccessTimeUtc" xml:space="preserve">
+    <value>Last access time UTC</value>
+  </data>
+  <data name="n_Extension" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="n_NameWithoutExtension" xml:space="preserve">
+    <value>Name without extension</value>
+  </data>
+  <data name="n_IsReadOnly" xml:space="preserve">
+    <value>Read only</value>
+  </data>
+  <data name="n_IsCompresses" xml:space="preserve">
+    <value>Compressed</value>
+  </data>
+  <data name="n_IsSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="n_IsHidden" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="n_IsEncrypted" xml:space="preserve">
+    <value>Encrypted</value>
+  </data>
+  <data name="n_Attributes" xml:space="preserve">
+    <value>Attributes</value>
   </data>
 </root>

@@ -4,7 +4,7 @@
     xmlns:my="clr-namespace:Tools.Metanol"
     xmlns:tCnv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
     Title="Metanol Browser" Height="529" Width="775" Background="Black" Foreground="Yellow" FocusManager.FocusedElement="{Binding ElementName=btnSave, Mode=OneTime}">
-    
+
     <Window.Resources>
         <Style TargetType="{x:Type Label}" x:Key="LabelStyle">
             <Setter Property="Foreground" Value="Yellow"/>
@@ -69,78 +69,38 @@
                 <TextBlock Text="{Binding IFD0.Model}"/>
             </TextBlock>
         </Grid>
-        
+
         <!--Ratings-->
-        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Name="grdRating" DataContext="{Binding Iptc}">
-            <Grid.Resources>
-                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
-                    <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" DataContext="{Binding Iptc}" Name="lblRating">
+            <Label.Resources>
+                <Style TargetType="TextBlock" x:Key="l1">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding .}" Value="0"><Setter Property="Visibility" Value="Collapsed"/></DataTrigger>
+                    </Style.Triggers>
                 </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>                                                    
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Target="{Binding ElementName=rtgTech}">_Technical</Label>
-            <my:Rating Grid.Column="1" Grid.Row="0" x:Name="rtgTech" Rating="{Binding TechnicalQuality}"/>
-            <Label Grid.Column="0" Grid.Row="1" Target="{Binding ElementName=rtgArt}">_Art</Label>
-            <my:Rating Grid.Column="1" Grid.Row="1" x:Name="rtgArt" Rating="{Binding ArtQuality}"/>
-            <Label Grid.Column="2" Grid.Row="0" Target="{Binding ElementName=rtgInfo}">_Info</Label>
-            <my:Rating Grid.Column="3" Grid.Row="0" x:Name="rtgInfo" Rating="{Binding InformationValue}"/>
-            <Label Grid.Column="2" Grid.Row="1" Target="{Binding ElementName=rtgOver}">_Overall</Label>
-            <my:Rating Grid.Column="3" Grid.Row="1" x:Name="rtgOver" Rating="{Binding OverallRating}"/>
-        </Grid>
+                <Style TargetType="TextBlock" x:Key="l2">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding .}" Value="-1">
+                            <Setter Property="Text" Value="✖"/>
+                            <Setter Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★"/></DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★"/></DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★★"/></DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★★★"/></DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★★★★"/></DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Resources>
+            <TextBlock>
+                <TextBlock DataContext="{Binding TechnicalQuality}" Style="{StaticResource l1}">T <TextBlock/></TextBlock>
+                <TextBlock DataContext="{Binding ArtQuality}" Style="{StaticResource l1}">A <TextBlock/></TextBlock>
+                <TextBlock DataContext="{Binding InformationValue}" Style="{StaticResource l1}">I <TextBlock/></TextBlock>
+                <TextBlock DataContext="{Binding OverallRating}" Style="{StaticResource l1}" FontWeight="Bold">Σ <TextBlock/></TextBlock>
+            </TextBlock>
+        </Label> 
 
         <!--Save button-->
-        <Grid Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Name="grdSave" Visibility="{Binding Iptc.IsChanged, Converter={StaticResource BooleanVisibilityConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Name="txtChaned" HorizontalAlignment="Center">*</TextBlock>
-            <Button Name="btnSave" Grid.Row="1" Width="24" Height="24" Content="▼">
-                <Button.ContextMenu>
-                    <ContextMenu PlacementTarget="{Binding ElementName=btnSave}">
-                        <MenuItem Header="_Save (Ctrl+S)" Name="mniSave">
-                            <MenuItem.Icon>
-                                <Image Source="/MetanolBrowser;component/Images/saveHS.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_Previous (←)" Name="mniPrev">
-                            <MenuItem.Icon>
-                                <Image Source="/MetanolBrowser;component/Images/Back.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_Next (→)" Name="mniNext">
-                            <MenuItem.Icon>
-                                <Image Source="/MetanolBrowser;component/Images/forward.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_Open ... (Ctrl+O)" Name="mniOpen">
-                            <MenuItem.Icon>
-                                <Image Source="/MetanolBrowser;component/Images/OpenFile.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_Copy ... (F5)" Name="mniCopy"/>
-                        <MenuItem Header="_Link ... (F12)" Name="mniLink"/>
-                        <MenuItem Header="_Fullscreen (Enter)" Name="mniFullScreen">
-                            <MenuItem.Icon>
-                                <Image Source="/MetanolBrowser;component/Images/FullScreenHS.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_Exit (Esc)" Name="mniExit"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
-        </Grid>
+        <TextBlock Name="txtChaned" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="2" Visibility="{Binding Iptc.IsChanged, Converter={StaticResource BooleanVisibilityConverter}}">*</TextBlock>
     </Grid>
 </Window>

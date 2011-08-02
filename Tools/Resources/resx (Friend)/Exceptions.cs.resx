@@ -1380,4 +1380,115 @@
   <data name="InvalidFormatStringInvalidHexadecimalEscapeSequence" xml:space="preserve">
     <value>Neplatný formátovací řetězec. Neplatná hexadecimální escape sekvence</value>
   </data>
+  <data name="OnlyValuesOfFollowingTypesAreAcceptable" xml:space="preserve">
+    <value>Jen hodnoty následujících typů jsou přípustné:</value>
+  </data>
+  <data name="ValueOfUnexpectedType0ExpectedOneOfFollowingTypes" xml:space="preserve">
+    <value>Hodnote neočekávaného typu {0}, očekáván jeden z následujících typů:</value>
+  </data>
+  <data name="CollectionCannotContainNullValue" xml:space="preserve">
+    <value>Kolekce nesmí obsahovat nulllovou hodnotu</value>
+  </data>
+  <data name="NoPropertyIsMostSpecific" xml:space="preserve">
+    <value>Žádná vlastnost {0} není nejspecifičtější</value>
+  </data>
+  <data name="NoSuitablePropertyFound" xml:space="preserve">
+    <value>Žádná vhodná vlastnost {0} nenalezena</value>
+  </data>
+  <data name="RegistryHiveIsNoLongerSupported" xml:space="preserve">
+    <value>Kořenový klíč registru {0} již není podporován</value>
+  </data>
+  <data name="ArabicDefaultNotSpecified" xml:space="preserve">
+    <value>Výchozí hodnota pro Arabské písmeno musí být určena</value>
+  </data>
+  <data name="LigatureToChar" xml:space="preserve">
+    <value>Ligaturu nelze převést na jediný znak</value>
+  </data>
+  <data name="ProviderDoesNotProviderService" xml:space="preserve">
+    <value>Poskytovatel neposkytuje službu {0}</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Cesta</value>
+  </data>
+  <data name="InvalidBooleanValue" xml:space="preserve">
+    <value>Neplatná logická nodnota {0}</value>
+  </data>
+  <data name="PropertyMustBeSet" xml:space="preserve">
+    <value>{0} musí být nastavena</value>
+  </data>
+  <data name="IsNotAllowed" xml:space="preserve">
+    <value>{0} není povoleno</value>
+  </data>
+  <data name="InvalidValueReturnedByLoopFunction" xml:space="preserve">
+    <value>Neplatná hodnota {0} vrácena funkcí smyčky.</value>
+  </data>
+  <data name="HexStringInvalid" xml:space="preserve">
+    <value>Poskytnutý řetězec nevypadá zahexakódovaný:</value>
+  </data>
+  <data name="Base64StringInvalid" xml:space="preserve">
+    <value>Poskytnutý řetězec nevypadá Base64-zakodovaný:</value>
+  </data>
+  <data name="DecryptInitializationVectorMissing" xml:space="preserve">
+    <value>Žádný inicializační vektor nebyl poskytnut pro operaci dešifrování.</value>
+  </data>
+  <data name="DecryptKeyMissing" xml:space="preserve">
+    <value>Žádný klíč nebyl poskytnut pro operaci dešifrování.</value>
+  </data>
+  <data name="InvalidVersionFormat" xml:space="preserve">
+    <value>{0} je neplatná verze</value>
+  </data>
+  <data name="VersionPartToVersionMinorNull" xml:space="preserve">
+    <value>Nemohu převést VersionPart na Version, když Minor není nastaveno.</value>
+  </data>
+  <data name="CannotLoadManifestResourceStream" xml:space="preserve">
+    <value>Nomonu načíst zdroj manifestu {0}</value>
+  </data>
+  <data name="UnsupportedElement" xml:space="preserve">
+    <value>Nepodporovaný element {0}</value>
+  </data>
+  <data name="ElementMustBe" xml:space="preserve">
+    <value>Element musí být {0}</value>
+  </data>
+  <data name="PropertyWasAlreadySet" xml:space="preserve">
+    <value>Vlastnost {0} již byla nastavena</value>
+  </data>
+  <data name="UnsuppportedGeneralCategory" xml:space="preserve">
+    <value>Nepodporovaná obecná kategorie {0}</value>
+  </data>
+  <data name="UnsupportedBidirectionalCategory" xml:space="preserve">
+    <value>Nepodporovaná bidi kategorie {0}</value>
+  </data>
+  <data name="CharacterRepresentsSurrogatePair" xml:space="preserve">
+    <value>Znak představuje pár surrogateů</value>
+  </data>
+  <data name="OperationIsNotValidForCharacterRanges" xml:space="preserve">
+    <value>Operace není platná pro rozsahy znaků.</value>
+  </data>
+  <data name="MakeSingleFromSingle" xml:space="preserve">
+    <value>Jen znakové rozsahy mohou být použity pro vytvoření jednotlivých znaků.</value>
+  </data>
+  <data name="RangeNotFullySpecified" xml:space="preserve">
+    <value>Tento rozsah není plně specifikován. Buď první nebo poslední kód není určen.</value>
+  </data>
+  <data name="CannotFindCodePoint" xml:space="preserve">
+    <value>Nemohu najít kód reprezentovaný {0}. Instance {1} byla buďto inicializována bez XML dokumentu nebo informace pro aktuální kód není k dispozici.</value>
+  </data>
+  <data name="NotEnoughSpaceInDestinationArray" xml:space="preserve">
+    <value>V cílovém poli není dost místa.</value>
+  </data>
+  <data name="NotAllowedForPlaceholderCharacters" xml:space="preserve">
+    <value>Nepovoleno pro zástupné znaky.</value>
+  </data>
+  <data name="SequenceContainsPlaceholder" xml:space="preserve">
+    <value>Sekvence obsahuje zástupný znak</value>
+  </data>
+  <data name="UnexpedtedValue0" xml:space="preserve">
+    <value>Neočekávaná hodnota {0}</value>
+  </data>
+  <data name="ArrayMustHaveExactlyXBytes" xml:space="preserve">
+    <value>Pole musí mýt přesně {0} bytů</value>
+  </data>
+  <data name="UnknownSystemMetadataItemName" xml:space="preserve">
+    <value>{0} není známý název systémových metadat</value>
+  </data>
 </root>

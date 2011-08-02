@@ -6,6 +6,15 @@ Public Class IptcInternal
     Inherits Iptc
     Implements INotifyPropertyChanged
 
+    ''' <summary>Default CTor - creates a new empty instance of the <see cref="IptcInternal"/> class</summary>
+    Public Sub New()
+    End Sub
+    ''' <summary>CTor - creates a new instance of the <see cref="IptcInternal"/> class and reads its data from given <see cref="IIptcGetter"/></summary>
+    ''' <param name="getter">Source of IPTC data</param>
+    Public Sub New(getter As IIptcGetter)
+        MyBase.New(getter)
+    End Sub
+
     ''' <summary>Called when value of any tag changes</summary>
     ''' <param name="Tag">Recod and dataset number</param>
     ''' <remarks>

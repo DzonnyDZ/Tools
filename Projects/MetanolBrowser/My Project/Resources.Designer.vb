@@ -59,5 +59,50 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to File {0} does not exist..
+        '''</summary>
+        Friend ReadOnly Property err_FileDoesNotExist() As String
+            Get
+                Return ResourceManager.GetString("err_FileDoesNotExist", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error loading file {0}:.
+        '''</summary>
+        Friend ReadOnly Property err_LoadFile() As String
+            Get
+                Return ResourceManager.GetString("err_LoadFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to File {0} is not JPEG file..
+        '''</summary>
+        Friend ReadOnly Property err_NotAJpegFile() As String
+            Get
+                Return ResourceManager.GetString("err_NotAJpegFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to JPEG files (*.jpg, *.jpeg).
+        '''</summary>
+        Friend ReadOnly Property fil_Jpeg() As String
+            Get
+                Return ResourceManager.GetString("fil_Jpeg", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Open File.
+        '''</summary>
+        Friend ReadOnly Property txt_OpenFile() As String
+            Get
+                Return ResourceManager.GetString("txt_OpenFile", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

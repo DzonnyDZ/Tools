@@ -14,7 +14,8 @@ Namespace MetadataT
         ''' <exception cref="IO.FileNotFoundException">File with address <paramref name="FileName"/> does not exist.</exception>
         ''' <exception cref="Security.SecurityException">The caller does not have required permission</exception>
         ''' <exception cref="UnauthorizedAccessException">Access to <paramref name="FileName"/> is denied.</exception>
-        Public Sub New(ByVal FileName As String)
+        ''' <version version="1.5.4">Parameter <c>FileName</c> renamed to <c>fileName</c></version>
+        Public Sub New(ByVal fileName As String)
             If Not IO.File.Exists(FileName) Then Throw New IO.FileNotFoundException("File not found", FileName)
             file = New IO.FileInfo(FileName)
         End Sub
@@ -205,7 +206,8 @@ Namespace MetadataT
         ''' <returns>True when value for given key is present; false otherwise</returns>
         ''' <remarks>The <paramref name="Key"/> parameter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).
         ''' <para>This implementation returns true forr all predefined keys.</para></remarks>
-        Public Function ContainsKey(ByVal Key As String) As Boolean Implements IMetadata.ContainsKey
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function ContainsKey(ByVal key As String) As Boolean Implements IMetadata.ContainsKey
             Return Keys.Contains(Key)
         End Function
 
@@ -219,26 +221,28 @@ Namespace MetadataT
         ''' <param name="Key">Key (or name) to get description of</param>
         ''' <returns>Localized description of purpose of metadata item identified by <paramref name="Key"/>; null when description is not available.</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> is in invalid format or it is not one of predefined names.</exception>
-        Public Function GetDescription(ByVal Key As String) As String Implements IMetadata.GetDescription
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        ''' <version version="1.5.4">Descriptions extracted to resource and localized to Czech</version>
+        Public Function GetDescription(ByVal key As String) As String Implements IMetadata.GetDescription
             Select Case Key
-                Case "FullPath" : Return "Full path to file"
-                Case "DirectoryName" : Return "Path to directory file is saved in"
-                Case "FileName" : Return "Name of the file with extension"
-                Case "Size" : Return "Size of the file in bytes"
-                Case "CreationTime" : Return "Date and time when the file was created"
-                Case "CreationTimeUtc" : Return "Date and time when the file was created coordibates in universal time (UTC)"
-                Case "LastWriteTime" : Return "Date and time when the file was last written to"
-                Case "LastWriteTimeUtc" : Return "Date and time coordinated in universal time (UTC) the file was last written to"
-                Case "LastAccessTime" : Return "Date and time the file was last accessed"
-                Case "LastAccessTimeUtc" : Return "Date and time coordinated in universal time (UTC) the file was last accesed"
-                Case "Extension" : Return "Extension part of file name. That's part after last dot."
-                Case "NameWithoutExtension" : Return "File name without extension, that's exluding last dot and text after it."
-                Case "IsReadOnly" : Return "Indicates if file is read only"
-                Case "IsCompresses" : Return "Indicates if file is compresed"
-                Case "IsSystem" : Return "Indicates if file is system file"
-                Case "IsHidden" : Return "Indicates if file is hidden"
-                Case "IsEncrypted" : Return "Indicates if file is encrypted"
-                Case "Attributes" : Return "All file attrbutes OR-ed"
+                Case "FullPath" : Return My.Resources.d_FullPath
+                Case "DirectoryName" : Return My.Resources.d_DirectoryName
+                Case "FileName" : Return My.Resources.d_FileName
+                Case "Size" : Return My.Resources.d_Size
+                Case "CreationTime" : Return My.Resources.d_CreationTime
+                Case "CreationTimeUtc" : Return My.Resources.d_CreationTimeUtc
+                Case "LastWriteTime" : Return My.Resources.d_LastWriteTime
+                Case "LastWriteTimeUtc" : Return My.Resources.d_LastWriteTimeUtc
+                Case "LastAccessTime" : Return My.Resources.d_LastAccessTime
+                Case "LastAccessTimeUtc" : Return My.Resources.d_LastAccessTimeUtc
+                Case "Extension" : Return My.Resources.d_Extension
+                Case "NameWithoutExtension" : Return My.Resources.d_NameWithoutExtension
+                Case "IsReadOnly" : Return My.Resources.d_IsReadOnly
+                Case "IsCompresses" : Return My.Resources.d_IsCompresses
+                Case "IsSystem" : Return My.Resources.d_IsSystem
+                Case "IsHidden" : Return My.Resources.d_IsHidden
+                Case "IsEncrypted" : Return My.Resources.d_IsEncrypted
+                Case "Attributes" : Return My.Resources.d_Attributes
                 Case Else : Return Nothing
             End Select
         End Function
@@ -247,26 +251,28 @@ Namespace MetadataT
         ''' <param name="Key">Key (or name) to get name for</param>
         ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="Key"/>; null when no such name is defined/known.</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid formar or it is not one of predefined names.</exception>
-        Public Function GetHumanName(ByVal Key As String) As String Implements IMetadata.GetHumanName
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        ''' <version version="1.5.4">Display names extracted to resource and localized to Czech</version>
+        Public Function GetHumanName(ByVal key As String) As String Implements IMetadata.GetHumanName
             Select Case Key
-                Case "FullPath" : Return "Full path"
-                Case "DirectoryName" : Return "Directory"
-                Case "FileName" : Return "Name"
-                Case "Size" : Return "Size"
-                Case "CreationTime" : Return "Creation time"
-                Case "CreationTimeUtc" : Return "Creation time UTC"
-                Case "LastWriteTime" : Return "Last change time"
-                Case "LastWriteTimeUtc" : Return "Last change time UTC"
-                Case "LastAccessTime" : Return "Last access time"
-                Case "LastAccessTimeUtc" : Return "Last access time UTC"
-                Case "Extension" : Return "Extension"
-                Case "NameWithoutExtension" : Return "Name without extension"
-                Case "IsReadOnly" : Return "Read only"
-                Case "IsCompresses" : Return "Compressed"
-                Case "IsSystem" : Return "System"
-                Case "IsHidden" : Return "Hidden"
-                Case "IsEncrypted" : Return "Encrypted"
-                Case "Attributes" : Return "Attributes"
+                Case "FullPath" : Return My.Resources.n_FullPath
+                Case "DirectoryName" : Return My.Resources.n_DirectoryName
+                Case "FileName" : Return My.Resources.n_FileName
+                Case "Size" : Return My.Resources.n_Size
+                Case "CreationTime" : Return My.Resources.n_CreationTime
+                Case "CreationTimeUtc" : Return My.Resources.n_CreationTimeUtc
+                Case "LastWriteTime" : Return My.Resources.n_LastWriteTime
+                Case "LastWriteTimeUtc" : Return My.Resources.n_LastWriteTimeUtc
+                Case "LastAccessTime" : Return My.Resources.n_LastAccessTime
+                Case "LastAccessTimeUtc" : Return My.Resources.n_LastAccessTimeUtc
+                Case "Extension" : Return My.Resources.n_Extension
+                Case "NameWithoutExtension" : Return My.Resources.n_NameWithoutExtension
+                Case "IsReadOnly" : Return My.Resources.n_IsReadOnly
+                Case "IsCompresses" : Return My.Resources.n_IsCompresses
+                Case "IsSystem" : Return My.Resources.n_IsSystem
+                Case "IsHidden" : Return My.Resources.n_IsHidden
+                Case "IsEncrypted" : Return My.Resources.n_IsEncrypted
+                Case "Attributes" : Return My.Resources.n_Attributes
                 Case Else : Return Nothing
             End Select
         End Function
@@ -276,9 +282,10 @@ Namespace MetadataT
         ''' <returns>Key in metadata-specific format for given predefined metadata item name</returns>
         ''' <exception cref="ArgumentException"><paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
         ''' <remarks>This implementation either returns <paramref name="Name"/> or throws <see cref="ArgumentException"/></remarks>
+        ''' <version version="1.5.4">Message of <see cref="ArgumentException"/> made localizable and localized to Czech</version>
         Private Function GetKeyOfName(ByVal Name As String) As String Implements IMetadata.GetKeyOfName
             If Keys.Contains(Name) Then Return Name
-            Throw New ArgumentException("{0} is not known system metadata item name.".f(Name))
+            Throw New ArgumentException(ResourcesT.Exceptions.UnknownSystemMetadataItemName.f(Name))
         End Function
 
         ''' <summary>Gets name for key</summary>
@@ -286,9 +293,10 @@ Namespace MetadataT
         ''' <returns>One of predefined names to use instead of <paramref name="Key"/>; null when given key has no corresponding name.</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format</exception>
         ''' <remarks>This implementation either returns <paramref name="Name"/> or throws <see cref="ArgumentException"/></remarks>
+        ''' <version version="1.5.4">Message of <see cref="ArgumentException"/> made localizable and localized to Czech</version>
         Private Function GetNameOfKey(ByVal Key As String) As String Implements IMetadata.GetNameOfKey
             If Keys.Contains(Key) Then Return Key
-            Throw New ArgumentException("{0} is not known system metadata item name.".f(Key))
+            Throw New ArgumentException(ResourcesT.Exceptions.UnknownSystemMetadataItemName.f(Key))
         End Function
 
         ''' <summary>Gets all keys predefined for curent metadata format</summary>
@@ -310,6 +318,7 @@ Namespace MetadataT
         ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
         ''' <returns>Value of metadata item with given key as string; or null if given metadata value cannot be obtained</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> is not one of predefined names</exception>
+        ''' <version version="1.5.4">Message of <see cref="ArgumentException"/> made localizable and localized to Czech</version>
         Public Function GetStringValue(ByVal Key As String) As String Implements IMetadata.GetStringValue
             Dim [error] As Boolean = False
             Try
@@ -332,7 +341,7 @@ Namespace MetadataT
                     Case "IsHidden" : Return IsHidden.ToString
                     Case "IsEncrypted" : Return IsEncrypred.ToString
                     Case "Attributes" : Return Attributes.ToString("F")
-                    Case Else : [error] = True : Throw New ArgumentException("{0} is not known system metadata item name.".f(Key))
+                    Case Else : [error] = True : Throw New ArgumentException(ResourcesT.Exceptions.UnknownSystemMetadataItemName.f(Key))
                 End Select
             Catch When Not [error]
                 Return Nothing
@@ -355,7 +364,8 @@ Namespace MetadataT
         ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
         ''' <returns>Value of metadata item with given key; or null if given metadata value cannot be obtained</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> is not one of predefined names</exception>
-        Default Public ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
+        ''' <version version="1.5.4">Message of <see cref="ArgumentException"/> made localizable and localized to Czech</version>
+        Default Public ReadOnly Property Value(ByVal key As String) As Object Implements IMetadata.Value
             Get
                 Dim [error] As Boolean = False
                 Try
@@ -378,7 +388,7 @@ Namespace MetadataT
                         Case "IsHidden" : Return IsHidden
                         Case "IsEncrypted" : Return IsEncrypred
                         Case "Attributes" : Return Attributes
-                        Case Else : [error] = True : Throw New ArgumentException("{0} is not known system metadata item name.".f(Key))
+                        Case Else : [error] = True : Throw New ArgumentException(ResourcesT.Exceptions.UnknownSystemMetadataItemName.f(Key))
                     End Select
                 Catch When Not [error]
                     Return Nothing

@@ -3800,6 +3800,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} is not known system metadata item name.'.
+        '''</summary>
+        Public ReadOnly Property UnknownSystemMetadataItemName() As String
+            Get
+                Return ResourceManager.GetString("UnknownSystemMetadataItemName", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unknown underlying type {0}'.
         '''</summary>
         Public ReadOnly Property UnknownUnderlyingType0() As String
@@ -7743,6 +7752,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function UnknownState0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, UnknownState0, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} is not known system metadata item name.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function UnknownSystemMetadataItemNameFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnknownSystemMetadataItemName, arg0)
         End Function
         
         '''<summary>

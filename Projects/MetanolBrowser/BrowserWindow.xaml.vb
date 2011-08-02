@@ -1,7 +1,23 @@
-﻿Imports Tools.WindowsT.WPF
-Imports mBox = Tools.WindowsT.IndependentT.MessageBox
+﻿Imports Tools.WindowsT.WPF, Tools.LinqT, Tools.ExtensionsT
+Imports mBox = Tools.WindowsT.IndependentT.MessageBox, System.Linq
+Imports Microsoft.Win32
+Imports Tools.MetadataT
+
 ''' <summary>A windows used for browsing pictures</summary>
 Class BrowserWindow
+    ''' <summary>CTor - creates a new instance of the <see cref="BrowserWindow"/> class</summary>
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+    Private Sub BrowserWindow_Loaded(sender As Object, e As System.Windows.RoutedEventArgs) Handles Me.Loaded
+        Dim args = Environment.GetCommandLineArgs
+        Metadata = New MetadataCollection
+        If args.Length > 1 Then
+            If Not OpenFile(args(1)) Then Me.Close()
+        Else
+            If Not OpenFile() Then Me.Close()
+        End If
+    End Sub
 
     ''' <summary>Gets or sets current metadata</summary>
     Private Property Metadata As MetadataCollection
@@ -12,68 +28,33 @@ Class BrowserWindow
             DataContext = value
         End Set
     End Property
-
-   
-
-
-    Private Sub Window_PreviewKeyDown(sender As Grid, e As System.Windows.Input.KeyEventArgs) Handles MyBase.PreviewKeyDown
-        Select Case e.Key
-            Case Key.Down
-                If rtgTech.IsFocused Then
-                    rtgArt.Focus()
-                ElseIf rtgInfo.IsFocused Then
-                    rtgOver.Focus()
-                End If
-            Case Key.Up
-                If rtgArt.IsFocused Then
-                    rtgTech.Focus()
-                ElseIf rtgOver.IsFocused Then
-                    rtgInfo.Focus()
-                End If
-            Case Key.Left
-                If sender.FlowDirection = Windows.FlowDirection.RightToLeft Then GoTo Right
-Left:           If rtgInfo.IsFocused Then
-                    rtgTech.Focus()
-                ElseIf rtgOver.IsFocused Then
-                    rtgArt.Focus()
-                End If
-            Case Key.Right
-                If sender.FlowDirection = Windows.FlowDirection.RightToLeft Then GoTo Left
-Right:          If rtgTech.IsFocused Then
-                    rtgInfo.Focus()
-                ElseIf rtgArt.IsFocused Then
-                    rtgOver.Focus()
-                End If
-            Case Else : Return
-        End Select
-        e.Handled = True
-    End Sub
+    Private index%
+    Private directory() As String
 
     Private Sub grdIptc_MouseDown(sender As System.Object, e As System.Windows.Input.MouseButtonEventArgs) Handles grdIptc.MouseDown
         If e.ClickCount = 2 AndAlso e.ChangedButton = MouseButton.Left Then
-            Dim dlgIptc As New IptcEditor(Metadata.Iptc)
-            dlgIptc.ShowDialog(Me)
+            ShowIptc()
+            e.Handled = True
         End If
     End Sub
-
-    Private Sub btnSave_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles btnSave.Click
-        btnSave.ContextMenu.IsOpen = True
-    End Sub
-
-    Private Sub btnSave_KeyDown(sender As System.Object, e As System.Windows.Input.KeyEventArgs) Handles btnSave.KeyDown
-        Select Case Keyboard.Modifiers
-            Case ModifierKeys.None
-                Select Case e.Key
-                    Case Key.Left : If Me.FlowDirection = Windows.FlowDirection.LeftToRight Then GoPrev() Else GoNext()
-                    Case Key.Right : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then GoPrev() Else GoNext()
-                    Case Else : Return
-                End Select
-            Case Else : Return
-        End Select
+    Private Sub lblRating_MouseDoubleClick(sender As System.Object, e As System.Windows.Input.MouseButtonEventArgs) Handles lblRating.MouseDoubleClick
+        ShowRating()
         e.Handled = True
     End Sub
 
-    Private Sub BrowserWindow_KeyDown(sender As Object, e As System.Windows.Input.KeyEventArgs) Handles Me.KeyDown
+
+    'Keyboard shortcuts
+    '←          Left
+    '→          Right
+    'F5         Copy
+    'F12        Link
+    'Enter      Fullscreen
+    'Esc        Exit
+    'I          IPTC
+    '*/ Ctrl+R  Rating
+    'Ctrl+O     Open file
+    'Ctrl'S     Save changes
+    Private Sub BrowserWindow_PreviewKeyDown(sender As Object, e As System.Windows.Input.KeyEventArgs) Handles Me.PreviewKeyDown
         Select Case Keyboard.Modifiers
             Case ModifierKeys.None
                 Select Case e.Key
@@ -83,12 +64,16 @@ Right:          If rtgTech.IsFocused Then
                     Case Key.F12 : CreateLink()
                     Case Key.Return : ToggleFullscreen()
                     Case Key.Escape : [Exit]()
+                    Case Key.I : ShowIptc()
+                    Case Key.Multiply : ShowRating()
                     Case Else : Return
                 End Select
             Case ModifierKeys.Control
                 Select Case e.Key
                     Case Key.O : OpenFile()
                     Case Key.S : Save()
+                    Case Key.R : ShowRating()
+                    Case Else : Return
                 End Select
             Case Else : Return
         End Select
@@ -110,11 +95,46 @@ Right:          If rtgTech.IsFocused Then
         End If
     End Sub
     ''' <summary>Opens a file</summary>
-    Private Sub OpenFile()
+    Private Function OpenFile(Optional fileName As String = Nothing) As Boolean
         If IfNecessaryAskAndSave() Then
-            'TODO:
+            If fileName = "" Then
+                Dim dlg As New OpenFileDialog() With {.Filter = My.Resources.fil_Jpeg + "|*.jpg;*.jpeg;*.jfif"}
+                If dlg.ShowDialog(Me).Value Then
+                    fileName = dlg.FileName
+                Else
+                    Return False
+                End If
+            End If
+            If Not IO.Path.GetExtension(fileName).ToLower.In(".jpeg", ".jpg", ".jfif") Then
+                If mBox.MsgBoxFW(My.Resources.err_NotAJpegFile, MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation, My.Resources.txt_OpenFile, Me, fileName) = MsgBoxResult.Retry Then
+                    Return OpenFile()
+                Else
+                    Return False
+                End If
+            End If
+            If Not IO.File.Exists(fileName) Then
+                If mBox.MsgBoxFW(My.Resources.err_FileDoesNotExist, MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation, My.Resources.txt_OpenFile, Me, fileName) = MsgBoxResult.Retry Then
+                    Return OpenFile()
+                Else
+                    Return False
+                End If
+            End If
+            Try
+                LoadFile(fileName)
+                directory = IO.Directory.GetFiles(IO.Path.GetDirectoryName(fileName))
+                index = directory.IndexOf(fileName)
+                Return True
+            Catch ex As Exception
+                If mBox.Error_XPTIBWO(ex, String.Format(My.Resources.err_LoadFile, fileName), My.Resources.txt_OpenFile, Buttons:=mBox.MessageBoxButton.Buttons.Retry Or mBox.MessageBoxButton.Buttons.Cancel, Owner:=Me) = Forms.DialogResult.Retry Then
+                    Return OpenFile()
+                Else
+                    Return False
+                End If
+            End Try
+        Else
+            Return False
         End If
-    End Sub
+    End Function
     ''' <summary>Saves changes in IPTC</summary>
     ''' <returns>True if save is OK or user is OK with faiilure, false to cancel cutrrent operation</returns>
     Private Function Save() As Boolean
@@ -170,39 +190,36 @@ Right:          If rtgTech.IsFocused Then
         Else : Return False
         End If
     End Function
-#End Region
-
-#Region "Menu items events"
-    Private Sub mniSave_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniSave.Click
-        Save()
+    ''' <summary>Shows IPTC dialog</summary>
+    Private Sub ShowIptc()
+        Dim dlgIptc As New IptcEditor(Metadata.Iptc)
+        dlgIptc.ShowDialog(Me)
+    End Sub
+    ''' <summary>Shows rating dialog</summary>
+    Private Sub ShowRating()
+        Dim dlgRating As New RatingEditor(Metadata.Iptc)
+        dlgRating.ShowDialog(Me)
     End Sub
 
-    Private Sub mniPrev_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniPrev.Click
-        GoPrev()
-    End Sub
-
-    Private Sub mniNext_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniNext.Click
-        GoNext()
-    End Sub
-
-    Private Sub mniOpen_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniOpen.Click
-        OpenFile()
-    End Sub
-
-    Private Sub mniCopy_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniCopy.Click
-        Copy()
-    End Sub
-
-    Private Sub mniLink_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniLink.Click
-        CreateLink()
-    End Sub
-
-    Private Sub mniFullScreen_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniFullScreen.Click
-        ToggleFullscreen()
-    End Sub
-
-    Private Sub mniExit_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles mniExit.Click
-        [Exit]()
+    ''' <summary>Loads file</summary>
+    ''' <param name="fileName">Name of file to load</param>
+    Private Sub LoadFile(fileName$)
+        Metadata.Exif = Nothing
+        Metadata.Iptc = Nothing
+        Metadata.System = New SystemMetadata(fileName)
+        Dim bmp As BitmapImage = New BitmapImage() With {.StreamSource = IO.File.Open(fileName, IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.ReadWrite)}
+        imgImage.Source = bmp
+        Using jpeg As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(fileName)
+            If jpeg.ContainsExif Then
+                Metadata.Exif = jpeg.GetExif()
+            End If
+            If jpeg.ContainsIptc Then
+                Metadata.Iptc = New IptcInternal(jpeg)
+            Else
+                Metadata.Iptc = New IptcInternal
+            End If
+        End Using
     End Sub
 #End Region
+
 End Class
