@@ -185,6 +185,7 @@ Class BrowserWindow
     ''' <summary>If data were changed asks user to save them</summary>
     ''' <remarks>True to save changes, false to discard changes, null to cancel operation</remarks>
     Private Function AskIfNecessary() As Boolean?
+        If Metadata.Iptc Is Nothing Then Return False
         If Metadata.Iptc.IsChanged Then
             Return AskSave()
         Else : Return False
