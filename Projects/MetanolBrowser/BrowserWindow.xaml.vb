@@ -2,9 +2,12 @@
 Imports mBox = Tools.WindowsT.IndependentT.MessageBox, System.Linq
 Imports Microsoft.Win32
 Imports Tools.MetadataT
+Imports Tools.DrawingT.DrawingIOt.JPEG
+Imports MessageBoxButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 
 ''' <summary>A windows used for browsing pictures</summary>
 Class BrowserWindow
+    Private Const JpegMask As String = "*.jpg;*.jpeg;*.jfif"
     ''' <summary>CTor - creates a new instance of the <see cref="BrowserWindow"/> class</summary>
     Public Sub New()
         InitializeComponent()
@@ -30,6 +33,7 @@ Class BrowserWindow
     End Property
     Private index%
     Private directory() As String
+    Private directoryName As String
 
     Private Sub grdIptc_MouseDown(sender As System.Object, e As System.Windows.Input.MouseButtonEventArgs) Handles grdIptc.MouseDown
         If e.ClickCount = 2 AndAlso e.ChangedButton = MouseButton.Left Then
@@ -53,7 +57,6 @@ Class BrowserWindow
     'I          IPTC
     '*/ Ctrl+R  Rating
     'Ctrl+O     Open file
-    'Ctrl'S     Save changes
     Private Sub BrowserWindow_PreviewKeyDown(sender As Object, e As System.Windows.Input.KeyEventArgs) Handles Me.PreviewKeyDown
         Select Case Keyboard.Modifiers
             Case ModifierKeys.None
@@ -71,7 +74,6 @@ Class BrowserWindow
             Case ModifierKeys.Control
                 Select Case e.Key
                     Case Key.O : OpenFile()
-                    Case Key.S : Save()
                     Case Key.R : ShowRating()
                     Case Else : Return
                 End Select
@@ -83,72 +85,103 @@ Class BrowserWindow
 #Region "Command methods"
     ''' <summary>Shows next image</summary>
     Private Sub GoNext()
-        If IfNecessaryAskAndSave() Then
-            'TODO:
+        If index + 1 >= directory.Length Then
+            OnDirectoryEnd(1)
+        Else
+            index += 1
+            Try
+                LoadFile(directory(index))
+            Catch ex As Exception
+                mBox.Error_XW(ex, Me)
+                GoNext()
+            End Try
+
         End If
     End Sub
 
     ''' <summary>Shows previous image</summary>
     Private Sub GoPrev()
-        If IfNecessaryAskAndSave() Then
-            'TODO:
+        If index <= 0 Then
+            OnDirectoryEnd(-1)
+        Else
+            index -= 1
+            Try
+                LoadFile(directory(index))
+            Catch ex As Exception
+                mBox.Error_XW(ex, Me)
+                GoPrev()
+            End Try
+        End If
+    End Sub
+
+    ''' <summary>Called when directory end or start is reached</summary>
+    ''' <param name="direction">1 for end, -1 for start</param>
+    Private Sub OnDirectoryEnd(direction%)
+        If direction.NotIn(-1, 1) Then Throw New ArgumentException(My.Resources.ex_1orMinus1, "direction")
+        Dim dl As New DirectoryEndDialog(directoryName, direction)
+        If dl.ShowDialog(Me) Then
+            Try
+                directory = IO.Directory.GetFiles(dl.Folder, JpegMask)
+            Catch ex As Exception
+                mBox.Error_XW(ex, Me)
+                OnDirectoryEnd(direction)
+            End Try
+            directoryName = dl.Folder
+            If directory.Length = 0 Then
+                OnDirectoryEnd(direction)
+            Else
+                index = If(direction = 1, 0, directory.Length - 1)
+                Try
+                    LoadFile(directory(index))
+                Catch ex As Exception
+                    mBox.Error_XW(ex, Me)
+                    If direction = 1 Then GoNext() Else GoPrev()
+                End Try
+            End If
         End If
     End Sub
     ''' <summary>Opens a file</summary>
+    ''' <param name="fileName">A name of file to open, if null asks user</param>
     Private Function OpenFile(Optional fileName As String = Nothing) As Boolean
-        If IfNecessaryAskAndSave() Then
-            If fileName = "" Then
-                Dim dlg As New OpenFileDialog() With {.Filter = My.Resources.fil_Jpeg + "|*.jpg;*.jpeg;*.jfif"}
-                If dlg.ShowDialog(Me).Value Then
-                    fileName = dlg.FileName
-                Else
-                    Return False
-                End If
+        If fileName = "" Then
+            Dim dlg As New OpenFileDialog() With {.Filter = My.Resources.fil_Jpeg + "|" + JpegMask}
+            If dlg.ShowDialog(Me).Value Then
+                fileName = dlg.FileName
+            Else
+                Return False
             End If
-            If Not IO.Path.GetExtension(fileName).ToLower.In(".jpeg", ".jpg", ".jfif") Then
-                If mBox.MsgBoxFW(My.Resources.err_NotAJpegFile, MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation, My.Resources.txt_OpenFile, Me, fileName) = MsgBoxResult.Retry Then
-                    Return OpenFile()
-                Else
-                    Return False
-                End If
-            End If
-            If Not IO.File.Exists(fileName) Then
-                If mBox.MsgBoxFW(My.Resources.err_FileDoesNotExist, MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation, My.Resources.txt_OpenFile, Me, fileName) = MsgBoxResult.Retry Then
-                    Return OpenFile()
-                Else
-                    Return False
-                End If
-            End If
-            Try
-                LoadFile(fileName)
-                directory = IO.Directory.GetFiles(IO.Path.GetDirectoryName(fileName))
-                index = directory.IndexOf(fileName)
-                Return True
-            Catch ex As Exception
-                If mBox.Error_XPTIBWO(ex, String.Format(My.Resources.err_LoadFile, fileName), My.Resources.txt_OpenFile, Buttons:=mBox.MessageBoxButton.Buttons.Retry Or mBox.MessageBoxButton.Buttons.Cancel, Owner:=Me) = Forms.DialogResult.Retry Then
-                    Return OpenFile()
-                Else
-                    Return False
-                End If
-            End Try
-        Else
-            Return False
         End If
-    End Function
-    ''' <summary>Saves changes in IPTC</summary>
-    ''' <returns>True if save is OK or user is OK with faiilure, false to cancel cutrrent operation</returns>
-    Private Function Save() As Boolean
-        If Metadata.Iptc.IsChanged Then
-            'TODO:
-        Else
+        If Not IO.Path.GetExtension(fileName).ToLower.In(".jpeg", ".jpg", ".jfif") Then
+            If mBox.MsgBoxFW(My.Resources.err_NotAJpegFile, MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation, My.Resources.txt_OpenFile, Me, fileName) = MsgBoxResult.Retry Then
+                Return OpenFile()
+            Else
+                Return False
+            End If
+        End If
+        If Not IO.File.Exists(fileName) Then
+            If mBox.MsgBoxFW(My.Resources.err_FileDoesNotExist, MsgBoxStyle.RetryCancel Or MsgBoxStyle.Exclamation, My.Resources.txt_OpenFile, Me, fileName) = MsgBoxResult.Retry Then
+                Return OpenFile()
+            Else
+                Return False
+            End If
+        End If
+        Try
+            LoadFile(fileName)
+            directory = IO.Directory.GetFiles(IO.Path.GetDirectoryName(fileName), JpegMask)
+            directoryName = IO.Path.GetDirectoryName(fileName)
+            index = directory.IndexOf(fileName)
             Return True
-        End If
+        Catch ex As Exception
+            If mBox.Error_XPTIBWO(ex, String.Format(My.Resources.err_LoadFile, fileName), My.Resources.txt_OpenFile, Buttons:=mBox.MessageBoxButton.Buttons.Retry Or mBox.MessageBoxButton.Buttons.Cancel, Owner:=Me) = Forms.DialogResult.Retry Then
+                Return OpenFile()
+            Else
+                Return False
+            End If
+        End Try
     End Function
     ''' <summary>Copies a file</summary>
     Private Sub Copy()
-        If IfNecessaryAskAndSave() Then
-            'TODO:
-        End If
+        'TODO:
     End Sub
     ''' <summary>Creates link to a file</summary>
     Private Sub CreateLink()
@@ -160,46 +193,64 @@ Class BrowserWindow
     End Sub
     ''' <summary>Quits application</summary>
     Private Sub [Exit]()
-        If IfNecessaryAskAndSave() Then Me.Close()
+        Me.Close()
     End Sub
-    ''' <summary>If necessary asks user to save changes and saves them</summary>
-    ''' <remarks>True if no pending changes or if save was successfull; false to cancel pending operation (user decission)</remarks>
-    Private Function IfNecessaryAskAndSave() As Boolean
-        Dim answer = AskIfNecessary()
-        If Not answer.HasValue Then Return False
-        If answer.Value Then
-            Return Save()
-        Else
-            Return True
-        End If
-    End Function
-    ''' <summary>Asks user to save changes</summary>
-    ''' <remarks>True to save changes, false to discard changes, null to cancel operation</remarks>
-    Private Function AskSave() As Boolean?
-        Select Case mBox.MsgBox("Unsaved changes. Save?", MsgBoxStyle.YesNoCancel, "Unsaved changes", Me)
-            Case MsgBoxResult.Yes : Return True
-            Case MsgBoxResult.No : Return False
-            Case Else : Return Nothing
-        End Select
-    End Function
-    ''' <summary>If data were changed asks user to save them</summary>
-    ''' <remarks>True to save changes, false to discard changes, null to cancel operation</remarks>
-    Private Function AskIfNecessary() As Boolean?
-        If Metadata.Iptc Is Nothing Then Return False
-        If Metadata.Iptc.IsChanged Then
-            Return AskSave()
-        Else : Return False
-        End If
-    End Function
+
     ''' <summary>Shows IPTC dialog</summary>
     Private Sub ShowIptc()
-        Dim dlgIptc As New IptcEditor(Metadata.Iptc)
-        dlgIptc.ShowDialog(Me)
+        ShowIptcEditDialog(New IptcEditor(Metadata.Iptc))
     End Sub
     ''' <summary>Shows rating dialog</summary>
     Private Sub ShowRating()
-        Dim dlgRating As New RatingEditor(Metadata.Iptc)
-        dlgRating.ShowDialog(Me)
+        ShowIptcEditDialog(New RatingEditor(Metadata.Iptc))
+    End Sub
+
+    ''' <summary>Shows dialog for IPTC editing, when dialog closes either saves or discards IPTC changes</summary>
+    ''' <param name="dialog">The dialog to be shown</param>
+    ''' <exception cref="ArgumentNullException"><paramref name="dialog"/> is null</exception>
+    Private Sub ShowIptcEditDialog(dialog As Window)
+        If dialog Is Nothing Then Throw New ArgumentException("dialog")
+        If dialog.ShowDialog(Me) Then
+            If Metadata.Iptc.IsChanged Then SaveIptc()
+        Else
+            If Metadata.Iptc.IsChanged Then ReloadIptc()
+        End If
+    End Sub
+
+    ''' <summary>Saves IPTC data to file</summary>
+    Private Sub SaveIptc()
+retry:  Dim jpeg As JPEGReader = Nothing
+        Try
+            jpeg = New JPEGReader(directory(index), True)
+            jpeg.IPTCEmbed(Metadata.Iptc.GetBytes())
+        Catch ex As Exception
+            If mBox.Error_XPTIBWO(ex, My.Resources.err_IptcSave, My.Resources.txt_SaveIptc, mBox.MessageBoxIcons.Error, mBox.MessageBoxButton.Buttons.Abort Or mBox.MessageBoxButton.Buttons.Retry, Me) = Forms.DialogResult.Retry Then
+                GoTo retry
+            Else
+                ReloadIptc()
+            End If
+        Finally
+            If jpeg IsNot Nothing Then jpeg.Dispose()
+        End Try
+    End Sub
+
+    ''' <summary>Reloads IPTC data from file</summary>
+    Private Sub ReloadIptc()
+retry:  Dim jpeg As JPEGReader = Nothing
+        Try
+            jpeg = New JPEGReader(directory(index))
+            If jpeg.ContainsIptc Then
+                Metadata.Iptc = New IptcInternal(jpeg)
+            Else
+                Metadata.Iptc = New IptcInternal
+            End If
+        Catch ex As Exception
+            If mBox.Error_XPTIBWO(ex, My.Resources.err_IptcReload, My.Resources.txt_ReloadIptc, mBox.MessageBoxIcons.Error, mBox.MessageBoxButton.Buttons.Abort Or mBox.MessageBoxButton.Buttons.Retry, Me) = Forms.DialogResult.Retry Then
+                GoTo retry
+            Else
+                Metadata.Iptc = New IptcInternal
+            End If
+        End Try
     End Sub
 
     ''' <summary>Loads file</summary>

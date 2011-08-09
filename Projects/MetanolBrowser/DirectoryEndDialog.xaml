@@ -1,0 +1,47 @@
+﻿<Window x:Class="DirectoryEndDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    Title="Folder browsing" Height="382" Width="623" ShowInTaskbar="False" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+    FocusManager.FocusedElement="{Binding ElementName=lstFolders}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Text="End of folder reached. Do you want to continue in another folder?" Name="txbI1" HorizontalAlignment="Left"/>
+        <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Content="Current folder:" Target="{Binding ElementName=txtFolder}" HorizontalAlignment="Left"/>
+        <TextBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Folder}" IsReadOnly="True" IsTabStop="False" Focusable="False" />
+        <ListBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Name="lstFolders" SelectionMode="Single" DisplayMemberPath="DisplayName" SelectedValuePath="Path" />
+        <Button Grid.Column="2" Grid.Row="3" Name="btnOK" Content="_Use folder" IsDefault="True">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=lstFolders, Path=SelectedIndex}" Value="-1">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=lstFolders, Path=SelectedValue}" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Grid.Column="2" Grid.Row="4" Name="btnCancel" Content="_Cancel" IsCancel="True"/>
+        <TextBox Grid.Column="0" Grid.Row="6" Text="→ or space" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Text="= enters the folder" HorizontalAlignment="Left"/>
+        <TextBox Grid.Column="0" Grid.Row="7"  Text="← or backspace" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="= folder up (..)" HorizontalAlignment="Left"/>
+    </Grid>
+</Window>

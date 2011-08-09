@@ -132,4 +132,28 @@
   <data name="fil_Jpeg" xml:space="preserve">
     <value>JPEG files (*.jpg, *.jpeg)</value>
   </data>
+  <data name="err_IptcSave" xml:space="preserve">
+    <value>Error while saving IPTC data</value>
+  </data>
+  <data name="txt_SaveIptc" xml:space="preserve">
+    <value>Save IPTC</value>
+  </data>
+  <data name="err_IptcReload" xml:space="preserve">
+    <value>Error while loading IPTC data</value>
+  </data>
+  <data name="txt_ReloadIptc" xml:space="preserve">
+    <value>Reload IPTC</value>
+  </data>
+  <data name="ex_1orMinus1" xml:space="preserve">
+    <value>Value must be -1 or 1</value>
+  </data>
+  <data name="iq_BeginningOfFolderReached" xml:space="preserve">
+    <value>Beginning of folder reached. Do you want to continue in another folder?</value>
+  </data>
+  <data name="txt_ThisFolder" xml:space="preserve">
+    <value>(.) - Současná složka</value>
+  </data>
+  <data name="txt_FolderUp" xml:space="preserve">
+    <value>(..)</value>
+  </data>
 </root>

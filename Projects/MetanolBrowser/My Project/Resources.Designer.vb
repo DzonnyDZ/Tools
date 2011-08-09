@@ -70,6 +70,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Error while loading IPTC data.
+        '''</summary>
+        Friend ReadOnly Property err_IptcReload() As String
+            Get
+                Return ResourceManager.GetString("err_IptcReload", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error while saving IPTC data.
+        '''</summary>
+        Friend ReadOnly Property err_IptcSave() As String
+            Get
+                Return ResourceManager.GetString("err_IptcSave", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Error loading file {0}:.
         '''</summary>
         Friend ReadOnly Property err_LoadFile() As String
@@ -88,6 +106,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Value must be -1 or 1.
+        '''</summary>
+        Friend ReadOnly Property ex_1orMinus1() As String
+            Get
+                Return ResourceManager.GetString("ex_1orMinus1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to JPEG files (*.jpg, *.jpeg).
         '''</summary>
         Friend ReadOnly Property fil_Jpeg() As String
@@ -97,11 +124,56 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Beginning of folder reached. Do you want to continue in another folder?.
+        '''</summary>
+        Friend ReadOnly Property iq_BeginningOfFolderReached() As String
+            Get
+                Return ResourceManager.GetString("iq_BeginningOfFolderReached", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to (..).
+        '''</summary>
+        Friend ReadOnly Property txt_FolderUp() As String
+            Get
+                Return ResourceManager.GetString("txt_FolderUp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Open File.
         '''</summary>
         Friend ReadOnly Property txt_OpenFile() As String
             Get
                 Return ResourceManager.GetString("txt_OpenFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Reload IPTC.
+        '''</summary>
+        Friend ReadOnly Property txt_ReloadIptc() As String
+            Get
+                Return ResourceManager.GetString("txt_ReloadIptc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Save IPTC.
+        '''</summary>
+        Friend ReadOnly Property txt_SaveIptc() As String
+            Get
+                Return ResourceManager.GetString("txt_SaveIptc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to (.) - Současná složka.
+        '''</summary>
+        Friend ReadOnly Property txt_ThisFolder() As String
+            Get
+                Return ResourceManager.GetString("txt_ThisFolder", resourceCulture)
             End Get
         End Property
     End Module

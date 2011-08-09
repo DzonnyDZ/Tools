@@ -99,8 +99,5 @@
                 <TextBlock DataContext="{Binding OverallRating}" Style="{StaticResource l1}" FontWeight="Bold">Σ <TextBlock/></TextBlock>
             </TextBlock>
         </Label> 
-
-        <!--Save button-->
-        <TextBlock Name="txtChaned" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="2" Visibility="{Binding Iptc.IsChanged, Converter={StaticResource BooleanVisibilityConverter}}">*</TextBlock>
     </Grid>
 </Window>

@@ -13,4 +13,14 @@ Public Class IptcEditor
         DataContext = iptc
         prgIptc.SelectedObject = iptc
     End Sub
+
+    Private Sub btnOK_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles btnOK.Click
+        Me.DialogResult = True
+        Me.Close()
+    End Sub
+
+    Private Sub btnCancel_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles btnCancel.Click
+        Me.DialogResult = False
+        Me.Close()
+    End Sub
 End Class

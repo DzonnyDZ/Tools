@@ -3,49 +3,62 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="IptcEditor" Height="300" Width="300"
     xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
-    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" WindowStyle="ToolWindow">
-    <TabControl>
-        <TabItem Header="Basic">
-            <Grid>
-                <Grid.ColumnDefinitions >
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid.Resources>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Grid.Column" Value="0"/>
-                    </Style>
-                    <Style TargetType="{x:Type TextBox}">
-                        <Setter Property="Grid.Column" Value="1"/>
-                    </Style>
-                </Grid.Resources>
-                <Label Grid.Row="0">Object Name</Label>
-                <TextBox Grid.Row="0"/>
-                <Label Grid.Row="1">Country Code</Label>
-                <TextBox Grid.Row="1"/>
-                <Label Grid.Row="2">Country Name</Label>
-                <TextBox Grid.Row="2"/>
-                <Label Grid.Row="3">Province/State</Label>
-                <TextBox Grid.Row="3"/>
-                <Label Grid.Row="4">City</Label>
-                <TextBox Grid.Row="4"/>
-                <Label Grid.Row="5">Sublocation</Label>
-                <TextBox Grid.Row="5"/>
-            </Grid>
-            
-        </TabItem>
-        <TabItem Header="All IPTC">
-            <wfi:WindowsFormsHost>
-                <wf:PropertyGrid x:Name="prgIptc"/>
-            </wfi:WindowsFormsHost>
-        </TabItem>
-    </TabControl>
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" WindowStyle="ToolWindow" ShowInTaskbar="False">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.ColumnSpan="2">
+            <TabItem Header="Basic">
+                <Grid>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Grid.Column" Value="0"/>
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Grid.Column" Value="1"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Label Grid.Row="0">Object Name</Label>
+                    <TextBox Grid.Row="0"/>
+                    <Label Grid.Row="1">Country Code</Label>
+                    <TextBox Grid.Row="1"/>
+                    <Label Grid.Row="2">Country Name</Label>
+                    <TextBox Grid.Row="2"/>
+                    <Label Grid.Row="3">Province/State</Label>
+                    <TextBox Grid.Row="3"/>
+                    <Label Grid.Row="4">City</Label>
+                    <TextBox Grid.Row="4"/>
+                    <Label Grid.Row="5">Sublocation</Label>
+                    <TextBox Grid.Row="5"/>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="All IPTC">
+                <wfi:WindowsFormsHost>
+                    <wf:PropertyGrid x:Name="prgIptc"/>
+                </wfi:WindowsFormsHost>
+            </TabItem>
+        </TabControl>
+        
+        <Button Name="btnOK" Content="_OK" IsDefault="True" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"/>
+        <Button Name="btnCancel" Content="_Cancel" IsCancel="True" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
+    </Grid>
 </Window>
