@@ -487,6 +487,11 @@
             <summary>Contains type and value converters for Windows Presentation Foundation (WPF)</summary>
             <seealso cref="N:System.Windows.Converters"/>
         </member>
+        <member name="N:WindowsT.WPF.InputT">
+            <summary>Provides types to support the Windows Presentation Foundation (WPF) input system. This includes device abstraction classes for mouse, keyboard, and stylus devices, a common input manager class, support for commanding and custom commands, and various utility classes.</summary>
+            <seealso cref="N:System.Windows.Input"/>
+            <version version="1.5.4">This namespace is new in version 1.5.4</version>
+        </member>
         <member name="N:Tools.WindowsT.WPF.MarkupT">
             <summary>Provides types to support serialization and Extensible Application Markup Language (XAML) in Windows Presentation Foundation (WPF). In particular, contains classes to support XAML markup extensions and other language concepts that are defined by the XAML specification, reader/writer implementation classes, serializers, and attributes that report XAML characteristics to reflection-based analysis.</summary>
             <version stage="Nightly" version="1.5.2">Namespace introduced</version>

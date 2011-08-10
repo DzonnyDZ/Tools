@@ -246,6 +246,7 @@
     <Compile Include="Windows\WPF\Converters\General\StringFormatConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Type-safe\XmlBooleanConverter.vb" />
     <Compile Include="Windows\WPF\Converters\Type-safe\XmlXPathConverter.vb" />
+    <Compile Include="Windows\WPF\Input\FreeKeyGesture.vb" />
     <Compile Include="Windows\WPF\Markup\MarkupExtensionBase.vb" />
     <Compile Include="Windows\WPF\Markup\NamespacesExtension.vb" />
     <Compile Include="Windows\WPF\Markup\NewExtension.vb" />

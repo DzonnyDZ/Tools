@@ -4,7 +4,23 @@
     xmlns:my="clr-namespace:Tools.Metanol"
     xmlns:tCnv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
     Title="Metanol Browser" Height="529" Width="775" Background="Black" Foreground="Yellow" FocusManager.FocusedElement="{Binding ElementName=btnSave, Mode=OneTime}">
-
+    <Window.CommandBindings>
+        <CommandBinding Command="NextPage" Executed="NextPage_Executed"/>    
+        <CommandBinding Command="PreviousPage" Executed="PreviousPage_Executed"  />
+        <CommandBinding Command="my:FileCommands.FileCopy" Executed="FileCopy_Executed"/>
+        <CommandBinding Command="my:FileCommands.FileLink" Executed="FileLink_Executed"/>
+        <CommandBinding Command="my:DisplayCommands.ToggleFullscreen" Executed="ToggleFullscreen_Executed"/>
+        <CommandBinding Command="Close" Executed="Close_Executed" />
+        <CommandBinding Command="my:MetanolBrowserCommands.EditIptc" Executed="EditIptc_Executed"/>
+        <CommandBinding Command="my:MetanolBrowserCommands.EditRating" Executed="EditRating_Executed"/>
+        <CommandBinding Command="Open" Executed="Open_Executed"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Right" Command="NextPage"/>
+        <KeyBinding Gesture="Left" Command="PreviousPage"/>
+        <KeyBinding Gesture="Return" Command="my:DisplayCommands.ToggleFullscreen"/>
+        <KeyBinding Gesture="Esc" Command="Close"/>
+    </Window.InputBindings>
     <Window.Resources>
         <Style TargetType="{x:Type Label}" x:Key="LabelStyle">
             <Setter Property="Foreground" Value="Yellow"/>

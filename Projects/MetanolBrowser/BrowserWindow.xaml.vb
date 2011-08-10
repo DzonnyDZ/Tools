@@ -47,40 +47,31 @@ Class BrowserWindow
     End Sub
 
 
-    'Keyboard shortcuts
-    '←          Left
-    '→          Right
-    'F5         Copy
-    'F12        Link
-    'Enter      Fullscreen
-    'Esc        Exit
-    'I          IPTC
-    '*/ Ctrl+R  Rating
-    'Ctrl+O     Open file
-    Private Sub BrowserWindow_PreviewKeyDown(sender As Object, e As System.Windows.Input.KeyEventArgs) Handles Me.PreviewKeyDown
-        Select Case Keyboard.Modifiers
-            Case ModifierKeys.None
-                Select Case e.Key
-                    Case Key.Left : If Me.FlowDirection = Windows.FlowDirection.LeftToRight Then GoPrev() Else GoNext()
-                    Case Key.Right : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then GoPrev() Else GoNext()
-                    Case Key.F5 : Copy()
-                    Case Key.F12 : CreateLink()
-                    Case Key.Return : ToggleFullscreen()
-                    Case Key.Escape : [Exit]()
-                    Case Key.I : ShowIptc()
-                    Case Key.Multiply : ShowRating()
-                    Case Else : Return
-                End Select
-            Case ModifierKeys.Control
-                Select Case e.Key
-                    Case Key.O : OpenFile()
-                    Case Key.R : ShowRating()
-                    Case Else : Return
-                End Select
-            Case Else : Return
-        End Select
-        e.Handled = True
-    End Sub
+
+    'Private Sub BrowserWindow_PreviewKeyDown(sender As Object, e As System.Windows.Input.KeyEventArgs) Handles Me.PreviewKeyDown
+    '    Select Case Keyboard.Modifiers
+    '        Case ModifierKeys.None
+    '            Select Case e.Key
+    '                Case Key.Left : If Me.FlowDirection = Windows.FlowDirection.LeftToRight Then GoPrev() Else GoNext()
+    '                Case Key.Right : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then GoPrev() Else GoNext()
+    '                Case Key.F5 : Copy()
+    '                Case Key.F12 : CreateLink()
+    '                Case Key.Return : ToggleFullscreen()
+    '                Case Key.Escape : [Exit]()
+    '                Case Key.I : ShowIptc()
+    '                Case Key.Multiply : ShowRating()
+    '                Case Else : Return
+    '            End Select
+    '        Case ModifierKeys.Control
+    '            Select Case e.Key
+    '                Case Key.O : OpenFile()
+    '                Case Key.R : ShowRating()
+    '                Case Else : Return
+    '            End Select
+    '        Case Else : Return
+    '    End Select
+    '    e.Handled = True
+    'End Sub
 
 #Region "Command methods"
     ''' <summary>Shows next image</summary>
@@ -274,4 +265,53 @@ retry:  Dim jpeg As JPEGReader = Nothing
     End Sub
 #End Region
 
+
+#Region "Commands"
+    'Keyboard shortcuts
+    '←          Left
+    '→          Right
+    'F5         Copy
+    'F12        Link
+    'Enter      Fullscreen (Also Alt+Enter)
+    'Esc        Exit
+    'I          IPTC
+    '*/ Ctrl+R  Rating
+    'Ctrl+O     Open file
+
+    Private Sub NextPage_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        GoNext()
+    End Sub
+
+    Private Sub PreviousPage_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        GoPrev()
+    End Sub
+
+    Private Sub FileCopy_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        Copy()
+    End Sub
+
+    Private Sub FileLink_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        CreateLink()
+    End Sub
+
+    Private Sub ToggleFullscreen_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        ToggleFullscreen()
+    End Sub
+
+    Private Sub Close_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        [Exit]()
+    End Sub
+
+    Private Sub EditIptc_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        ShowIptc()
+    End Sub
+
+    Private Sub EditRating_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        ShowRating()
+    End Sub
+
+    Private Sub Open_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
+        OpenFile()
+    End Sub
+#End Region
 End Class
