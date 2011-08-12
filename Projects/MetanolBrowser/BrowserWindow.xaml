@@ -3,9 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:my="clr-namespace:Tools.Metanol"
     xmlns:tCnv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
-    Title="Metanol Browser" Height="529" Width="775" Background="Black" Foreground="Yellow" FocusManager.FocusedElement="{Binding ElementName=btnSave, Mode=OneTime}">
+    xmlns:ti="clr-namespace:Tools.WindowsT.WPF.InputT;assembly=Tools.Windows"
+    Title="Metanol Browser" Height="529" Width="775" Background="Black" Foreground="Yellow" FocusManager.FocusedElement="{Binding ElementName=btnSave, Mode=OneTime}"
+    Icon="file:///D:/Users/Honza/Documents/Programy/Tools/Projects/Metanol2/Resources/Metanol.ico"
+>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsFullscreen}" Value="True">
+                    <Setter Property="WindowStyle" Value="None"/>
+                    <Setter Property="WindowState" Value="Maximized"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
     <Window.CommandBindings>
-        <CommandBinding Command="NextPage" Executed="NextPage_Executed"/>    
+        <CommandBinding Command="NextPage" Executed="NextPage_Executed"/>
         <CommandBinding Command="PreviousPage" Executed="PreviousPage_Executed"  />
         <CommandBinding Command="my:FileCommands.FileCopy" Executed="FileCopy_Executed"/>
         <CommandBinding Command="my:FileCommands.FileLink" Executed="FileLink_Executed"/>
@@ -17,6 +30,7 @@
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Gesture="Right" Command="NextPage"/>
+        <KeyBinding Gesture="Space" Command="NextPage"/>
         <KeyBinding Gesture="Left" Command="PreviousPage"/>
         <KeyBinding Gesture="Return" Command="my:DisplayCommands.ToggleFullscreen"/>
         <KeyBinding Gesture="Esc" Command="Close"/>
@@ -36,13 +50,95 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Image Name="imgImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="mnuMenu">
+            <Menu.Style>
+                <Style TargetType="Menu">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=my:BrowserWindow, Mode=FindAncestor}, Path=IsFullscreen}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Menu.Style>
+            <MenuItem Header="_File">
+                <MenuItem Command="Open">
+                    <MenuItem.Icon>
+                        <Image Source="/MetanolBrowser;component/Images/OpenFile.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="my:FileCommands.FileCopy"/>
+                <MenuItem Command="my:FileCommands.FileLink"/>
+                <MenuItem Command="Close" InputGestureText="Esc"/>
+            </MenuItem>
+            <MenuItem Header="_Image">
+                <MenuItem Command="my:MetanolBrowserCommands.EditIptc" InputGestureText="I"/>
+                <MenuItem Command="my:MetanolBrowserCommands.EditRating" InputGestureText="*, Ctrl+R"/>
+            </MenuItem>
+            <MenuItem Header="_Display">
+                <MenuItem Command="my:DisplayCommands.ToggleFullscreen" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=my:BrowserWindow, Mode=FindAncestor}, Path=IsFullscreen, Mode=OneWay}" InputGestureText="Enter, Alt+Enter">
+                    <MenuItem.Icon>
+                        <Image Source="/MetanolBrowser;component/Images/FullScreenHS.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="PreviousPage" InputGestureText="←" Header="_Previous file">
+                    <MenuItem.Icon>
+                        <Image Source="/MetanolBrowser;component/Images/forward.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="NextPage" InputGestureText="→, Space" Header="_Next file">
+                    <MenuItem.Icon>
+                        <Image Source="/MetanolBrowser;component/Images/Back.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" IsLocked="True" Name="tbtToolbars">
+            <ToolBarTray.Style>
+                <Style TargetType="ToolBarTray">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=my:BrowserWindow, Mode=FindAncestor}, Path=IsFullscreen}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToolBarTray.Style>
+            <ToolBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+                <Button Command="PreviousPage">
+                    <Button.ToolTip>
+                        <TextBlock>
+                            <TextBlock Text="Previous file"/>
+                            (<TextBlock Text="←"/>)
+                        </TextBlock>
+                    </Button.ToolTip>
+                    <Image Source="/MetanolBrowser;component/Images/Back.png" />
+                </Button>
+                <Button Command="NextPage">
+                    <Button.ToolTip>
+                        <TextBlock>
+                            <TextBlock Text="Next file"/>
+                            (<TextBlock Text="→"/>)
+                        </TextBlock>
+                    </Button.ToolTip>
+                    <Image Source="/MetanolBrowser;component/Images/forward.png" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <Image Name="imgImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Grid.RowSpan="3" Stretch="Uniform" Grid.Row="2">
+            <Image.InputBindings>
+                <MouseBinding  Command="NextPage" Gesture="RightClick"/>
+                <MouseBinding  Command="PreviousPage" Gesture="LeftClick"/>
+            </Image.InputBindings>
+        </Image>
 
         <!--IPTC-->
-        <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="grdIptc" DataContext="{Binding Iptc}">
+        <Grid Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Name="grdIptc" DataContext="{Binding Iptc}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -59,7 +155,7 @@
             </TextBlock>
         </Grid>
         <!--System-->
-        <Grid Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Name="grdSystem" DataContext="{Binding System}">
+        <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Name="grdSystem" DataContext="{Binding System}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -67,11 +163,18 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding FileName}" Grid.Row="0" HorizontalAlignment="Center" TextAlignment="Center"/>
+            <TextBlock Grid.Row="0">
+                <TextBlock Text="{Binding FileName}" HorizontalAlignment="Center" TextAlignment="Center"/>
+                (
+                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=my:BrowserWindow, Mode=FindAncestor}, Path=DisplayIndex}"/>
+                /
+                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=my:BrowserWindow, Mode=FindAncestor}, Path=Directory.Length}"/>
+                )
+            </TextBlock>
             <TextBlock Text="{Binding Size, StringFormat='#,###'}" Grid.Row="1" HorizontalAlignment="Center" TextAlignment="Center"/>
         </Grid>
         <!--Exif-->
-        <Grid Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Name="grdExif" DataContext="{Binding Exif}">
+        <Grid Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Name="grdExif" DataContext="{Binding Exif}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -87,11 +190,13 @@
         </Grid>
 
         <!--Ratings-->
-        <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" DataContext="{Binding Iptc}" Name="lblRating">
+        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" DataContext="{Binding Iptc}" Name="lblRating">
             <Label.Resources>
                 <Style TargetType="TextBlock" x:Key="l1">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding .}" Value="0"><Setter Property="Visibility" Value="Collapsed"/></DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
                 <Style TargetType="TextBlock" x:Key="l2">
@@ -100,19 +205,29 @@
                             <Setter Property="Text" Value="✖"/>
                             <Setter Property="Foreground" Value="Red"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★"/></DataTrigger>
-                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★"/></DataTrigger>
-                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★★"/></DataTrigger>
-                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★★★"/></DataTrigger>
-                        <DataTrigger Binding="{Binding .}" Value="1"><Setter Property="Text" Value="★★★★★"/></DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="1">
+                            <Setter Property="Text" Value="★"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="2">
+                            <Setter Property="Text" Value="★★"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="3">
+                            <Setter Property="Text" Value="★★★"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="4">
+                            <Setter Property="Text" Value="★★★★"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding .}" Value="5">
+                            <Setter Property="Text" Value="★★★★★"/>
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Label.Resources>
             <TextBlock>
-                <TextBlock DataContext="{Binding TechnicalQuality}" Style="{StaticResource l1}">T <TextBlock/></TextBlock>
-                <TextBlock DataContext="{Binding ArtQuality}" Style="{StaticResource l1}">A <TextBlock/></TextBlock>
-                <TextBlock DataContext="{Binding InformationValue}" Style="{StaticResource l1}">I <TextBlock/></TextBlock>
-                <TextBlock DataContext="{Binding OverallRating}" Style="{StaticResource l1}" FontWeight="Bold">Σ <TextBlock/></TextBlock>
+                <TextBlock DataContext="{Binding TechnicalQuality}" Style="{StaticResource l1}">T <TextBlock Style="{StaticResource l2}"/></TextBlock>
+                <TextBlock DataContext="{Binding ArtQuality}" Style="{StaticResource l1}">A <TextBlock Style="{StaticResource l2}"/></TextBlock>
+                <TextBlock DataContext="{Binding InformationValue}" Style="{StaticResource l1}">I <TextBlock Style="{StaticResource l2}"/></TextBlock>
+                <TextBlock DataContext="{Binding OverallRating}" Style="{StaticResource l1}" FontWeight="Bold">Σ <TextBlock Style="{StaticResource l2}"/></TextBlock>
             </TextBlock>
         </Label> 
     </Grid>

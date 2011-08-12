@@ -4416,24 +4416,26 @@ Namespace MetadataT.IptcT
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Description("Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.")> _
-		<Category("Location")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>Public Overridable Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
-			Get
-				Try
-					Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166)))
-					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
-				Catch ex As Exception
-					Throw New IPTCGetException(ex)
-				End Try
-			End Get
-			Set
-				Try
-					StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166), 3, true) = ConvertEnumList(Of ISO3166)(New List(Of StringEnum(Of ISO3166))(New StringEnum(Of ISO3166)(){value}))
-				Catch ex As Exception
-					Throw New IPTCSetException(ex)
-				End Try
-			End Set
-		End Property
+        <Description("Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.")> _
+        <Category("Location")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>
+        <TypeConverter(GetType(StringEnum(Of ISO3166).Converter))>
+        Public Overridable Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
+            Get
+                Try
+                    Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166)))
+                    If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+                Catch ex As Exception
+                    Throw New IptcGetException(ex)
+                End Try
+            End Get
+            Set(value As StringEnum(Of ISO3166))
+                Try
+                    StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166), 3, True) = ConvertEnumList(Of ISO3166)(New List(Of StringEnum(Of ISO3166))(New StringEnum(Of ISO3166)() {value}))
+                Catch ex As Exception
+                    Throw New IptcSetException(ex)
+                End Try
+            End Set
+        End Property
 		''' <summary>Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.</summary>
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>

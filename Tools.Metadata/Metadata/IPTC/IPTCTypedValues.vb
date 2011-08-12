@@ -37,7 +37,7 @@ Namespace MetadataT.IptcT
         ''' <see cref="CodedCharacterSet"/> also specifies encoding hint for record 8 (<see cref="RecordNumbers.ObjectDataRecord"/>).
         ''' You shall decide yourself whether to use this hint or not when decoding binary data from record 8.
         ''' <see cref="Iptc"/> class does not apply any encoding on binary data in record 8.
-        ''' Howver when text data are read from record 8 encoding is applied same way as in records 2 - 6.
+        ''' However when text data are read from record 8 encoding is applied same way as in records 2 - 6.
         ''' </para>
         ''' </remarks>
         ''' <seelaso cref="CodedCharacterSet"/><seelaso cref="Tools.TextT.EncodingT.ISO2022.DetectEncoding"/>

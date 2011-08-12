@@ -36,7 +36,6 @@
         <Label Grid.Column="2" Grid.Row="1" Target="{Binding ElementName=rtgOverall}">_Overall</Label>
         <my:Rating x:Name="rtgOverall" Grid.Column="3" Grid.Row="1" Rating="{Binding OverallRating, Mode=TwoWay}"/>
 
-
         <Button Name="btnOK" Content="_OK" IsDefault="True" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
         <Button Name="btnCancel" Content="_Cancel" IsCancel="True" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
     </Grid>

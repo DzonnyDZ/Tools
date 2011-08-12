@@ -52,6 +52,30 @@ Partial Friend NotInheritable Class MySettings
             Return defaultInstance
         End Get
     End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+    Public Property IptcUtf8() As Boolean
+        Get
+            Return CType(Me("IptcUtf8"),Boolean)
+        End Get
+        Set
+            Me("IptcUtf8") = value
+        End Set
+    End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+    Public Property IgnoreIptcLengthConstraints() As Boolean
+        Get
+            Return CType(Me("IgnoreIptcLengthConstraints"),Boolean)
+        End Get
+        Set
+            Me("IgnoreIptcLengthConstraints") = value
+        End Set
+    End Property
 End Class
 
 Namespace My

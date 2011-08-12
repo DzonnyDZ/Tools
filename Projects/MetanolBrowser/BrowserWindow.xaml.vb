@@ -11,6 +11,7 @@ Class BrowserWindow
     ''' <summary>CTor - creates a new instance of the <see cref="BrowserWindow"/> class</summary>
     Public Sub New()
         InitializeComponent()
+        Title = String.Format("{0} {1}", My.Application.Info.Title, My.Application.Info.Version)
     End Sub
     Private Sub BrowserWindow_Loaded(sender As Object, e As System.Windows.RoutedEventArgs) Handles Me.Loaded
         Dim args = Environment.GetCommandLineArgs
@@ -31,9 +32,99 @@ Class BrowserWindow
             DataContext = value
         End Set
     End Property
-    Private index%
-    Private directory() As String
-    Private directoryName As String
+
+
+
+#Region "Index"
+    ''' <summary>Gets or sets index of current file in directory</summary>      
+    Public Property Index As Integer
+        Get
+            Return GetValue(IndexProperty)
+        End Get
+        Set(ByVal value As Integer)
+            SetValue(IndexProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="Index"/> dependency property</summary>                                                   
+    Public Shared ReadOnly IndexProperty As DependencyProperty = DependencyProperty.Register(
+        "Index", GetType(Integer), GetType(BrowserWindow), New FrameworkPropertyMetadata(-1, AddressOf OnIndexChanged))
+    ''' <summary>Called when value of the <see cref="Index"/> property changes</summary>
+    ''' <param name="d">Source of the event  - must be <see cref="BrowserWindow"/></param>
+    ''' <param name="e">Event arguments</param>
+    Private Shared Sub OnIndexChanged(ByVal d As System.Windows.DependencyObject, ByVal e As DependencyPropertyChangedEventArgs)
+        DirectCast(d, BrowserWindow).OnIndexChanged(e)
+    End Sub
+    ''' <summary>Callled when value of the <see cref="Index"/> property changes</summary>
+    ''' <param name="e">Event arguments</param>
+    Protected Overridable Sub OnIndexChanged(e As DependencyPropertyChangedEventArgs)
+        Me.SetValue(DisplayIndexPropertyKey, Index + 1)
+        Try
+            Title = String.Format("{0} {1} - {2}", My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
+        Catch :End Try
+    End Sub
+
+    ''' <summary>Gets 1-based index of current file in directory</summary>
+    Public ReadOnly Property DisplayIndex As Integer
+        Get
+            Return GetValue(BrowserWindow.DisplayIndexProperty)
+        End Get
+    End Property
+    ''' <summary>Metadata for the <see cref="DisplayIndex"/> property</summary>
+    Private Shared ReadOnly DisplayIndexPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly("DisplayIndex", GetType(Integer), GetType(BrowserWindow), New FrameworkPropertyMetadata(0))
+    ''' <summary>Key of the <see cref="DisplayIndex"/> property</summary>
+    Public Shared ReadOnly DisplayIndexProperty As DependencyProperty = DisplayIndexPropertyKey.DependencyProperty
+#End Region
+
+#Region "Directory"
+    ''' <summary>Gets or sets array of files in current directory</summary>      
+    Public Property Directory As String()
+        Get
+            Return GetValue(DirectoryProperty)
+        End Get
+        Set(ByVal value As String())
+            SetValue(DirectoryProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="Directory"/> dependency property</summary>                                                   
+    Public Shared ReadOnly DirectoryProperty As DependencyProperty = DependencyProperty.Register(
+        "Directory", GetType(String()), GetType(BrowserWindow), New FrameworkPropertyMetadata(New String() {}))
+#End Region
+
+
+#Region "DirectoryName"
+    ''' <summary>Gets or sets path of current directory</summary>      
+    Public Property DirectoryName As String
+        Get
+            Return GetValue(DirectoryNameProperty)
+        End Get
+        Set(ByVal value As String)
+            SetValue(DirectoryNameProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="DirectoryName"/> dependency property</summary>                                                   
+    Public Shared ReadOnly DirectoryNameProperty As DependencyProperty = DependencyProperty.Register(
+        "DirectoryName", GetType(String), GetType(BrowserWindow), New FrameworkPropertyMetadata(Nothing))
+#End Region
+
+
+
+
+
+#Region "IsFullscreen"
+    ''' <summary>Gets or sets value indicating if this window is displayed fullscreen</summary>
+    Public Property IsFullscreen() As Boolean
+        <DebuggerStepThrough()> Get
+            Return GetValue(IsFullscreenProperty)
+        End Get
+        <DebuggerStepThrough()> Set(ByVal value As Boolean)
+            SetValue(IsFullscreenProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="IsFullscreen"/> dependency property</summary>
+    Public Shared ReadOnly IsFullscreenProperty As DependencyProperty =
+                           DependencyProperty.Register("IsFullscreen", GetType(Boolean), GetType(BrowserWindow),
+                           New FrameworkPropertyMetadata(False))
+#End Region
 
     Private Sub grdIptc_MouseDown(sender As System.Object, e As System.Windows.Input.MouseButtonEventArgs) Handles grdIptc.MouseDown
         If e.ClickCount = 2 AndAlso e.ChangedButton = MouseButton.Left Then
@@ -45,33 +136,6 @@ Class BrowserWindow
         ShowRating()
         e.Handled = True
     End Sub
-
-
-
-    'Private Sub BrowserWindow_PreviewKeyDown(sender As Object, e As System.Windows.Input.KeyEventArgs) Handles Me.PreviewKeyDown
-    '    Select Case Keyboard.Modifiers
-    '        Case ModifierKeys.None
-    '            Select Case e.Key
-    '                Case Key.Left : If Me.FlowDirection = Windows.FlowDirection.LeftToRight Then GoPrev() Else GoNext()
-    '                Case Key.Right : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then GoPrev() Else GoNext()
-    '                Case Key.F5 : Copy()
-    '                Case Key.F12 : CreateLink()
-    '                Case Key.Return : ToggleFullscreen()
-    '                Case Key.Escape : [Exit]()
-    '                Case Key.I : ShowIptc()
-    '                Case Key.Multiply : ShowRating()
-    '                Case Else : Return
-    '            End Select
-    '        Case ModifierKeys.Control
-    '            Select Case e.Key
-    '                Case Key.O : OpenFile()
-    '                Case Key.R : ShowRating()
-    '                Case Else : Return
-    '            End Select
-    '        Case Else : Return
-    '    End Select
-    '    e.Handled = True
-    'End Sub
 
 #Region "Command methods"
     ''' <summary>Shows next image</summary>
@@ -112,7 +176,7 @@ Class BrowserWindow
         Dim dl As New DirectoryEndDialog(directoryName, direction)
         If dl.ShowDialog(Me) Then
             Try
-                directory = IO.Directory.GetFiles(dl.Folder, JpegMask)
+                directory = GetSupportedFilesFromDirectory(dl.Folder)
             Catch ex As Exception
                 mBox.Error_XW(ex, Me)
                 OnDirectoryEnd(direction)
@@ -122,8 +186,9 @@ Class BrowserWindow
                 OnDirectoryEnd(direction)
             Else
                 index = If(direction = 1, 0, directory.Length - 1)
+                Title = String.Format("{0} {1} - {2}", My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
                 Try
-                    LoadFile(directory(index))
+                    LoadFile(Directory(Index))
                 Catch ex As Exception
                     mBox.Error_XW(ex, Me)
                     If direction = 1 Then GoNext() Else GoPrev()
@@ -158,9 +223,10 @@ Class BrowserWindow
         End If
         Try
             LoadFile(fileName)
-            directory = IO.Directory.GetFiles(IO.Path.GetDirectoryName(fileName), JpegMask)
+            directory = GetSupportedFilesFromDirectory(IO.Path.GetDirectoryName(fileName))
             directoryName = IO.Path.GetDirectoryName(fileName)
-            index = directory.IndexOf(fileName)
+            Index = Directory.IndexOf(fileName)
+            Title = String.Format("{0} {1} - {2}", My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
             Return True
         Catch ex As Exception
             If mBox.Error_XPTIBWO(ex, String.Format(My.Resources.err_LoadFile, fileName), My.Resources.txt_OpenFile, Buttons:=mBox.MessageBoxButton.Buttons.Retry Or mBox.MessageBoxButton.Buttons.Cancel, Owner:=Me) = Forms.DialogResult.Retry Then
@@ -170,6 +236,14 @@ Class BrowserWindow
             End If
         End Try
     End Function
+
+    ''' <summary>Gets files supported for browsing from given directory</summary>
+    ''' <param name="directory">Directory to get files from</param>
+    ''' <returns>Array of file paths</returns>
+    Private Function GetSupportedFilesFromDirectory(directory$) As String()
+        Return (From file In IO.Directory.EnumerateFiles(directory) Where IO.Path.GetExtension(file).ToLowerInvariant.In(".jpg", ".jpeg", ".jfif")).ToArray
+    End Function
+
     ''' <summary>Copies a file</summary>
     Private Sub Copy()
         'TODO:
@@ -180,7 +254,7 @@ Class BrowserWindow
     End Sub
     ''' <summary>Toggles fullscreen mode</summary>
     Private Sub ToggleFullscreen()
-        'TODO:
+        IsFullscreen = Not IsFullscreen
     End Sub
     ''' <summary>Quits application</summary>
     Private Sub [Exit]()
@@ -250,7 +324,14 @@ retry:  Dim jpeg As JPEGReader = Nothing
         Metadata.Exif = Nothing
         Metadata.Iptc = Nothing
         Metadata.System = New SystemMetadata(fileName)
-        Dim bmp As BitmapImage = New BitmapImage() With {.StreamSource = IO.File.Open(fileName, IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.ReadWrite)}
+        Dim bmp As BitmapImage = New BitmapImage() 'With {.StreamSource = IO.File.Open(fileName, IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.ReadWrite)}
+        bmp.BeginInit()
+        Try
+            bmp.CacheOption = BitmapCacheOption.OnLoad
+            bmp.UriSource = New Uri(fileName)
+        Finally
+            bmp.EndInit()
+        End Try
         imgImage.Source = bmp
         Using jpeg As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(fileName)
             If jpeg.ContainsExif Then
@@ -314,4 +395,10 @@ retry:  Dim jpeg As JPEGReader = Nothing
         OpenFile()
     End Sub
 #End Region
+
+
+
+
+
+
 End Class

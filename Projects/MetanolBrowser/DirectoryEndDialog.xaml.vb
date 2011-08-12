@@ -99,8 +99,7 @@ Public Class DirectoryEndDialog
     End Sub
 
     Private Sub btnOK_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles btnOK.Click
-
-        If lstFolders.SelectedIndex > 0 AndAlso DirectCast(lstFolders.SelectedItem, String) <> "" Then
+        If lstFolders.SelectedIndex >= 0 AndAlso DirectCast(lstFolders.SelectedValue, String) <> "" Then
             Folder = lstFolders.SelectedValue
             Me.DialogResult = True
             Me.Close()

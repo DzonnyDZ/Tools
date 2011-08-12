@@ -8,11 +8,20 @@ Public Class IptcInternal
 
     ''' <summary>Default CTor - creates a new empty instance of the <see cref="IptcInternal"/> class</summary>
     Public Sub New()
+        If Me.Tags.Count = 0 AndAlso My.Settings.IptcUtf8 Then
+            Me.CodedCharacterSet = New Byte() {Tools.TextT.EncodingT.ISO2022.AsciiEscape, &H25, &H47}
+        End If
+        IsChanged = False
     End Sub
     ''' <summary>CTor - creates a new instance of the <see cref="IptcInternal"/> class and reads its data from given <see cref="IIptcGetter"/></summary>
     ''' <param name="getter">Source of IPTC data</param>
     Public Sub New(getter As IIptcGetter)
         MyBase.New(getter)
+        If Me.Tags.Count = 0 AndAlso My.Settings.IptcUtf8 Then
+            Me.CodedCharacterSet = New Byte() {Tools.TextT.EncodingT.ISO2022.AsciiEscape, &H25, &H47}
+        End If
+        IgnoreLenghtConstraints = My.Settings.IgnoreIptcLengthConstraints
+        IsChanged = False
     End Sub
 
     ''' <summary>Called when value of any tag changes</summary>

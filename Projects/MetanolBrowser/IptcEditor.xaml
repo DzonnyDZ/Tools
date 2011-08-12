@@ -37,17 +37,17 @@
                         </Style>
                     </Grid.Resources>
                     <Label Grid.Row="0">Object Name</Label>
-                    <TextBox Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Text="{Binding ObjectName, Mode=TwoWay}"/>
                     <Label Grid.Row="1">Country Code</Label>
-                    <TextBox Grid.Row="1"/>
+                    <TextBox Grid.Row="1" Text="{Binding CountryPrimaryLocationCode, Mode=TwoWay}" MaxLength="3"/>
                     <Label Grid.Row="2">Country Name</Label>
-                    <TextBox Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Text="{Binding CountryPrimaryLocationName, Mode=TwoWay}"/>
                     <Label Grid.Row="3">Province/State</Label>
-                    <TextBox Grid.Row="3"/>
+                    <TextBox Grid.Row="3" Text="{Binding ProvinceState, Mode=TwoWay}"/>
                     <Label Grid.Row="4">City</Label>
-                    <TextBox Grid.Row="4"/>
+                    <TextBox Grid.Row="4" Text="{Binding City, Mode=TwoWay}"/>
                     <Label Grid.Row="5">Sublocation</Label>
-                    <TextBox Grid.Row="5"/>
+                    <TextBox Grid.Row="5" Text="{Binding SubLocation, Mode=TwoWay}"/>
                 </Grid>
 
             </TabItem>

@@ -1747,6 +1747,8 @@ Namespace MetadataT.IptcT.IptcDataTypes
         End Function
 
         ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="StringEnum(Of TEnum)"/>'s</summary>
+        ''' <version version="1.5.4">Added <see cref="EditorBrowsableAttribute"/></version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Class Converter
             Inherits TypeConverter(Of StringEnum, String)
             ''' <summary>Performs conversion from <see cref="String"/> to <see cref="T:StringEnum"/></summary>
@@ -1803,15 +1805,39 @@ Namespace MetadataT.IptcT.IptcDataTypes
                 Return New StandardValuesCollection(ret)
             End Function
         End Class
+
+        ''' <summary>Custom type description provider for <see cref="StringEnum(Of T)"/> generic classes</summary>
+        ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Class StringEnumTypeDescriptionProvider
+            Inherits TypeDescriptionProvider
+            ''' <summary>Gets a custom type descriptor for the given type and object.</summary>
+            ''' <param name="objectType">The type of object for which to retrieve the type descriptor.</param>
+            ''' <param name="instance">An instance of the type. Can be null if no instance was passed to the <see cref="T:System.ComponentModel.TypeDescriptor" />.</param>
+            ''' <returns>An <see cref="T:System.ComponentModel.ICustomTypeDescriptor" /> that can provide metadata for the type.</returns>
+            ''' <remarks>If <paramref name="objectType"/> or <paramref name="instance"/> is <see cref="StringEnum(Of T)"/> returns <see cref="T: MetadataT.IptcT.IptcDataTypes.StringEnum`1+StringEnumTypeDescriptor"/>.</remarks>
+            Public Overrides Function GetTypeDescriptor(objectType As System.Type, instance As Object) As System.ComponentModel.ICustomTypeDescriptor
+                Dim t = If(instance Is Nothing, objectType, instance.GetType())
+                Do
+                    If t.IsGenericType AndAlso t.GetGenericTypeDefinition.Equals(GetType(StringEnum(Of ))) Then _
+                        Return Activator.CreateInstance(GetType(StringEnum(Of ).StringEnumTypeDescriptor).MakeGenericType({t.GetGenericArguments()(0)}))
+                    t = t.BaseType
+                Loop
+                Return MyBase.GetTypeDescriptor(objectType, instance)
+            End Function
+        End Class
     End Class
 
     ''' <summary>Type that can contain value of "string enum" even when such value is not member of this enum</summary>
     ''' <typeparam name="TEnum">Type of <see cref="P:StringEnum`0.EnumValue"/>. Must inherit from <see cref="[Enum]"/></typeparam>
-    <CLSCompliant(False), DebuggerDisplay("{ToString}")> _
-    <TypeConverter(GetType(StringEnum.Converter))> _
+    ''' <version version="1.5.4">Added <see cref="TypeDescriptionProviderAttribute"/>. This makes this class WPF binding-friendly.</version>
+    <CLSCompliant(False), DebuggerDisplay("{ToString}")>
+    <TypeConverter(GetType(StringEnum.Converter))>
+    <TypeDescriptionProvider(GetType(StringEnum.StringEnumTypeDescriptionProvider))>
     Public Class StringEnum(Of TEnum As {IConvertible, Structure})
         Inherits StringEnum
         Implements IT1orT2(Of TEnum, String)
+
         ''' <summary>Contains value of the <see cref="StringValue"/> property</summary>
         Private _StringValue As String
         ''' <summary>Contains value of the <see cref="EnumValue"/> property</summary>
@@ -2031,6 +2057,8 @@ Namespace MetadataT.IptcT.IptcDataTypes
             Me.EnumValue = EnumValue
         End Sub
         ''' <summary>Extends <see cref="T:StringEnum.Converter"/> so that it works even if it is given with null <see cref="ITypeDescriptorContext"/>. Supplies very simple fake own <see cref="ITypeDescriptorContext"/>.</summary>
+        ''' <version version="1.5.4">Added <see cref="EditorBrowsableAttribute"/></version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shadows Class Converter
             Inherits StringEnum.Converter
             ''' <summary>Gets substitution <see cref="ITypeDescriptorContext"/></summary>
@@ -2176,18 +2204,15 @@ Namespace MetadataT.IptcT.IptcDataTypes
                 If context Is Nothing Then context = GetPropertyDescriptor()
                 Return MyBase.GetStandardValuesExclusive(context)
             End Function
-            ''' <summary>Performs conversion from <see cref="String"/> to <see cref="T:StringEnum"/></summary>
+            ''' <summary>Performs conversion from <see cref="String"/> to <see cref="T:StringEnum(Of T)"/></summary>
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
             ''' <param name="value">Value to be converted to <see cref="T:StringEnum"/></param>
-            ''' <returns><see cref="T:StringEnum"/> initialized by <paramref name="value"/></returns>
-            ''' <exception cref="System.MissingMethodException">Cannot create an instance of generic class <see cref="StringEnum(Of TEnum)"/>. The constructor is missing.</exception>
-            ''' <exception cref="System.MemberAccessException">Cannot create an instance of generic class <see cref="StringEnum(Of TEnum)"/>. E.g. the class is abstract.</exception>
-            ''' <exception cref="System.Reflection.TargetInvocationException">Constructor of <see cref="StringEnum(Of TEnum)"/> has thrown an exception.</exception>
-            ''' <remarks>Unlike <see cref="M:StringEnum.Converter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.String)"/>, this method works even if <paramref name="context"/> is null</remarks>
+            ''' <returns><see cref="T:StringEnum(Of T)"/> initialized by <paramref name="value"/></returns>
+            ''' <remarks>Unlike <see cref="M:StringEnum.Converter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.String)"/>, this method works even if <paramref name="context"/> or <paramref name="context"/>.<see cref="ITypeDescriptorContext.PropertyDescriptor">PropertyDescriptor</see> is null because it ignores <paramref name="context"/> and directly creates a new instance of type <see cref="StringEnum(Of T)"/>.</remarks>
+            ''' <version version="1.5.4">CHanged implementation. The method now directly creates a new instance of <see cref="StringEnum(Of T)"/>. Previously it called base class method and just ensured that <paramref name="context"/> was not null.</version>
             Public Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As StringEnum
-                If context Is Nothing Then context = GetPropertyDescriptor()
-                Return MyBase.ConvertFrom(context, culture, value)
+                Return New StringEnum(Of TEnum)(value)
             End Function
             ''' <summary>If overriden in derived class performs conversion form null to type <see cref="T:StringEnum"/></summary>
             ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
@@ -2245,6 +2270,21 @@ Namespace MetadataT.IptcT.IptcDataTypes
                 Return MyBase.CreateInstance(propertyValues, context)
             End Function
 #End Region
+        End Class
+
+
+        ''' <summary>Custom type descriptor for <see cref="StringEnum(Of T)"/>. It only provides converter.</summary>
+        ''' <seelaso cref="StringEnumTypeDescriptionProvider"/>
+        ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Class StringEnumTypeDescriptor
+            Inherits CustomTypeDescriptor
+            ''' <summary>Returns a type converter for the type represented by this type descriptor.</summary>
+            ''' <returns>A <see cref="T:System.ComponentModel.TypeConverter" /> for the type represented by this type descriptor. 
+            ''' This implementation returns a new instance of <see cref="Convert"/>.</returns>
+            Public Overrides Function GetConverter() As System.ComponentModel.TypeConverter
+                Return New Converter
+            End Function
         End Class
     End Class
 
