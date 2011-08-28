@@ -331,7 +331,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;&#9;''' &lt;summary>Gets details about tag format by tag record and number&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="Record">Recor number&lt;/param>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="TagNumber">Number of tag within &lt;paramref name="Record"/>&lt;/param>&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;''' &lt;param name="UseThisGroup">If not null given instance of &lt;see cref="GroupInfo"/> is used instead of obtaining new instance using shared property of the &lt;see cref="GroupInfo"/> class. (Relevant only for tags grouped into groups.)&lt;/param></xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;param name="UseThisGroup">If not null given instance of &lt;see cref="GroupInfo"/> is used instead of obtaining new instance using shared property of the &lt;see cref="GroupInfo"/> class. (Relevant only for tags grouped into groups.)&lt;/param>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/> -or- &lt;paramref name="TagNumber"/> is not tag within &lt;paramref name="record"/>&lt;/exception>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;Friend Shared Function GetTag(ByVal Record As RecordNumbers, TagNumber As Byte, ByVal UseThisGroup As GroupInfo) As IPTCTag&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;Select Case Record&#xD;&#xA;</xsl:text>

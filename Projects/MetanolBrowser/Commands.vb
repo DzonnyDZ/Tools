@@ -6,7 +6,7 @@ Public NotInheritable Class FileCommands
     ''' <summary>Private constructor not present - this is static class</summary>
     Partial Private Sub New()
     End Sub
-    Private Shared _fileCopy As New RoutedUICommand("Copy", "FileCopy", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.F5)})
+    Private Shared _fileCopy As New RoutedUICommand(My.Resources.txt_Copy, "FileCopy", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.F5)})
     ''' <summary>Gets a command for cyping file</summary>
     Public Shared ReadOnly Property FileCopy As RoutedUICommand
         Get
@@ -14,7 +14,7 @@ Public NotInheritable Class FileCommands
         End Get
     End Property
 
-    Private Shared _fileLink As New RoutedUICommand("Create link", "FileLink", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.F12)})
+    Private Shared _fileLink As New RoutedUICommand(My.Resources.txt_CreateLink, "FileLink", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.F12)})
     ''' <summary>Gets a command for creating a link (shortcut)</summary>
     Public Shared ReadOnly Property FileLink As RoutedUICommand
         Get
@@ -28,7 +28,7 @@ Public NotInheritable Class DisplayCommands
     ''' <summary>Private constructor not present - this is static class</summary>
     Partial Private Sub New()
     End Sub
-    Private Shared _toggleFullscreen As New RoutedUICommand("Toggle Fullscreen", "ToggleFullscreen", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.Return, ModifierKeys.Alt)})
+    Private Shared _toggleFullscreen As New RoutedUICommand(My.Resources.txt_ToggleFullscreen, "ToggleFullscreen", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.Return, ModifierKeys.Alt)})
     ''' <summary>Gets a command for toggling a fullscreen view</summary>
     Public Shared ReadOnly Property ToggleFullscreen As RoutedUICommand
         Get
@@ -43,7 +43,7 @@ Public NotInheritable Class MetanolBrowserCommands
     ''' <summary>Private constructor not present - this is static class</summary>
     Partial Private Sub New()
     End Sub
-    Private Shared _editIptc As New RoutedUICommand("Edit IPTC", "EditIptc", GetType(MetanolBrowserCommands), New InputGestureCollection() From {New FreeKeyGesture(Key.I)})
+    Private Shared _editIptc As New RoutedUICommand(My.Resources.txt_EditIptc, "EditIptc", GetType(MetanolBrowserCommands), New InputGestureCollection() From {New FreeKeyGesture(Key.I)})
     ''' <summary>Gets a command for editing IPTC data</summary>
     Public Shared ReadOnly Property EditIptc As RoutedUICommand
         Get
@@ -51,7 +51,7 @@ Public NotInheritable Class MetanolBrowserCommands
         End Get
     End Property
 
-    Private Shared _editRating As New RoutedUICommand("Edit rating", "EditRating", GetType(MetanolBrowserCommands), New InputGestureCollection() From {New FreeKeyGesture(Key.Multiply), New KeyGesture(Key.R, ModifierKeys.Control)})
+    Private Shared _editRating As New RoutedUICommand(My.Resources.txt_EditRating, "EditRating", GetType(MetanolBrowserCommands), New InputGestureCollection() From {New FreeKeyGesture(Key.Multiply), New KeyGesture(Key.R, ModifierKeys.Control)})
     ''' <summary>Gets a command for editing rating</summary>
     Public Shared ReadOnly Property EditRating As RoutedUICommand
         Get

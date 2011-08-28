@@ -4,15 +4,30 @@
     xmlns:my="clr-namespace:Tools.Metanol"
     xmlns:tCnv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
     xmlns:ti="clr-namespace:Tools.WindowsT.WPF.InputT;assembly=Tools.Windows"
-    Title="Metanol Browser" Height="529" Width="775" Background="Black" Foreground="Yellow" FocusManager.FocusedElement="{Binding ElementName=btnSave, Mode=OneTime}"
-    Icon="file:///D:/Users/Honza/Documents/Programy/Tools/Projects/Metanol2/Resources/Metanol.ico"
+    Title="{x:Static Tools.Metanol.My.Resources:Resources.txt_DefaultWindowTitle}" Height="529" Width="775" Background="Black" Foreground="Yellow"
+    Icon="file:///D:/Users/Honza/Documents/Programy/Tools/Projects/Metanol2/Resources/Metanol.ico" xmlns:Tools.Metanol.My.Resources="clr-namespace:Tools.Metanol.My.Resources"
 >
+    <Window.Resources>
+        <Style TargetType="{x:Type Label}" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <tCnv:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+        <ti:MouseWheelGesture x:Key="MouseWheelMinus">Minus</ti:MouseWheelGesture>
+        <ti:MouseWheelGesture x:Key="MouseWheelPlus">Plus</ti:MouseWheelGesture>
+    </Window.Resources>
     <Window.Style>
         <Style TargetType="Window">
             <Style.Triggers>
+                <!--Note: These DataTriggers are not reliable, so there is ensuring code in OnIsFullscreenChanged-->
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsFullscreen}" Value="True">
                     <Setter Property="WindowStyle" Value="None"/>
                     <Setter Property="WindowState" Value="Maximized"/>
+                    <Setter Property="ResizeMode" Value="NoResize"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsFullscreen}" Value="False">
+                    <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+                    <Setter Property="ResizeMode" Value="CanResize"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -32,21 +47,24 @@
         <KeyBinding Gesture="Right" Command="NextPage"/>
         <KeyBinding Gesture="Space" Command="NextPage"/>
         <KeyBinding Gesture="Left" Command="PreviousPage"/>
+        <KeyBinding Gesture="Alt+Right" Command="NextPage"/>
+        <KeyBinding Gesture="Alt+Left" Command="PreviousPage"/>
         <KeyBinding Gesture="Return" Command="my:DisplayCommands.ToggleFullscreen"/>
         <KeyBinding Gesture="Esc" Command="Close"/>
+        <MouseBinding Command="NextPage" Gesture="{StaticResource MouseWheelMinus}"/>
+        <MouseBinding Command="PreviousPage" Gesture="{StaticResource MouseWheelPlus}"/>
+        <ti:FreeInputBinding Command="Open">
+            <ti:FreeInputBinding.Gesture>
+                <ti:FreeKeyGesture>O</ti:FreeKeyGesture>
+            </ti:FreeInputBinding.Gesture>
+        </ti:FreeInputBinding>
     </Window.InputBindings>
-    <Window.Resources>
-        <Style TargetType="{x:Type Label}" x:Key="LabelStyle">
-            <Setter Property="Foreground" Value="Yellow"/>
-            <Setter Property="FontWeight" Value="Normal" />
-        </Style>
-        <tCnv:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
-    </Window.Resources>
+
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -66,8 +84,8 @@
                     </Style.Triggers>
                 </Style>
             </Menu.Style>
-            <MenuItem Header="_File">
-                <MenuItem Command="Open">
+            <MenuItem Header="{x:Static Tools.Metanol.My.Resources:Resources.mni_File}">
+                <MenuItem Command="Open" InputGestureText="O, Ctrl+O">
                     <MenuItem.Icon>
                         <Image Source="/MetanolBrowser;component/Images/OpenFile.png" />
                     </MenuItem.Icon>
@@ -76,22 +94,22 @@
                 <MenuItem Command="my:FileCommands.FileLink"/>
                 <MenuItem Command="Close" InputGestureText="Esc"/>
             </MenuItem>
-            <MenuItem Header="_Image">
+            <MenuItem Header="{x:Static Tools.Metanol.My.Resources:Resources.mni_Image}">
                 <MenuItem Command="my:MetanolBrowserCommands.EditIptc" InputGestureText="I"/>
                 <MenuItem Command="my:MetanolBrowserCommands.EditRating" InputGestureText="*, Ctrl+R"/>
             </MenuItem>
-            <MenuItem Header="_Display">
+            <MenuItem Header="{x:Static Tools.Metanol.My.Resources:Resources.mni_Display}">
                 <MenuItem Command="my:DisplayCommands.ToggleFullscreen" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=my:BrowserWindow, Mode=FindAncestor}, Path=IsFullscreen, Mode=OneWay}" InputGestureText="Enter, Alt+Enter">
                     <MenuItem.Icon>
                         <Image Source="/MetanolBrowser;component/Images/FullScreenHS.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Command="PreviousPage" InputGestureText="←" Header="_Previous file">
+                <MenuItem Command="PreviousPage" InputGestureText="←" Header="{x:Static Tools.Metanol.My.Resources:Resources.mni_PreviousImage}">
                     <MenuItem.Icon>
                         <Image Source="/MetanolBrowser;component/Images/forward.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Command="NextPage" InputGestureText="→, Space" Header="_Next file">
+                <MenuItem Command="NextPage" InputGestureText="→, Space" Header="{x:Static Tools.Metanol.My.Resources:Resources.mni_NextImage}">
                     <MenuItem.Icon>
                         <Image Source="/MetanolBrowser;component/Images/Back.png" />
                     </MenuItem.Icon>
@@ -112,8 +130,8 @@
                 <Button Command="PreviousPage">
                     <Button.ToolTip>
                         <TextBlock>
-                            <TextBlock Text="Previous file"/>
-                            (<TextBlock Text="←"/>)
+                            <TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.tot_PreviousImage}"/>
+                            (<TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.ltrrtl_PreviousArrow}"/>)
                         </TextBlock>
                     </Button.ToolTip>
                     <Image Source="/MetanolBrowser;component/Images/Back.png" />
@@ -121,8 +139,8 @@
                 <Button Command="NextPage">
                     <Button.ToolTip>
                         <TextBlock>
-                            <TextBlock Text="Next file"/>
-                            (<TextBlock Text="→"/>)
+                            <TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.tot_NextImage}"/>
+                            (<TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.ltrrtl_NextArrow}"/>)
                         </TextBlock>
                     </Button.ToolTip>
                     <Image Source="/MetanolBrowser;component/Images/forward.png" />
@@ -198,6 +216,7 @@
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>
+                    <Setter Property="Foreground" Value="Yellow"/>
                 </Style>
                 <Style TargetType="TextBlock" x:Key="l2">
                     <Style.Triggers>
@@ -221,13 +240,14 @@
                             <Setter Property="Text" Value="★★★★★"/>
                         </DataTrigger>
                     </Style.Triggers>
+                    <Setter Property="Foreground" Value="Yellow"/>
                 </Style>
             </Label.Resources>
             <TextBlock>
-                <TextBlock DataContext="{Binding TechnicalQuality}" Style="{StaticResource l1}">T <TextBlock Style="{StaticResource l2}"/></TextBlock>
-                <TextBlock DataContext="{Binding ArtQuality}" Style="{StaticResource l1}">A <TextBlock Style="{StaticResource l2}"/></TextBlock>
-                <TextBlock DataContext="{Binding InformationValue}" Style="{StaticResource l1}">I <TextBlock Style="{StaticResource l2}"/></TextBlock>
-                <TextBlock DataContext="{Binding OverallRating}" Style="{StaticResource l1}" FontWeight="Bold">Σ <TextBlock Style="{StaticResource l2}"/></TextBlock>
+                <TextBlock DataContext="{Binding TechnicalQuality}" Style="{StaticResource l1}"><TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.txt_TechnicalAbbr}"/> <TextBlock Style="{StaticResource l2}"/></TextBlock>
+                <TextBlock DataContext="{Binding ArtQuality}" Style="{StaticResource l1}"><TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.txt_ArtAbbr}"/> <TextBlock Style="{StaticResource l2}"/></TextBlock>
+                <TextBlock DataContext="{Binding InformationValue}" Style="{StaticResource l1}"><TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.txt_InfoAbbr}"/> <TextBlock Style="{StaticResource l2}"/></TextBlock>
+                <TextBlock DataContext="{Binding OverallRating}" Style="{StaticResource l1}" FontWeight="Bold"><TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.txt_OverallAbbr}"/> <TextBlock Style="{StaticResource l2}"/></TextBlock>
             </TextBlock>
         </Label> 
     </Grid>

@@ -35,6 +35,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Created doc", "Created doc"
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\MetanolCommonAssemblyInfo.vb = Projects\MetanolCommonAssemblyInfo.vb
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Articles", "Articles", "{982F36B7-A3E5-4782-96B0-9979A95610F1}"
 EndProject

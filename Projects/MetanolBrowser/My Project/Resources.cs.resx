@@ -112,46 +112,46 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="err_NotAJpegFile" xml:space="preserve">
-    <value>File {0} is not JPEG file.</value>
+    <value>Soubor {0} není soubor JPEG.</value>
   </data>
   <data name="err_FileDoesNotExist" xml:space="preserve">
-    <value>File {0} does not exist.</value>
+    <value>Soubor {0} neexistuje.</value>
   </data>
   <data name="err_LoadFile" xml:space="preserve">
-    <value>Error loading file {0}:</value>
+    <value>Chyba při načítání souboru {0}:</value>
   </data>
   <data name="txt_OpenFile" xml:space="preserve">
-    <value>Open File</value>
+    <value>Otevřít soubor</value>
   </data>
   <data name="fil_Jpeg" xml:space="preserve">
-    <value>JPEG files (*.jpg, *.jpeg)</value>
+    <value>Soubory JPEG (*.jpg, *.jpeg)</value>
   </data>
   <data name="err_IptcSave" xml:space="preserve">
-    <value>Error while saving IPTC data</value>
+    <value>Chyba při ukládání dat IPTC</value>
   </data>
   <data name="txt_SaveIptc" xml:space="preserve">
-    <value>Save IPTC</value>
+    <value>Uložit IPTC</value>
   </data>
   <data name="err_IptcReload" xml:space="preserve">
-    <value>Error while loading IPTC data</value>
+    <value>Chyba při načítání dat IPTC</value>
   </data>
   <data name="txt_ReloadIptc" xml:space="preserve">
-    <value>Reload IPTC</value>
+    <value>Znovunačíst IPTC</value>
   </data>
   <data name="ex_1orMinus1" xml:space="preserve">
-    <value>Value must be -1 or 1</value>
+    <value>Hodnota musí být -1 nebo 1</value>
   </data>
   <data name="iq_BeginningOfFolderReached" xml:space="preserve">
-    <value>Beginning of folder reached. Do you want to continue in another folder?</value>
+    <value>Dosaženo začátku složky. Přejete si pokračovat jinou složkou?</value>
   </data>
   <data name="txt_ThisFolder" xml:space="preserve">
-    <value>(.) - Current folder</value>
+    <value>(.) - Současná složka</value>
   </data>
   <data name="txt_FolderUp" xml:space="preserve">
     <value>(..)</value>
@@ -160,151 +160,127 @@
     <value>{0} {1} - {2}</value>
   </data>
   <data name="txt_Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Kopírovat</value>
   </data>
   <data name="txt_CreateLink" xml:space="preserve">
-    <value>Create link</value>
+    <value>Vytvořit zástupce</value>
   </data>
   <data name="txt_ToggleFullscreen" xml:space="preserve">
-    <value>Toggle Fullscreen</value>
+    <value>Přepnout celou obrazovku</value>
   </data>
   <data name="txt_EditIptc" xml:space="preserve">
-    <value>Edit IPTC</value>
+    <value>Editace IPTC</value>
   </data>
   <data name="txt_EditRating" xml:space="preserve">
-    <value>Edit rating</value>
+    <value>Editace ratingu</value>
   </data>
   <data name="txt_DefaultWindowTitle" xml:space="preserve">
     <value>Metanol Browser</value>
   </data>
   <data name="mni_File" xml:space="preserve">
-    <value>_File</value>
+    <value>_Soubor</value>
   </data>
   <data name="mni_Image" xml:space="preserve">
-    <value>_Image</value>
+    <value>_Obrázek</value>
   </data>
   <data name="mni_Display" xml:space="preserve">
-    <value>_Display</value>
+    <value>_Zobrazení</value>
   </data>
   <data name="mni_PreviousImage" xml:space="preserve">
-    <value>_Previous image</value>
+    <value>_Předchozí obrázek</value>
   </data>
   <data name="mni_NextImage" xml:space="preserve">
-    <value>_Next image</value>
+    <value>_Následující obrázek</value>
   </data>
   <data name="tot_PreviousImage" xml:space="preserve">
-    <value>Previous image</value>
-  </data>
-  <data name="ltrrtl_PreviousArrow" xml:space="preserve">
-    <value>←</value>
+    <value>Předchozí obraázek</value>
   </data>
   <data name="tot_NextImage" xml:space="preserve">
-    <value>Next image</value>
-  </data>
-  <data name="ltrrtl_NextArrow" xml:space="preserve">
-    <value>→</value>
+    <value>Následující obrázek</value>
   </data>
   <data name="txt_FolderBrowsing" xml:space="preserve">
-    <value>Folder browsing</value>
+    <value>Procházení složek</value>
   </data>
   <data name="txt_EndOfFolderReached" xml:space="preserve">
-    <value>End of folder reached. Do you want to continue in another folder?</value>
+    <value>Dosaženo konce složky. Přejete si pokračovat jinou složkou?</value>
   </data>
   <data name="txt_CurrentFolder" xml:space="preserve">
-    <value>Current folder:</value>
+    <value>Aktuální složka:</value>
   </data>
   <data name="txt_UseFolder" xml:space="preserve">
-    <value>_Use folder</value>
+    <value>_Použít složku</value>
   </data>
   <data name="txt_Cancel" xml:space="preserve">
-    <value>_Cancel</value>
+    <value>_Storno</value>
   </data>
   <data name="txt_EnterFolderKeys" xml:space="preserve">
-    <value>→ or space</value>
+    <value>→ nebo mezerník</value>
   </data>
   <data name="txt_EnterFolder" xml:space="preserve">
-    <value>= enters the folder</value>
+    <value>= vstup do složky</value>
   </data>
   <data name="txt_FolderUpKeys" xml:space="preserve">
-    <value>← or backspace</value>
+    <value>← nebo backspace</value>
   </data>
   <data name="txt_FolderUpDesc" xml:space="preserve">
-    <value>= folder up (..)</value>
+    <value>= o složku výše (..)</value>
   </data>
   <data name="txt_IptcEditor" xml:space="preserve">
-    <value>IPTC Editor</value>
+    <value>IPTC editor</value>
   </data>
   <data name="iptc_ObjectName" xml:space="preserve">
-    <value>Object Name</value>
+    <value>Název objektu</value>
   </data>
   <data name="iptc_CountryCode" xml:space="preserve">
-    <value>Country Code</value>
+    <value>Kód země</value>
   </data>
   <data name="iptc_CountryName" xml:space="preserve">
-    <value>Country Name</value>
+    <value>Název země</value>
   </data>
   <data name="iptc_ProvinceState" xml:space="preserve">
-    <value>Province/State</value>
+    <value>Provincie/Stát</value>
   </data>
   <data name="iptc_City" xml:space="preserve">
-    <value>City</value>
+    <value>Město</value>
   </data>
   <data name="iptc_Sublocation" xml:space="preserve">
-    <value>Sublocation</value>
+    <value>Sublokace</value>
   </data>
   <data name="txt_Basic" xml:space="preserve">
-    <value>Basic</value>
+    <value>Základní</value>
   </data>
   <data name="txt_AllIptc" xml:space="preserve">
-    <value>All IPTC</value>
+    <value>Veškeré IPTC</value>
   </data>
   <data name="txt_OK" xml:space="preserve">
     <value>_OK</value>
   </data>
-  <data name="rating_StarActive" xml:space="preserve">
-    <value>★</value>
-  </data>
-  <data name="rating_StarInactive" xml:space="preserve">
-    <value>☆</value>
-  </data>
-  <data name="rating_NotRated" xml:space="preserve">
-    <value>?</value>
-  </data>
   <data name="tot_NotRated" xml:space="preserve">
-    <value>Not rated</value>
-  </data>
-  <data name="rating_Rejected" xml:space="preserve">
-    <value>✖</value>
+    <value>Nehodnoceno</value>
   </data>
   <data name="tot_Rejected" xml:space="preserve">
-    <value>Rejected</value>
+    <value>Zamítnuto</value>
   </data>
   <data name="txt_Rating" xml:space="preserve">
-    <value>Rating</value>
+    <value>Hodnocení</value>
   </data>
   <data name="txt_Technical" xml:space="preserve">
-    <value>_Technical</value>
+    <value>_Technické</value>
   </data>
   <data name="txt_Art" xml:space="preserve">
-    <value>_Art</value>
+    <value>_Umělecké</value>
   </data>
   <data name="txt_Info" xml:space="preserve">
     <value>_Info</value>
   </data>
   <data name="txt_Overall" xml:space="preserve">
-    <value>_Overall</value>
-  </data>
-  <data name="rtlltr_AltPreviousArrow" xml:space="preserve">
-    <value>Alt+←</value>
-  </data>
-  <data name="ltrrtl_AltNextArrow" xml:space="preserve">
-    <value>Alt+→</value>
+    <value>_Celkem</value>
   </data>
   <data name="txt_TechnicalAbbr" xml:space="preserve">
     <value>T</value>
   </data>
   <data name="txt_ArtAbbr" xml:space="preserve">
-    <value>A</value>
+    <value>U</value>
   </data>
   <data name="txt_InfoAbbr" xml:space="preserve">
     <value>I</value>

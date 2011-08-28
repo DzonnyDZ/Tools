@@ -143,6 +143,9 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MetanolCommonAssemblyInfo.vb">
+      <Link>My Project\MetanolCommonAssemblyInfo.vb</Link>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Controls\CsvFormatConfigurator.Designer.vb">
       <DependentUpon>CsvFormatConfigurator.vb</DependentUpon>

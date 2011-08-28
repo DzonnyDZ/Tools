@@ -2885,6 +2885,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'String &quot;{0}&quot; is not valid description of {1}.'.
+        '''</summary>
+        Public ReadOnly Property StringIsNotValidDescription() As String
+            Get
+                Return ResourceManager.GetString("StringIsNotValidDescription", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'String must consist of event number of hexadeimal numerals'.
         '''</summary>
         Public ReadOnly Property StringMustConsistOfEventNumberOfHexadeimalNumerals() As String
@@ -3931,6 +3940,15 @@ Namespace ResourcesT
         Public ReadOnly Property ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith() As String
             Get
                 Return ResourceManager.GetString("ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to '{0} must be {1} for {2}.'.
+        '''</summary>
+        Public ReadOnly Property ValueMustBeFor() As String
+            Get
+                Return ResourceManager.GetString("ValueMustBeFor", _resourceCulture)
             End Get
         End Property
         
@@ -6876,6 +6894,16 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'String &quot;{0}&quot; is not valid description of {1}.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function StringIsNotValidDescriptionFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, StringIsNotValidDescription, arg0, arg1)
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the StringMustConsistOfEventNumberOfHexadeimalNumerals property value.
         '''</summary>
         '''<returns>The StringMustConsistOfEventNumberOfHexadeimalNumerals property value.</returns>
@@ -7883,6 +7911,17 @@ Namespace ResourcesT
         '''<returns>The ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith property value.</returns>
         Public Function ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWithFormat() As String
             Return ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} must be {1} for {2}.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<param name="arg2">An object (2) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Function ValueMustBeForFormat(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object) As String
+            Return String.Format(_resourceCulture, ValueMustBeFor, arg0, arg1, arg2)
         End Function
         
         '''<summary>

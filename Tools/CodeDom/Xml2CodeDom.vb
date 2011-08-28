@@ -2,7 +2,7 @@
 Imports System.CodeDom
 Imports <xmlns="http://dzonny.cz/xml/schemas/CodeDom">
 Imports <xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-Imports System.Reflection
+Imports System.Reflection, Tools.CollectionsT.SpecializedT.AsTypeSafe
 
 '#If Config <= Nightly Then 'Stage of this file set in Tools.vbproj
 'Stage:Nightly

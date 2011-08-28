@@ -24,7 +24,7 @@ Class BrowserWindow
     End Sub
 
     ''' <summary>Gets or sets current metadata</summary>
-    Private Property Metadata As MetadataCollection
+    Friend Property Metadata As MetadataCollection
         Get
             Return DataContext
         End Get
@@ -32,8 +32,6 @@ Class BrowserWindow
             DataContext = value
         End Set
     End Property
-
-
 
 #Region "Index"
     ''' <summary>Gets or sets index of current file in directory</summary>      
@@ -59,7 +57,7 @@ Class BrowserWindow
     Protected Overridable Sub OnIndexChanged(e As DependencyPropertyChangedEventArgs)
         Me.SetValue(DisplayIndexPropertyKey, Index + 1)
         Try
-            Title = String.Format("{0} {1} - {2}", My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
+            Title = String.Format(My.Resources.txt_WindowTitle, My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
         Catch :End Try
     End Sub
 
@@ -90,7 +88,6 @@ Class BrowserWindow
         "Directory", GetType(String()), GetType(BrowserWindow), New FrameworkPropertyMetadata(New String() {}))
 #End Region
 
-
 #Region "DirectoryName"
     ''' <summary>Gets or sets path of current directory</summary>      
     Public Property DirectoryName As String
@@ -106,10 +103,6 @@ Class BrowserWindow
         "DirectoryName", GetType(String), GetType(BrowserWindow), New FrameworkPropertyMetadata(Nothing))
 #End Region
 
-
-
-
-
 #Region "IsFullscreen"
     ''' <summary>Gets or sets value indicating if this window is displayed fullscreen</summary>
     Public Property IsFullscreen() As Boolean
@@ -123,7 +116,28 @@ Class BrowserWindow
     ''' <summary>Metadata of the <see cref="IsFullscreen"/> dependency property</summary>
     Public Shared ReadOnly IsFullscreenProperty As DependencyProperty =
                            DependencyProperty.Register("IsFullscreen", GetType(Boolean), GetType(BrowserWindow),
-                           New FrameworkPropertyMetadata(False))
+                           New FrameworkPropertyMetadata(False, AddressOf OnIsFullscreenChanged))
+    Private Shared Sub OnIsFullscreenChanged(ByVal d As System.Windows.DependencyObject, ByVal e As DependencyPropertyChangedEventArgs)
+        DirectCast(d, BrowserWindow).OnIsFullscreenChanged(e)
+    End Sub
+    Private oldWindowState As WindowState?
+    ''' <summary>Called when value of the <see cref="IsFullscreenProperty"/> changes</summary>
+    ''' <param name="e">Event arguments</param>
+    Protected Overridable Sub OnIsFullscreenChanged(e As DependencyPropertyChangedEventArgs)
+        'Note: This is done via DataTrigger in XAML, but it was not reliable, so this code is here to ensure
+        If IsFullscreen Then
+            oldWindowState = WindowState
+            If ResizeMode <> ResizeMode.NoResize Then ResizeMode = ResizeMode.NoResize
+            If WindowStyle <> WindowStyle.None Then WindowStyle = WindowStyle.None
+            If WindowState = Windows.WindowState.Maximized Then WindowState = Windows.WindowState.Normal 'To ensure normal-maximized change (required to cover taskbar)
+            If WindowState <> WindowState.Maximized Then WindowState = WindowState.Maximized
+        Else
+            If ResizeMode <> ResizeMode.CanResize AndAlso ResizeMode <> ResizeMode.CanResizeWithGrip Then ResizeMode = ResizeMode.CanResize
+            If WindowStyle <> WindowStyle.SingleBorderWindow Then WindowStyle = WindowStyle.SingleBorderWindow
+            If oldWindowState.HasValue AndAlso oldWindowState <> WindowState Then WindowState = oldWindowState
+            oldWindowState = Nothing
+        End If
+    End Sub
 #End Region
 
     Private Sub grdIptc_MouseDown(sender As System.Object, e As System.Windows.Input.MouseButtonEventArgs) Handles grdIptc.MouseDown
@@ -140,12 +154,12 @@ Class BrowserWindow
 #Region "Command methods"
     ''' <summary>Shows next image</summary>
     Private Sub GoNext()
-        If index + 1 >= directory.Length Then
+        If Index + 1 >= Directory.Length Then
             OnDirectoryEnd(1)
         Else
-            index += 1
+            Index += 1
             Try
-                LoadFile(directory(index))
+                LoadFile(Directory(Index))
             Catch ex As Exception
                 mBox.Error_XW(ex, Me)
                 GoNext()
@@ -156,12 +170,12 @@ Class BrowserWindow
 
     ''' <summary>Shows previous image</summary>
     Private Sub GoPrev()
-        If index <= 0 Then
+        If Index <= 0 Then
             OnDirectoryEnd(-1)
         Else
-            index -= 1
+            Index -= 1
             Try
-                LoadFile(directory(index))
+                LoadFile(Directory(Index))
             Catch ex As Exception
                 mBox.Error_XW(ex, Me)
                 GoPrev()
@@ -173,20 +187,20 @@ Class BrowserWindow
     ''' <param name="direction">1 for end, -1 for start</param>
     Private Sub OnDirectoryEnd(direction%)
         If direction.NotIn(-1, 1) Then Throw New ArgumentException(My.Resources.ex_1orMinus1, "direction")
-        Dim dl As New DirectoryEndDialog(directoryName, direction)
+        Dim dl As New DirectoryEndDialog(DirectoryName, direction)
         If dl.ShowDialog(Me) Then
             Try
-                directory = GetSupportedFilesFromDirectory(dl.Folder)
+                Directory = GetSupportedFilesFromDirectory(dl.Folder)
             Catch ex As Exception
                 mBox.Error_XW(ex, Me)
                 OnDirectoryEnd(direction)
             End Try
-            directoryName = dl.Folder
-            If directory.Length = 0 Then
+            DirectoryName = dl.Folder
+            If Directory.Length = 0 Then
                 OnDirectoryEnd(direction)
             Else
-                index = If(direction = 1, 0, directory.Length - 1)
-                Title = String.Format("{0} {1} - {2}", My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
+                Index = If(direction = 1, 0, Directory.Length - 1)
+                Title = String.Format(My.Resources.txt_WindowTitle, My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
                 Try
                     LoadFile(Directory(Index))
                 Catch ex As Exception
@@ -223,10 +237,10 @@ Class BrowserWindow
         End If
         Try
             LoadFile(fileName)
-            directory = GetSupportedFilesFromDirectory(IO.Path.GetDirectoryName(fileName))
-            directoryName = IO.Path.GetDirectoryName(fileName)
+            Directory = GetSupportedFilesFromDirectory(IO.Path.GetDirectoryName(fileName))
+            DirectoryName = IO.Path.GetDirectoryName(fileName)
             Index = Directory.IndexOf(fileName)
-            Title = String.Format("{0} {1} - {2}", My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
+            Title = String.Format(My.Resources.txt_WindowTitle, My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
             Return True
         Catch ex As Exception
             If mBox.Error_XPTIBWO(ex, String.Format(My.Resources.err_LoadFile, fileName), My.Resources.txt_OpenFile, Buttons:=mBox.MessageBoxButton.Buttons.Retry Or mBox.MessageBoxButton.Buttons.Cancel, Owner:=Me) = Forms.DialogResult.Retry Then
@@ -267,7 +281,12 @@ Class BrowserWindow
     End Sub
     ''' <summary>Shows rating dialog</summary>
     Private Sub ShowRating()
-        ShowIptcEditDialog(New RatingEditor(Metadata.Iptc))
+        Dim win As RatingEditor = New RatingEditor(Metadata.Iptc)
+        AddHandler win.Loaded, Sub(sender, e)
+                                   win.Left = lblRating.PointToScreen(New Point(lblRating.ActualWidth / 2, 0)).X - win.ActualWidth / 2
+                                   win.Top = lblRating.PointToScreen(New Point(0, lblRating.ActualHeight)).Y - win.ActualHeight
+                               End Sub
+        ShowIptcEditDialog(win)
     End Sub
 
     ''' <summary>Shows dialog for IPTC editing, when dialog closes either saves or discards IPTC changes</summary>
@@ -275,35 +294,48 @@ Class BrowserWindow
     ''' <exception cref="ArgumentNullException"><paramref name="dialog"/> is null</exception>
     Private Sub ShowIptcEditDialog(dialog As Window)
         If dialog Is Nothing Then Throw New ArgumentException("dialog")
-        If dialog.ShowDialog(Me) Then
-            If Metadata.Iptc.IsChanged Then SaveIptc()
-        Else
-            If Metadata.Iptc.IsChanged Then ReloadIptc()
+        Dim result = dialog.ShowDialog(Me)
+        If result.HasValue Then
+            If result Then 'Note: Dialog can change current picture
+                If Metadata IsNot Nothing AndAlso Metadata.Iptc IsNot Nothing AndAlso Metadata.Iptc.IsChanged Then SaveIptc()
+            Else
+                If Metadata IsNot Nothing AndAlso Metadata.Iptc IsNot Nothing AndAlso Metadata.Iptc.IsChanged Then ReloadIptc()
+            End If
         End If
     End Sub
 
     ''' <summary>Saves IPTC data to file</summary>
-    Private Sub SaveIptc()
+    ''' <param name="onErrorButtons">
+    ''' Buttons to be shown in case of save error.
+    ''' <see cref="MessageBoxButton.Buttons.Abort"/> results in reload of original IPTC data from file.
+    ''' <see cref="MessageBoxButton.Buttons.Retry"/> is handled internally and causes new attempt to save IPTC data.
+    ''' Other buttons are just shown and appropriate <see cref="Forms.DialogResult"/> value is returned on click. No action is taken.
+    ''' </param>
+    ''' <returns>Value indicating which button was clicked</returns>
+    Friend Function SaveIptc(Optional onErrorButtons As mBox.MessageBoxButton.Buttons = MessageBoxButton.Buttons.Abort Or MessageBoxButton.Buttons.Retry) As Forms.DialogResult
 retry:  Dim jpeg As JPEGReader = Nothing
         Try
-            jpeg = New JPEGReader(directory(index), True)
+            jpeg = New JPEGReader(Directory(Index), True)
             jpeg.IPTCEmbed(Metadata.Iptc.GetBytes())
         Catch ex As Exception
-            If mBox.Error_XPTIBWO(ex, My.Resources.err_IptcSave, My.Resources.txt_SaveIptc, mBox.MessageBoxIcons.Error, mBox.MessageBoxButton.Buttons.Abort Or mBox.MessageBoxButton.Buttons.Retry, Me) = Forms.DialogResult.Retry Then
-                GoTo retry
-            Else
-                ReloadIptc()
-            End If
+            Dim result = mBox.Error_XPTIBWO(ex, My.Resources.err_IptcSave, My.Resources.txt_SaveIptc, mBox.MessageBoxIcons.Error, onErrorButtons, Me)
+            Select Case result
+                Case Forms.DialogResult.Retry : GoTo retry
+                Case Forms.DialogResult.Abort : ReloadIptc()
+                    'Case Else: 'Do nothing
+            End Select
+            Return result
         Finally
             If jpeg IsNot Nothing Then jpeg.Dispose()
         End Try
-    End Sub
+        Return Forms.DialogResult.OK
+    End Function
 
     ''' <summary>Reloads IPTC data from file</summary>
     Private Sub ReloadIptc()
 retry:  Dim jpeg As JPEGReader = Nothing
         Try
-            jpeg = New JPEGReader(directory(index))
+            jpeg = New JPEGReader(Directory(Index))
             If jpeg.ContainsIptc Then
                 Metadata.Iptc = New IptcInternal(jpeg)
             Else
@@ -346,7 +378,6 @@ retry:  Dim jpeg As JPEGReader = Nothing
     End Sub
 #End Region
 
-
 #Region "Commands"
     'Keyboard shortcuts
     '←          Left
@@ -356,8 +387,8 @@ retry:  Dim jpeg As JPEGReader = Nothing
     'Enter      Fullscreen (Also Alt+Enter)
     'Esc        Exit
     'I          IPTC
-    '*/ Ctrl+R  Rating
-    'Ctrl+O     Open file
+    '* / Ctrl+R Rating
+    'Ctrl+O / O Open file
 
     Private Sub NextPage_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
         GoNext()
@@ -395,10 +426,4 @@ retry:  Dim jpeg As JPEGReader = Nothing
         OpenFile()
     End Sub
 #End Region
-
-
-
-
-
-
 End Class

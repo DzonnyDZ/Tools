@@ -1,14 +1,29 @@
 ﻿Imports System.Windows.Input, Tools.ExtensionsT, Tools
 Imports System.Globalization
 Imports System.Windows.Markup
+Imports Tools.WindowsT.WPF.MarkupT
 
 Namespace WindowsT.WPF.InputT
 
     ''' <summary>An alternative implementation of <see cref="KeyGesture"/> class which allows non-modified key to be matched</summary>
+    ''' <remarks>
+    ''' In XAML <see cref="FreeKeyGesture"/> cannot be used with <see cref="KeyBinding"/>. Use <see cref="FreeInputBinding"/> instead.
+    ''' <example>
+    ''' This example show how to instantiate <see cref="FreeKeyGesture"/> using <see cref="FreeInputBinding"/> in XAML.
+    ''' The code below binds command <see cref="ApplicationCommands.Open"/> go key G.
+    ''' <code lang="XAML"><![CDATA[<Window.InputBindings xmlns:ti="clr-namespace:Tools.WindowsT.WPF.InputT;assembly=Tools.Windows">
+    '''     <ti:FreeInputBinding Command="Open">
+    '''         <ti:FreeInputBinding.Gesture>
+    '''             <ti:FreeKeyGesture>G</ti:FreeKeyGesture>
+    '''         </ti:FreeInputBinding.Gesture>
+    '''     </ti:FreeInputBinding>
+    ''' </Window.InputBindings>]]></code>
+    ''' </example>
+    ''' </remarks>
     ''' <seelaso cref="KeyGesture"/>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     <TypeConverter(GetType(FreeKeyGestureConverter))>
-    <ValueSerializer(GetType(FreeKeyGestureValueSerializer))>
+    <ValueSerializer(GetType(DefaultTypeConverterBasedValueSerializer(Of FreeKeyGesture)))>
     Public Class FreeKeyGesture
         Inherits InputGesture
 
@@ -242,57 +257,6 @@ Namespace WindowsT.WPF.InputT
         Private Shared ReadOnly keyConverter As KeyConverter = New KeyConverter
         Private Shared ReadOnly modifierKeysConverter As ModifierKeysConverter = New ModifierKeysConverter
         Private Const ModifiersDelimiter As Char = "+"c
-    End Class
-
-    ''' <summary>Converts instances of <see cref="String"/> to and from instances of <see cref="FreeKeyGesture"/>.</summary>
-    ''' <seelaso cref="FreeKeyGesture"/><seelaso cref="KeyGestureValueSerializer"/>
-    ''' <version version="1.5.4">This class is new in version 1.5.4</version>
-    <EditorBrowsable(EditorBrowsableState.Advanced)>
-    Public Class FreeKeyGestureValueSerializer
-        Inherits ValueSerializer
-        ''' <summary>Determines whether the specified <see cref="T:System.String" /> can be converted to an instance of the type that the implementation of <see cref="T:System.Windows.Markup.ValueSerializer" /> supports.</summary>
-        ''' <param name="value">The string to evaluate for conversion.</param>
-        ''' <param name="context">Context information that is used for conversion. </param>
-        ''' <returns>true if the value can be converted; otherwise, false.</returns>
-        Public Overrides Function CanConvertFromString(ByVal value As String, ByVal context As IValueSerializerContext) As Boolean
-            Return True
-        End Function
-
-        ''' <summary>Determines whether the specified object can be converted into a <see cref="T:System.String" />.</summary>
-        ''' <param name="value">The object to evaluate for conversion.</param>
-        ''' <param name="context">Context information that is used for conversion.</param>
-        ''' <returns>true if the <paramref name="value" /> can be converted into a <see cref="T:System.String" />; otherwise, false.</returns>
-        Public Overrides Function CanConvertToString(ByVal value As Object, ByVal context As IValueSerializerContext) As Boolean
-            Dim gesture As FreeKeyGesture = TryCast(value, FreeKeyGesture)
-            Return ((Not gesture Is Nothing) AndAlso ModifierKeysConverter.IsDefinedModifierKeys(gesture.Modifiers)) 'AndAlso FreeKeyGestureConverter.IsDefinedKey(gesture.Key)
-        End Function
-
-        ''' <summary>Converts a <see cref="T:System.String" /> to an instance of the type that the implementation of <see cref="T:System.Windows.Markup.ValueSerializer" /> supports.</summary>
-        ''' <param name="value">The string to convert.</param>
-        ''' <param name="context">Context information that is used for conversion.</param>
-        ''' <returns>A new instance of the type that the implementation of <see cref="T:System.Windows.Markup.ValueSerializer" /> supports based on the supplied <paramref name="value" />.</returns>
-        ''' <exception cref="T:System.NotSupportedException"><paramref name="value" /> cannot be converted.</exception>
-        Public Overrides Function ConvertFromString(ByVal value As String, ByVal context As IValueSerializerContext) As Object
-            Dim converter As TypeConverter = TypeDescriptor.GetConverter(GetType(FreeKeyGesture))
-            If (Not converter Is Nothing) Then
-                Return converter.ConvertFromString(value)
-            End If
-            Return MyBase.ConvertFromString(value, context)
-        End Function
-
-        ''' <summary>Converts the specified object to a <see cref="T:System.String" />.</summary>
-        ''' <param name="value">The object to convert into a string.</param>
-        ''' <param name="context">Context information that is used for conversion.</param>
-        ''' <returns>A string representation of the specified object.</returns>
-        ''' <exception cref="T:System.NotSupportedException"><paramref name="value" /> cannot be converted.</exception>
-        Public Overrides Function ConvertToString(ByVal value As Object, ByVal context As IValueSerializerContext) As String
-            Dim converter As TypeConverter = TypeDescriptor.GetConverter(GetType(FreeKeyGesture))
-            If (Not converter Is Nothing) Then
-                Return converter.ConvertToInvariantString(value)
-            End If
-            Return MyBase.ConvertToString(value, context)
-        End Function
-
     End Class
 
 End Namespace

@@ -1484,4 +1484,10 @@
   <data name="UnknownSystemMetadataItemName" xml:space="preserve">
     <value>{0} is not known system metadata item name.</value>
   </data>
+  <data name="StringIsNotValidDescription" xml:space="preserve">
+    <value>String "{0}" is not valid description of {1}.</value>
+  </data>
+  <data name="ValueMustBeFor" xml:space="preserve">
+    <value>{0} must be {1} for {2}.</value>
+  </data>
 </root>

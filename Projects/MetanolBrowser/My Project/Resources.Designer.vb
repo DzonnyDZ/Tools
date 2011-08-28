@@ -26,7 +26,7 @@ Namespace My.Resources
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
-    Friend Module Resources
+    Public Module Resources
         
         Private resourceMan As Global.System.Resources.ResourceManager
         
@@ -36,7 +36,7 @@ Namespace My.Resources
         '''  Returns the cached ResourceManager instance used by this class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
+        Public ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
                     Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Tools.Metanol.Resources", GetType(Resources).Assembly)
@@ -51,7 +51,7 @@ Namespace My.Resources
         '''  resource lookups using this strongly typed resource class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Property Culture() As Global.System.Globalization.CultureInfo
+        Public Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
             End Get
@@ -63,7 +63,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to File {0} does not exist..
         '''</summary>
-        Friend ReadOnly Property err_FileDoesNotExist() As String
+        Public ReadOnly Property err_FileDoesNotExist() As String
             Get
                 Return ResourceManager.GetString("err_FileDoesNotExist", resourceCulture)
             End Get
@@ -72,7 +72,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to Error while loading IPTC data.
         '''</summary>
-        Friend ReadOnly Property err_IptcReload() As String
+        Public ReadOnly Property err_IptcReload() As String
             Get
                 Return ResourceManager.GetString("err_IptcReload", resourceCulture)
             End Get
@@ -81,7 +81,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to Error while saving IPTC data.
         '''</summary>
-        Friend ReadOnly Property err_IptcSave() As String
+        Public ReadOnly Property err_IptcSave() As String
             Get
                 Return ResourceManager.GetString("err_IptcSave", resourceCulture)
             End Get
@@ -90,7 +90,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to Error loading file {0}:.
         '''</summary>
-        Friend ReadOnly Property err_LoadFile() As String
+        Public ReadOnly Property err_LoadFile() As String
             Get
                 Return ResourceManager.GetString("err_LoadFile", resourceCulture)
             End Get
@@ -99,7 +99,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to File {0} is not JPEG file..
         '''</summary>
-        Friend ReadOnly Property err_NotAJpegFile() As String
+        Public ReadOnly Property err_NotAJpegFile() As String
             Get
                 Return ResourceManager.GetString("err_NotAJpegFile", resourceCulture)
             End Get
@@ -108,7 +108,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to Value must be -1 or 1.
         '''</summary>
-        Friend ReadOnly Property ex_1orMinus1() As String
+        Public ReadOnly Property ex_1orMinus1() As String
             Get
                 Return ResourceManager.GetString("ex_1orMinus1", resourceCulture)
             End Get
@@ -117,43 +117,466 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to JPEG files (*.jpg, *.jpeg).
         '''</summary>
-        Friend ReadOnly Property fil_Jpeg() As String
+        Public ReadOnly Property fil_Jpeg() As String
             Get
                 Return ResourceManager.GetString("fil_Jpeg", resourceCulture)
             End Get
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to City.
+        '''</summary>
+        Public ReadOnly Property iptc_City() As String
+            Get
+                Return ResourceManager.GetString("iptc_City", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Country Code.
+        '''</summary>
+        Public ReadOnly Property iptc_CountryCode() As String
+            Get
+                Return ResourceManager.GetString("iptc_CountryCode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Country Name.
+        '''</summary>
+        Public ReadOnly Property iptc_CountryName() As String
+            Get
+                Return ResourceManager.GetString("iptc_CountryName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Object Name.
+        '''</summary>
+        Public ReadOnly Property iptc_ObjectName() As String
+            Get
+                Return ResourceManager.GetString("iptc_ObjectName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Province/State.
+        '''</summary>
+        Public ReadOnly Property iptc_ProvinceState() As String
+            Get
+                Return ResourceManager.GetString("iptc_ProvinceState", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Sublocation.
+        '''</summary>
+        Public ReadOnly Property iptc_Sublocation() As String
+            Get
+                Return ResourceManager.GetString("iptc_Sublocation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Beginning of folder reached. Do you want to continue in another folder?.
         '''</summary>
-        Friend ReadOnly Property iq_BeginningOfFolderReached() As String
+        Public ReadOnly Property iq_BeginningOfFolderReached() As String
             Get
                 Return ResourceManager.GetString("iq_BeginningOfFolderReached", resourceCulture)
             End Get
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Alt+→.
+        '''</summary>
+        Public ReadOnly Property ltrrtl_AltNextArrow() As String
+            Get
+                Return ResourceManager.GetString("ltrrtl_AltNextArrow", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to →.
+        '''</summary>
+        Public ReadOnly Property ltrrtl_NextArrow() As String
+            Get
+                Return ResourceManager.GetString("ltrrtl_NextArrow", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ←.
+        '''</summary>
+        Public ReadOnly Property ltrrtl_PreviousArrow() As String
+            Get
+                Return ResourceManager.GetString("ltrrtl_PreviousArrow", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Display.
+        '''</summary>
+        Public ReadOnly Property mni_Display() As String
+            Get
+                Return ResourceManager.GetString("mni_Display", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _File.
+        '''</summary>
+        Public ReadOnly Property mni_File() As String
+            Get
+                Return ResourceManager.GetString("mni_File", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Image.
+        '''</summary>
+        Public ReadOnly Property mni_Image() As String
+            Get
+                Return ResourceManager.GetString("mni_Image", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Next image.
+        '''</summary>
+        Public ReadOnly Property mni_NextImage() As String
+            Get
+                Return ResourceManager.GetString("mni_NextImage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Previous image.
+        '''</summary>
+        Public ReadOnly Property mni_PreviousImage() As String
+            Get
+                Return ResourceManager.GetString("mni_PreviousImage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ?.
+        '''</summary>
+        Public ReadOnly Property rating_NotRated() As String
+            Get
+                Return ResourceManager.GetString("rating_NotRated", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ✖.
+        '''</summary>
+        Public ReadOnly Property rating_Rejected() As String
+            Get
+                Return ResourceManager.GetString("rating_Rejected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ★.
+        '''</summary>
+        Public ReadOnly Property rating_StarActive() As String
+            Get
+                Return ResourceManager.GetString("rating_StarActive", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ☆.
+        '''</summary>
+        Public ReadOnly Property rating_StarInactive() As String
+            Get
+                Return ResourceManager.GetString("rating_StarInactive", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Alt+←.
+        '''</summary>
+        Public ReadOnly Property rtlltr_AltPreviousArrow() As String
+            Get
+                Return ResourceManager.GetString("rtlltr_AltPreviousArrow", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Next image.
+        '''</summary>
+        Public ReadOnly Property tot_NextImage() As String
+            Get
+                Return ResourceManager.GetString("tot_NextImage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Not rated.
+        '''</summary>
+        Public ReadOnly Property tot_NotRated() As String
+            Get
+                Return ResourceManager.GetString("tot_NotRated", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Previous image.
+        '''</summary>
+        Public ReadOnly Property tot_PreviousImage() As String
+            Get
+                Return ResourceManager.GetString("tot_PreviousImage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Rejected.
+        '''</summary>
+        Public ReadOnly Property tot_Rejected() As String
+            Get
+                Return ResourceManager.GetString("tot_Rejected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to All IPTC.
+        '''</summary>
+        Public ReadOnly Property txt_AllIptc() As String
+            Get
+                Return ResourceManager.GetString("txt_AllIptc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Art.
+        '''</summary>
+        Public ReadOnly Property txt_Art() As String
+            Get
+                Return ResourceManager.GetString("txt_Art", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to A.
+        '''</summary>
+        Public ReadOnly Property txt_ArtAbbr() As String
+            Get
+                Return ResourceManager.GetString("txt_ArtAbbr", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Basic.
+        '''</summary>
+        Public ReadOnly Property txt_Basic() As String
+            Get
+                Return ResourceManager.GetString("txt_Basic", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Cancel.
+        '''</summary>
+        Public ReadOnly Property txt_Cancel() As String
+            Get
+                Return ResourceManager.GetString("txt_Cancel", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Copy.
+        '''</summary>
+        Public ReadOnly Property txt_Copy() As String
+            Get
+                Return ResourceManager.GetString("txt_Copy", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Create link.
+        '''</summary>
+        Public ReadOnly Property txt_CreateLink() As String
+            Get
+                Return ResourceManager.GetString("txt_CreateLink", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Current folder:.
+        '''</summary>
+        Public ReadOnly Property txt_CurrentFolder() As String
+            Get
+                Return ResourceManager.GetString("txt_CurrentFolder", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Metanol Browser.
+        '''</summary>
+        Public ReadOnly Property txt_DefaultWindowTitle() As String
+            Get
+                Return ResourceManager.GetString("txt_DefaultWindowTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Edit IPTC.
+        '''</summary>
+        Public ReadOnly Property txt_EditIptc() As String
+            Get
+                Return ResourceManager.GetString("txt_EditIptc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Edit rating.
+        '''</summary>
+        Public ReadOnly Property txt_EditRating() As String
+            Get
+                Return ResourceManager.GetString("txt_EditRating", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to End of folder reached. Do you want to continue in another folder?.
+        '''</summary>
+        Public ReadOnly Property txt_EndOfFolderReached() As String
+            Get
+                Return ResourceManager.GetString("txt_EndOfFolderReached", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to = enters the folder.
+        '''</summary>
+        Public ReadOnly Property txt_EnterFolder() As String
+            Get
+                Return ResourceManager.GetString("txt_EnterFolder", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to → or space.
+        '''</summary>
+        Public ReadOnly Property txt_EnterFolderKeys() As String
+            Get
+                Return ResourceManager.GetString("txt_EnterFolderKeys", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Folder browsing.
+        '''</summary>
+        Public ReadOnly Property txt_FolderBrowsing() As String
+            Get
+                Return ResourceManager.GetString("txt_FolderBrowsing", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to (..).
         '''</summary>
-        Friend ReadOnly Property txt_FolderUp() As String
+        Public ReadOnly Property txt_FolderUp() As String
             Get
                 Return ResourceManager.GetString("txt_FolderUp", resourceCulture)
             End Get
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to = folder up (..).
+        '''</summary>
+        Public ReadOnly Property txt_FolderUpDesc() As String
+            Get
+                Return ResourceManager.GetString("txt_FolderUpDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ← or backspace.
+        '''</summary>
+        Public ReadOnly Property txt_FolderUpKeys() As String
+            Get
+                Return ResourceManager.GetString("txt_FolderUpKeys", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Info.
+        '''</summary>
+        Public ReadOnly Property txt_Info() As String
+            Get
+                Return ResourceManager.GetString("txt_Info", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to I.
+        '''</summary>
+        Public ReadOnly Property txt_InfoAbbr() As String
+            Get
+                Return ResourceManager.GetString("txt_InfoAbbr", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to IPTC Editor.
+        '''</summary>
+        Public ReadOnly Property txt_IptcEditor() As String
+            Get
+                Return ResourceManager.GetString("txt_IptcEditor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _OK.
+        '''</summary>
+        Public ReadOnly Property txt_OK() As String
+            Get
+                Return ResourceManager.GetString("txt_OK", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Open File.
         '''</summary>
-        Friend ReadOnly Property txt_OpenFile() As String
+        Public ReadOnly Property txt_OpenFile() As String
             Get
                 Return ResourceManager.GetString("txt_OpenFile", resourceCulture)
             End Get
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to _Overall.
+        '''</summary>
+        Public ReadOnly Property txt_Overall() As String
+            Get
+                Return ResourceManager.GetString("txt_Overall", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Σ.
+        '''</summary>
+        Public ReadOnly Property txt_OverallAbbr() As String
+            Get
+                Return ResourceManager.GetString("txt_OverallAbbr", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Rating.
+        '''</summary>
+        Public ReadOnly Property txt_Rating() As String
+            Get
+                Return ResourceManager.GetString("txt_Rating", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Reload IPTC.
         '''</summary>
-        Friend ReadOnly Property txt_ReloadIptc() As String
+        Public ReadOnly Property txt_ReloadIptc() As String
             Get
                 Return ResourceManager.GetString("txt_ReloadIptc", resourceCulture)
             End Get
@@ -162,18 +585,63 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to Save IPTC.
         '''</summary>
-        Friend ReadOnly Property txt_SaveIptc() As String
+        Public ReadOnly Property txt_SaveIptc() As String
             Get
                 Return ResourceManager.GetString("txt_SaveIptc", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to (.) - Současná složka.
+        '''  Looks up a localized string similar to _Technical.
         '''</summary>
-        Friend ReadOnly Property txt_ThisFolder() As String
+        Public ReadOnly Property txt_Technical() As String
+            Get
+                Return ResourceManager.GetString("txt_Technical", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to T.
+        '''</summary>
+        Public ReadOnly Property txt_TechnicalAbbr() As String
+            Get
+                Return ResourceManager.GetString("txt_TechnicalAbbr", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to (.) - Current folder.
+        '''</summary>
+        Public ReadOnly Property txt_ThisFolder() As String
             Get
                 Return ResourceManager.GetString("txt_ThisFolder", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Toggle Fullscreen.
+        '''</summary>
+        Public ReadOnly Property txt_ToggleFullscreen() As String
+            Get
+                Return ResourceManager.GetString("txt_ToggleFullscreen", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to _Use folder.
+        '''</summary>
+        Public ReadOnly Property txt_UseFolder() As String
+            Get
+                Return ResourceManager.GetString("txt_UseFolder", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} {1} - {2}.
+        '''</summary>
+        Public ReadOnly Property txt_WindowTitle() As String
+            Get
+                Return ResourceManager.GetString("txt_WindowTitle", resourceCulture)
             End Get
         End Property
     End Module

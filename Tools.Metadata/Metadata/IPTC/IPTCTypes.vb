@@ -2395,7 +2395,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
 
     ''' <summary>Numbers assigned by IPTC-NAA for manufacturers of image originating devices</summary>
     ''' <remarks>The following series of numbers have been assigned by IPTC-NAA for manufacturers of image originating devices.
-    ''' <para>These numbers are used for manufacturer identification used in <see cref="DeviceIdentifier"/>.</para></remarks>
+    ''' <para>These numbers are used for manufacturer identification used in Device Identifier.</para></remarks>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum ManufacturersIdentificationNumber As Short
         ''' <summary>Associated Press, East Brunswick, NJ, USA</summary>

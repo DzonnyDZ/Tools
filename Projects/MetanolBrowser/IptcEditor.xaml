@@ -1,9 +1,9 @@
 ﻿<Window x:Class="IptcEditor"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="IptcEditor" Height="300" Width="300"
+    Title="{x:Static Tools.Metanol.My.Resources:Resources.txt_IptcEditor}" Height="300" Width="300"
     xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
-    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" WindowStyle="ToolWindow" ShowInTaskbar="False">
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" WindowStyle="ToolWindow" ShowInTaskbar="False" FocusManager.FocusedElement="{Binding ElementName=txtObjectName}" xmlns:Tools.Metanol.My.Resources="clr-namespace:Tools.Metanol.My.Resources">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,7 +14,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TabControl Grid.ColumnSpan="2">
-            <TabItem Header="Basic">
+            <TabItem Header="{x:Static Tools.Metanol.My.Resources:Resources.txt_Basic}">
                 <Grid>
                     <Grid.ColumnDefinitions >
                         <ColumnDefinition Width="auto" />
@@ -36,29 +36,29 @@
                             <Setter Property="Grid.Column" Value="1"/>
                         </Style>
                     </Grid.Resources>
-                    <Label Grid.Row="0">Object Name</Label>
-                    <TextBox Grid.Row="0" Text="{Binding ObjectName, Mode=TwoWay}"/>
-                    <Label Grid.Row="1">Country Code</Label>
+                    <Label Grid.Row="0" Content="{x:Static Tools.Metanol.My.Resources:Resources.iptc_ObjectName}"/>
+                    <TextBox Grid.Row="0" Text="{Binding ObjectName, Mode=TwoWay}" Name="txtObjectName"/>
+                    <Label Grid.Row="1" Content="{x:Static Tools.Metanol.My.Resources:Resources.iptc_CountryCode}"/>
                     <TextBox Grid.Row="1" Text="{Binding CountryPrimaryLocationCode, Mode=TwoWay}" MaxLength="3"/>
-                    <Label Grid.Row="2">Country Name</Label>
+                    <Label Grid.Row="2" Content="{x:Static Tools.Metanol.My.Resources:Resources.iptc_CountryName}"/>
                     <TextBox Grid.Row="2" Text="{Binding CountryPrimaryLocationName, Mode=TwoWay}"/>
-                    <Label Grid.Row="3">Province/State</Label>
+                    <Label Grid.Row="3" Content="{x:Static Tools.Metanol.My.Resources:Resources.iptc_ProvinceState}"/>
                     <TextBox Grid.Row="3" Text="{Binding ProvinceState, Mode=TwoWay}"/>
-                    <Label Grid.Row="4">City</Label>
+                    <Label Grid.Row="4" Content="{x:Static Tools.Metanol.My.Resources:Resources.iptc_City}"/>
                     <TextBox Grid.Row="4" Text="{Binding City, Mode=TwoWay}"/>
-                    <Label Grid.Row="5">Sublocation</Label>
+                    <Label Grid.Row="5" Content="{x:Static Tools.Metanol.My.Resources:Resources.iptc_Sublocation}"/>
                     <TextBox Grid.Row="5" Text="{Binding SubLocation, Mode=TwoWay}"/>
                 </Grid>
 
             </TabItem>
-            <TabItem Header="All IPTC">
+            <TabItem Header="{x:Static Tools.Metanol.My.Resources:Resources.txt_AllIptc}">
                 <wfi:WindowsFormsHost>
                     <wf:PropertyGrid x:Name="prgIptc"/>
                 </wfi:WindowsFormsHost>
             </TabItem>
         </TabControl>
         
-        <Button Name="btnOK" Content="_OK" IsDefault="True" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"/>
-        <Button Name="btnCancel" Content="_Cancel" IsCancel="True" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
+        <Button Name="btnOK" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_OK}" IsDefault="True" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"/>
+        <Button Name="btnCancel" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_Cancel}" IsCancel="True" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
     </Grid>
 </Window>

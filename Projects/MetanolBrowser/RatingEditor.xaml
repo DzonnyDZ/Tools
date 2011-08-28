@@ -2,7 +2,18 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:my="clr-namespace:Tools.Metanol"
-    Title="Rating" SizeToContent="WidthAndHeight" WindowStyle="ToolWindow" ShowInTaskbar="False">
+    Title="{x:Static Tools.Metanol.My.Resources:Resources.txt_Rating}" 
+    SizeToContent="WidthAndHeight" WindowStyle="ToolWindow" ShowInTaskbar="False" FocusManager.FocusedElement="{Binding ElementName=rtgTech}" xmlns:Tools.Metanol.My.Resources="clr-namespace:Tools.Metanol.My.Resources">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="NextPage" Executed="NextPage_Executed" x:Name="cmdNextPage" />
+        <CommandBinding Command="PreviousPage" Executed="PreviousPage_Executed" x:Name="cmdPreviousPage"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Alt+Right" Command="NextPage"/>
+        <KeyBinding Gesture="Alt+Left" Command="PreviousPage"/>
+    </Window.InputBindings>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -24,19 +35,49 @@
             </Style>
         </Grid.Resources>
         
-        <Label Grid.Column="0" Grid.Row="0" Target="{Binding ElementName=rtgTech}">_Technical</Label>
+        <Label Grid.Column="0" Grid.Row="0" Target="{Binding ElementName=rtgTech}" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_Technical}"/>
         <my:Rating x:Name="rtgTech" Grid.Column="1" Grid.Row="0" Rating="{Binding TechnicalQuality, Mode=TwoWay}"/>
 
-        <Label Grid.Column="2" Grid.Row="0" Target="{Binding ElementName=rtgArt}">_Art</Label>
+        <Label Grid.Column="2" Grid.Row="0" Target="{Binding ElementName=rtgArt}" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_Art}"/>
         <my:Rating x:Name="rtgArt" Grid.Column="3" Grid.Row="0" Rating="{Binding ArtQuality, Mode=TwoWay}"/>
 
-        <Label Grid.Column="0" Grid.Row="1" Target="{Binding ElementName=rtgInfo}">_Info</Label>
+        <Label Grid.Column="0" Grid.Row="1" Target="{Binding ElementName=rtgInfo}" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_Info}"/>
         <my:Rating x:Name="rtgInfo" Grid.Column="1" Grid.Row="1" Rating="{Binding InformationValue, Mode=TwoWay}"/>
 
-        <Label Grid.Column="2" Grid.Row="1" Target="{Binding ElementName=rtgOverall}">_Overall</Label>
+        <Label Grid.Column="2" Grid.Row="1" Target="{Binding ElementName=rtgOverall}" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_Overall}"/>
         <my:Rating x:Name="rtgOverall" Grid.Column="3" Grid.Row="1" Rating="{Binding OverallRating, Mode=TwoWay}"/>
 
-        <Button Name="btnOK" Content="_OK" IsDefault="True" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
-        <Button Name="btnCancel" Content="_Cancel" IsCancel="True" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+        <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="btnOK" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_OK}" IsDefault="True" Grid.Column="0" HorizontalAlignment="Center" IsTabStop="False"/>
+            <Button Name="btnCancel" Content="{x:Static Tools.Metanol.My.Resources:Resources.txt_Cancel}" IsCancel="True" Grid.Column="1" HorizontalAlignment="Center" IsTabStop="False"/>
+        </Grid>
+        <Grid Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Command="PreviousPage" Grid.Column="0" IsTabStop="False">
+                <Button.ToolTip>
+                    <TextBlock>
+                    <TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.tot_PreviousImage}"/>
+                        (<TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.rtlltr_AltPreviousArrow}"/>)
+                    </TextBlock>
+                </Button.ToolTip>
+                <Image Source="/MetanolBrowser;component/Images/Back.png" Width="16px" Height="16px" />
+            </Button>
+            <Button Command="NextPage" Grid.Column="1" IsTabStop="False">
+                <Button.ToolTip>
+                    <TextBlock>
+                    <TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.tot_NextImage}"/>
+                        (<TextBlock Text="{x:Static Tools.Metanol.My.Resources:Resources.ltrrtl_AltNextArrow}"/>)
+                    </TextBlock>
+                </Button.ToolTip>
+                <Image Source="/MetanolBrowser;component/Images/forward.png" Width="16px" Height="16px" />
+            </Button>
+        </Grid>
     </Grid>
 </Window>

@@ -6,7 +6,7 @@
              xmlns:my="clr-namespace:Tools.Metanol"
              mc:Ignorable="d" 
              Height="auto" Width="auto"
-             IsTabStop="True" Focusable="True"
+             IsTabStop="True" Focusable="True" xmlns:Tools.Metanol.My.Resources="clr-namespace:Tools.Metanol.My.Resources"
              >
     <UserControl.Resources>
         <Style TargetType="{x:Type ToggleButton}" x:Key="bbase">
@@ -18,16 +18,27 @@
             <Setter Property="Focusable" Value="False"/>
         </Style>
         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource bbase}" x:Key="star">
-            <Setter Property="Content" Value="★"/>
+            <Setter Property="Content" Value="{x:Static Tools.Metanol.My.Resources:Resources.rating_StarActive}"/>
             <Style.Triggers>
                 <Trigger Property="IsChecked" Value="False">
-                    <Setter Property="Content" Value="☆"/>
+                    <Setter Property="Content" Value="{x:Static Tools.Metanol.My.Resources:Resources.rating_StarInactive}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+    <UserControl.FocusVisualStyle>
+        <Style TargetType="Control">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="-2" StrokeThickness="1" Stroke="Red" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.FocusVisualStyle>
     <StackPanel Orientation="Horizontal">
-        <ToggleButton Name="btnNotRated" Content="?" Foreground="Blue" FontWeight="Bold" >
+        <ToggleButton Name="btnNotRated" Content="{x:Static Tools.Metanol.My.Resources:Resources.rating_NotRated}" Foreground="Blue" FontWeight="Bold" ToolTip="{x:Static Tools.Metanol.My.Resources:Resources.tot_NotRated}">
             <ToggleButton.Style>
                 <Style BasedOn="{StaticResource bbase}" TargetType="{x:Type ToggleButton}">
                     <Style.Triggers>
@@ -38,7 +49,7 @@
                 </Style>
             </ToggleButton.Style>
         </ToggleButton>
-        <ToggleButton Name="btnRejected" Content="✖" Foreground="Red">
+        <ToggleButton Name="btnRejected" Content="{x:Static Tools.Metanol.My.Resources:Resources.rating_Rejected}" Foreground="Red" ToolTip="{x:Static Tools.Metanol.My.Resources:Resources.tot_Rejected}">
             <ToggleButton.Style>
                 <Style BasedOn="{StaticResource bbase}" TargetType="{x:Type ToggleButton}">
                     <Style.Triggers>
@@ -69,7 +80,7 @@
                             <Setter Property="IsChecked" Value="True"/>
                         </DataTrigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Content" Value="☆"/>
+                            <Setter Property="Content" Value="{x:Static Tools.Metanol.My.Resources:Resources.rating_StarInactive}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -92,7 +103,7 @@
                             <Setter Property="IsChecked" Value="True"/>
                         </DataTrigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Content" Value="☆"/>
+                            <Setter Property="Content" Value="{x:Static Tools.Metanol.My.Resources:Resources.rating_StarInactive}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -112,7 +123,7 @@
                             <Setter Property="IsChecked" Value="True"/>
                         </DataTrigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Content" Value="☆"/>
+                            <Setter Property="Content" Value="{x:Static Tools.Metanol.My.Resources:Resources.rating_StarInactive}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -129,7 +140,7 @@
                             <Setter Property="IsChecked" Value="True"/>
                         </DataTrigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Content" Value="☆"/>
+                            <Setter Property="Content" Value="{x:Static Tools.Metanol.My.Resources:Resources.rating_StarInactive}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -143,7 +154,7 @@
                             <Setter Property="IsChecked" Value="True"/>
                         </DataTrigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Content" Value="☆"/>
+                            <Setter Property="Content" Value="{x:Static Tools.Metanol.My.Resources:Resources.rating_StarInactive}"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
