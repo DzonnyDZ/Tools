@@ -1,12 +1,12 @@
 ﻿Imports CustomRating = Tools.MetadataT.IptcT.Iptc.CustomRating
-Imports System.ComponentModel
+Imports System.ComponentModel, Tools.LinqT
 
 ''' <summary>Control for rating</summary>
 ''' <version version="2.0.6">This class is new in version 2.0.6</version>
 Public Class Rating : Inherits ComboBox
     ''' <summary>CTor - creates a new instance of the <see cref="Rating"/> class</summary>
     Public Sub New()
-        Me.DropDownStyle = ComboBoxStyle.DropDownList
+        MyBase.DropDownStyle = ComboBoxStyle.DropDownList
         Me.Items.Add(My.Resources.NotRated)
         Me.Items.Add(My.Resources.Rejected)
         For i = 1 To 5
@@ -35,6 +35,34 @@ Public Class Rating : Inherits ComboBox
             End If
         End Set
     End Property
+
+    ' ''' <summary>This function may be used by some type descriptors and property grids to determined if the <see cref="Items"/> property should be serialized.</summary>
+    ' ''' <returns>False</returns>
+    'Private Function ShouldSerializeItems() As Boolean
+    '    Return False
+    'End Function
+
+    ''' <summary>Gets an object representing the collection of the items contained in this <see cref="System.Windows.Forms.ComboBox"/>.</summary>
+    <EditorBrowsable(EditorBrowsableState.Never), Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Shadows ReadOnly Property Items As ObjectCollection
+        Get
+            Return MyBase.Items()
+        End Get
+    End Property
+    ''' <summary>One of the <see cref="System.Windows.Forms.ComboBoxStyle"/> values. The default is DropDown.</summary>
+    ''' <value>Only possible value is <see cref="ComboBoxStyle.DropDownList"/>.</value>
+    <EditorBrowsable(EditorBrowsableState.Never), Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+    Public Shadows ReadOnly Property DropDownStyle As ComboBoxStyle
+        Get
+            Return MyBase.DropDownStyle
+        End Get
+    End Property
+    ''' <summary>Raises the <see cref="E:System.Windows.Forms.ComboBox.DropDownStyleChanged" /> event.</summary>
+    ''' <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data. </param>
+    Protected Overrides Sub OnDropDownStyleChanged(e As System.EventArgs)
+        MyBase.DropDownStyle = ComboBoxStyle.DropDownList
+        'MyBase.OnDropDownStyleChanged(e)
+    End Sub
 
 
     ''' <summary>Raises the <see cref="E:System.Windows.Forms.Control.KeyDown" /> event.</summary>
@@ -104,4 +132,50 @@ Public Class Rating : Inherits ComboBox
             e.Handled = True
         End If
     End Sub
+
+    ' ''' <summary>Implements <see cref="TypeDescriptionProvider"/> for <see cref="Tools.Metanol.Rating"/></summary>
+    'Friend Class RatingTypeDescriptionProvider
+    '    Inherits TypeDescriptionProvider
+    '    ''' <summary>Gets a custom type descriptor for the given type and object.</summary>
+    '    ''' <returns>An <see cref="T:System.ComponentModel.ICustomTypeDescriptor" /> that can provide metadata for the type.</returns>
+    '    ''' <param name="objectType">The type of object for which to retrieve the type descriptor.</param>
+    '    ''' <param name="instance">An instance of the type. Can be null if no instance was passed to the <see cref="T:System.ComponentModel.TypeDescriptor" />.</param>
+    '    Public Overrides Function GetTypeDescriptor(objectType As System.Type, instance As Object) As System.ComponentModel.ICustomTypeDescriptor
+    '        If objectType.Equals(GetType(Rating)) AndAlso (instance Is Nothing OrElse TypeOf instance Is Rating) Then _
+    '            Return New RatingTypeDescriptor()
+    '        Return MyBase.GetTypeDescriptor(objectType, instance)
+    '    End Function
+    'End Class
+
+    ' ''' <summary>Implements <see cref="CustomTypeDescriptor"/> for <see cref="Tools.Metanol.Rating"/></summary>
+    'Private Class RatingTypeDescriptor
+    '    Inherits CustomTypeDescriptor
+    '    ''' <summary>Returns a collection of property descriptors for the object represented by this type descriptor.</summary>
+    '    ''' <returns>A <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> containing the property descriptions for the object represented by this type descriptor. The default is <see cref="F:System.ComponentModel.PropertyDescriptorCollection.Empty" />.</returns>
+    '    Public Overrides Function GetProperties() As System.ComponentModel.PropertyDescriptorCollection
+    '        Return FilterProperties(MyBase.GetProperties())
+    '    End Function
+    '    ''' <summary>Returns a collection of property descriptors for the object represented by this type descriptor.</summary>
+    '    ''' <returns>A <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> containing the property descriptions for the object represented by this type descriptor. The default is <see cref="F:System.ComponentModel.PropertyDescriptorCollection.Empty" />.</returns>
+    '    Public Overrides Function GetProperties(attributes() As System.Attribute) As System.ComponentModel.PropertyDescriptorCollection
+    '        Return FilterProperties(MyBase.GetProperties(attributes))
+    '    End Function
+
+    '    ''' <summary>Filters <see cref="PropertyDescriptorCollection"/></summary>
+    '    ''' <param name="properties">Collection to filter</param>
+    '    ''' <returns><paramref name="properties"/></returns>
+    '    ''' <remarks>This method removes some items form <paramref name="properties"/></remarks>
+    '    Private Function FilterProperties(properties As PropertyDescriptorCollection) As PropertyDescriptorCollection
+
+    '        Dim toRemove As New List(Of PropertyDescriptor)
+    '        For Each prd As PropertyDescriptor In properties
+    '            If prd.Name.In("Items", "DropDownStyle") Then toRemove.Add(prd)
+    '        Next
+    '        For Each item In toRemove
+    '            properties.Remove(item)
+    '        Next
+    '        Return properties
+    '    End Function
+
+    'End Class
 End Class

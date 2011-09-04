@@ -247,6 +247,7 @@
     </None>
     <None Include="Metadata\IPTC\IPTCTags.xslt">
       <DependentUpon>IPTCTags.xml</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Metadata\Exif\ExifTags.css">
       <DependentUpon>ExifTags.html</DependentUpon>
