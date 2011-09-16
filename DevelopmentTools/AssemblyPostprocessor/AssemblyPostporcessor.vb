@@ -260,19 +260,19 @@ Namespace RuntimeT.CompilerServicesT
         ''' <param name="type">A type to post-process</param>
         ''' <exception cref="ArgumentNullException">
         ''' <paramref name="item"></paramref> is null</exception>
-        ''' <exception cref="IO.FileNotFoundException">Cannot find assembly for attribute type or required dependent type or parameter type. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
-        ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
-        ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
+        ''' <exception cref="IO.FileNotFoundException">Cannot find assembly for attribute type or required dependent type or parameter type. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         ''' <exception cref="MemberAccessException">
-        ''' <paramref name="attr"></paramref> is abstract class. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
-        ''' <exception cref="Reflection.TargetInvocationException">Error while invoking attribute class constructor -or- Error when setting property value for named attribute argument. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
-        ''' <exception cref="Security.SecurityException">The caller does not have the necessary code access permission. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
-        ''' <exception cref="Reflection.AmbiguousMatchException">More than one property found for named attribute argument. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
-        ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
-        ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <paramref name="errorSink"></paramref> is null or returns false.)</exception>
+        ''' <paramref name="attr"></paramref> is abstract class. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="Reflection.TargetInvocationException">Error while invoking attribute class constructor -or- Error when setting property value for named attribute argument. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="Security.SecurityException">The caller does not have the necessary code access permission. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="Reflection.AmbiguousMatchException">More than one property found for named attribute argument. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         Public Sub ProcessType(ByVal type As TypeDefinition)
             If type.HasMethods Then
-                For Each mtd In type.Methods
+                For Each mtd In type.Methods.ToArray
                     ProcessItem(mtd)
                     If mtd.HasParameters Then
                         For Each par In mtd.Parameters.ToArray
@@ -322,15 +322,15 @@ Namespace RuntimeT.CompilerServicesT
         ''' <summary>Post-processes single item, non-recursive</summary>
         ''' <param name="item">An item to post-process</param>
         ''' <exception cref="ArgumentNullException"><paramref name="item"/> is null</exception>
-        ''' <exception cref="IO.FileNotFoundException">Cannot find assembly for attribute type or required dependent type or parameter type. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="MemberAccessException"><paramref name="attr"/> is abstract class. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="Reflection.TargetInvocationException">Error while invoking attribute class constructor -or- Error when setting property value for named attribute argument. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="Security.SecurityException">The caller does not have the necessary code access permission. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="Reflection.AmbiguousMatchException">More than one property found for named attribute argument. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
-        ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="ErrorSink"/> is null or returns false.)</exception>
+        ''' <exception cref="IO.FileNotFoundException">Cannot find assembly for attribute type or required dependent type or parameter type. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="MemberAccessException"><paramref name="attr"/> is abstract class. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="Reflection.TargetInvocationException">Error while invoking attribute class constructor -or- Error when setting property value for named attribute argument. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="Security.SecurityException">The caller does not have the necessary code access permission. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="Reflection.AmbiguousMatchException">More than one property found for named attribute argument. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
+        ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         Public Sub ProcessItem(item As ICustomAttributeProvider)
             If Not item.HasCustomAttributes Then Return
             Dim attributesToRemove As New List(Of CustomAttribute)

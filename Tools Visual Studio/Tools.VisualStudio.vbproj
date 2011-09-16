@@ -36,7 +36,7 @@
     <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -70,6 +70,7 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
@@ -88,6 +89,7 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Alpha|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -105,8 +107,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -122,10 +125,11 @@
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RC|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -141,24 +145,17 @@
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.VisualStudio.DebuggerVisualizers.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -166,7 +163,6 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.ComponentModel" />
-    <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="Tools.CollectionsT.GenericT" />
     <Import Include="Tools.InternalT" />
@@ -179,19 +175,11 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
-    <Compile Include="Diagnostics\ImageVisualizer.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="misc.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -199,14 +187,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="NativeMethods.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\SharedFiles\Tools.snk">
@@ -249,7 +229,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>REM COPY "$(TargetPath)" "$(DevEnvDir)..\Packages\Debugger\Visualizers\$(TargetFileName)"
-REM COPY "$(TargetDir)Tools.dll"  "$(DevEnvDir)..\Packages\Debugger\Visualizers\Tools.dll"</PostBuildEvent>
+    <PostBuildEvent>
+            REM COPY "$(TargetPath)" "$(DevEnvDir)..\Packages\Debugger\Visualizers\$(TargetFileName)"
+            REM COPY "$(TargetDir)Tools.dll"  "$(DevEnvDir)..\Packages\Debugger\Visualizers\Tools.dll"
+        </PostBuildEvent>
   </PropertyGroup>
 </Project>

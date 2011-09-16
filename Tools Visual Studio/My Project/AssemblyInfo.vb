@@ -1,4 +1,6 @@
-﻿Imports System
+﻿Imports System.Resources
+
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -10,12 +12,12 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Tools Visual Studio")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Đools")> 
-<Assembly: AssemblyCopyright("Copyright © ĐTools Team  2007")> 
+<Assembly: AssemblyCompany("Đonny")> 
+<Assembly: AssemblyProduct("ĐTools")> 
+<Assembly: AssemblyCopyright("Copyright © Đonny  2007-11")> 
 <Assembly: AssemblyTrademark("")> 
 
-<Assembly: ComVisible(False)>
+<Assembly: ComVisible(False)> 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
 <Assembly: Guid("b13b00c0-0c9f-4fe6-9cbd-f04230f3125d")> 
@@ -31,3 +33,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
+
+<Assembly: NeutralResourcesLanguageAttribute("en")> 

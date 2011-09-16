@@ -351,6 +351,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Runtime.CompilerServi
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MetanolBrowser", "Projects\MetanolBrowser\MetanolBrowser.vbproj", "{092FE8E0-7C8B-4B3B-BB89-2FE2FFACD047}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.VisualStudio.Debugger", "Tools.VisualStudio.Debugger\Tools.VisualStudio.Debugger.vbproj", "{991AA564-5CCF-481C-A2FE-E657D7379E67}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Tools.vsmdi
@@ -1271,6 +1273,31 @@ Global
 		{092FE8E0-7C8B-4B3B-BB89-2FE2FFACD047}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{092FE8E0-7C8B-4B3B-BB89-2FE2FFACD047}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{092FE8E0-7C8B-4B3B-BB89-2FE2FFACD047}.Release|x86.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Alpha|Any CPU.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Alpha|Any CPU.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Alpha|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Alpha|Mixed Platforms.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Alpha|x86.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Beta|Any CPU.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Beta|Any CPU.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Beta|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Beta|Mixed Platforms.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Beta|x86.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.RC|Any CPU.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.RC|Any CPU.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.RC|Mixed Platforms.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.RC|x86.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{991AA564-5CCF-481C-A2FE-E657D7379E67}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
