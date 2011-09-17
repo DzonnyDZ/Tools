@@ -44,7 +44,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\AnyCPU\Debug\</OutputPath>
     <DocumentationFile>Tools.UnitTests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -54,7 +54,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\AnyCPU\Release\</OutputPath>
     <DocumentationFile>Tools.UnitTests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <Config>5</Config>
@@ -65,7 +65,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Alpha\</OutputPath>
+    <OutputPath>bin\AnyCPU\Alpha\</OutputPath>
     <DocumentationFile>Tools.UnitTests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
@@ -79,7 +79,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Beta\</OutputPath>
+    <OutputPath>bin\AnyCPU\Beta\</OutputPath>
     <DocumentationFile>Tools.UnitTests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
@@ -93,7 +93,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\RC\</OutputPath>
+    <OutputPath>bin\AnyCPU\RC\</OutputPath>
     <DocumentationFile>Tools.UnitTests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>

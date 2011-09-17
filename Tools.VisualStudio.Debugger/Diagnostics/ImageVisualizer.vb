@@ -1,4 +1,7 @@
-Imports System.Diagnostics, System.Drawing, Microsoft.VisualStudio.DebuggerVisualizers, System.Windows.Forms
+Imports System.Drawing
+Imports System.Windows.Forms
+Imports Microsoft.VisualStudio.DebuggerVisualizers
+
 '#If Config <= Nightly Then 'Stage: Nightly
 '<Assembly: DebuggerVisualizer(GetType(DiagnosticsT.ImageVisualizer), GetType(DiagnosticsT.ImageVisualizer.VisualizerImageSource), Description:="Image visualizer", Target:=GetType(Image))> 
 <Assembly: DebuggerVisualizer(GetType(DiagnosticsT.ImageVisualizer), Target:=GetType(Image), Description:="Image visualizer")> 
@@ -6,7 +9,8 @@ Namespace DiagnosticsT
     'TODO: ImageVisualizer Testing needed
     ''' <summary>Implements <see cref="DialogDebuggerVisualizer"/> for datatype <see cref="Image"/></summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
-    ''' <version version="1.5.2" stage="Nightly"><c>VersionAttribute<c> and <c>AuthorAttribute</c> removed</version>
+    ''' <version version="1.5.2" stage="Nightly"><c>VersionAttribute</c> and <c>AuthorAttribute</c> removed</version>
+    ''' <version version="1.5.4">Moved from assembly Tools.VisualStuido to new Tools.VisualStudio.Debugger. The new assembly is AnyCPU.</version>
     Public Class ImageVisualizer
         Inherits DialogDebuggerVisualizer
         ''' <summary>Shows visualizer dialog</summary>

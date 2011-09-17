@@ -12,4 +12,16 @@ TestResults
 Tools.sdf
 *.docstates
 *.suo
+</Value></Property><Property><Name>bugtraq:number</Name><Value>true</Value></Property><Property><Name>svn:ignore</Name><Value>bin
+debug
+desktop.ini
+Documentation.shfbproj_Honza
+obj
+prebuild
+TestResults
+*.opensdf
+Tools.sdf
+*.docstates
+*.suo
+Thumbs.db
 </Value></Property></Properties></ItemProperties>

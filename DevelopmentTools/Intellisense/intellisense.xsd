@@ -219,8 +219,60 @@
 
 
     <xs:simpleType name="ident">
+        <xs:annotation>
+            <xs:documentation>A XML documentation identifier in CLI format prefixed with one character indicating it's type.</xs:documentation>
+            <xs:appinfo>
+                <sd:schemaDoc xmlns:sd="http://schemas.xsddoc.codeplex.com/schemaDoc/2009/3" xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5">
+                    <summary>
+                        <para>A XML documentation identifier in CLI format prefixed with one character indicating it's type.</para>
+                    </summary>
+                    <remarks>
+                        <content>
+                            <para>Prefixes are:</para>
+                            <definitionTable>
+                                <definedTerm>N:</definedTerm>
+                                <definition>
+                                    <para>Namespace</para>
+                                </definition>
+                                <definedTerm>T:</definedTerm>
+                                <definition>
+                                    <para>Type (Class, Structure, Interface, Enumeration, Delegate)</para>
+                                </definition>
+                                <definedTerm>M:</definedTerm>
+                                <definition>
+                                    <para>Method (Procedure, Function, Contructor, Type Initializer, Accessor)</para>
+                                </definition>
+                                <definedTerm>E:</definedTerm>
+                                <definition>
+                                    <para>Event</para>
+                                </definition>
+                                <definedTerm>P:</definedTerm>
+                                <definition>
+                                    <para>Property</para>
+                                </definition>
+                                <definedTerm>F:</definedTerm>
+                                <definition>
+                                    <para>Field</para>
+                                </definition>
+                                <definedTerm>A:</definedTerm>
+                                <definition>
+                                    <para>(Non-Standard extension) Assembly (dll, exe)</para>
+                                </definition>
+                            </definitionTable>
+                            <para>Version History:</para>
+                            <definitionTable>
+                                <definedTerm>1.5.4</definedTerm>
+                                <definition>
+                                    <para>Alllowed non-standard prefix A: for documenting assemblies.</para>
+                                </definition>
+                            </definitionTable>
+                        </content>
+                    </remarks>
+                </sd:schemaDoc>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="[NTMEPF]:.*"/>
+            <xs:pattern value="[NTMEPFA]:.*"/>
         </xs:restriction>
     </xs:simpleType>
 

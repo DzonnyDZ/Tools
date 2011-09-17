@@ -35,6 +35,7 @@
                 <DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Header="Size"  IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding SourceColumn, Mode=OneWay}" Header="SourceColumn"  IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding SourceVersion, Mode=OneWay}" Header="SourceVersion"  IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding DataType, Mode=OneWay}" Header="{x:Static r:Resources.DataType}"  IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock Grid.Row="5">

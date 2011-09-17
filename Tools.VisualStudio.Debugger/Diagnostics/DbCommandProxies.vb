@@ -21,7 +21,18 @@
             Me._parameters = DataParameterVisualizerCollectionProxy.EnsureSerializable(command.Parameters)
             Me.Transaction = command.Transaction
             Me.UpdatedRowSource = command.UpdatedRowSource
+            _originalTypeName = command.GetType.FullName
         End Sub
+
+        Private ReadOnly _originalTypeName As String
+        ''' <summary>In case this instance weas initialized form another instance of <see cref="IDbCommand"/> gets name of type this instance was initialized from instance of</summary>
+        ''' <returns>Full name of type this instance was initialized from. If this instance was not initialized from another instance of <see cref="IDbCommand"/> returns name of type <see cref="DbCommandVisualizerProxy"/>.</returns>
+        Public ReadOnly Property OriginalTypeName As String
+            Get
+                If _originalTypeName Is Nothing Then Return MyBase.GetType.FullName
+                Return _originalTypeName
+            End Get
+        End Property
 
         ''' <summary>For given <see cref="IDbCommand"/> gets serializable implementation of <see cref="IDbCommand"/></summary>
         ''' <param name="command">An <see cref="IDbCommand"/> to get serializable instance for</param>
@@ -236,8 +247,19 @@
                 Me.Size = .Size
                 Me.Scale = .Scale
                 Me.Precision = .Precision
+                _originalTypeName = .GetType.FullName
             End With
         End Sub
+
+        Private ReadOnly _originalTypeName As String
+        ''' <summary>In case this instance weas initialized form another instance of <see cref="IDbDataParameter"/> gets name of type this instance was initialized from instance of</summary>
+        ''' <returns>Full name of type this instance was initialized from. If this instance was not initialized from another instance of <see cref="IDbDataParameter"/> returns name of type <see cref="DbDataParameterVisualizerProxy"/>.</returns>
+        Public ReadOnly Property OriginalTypeName As String
+            Get
+                If _originalTypeName Is Nothing Then Return MyBase.GetType.FullName
+                Return _originalTypeName
+            End Get
+        End Property
 
         ''' <summary>For given <see cref="IDataParameter"/> gets serializable implementation of <see cref="IDataParameter"/></summary>
         ''' <param name="param">An <see cref="IDataParameter"/> to get serializable instance for</param>

@@ -1,7 +1,6 @@
-﻿Imports System.Resources
-
-Imports System
-Imports System.Reflection
+﻿Imports System.Reflection
+Imports System.Resources
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
 ' General Information about an assembly is controlled through the following 
@@ -35,3 +34,5 @@ Imports System.Runtime.InteropServices
 
 
 <Assembly: NeutralResourcesLanguageAttribute("en")> 
+
+<Assembly: TypeForwardedTo(GetType(DiagnosticsT.ImageVisualizer))> 

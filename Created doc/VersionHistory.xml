@@ -8,60 +8,133 @@
             <see cref="T:Tools.InternalT.VersionAttribute"/>, <see cref="T:Tools.InternalT.AuthorAttribute"/> and <see cref="T:Tools.InternalT.FirstVersionAttribute"/> marked as obsoltele. Use XML ocumentation tags instead.
             These atributes were replaced with appropriate XML comments.
         </vh:i>
-        <vh:i>Tools.InternalT.FirstVersion renamed to <see cref="T:Tools.InternalT.FirstVersionAttribute"/></vh:i>
-        <vh:i><see cref="T:Tools.ExtensionsT.DelegateExtensions"/> module: Visubility changed from Private to Public.</vh:i>
-        <vh:i>Build state of constants <see cref="F:Tools.VisualBasicT.Interaction.Null"/> and <see cref="F:Tools.VisualBasicT.Interaction.Nothing"/> changed from Nightly to Release</vh:i>
-        <vh:i>Created new assemblies Tools.Windows (for Windows Forms and WPF) and Tools.Metadata (for (image) metadata). Namespaces <see cref="N:Tools.DrawingT.DrawingIOt"/> and <see cref="N:Tools.DrawingT.MetadataT"/> (<see cref="N:Tools.MetadataT"/>) relocated to assembly Tools.Metadata; <see cref="N:Tools.WindowsT"/> relocated to assembly Tools.Windows with exception of <see cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/>.</vh:i>
-        <vh:i>A few methods from <see cref="T:Tools.CollectionsT.SpecializedT.CollectionTools"/> relocated to <see cref="T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions"/>.</vh:i>
-        <vh:i>Namespace Tools.DrawingT.MetadataT renamed to <see cref="N:Tools.MetadataT"/></vh:i>
-        <vh:i>Added namespace <see cref="N:Tools.Experimental.DevicesT.JoystickT"/></vh:i>
-        <vh:i>Added extension method <see cref="M:Tools.CollectionsT.SpecializedT.CollectionTools.Import(System.Windows.Forms.ImageList.ImageCollection,System.Windows.Forms.ImageList.ImageCollection)"/>.</vh:i>
-        <vh:i>Added namespace <see cref="N:Tools.WindowsT.InteropT"/>.</vh:i>
-        <vh:i>Fixed: <see cref="M:Tools.TypeTools.CanAutomaticallyCreateInstance(System.Type)"/> always returns null.</vh:i>
-        <vh:i>Added namespace <see cref="N:Tools.WindowsT.FormsT.VisualStylesT"/>.</vh:i>
-        <vh:i><see cref="T:Tools.MetadataT.ExifT.URational"/> and <see cref="T:Tools.MetadataT.ExifT.SRational"/> now have Parse and TryParse methods, implement <see cref="T:System.IFormatable"/> and has <see cref="T:System.ComponentModel.TypeConverterAttribute"/>.</vh:i>
-        <vh:i>Added several <see cref="T:System.ComponentModel.BrowsableAttribute"/>(false) and <see cref="T:System.ComponentMode.TypeConverterAttribute"/>(<see cref="T:System.ComponentModel.ExpandableObjectConverter"/>)  for <see cref="T:Tools.MetadataT.ExifT.Ifd"/>'s properties and derived classes' properties.</vh:i>
-        <vh:i><see cref="T:Tools.CollectionsT.GenericT.DictionaryWithEvents`2"/> implements <see cref="T:System.COllections.Generic.IEnumerable`1"/>[<typeparamref name="TValue"/>].</vh:i>
-        <vh:i>Fixed: Exif <see cref="T:Tools.MetadataT.ExifT.SRational"/> and <see cref="T:Tools.MetadataT.ExifT.URrational"/> are incorrectly read from image files (2×16 bits instead of 2×32 bits).</vh:i>
-        <vh:i><see cref="T:Tools.Metadata.ExifT.ExifWriter"/> made public and Exif saving capability added to <see cref="T:Tools.Metadata.ExifT.Exif"/>.</vh:i>
-        <vh:i>Added <see cref="M:Tools.ReflectionT.ReflectionTools.GetOperators"/> overloaed function.</vh:i>
-        <vh:i>Added <see cref="M:Tools.TypeTools.DynamiCast(System.Object,System.Type)"/> method</vh:i>
-        <vh:i><see cref="T:Tools.WindowsT.FormsT.ObjectBrowser"/> now has <see cref="P:Tools.WindowsT.FormsT.ObjectBrowser.SelectedItem"/> property</vh:i>
-        <vh:i>Fixed: Check box on <see cref="T:Tools.WindowsT.FormsT.MessageBox"/> does not autosize.</vh:i>
-        <vh:i><see cref="T:Tools.IReportsChange.ValueChangedEventArgsBase"/> now derives <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/></vh:i>
-        <vh:i>Null and <see cref="T:System.Nullable`1"/> support in <see cref="T:Tools.WindowsT.WPF.ConvertersT.StronglyTypedConverter`2"/>.</vh:i>
-        <vh:i>New attribute class <see cref="T:Tools.ComponentModel.EnumDefaultValueAttribute"/> for better working with defualt values of enumerated types.</vh:i>
-        <vh:i>New <see cref="T:Tools.ComponentModelT.MultipleException"/> class for throwing multiple exceptions at once.</vh:i>
+        <vh:i>
+            Tools.InternalT.FirstVersion renamed to <see cref="T:Tools.InternalT.FirstVersionAttribute"/>
+        </vh:i>
+        <vh:i>
+            <see cref="T:Tools.ExtensionsT.DelegateExtensions"/> module: Visubility changed from Private to Public.
+        </vh:i>
+        <vh:i>
+            Build state of constants <see cref="F:Tools.VisualBasicT.Interaction.Null"/> and <see cref="F:Tools.VisualBasicT.Interaction.Nothing"/> changed from Nightly to Release
+        </vh:i>
+        <vh:i>
+            Created new assemblies Tools.Windows (for Windows Forms and WPF) and Tools.Metadata (for (image) metadata). Namespaces <see cref="N:Tools.DrawingT.DrawingIOt"/> and <see cref="N:Tools.DrawingT.MetadataT"/> (<see cref="N:Tools.MetadataT"/>) relocated to assembly Tools.Metadata; <see cref="N:Tools.WindowsT"/> relocated to assembly Tools.Windows with exception of <see cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/>.
+        </vh:i>
+        <vh:i>
+            A few methods from <see cref="T:Tools.CollectionsT.SpecializedT.CollectionTools"/> relocated to <see cref="T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions"/>.
+        </vh:i>
+        <vh:i>
+            Namespace Tools.DrawingT.MetadataT renamed to <see cref="N:Tools.MetadataT"/>
+        </vh:i>
+        <vh:i>
+            Added namespace <see cref="N:Tools.Experimental.DevicesT.JoystickT"/>
+        </vh:i>
+        <vh:i>
+            Added extension method <see cref="M:Tools.CollectionsT.SpecializedT.CollectionTools.Import(System.Windows.Forms.ImageList.ImageCollection,System.Windows.Forms.ImageList.ImageCollection)"/>.
+        </vh:i>
+        <vh:i>
+            Added namespace <see cref="N:Tools.WindowsT.InteropT"/>.
+        </vh:i>
+        <vh:i>
+            Fixed: <see cref="M:Tools.TypeTools.CanAutomaticallyCreateInstance(System.Type)"/> always returns null.
+        </vh:i>
+        <vh:i>
+            Added namespace <see cref="N:Tools.WindowsT.FormsT.VisualStylesT"/>.
+        </vh:i>
+        <vh:i>
+            <see cref="T:Tools.MetadataT.ExifT.URational"/> and <see cref="T:Tools.MetadataT.ExifT.SRational"/> now have Parse and TryParse methods, implement <see cref="T:System.IFormatable"/> and has <see cref="T:System.ComponentModel.TypeConverterAttribute"/>.
+        </vh:i>
+        <vh:i>
+            Added several <see cref="T:System.ComponentModel.BrowsableAttribute"/>(false) and <see cref="T:System.ComponentMode.TypeConverterAttribute"/>(<see cref="T:System.ComponentModel.ExpandableObjectConverter"/>)  for <see cref="T:Tools.MetadataT.ExifT.Ifd"/>'s properties and derived classes' properties.
+        </vh:i>
+        <vh:i>
+            <see cref="T:Tools.CollectionsT.GenericT.DictionaryWithEvents`2"/> implements <see cref="T:System.COllections.Generic.IEnumerable`1"/>[<typeparamref name="TValue"/>].
+        </vh:i>
+        <vh:i>
+            Fixed: Exif <see cref="T:Tools.MetadataT.ExifT.SRational"/> and <see cref="T:Tools.MetadataT.ExifT.URrational"/> are incorrectly read from image files (2×16 bits instead of 2×32 bits).
+        </vh:i>
+        <vh:i>
+            <see cref="T:Tools.Metadata.ExifT.ExifWriter"/> made public and Exif saving capability added to <see cref="T:Tools.Metadata.ExifT.Exif"/>.
+        </vh:i>
+        <vh:i>
+            Added <see cref="M:Tools.ReflectionT.ReflectionTools.GetOperators"/> overloaed function.
+        </vh:i>
+        <vh:i>
+            Added <see cref="M:Tools.TypeTools.DynamiCast(System.Object,System.Type)"/> method
+        </vh:i>
+        <vh:i>
+            <see cref="T:Tools.WindowsT.FormsT.ObjectBrowser"/> now has <see cref="P:Tools.WindowsT.FormsT.ObjectBrowser.SelectedItem"/> property
+        </vh:i>
+        <vh:i>
+            Fixed: Check box on <see cref="T:Tools.WindowsT.FormsT.MessageBox"/> does not autosize.
+        </vh:i>
+        <vh:i>
+            <see cref="T:Tools.IReportsChange.ValueChangedEventArgsBase"/> now derives <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/>
+        </vh:i>
+        <vh:i>
+            Null and <see cref="T:System.Nullable`1"/> support in <see cref="T:Tools.WindowsT.WPF.ConvertersT.StronglyTypedConverter`2"/>.
+        </vh:i>
+        <vh:i>
+            New attribute class <see cref="T:Tools.ComponentModel.EnumDefaultValueAttribute"/> for better working with defualt values of enumerated types.
+        </vh:i>
+        <vh:i>
+            New <see cref="T:Tools.ComponentModelT.MultipleException"/> class for throwing multiple exceptions at once.
+        </vh:i>
         <vh:i>Several new converters for WPF.</vh:i>
-        <vh:i>A way to create instance of generic type in XAML: <see cref="T:Tools.WindowsT.WPF.MarkupT.GenericExtension"/>.</vh:i>
-        <vh:i>Minor enhancements in <see cref="T:Tools.CollectionsT.GenericT.ListWithEvents`1"/>.</vh:i>
-        <vh:i>Common base class for all <see cref="T:Tools.CollectionsT.GenericT.ListWithEvents`1"/> - <see cref="T:Tools.CollectionsT.GenericT.ListWithEventsBase"/>.</vh:i>
-        <vh:i>Minor enhancements in <see cref="T:Tools.WindowsT.IndependentT.MessageBox"/>.</vh:i>
-        <vh:i><see cref="T:Tools.CollectionsT.GenericT.ICollectionNotifyItem"/> and <see cref="T:Tools.CollectionsT.GenericT.ICollectionCancelItem"/> interfaces introduced.</vh:i>
+        <vh:i>
+            A way to create instance of generic type in XAML: <see cref="T:Tools.WindowsT.WPF.MarkupT.GenericExtension"/>.
+        </vh:i>
+        <vh:i>
+            Minor enhancements in <see cref="T:Tools.CollectionsT.GenericT.ListWithEvents`1"/>.
+        </vh:i>
+        <vh:i>
+            Common base class for all <see cref="T:Tools.CollectionsT.GenericT.ListWithEvents`1"/> - <see cref="T:Tools.CollectionsT.GenericT.ListWithEventsBase"/>.
+        </vh:i>
+        <vh:i>
+            Minor enhancements in <see cref="T:Tools.WindowsT.IndependentT.MessageBox"/>.
+        </vh:i>
+        <vh:i>
+            <see cref="T:Tools.CollectionsT.GenericT.ICollectionNotifyItem"/> and <see cref="T:Tools.CollectionsT.GenericT.ICollectionCancelItem"/> interfaces introduced.
+        </vh:i>
         <vh:i>Fixed some resources-localization-related issues.</vh:i>
-        <vh:i>New class <see cref="T:Tools.TestsT.StaticPropertiesTest"/>.</vh:i>
+        <vh:i>
+            New class <see cref="T:Tools.TestsT.StaticPropertiesTest"/>.
+        </vh:i>
         <vh:i>WPF implementation of message box.</vh:i>
-        <vh:i>New metadata querying interfaces <see cref="T:Tools.MetadataT.IMetadataProvider"/> and <see cref="T:Tools.MetadataT.IMetadata"/> implemented by <see cref="T:Tools.MetadataT.ExifT.Exif"/> and <see cref="T:Tools.MetadataT.IptcT.IPTC"/>.</vh:i>
+        <vh:i>
+            New metadata querying interfaces <see cref="T:Tools.MetadataT.IMetadataProvider"/> and <see cref="T:Tools.MetadataT.IMetadata"/> implemented by <see cref="T:Tools.MetadataT.ExifT.Exif"/> and <see cref="T:Tools.MetadataT.IptcT.IPTC"/>.
+        </vh:i>
         <vh:i>Assembly Tools Win renamed to Tools.Win</vh:i>
         <vh:i>Assembly Tools IL renamed to Tols.IL</vh:i>
-        <vh:i>New class <see cref="T:Tools.CollectionsT.GenericT.PriorityQueue"/></vh:i>
-        <vh:i>New class <see cref="T:Tools.DataStructuresT.GenericT.Graph"/></vh:i>
+        <vh:i>
+            New class <see cref="T:Tools.CollectionsT.GenericT.PriorityQueue"/>
+        </vh:i>
+        <vh:i>
+            New class <see cref="T:Tools.DataStructuresT.GenericT.Graph"/>
+        </vh:i>
         <vh:i>Added project XsdGenerator - generates classes from XSD files.</vh:i>
-        <vh:i>New project Tools.TotalCommander (see <see cref="N:Tools.TotalCommanderT"/>) for creating Total Commander plugins.</vh:i>
+        <vh:i>
+            New project Tools.TotalCommander (see <see cref="N:Tools.TotalCommanderT"/>) for creating Total Commander plugins.
+        </vh:i>
     </vh:Version>
+    
     <vh:Version Major="1" Minor="5" Build="3">
         <vh:i>Added assembly Tools.SqlServer. This assembly should be loaded to SQL Sever.</vh:i>
-        <vh:i>Corresponding API from <see cref="N:Tools.SpecialT"/> moved to <see cref="T:Tools.EnumCore"/> and <see cref="T:Tools.DelegateCore"/>.</vh:i>
+        <vh:i>
+            Corresponding API from <see cref="N:Tools.SpecialT"/> moved to <see cref="T:Tools.EnumCore"/> and <see cref="T:Tools.DelegateCore"/>.
+        </vh:i>
         <vh:i>Many new classes for WPF.</vh:i>
         <vh:i>Many new extension methods</vh:i>
         <vh:i>Bugfixes and new support classes.</vh:i>
     </vh:Version>
+    
     <vh:Version Major="1" Minor="5" Build="4">
         <vh:i>Added documentation for development tools - EXE command line tools and Visual Studio Custom Tools</vh:i>
         <vh:i>Total Commander WFX plugin framework extended for Crypto and background transfers.</vh:i>
-	<vh:i>Added support for WLX (Lister) plugins for Total Commander</vh:i>
-	<vh:i>Created binding to Unicode Character Database XML</vh:i>
-	<vh:i>Assembly Postrocessor tool that allows you to manipulate compiled assembly</vh:i>
-	<vh:i>Implemented IPTC IIM Record No. 3 properties</vh:i>
+        <vh:i>Added support for WLX (Lister) plugins for Total Commander</vh:i>
+        <vh:i>Created binding to Unicode Character Database XML</vh:i>
+        <vh:i>Assembly Postrocessor tool that allows you to manipulate compiled assembly</vh:i>
+        <vh:i>Implemented IPTC IIM Record No. 3 properties</vh:i>
+        <vh:i>Assembly Tools.VisualStudio split to Tools.VisualStudio and Tools.VisualStudio.Debugger. Tools.VisualStudio.Debugger is AnyCPU and contains Debugger Visualizers which chan now be used when debugging x64 processes.</vh:i>
     </vh:Version>
-</vh:VersionHistory>
+</vh:VersionHistory>  

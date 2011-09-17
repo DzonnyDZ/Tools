@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../DevelopmentTools/Intellisense/intellisense.xsd">
+    <assembly>
+        <name>_SharedItems_</name>
+    </assembly>
+    <members>
+        <member name="A:Tools.dll">
+            <summary>Core library of ĐTools project. Contains core and general-purpose namespaces and classes.</summary>
+            <remarks>DLL, Any CPU, Strong Named, Starndard Versioning, Managed, VB</remarks>
+            <include file="$(GlobalBin)AnyCPU/Tools.dll" path="."/>
+        </member>
+
+        <member name="A:ReportingEngine Lite.dll">
+            <summary>Contins a lightweight Reporting Engine that can generate CSV, XML, HTML and Excel files from database queries and stored procedures.</summary>
+            <remarks>DLL, Any CPU, Strong Named, Starndard Versioning, Managed (depends on MS Office COM), VB</remarks>
+            <include file="$(GlobalBin)AnyCPU/ReportingEngine Lite.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.Tests.exe">
+            <summary>A windows application used for manual testing and demonstration purposes</summary>
+            <remarks>
+                <para>EXE, Any CPU (or x86), Strong Named, Standard Vesioning, Managed (uses P/Invoke), VB</para>
+                <para>Any public API provided by this assembly is not intended for use. This library is not intended for being referenced.</para>
+            </remarks>
+            <include file="Tests/bin/x86/$(Configuration)/Tools.Tests.exe" path="."/>
+        </member>
+
+        <member name="A:Tools Experimental.dll">
+            <summary>A place for placing various asorted untested functionality before it's fully evaluated and included in main tools library.</summary>
+            <remarks>
+                <para>DLL, Any CPU, unsigned, Stanbdard Vesioning, Managed (may use P/Invoke or COM), VB</para>
+                <para>Everything in this assembly is subject of change!</para>
+            </remarks>
+            <include file="$(GlobalBin)/AnyCPU/Tools Experimental.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.Data.Schema.Deploy.dll">
+            <summary>Contains classes for deploying database projects</summary>
+            <remarks>DLL, Any CPU, Strong Named, Standard Vesioning, Managed, VB</remarks>
+            <include file="$(GlobalBin)AnyCPU/Tools.Data.Schema.Deploy.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.Hardcore.dll">
+            <summary>Contains classes that provide functionality that can be written neinther in Visual Basic nor in C#.</summary>
+            <remarks>DLL, Any CPU, Strong Named, Standard Versioning, Managed, C++/CLI (safe mode)</remarks>
+            <include file="$(GlobalBin)AnyCPU/Tools.Hardcore.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.Metadata.dll">
+            <summary>Contains classes for reading and writing various memtadata formats (currently implements IPTC and Exif).</summary>
+            <remarks>DLL, Any CPU, Strong Named, Standard Versioning, Managed, VB</remarks>
+            <include file="$(GlobalBin)AnyCPU/Tools.Metadata.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.Runtime.CompilerServices.dll">
+            <summary>Defines custom attributes for assembly postrpocessing.</summary>
+            <remarks>
+                <para>DLL, Any CPU, Strong Named, Standard Versioning, Managed, VB</para>
+                <para>This assembly does not contain actual postrocessing code. It's contained in AssemblyPostprocessor.exe.</para>
+                <para>This library does not depend on core Tools.dll, so you can use it without having big Tools.dll as reference. Further more, if your posprocessing is designed certain way you can instruct AssemblyPostrpocessor to remove reference to Tools.Runtime.CompilerServices as well.</para>
+            </remarks>
+            <include file="$(GlobalBin)AnyCPU/Tools.Runtime.CompilerServices.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.SqlServer.dll">
+            <summary>Contains managed code to be invoked on server-side of Microsft SQL Server. Contains various utility functions to be called from Transact-SQL.</summary>
+            <remarks>
+                <para>DLL, Any CPU, Strong Named, Standard Versioning, Managed, VB</para>
+                <para>Load this assembly to SQL server and setup CLI stored procedures. This DLL is not intentended to become your reference unless you are developing a DL that will also be uploaded to SQL Server.</para>
+            </remarks>
+            <version version="1.5.4">The assembly is now strongly named.</version>
+            <include file="$(GlobalBin)AnyCPU/Tools.SqlServer.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.Win.dll">
+            <summary>Contains managed wrappers around various Win32 APIs.</summary>
+            <remarks>DLL, Any CPU (x64 compatibility was not fully tested), Strong Named, Standard Versioning, Fullly Managed (COM and P/Invoke dependensies), VB</remarks>
+            <include file="$(GlobalBin)AnyCPU/Tools.Win.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.Windows.dll">
+            <summary>Contains WinForms and WPF functionality</summary>
+            <remarks>
+                <para>DLL, Any CPU, Strong Named, Standard Versioning, Managed, VB</para>
+                <para>This assembly will likely be split to 3 assemblies in future (Tools.Windows.Forms, Tools.Windows.WPF, and Tools.Windows.Interop and maybe Tools.Windows.Common). This will likely introduce breaking changes to API.</para>
+            </remarks>
+            <include file="$(GlobalBin)AnyCPU/Tools.Windows.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.UnitTests.dll">
+            <summary>Contains unit tests for ĐTools. You likely don't have this assembly and you likely do not need it.</summary>
+            <remarks>DLL, Any CPU (or x86), Strong Named, Standard Versioning, Managed, VB</remarks>
+            <include file="UnitTests/bin/AnyCPU/$(Configuration)/Tools.UnitTests.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.VisualStudio.dll">
+            <summary>Contains various tools for Visual Studio extensions and integration.</summary>
+            <remarks>DLL, x86, Strong Named, Standard Versioning, Managed, VB</remarks>
+            <version version="1.5.4">Part of this assembly was extracted to Tools.VisualStudio.Debugger.dll so Tools.VisualStudio.dll now contains very little functionality.</version>
+            <include file="Tools Visual Studio/bin/x86/$(Configuration)/Tools.VisualStudio.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.VisualStudio.CS.dll">
+            <summary>Contains various tools for Visual Studio extensions and integration usually copied from 3rd party sources.</summary>
+            <remarks>DLL, x86, Strong Named, Standard Versioning, Managed, C#</remarks>
+            <include file="Tools VisualStudio CS/bin/x86/$(Configuration)/Tools.VisualStudio.CS.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.VisualStudio.Debugger">
+            <summary>Contains Visual Studio Debugger Visualizers and supporting classes</summary>
+            <remarks>DLL, AnyCPU, Strong Named, Standard Versioning, Managed, VB</remarks>
+            <version version="1.5.4">This assembly is new in version 1.5.4</version>
+            <include file="Tools.VisualStudio.Debugger/bin/$(Configuration)/Tools.VisualStudio.Debugger.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.TotalCommander.dll">
+            <summary>Implemenst a framework (base and support classes) for developing managed Total Commander plugins</summary>
+            <remarks>DLL, x86, Strong Named, Standard Versioning, Managed (P/Invoke dependencies), C++/CLI (pure mode)</remarks>
+            <include file="$(GlobalBin)x86/Tools.TotalCommander.dll" path="."/>
+        </member>
+
+        <member name="A:Tools.TotalCommander.Extensions.dll">
+            <summary>Extends functionality of Tools.TotalCommander.dll</summary>
+            <remarks>DLL, x86, Strong Named, Standard Versioning, Managed, VB</remarks>
+            <version version="1.5.4">This asssembly is new in version 1.5.4</version>
+            <include file="$(GlobalBin)x86/Tools.TotalCommander.Extensions.dll" path="."/>
+        </member>
+
+        <member name="A:wfxSample.dll">
+            <summary>Sample implementation of File System Plugin for Total Commander</summary>
+            <remarks>
+                <para>DLL, x86, Strong Named, Standard Versioning, Managed, VB</para>
+                <para>This is sample library. You are unlikely to use it as reference.</para>
+            </remarks>
+            <include file="Samples/wfx sample/bin/x86/Debug/wfxSample.dll" path="."/>
+        </member>
+
+        <member name="A:wfxSample.wfx">
+            <summary>Autogenerated wrapper for wfxSample.dll to be loaded by Total Commander</summary>
+            <remarks>
+                <para>DLL, Anx CPU, Strong Named, Standard Versioning, Mixed, C++/CLI (mixed mode, autogenerated)</para>
+                <para>This is sample library. It does not provide any public API.</para>
+            </remarks>
+            <include file="Samples/wfx sample/bin/x86/Debug/wfxSample.wfx" path="."/>
+        </member>
+
+        <member name="A:Metanol.exe">
+            <summary>Windows application for editing IPTC metadata in JPEG files.</summary>
+            <remarks>
+                <para>EXE, Any CPU, Strong Named, Metanol-specific versioning, Managed, VB</para>
+                <para>Older version of metanol (v1.x) can be found in source code. It was also Metanol.exe and it's no longer distributed.</para>
+                <para>This assembly provideas a public API but Metanol plugin-model is not established yet. You are unlikely to use this library as reference.</para>
+            </remarks>
+            <include file="Projects/Metanol2/bin/Debug/AnyCPU/Metanol.exe" path="."/>
+        </member>
+
+        <member name="A:Metanol Screen Saver.exe">
+            <summary>Metanol-based sreen saver</summary>
+            <remarks>
+                <para>EXE, Any CPU, unsigned, specific versioning, Managed, VB</para>
+                <para>This project is suspended, assembly is not distributed.</para>
+                <para>Any public API provided by this assembly is not intended for use. This library is not intended for being referenced.</para>
+            </remarks>
+            <include file="Projects/Metanol Screen Saver/bin/Debug/AnyCPU/Metanol Screen Saver.exe" path="."/>
+        </member>
+
+        <member name="A:MetanolBrowser.exe">
+            <summary>Metanol-based simple image viewer</summary>
+            <remarks>
+                <para>EXE, Any CPU, Strong Named, Metanol-specific versioning, Managed, VB</para>
+                <para>Any public API provided by this assembly is not intended for use. This library is not intended for being referenced.</para>
+            </remarks>
+            <version version="2.0.7">This assembly is new in version 2.0.7.</version>
+            <version version="2.0.8">Thsi assembly is now Strong Named</version>
+            <include file="Projects/MetanolBrowser/bin/Debug/MetanolBrowser.exe" path="."/>
+        </member>
+
+        <member name='A:AssemblyPostprocessor.exe'>
+            <summary>Console application - an assembly postrocessing tool that can alter compiled assembly using Mono.Cecil</summary>
+            <remarks>
+                <para>EXE Any CPU Strong Named Standard Versioning Managed VB</para>
+                <para>This EXE assembly provides public API</para>
+            </remarks>
+            <version version='1.5.4'>This assembly is new in version 1.5.4</version>
+            <include file='DevelopmentTools/AssemblyPostprocessor/bin/Debug/AssemblyPostprocessor.exe' path='.'/>
+        </member>
+        <member name='A:CommentsMerge.exe'>
+            <summary>Console tool for merging XML comments from multiple files to one</summary>
+            <remarks>
+                <para>EXE Any CPU Strong Named Standard Versioning Managed VB</para>
+                <para>This assembly does not provide any public API</para>
+            </remarks>
+            <include file='DevelopmentTools/CommentsMerge/bin/Debug/AnyCPU/CommentsMerge.exe' path='.'/>
+        </member>
+        <member name='A:PseudoZip.exe'>
+            <summary>
+                A command line application for creating and unpacking ZIP-like archives using <see cref="T:System.IO.Packaging.ZipPackage"/>.
+            </summary>
+            <remarks>
+                <para>EXE Any CPU Strong Named Standard Versioning Managed VB</para>
+                <para>This assembly does not provide any public API</para>
+            </remarks>
+            <include file='DevelopmentTools/PseudoZip/bin/Debug/AnyCPU/PseudoZip.exe' path='.'/>
+        </member>
+        <member name='A:ResXFileCodeGeneratorEx.dll'>
+            <summary>Visual Studio Custom Tool used for generating code from managed resource (RESX) files.</summary>
+            <remarks>
+                <para>DLL x86 Strong Named Standard Versioning Managed C#</para>
+                <para>Public API provided by this assembly is intended to be called by Visual Studio not by you. However it's possible to add this assembyl as reference.</para>
+            </remarks>
+            <include file='DevelopmentTools/ResXFileCodeGeneratorEx/bin/Debug/x86/ResXFileCodeGeneratorEx.dll' path='.'/>
+        </member>
+        <member name='A:ResXFileGenerator.exe'>
+            <summary>Commandline wrapper around ResXFileCodeGeneratorEx</summary>
+            <remarks>
+                <para>EXE x86 unsigned Standard Versioning Managed VB</para>
+                <para>This assembly does not privide any public API. Use API provided by ResXFileCodeGeneratorEx.</para>
+            </remarks>
+            <include file='DevelopmentTools/ResXFileGenerator/bin/Debug/x86/ResXFileGenerator.exe' path='.'/>
+        </member>
+        <member name='A:SplashScreenGenerator.exe'>
+            <summary>A command line application used to generate image files that can be used as Splash Sreens for WPF applications</summary>
+            <remarks>
+                <para>EXE Any CPU Strong Named Standard Versioning Managed VB</para>
+                <para>This EXE assembly provides public API</para>
+            </remarks>
+            <include file='DevelopmentTools/SplashScreenGenerator/bin/Debug/SplashScreenGenerator.exe' path='.'/>
+        </member>
+        <member name='A:Tools.VisualStudio.Macros.dll'>
+            <summary>Contains Visual Studio macros</summary>
+            <remarks>
+                <para>DLL Any CPU Strong Named Standard Versioning Managed VB</para>
+                <para>This DLL is not intended for use from your code as reference. It's not distributed. It exists only as organizational unit for Visual Studio macros. Download macros source code instead.</para>
+            </remarks>
+            <include file='DevelopmentTools/Macros/bin/Debug/Tools.VisualStudio.Macros.dll' path='.'/>
+        </member>
+        <member name='A:XsdGenerator.dll'>
+            <summary>Visual Studio custom tool that generates classes from XML-Schema (XSD) files</summary>
+            <remarks>
+                <para>DLL x86 Strong Named Standard Versioning Managed C#</para>
+                <para>Public API from this assembly is used by Visual Studio or if you implement your own extension to XSD generator.</para>
+            </remarks>
+            <version version='1.5.4'>Fix: Assembly version missing</version>
+            <include file='DevelopmentTools/XsdGenerator/bin/Debug/x86/XsdGenerator.dll' path='.'/>
+        </member>
+        <member name='A:TransformCodeGenerator.dll'>
+            <summary>XSLT-based Visual Studio custom tool</summary>
+            <remarks>
+                <para>DLL x86 Strong Named Standard Versioning Managed C#</para>
+                <para>Public API provided by this assembly is intended to be called by Visual Studio not by you. However it's possible to add this assembyl as reference.</para>
+            </remarks>
+            <include file='DevelopmentTools/TransformCodeGenerator/bin/Debug/x86/TransformCodeGenerator.dll' path='.'/>
+        </member>
+        <member name='A:VersionCorrector.exe'>
+            <summary>A command line application which's purpose is to take a .NET assembly which contains WPF resoutrces and fix version information for types from the same assembyl referenced form XAML resources</summary>
+            <remarks>
+                <para>EXE Any CPU Strong Named Standard Versioning Managed VB</para>
+                <para>This assembly does not provide any public API</para>
+            </remarks>
+            <include file='DevelopmentTools/VersionCorrector/bin/Debug/AnyCPU/VersionCorrector.exe' path='.'/>
+        </member>
+        <member name='A:VersionUpdater.exe'>
+            <summary>A command line application that can generate version files (part of assembly info).</summary>
+            <remarks>
+                <para>EXE Any CPU Strong Named Standard Versioning Managed VB</para>
+                <para>This assembly does not provide any public API</para>
+            </remarks>
+            <include file='DevelopmentTools/VersionUpdater/bin/Debug/VersionUpdater.exe' path='.'/>
+        </member>
+
+    </members>
+</doc>

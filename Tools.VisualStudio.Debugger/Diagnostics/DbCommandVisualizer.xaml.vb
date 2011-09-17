@@ -1,13 +1,11 @@
-﻿Imports System.Windows
-Imports System.Linq
+﻿Imports System.Data.Common
+Imports System.Windows
 Imports Microsoft.VisualStudio.DebuggerVisualizers
 Imports Tools.DiagnosticsT
-Imports System.Data.Common
 
-
-<Assembly: DebuggerVisualizer(GetType(DbCommandVisualizer), GetType(DbCommandSource), Target:=GetType(IDbCommand), Description:="DB Command Visualizer")> 
+<Assembly: DebuggerVisualizer(GetType(DbCommandVisualizer), GetType(DbCommandSource), Target:=GetType(IDbCommand), Description:="DB Command Visualizer")>  'It seems that using interface as Target is ognored by VS
 <Assembly: DebuggerVisualizer(GetType(DbCommandVisualizer), GetType(DbCommandSource), Target:=GetType(dbcommand), Description:="DB Command Visualizer")> 
-'<Assembly: DebuggerVisualizer(GetType(DbCommandVisualizer), Target:=GetType(sqlcommand), Description:="DB Command Visualizer")> 
+
 
 Namespace DiagnosticsT
     ''' <summary>Implements Debugger Visualizer for database commands - types implementing <see cref="IDbCommand"/></summary>
@@ -80,21 +78,26 @@ Namespace DiagnosticsT
             End Get
         End Property
 
-        ''' <summary>Provides command data type name for current command</summary>
+        ''' <summary>Provides command data type full name for current command</summary>
         Public ReadOnly Property CommandTypeName$
             Get
                 If cmd Is Nothing Then Return Nothing
-                Return cmd.GetType.Name
+                If TypeOf cmd Is DbCommandVisualizerProxy Then Return DirectCast(cmd, DbCommandVisualizerProxy).OriginalTypeName
+                Return cmd.GetType.FullName
             End Get
         End Property
 
         ''' <summary>Provides parameters for current command</summary>
+        ''' <returns>Enumerates anonymous type</returns>
         Public ReadOnly Property Parameters As IEnumerable
             Get
                 If cmd Is Nothing Then Return Nothing
                 Return From par As IDbDataParameter In cmd.Parameters Select
                        par.DbType, par.Direction, par.IsNullable, par.ParameterName, par.Precision, par.Scale, par.Size, par.SourceColumn, par.SourceVersion, par.Value,
-                       TypeName = par.GetType.Name
+                       DataType = If(TypeOf par Is DbDataParameterVisualizerProxy,
+                          DirectCast(par, DbDataParameterVisualizerProxy).OriginalTypeName,
+                          par.GetType.FullName
+                       )
             End Get
         End Property
 
