@@ -221,6 +221,7 @@
     <Compile Include="Extensions\StringParsing.vb" />
     <Compile Include="Globalization\Arabic.vb" />
     <Compile Include="Linq\ForEnumerator.vb" />
+    <Compile Include="misc\EmptyArray.vb" />
     <Compile Include="misc\Operators.vb" />
     <Compile Include="misc\SyntaxErrorException.vb" />
     <Compile Include="misc\VersionPart.vb" />
@@ -241,6 +242,14 @@
     <Compile Include="Text\Unicode\UnicodeEnums.vb" />
     <Compile Include="Text\Unicode\UnicodeExtensions.vb" />
     <Compile Include="Text\Unicode\UnicodePropertiesProvider.vb" />
+    <Compile Include="Text\Unicode\UnicodePropertyAttribute.vb" />
+    <Compile Include="Text\Unicode\UnicodePropertyCategoryAttribute.vb" />
+    <Compile Include="Text\Unicode\UnicodeResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnicodeResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Text\Unicode\UnihanPropertyCategoryAttribute.vb" />
     <Compile Include="Threading\IInvoke.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
@@ -359,6 +368,11 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\UnicodeResources.resx">
+      <CustomToolNamespace>TextT.UnicodeT</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnicodeResources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

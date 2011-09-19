@@ -618,5 +618,4 @@ Namespace TextT.UnicodeT
         ''' <summary><see cref="Globalization.UnicodeCategory.OpenPunctuation"/> or <see cref="Globalization.UnicodeCategory.ClosePunctuation"/> or <see cref="UnicodeLineBreakType.Quotation"/> but U+05F3 (exluding <see cref="ATerm"/> and <see cref="STerm"/>)</summary>
         <XmlEnum("CL")> Close
     End Enum
-
 End Namespace

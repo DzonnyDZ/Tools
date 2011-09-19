@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 ''' <summary>Misc tools</summary>
-<HideModuleName()> Public Module misc_
+<HideModuleName()>
+Public Module misc_
     ''' <summary>Returns given object</summary>
     ''' <param name="obj">Object to return</param>
     ''' <typeparam name="T">Type of <paramref name="obj"/></typeparam>
@@ -20,6 +21,7 @@
         a = b
         b = tmp
     End Sub
+
 #Region "Switch"
 #Region "General"
     ''' <summary>Returns one of results depending on boolean conditions</summary>
@@ -47,7 +49,7 @@
         Dim eqc = EqualityComparer(Of TC).Default
         While cE.MoveNext
             If Not rE.MoveNext Then Throw New ArgumentException(ResourcesT.Exceptions.ThereIsNotEnoughtResults, "results")
-            If eqc.Equals(cE.Current, Value) Then Return rE.Current
+            If eqc.Equals(cE.Current, value) Then Return rE.Current
         End While
         If ThrowOnError Then Throw New ArgumentException(ResourcesT.Exceptions.NoConditionWasTrue, "conditions")
         Return Nothing
@@ -89,7 +91,7 @@
     ''' <returns>Item from <paramref name="results"/> at position of first condition from <paramref name="conditions"/> which equals to <paramref name="Value"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="results"/> contains less items than is orinar number of firts condtition which is true (simply: enumeration of <paramref name="results"/> reaches the end of collection before first condition which equals to <paramref name="value"/> is found) =or= None of <paramref name="conditions"/> equals to <paramref name="value"/>.</exception>
     Public Function Switch(Of T, TC)(ByVal value As TC, ByVal conditions As IEnumerable(Of TC), ByVal ParamArray results As T()) As T
-        Return Switch(Of T, TC)(Value, conditions, DirectCast(results, IEnumerable(Of T)), True)
+        Return Switch(Of T, TC)(value, conditions, DirectCast(results, IEnumerable(Of T)), True)
     End Function
 #End Region
 #Region "c1, c2, ..., r1, r2, ..."
