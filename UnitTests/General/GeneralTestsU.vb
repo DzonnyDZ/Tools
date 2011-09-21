@@ -1,7 +1,9 @@
-﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
-Imports Tools.TestsT
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Reflection
+Imports Microsoft.VisualStudio.TestTools.UnitTesting
+Imports Tools.ReflectionT
+Imports Tools.TestsT
+
 ''' <summary>Those tests are not unit tests at all, those tests are some additional tests verifying assembly correctness and structure etc.</summary>
 <TestClass()> _
 Public Class GeneralTestsUT
@@ -21,18 +23,23 @@ Public Class GeneralTestsUT
             testContextInstance = value
         End Set
     End Property
-
+    'Assembly.Load("Tools.IL"), _
     Private ToolsAssemblies As Assembly() = { _
             Assembly.Load("Tools"), _
-            Assembly.Load("Tools.IL"), _
+            Assembly.Load("Tools.Hardcore"), _
             Assembly.Load("Tools.Metadata"), _
-            Assembly.Load("Tools.TotalCommander"), _
-            Assembly.Load("Tools.VisualStudio"), _
-            Assembly.Load("Tools.VisualStudio.CS"), _
+            If(Environment.Is64BitProcess, Nothing, Assembly.Load("Tools.TotalCommander")), _
+            If(Environment.Is64BitProcess, Nothing, Assembly.Load("Tools.TotalCommander.Extensions")), _
+            Assembly.Load("Tools.SqlServer"), _
+            If(Environment.Is64BitProcess, Nothing, Assembly.Load("Tools.VisualStudio")), _
+            If(Environment.Is64BitProcess, Nothing, Assembly.Load("Tools.VisualStudio.CS")), _
+            Assembly.Load("Tools.VisualStudio.Debugger"), _
+            Assembly.Load("Tools.Data.Schema.Deploy"), _
             Assembly.Load("Tools.Win"), _
             Assembly.Load("Tools.Windows"), _
-            Assembly.Load("TransformCodeGenerator"), _
-            Assembly.Load("Tools.VisualStudio.Macros") _
+            If(Environment.Is64BitProcess, Nothing, Assembly.Load("TransformCodeGenerator")), _
+            Assembly.Load("Tools.VisualStudio.Macros"), _
+            Assembly.Load("Tools.Runtime.CompilerServices") _
         }
 #Region "Attributes"
     <TestMethod()> Public Sub AttributeTest()
@@ -51,7 +58,7 @@ Public Class GeneralTestsUT
         TestContext.WriteLine("Warning: {0} at {1}", e.Kind, ObjectString(e.Object))
     End Sub
     Private Sub at_Error(ByVal sender As AttributeTest, ByVal e As AttributeTest.AttributeTestErrorEventArgs)
-        TestContext.WriteLine("Error: {0} at {1}", e.Exception.Message, ObjectString(e.Object))
+        TestContext.WriteLine("Error: {0} at {1}{2}", e.Exception.Message, ObjectString(e.Object), GetAttributeInfo(e.CustomAttributeData))
     End Sub
     Private Sub at_BeforeTest(ByVal sender As AttributeTest, ByVal e As AttributeTest.CancelObjectEventArgs)
         If TypeOf e.Object Is Assembly Then
@@ -72,21 +79,31 @@ Public Class GeneralTestsUT
             Return obj.ToString
         End If
     End Function
+    Private Function GetAttributeInfo(customAttributeData As CustomAttributeData) As Object
+        If customAttributeData Is Nothing Then Return Nothing
+        Try
+            Return " attribute " + ObjectString(customAttributeData.Constructor)
+        Catch
+            Return Nothing
+        End Try
+    End Function
 #End Region
 #Region "CLS"
     <TestMethod()> Public Sub CLSTest()
         Dim Checker As New CLSComplianceChecker
-        Dim Violations As New List(Of CLSComplianceChecker.CLSViolationEventArgs)
-        AddHandler Checker.Violation, Function(sender, e) Tools.ExtensionsT.AsFunction(Of CLSComplianceChecker.CLSViolationEventArgs)(AddressOf Violations.Add).Invoke(e)
+        Dim violi% = 0
+        AddHandler Checker.Violation, Sub(sender, e)
+                                          violi += 1
+                                          TestContext.WriteLine("{0:d} {0:f} {1} @ {2} {3} CLSCompliant: {4}", e.Rule, e.Message,
+                                                                GetMemberString(e.Member, True),
+                                                                If(e.Exception IsNot Nothing, e.Exception.Message, ""),
+                                                                e.member.IsClsCompliant
+                                                               )
+                                      End Sub
         For Each Item In ToolsAssemblies
             Checker.Check(Item)
         Next
-        If Violations.Count > 0 Then
-            For Each Violation In Violations
-                TestContext.WriteLine("{0:d} {0:f} {1} @ {2} {3}", Violation.Rule, Violation.Message, GetMemberString(Violation.Member, True), If(Violation.Exception IsNot Nothing, Violation.Exception.Message, ""))
-            Next
-            Assert.Fail()
-        End If
+        Assert.AreEqual(0, violi, String.Format("{0} CLS-compliance violations detected.", violi))
     End Sub
     ''' <summary>Gets string representing member</summary>
     ''' <param name="member">Member to represent</param>
@@ -178,4 +195,7 @@ Public Class GeneralTestsUT
         Return Name
     End Function
 #End Region
+
+ 
+
 End Class

@@ -820,6 +820,10 @@
       <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>
       <Name>Tools.Metadata</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
+      <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
+      <Name>Tools.Runtime.CompilerServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools.VisualStudio.Debugger\Tools.VisualStudio.Debugger.vbproj">
       <Project>{991AA564-5CCF-481C-A2FE-E657D7379E67}</Project>
       <Name>Tools.VisualStudio.Debugger</Name>

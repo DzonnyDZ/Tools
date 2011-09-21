@@ -203,6 +203,10 @@
       <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>
       <Name>Tools.Metadata</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
+      <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
+      <Name>Tools.Runtime.CompilerServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj">
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>

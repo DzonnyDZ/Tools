@@ -221,6 +221,7 @@
     <Compile Include="Extensions\StringParsing.vb" />
     <Compile Include="Globalization\Arabic.vb" />
     <Compile Include="Linq\ForEnumerator.vb" />
+    <Compile Include="Reflection\AttributteValueProvider.vb" />
     <Compile Include="misc\EmptyArray.vb" />
     <Compile Include="misc\Operators.vb" />
     <Compile Include="misc\SyntaxErrorException.vb" />

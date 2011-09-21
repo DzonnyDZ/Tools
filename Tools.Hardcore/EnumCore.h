@@ -8,6 +8,7 @@ using namespace System::Reflection;
 namespace Tools{
     /// <summary>Contains basic extension methods for working with enumerations</summary>
     /// <version version="1.5.3">This class is new in version 1.5.3</version>
+    /// <version version="1.5.4">Added various overloaded <c>GetFlags</c> methods.</version>
     [Extension]
     public ref class EnumCore{
     private: 
@@ -94,5 +95,99 @@ namespace Tools{
         generic <class T> where T:Enum, gcnew()
         [Extension]
         static FieldInfo^ GetConstant(T value);
+
+#pragma region GetFlags
+    public:
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="SByte"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension, CLSCompliant(false)]
+        static cli::array<SByte>^ GetFlags(SByte value);
+
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="Byte"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension]
+        static cli::array<Byte>^ GetFlags(Byte value);
+
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="Int16"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension]
+        static cli::array<Int16>^ GetFlags(Int16 value);
+
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="UInt16"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension, CLSCompliant(false)]
+        static cli::array<UInt16>^ GetFlags(UInt16 value);
+
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="Int32"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension]
+        static cli::array<Int32>^ GetFlags(Int32 value);
+
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="UInt32"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension, CLSCompliant(false)]
+        static cli::array<UInt32>^ GetFlags(UInt32 value);
+
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="Int64"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension, CLSCompliant(false)]
+        static cli::array<Int64>^ GetFlags(Int64 value);
+
+        /// <summary>Gets individual flags (all bits that are set) from <see cref="UInt64"/> value</summary>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        [Extension]
+        static cli::array<UInt64>^ GetFlags(UInt64 value);
+
+    private:
+        /// <summary>Gets individual flags (all bits that are set) from unsigned numeric value</summary>
+        /// <typeparam name="TU">Type of numeric value. Must be <see cref="Byte"/>, <see cref="UInt16"/>, <see cref="UInt32"/>, or <see cref="UInt64"/>.</typeparam>
+        /// <param name="value">Value to get flags from</param>
+        /// <param name="size">Size of type <typeparamref name="TU"/> in bits</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        template <class TU>
+        static cli::array<TU>^ GetFlagsU(TU value, int size);
+    
+        /// <summary>Gets individual flags (all bits that are set) from signed numeric value</summary>
+        /// <typeparam name="TS">Type of numeric value. Must be <see cref="SByte"/>, <see cref="Int16"/>, <see cref="Int32"/>, or <see cref="Int64"/>.</typeparam>
+        /// <typeparam name="TU">
+        /// Corresponding unsigned type.
+        /// Must be <see cref="Byte"/> if <typeparamref name="TS"/> is <seee cref="SByte"/>.
+        /// Must be <see cref="UInt16"/> if <typeparamref name="TS"/> is <seee cref="Int16"/>.
+        /// Must be <see cref="UInt32"/> if <typeparamref name="TS"/> is <seee cref="Int32"/>.
+        /// Must be <see cref="UInt64"/> if <typeparamref name="TS"/> is <seee cref="Int64"/>.
+        /// </typeparam>
+        /// <param name="value">Value to get flags from</param>
+        /// <param name="size">Size of type <typeparamref name="TS"/> and <typeparamref name="TU"/> in bits</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        template <class TS, class TU>
+        static cli::array<TS>^ GetFlagsS(TS value, int size);
+
+    public:
+        /// <summary>Gets individual flags (all bits that are set) from enumerated value</summary>
+        /// <typeparam name="T">Enumeration type to get flags from</typeparam>
+        /// <param name="value">Value to get flags from</param>
+        /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
+        /// <exception cref="NotSupportedException">Underlying type of enumeration <typeparamref name="T"/> is not one of supported types (should not happen)</exception>
+        /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        generic <class T> where T:Enum, gcnew()
+        [Extension]
+        static cli::array<T>^ GetFlags(T value);
+#pragma endregion
     };
 }

@@ -2,6 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Collections
 Imports Tools.CollectionsT.GenericT
+Imports System.Threading.Interlocked
 
 Namespace CollectionsUT.GenericUT
 
@@ -30,9 +31,22 @@ Namespace CollectionsUT.GenericUT
             instance = New DuplicateDictionary(Of String, String)(array, AddressOf StringComparer.Ordinal.Compare)
         End Sub
 
-        Private array As KeyValuePair(Of String, String)() = {New KeyValuePair(Of String, String)("a", "а"), New KeyValuePair(Of String, String)("d", "д"), New KeyValuePair(Of String, String)("g", "г"), New KeyValuePair(Of String, String)("b", "б"), New KeyValuePair(Of String, String)("x", "кс"), New KeyValuePair(Of String, String)("y", "ы"), _
-         New KeyValuePair(Of String, String)("X", "КС"), New KeyValuePair(Of String, String)("k", "к"), New KeyValuePair(Of String, String)("k", "к"), New KeyValuePair(Of String, String)("š", "ш"), New KeyValuePair(Of String, String)("šč", "щ"), New KeyValuePair(Of String, String)("šč", "шч"), _
-         New KeyValuePair(Of String, String)("", ""), New KeyValuePair(Of String, String)(Nothing, "")}
+        Private array As KeyValuePair(Of String, String)() = {
+            New KeyValuePair(Of String, String)("a", "а"),
+            New KeyValuePair(Of String, String)("d", "д"),
+            New KeyValuePair(Of String, String)("g", "г"),
+            New KeyValuePair(Of String, String)("b", "б"),
+            New KeyValuePair(Of String, String)("x", "кс"),
+            New KeyValuePair(Of String, String)("y", "ы"),
+            New KeyValuePair(Of String, String)("X", "КС"),
+            New KeyValuePair(Of String, String)("k", "к"),
+            New KeyValuePair(Of String, String)("k", "к"),
+            New KeyValuePair(Of String, String)("š", "ш"),
+            New KeyValuePair(Of String, String)("šč", "щ"),
+            New KeyValuePair(Of String, String)("šč", "шч"),
+            New KeyValuePair(Of String, String)("", ""),
+            New KeyValuePair(Of String, String)(Nothing, "")
+        }
         Private instance As DuplicateDictionary(Of String, String)
 
         <TestMethod()> _
@@ -42,33 +56,33 @@ Namespace CollectionsUT.GenericUT
             Assert.AreEqual(array.Length, instance.Count)
             Dim i As Integer = 0
             Assert.AreEqual(instance(i).Key, Nothing)
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "")
             Assert.AreEqual(instance(i).Key, "")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "")
             Assert.AreEqual(instance(i).Key, "X")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "КС")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "КС")
             Assert.AreEqual(instance(i).Key, "a")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "а")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "а")
             Assert.AreEqual(instance(i).Key, "b")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "б")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "б")
             Assert.AreEqual(instance(i).Key, "d")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "д")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "д")
             Assert.AreEqual(instance(i).Key, "g")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "г")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "г")
             Assert.AreEqual(instance(i).Key, "k")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "к")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "к")
             Assert.AreEqual(instance(i).Key, "k")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "к")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "к")
             Assert.AreEqual(instance(i).Key, "x")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "кс")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "кс")
             Assert.AreEqual(instance(i).Key, "y")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "ы")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "ы")
             Assert.AreEqual(instance(i).Key, "š")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "ш")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "ш")
             Assert.AreEqual(instance(i).Key, "šč")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "щ")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "щ")
             Assert.AreEqual(instance(i).Key, "šč")
-            Assert.AreEqual(instance(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1)).Value, "шч")
+            Assert.AreEqual(instance(Increment(i) - 1).Value, "шч")
         End Sub
 
 
@@ -94,20 +108,19 @@ Namespace CollectionsUT.GenericUT
         <TestMethod()> _
         Public Sub FirstIndexOfTest()
             Dim i As Integer = 0
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf(Nothing))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf(""))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("X"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("a"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("b"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("d"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("g"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("k"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf(Nothing))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf(""))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("X"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("a"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("b"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("d"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("g"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("k"))
             i += 1
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("x"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("y"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("š"))
-            Assert.AreEqual(System.Math.Max(System.Threading.Interlocked.Increment(i), i - 1), instance.FirstIndexOf("šč"))
-            i += 1
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("x"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("y"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("š"))
+            Assert.AreEqual(Increment(i) - 1, instance.FirstIndexOf("šč"))
         End Sub
 
         <TestMethod()> _
@@ -130,6 +143,7 @@ Namespace CollectionsUT.GenericUT
                 End While
             End Using
         End Sub
+
 
 
         <TestMethod()> _
@@ -167,7 +181,6 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
         Public Sub PairComparisonTest()
             Dim acc As New PrivateObject(instance)
             Assert.AreEqual(instance.Comparison("a", "a"), acc.Invoke("PairComparison", New KeyValuePair(Of String, String)("a", "xxx"), New KeyValuePair(Of String, String)("a", "yyy")))
@@ -204,7 +217,6 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
         Public Sub AddTest()
             Dim clone = instance.Clone()
             Dim dicClone As IDictionary(Of String, String) = clone
@@ -217,7 +229,6 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
         Public Sub ClearTest()
             Dim clone = instance.Clone()
             Dim dicClone As IDictionary(Of String, String) = clone
@@ -226,7 +237,6 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
         Public Sub ContainsTest()
             Dim dic As IDictionary(Of String, String) = instance
             Assert.IsFalse(dic.Contains(New KeyValuePair(Of String, String)("ň", "њ")))
@@ -236,7 +246,6 @@ Namespace CollectionsUT.GenericUT
 
 
         <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
         Public Sub RemoveTest1()
             Dim clone = instance.Clone()
             Dim dic As IDictionary(Of String, String) = clone
@@ -247,7 +256,6 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
         Public Sub AddTest1()
             Dim clone = instance.Clone()
             Dim dicClone As IDictionary(Of String, String) = clone
@@ -345,18 +353,14 @@ Namespace CollectionsUT.GenericUT
         Public Sub KeysTest()
             Dim keys = instance.Keys
             Assert.AreEqual(instance.Count, keys.Count)
-            Using dicE = instance.GetEnumerator()
-                Using keE = keys.GetEnumerator()
-                    While dicE.MoveNext() Or keE.MoveNext()
-                        '| is here intentionaly
-                        Assert.AreEqual(dicE.Current.Key, keE.Current)
-                    End While
-                End Using
+            Using dicE = instance.GetEnumerator(), keE = keys.GetEnumerator()
+                While dicE.MoveNext() Or keE.MoveNext() 'Or is here intentionaly
+                    Assert.AreEqual(dicE.Current.Key, keE.Current)
+                End While
             End Using
         End Sub
 
         <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
         Public Sub IsReadOnlyTest()
             Assert.AreEqual(False, DirectCast(instance, IDictionary(Of String, String)).IsReadOnly)
         End Sub
@@ -365,13 +369,10 @@ Namespace CollectionsUT.GenericUT
         Public Sub ValuesTest()
             Dim values = instance.Values
             Assert.AreEqual(instance.Count, values.Count)
-            Using dicE = instance.GetEnumerator()
-                Using valE = values.GetEnumerator()
-                    While dicE.MoveNext() Or valE.MoveNext()
-                        '| is here intentionaly
-                        Assert.AreEqual(dicE.Current.Value, valE.Current)
-                    End While
-                End Using
+            Using dicE = instance.GetEnumerator() , valE = values.GetEnumerator()
+                While dicE.MoveNext() Or valE.MoveNext() 'Or is here intentionaly
+                    Assert.AreEqual(dicE.Current.Value, valE.Current)
+                End While
             End Using
         End Sub
     End Class

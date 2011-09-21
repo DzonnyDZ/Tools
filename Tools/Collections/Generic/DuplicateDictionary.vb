@@ -372,7 +372,8 @@ Namespace CollectionsT.GenericT
             End Function
 
             Public Function GetEnumerator() As IEnumerator(Of TKey) Implements IEnumerable(Of TKey).GetEnumerator
-                Return From item In dictionary Select item.Key
+                Return (From item In dictionary.list Select item.Key).GetEnumerator
+                'Return From item In dictionary Select item.Key
                 '           For Each item As KeyValuePair(Of TKey, TValue) In dictionary
                 'yield Return item.Key
                 '           Next
@@ -433,7 +434,7 @@ Namespace CollectionsT.GenericT
             End Function
 
             Public Function GetEnumerator() As IEnumerator(Of TValue) Implements IEnumerable(Of TValue).GetEnumerator
-                Return From item In dictionary Select item.Value
+                Return (From item In dictionary.list Select item.Value).GetEnumerator
                 '           For Each item As KeyValuePair(Of TKey, TValue) In dictionary
                 'yield Return item.Value
                 '           Next

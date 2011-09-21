@@ -1496,8 +1496,40 @@ Namespace ReflectionT
         End Function
 
 
-
-
+        ''' <summary>Gets immediate parent code object of another code object</summary>
+        ''' <param name="item">Item to get paret of</param>
+        ''' <returns>Parent of <paramref name="item"/>, null if <paramref name="item"/> does not have a parent.</returns>
+        ''' <remarks>
+        ''' For property and event accessors returns the property/event if it's declared in the same type.
+        ''' If method serves as accessor for more properites or events (in the same type), first is taken.
+        ''' If method serves as accessor for property/ies and event(s (in the same type), 1ts property found takes precendence.
+        ''' <para>For <see cref="Assembly"/> always returns null.</para>
+        ''' </remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="item"/> is null</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        <Extension()> Public Function Parent(item As ICustomAttributeProvider) As ICustomAttributeProvider
+            If item Is Nothing Then Throw New ArgumentNullException("item")
+            If TypeOf item Is Assembly Then Return Nothing
+            If TypeOf item Is [Module] Then Return DirectCast(item, [Module]).Assembly
+            If TypeOf item Is Type Then
+                Dim t As Type = item
+                If t.IsGenericParameter Then Return If(t.DeclaringMethod, DirectCast(t.DeclaringType, ICustomAttributeProvider))
+                If t.IsNested Then Return t.DeclaringType
+                Return t.Module
+            End If
+            If TypeOf item Is MethodInfo Then
+                Dim m As MethodInfo = item
+                Dim p As ICustomAttributeProvider = m.GetProperty
+                If p IsNot Nothing Then Return p
+                p = m.GetEvent
+                If p IsNot Nothing Then Return p
+                Return If(m.DeclaringType, DirectCast(m.Module, ICustomAttributeProvider))
+            End If
+            If TypeOf item Is FieldInfo Then Return If(DirectCast(item, FieldInfo).DeclaringType, DirectCast(DirectCast(item, FieldInfo).Module, ICustomAttributeProvider))
+            If TypeOf item Is MemberInfo Then Return DirectCast(item, MemberInfo).DeclaringType
+            If TypeOf item Is ParameterInfo Then Return DirectCast(item, ParameterInfo).Member
+            Return Nothing
+        End Function
 
     End Module
 

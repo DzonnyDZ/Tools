@@ -48,7 +48,7 @@ Namespace ReflectionUT
         End Sub
         Private Sub hssHJ(<[In](), Out()> ByRef x As Integer)
         End Sub
-        Private Function hssHK(ByRef DisconnectRoot As SByte) As Integer
+        Private Function hssHK(ByRef disconnectRoot As Char) As Integer
             Return 0
         End Function
         Private Delegate Function RefFunc(Of T1, TRet)(ByRef x As t1) As tret
@@ -63,7 +63,7 @@ Namespace ReflectionUT
             Dim hssHG As System.Reflection.MethodInfo = New RefAct(Of Integer)(AddressOf Me.hssHG).Method
             Dim hssHI As System.Reflection.MethodInfo = New RefAct(Of Integer)(AddressOf Me.hssHI).Method
             Dim hssHJ As System.Reflection.MethodInfo = New RefAct(Of Integer)(AddressOf Me.hssHJ).Method
-            Dim hssHK As System.Reflection.MethodInfo = New RefFunc(Of SByte, Integer)(AddressOf Me.hssHK).Method
+            Dim hssHK As System.Reflection.MethodInfo = New RefFunc(Of Char, Integer)(AddressOf Me.hssHK).Method
             Dim FsDisconect = Reflection.Assembly.Load("Tools.TotalCommander").GetType("Tools.TotalCommanderT.FileSystemPlugin").GetMethod("FsDisconnect")
 
             Assert.IsTrue(hssHA.HasSameSignature(hssHA, SignatureComparisonStrictness.Strict))

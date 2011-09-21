@@ -260,6 +260,7 @@
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />
     <Compile Include="Collections\Generic\DuplicateDictionaryU.vb" />
+    <Compile Include="EnumCoreTest.vb" />
     <Compile Include="Extensions\DateTimeExtensionsTest.vb" />
     <Compile Include="Extensions\StringFormatting.vb" />
     <Compile Include="Extensions\StringExtensions.vb" />
@@ -299,6 +300,10 @@
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
       <Name>Tools.Win</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj">
+      <Project>{4FA454BC-332A-4226-A229-38D87C504F8F}</Project>
+      <Name>Tools.Data.Schema.Deploy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools.Hardcore\Tools.Hardcore.vcxproj">
       <Project>{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}</Project>
       <Name>Tools.Hardcore</Name>
@@ -310,6 +315,22 @@
     <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
       <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
       <Name>Tools.Runtime.CompilerServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.SqlServer\Tools.SqlServer.vbproj">
+      <Project>{850AAA8C-49CC-476F-B871-53EBDE85E679}</Project>
+      <Name>Tools.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.TotalCommander\Tools.TotalCommander.Extensions\Tools.TotalCommander.Extensions.vbproj">
+      <Project>{370D8C48-8190-4DE0-9DB3-51B07B7C86B9}</Project>
+      <Name>Tools.TotalCommander.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.TotalCommander\Tools.TotalCommander.vcxproj">
+      <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
+      <Name>Tools.TotalCommander</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.VisualStudio.Debugger\Tools.VisualStudio.Debugger.vbproj">
+      <Project>{991AA564-5CCF-481C-A2FE-E657D7379E67}</Project>
+      <Name>Tools.VisualStudio.Debugger</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
