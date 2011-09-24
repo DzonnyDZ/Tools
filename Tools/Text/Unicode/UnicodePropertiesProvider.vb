@@ -1648,7 +1648,6 @@ Namespace TextT.UnicodeT
 #Region "Unihan"
         'Unihan properties in XML: http://www.unicode.org/reports/tr42/#w1aac13c13c49b1
         'Unihan Database - property descriptions: http://www.unicode.org/reports/tr38/#AlphabeticalListing
-        'TODO: 4.4.21
 
 #Region "Helpers"
         ''' <summary>Unihan helper - gets value of XML attribute and parses it as space-separated array of decimal integers as used in Unihan database</summary>
@@ -1710,6 +1709,32 @@ Namespace TextT.UnicodeT
             Dim value As String = GetPropertyValue(attributeName)
             If value.IsNullOrEmpty Then Return EmptyArray.Decimal
             Return (From str In value.Split(" "c) Select Decimal.Parse(str, InvariantCulture)).ToArray
+        End Function
+
+        ''' <summary>Unihan helper - gets value of XML attribute stored as space-separated Unicode characters</summary>
+        ''' <param name="attributeName">Name of the XML attribute to parse value of</param>
+        ''' <returns>Array of characters obtained from attribute value. An empty array if the attribute is either not present or empty.</returns>
+        ''' <remarks>Use only for attributes that are guaranteed to have single characters separated by spaces and only if the characters are quaranteed no be UTF-16 character (i.e. not surrogate pairs).</remarks>
+        ''' <exception cref="InvalidOperationException">An item in the array is either 0 characters long or more than one UTF-16 character long (this includes 2 or more subsequent regular characcters or surrogate pair(s))</exception>
+        Protected Function GetCharArray(attributeName$) As Char()
+            Dim value As String = GetPropertyValue(attributeName)
+            If value.IsNullOrEmpty Then Return EmptyArray.Char
+            Return (From str In value.Split(" "c) Select str.Single).ToArray
+        End Function
+
+        ''' <summary>Unihan helper - gets value of XML attribute stored as space-separated version values</summary>
+        ''' <param name="attributeName">Name of the XML attribute to parse value of</param>
+        ''' <returns>Array of <see cref="Version"/>s obtained from attribute value. An empty array if the attribute is either not present or empty.</returns>
+        ''' <remarks>For supported version parsings see <see cref="Version.Parse"/>.</remarks>
+        ''' <exception cref="ArgumentException">Input has fewer than two or more than four version components.</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">At least one component in input is less than zero.</exception>
+        ''' <exception cref="FormatException">At least one component in input is not an integer.</exception>
+        ''' <exception cref="OverflowException">At least one component in input represents a number that is greater than <see cref="System.Int32.MaxValue"/>.</exception>
+        ''' <seelaso cref="Version.Parse"/>
+        Protected Function GetVersionArray(attributeName$) As Version()
+            Dim value As String = GetPropertyValue(attributeName)
+            If value.IsNullOrEmpty Then Return EmptyArray(Of Version).value
+            Return (From str In value.Split(" "c) Select Version.Parse(str)).ToArray
         End Function
 #End Region
 
@@ -1850,7 +1875,402 @@ Namespace TextT.UnicodeT
         <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Cowles")>
         Public ReadOnly Property HanCowles As Decimal()
             Get
-                Return getDecimalArray("kCowles")
+                Return GetDecimalArray("kCowles")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in the Dae Jaweon (Korean) dictionary used in the four-dictionary sorting algorithm</summary>
+        ''' <remarks>The position is in the form “page.position” with the final digit in the position being “0” for characters actually in the dictionary and “1” for characters not found in the dictionary and assigned a “virtual” position in the dictionary.</remarks>
+        <XmlAttribute("kDaeJaweon")>
+        <UcdProperty("kDaeJaweon", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Dae Jaweon")>
+        Public ReadOnly Property HanDaeJaweon As String()
+            Get
+                Return GetStringArray("kDaeJaweon")
+            End Get
+        End Property
+
+        ''' <summary>An English definition for this character.</summary>
+        ''' <remarks>
+        ''' Definitions are for modern written Chinese and are usually (but not always) the same as the definition in other Chinese dialects or non-Chinese languages. In some cases, synonyms are indicated. Fuller variant information can be found using the various variant fields.
+        ''' <para>Definitions specific to non-Chinese languages or Chinese dialects other than modern Mandarin are marked, e.g., (Cant.) or (J).</para>
+        ''' <para>Major definitions are separated by semicolons, and minor definitions by commas. Any valid Unicode character (except for tab, double-quote, and any line break character) may be used within the definition field.</para></remarks>
+        <XmlAttribute("kDefinition")>
+        <UcdProperty("kDefinition", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Definition")>
+        Public ReadOnly Property HanDefinition As String
+            Get
+                Return GetPropertyValue("kDefinition")
+            End Get
+        End Property
+
+        ''' <summary>The EACC mapping for this character.</summary>
+        <XmlAttribute("kEACC")>
+        <UcdProperty("kEACC", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan EACC")>
+        Public ReadOnly Property HanEacc As Integer()
+            Get
+                Return GetHexArray("kEACC")
+            End Get
+        End Property
+
+        ''' <summary>Data on the character from The Five Thousand Dictionary (aka Fenn’s Chinese-English Pocket Dictionary) by Courtenay H. Fenn, Cambridge, Mass.: Harvard University Press, 1979.</summary>
+        ''' <remarks>
+        ''' The data here consists of a decimal number followed by a letter A through K, the letter P, or an asterisk. The decimal number gives the Soothill number for the character’s phonetic, and the letter is a rough frequency indication, with A indicating the 500 most common ideographs, B the next five hundred, and so on.
+        ''' <para>P is used by Fenn to indicate a rare character included in the dictionary only because it is the phonetic element in other characters.</para>
+        ''' <para>An asterisk is used instead of a letter in the final position to indicate a character which belongs to one of Soothill’s phonetic groups but is not found in Fenn’s dictionary.</para>
+        ''' <para>Characters which have a frequency letter but no Soothill phonetic group are assigned group 0.</para>
+        ''' </remarks>
+        <XmlAttribute("kFenn")>
+        <UcdProperty("kFenn", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Fenn")>
+        Public ReadOnly Property HanFenn As String()
+            Get
+                Return GetStringArray("kFenn")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in <em>Fenn’s Chinese-English Pocket Dictionary</em> by Courtenay H. Fenn, Cambridge, Mass.: Harvard University Press, 1942.</summary>
+        ''' <remarks>The position is indicated by a three-digit page number followed by a period and a two-digit position on the page.</remarks>
+        <XmlAttribute("kFennIndex")>
+        <UcdProperty("kFennIndex", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Fenn Index")>
+        Public ReadOnly Property HanFennIndex As Decimal()
+            Get
+                Return GetDecimalArray("kFennIndex")
+            End Get
+        End Property
+
+        ''' <summary>The four-corner code(s) for the character. This data is derived from data provided in the public domain by Hartmut Bohn, Urs App, and Christian Wittern.</summary>
+        ''' <remarks>
+        ''' The four-corner system assigns each character a four-digit code from 0 through 9. The digit is derived from the “shape” of the four corners of the character (upper-left, upper-right, lower-left, lower-right). An optional fifth digit can be used to further distinguish characters; the fifth digit is derived from the shape in the character’s center or region immediately to the left of the fourth corner.
+        ''' <para>The four-corner system is now used only rarely. Full descriptions are available online, e.g., at <a href="http://en.wikipedia.org/wiki/Four_corner_input">Wikipedia</a>.</para>
+        ''' <para>Values in this field consist of four decimal digits, optionally followed by a period and fifth digit for a five-digit form.</para>
+        ''' </remarks>
+        <XmlAttribute("kFourCornerCode")>
+        <UcdProperty("kFourCornerCode", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Four-corner Code")>
+        Public ReadOnly Property HanFourCornerCode As Decimal()
+            Get
+                Return GetDecimalArray("kFourCornerCode")
+            End Get
+        End Property
+
+        ''' <summary>A rough frequency measurement for the character based on analysis of traditional Chinese USENET postings</summary>
+        ''' <remarks>Characters with a <see cref="HanFrequency"/> of 1 are the most common, those with a <see cref="HanFrequency"/> of 2 are less common, and so on, through a <see cref="HanFrequency"/> of 5.</remarks>
+        <XmlAttribute("kFrequency")>
+        <UcdProperty("kFrequency", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), Description("Unihan Frequency")>
+        Public ReadOnly Property HanFrequency As Integer()
+            Get
+                Return GetIntArray("kFrequency")
+            End Get
+        End Property
+
+        ''' <summary>The GB 2312-80 mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kGB0")>
+        <UcdProperty("kGB0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 2312-80")>
+        Public ReadOnly Property HanGB0 As Integer()
+            Get
+                Return GetIntArray("kGB0")
+            End Get
+        End Property
+
+#Region "kGBx"
+        ''' <summary>The GB 12345-90 mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kGB1")>
+        <UcdProperty("kGB1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 12345-90")>
+        Public ReadOnly Property HanGB1 As Integer()
+            Get
+                Return GetIntArray("kGB1")
+            End Get
+        End Property
+
+        ''' <summary>The GB 7589-87 mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kGB3")>
+        <UcdProperty("kGB3", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 7589-87")>
+        Public ReadOnly Property HanGB3 As Integer()
+            Get
+                Return GetIntArray("kGB3")
+            End Get
+        End Property
+
+        ''' <summary>The GB 7590-87 mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kGB5")>
+        <UcdProperty("kGB5", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 7590-87")>
+        Public ReadOnly Property HanGB5 As Integer()
+            Get
+                Return GetIntArray("kGB5")
+            End Get
+        End Property
+
+        ''' <summary>The GB 8565-89 mapping for this character in ku/ten form (GB7).</summary>
+        <XmlAttribute("kGB7")>
+        <UcdProperty("kGB7", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 8565-89 (GB7)")>
+        Public ReadOnly Property HanGB7 As Integer()
+            Get
+                Return GetIntArray("kGB7")
+            End Get
+        End Property
+
+        ''' <summary>The GB 8565-89 mapping for this character in ku/ten form (GB8).</summary>
+        <XmlAttribute("kGB8")>
+        <UcdProperty("kGB8", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 8565-89 (GB8)")>
+        Public ReadOnly Property HanGB8 As Integer()
+            Get
+                Return GetIntArray("kGB8")
+            End Get
+        End Property
+#End Region
+
+        ''' <summary>The primary grade in the Hong Kong school system by which a student is expected to know the character</summary>
+        ''' <remarks>This data is derived from 朗文初級中文詞典, Hong Kong: Longman, 2001.</remarks>
+        <XmlAttribute("kGradeLevel")>
+        <UcdProperty("kGradeLevel", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Grade Level")>
+        Public ReadOnly Property HanGradeLevel As Integer()
+            Get
+                Return GetIntArray("kGradeLevel")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in Bernhard Karlgren’s Grammata Serica Recensa (1957).</summary>
+        ''' <remarks>This dataset contains a total of 7,405 records. References are given in the form DDDDa('), where “DDDD” is a set number in the range [0001..1260] zero-padded to 4-digits, “a” is a letter in the range [a..z] (excluding “w”), optionally followed by apostrophe ('). The data from which this mapping table is extracted contains a total of 10,023 references. References to inscriptional forms have been omitted.</remarks>
+        <XmlAttribute("kGSR")>
+        <UcdProperty("kGSR", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Grammata Serica Recensa")>
+        Public ReadOnly Property HanGsr As String()
+            Get
+                Return GetStringArray("kGSR")
+            End Get
+        End Property
+
+        ''' <summary>The modern Korean pronunciation(s) for this character in Hangul.</summary>
+        ''' <remarks>Strings returned are composed only from characters from range 0x1100 ÷ 0x11FF (ᄀ÷ᇿ)</remarks>
+        <XmlAttribute("kHangul")>
+        <UcdProperty("kHangul", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Readings")>
+        Public ReadOnly Property HanHangul As String()
+            Get
+                Return GetStringArray("kHangul")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in the Hanyu Da Zidian (HDZ) Chinese character dictionary</summary>
+        ''' <remarks>
+        ''' The character references are given in the form “ABCDE.XYZ”, in which: “A” is the volume number [1..8]; “BCDE” is the zero-padded page number [0001..4809]; “XY” is the zero-padded number of the character on the page [01..32]; “Z” is “0” for a character actually in the dictionary, and greater than 0 for a character assigned a “virtual” position in the dictionary. For example, 53024.060 indicates an actual HDZ character, the 6th character on Page 3,024 of Volume 5 (i.e. 籉 [U+7C49]). Note that the Volume 8 “BCDE” references are in the range [0008..0044] inclusive, referring to the pagination of the “Appendix of Addendum” at the end of that volume (beginning after p. 5746).
+        ''' <para>The first character assigned a given virtual position has an index ending in 1; the second assigned the same virtual position has an index ending in 2; and so on.</para>
+        ''' </remarks>
+        <XmlAttribute("kHanYu")>
+        <UcdProperty("kHanYu", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Hanyu Da Zidian")>
+        Public ReadOnly Property HanHanYu As String()
+            Get
+                Return GetStringArray("kHanYu")
+            End Get
+        End Property
+
+        ''' <summary>The Pronunciations and Frequencies of this character, based in part on those appearing in 《現代漢語頻率詞典》 &lt;Xiandai Hanyu Pinlu Cidian> (XDHYPLCD) [Modern Standard Beijing Chinese Frequency Dictionary]</summary>
+        ''' <remarks>
+        ''' <para>This dataset contains a total of 3799 records. (The original data provided to Unihan 2003/02/04 contained a total of 3800 records, including 〇 [U+3007] líng ‘IDEOGRAPHIC NUMBER ZERO’, not included in Unihan since it is not a CJK UNIFIED IDEOGRAPH.)</para>
+        ''' <para>Each entry is comprised of two pieces of data.</para>
+        ''' <para>The Hanyu Pinyin (HYPY) pronunciation(s) of the character, with numeric tone marks (1-5, where 5 indicates the “neutral tone”) immediately following each alphabetic string.</para>
+        ''' <para>Immediately following the numeric tone mark, a numeric string appears in parentheses: e.g. in “a1(392)” the numeric string “392” indicates the sum total of the frequencies of the pronunciations of the character as given in HYPLCD.</para>
+        ''' <para>Where more than one pronunciation exists, these are sorted by descending frequency, and the list elements are “space” delimited.</para>
+        ''' </remarks>
+        <XmlAttribute("kHanyuPinlu")>
+        <UcdProperty("kHanyuPinlu", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Inihan Xindai Hanyu Pinlu Cidian")>
+        Public ReadOnly Property HanHanyuPinlu As String()
+            Get
+                Return GetStringArray("kHanyuPinlu")
+            End Get
+        End Property
+
+
+        ''' <summary>The 漢語拼音 Hànyǔ Pīnyīn reading(s) appearing in the edition of 《漢語大字典》 Hànyǔ Dà Zìdiǎn (HDZ) specified in the “kHanYu” property description (q.v.).</summary>
+        ''' <remarks>
+        ''' Each location has the form “ABCDE.XYZ” (as in “kHanYu”); multiple locations for a given pīnyīn reading are separated by “,” (comma). The list of locations is followed by “:” (colon), followed by a comma-separated list of one or more pīnyīn readings. Where multiple pīnyīn readings are associated with a given mapping, these are ordered as in HDZ (for the most part reflecting relative commonality). The following are representative records.
+        ''' <list type="list">
+        ''' <item>| U+34CE | 㓎 | 10297.260: qīn,qìn,qǐn |</item>
+        ''' <item>| U+34D8 | 㓘 | 10278.080,10278.090: sù |</item>
+        ''' <item>| U+5364 | 卤 | 10093.130: xī,lǔ 74609.020: lǔ,xī |</item>
+        ''' <item>| U+5EFE | 廾 | 10513.110,10514.010,10514.020: gǒng |</item>
+        ''' </list>
+        ''' For example, the “kHanyuPinyin” value for 卤 U+5364 is “10093.130: xī,lǔ 74609.020: lǔ,xī”. This means that 卤 U+5364 is found in “kHanYu” at entries 10093.130 and 74609.020. The former entry has the two pīnyīn readings xī and lǔ (in that order), whereas the latter entry has the readings lǔ and xī (reversing the order).
+        ''' <para>This data was originally input by 井作恆 Jǐng Zuòhéng, proofed by 聃媽歌 Dān Māgē (Magda Danish, using software donated by 文林 Wénlín Institute, Inc. and tables prepared by 曲理查 Qū Lǐchá), and proofed again and prepared for the Unicode Consortium by 曲理查 Qū Lǐchá (2008-01-14).</para>
+        ''' </remarks>
+        <XmlAttribute("kHanyuPinyin")>
+        <UcdProperty("kHanyuPinyin", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Hànyǔ Dà Zìdiǎn")>
+        Public ReadOnly Property HanHanyuPinyin As String()
+            Get
+                Return GetStringArray("kHanyuPinyin")
+            End Get
+        End Property
+
+        ''' <summary>Indicates that 《漢語大字典》 Hanyu Da Zidian has a radical break beginning at this character’s position.</summary>
+        ''' <remarks>The field consists of the radical (with its Unicode code point), a colon, and then the Hanyu Da Zidian position as in the kHanyu field.</remarks>
+        <XmlAttribute("kHDZRadBreak")>
+        <UcdProperty("kHDZRadBreak", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Hanyu Da Zidian Break")>
+        Public ReadOnly Property HanHDZRadBreak As String
+            Get
+                Return GetPropertyValue("kHDZRadBreak")
+            End Get
+        End Property
+
+        ''' <summary>The index of the character in 常用字字形表 (二零零零年修訂本),香港: 香港教育學院, 2000, ISBN 962-949-040-4.</summary>
+        ''' <remarks>This publication gives the “proper” shapes for 4759 characters as used in the Hong Kong school system. The index is an integer, zero-padded to four digits.</remarks>
+        <XmlAttribute("kHKGlyph")>
+        <UcdProperty("kHKGlyph", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Hong Kong Glyph")>
+        Public ReadOnly Property HanHKGlyph As Integer()
+            Get
+                Return GetIntArray("kHKGlyph")
+            End Get
+        End Property
+
+        ''' <summary>Mappings to the Big Five extended code points used for the Hong Kong Supplementary Character Set.</summary>
+        <XmlAttribute("kHKSCS")>
+        <UcdProperty("kHKSCS", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Hong Kong Supplementary Character Set")>
+        Public ReadOnly Property HanHkscs As Integer()
+            Get
+                Return GetHexArray("kHKSCS")
+            End Get
+        End Property
+
+        ''' <summary>The IBM Japanese mapping for this character in hexadecimal.</summary>
+        ''' <remarks>Format of each string is <c>^F[ABC][0-9A-F]{2}$</c></remarks>
+        <XmlAttribute("kIBMJapan")>
+        <UcdProperty("kIBMJapan", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan IBM Japan")>
+        Public ReadOnly Property HanIbmJapan As String()
+            Get
+                Return GetStringArray("kIBMJapan")
+            End Get
+        End Property
+
+        ''' <summary>A boolean indicating that a character is in IICore, the IRG-produced minimal set of required ideographs for East Asian use. A character is in IICore if and only if it has a value for the kIICore field.</summary>
+        ''' <remarks>The only value currently in this field is “2.1”, which is the identifier of the version of IICore used to populate this field.</remarks>
+        <XmlAttribute("kIICore")>
+        <UcdProperty("kIICore", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IICore")>
+        Public ReadOnly Property HanIICore As Version()
+            Get
+                Return GetVersionArray("kIICore")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in the Dae Jaweon (Korean) dictionary used in the four-dictionary sorting algorithm.</summary>
+        ''' <remarks>
+        ''' The position is in the form “page.position” with the final digit in the position being “0” for characters actually in the dictionary and “1” for characters not found in the dictionary and assigned a “virtual” position in the dictionary.
+        ''' <para>Thus, “1187.060” indicates the sixth character on page 1187. A character not in this dictionary but assigned a position between the 6th and 7th characters on page 1187 for sorting purposes would have the code “1187.061”</para>
+        ''' <para>This field represents the official position of the character within the Dae Jaweon dictionary as used by the IRG in the four-dictionary sorting algorithm.</para>
+        ''' </remarks>
+        <XmlAttribute("kIRGDaeJaweon")>
+        <UcdProperty("kIRGDaeJaweon", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Dae Jaweon (IRG)")>
+        Public ReadOnly Property HanIrgDaeJaweon As String()
+            Get
+                Return GetStringArray("kIRGDaeJaweon")
+            End Get
+        End Property
+
+        ''' <summary>The index of this character in the Dai Kanwa Ziten, aka Morohashi dictionary (Japanese) used in the four-dictionary sorting algorithm.</summary>
+        ''' <remarks>This field represents the official position of the character within the DaiKanwa dictionary as used by the IRG in the four-dictionary sorting algorithm.</remarks>
+        <XmlAttribute("kIRGDaiKanwaZiten")>
+        <UcdProperty("kIRGDaiKanwaZiten", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), Description("Unihan Dai Kanwa Ziten (IRG)")>
+        Public ReadOnly Property HanIrgDaiKanwaZiten As String()
+            Get
+                Return GetStringArray("kIRGDaiKanwaZiten")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in the Hanyu Da Zidian (PRC) dictionary used in the four-dictionary sorting algorithm.</summary>
+        ''' <remarks>
+        ''' The position is in the form “volume page.position” with the final digit in the position being “0” for characters actually in the dictionary and “1” for characters not found in the dictionary and assigned a “virtual” position in the dictionary.
+        ''' <para>Thus, “32264.080” indicates the eighth character on page 2264 in volume 3. A character not in this dictionary but assigned a position between the 8th and 9th characters on this page for sorting purposes would have the code “32264.081”</para>
+        ''' <para>This field represents the official position of the character within the Hanyu Da Zidian dictionary as used by the IRG in the four-dictionary sorting algorithm.</para>
+        ''' </remarks>
+        <XmlAttribute("kIRGHanyuDaZidian")>
+        <UcdProperty("kIRGHanyuDaZidian", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), Description("Unihan Hanyu Da Zidian (IRG)")>
+        Public ReadOnly Property HanIrgHanyuDaZidian As String()
+            Get
+                Return GetStringArray("kIRGHanyuDaZidian")
+            End Get
+        End Property
+
+        ''' <summary>The official IRG position of this character in the 《康熙字典》 Kang Xi Dictionary used in the four-dictionary sorting algorithm.</summary>
+        ''' <remarks>
+        ''' The position is in the form “page.position” with the final digit in the position being “0” for characters actually in the dictionary and “1” for characters not found in the dictionary but assigned a “virtual” position in the dictionary.
+        ''' <para>Thus, “1187.060” indicates the sixth character on page 1187. A character not in this dictionary but assigned a position between the 6th and 7th characters on page 1187 for sorting purposes would have the code “1187.061”.</para>
+        ''' </remarks>
+        <XmlAttribute("kIRGKangXi")>
+        <UcdProperty("kIRGKangXi", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), Description("Unihan Kang Xi (IRG)")>
+        Public ReadOnly Property HanIrgKangXi As String()
+            Get
+                Return GetStringArray("kIRGKangXi")
+            End Get
+        End Property
+
+        ''' <summary>The IRG “G” source mapping for this character in hex.</summary>
+        ''' <remarks>
+        ''' The IRG G source consists of data from the following national standards, publications, and lists from the People’s Republic of China and Singapore. The versions of the standards used are those provided by the PRC to the IRG and may not always reflect published versions of the standards generally available.
+        ''' <list>
+        ''' <item>G0 GB2312-80</item>
+        ''' <item>G1 GB12345-90 with 58 Hong Kong and 92 Korean “Idu” characters</item>
+        ''' <item>G3 GB7589-87 unsimplified forms</item>
+        ''' <item>G5 GB7590-87 unsimplified forms</item>
+        ''' <item>G7 General Purpose Hanzi List for Modern Chinese Language, and General List of Simplified Hanzi</item>
+        ''' <item>GS Singapore Characters</item>
+        ''' <item>G8 GB8565-88</item>
+        ''' <item>G9 GB18030-2000</item>
+        ''' <item>GE GB16500-95</item>
+        ''' <item>G4K Siku Quanshu (四庫全書)</item>
+        ''' <item>GBK Chinese Encyclopedia (中國大百科全書)</item>
+        ''' <item>GCH Ci Hai (辞海)</item>
+        ''' <item>GCY Ci Yuan (辭源)</item>
+        ''' <item>GCYY Chinese Academy of Surveying and Mapping Ideographs (中国测绘科学院用字) GFZ Founder Press System (方正排版系统)</item>
+        ''' <item>GGH Gudai Hanyu Cidian (古代汉语词典)</item>
+        ''' <item>GHC Hanyu Dacidian (漢語大詞典)</item>
+        ''' <item>GHZ Hanyu Dazidian ideographs (漢語大字典)</item>
+        ''' <item>GIDC ID system of the Ministry of Public Security of China, 2009</item>
+        ''' <item>GJZ Commercial Press Ideographs (商务印书馆用字)</item>
+        ''' <item>GKX Kangxi Dictionary ideographs(康熙字典)9th edition (1958) including the addendum (康熙字典)補遺</item>
+        ''' <item>GXC Xiandai Hanyu Cidian (现代汉语词典)</item>
+        ''' <item>GZFY Hanyu Fangyan Dacidian (汉语方言大辞典)</item>
+        ''' <item>GZH ZhongHua ZiHai (中华字海)</item>
+        ''' <item>GZJW Yinzhou Jinwen Jicheng Yinde (殷周金文集成引得)</item>
+        ''' </list>
+        ''' </remarks>
+        <XmlAttribute("kIRG_GSource")>
+        <UcdProperty("kIRG_GSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ““G”” Source")>
+        Public ReadOnly Property HanIrgGSource As String '““G””
+            Get
+                Return GetPropertyValue("kIRG_GSource")
+            End Get
+        End Property
+
+        ''' <summary>The IRG “H” source mapping for this character in hex.</summary>
+        ''' <remarks>The IRG “H” source consists of data from the Hong Kong Supplementary Character Set – 2008.</remarks>
+        <XmlAttribute("kIRG_HSource")>
+        <UcdProperty("kIRG_HSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ““H”” Source")>
+        Public ReadOnly Property HanIrgGSource As String '““H””
+            Get
+                Return GetPropertyValue("kIRG_HSource")
             End Get
         End Property
 
@@ -1866,126 +2286,10 @@ Namespace TextT.UnicodeT
         'code-point-properties &= attribute kAlternateMorohashi
         '   { text }?   
 
-        'code-point-properties &= attribute kDaeJaweon
-        '   { xsd:string {pattern="[0-9]{4}\.[0-9]{2}[0158]"} }?
 
-        'code-point-properties &= attribute kDefinition
-        '   { text }?
+        'TODO:
 
-        'code-point-properties &= attribute kEACC
-        '   { xsd:string {pattern="[0-9A-F]{6}"} }?
-
-        'code-point-properties &= attribute kFenn
-        '   { list { xsd:string {pattern="[0-9]+a?[A-KP*]"} +}}?
-
-        'code-point-properties &= attribute kFennIndex
-        '   { list { xsd:string {pattern="[1-9][0-9]{0,2}\.[01][0-9]"} +}}?
-
-        'code-point-properties &= attribute kFourCornerCode
-        '   { list { xsd:string {pattern="[0-9]{4}(\.[0-9])?"} +}}?
-
-        'code-point-properties &= attribute kFrequency
-        '   { xsd:string {pattern="[1-5]"} }?
-
-        'code-point-properties &= attribute kGB0
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kGB1
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kGB3
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kGB5
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kGB7
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kGB8
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kGradeLevel
-        '   { xsd:string {pattern="[1-6]"} }?
-
-        'code-point-properties &= attribute kGSR
-        '   { list { xsd:string {pattern="[0-9]{4}[a-vx-z]'*"} +}}?
-
-        'code-point-properties &= attribute kHangul
-        '   { text }?
-
-        'code-point-properties &= attribute kHanYu
-        '   { list { xsd:string {pattern="[1-8][0-9]{4}\.[0-9]{2}[0-3]"} +}}?
-
-        'code-point-properties &= attribute kHanyuPinlu
-        '   { list { xsd:string {pattern="[a-zü̈]+[1-5]\([0-9]+\)"} +}}?
-
-        'code-point-properties &= attribute kHanyuPinyin
-        '   { list { xsd:string {pattern="([0-9]{5}\.[0-9]{2}0,)*[0-9]{5}\.[0-9]{2}0:([a-z̀-̂̄̈̌]+,)*[a-z̀-̂̄̈̌]+"} +}}?
-
-        'code-point-properties &= attribute kHDZRadBreak
-        '   { xsd:string {pattern="[⼀-⿕]\[U\+2?[0-9A-F]{4}\]:[1-8][0-9]{4}\.[0-9]{2}[012]"} }?
-
-        'code-point-properties &= attribute kHKGlyph
-        '   { list { xsd:string {pattern="[0-9]{4}"} +}}?
-
-        'code-point-properties &= attribute kHKSCS
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kIBMJapan
-        '   { xsd:string {pattern="F[ABC][0-9A-F]{2}"} }?
-
-        'code-point-properties &= attribute kIICore
-        '   { xsd:string {pattern="[1-9]\.[1-9]"} }?
-
-        'code-point-properties &= attribute kIRGDaeJaweon
-        '   { xsd:string {pattern="([0-9]{4}\.[0-9]{2}[01])|(0000\.555)"} }?
-
-        'code-point-properties &= attribute kIRGDaiKanwaZiten
-        '   { xsd:string {pattern="[0-9]{5}'?"} }?
-
-        'code-point-properties &= attribute kIRGHanyuDaZidian
-        '   { xsd:string {pattern="[1-8][0-9]{4}\.[0-3][0-9][01]"} }?
-
-        'code-point-properties &= attribute kIRGKangXi
-        '   { xsd:string {pattern="[01][0-9]{3}\.[0-7][0-9][01]"} }?
-
-        'code-point-properties &= attribute kIRG_GSource
-        '   { "" | xsd:string {pattern="(0|1|2|3|5|7|8|9|E|S|(4K)|(BK)|(CH)|(CY)|(FZ)|(FZ_BK)|(HC)|(HZ)|(KX)|(ZJW)|(ZFY)|(CYY)|(GJZ)|(XC)|(GH))(-)?([0-9A-F]{4,6})?"}
-        '        | xsd:string {pattern="G0-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="G1-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="G3-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="G5-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="G7-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="GS-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="G8-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="G9-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="GE-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="G4K"}
-        '        | xsd:string {pattern="GBK"}
-        '        | xsd:string {pattern="GBK-[0-9]{4}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GCH"}
-        '        | xsd:string {pattern="GCH-[0-9]{4}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GCY"}
-        '        | xsd:string {pattern="GCYY-[0-9]{5}"}
-        '        | xsd:string {pattern="GFZ"}
-        '        | xsd:string {pattern="GFZ-[0-9]{5}"}
-        '        | xsd:string {pattern="GGH-[0-9]{4}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GHC"}
-        '        | xsd:string {pattern="GHC-[0-9]{4}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GHZ"}
-        '        | xsd:string {pattern="GHZ-[0-9]{5}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GIDC-[0-9]{3}"}
-        '        | xsd:string {pattern="GJZ-[0-9]{5}"}
-        '        | xsd:string {pattern="GKX-[0-9]{4}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GXC-[0-9]{4}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GZFY-[0-9]{5}"}
-        '        | xsd:string {pattern="GZH-[0-9]{4}\.[0-9]{2}"}
-        '        | xsd:string {pattern="GZJW-[0-9]{5}"} }?
-
-        'code-point-properties &= attribute kIRG_HSource
-        '   { "" | xsd:string {pattern="[0-9A-F]{4}"}
-        '        | xsd:string {pattern="H-[0-9A-F]{4}"} }?
+      
 
         'code-point-properties &= attribute kIRG_JSource
         '   { "" | xsd:string {pattern="(0|1|3|(3A)|4|A|(ARIB)|K)-[0-9A-F]{4,5}"} 
