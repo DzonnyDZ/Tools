@@ -237,6 +237,7 @@
     <Compile Include="Security\Cryptography\Encryption\Symmetric.vb" />
     <Compile Include="Text\Escaping.vb" />
     <Compile Include="Text\Unicode\CodePointInfo.vb" />
+    <Compile Include="Text\Unicode\RadicalStrokeCount.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterDatabase.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterGroup.vb" />
     <Compile Include="Text\Unicode\UnicodeCodePoint.vb" />
@@ -389,6 +390,7 @@
     <None Include="Text\Unicode\ucd.all.grouped.xml.gz">
       <DependentUpon>ucd.all.grouped.xml</DependentUpon>
     </None>
+    <None Include="Text\Unicode\Unihan generator.xlsx" />
     <None Include="Web\Css\Lexical\SelectorsFSA.vsd" />
   </ItemGroup>
   <ItemGroup>

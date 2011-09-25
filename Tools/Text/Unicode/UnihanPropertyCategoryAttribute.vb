@@ -40,9 +40,10 @@ Namespace TextT.UnicodeT
                 Case "dictionary indices", "unihan - dictionary indices" : cat = UnihanPropertyCategory.DictionaryIndices
                 Case "readings", "unihan - readings" : cat = UnihanPropertyCategory.Readings
                 Case "dictionary-like data", "unihan - dictionary-like data" : cat = UnihanPropertyCategory.DictionaryLikeData
-                Case "radical stroke count", "unihan - radical stroke count" : cat = UnihanPropertyCategory.RadicalStrokeCount
+                Case "radical stroke count", "unihan - radical stroke count" : cat = UnihanPropertyCategory.RadicalStrokeCountS
                 Case "variants", "unihan - variants" : cat = UnihanPropertyCategory.Variants
                 Case "numeric values", "unihan - numeric values" : cat = UnihanPropertyCategory.NumericValues
+                Case "unknown" : cat = UnihanPropertyCategory.unknown
                 Case Else : Return MyBase.GetLocalizedString(value)
             End Select
             Return GetLocalizedString(cat)
@@ -59,9 +60,10 @@ Namespace TextT.UnicodeT
                 Case UnihanPropertyCategory.DictionaryIndices : Return UnicodeResources.propcat_unihan_DictionaryIndices
                 Case UnihanPropertyCategory.Readings : Return UnicodeResources.propcat_unihan_Readings
                 Case UnihanPropertyCategory.DictionaryLikeData : Return UnicodeResources.propcat_unihan_DictionaryLikeData
-                Case UnihanPropertyCategory.RadicalStrokeCount : Return UnicodeResources.propcat_unihan_RadicalStrokeCount
+                Case UnihanPropertyCategory.RadicalStrokeCounts : Return UnicodeResources.propcat_unihan_RadicalStrokeCount
                 Case UnihanPropertyCategory.Variants : Return UnicodeResources.propcat_unihan_Variants
                 Case UnihanPropertyCategory.NumericValues : Return UnicodeResources.propcat_unihan_NumericValues
+                Case UnihanPropertyCategory.unknown : Return UnicodeResources.propcat_unihan_Unknown
                 Case Else : Throw New InvalidEnumArgumentException("category", category, category.GetType)
             End Select
         End Function
@@ -77,9 +79,10 @@ Namespace TextT.UnicodeT
                 Case UnihanPropertyCategory.DictionaryIndices : Return "Unihan_DictionaryIndices.txt"
                 Case UnihanPropertyCategory.Readings : Return "Unihan_Readings.txt"
                 Case UnihanPropertyCategory.DictionaryLikeData : Return "Unihan_DictionaryLikeData.txt"
-                Case UnihanPropertyCategory.RadicalStrokeCount : Return "Unihan_RadicalStrokeCounts.txt"
+                Case UnihanPropertyCategory.RadicalStrokeCountS : Return "Unihan_RadicalStrokeCounts.txt"
                 Case UnihanPropertyCategory.Variants : Return "Unihan_Variants.txt"
                 Case UnihanPropertyCategory.NumericValues : Return "Unihan_NumericValues.txt"
+                Case UnihanPropertyCategory.unknown : Return Nothing
                 Case Else : Throw New InvalidEnumArgumentException("category", category, category.GetType)
             End Select
         End Function
@@ -121,12 +124,16 @@ Namespace TextT.UnicodeT
         DictionaryLikeData
         ''' <summary>Redical stroke counts</summary>
         <LDisplayName(GetType(UnicodeResources), "propcat_unihan_RadicalStrokeCount")>
-        RadicalStrokeCount
+        RadicalStrokeCounts
         ''' <summary>Glyph variants</summary>
         <LDisplayName(GetType(UnicodeResources), "propcat_unihan_Variants")>
         Variants
         ''' <summary>Numerical values an ideograph may have</summary>
         <LDisplayName(GetType(UnicodeResources), "propcat_unihan_NumericValues")>
         NumericValues
+        ''' <summary>Unknown/undocumented</summary>
+        <LDisplayName(GetType(UnicodeResources), "propcat_unihan_Unknown")>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        unknown
     End Enum
 End Namespace

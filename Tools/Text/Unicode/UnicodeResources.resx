@@ -207,4 +207,7 @@
   <data name="ex_CodepointMustStartWithUPlus" xml:space="preserve">
     <value>Codepoint must start with U+</value>
   </data>
+  <data name="propcat_unihan_Unknown" xml:space="preserve">
+    <value>unknown</value>
+  </data>
 </root>

@@ -236,6 +236,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to unknown.
+        '''</summary>
+        Friend Shared ReadOnly Property propcat_unihan_Unknown() As String
+            Get
+                Return ResourceManager.GetString("propcat_unihan_Unknown", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Variants.
         '''</summary>
         Friend Shared ReadOnly Property propcat_unihan_Variants() As String

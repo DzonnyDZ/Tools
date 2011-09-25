@@ -953,7 +953,6 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-
         ''' <summary>Gets value indicating wheather character from is unstable under case folding</summary>
         ''' <returns>True if character's normalized forms are not stable under case folding.</returns>
         ''' <remarks>Underlying XML attribute is @CWCF</remarks> 
@@ -1736,6 +1735,22 @@ Namespace TextT.UnicodeT
             If value.IsNullOrEmpty Then Return EmptyArray(Of Version).value
             Return (From str In value.Split(" "c) Select Version.Parse(str)).ToArray
         End Function
+
+        ''' <summary>Unihan helper - gets value of XML attribute stored as space-separated <see cref="RadicalStrokeCount"/> values</summary>
+        ''' <param name="attributeName">Name of the XML attribute to parse value of</param>
+        ''' <returns>Array of <see cref="RadicalStrokeCount"/> values obtained from attribute value. An empty array if the attribute is either not present or empty.</returns>
+        ''' <remarks>For supported version parsings see <see cref="RadicalStrokeCount.Parse"/>.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
+        ''' <exception cref="FormatException"><paramref name="value"/> does not contain 2 dot(.)-separated parts -or- AdditionalStrokes part of <paramref name="value"/> cannot be parsed as <see cref="Integer"/></exception>
+        ''' <exception cref="ArgumentException">Radical part of <paramref name="value"/> does not represent a value that can be converted to <see cref="CjkRadical"/> value using the <see cref="LookupRadical"/> function.</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">AdditionalStrokes part of <paramref name="value"/> represents negative number</exception>
+        ''' <exception cref="OverflowException">AdditionalStrokes part of <paramref name="value"/> is too big or too small for datatype <see cref="Integer"/>.</exception>
+        ''' <seelaso cref="RadicalStrokeCount.Parse"/>
+        Protected Function GetRadicalStrokeCountArray(attributeName$) As RadicalStrokeCount()
+            Dim value As String = GetPropertyValue(attributeName)
+            If value.IsNullOrEmpty Then Return EmptyArray(Of RadicalStrokeCount).value
+            Return (From str In value.Split(" "c) Select RadicalStrokeCount.Parse(str)).ToArray
+        End Function
 #End Region
 
         ''' <summary>The value of the character when used in the writing of accounting numerals.</summary>
@@ -2093,7 +2108,6 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-
         ''' <summary>The 漢語拼音 Hànyǔ Pīnyīn reading(s) appearing in the edition of 《漢語大字典》 Hànyǔ Dà Zìdiǎn (HDZ) specified in the “kHanYu” property description (q.v.).</summary>
         ''' <remarks>
         ''' Each location has the form “ABCDE.XYZ” (as in “kHanYu”); multiple locations for a given pīnyīn reading are separated by “,” (comma). The list of locations is followed by “:” (colon), followed by a comma-separated list of one or more pīnyīn readings. Where multiple pīnyīn readings are associated with a given mapping, these are ordered as in HDZ (for the most part reflecting relative commonality). The following are representative records.
@@ -2224,7 +2238,8 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>The IRG “G” source mapping for this character in hex.</summary>
+#Region "IRG Sources"
+        ''' <summary>The IRG “G” (China + Singapore) source mapping for this character in hex.</summary>
         ''' <remarks>
         ''' The IRG G source consists of data from the following national standards, publications, and lists from the People’s Republic of China and Singapore. The versions of the standards used are those provided by the PRC to the IRG and may not always reflect published versions of the standards generally available.
         ''' <list>
@@ -2256,228 +2271,696 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRG_GSource")>
         <UcdProperty("kIRG_GSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ““G”” Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""G"" Source")>
         Public ReadOnly Property HanIrgGSource As String '““G””
             Get
                 Return GetPropertyValue("kIRG_GSource")
             End Get
         End Property
 
-        ''' <summary>The IRG “H” source mapping for this character in hex.</summary>
+        ''' <summary>The IRG “H” (Hong Kong) source mapping for this character in hex.</summary>
         ''' <remarks>The IRG “H” source consists of data from the Hong Kong Supplementary Character Set – 2008.</remarks>
         <XmlAttribute("kIRG_HSource")>
         <UcdProperty("kIRG_HSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ““H”” Source")>
-        Public ReadOnly Property HanIrgGSource As String '““H””
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""H"" Source")>
+        Public ReadOnly Property HanIrgHSource As String '““H””
             Get
                 Return GetPropertyValue("kIRG_HSource")
             End Get
         End Property
 
-        'code-point-properties &= attribute kAlternateHanYu
-        '   { text }?  #old
+        ''' <summary>The IRG “J” (Japan) source mapping for this character in hex.</summary>
+        ''' <remarks>
+        ''' The IRG “J” source consists of data from the following national standards and lists from Japan.
+        ''' <list type="list">
+        ''' <item>J0 JIS X 0208-1990</item>
+        ''' <item>J1 JIS X 0212-1990</item>
+        ''' <item>J3 JIS X 0213:2000 level-3</item>
+        ''' <item>J3A JIS X 0213:2004 level-3</item>
+        ''' <item>J4 JIS X 0213:2000 level-4</item>
+        ''' <item>JA Unified Japanese IT Vendors Contemporary Ideographs, 1993</item>
+        ''' <item>JH Hanyo-Denshi Program (汎用電子情報交換環境整備プログラム), 2002-2009</item>
+        ''' <item>JK Japanese KOKUJI Collection</item>
+        ''' <item>JARIB Association of Radio Industries and Businesses (ARIB) ARIB STD-B24 Version 5.1, March 14 2007</item>
+        ''' </list>
+        ''' </remarks>
+        <XmlAttribute("kIRG_JSource")>
+        <UcdProperty("kIRG_JSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""J"" Source")>
+        Public ReadOnly Property HanIrgJSource As String '““J””
+            Get
+                Return GetPropertyValue("kIRG_JSource")
+            End Get
+        End Property
 
-        'code-point-properties &= attribute kAlternateJEF
-        '   { text }?  #old
+        ''' <summary>The IRG “KP” (North Korea) source mapping for this character in hex.</summary>
+        ''' <remarks>
+        ''' The IRG “KP” source consists of data from the following national standards and lists from the Democratic People’s Republic of Korea (North Korea).
+        ''' <list type="list">
+        ''' <item>KP0 KPS 9566-97</item>
+        ''' <item>KP1 KPS 10721-2000</item>
+        ''' </list>
+        ''' </remarks>
+        <XmlAttribute("kIRG_KPSource")>
+        <UcdProperty("kIRG_KPSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""KP"" Source")>
+        Public ReadOnly Property HanIrgKPSource As String '““KP””
+            Get
+                Return GetPropertyValue("kIRG_KPSource")
+            End Get
+        End Property
 
-        'code-point-properties &= attribute kAlternateKangXi
-        '   { text }?
+        ''' <summary>The IRG “K” (Korea) source mapping for this character in hex.</summary>
+        ''' <remarks>
+        ''' The IRG “K” source consists of data from the following national standards and lists from the Republic of Korea (South Korea).
+        ''' <list type="list">
+        ''' <item>K0 KS X 1001:2004 (formerly KS C 5601-1987)</item>
+        ''' <item>K1 KS X 1002:2001 (formerly KS C 5657-1991)</item>
+        ''' <item>K2 PKS C 5700-1 1994</item>
+        ''' <item>K3 PKS C 5700-2 1994</item>
+        ''' <item>K4 PKS 5700-3:1998</item>
+        ''' <item>K5 Korean IRG Hanja Character Set 5th Edition: 2001</item>
+        ''' </list>
+        ''' </remarks>
+        <XmlAttribute("kIRG_KSource")>
+        <UcdProperty("kIRG_KSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""K"" Source")>
+        Public ReadOnly Property HanIrgKSource As String '““K””
+            Get
+                Return GetPropertyValue("kIRG_KSource")
+            End Get
+        End Property
 
-        'code-point-properties &= attribute kAlternateMorohashi
-        '   { text }?   
+        ''' <summary>The IRG “M” (Macao) source mapping for this character.</summary>
+        ''' <remarks>The IRG “M” source consists of data from the Macao Information System Character Set (澳門資訊系統字集).</remarks>
+        <XmlAttribute("kIRG_MSource")>
+        <UcdProperty("kIRG_MSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""M"" Source")>
+        Public ReadOnly Property HanIrgMSource As String '““M””
+            Get
+                Return GetPropertyValue("kIRG_MSource")
+            End Get
+        End Property
+
+        ''' <summary>The IRG “T” (Taiwan) source mapping for this character in hex.</summary>
+        ''' <remarks>
+        ''' The IRG “T” source consists of data from the following national standards and lists from the Republic of China (Taiwan).
+        ''' <list type="list">
+        ''' <item>T1 TCA-CNS 11643-1992 1st plane</item>
+        ''' <item>T2 TCA-CNS 11643-1992 2nd plane</item>
+        ''' <item>T3 TCA-CNS 11643-1992 3rd plane with some additional characters</item>
+        ''' <item>T4 TCA-CNS 11643-1992 4th plane</item>
+        ''' <item>T5 TCA-CNS 11643-1992 5th plane</item>
+        ''' <item>T6 TCA-CNS 11643-1992 6th plane</item>
+        ''' <item>T7 TCA-CNS 11643-1992 7th plane</item>
+        ''' <item>TB TCA-CNS Ministry of Education, Hakka dialect, May 2007</item>
+        ''' <item>TC TCA-CNS 11643-1992 12th plane</item>
+        ''' <item>TD TCA-CNS 11643-1992 13th plane</item>
+        ''' <item>TE TCA-CNS 11643-1992 14th plane</item>
+        ''' <item>TF TCA-CNS 11643-1992 15th plane</item>
+        ''' </list>
+        ''' </remarks>
+        <XmlAttribute("kIRG_TSource")>
+        <UcdProperty("kIRG_TSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""T"" Source")>
+        Public ReadOnly Property HanIrgTSource As String '““T””
+            Get
+                Return GetPropertyValue("kIRG_TSource")
+            End Get
+        End Property
+
+        ''' <summary>The IRG “U” (Unicode) source mapping for this character.</summary>
+        ''' <remarks>U-source references are a reference into the U-source ideograph database; see UTR #45. These consist of “UTC” followed by a five-digit, zero-padded index into the database.</remarks>
+        <XmlAttribute("kIRG_USource")>
+        <UcdProperty("kIRG_USource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""U"" Source")>
+        Public ReadOnly Property HanIrgUSource As String '““U””
+            Get
+                Return GetPropertyValue("kIRG_USource")
+            End Get
+        End Property
+
+        ''' <summary>The IRG “V” (Vietnam) source mapping for this character in hex.</summary>
+        ''' <remarks>
+        '''  The IRG “V” source consists of data from the following national standards and lists from Vietnam.
+        ''' <list type="list">
+        ''' <item>V0 TCVN 5773:1993</item>
+        ''' <item>V1 TCVN 6056:1995</item>
+        ''' <item>V2 VHN 01:1998</item>
+        ''' <item>V3 VHN 02: 1998</item>
+        ''' <item>V4 Dictionary on Nom 2006, Dictionary on Nom of Tay ethnic 2006, Lookup Table for Nom in the South 1994</item>
+        ''' </list>
+        ''' </remarks>
+        <XmlAttribute("kIRG_VSource")>
+        <UcdProperty("kIRG_VSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""V"" Source")>
+        Public ReadOnly Property HanIrgVSource As String '““V””
+            Get
+                Return GetPropertyValue("kIRG_VSource")
+            End Get
+        End Property
+#End Region
+
+        ''' <summary>Meaning of this property is not documented in Unicode Standard. It was dropped in Unicdoe 3.2</summary>
+        ''' <remarks>This property is superseded by <see cref="HanHanYu"/>.</remarks>
+        <XmlAttribute("kAlternateHanYu")>
+        <UcdProperty("kAlternateHanYu", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate Han Yu")>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 3.2. Its superseded by HanHanYu.")>
+        Public ReadOnly Property HanAlternateHanYu As String
+            Get
+                Return GetPropertyValue("kAlternateHanYu")
+            End Get
+        End Property
+
+        ''' <summary>Meaning of this property is not documented in Unicode Standard. It was dropped in Unicdoe 3.1</summary>
+        <XmlAttribute("kAlternateJEF")>
+        <UcdProperty("kAlternateJEF", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate JEF")>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 3.1.")>
+        Public ReadOnly Property HanAlternateJef As String
+            Get
+                Return GetPropertyValue("kAlternateJEF")
+            End Get
+        End Property
+
+        ''' <summary>Meaning of this property is not documented in Unicode Standard. It was dropped in Unicdoe 4.1</summary>
+        <XmlAttribute("kAlternateKangXi")>
+        <UcdProperty("kAlternateKangXi", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate Kang Xi")>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 4.1.")>
+        Public ReadOnly Property HanAlternateKangXi As String
+            Get
+                Return GetPropertyValue("kAlternateKangXi")
+            End Get
+        End Property
+
+        ''' <summary>Meaning of this property is not documented in Unicode Standard. It was dropped in Unicdoe 4.1</summary>
+        <XmlAttribute("kAlternateMorohashi")>
+        <UcdProperty("kAlternateMorohashi", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate Morohashi")>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 4.1.")>
+        Public ReadOnly Property HanAlternateMorohashi As String
+            Get
+                Return GetPropertyValue("kAlternateMorohashi")
+            End Get
+        End Property
+
+        'Note: Unihan propertyies below were semi-automatically generated from Unihan generator.xlsx
+
+        ''' <summary>The Japanese pronunciation(s) of this character.</summary>
+        <XmlAttribute("kJapaneseKun")>
+        <UcdProperty("kJapaneseKun", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Japanese Kun")>
+        Public ReadOnly Property HanJapaneseKun As String()
+            Get
+                Return GetStringArray("kJapaneseKun")
+            End Get
+        End Property
+
+        ''' <summary>The Sino-Japanese pronunciation(s) of this character.</summary>
+        <XmlAttribute("kJapaneseOn")>
+        <UcdProperty("kJapaneseOn", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Japanese On")>
+        Public ReadOnly Property HanJapaneseOn As String()
+            Get
+                Return GetStringArray("kJapaneseOn")
+            End Get
+        End Property
+
+        ''' <summary>The JIS X 0208-1990 mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kJis0")>
+        <UcdProperty("kJis0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan JIS X 0208-1990")>
+        Public ReadOnly Property HanJis0208 As Integer()
+            Get
+                Return GetIntArray("kJis0")
+            End Get
+        End Property
+
+        ''' <summary>The JIS X 0213-2000 mapping for this character in min,ku,ten form.</summary>
+        <XmlAttribute("kJIS0213")>
+        <UcdProperty("kJIS0213", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan JIS X 0213-2000")>
+        Public ReadOnly Property HanJis0213 As String()
+            Get
+                Return GetStringArray("kJIS0213")
+            End Get
+        End Property
+
+        ''' <summary>The JIS X 0212-1990 mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kJis1")>
+        <UcdProperty("kJis1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan JIS X 0212-1190")>
+        Public ReadOnly Property HanJisX0212 As Integer()
+            Get
+                Return GetIntArray("kJis1")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in the 《康熙字典》 Kang Xi Dictionary used in the four-dictionary sorting algorithm.</summary>
+        ''' <remarks> The position is in the form “page.position” with the final digit in the position being “0” for characters actually in the dictionary and “1” for characters not found in the dictionary but assigned a “virtual” position in the dictionary.
+        ''' <para>Thus, “1187.060” indicates the sixth character on page 1187. A character not in this dictionary but assigned a position between the 6th and 7th characters on page 1187 for sorting purposes would have the code “1187.061”.</para></remarks>
+        <XmlAttribute("kKangXi")>
+        <UcdProperty("kKangXi", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Kang Xi")>
+        Public ReadOnly Property HanKangXi As String()
+            Get
+                Return GetStringArray("kKangXi")
+            End Get
+        End Property
+
+        ''' <summary>The index of this character in <em>Analytic Dictionary of Chinese and Sino-Japanese</em> by Bernhard Karlgren, New York: Dover Publications, Inc., 1974.</summary>
+        ''' <remarks>
+        ''' <para>If the index is followed by an asterisk (*), then the index is an interpolated one, indicating where the character would be found if it were to have been included in the dictionary. Note that while the index itself is usually an integer, there are some cases where it is an integer followed by an “A”.</para></remarks>
+        <XmlAttribute("kKarlgren")>
+        <UcdProperty("kKarlgren", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Karlgren")>
+        Public ReadOnly Property HanKarlgren As String()
+            Get
+                Return GetStringArray("kKarlgren")
+            End Get
+        End Property
+
+        ''' <summary>The Korean pronunciation(s) of this character, using the Yale romanization system.</summary>
+        ''' <remarks> (See <a href="http://www.coffeesigns.com/Resources/romanization/korean.asp">http://www.coffeesigns.com/Resources/romanization/korean.asp</a> for a comparison of the various Korean romanization systems.)</remarks>
+        <XmlAttribute("kKorean")>
+        <UcdProperty("kKorean", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Korean")>
+        Public ReadOnly Property HanKorean As String()
+            Get
+                Return GetStringArray("kKorean")
+            End Get
+        End Property
+
+        ''' <summary>The KPS 9566-97 mapping for this character in hexadecimal form.</summary>
+        <XmlAttribute("kKPS0")>
+        <UcdProperty("kKPS0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KPS 9566-97")>
+        Public ReadOnly Property HanKps9566 As Integer()
+            Get
+                Return GetHexArray("kKPS0")
+            End Get
+        End Property
+
+        ''' <summary>The KPS 10721-2000 mapping for this character in hexadecimal form.</summary>
+        <XmlAttribute("kKPS1")>
+        <UcdProperty("kKPS1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KPS 10721-2000")>
+        Public ReadOnly Property HanKps10721 As Integer()
+            Get
+                Return GetHexArray("kKPS1")
+            End Get
+        End Property
+
+        ''' <summary>The KS X 1001:1992 (KS C 5601-1989) mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kKSC0")>
+        <UcdProperty("kKSC0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KS X 1001:1992")>
+        Public ReadOnly Property HanKSX1001 As Integer()
+            Get
+                Return GetIntArray("kKSC0")
+            End Get
+        End Property
+
+        ''' <summary>The KS X 1002:1991 (KS C 5657-1991) mapping for this character in ku/ten form.</summary>
+        <XmlAttribute("kKSC1")>
+        <UcdProperty("kKSC1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KS X 1002:1991")>
+        Public ReadOnly Property HanKSX1002 As Integer()
+            Get
+                Return GetIntArray("kKSC1")
+            End Get
+        End Property
+
+        ''' <summary>The index of this character in A Practical Cantonese-English Dictionary by Sidney Lau, Hong Kong: The Government Printer, 1977.</summary>
+        ''' <remarks>
+        ''' <para>The index consists of an integer. Missing indices indicate unencoded characters which are being submitted to the IRG for inclusion in future versions of the standard.</para></remarks>
+        <XmlAttribute("kLau")>
+        <UcdProperty("kLau", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Lau")>
+        Public ReadOnly Property HanLau As Integer()
+            Get
+                Return GetIntArray("kLau")
+            End Get
+        End Property
+
+        ''' <summary>The PRC telegraph code for this character, </summary>
+        ''' <remarks>derived from “Kanzi denpou koudo henkan-hyou” (“Chinese character telegraph code conversion table”), Lin Jinyi, KDD Engineering and Consulting, Tokyo, 1984.</remarks>
+        <XmlAttribute("kMainlandTelegraph")>
+        <UcdProperty("kMainlandTelegraph", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Chinese Telegraph")>
+        Public ReadOnly Property HanMainlandTelegraph As Integer()
+            Get
+                Return GetIntArray("kMainlandTelegraph")
+            End Get
+        End Property
+
+        ''' <summary>The Mandarin pronunciation(s) for this character in pinyin; </summary>
+        ''' <remarks>Mandarin pronunciations are sorted in order of frequency, not alphabetically.</remarks>
+        <XmlAttribute("kMandarin")>
+        <UcdProperty("kMandarin", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Mandarin")>
+        Public ReadOnly Property HanMandarin As String()
+            Get
+                Return GetStringArray("kMandarin")
+            End Get
+        End Property
+
+        ''' <summary>The index of this character in Mathews’ Chinese-English Dictionary by Robert H. Mathews, Cambrige: Harvard University Press, 1975.</summary>
+        ''' <remarks>
+        ''' <para>Note that the field name is kMatthews instead of kMathews to maintain compatibility with earlier versions of this file, where it was inadvertently misspelled.</para></remarks>
+        <XmlAttribute("kMatthews")>
+        <UcdProperty("kMatthews", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Matthews")>
+        Public ReadOnly Property HanMatthews As String()
+            Get
+                Return GetStringArray("kMatthews")
+            End Get
+        End Property
+
+        ''' <summary>The index of this character in the Student’s Cantonese-English Dictionary by Bernard F. Meyer and Theodore F. Wempe (3rd edition, 1947).</summary>
+        ''' <remarks> The index is an integer, optionally followed by a lower-case Latin letter if the listing is in a subsidiary entry and not a main one. In some cases where the character is found in the radical-stroke index, but not in the main body of the dictionary, the integer is followed by an asterisk (e.g., U+50E5, which is listed as 736* as well as 1185a).</remarks>
+        <XmlAttribute("kMeyerWempe")>
+        <UcdProperty("kMeyerWempe", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Meyer & Wempe")>
+        Public ReadOnly Property HanMeyerWempe As String()
+            Get
+                Return GetStringArray("kMeyerWempe")
+            End Get
+        End Property
+
+        ''' <summary>The index of this character in the Dae Kanwa Ziten, aka Morohashi dictionary (Japanese) used in the four-dictionary sorting algorithm.</summary>
+        ''' <remarks>
+        ''' <para>The edition used is the revised edition, published in Tokyo by Taishuukan Shoten, 1986.</para></remarks>
+        <XmlAttribute("kMorohashi")>
+        <UcdProperty("kMorohashi", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Morohashi")>
+        Public ReadOnly Property HanMorohashi As String()
+            Get
+                Return GetStringArray("kMorohashi")
+            End Get
+        End Property
+
+        ''' <summary>The index of this character in The Modern Reader’s Japanese-English Character Dictionary by Andrew Nathaniel Nelson, Rutland, Vermont: Charles E. Tuttle Company, 1974.</summary>
+        <XmlAttribute("kNelson")>
+        <UcdProperty("kNelson", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Nelson")>
+        Public ReadOnly Property HanNelson As Integer()
+            Get
+                Return GetIntArray("kNelson")
+            End Get
+        End Property
+
+        ''' <summary>The numeric value for the character in certain unusual, specialized contexts.</summary>
+        ''' <remarks>
+        ''' <para>The three numeric-value fields should have no overlap; that is, characters with a kOtherNumeric value should not have a kAccountingNumeric or kPrimaryNumeric value as well.</para></remarks>
+        <XmlAttribute("kOtherNumeric")>
+        <UcdProperty("kOtherNumeric", UnihanPropertyCategory.NumericValues, UnicodePropertyStatus.Informative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), DisplayName("Unihan Other Numeric")>
+        Public ReadOnly Property HanOtherNumeric As Integer()
+            Get
+                Return GetIntArray("kOtherNumeric")
+            End Get
+        End Property
+
+        ''' <summary>The phonetic index for the character from <em>Ten Thousand Characters: An Analytic Dictionary</em>, by G. Hugh Casey, S.J. Hong Kong: Kelley and Walsh, 1980.</summary>
+        <XmlAttribute("kPhonetic")>
+        <UcdProperty("kPhonetic", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Phonetic")>
+        Public ReadOnly Property HanPhonetic As String()
+            Get
+                Return GetStringArray("kPhonetic")
+            End Get
+        End Property
+
+        ''' <summary>The value of the character when used in the writing of numbers in the standard fashion.</summary>
+        ''' <remarks>
+        ''' <para>The three numeric-value fields should have no overlap; that is, characters with a kPrimaryNumeric value should not have a kAccountingNumeric or kOtherNumeric value as well.</para></remarks>
+        <XmlAttribute("kPrimaryNumeric")>
+        <UcdProperty("kPrimaryNumeric", UnihanPropertyCategory.NumericValues, UnicodePropertyStatus.Informative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), DisplayName("Unihan Primary Numeric")>
+        Public ReadOnly Property HanPrimaryNumeric As Integer()
+            Get
+                Return GetIntArray("kPrimaryNumeric")
+            End Get
+        End Property
+
+        ''' <summary>A “GB 12345-90” code point assigned to this character for the purposes of including it within Unihan.</summary>
+        ''' <remarks> Pseudo-GB1 codes were used to provide official code points for characters not already in national standards, such as characters used to write Cantonese, and so on.</remarks>
+        <XmlAttribute("kPseudoGB1")>
+        <UcdProperty("kPseudoGB1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Pseudo GB 12345-90")>
+        Public ReadOnly Property HanPseudoGB1 As Integer()
+            Get
+                Return GetIntArray("kPseudoGB1")
+            End Get
+        End Property
+
+        ''' <summary>Information on the glyphs in Adobe-Japan1-6 as contributed by Adobe.</summary>
+        ''' <remarks> The value consists of a number of space-separated entries. Each entry consists of three pieces of information separated by a plus sign:
+        ''' <list type="number">
+        ''' <item>C or V. “C” indicates that the Unicode code point maps directly to the Adobe-Japan1-6 CID that appears after it, and “V” indicates that it is considered a variant form, and thus not directly encoded.</item></remarks>
+        <XmlAttribute("kRSAdobe_Japan1_6")>
+        <UcdProperty("kRSAdobe_Japan1_6", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Adobe-Japan1-6")>
+        Public ReadOnly Property HanRSAdobeJapan As String()
+            Get
+                Return GetStringArray("kRSAdobe_Japan1_6")
+            End Get
+        End Property
+
+        ''' <summary>A Japanese radical/stroke count for this character in the form “radical.additional strokes”.</summary>
+        <XmlAttribute("kRSJapanese")>
+        <UcdProperty("kRSJapanese", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Japanese)")>
+        Public ReadOnly Property HanRSJapanese As RadicalStrokeCount()
+            Get
+                Return GetRadicalStrokeCountArray("kRSJapanese")
+            End Get
+        End Property
+
+        ''' <summary>The KangXi radical/stroke count for this character consistent with the value of the kKangXi field in the form “radical.additional strokes”.</summary>
+        <XmlAttribute("kRSKangXi")>
+        <UcdProperty("kRSKangXi", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Kang Xi)")>
+        Public ReadOnly Property HanRSKangXi As RadicalStrokeCount()
+            Get
+                Return GetRadicalStrokeCountArray("kRSKangXi")
+            End Get
+        End Property
+
+        ''' <summary>A Morohashi radical/stroke count for this character in the form “radical.additional strokes”.</summary>
+        <XmlAttribute("kRSKanWa")>
+        <UcdProperty("kRSKanWa", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Morohashi)")>
+        Public ReadOnly Property HanRSKanWa As RadicalStrokeCount()
+            Get
+                Return GetRadicalStrokeCountArray("kRSKanWa")
+            End Get
+        End Property
+
+        ''' <summary>A Korean radical/stroke count for this character in the form “radical.additional strokes”.</summary>
+        <XmlAttribute("kRSKorean")>
+        <UcdProperty("kRSKorean", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Korean)")>
+        Public ReadOnly Property HanRSKorean As RadicalStrokeCount()
+            Get
+                Return GetRadicalStrokeCountArray("kRSKorean")
+            End Get
+        End Property
+
+        ''' <summary>A standard radical/stroke count for this character in the form “radical.additional strokes”.</summary>
+        ''' <remarks> The radical is indicated by a number in the range (1..214) inclusive. An apostrophe (') after the radical indicates a simplified version of the given radical. The “additional strokes” value is the residual stroke-count, the count of all strokes remaining after eliminating all strokes associated with the radical.
+        ''' <para>This field is also used for additional radical-stroke indices where either a character may be reasonably classified under more than one radical, or alternate stroke count algorithms may provide different stroke counts.</para>
+        ''' <para>The first value is intended to reflect the same radical as the kRSKangXi field and the stroke count of the glyph used to print the character within the Unicode Standard.</para></remarks>
+        <XmlAttribute("kRSUnicode")>
+        <UcdProperty("kRSUnicode", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Informative)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Unicode)")>
+        Public ReadOnly Property HanRSUnicode As RadicalStrokeCount()
+            Get
+                Return GetRadicalStrokeCountArray("kRSUnicode")
+            End Get
+        End Property
+
+        ''' <summary>The position of this character in the Song Ben Guang Yun (SBGY) Medieval Chinese character dictionary</summary>
+        ''' <remarks>
+        ''' <para>The 25334 character references are given in the form “ABC.XY”, in which: “ABC” is the zero-padded page number [004..546]; “XY” is the zero-padded number of the character on the page [01..73]. For example, 364.38 indicates the 38th character on Page 364 (i.e. 澍). Where a given Unicode Scalar Value (USV) has more than one reference, these are space-delimited.</para></remarks>
+        <XmlAttribute("kSBGY")>
+        <UcdProperty("kSBGY", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Song Ben Guang Yun")>
+        Public ReadOnly Property HanSongBenGuangYun As String()
+            Get
+                Return GetStringArray("kSBGY")
+            End Get
+        End Property
+
+        ''' <summary>The Unicode value for a semantic variant for this character.</summary>
+        ''' <remarks> A semantic variant is an x- or y-variant with similar or identical meaning which can generally be used in place of the indicated character.
+        ''' <para>The basic syntax is a Unicode scalar value. It may optionally be followed by additional data. The additional data is separated from the Unicode scalar value by a less-than sign (&lt;), and may be subdivided itself into substrings by commas, each of which may be divided into two pieces by a colon. The additional data consists of a series of field tags for another field in the Unihan database indicating the source of the information. If subdivided, the final piece is a string consisting of the letters T (for tòng, U+540C 同) B (for bù, U+4E0D 不), or Z (for zhèng, U+6B63 正).</para>
+        ''' <para>T is used if the indicated source explicitly indicates the two are the same (e.g., by saying that the one character is “the same as” the other).</para>
+        ''' <para>B is used if the source explicitly indicates that the two are used improperly one for the other.</para>
+        ''' <para>Z is used if the source explicitly indicates that the given character is the preferred form. Thus, kHanYu indicates that U+5231 刱 and U+5275 創 are semantic variants and that U+5275 創 is the preferred form.</para></remarks>
+        <XmlAttribute("kSemanticVariant")>
+        <UcdProperty("kSemanticVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Semantic Variant")>
+        Public ReadOnly Property HanSemanticVariant As String()
+            Get
+                Return GetStringArray("kSemanticVariant")
+            End Get
+        End Property
+
+        ''' <summary>The Unicode value for the simplified Chinese variant for this character (if any).</summary>
+        ''' <remarks>
+        ''' <para>Note that a character can be both a traditional Chinese character in its own right and the simplified variant for other characters (e.g., U+53F0).</para>
+        ''' <para>In such case, the character is listed as its own simplified variant and one of its own traditional variants. This distinguishes this from the case where the character is not the simplified form for any character (e.g., U+4E95).</para>
+        ''' <para>Much of the of the data on simplified and traditional variants was supplied by Wenlin <a href="http://www.wenlin.com">http://www.wenlin.com</a></para></remarks>
+        <XmlAttribute("kSimplifiedVariant")>
+        <UcdProperty("kSimplifiedVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Simplified Variant")>
+        Public ReadOnly Property HanSimplifiedVariant As String()
+            Get
+                Return GetUnicodeArray("kSimplifiedVariant")
+            End Get
+        End Property
+
+        ''' <summary>The Unicode value for a specialized semantic variant for this character.</summary>
+        ''' <remarks> The syntax is the same as for the kSemanticVariant field.
+        ''' <para>A specialized semantic variant is an x- or y-variant with similar or identical meaning only in certain contexts (such as accountants’ numerals).</para></remarks>
+        <XmlAttribute("kSpecializedSemanticVariant")>
+        <UcdProperty("kSpecializedSemanticVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Specialized Semantic Variant")>
+        Public ReadOnly Property HanSpecializedSemanticVariant As String()
+            Get
+                Return GetStringArray("kSpecializedSemanticVariant")
+            End Get
+        End Property
+
+        ''' <summary>The Taiwanese telegraph code for this character, derived from “Kanzi denpou koudo henkan-hyou” (“Chinese character telegraph code conversion table”), Lin Jinyi, KDD Engineering and Consulting, Tokyo, 1984.</summary>
+        <XmlAttribute("kTaiwanTelegraph")>
+        <UcdProperty("kTaiwanTelegraph", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Taiwan Telegraph")>
+        Public ReadOnly Property HanTaiwanTelegraph As Integer()
+            Get
+                Return GetIntArray("kTaiwanTelegraph")
+            End Get
+        End Property
+
+        ''' <summary>The Tang dynasty pronunciation(s) of this character, derived from or consistent with <em>T’ang Poetic Vocabulary</em> by Hugh M. Stimson, Far Eastern Publications, Yale Univ. 1976.</summary>
+        ''' <remarks> An asterisk indicates that the word or morpheme represented in toto or in part by the given character with the given reading occurs more than four times in the seven hundred poems covered.</remarks>
+        <XmlAttribute("kTang")>
+        <UcdProperty("kTang", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Tang")>
+        Public ReadOnly Property HanTang As String()
+            Get
+                Return GetStringArray("kTang")
+            End Get
+        End Property
+
+        ''' <summary>The total number of strokes in the character (including the radical).</summary>
+        ''' <remarks> This value is for the character as drawn in the Unicode charts.</remarks>
+        <XmlAttribute("kTotalStrokes")>
+        <UcdProperty("kTotalStrokes", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Total Strokes")>
+        Public ReadOnly Property HanTotalStrokes As Integer()
+            Get
+                Return GetIntArray("kTotalStrokes")
+            End Get
+        End Property
+
+        ''' <summary>The Unicode value(s) for the traditional Chinese variant(s) for this character.</summary>
+        ''' <remarks>
+        ''' <para>Note that a character can be both a traditional Chinese character in its own right and the simplified variant for other characters (e.g., 台 U+53F0).</para>
+        ''' <para>In such case, the character is listed as its own simplified variant and one of its own traditional variants. This distinguishes this from the case where the character is not the simplified form for any character (e.g., 井 U+4E95).</para>
+        ''' <para>Much of the of the data on simplified and traditional variants was graciously supplied by Wenlin Institute, Inc. <a href="http://www.wenlin.com">http://www.wenlin.com</a>.</para></remarks>
+        <XmlAttribute("kTraditionalVariant")>
+        <UcdProperty("kTraditionalVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Traditional Variant")>
+        Public ReadOnly Property HanTraditionalVariant As String()
+            Get
+                Return GetUnicodeArray("kTraditionalVariant")
+            End Get
+        End Property
+
+        ''' <summary>The character’s pronunciation(s) in Quốc ngữ.</summary>
+        <XmlAttribute("kVietnamese")>
+        <UcdProperty("kVietnamese", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Vietnamese")>
+        Public ReadOnly Property HanVietnamese As String()
+            Get
+                Return GetStringArray("kVietnamese")
+            End Get
+        End Property
+
+        ''' <summary>The Xerox code for this character.</summary>
+        <XmlAttribute("kXerox")>
+        <UcdProperty("kXerox", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Xerox")>
+        Public ReadOnly Property HanXerox As String()
+            Get
+                Return GetStringArray("kXerox")
+            End Get
+        End Property
+
+        ''' <summary>One or more Hànyǔ Pīnyīn readings as given in the Xiàndài Hànyǔ Cídiǎn (full bibliographic information below).</summary>
+        ''' <remarks>
+        ''' <para>Each pīnyīn reading is preceded by the character’s location(s) in the dictionary, separated from the reading by “:” (colon); multiple locations for a given reading are separated by “,” (comma); multiple “location: reading” values are separated by “ ” (space). Each location reference is of the form /[0-9]{4}\.[0-9]{3}\*?/ . The number preceding the period is the page number, zero-padded to four digits. The first two digits of the number following the period are the entry’s position on the page, zero-padded. The third digit is 0 for a main entry and greater than 0 for a parenthesized variant of the main entry. A trailing “*” (asterisk) on the location indicates an encoded variant substituted for an unencoded character (see below).</para></remarks>
+        <XmlAttribute("kXHC1983")>
+        <UcdProperty("kXHC1983", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Xiàndài Hànyǔ Cídiǎn")>
+        Public ReadOnly Property HanXiàndàiHànyǔCídiǎn As String()
+            Get
+                Return GetStringArray("kXHC1983")
+            End Get
+        End Property
+
+        ''' <summary>The Unicode value(s) for known z-variants of this character.</summary>
+        ''' <remarks>
+        ''' <para>The basic syntax is a Unicode scalar value. It may optionally be followed by additional data. The additional data is separated from the Unicode scalar value by a less-than sign (&lt;), and may be subdivided itself into substrings by commas. The additional data consists of a series of field tags for another field in the Unihan database indicating the source of the information.</para></remarks>
+        <XmlAttribute("kZVariant")>
+        <UcdProperty("kZVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Z-variant")>
+        Public ReadOnly Property HanZVariant As String()
+            Get
+                Return GetStringArray("kZVariant")
+            End Get
+        End Property
+
+        'End of generated properties
+
+        ''' <summary>This property is undocumented in Unicode standard</summary>
+        <XmlAttribute("kJHJ")>
+        <UcdProperty("kJHJ", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan JHJ")>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
+        Public ReadOnly Property HanJhj As String
+            Get
+                Return GetPropertyValue("kJHJ")
+            End Get
+        End Property
 
 
-        'TODO:
+        ''' <summary>Meaning of this property is not documented in Unicode standard but it seems to be merge of some or all Radical/stroke Count properties. This property was dropped in Unicode 3.1</summary>
+        <XmlAttribute("kRSMerged")>
+        <UcdProperty("kRSMerged", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Merged)")>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped from Unicode 3.1")>
+        Public ReadOnly Property HanRSMerged As String
+            Get
+                Return GetPropertyValue("kRSMerged")
+            End Get
+        End Property
 
-      
-
-        'code-point-properties &= attribute kIRG_JSource
-        '   { "" | xsd:string {pattern="(0|1|3|(3A)|4|A|(ARIB)|K)-[0-9A-F]{4,5}"} 
-        '        | xsd:string {pattern="J0-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="J1-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="J3-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="J3A-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="J4-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="JA-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="JH-[0-9A-Z]{6,7}"}
-        '        | xsd:string {pattern="JK-[0-9]{5}"}
-        '        | xsd:string {pattern="JARIB-[0-9A-F]{4}"} }?
-
-
-        'code-point-properties &= attribute kIRG_KPSource
-        '   { "" | xsd:string {pattern="((KP0)|(KP1))-[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kIRG_KSource
-        '   { "" | xsd:string {pattern="((0|1|2|3|4|5)-[0-9A-F]{4})|(KZ[0-9]{6})"}
-        '        | xsd:string {pattern="K0-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="K1-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="K2-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="K3-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="K4-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="K5-[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kIRG_MSource
-        '   { "" | xsd:string {pattern="MAC[0-9]{5}"}
-        '        | xsd:string {pattern="MAC-[0-9]{5}"} }?
-
-        'code-point-properties &= attribute kIRG_TSource
-        '   { "" | xsd:string {pattern="(1-[0-9A-F]{4})|(2-[0-9A-F]{4})|(3-[0-9A-F]{4})|(4-[0-9A-F]{4})|(5-[0-9A-F]{4})|(6-[0-9A-F]{4})|(7-[0-9A-F]{4})|(F-[0-9A-F]{4})|(C-[0-9A-F]{4})|(D-[0-9A-F]{4})|(E-[0-9A-F]{4})"}
-        '        | xsd:string {pattern="T1-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="T2-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="T3-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="T4-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="T5-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="T6-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="T7-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="TB-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="TC-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="TD-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="TE-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="TF-[0-9A-F]{4}"} }?
-
-
-        'code-point-properties &= attribute kIRG_USource
-        '   { "" | xsd:string {pattern="(U\+2?[0-9A-F]{4})|(UTC[0-9]{5})"} }?
-
-        'code-point-properties &= attribute kIRG_VSource
-        '   { "" | xsd:string {pattern="(0|1|2|3|4)-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="V0-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="V1-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="V2-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="V3-[0-9A-F]{4}"}
-        '        | xsd:string {pattern="V4-[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kJHJ
-        '   { text }?
-
-        'code-point-properties &= attribute kJIS0213
-        '   { xsd:string {pattern="[12],[0-9]{2},[0-9]{1,2}"} }?
-
-        'code-point-properties &= attribute kJapaneseKun
-        '   { list { xsd:string {pattern="[A-Z]+"}+ } }?
-
-        'code-point-properties &= attribute kJapaneseOn
-        '   { list { xsd:string {pattern="[A-Z]+"}+ } }?
-
-        'code-point-properties &= attribute kJis0
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kJis1
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kKPS0
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kKPS1
-        '   { xsd:string {pattern="[0-9A-F]{4}"} }?
-
-        'code-point-properties &= attribute kKSC0
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kKSC1
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kKangXi
-        '   { xsd:string {pattern="[0-9]{4}\.[0-9]{2}[01]"} }?
-
-        'code-point-properties &= attribute kKarlgren
-        '   { xsd:string {pattern="[1-9][0-9]{0,3}[A*]?"} }?
-
-        'code-point-properties &= attribute kKorean
-        '   { list { xsd:string {pattern="[A-Z]+"} +}}?
-
-        'code-point-properties &= attribute kLau
-        '   { list { xsd:string {pattern="[1-9][0-9]{0,3}"} +}}?
-
-        'code-point-properties &= attribute kMainlandTelegraph
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kMandarin
-        '   { list { xsd:string {pattern="[A-ZÜ̈]+[1-5]"} +}}?
-
-        'code-point-properties &= attribute kMatthews
-        '   { xsd:string {pattern="[0-9]{1,4}(a|\.5)?"} }?
-
-        'code-point-properties &= attribute kMeyerWempe
-        '   { list { xsd:string {pattern="[1-9][0-9]{0,3}[a-t*]?"} +}}?
-
-        'code-point-properties &= attribute kMorohashi
-        '   { xsd:string {pattern="[0-9]{5}'?"} }?
-
-        'code-point-properties &= attribute kNelson
-        '   { list { xsd:string {pattern="[0-9]{4}"} +}}?
-
-        'code-point-properties &= attribute kOtherNumeric
-        '   { list { xsd:string {pattern="[0-9]+"} +}}?
-
-        'code-point-properties &= attribute kPhonetic
-        '   { list { xsd:string {pattern="[1-9][0-9]{0,3}[A-D]?\*?"} +}}?
-
-        'code-point-properties &= attribute kPrimaryNumeric
-        '   { xsd:string {pattern="[0-9]+"} }?
-
-        'code-point-properties &= attribute kPseudoGB1
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kRSAdobe_Japan1_6
-        '   { list { xsd:string {pattern="[CV]\+[0-9]{1,5}\+[1-9][0-9]{0,2}\.[1-9][0-9]?\.[0-9]{1,2}"} +}}?
-
-        'code-point-properties &= attribute kRSJapanese
-        '   { xsd:string {pattern="[0-9]{1,3}\.[0-9]{1,2}"} }?
-
-        'code-point-properties &= attribute kRSKanWa
-        '   { xsd:string {pattern="[0-9]{1,3}\.[0-9]{1,2}"} }?
-
-        'code-point-properties &= attribute kRSKangXi
-        '   { xsd:string {pattern="[0-9]{1,3}\.[0-9]{1,2}"} }?
-
-        'code-point-properties &= attribute kRSKorean
-        '   { xsd:string {pattern="[0-9]{1,3}\.[0-9]{1,2}"} }?
-
-        'code-point-properties &= attribute kRSMerged
-        '   { text }?
-
-        'code-point-properties &= attribute kRSUnicode
-        '   { list { xsd:string {pattern="[0-9]{1,3}'?\.[0-9]{1,2}"} +}}?
-
-        'code-point-properties &= attribute kSBGY
-        '   { list { xsd:string {pattern="[0-9]{3}\.[0-9]{2}"} +}}?
-
-        'code-point-properties &= attribute kSemanticVariant
-        '   { list { xsd:string {pattern="U\+2?[0-9A-F]{4}(<k[A-Za-z:0-9]+(,k[A-Za-z0-9]+)*)?"} +}}?
-
-        'code-point-properties &= attribute kSimplifiedVariant
-        '   { list { xsd:string {pattern="U\+2?[0-9A-F]{4}"} +}}?
-
-        'code-point-properties &= attribute kSpecializedSemanticVariant
-        '   { list { xsd:string {pattern="U\+2?[0-9A-F]{4}(<k[A-Za-z0-9]+(,k[A-Za-z0-9]+)*)?"} +}}?
-
-        'code-point-properties &= attribute kTaiwanTelegraph
-        '   { xsd:string {pattern="[0-9]{4}"} }?
-
-        'code-point-properties &= attribute kTang
-        '   { list { xsd:string {pattern="\*?[A-Za-z\(\)æɑəɛ̀̌]+"} +}}?
-
-        'code-point-properties &= attribute kTotalStrokes
-        '   { xsd:string {pattern="[1-9][0-9]{0,2}"} }?
-
-        'code-point-properties &= attribute kTraditionalVariant
-        '   { list { xsd:string {pattern="U\+2?[0-9A-F]{4}"} +}}?
-
-        'code-point-properties &= attribute kVietnamese
-        '   { list { xsd:string {pattern="[A-Za-zà-ừ-̛̣̆̉ạ-ỹ]+"} +}}?
-
-        'code-point-properties &= attribute kXHC1983
-        '   { list { xsd:string {pattern="[0-9,.*]+:[a-zǜ́̄̈̌]+"} +}} ?
-
-        'code-point-properties &= attribute kWubi
-        '   { text }?
-
-        'code-point-properties &= attribute kXerox
-        '   { xsd:string {pattern="[0-9]{3}:[0-9]{3}"} }?
-
-        'code-point-properties &= attribute kZVariant
-        '   { xsd:string {pattern="U\+2?[0-9A-F]{4}((<k[A-Za-z0-9]+(:[TBZ]+)?(,k[A-Za-z0-9]+(:[TBZ]+)?)*)|(:k[A-Za-z]+))?"} }?
+        ''' <summary>This property is undocumented in Unicode standard</summary>
+        <XmlAttribute("kWubi")>
+        <UcdProperty("kWubi", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Wubi")>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
+        Public ReadOnly Property HanWubi As String
+            Get
+                Return GetPropertyValue("kWubi")
+            End Get
+        End Property
 
 #End Region
 
