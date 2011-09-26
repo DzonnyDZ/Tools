@@ -215,6 +215,7 @@
     <Compile Include="ComponentModel\IXmlWrapper.vb" />
     <Compile Include="ComponentModel\PropertyChangingEventArgsEx.vb" />
     <Compile Include="ComponentModel\ValueContainer.vb" />
+    <Compile Include="ComponentModel\Wrapper.vb" />
     <Compile Include="Data\DataExtensions.vb" />
     <Compile Include="Extensions\DateTimeExtensions.vb" />
     <Compile Include="Extensions\IFormattableExtensions.vb" />
@@ -237,12 +238,18 @@
     <Compile Include="Security\Cryptography\Encryption\Symmetric.vb" />
     <Compile Include="Text\Escaping.vb" />
     <Compile Include="Text\Unicode\CodePointInfo.vb" />
+    <Compile Include="Text\Unicode\EmojiSourceInfo.vb" />
     <Compile Include="Text\Unicode\RadicalStrokeCount.vb" />
+    <Compile Include="Text\Unicode\UcdRepertoire.vb" />
+    <Compile Include="Text\Unicode\UnicodeBlock.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterDatabase.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterGroup.vb" />
     <Compile Include="Text\Unicode\UnicodeCodePoint.vb" />
+    <Compile Include="Text\Unicode\UnicodeCollections.vb" />
     <Compile Include="Text\Unicode\UnicodeEnums.vb" />
     <Compile Include="Text\Unicode\UnicodeExtensions.vb" />
+    <Compile Include="Text\Unicode\UnicodeNamedSequence.vb" />
+    <Compile Include="Text\Unicode\UnicodeNormalizationCorrection.vb" />
     <Compile Include="Text\Unicode\UnicodePropertiesProvider.vb" />
     <Compile Include="Text\Unicode\UnicodePropertyAttribute.vb" />
     <Compile Include="Text\Unicode\UnicodePropertyCategoryAttribute.vb" />
@@ -251,6 +258,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UnicodeResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Text\Unicode\UnicodeStandartizedVariant.vb" />
     <Compile Include="Text\Unicode\UnihanPropertyCategoryAttribute.vb" />
     <Compile Include="Threading\IInvoke.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />

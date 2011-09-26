@@ -41,7 +41,8 @@ Namespace LinqT
     ''' <param name="yield">Value returned as result of this iteration</param>
     ''' <remarks>When this delegate is used <see cref="LoopState.[Next]"/> is assomed for all iterations</remarks>
     ''' <version version="1.5.3">This delegate is new in version 1.5.3</version>
-    Public Delegate Sub NonBreakingLoopBody(Of TReturn, ti)(ByRef i As ti, <Out()> ByRef yield As TReturn)
+    ''' <version version="1.5.4">Type parameter <c>ti</c> renamed to <c>TI</c></version>
+    Public Delegate Sub NonBreakingLoopBody(Of TReturn, TI)(ByRef i As ti, <Out()> ByRef yield As TReturn)
     ''' <summary>Delegate for body of for-each loop</summary>
     ''' <typeparam name="TReturn">Type of value returned from loop</typeparam>
     ''' <typeparam name="TItem">Type of for-each item</typeparam>
@@ -140,6 +141,27 @@ Namespace LinqT
                        End Function, "loop")
                   )
         End Sub
+
+        ''' <summary>CTor - creates a new instance of the <see cref="ForLoopCollection(Of TReturn, TI)"/> class. Increment passed by reference, loop can neitrher break nor affect loop variable</summary>
+        ''' <param name="initialize">Function to be used to initialized iteration. It returns initial value of iterator. Called once before the iteration starts (and again if <see cref="Reset"/> was called).</param>
+        ''' <param name="condition">Function to test wheather to continue in iteration or not. Called before each iteration including the first one. If it returns true iteration is entered, if it returns false iteration ends and <see cref="MoveNext"/> returns false.</param>
+        ''' <param name="increment">Function used to increment value. Called after each loop execution (unless termination was indicated). Value of iteration variable to this function is passed by reference and function should change it to a new value used in next loop iteration. This parameter is ignored if null. In such case incrementation logic should be in <see cref="condition"/> or <see cref="[loop]"/>.</param>
+        ''' <param name="loop">Function called as loop body. It receives current value of iterator and can change it. Loop return value should be returned through the second parameter.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="initialize"/>, <paramref name="condition"/> or <paramref name="loop"/> is null.</exception>
+        Public Sub New(ByVal initialize As Func(Of TI), ByVal condition As Func(Of TI, Boolean), ByVal increment As Increment(Of TI), ByVal [loop] As Func(Of TI, TReturn))
+            Me.New(initialize, condition, increment, [loop].ThrowIfNull(Of NonBreakingLoopBody(Of TReturn, TI))(Sub(ByRef i, ByRef value) value = [loop](i), "loop"))
+        End Sub
+
+        ''' <summary>CTor - creates a new instance of the <see cref="ForLoopCollection(Of TReturn, TI)"/> class. Increment passed by value, loop can neitrher break nor affect loop variable</summary>
+        ''' <param name="initialize">Function to be used to initialized iteration. It returns initial value of iterator. Called once before the iteration starts (and again if <see cref="Reset"/> was called).</param>
+        ''' <param name="condition">Function to test wheather to continue in iteration or not. Called before each iteration including the first one. If it returns true iteration is entered, if it returns false iteration ends and <see cref="MoveNext"/> returns false.</param>
+        ''' <param name="increment">Function used to increment value. Called after each loop execution (unless termination was indicated). Old iteration variable value is passed here and the function should return new value used in next loop iteration. This parameter is ignored if null. In such case incrementation logic should be in <see cref="condition"/> or <see cref="[loop]"/>.</param>
+        ''' <param name="loop">Function called as loop body. It receives current value of iterator and can change it. Loop return value should be returned through the second parameter.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="initialize"/>, <paramref name="condition"/> or <paramref name="loop"/> is null.</exception>
+        Public Sub New(ByVal initialize As Func(Of TI), ByVal condition As Func(Of TI, Boolean), ByVal increment As Func(Of TI, TI), ByVal [loop] As Func(Of TI, TReturn))
+            Me.New(initialize, condition, increment, [loop].ThrowIfNull(Of NonBreakingLoopBody(Of TReturn, TI))(Sub(ByRef i, ByRef value) value = [loop](i), "loop"))
+        End Sub
+
         ''' <summary>Copy CTor - creates a new instance of the <see cref="ForLoopCollection(Of TReturn, TI)"/> which is clone of another instance.</summary>
         ''' <param name="other">Instance to clone</param>
         ''' <exception cref="ArgumentNullException"><paramref name="other"/> is null</exception>
