@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Linq
+Imports System.Xml.XPath
 Imports System.Linq
 Imports Tools.RuntimeT.CompilerServicesT
 Imports Tools.TextT.UnicodeT
@@ -12,8 +13,6 @@ Imports System.Globalization.CultureInfo
 <Module: AddResource(unicodecharacterdatabase.UnicodeXmlDatabaseResourceName, unicodecharacterdatabase.UnicodeXmlDatabaseFileName, False, False, Remove:=True)> 
 
 Namespace TextT.UnicodeT
-
-
     ''' <summary>Provides information from Unicode Charatcer Database</summary>
     ''' <remarks>See http://www.unicode.org/ucd/.
     ''' <para>
@@ -34,7 +33,9 @@ Namespace TextT.UnicodeT
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public Class UnicodeCharacterDatabase
-        Implements IXDocumentWrapper
+        Implements IXDocumentWrapper, IXElementWrapper
+        ''' <summary>Name of element representing this class in XML</summary>
+        Friend Shared ReadOnly elementName As XName = <ucd/>.Name
 #Region "Static loading"
         ''' <summary>Name of assembly resource that contains Unicode Character Database XML</summary>
         ''' <remarks>
@@ -113,7 +114,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="ArgumentException">Root element of <paramref name="unicodeCharacterDatabaseXml"/> is not <c>&lt;ucd></c> in namespace http://www.unicode.org/ns/2003/ucd/1.0.</exception>
         Public Sub New(unicodeCharacterDatabaseXml As XDocument)
             If unicodeCharacterDatabaseXml Is Nothing Then Throw New ArgumentNullException("unicodeCharacterDatabaseXml")
-            If Not _xml.Root.Name = GetXmlNamespace().GetName("ucd") Then Throw New ArgumentException(ResourcesT.Exceptions.RootElementMustBe0.f(GetXmlNamespace().GetName("ucd")))
+            If Not _xml.Root.Name = elementName Then Throw New ArgumentException(ResourcesT.Exceptions.RootElementMustBe0.f(elementName))
             _xml = unicodeCharacterDatabaseXml
         End Sub
         ''' <summary>CTor - creates a new instance of the <see cref="UnicodeCharacterDatabase"/> class from URL where Unicode Character Database XML is located.</summary>
@@ -152,6 +153,7 @@ Namespace TextT.UnicodeT
             Me.New(XDocument.Load(New XmlNodeReader(unicodeCharacterDatabaseXml)))
         End Sub
 #End Region
+
         ''' <summary>Gets underlying <see cref="XDocument"/> instance that contains data of loaded Unicode Character Database</summary>
         ''' <remarks>Do not change content of the document, it can have unprecedenter results</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
@@ -164,6 +166,12 @@ Namespace TextT.UnicodeT
         Private ReadOnly Property IXNodeWrapper_Node As XNode Implements IXNodeWrapper.Node
             Get
                 Return Xml
+            End Get
+        End Property
+        ''' <summary>Gets XML element this instance wraps</summary>
+        Private ReadOnly Property RootElement As XElement Implements IXElementWrapper.Element
+            Get
+                Return Xml.Root
             End Get
         End Property
 
@@ -201,10 +209,80 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets XML elements representing all code points in this instance of Unicode Character Database</summary>
         Protected ReadOnly Property CodePointXmlElements As IEnumerable(Of XElement)
             Get
-                Return Xml.<repertoire>...<char>.Union(Xml.<repertoire>...<reserved>).Union(Xml.<repertoire>...<noncharacter>).Union(Xml.<repertoire>...<surrogate>)
+                Return GetCodePointXmlElements(Xml)
             End Get
         End Property
 
+        ''' <summary>Gets XML elements representing all code points in given XML document which represents instance of Unicode Character Database</summary>
+        ''' <param name="document">The XML document that contains Unicode Character Database XML data</param>
+        ''' <returns>XML elements representing all code points in <paramref name="document"/>.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="document"/> is null</exception>
+        Friend Shared Function GetCodePointXmlElements(document As XDocument) As IEnumerable(Of XElement)
+            If document Is Nothing Then Throw New ArgumentNullException("document")
+            Return document.<repertoire>...<char>.Union(document.<repertoire>...<reserved>).Union(document.<repertoire>...<noncharacter>).Union(document.<repertoire>...<surrogate>)
+        End Function
+
+
+        ''' <summary>Gets all Unicode blocks</summary>
+        Public ReadOnly Property Blocks As IEnumerable(Of UnicodeBlock)
+            Get
+                Return From el In Xml.<blocks>.<block> Select New UnicodeBlock(el)
+            End Get
+        End Property
+
+        ''' <summary>Gets named sequences of characters</summary>
+        Public ReadOnly Property NamedSequences As IEnumerable(Of UnicodeNamedSequence)
+            Get
+                Return From el In Xml.<named-sequences>.<named-sequence> Select New UnicodeNamedSequence(el)
+            End Get
+        End Property
+
+        ''' <summary>Gets provisional named sequences of characters</summary>
+        Public ReadOnly Property ProvisionalNamedSequences As IEnumerable(Of UnicodeNamedSequence)
+            Get
+                Return From el In Xml.<provisional-named-sequences>.<named-sequence> Select New UnicodeNamedSequence(el)
+            End Get
+        End Property
+
+
+        ''' <summary>Gets normalization corrections between Unicode versions</summary>
+        Public ReadOnly Property NormalizationCorrections As IEnumerable(Of UnicodeNormalizationCorrection)
+            Get
+                Return From el In Xml.<normalization-corrections>.<normalization-correction> Select New UnicodeNormalizationCorrection(el)
+            End Get
+        End Property
+
+        ''' <summary>Gets Unicode standartized variants</summary>
+        Public ReadOnly Property StandartizedVariants As IEnumerable(Of UnicodeStandardizedVariant)
+            Get
+                Return From el In Xml.<standardized-variants>.<standardized-variant> Select New UnicodeStandardizedVariant(el)
+            End Get
+        End Property
+
+        ''' <summary>Gets list of CJK Radicals</summary>
+        Public ReadOnly Property CjkRadicals As IEnumerable(Of CjkRadicalInfo)
+            Get
+                Return From el In Xml.<cjk-radicals>.<cjk-radical> Select New CjkRadicalInfo(el)
+            End Get
+        End Property
+
+        ''' <summary>Gets list of Emoji sources</summary>
+        Public ReadOnly Property EmojiSources As IEnumerable(Of EmojiSourceInfo)
+            Get
+                Return From el In Xml.<emoji-sources>.<emoji-source> Select New EmojiSourceInfo(el)
+            End Get
+        End Property
+
+        ''' <summary>Gets repertoire of groups and code points</summary>
+        ''' <remarks>Tis is helper property. You ususally don't need it. You usually use <see cref="Groups"/> and <see cref="CodePoints"/> directly.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public ReadOnly Property Repertoire As UcdRepertoire
+            Get
+                Dim el = Xml.<repertoire>.FirstOrDefault
+                If el IsNot Nothing Then Return New UcdRepertoire(el)
+                Return Nothing
+            End Get
+        End Property
 #End Region
 
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="UnicodeCharacterDatabase" />.</summary>
@@ -249,6 +327,68 @@ Namespace TextT.UnicodeT
         Public Function FindCodePoint(character As Char) As UnicodeCodePoint
             Return FindCodePoint(Char.ConvertToUtf32(CStr(character), 0))
         End Function
+
+        ''' <summary>Queries Unicode Character Database XML using XPath</summary>
+        ''' <param name="xPath">XPath query</param>
+        ''' <returns>Objects retrieved suing given query</returns>
+        ''' <remarks>Default namespace is mapped to http://www.unicode.org/ns/2003/ucd/1.0</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="xPath"/> is nulll</exception>
+        Public Function Query(xPath As String) As IEnumerable
+            If xPath Is Nothing Then Throw New ArgumentNullException("xPath")
+            Dim r As New XmlNamespaceManager(New NameTable)
+            r.AddNamespace(String.Empty, GetXmlNamespace().NamespaceName)
+            Return QueryToObjects(Xml.XPathSelectElements(xPath, r))
+        End Function
+
+        ''' <summary>Queries Unicode Character Database XML using Linq-to-XML (XLINQ)</summary>
+        ''' <param name="path">A delegate (typically λ-function) specifying a query to select XML Elements from Unicode Character Database XML</param>
+        ''' <returns>Objects retrieved suing given query</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="path"/> is nulll</exception>
+        Public Function Query(path As Func(Of XDocument, IEnumerable(Of XElement))) As IEnumerable
+            If path Is Nothing Then Throw New ArgumentNullException("path")
+            Return QueryToObjects(path(Xml))
+        End Function
+
+        ''' <summary>Converts each object in enumeration of <see cref="XElement"/>s to UCD object</summary>
+        ''' <param name="query">Represents a query to Unicode Character Database XML</param>
+        ''' <returns>An enumeration of objects instantiated from elements in <paramref name="query"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="query"/> is nulll</exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Shared Function QueryToObjects(query As IEnumerable(Of XElement)) As IEnumerable(Of IXmlElementWrapper)
+            If query Is Nothing Then Throw New ArgumentNullException("query")
+            Return From el In query Where el IsNot Nothing Let ret = ElementToObject(el) Where ret IsNot Nothing Select ret
+        End Function
+
+        ''' <summary>Converts a XML elemetn to one of Unicode Character Database object from <see cref="Tools.TextT.UnicodeT"/> namespace</summary>
+        ''' <param name="element">A <see cref="XElement"/> create wrapper object for</param>
+        ''' <returns>A wrapper object for given element. Null if <paramref name="element"/> is null. <see cref="XElementWrapper"/> if element type is unknown.</returns>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Shared Function ElementToObject(element As XElement) As IXElementWrapper
+            Select Case element.Name
+                Case UnicodeCharacterDatabase.elementName
+                    If element.Document IsNot Nothing AndAlso element.Document.Root Is element Then Return New UnicodeCharacterDatabase(element.Document)
+                    Return New XElementWrapper(element)
+                Case UcdRepertoire.elementName : Return New UcdRepertoire(element)
+                Case ReservedUnicodeCodePoint.elementName, UnicodeNoncharacter.elementName, UnicodeSurrogate.elementName, UnicodeCharacter.elementName
+                    Return UnicodeCodePoint.Create(element)
+                Case UnicodeCharacterGroup.elementName : Return New UnicodeCharacterGroup(element)
+                Case (<blocks/>).Name : Return New UcdCollection(Of UnicodeBlock)(element)
+                Case UnicodeBlock.elementName : Return New UnicodeBlock(element)
+                Case (<named-sequences/>).Name : Return New UcdCollection(Of UnicodeNamedSequence)(element)
+                Case (<provisional-named-sequences/>).Name : Return New UcdCollection(Of UnicodeNamedSequence)(element)
+                Case UnicodeNamedSequence.elementName : Return New UnicodeNamedSequence(element)
+                Case (<normalization-corrections/>).Name : Return New UcdCollection(Of UnicodeNormalizationCorrection)(element)
+                Case UnicodeNormalizationCorrection.elementName : Return New UnicodeNormalizationCorrection(element)
+                Case (<standardized-variants/>).Name : Return New UcdCollection(Of UnicodeStandardizedVariant)(element)
+                Case UnicodeStandardizedVariant.elementName : Return New UnicodeStandardizedVariant(element)
+                Case (<cjk-radicals/>).Name : Return New UcdCollection(Of CjkRadicalInfo)(element)
+                Case CjkRadicalInfo.elementName : Return New CjkRadicalInfo(element)
+                Case (<emoji-sources/>).Name : Return New UcdCollection(Of EmojiSourceInfo)(element)
+                Case EmojiSourceInfo.elementName : Return New EmojiSourceInfo(element)
+                Case Else : Return New XElementWrapper(element)
+            End Select
+        End Function
+
     End Class
 End Namespace
 #End If

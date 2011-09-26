@@ -74,6 +74,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Element must be {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_InvalidXmlElement() As String
+            Get
+                Return ResourceManager.GetString("ex_InvalidXmlElement", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Bidirectional.
         '''</summary>
         Friend Shared ReadOnly Property propcat_Bidirectional() As String
@@ -340,6 +349,15 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property proptype_String() As String
             Get
                 Return ResourceManager.GetString("proptype_String", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unrecognized format character {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_UnrecognizedFormatCharacter() As String
+            Get
+                Return ResourceManager.GetString("ex_UnrecognizedFormatCharacter", resourceCulture)
             End Get
         End Property
     End Class

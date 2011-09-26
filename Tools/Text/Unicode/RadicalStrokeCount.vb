@@ -1,7 +1,9 @@
-﻿Imports Tools.ComponentModelT
+﻿Imports Tools.ComponentModelT, Tools.ExtensionsT
+Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
 Imports System.Globalization.CultureInfo
 Imports System.Xml.Serialization
 Imports System.Xml.Schema
+Imports System.Xml.Linq
 
 Namespace TextT.UnicodeT
 
@@ -739,12 +741,14 @@ Namespace TextT.UnicodeT
     ''' <note>
     ''' You should not rely on names and display names of members of this enumeration as they are subject to change.
     ''' Only thing that  really matters is numerical value.
+    ''' To get normative data regarding CJK Radicals see <see cref="UnicodeCharacterDatabase.CjkRadicals"/>.
     ''' </note>
     ''' To convert between <see cref="CjkRadical"/> values and actual characters representing the radicals look for <see cref="RadicalStrokeCount.LookupRadical"/> and <see cref="RadicalStrokeCount.RadicalToChar"/> functions.
     ''' </remarks>
     ''' <seelaso cref="RadicalStrokeCount"/>
     ''' <seelaso cref="RadicalStrokeCount.LookupRadical"/>
     ''' <seelaso cref="RadicalStrokeCount.RadicalToChar"/>
+    ''' <seelaso cref="UnicodeCharacterDatabase.CjkRadicals"/>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum CjkRadical
 #Region "Kang Xi"
@@ -1765,4 +1769,92 @@ Namespace TextT.UnicodeT
 
 #End Region
     End Enum
+
+    ''' <summary>Provides information and points to CJK Radical</summary>
+    ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+    <DebuggerDisplay("{Number} {RadicalCharacter}")>
+    Public Class CjkRadicalInfo
+        Implements IXElementWrapper
+
+        ''' <summary>Name of element representing this class in XML</summary>
+        Friend Shared ReadOnly elementName As XName = <cjk-radical/>.Name
+
+        Private ReadOnly _element As Xml.Linq.XElement
+
+        ''' <summary>CTor - creates a new instance of the <see cref="UnicodeStandardizedVariant"/> class</summary>
+        ''' <param name="element">A <see cref="XElement"/> that represents this named sequence</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="element"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="element"/> is not element &lt;standardized-variant> in namespace http://www.unicode.org/ns/2003/ucd/1.0.</exception>
+        Sub New(element As Xml.Linq.XElement)
+            If element Is Nothing Then Throw New ArgumentNullException("element")
+            If element.Name <> elementName Then Throw New ArgumentException(UnicodeResources.ex_InvalidXmlElement.f(elementName))
+            _element = element
+        End Sub
+
+        ''' <summary>Gets XML element this instance wraps</summary>
+        Public ReadOnly Property Element As System.Xml.Linq.XElement Implements IXElementWrapper.Element
+            Get
+                Return _element
+            End Get
+        End Property
+
+        ''' <summary>Gets node this instance wraps</summary>
+        Private ReadOnly Property Node As System.Xml.Linq.XNode Implements IXNodeWrapper.Node
+            Get
+                Return Element
+            End Get
+        End Property
+
+        ''' <summary>Gets radical number as enumerated value</summary>
+        ''' <remarks>Names of members of the <see cref="CjkRadical"/> enumeration are just informative. Only what really matters is numeric value.</remarks>
+        Public ReadOnly Property Radical As CjkRadical
+            Get
+                Return Number
+            End Get
+        End Property
+
+        ''' <summary>Gets radical number as <see cref="Integer"/></summary>
+        Public ReadOnly Property Number As Integer
+            Get
+                Return Integer.Parse(Element.@number.TrimEnd("'"c), InvariantCulture)
+            End Get
+        End Property
+
+        ''' <summary>Gets value indicating if this radical represents simplified version</summary>
+        Public ReadOnly Property IsSimplified As Boolean
+            Get
+                Return Element.@number.EndsWith("'")
+            End Get
+        End Property
+
+        ''' <summary>Gets a Code Point that represents this radical</summary>
+        Public ReadOnly Property RadicalCodePoint As CodePointInfo
+            Get
+                Return New CodePointInfo(Element.Document, UInt32.Parse("0x" & Element.@radical, Globalization.NumberStyles.HexNumber, InvariantCulture))
+            End Get
+        End Property
+
+        ''' <summary>Gets string that represents this radical</summary>
+        ''' <remarks>For non-BMP characters returns 2 characters (surrogate pair)</remarks>
+        Public ReadOnly Property RadicalCharacter As String
+            Get
+                Return Char.ConvertFromUtf32(UInt32.Parse("0x" & Element.@radical, Globalization.NumberStyles.HexNumber, InvariantCulture))
+            End Get
+        End Property
+
+        ''' <summary>Gets a Code Point that represents radical associated ideograph</summary>
+        Public ReadOnly Property IdeographCodePoint As CodePointInfo
+            Get
+                Return New CodePointInfo(Element.Document, UInt32.Parse("0x" & Element.@ideograph, Globalization.NumberStyles.HexNumber, InvariantCulture))
+            End Get
+        End Property
+
+        ''' <summary>Gets string that represents this radical associated ideograph</summary>
+        ''' <remarks>For non-BMP characters returns 2 characters (surrogate pair)</remarks>
+        Public ReadOnly Property IdeographCharacter As String
+            Get
+                Return Char.ConvertFromUtf32(UInt32.Parse("0x" & Element.@ideograph, Globalization.NumberStyles.HexNumber, InvariantCulture))
+            End Get
+        End Property
+    End Class
 End Namespace

@@ -223,10 +223,11 @@ Namespace TextT.UnicodeT
     End Class
 
     ''' <summary>Read-only collection of Unicode code points</summary>
+    ''' <remarks>This class implements <see cref="IFormattable"/>. For list of possible formatting strings see <see cref="CodePointInfoCollection.ToString"/></remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Class CodePointInfoCollection
-        Implements ICollection(Of UnicodeCodePoint)
+        Implements ICollection(Of UnicodeCodePoint), IFormattable
 
         Private _codePoints As UInteger?()
         Private xml As XDocument
@@ -341,12 +342,6 @@ Namespace TextT.UnicodeT
             Throw New NotSupportedException(ResourcesT.Exceptions.CollectionIsReadOnly)
         End Function
 
-        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
-        ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
-        ''' <filterpriority>2</filterpriority>
-        Public Overrides Function ToString() As String
-            Return (From itm In _codePoints Select If(itm.HasValue, itm.Value.ToString("X", InvariantCulture), "#")).Join(" ")
-        End Function
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
         ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
@@ -407,5 +402,49 @@ Namespace TextT.UnicodeT
                 Return (From cp In _codePoints Select cp.Value.BitwiseSame).ToArray
             End Get
         End Property
+
+        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+        ''' <filterpriority>2</filterpriority>
+        Public Overloads Overrides Function ToString() As String
+            Return ToString("g", CurrentCulture)
+        End Function
+
+        ''' <summary>Formats the value of the current instance using the specified format.</summary>
+        ''' <returns>The value of the current instance in the specified format.</returns>
+        ''' <param name="format">The format to use.-or- A null reference (Nothing in Visual Basic) to use the default format defined for the type of the <see cref="T:System.IFormattable" /> implementation. </param>
+        ''' <param name="formatProvider">The provider to use to format the value.-or- A null reference (Nothing in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system. </param>
+        ''' <remarks>Allowed <paramref name="format"/> strings are:
+        ''' <list type="table"><listheader><term>Format string</term><description>Output</description></listheader>
+        ''' <item><term>x or g</term><description>Hexadecimal codes, space-delimited, minimally four lowecase hexadigits (0044 005A); unknown characters rendered as #</description></item>
+        ''' <item><term>X or G</term><description>Hexadecimal codes, space-delimited, minimally four uppercase hexadigits (0044 005a); unknown characters rendered as #</description></item>
+        ''' <item><term>D or d</term><description>Decadic codes, space-delimited (68 90); unknown characters rendered as #</description></item>
+        ''' <item><term>s or S</term><description>Characters represinting individual code points, no delimiter (DZ)<note>Because CLR strings are represented in UTF-16 some codepoints may be represented as two UTF-16 characters (surrogate pairs)</note>Unknown characters rendered as &lt;#>.</description></item>
+        ''' </list>
+        ''' </remarks>
+        ''' <filterpriority>2</filterpriority>
+        ''' <exception cref="ArgumentException"><paramref name="format"/> is not one of recognized formatting strings</exception>
+        Public Overloads Function ToString(format As String, formatProvider As System.IFormatProvider) As String Implements System.IFormattable.ToString
+            Select Case format
+                Case "x", "X"
+                    Return (From itm In _codePoints Select If(itm.HasValue, itm.Value.ToString(format & "4", formatProvider), "#")).Join(" ")
+                Case "d", "D"
+                    Return (From itm In _codePoints Select If(itm.HasValue, itm.Value.ToString(format, formatProvider), "#")).Join(" ")
+                Case "g" : Return ToString("x", formatProvider)
+                Case "G", "", Nothing : Return ToString("X", formatProvider)
+                Case "S", "s"
+                    Return (From itm In _codePoints Select If(itm.HasValue, Char.ConvertFromUtf32(itm.Value), "<#>")).Join("")
+                Case Else : Throw New ArgumentException(String.Format(TextT.UnicodeT.UnicodeResources.ex_UnrecognizedFormatCharacter, format))
+            End Select
+
+        End Function
+
+        ''' <summary>Formats the value of the current instance using the specified format.</summary>
+        ''' <param name="format">The format to use.-or- A null reference (Nothing in Visual Basic) to use the default format defined for the type of the <see cref="T:System.IFormattable" /> implementation. </param>
+        ''' <remarks>For list of formats see other overload.</remarks>
+        ''' <exception cref="ArgumentException"><paramref name="format"/> is not one of recognized formatting strings</exception>
+        Public Overloads Function ToString(format As String) As String
+            Return ToString(format, CurrentCulture)
+        End Function
     End Class
 End Namespace

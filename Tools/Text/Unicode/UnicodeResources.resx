@@ -210,4 +210,11 @@
   <data name="propcat_unihan_Unknown" xml:space="preserve">
     <value>unknown</value>
   </data>
+  <data name="ex_InvalidXmlElement" xml:space="preserve">
+    <value>Element must be {0}</value>
+  </data>
+  <data name="ex_UnrecognizedFormatCharacter" xml:space="preserve">
+    <value>Unrecognized format character {0}</value>
+    <comment>ex_UnrecognizedFormatCharacter description</comment>
+  </data>
 </root>
