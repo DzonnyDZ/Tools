@@ -217,7 +217,7 @@ Namespace TextT.UnicodeT
                     Case "Cs" : Return Globalization.UnicodeCategory.Surrogate
                     Case "Co" : Return Globalization.UnicodeCategory.PrivateUse
                     Case "Cn" : Return Globalization.UnicodeCategory.OtherNotAssigned
-                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnsuppportedGeneralCategory.f(value))
+                    Case Else : Throw New InvalidOperationException(UnicodeResources.ex_UnsuppportedGeneralCategory.f(value))
                 End Select
             End Get
         End Property
@@ -264,7 +264,7 @@ Namespace TextT.UnicodeT
                 Try
                     Return GetUnicodeBidiCategory(value)
                 Catch ex As ArgumentException
-                    Throw New InvalidOperationException(ResourcesT.Exceptions.UnsupportedBidirectionalCategory.f(value), ex)
+                    Throw New InvalidOperationException(UnicodeResources.ex_UnsupportedBidirectionalCategory.f(value), ex)
                 End Try
             End Get
         End Property
@@ -294,7 +294,7 @@ Namespace TextT.UnicodeT
                 Case "RLO" : Return UnicodeBidiCategory.RightToLeftOverride
                 Case "S" : Return UnicodeBidiCategory.SegmentSeparator
                 Case "WS" : Return UnicodeBidiCategory.Whitespace
-                Case Else : Throw New ArgumentException(ResourcesT.Exceptions.UnsupportedBidirectionalCategory.f(value), "value")
+                Case Else : Throw New ArgumentException(UnicodeResources.ex_UnsupportedBidirectionalCategory.f(value), "value")
             End Select
         End Function
 

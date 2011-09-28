@@ -320,6 +320,10 @@
       <Project>{850AAA8C-49CC-476F-B871-53EBDE85E679}</Project>
       <Name>Tools.SqlServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools.Text.Unicode\Tools.Text.Unicode.vbproj">
+      <Project>{69B7448C-E445-4507-AE2A-469E3C99FC62}</Project>
+      <Name>Tools.Text.Unicode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools.TotalCommander\Tools.TotalCommander.Extensions\Tools.TotalCommander.Extensions.vbproj">
       <Project>{370D8C48-8190-4DE0-9DB3-51B07B7C86B9}</Project>
       <Name>Tools.TotalCommander.Extensions</Name>

@@ -1444,36 +1444,8 @@
   <data name="PropertyWasAlreadySet" xml:space="preserve">
     <value>Property {0} was already set</value>
   </data>
-  <data name="UnsuppportedGeneralCategory" xml:space="preserve">
-    <value>Unsuppported general category {0}</value>
-  </data>
-  <data name="UnsupportedBidirectionalCategory" xml:space="preserve">
-    <value>Unsupported bidirectional category {0}</value>
-  </data>
-  <data name="CharacterRepresentsSurrogatePair" xml:space="preserve">
-    <value>Character represents surrogate pair</value>
-  </data>
-  <data name="OperationIsNotValidForCharacterRanges" xml:space="preserve">
-    <value>Operation is not valid for character ranges.</value>
-  </data>
-  <data name="MakeSingleFromSingle" xml:space="preserve">
-    <value>Only range characters can be used to make single characters.</value>
-  </data>
-  <data name="RangeNotFullySpecified" xml:space="preserve">
-    <value>This range is not fully specified. Either first or last codepoint is not specified.</value>
-  </data>
-  <data name="CannotFindCodePoint" xml:space="preserve">
-    <value>Cannot find code point represented by {0}. {1} instance was either initialized without XML document or information is not available for current code point.</value>
-  </data>
   <data name="NotEnoughSpaceInDestinationArray" xml:space="preserve">
     <value>Not enough space in destination array.</value>
-  </data>
-  <data name="NotAllowedForPlaceholderCharacters" xml:space="preserve">
-    <value>Not allowed for placeholder characters.</value>
-  </data>
-  <data name="SequenceContainsPlaceholder" xml:space="preserve">
-    <value>Sequence contains placeholder</value>
-    <comment>SequenceContainsPlaceholder description</comment>
   </data>
   <data name="UnexpedtedValue0" xml:space="preserve">
     <value>Unexpedted value {0}</value>

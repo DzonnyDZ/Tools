@@ -77,7 +77,7 @@ Namespace TextT.UnicodeT
         <CLSCompliant(False)>
         Public ReadOnly Property CodePoint As UInteger
             Get
-                If IsPlaceholder Then Throw New InvalidOperationException(ResourcesT.Exceptions.NotAllowedForPlaceholderCharacters)
+                If IsPlaceholder Then Throw New InvalidOperationException(UnicodeResources.ex_NotAllowedForPlaceholderCharacters)
                 Return _codepoint
             End Get
         End Property
@@ -104,7 +104,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Current code point is surrogate pair -or- <see cref="IsPlaceholder"/> is true</exception>
         Public ReadOnly Property Character As Char
             Get
-                If Characters.Length > 1 Then Throw New InvalidOperationException(ResourcesT.Exceptions.CharacterRepresentsSurrogatePair)
+                If Characters.Length > 1 Then Throw New InvalidOperationException(UnicodeResources.ex_SurrogatePair)
                 Return Characters(0)
             End Get
         End Property
@@ -388,7 +388,7 @@ Namespace TextT.UnicodeT
         <CLSCompliant(False)>
         Public ReadOnly Property CodePoints As UInteger()
             Get
-                If _codePoints.Contains(Nothing) Then Throw New InvalidOperationException(ResourcesT.Exceptions.SequenceContainsPlaceholder)
+                If _codePoints.Contains(Nothing) Then Throw New InvalidOperationException(UnicodeResources.ex_SequenceContainsPlaceholder)
                 Return _codePoints.Clone
             End Get
         End Property
@@ -398,7 +398,7 @@ Namespace TextT.UnicodeT
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public ReadOnly Property CodePointsSigned As Integer()
             Get
-                If _codePoints.Contains(Nothing) Then Throw New InvalidOperationException(ResourcesT.Exceptions.SequenceContainsPlaceholder)
+                If _codePoints.Contains(Nothing) Then Throw New InvalidOperationException(UnicodeResources.ex_SequenceContainsPlaceholder)
                 Return (From cp In _codePoints Select cp.Value.BitwiseSame).ToArray
             End Get
         End Property

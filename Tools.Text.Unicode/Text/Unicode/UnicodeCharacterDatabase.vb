@@ -36,6 +36,8 @@ Namespace TextT.UnicodeT
         Implements IXDocumentWrapper, IXElementWrapper
         ''' <summary>Name of element representing this class in XML</summary>
         Friend Shared ReadOnly elementName As XName = <ucd/>.Name
+        ''' <summary>URI of XML namespace of Unicode Character Database XML</summary>
+        Public Const XmlNamespace$ = "http://www.unicode.org/ns/2003/ucd/1.0"
 #Region "Static loading"
         ''' <summary>Name of assembly resource that contains Unicode Character Database XML</summary>
         ''' <remarks>

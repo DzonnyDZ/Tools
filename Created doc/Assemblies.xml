@@ -26,6 +26,15 @@
             <include file="Tests/bin/x86/$(Configuration)/Tools.Tests.exe" path="."/>
         </member>
 
+        <member name="A:Tools.Text.Unicode.dll">
+            <summary>Contains classes for working with Unicode - mainly provides access to Unicode Character Database</summary>
+            <remarks>
+                <para>DLL, Any CPU, Strong Named, Standard Vesioning, Managed, VB</para>
+            </remarks>
+            <version version="1.5.4">This assembly is new in version 1.5.4</version>
+            <include file="$(GlobalBin)AnyCPU/Tools.Text.Unicode.dll" path="."/>
+        </member>
+
         <member name="A:Tools Experimental.dll">
             <summary>A place for placing various asorted untested functionality before it's fully evaluated and included in main tools library.</summary>
             <remarks>

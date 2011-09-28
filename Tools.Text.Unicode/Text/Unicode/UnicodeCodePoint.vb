@@ -256,8 +256,8 @@ Namespace TextT.UnicodeT
         <CLSCompliant(False)>
         Public Function MakeSingle(codePoint As UInteger) As UnicodeCodePoint
             If Me.CodePoint.HasValue AndAlso codePoint = Me.CodePoint.Value Then Return Me
-            If Me.CodePoint.HasValue Then Throw New InvalidOperationException(ResourcesT.Exceptions.MakeSingleFromSingle)
-            If Me.FirstCodePoint Is Nothing OrElse Me.LastCodePoint Is Nothing Then Throw New InvalidOperationException(ResourcesT.Exceptions.RangeNotFullySpecified)
+            If Me.CodePoint.HasValue Then Throw New InvalidOperationException(UnicodeResources.ex_MakeSingleFromSingle)
+            If Me.FirstCodePoint Is Nothing OrElse Me.LastCodePoint Is Nothing Then Throw New InvalidOperationException(UnicodeResources.ex_RangeNotFullySpecified)
             If codePoint < Me.FirstCodePoint.Value OrElse codePoint > Me.LastCodePoint.Value Then Throw New ArgumentOutOfRangeException("codePoint")
             Dim clone = Create(Element)
             If _group IsNot Nothing Then clone.Group = _group
@@ -284,7 +284,7 @@ Namespace TextT.UnicodeT
         ''' <returns>A new <see cref="CodePointInfo"/> instance pointing to charatcer indicated by <see cref="CodePoint"/> property.</returns>
         ''' <exception cref="InvalidOperationException">This instance represents character range.</exception>
         Public Function AsCodePointInfo() As CodePointInfo
-            If Not CodePoint.HasValue Then Throw New InvalidOperationException(ResourcesT.Exceptions.OperationIsNotValidForCharacterRanges)
+            If Not CodePoint.HasValue Then Throw New InvalidOperationException(UnicodeResources.ex_OperationIsNotValidForCharacterRanges)
             Return New CodePointInfo(Element.Document, CodePoint.Value)
         End Function
 
@@ -305,7 +305,7 @@ Namespace TextT.UnicodeT
         Public Shared Widening Operator CType(a As CodePointInfo) As UnicodeCodePoint
             If a Is Nothing Then Return Nothing
             Dim ret = a.UnicodeCodePoint
-            If ret Is Nothing Then Throw New InvalidOperationException(ResourcesT.Exceptions.CannotFindCodePoint)
+            If ret Is Nothing Then Throw New InvalidOperationException(UnicodeResources.ex_CannotFindCodePoint)
             Return ret
         End Operator
     End Class

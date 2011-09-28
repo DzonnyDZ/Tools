@@ -824,6 +824,10 @@
       <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
       <Name>Tools.Runtime.CompilerServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools.Text.Unicode\Tools.Text.Unicode.vbproj">
+      <Project>{69B7448C-E445-4507-AE2A-469E3C99FC62}</Project>
+      <Name>Tools.Text.Unicode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools.VisualStudio.Debugger\Tools.VisualStudio.Debugger.vbproj">
       <Project>{991AA564-5CCF-481C-A2FE-E657D7379E67}</Project>
       <Name>Tools.VisualStudio.Debugger</Name>

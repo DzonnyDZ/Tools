@@ -65,6 +65,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot find code point represented by {0}. {1} instance was either initialized without XML document or information is not available for current code point..
+        '''</summary>
+        Friend Shared ReadOnly Property ex_CannotFindCodePoint() As String
+            Get
+                Return ResourceManager.GetString("ex_CannotFindCodePoint", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Codepoint must start with U+.
         '''</summary>
         Friend Shared ReadOnly Property ex_CodepointMustStartWithUPlus() As String
@@ -79,6 +88,87 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property ex_InvalidXmlElement() As String
             Get
                 Return ResourceManager.GetString("ex_InvalidXmlElement", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only range characters can be used to make single characters..
+        '''</summary>
+        Friend Shared ReadOnly Property ex_MakeSingleFromSingle() As String
+            Get
+                Return ResourceManager.GetString("ex_MakeSingleFromSingle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Not allowed for placeholder characters..
+        '''</summary>
+        Friend Shared ReadOnly Property ex_NotAllowedForPlaceholderCharacters() As String
+            Get
+                Return ResourceManager.GetString("ex_NotAllowedForPlaceholderCharacters", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Operation is not valid for character ranges..
+        '''</summary>
+        Friend Shared ReadOnly Property ex_OperationIsNotValidForCharacterRanges() As String
+            Get
+                Return ResourceManager.GetString("ex_OperationIsNotValidForCharacterRanges", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This range is not fully specified. Either first or last codepoint is not specified..
+        '''</summary>
+        Friend Shared ReadOnly Property ex_RangeNotFullySpecified() As String
+            Get
+                Return ResourceManager.GetString("ex_RangeNotFullySpecified", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Sequence contains placeholder.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_SequenceContainsPlaceholder() As String
+            Get
+                Return ResourceManager.GetString("ex_SequenceContainsPlaceholder", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Character represents surrogate pair.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_SurrogatePair() As String
+            Get
+                Return ResourceManager.GetString("ex_SurrogatePair", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unrecognized format character {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_UnrecognizedFormatCharacter() As String
+            Get
+                Return ResourceManager.GetString("ex_UnrecognizedFormatCharacter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unsupported bidirectional category {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_UnsupportedBidirectionalCategory() As String
+            Get
+                Return ResourceManager.GetString("ex_UnsupportedBidirectionalCategory", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unsuppported general category {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_UnsuppportedGeneralCategory() As String
+            Get
+                Return ResourceManager.GetString("ex_UnsuppportedGeneralCategory", resourceCulture)
             End Get
         End Property
         
@@ -349,15 +439,6 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property proptype_String() As String
             Get
                 Return ResourceManager.GetString("proptype_String", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to Unrecognized format character {0}.
-        '''</summary>
-        Friend Shared ReadOnly Property ex_UnrecognizedFormatCharacter() As String
-            Get
-                Return ResourceManager.GetString("ex_UnrecognizedFormatCharacter", resourceCulture)
             End Get
         End Property
     End Class
