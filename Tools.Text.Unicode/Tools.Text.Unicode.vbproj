@@ -141,6 +141,9 @@
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="Text\Unicode\CodePointInfo.vb" />
+    <Compile Include="Text\Unicode\CsurEnums.vb" />
+    <Compile Include="Text\Unicode\CsurExtensions.vb" />
+    <Compile Include="Text\Unicode\CsurPropertiesProvider.vb" />
     <Compile Include="Text\Unicode\EmojiSourceInfo.vb" />
     <Compile Include="Text\Unicode\RadicalStrokeCount.vb" />
     <Compile Include="Text\Unicode\UcdRepertoire.vb" />
@@ -179,6 +182,10 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <EmbeddedResource Include="Text\Unicode\CSUR.xml.gz">
+      <LogicalName>Tools.TextT.UnicodeT.CSUR.xml.gz</LogicalName>
+      <DependentUpon>CSUR.xml</DependentUpon>
+    </EmbeddedResource>
     <None Include="Text\Unicode\ucd.all.grouped.xml.gz">
       <DependentUpon>ucd.all.grouped.xml</DependentUpon>
     </None>
@@ -197,9 +204,13 @@
   <ItemGroup>
     <None Include="Text\Unicode\ucd.all.grouped.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Text\Unicode\CSUR.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml</PreBuildEvent>
+    <PreBuildEvent>"$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml
+"$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\CSUR.xml.gz" "$(ProjectDir)Text\Unicode" -sg CSUR.xml</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>"$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"

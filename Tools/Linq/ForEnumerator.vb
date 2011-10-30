@@ -387,6 +387,18 @@ condition:  If Not condition(i) Then
                                 End Function, "loop")
                       )
         End Sub
+
+        ''' <summary>CTor - creates a new instance of the <see cref="ForLoopCollection(Of T)"/> class resembling loop with increment 1, no option to break, continue or affect loop variable</summary>
+        ''' <param name="from">Start position of the loop</param>
+        ''' <param name="to">Maximum value of the loop</param>
+        ''' <param name="loop">Function called as loop body. It receives current value of iterator and should return current value of generated collection.</param>
+        ''' <remarks>This constructor creates VB-style loop <c>For i = [from] To [to]</c> or C#-style loop <c>for(int i = from; i &lt;= to; i++)</c></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="loop"/> is null</exception>
+        ''' <version version="1.5.4">This CTor is new in version 1.5.4</version>
+        Public Sub New(ByVal [from] As Integer, ByVal [to] As Integer, ByVal [loop] As Func(Of Integer, T))
+            Me.New([from], [to], 1, [loop].ThrowIfNull(Of NonBreakingLoopBody(Of T, Integer))(Sub(ByRef i As Integer, ByRef yield As T) yield = [loop](i), "loop"))
+        End Sub
+
         ''' <summary>Copy CTor - creates a new instance of the <see cref="ForLoopCollection(Of T)"/> class which is clone of another given instance</summary>
         ''' <param name="other">Instance to clone</param>
         ''' <exception cref="ArgumentNullException"><paramref name="other"/> is null</exception>

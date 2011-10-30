@@ -16,7 +16,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyProduct("Tools.Text.Unicode")> 
 <Assembly: AssemblyCopyright("Copyright © Đonny 2011")> 
 
-
+<Assembly: CLSCompliant(True)> 
 <Assembly: ComVisible(False)> 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM

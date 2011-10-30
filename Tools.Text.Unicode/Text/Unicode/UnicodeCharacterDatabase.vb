@@ -41,10 +41,10 @@ Namespace TextT.UnicodeT
 #Region "Static loading"
         ''' <summary>Name of assembly resource that contains Unicode Character Database XML</summary>
         ''' <remarks>
-        ''' <para>The resource is contained in Tools.dll assembly (same assembly as <see cref="UnicodeCharacterDatabase"/> class).</para>
+        ''' <para>The resource is contained in Tools.Text.Unicode.dll assembly (same assembly as the <see cref="UnicodeCharacterDatabase"/> class).</para>
         ''' <para>Because of size of Unicode Character Database XML this resource is GZipped (use <see cref="IO.Compression.GZipStream"/> to unGZip it).</para>
         ''' <para>Grouped version of Unicode Character Database XML is used.</para>
-        ''' <para>This resource is not embedded, it's linked. It means that you must distribute file this resource points to with Tools.dll assembly to be able to access it.</para>
+        ''' <para>This resource is not embedded, it's linked. It means that you must distribute file this resource points to with Tools.Text.Unicode.dll assembly to be able to access it.</para>
         ''' </remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Const UnicodeXmlDatabaseResourceName As String = "Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz"
@@ -52,7 +52,7 @@ Namespace TextT.UnicodeT
         Friend Const UnicodeXmlDatabaseFileName As String = "ucd.all.grouped.xml.gz"
 
         ''' <summary>Gets Unicode Character Database in XML format</summary>
-        ''' <returns>Content of linked resource <c>Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz</c> (file ucd.all.grouped.xml.gz) as <see cref="XDocument"/>.</returns>
+        ''' <returns>Content of linked resource <c>Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz</c> (<see cref="UnicodeXmlDatabaseResourceName"/>; file ucd.all.grouped.xml.gz) as <see cref="XDocument"/>.</returns>
         ''' <exception cref="IO.FileNotFoundException">File ucd.all.grouped.xml.gz was not correctly distributed with Tools.dll assembly.</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function GetXml() As XDocument
@@ -174,6 +174,24 @@ Namespace TextT.UnicodeT
         Private ReadOnly Property RootElement As XElement Implements IXElementWrapper.Element
             Get
                 Return Xml.Root
+            End Get
+        End Property
+
+        ''' <summary>Gets ditionary containing extended properties for characters - the properties not comming from official Unicode character database.</summary>
+        ''' <remarks>
+        ''' Key of the dictionary are names of XML namespaces of the properties. Values are instances of <see cref="UnicodeCharacterDatabase"/> loaded with these additional properties.
+        ''' <para>Value of this property is stored in <see cref="Xml"/>.<see cref="XDocument.Annotation">Annotation</see></para>
+        ''' </remarks>
+        ''' <seelaso cref="CsurExtensions"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public ReadOnly Property Extensions As IDictionary(Of String, UnicodeCharacterDatabase)
+            Get
+                Dim ret = Xml.Annotation(Of IDictionary(Of String, UnicodeCharacter))()
+                If ret Is Nothing Then
+                    ret = New Dictionary(Of String, UnicodeCharacterDatabase)
+                    Xml.AddAnnotation(ret)
+                End If
+                Return ret
             End Get
         End Property
 

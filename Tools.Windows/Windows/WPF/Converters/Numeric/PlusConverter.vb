@@ -9,8 +9,15 @@ Imports System.Windows.Data
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that adds value to a numeric value</summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
+    ''' <version version="1.5.4">New property <see cref="PlusConverter.UseDynamicCast"/> now allows to chose wheather <see cref="DynamicCast"/> is used or not.</version>
     Public Class PlusConverter
         Implements IValueConverter
+
+        ''' <summary>Gets or sets value indicating if conversion function uses <see cref="DynamicCast"/> to convert actual type to target type</summary>
+        ''' <remarks>If this property is fale, value of target type is returned without attempt to cast it (only special buil-in conversions are considered).</remarks>7
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        <DefaultValue(True)>
+        Public Property UseDynamicCast As Boolean = True
 
         ''' <summary>Converts a value.</summary>
         ''' <returns>A converted value. <paramref name="value"/> + <paramref name="parameter"/>. If <paramref name="parameter"/> <paramref name="value"/> <see cref="TypeTools.DynamicCast">dynamicly casted</see> to <paramref name="targetType"/> is returned.</returns>
@@ -106,7 +113,11 @@ Namespace WindowsT.WPF.ConvertersT
             Else
                 Throw New NotSupportedException(ConverterResources.ex_UnsupportedDataType.f(value.GetType.Name))
             End If
-            Return TypeTools.DynamicCast(ret, targetType)
+            If UseDynamicCast Then
+                Return TypeTools.DynamicCast(ret, targetType)
+            Else
+                Return ret
+            End If
         End Function
         ''' <summary>Converts a value.</summary>
         ''' <returns>A converted value. <paramref name="value"/> - <paramref name="parameter"/>. If <paramref name="parameter"/> <paramref name="value"/> <see cref="TypeTools.DynamicCast">dynamicly casted</see> to <paramref name="targetType"/> is returned.</returns>

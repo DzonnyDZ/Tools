@@ -25,6 +25,15 @@ Namespace TextT.UnicodeT
             _element = element
         End Sub
 
+        ''' <summary>Gets a XML document that represents whole Unicode Character Database</summary>
+        ''' <remarks><note type="inheritinfo">Override this property in derived class if UCD document differs from <see cref="Element"/>.<see cref="XElement.Document">Document</see>.</note></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Overridable ReadOnly Property Document As XDocument
+            Get
+                Return Element.Document
+            End Get
+        End Property
+
         Private ReadOnly _element As XElement
 
         ''' <summary>Gets XML element this instance wraps</summary>
@@ -45,13 +54,13 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets first code point of this block</summary>
         Public ReadOnly Property FirstCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Element.Document, Integer.Parse("0x" & Element.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Document, Integer.Parse("0x" & Element.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
         ''' <summary>Gets last code point of this block</summary>
         Public ReadOnly Property LastCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Element.Document, Integer.Parse("0x" & Element.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Document, Integer.Parse("0x" & Element.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
         ''' <summary>Gets name of this block</summary>
@@ -68,7 +77,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim hex1 = FirstCodePoint.CodePoint.ToString("X", InvariantCulture)
                 Dim hexX = LastCodePoint.CodePoint.ToString("X", InvariantCulture)
-                Return From el In UnicodeCharacterDatabase.GetCodePointXmlElements(Element.Document)
+                Return From el In UnicodeCharacterDatabase.GetCodePointXmlElements(Document)
                        Where (el.@cp IsNot Nothing AndAlso el.@cp >= hex1 AndAlso el.@cp <= hexX) OrElse
                              (el.@cp Is Nothing AndAlso el.@<first-cp> IsNot Nothing AndAlso el.@<last-cp> IsNot Nothing AndAlso el.@<first-cp> >= hex1 AndAlso el.@<last-cp> <= hexX) OrElse
                              (el.@cp Is Nothing AndAlso el.@<first-cp> IsNot Nothing AndAlso el.@<last-cp> Is Nothing AndAlso el.@<first-cp> >= hex1 AndAlso el.@<first-cp> <= hexX) OrElse
@@ -87,7 +96,7 @@ Namespace TextT.UnicodeT
                 Function() FirstCodePoint.CodePoint,
                 Function(i) i <= LastCodePoint.CodePoint,
                 Function(i) i + 1UI,
-                Function(i) New CodePointInfo(Element.Document, i)
+                Function(i) New CodePointInfo(Document, i)
             )
         End Function
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="UnicodeBlock" />.</summary>

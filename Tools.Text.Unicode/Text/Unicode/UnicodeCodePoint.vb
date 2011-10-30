@@ -24,7 +24,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="ArgumentNullException"><paramref name="element"/> is nulll</exception>
         ''' <exception cref="ArgumentException"><paramref name="element"/> is neither &lt;reserved>, &lt;noncharacter>, &lt;surrogate> nor &lt;char> in namespace http://www.unicode.org/ns/2003/ucd/1.0.</exception>
         Public Shared Function Create(element As XElement) As UnicodeCodePoint
-            If element Is Nothing Then Throw New ArgumentNullException("elemen")
+            If element Is Nothing Then Throw New ArgumentNullException("element")
             Select Case element.Name
                 Case ReservedUnicodeCodePoint.elementName : Return New ReservedUnicodeCodePoint(element)
                 Case UnicodeNoncharacter.elementName : Return New UnicodeNoncharacter(element)
@@ -41,7 +41,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="ArgumentNullException"><paramref name="element"/> is nulll</exception>
         ''' <exception cref="ArgumentException"><paramref name="element"/> is neither &lt;reserved>, &lt;noncharacter>, &lt;surrogate> nor &lt;char> in namespace http://www.unicode.org/ns/2003/ucd/1.0.</exception>
         Public Shared Function Create(element As XElement, group As UnicodeCharacterGroup) As Object
-            If element Is Nothing Then Throw New ArgumentNullException("elemen")
+            If element Is Nothing Then Throw New ArgumentNullException("element")
             Select Case element.Name
                 Case ReservedUnicodeCodePoint.elementName : Return New ReservedUnicodeCodePoint(element) With {.Group = group}
                 Case UnicodeNoncharacter.elementName : Return New UnicodeNoncharacter(element) With {.Group = group}
@@ -73,23 +73,40 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets value of given property (attributes)</summary>
+        ''' <param name="namespace">Name of attribute XML namespace</param>
         ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
         ''' <returns>Value of the property (attribute) as string. If the attribute is not present on <see cref="Element"/> and <see cref="Group"/> is not null the attribute si searched on <see cref="Group"/>. If it's present neither on <see cref="Element"/> nor on <see cref="Group"/> null is returned.</returns>
+        ''' <remarks>
+        ''' If <paramref name="namespace"/> is neither null nor an empty string and extension for that namespace is registered
+        ''' (i.e. <see cref="Element"/>.<see cref="XElement.Document">Document</see>.<see cref="XDocument.Annotation">Annotation</see>[<see cref="T:System.Collections.Generic.IDictionary`2"/>[<see cref="String"/>, <see cref="UnicodeCharacterDatabase"/>]] is not null and the dictionary it resturns contains key <paramref name="namespace"/>)
+        ''' attempt to obtain property value from that extension <see cref="UnicodeCharacterDatabase"/> is made first.
+        ''' This only works for single-code-point characters (i.e. <see cref="CodePoint"/> is not null.)
+        ''' </remarks>
+        ''' <seelaso cref="GetExtensions"/>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public Overrides Function GetPropertyValue$(name$)
-            Dim attr = Element.Attribute(name)
-            If attr Is Nothing AndAlso Group IsNot Nothing Then Return Group.GetPropertyValue(name)
+        Public Overrides Function GetPropertyValue$(namespace$, name$)
+            If namespace$ <> "" AndAlso CodePoint.HasValue Then
+                Dim extUcd = GetExtensions([namespace])
+                If extUcd IsNot Nothing Then
+                    Dim extCodePoint = extUcd.FindCodePoint(Me.CodePoint.Value)
+                    If extCodePoint IsNot Nothing Then Return extCodePoint.GetPropertyValue([namespace], name)
+                End If
+            End If
+            Dim attr = Element.Attribute(XName.Get(name, namespace$))
+            If attr Is Nothing AndAlso Group IsNot Nothing Then Return Group.GetPropertyValue(namespace$, name)
             Return attr.Value
         End Function
 
         ''' <summary>Get value of given property (attributes) resolving or not resolving placeholders in property value</summary>
+        ''' <param name="namespace">Name of attribute XML namespace</param>
         ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
         ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it.</param>
         ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
         ''' <remarks>Placeholder # is replace only if <see cref="CodePoint"/> is not null.</remarks>
-        Protected Overrides Function GetPropertyValue(name As String, allowResolving As Boolean) As String
-            Dim ret = GetPropertyValue(name, allowResolving)
-            If ret <> "" AndAlso ret.Contains("#") AndAlso CodePoint.HasValue Then Return ret.Replace("#", CodePoint.Value.ToString("X", InvariantCulture))
+        Protected Overrides Function GetPropertyValue(namespace$, name$, allowResolving As Boolean) As String
+            Dim ret = GetPropertyValue(name, [namespace])
+            If allowResolving AndAlso ret <> "" AndAlso ret.Contains("#") AndAlso CodePoint.HasValue Then _
+                Return ret.Replace("#", CodePoint.Value.ToString("X", InvariantCulture))
             Return ret
         End Function
 

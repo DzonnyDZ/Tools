@@ -91,29 +91,76 @@ Namespace TextT.UnicodeT
             Return MyBase.Equals(obj)
         End Function
 
-        ''' <summary>Gets value of given property (attributes)</summary>
+        ''' <summary>Gets value of given property (attribute with no namespace)</summary>
         ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
         ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
-        ''' <remarks>Derived class may provide fallback logic for providing property values when the property is not defined on <see cref="Element"/>.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public Overridable Function GetPropertyValue$(name$)
-            Dim attr = Element.Attribute(name)
-            If attr Is Nothing Then Return Nothing
-            Return attr.Value
+        Public Function GetPropertyValue$(name$)
+            Return GetPropertyValue(Nothing, name)
         End Function
 
-        ''' <summary>When overriden in derived class get value of given property (attributes) resolving or not resolving placeholders in property value</summary>
+        ''' <summary>When overriden in derived class get value of given property (attribute with namespace specified) resolving or not resolving placeholders in property value</summary>
+        ''' <param name="namespace">Name of attribute XML namespace</param>
         ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
         ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overriden in derived class. This implementation never resolves placholders.</param>
         ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
         ''' <remarks>Derived class may provide fallback logic for providing property values when the property is not defined on <see cref="Element"/>.
         ''' <para>
-        ''' This implementation simply calls <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String)"/> overload not resolving any placeholders (ignoring <paramref name="allowResolving"/>).
+        ''' This implementation simply calls <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String)"/> overload not resolving any placeholders (ignoring <paramref name="allowResolving"/>).
         ''' When derived class implements resolving it's not mandatory to happen. Derived class implementation resolves placeholders if it can and leaves them in property value if it cannot resolve them.
         ''' </para></remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Protected Overridable Function GetPropertyValue$(name$, allowResolving As Boolean)
-            Return GetPropertyValue(name)
+        Protected Overridable Function GetPropertyValue$(namespace$, name$, allowResolving As Boolean)
+            Return GetPropertyValue([namespace], name)
+        End Function
+
+        ''' <summary>When <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> overload is overriden overriden in derived class get value of given property (attribute with no namespace) resolving or not resolving placeholders in property value</summary>
+        ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
+        ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overriden in derived class. This implementation never resolves placholders.</param>
+        ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
+        ''' <remarks>If <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> is not overriden resolving is never performed.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Function GetPropertyValue$(name$, allowResolving As Boolean)
+            Return GetPropertyValue(Nothing, name, allowResolving)
+        End Function
+
+        ''' <summary>Gets value of given property (attribute with namespace specified)</summary>
+        ''' <param name="namespace">Name of attribute XML namespace</param>
+        ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
+        ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
+        ''' <remarks>Derived class may provide fallback logic for providing property values when the property is not defined on <see cref="Element"/>.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Overridable Function GetPropertyValue$(namespace$, name$)
+            Dim attr = Element.Attribute(XName.Get(name, [namespace]))
+            If attr Is Nothing Then Return Nothing
+            Return attr.Value
+        End Function
+
+        ''' <summary>Gets an instance of <see cref="UnicodeCharacterDatabase"/> that provides property values defined in UCD extensions model identified by a namespace name</summary>
+        ''' <param name="namespace">Name of nbamespace to get extensions UCD for. <note>Null and empty string value are always ignored and this method returns null.</note></param>
+        ''' <returns>
+        ''' An instance of <see cref="UnicodeCharacterDatabase"/> that provides values of UCD extension properties
+        ''' (i.e. properties that are not part of Unicode standard and come from other source).
+        ''' The model to get properties for is identified by <paramref name="namespace"/>.
+        ''' Returns null if either <paramref name="namespace"/> is null or an empty string, or no extensions are registered for document <see cref="Element"/> belongs to, or extensions for namespace <paramref name="namespace"/> is not registered.
+        ''' </returns>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Function GetExtensions(namespace$) As UnicodeCharacterDatabase
+            If [namespace].IsNullOrEmpty Then Return Nothing
+            Dim extDic = GetExtensions()
+            If extDic Is Nothing Then Return Nothing
+            If Not extDic.ContainsKey([namespace]) Then Return Nothing
+            Return extDic([namespace])
+        End Function
+        ''' <summary>Gets all registered extensions for <see cref="Element"/>.<see cref="XElement.Document">Document</see></summary>
+        ''' <returns>All registered extensions for <see cref="Element"/>.<see cref="XElement.Document">Document</see>. Null if there are no extensions registered.</returns>
+        ''' <remarks>
+        ''' Extensions are registered in a dictionary which is stored in document annotation of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="String"/>, <see cref="UnicodeCharacterDatabase"/>].
+        ''' Primary way of accessing extensions is the <see cref="UnicodeCharacterDatabase.Extensions"/> property.
+        ''' </remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Function GetExtensions() As IDictionary(Of String, UnicodeCharacterDatabase)
+            Return Element.Document.Annotation(Of IDictionary(Of String, UnicodeCharacterDatabase))()
         End Function
 #End Region
 
