@@ -141,6 +141,7 @@
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="Text\Unicode\CodePointInfo.vb" />
+    <Compile Include="Text\Unicode\CsurBlock.vb" />
     <Compile Include="Text\Unicode\CsurEnums.vb" />
     <Compile Include="Text\Unicode\CsurExtensions.vb" />
     <Compile Include="Text\Unicode\CsurPropertiesProvider.vb" />
@@ -192,6 +193,10 @@
     <None Include="Text\Unicode\Unihan generator.xlsx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tools.Hardcore\Tools.Hardcore.vcxproj">
+      <Project>{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}</Project>
+      <Name>Tools.Hardcore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
       <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
       <Name>Tools.Runtime.CompilerServices</Name>
@@ -205,7 +210,9 @@
     <None Include="Text\Unicode\ucd.all.grouped.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Text\Unicode\CSUR.xml" />
+    <None Include="Text\Unicode\CSUR.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

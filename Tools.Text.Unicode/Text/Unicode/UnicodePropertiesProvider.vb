@@ -54,6 +54,7 @@ Namespace TextT.UnicodeT
     ''' </list>
     ''' <note>May boolean properties' names are prefixed with the "Is" prefix which is not used in UCD.</note>
     ''' <note>Unihan database properties has prefix "Han" (Uninah property can be also determined by use of <see cref="UnihanPropertyCategoryAttribute"/> instead of <see cref="UnicodePropertyCategoryAttribute"/>).</note>
+    ''' <note>XML serialization attributes used to decorate properties of this class are not intended for XML serialization, they are rather intended as machine-readable documentation where the property originates from in UCD XML.</note>
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public MustInherit Class UnicodePropertiesProvider : Implements IXElementWrapper
@@ -110,7 +111,7 @@ Namespace TextT.UnicodeT
         ''' When derived class implements resolving it's not mandatory to happen. Derived class implementation resolves placeholders if it can and leaves them in property value if it cannot resolve them.
         ''' </para></remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Protected Overridable Function GetPropertyValue$(namespace$, name$, allowResolving As Boolean)
+        Public Overridable Function GetPropertyValue$(namespace$, name$, allowResolving As Boolean)
             Return GetPropertyValue([namespace], name)
         End Function
 
@@ -120,7 +121,7 @@ Namespace TextT.UnicodeT
         ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
         ''' <remarks>If <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> is not overriden resolving is never performed.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Protected Function GetPropertyValue$(name$, allowResolving As Boolean)
+        Public Function GetPropertyValue$(name$, allowResolving As Boolean)
             Return GetPropertyValue(Nothing, name, allowResolving)
         End Function
 

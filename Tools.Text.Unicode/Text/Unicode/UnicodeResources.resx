@@ -245,4 +245,49 @@
   <data name="ex_UnsuppportedGeneralCategory" xml:space="preserve">
     <value>Unsuppported general category {0}</value>
   </data>
+  <data name="ex_ValueCannotBeParsed" xml:space="preserve">
+    <value>Value {0} cannot be parsed as {1}</value>
+  </data>
+  <data name="propcat_CSUR_CSUR" xml:space="preserve">
+    <value>CSUR</value>
+  </data>
+  <data name="d_CSUR_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="d_CSUR_BidiCategory" xml:space="preserve">
+    <value>Bidi Category</value>
+  </data>
+  <data name="d_CSUR_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="d_CSUR_LastRevision" xml:space="preserve">
+    <value>Last revision</value>
+  </data>
+  <data name="d_CSUR_ReservedFor" xml:space="preserve">
+    <value>Reserved for</value>
+  </data>
+  <data name="d_CSUR_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="d_CSUR_Script" xml:space="preserve">
+    <value>Script</value>
+  </data>
+  <data name="propcat_other_Infrastructure" xml:space="preserve">
+    <value>Infrastructure</value>
+  </data>
+  <data name="d_other_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="d_other_CodePoint" xml:space="preserve">
+    <value>Code point</value>
+  </data>
+  <data name="d_other_FirstCodePoint" xml:space="preserve">
+    <value>First Code-point</value>
+  </data>
+  <data name="d_other_LastCodePoint" xml:space="preserve">
+    <value>Last Code-point</value>
+  </data>
+  <data name="d_CSUR_Creator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
 </root>

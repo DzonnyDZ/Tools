@@ -347,7 +347,13 @@
             <summary>Contains classes for working with different text encodings.</summary>
         </member>
         <member name="N:Tools.TextT.UnicodeT">
-            <summary>Contains Unicode-specific functionality</summary>
+            <summary>Contains Unicode-specific functionality. Especially it contains Unicode Character Database (UCD) bindings.</summary>
+            <remarks>
+                Properties of classes in this namespace arew often decodated with XML serialization attributes.
+                However these attributes are not intended for XML serialization of the classes (use Unicode Character Database (UCD) XML instead).
+                These attributes are intended as machine-readable documentation of where the property originates from in UCD XML.
+            </remarks>
+            <seealso cref="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase"/>
             <version version="1.5.4">This namespace is new in version 1.5.4</version>
         </member>
         <!--ThreadingT-->

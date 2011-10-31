@@ -52,18 +52,23 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets first code point of this block</summary>
+        <XmlElement("first-cp")>
         Public ReadOnly Property FirstCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Document, Integer.Parse("0x" & Element.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Document, UInteger.Parse("0x" & Element.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
+
         ''' <summary>Gets last code point of this block</summary>
+        <XmlElement("last-cp")>
         Public ReadOnly Property LastCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Document, Integer.Parse("0x" & Element.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Document, UInteger.Parse("0x" & Element.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
+
         ''' <summary>Gets name of this block</summary>
+        <XmlElement("name")>
         Public ReadOnly Property Name As String
             Get
                 Return Element.@name

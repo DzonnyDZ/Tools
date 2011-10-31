@@ -409,6 +409,62 @@ Namespace TextT.UnicodeT
             End Select
         End Function
 
+        ''' <summary>Finds a block a code point belongs to</summary>
+        ''' <param name="blocks">A collection of XML elements representing blocks to search within. The collection should contain &lt;block> elements from the http://www.unicode.org/ns/2003/ucd/1.0 namespace (this precondition is not checked).</param>
+        ''' <param name="codePoint">Code point (character) to find block it belongs to</param>
+        ''' <param name="checked">True to check for duplicate block, false to skip this check. If <paramref name="checked"/> is true <see cref="Enumerable.SingleOrDefault"/> is used to select a block, if it is false <see cref="Enumerable.FirstOrDefault"/> is used.</param>
+        ''' <returns>
+        ''' An element from the <paramref name="blocks"/> collection <paramref name="codePoint"/> falls in range of codepoints of.
+        ''' Null if no such element can ba found.
+        ''' <note>What happens when more than such element is found depends on value of the <paramref name="checked"/> parameter. When <paramref name="checked"/> is true an <see cref="InvalidOperationException"/> is thrown. When <paramref name="checked"/> is false first matching block is returned and the other bllocks (elements) are ignored.</note>
+        ''' </returns>
+        ''' <remarks>
+        ''' Attributes forst-cp and last-cp are used to determine block range.
+        ''' <para>This method is not CLS-compliant and no CLS-compliant alternative is provided. Consumers not capable of using <see cref="UInteger"/> type should use one of instance overloads instead.</para>
+        ''' </remarks>
+        ''' <exception cref="ArgumentNullException">Attribute first-cp or last-cp of an element is not provided.</exception>
+        ''' <exception cref="FormatException">Value of attribute first-cp or last-cp cannot be parsed as hexadecimal number.</exception>
+        ''' <exception cref="OverflowException">Value of attribute first-cp or last-cp can be parsed as hexadecimal number but it does not fall into range of the <see cref="UInteger"/> type.</exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="checked"/> is true and more than one block is found.</exception>
+        <CLSCompliant(False)>
+        Protected Friend Shared Function FindBlock(blocks As IEnumerable(Of XElement), codePoint As UInteger, checked As Boolean) As XElement
+            Dim suitableBlocks =
+                From b In blocks
+                Where
+                    UInteger.Parse("0x" & b.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture) <= codePoint AndAlso
+                    UInteger.Parse("0x" & b.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture) >= codePoint
+            Dim oneBlock = If(checked, suitableBlocks.SingleOrDefault, suitableBlocks.FirstOrDefault)
+            Return oneBlock
+        End Function
+
+        ''' <summary>Gets a Unicode block that covers given code point</summary>
+        ''' <param name="codePoint">A code point to get block that contains it</param>
+        ''' <returns>A Unicode block that cotains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
+        ''' <remarks>This method is not CLS-compliant. CLS compliant alternative (overload) is provided.</remarks>
+        ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
+        ''' <seelaso cref="UnicodeCodePoint.Block"/>
+        <CLSCompliant(False)>
+        Public Function FindBlock(codePoint As UInteger) As UnicodeBlock
+            Dim bel As XElement
+            Try
+                bel = FindBlock(Xml.<ucd>.<blocks>.<block>, codePoint, False)
+            Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
+                Throw New InvalidOperationException(ex.Message, ex)
+            End Try
+            If bel Is Nothing Then Return Nothing
+            Return New UnicodeBlock(bel)
+        End Function
+
+        ''' <summary>Gets a Unicode block that covers given code point (CLS-compliant alternative</summary>
+        ''' <param name="codePoint">A code point to get block that contains it</param>
+        ''' <returns>A Unicode block that cotains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
+        ''' <remarks>This method is not CLS-compliant. CLS compliant alternative (overload) is provided.</remarks>
+        ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
+        ''' <seelaso cref="UnicodeCodePoint.Block"/>
+        Public Function FindBlock(codePoint As Integer) As UnicodeBlock
+            Return FindBlock(codePoint.BitwiseSame)
+        End Function
+
     End Class
 End Namespace
 #End If

@@ -1,11 +1,12 @@
-﻿Imports System.Xml.Linq
-Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
+﻿Imports System.Globalization.CultureInfo
+Imports Tools.ComponentModelT
 Imports Tools.ExtensionsT
-Imports System.Globalization.CultureInfo
-Imports Tools.MathT
+Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
+Imports System.Xml.Serialization
 
 Namespace TextT.UnicodeT
     ''' <summary>Represents single Unicode code point and provides information about it</summary>
+    ''' <remarks><note>XML serialization attributes used to decorate properties of this class are not intended for XML serialization, they are rather intended as machine-readable documentation where the property originates from in UCD XML.</note></remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public MustInherit Class UnicodeCodePoint : Inherits UnicodePropertiesProvider
         ''' <summary>CTor - creates a new instance of the <see cref="UnicodeCodePoint"/> class</summary>
@@ -16,6 +17,7 @@ Namespace TextT.UnicodeT
         End Sub
 
         ''' <summary>When overriden in derived class gets type of this code point</summary>
+        <LCategory(GetType(UnicodeResources), "propcat_other_Infrastructure", "Infrastructure"), LDisplayName(GetType(UnicodeResources), "d_other_Type")>
         Public MustOverride ReadOnly Property Type As UnicodeCodePointType
 
         ''' <summary>Creates an instance of <see cref="UnicodeCodePoint"/>-derived class from XML element</summary>
@@ -103,7 +105,8 @@ Namespace TextT.UnicodeT
         ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it.</param>
         ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
         ''' <remarks>Placeholder # is replace only if <see cref="CodePoint"/> is not null.</remarks>
-        Protected Overrides Function GetPropertyValue(namespace$, name$, allowResolving As Boolean) As String
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Overrides Function GetPropertyValue(namespace$, name$, allowResolving As Boolean) As String
             Dim ret = GetPropertyValue(name, [namespace])
             If allowResolving AndAlso ret <> "" AndAlso ret.Contains("#") AndAlso CodePoint.HasValue Then _
                 Return ret.Replace("#", CodePoint.Value.ToString("X", InvariantCulture))
@@ -151,7 +154,8 @@ Namespace TextT.UnicodeT
         ''' <para>This property is not CLS-compliant. Corresponding CLS-compilant property is <see cref="CodePointSigned"/>.</para>
         ''' <para>Underlying XML attributes is @cp.</para>
         ''' </remarks>
-        <CLSCompliant(False)>
+        <CLSCompliant(False), LCategory(GetType(UnicodeResources), "propcat_other_Infrastructure", "Infrastructure"), LDisplayName(GetType(UnicodeResources), "d_other_CodePoint")>
+        <XmlAttribute("cp")>
         Public ReadOnly Property CodePoint As UInteger?
             Get
                 If _codePoint.HasValue Then Return _codePoint
@@ -163,7 +167,7 @@ Namespace TextT.UnicodeT
 
         ''' <summary>CLS-comliant version of <see cref="CodePoint"/> ptoperty</summary>
         ''' <seelaso cref="CodePoint"/>
-        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), XmlIgnore()>
         Public ReadOnly Property CodePointSigned As Integer?
             Get
                 Dim value = CodePoint
@@ -178,7 +182,8 @@ Namespace TextT.UnicodeT
         ''' This property is not CLS-compliant. CLS-compliant alternative is <see cref="FirstCodePointSigned"/>.
         ''' <para>Underlying XML attribute is @first-cp.</para>
         ''' </remarks>
-        <CLSCompliant(False)>
+        <CLSCompliant(False), LCategory(GetType(UnicodeResources), "propcat_other_Infrastructure", "Infrastructure"), LDisplayName(GetType(UnicodeResources), "d_other_FirstCodePoint")>
+        <XmlAttribute("first-cp")>
         Public ReadOnly Property FirstCodePoint As UInteger?
             Get
                 Dim value = GetPropertyValue("first-cp")
@@ -193,7 +198,8 @@ Namespace TextT.UnicodeT
         ''' This property is not CLS-compliant. CLS-compliant alternative is <see cref="LastCodePointSigned"/>.
         ''' <para>Underlying XML attribute is @last-cp.</para>
         ''' </remarks>
-        <CLSCompliant(False)>
+        <CLSCompliant(False), LCategory(GetType(UnicodeResources), "propcat_other_Infrastructure", "Infrastructure"), LDisplayName(GetType(UnicodeResources), "d_other_LastCodePoint")>
+        <XmlAttribute("last-cp")>
         Public ReadOnly Property LastCodePoint As UInteger?
             Get
                 Dim value = GetPropertyValue("last-cp")
@@ -204,7 +210,7 @@ Namespace TextT.UnicodeT
 
         ''' <summary>CLS-comliant version of <see cref="FirstCodePoint"/> ptoperty</summary>
         ''' <seelaso cref="CodePoint"/>
-        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), XmlIgnore()>
         Public ReadOnly Property FirstCodePointSigned As Integer?
             Get
                 Dim value = FirstCodePoint
@@ -214,7 +220,7 @@ Namespace TextT.UnicodeT
         End Property
         ''' <summary>CLS-comliant version of <see cref="LastCodePoint"/> ptoperty</summary>
         ''' <seelaso cref="CodePoint"/>
-        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), XmlIgnore()>
         Public ReadOnly Property LastCodePointSigned As Integer?
             Get
                 Dim value = LastCodePoint
@@ -325,6 +331,40 @@ Namespace TextT.UnicodeT
             If ret Is Nothing Then Throw New InvalidOperationException(UnicodeResources.ex_CannotFindCodePoint)
             Return ret
         End Operator
+
+        ''' <summary>Gets a Unicode block this code-point belongs to</summary>
+        ''' <returns>
+        ''' A Unicode block this code-point belongs to, null if corresponding block cannot be found.
+        ''' In case <see cref="CodePoint"/> is null and <see cref="FirstCodePoint"/> and <see cref="LastCodePoint"/> are specified the block is returned only in case both - <see cref="FirstCodePoint"/> and <see cref="LastCodePoint"/> belong to the same block.
+        ''' If <see cref="CodePoint"/> is null and also either <see cref="FirstCodePoint"/> or <see cref="LastCodePoint"/> is null, this function always returns null.
+        ''' </returns>
+        ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
+        ''' <seelaso cref="UnicodeCharacterDatabase.FindBlock"/>
+        <Browsable(False), XmlIgnore()>
+        Public ReadOnly Property Block As UnicodeBlock
+            Get
+                If CodePoint.HasValue Then
+                    Dim bel As XElement
+                    Try
+                        bel = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, CodePoint.Value, False)
+                    Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
+                        Throw New InvalidOperationException(ex.Message, ex)
+                    End Try
+                    If bel IsNot Nothing Then Return New UnicodeBlock(bel)
+                ElseIf FirstCodePoint.HasValue AndAlso LastCodePoint.HasValue Then
+                    Dim bel1 As XElement
+                    Dim bel2 As XElement
+                    Try
+                        bel1 = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, FirstCodePoint.Value, False)
+                        bel2 = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, LastCodePoint.Value, False)
+                    Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
+                        Throw New InvalidOperationException(ex.Message, ex)
+                    End Try
+                    If bel1 Is bel2 Then Return New UnicodeBlock(bel1)
+                End If
+                Return Nothing
+            End Get
+        End Property
     End Class
 
     ''' <summary>Enumerates Unicode code point types</summary>

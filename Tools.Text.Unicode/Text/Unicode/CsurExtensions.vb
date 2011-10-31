@@ -178,7 +178,7 @@ Namespace TextT.UnicodeT
             If Not codePoint.IsCsurLoaded Then Return Nothing
             Dim csurCodePoint = codePoint.GetExtensions(XmlNamespace).FindCodePoint(codePoint.CodePoint.Value)
             If csurCodePoint Is Nothing Then Return Nothing
-            Return New CsurPropertiesProvider(csurCodePoint)
+            Return New CsurPropertiesProvider(csurCodePoint, codePoint.Element.Document)
         End Function
 
         ''' <summary>Gets ConScript Unicode Registry (CSUR) blocks</summary>
