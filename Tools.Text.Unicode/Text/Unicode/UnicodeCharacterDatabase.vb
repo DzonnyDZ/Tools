@@ -91,6 +91,10 @@ Namespace TextT.UnicodeT
         Private Shared ReadOnly defaultLock As New Object
         ''' <summary>Gets default instance of <see cref="UnicodeCharacterDatabase"/> class initialized with default copy of Unicode Character Database XML</summary>
         ''' <returns>Default instance of Unicode Character Database; null if it cannot be initialized because default Unicode Character Database xml is not assessible (i.e. <see cref="GetXml"/> throws <see cref="IO.FileNotFoundException"/>).</returns>
+        ''' <remarks>
+        ''' This instance of Unicode character database is pre-loaded with ConScript Unicode Registry (CSUR) data (see <see cref="CsurExtensions"/>) and
+        ''' name aliases (see <see cref="LoadAliases"/>).
+        ''' </remarks>
         Public Shared ReadOnly Property [Default] As UnicodeCharacterDatabase
             Get
                 If _default Is Nothing Then
@@ -100,6 +104,8 @@ Namespace TextT.UnicodeT
                                 _default = New UnicodeCharacterDatabase(GetXml)
                             Catch ex As IO.FileNotFoundException
                             End Try
+                            _default.Extensions.Add(CsurExtensions.XmlNamespace, CsurExtensions.DefaultCsurDatabase)
+                            _default.LoadAliases()
                         End If
                     End SyncLock
                 End If
@@ -465,6 +471,76 @@ Namespace TextT.UnicodeT
             Return FindBlock(codePoint.BitwiseSame)
         End Function
 
+        ''' <summary>Gets dictionary of name aliases for Unicode code-points</summary>
+        ''' <returns>A dictionary of name aliases. Nulll if name aliases were not loded.</returns>
+        ''' <remarks>
+        ''' Aliases are stored in <see cref="Xml"/>.<see cref="XDocument.Annotations">Annotations</see> of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="UInteger"/>, <see cref="String()"/>].
+        ''' <para>Name aliases are not part of Unicode Character Database XML and thus they are not loaded by default when loading <see cref="UnicodeCharacterDatabase"/>. You must load them explicitly uisng some of <see cref="LoadAliases"/> overloads or some other way. Some other way means set <see cref="Xml"/>.<see cref="XDocument.Annotations">Annotations</see> directly.</para>
+        ''' <para>This property is not CLS-compliant. Direct CLS-compliant alternative is not provided. Use aliases-related properties of <see cref="UnicodeCodePoint"/>.</para>
+        ''' <para>Keys of the dictionary are code-point codes, values are alias names. Each code-point can have zero or more aliases. Currently there are only few (11 as of Unicode 6.0) aliases defined in the Unicode standard and no character has more than one alias.</para>
+        ''' </remarks>
+        <CLSCompliant(False)>
+        Public ReadOnly Property Aliases As IDictionary(Of UInteger, String())
+            Get
+                Return Xml.Annotation(Of IDictionary(Of UInteger, String()))()
+            End Get
+        End Property
+
+        'TODO: Aliases loading and parsing
+
+        ''' <summary>Loads default aliases names that are stored in an embeded resource inside Tools.Text.Unicode.dll</summary>
+        Public Sub LoadAliases()
+            'TODO:
+        End Sub
+
+        ''' <summary>Loads aliases from a file</summary>
+        ''' <param name="path">Path to NameAliases.txt file from Unicode Character Database (UCD)</param>
+        ''' <remarks>For Unicode 6.0 the file is publicly available at <a href="http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt">http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt</a>.</remarks>
+        Public Sub LoadAliases(path As String)
+            'TODO:
+        End Sub
+
+        ''' <summary>Loads aliases from a text reader</summary>
+        ''' <param name="reader">A reader to read aliases from. The reader should point to firs tile of file in NameAlias.txt format (as used in UCD)</param>
+        Public Sub LoadAliases(reader As IO.TextReader)
+            'TODO:
+        End Sub
+
+        ''' <summary>Parses contant of NameAliases.txt file from Unicode Character Database to a dictionary of name aliases</summary>
+        ''' <param name="reader">A reader that points to first line of NameAliases.txt-like file (a file in compatible format)</param>
+        ''' <returns>A dictionary keyed by code-points and valued by name aliases for that code-point</returns>
+        ''' <remarks>This function is not CLS-compliant. No direct CLS-compliant counterpart is provided. Use some of instance overloads of <see cref="LoadAliases"/>.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="reader"/> is null.</exception>
+        ''' <exception cref="FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced), CLSCompliant(False)>
+        Public Shared Function ReadAliases(reader As IO.TextReader) As IDictionary(Of UInteger, String())
+            If reader Is Nothing Then Throw New ArgumentNullException("reader")
+            Dim aliases As New Dictionary(Of UInteger, List(Of String))
+
+            Dim line As String
+            Dim lineNumber% = 0
+            Do
+                line = reader.ReadLine
+                lineNumber += 1
+                If line.IsNullOrWhiteSpace OrElse line.StartsWith("#") Then Continue Do
+                If line.Contains("#") Then line = line.SubstringBefore("#")
+                Dim parts = line.Split({";"c}, 2)
+                Try
+                    Dim code = UInteger.Parse("0x" & parts(0), Globalization.NumberStyles.HexNumber, InvariantCulture)
+                    If aliases.ContainsKey(code) Then aliases(code).Add(parts(1)) Else aliases.Add(code, New List(Of String) From {parts(0)})
+                Catch ex As Exception
+                    Throw New FormatException(TextT.UnicodeT.UnicodeResources.ex_ErrorReadingNameAliases.f(lineNumber, ex.Message), ex)
+                End Try
+            Loop Until line Is Nothing
+
+            Dim ret As New Dictionary(Of UInteger, String())(aliases.Count)
+            For Each itm In aliases
+                ret.Add(itm.Key, itm.Value.ToArray)
+            Next
+            Return ret
+        End Function
+
+        'TODO: Informative aliases
     End Class
 End Namespace
 #End If

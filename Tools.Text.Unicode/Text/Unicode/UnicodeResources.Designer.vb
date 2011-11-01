@@ -191,6 +191,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Erorr while reading name aliases on line {0}: {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_ErrorReadingNameAliases() As String
+            Get
+                Return ResourceManager.GetString("ex_ErrorReadingNameAliases", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Element must be {0}.
         '''</summary>
         Friend Shared ReadOnly Property ex_InvalidXmlElement() As String
