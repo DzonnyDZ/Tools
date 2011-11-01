@@ -88,7 +88,7 @@ Namespace TextT.UnicodeT
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Overrides Function GetPropertyValue$(namespace$, name$)
             If namespace$ <> "" AndAlso CodePoint.HasValue Then
-                Dim extUcd = GetExtensions([namespace])
+                Dim extUcd = GetExtension([namespace])
                 If extUcd IsNot Nothing Then
                     Dim extCodePoint = extUcd.FindCodePoint(Me.CodePoint.Value)
                     If extCodePoint IsNot Nothing Then Return extCodePoint.GetPropertyValue([namespace], name)
@@ -363,6 +363,24 @@ Namespace TextT.UnicodeT
                     If bel1 Is bel2 Then Return New UnicodeBlock(bel1)
                 End If
                 Return Nothing
+            End Get
+        End Property
+
+        ''' <summary>Gets normative name aliases for name of this code point</summary>
+        ''' <returns>
+        ''' Name aliases (alternative normative names) for this code-point.
+        ''' Retturns null if <see cref="CodePoint"/> is null or if name aliases are not registered.
+        ''' Returns an empty array if there ane no formal aliases for name of current code point.
+        ''' </returns>
+        ''' <remarks>This property returns non-null values only if NameAliases.txt textual extension was registered for parent UCD</remarks>
+        ''' <seelaso cref="UnicodeCharacterDatabase.NameAliases"/>
+        Public ReadOnly Property NameAliases As String()
+            Get
+                If Not CodePoint.HasValue Then Return Nothing
+                Dim aliases = TryCast(GetTextualExtension("NameAliases.txt"), Dictionary(Of UInteger, String()))
+                If aliases Is Nothing Then Return Nothing
+                Dim aarr As String() = Nothing
+                If aliases.TryGetValue(CodePoint.Value, aarr) Then Return aarr Else Return New String() {}
             End Get
         End Property
     End Class

@@ -146,7 +146,7 @@ Namespace TextT.UnicodeT
         ''' Returns null if either <paramref name="namespace"/> is null or an empty string, or no extensions are registered for document <see cref="Element"/> belongs to, or extensions for namespace <paramref name="namespace"/> is not registered.
         ''' </returns>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public Function GetExtensions(namespace$) As UnicodeCharacterDatabase
+        Public Function GetExtension(namespace$) As UnicodeCharacterDatabase
             If [namespace].IsNullOrEmpty Then Return Nothing
             Dim extDic = GetExtensions()
             If extDic Is Nothing Then Return Nothing
@@ -159,9 +159,33 @@ Namespace TextT.UnicodeT
         ''' Extensions are registered in a dictionary which is stored in document annotation of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="String"/>, <see cref="UnicodeCharacterDatabase"/>].
         ''' Primary way of accessing extensions is the <see cref="UnicodeCharacterDatabase.Extensions"/> property.
         ''' </remarks>
+        ''' <seelaso cref="UnicodeCharacterDatabase.Extensions"/>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Function GetExtensions() As IDictionary(Of String, UnicodeCharacterDatabase)
             Return Element.Document.Annotation(Of IDictionary(Of String, UnicodeCharacterDatabase))()
+        End Function
+
+        ''' <summary>Gets all registered textual extensions for <see cref="Element"/>.<see cref="XElement.Document">Document</see></summary>
+        ''' <returns>All registered textual extensions for <see cref="Element"/>.<see cref="XElement.Document">Document</see>. Null if no extensions are registered.</returns>
+        ''' <remarks>
+        ''' Extensions are registered in dictionray which is stored in document annotation of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="String"/>, <see cref="Object"/>].
+        ''' Actual type of extension depends on its type. Primary way of accessing extensions if the <see cref="UnicodeCharacterDatabase.TextualExtensions"/> property.
+        ''' </remarks>
+        ''' <seelaso cref="UnicodeCharacterDatabase.TextualExtensions"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Function GetTextualExtensions() As IDictionary(Of String, Object)
+            Return Element.Document.Annotation(Of IDictionary(Of String, Object))()
+        End Function
+
+        ''' <summary>Gets one oextension from textual extensions registered for <see cref="Element"/>.<see cref="XElement.Document">Document</see>.</summary>
+        ''' <returns>An object represneting the extension registered under name <paramref name="name"/>. Null if either the extension is not registered or no extensions are registered.</returns>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Function GetTextualExtension(name$) As Object
+            Dim extDic = GetTextualExtensions()
+            If extDic Is Nothing Then Return Nothing
+            Dim ret As Object = Nothing
+            extDic.TryGetValue(name, ret)
+            Return ret
         End Function
 #End Region
 

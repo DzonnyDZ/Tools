@@ -214,6 +214,11 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Text\Unicode\NameAliases.txt">
+      <LogicalName>Tools.TextT.UnicodeT.NameAliases.txt</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml

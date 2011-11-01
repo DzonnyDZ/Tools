@@ -158,7 +158,7 @@ Namespace TextT.UnicodeT
         <Extension()>
         Public Function IsCsurLoaded(provider As UnicodePropertiesProvider) As Boolean
             If provider Is Nothing Then Throw New ArgumentNullException("provider")
-            Return provider.GetExtensions(XmlNamespace) IsNot Nothing
+            Return provider.GetExtension(XmlNamespace) IsNot Nothing
         End Function
 
         ''' <summary>Gets ConScript Unicode Registry (CSUR) extension (non-standard) properties for given Unicode Code-Point</summary>
@@ -176,7 +176,7 @@ Namespace TextT.UnicodeT
             If codePoint Is Nothing Then Throw New ArgumentNullException("codePoint")
             If Not codePoint.CodePoint.HasValue Then Return Nothing
             If Not codePoint.IsCsurLoaded Then Return Nothing
-            Dim csurCodePoint = codePoint.GetExtensions(XmlNamespace).FindCodePoint(codePoint.CodePoint.Value)
+            Dim csurCodePoint = codePoint.GetExtension(XmlNamespace).FindCodePoint(codePoint.CodePoint.Value)
             If csurCodePoint Is Nothing Then Return Nothing
             Return New CsurPropertiesProvider(csurCodePoint, codePoint.Element.Document)
         End Function

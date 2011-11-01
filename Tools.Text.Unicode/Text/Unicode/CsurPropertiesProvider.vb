@@ -52,7 +52,7 @@ Namespace TextT.UnicodeT
         <XmlIgnore(), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected ReadOnly Property CsurDocument As XDocument
             Get
-                Dim csurExt = PropertySource.GetExtensions(XmlNamespace)
+                Dim csurExt = PropertySource.GetExtension(XmlNamespace)
                 If csurExt IsNot Nothing Then Return csurExt.Xml
                 Return PropertySource.Element.Document
             End Get
@@ -209,7 +209,7 @@ Namespace TextT.UnicodeT
             Get
                 If Not TypeOf PropertySource Is UnicodeCodePoint Then Return Nothing
                 Dim codePoint As UnicodeCodePoint = PropertySource
-                Dim csurExt = PropertySource.GetExtensions(XmlNamespace)
+                Dim csurExt = PropertySource.GetExtension(XmlNamespace)
                 If csurExt Is Nothing Then
                     Return codePoint.Type
                 Else

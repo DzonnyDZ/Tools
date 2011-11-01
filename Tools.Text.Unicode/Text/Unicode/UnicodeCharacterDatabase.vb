@@ -38,6 +38,7 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly elementName As XName = <ucd/>.Name
         ''' <summary>URI of XML namespace of Unicode Character Database XML</summary>
         Public Const XmlNamespace$ = "http://www.unicode.org/ns/2003/ucd/1.0"
+
 #Region "Static loading"
         ''' <summary>Name of assembly resource that contains Unicode Character Database XML</summary>
         ''' <remarks>
@@ -50,6 +51,10 @@ Namespace TextT.UnicodeT
         Public Const UnicodeXmlDatabaseResourceName As String = "Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz"
         ''' <summary>Name of file that contains Unicode Character Database XML</summary>
         Friend Const UnicodeXmlDatabaseFileName As String = "ucd.all.grouped.xml.gz"
+        ''' <summary>Name of assembly resource that contains default NameAliases.txt file from UCD</summary>
+        ''' <remarks>This resource is embeded resource in same assembly as <see cref="UnicodeCharacterDatabase"/> (Tools.Text.Unicode.txt)</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Const NameAlisesResourceName$ = "Tools.TextT.UnicodeT.NameAliases.txt"
 
         ''' <summary>Gets Unicode Character Database in XML format</summary>
         ''' <returns>Content of linked resource <c>Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz</c> (<see cref="UnicodeXmlDatabaseResourceName"/>; file ucd.all.grouped.xml.gz) as <see cref="XDocument"/>.</returns>
@@ -93,7 +98,7 @@ Namespace TextT.UnicodeT
         ''' <returns>Default instance of Unicode Character Database; null if it cannot be initialized because default Unicode Character Database xml is not assessible (i.e. <see cref="GetXml"/> throws <see cref="IO.FileNotFoundException"/>).</returns>
         ''' <remarks>
         ''' This instance of Unicode character database is pre-loaded with ConScript Unicode Registry (CSUR) data (see <see cref="CsurExtensions"/>) and
-        ''' name aliases (see <see cref="LoadAliases"/>).
+        ''' name aliases (see <see cref="NameAliases"/>).
         ''' </remarks>
         Public Shared ReadOnly Property [Default] As UnicodeCharacterDatabase
             Get
@@ -105,7 +110,7 @@ Namespace TextT.UnicodeT
                             Catch ex As IO.FileNotFoundException
                             End Try
                             _default.Extensions.Add(CsurExtensions.XmlNamespace, CsurExtensions.DefaultCsurDatabase)
-                            _default.LoadAliases()
+                            _default.LoadNameAliases()
                         End If
                     End SyncLock
                 End If
@@ -162,6 +167,7 @@ Namespace TextT.UnicodeT
         End Sub
 #End Region
 
+#Region "IWhateverWrappers"
         ''' <summary>Gets underlying <see cref="XDocument"/> instance that contains data of loaded Unicode Character Database</summary>
         ''' <remarks>Do not change content of the document, it can have unprecedenter results</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
@@ -182,7 +188,9 @@ Namespace TextT.UnicodeT
                 Return Xml.Root
             End Get
         End Property
+#End Region
 
+#Region "Extensions"
         ''' <summary>Gets ditionary containing extended properties for characters - the properties not comming from official Unicode character database.</summary>
         ''' <remarks>
         ''' Key of the dictionary are names of XML namespaces of the properties. Values are instances of <see cref="UnicodeCharacterDatabase"/> loaded with these additional properties.
@@ -200,6 +208,28 @@ Namespace TextT.UnicodeT
                 Return ret
             End Get
         End Property
+
+        ''' <summary>Gets a dictionary that contains textual extensions to Unicode Character Database XML</summary>
+        ''' <remarks>
+        ''' This property is stored in <see cref="Xml"/>.<see cref="XDocument.Annotations"/> of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="String"/>, <see cref="Object"/>].
+        ''' <para>
+        ''' Unicode Character Database XML provides most of properties from Unicode Character Database (UCD), but traditionaly Unicode Character Database is bunch of text files.
+        ''' Some UCD properties are not provided in UCD XML. That's why this property exists. You can load supported textual extensions here.
+        ''' </para>
+        ''' <para>Keys of the dictionary are names of files from UCD, values are object representations of that files.</para>
+        ''' </remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public ReadOnly Property TextualExtensions As IDictionary(Of String, Object)
+            Get
+                Dim a = Xml.Annotation(Of IDictionary(Of String, Object))()
+                If a Is Nothing Then
+                    a = New Dictionary(Of String, Object)
+                    Xml.AddAnnotation(a)
+                End If
+                Return a
+            End Get
+        End Property
+#End Region
 
 #Region "Element accessors"
 
@@ -311,6 +341,7 @@ Namespace TextT.UnicodeT
         End Property
 #End Region
 
+#Region "Object overrides (Equals, ToString)"
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="UnicodeCharacterDatabase" />.</summary>
         ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="UnicodeCharacterDatabase" /> (it's <see cref="UnicodeCharacterDatabase"/> and it's backed by the same (reference equivalent) <see cref="Xml"/>); otherwise, false.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="UnicodeCharacterDatabase" />. </param>
@@ -325,7 +356,10 @@ Namespace TextT.UnicodeT
             If Not Description.IsNullOrWhiteSpace Then Return Description
             Return MyBase.ToString()
         End Function
+#End Region
 
+#Region "Querying"
+#Region "Find"
         ''' <summary>Gets information from Unicode Character database for single code point</summary>
         ''' <param name="codePoint">A codepoint to get information for</param>
         ''' <returns>Information about given code point. Null if current instance of Unicode Character Database does not provide information about the character.</returns>
@@ -353,6 +387,7 @@ Namespace TextT.UnicodeT
         Public Function FindCodePoint(character As Char) As UnicodeCodePoint
             Return FindCodePoint(Char.ConvertToUtf32(CStr(character), 0))
         End Function
+#End Region
 
         ''' <summary>Queries Unicode Character Database XML using XPath</summary>
         ''' <param name="xPath">XPath query</param>
@@ -415,6 +450,7 @@ Namespace TextT.UnicodeT
             End Select
         End Function
 
+#Region "Blocks"
         ''' <summary>Finds a block a code point belongs to</summary>
         ''' <param name="blocks">A collection of XML elements representing blocks to search within. The collection should contain &lt;block> elements from the http://www.unicode.org/ns/2003/ucd/1.0 namespace (this precondition is not checked).</param>
         ''' <param name="codePoint">Code point (character) to find block it belongs to</param>
@@ -470,50 +506,65 @@ Namespace TextT.UnicodeT
         Public Function FindBlock(codePoint As Integer) As UnicodeBlock
             Return FindBlock(codePoint.BitwiseSame)
         End Function
+#End Region
+#End Region
 
+#Region "NameALiases.txt"
         ''' <summary>Gets dictionary of name aliases for Unicode code-points</summary>
-        ''' <returns>A dictionary of name aliases. Nulll if name aliases were not loded.</returns>
+        ''' <returns>A dictionary of name aliases. Null if name aliases were not loded.</returns>
         ''' <remarks>
-        ''' Aliases are stored in <see cref="Xml"/>.<see cref="XDocument.Annotations">Annotations</see> of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="UInteger"/>, <see cref="String()"/>].
-        ''' <para>Name aliases are not part of Unicode Character Database XML and thus they are not loaded by default when loading <see cref="UnicodeCharacterDatabase"/>. You must load them explicitly uisng some of <see cref="LoadAliases"/> overloads or some other way. Some other way means set <see cref="Xml"/>.<see cref="XDocument.Annotations">Annotations</see> directly.</para>
+        ''' Aliases are stored in <see cref="TextualExtensions"/> under key <c>NameAliases.txt</c>.
+        ''' <para>Name aliases are not part of Unicode Character Database XML and thus they are not loaded by default when loading <see cref="UnicodeCharacterDatabase"/>. You must load them explicitly uisng some of <see cref="LoadNameAliases"/> overloads or set them directly to <see cref="TextualExtensions"/> directly.</para>
         ''' <para>This property is not CLS-compliant. Direct CLS-compliant alternative is not provided. Use aliases-related properties of <see cref="UnicodeCodePoint"/>.</para>
         ''' <para>Keys of the dictionary are code-point codes, values are alias names. Each code-point can have zero or more aliases. Currently there are only few (11 as of Unicode 6.0) aliases defined in the Unicode standard and no character has more than one alias.</para>
         ''' </remarks>
         <CLSCompliant(False)>
-        Public ReadOnly Property Aliases As IDictionary(Of UInteger, String())
+        Public ReadOnly Property NameAliases As IDictionary(Of UInteger, String())
             Get
-                Return Xml.Annotation(Of IDictionary(Of UInteger, String()))()
+                Dim ret As Object = Nothing
+                TextualExtensions.TryGetValue("NameAliases.txt", ret)
+                Return TryCast(ret, IDictionary(Of UInteger, String()))
             End Get
         End Property
 
-        'TODO: Aliases loading and parsing
-
         ''' <summary>Loads default aliases names that are stored in an embeded resource inside Tools.Text.Unicode.dll</summary>
-        Public Sub LoadAliases()
-            'TODO:
+        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="TextualExtensions"/> first.</exception>
+        ''' <seelaso cref="NameAliases"/>
+        Public Sub LoadNameAliases()
+            LoadNameAliases(New IO.StreamReader(GetType(UnicodeCharacterDatabase).Assembly.GetManifestResourceStream(NameAlisesResourceName)))
         End Sub
 
         ''' <summary>Loads aliases from a file</summary>
         ''' <param name="path">Path to NameAliases.txt file from Unicode Character Database (UCD)</param>
         ''' <remarks>For Unicode 6.0 the file is publicly available at <a href="http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt">http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt</a>.</remarks>
-        Public Sub LoadAliases(path As String)
-            'TODO:
+        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="TextualExtensions"/> first.</exception>
+        ''' <exception cref="FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+        ''' <seelaso cref="NameAliases"/>
+        Public Sub LoadNameAliases(path As String)
+            LoadNameAliases(IO.File.OpenText(path))
         End Sub
 
         ''' <summary>Loads aliases from a text reader</summary>
         ''' <param name="reader">A reader to read aliases from. The reader should point to firs tile of file in NameAlias.txt format (as used in UCD)</param>
-        Public Sub LoadAliases(reader As IO.TextReader)
-            'TODO:
+        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="TextualExtensions"/> first.</exception>
+        ''' <exception cref="FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+        ''' <seelaso cref="NameAliases"/>
+        Public Sub LoadNameAliases(reader As IO.TextReader)
+            Dim a = ReadNameAliases(reader)
+            TextualExtensions.Add("NameAliases.txt", a)
         End Sub
 
         ''' <summary>Parses contant of NameAliases.txt file from Unicode Character Database to a dictionary of name aliases</summary>
         ''' <param name="reader">A reader that points to first line of NameAliases.txt-like file (a file in compatible format)</param>
         ''' <returns>A dictionary keyed by code-points and valued by name aliases for that code-point</returns>
-        ''' <remarks>This function is not CLS-compliant. No direct CLS-compliant counterpart is provided. Use some of instance overloads of <see cref="LoadAliases"/>.</remarks>
+        ''' <remarks>
+        ''' This function is not CLS-compliant. No direct CLS-compliant counterpart is provided. Use some of instance overloads of <see cref="LoadNameAliases"/>.
+        ''' <para>Parsing alghoritm provided by this method will work with proposed etxension of Unicode 6.1.0 but will ignore the Type field.</para>
+        ''' </remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="reader"/> is null.</exception>
         ''' <exception cref="FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced), CLSCompliant(False)>
-        Public Shared Function ReadAliases(reader As IO.TextReader) As IDictionary(Of UInteger, String())
+        Public Shared Function ReadNameAliases(reader As IO.TextReader) As IDictionary(Of UInteger, String())
             If reader Is Nothing Then Throw New ArgumentNullException("reader")
             Dim aliases As New Dictionary(Of UInteger, List(Of String))
 
@@ -524,7 +575,7 @@ Namespace TextT.UnicodeT
                 lineNumber += 1
                 If line.IsNullOrWhiteSpace OrElse line.StartsWith("#") Then Continue Do
                 If line.Contains("#") Then line = line.SubstringBefore("#")
-                Dim parts = line.Split({";"c}, 2)
+                Dim parts = line.Split({";"c})
                 Try
                     Dim code = UInteger.Parse("0x" & parts(0), Globalization.NumberStyles.HexNumber, InvariantCulture)
                     If aliases.ContainsKey(code) Then aliases(code).Add(parts(1)) Else aliases.Add(code, New List(Of String) From {parts(0)})
@@ -539,6 +590,7 @@ Namespace TextT.UnicodeT
             Next
             Return ret
         End Function
+#End Region
 
         'TODO: Informative aliases
     End Class
