@@ -110,6 +110,7 @@ Namespace TextT.UnicodeT
                             Catch ex As IO.FileNotFoundException
                             End Try
                             _default.Extensions.Add(CsurExtensions.XmlNamespace, CsurExtensions.DefaultCsurDatabase)
+                            _default.Extensions.Add(NamesListExtensions.XmlNamespace, NamesListExtensions.DefaultNamesList)
                             _default.LoadNameAliases()
                         End If
                     End SyncLock
@@ -592,7 +593,9 @@ Namespace TextT.UnicodeT
         End Function
 #End Region
 
-        'TODO: Informative aliases
+#Region "NameList.txt"
+
+#End Region
     End Class
 End Namespace
 #End If

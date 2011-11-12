@@ -27,8 +27,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeBuildCommandLine>"$(ProjectDir)..\DevelopmentTools\VersionUpdater\bin\Debug\VersionUpdater" "$(ProjectDir)..\SharedFiles\version.txt" "svn:$(ProjectDir).." "$(ProjectDir)..\SharedFiles\version.cpp" "$(ProjectDir)..\SharedFiles\version.cs" "$(ProjectDir)..\SharedFiles\version.il" "$(ProjectDir)..\SharedFiles\version.vb"</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='prebuild|Win32'">"$(ProjectDir)..\DevelopmentTools\VersionUpdater\bin\Debug\VersionUpdater" "$(ProjectDir)..\SharedFiles\version.txt" timestamp "$(ProjectDir)..\SharedFiles\version.cpp" "$(ProjectDir)..\SharedFiles\version.cs" "$(ProjectDir)..\SharedFiles\version.il" "$(ProjectDir)..\SharedFiles\version.vb"</NMakeReBuildCommandLine>
+    <NMakeBuildCommandLine>"$(ProjectDir)..\DevelopmentTools\VersionUpdater\bin\Debug\VersionUpdater" "$(ProjectDir)..\SharedFiles\version.txt" "svn17:$(ProjectDir).." "$(ProjectDir)..\SharedFiles\version.cpp" "$(ProjectDir)..\SharedFiles\version.cs" "$(ProjectDir)..\SharedFiles\version.il" "$(ProjectDir)..\SharedFiles\version.vb"</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='prebuild|Win32'">"$(ProjectDir)..\DevelopmentTools\VersionUpdater\bin\Debug\VersionUpdater" "$(ProjectDir)..\SharedFiles\version.txt" "svn17:$(ProjectDir).." "$(ProjectDir)..\SharedFiles\version.cpp" "$(ProjectDir)..\SharedFiles\version.cs" "$(ProjectDir)..\SharedFiles\version.il" "$(ProjectDir)..\SharedFiles\version.vb"</NMakeReBuildCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetExt />

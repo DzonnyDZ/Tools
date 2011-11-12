@@ -293,4 +293,7 @@
   <data name="ex_ErrorReadingNameAliases" xml:space="preserve">
     <value>Erorr while reading name aliases on line {0}: {1}</value>
   </data>
+  <data name="ex_NameAlias_NotHex" xml:space="preserve">
+    <value>Unexpected character. Expected uppercase hexadecimal digit</value>
+  </data>
 </root>

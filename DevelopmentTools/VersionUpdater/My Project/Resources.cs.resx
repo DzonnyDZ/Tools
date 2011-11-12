@@ -112,18 +112,18 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Usage" xml:space="preserve">
     <value>Použití: {0} vstup režim výstup1 výstup2 výstup3 ...</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>režim = Timestamp | Increment|Svn:složka</value>
+    <value>režim = Timestamp | Increment|Svn16:složka|Svn17:složka</value>
   </data>
   <data name="SvnDirpath" xml:space="preserve">
-    <value>složka - cesta ke složce verzované pomocí SVN použité k získání čísla revize (z .svn\entries)</value>
+    <value>složka - cesta ke složce verzované pomocí SVN použité k získání čísla revize (z .svn\entries - Svn16, z .svn\wc.db - Svn17)</value>
   </data>
 </root>

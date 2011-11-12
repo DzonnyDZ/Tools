@@ -53,11 +53,11 @@
                                 </alert>
                             </definition>
                             <definedTerm>
-                                <codeInline>Svn:dirpath</codeInline>
+                                <codeInline>Svn16:dirpath</codeInline>
                             </definedTerm>
                             <definition>
                                 <para>
-                                    Uses revision number form SVN.
+                                    Uses revision number form SVN. Use if you have SVN 1.6.x working copy.
                                     Because of limitation of value of <codeEntityReference>P:System.Version.Revision</codeEntityReference> to maximally <codeEntityReference>F:System.UInt16.MaxValue</codeEntityReference> - 1 it's AND-ed with <codeInline>0xFFFF</codeInline>.
                                 </para>
                                 <definitionTable>
@@ -65,10 +65,10 @@
                                         <codeInline>dirpath</codeInline>
                                     </definedTerm>
                                     <definition>
-                                        <para>Path of SVN.controlled directory to use revision number of.</para>
+                                        <para>Path of SVN-controlled directory to use revision number of.</para>
                                         <alert class="note">
                                             <para>
-                                                If <codeInline>dirpath</codeInline> contains spaces entire <codeInline>Svn:dirpath</codeInline> argument must be enclosed in quotes.
+                                                If <codeInline>dirpath</codeInline> contains spaces entire <codeInline>Svn16:dirpath</codeInline> argument must be enclosed in quotes.
                                             </para>
                                         </alert>
                                     </definition>
@@ -85,7 +85,52 @@
                                     </para>
                                 </alert>
                             </definition>
+                            <definedTerm>
+                                <codeInline>Svn17:dirpath</codeInline>
+                            </definedTerm>
+                            <definition>
+                                <para>
+                                    Uses revision number form SVN. Use if you have SVN 1.7.x working copy.
+                                    Because of limitation of value of <codeEntityReference>P:System.Version.Revision</codeEntityReference> to maximally <codeEntityReference>F:System.UInt16.MaxValue</codeEntityReference> - 1 it's AND-ed with <codeInline>0xFFFF</codeInline>.
+                                </para>
+                                <definitionTable>
+                                    <definedTerm>
+                                        <codeInline>dirpath</codeInline>
+                                    </definedTerm>
+                                    <definition>
+                                        <para>
+                                            Path of root of SVN working copy to use revision number of.
+                                        </para>
+                                        <alert class="note">
+                                            <para>
+                                                If <codeInline>dirpath</codeInline> contains spaces
+                                                entire <codeInline>Svn17:dirpath</codeInline> or <codeInline>Svn17:dirpath</codeInline> argument
+                                                must be enclosed in quotes.
+                                            </para>
+                                        </alert>
+                                    </definition>
+                                </definitionTable>
+                                <alert class="note">
+                                    <para>
+                                        Due to changes in SVN working style between client version 1.6 and 1.7 there are two different options for SVN 1.6 and SVN 1.7.
+                                        Version 1.7 accesses SVN SQLite database to obtain working copy revision number.
+                                        No SVN API is used, but requires System.Data.SQLite.dll.
+                                        Because of this this method works only if you use SVN client which stores SVN metadata in <localUri>.svn\wc.db</localUri> and the <localUri>wc.db</localUri> file represents SQLite database with expected structure.
+                                    </para>
+                                    <para>
+                                        VersionUpdater uses following query to obtain revision number:
+                                        <codeInline>SELECT revision FROM NODES WHERE local_relpath=''</codeInline>
+                                    </para>
+                                </alert>
+                            </definition>
                         </definitionTable>
+                        <alert class="note">
+                            <para>
+                                Wheather to use <codeInline>Svn16</codeInline> or <codeInline>Svn17</codeInline> does not depend on version of SVN server used.
+                                It depends on version of working copy your SVN client (such as TortosiseSVN) uses.
+                                1.6.x-style clients can work with 1.7.x server and vice-versa.
+                            </para>
+                        </alert>
                     </definition>
                     <definedTerm>
                         <codeInline>outfile1 outfile2 outfile3 ...</codeInline>
@@ -111,72 +156,92 @@
                             <definedTerm>vb, bas</definedTerm>
                             <definition>
                                 <para>Visual Basic</para>
-                                <code language="vb"><![CDATA[<Assembly: System.Reflection.AssemblyVersion("{0}")>
-<Assembly: System.Reflection.AssemblyFileVersion("{0}")>]]></code>
+                                <code language="vb">
+                                    <![CDATA[<Assembly: System.Reflection.AssemblyVersion("{0}")>
+<Assembly: System.Reflection.AssemblyFileVersion("{0}")>]]>
+                                </code>
                             </definition>
                             <definedTerm>cs, c#</definedTerm>
                             <definition>
                                 <para>C#</para>
-                                <code language="c#"><![CDATA[[assembly: System.Reflection.AssemblyVersion("{0}")]
-[assembly: System.Reflection.AssemblyFileVersion("{0}")])]]></code>
+                                <code language="c#">
+                                    <![CDATA[[assembly: System.Reflection.AssemblyVersion("{0}")]
+[assembly: System.Reflection.AssemblyFileVersion("{0}")])]]>
+                                </code>
                             </definition>
                             <definedTerm>c, cpp, h, c++</definedTerm>
                             <definition>
                                 <para>C++/CLI</para>
-                                <code language="cpp"><![CDATA[[assembly: System::Reflection::AssemblyVersion("{0}")]
-[assembly: System::Reflection::AssemblyFileVersion("{0}")]]]></code>
+                                <code language="cpp">
+                                    <![CDATA[[assembly: System::Reflection::AssemblyVersion("{0}")]
+[assembly: System::Reflection::AssemblyFileVersion("{0}")]]]>
+                                </code>
                             </definition>
                             <definedTerm>il, msil, cil</definedTerm>
                             <definition>
                                 <para>Common Intermediate Language (CIL)</para>
-                                <code language="il"><![CDATA[.ver {0}:{1}:{2}:{3}
-.custom instance void [mscorlib]System.Reflection.AssemblyFileVersionAttribute::.ctor(string) = { string('{4}') }]]></code>
+                                <code language="il">
+                                    <![CDATA[.ver {0}:{1}:{2}:{3}
+.custom instance void [mscorlib]System.Reflection.AssemblyFileVersionAttribute::.ctor(string) = { string('{4}') }]]>
+                                </code>
                             </definition>
                             <definedTerm>js</definedTerm>
                             <definition>
                                 <para>JScript.NET</para>
-                                <code language="js"><![CDATA[assembly: System.Reflection.AssemblyVersion("{0}")
-assembly: System.Reflection.AssemblyFileVersion("{0}")]]></code>
+                                <code language="js">
+                                    <![CDATA[assembly: System.Reflection.AssemblyVersion("{0}")
+assembly: System.Reflection.AssemblyFileVersion("{0}")]]>
+                                </code>
                             </definition>
                             <definedTerm>fs, f#</definedTerm>
                             <definition>
                                 <para>F#</para>
-                                <code language="f#"><![CDATA[[<assembly: System.Reflection.AssemblyVersion("{0}")>]
-[<assembly: System.Reflection.AssemblyFileVersion("{0}")>]]]></code>
+                                <code language="f#">
+                                    <![CDATA[[<assembly: System.Reflection.AssemblyVersion("{0}")>]
+[<assembly: System.Reflection.AssemblyFileVersion("{0}")>]]]>
+                                </code>
                             </definition>
                             <definedTerm>java, j#</definedTerm>
                             <definition>
                                 <para>J#</para>
-                                <code language="j#"><![CDATA[/** @assembly System.Reflection.AssemblyVersion("{0}") */
-/** @assembly System.Reflection.AssemblyFileVersion("{0}") */]]></code>
+                                <code language="j#">
+                                    <![CDATA[/** @assembly System.Reflection.AssemblyVersion("{0}") */
+/** @assembly System.Reflection.AssemblyFileVersion("{0}") */]]>
+                                </code>
                             </definition>
                             <definedTerm>php, inc, php3, php4, php5, php6</definedTerm>
                             <definition>
                                 <para>PHP (Phalanger)</para>
-                                <code language="php"><![CDATA[[assembly: System:::Reflection:::AssemblyVersion("{0}")]
-[assembly: System:::Reflection:::AssemblyFileVersion("{0}")]]]></code>
+                                <code language="php">
+                                    <![CDATA[[assembly: System:::Reflection:::AssemblyVersion("{0}")]
+[assembly: System:::Reflection:::AssemblyFileVersion("{0}")]]]>
+                                </code>
                             </definition>
                             <definedTerm>xml</definedTerm>
                             <definition>
                                 <para>Writes version information to a XML file as follows:</para>
-                                <code language="xml"><![CDATA[<?xml version="1.0"?>
+                                <code language="xml">
+                                    <![CDATA[<?xml version="1.0"?>
 <assembly>
     <System.Reflection.AssemblyVersion>{0}</System.Reflection.AssemblyVersion>
     <System.Reflection.AssemblyFileVersion>{1}</System.Reflection.AssemblyFileVersion>
-</assembly>]]></code>
+</assembly>]]>
+                                </code>
                             </definition>
                             <definedTerm>p</definedTerm>
                             <definition>
                                 <para>Pascal/Delphi</para>
-                                <code language="pascal"><![CDATA[[assembly: System.Reflection.AssemblyVersion("{0}")]
-[assembly: System.Reflection.AssemblyFileVersion("{0}")]]]></code>
+                                <code language="pascal">
+                                    <![CDATA[[assembly: System.Reflection.AssemblyVersion("{0}")]
+[assembly: System.Reflection.AssemblyFileVersion("{0}")]]]>
+                                </code>
                             </definition>
                             <definedTerm>Anything else</definedTerm>
                             <definition>
                                 <para>Version number is written to file as plain text.</para>
                                 <alert class="tip">
                                     <para>
-                                        This way you can save updated version infor back to <codeInline>infile</codeInline> and achieve continuous incrementation when <codeInline>mode</codeInline> is <codeInline>Increment</codeInline>.
+                                        This way you can save updated version information back to <codeInline>infile</codeInline> and achieve continuous incrementation when <codeInline>mode</codeInline> is <codeInline>Increment</codeInline>.
                                     </para>
                                 </alert>
                             </definition>
@@ -217,6 +282,18 @@ assembly: System.Reflection.AssemblyFileVersion("{0}")]]></code>
                                     </listItem>
                                     <listItem>
                                         <para>Target file is overwritten only if it's content differs from newly generated text. This prevents Visual Studio from constant rebuilds of whole solution.</para>
+                                    </listItem>
+                                    <listItem>
+                                        <para>
+                                            Mode <codeInline>Svn</codeInline> renamed to <codeInline>Svn16</codeInline>.
+                                            Supports only SVN with working copy format 1.6.x.
+                                        </para>
+                                    </listItem>
+                                    <listItem>
+                                        <para>
+                                            New mode: <codeInline>Svn17</codeInline>
+                                            Supports only SVN with working copy format 1.7.x.
+                                        </para>
                                     </listItem>
                                 </list>
                             </listItem>

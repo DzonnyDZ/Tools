@@ -77,7 +77,7 @@ alert[class]:before{
     border-bottom: 1px solid #C8CDDE;
     margin-bottom:.5EM;
     margin-left:-1EM;
-    margin-right:-1EM;
+    margin-right:-1.15EM;
     padding-left:1EM;
     padding-right:1EM;
     color:#006;
@@ -176,7 +176,10 @@ definitionTable > definition:not(:last-child){
     border-bottom:solid 1px #D5D5D3;
 }
 definitionTable > definition > *{
-    margin:0;
+    margin-left:0;
+}
+definitionTable > definition > para{
+    margin-top:0;
 }
 definitionTable > definition > alert + alert,
 definitionTable > definition > alert + code,
@@ -235,10 +238,10 @@ mediaLink > image:before{
 display
 
 /*code*/
-codeInline{
+codeInline, * codeInline{
     font-family:Monospace;
 }
-system, code{
+system, code, * system, * code{
     font-family:Monospace;
     background-color:#DDD;
     display:block;
@@ -254,13 +257,13 @@ code[language]:before{
     font-family:Sans-Serif;
     text-transform:uppercase;
 }
-languageKeyword{
+languageKeyword, * languageKeyword{
     font-family:Monospace;
     color:Blue;
 }
 
 /*list*/
-list{
+list, * list{
     display:block;
     margin-left:2EM;
 }

@@ -52,7 +52,7 @@ Namespace TextT.UnicodeT
         <XmlIgnore(), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected ReadOnly Property CsurDocument As XDocument
             Get
-                Dim csurExt = PropertySource.GetExtension(XmlNamespace)
+                Dim csurExt = PropertySource.GetExtension(CsurExtensions.XmlNamespace)
                 If csurExt IsNot Nothing Then Return csurExt.Xml
                 Return PropertySource.Element.Document
             End Get
@@ -67,7 +67,7 @@ Namespace TextT.UnicodeT
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_Script"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property Script As String
             Get
-                Return PropertySource.GetPropertyValue(XmlNamespace, "script")
+                Return PropertySource.GetPropertyValue(CsurExtensions.XmlNamespace, "script")
             End Get
         End Property
 
@@ -78,7 +78,7 @@ Namespace TextT.UnicodeT
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_Status"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property Status As CsurStatus
             Get
-                Dim val = PropertySource.GetPropertyValue(XmlNamespace, "status")
+                Dim val = PropertySource.GetPropertyValue(CsurExtensions.XmlNamespace, "status")
                 If val = "" Then Return CsurStatus.NotInCsur
                 Try
                     Return EnumCore.Parse(Of CsurStatus)(val)
@@ -95,7 +95,7 @@ Namespace TextT.UnicodeT
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_ReservedFor"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property ReservedFor As CsurReservedFor
             Get
-                Dim val = PropertySource.GetPropertyValue(XmlNamespace, "reserved-for")
+                Dim val = PropertySource.GetPropertyValue(CsurExtensions.XmlNamespace, "reserved-for")
                 If val = "" Then Return CsurReservedFor.notReserved
                 Try
                     Return EnumCore.Parse(Of CsurReservedFor)(val)
@@ -112,7 +112,7 @@ Namespace TextT.UnicodeT
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_LastRevision"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property LastRevision As Date?
             Get
-                Dim val = PropertySource.GetPropertyValue(XmlNamespace, "last-revision")
+                Dim val = PropertySource.GetPropertyValue(CsurExtensions.XmlNamespace, "last-revision")
                 If val = "" Then Return Nothing
                 Try
                     Return DateTime.ParseExact(val, "yyyy-MM-dd", InvariantCulture)
@@ -132,7 +132,7 @@ Namespace TextT.UnicodeT
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_Name"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property Name As String
             Get
-                Return PropertySource.GetPropertyValue(XmlNamespace, "name", True)
+                Return PropertySource.GetPropertyValue(CsurExtensions.XmlNamespace, "name", True)
             End Get
         End Property
 
@@ -144,7 +144,7 @@ Namespace TextT.UnicodeT
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_BidiCategory"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property BidiCategory As UnicodeBidiCategory?
             Get
-                Dim val = PropertySource.GetPropertyValue(XmlNamespace, "bc")
+                Dim val = PropertySource.GetPropertyValue(CsurExtensions.XmlNamespace, "bc")
                 If val = "" Then Return Nothing
                 Try
                     Return EnumCore.Parse(Of UnicodeBidiCategory)(val)
@@ -209,7 +209,7 @@ Namespace TextT.UnicodeT
             Get
                 If Not TypeOf PropertySource Is UnicodeCodePoint Then Return Nothing
                 Dim codePoint As UnicodeCodePoint = PropertySource
-                Dim csurExt = PropertySource.GetExtension(XmlNamespace)
+                Dim csurExt = PropertySource.GetExtension(CsurExtensions.XmlNamespace)
                 If csurExt Is Nothing Then
                     Return codePoint.Type
                 Else

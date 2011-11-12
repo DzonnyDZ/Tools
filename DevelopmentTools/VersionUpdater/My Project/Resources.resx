@@ -121,9 +121,9 @@
     <value>Usage: {0} infile mode outfile1 otfile2 outfile3 ...</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>mode = Timestamp | Increment|Svn:dirpath</value>
+    <value>mode = Timestamp | Increment|Svn16:dirpath|Svn17:dirpath</value>
   </data>
   <data name="SvnDirpath" xml:space="preserve">
-    <value>dirpath - path to a SVN-controled directory to get revision number of (it's read from .svn\entries)</value>
+    <value>dirpath - path to a SVN-controled directory to get revision number of (it's read from .svn\entries (Svn16) or .svn\wc.db (Svn17))</value>
   </data>
 </root>

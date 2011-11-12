@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Globalization.CultureInfo
+Imports System.Data.SQLite
 
 ''' <summary>VersionUpdater implementation</summary>
 Friend Module VersionUpdater
@@ -9,13 +10,17 @@ Friend Module VersionUpdater
 
         Console.WriteLine("{0} {1}", My.Application.Info.Title, My.Application.Info.Version)
         If My.Application.CommandLineArgs.Count < 3 Then Usage(1) : End
+        Console.WriteLine(Environment.CommandLine)
 
         Dim infile As String = My.Application.CommandLineArgs(0)
         Dim mode As VersionUpdaterMode
         Dim svnPath$ = Nothing
-        If My.Application.CommandLineArgs(1).ToLowerInvariant.StartsWith("svn:") Then
-            mode = VersionUpdaterMode.Svn
-            svnPath = My.Application.CommandLineArgs(1).Substring(4)
+        If My.Application.CommandLineArgs(1).ToLowerInvariant.StartsWith("svn16:") Then
+            mode = VersionUpdaterMode.Svn16
+            svnPath = My.Application.CommandLineArgs(1).Substring(6)
+        ElseIf My.Application.CommandLineArgs(1).ToLowerInvariant.StartsWith("svn17:") Then
+            mode = VersionUpdaterMode.Svn17
+            svnPath = My.Application.CommandLineArgs(1).Substring(6)
         Else
             mode = [Enum].Parse(GetType(VersionUpdaterMode), My.Application.CommandLineArgs(1), True)
         End If
@@ -27,11 +32,23 @@ Friend Module VersionUpdater
         Select Case mode
             Case VersionUpdaterMode.Timestamp : newVersion = New Version(actualVersion.Major, actualVersion.Minor, actualVersion.Build, CInt(CDbl(Math.Truncate((DateTime.UtcNow - Date.SpecifyKind(#1/1/1970#, DateTimeKind.Utc)).TotalSeconds)) And &HFFFF))
             Case VersionUpdaterMode.Increment : newVersion = New Version(actualVersion.Major, actualVersion.Minor, actualVersion.Build, (actualVersion.Revision + 1) And &HFFFF)
-            Case VersionUpdaterMode.Svn
+            Case VersionUpdaterMode.Svn16
                 Using r = My.Computer.FileSystem.OpenTextFileReader(IO.Path.Combine(svnPath, ".svn\entries"))
                     r.ReadLine() : r.ReadLine() : r.ReadLine() 'Ignore 3 lines
                     '4th line contains version
                     newVersion = New Version(actualVersion.Major, actualVersion.Minor, actualVersion.Build, Integer.Parse(r.ReadLine, InvariantCulture) And &HFFFF)
+                End Using
+            Case VersionUpdaterMode.Svn17
+                Dim csb = New SQLiteConnectionStringBuilder With {
+                    .DataSource = IO.Path.GetFullPath(IO.Path.Combine(svnPath, ".svn\wc.db")),
+                    .ReadOnly = True
+                }
+                Using conn As New SQLiteConnection(csb.ToString)
+                    conn.Open()
+                    Dim cmd = conn.CreateCommand
+                    cmd.CommandText = "SELECT revision FROM NODES WHERE local_relpath=''"
+                    Dim revision As Integer = cmd.ExecuteScalar()
+                    newVersion = New Version(actualVersion.Major, actualVersion.Minor, actualVersion.Build, revision And &HFFFF)
                 End Using
             Case Else : Usage(2) : End
         End Select
@@ -55,7 +72,7 @@ Friend Module VersionUpdater
             If IO.File.Exists(file) Then
                 Try
                     write = text <> My.Computer.FileSystem.ReadAllText(file)
-                Catch :End Try
+                Catch : End Try
             End If
             If write Then _
                 My.Computer.FileSystem.WriteAllText(file, text, False)
@@ -158,6 +175,11 @@ Friend Enum VersionUpdaterMode
     Timestamp
     ''' <summary>Revision is increased by 1</summary>
     Increment
-    ''' <summary>Revision is obtainded from SVN</summary>
-    Svn
+    ''' <summary>Revision is obtainded from SVN (Working copy version 1.6.x)</summary>
+    ''' <version version="1.5.4">Renamed from <c>Svn</c> to <c>Svn16</c></version>
+    Svn16
+    ''' <summary>Revision is obtainded from SVN (Working copy version 1.7.x)</summary>
+    ''' <remarks>This requires SQLite</remarks>
+    ''' <version version="1.5.4">This enumeration member is new in version 1.5.4</version>
+    Svn17
 End Enum

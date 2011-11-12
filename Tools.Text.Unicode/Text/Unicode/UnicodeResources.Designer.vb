@@ -218,6 +218,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Unexpected character. Expected uppercase hexadecimal digit.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_NameAlias_NotHex() As String
+            Get
+                Return ResourceManager.GetString("ex_NameAlias_NotHex", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Not allowed for placeholder characters..
         '''</summary>
         Friend Shared ReadOnly Property ex_NotAllowedForPlaceholderCharacters() As String
