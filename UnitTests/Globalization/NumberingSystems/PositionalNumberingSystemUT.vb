@@ -138,7 +138,7 @@ Namespace GlobalizationUT.NumberingSystemsUT
 
         <TestMethod()> _
         Public Sub NewU5()
-            Dim sys60 As New PositionalNumberingSystem(60, TextT.Casing.LowerCase)
+            Dim sys60 As New PositionalNumberingSystem(60, Tools.TextT.Casing.LowerCase)
             Assert.AreEqual("ιrfd", sys60.GetValue(9602113))
             Assert.AreEqual(9602113, sys60.Parse("ιrfd"))
         End Sub

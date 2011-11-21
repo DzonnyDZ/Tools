@@ -222,6 +222,8 @@
     <Compile Include="Extensions\StringParsing.vb" />
     <Compile Include="Globalization\Arabic.vb" />
     <Compile Include="Linq\ForEnumerator.vb" />
+    <Compile Include="misc\CharComparer.vb" />
+    <Compile Include="Numerics\Conversions.vb" />
     <Compile Include="Reflection\AttributteValueProvider.vb" />
     <Compile Include="misc\EmptyArray.vb" />
     <Compile Include="misc\Operators.vb" />
@@ -584,12 +586,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
-      <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
-      <Name>Tools.Runtime.CompilerServices</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -603,6 +599,6 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>REM "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

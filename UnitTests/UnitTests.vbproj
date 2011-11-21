@@ -260,6 +260,7 @@
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />
     <Compile Include="Collections\Generic\DuplicateDictionaryU.vb" />
+    <Compile Include="Numerics\ConversionsTest.vb" />
     <Compile Include="EnumCoreTest.vb" />
     <Compile Include="Extensions\DateTimeExtensionsTest.vb" />
     <Compile Include="Extensions\StringFormatting.vb" />
@@ -268,7 +269,7 @@
     <Compile Include="General\EnumCoreU.vb" />
     <Compile Include="General\GeneralTestsU.vb" />
     <Compile Include="Globalization\NumberingSystems\ExcelColumnNumberingSystemUT.vb" />
-    <Compile Include="Globalization\NumberingSystems\PositionalUnmberingSystemUT.vb" />
+    <Compile Include="Globalization\NumberingSystems\PositionalNumberingSystemUT.vb" />
     <Compile Include="Globalization\NumberingSystems\RomanUT.vb" />
     <Compile Include="Globalization\NumberingSystemUT.vb" />
     <Compile Include="Collections\Generic\PriorityQueueU.vb" />
@@ -276,6 +277,7 @@
     <Compile Include="Reflection\ReflectionToolsU.vb" />
     <Compile Include="Collections\Generic\CollectionToolsU.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="Text\Unicode\CharsSourceTest.vb" />
     <Compile Include="TransliterationDictionaryTest.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterDatabaseTest.vb" />
   </ItemGroup>

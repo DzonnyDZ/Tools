@@ -1671,14 +1671,16 @@ Namespace CollectionsT.GenericT
     Public Class IndexableEnumerator(Of TIndex, TValue)
         Implements IEnumerator(Of Tvalue)
         ''' <summary>Outside-supplied indexes</summary>
-        Private Keys As IEnumerator(Of TIndex)
+        Private keys As IEnumerator(Of TIndex)
         ''' <summary>Instance to be indexed</summary>
-        Private Instance As IIndexable(Of Tvalue, TIndex)
+        Private instance As IReadOnlyIndexable(Of TValue, TIndex)
         ''' <summary>CTor</summary>
         ''' <param name="KeysEnumerator"><see cref="IEnumerator"/> which supplies indexes to enumerate over</param>
         ''' <param name="Instance"><see cref="IReadOnlyIndexable(Of TITem, TIndex)"/> to enumerate over</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="KeysEnumerator"/> is null</exception>
-        Public Sub New(ByVal KeysEnumerator As IEnumerator(Of TIndex), ByVal Instance As IReadOnlyIndexable(Of TValue, TIndex))
+        ''' <version version="1.5.4">Parameters renamed: <c>KeysEnumerator</c> to <c>keysEnumrator</c>, <c>Instance</c> to <c>instance</c></version>
+        ''' <version version="1.5.4">Fix: <see cref="InvalidCastException"/> when <paramref name="instance"/> is not <see cref="IIndexable(Of TIndex, TKey)"/>, now <see cref="IReadOnlyIndexable(Of TValue, TIndex)"/> is enough.</version>
+        Public Sub New(ByVal keysEnumerator As IEnumerator(Of TIndex), ByVal instance As IReadOnlyIndexable(Of TValue, TIndex))
             If KeysEnumerator Is [Nothing] Then Throw New ArgumentNullException("KeysEnumerator")
             If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
             Me.Keys = KeysEnumerator

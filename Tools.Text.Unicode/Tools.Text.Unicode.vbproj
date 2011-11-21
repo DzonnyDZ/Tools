@@ -115,6 +115,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -140,6 +141,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
+    <Compile Include="Text\Unicode\CharsList.vb" />
+    <Compile Include="Text\Unicode\CharsSource.vb" />
     <Compile Include="Text\Unicode\CodePointInfo.vb" />
     <Compile Include="Text\Unicode\CsurBlock.vb" />
     <Compile Include="Text\Unicode\CsurEnums.vb" />

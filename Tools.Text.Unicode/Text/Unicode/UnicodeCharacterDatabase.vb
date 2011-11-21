@@ -38,6 +38,9 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly elementName As XName = <ucd/>.Name
         ''' <summary>URI of XML namespace of Unicode Character Database XML</summary>
         Public Const XmlNamespace$ = "http://www.unicode.org/ns/2003/ucd/1.0"
+        ''' <summary>Code of highest code-point supported by the Unicode standard</summary>
+        <CLSCompliant(False)>
+        Public Const MaxCodePoint As UInteger = &H10FFFFUI
 
 #Region "Static loading"
         ''' <summary>Name of assembly resource that contains Unicode Character Database XML</summary>

@@ -1,9 +1,9 @@
 ﻿<Window x:Class="MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="clr-namespace:Dzonnny.UnicodeMap"
+        xmlns:my="clr-namespace:Tools.TextT.UnicodeT"
     Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <my:CharacterChart CharFontFamily="Adobe Gothic Std" CharFontStretch="Condensed" CharFontStyle="Oblique" CharFontWeight="Thin" CharSize="22" />
+        <my:CharacterChart  />
     </Grid>
 </Window>

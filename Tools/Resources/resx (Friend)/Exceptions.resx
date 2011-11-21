@@ -1462,4 +1462,22 @@
   <data name="ValueMustBeFor" xml:space="preserve">
     <value>{0} must be {1} for {2}.</value>
   </data>
+  <data name="EmptyNumberNotAllowedInBase" xml:space="preserve">
+    <value>Value cannot be an empty string when base is greater than 1</value>
+  </data>
+  <data name="InvallidNumberBase" xml:space="preserve">
+    <value>Base must be greater than zero</value>
+  </data>
+  <data name="AlphabetLenghtBaseMismatch" xml:space="preserve">
+    <value>Lenght of alphabet must be same as base</value>
+  </data>
+  <data name="BaseInvalidCharacter" xml:space="preserve">
+    <value>Value contains character that cannot be interpreted as numeral in given base</value>
+  </data>
+  <data name="NegativeValueUnsupported" xml:space="preserve">
+    <value>Negative values are not supported</value>
+  </data>
+  <data name="MaximumBaseSupported" xml:space="preserve">
+    <value>Maximum supported base is {0}</value>
+  </data>
 </root>

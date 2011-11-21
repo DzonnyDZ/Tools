@@ -4,7 +4,8 @@
 ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 Public Interface IReportsChange
     ''' <summary>Raised when value of member changes</summary>
-    ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)</remarks>
+    ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class or <see cref="PropertyChangedEventArgs"/>)</remarks>
+    ''' <version version="1.5.4">Documentation change: Added recomendation to use <see cref="PropertyChangedEventArgs"/></version>
     Event Changed As ChangedEventHandler
     ''' <summary>Delegate for the <see cref="Changed"/> event</summary>
     ''' <param name="sender">The source of the event</param>

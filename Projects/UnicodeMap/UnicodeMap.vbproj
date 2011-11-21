@@ -6,7 +6,7 @@
     <ProjectGuid>{9DBD8EE0-0C5E-48F7-B0A8-7A7D52F8A82D}</ProjectGuid>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Dzonnny.UnicodeMap</RootNamespace>
+    <RootNamespace>Tools.TextT.UnicodeT</RootNamespace>
     <AssemblyName>UnicodeMap</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -140,6 +140,10 @@
     <AppDesigner Include="My Project\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Tools.Text.Unicode\Tools.Text.Unicode.vbproj">
+      <Project>{69B7448C-E445-4507-AE2A-469E3C99FC62}</Project>
+      <Name>Tools.Text.Unicode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj">
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>

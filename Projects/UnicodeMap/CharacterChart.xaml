@@ -3,139 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:my="clr-namespace:Dzonnny.UnicodeMap"
+             xmlns:my="clr-namespace:Tools.TextT.UnicodeT"
              xmlns:tconv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              FocusManager.IsFocusScope="True"
 >
-    <UserControl.Resources>
-        <tconv:PlusConverter x:Key="plus" UseDynamicCast="False"/>
-        <sys:Double x:Key="GridSizeDifference">14</sys:Double> 
-        
-        <Style x:Key="CharButtonFocusVisual" TargetType="Control">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border >
-                            <Rectangle Margin="1" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" StrokeDashArray="1 2" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Button" x:Key="CharButton">
-            <Style.Triggers>
-                <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
-                </Trigger>
-            </Style.Triggers>
-            <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="FocusVisualStyle" Value="{StaticResource CharButtonFocusVisual}" />
-            <Setter Property="MinHeight" Value="0" />
-            <Setter Property="MinWidth" Value="0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border TextBlock.Foreground="{TemplateBinding Foreground}" x:Name="Border" CornerRadius="0" BorderThickness="1,0,0,0"
-                                BorderBrush="Gray" Background="{TemplateBinding Background}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                <ContentPresenter Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="False" Width="auto" Height="auto" />
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}"/>
-            <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize}"/>
-            <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharFontFamily}"/>
-            <Setter Property="FontStretch" Value="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharFontStretch}"/>
-            <Setter Property="FontStyle" Value="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharFontStyle}"/>
-            <Setter Property="FontWeight" Value="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharFontWeight}"/>
-        </Style>
-    </UserControl.Resources>
-    <!--<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">-->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="{x:Static SystemParameters.ScrollWidth}"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions >
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!--Header-->
-        <ItemsControl Name="itmHeader" Grid.Column="1" Height="auto" Padding="1,0,0,0" Focusable="False">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
+        <DataGrid Name="dgChars" AutoGenerateColumns="False" SelectionMode="Extended" SelectionUnit="CellOrRowHeader">
+            <DataGrid.RowHeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding .}" Width="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}" TextAlignment="Center" />
+                    <TextBlock Text="{Binding .}"/>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-        <!--Body-->
-        <ItemsControl Name="itmContent" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Height="auto" VirtualizingStackPanel.IsVirtualizing="True"
-                      ScrollViewer.CanContentScroll="True" IsTabStop="False">
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
-                            Padding="{TemplateBinding Control.Padding}"
-                            BorderBrush="{TemplateBinding Border.BorderBrush}"
-                            Background="{TemplateBinding Panel.Background}"
-                            SnapsToDevicePixels="True">
-                        <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </ItemsControl.Template>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding RowHex}"
-                                   Width="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}"
-                                   Height="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" TextAlignment="Right"/>
-                        <ItemsControl ItemsSource="{Binding Chars}" BorderThickness="0,1,1,0" BorderBrush="Gray" IsTabStop="False">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Style="{StaticResource CharButton}" Click="CharButton_Click">
-                                        <TextBlock Text="{Binding Text}" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   Width="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}"
-                                                   Height="{Binding RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Path=CharSize, Converter={StaticResource plus}, ConverterParameter={StaticResource GridSizeDifference}}"/>
-                                    </Button>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            </DataGrid.RowHeaderTemplate>
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=0}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=1}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=2}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=3}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=4}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=5}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=6}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=7}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=8}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=9}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=A}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=B}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=C}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=D}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=E}"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=F}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
-    <!--</ScrollViewer>-->
 </UserControl>
