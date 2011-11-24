@@ -1,16 +1,17 @@
-﻿''' <summary>Represents single character in character map</summary>
+﻿Imports Tools.WindowsT.WPF
+Imports System.ComponentModel
+
+''' <summary>Represents single character in character map</summary>
 Public Class CharPresenter
     Inherits Control
+    Implements INotifyPropertyChanged
+
     ''' <summary>Type initiallizer - initializes the <see cref="CharPresenter"/> type</summary>
     Shared Sub New()
         DefaultStyleKeyProperty.OverrideMetadata(GetType(CharPresenter), New FrameworkPropertyMetadata(GetType(CharPresenter)))
     End Sub
     ''' <summary>CTor - creates a new instance of the <see cref="CharPresenter"/> property</summary>
     Public Sub New()
-        SetBinding(ChartProperty, New Binding() With {
-                   .RelativeSource = New RelativeSource(RelativeSourceMode.FindAncestor) With {.AncestorType = GetType(CharacterChart)},
-                   .Mode = BindingMode.OneWay
-               })
     End Sub
 
 
@@ -48,6 +49,7 @@ Public Class CharPresenter
     <CLSCompliant(False)>
     Protected Overridable Sub OnCodePointChanged(ByVal e As System.Windows.DependencyPropertyChangedEventArgs)
         If CodePoint <> Char.ConvertToUtf32(Character, 0) Then Character = Char.ConvertFromUtf32(CodePoint)
+        OnPropertyChanged("CharName")
     End Sub
     ''' <summary>Called whenever a value of the <see cref="CodePoint"/> dependency property is being re-evaluated, or coercion is specifically requested.</summary>
     ''' <param name="d">The object that the property exists on. When the callback is invoked, the property system passes this value.</param>
@@ -127,42 +129,28 @@ Public Class CharPresenter
     End Function
 #End Region
 
-#Region "Chart"
-    ''' <summary>Key of the <see cref="ChartProperty"/></summary>
-    Private Shared ReadOnly ChartProperty As DependencyProperty = _
-                            DependencyProperty.Register("Chart", _
-                            GetType(CharacterChart), GetType(CharPresenter), _
-                            New FrameworkPropertyMetadata(Nothing, AddressOf OnChartChanged))
-#End Region
+    ''' <summary>Gets name of character displayed</summary>
+    ''' <returns>Name of character with code <see cref="CodePoint"/>. Null if <see cref="CharPresenter"/> is not placed in <see cref="CharacterChart"/> or it does not provide <see cref="CharacterChart.NameSource"/> or the name source does not provide name of the character.</returns>
+    Public ReadOnly Property CharName As String
+        Get
+            Dim chart = Me.GetVisualAncestor(Of CharacterChart)()
+            If chart Is Nothing OrElse chart.NameSource Is Nothing Then Return Nothing
+            Return chart.NameSource.GetName(CodePoint)
+        End Get
+    End Property
 
-
-    Private Shared ReadOnly CharNamePropertyKey As DependencyPropertyKey = _
-                            DependencyProperty.RegisterReadOnly("CharName", _
-                            GetType(String), GetType(CharPresenter), _
-                            New FrameworkPropertyMetadata(Nothing))
-
-    Public Shared ReadOnly CharNameProperty As DependencyProperty = CharNamePropertyKey.DependencyProperty
-
-
-
-
-    ''' <summary>Called when value of the <see cref="ChartProperty"/> property changes for any <see cref="charpresenter"/></summary>
-    ''' <param name="d">A <see cref="charpresenter"/> <see cref="CodePoint"/> has changed for</param>
+    ''' <summary>Occurs when a property value changes.</summary>
+    ''' <remarks>This event notifies changes only for some non-dependency properties such as <see cref="CharName"/>.</remarks>
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+    ''' <summary>Raises the <see cref="PropertyChanged"/> event</summary>
     ''' <param name="e">Event arguments</param>
-    ''' <exception cref="Tools.TypeMismatchException"><paramref name="d"/> is not <see cref="charpresenter"/></exception>
-    ''' <exception cref="ArgumentNullException"><paramref name="d"/> is null</exception>
-    <DebuggerStepThrough()> _
-    Private Shared Sub OnChartChanged(ByVal d As System.Windows.DependencyObject, ByVal e As System.Windows.DependencyPropertyChangedEventArgs)
-        If d Is Nothing Then Throw New ArgumentNullException("d")
-        If Not TypeOf d Is CharPresenter Then Throw New Tools.TypeMismatchException("d", d, GetType(CharPresenter))
-        DirectCast(d, CharPresenter).OnCodePointChanged(e)
+    Protected Overridable Overloads Sub OnPropertyChanged(e As PropertyChangedEventArgs)
+        RaiseEvent PropertyChanged(Me, e)
     End Sub
-    ''' <summary>Called when value of the <see cref="ChartProperty"/> property changes</summary>
-    ''' <param name="e">Event arguments</param>
-    <CLSCompliant(False)>
-    Protected Overridable Sub OnChartChanged(ByVal e As System.Windows.DependencyPropertyChangedEventArgs)
-        Dim chart As CharacterChart = DirectCast(GetValue(ChartProperty), CharacterChart)
-        SetValue(CharNamePropertyKey, If(chart Is Nothing, Nothing, chart.NameSourceInternal(CodePoint)))
+    ''' <summary>Raises the <see cref="PropertyChanged"/> event</summary>
+    ''' <param name="propertyName">Name of changed property</param>
+    Protected Overloads Sub OnPropertyChanged(propertyName As String)
+        OnPropertyChanged(New PropertyChangedEventArgs(propertyName))
     End Sub
 
 End Class

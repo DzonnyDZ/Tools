@@ -2,7 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:my="clr-namespace:Tools.TextT.UnicodeT"
+    xmlns:tc="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
 >
+    <tc:NullInvisibleConverter x:Key="NullInvisibleConverter"/>
 
     <Style TargetType="{x:Type my:CharPresenter}">
         <Setter Property="Template">
@@ -17,7 +19,8 @@
                 <ToolTip>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ToolTip}, Path=PlacementTarget.CodePoint, StringFormat='U+{0:X4}'}"/>
-                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ToolTip}, Path=PlacementTarget.CharName}"/>
+                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ToolTip}, Path=PlacementTarget.CharName}"
+                                   Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource NullInvisibleConverter}}" />
                     </StackPanel>
                 </ToolTip>
             </Setter.Value>

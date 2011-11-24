@@ -94,7 +94,7 @@ Namespace TextT.UnicodeT
                     If extCodePoint IsNot Nothing Then Return extCodePoint.GetPropertyValue([namespace], name)
                 End If
             End If
-            Dim attr = Element.Attribute(XName.Get(name, namespace$))
+            Dim attr = Element.Attribute(If([namespace] Is Nothing, CType(name, XName), XName.Get(name, namespace$)))
             If attr Is Nothing AndAlso Group IsNot Nothing Then Return Group.GetPropertyValue(namespace$, name)
             Return attr.Value
         End Function

@@ -132,7 +132,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Derived class may provide fallback logic for providing property values when the property is not defined on <see cref="Element"/>.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Overridable Function GetPropertyValue$(namespace$, name$)
-            Dim attr = Element.Attribute(XName.Get(name, [namespace]))
+            Dim attr = Element.Attribute(If([namespace] Is Nothing, CType(name, XName), XName.Get(name, namespace$)))
             If attr Is Nothing Then Return Nothing
             Return attr.Value
         End Function

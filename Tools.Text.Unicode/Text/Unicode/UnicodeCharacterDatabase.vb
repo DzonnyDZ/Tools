@@ -253,7 +253,7 @@ Namespace TextT.UnicodeT
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public ReadOnly Property Groups As IEnumerable(Of UnicodeCharacterGroup)
             Get
-                Return From g In Xml.<repertoire>.<group> Select New UnicodeCharacterGroup(g)
+                Return From g In Xml.<ucd>.<repertoire>.<group> Select New UnicodeCharacterGroup(g)
             End Get
         End Property
 
@@ -279,7 +279,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="ArgumentNullException"><paramref name="document"/> is null</exception>
         Friend Shared Function GetCodePointXmlElements(document As XDocument) As IEnumerable(Of XElement)
             If document Is Nothing Then Throw New ArgumentNullException("document")
-            Return document.<repertoire>...<char>.Union(document.<repertoire>...<reserved>).Union(document.<repertoire>...<noncharacter>).Union(document.<repertoire>...<surrogate>)
+            Return document.<ucd>.<repertoire>...<char>.Union(document.<ucd>.<repertoire>...<reserved>).Union(document.<ucd>.<repertoire>...<noncharacter>).Union(document.<ucd>.<repertoire>...<surrogate>)
         End Function
 
 
@@ -338,7 +338,7 @@ Namespace TextT.UnicodeT
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public ReadOnly Property Repertoire As UcdRepertoire
             Get
-                Dim el = Xml.<repertoire>.FirstOrDefault
+                Dim el = Xml.<ucd>.<repertoire>.FirstOrDefault
                 If el IsNot Nothing Then Return New UcdRepertoire(el)
                 Return Nothing
             End Get
@@ -370,15 +370,25 @@ Namespace TextT.UnicodeT
         ''' <remarks>This function is not CLS-compliant. CLS-compliant overload exists.</remarks>
         <CLSCompliant(False)>
         Public Function FindCodePoint(codePoint As UInteger) As UnicodeCodePoint
-            Dim [single] = (From el In CodePointXmlElements Where el.@cp = codePoint.ToString("X", InvariantCulture)).SingleOrDefault
+            Dim [single] = (From el In CodePointXmlElements Where CpMatch(el.@cp, codePoint)).SingleOrDefault
             If [single] IsNot Nothing Then Return UnicodeCodePoint.Create([single])
             Dim range = (From el In CodePointXmlElements Where el.@<cp-first> IsNot Nothing AndAlso el.@<cp-last> IsNot Nothing AndAlso
-                                                                UInteger.Parse(el.@<cp-first>, Globalization.NumberStyles.HexNumber, InvariantCulture) <= codePoint AndAlso
-                                                                UInteger.Parse(el.@<cp-last>, Globalization.NumberStyles.HexNumber, InvariantCulture) >= codePoint
+                                                               UInteger.Parse(el.@<cp-first>, Globalization.NumberStyles.HexNumber, InvariantCulture) <= codePoint AndAlso
+                                                               UInteger.Parse(el.@<cp-last>, Globalization.NumberStyles.HexNumber, InvariantCulture) >= codePoint
                         ).SingleOrDefault
             If range IsNot Nothing Then Return UnicodeCodePoint.Create(range).MakeSingle(codePoint)
             Return Nothing
         End Function
+
+        ''' <summary>Detects if XML hexa code point number matches code point number</summary>
+        ''' <param name="xmlCp">Hexadecimal code of character</param>
+        ''' <param name="cp">Code of character</param>
+        ''' <returns>True if <paramref name="xmlCp"/> and <paramref name="cp"/> represent the same number (in hex); false otherwise</returns>
+        Private Shared Function CpMatch(xmlCp$, cp As UInteger) As Boolean
+            If xmlCp = "" Then Return False
+            Return UInteger.Parse(xmlCp, Globalization.NumberStyles.HexNumber, InvariantCulture) = cp
+        End Function
+
         ''' <summary>Gets information from Unicode Character database for single code point</summary>
         ''' <param name="codePoint">A codepoint to get information for</param>
         ''' <returns>Information about given code point. Null if current instance of Unicode Character Database does not provide information about the character.</returns>
