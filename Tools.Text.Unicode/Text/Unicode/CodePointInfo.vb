@@ -67,7 +67,7 @@ Namespace TextT.UnicodeT
         Public Shared Function Parse(value As String, Optional xml As XDocument = Nothing) As CodePointInfo
             If value = "" Then Return Nothing
             If value = "#" Then Return CreatePlaceholder(xml)
-            Return New CodePointInfo(xml, UInt32.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture))
+            Return New CodePointInfo(xml, UInt32.Parse(value, Globalization.NumberStyles.HexNumber, InvariantCulture))
         End Function
 
 
@@ -257,7 +257,7 @@ Namespace TextT.UnicodeT
         Public Sub New(xml As XDocument, codePoints As String)
             _codePoints = If(codePoints.IsNullOrWhiteSpace, New UInteger?() {}, (
                            From cp In codePoints.WhiteSpaceSplit
-                           Select If(cp = "#", New UInteger?, UInteger.Parse("0x" & cp, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                           Select If(cp = "#", New UInteger?, UInteger.Parse(cp, Globalization.NumberStyles.HexNumber, InvariantCulture))
                            ).ToArray)
             Me.xml = xml
         End Sub

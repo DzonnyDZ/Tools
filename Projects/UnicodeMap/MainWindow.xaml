@@ -4,6 +4,6 @@
         xmlns:my="clr-namespace:Tools.TextT.UnicodeT"
     Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <my:CharacterChart  />
+        <my:CharacterChart   />
     </Grid>
 </Window>

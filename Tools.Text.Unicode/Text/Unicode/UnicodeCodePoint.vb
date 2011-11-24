@@ -129,6 +129,34 @@ Namespace TextT.UnicodeT
                 Return value
             End Get
         End Property
+
+        ''' <summary>Gets the of the code point thats most useful for user</summary>
+        ''' <returns>
+        ''' Usually returns <see cref="Name"/>.
+        ''' Exceptions (conditions are evaluated in given order):
+        ''' <list type="table">
+        ''' <listheader><term>Condition</term><description>Returns</description></listheader>
+        ''' <item><term>Name aliases are loaded and name alias exist for current code point</term><description>First name alias; see <see cref="NameAliases"/>. This value is returned without prefix.</description></item>
+        ''' <item><term><see cref="GeneralCategory"/> is <see cref="Globalization.UnicodeCategory.PrivateUse"/> (i.e. this is private use character) and <see cref="Name"/> is null or an empty string and CSUR extension is loaded and provides <see cref="CsurPropertiesProvider"/> for this code-point which provides non-null non-empty name for this code-point.</term><description><see cref="CsurPropertiesProvider.Name"/> (prefix CSUR:, localizable)</description></item>
+        ''' <item><term><see cref="Name"/> is null or empty and <see cref="Name1"/> is not.</term><description><see cref="Name1"/> (prefix 1:, localizable)</description></item>
+        ''' <item><term><see cref="Name"/> is null or empty and  <see cref="NamesListExtensions"/> are loaded and provide aliases</term><description>First alias form <see cref="NamesListExtensions.Aliases"/> (prefix Alias:, localizable)</description></item>
+        ''' </list>
+        ''' <note type="inheritinfo">Derived class may provide different for <see cref="UniversalName"/> lookup.</note>
+        ''' </returns>
+        Public Overridable ReadOnly Property UniversalName As String
+            Get
+                If NameAliases IsNot Nothing AndAlso NameAliases.Length > 0 Then Return NameAliases(0)
+                If Me.GeneralCategory = Globalization.UnicodeCategory.PrivateUse AndAlso Name = "" Then _
+                    If Me.Csur IsNot Nothing AndAlso Me.Csur.Name <> "" Then Return TextT.UnicodeT.UnicodeResources.prefix_CSUR & Me.Csur.Name
+                If Me.Name = "" AndAlso Me.Name1 <> "" Then Return TextT.UnicodeT.UnicodeResources.prefix_Unicode1 & Name1
+                If Me.Name = "" Then
+                    Dim a = NamesListExtensions.Aliases(Me)
+                    If a IsNot Nothing AndAlso a.Length > 0 Then Return TextT.UnicodeT.UnicodeResources.prefix_Alias & a(0)
+                End If
+                Return Me.Name
+            End Get
+        End Property
+
         ''' <summary>Gets name of the character the character had in version 1 of Unicode standard</summary>
         ''' <returns>Name character had in version 1 of Unicode standard (if specified; null otherwise)</returns>
         ''' <remarks>
@@ -161,7 +189,7 @@ Namespace TextT.UnicodeT
                 If _codePoint.HasValue Then Return _codePoint
                 Dim value = GetPropertyValue("cp")
                 If value.IsNullOrEmpty Then Return Nothing
-                Return UInteger.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return UInteger.Parse(value, Globalization.NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 
@@ -188,7 +216,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim value = GetPropertyValue("first-cp")
                 If value.IsNullOrEmpty Then Return Nothing
-                Return UInteger.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return UInteger.Parse(value, Globalization.NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 
@@ -204,7 +232,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim value = GetPropertyValue("last-cp")
                 If value.IsNullOrEmpty Then Return Nothing
-                Return UInteger.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return UInteger.Parse(value, Globalization.NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 

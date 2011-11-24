@@ -1830,7 +1830,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets a Code Point that represents this radical</summary>
         Public ReadOnly Property RadicalCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Element.Document, UInt32.Parse("0x" & Element.@radical, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Element.Document, UInt32.Parse(Element.@radical, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 
@@ -1838,14 +1838,14 @@ Namespace TextT.UnicodeT
         ''' <remarks>For non-BMP characters returns 2 characters (surrogate pair)</remarks>
         Public ReadOnly Property RadicalCharacter As String
             Get
-                Return Char.ConvertFromUtf32(UInt32.Parse("0x" & Element.@radical, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return Char.ConvertFromUtf32(UInt32.Parse(Element.@radical, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 
         ''' <summary>Gets a Code Point that represents radical associated ideograph</summary>
         Public ReadOnly Property IdeographCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Element.Document, UInt32.Parse("0x" & Element.@ideograph, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Element.Document, UInt32.Parse(Element.@ideograph, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 
@@ -1853,7 +1853,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>For non-BMP characters returns 2 characters (surrogate pair)</remarks>
         Public ReadOnly Property IdeographCharacter As String
             Get
-                Return Char.ConvertFromUtf32(UInt32.Parse("0x" & Element.@ideograph, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return Char.ConvertFromUtf32(UInt32.Parse(Element.@ideograph, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
     End Class

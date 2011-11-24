@@ -463,6 +463,7 @@ Namespace TextT.UnicodeT
         End Property
     End Class
 
+    ''' <summary>A type description provider of <see cref="CharsLine"/></summary>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Friend Class CharsLineTypeDescriptionProvider
         Inherits TypeDescriptionProvider
@@ -485,76 +486,143 @@ Namespace TextT.UnicodeT
             Return type.Equals(GetType(CharsLine))
         End Function
     End Class
+
+    ''' <summary>A type descriptor for <see cref="CharsLine"/></summary>
+    ''' <remarks>Main putpose is to provide properties for individual columns (indexes)</remarks>
     Friend Class CharsLineTypeDescriptor
         Inherits CustomTypeDescriptor
+        ''' <summary>Instance of <see cref="CharsLine"/> being described</summary>
         Private instance As CharsLine
+        ''' <summary>CTor - creates a new instance of the <see cref="CharsLine"/> class</summary>
+        ''' <param name="instance">An instance do describe</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="instance"/> is null</exception>
         Public Sub New(instance As CharsLine)
             If instance Is Nothing Then Throw New ArgumentNullException("instance")
             Me.instance = instance
         End Sub
 
+        ''' <summary>Returns a collection of property descriptors for the object represented by this type descriptor.</summary>
+        ''' <returns>A <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> containing the property descriptions for the object represented by this type descriptor. The default is <see cref="F:System.ComponentModel.PropertyDescriptorCollection.Empty" />.</returns>
         Public Overrides Function GetProperties() As System.ComponentModel.PropertyDescriptorCollection
             Dim properties = New ForLoopCollection(Of PropertyDescriptor, Integer)(Function() 0, Function(i) i < instance.Size, Function(i) i + 1, Function(i) New CharsLineColumnDescriptor(instance, i))
             Return New PropertyDescriptorCollection(properties.ToArray, True)
         End Function
+        ''' <summary>Returns a collection of property descriptors for the object represented by this type descriptor.</summary>
+        ''' <returns>A <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> containing the property descriptions for the object represented by this type descriptor. The default is <see cref="F:System.ComponentModel.PropertyDescriptorCollection.Empty" />.</returns>
         Public Overrides Function GetProperties(attributes() As System.Attribute) As System.ComponentModel.PropertyDescriptorCollection
             If attributes Is Nothing OrElse attributes.Length = 0 Then Return GetProperties()
             Dim properties = From prp As PropertyDescriptor In GetProperties() Where attributes.All(Function(a) prp.Attributes.Contains(a))
             Return New PropertyDescriptorCollection(properties.ToArray, True)
         End Function
+        ''' <summary>Returns a collection of custom attributes for the type represented by this type descriptor.</summary>
+        ''' <returns>An <see cref="T:System.ComponentModel.AttributeCollection" /> containing the attributes for the type. The default is <see cref="F:System.ComponentModel.AttributeCollection.Empty" />.</returns>
         Public Overrides Function GetAttributes() As System.ComponentModel.AttributeCollection
             Return TypeDescriptor.GetAttributes(instance, True)
         End Function
+        ''' <summary>Returns the fully qualified name of the class represented by this type descriptor.</summary>
+        ''' <returns>A <see cref="T:System.String" /> containing the fully qualified class name of the type this type descriptor is describing. The default is null.</returns>
         Public Overrides Function GetClassName() As String
             Return TypeDescriptor.GetClassName(instance, True)
         End Function
+        ''' <summary>Returns a collection of event descriptors for the object represented by this type descriptor.</summary>
+        ''' <returns>An <see cref="T:System.ComponentModel.EventDescriptorCollection" /> containing the event descriptors for the object represented by this type descriptor. The default is <see cref="F:System.ComponentModel.EventDescriptorCollection.Empty" />.</returns>
         Public Overrides Function GetEvents() As System.ComponentModel.EventDescriptorCollection
             Return TypeDescriptor.GetEvents(instance, True)
         End Function
+        ''' <summary>Returns a collection of event descriptors for the object represented by this type descriptor.</summary>
+        ''' <returns>An <see cref="T:System.ComponentModel.EventDescriptorCollection" /> containing the event descriptors for the object represented by this type descriptor. The default is <see cref="F:System.ComponentModel.EventDescriptorCollection.Empty" />.</returns>
         Public Overrides Function GetEvents(attributes() As System.Attribute) As System.ComponentModel.EventDescriptorCollection
             Return TypeDescriptor.GetEvents(instance, attributes, True)
         End Function
+        ''' <summary>Returns an object that contains the property described by the specified property descriptor.</summary>
+        ''' <returns>An <see cref="T:System.Object" /> that owns the given property specified by the type descriptor. The default is null.</returns>
+        ''' <param name="pd">The property descriptor for which to retrieve the owning object.</param>
         Public Overrides Function GetPropertyOwner(pd As System.ComponentModel.PropertyDescriptor) As Object
+            If TypeOf pd Is CharsLineColumnDescriptor Then Return DirectCast(pd, CharsLineColumnDescriptor).Instance
             Return instance
         End Function
+        ''' <summary>Returns a type converter for the type represented by this type descriptor.</summary>
+        ''' <returns>A <see cref="T:System.ComponentModel.TypeConverter" /> for the type represented by this type descriptor. The default is a newly created <see cref="T:System.ComponentModel.TypeConverter" />.</returns>
         Public Overrides Function GetConverter() As System.ComponentModel.TypeConverter
             Return TypeDescriptor.GetConverter(instance, True)
         End Function
+        ''' <summary>Returns the name of the class represented by this type descriptor.</summary>
+        ''' <returns>A <see cref="T:System.String" /> containing the name of the component instance this type descriptor is describing. The default is null.</returns>
         Public Overrides Function GetComponentName() As String
             Return TypeDescriptor.GetComponentName(instance, True)
         End Function
+        ''' <summary>Returns the event descriptor for the default event of the object represented by this type descriptor.</summary>
+        ''' <returns>The <see cref="T:System.ComponentModel.EventDescriptor" /> for the default event on the object represented by this type descriptor. The default is null.</returns>
         Public Overrides Function GetDefaultEvent() As System.ComponentModel.EventDescriptor
             Return TypeDescriptor.GetDefaultEvent(instance, True)
         End Function
+        ''' <summary>Returns the property descriptor for the default property of the object represented by this type descriptor.</summary>
+        ''' <returns>A <see cref="T:System.ComponentModel.PropertyDescriptor" /> for the default property on the object represented by this type descriptor. The default is null. This implementation always returns null.</returns>
         Public Overrides Function GetDefaultProperty() As System.ComponentModel.PropertyDescriptor
             Return Nothing
         End Function
+        ''' <summary>Returns an editor of the specified type that is to be associated with the class represented by this type descriptor.</summary>
+        ''' <returns>An editor of the given type that is to be associated with the class represented by this type descriptor. The default is null.</returns>
+        ''' <param name="editorBaseType">The base type of the editor to retrieve.</param>
         Public Overrides Function GetEditor(editorBaseType As System.Type) As Object
             Return TypeDescriptor.GetEditor(instance, editorBaseType, True)
         End Function
     End Class
 
+    ''' <summary>A property descriptor that column of <see cref="CharsLine"/></summary>
     Friend Class CharsLineColumnDescriptor
         Inherits PropertyDescriptor
-        Private ReadOnly instance As CharsLine
+        ''' <summary>Current char line to provide property for</summary>
+        Private ReadOnly _instance As CharsLine
+        ''' <summary>Index of column to describe</summary>
         Private ReadOnly columnIndex As Integer
+        ''' <summary>CTor - creates a new instance of the <see cref="CharsLineColumnDescriptor"/> class</summary>
+        ''' <param name="instance">Instance of <see cref="CharsLine"/> to created property descriptor for</param>
+        ''' <param name="columnIndex">Index (0-based) of column co create property descriptor for</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="instance"/> is null</exception>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="columnIndex"/> is less than zero or greater than or equal to <see cref="CharsLine.Size">size</see> of <paramref name="instance"/></exception>
         Public Sub New(instance As CharsLine, columnIndex As Integer)
-            MyBase.New(GetName(instance, columnIndex), GetAttributes(instance, columnIndex))
-            Me.instance = instance
+            MyBase.New(GetName(instance, columnIndex), GetAttributes())
+            If columnIndex < 0 OrElse columnIndex >= instance.Size Then Throw New ArgumentOutOfRangeException("columnIndex")
+            Me._instance = instance
             Me.columnIndex = columnIndex
         End Sub
 
+        ''' <summary>Gets current char line this property descriptor ptovides description of property of</summary>
+        Public ReadOnly Property Instance As Object
+            Get
+                Return _instance
+            End Get
+        End Property
+
+        ''' <summary>Gets name of newly created property</summary>
+        ''' <param name="instance">Instance of <see cref="CharsLine"/> the property belongs to</param>
+        ''' <param name="columnIndex">Index of column the instance belongs to</param>
+        ''' <returns>Name of the propety-colum. I.e. number of the column in base specified by <paramref name="instance"/>.<see cref="CharsLine.Size">Size</see>.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="instance"/> is null</exception>
         Private Shared Function GetName(instance As CharsLine, columnIndex As Integer) As String
+            If instance Is Nothing Then Throw New ArgumentNullException("instance")
             Return NumericsT.ConversionsT.Dec2Xxx(columnIndex, instance.Size)
         End Function
-        Private Shared Function GetAttributes(instance As CharsLine, columnIndex As Integer) As Attribute()
-            Return New Attribute() {New BrowsableAttribute(True)}
+
+        ''' <summary>Gets attributes for newly created instance of <see cref="CharsLineColumnDescriptor"/></summary>
+        ''' <returns>Attributes of a virtual property described by newly created instace</returns>
+        Private Shared Function GetAttributes() As Attribute()
+            Return New Attribute() {New BrowsableAttribute(True), New BindableAttribute(True, BindingDirection.OneWay)}
         End Function
 
+        ''' <summary>When overridden in a derived class, returns whether resetting an object changes its value.</summary>
+        ''' <param name="component">The component to test for reset capability. </param>
+        ''' <returns>true if resetting the component changes its value; otherwise, false. This implementation always returns false.</returns>
         Public Overrides Function CanResetValue(component As Object) As Boolean
             Return False
         End Function
 
+        ''' <summary>When overridden in a derived class, gets the type of the component this property is bound to.</summary>
+        ''' <returns>
+        ''' A <see cref="T:System.Type" /> that represents the type of component this property is bound to.
+        ''' This implementation always returns type of item passed to CTor which is always <see cref="CharsLine"/> or derived type.
+        ''' </returns>
         Public Overrides ReadOnly Property ComponentType As System.Type
             Get
                 Return instance.GetType
@@ -569,26 +637,40 @@ Namespace TextT.UnicodeT
             Throw New TypeMismatchException(component, "component", GetType(CharsLine))
         End Function
 
+        ''' <summary>When overridden in a derived class, gets a value indicating whether this property is read-only.</summary>
+        ''' <returns>true if the property is read-only; otherwise, false. This implementation always returns true.</returns>
         Public Overrides ReadOnly Property IsReadOnly As Boolean
             Get
                 Return True
             End Get
         End Property
 
+        ''' <summary>When overridden in a derived class, gets the type of the property.</summary>
+        ''' <returns>A <see cref="T:System.Type" /> that represents the type of the property. This implementation always returns <see cref="UInteger"/>.</returns>
         Public Overrides ReadOnly Property PropertyType As System.Type
             Get
                 Return GetType(UInteger)
             End Get
         End Property
 
+        ''' <summary>When overridden in a derived class, resets the value for this property of the component to the default value.</summary>
+        ''' <param name="component">The component with the property value that is to be reset to the default value. </param>
+        ''' <exception cref="NotSupportedException">This implementation always throws this exception</exception>
         Public Overrides Sub ResetValue(component As Object)
             Throw New NotSupportedException
         End Sub
 
+        ''' <summary>When overridden in a derived class, sets the value of the component to a different value.</summary>
+        ''' <param name="component">The component with the property value that is to be set. </param>
+        ''' <param name="value">The new value. </param>
+        ''' <exception cref="NotSupportedException">This implementation always throws this exception</exception>
         Public Overrides Sub SetValue(component As Object, value As Object)
             Throw New NotSupportedException
         End Sub
 
+        ''' <summary>When overridden in a derived class, determines a value indicating whether the value of this property needs to be persisted.</summary>
+        ''' <param name="component">The component with the property to be examined for persistence. </param>
+        ''' <returns>true if the property should be persisted; otherwise, false. This implementation always returns true.</returns>
         Public Overrides Function ShouldSerializeValue(component As Object) As Boolean
             Return True
         End Function

@@ -11,30 +11,34 @@
              FocusManager.IsFocusScope="True"
 >
     <Grid>
-        <DataGrid Name="dgChars" AutoGenerateColumns="False" SelectionMode="Extended" SelectionUnit="CellOrRowHeader">
+        <DataGrid Name="dgChars" AutoGenerateColumns="False" SelectionMode="Extended" SelectionUnit="CellOrRowHeader"
+                  MinRowHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:CharacterChart}}, Path=RowHeight}"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
+                  EnableRowVirtualization="True"
+                  >
             <DataGrid.RowHeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding .}"/>
+                    <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=Item.Characters[0], StringFormat=X4}"
+                               HorizontalAlignment="Right" VerticalAlignment="Top" TextAlignment="Right"
+                               />
                 </DataTemplate>
             </DataGrid.RowHeaderTemplate>
-            <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=0}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=1}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=2}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=3}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=4}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=5}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=6}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=7}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=8}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=9}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=A}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=B}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=C}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=D}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=E}"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=F}"/>
-            </DataGrid.Columns>
+            <DataGrid.RowHeaderStyle>
+                <Style TargetType="DataGridRowHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                </Style>
+            </DataGrid.RowHeaderStyle>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:CharacterChart}}, Path=RowHeight}"/>
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
     </Grid>
 </UserControl>

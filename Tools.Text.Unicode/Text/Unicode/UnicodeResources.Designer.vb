@@ -308,6 +308,33 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Alias: .
+        '''</summary>
+        Friend Shared ReadOnly Property prefix_Alias() As String
+            Get
+                Return ResourceManager.GetString("prefix_Alias", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to CSUR: .
+        '''</summary>
+        Friend Shared ReadOnly Property prefix_CSUR() As String
+            Get
+                Return ResourceManager.GetString("prefix_CSUR", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to 1: .
+        '''</summary>
+        Friend Shared ReadOnly Property prefix_Unicode1() As String
+            Get
+                Return ResourceManager.GetString("prefix_Unicode1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Bidirectional.
         '''</summary>
         Friend Shared ReadOnly Property propcat_Bidirectional() As String

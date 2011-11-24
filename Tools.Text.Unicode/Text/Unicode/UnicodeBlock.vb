@@ -55,7 +55,7 @@ Namespace TextT.UnicodeT
         <XmlElement("first-cp")>
         Public ReadOnly Property FirstCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Document, UInteger.Parse("0x" & Element.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Document, UInteger.Parse(Element.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 
@@ -63,7 +63,7 @@ Namespace TextT.UnicodeT
         <XmlElement("last-cp")>
         Public ReadOnly Property LastCodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Document, UInteger.Parse("0x" & Element.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Document, UInteger.Parse(Element.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 

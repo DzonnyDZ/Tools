@@ -47,7 +47,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets a code point this correction informs about change of normalization of</summary>
         Public ReadOnly Property CodePoint As CodePointInfo
             Get
-                Return New CodePointInfo(Element.Document, UInt32.Parse("0x" & Element.@cp, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Element.Document, UInt32.Parse(Element.@cp, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 

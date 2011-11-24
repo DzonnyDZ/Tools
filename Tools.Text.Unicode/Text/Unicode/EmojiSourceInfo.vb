@@ -49,7 +49,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim val = Element.@docomo
                 If val.IsNullOrEmpty Then Return Nothing
-                Return Integer.Parse("0x" & val, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return Integer.Parse(val, Globalization.NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 
@@ -58,7 +58,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim val = Element.@kddi
                 If val.IsNullOrEmpty Then Return Nothing
-                Return Integer.Parse("0x" & val, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return Integer.Parse(val, Globalization.NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 
@@ -67,7 +67,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim val = Element.@softbank
                 If val.IsNullOrEmpty Then Return Nothing
-                Return Integer.Parse("0x" & val, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return Integer.Parse(val, Globalization.NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 

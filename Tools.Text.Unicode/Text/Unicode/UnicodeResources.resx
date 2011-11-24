@@ -296,4 +296,13 @@
   <data name="ex_NameAlias_NotHex" xml:space="preserve">
     <value>Unexpected character. Expected uppercase hexadecimal digit</value>
   </data>
+  <data name="prefix_CSUR" xml:space="preserve">
+    <value>CSUR: </value>
+  </data>
+  <data name="prefix_Unicode1" xml:space="preserve">
+    <value>1: </value>
+  </data>
+  <data name="prefix_Alias" xml:space="preserve">
+    <value>Alias: </value>
+  </data>
 </root>

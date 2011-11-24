@@ -402,7 +402,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim value = GetPropertyValue("bmg")
                 If value = "" Then Return Nothing
-                Return New CodePointInfo(Element.Document, UInteger.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Element.Document, UInteger.Parse(value, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 
@@ -985,7 +985,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim value As String = GetPropertyValue("scf", True)
                 If value = "" Then Return Nothing
-                Return New CodePointInfo(Element.Document, UInteger.Parse("0x" & value, Globalization.NumberStyles.HexNumber, InvariantCulture))
+                Return New CodePointInfo(Element.Document, UInteger.Parse(value, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 
@@ -1739,7 +1739,7 @@ Namespace TextT.UnicodeT
         Protected Function GetHexArray(attributeName$) As Integer()
             Dim value As String = GetPropertyValue(attributeName$)
             If value.IsNullOrEmpty Then Return EmptyArray.Int32
-            Return (From str In value.Split(" "c) Select Integer.Parse("0x" & str, Globalization.NumberStyles.HexNumber, InvariantCulture)).ToArray
+            Return (From str In value.Split(" "c) Select Integer.Parse(str, Globalization.NumberStyles.HexNumber, InvariantCulture)).ToArray
         End Function
         ''' <summary>Unihan helper - gets value of XML attribute stored as space-separated array of strings (this format is used in Unihan database)</summary>
         ''' <param name="attributeName">Name of the XML attribute to parse value of</param>
@@ -1763,7 +1763,7 @@ Namespace TextT.UnicodeT
             If value.IsNullOrEmpty Then Return EmptyArray.String
             Return (
                 From str In value.Split(" "c)
-                Select Char.ConvertFromUtf32(Integer.Parse("0x" & (
+                Select Char.ConvertFromUtf32(Integer.Parse((
                     Function()
                         If Not str.StartsWith("U+") Then Throw New FormatException(UnicodeResources.ex_CodepointMustStartWithUPlus)
                         Return str.Substring(2)

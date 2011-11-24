@@ -58,7 +58,7 @@ Namespace TextT.UnicodeT
         ''' <seelaso cref="CodePointInfoCollection.ToString"/>
         Public ReadOnly Property Sequence As String
             Get
-                Return CodePoints.ToString("s") ' String.Join("", From cp In Element.@cps.WhiteSpaceSplit Select Char.ConvertFromUtf32(UInteger.Parse("0x" & cp, Globalization.NumberStyles.HexNumber, InvariantCulture)))
+                Return CodePoints.ToString("s") ' String.Join("", From cp In Element.@cps.WhiteSpaceSplit Select Char.ConvertFromUtf32(UInteger.Parse(cp, Globalization.NumberStyles.HexNumber, InvariantCulture)))
             End Get
         End Property
 

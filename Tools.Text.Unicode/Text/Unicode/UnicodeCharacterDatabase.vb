@@ -33,7 +33,7 @@ Namespace TextT.UnicodeT
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public Class UnicodeCharacterDatabase
-        Implements IXDocumentWrapper, IXElementWrapper
+        Implements IXDocumentWrapper, IXElementWrapper, ICharNameProvider
         ''' <summary>Name of element representing this class in XML</summary>
         Friend Shared ReadOnly elementName As XName = <ucd/>.Name
         ''' <summary>URI of XML namespace of Unicode Character Database XML</summary>
@@ -131,7 +131,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="ArgumentException">Root element of <paramref name="unicodeCharacterDatabaseXml"/> is not <c>&lt;ucd></c> in namespace http://www.unicode.org/ns/2003/ucd/1.0.</exception>
         Public Sub New(unicodeCharacterDatabaseXml As XDocument)
             If unicodeCharacterDatabaseXml Is Nothing Then Throw New ArgumentNullException("unicodeCharacterDatabaseXml")
-            If Not _xml.Root.Name = elementName Then Throw New ArgumentException(ResourcesT.Exceptions.RootElementMustBe0.f(elementName))
+            If Not unicodeCharacterDatabaseXml.Root.Name = elementName Then Throw New ArgumentException(ResourcesT.Exceptions.RootElementMustBe0.f(elementName))
             _xml = unicodeCharacterDatabaseXml
         End Sub
         ''' <summary>CTor - creates a new instance of the <see cref="UnicodeCharacterDatabase"/> class from URL where Unicode Character Database XML is located.</summary>
@@ -204,7 +204,7 @@ Namespace TextT.UnicodeT
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public ReadOnly Property Extensions As IDictionary(Of String, UnicodeCharacterDatabase)
             Get
-                Dim ret = Xml.Annotation(Of IDictionary(Of String, UnicodeCharacter))()
+                Dim ret = Xml.Annotation(Of IDictionary(Of String, UnicodeCharacterDatabase))()
                 If ret Is Nothing Then
                     ret = New Dictionary(Of String, UnicodeCharacterDatabase)
                     Xml.AddAnnotation(ret)
@@ -373,8 +373,8 @@ Namespace TextT.UnicodeT
             Dim [single] = (From el In CodePointXmlElements Where el.@cp = codePoint.ToString("X", InvariantCulture)).SingleOrDefault
             If [single] IsNot Nothing Then Return UnicodeCodePoint.Create([single])
             Dim range = (From el In CodePointXmlElements Where el.@<cp-first> IsNot Nothing AndAlso el.@<cp-last> IsNot Nothing AndAlso
-                                                                UInteger.Parse("0x" & el.@<cp-first>, Globalization.NumberStyles.HexNumber, InvariantCulture) <= codePoint AndAlso
-                                                                UInteger.Parse("0x" & el.@<cp-last>, Globalization.NumberStyles.HexNumber, InvariantCulture) >= codePoint
+                                                                UInteger.Parse(el.@<cp-first>, Globalization.NumberStyles.HexNumber, InvariantCulture) <= codePoint AndAlso
+                                                                UInteger.Parse(el.@<cp-last>, Globalization.NumberStyles.HexNumber, InvariantCulture) >= codePoint
                         ).SingleOrDefault
             If range IsNot Nothing Then Return UnicodeCodePoint.Create(range).MakeSingle(codePoint)
             Return Nothing
@@ -477,8 +477,8 @@ Namespace TextT.UnicodeT
             Dim suitableBlocks =
                 From b In blocks
                 Where
-                    UInteger.Parse("0x" & b.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture) <= codePoint AndAlso
-                    UInteger.Parse("0x" & b.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture) >= codePoint
+                    UInteger.Parse(b.@<first-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture) <= codePoint AndAlso
+                    UInteger.Parse(b.@<last-cp>, Globalization.NumberStyles.HexNumber, InvariantCulture) >= codePoint
             Dim oneBlock = If(checked, suitableBlocks.SingleOrDefault, suitableBlocks.FirstOrDefault)
             Return oneBlock
         End Function
@@ -581,7 +581,7 @@ Namespace TextT.UnicodeT
                 If line.Contains("#") Then line = line.SubstringBefore("#")
                 Dim parts = line.Split({";"c})
                 Try
-                    Dim code = UInteger.Parse("0x" & parts(0), Globalization.NumberStyles.HexNumber, InvariantCulture)
+                    Dim code = UInteger.Parse(parts(0), Globalization.NumberStyles.HexNumber, InvariantCulture)
                     If aliases.ContainsKey(code) Then aliases(code).Add(parts(1)) Else aliases.Add(code, New List(Of String) From {parts(0)})
                 Catch ex As Exception
                     Throw New FormatException(TextT.UnicodeT.UnicodeResources.ex_ErrorReadingNameAliases.f(lineNumber, ex.Message), ex)
@@ -599,6 +599,16 @@ Namespace TextT.UnicodeT
 #Region "NameList.txt"
 
 #End Region
+
+        ''' <summary>Gets name of a character</summary>
+        ''' <param name="codePoint">A Unicode (UTF-32) code-point</param>
+        ''' <returns>Name of the character, nulll of the source is not capable of providing character name</returns>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="codePoint"/> is less than zero or greater than <see cref="UnicodeCharacterDatabase.MaxCodePoint"/>.</exception>
+        Private Function GetName(codePoint As Integer) As String Implements ICharNameProvider.GetName
+            Dim ch = FindCodePoint(codePoint)
+            If ch IsNot Nothing Then Return ch.UniversalName
+            Return Nothing
+        End Function
     End Class
 End Namespace
 #End If

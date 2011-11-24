@@ -72,7 +72,7 @@ Namespace TextT.UnicodeT
                 line = line & vbCrLf
                 Dim match = nameLine.Match(line)
                 If match.Success Then
-                    codePoint = UInteger.Parse("0x" & match.Groups!Char.Value, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                    codePoint = UInteger.Parse(match.Groups!Char.Value, Globalization.NumberStyles.HexNumber, InvariantCulture)
                     RaiseEvent CodePoint(codePoint, line.Substring(0, line.Length - 2))
                 ElseIf codePoint.HasValue Then
                     match = aliasline.Match(line)
@@ -81,7 +81,7 @@ Namespace TextT.UnicodeT
                     Else
                         match = crossRef.Match(line)
                         If match.Success Then
-                            RaiseEvent CrossReference(codePoint, UInteger.Parse("0x" & match.Groups!Char.Value, Globalization.NumberStyles.HexNumber, InvariantCulture), line.Substring(0, line.Length - 2))
+                            RaiseEvent CrossReference(codePoint, UInteger.Parse(match.Groups!Char.Value, Globalization.NumberStyles.HexNumber, InvariantCulture), line.Substring(0, line.Length - 2))
                         End If
                     End If
 
@@ -187,7 +187,7 @@ Namespace TextT.UnicodeT
                         If _default Is Nothing Then
                             Using compressedStream = GetType(NamesListParser).Assembly.GetManifestResourceStream(ResourceName),
                                   decompressedStream = New GZipStream(compressedStream, CompressionMode.Decompress),
-                                  reader = New IO.StreamReader(decompressedStream, System.Text.Encoding.GetEncoding("Latin-1"))
+                                  reader = New IO.StreamReader(decompressedStream, System.Text.Encoding.GetEncoding("Latin1"))
                                 _default = New UnicodeCharacterDatabase(NamesListParser.MakeExtensionXml(reader))
                             End Using
                         End If
@@ -256,7 +256,7 @@ Namespace TextT.UnicodeT
             If Not cp.CodePoint.HasValue Then Return Nothing
             Dim val = cp.GetPropertyValue(XmlNamespace, "cross-ref", False)
             If val = "" Then Return New CodePointInfo() {}
-            Return From str In val.WhiteSpaceSplit Select New CodePointInfo(cp.Element.Document, UInteger.Parse("0x" & str, Globalization.NumberStyles.HexNumber, InvariantCulture))
+            Return From str In val.WhiteSpaceSplit Select New CodePointInfo(cp.Element.Document, UInteger.Parse(str, Globalization.NumberStyles.HexNumber, InvariantCulture))
         End Function
 
     End Module

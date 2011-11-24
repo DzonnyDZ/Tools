@@ -149,6 +149,7 @@
     <Compile Include="Text\Unicode\CsurExtensions.vb" />
     <Compile Include="Text\Unicode\CsurPropertiesProvider.vb" />
     <Compile Include="Text\Unicode\EmojiSourceInfo.vb" />
+    <Compile Include="Text\Unicode\ICharNameProvider.vb" />
     <Compile Include="Text\Unicode\NamesListParser.vb" />
     <Compile Include="Text\Unicode\RadicalStrokeCount.vb" />
     <Compile Include="Text\Unicode\UcdRepertoire.vb" />
