@@ -159,6 +159,7 @@
     <Compile Include="API\Notifications.vb" />
     <Compile Include="API\Threads.vb" />
     <Compile Include="Diagnostics\ProcessExtensions.vb" />
+    <Compile Include="Text\Unicode\UnicodeNative.vb" />
     <Compile Include="Windows\Interop\NativeInteropExtensions.vb" />
     <Compile Include="Windows\WPF\WPFNativeExtensions.vb" />
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">

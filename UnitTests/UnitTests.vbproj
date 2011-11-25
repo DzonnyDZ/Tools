@@ -280,6 +280,7 @@
     <Compile Include="Text\Unicode\CharsSourceTest.vb" />
     <Compile Include="TransliterationDictionaryTest.vb" />
     <Compile Include="Text\Unicode\UnicodeCharacterDatabaseTest.vb" />
+    <Compile Include="Text\Unicode\UnicodeNativeTest.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj">

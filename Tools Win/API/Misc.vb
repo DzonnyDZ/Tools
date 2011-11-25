@@ -190,6 +190,26 @@ Namespace API
         ''' <returns>If the function succeeds, the return value is true. If the function fails, the return value is false.</returns>
         Public Declare Function CloseHandle Lib "Kernel32.dll" (ByVal hObject As IntPtr) As Boolean
     End Module
+
+    ''' <summary>Misc Win32 API declrations</summary>
+    Friend Module Misc
+
+        ''' <summary>Undocumented Win API function for getting localized character names</summary>
+        ''' <param name="wCharCode">Character code (code-point)</param>
+        ''' <param name="lpBuf">When function returns returns return value</param>
+        ''' <returns>Number of characters returned</returns>
+        Public Declare Function GetUName Lib "getuname.dll" (ByVal wCharCode As UShort, <MarshalAs(UnmanagedType.LPWStr)> ByVal lpbuf As System.Text.StringBuilder) As Integer
+
+        'int
+        'WINAPI
+        'GetUName(IN WORD wCharCode,
+        '         OUT LPWSTR lpBuf)
+        '{
+        '        wcscpy(lpBuf, L"Undefined");
+        '    return 0;
+        '}
+
+    End Module
   
 End Namespace
 
