@@ -55,6 +55,7 @@
   <ItemGroup>
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System" />
@@ -66,6 +67,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="Application.xaml">
@@ -146,6 +148,10 @@
     <AppDesigner Include="My Project\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj">
+      <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
+      <Name>Tools.Win</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Tools.Text.Unicode\Tools.Text.Unicode.vbproj">
       <Project>{69B7448C-E445-4507-AE2A-469E3C99FC62}</Project>
       <Name>Tools.Text.Unicode</Name>

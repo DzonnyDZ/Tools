@@ -2,8 +2,105 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:Tools.TextT.UnicodeT"
+        xmlns:tctl="clr-namespace:Tools.WindowsT.WPF.ControlsT;assembly=Tools.Windows"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <my:CharacterChart   />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"><!--Blocks etc.--></ColumnDefinition>                                     
+            <ColumnDefinition Width="*"><!--Charmap--></ColumnDefinition>
+            <ColumnDefinition Width="100"><!--All properties--></ColumnDefinition>                                     
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"><!--Menu--></RowDefinition>
+            <RowDefinition Height="auto"><!--Toolbar--></RowDefinition>
+            <RowDefinition Height="auto"><!--Font etc.--></RowDefinition>
+            <RowDefinition Height="auto"><!--Basic character info--></RowDefinition>
+            <RowDefinition Height="*"><!--Charmap--></RowDefinition>
+            <RowDefinition Height="100"><!--Text box--></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--TODO: Menu-->
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Command="Open" Header="Load custom UCD ..." ToolTip="Loads custom version of Unicode Character Database and related files"/>
+                <MenuItem Command="Close"/>
+            </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Command="Search"/>
+                <MenuItem Command="GoToPage" Header="Go to code-point ..."/>
+            </MenuItem>
+            <MenuItem Header="Help"/>
+        </Menu>
+        <!--TODO: Toolbar-->
+        <!--Blocks etc.-->
+        <TreeView Grid.Column="0" Grid.Row="3">
+            <TreeViewItem Header="All" IsSelected="True"/>
+            <TreeViewItem Header="Planes" Focusable="False">
+                <TreeViewItem Header="0 - BMP (Basic Multilingual Plane)" ToolTip="0000-FFFF"/>
+                <TreeViewItem Header="1 - SMP (Supplementary Multilingual Plane)" ToolTip="10000–1FFFF"/>
+                <TreeViewItem Header="2 - SIP (Supplementary Ideographic Plane)" ToolTip="20000–2FFFF"/>
+                <TreeViewItem Header="3 - unassigned" ToolTip="30000–3FFFF"/>
+                <TreeViewItem Header="4 - unassigned" ToolTip="40000–4FFFF"/>
+                <TreeViewItem Header="5 - unassigned" ToolTip="50000–5FFFF"/>
+                <TreeViewItem Header="6 - unassigned" ToolTip="60000–6FFFF"/>
+                <TreeViewItem Header="7 - unassigned" ToolTip="70000–7FFFF"/>
+                <TreeViewItem Header="8 - unassigned" ToolTip="80000–8FFFF"/>
+                <TreeViewItem Header="9 - unassigned" ToolTip="90000–9FFFF"/>
+                <TreeViewItem Header="10 - unassigned" ToolTip="A0000–AFFFF"/>
+                <TreeViewItem Header="11 - unassigned" ToolTip="B0000–BFFFF"/>
+                <TreeViewItem Header="12 - unassigned" ToolTip="C0000–CFFFF"/>
+                <TreeViewItem Header="13 - unassigned" ToolTip="D0000–DFFFF"/>
+                <TreeViewItem Header="14 - SSP (Supplementary Special-purpose Plane)" ToolTip="E0000–EFFFF"/>
+                <TreeViewItem Header="15 - S PUA A (Private use area)" ToolTip="F0000–FFFFF"/>
+                <TreeViewItem Header="16 - S PUA B (Private use area)" ToolTip="100000–10FFFF"/>
+            </TreeViewItem>
+            <TreeViewItem Header="Blocks" Name="twiBlocks" Focusable="False"/>
+            <TreeViewItem Header="CSUR blocks" Name="twiCsurBlocks" Focusable="False"/>
+        </TreeView>
+        <!--Font etc.-->
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+            <Label Content="Font" Target="{Binding ElementName=cmbFont}"/>
+            <ComboBox Name="cmbFont" IsEditable="False"/>
+            <Label Content="Size" Target="{Binding ElementName=nudFontSize}"/>
+            <tctl:NumericUpDown Name="nudFontSize" Value="12" Minimum="0" Maximum="200" Change="1"/>
+            <ToggleButton Content="B" FontWeight="Bold" ToolTip="Bold"/>
+            <ToggleButton Content="I" FontStyle="Italic" ToolTip="Italic"/>
+            <ToggleButton>
+                <TextBlock Text="U" TextDecorations="Underline"/>
+            </ToggleButton>
+        </StackPanel>
+        <!--Charmap-->
+        <my:CharacterChart Grid.Row="3" Grid.Column="1"
+                           FontFamily="{Binding ElementName=cmbFont, Path=SelectedItem}"
+                           FontSize="{Binding ElementName=nudFontSize, Path=Value}"
+                           />
+        <!--Basic character info-->
+        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
+            <!--TODO: Binding-->
+            <TextBlock>
+                <TextBlock Text="U+0000"/> / <TextBlock Text="0"/>
+            </TextBlock>
+            <TextBlock Text="SELECTED CHARACTER NAME"/>
+            <TextBlock Text="Selected character Windows name"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2">
+            <Expander IsExpanded="True">
+                <wfi:WindowsFormsHost>
+                    <wf:PropertyGrid Name="prgUnicode"/>
+                </wfi:WindowsFormsHost>                
+            </Expander>
+            <Expander IsExpanded="False">
+                <wfi:WindowsFormsHost>
+                    <wf:PropertyGrid Name="prgCsur"/>
+                </wfi:WindowsFormsHost>
+            </Expander>
+            <Expander IsExpanded="False">
+                <wfi:WindowsFormsHost>
+                    <wf:PropertyGrid Name="prgOther"/>
+                </wfi:WindowsFormsHost>
+            </Expander>
+        </StackPanel>
+        <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Name="txtText"/>
     </Grid>
 </Window>
