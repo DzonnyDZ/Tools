@@ -49,8 +49,9 @@ Public Module TypeTools
     ''' <param name="Inherit">When true, look up the hierarchy chain for the inherited custom attribute.</param>
     ''' <returns>First attribute returned by <see cref="Reflection.ICustomAttributeProvider.GetCustomAttributes"/> or null if no attribute is returned</returns>
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
+    ''' <version version="1.5.4">Parameter renamed: <c>From</c> to <c>from</c>, <c>Inherit</c> to <c>inherit</c></version>
     <Extension()> _
-     Public Function GetAttribute(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T
+    Public Function GetAttribute(Of T As Attribute)(ByVal from As Reflection.ICustomAttributeProvider, Optional ByVal inherit As Boolean = True) As T
         Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
         If attrs Is Nothing OrElse attrs.Length = 0 Then Return Nothing Else Return attrs(0)
     End Function
@@ -61,8 +62,9 @@ Public Module TypeTools
     ''' <returns>All attributes returned by <see cref="Reflection.ICustomAttributeProvider.GetCustomAttributes"/> or null if no attribute is returned</returns>
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
     ''' <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
+    ''' <version version="1.5.4">Parameter renamed: <c>From</c> to <c>from</c>, <c>Inherit</c> to <c>inherit</c></version>
     <Extension()> _
-    Public Function GetAttributes(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T()
+    Public Function GetAttributes(Of T As Attribute)(ByVal from As Reflection.ICustomAttributeProvider, Optional ByVal inherit As Boolean = True) As T()
         Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
         If attrs Is Nothing Then Return Nothing
         Return (From Attr In attrs Select DirectCast(Attr, T)).ToArray
@@ -80,8 +82,9 @@ Public Module TypeTools
     ''' <param name="Type">Type of enumeration (must derive from <see cref="System.Enum"/>)</param>
     ''' <exception cref="System.ArgumentNullException"><paramref name="Type"/> is null.</exception>
     ''' <exception cref="System.ArgumentException"><paramref name="Type"/> is not an <see cref="System.Enum"/> -or- Underlying type of <paramref name="Type"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
+    ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
     <CLSCompliant(False)> _
-    Public Function GetValueInEnumBaseType(ByVal Type As Type, ByVal Value As IConvertible) As IConvertible
+    Public Function GetValueInEnumBaseType(ByVal type As Type, ByVal Value As IConvertible) As IConvertible
         Dim EType As Type = [Enum].GetUnderlyingType(Type)
         If GetType(Byte).Equals(EType) Then : Return Value.ToByte(System.Globalization.CultureInfo.InvariantCulture)
         ElseIf GetType(SByte).Equals(EType) Then : Return Value.ToSByte(System.Globalization.CultureInfo.InvariantCulture)
@@ -113,7 +116,8 @@ Public Module TypeTools
     ''' <param name="EnumType">Type of enumeration</param>
     ''' <returns><see cref="Reflection.FieldInfo"/> that represents constant enum member of type <paramref name="EnumType"/> with name <paramref name="name"/>. Null if such constant doesnot exists.</returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration</exception>
-    Public Function GetConstant(ByVal name As String, ByVal EnumType As Type) As Reflection.FieldInfo
+    ''' <version version="1.5.4">Parameter renamed: <c>EnumType</c> to <c>enumType</c></version>
+    Public Function GetConstant(ByVal name As String, ByVal enumType As Type) As Reflection.FieldInfo
         If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "Type"), "Type")
         Dim field = EnumType.GetField(name, Reflection.BindingFlags.Static Or Reflection.BindingFlags.Public)
         If field Is Nothing Then Return Nothing
@@ -140,7 +144,8 @@ Public Module TypeTools
     ''' <param name="EnumType">Type of enumeration</param>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= Constant with name <paramref name="name"/> does not exist in enumeration <paramref name="EnumType"/>.</exception>
     ''' <returns>Value of constant with name <paramref name="name"/> in type <paramref name="EnumType"/></returns>
-    Public Function GetValue(ByVal name$, ByVal EnumType As Type) As [Enum]
+    ''' <version version="1.5.4">Parameter renamed: <c>EnumType</c> to <c>enumType</c></version>
+    Public Function GetValue(ByVal name$, ByVal enumType As Type) As [Enum]
         Dim cns = GetConstant(name, EnumType)
         If cns Is Nothing Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Constant0DoesNotExistInType1, name, EnumType.Name))
         Return cns.GetValue(Nothing)
@@ -158,8 +163,9 @@ Public Module TypeTools
     ''' <param name="value"><see cref="IConvertible"/> to be converted using invariant culture</param>
     ''' <typeparam name="T">Type of enumeration (must derive from <see cref="System.Enum"/>)</typeparam>
     ''' <exception cref="System.ArgumentException"><paramref name="T"/> is not an <see cref="System.Enum"/> -or- Underlying type of <paramref name="Type"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
+    ''' <version version="1.5.4">Parameter renamed: <c>Value</c> to <c>value</c></version>
     <CLSCompliant(False)> _
-    Public Function GetEnumValue(Of T As {IConvertible, Structure})(ByVal Value As IConvertible) As T
+    Public Function GetEnumValue(Of T As {IConvertible, Structure})(ByVal value As IConvertible) As T
         Return CObj(GetEnumValue(GetType(T), Value))
     End Function
     ''' <summary>Converts specified <see cref="IConvertible"/> to specified <see cref="[Enum]"/> (type-unsafe)</summary>
@@ -167,8 +173,9 @@ Public Module TypeTools
     ''' <param name="Type">Type of enumeration (must derive from <see cref="System.Enum"/>)</param>
     ''' <exception cref="System.ArgumentNullException"><paramref name="Type"/> is null.</exception>
     ''' <exception cref="System.ArgumentException"><paramref name="Type"/> is not an <see cref="System.Enum"/> -or- Underlying type of <paramref name="Type"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
+    ''' <version version="1.5.4">Parameters renamed: <c>Type</c> to <c>type</c>, <c>Value</c> to <c>value</c></version>
     <CLSCompliant(False)> _
-    Public Function GetEnumValue(ByVal Type As Type, ByVal Value As IConvertible) As [Enum]
+    Public Function GetEnumValue(ByVal type As Type, ByVal value As IConvertible) As [Enum]
         Return [Enum].ToObject(Type, GetValueInEnumBaseType(Type, Value))
     End Function
     ''' <summary>Gets value idicating if given value is defined as constant in enumeration</summary>
@@ -185,7 +192,8 @@ Public Module TypeTools
     ''' <param name="Separator">Separator of flags</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
-    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal Separator As String) As [Enum]
+    ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>EnumType</c> to <c>enumType</c>, <c>Separator</c> to <c>separator</c></version>
+    Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal separator As String) As [Enum]
         If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "EnumType"), "EnumType")
         If [Enum].GetUnderlyingType(EnumType).Equals(GetType(SByte)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Short)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Integer)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Long)) Then
             Dim ret As Long = 0
@@ -210,7 +218,8 @@ Public Module TypeTools
     ''' <param name="Culture">Culture to obtain separator from</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
-    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal Culture As Globalization.CultureInfo) As [Enum]
+    ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>EnumType</c> to <c>enumType</c>, <c>Culture</c> to <c>culture</c></version>
+    Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal culture As Globalization.CultureInfo) As [Enum]
         Return FlagsFromString(Flags, EnumType, Culture.TextInfo)
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
@@ -219,7 +228,7 @@ Public Module TypeTools
     ''' <param name="TextInfo"><see cref="Globalization.TextInfo"/> to obtain separator from</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
-    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal TextInfo As Globalization.TextInfo) As [Enum]
+    Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal textInfo As Globalization.TextInfo) As [Enum]
         Return FlagsFromString(Flags, EnumType, TextInfo.ListSeparator)
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
@@ -228,7 +237,8 @@ Public Module TypeTools
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     ''' <remarks>Obtains separator from current culture</remarks>
-    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type) As [Enum]
+    ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>EnumType</c> to <c>enumType</c></version>
+    Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type) As [Enum]
         Return FlagsFromString(Flags, EnumType, Globalization.CultureInfo.CurrentCulture)
     End Function
 
@@ -238,8 +248,9 @@ Public Module TypeTools
     ''' <param name="Separator">Separator of flags</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>Separator</c> to <c>separator</c></version>
     <CLSCompliant(False)> _
-    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String, ByVal Separator As String) As T
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal separator As String) As T
         Return CObj(FlagsFromString(Flags, GetType(T), Separator))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
@@ -248,8 +259,9 @@ Public Module TypeTools
     ''' <param name="Culture">Culture to obtain separator from</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>Culture</c> to <c>culture</c></version>
     <CLSCompliant(False)> _
-    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String, ByVal Culture As Globalization.CultureInfo) As T
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal culture As Globalization.CultureInfo) As T
         Return CObj(FlagsFromString(Flags, GetType(T), Culture.TextInfo))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
@@ -258,8 +270,9 @@ Public Module TypeTools
     ''' <param name="TextInfo"><see cref="Globalization.TextInfo"/> to obtain separator from</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>TextInfo</c> to <c>textInfo</c></version>
     <CLSCompliant(False)> _
-    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String, ByVal TextInfo As Globalization.TextInfo) As T
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal textInfo As Globalization.TextInfo) As T
         Return CObj(FlagsFromString(Flags, GetType(T), TextInfo.ListSeparator))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
@@ -268,8 +281,9 @@ Public Module TypeTools
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     ''' <remarks>Obtains separator from current culture</remarks>
+    ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c></version>
     <CLSCompliant(False)> _
-    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String) As T
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String) As T
         Return CObj(FlagsFromString(Flags, GetType(T), Globalization.CultureInfo.CurrentCulture))
     End Function
     ''' <summary>Gets toolbox bitmap assciated with given <see cref="Type"/></summary>
@@ -279,8 +293,9 @@ Public Module TypeTools
     ''' <returns>Bitmap assciated with <see cref="Type"/> if any</returns>
     ''' <remarks>If <paramref name="Type"/> is decorated with <see cref="Drawing.ToolboxBitmapAttribute"/> then it is used. If not static method <see cref="Drawing.ToolboxBitmapAttribute.GetImageFromResource"/> is used with <see cref="Type.Name"/> of <paramref name="Type"/>.</remarks>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+    ''' <version version="1.5.4">Parameters renamed to camelCase</version>
     <Extension()> _
-    Public Function GetToolBoxBitmap(ByVal Type As Type, Optional ByVal Large As Boolean = False, Optional ByVal Inherit As Boolean = False) As Drawing.Image
+    Public Function GetToolBoxBitmap(ByVal type As Type, Optional ByVal large As Boolean = False, Optional ByVal inherit As Boolean = False) As Drawing.Image
         If Type Is Nothing Then Throw New ArgumentException("Type")
         Dim attr = Type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(False)
         If attr Is Nothing AndAlso Inherit Then attr = Type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(True)
@@ -303,8 +318,9 @@ Public Module TypeTools
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
     ''' <seealso cref="HasDefaultCTor"/>
     ''' <version stage="Nightly" version="1.5.2">Fixed: Always returns null due to <paramref name="Attributes"/> being and-ed with <see cref="Reflection.BindingFlags.Instance"/> instead of or-ed</version>
+    ''' <version version="1.5.4">Parameters renamed to camelCase</version>
     <Extension()> _
-    Public Function GetDefaltCTor(ByVal Type As Type, Optional ByVal Attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Reflection.ConstructorInfo
+    Public Function GetDefaltCTor(ByVal type As Type, Optional ByVal attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Reflection.ConstructorInfo
         If Type Is Nothing Then Throw New ArgumentException("Type")
         Return Type.GetConstructor(Attributes Or Reflection.BindingFlags.Instance, Nothing, Type.EmptyTypes, Nothing)
     End Function
@@ -314,8 +330,9 @@ Public Module TypeTools
     ''' <remarks>True if type has default (parameterless) CTor, fale otherwise.</remarks>
     ''' <seealso cref="GetDefaltCTor"/>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+    ''' <version version="1.5.4">Parameters renamed to camelCase</version>
     <Extension()> _
-    Public Function HasDefaultCTor(ByVal Type As Type, Optional ByVal Attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Boolean
+    Public Function HasDefaultCTor(ByVal type As Type, Optional ByVal attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Boolean
         If Type Is Nothing Then Throw New ArgumentException("Type")
         Return Type.GetDefaltCTor(Attributes) IsNot Nothing
     End Function
@@ -324,8 +341,9 @@ Public Module TypeTools
     ''' <returns>False if type is either interface, abstract or open; true if type has default contructor or is value type</returns>
     ''' <seealso cref="HasDefaultCTor"/>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+    ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
     <Extension()> _
-    Public Function CanAutomaticallyCreateInstance(ByVal Type As Type) As Boolean
+    Public Function CanAutomaticallyCreateInstance(ByVal type As Type) As Boolean
         If Type Is Nothing Then Throw New ArgumentException("Type")
         If Type.IsInterface Then Return False
         If Type.IsAbstract Then Return False
@@ -351,6 +369,22 @@ Public Module TypeTools
     <Extension()> Function CreateInstance(ByVal type As Type) As Object
         Return Activator.CreateInstance(type)
     End Function
+    ''' <summary>Attempts to cast given object to specific type, optionally using also type converter as last resort</summary>
+    ''' <param name="obj">Object to cast</param>
+    ''' <param name="considerTypeConverter">True to try use <see cref="TypeConverter"/> is all other ways of conversion failed</param>
+    ''' <typeparam name="T">TYpe to cast <paramref name="obj"/> to</typeparam>
+    ''' <returns>Value of <paramref name="obj"/> casted to type <typeparamref name="T"/>. Method uses several ways of casting.</returns>
+    ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <paramref name="Type"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
+    ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
+    ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
+    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+    ''' <exception cref="NotSupportedException"><paramref name="considerTypeConverter"/> is true, <see cref="TypeConverter"/> was used and it couldn't perform the conversion requested.</exception>
+    ''' <remarks>See <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/> non-generic method fro details on how casting is done.</remarks>
+    ''' <seealso cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/>
+    ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+    Public Function DynamicCast(Of T)(ByVal obj As Object, considerTypeConverter As Boolean) As T
+        Return DynamicCast(obj, GetType(T), considerTypeConverter)
+    End Function
     ''' <summary>Attempts to cast given object to specific type</summary>
     ''' <param name="obj">Object to cast</param>
     ''' <typeparam name="T">TYpe to cast <paramref name="obj"/> to</typeparam>
@@ -359,12 +393,13 @@ Public Module TypeTools
     ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
     ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
     ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
-    ''' <remarks>See <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type"/> non-generic method fro details on how casting is done.</remarks>
+    ''' <remarks>See <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/> non-generic method fro details on how casting is done.</remarks>
     ''' <seealso cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type)"/>
     ''' <version version="1.5.2">Function introduced</version>
     ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longe extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
+    ''' <version version="1.5.4">This function is now backed by call to a new extended overload <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)">DynamicCast(obj, type, false)</see></version>
     Public Function DynamicCast(Of T)(ByVal obj As Object) As T
-        Return DynamicCast(obj, GetType(T))
+        Return DynamicCast(obj, GetType(T), False)
     End Function
     ''' <summary>Attempts to cast given tobject to given type</summary>
     ''' <param name="obj">Object to cast</param>
@@ -375,6 +410,26 @@ Public Module TypeTools
     ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
     ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
     ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+    ''' <remarks>For details of how the conversion is performed see <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/></remarks>
+    ''' <seealso cref="M:Tools.TypeTools.DynamicCast`1(System.Object)"/>
+    ''' <version version="1.5.2">Function introduced</version>
+    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longer extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
+    ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
+    ''' <version version="1.5.4">This function is now backed by call to a new extended overload <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)">DynamicCast(obj, type, false)</see></version>
+    Public Function DynamicCast(ByVal obj As Object, ByVal type As Type) As Object
+        Return DynamicCast(obj, type, False)
+    End Function
+    ''' <summary>Attempts to cast given tobject to given type</summary>
+    ''' <param name="obj">Object to cast</param>
+    ''' <param name="Type">Type to cast <paramref name="obj"/> to</param>
+    ''' <param name="considerTypeConverter">True to try use <see cref="TypeConverter"/> is all other ways of conversion failed</param>
+    ''' <returns>Value of <paramref name="obj"/> casted to type <paramref name="Type"/>. Method uses several ways of casting.</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null and <paramref name="obj"/> is not null</exception>
+    ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <paramref name="Type"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
+    ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
+    ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
+    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+    ''' <exception cref="NotSupportedException"><paramref name="considerTypeConverter"/> is true, <see cref="TypeConverter"/> was used and it couldn't perform the conversion requested.</exception>
     ''' <remarks>Following ways of casting are attempted in given order
     ''' <list type="numbered">
     ''' <item>When <paramref name="obj"/> is null, null is returned (default value for value types)</item>
@@ -398,254 +453,267 @@ Public Module TypeTools
     ''' <para>Values are converted from this type to <see cref="String"/> if <paramref name="Type"/> equals to <see cref="String"/> using default format in culture-sensitive way.</para>
     ''' <para>If <paramref name="obj"/> is <see cref="String"/> it is converted to one of these types when <paramref name="Type"/> <see cref="Type.IsAssignableFrom">is assignable from it</see> using culture-sensitive parsing in following order without error recovery: <see cref="Date"/>, <see cref="TimeSpan"/>, <see cref="Decimal"/>.</para></item>
     ''' <item>Special conversion between <see cref="Boolean"/> and <see cref="Decimal"/> is attempted using same rules for <see cref="Boolean"/> ↔ numeric conversions above.</item>
+    ''' <item>(Only when <paramref name="considerTypeConverter"/> is true) <see cref="TypeConverter"/> that can convert <paramref name="obj"/> is obtained using <see cref="M:System.ComponentModel.TypeDescriptor.GetConverter(System.Object)"/>. If it <see cref="TypeConverter.CanConvertTo">can convert to</see> <paramref name="Type"/> <see cref="TypeConverter.ConvertTo"/> is called.</item>
+    ''' <item>(Only when <paramref name="considerTypeConverter"/> is true) <see cref="TypeConverter"/> for <paramref name="Type"/> is obtained using <see cref="M:System.ComponentModel.TypeDescriptor.GetConverter(System.Type)"/>. If it <see cref="TypeConverter.CanConvertFrom">can convert from</see> object of type of <paramref name="obj"/> <see cref="TypeConverter.ConvertFrom"/> is called.</item>
     ''' </list>
     ''' <para>Note that following conversion are not defined: <see cref="Date"/>↔<see cref="Boolean"/>, <see cref="Date"/>↔<see cref="TimeSpan"/>, <see cref="Date"/>↔<see cref="Char"/>.
     ''' <see cref="TimeSpanFormattable"/> is treated as any other types using its operators.
     ''' There is no specific support for <see cref="Nullable(Of T)"/></para></remarks>
     ''' <seealso cref="M:Tools.TypeTools.DynamicCast`1(System.Object)"/>
-    ''' <version version="1.5.2">Function introduced</version>
-    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longer extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
-    Public Function DynamicCast(ByVal obj As Object, ByVal Type As Type) As Object
+    ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+    Public Function DynamicCast(ByVal obj As Object, ByVal type As Type, considerTypeConverter As Boolean) As Object
         If obj Is Nothing Then
-            If Type Is Nothing Then Return Nothing
-            If Type.IsValueType Then Return Activator.CreateInstance(Type)
+            If type Is Nothing Then Return Nothing
+            If type.IsValueType Then Return Activator.CreateInstance(type)
         End If
-        If Type Is Nothing Then Throw New ArgumentNullException("Type")
+        If type Is Nothing Then Throw New ArgumentNullException("Type")
         Dim ObjType = obj.GetType
         'No cast needed
-        If Type.IsAssignableFrom(ObjType) Then Return obj
+        If type.IsAssignableFrom(ObjType) Then Return obj
         'Operators
-        Dim [Operator] = FindBestFitCastOperator(ObjType, Type)
+        Dim [Operator] = FindBestFitCastOperator(ObjType, type)
         If [Operator] IsNot Nothing Then Return [Operator].Invoke(Nothing, New Object() {obj})
         'Enum
-        If ObjType.IsEnum OrElse Type.IsEnum Then
-            If TypeOf obj Is [Enum] AndAlso Type.IsAssignableFrom(GetType(String)) AndAlso DirectCast(obj, [Enum]).IsDefined() Then Return obj.ToString
-            If TypeOf obj Is String AndAlso Type.IsEnum AndAlso [Enum].GetNames(Type).Contains(obj) Then Return [Enum].Parse(Type, obj)
-            If TypeOf obj Is [Enum] AndAlso Type.IsAssignableFrom([Enum].GetUnderlyingType(ObjType)) Then Return DirectCast(obj, [Enum]).GetValue
-            If Type.IsEnum AndAlso [Enum].GetUnderlyingType(Type).IsAssignableFrom(ObjType) Then Return GetEnumValue(Type, obj)
+        If ObjType.IsEnum OrElse type.IsEnum Then
+            If TypeOf obj Is [Enum] AndAlso type.IsAssignableFrom(GetType(String)) AndAlso DirectCast(obj, [Enum]).IsDefined() Then Return obj.ToString
+            If TypeOf obj Is String AndAlso type.IsEnum AndAlso [Enum].GetNames(type).Contains(obj) Then Return [Enum].Parse(type, obj)
+            If TypeOf obj Is [Enum] AndAlso type.IsAssignableFrom([Enum].GetUnderlyingType(ObjType)) Then Return DirectCast(obj, [Enum]).GetValue
+            If type.IsEnum AndAlso [Enum].GetUnderlyingType(type).IsAssignableFrom(ObjType) Then Return GetEnumValue(type, obj)
             Dim EnumCastFrom = obj
             If ObjType.IsEnum Then EnumCastFrom = DirectCast(obj, [Enum]).GetValue
-            Dim EnumCastTo = Type
-            If Type.IsEnum Then EnumCastTo = [Enum].GetUnderlyingType(Type)
+            Dim EnumCastTo = type
+            If type.IsEnum Then EnumCastTo = [Enum].GetUnderlyingType(type)
             Dim Ret = DynamicCast(EnumCastFrom, EnumCastTo)
-            If Type.IsEnum Then Return GetEnumValue(Type, Ret) Else Return Ret
+            If type.IsEnum Then Return GetEnumValue(type, Ret) Else Return Ret
         End If
         'Built-in types
         If TypeOf obj Is Byte Then
             With DirectCast(obj, Byte)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is SByte Then
             With DirectCast(obj, SByte)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is Short Then
             With DirectCast(obj, Short)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is UShort Then
             With DirectCast(obj, UShort)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is Integer Then
             With DirectCast(obj, Integer)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is UInteger Then
             With DirectCast(DirectCast(obj, UInteger), IConvertible)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is Long Then
             With DirectCast(DirectCast(obj, Long), IConvertible)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is ULong Then
             With DirectCast(DirectCast(obj, ULong), IConvertible)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is Double Then
             With DirectCast(obj, Double)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is Char Then
             With DirectCast(obj, Char)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return .self
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(AscW(.self))
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return .self
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(AscW(.self))
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is Boolean Then
             With DirectCast(obj, Boolean)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(If(.self, 1, 0))
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(If(.self, 1, 0))
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
                 End If
             End With
         ElseIf TypeOf obj Is String Then
             With DirectCast(obj, String)
-                If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return CChar(.self)
-                ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
-                ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return .self
+                If type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+                ElseIf type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+                ElseIf type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+                ElseIf type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+                ElseIf type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+                ElseIf type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+                ElseIf type.IsAssignableFrom(GetType(Char)) Then : Return CChar(.self)
+                ElseIf type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+                ElseIf type.IsAssignableFrom(GetType(String)) Then : Return .self
                 End If
             End With
         End If
         'Special conversions
-        If TypeOf obj Is Date AndAlso Type.IsAssignableFrom(GetType(String)) Then Return CStr(DirectCast(obj, Date))
-        If TypeOf obj Is TimeSpan AndAlso Type.IsAssignableFrom(GetType(String)) Then Return DirectCast(obj, TimeSpan).ToString
-        If TypeOf obj Is String AndAlso Type.Equals(GetType(Date)) Then Return CDate(DirectCast(obj, String))
-        If TypeOf obj Is String AndAlso Type.Equals(GetType(TimeSpan)) Then Return TimeSpan.Parse(DirectCast(obj, String))
-        If TypeOf obj Is Decimal AndAlso Type.IsAssignableFrom(GetType(String)) Then Return CStr(DirectCast(obj, Decimal))
-        If TypeOf obj Is String AndAlso Type.Equals(GetType(Decimal)) Then Return CDec(DirectCast(obj, String))
-        If TypeOf obj Is Boolean AndAlso Type.Equals(GetType(Decimal)) Then Return CDec(DirectCast(obj, Boolean))
-        If TypeOf obj Is Decimal AndAlso Type.Equals(GetType(Boolean)) Then Return CBool(DirectCast(obj, Decimal))
-        Throw New InvalidCastException(ResourcesT.Exceptions.UnableToCastType0ToType1.f(ObjType.FullName, Type.FullName))
+        If TypeOf obj Is Date AndAlso type.IsAssignableFrom(GetType(String)) Then Return CStr(DirectCast(obj, Date))
+        If TypeOf obj Is TimeSpan AndAlso type.IsAssignableFrom(GetType(String)) Then Return DirectCast(obj, TimeSpan).ToString
+        If TypeOf obj Is String AndAlso type.Equals(GetType(Date)) Then Return CDate(DirectCast(obj, String))
+        If TypeOf obj Is String AndAlso type.Equals(GetType(TimeSpan)) Then Return TimeSpan.Parse(DirectCast(obj, String))
+        If TypeOf obj Is Decimal AndAlso type.IsAssignableFrom(GetType(String)) Then Return CStr(DirectCast(obj, Decimal))
+        If TypeOf obj Is String AndAlso type.Equals(GetType(Decimal)) Then Return CDec(DirectCast(obj, String))
+        If TypeOf obj Is Boolean AndAlso type.Equals(GetType(Decimal)) Then Return CDec(DirectCast(obj, Boolean))
+        If TypeOf obj Is Decimal AndAlso type.Equals(GetType(Boolean)) Then Return CBool(DirectCast(obj, Decimal))
+        If considerTypeConverter AndAlso obj IsNot Nothing Then
+            'Try to use converter of obj
+            Dim tc = TypeDescriptor.GetConverter(obj)
+            If tc IsNot Nothing AndAlso tc.CanConvertTo(type) Then
+                Return tc.ConvertTo(obj, type)
+            End If
+            'Try to use converter of type
+            tc = TypeDescriptor.GetConverter(type)
+            If tc IsNot Nothing AndAlso tc.CanConvertFrom(obj.GetType) Then
+                Return tc.ConvertFrom(obj)
+            End If
+        End If
+        Throw New InvalidCastException(ResourcesT.Exceptions.UnableToCastType0ToType1.f(ObjType.FullName, type.FullName))
     End Function
 
     ''' <summary>Gets value indicating if given type is generic type definition from which another given type was created</summary>
@@ -655,7 +723,8 @@ Public Module TypeTools
     ''' <exception cref="ArgumentNullException"><paramref name="Child"/> or <paramref name="Parent"/> is null.</exception>
     ''' <seelaso cref="IsGenericCreatedFrom"/>
     ''' <version version="1.5.2">Function added</version>
-    <Extension()> Public Function IsGenericParentOf(ByVal Parent As Type, ByVal Child As Type) As Boolean
+    ''' <version version="1.5.4">Parameters renamed: <c>Parent</c> to <c>parent</c>, <c>Child</c> to <c>child</c></version>
+    <Extension()> Public Function IsGenericParentOf(ByVal parent As Type, ByVal child As Type) As Boolean
         If Child Is Nothing Then Throw New ArgumentNullException("Child")
         If Parent Is Nothing Then Throw New ArgumentNullException("Parent")
         If Not Parent.IsGenericTypeDefinition Then Return False
@@ -669,7 +738,8 @@ Public Module TypeTools
     ''' <exception cref="ArgumentNullException"><paramref name="Child"/> or <paramref name="Parent"/> is null.</exception>
     ''' <seelaso cref="IsGenericParentOf"/>
     ''' <version version="1.5.2">Function added</version>
-    <Extension()> Public Function IsGenericCreatedFrom(ByVal Child As Type, ByVal Parent As Type) As Boolean
+    ''' <version version="1.5.4">Parameters renamed: <c>Parent</c> to <c>parent</c>, <c>Child</c> to <c>child</c></version>
+    <Extension()> Public Function IsGenericCreatedFrom(ByVal child As Type, ByVal parent As Type) As Boolean
         Return Parent.IsGenericParentOf(Child)
     End Function
     ''' <summary>Gets value indicating if given type is <see cref="Nullable(Of T)"/> and if another given type is its generic argument</summary>
@@ -678,7 +748,8 @@ Public Module TypeTools
     ''' <returns>True when <paramref name="NullableType"/> <see cref="IsGenericCreatedFrom">is generic type created from</see> <see cref="Nullable(Of T)"/> and <paramref name="InnerType"/> is its generic argument; false otherwise</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="NullableType"/> or <paramref name="InnerType"/> is null</exception>
     ''' <version version="1.5.2">Function added</version>
-    <Extension()> Public Function IsNullableOf(ByVal NullableType As Type, ByVal InnerType As Type) As Boolean
+    ''' <version version="1.5.4">Parameters renamed: <c>NullableType</c> to <c>nullableType</c>, <c>InnerType</c> to <c>innerType</c></version>
+    <Extension()> Public Function IsNullableOf(ByVal nullableType As Type, ByVal innerType As Type) As Boolean
         If NullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
         If InnerType Is Nothing Then Throw New ArgumentNullException("InnerType")
         Return NullableType.IsGenericCreatedFrom(GetType(Nullable(Of ))) AndAlso NullableType.GetGenericArguments()(0).Equals(InnerType)
@@ -689,7 +760,8 @@ Public Module TypeTools
     ''' <remarks>Returns false when generict type definition <see cref="Nullable(Of T)"/> is passed</remarks>
     ''' <exception cref="ArgumentNullException"><paramref name="NullableType"/> is null</exception>
     ''' <version version="1.5.2">Function added</version>
-    <Extension()> Public Function IsNullable(ByVal NullableType As Type) As Boolean
+    ''' <version version="1.5.4">Parameter renamed: <c>NullableType</c> to <c>nullableType</c></version>
+    <Extension()> Public Function IsNullable(ByVal nullableType As Type) As Boolean
         If NullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
         Return NullableType.IsGenericCreatedFrom(GetType(Nullable(Of )))
     End Function
@@ -698,7 +770,8 @@ Public Module TypeTools
     ''' <returns>True if type represents vector (SzArray) - that is 1-dimensional array with lower bound zero.</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is nul</exception>
     ''' <version version="1.5.2">Function added</version>
-    <Extension()> Public Function IsVector(ByVal Type As Type) As Boolean
+    ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
+    <Extension()> Public Function IsVector(ByVal type As Type) As Boolean
         If Type Is Nothing Then Throw New ArgumentNullException("Type")
         Static Method As MethodInfo
         Static get_IsSzArray As Func(Of Type, Boolean)
@@ -726,6 +799,5 @@ Public Module TypeTools
     Public Function [Is](Of T)(obj As Object) As Boolean
         Return TypeOf obj Is T
     End Function
-
 End Module
 #End If

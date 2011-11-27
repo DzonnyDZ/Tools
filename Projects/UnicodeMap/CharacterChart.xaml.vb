@@ -1,13 +1,25 @@
 ﻿Imports Tools.ExtensionsT, Tools.LinqT
-Imports Tools
+Imports Tools, Tools.WindowsT.WPF
 Imports Tools.CollectionsT.GenericT
+Imports System.ComponentModel
 
 ''' <summary>A control that visualy displays Unicode characters</summary>
+''' <remarks>This class implements the <see cref="INotifyPropertyChanged"/> interface. However only some non-dependency properties such as <see cref="CharacterChart.SelectedCodePoints"/> changes are reported via this interface. Dependency properties has their own mechanism for reporting changes.</remarks>
 Public Class CharacterChart
+    Implements INotifyPropertyChanged
 
     ''' <summary>CTor - creates a new instance of the <see cref="CharacterChart"/> class</summary>
     Public Sub New()
         InitializeComponent()
+        SetBinding(ChartFontFamilyProperty, New Binding() With {.RelativeSource = New RelativeSource(RelativeSourceMode.Self), .Path = New PropertyPath(FontFamilyProperty.Name)})
+        SetBinding(ChartFontSizeProperty, New Binding() With {.RelativeSource = New RelativeSource(RelativeSourceMode.Self), .Path = New PropertyPath(FontSizeProperty.Name)})
+        SetBinding(ChartFontStretchProperty, New Binding() With {.RelativeSource = New RelativeSource(RelativeSourceMode.Self), .Path = New PropertyPath(FontStretchProperty.Name)})
+        SetBinding(ChartFontStyleProperty, New Binding() With {.RelativeSource = New RelativeSource(RelativeSourceMode.Self), .Path = New PropertyPath(FontStyleProperty.Name)})
+        SetBinding(ChartFontWeightProperty, New Binding() With {.RelativeSource = New RelativeSource(RelativeSourceMode.Self), .Path = New PropertyPath(FontWeightProperty.Name)})
+    End Sub
+
+    Private Sub CharacterChart_Loaded(sender As Object, e As System.Windows.RoutedEventArgs) Handles Me.Loaded
+        MaxHeight = 1024
         ResetDataSource()
         ApplyColumns()
     End Sub
@@ -142,6 +154,119 @@ Public Class CharacterChart
                            New FrameworkPropertyMetadata(UnicodeCharacterDatabase.Default))
 #End Region
 
+#Region "SelectedCodePoint"
+    ''' <summary>Gets currently selected and active code point (just one)</summary>
+    ''' <remarks>If property value is null either no cell is selected or an empty cell is seleccted</remarks>
+    Public ReadOnly Property SelectedCodePoint As UInteger?
+        Get
+            Return GetValue(CharacterChart.SelectedCodePointProperty)
+        End Get
+    End Property
+    ''' <summary>Key of the <see cref="SelectedCodePoint"/> dependency property</summary>
+    Private Shared ReadOnly SelectedCodePointPropertyKey As DependencyPropertyKey = _
+                            DependencyProperty.RegisterReadOnly("SelectedCodePoint", _
+                            GetType(UInteger?), GetType(CharacterChart), _
+                            New FrameworkPropertyMetadata(New UInteger?))
+    ''' <summary>Metadata of the <see cref="SelectedCodePoint"/> dependency property</summary>
+    Public Shared ReadOnly SelectedCodePointProperty As DependencyProperty = _
+                           SelectedCodePointPropertyKey.DependencyProperty
+#End Region
+
+#Region "ChartFontFamily"
+    ''' <summary>Gets or sets font familly used for displayed characters</summary>      
+    Public Property ChartFontFamily As FontFamily
+        Get
+            Return GetValue(ChartFontFamilyProperty)
+        End Get
+        Set(ByVal value As FontFamily)
+            SetValue(ChartFontFamilyProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="ChartFontFamily"/> dependency property</summary>                                                   
+    Public Shared ReadOnly ChartFontFamilyProperty As DependencyProperty = DependencyProperty.Register(
+        "ChartFontFamily", GetType(FontFamily), GetType(CharacterChart), New FrameworkPropertyMetadata(FontFamilyProperty.GetMetadata(GetType(CharacterChart)).DefaultValue))
+#End Region
+
+#Region "ChartFontSize"
+    ''' <summary>Gets or sets size of font used for displayed characters</summary>      
+    Public Property ChartFontSize As Double
+        Get
+            Return GetValue(ChartFontSizeProperty)
+        End Get
+        Set(value As Double)
+            SetValue(ChartFontSizeProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="ChartFontSize"/> dependency property</summary>                                                   
+    Public Shared ReadOnly ChartFontSizeProperty As DependencyProperty = DependencyProperty.Register(
+        "ChartFontSize", GetType(Double), GetType(CharacterChart), New FrameworkPropertyMetadata(FontSizeProperty.GetMetadata(GetType(CharacterChart)).DefaultValue))
+#End Region
+
+#Region "ChartFontStretch"
+    ''' <summary>Gets or sets font stretch used for displayed characters</summary>      
+    Public Property ChartFontStretch As FontStretch
+        Get
+            Return GetValue(ChartFontStretchProperty)
+        End Get
+        Set(ByVal value As FontStretch)
+            SetValue(ChartFontStretchProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="ChartFontStretch"/> dependency property</summary>                                                   
+    Public Shared ReadOnly ChartFontStretchProperty As DependencyProperty = DependencyProperty.Register(
+        "ChartFontStretch", GetType(FontStretch), GetType(CharacterChart), New FrameworkPropertyMetadata(FontStretchProperty.GetMetadata(GetType(CharacterChart)).DefaultValue))
+#End Region
+
+#Region "ChartFontStyle"
+    ''' <summary>Gets or sets font style used for displayed characters</summary>      
+    Public Property ChartFontStyle As FontStyle
+        Get
+            Return GetValue(ChartFontStyleProperty)
+        End Get
+        Set(ByVal value As FontStyle)
+            SetValue(ChartFontStyleProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="ChartFontStyle"/> dependency property</summary>                                                   
+    Public Shared ReadOnly ChartFontStyleProperty As DependencyProperty = DependencyProperty.Register(
+        "ChartFontStyle", GetType(FontStyle), GetType(CharacterChart), New FrameworkPropertyMetadata(FontStyleProperty.GetMetadata(GetType(CharacterChart)).DefaultValue))
+#End Region
+
+#Region "ChartFontWeight"
+    ''' <summary>Gets or sets font weight used for displayed characters</summary>      
+    Public Property ChartFontWeight As FontWeight
+        Get
+            Return GetValue(ChartFontWeightProperty)
+        End Get
+        Set(ByVal value As FontWeight)
+            SetValue(ChartFontWeightProperty, value)
+        End Set
+    End Property
+    ''' <summary>Metadata of the <see cref="ChartFontWeight"/> dependency property</summary>                                                   
+    Public Shared ReadOnly ChartFontWeightProperty As DependencyProperty = DependencyProperty.Register(
+        "ChartFontWeight", GetType(FontWeight), GetType(CharacterChart), New FrameworkPropertyMetadata(FontWeightProperty.GetMetadata(GetType(CharacterChart)).DefaultValue))
+#End Region
+
+    Private _selectedCodePoints As UInteger?() = Nothing
+    ''' <summary>Gets array of currently selected code-points</summary>
+    ''' <remarks>Changes of this non-dependency property are reported via <see cref="INotifyPropertyChanged"/>/<see cref="PropertyChanged"/>.
+    ''' <para>If araray returned contains null values, empty cells are selected</para></remarks>
+    Public ReadOnly Property SelectedCodePoints As UInteger?()
+        Get
+            If _selectedCodePoints Is Nothing Then
+                Dim arr(0 To dgChars.SelectedCells.Count - 1) As Nullable(Of UInteger)
+                Dim i% = 0
+                For Each c In dgChars.SelectedCells
+                    arr(i) = GetCodePointFromCell(c)
+                    i += 1
+                Next
+                _selectedCodePoints = arr
+            End If
+            Return _selectedCodePoints
+        End Get
+    End Property
+
+
     ''' <summary>Resets source of data for main grid</summary>
     Private Sub ResetDataSource()
         dgChars.ItemsSource = New CharsSource(If(DataSource, CharsList.Empty)) With {.Columns = Me.ColumnCount}
@@ -169,4 +294,52 @@ Public Class CharacterChart
         End Try
     End Sub
 
+    Private Sub dgChars_CurrentCellChanged(sender As Object, e As System.EventArgs) Handles dgChars.CurrentCellChanged
+        SetValue(SelectedCodePointPropertyKey, GetCodePointFromCell(dgChars.CurrentCell))
+        OnSelectedCodePointChanged(e)
+    End Sub
+
+    Private Sub dgChars_SelectedCellsChanged(sender As Object, e As System.Windows.Controls.SelectedCellsChangedEventArgs) Handles dgChars.SelectedCellsChanged
+        _selectedCodePoints = Nothing
+        OnSelectedCodePointsChanged(e)
+    End Sub
+
+    ''' <summary>Gets conde-point value form cell selected</summary>
+    Protected Function GetCodePointFromCell(cell As DataGridCellInfo) As UInteger?
+        Dim line As CharsLine = cell.Item
+        Return line(dgChars.Columns.IndexOf(cell.Column))
+    End Function
+
+    ''' <summary>Raises the <see cref="PropertyChanged"/> event</summary>
+    ''' <param name="e">Event arguments</param>
+    Protected Overridable Overloads Sub OnPropertyChanged(e As PropertyChangedEventArgs)
+        RaiseEvent PropertyChanged(Me, e)
+    End Sub
+
+    ''' <summary>Raises the <see cref="PropertyChanged"/> event</summary>
+    ''' <param name="propertyName">Name of changed property</param>
+    Protected Overloads Sub OnPropertyChanged(propertyName$)
+        OnPropertyChanged(New PropertyChangedEventArgs(propertyName))
+    End Sub
+
+    ''' <summary>Occurs when a property value changes.</summary>
+    ''' <remarks>This class reports only changes of certain non-dependency properties such as <see cref="SelectedCodePoints"/> via this property</remarks>
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+
+    ''' <summary>Raised when value of the <see cref="SelectedCodePoint"/> property changes</summary>
+    Public Event SelectedCodePointChanged As EventHandler
+    ''' <summary>Raised when value of the <see cref="SelectedCodePoints"/> property changes</summary>
+    Public Event SelectedCodePointsChanged As EventHandler
+
+    ''' <summary>Raises the <see cref="SelectedCodePointChanged"/> event</summary>
+    ''' <param name="e">Event arrguments</param>
+    Protected Overridable Sub OnSelectedCodePointChanged(e As EventArgs)
+        RaiseEvent SelectedCodePointChanged(Me, e)
+    End Sub
+    ''' <summary>Raises the <see cref="SelectedCodePointChanged"/> event</summary>
+    ''' <param name="e">Event arrguments</param>
+    Protected Overridable Sub OnSelectedCodePointsChanged(e As EventArgs)
+        OnPropertyChanged("SelectedCodePoints")
+        RaiseEvent SelectedCodePointsChanged(Me, e)
+    End Sub
 End Class

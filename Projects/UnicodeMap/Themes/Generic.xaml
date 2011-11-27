@@ -18,15 +18,20 @@
             <Setter.Value>
                 <ToolTip>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ToolTip}, Path=PlacementTarget.CodePoint, StringFormat='U+{0:X4}'}"/>
-                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ToolTip}, Path=PlacementTarget.CharName}"
-                                   Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource NullInvisibleConverter}}" />
+                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ToolTip}, Path=PlacementTarget.CodePoint, StringFormat='U+{0:X4}', Mode=OneWay}"/>
+                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ToolTip}, Path=PlacementTarget.CharName, Mode=OneWay}"
+                                   Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource NullInvisibleConverter}, Mode=OneWay}" />
                     </StackPanel>
                 </ToolTip>
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment"  Value="Stretch"/>
+        <Setter Property="FontFamily" Value="{Binding ChartFontFamily, RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Mode=OneWay}"/>
+        <Setter Property="FontSize" Value="{Binding ChartFontSize, RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Mode=OneWay}"/>
+        <Setter Property="FontStretch" Value="{Binding ChartFontStretch, RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Mode=OneWay}"/>
+        <Setter Property="FontStyle" Value="{Binding ChartFontStyle, RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Mode=OneWay}"/>
+        <Setter Property="FontWeight" Value="{Binding ChartFontWeight, RelativeSource={RelativeSource AncestorType=my:CharacterChart}, Mode=OneWay}"/>
     </Style>
 
 </ResourceDictionary>

@@ -3,25 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:Tools.TextT.UnicodeT"
         xmlns:tctl="clr-namespace:Tools.WindowsT.WPF.ControlsT;assembly=Tools.Windows"
+        xmlns:tcnv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
         xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <tcnv:ChoiceBooleanConverter x:Key="ChoiceBooleanConverter"/>         
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"><!--Blocks etc.--></ColumnDefinition>                                     
-            <ColumnDefinition Width="*"><!--Charmap--></ColumnDefinition>
-            <ColumnDefinition Width="100"><!--All properties--></ColumnDefinition>                                     
+            <ColumnDefinition Width="1*"><!--Blocks etc.--></ColumnDefinition>                                     
+            <ColumnDefinition Width="3*"><!--Charmap--></ColumnDefinition>
+            <ColumnDefinition Width="1*"><!--All properties--></ColumnDefinition>                                     
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"><!--Menu--></RowDefinition>
             <RowDefinition Height="auto"><!--Toolbar--></RowDefinition>
             <RowDefinition Height="auto"><!--Font etc.--></RowDefinition>
+            <RowDefinition Height="1*"><!--Charmap--></RowDefinition>
             <RowDefinition Height="auto"><!--Basic character info--></RowDefinition>
-            <RowDefinition Height="*"><!--Charmap--></RowDefinition>
-            <RowDefinition Height="100"><!--Text box--></RowDefinition>
+            <RowDefinition Height=".25*"><!--Text box--></RowDefinition>
         </Grid.RowDefinitions>
-        <!--TODO: Menu-->
-        <Menu>
+        <!--Menu-->
+        <Menu Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="File">
                 <MenuItem Command="Open" Header="Load custom UCD ..." ToolTip="Loads custom version of Unicode Character Database and related files"/>
                 <MenuItem Command="Close"/>
@@ -32,7 +36,8 @@
             </MenuItem>
             <MenuItem Header="Help"/>
         </Menu>
-        <!--TODO: Toolbar-->
+        <!--Toolbar-->
+        <ToolBarPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
         <!--Blocks etc.-->
         <TreeView Grid.Column="0" Grid.Row="3">
             <TreeViewItem Header="All" IsSelected="True"/>
@@ -64,17 +69,17 @@
             <ComboBox Name="cmbFont" IsEditable="False"/>
             <Label Content="Size" Target="{Binding ElementName=nudFontSize}"/>
             <tctl:NumericUpDown Name="nudFontSize" Value="12" Minimum="0" Maximum="200" Change="1"/>
-            <ToggleButton Content="B" FontWeight="Bold" ToolTip="Bold"/>
-            <ToggleButton Content="I" FontStyle="Italic" ToolTip="Italic"/>
-            <ToggleButton>
-                <TextBlock Text="U" TextDecorations="Underline"/>
-            </ToggleButton>
+            <ToggleButton Content="B" FontWeight="Bold" ToolTip="Bold" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Name="tgbBold"/>
+            <ToggleButton Content="I" FontStyle="Italic" ToolTip="Italic" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Name="tgbItalic"/>
         </StackPanel>
         <!--Charmap-->
         <my:CharacterChart Grid.Row="3" Grid.Column="1"
-                           FontFamily="{Binding ElementName=cmbFont, Path=SelectedItem}"
-                           FontSize="{Binding ElementName=nudFontSize, Path=Value}"
-                           />
+                           ChartFontFamily="{Binding ElementName=cmbFont, Path=SelectedItem, Mode=OneWay}"
+                           ChartFontSize="{Binding ElementName=nudFontSize, Path=Value, Mode=OneWay}"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxHeight="300"
+                           ChartFontWeight="{Binding IsChecked, ElementName=tgbBold, Converter={StaticResource ChoiceBooleanConverter}, ConverterParameter=Bold|Normal}"
+                           ChartFontStyle="{Binding IsChecked, ElementName=tgbItalic, Converter={StaticResource ChoiceBooleanConverter}, ConverterParameter=Italic|Normal}"
+        />
         <!--Basic character info-->
         <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
             <!--TODO: Binding-->
@@ -84,21 +89,22 @@
             <TextBlock Text="SELECTED CHARACTER NAME"/>
             <TextBlock Text="Selected character Windows name"/>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2">
+        <!--Properties-->
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Stretch">
             <Expander IsExpanded="True">
-                <wfi:WindowsFormsHost>
+                <!--<wfi:WindowsFormsHost>
                     <wf:PropertyGrid Name="prgUnicode"/>
-                </wfi:WindowsFormsHost>                
+                </wfi:WindowsFormsHost>-->                
             </Expander>
             <Expander IsExpanded="False">
-                <wfi:WindowsFormsHost>
+                <!--<wfi:WindowsFormsHost>
                     <wf:PropertyGrid Name="prgCsur"/>
-                </wfi:WindowsFormsHost>
+                </wfi:WindowsFormsHost>-->
             </Expander>
             <Expander IsExpanded="False">
-                <wfi:WindowsFormsHost>
+                <!--<wfi:WindowsFormsHost>
                     <wf:PropertyGrid Name="prgOther"/>
-                </wfi:WindowsFormsHost>
+                </wfi:WindowsFormsHost>-->
             </Expander>
         </StackPanel>
         <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Name="txtText"/>

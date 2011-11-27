@@ -10,35 +10,33 @@
              d:DesignHeight="300" d:DesignWidth="300"
              FocusManager.IsFocusScope="True"
 >
-    <Grid>
-        <DataGrid Name="dgChars" AutoGenerateColumns="False" SelectionMode="Extended" SelectionUnit="CellOrRowHeader"
-                  MinRowHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:CharacterChart}}, Path=RowHeight}"
-                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
-                  EnableRowVirtualization="True"
-                  >
-            <DataGrid.RowHeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=Item.Characters[0], StringFormat=X4}"
-                               HorizontalAlignment="Right" VerticalAlignment="Top" TextAlignment="Right"
-                               />
-                </DataTemplate>
-            </DataGrid.RowHeaderTemplate>
-            <DataGrid.RowHeaderStyle>
-                <Style TargetType="DataGridRowHeader">
-                    <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                    <Setter Property="VerticalContentAlignment" Value="Top"/>
-                </Style>
-            </DataGrid.RowHeaderStyle>
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:CharacterChart}}, Path=RowHeight}"/>
-                </Style>
-            </DataGrid.RowStyle>
-        </DataGrid>
-    </Grid>
+    <DataGrid Name="dgChars" AutoGenerateColumns="False" SelectionMode="Extended" SelectionUnit="CellOrRowHeader"
+              MinRowHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:CharacterChart}}, Path=RowHeight}"
+              CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
+              EnableRowVirtualization="True" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
+    >
+        <DataGrid.RowHeaderTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=Item.Characters[0], StringFormat=X4}"
+                            HorizontalAlignment="Right" VerticalAlignment="Top" TextAlignment="Right"
+                            />
+            </DataTemplate>
+        </DataGrid.RowHeaderTemplate>
+        <DataGrid.RowHeaderStyle>
+            <Style TargetType="DataGridRowHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+            </Style>
+        </DataGrid.RowHeaderStyle>
+        <DataGrid.ColumnHeaderStyle>
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+        </DataGrid.ColumnHeaderStyle>
+        <DataGrid.RowStyle>
+            <Style TargetType="DataGridRow">
+                <Setter Property="Height" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type my:CharacterChart}}, Path=RowHeight}"/>
+            </Style>
+        </DataGrid.RowStyle>
+    </DataGrid>
 </UserControl>

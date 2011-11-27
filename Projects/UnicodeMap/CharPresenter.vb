@@ -2,6 +2,7 @@
 Imports System.ComponentModel
 
 ''' <summary>Represents single character in character map</summary>
+''' <remarks>This class implements the <see cref="INotifyPropertyChanged"/> interface. However only some non-dependency properties such as <see cref="CharPresenter.CharName"/> changes are reported via this interface. Dependency properties has their own mechanism for reporting changes.</remarks>
 Public Class CharPresenter
     Inherits Control
     Implements INotifyPropertyChanged
@@ -13,7 +14,6 @@ Public Class CharPresenter
     ''' <summary>CTor - creates a new instance of the <see cref="CharPresenter"/> property</summary>
     Public Sub New()
     End Sub
-
 
 #Region "CodePoint"
     ''' <summary>Gets or sets code-point code of displayed code-point (character)</summary>
@@ -131,6 +131,7 @@ Public Class CharPresenter
 
     ''' <summary>Gets name of character displayed</summary>
     ''' <returns>Name of character with code <see cref="CodePoint"/>. Null if <see cref="CharPresenter"/> is not placed in <see cref="CharacterChart"/> or it does not provide <see cref="CharacterChart.NameSource"/> or the name source does not provide name of the character.</returns>
+    ''' <remarks>Changes of this non-dependency property are reported via <see cref="INotifyPropertyChanged"/>/<see cref="PropertyChanged"/></remarks>
     Public ReadOnly Property CharName As String
         Get
             Dim chart = Me.GetVisualAncestor(Of CharacterChart)()

@@ -5,8 +5,9 @@ Imports System.Runtime.InteropServices
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter which converts a boolean value to one of given string values</summary>
-    ''' <remarks>Values are passed to parameter as two pipe(|)-separated strings or as an array of strings with two elements.</remarks>
+    ''' <remarks>Values are passed to parameter as two pipe(|)-separated strings or as an array of strings with two elements in order TrueValue|FalseValue.</remarks>
     ''' <version version="1.5.3" stage="Nightly">This class is new in version 1.5.3</version>
+    ''' <version version="1.5.4">Forward conversion is now <see cref="TypeConverter"/>-aware</version>
     Public Class ChoiceBooleanConverter
         Implements IValueConverter
 
@@ -35,6 +36,7 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <exception cref="InvalidCastException">Error (cannot convert) when converting <paramref name="value"/> to <see cref="Boolean"/> or return value to <paramref name="targetType"/>.</exception>
         ''' <exception cref="OverflowException">Error (overflow) when converting <paramref name="value"/> to <see cref="Boolean"/> or return value to <paramref name="targetType"/>.</exception>
         ''' <exception cref="Reflection.AmbiguousMatchException">Error (conversion operators found but no one is most specific) when converting <paramref name="value"/> to <see cref="Boolean"/> or return value to <paramref name="targetType"/>.</exception>
+        ''' <version version="1.5.4">Final return value conversion is now <see cref="TypeConverter"/>-aware</version>
         Public Function Convert(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
             If value Is Nothing Then Return Nothing
             Dim val As Boolean
@@ -57,7 +59,7 @@ Namespace WindowsT.WPF.ConvertersT
             GetParts(parameter, culture, trueCh, falseCh)
             Dim ret = If(val, trueCh, falseCh)
             If targetType Is Nothing OrElse IgnoreTargetType Then Return ret
-            Return DynamicCast(ret, targetType)
+            Return DynamicCast(ret, targetType, True)
         End Function
 
         ''' <summary>Converts a value. </summary>
