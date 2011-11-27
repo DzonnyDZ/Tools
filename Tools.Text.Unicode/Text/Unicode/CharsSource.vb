@@ -57,7 +57,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>If <see cref="Continuous"/> is true this is also character with lowest code-point</remarks>
         Public ReadOnly Property FirstChar As UInteger
             Get
-                If Chars.Count = 0 Then Throw New InvalidOperationException("No characters in collection")
+                If Chars.Count = 0 Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_NoCharsInCollection)
                 Return Chars(0)
             End Get
         End Property
@@ -66,7 +66,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>If <see cref="Continuous"/> is true this is also character with highest code-point</remarks>
         Public ReadOnly Property LastChar As UInteger
             Get
-                If Chars.Count = 0 Then Throw New InvalidOperationException("No characters in collection")
+                If Chars.Count = 0 Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_NoCharsInCollection)
                 Return Chars(Chars.Count - 1)
             End Get
         End Property
@@ -78,7 +78,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         Protected Friend ReadOnly Property VirtualFirstIndex As Long
             Get
-                If Chars.Count = 0 Then Throw New InvalidOperationException("No characters in collection")
+                If Chars.Count = 0 Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_NoCharsInCollection)
                 If Not Continuous Then Return 0
                 Return -(FirstChar Mod Columns)
             End Get
@@ -91,7 +91,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         Protected Friend ReadOnly Property VirtualLastIndex As Long
             Get
-                If Chars.Count = 0 Then Throw New InvalidOperationException("No characters in collection")
+                If Chars.Count = 0 Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_NoCharsInCollection)
                 If Not Continuous Then
                     Return Chars.Count - 1
                 Else
@@ -179,7 +179,7 @@ Namespace TextT.UnicodeT
         Private Sub CopyTo(array() As CharsLine, arrayIndex As Integer) Implements ICollection(Of CharsLine).CopyTo, IReadOnlyCollection(Of CharsLine).CopyTo
             If array Is Nothing Then Throw New ArgumentNullException("array")
             If arrayIndex < array.GetLowerBound(0) OrElse arrayIndex > array.GetUpperBound(0) Then Throw New ArgumentOutOfRangeException("arrayIndex")
-            If array.Length - arrayIndex < Count Then Throw New ArgumentException("Not enough space in destination array")
+            If array.Length - arrayIndex < Count Then Throw New ArgumentException(TextT.UnicodeT.UnicodeResources.ex_CollectionCopyToSmallArray)
             Dim i% = 0
             For Each line In Me
                 array(i + arrayIndex) = line
@@ -204,9 +204,9 @@ Namespace TextT.UnicodeT
         ''' <filterpriority>2</filterpriority>
         Private Sub ICollection_CopyTo(array As Array, index As Integer) Implements ICollection.CopyTo
             If array Is Nothing Then Throw New ArgumentNullException("array")
-            If array.Rank <> 1 Then Throw New ArgumentException("Array is multidimensional", "array")
+            If array.Rank <> 1 Then Throw New ArgumentException(TextT.UnicodeT.UnicodeResources.ex_MultidimensionalArray, "array")
             If index < array.GetLowerBound(0) OrElse index > array.GetUpperBound(0) Then Throw New ArgumentOutOfRangeException("index")
-            If array.Length - index < Count Then Throw New ArgumentException("Not enough space in destination array")
+            If array.Length - index < Count Then Throw New ArgumentException(TextT.UnicodeT.UnicodeResources.ex_CollectionCopyToSmallArray)
             Dim i% = 0
             For Each line In Me
                 array.SetValue(line, i + index)
@@ -344,15 +344,5 @@ Namespace TextT.UnicodeT
             OnCollectionChanged(New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))
         End Sub
 #End Region
-
-
-
-
-
-
-
-
-
-
     End Class
 End Namespace

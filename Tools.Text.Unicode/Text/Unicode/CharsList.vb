@@ -50,7 +50,7 @@ Namespace TextT.UnicodeT
         Public Overridable Sub CopyTo(array() As UInteger, arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of UInteger).CopyTo, IReadOnlyCollection(Of UInteger).CopyTo
             If array Is Nothing Then Throw New ArgumentNullException("array")
             If arrayIndex < array.GetLowerBound(0) OrElse arrayIndex > array.GetUpperBound(0) Then Throw New ArgumentOutOfRangeException("arrayIndex")
-            If Not (array.Length - arrayIndex > Me.Count) Then Throw New ArgumentException("Not enough space in destination array")
+            If Not (array.Length - arrayIndex > Me.Count) Then Throw New ArgumentException(TextT.UnicodeT.UnicodeResources.ex_CollectionCopyToSmallArray)
             Dim i% = 0
             For Each value In Me
                 array(arrayIndex + i) = value
@@ -171,7 +171,7 @@ Namespace TextT.UnicodeT
         Inherits CharsList
         ''' <summary>The array</summary>
         Private ReadOnly array As UInteger()
-        ''' <summary>CTor - creates a new instance of the <see cref="CharArrayList"/> class</summary>
+        ''' <summary>CTor - creates a new instance of the <see cref="CharsArray"/> class</summary>
         ''' <param name="array">The array that contains characters new instance will provide</param>
         ''' <exception cref="ArgumentNullException"><paramref name="array"/> is null</exception>
         Public Sub New(array As UInteger())
@@ -258,7 +258,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="ArgumentException"><paramref name="last"/> is less than <paramref name="first"/></exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="last"/> is greater than <see cref="UnicodeCharacterDatabase.MaxCodePoint"/></exception>
         Public Sub New(first As UInteger, last As UInteger)
-            If first > last Then Throw New ArgumentException("First character cannot be greater than last charatcer")
+            If first > last Then Throw New ArgumentException(TextT.UnicodeT.UnicodeResources.ex_FirstLastCharSwapped)
             If last > UnicodeCharacterDatabase.MaxCodePoint Then Throw New ArgumentOutOfRangeException("last")
             _start = first
             _end = last

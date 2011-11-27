@@ -305,4 +305,22 @@
   <data name="prefix_Alias" xml:space="preserve">
     <value>Alias: </value>
   </data>
+  <data name="ex_NamesListAlreadyLoaded" xml:space="preserve">
+    <value>NamesList extension is already loaded</value>
+  </data>
+  <data name="ex_CollectionCopyToSmallArray" xml:space="preserve">
+    <value>Not enough space in destination array</value>
+  </data>
+  <data name="ex_FirstLastCharSwapped" xml:space="preserve">
+    <value>First character cannot be greater than last charatcer</value>
+  </data>
+  <data name="ex_NoCharsInCollection" xml:space="preserve">
+    <value>No characters in collection</value>
+  </data>
+  <data name="ex_MultidimensionalArray" xml:space="preserve">
+    <value>Array is multidimensional</value>
+  </data>
+  <data name="ex_EnumeratorState" xml:space="preserve">
+    <value>Enumeration has not yet started or it has already finished.</value>
+  </data>
 </root>

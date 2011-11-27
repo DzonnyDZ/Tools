@@ -191,11 +191,38 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Not enough space in destination array.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_CollectionCopyToSmallArray() As String
+            Get
+                Return ResourceManager.GetString("ex_CollectionCopyToSmallArray", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enumeration has not yet started or it has already finished..
+        '''</summary>
+        Friend Shared ReadOnly Property ex_EnumeratorState() As String
+            Get
+                Return ResourceManager.GetString("ex_EnumeratorState", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Erorr while reading name aliases on line {0}: {1}.
         '''</summary>
         Friend Shared ReadOnly Property ex_ErrorReadingNameAliases() As String
             Get
                 Return ResourceManager.GetString("ex_ErrorReadingNameAliases", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to First character cannot be greater than last charatcer.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_FirstLastCharSwapped() As String
+            Get
+                Return ResourceManager.GetString("ex_FirstLastCharSwapped", resourceCulture)
             End Get
         End Property
         
@@ -218,11 +245,38 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Array is multidimensional.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_MultidimensionalArray() As String
+            Get
+                Return ResourceManager.GetString("ex_MultidimensionalArray", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Unexpected character. Expected uppercase hexadecimal digit.
         '''</summary>
         Friend Shared ReadOnly Property ex_NameAlias_NotHex() As String
             Get
                 Return ResourceManager.GetString("ex_NameAlias_NotHex", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to NamesList extension is already loaded.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_NamesListAlreadyLoaded() As String
+            Get
+                Return ResourceManager.GetString("ex_NamesListAlreadyLoaded", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to No characters in collection.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_NoCharsInCollection() As String
+            Get
+                Return ResourceManager.GetString("ex_NoCharsInCollection", resourceCulture)
             End Get
         End Property
         

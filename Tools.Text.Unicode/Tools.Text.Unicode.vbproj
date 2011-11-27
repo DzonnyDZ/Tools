@@ -173,7 +173,6 @@
     </Compile>
     <Compile Include="Text\Unicode\UnicodeStandartizedVariant.vb" />
     <Compile Include="Text\Unicode\UnihanPropertyCategoryAttribute.vb" />
-    <Compile Include="Text\Unicode\Utf32String.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Text\Unicode\UnicodeResources.resx">

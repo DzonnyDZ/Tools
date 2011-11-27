@@ -162,7 +162,6 @@ Namespace TextT.UnicodeT
             Return ret
         End Function
 
-
     End Class
 
     ''' <summary>Provides extension method for Unicode Character Dataabase related to properties extracted from NamesList.txt</summary>
@@ -214,10 +213,20 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException"><paramref name="target"/> is already loaded with NamesList extension</exception>
         <Extension()>
         Public Sub LoadNamesList(target As UnicodeCharacterDatabase, source As IO.TextReader)
-            If target Is Nothing Then Throw New ArgumentNullException("target")
             If source Is Nothing Then Throw New ArgumentNullException("source")
-            If target.IsNamesListLLoaded Then Throw New InvalidOperationException("NamesList extension is already loaded")
-            target.Extensions.Add(XmlNamespace, New UnicodeCharacterDatabase(NamesListParser.MakeExtensionXml(source)))
+            LoadNamesList(target, NamesListParser.MakeExtensionXml(source))
+        End Sub
+
+        ''' <summary>Loads NamesList extension to given UCD from XML</summary>
+        ''' <param name="target">UCD to load NamesList to</param>
+        ''' <param name="namesListXml">NaesList.txt parsed to XML form. The foem must be same that is returned by <see cref="NamesListParser.MakeExtensionXml"/>.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="target"/> is null or <paramref name="namesListXml"/> is null.</exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="target"/> is already loaded with NamesList extension</exception>
+        ''' <exception cref="ArgumentException">Root element of <paramref name="namesListXml"/> is not <c>&lt;ucd></c> in namespace http://www.unicode.org/ns/2003/ucd/1.0.</exception>
+        <Extension()>
+        Public Sub LoadNamesList(target As UnicodeCharacterDatabase, namesListXml As XDocument)
+            If namesListXml Is Nothing Then Throw New ArgumentNullException("namesListXml")
+            target.Extensions.Add(XmlNamespace, New UnicodeCharacterDatabase(namesListXml))
         End Sub
 
         ''' <summary>Loads default NamesList extension to given UCD</summary>
@@ -227,7 +236,7 @@ Namespace TextT.UnicodeT
         <Extension()>
         Public Sub LoadNamesList(target As UnicodeCharacterDatabase)
             If target Is Nothing Then Throw New ArgumentNullException("target")
-            If target.IsNamesListLLoaded Then Throw New InvalidOperationException("NamesList extension is already loaded")
+            If target.IsNamesListLLoaded Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_NamesListAlreadyLoaded)
             target.Extensions.Add(XmlNamespace, [DefaultNamesList])
         End Sub
 

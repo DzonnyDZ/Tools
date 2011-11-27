@@ -89,7 +89,7 @@ Namespace TextT.UnicodeT
             Public ReadOnly Property Current As UInteger? Implements System.Collections.Generic.IEnumerator(Of UInteger?).Current
                 Get
                     If disposedValue Then Throw New ObjectDisposedException([GetType].Name)
-                    If index < 0 OrElse index >= [for].Count Then Throw New InvalidOperationException("Enumeration ahs not yet started or it has already finished.")
+                    If index < 0 OrElse index >= [for].Count Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_EnumeratorState)
                     Return [for](index)
                 End Get
             End Property
