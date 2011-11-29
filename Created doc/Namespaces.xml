@@ -207,6 +207,11 @@
                 Attributtes <see cref="T:Tools.InternalT.VersionAttribute"/>, <see cref="T:Tools.InternaltT.AuthorAttribute"/> and <see cref="T:Tools.InternalT.FirstVersionAttribute"/> are obsolete and should no longer be used. Use XML documentation tags instead.
             </version>
         </member>
+        <!--Interop-->
+        <member name="N:Tools.InteropT">
+            <summary>Provides classes for interoperability with other platforms</summary>
+            <version version="1.5.4">This namespace is new in version 1.5.4</version>
+        </member>
         <!--IOt-->
         <member name="N:Tools.IOt">
             <summary>

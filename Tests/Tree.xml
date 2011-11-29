@@ -36,6 +36,11 @@
             <node name="ToolAssembly" image="Class" tag="Tools.Tests.InternalT.ToolAssembly.Test" />
             <node name="VersionAttribute" image="Class" tag="Tools.Tests.InternalT.VersionAttributeTest.Test" />
         </node>
+        <node name="InteropT" image="Namespace">
+            <node name="UnmanagedModule" image="Class">
+                <node name="UnmanagedResources" image="Object" tag="Tools.Tests.InteropT.frmUnmanagedResources.Test"/>
+            </node>
+        </node>
         <node name="IOt" image="Namespace">
             <node name="BinaryReader" image="Class Shortcut" tag="Tools.Tests.DrawingT.IOt.frmJPEG.test" />
             <node name="ConstrainedReadOnlyStream" image="Class Shortcut" tag="Tools.Tests.DrawingT.IOt.frmJPEG.test" />

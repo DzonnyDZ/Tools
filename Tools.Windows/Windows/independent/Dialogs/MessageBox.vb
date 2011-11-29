@@ -3267,9 +3267,11 @@ Namespace WindowsT.IndependentT
         ''' <remarks>This function mimisc behaviour of the <see cref="Microsoft.VisualBasic.Interaction.MsgBox"/> function</remarks>
         ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <version version="1.5.3" stage="Beta">Added parameter <paramref name="owner"/> because using <see cref="MsgBox"/> without owner caused bad behavior in WPF applications.</version>
-        Public Shared Function MsgBox(ByVal Prompt As Object, Optional ByVal Buttons As MsgBoxStyle = 0, Optional ByVal Title As Object = Nothing, Optional ByVal owner As Object = Nothing) As MsgBoxResult
+        ''' <version version="1.5.4">Fix: <see cref="NullReferenceException"/> thrown if <paramref name="Title"/> or <paramref name="Prompt"/> is null.</version>
+        ''' <version version="1.5.4">Parameters renamed: <c>Prompt</c> to <c>prompt</c>, <c>Buttons</c> to <c>buttons</c>, <c>Title</c> to <c>title</c></version>
+        Public Shared Function MsgBox(ByVal prompt As Object, Optional ByVal buttons As MsgBoxStyle = 0, Optional ByVal title As Object = Nothing, Optional ByVal owner As Object = Nothing) As MsgBoxResult
             Try
-                Dim box As New FakeBox With {.Prompt = Prompt.ToString, .Title = Title.ToString}
+                Dim box As New FakeBox With {.Prompt = If(Prompt, "").ToString, .Title = If(Title, "").ToString}
                 box.Buttons.Clear()
                 box.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
                 box.Icon = GetIconDelegate.Invoke(ConvertIconConstant(Buttons))

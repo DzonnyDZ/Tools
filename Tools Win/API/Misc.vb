@@ -31,6 +31,12 @@ Namespace API
 
     ''' <summary>Common Win32 API declarations</summary>
     Friend Module Common
+        ''' <summary>Sets the last-error code for the calling thread.</summary>
+        ''' <param name="dwErrCode">The last-error code for the thread.</param>
+        Public Declare Sub SetLastError Lib "kernel32" (dwErrCode%)
+        ''' <summary>Error code that indicates no error</summary>
+        Public Const ERROR_SUCCESS% = 0
+
         ''' <summary>Value representing NULL</summary>
         Public Const NULL As Integer = 0
         ''' <summary>Boolean type as used in Win32 API</summary>
@@ -164,6 +170,8 @@ Namespace API
         ''' <para>If the string specifies a module name without a path and the file name extension is omitted, the function appends the default library extension .dll to the module name. To prevent the function from appending .dll to the module name, include a trailing point character (.) in the module name string.</para></param>
         ''' <returns>If the function succeeds, the return value is a handle to the module. If the function fails, the return value is NULL.</returns>
         Public Declare Auto Function LoadLibrary Lib "kernel32" (ByVal lpLibFileName As String) As Integer
+
+
         ''' <summary>Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).</summary>
         ''' <param name="hModule"><para>A handle to the DLL module that contains the function or variable. The LoadLibrary, LoadLibraryEx, or GetModuleHandle function returns this handle.</para>
         ''' <para>The GetProcAddress function does not retrieve addresses from modules that were loaded using the LOAD_LIBRARY_AS_DATAFILE flag. For more information, see LoadLibraryEx.</para></param>
@@ -176,6 +184,124 @@ Namespace API
         Public Declare Function FreeLibrary Lib "kernel32" (ByVal hLibModule As Integer) As Integer
 #End Region
 
+        ''' <summary>Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.</summary>
+        ''' <param name="lpFileName">A string that specifies the file name of the module to load. This name is not related to the name stored in a library module itself, as specified by the LIBRARY keyword in the module-definition (.def) file.</param>
+        ''' <param name="hFile">This parameter is reserved for future use. It must be NULL.</param>
+        ''' <param name="dwFlags">The action to be taken when loading the module. If no flags are specified, the behavior of this function is identical to that of the <see cref="LoadLibrary"/> function.</param>
+        ''' <returns>If the function succeeds, the return value is a handle to the loaded module. If the function fails, the return value is NULL.</returns>
+        Public Declare Auto Function LoadLibraryEx Lib "kernel32" (ByVal lpFileName$, hFile As IntPtr, dwFlags As LoadLibraryMode) As IntPtr
+
+#Region "Resources"
+        ''' <summary>Determines the location of a resource with the specified type and name in the specified module.</summary>
+        ''' <param name="hModule">A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process.</param>
+        ''' <param name="lpName">The name of the resource.</param>
+        ''' <param name="lpType">The resource type.</param>
+        ''' <returns>If the function succeeds, the return value is a handle to the specified resource's information block. To obtain a handle to the resource, pass this handle to the LoadResource function. If the function fails, the return value is NULL. </returns>
+        Public Declare Auto Function FindResource Lib "Kernel32" (hModule As IntPtr, lpName As String, lpType As String) As IntPtr
+        ''' <summary>Determines the location of a resource with the specified type and name in the specified module.</summary>
+        ''' <param name="hModule">A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process.</param>
+        ''' <param name="lpId">ID of the resource.</param>
+        ''' <param name="lpType">The resource type.</param>
+        ''' <returns>If the function succeeds, the return value is a handle to the specified resource's information block. To obtain a handle to the resource, pass this handle to the LoadResource function. If the function fails, the return value is NULL. </returns>
+        Public Declare Auto Function FindResource Lib "Kernel32" (hModule As IntPtr, lpId As IntPtr, lpType As String) As IntPtr
+        ''' <summary>Determines the location of a resource with the specified type and name in the specified module.</summary>
+        ''' <param name="hModule">A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process.</param>
+        ''' <param name="lpId">ID of the resource.</param>
+        ''' <param name="lpType">The resource type.</param>
+        ''' <returns>If the function succeeds, the return value is a handle to the specified resource's information block. To obtain a handle to the resource, pass this handle to the LoadResource function. If the function fails, the return value is NULL. </returns>
+        Public Declare Auto Function FindResource Lib "Kernel32" (hModule As IntPtr, lpId As IntPtr, lpType As IntPtr) As IntPtr
+        ''' <summary>Determines the location of a resource with the specified type and name in the specified module.</summary>
+        ''' <param name="hModule">A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process.</param>
+        ''' <param name="lpName">The name of the resource.</param>
+        ''' <param name="lpType">The resource type.</param>
+        ''' <returns>If the function succeeds, the return value is a handle to the specified resource's information block. To obtain a handle to the resource, pass this handle to the LoadResource function. If the function fails, the return value is NULL. </returns>
+        Public Declare Auto Function FindResource Lib "Kernel32" (hModule As IntPtr, lpName As String, lpType As IntPtr) As IntPtr
+
+        ''' <summary>Retrieves a handle that can be used to obtain a pointer to the first byte of the specified resource in memory.</summary>
+        ''' <param name="hModule">A handle to the module whose executable file contains the resource. If hModule is NULL, the system loads the resource from the module that was used to create the current process.</param>
+        ''' <param name="hResInfo">A handle to the resource to be loaded. This handle is returned by the FindResource or FindResourceEx function.</param>
+        ''' <returns>If the function succeeds, the return value is a handle to the data associated with the resource. If the function fails, the return value is NULL.</returns>
+        ''' <remarks>It is not necessary to free the resources loaded using <see cref="LoadResource"/>.</remarks>
+        Public Declare Function LoadResource Lib "kernel32" (hModule As IntPtr, hResInfo As IntPtr) As IntPtr
+
+        ''' <summary>Retrieves the size, in bytes, of the specified resource.</summary>
+        ''' <param name="hModule">A handle to the module whose executable file contains the resource.</param>
+        ''' <param name="hResInfo">A handle to the resource. This handle must be created by using the FindResource or FindResourceEx function.</param>
+        ''' <returns>If the function succeeds, the return value is the number of bytes in the resource. If the function fails, the return value is zero.</returns>
+        <DllImport("kernel32.dll", SetLastError:=True)> _
+        Public Function SizeofResource(hModule As IntPtr, hResInfo As IntPtr) As UInteger
+        End Function
+        ''' <summary>Enumerates resource types within a binary module. Starting with Windows Vista, this is typically a language-neutral Portable Executable (LN file), and the enumeration also includes resources from one of the corresponding language-specific resource files (.mui files)—if one exists—that contain localizable language resources. It is also possible to use hModule to specify a .mui file, in which case only that file is searched for resource types.</summary>
+        ''' <param name="hModule">A handle to a module to be searched. This handle must be obtained through LoadLibrary or LoadLibraryEx. See Remarks for more information. If this parameter is NULL, that is equivalent to passing in a handle to the module used to create the current process.</param>
+        ''' <param name="lpEnumFunc">A pointer to the callback function to be called for each enumerated resource type. For more information, see the <see cref="EnumResTypeProc"/> function.</param>
+        ''' <param name="lParam">An application-defined value passed to the callback function.</param>
+        ''' <returns>Returns TRUE if successful; otherwise, FALSE.</returns>
+        <DllImport("kernel32.dll", SetLastError:=True)> _
+        Public Function EnumResourceTypes(ByVal hModule As IntPtr, ByVal lpEnumFunc As EnumResTypeProc, ByVal lParam As IntPtr) As Boolean
+        End Function
+        ''' <summary>An application-defined callback function used with the EnumResourceTypes and EnumResourceTypesEx functions. It receives resource types. The ENUMRESTYPEPROC type defines a pointer to this callback function. EnumResTypeProc is a placeholder for the application-defined function name.</summary>
+        ''' <param name="hModule">A handle to the module whose executable file contains the resources for which the types are to be enumerated. If this parameter is NULL, the function enumerates the resource types in the module used to create the current process.</param>
+        ''' <param name="lpszType">The type of resource for which the type is being enumerated.</param>
+        ''' <param name="lParam">An application-defined parameter passed to the EnumResourceTypes or EnumResourceTypesEx function. This parameter can be used in error checking.</param>
+        ''' <returns>Returns TRUE to continue enumeration or FALSE to stop enumeration.</returns>
+        Public Delegate Function EnumResTypeProc(hModule As IntPtr, lpszType As IntPtr, lParam As IntPtr) As Boolean
+
+        ''' <summary>Enumerates resources of a specified type within a binary module. For Windows Vista and later, this is typically a language-neutral Portable Executable (LN file), and the enumeration will also include resources from the corresponding language-specific resource files (.mui files) that contain localizable language resources. It is also possible for hModule to specify an .mui file, in which case only that file is searched for resources.</summary>
+        ''' <param name="hModule">A handle to a module to be searched. Starting with Windows Vista, if this is an LN file, then appropriate .mui files (if any exist) are included in the search. If this parameter is NULL, that is equivalent to passing in a handle to the module used to create the current process.</param>
+        ''' <param name="lpszType">The type of the resource for which the name is being enumerated.</param>
+        ''' <param name="lpEnumFunc">A pointer to the callback function to be called for each enumerated resource name or ID. </param>
+        ''' <param name="lParam">An application-defined value passed to the callback function. This parameter can be used in error checking.</param>
+        ''' <returns>The return value is TRUE if the function succeeds or FALSE if the function does not find a resource of the type specified, or if the function fails for another reason.</returns>
+        <DllImport("kernel32.dll", CharSet:=CharSet.Unicode, EntryPoint:="EnumResourceNamesW", SetLastError:=True)> _
+        Public Function EnumResourceNames(ByVal hModule As IntPtr, ByVal lpszType As String, ByVal lpEnumFunc As EnumResNameProc, ByVal lParam As IntPtr) As Boolean
+        End Function
+        ''' <summary>Enumerates resources of a specified type within a binary module. For Windows Vista and later, this is typically a language-neutral Portable Executable (LN file), and the enumeration will also include resources from the corresponding language-specific resource files (.mui files) that contain localizable language resources. It is also possible for hModule to specify an .mui file, in which case only that file is searched for resources.</summary>
+        ''' <param name="hModule">A handle to a module to be searched. Starting with Windows Vista, if this is an LN file, then appropriate .mui files (if any exist) are included in the search. If this parameter is NULL, that is equivalent to passing in a handle to the module used to create the current process.</param>
+        ''' <param name="lpszType">The type of the resource for which the name is being enumerated.</param>
+        ''' <param name="lpEnumFunc">A pointer to the callback function to be called for each enumerated resource name or ID. </param>
+        ''' <param name="lParam">An application-defined value passed to the callback function. This parameter can be used in error checking.</param>
+        ''' <returns>The return value is TRUE if the function succeeds or FALSE if the function does not find a resource of the type specified, or if the function fails for another reason.</returns>
+        <DllImport("kernel32.dll", CharSet:=CharSet.Unicode, EntryPoint:="EnumResourceNamesW", SetLastError:=True)> _
+        Public Function EnumResourceNames(ByVal hModule As IntPtr, ByVal lpszType As IntPtr, ByVal lpEnumFunc As EnumResNameProc, ByVal lParam As IntPtr) As Boolean
+        End Function
+
+        ''' <summary>An application-defined callback function used with the EnumResourceNames and EnumResourceNamesEx functions. It receives the type and name of a resource. The ENUMRESNAMEPROC type defines a pointer to this callback function. EnumResNameProc is a placeholder for the application-defined function name.</summary>
+        ''' <param name="hModule">A handle to the module whose executable file contains the resources that are being enumerated. If this parameter is NULL, the function enumerates the resource names in the module used to create the current process.</param>
+        ''' <param name="lpszType">The type of resource for which the name is being enumerated.</param>
+        ''' <param name="lpszName">The name of a resource of the type being enumerated.</param>
+        ''' <param name="lParam">An application-defined parameter passed to the EnumResourceNames or EnumResourceNamesEx function. This parameter can be used in error checking.</param>
+        ''' <returns>Returns TRUE to continue enumeration or FALSE to stop enumeration.</returns>
+        Public Delegate Function EnumResNameProc(ByVal hModule As IntPtr, ByVal lpszType As IntPtr, ByVal lpszName As IntPtr, ByVal lParam As IntPtr) As Boolean
+
+        ''' <summary>Loads a string resource from the executable file associated with a specified module, copies the string into a buffer, and appends a terminating null character.</summary>
+        ''' <param name="hInstance">A handle to an instance of the module whose executable file contains the string resource. To get the handle to the application itself, call the GetModuleHandle function with NULL.</param>
+        ''' <param name="uID">The identifier of the string to be loaded.</param>
+        ''' <param name="lpBuffer">The buffer is to receive the string.</param>
+        ''' <param name="nBufferMax">The size of the buffer, in characters. The string is truncated and null-terminated if it is longer than the number of characters specified. If this parameter is 0, then lpBuffer receives a read-only pointer to the resource itself.</param>
+        ''' <returns>If the function succeeds, the return value is the number of characters copied into the buffer, not including the terminating null character, or zero if the string resource does not exist. </returns>
+        <DllImport("User32", SetLastError:=True)> _
+        Public Function LoadString(ByVal hInstance As IntPtr, ByVal uID As UInt32, ByVal lpBuffer As System.Text.StringBuilder, ByVal nBufferMax As Integer) As Integer
+        End Function
+
+        ''' <summary>Loads a string resource from the executable file associated with a specified module, copies the string into a buffer, and appends a terminating null character.</summary>
+        ''' <param name="hInstance">A handle to an instance of the module whose executable file contains the string resource. To get the handle to the application itself, call the GetModuleHandle function with NULL.</param>
+        ''' <param name="uID">The identifier of the string to be loaded.</param>
+        ''' <param name="lpBuffer">The buffer is to receive the string.</param>
+        ''' <param name="nBufferMax">The size of the buffer, in characters. The string is truncated and null-terminated if it is longer than the number of characters specified. If this parameter is 0, then lpBuffer receives a read-only pointer to the resource itself.</param>
+        ''' <returns>If the function succeeds, the return value is the number of characters copied into the buffer, not including the terminating null character, or zero if the string resource does not exist. </returns>
+        <DllImport("User32", SetLastError:=True)> _
+        Public Function LoadString(ByVal hInstance As IntPtr, ByVal uID As UInt32, ByRef lpBuffer As IntPtr, ByVal nBufferMax As Integer) As Integer
+        End Function
+
+        ''' <summary>Determines whether a value is an integer identifier for a resource.</summary>
+        ''' <param name="value">he integer value to be tested.</param>
+        ''' <returns>If the value is a resource identifier, the return value is TRUE. Otherwise, the return value is FALSE.</returns>
+        ''' <remarks>This macro checks whether all bits except the least 16 bits are zero. When true, wInteger is an integer identifier for a resource. Otherwise it is typically a pointer to a string.</remarks>
+        Public Function IsIntRresource(value As IntPtr) As Boolean
+            Return value.ToInt64 <= UShort.MaxValue
+        End Function
+#End Region
+
         ''' <summary>Deletes a logical pen, brush, font, bitmap, region, or palette, freeing all system resources associated with the object. After the object is deleted, the specified handle is no longer valid.</summary>
         ''' <param name="hObject">A handle to a logical pen, brush, font, bitmap, region, or palette.</param>
         ''' <returns>If the function succeeds, the return value is true. If the specified handle is not valid or is currently selected into a DC, the return value is false.</returns>
@@ -185,10 +311,38 @@ Namespace API
         ''' </remarks>
         Public Declare Function DeleteObject Lib "gdi32.dll" (ByVal hObject As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
 
+
         ''' <summary>Closes an open object handle.</summary>
         ''' <param name="hObject">A valid handle to an open object.</param>
         ''' <returns>If the function succeeds, the return value is true. If the function fails, the return value is false.</returns>
         Public Declare Function CloseHandle Lib "Kernel32.dll" (ByVal hObject As IntPtr) As Boolean
+
+        ''' <summary>Flags for the <see cref="LoadLibraryEx"/> method</summary>
+        <Flags()>
+        Public Enum LoadLibraryMode As UInteger
+            ''' <summary>If this value is used, and the executable module is a DLL, the system does not call DllMain for process and thread initialization and termination. Also, the system does not load additional executable modules that are referenced by the specified module.</summary>
+            DontResolveDllReferences = &H1
+            ''' <summary>If this value is used, the system does not check AppLocker rules or apply Software Restriction Policies for the DLL. This action applies only to the DLL being loaded and not to its dependencies. This value is recommended for use in setup programs that must run extracted DLLs during installation.</summary>
+            IgnoreCodeAuthzLevel = &H10
+            ''' <summary>If this value is used, the system maps the file into the calling process's virtual address space as if it were a data file. Nothing is done to execute or prepare to execute the mapped file. Therefore, you cannot call functions like GetModuleFileName, GetModuleHandle or GetProcAddress with this DLL. Using this value causes writes to read-only memory to raise an access violation. Use this flag when you want to load a DLL only to extract messages or resources from it.</summary>
+            LoadLibraryAsDatafile = &H2
+            ''' <summary>Similar to <see cref="LoadLibraryAsDatafile"/>, except that the DLL file on the disk is opened for exclusive write access. Therefore, other processes cannot open the DLL file for write access while it is in use. However, the DLL can still be opened by other processes.</summary>
+            LoadLibraryAsDatafile_EXCLUSIVE = &H40
+            ''' <summary>If this value is used, the system maps the file into the process's virtual address space as an image file. However, the loader does not load the static imports or perform the other usual initialization steps. Use this flag when you want to load a DLL only to extract messages or resources from it.</summary>
+            LoadLibraryAsImageResource = &H20
+            ''' <summary>If this value is used, the application's installation directory is searched for the DLL and its dependencies. Directories in the standard search path are not searched. This value cannot be combined with <see cref="AlteredSearchPath"/>.</summary>
+            SearchApplicationDir = &H200
+            ''' <summary>This value is a combination of <see cref="SearchApplicationDir"/>, <see cref="SerachSystem32"/>, and <see cref="SearchUserDirs"/>. Directories in the standard search path are not searched. This value cannot be combined with <see cref="AlteredSearchPath"/>.</summary>
+            SearchDefaultDirs = &H1000
+            ''' <summary>If this value is used, the directory that contains the DLL is temporarily added to the beginning of the list of directories that are searched for the DLL's dependencies. Directories in the standard search path are not searched.</summary>
+            SerachDllLoadDir = &H100
+            ''' <summary>If this value is used, %windows%\system32 is searched for the DLL and its dependencies. Directories in the standard search path are not searched. This value cannot be combined with <see cref="AlteredSearchPath"/>.</summary>
+            SerachSystem32 = &H800
+            ''' <summary>If this value is used, directories added using the AddDllDirectory or the SetDllDirectory function are searched for the DLL and its dependencies. If more than one directory has been added, the order in which the directories are searched is unspecified. Directories in the standard search path are not searched. This value cannot be combined with <see cref="AlteredSearchPath"/>.</summary>
+            SearchUserDirs = &H400
+            ''' <summary>If this value is used and lpFileName specifies an absolute path, the system uses the alternate file search strategy discussed in the Remarks section to find associated executable modules that the specified module causes to be loaded. If this value is used and lpFileName specifies a relative path, the behavior is undefined.</summary>
+            AlteredSearchPath = &H8
+        End Enum
     End Module
 
     ''' <summary>Misc Win32 API declrations</summary>
@@ -210,7 +364,7 @@ Namespace API
         '}
 
     End Module
-  
+
 End Namespace
 
 
