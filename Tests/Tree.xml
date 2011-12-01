@@ -138,6 +138,15 @@
             </node>
         </node>
     </node>
+    <node name="Tools.Text.Unicode" image="Assembly">
+        <node name="Tools" image="Namespace">
+            <node name="TextT" image="Namespace">
+                <node name="UnicodeT" image="Namespace">
+                    <node name="UCD Translation" image="Object" tag="Tools.Tests.TextT.UnicodeT.frmUcdTranslate.Go"/>
+                </node>
+            </node>
+        </node>
+    </node>
     <node name="Tools Visual Studio" image="Assembly">
         <node name="DiagnosticsT" image="Namespace">
             <node name="ImageVisualizer" image="Class" tag="Tools.Tests.DiagnosticsT.frmImageVisualizer.Test" />

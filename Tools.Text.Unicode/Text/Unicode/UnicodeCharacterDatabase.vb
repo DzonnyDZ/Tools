@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Linq
+Imports Tools.LinqT
 Imports System.Xml.XPath
 Imports System.Linq
 Imports Tools.RuntimeT.CompilerServicesT
@@ -261,7 +262,7 @@ Namespace TextT.UnicodeT
         ''' <returns>All code points in current Unicode Character Database (groupped or not)</returns>
         Public ReadOnly Property CodePoints As IEnumerable(Of UnicodeCodePoint)
             Get
-                Return From el In CodePointXmlElements.InDocumentOrder
+                Return From el In CodePointXmlElements
                        Select UnicodeCodePoint.Create(el)
             End Get
         End Property
@@ -275,12 +276,21 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Gets XML elements representing all code points in given XML document which represents instance of Unicode Character Database</summary>
         ''' <param name="document">The XML document that contains Unicode Character Database XML data</param>
-        ''' <returns>XML elements representing all code points in <paramref name="document"/>.</returns>
+        ''' <returns>XML elements representing all code points in <paramref name="document"/> (in document order).</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="document"/> is null</exception>
         Friend Shared Function GetCodePointXmlElements(document As XDocument) As IEnumerable(Of XElement)
             If document Is Nothing Then Throw New ArgumentNullException("document")
-            Return document.<ucd>.<repertoire>...<char>.Union(document.<ucd>.<repertoire>...<reserved>).Union(document.<ucd>.<repertoire>...<noncharacter>).Union(document.<ucd>.<repertoire>...<surrogate>)
+            Return From el In document.<ucd>.<repertoire>.Descendants Where el.Name.In(char_name, reserved_name, noncharacter_name, surrogate_name)
+            'Return document.<ucd>.<repertoire>...<char>.Union(document.<ucd>.<repertoire>...<reserved>).Union(document.<ucd>.<repertoire>...<noncharacter>).Union(document.<ucd>.<repertoire>...<surrogate>)
         End Function
+        ''' <summary><see cref="XName"/> of &lt;char> element</summary>
+        Private Shared ReadOnly char_name As XName = <char/>.Name
+        ''' <summary><see cref="XName"/> of &lt;reserved> element</summary>
+        Private Shared ReadOnly reserved_name As XName = <reserved/>.Name
+        ''' <summary><see cref="XName"/> of &lt;noncharacter> element</summary>
+        Private Shared ReadOnly noncharacter_name As XName = <noncharacter/>.Name
+        ''' <summary><see cref="XName"/> of &lt;surrogate> element</summary>
+        Private Shared ReadOnly surrogate_name As XName = <surrogate/>.Name
 
 
         ''' <summary>Gets all Unicode blocks</summary>

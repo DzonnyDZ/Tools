@@ -474,6 +474,12 @@
     <Compile Include="Tests\StaticProperiesTest.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Text\Unicode\frmTranslateBlockNames.Designer.vb">
+      <DependentUpon>frmTranslateBlockNames.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Text\Unicode\frmTranslateBlockNames.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Text\Unicode\frmUcdTranslate.Designer.vb">
       <DependentUpon>frmUcdTranslate.vb</DependentUpon>
     </Compile>
@@ -723,6 +729,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\StaticProperiesTest.resx">
       <DependentUpon>StaticProperiesTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\frmTranslateBlockNames.resx">
+      <DependentUpon>frmTranslateBlockNames.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\frmUcdTranslate.resx">
       <DependentUpon>frmUcdTranslate.vb</DependentUpon>

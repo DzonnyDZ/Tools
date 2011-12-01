@@ -402,6 +402,14 @@ Namespace InteropT
             Return New ResourceTypeIdentifier(name)
         End Operator
 
+        ''' <summary>Converts <see cref="ResourceTypeId"/> to <see cref="ResourceTypeIdentifier"/></summary>
+        ''' <param name="Id">Identifies resource type</param>
+        ''' <returns>A new insnatce of <see cref="ResourceTypeIdentifier"/> with <see cref="Id"/> set to <paramref name="id"/>.</returns>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="id"/> is out of range ot type <see cref="UShort"/>.</exception>
+        Public Shared Widening Operator CType(id As ResourceTypeId) As ResourceTypeIdentifier
+            Return New ResourceTypeIdentifier(id)
+        End Operator
+
         ''' <summary>Compares two instance of <see cref="ResourceTypeIdentifier"/> for equality</summary>
         ''' <param name="a">A <see cref="ResourceTypeIdentifier"/></param>
         ''' <param name="b">A <see cref="ResourceTypeIdentifier"/></param>
