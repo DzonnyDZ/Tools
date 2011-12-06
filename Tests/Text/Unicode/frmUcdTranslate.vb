@@ -1,4 +1,5 @@
 ﻿Imports mBox = Tools.WindowsT.IndependentT.MessageBox
+Imports Tools.WindowsT.InteropT
 Imports System.Globalization.CultureInfo
 Imports System.Linq
 Imports <xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
@@ -95,6 +96,7 @@ Namespace TextT.UnicodeT
                                     Try
                                         Dim len = br.ReadInt16
                                         Dim str = New String(br.ReadChars(len))
+                                        If str = "" Then Continue While
                                         Dim cp As Integer = (blockn - 1) * 16 + i
                                         If txtCheck.Text <> "" Then
                                             Dim origName$ = Nothing
@@ -131,13 +133,14 @@ Namespace TextT.UnicodeT
 
                 If chkBlocks.Checked Then
                     Dim data = From b In UnicodeCharacterDatabase.Default.Blocks
-                               Select UcdName = b.Name, LocalizedName = "", FirstCodePoint = b.FirstCodePoint.CodePoint, LastCodePoint = b.LastCodePoint.CodePoint
-                    Dim win = New frmTranslateBlockNames(data)
-                    If win.ShowDialog(Me) <> Windows.Forms.DialogResult.OK Then Return
+                               Select New TranslateData With {.UcdName = b.Name, .LocalizedName = "", .FirstCodePoint = b.FirstCodePoint.CodePoint, .LastCodePoint = b.LastCodePoint.CodePoint}
+                    Dim d2 = data.ToList
+                    Dim win = New winTranslateBlockNames(d2)
+                    If win.ShowDialog(Me) <> True Then Return
 
                     ret.<ucd>.First.Add(
                         <blocks><%= (
-                                    From itm In data Where itm.LocalizedName <> ""
+                                    From itm In d2 Where itm.LocalizedName <> ""
                                     Select New XNode() {
                                     If(chkComments.Checked, New XComment(itm.UcdName), Nothing),
                                     <block

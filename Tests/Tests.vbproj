@@ -474,12 +474,6 @@
     <Compile Include="Tests\StaticProperiesTest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Text\Unicode\frmTranslateBlockNames.Designer.vb">
-      <DependentUpon>frmTranslateBlockNames.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Text\Unicode\frmTranslateBlockNames.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Text\Unicode\frmUcdTranslate.Designer.vb">
       <DependentUpon>frmUcdTranslate.vb</DependentUpon>
     </Compile>
@@ -491,6 +485,10 @@
     </Compile>
     <Compile Include="Text\Unicode\frmUnicodeCharacterDatabaseTest.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Text\Unicode\TranslateData.vb" />
+    <Compile Include="Text\Unicode\winTranslateBlockNames.xaml.vb">
+      <DependentUpon>winTranslateBlockNames.xaml</DependentUpon>
     </Compile>
     <Compile Include="VisualStudio\Generators\frmCustomToolBase.Designer.vb">
       <DependentUpon>frmCustomToolBase.vb</DependentUpon>
@@ -730,9 +728,6 @@
     <EmbeddedResource Include="Tests\StaticProperiesTest.resx">
       <DependentUpon>StaticProperiesTest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Text\Unicode\frmTranslateBlockNames.resx">
-      <DependentUpon>frmTranslateBlockNames.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\frmUcdTranslate.resx">
       <DependentUpon>frmUcdTranslate.vb</DependentUpon>
     </EmbeddedResource>
@@ -893,6 +888,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Text\Unicode\winTranslateBlockNames.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\WPF\SystemTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
