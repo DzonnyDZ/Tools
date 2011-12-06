@@ -248,6 +248,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ControlsWin.cs.resx">
       <DependentUpon>ControlsWin.resx</DependentUpon>
+      <LogicalName>Tools.WindowsT.FormsT.ControlsWin.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ControlsWin.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
@@ -257,6 +258,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ExceptionsWin.cs.resx">
       <DependentUpon>ExceptionsWin.resx</DependentUpon>
+      <LogicalName>Tools.ResourcesT.ExceptionsWin.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ExceptionsWin.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>

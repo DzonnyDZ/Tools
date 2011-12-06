@@ -505,6 +505,7 @@
       <DependentUpon>Exceptions.resx</DependentUpon>
       <SubType>Designer</SubType>
       <Visible>True</Visible>
+      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
@@ -522,11 +523,14 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\resx %28Friend%29\CLSComplianceCheckerResources.cs.resx" />
+    <EmbeddedResource Include="Resources\resx %28Friend%29\CLSComplianceCheckerResources.cs.resx">
+      <LogicalName>Tools.ResourcesT.CLSComplianceCheckerResources.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
       <DependentUpon>Components.resx</DependentUpon>
       <SubType>Designer</SubType>
       <Visible>True</Visible>
+      <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>

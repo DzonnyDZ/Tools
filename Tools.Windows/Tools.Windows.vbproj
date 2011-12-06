@@ -377,6 +377,7 @@
       <CustomToolNamespace>WindowsT.WPF</CustomToolNamespace>
       <SubType>Designer</SubType>
       <DependentUpon>ResourcesWPF.resx</DependentUpon>
+      <LogicalName>Tools.WindowsT.WPF.Resources.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\ResourcesWPF.resx">
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
@@ -388,6 +389,7 @@
     <EmbeddedResource Include="Resources\resx %28Friend%29\DialogsWPF.cs.resx">
       <DependentUpon>DialogsWPF.resx</DependentUpon>
       <SubType>Designer</SubType>
+      <LogicalName>Tools.WindowsT.WPF.Dialogs.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DialogsWPF.resx">
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
@@ -667,6 +669,7 @@
       <DependentUpon>DerivedControls.resx</DependentUpon>
       <SubType>Designer</SubType>
       <Visible>True</Visible>
+      <LogicalName>Tools.WindowsT.FormsT.DerivedControls.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
@@ -679,6 +682,7 @@
       <SubType>Designer</SubType>
       <Visible>True</Visible>
       <DependentUpon>DialogsWF.resx</DependentUpon>
+      <LogicalName>Tools.WindowsT.FormsT.Dialogs.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DialogsWF.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
@@ -691,6 +695,7 @@
       <DependentUpon>CompositeControls.resx</DependentUpon>
       <SubType>Designer</SubType>
       <Visible>True</Visible>
+      <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>

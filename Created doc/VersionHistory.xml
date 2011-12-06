@@ -136,5 +136,6 @@
         <vh:i>Assembly Postrocessor tool that allows you to manipulate compiled assembly</vh:i>
         <vh:i>Implemented IPTC IIM Record No. 3 properties</vh:i>
         <vh:i>Assembly Tools.VisualStudio split to Tools.VisualStudio and Tools.VisualStudio.Debugger. Tools.VisualStudio.Debugger is AnyCPU and contains Debugger Visualizers which chan now be used when debugging x64 processes.</vh:i>
+	<vh:i>Fixes in several assemblies: Czech (cs) localizations are not used.</vh:i>
     </vh:Version>
 </vh:VersionHistory>  

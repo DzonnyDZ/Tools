@@ -242,7 +242,7 @@ Namespace TextT.UnicodeT
         ''' <returns>Description of loaded Unicode Character Database, null of description is not provided</returns>
         Public ReadOnly Property Description As String
             Get
-                Return _xml.<description>.Value
+                Return _xml.<ucd>.<description>.Value
             End Get
         End Property
 
@@ -296,21 +296,21 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets all Unicode blocks</summary>
         Public ReadOnly Property Blocks As IEnumerable(Of UnicodeBlock)
             Get
-                Return From el In Xml.<blocks>.<block> Select New UnicodeBlock(el)
+                Return From el In Xml.<ucd>.<blocks>.<block> Select New UnicodeBlock(el)
             End Get
         End Property
 
         ''' <summary>Gets named sequences of characters</summary>
         Public ReadOnly Property NamedSequences As IEnumerable(Of UnicodeNamedSequence)
             Get
-                Return From el In Xml.<named-sequences>.<named-sequence> Select New UnicodeNamedSequence(el)
+                Return From el In Xml.<ucd>.<named-sequences>.<named-sequence> Select New UnicodeNamedSequence(el)
             End Get
         End Property
 
         ''' <summary>Gets provisional named sequences of characters</summary>
         Public ReadOnly Property ProvisionalNamedSequences As IEnumerable(Of UnicodeNamedSequence)
             Get
-                Return From el In Xml.<provisional-named-sequences>.<named-sequence> Select New UnicodeNamedSequence(el)
+                Return From el In Xml.<ucd>.<provisional-named-sequences>.<named-sequence> Select New UnicodeNamedSequence(el)
             End Get
         End Property
 
@@ -318,28 +318,28 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets normalization corrections between Unicode versions</summary>
         Public ReadOnly Property NormalizationCorrections As IEnumerable(Of UnicodeNormalizationCorrection)
             Get
-                Return From el In Xml.<normalization-corrections>.<normalization-correction> Select New UnicodeNormalizationCorrection(el)
+                Return From el In Xml.<ucd>.<normalization-corrections>.<normalization-correction> Select New UnicodeNormalizationCorrection(el)
             End Get
         End Property
 
         ''' <summary>Gets Unicode standartized variants</summary>
         Public ReadOnly Property StandartizedVariants As IEnumerable(Of UnicodeStandardizedVariant)
             Get
-                Return From el In Xml.<standardized-variants>.<standardized-variant> Select New UnicodeStandardizedVariant(el)
+                Return From el In Xml.<ucd>.<standardized-variants>.<standardized-variant> Select New UnicodeStandardizedVariant(el)
             End Get
         End Property
 
         ''' <summary>Gets list of CJK Radicals</summary>
         Public ReadOnly Property CjkRadicals As IEnumerable(Of CjkRadicalInfo)
             Get
-                Return From el In Xml.<cjk-radicals>.<cjk-radical> Select New CjkRadicalInfo(el)
+                Return From el In Xml.<ucd>.<cjk-radicals>.<cjk-radical> Select New CjkRadicalInfo(el)
             End Get
         End Property
 
         ''' <summary>Gets list of Emoji sources</summary>
         Public ReadOnly Property EmojiSources As IEnumerable(Of EmojiSourceInfo)
             Get
-                Return From el In Xml.<emoji-sources>.<emoji-source> Select New EmojiSourceInfo(el)
+                Return From el In Xml.<ucd>.<emoji-sources>.<emoji-source> Select New EmojiSourceInfo(el)
             End Get
         End Property
 

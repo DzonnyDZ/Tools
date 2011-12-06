@@ -304,6 +304,7 @@
       <DependentUpon>IPTCResources.resx</DependentUpon>
       <SubType>Designer</SubType>
       <Visible>True</Visible>
+      <LogicalName>Tools.MetadataT.IptcT.IptcResources.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
       <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
