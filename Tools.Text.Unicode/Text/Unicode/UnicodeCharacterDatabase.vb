@@ -116,11 +116,27 @@ Namespace TextT.UnicodeT
                             _default.Extensions.Add(CsurExtensions.XmlNamespace, CsurExtensions.DefaultCsurDatabase)
                             _default.Extensions.Add(NamesListExtensions.XmlNamespace, NamesListExtensions.DefaultNamesList)
                             _default.LoadNameAliases()
+                            _default.LocalizationProvider = UcdLocalizationProvider.default
                         End If
                     End SyncLock
                 End If
                 Return _default
             End Get
+        End Property
+
+        ''' <summary>Gets or sets provider that provides localizations for unicode character database</summary>
+        ''' <remarks>Localizations are stored as <see cref="XObject.Annotation"/> of type <see cref="UcdLocalizationProvider"/>.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Property LocalizationProvider As UcdLocalizationProvider
+            Get
+                Return Xml.Annotation(Of UcdLocalizationProvider)()
+            End Get
+            Set(value As UcdLocalizationProvider)
+                If Xml.Annotation(Of UcdLocalizationProvider)() IsNot Nothing Then
+                    Xml.RemoveAnnotations(Of UcdLocalizationProvider)()
+                End If
+                If value IsNot Nothing Then Xml.AddAnnotation(value)
+            End Set
         End Property
 #End Region
 

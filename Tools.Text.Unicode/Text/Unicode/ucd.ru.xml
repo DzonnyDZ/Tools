@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ucd nl:language="ru" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+<ucd xml:lang="ru" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt#loc" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
   <repertoire>
-    <char cp="FFFE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="FFFE">
       <nl:alias>Не определен</nl:alias>
     </char>
   </repertoire>

@@ -1,154 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ucd nl:language="da" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+<ucd xml:lang="da" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt#loc" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
   <repertoire>
-    <char cp="0041" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0041">
       <nl:alias>Stort latinsk A</nl:alias>
     </char>
-    <char cp="0042" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0042">
       <nl:alias>Stort latinsk B</nl:alias>
     </char>
-    <char cp="0043" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0043">
       <nl:alias>Stort latinsk C</nl:alias>
     </char>
-    <char cp="0044" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0044">
       <nl:alias>Stort latinsk D</nl:alias>
     </char>
-    <char cp="0045" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0045">
       <nl:alias>Stort latinsk E</nl:alias>
     </char>
-    <char cp="0046" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0046">
       <nl:alias>Stort latinsk F</nl:alias>
     </char>
-    <char cp="0047" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0047">
       <nl:alias>Stort latinsk G</nl:alias>
     </char>
-    <char cp="0048" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0048">
       <nl:alias>Stort latinsk H</nl:alias>
     </char>
-    <char cp="0049" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0049">
       <nl:alias>Stort latinsk I</nl:alias>
     </char>
-    <char cp="004A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004A">
       <nl:alias>Stort latinsk J</nl:alias>
     </char>
-    <char cp="004B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004B">
       <nl:alias>Stort latinsk K</nl:alias>
     </char>
-    <char cp="004C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004C">
       <nl:alias>Stort latinsk L</nl:alias>
     </char>
-    <char cp="0054" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0054">
       <nl:alias>Stort latinsk T</nl:alias>
     </char>
-    <char cp="0056" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0056">
       <nl:alias>Stort latinsk V</nl:alias>
     </char>
-    <char cp="00D2" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D2">
       <nl:alias>Stort latinsk O med accent grave</nl:alias>
     </char>
-    <char cp="00D3" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D3">
       <nl:alias>Stort latinsk O med accent aigu</nl:alias>
     </char>
-    <char cp="00DD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00DD">
       <nl:alias>Stort latinsk Y med accent aigu</nl:alias>
     </char>
-    <char cp="00FD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00FD">
       <nl:alias>Lille latinsk Y med accent aigu</nl:alias>
     </char>
-    <char cp="0102" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0102">
       <nl:alias>Stort latinsk A med accent breve</nl:alias>
     </char>
-    <char cp="0106" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0106">
       <nl:alias>Stort latinsk C med accent aigu</nl:alias>
     </char>
-    <char cp="010C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010C">
       <nl:alias>Stort latinsk C med hacek</nl:alias>
     </char>
-    <char cp="010D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010D">
       <nl:alias>Lille latinsk C med hacek</nl:alias>
     </char>
-    <char cp="010E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010E">
       <nl:alias>Stort latinsk D med hacek</nl:alias>
     </char>
-    <char cp="010F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010F">
       <nl:alias>Lille latinsk D med hacek</nl:alias>
     </char>
-    <char cp="0110" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0110">
       <nl:alias>Stort latinsk D med streg</nl:alias>
     </char>
-    <char cp="011A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="011A">
       <nl:alias>Stort latinsk E med hacek</nl:alias>
     </char>
-    <char cp="011B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="011B">
       <nl:alias>Lille latinsk E med hacek</nl:alias>
     </char>
-    <char cp="013D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="013D">
       <nl:alias>Stort latinsk L med hacek</nl:alias>
     </char>
-    <char cp="013E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="013E">
       <nl:alias>Lille latinsk L med hacek</nl:alias>
     </char>
-    <char cp="0147" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0147">
       <nl:alias>Stort latinsk N med hacek</nl:alias>
     </char>
-    <char cp="0148" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0148">
       <nl:alias>Lille latinsk N med hacek</nl:alias>
     </char>
-    <char cp="0158" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0158">
       <nl:alias>Stort latinsk R med hacek</nl:alias>
     </char>
-    <char cp="0159" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0159">
       <nl:alias>Lille latinsk R med hacek</nl:alias>
     </char>
-    <char cp="0160" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0160">
       <nl:alias>Stort latinsk S med hacek</nl:alias>
     </char>
-    <char cp="0161" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0161">
       <nl:alias>Lille latinsk S med hacek</nl:alias>
     </char>
-    <char cp="0164" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0164">
       <nl:alias>Stort latinsk T med hacek</nl:alias>
     </char>
-    <char cp="0165" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0165">
       <nl:alias>Lille latinsk T med hacek</nl:alias>
     </char>
-    <char cp="016E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="016E">
       <nl:alias>Stort latinsk U med bolle over</nl:alias>
     </char>
-    <char cp="017D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="017D">
       <nl:alias>Stort latinsk Z med hacek</nl:alias>
     </char>
-    <char cp="017E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="017E">
       <nl:alias>Lille latinsk Z med hacek</nl:alias>
     </char>
-    <char cp="01C4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01C4">
       <nl:alias>Stort latinsk Dz med hacek</nl:alias>
     </char>
-    <char cp="01C5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01C5">
       <nl:alias>Stort latinsk D med lille latinsk z med hacek</nl:alias>
     </char>
-    <char cp="01C6" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01C6">
       <nl:alias>Lille latinsk Dz med hacek</nl:alias>
     </char>
-    <char cp="01CD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01CD">
       <nl:alias>Stort latinsk A med hacek</nl:alias>
     </char>
-    <char cp="01CE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01CE">
       <nl:alias>Lille latinsk A med hacek</nl:alias>
     </char>
-    <char cp="0218" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0218">
       <nl:alias>Stort latinsk S med komma under</nl:alias>
     </char>
-    <char cp="0219" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0219">
       <nl:alias>Lille latinsk S med komma under</nl:alias>
     </char>
-    <char cp="021A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="021A">
       <nl:alias>Stort latinsk T med komma under</nl:alias>
     </char>
-    <char cp="03A0" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A0">
       <nl:alias>Stort græsk Pi</nl:alias>
     </char>
-    <char cp="22EF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="22EF">
       <nl:alias>Vandret ellipse midtfor</nl:alias>
     </char>
   </repertoire>

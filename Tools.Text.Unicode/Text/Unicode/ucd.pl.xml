@@ -1,1087 +1,1087 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ucd nl:language="pl" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+<ucd xml:lang="pl" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt#loc" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
   <repertoire>
-    <char cp="0000" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0000">
       <nl:alias>Pusty</nl:alias>
     </char>
-    <char cp="0001" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0001">
       <nl:alias>Początek nagłówka</nl:alias>
     </char>
-    <char cp="0002" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0002">
       <nl:alias>Początek tekstu</nl:alias>
     </char>
-    <char cp="0003" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0003">
       <nl:alias>Koniec tekstu</nl:alias>
     </char>
-    <char cp="0004" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0004">
       <nl:alias>Koniec transmisji</nl:alias>
     </char>
-    <char cp="0005" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0005">
       <nl:alias>Zapytanie</nl:alias>
     </char>
-    <char cp="0006" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0006">
       <nl:alias>Potwierdzenie</nl:alias>
     </char>
-    <char cp="0007" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0007">
       <nl:alias>Dzwonek</nl:alias>
     </char>
-    <char cp="0009" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0009">
       <nl:alias>Tabulacja znaku</nl:alias>
     </char>
-    <char cp="000A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="000A">
       <nl:alias>Znak nowego wiersza (LF)</nl:alias>
     </char>
-    <char cp="000B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="000B">
       <nl:alias>Tabulacja w wierszu</nl:alias>
     </char>
-    <char cp="000C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="000C">
       <nl:alias>Wysuw strony (FF)</nl:alias>
     </char>
-    <char cp="000D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="000D">
       <nl:alias>Powrót karetki (CR)</nl:alias>
     </char>
-    <char cp="000E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="000E">
       <nl:alias>Shift zwolniony</nl:alias>
     </char>
-    <char cp="000F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="000F">
       <nl:alias>Shift wciśnięty</nl:alias>
     </char>
-    <char cp="0010" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0010">
       <nl:alias>Escape łącza danych</nl:alias>
     </char>
-    <char cp="0011" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0011">
       <nl:alias>Sterownik urządzenia jeden</nl:alias>
     </char>
-    <char cp="0012" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0012">
       <nl:alias>Sterownik urządzenia dwa</nl:alias>
     </char>
-    <char cp="0013" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0013">
       <nl:alias>Sterownik urządzenia trzy</nl:alias>
     </char>
-    <char cp="0014" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0014">
       <nl:alias>Sterownik urządzenia cztery</nl:alias>
     </char>
-    <char cp="0015" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0015">
       <nl:alias>Potwierdzenie negatywne</nl:alias>
     </char>
-    <char cp="0016" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0016">
       <nl:alias>Synchroniczny bezczynny</nl:alias>
     </char>
-    <char cp="0017" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0017">
       <nl:alias>Koniec bloku transmisji</nl:alias>
     </char>
-    <char cp="0018" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0018">
       <nl:alias>Anuluj</nl:alias>
     </char>
-    <char cp="0019" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0019">
       <nl:alias>Koniec nośnika</nl:alias>
     </char>
-    <char cp="001A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="001A">
       <nl:alias>Podstawianie</nl:alias>
     </char>
-    <char cp="0020" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0020">
       <nl:alias>Spacja</nl:alias>
     </char>
-    <char cp="0021" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0021">
       <nl:alias>Wykrzyknik</nl:alias>
     </char>
-    <char cp="0022" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0022">
       <nl:alias>Cudzysłów</nl:alias>
     </char>
-    <char cp="0023" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0023">
       <nl:alias>Znak numeru</nl:alias>
     </char>
-    <char cp="0024" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0024">
       <nl:alias>Znak dolara</nl:alias>
     </char>
-    <char cp="0025" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0025">
       <nl:alias>Znak procentu</nl:alias>
     </char>
-    <char cp="0026" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0026">
       <nl:alias>Handlowe „i”</nl:alias>
     </char>
-    <char cp="0027" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0027">
       <nl:alias>Apostrof</nl:alias>
     </char>
-    <char cp="0028" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0028">
       <nl:alias>Lewy nawias okrągły</nl:alias>
     </char>
-    <char cp="0029" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0029">
       <nl:alias>Prawy nawias okrągły</nl:alias>
     </char>
-    <char cp="002A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="002A">
       <nl:alias>Gwiazdka</nl:alias>
     </char>
-    <char cp="002B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="002B">
       <nl:alias>Plus</nl:alias>
     </char>
-    <char cp="002C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="002C">
       <nl:alias>Przecinek</nl:alias>
     </char>
-    <char cp="002D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="002D">
       <nl:alias>Łącznik. Minus</nl:alias>
     </char>
-    <char cp="002E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="002E">
       <nl:alias>Kropka</nl:alias>
     </char>
-    <char cp="002F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="002F">
       <nl:alias>Kreska ułamkowa</nl:alias>
     </char>
-    <char cp="0030" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0030">
       <nl:alias>Cyfra zero</nl:alias>
     </char>
-    <char cp="0031" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0031">
       <nl:alias>Cyfra jeden</nl:alias>
     </char>
-    <char cp="0032" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0032">
       <nl:alias>Cyfra dwa</nl:alias>
     </char>
-    <char cp="0033" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0033">
       <nl:alias>Cyfra trzy</nl:alias>
     </char>
-    <char cp="0034" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0034">
       <nl:alias>Cyfra cztery</nl:alias>
     </char>
-    <char cp="0035" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0035">
       <nl:alias>Cyfra pięć</nl:alias>
     </char>
-    <char cp="0036" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0036">
       <nl:alias>Cyfra sześć</nl:alias>
     </char>
-    <char cp="0037" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0037">
       <nl:alias>Cyfra siedem</nl:alias>
     </char>
-    <char cp="0038" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0038">
       <nl:alias>Cyfra osiem</nl:alias>
     </char>
-    <char cp="0039" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0039">
       <nl:alias>Cyfra dziewięć</nl:alias>
     </char>
-    <char cp="003A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="003A">
       <nl:alias>Dwukropek</nl:alias>
     </char>
-    <char cp="003B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="003B">
       <nl:alias>Średnik</nl:alias>
     </char>
-    <char cp="003C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="003C">
       <nl:alias>Mniejszy od</nl:alias>
     </char>
-    <char cp="003D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="003D">
       <nl:alias>Znak równości</nl:alias>
     </char>
-    <char cp="003E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="003E">
       <nl:alias>Większy od</nl:alias>
     </char>
-    <char cp="003F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="003F">
       <nl:alias>Znak zapytania</nl:alias>
     </char>
-    <char cp="0040" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0040">
       <nl:alias>Handlowe „przy”</nl:alias>
     </char>
-    <char cp="0041" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0041">
       <nl:alias>Wielka litera A</nl:alias>
     </char>
-    <char cp="0042" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0042">
       <nl:alias>Wielka litera B</nl:alias>
     </char>
-    <char cp="0043" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0043">
       <nl:alias>Wielka litera C</nl:alias>
     </char>
-    <char cp="0044" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0044">
       <nl:alias>Wielka litera D</nl:alias>
     </char>
-    <char cp="0045" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0045">
       <nl:alias>Wielka litera E</nl:alias>
     </char>
-    <char cp="0046" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0046">
       <nl:alias>Wielka litera F</nl:alias>
     </char>
-    <char cp="0047" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0047">
       <nl:alias>Wielka litera G</nl:alias>
     </char>
-    <char cp="0048" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0048">
       <nl:alias>Wielka litera H</nl:alias>
     </char>
-    <char cp="0049" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0049">
       <nl:alias>Wielka litera I</nl:alias>
     </char>
-    <char cp="004A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004A">
       <nl:alias>Wielka litera J</nl:alias>
     </char>
-    <char cp="004B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004B">
       <nl:alias>Wielka litera K</nl:alias>
     </char>
-    <char cp="004C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004C">
       <nl:alias>Wielka litera L</nl:alias>
     </char>
-    <char cp="004D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004D">
       <nl:alias>Wielka litera M</nl:alias>
     </char>
-    <char cp="004E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004E">
       <nl:alias>Wielka litera N</nl:alias>
     </char>
-    <char cp="004F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="004F">
       <nl:alias>Wielka litera O</nl:alias>
     </char>
-    <char cp="0050" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0050">
       <nl:alias>Wielka litera P</nl:alias>
     </char>
-    <char cp="0051" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0051">
       <nl:alias>Wielka litera Q</nl:alias>
     </char>
-    <char cp="0052" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0052">
       <nl:alias>Wielka litera R</nl:alias>
     </char>
-    <char cp="0053" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0053">
       <nl:alias>Wielka litera S</nl:alias>
     </char>
-    <char cp="0054" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0054">
       <nl:alias>Wielka litera T</nl:alias>
     </char>
-    <char cp="0055" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0055">
       <nl:alias>Wielka litera U</nl:alias>
     </char>
-    <char cp="0056" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0056">
       <nl:alias>Wielka litera V</nl:alias>
     </char>
-    <char cp="0057" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0057">
       <nl:alias>Wielka litera W</nl:alias>
     </char>
-    <char cp="0058" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0058">
       <nl:alias>Wielka litera X</nl:alias>
     </char>
-    <char cp="0059" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0059">
       <nl:alias>Wielka litera Y</nl:alias>
     </char>
-    <char cp="005A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="005A">
       <nl:alias>Wielka litera Z</nl:alias>
     </char>
-    <char cp="005B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="005B">
       <nl:alias>Lewy nawias kwadratowy</nl:alias>
     </char>
-    <char cp="005C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="005C">
       <nl:alias>Kreska ułamkowa odwrócona</nl:alias>
     </char>
-    <char cp="005D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="005D">
       <nl:alias>Prawy nawias kwadratowy</nl:alias>
     </char>
-    <char cp="005E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="005E">
       <nl:alias>Znak akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="005F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="005F">
       <nl:alias>Podkreślenie</nl:alias>
     </char>
-    <char cp="0060" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0060">
       <nl:alias>Akcent słaby</nl:alias>
     </char>
-    <char cp="0061" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0061">
       <nl:alias>Mała litera A</nl:alias>
     </char>
-    <char cp="0062" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0062">
       <nl:alias>Mała litera B</nl:alias>
     </char>
-    <char cp="0063" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0063">
       <nl:alias>Mała litera C</nl:alias>
     </char>
-    <char cp="0064" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0064">
       <nl:alias>Mała litera D</nl:alias>
     </char>
-    <char cp="0065" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0065">
       <nl:alias>Mała litera E</nl:alias>
     </char>
-    <char cp="0066" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0066">
       <nl:alias>Mała litera F</nl:alias>
     </char>
-    <char cp="0067" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0067">
       <nl:alias>Mała litera G</nl:alias>
     </char>
-    <char cp="0068" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0068">
       <nl:alias>Mała litera H</nl:alias>
     </char>
-    <char cp="0069" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0069">
       <nl:alias>Mała litera I</nl:alias>
     </char>
-    <char cp="006A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="006A">
       <nl:alias>Mała litera J</nl:alias>
     </char>
-    <char cp="006B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="006B">
       <nl:alias>Mała litera K</nl:alias>
     </char>
-    <char cp="006C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="006C">
       <nl:alias>Mała litera L</nl:alias>
     </char>
-    <char cp="006D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="006D">
       <nl:alias>Mała litera M</nl:alias>
     </char>
-    <char cp="006E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="006E">
       <nl:alias>Mała litera N</nl:alias>
     </char>
-    <char cp="006F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="006F">
       <nl:alias>Mała litera O</nl:alias>
     </char>
-    <char cp="0070" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0070">
       <nl:alias>Mała litera P</nl:alias>
     </char>
-    <char cp="0071" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0071">
       <nl:alias>Mała litera Q</nl:alias>
     </char>
-    <char cp="0072" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0072">
       <nl:alias>Mała litera R</nl:alias>
     </char>
-    <char cp="0073" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0073">
       <nl:alias>Mała litera S</nl:alias>
     </char>
-    <char cp="0074" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0074">
       <nl:alias>Mała litera T</nl:alias>
     </char>
-    <char cp="0075" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0075">
       <nl:alias>Mała litera U</nl:alias>
     </char>
-    <char cp="0076" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0076">
       <nl:alias>Mała litera V</nl:alias>
     </char>
-    <char cp="0077" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0077">
       <nl:alias>Mała litera W</nl:alias>
     </char>
-    <char cp="0078" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0078">
       <nl:alias>Mała litera X</nl:alias>
     </char>
-    <char cp="0079" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0079">
       <nl:alias>Mała litera Y</nl:alias>
     </char>
-    <char cp="007A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="007A">
       <nl:alias>Mała litera Z</nl:alias>
     </char>
-    <char cp="007B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="007B">
       <nl:alias>Lewy nawias klamrowy</nl:alias>
     </char>
-    <char cp="007C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="007C">
       <nl:alias>Kreska pionowa</nl:alias>
     </char>
-    <char cp="007D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="007D">
       <nl:alias>Prawy nawias klamrowy</nl:alias>
     </char>
-    <char cp="007E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="007E">
       <nl:alias>Tylda</nl:alias>
     </char>
-    <char cp="007F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="007F">
       <nl:alias>Usuń</nl:alias>
     </char>
-    <char cp="0095" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0095">
       <nl:alias>Komunikat oczekujący</nl:alias>
     </char>
-    <char cp="00A0" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A0">
       <nl:alias>Spacja nierozdzielająca</nl:alias>
     </char>
-    <char cp="00A1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A1">
       <nl:alias>Wykrzyknik odwrócony</nl:alias>
     </char>
-    <char cp="00A2" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A2">
       <nl:alias>Znak centa</nl:alias>
     </char>
-    <char cp="00A3" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A3">
       <nl:alias>Znak funta</nl:alias>
     </char>
-    <char cp="00A4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A4">
       <nl:alias>Znak jednostki monetarnej</nl:alias>
     </char>
-    <char cp="00A5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A5">
       <nl:alias>Znak jena</nl:alias>
     </char>
-    <char cp="00A7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A7">
       <nl:alias>Znak paragrafu</nl:alias>
     </char>
-    <char cp="00A8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A8">
       <nl:alias>Diaereza</nl:alias>
     </char>
-    <char cp="00A9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00A9">
       <nl:alias>Znak copyright</nl:alias>
     </char>
-    <char cp="00AB" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00AB">
       <nl:alias>Lewy podwójny cudzysłów kątowy</nl:alias>
     </char>
-    <char cp="00AD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00AD">
       <nl:alias>Łącznik nietrwały</nl:alias>
     </char>
-    <char cp="00AE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00AE">
       <nl:alias>Zastrzeżony znak towarowy</nl:alias>
     </char>
-    <char cp="00B0" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00B0">
       <nl:alias>Znak stopnia</nl:alias>
     </char>
-    <char cp="00B1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00B1">
       <nl:alias>Znak plus-minus</nl:alias>
     </char>
-    <char cp="00B4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00B4">
       <nl:alias>Znak akcentu silnego</nl:alias>
     </char>
-    <char cp="00BB" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00BB">
       <nl:alias>Prawy podwójny cudzysłów kątowy</nl:alias>
     </char>
-    <char cp="00BF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00BF">
       <nl:alias>Znak zapytania odwrócony</nl:alias>
     </char>
-    <char cp="00C0" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C0">
       <nl:alias>Wielka litera A ze znakiem akcentu słabego</nl:alias>
     </char>
-    <char cp="00C1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C1">
       <nl:alias>Wielka litera A ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00C2" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C2">
       <nl:alias>Wielka litera A ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00C4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C4">
       <nl:alias>Wielka litera A z diaerezą</nl:alias>
     </char>
-    <char cp="00C5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C5">
       <nl:alias>Wielka litera A z kółkiem</nl:alias>
     </char>
-    <char cp="00C7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C7">
       <nl:alias>Wielka litera C z cedillą</nl:alias>
     </char>
-    <char cp="00C8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C8">
       <nl:alias>Wielka litera E ze znakiem akcentu słabego</nl:alias>
     </char>
-    <char cp="00C9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00C9">
       <nl:alias>Wielka litera E ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00CA" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00CA">
       <nl:alias>Wielka litera E ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00CB" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00CB">
       <nl:alias>Wielka litera E z diaerezą</nl:alias>
     </char>
-    <char cp="00CD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00CD">
       <nl:alias>Wielka litera I ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00CE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00CE">
       <nl:alias>Wielka litera I ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00CF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00CF">
       <nl:alias>Wielka litera I z dierezą</nl:alias>
     </char>
-    <char cp="00D1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D1">
       <nl:alias>Wielka litera N z tyldą</nl:alias>
     </char>
-    <char cp="00D3" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D3">
       <nl:alias>Wielka litera O ze znakiem akcentu silnego (polska litera Ó)</nl:alias>
     </char>
-    <char cp="00D4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D4">
       <nl:alias>Wielka litera O ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00D6" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D6">
       <nl:alias>Wielka litera O z diaerezą</nl:alias>
     </char>
-    <char cp="00D7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D7">
       <nl:alias>Znak mnożenia</nl:alias>
     </char>
-    <char cp="00D8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D8">
       <nl:alias>Wielka przekreślona litera O</nl:alias>
     </char>
-    <char cp="00D9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00D9">
       <nl:alias>Wielka litera U ze znakiem akcentu słabego</nl:alias>
     </char>
-    <char cp="00DA" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00DA">
       <nl:alias>Wielka litera U ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00DB" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00DB">
       <nl:alias>Wielka litera U ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00DC" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00DC">
       <nl:alias>Wielka litera U z diaerezą</nl:alias>
     </char>
-    <char cp="00DD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00DD">
       <nl:alias>Wielka litera Y ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00DF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00DF">
       <nl:alias>Podwójna niemiecka litera S</nl:alias>
     </char>
-    <char cp="00E1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00E1">
       <nl:alias>Mała litera A ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00E2" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00E2">
       <nl:alias>Mała litera A ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00E4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00E4">
       <nl:alias>Mała litera A z diaerezą</nl:alias>
     </char>
-    <char cp="00E7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00E7">
       <nl:alias>Mała litera C z cedillą</nl:alias>
     </char>
-    <char cp="00E9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00E9">
       <nl:alias>Mała litera E ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00EB" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00EB">
       <nl:alias>Mała litera E z diaerezą</nl:alias>
     </char>
-    <char cp="00ED" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00ED">
       <nl:alias>Mała litera I ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00EE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00EE">
       <nl:alias>Mała litera I ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00F3" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00F3">
       <nl:alias>Mała litera O ze znakiem akcentu silnego (polska litera ó)</nl:alias>
     </char>
-    <char cp="00F4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00F4">
       <nl:alias>Mała litera O ze znakiem akcentu cyrkumfleksowego</nl:alias>
     </char>
-    <char cp="00F6" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00F6">
       <nl:alias>Mała litera O z diaerezą</nl:alias>
     </char>
-    <char cp="00F7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00F7">
       <nl:alias>Znak dzielenia</nl:alias>
     </char>
-    <char cp="00FA" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00FA">
       <nl:alias>Mała litera U ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00FC" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00FC">
       <nl:alias>Mała litera U z diaerezą</nl:alias>
     </char>
-    <char cp="00FD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00FD">
       <nl:alias>Mała litera Y ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="00FF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="00FF">
       <nl:alias>Latin Small Letter Y z diaerezą</nl:alias>
     </char>
-    <char cp="0103" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0103">
       <nl:alias>Mała litera A ze znakiem krótkotrwałości</nl:alias>
     </char>
-    <char cp="0104" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0104">
       <nl:alias>Wielka litera A z ogonkiem (polska litera Ą)</nl:alias>
     </char>
-    <char cp="0105" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0105">
       <nl:alias>Mała litera A z ogonkiem (polska litera ą)</nl:alias>
     </char>
-    <char cp="0106" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0106">
       <nl:alias>Wielka litera C ze znakiem akcentu silnego (polska litera Ć)</nl:alias>
     </char>
-    <char cp="0107" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0107">
       <nl:alias>Mała litera C ze znakiem akcentu silnego (polska litera ć)</nl:alias>
     </char>
-    <char cp="010C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010C">
       <nl:alias>Wielka litera C z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="010D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010D">
       <nl:alias>Mała litera C z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="010E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010E">
       <nl:alias>Wielka litera D z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="010F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="010F">
       <nl:alias>Mała litera D z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0110" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0110">
       <nl:alias>Wielka litera D z kreską</nl:alias>
     </char>
-    <char cp="0111" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0111">
       <nl:alias>Mała litera D z kreską</nl:alias>
     </char>
-    <char cp="0118" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0118">
       <nl:alias>Wielka litera E z ogonkiem (polska litera Ę)</nl:alias>
     </char>
-    <char cp="0119" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0119">
       <nl:alias>Mała litera E z ogonkiem (polska litera ę)</nl:alias>
     </char>
-    <char cp="011A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="011A">
       <nl:alias>Wielka litera E z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="011B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="011B">
       <nl:alias>Mała litera E z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0139" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0139">
       <nl:alias>Wielka litera L ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="013A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="013A">
       <nl:alias>Mała litera L ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="013D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="013D">
       <nl:alias>Wielka litera L z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="013E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="013E">
       <nl:alias>Mała litera L z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0141" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0141">
       <nl:alias>Wielka litera L z kreską (polska litera Ł)</nl:alias>
     </char>
-    <char cp="0142" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0142">
       <nl:alias>Mała litera L z kreską (polska litera ł)</nl:alias>
     </char>
-    <char cp="0143" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0143">
       <nl:alias>Wielka litera N ze znakiem akcentu silnego (polska litera Ń)</nl:alias>
     </char>
-    <char cp="0144" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0144">
       <nl:alias>Mała litera N ze znakiem akcentu silnego (polska litera ń)</nl:alias>
     </char>
-    <char cp="0147" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0147">
       <nl:alias>Wielka litera N z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0148" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0148">
       <nl:alias>Mała litera N z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0150" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0150">
       <nl:alias>Wielka litera O z podwójnym znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="0151" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0151">
       <nl:alias>Mała litera O z podwójnym znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="0154" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0154">
       <nl:alias>Wielka litera R ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="0155" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0155">
       <nl:alias>Mała litera R ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="0158" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0158">
       <nl:alias>Wielka litera R z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0159" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0159">
       <nl:alias>Mała litera R z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="015A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="015A">
       <nl:alias>Wielka litera S ze znakiem akcentu silnego (polska litera Ś)</nl:alias>
     </char>
-    <char cp="015B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="015B">
       <nl:alias>Mała litera S ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="015E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="015E">
       <nl:alias>Wielka litera S z cedillą</nl:alias>
     </char>
-    <char cp="015F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="015F">
       <nl:alias>Mała litera S z cedillą</nl:alias>
     </char>
-    <char cp="0160" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0160">
       <nl:alias>Wielka litera S z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0161" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0161">
       <nl:alias>Mała litera S z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0162" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0162">
       <nl:alias>Wielka litera T z cedillą</nl:alias>
     </char>
-    <char cp="0163" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0163">
       <nl:alias>Mała litera T z cedillą</nl:alias>
     </char>
-    <char cp="0164" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0164">
       <nl:alias>Wielka litera T z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="0165" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0165">
       <nl:alias>Mała litera T z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="016E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="016E">
       <nl:alias>Wielka litera U z kółeczkiem u góry</nl:alias>
     </char>
-    <char cp="016F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="016F">
       <nl:alias>Mała litera U z kółeczkiem u góry</nl:alias>
     </char>
-    <char cp="0170" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0170">
       <nl:alias>Wielka litera U z podwójnym znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="0171" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0171">
       <nl:alias>Mała litera U z podwójnym znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="0179" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0179">
       <nl:alias>Latin Capital Letter Z ze znakiem akcentu silnego (polska litera Ź)</nl:alias>
     </char>
-    <char cp="017A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="017A">
       <nl:alias>Mała litera Z ze znakiem akcentu silnego (polska litera ź)</nl:alias>
     </char>
-    <char cp="017B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="017B">
       <nl:alias>Wielka litera Z z kropką u góry (polska litera Ż)</nl:alias>
     </char>
-    <char cp="017C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="017C">
       <nl:alias>Mała litera Z z kropką u góry (polska litera ż)</nl:alias>
     </char>
-    <char cp="017D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="017D">
       <nl:alias>Wielka litera Z z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="017E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="017E">
       <nl:alias>Mała litera Z z odwróconym daszkiem</nl:alias>
     </char>
-    <char cp="01EA" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01EA">
       <nl:alias>Latin Capital Letter O z ogonkiem</nl:alias>
     </char>
-    <char cp="01EB" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01EB">
       <nl:alias>Latin Small Letter O z ogonkiem</nl:alias>
     </char>
-    <char cp="01F4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01F4">
       <nl:alias>Latin Capital Letter G ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="01F5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="01F5">
       <nl:alias>Latin Small Letter G ze znakiem akcentu silnego</nl:alias>
     </char>
-    <char cp="02C7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="02C7">
       <nl:alias>Daszek odwrócony</nl:alias>
     </char>
-    <char cp="02D8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="02D8">
       <nl:alias>Znak krótkotrwałości</nl:alias>
     </char>
-    <char cp="02D9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="02D9">
       <nl:alias>Kropka u góry</nl:alias>
     </char>
-    <char cp="02DA" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="02DA">
       <nl:alias>Kółeczko u góry</nl:alias>
     </char>
-    <char cp="02DD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="02DD">
       <nl:alias>Podwójny znak akcentu silnego</nl:alias>
     </char>
-    <char cp="0391" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0391">
       <nl:alias>Wielka grecka litera alfa</nl:alias>
     </char>
-    <char cp="0392" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0392">
       <nl:alias>Wielka grecka litera beta</nl:alias>
     </char>
-    <char cp="0393" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0393">
       <nl:alias>Wielka grecka litera gamma</nl:alias>
     </char>
-    <char cp="0394" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0394">
       <nl:alias>Wielka grecka litera delta</nl:alias>
     </char>
-    <char cp="0395" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0395">
       <nl:alias>Wielka grecka litera epsilon</nl:alias>
     </char>
-    <char cp="0396" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0396">
       <nl:alias>Wielka grecka litera dzeta</nl:alias>
     </char>
-    <char cp="0397" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0397">
       <nl:alias>Wielka grecka litera eta</nl:alias>
     </char>
-    <char cp="0398" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0398">
       <nl:alias>Wielka grecka litera theta</nl:alias>
     </char>
-    <char cp="0399" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="0399">
       <nl:alias>Wielka grecka litera iota</nl:alias>
     </char>
-    <char cp="039A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="039A">
       <nl:alias>Wielka grecka litera kappa</nl:alias>
     </char>
-    <char cp="039B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="039B">
       <nl:alias>Wielka grecka litera lambda</nl:alias>
     </char>
-    <char cp="039C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="039C">
       <nl:alias>Wielka grecka litera mu</nl:alias>
     </char>
-    <char cp="039D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="039D">
       <nl:alias>Wielka grecka litera ni</nl:alias>
     </char>
-    <char cp="039E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="039E">
       <nl:alias>Wielka grecka litera ksi</nl:alias>
     </char>
-    <char cp="039F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="039F">
       <nl:alias>Wielka grecka litera omikron</nl:alias>
     </char>
-    <char cp="03A0" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A0">
       <nl:alias>Wielka grecka litera pi</nl:alias>
     </char>
-    <char cp="03A1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A1">
       <nl:alias>Wielka grecka litera rho</nl:alias>
     </char>
-    <char cp="03A3" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A3">
       <nl:alias>Wielka grecka litera sigma</nl:alias>
     </char>
-    <char cp="03A4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A4">
       <nl:alias>Wielka grecka litera tau</nl:alias>
     </char>
-    <char cp="03A5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A5">
       <nl:alias>Wielka grecka litera ypsilon</nl:alias>
     </char>
-    <char cp="03A6" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A6">
       <nl:alias>Wielka grecka litera fi</nl:alias>
     </char>
-    <char cp="03A7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A7">
       <nl:alias>Wielka grecka litera chi</nl:alias>
     </char>
-    <char cp="03A8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A8">
       <nl:alias>Wielka grecka litera psi</nl:alias>
     </char>
-    <char cp="03A9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03A9">
       <nl:alias>Wielka grecka litera omega</nl:alias>
     </char>
-    <char cp="03B1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B1">
       <nl:alias>Mała grecka litera alfa</nl:alias>
     </char>
-    <char cp="03B2" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B2">
       <nl:alias>Mała grecka litera beta</nl:alias>
     </char>
-    <char cp="03B3" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B3">
       <nl:alias>Mała grecka litera gamma</nl:alias>
     </char>
-    <char cp="03B4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B4">
       <nl:alias>Mała grecka litera delta</nl:alias>
     </char>
-    <char cp="03B5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B5">
       <nl:alias>Mała grecka litera epsilon</nl:alias>
     </char>
-    <char cp="03B6" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B6">
       <nl:alias>Mała grecka litera dzeta</nl:alias>
     </char>
-    <char cp="03B7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B7">
       <nl:alias>Mała grecka litera eta</nl:alias>
     </char>
-    <char cp="03B8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B8">
       <nl:alias>Mała grecka litera theta</nl:alias>
     </char>
-    <char cp="03B9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03B9">
       <nl:alias>Mała grecka litera iota</nl:alias>
     </char>
-    <char cp="03BA" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03BA">
       <nl:alias>Mała grecka litera kappa</nl:alias>
     </char>
-    <char cp="03BB" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03BB">
       <nl:alias>Mała grecka litera lambda</nl:alias>
     </char>
-    <char cp="03BC" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03BC">
       <nl:alias>Mała grecka litera mu</nl:alias>
     </char>
-    <char cp="03BD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03BD">
       <nl:alias>Mała grecka litera ni</nl:alias>
     </char>
-    <char cp="03BE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03BE">
       <nl:alias>Mała grecka litera ksi</nl:alias>
     </char>
-    <char cp="03BF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03BF">
       <nl:alias>Mała grecka litera omikron</nl:alias>
     </char>
-    <char cp="03C0" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C0">
       <nl:alias>Mała grecka litera pi</nl:alias>
     </char>
-    <char cp="03C1" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C1">
       <nl:alias>Mała grecka litera rho</nl:alias>
     </char>
-    <char cp="03C2" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C2">
       <nl:alias>Mała grecka litera sigma (na końcu wyrazu)</nl:alias>
     </char>
-    <char cp="03C3" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C3">
       <nl:alias>Mała grecka litera sigma</nl:alias>
     </char>
-    <char cp="03C4" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C4">
       <nl:alias>Mała grecka litera tau</nl:alias>
     </char>
-    <char cp="03C5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C5">
       <nl:alias>Mała grecka litera ipsylon</nl:alias>
     </char>
-    <char cp="03C6" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C6">
       <nl:alias>Mała grecka litera fi</nl:alias>
     </char>
-    <char cp="03C7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C7">
       <nl:alias>Mała grecka litera chi</nl:alias>
     </char>
-    <char cp="03C8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C8">
       <nl:alias>Mała grecka litera psi</nl:alias>
     </char>
-    <char cp="03C9" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03C9">
       <nl:alias>Mała grecka litera omega</nl:alias>
     </char>
-    <char cp="03F5" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="03F5">
       <nl:alias>Grecka litera epsilon (zaokrąglona)</nl:alias>
     </char>
-    <char cp="2010" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2010">
       <nl:alias>Łącznik (–)</nl:alias>
     </char>
-    <char cp="2013" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2013">
       <nl:alias>Półpauza</nl:alias>
     </char>
-    <char cp="2014" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2014">
       <nl:alias>Pauza</nl:alias>
     </char>
-    <char cp="2016" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2016">
       <nl:alias>Podwójna kreska pionowa</nl:alias>
     </char>
-    <char cp="2022" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2022">
       <nl:alias>Punktor</nl:alias>
     </char>
-    <char cp="2032" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2032">
       <nl:alias>Prim</nl:alias>
     </char>
-    <char cp="2033" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2033">
       <nl:alias>Bis</nl:alias>
     </char>
-    <char cp="2034" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2034">
       <nl:alias>Ter</nl:alias>
     </char>
-    <char cp="2038" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2038">
       <nl:alias>Daszek (^)</nl:alias>
     </char>
-    <char cp="210E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="210E">
       <nl:alias>Stała Plancka</nl:alias>
     </char>
-    <char cp="210F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="210F">
       <nl:alias>Stała Plancka dzielona przez dwa pi</nl:alias>
     </char>
-    <char cp="2200" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2200">
       <nl:alias>Dla wszystkich (kwantyfikator ogólny)</nl:alias>
     </char>
-    <char cp="2202" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2202">
       <nl:alias>Różniczka cząstkowa</nl:alias>
     </char>
-    <char cp="2203" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2203">
       <nl:alias>Istnieje (kwantyfikator szczegółowy)</nl:alias>
     </char>
-    <char cp="2205" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2205">
       <nl:alias>Zbiór pusty</nl:alias>
     </char>
-    <char cp="2208" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2208">
       <nl:alias>Należy</nl:alias>
     </char>
-    <char cp="2209" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2209">
       <nl:alias>Nie należy</nl:alias>
     </char>
-    <char cp="2212" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2212">
       <nl:alias>Znak minus</nl:alias>
     </char>
-    <char cp="221A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="221A">
       <nl:alias>Pierwiastek kwadratowy</nl:alias>
     </char>
-    <char cp="221D" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="221D">
       <nl:alias>Proporcjonalne do</nl:alias>
     </char>
-    <char cp="221E" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="221E">
       <nl:alias>Nieskończoność</nl:alias>
     </char>
-    <char cp="221F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="221F">
       <nl:alias>Prawy kąt</nl:alias>
     </char>
-    <char cp="2220" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2220">
       <nl:alias>Kąt</nl:alias>
     </char>
-    <char cp="2227" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2227">
       <nl:alias>Koniunkcja</nl:alias>
     </char>
-    <char cp="2228" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2228">
       <nl:alias>Alternatywa</nl:alias>
     </char>
-    <char cp="2229" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2229">
       <nl:alias>Iloczyn zbiorów</nl:alias>
     </char>
-    <char cp="222A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="222A">
       <nl:alias>Składająca</nl:alias>
     </char>
-    <char cp="2232" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2232">
       <nl:alias>Całka krzywoliniowa w orientacji ujemnej</nl:alias>
     </char>
-    <char cp="2233" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2233">
       <nl:alias>Cała krzywoliniowa w orientacji dodatniej</nl:alias>
     </char>
-    <char cp="2234" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2234">
       <nl:alias>Dlatego</nl:alias>
     </char>
-    <char cp="2236" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2236">
       <nl:alias>Stopień</nl:alias>
     </char>
-    <char cp="2245" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2245">
       <nl:alias>W przybliżeniu równe</nl:alias>
     </char>
-    <char cp="2259" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2259">
       <nl:alias>Oceny</nl:alias>
     </char>
-    <char cp="2260" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2260">
       <nl:alias>Nierówne</nl:alias>
     </char>
-    <char cp="226C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="226C">
       <nl:alias>Między</nl:alias>
     </char>
-    <char cp="22A6" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="22A6">
       <nl:alias>Twierdzenie</nl:alias>
     </char>
-    <char cp="22A7" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="22A7">
       <nl:alias>Modele</nl:alias>
     </char>
-    <char cp="22A8" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="22A8">
       <nl:alias>Prawda</nl:alias>
     </char>
-    <char cp="22BF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="22BF">
       <nl:alias>Trójkąt prostokątny</nl:alias>
     </char>
-    <char cp="22EE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="22EE">
       <nl:alias>Wielokropek pionowy</nl:alias>
     </char>
-    <char cp="22EF" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="22EF">
       <nl:alias>Kropki poziome na linii środkowej</nl:alias>
     </char>
-    <char cp="2302" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2302">
       <nl:alias>Dom</nl:alias>
     </char>
-    <char cp="2306" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2306">
       <nl:alias>Perspektywa</nl:alias>
     </char>
-    <char cp="2312" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2312">
       <nl:alias>Łuk</nl:alias>
     </char>
-    <char cp="231A" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="231A">
       <nl:alias>Czujka</nl:alias>
     </char>
-    <char cp="231B" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="231B">
       <nl:alias>Klepsydra</nl:alias>
     </char>
-    <char cp="231C" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="231C">
       <nl:alias>Lewy górny narożnik</nl:alias>
     </char>
-    <char cp="2322" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2322">
       <nl:alias>Łuk w dół</nl:alias>
     </char>
-    <char cp="2323" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2323">
       <nl:alias>Łuk w górę</nl:alias>
     </char>
-    <char cp="2328" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2328">
       <nl:alias>Klawiatura</nl:alias>
     </char>
-    <char cp="2333" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2333">
       <nl:alias>Nachylenie</nl:alias>
     </char>
-    <char cp="2397" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2397">
       <nl:alias>Poprzednia strona</nl:alias>
     </char>
-    <char cp="2398" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2398">
       <nl:alias>Następna strona</nl:alias>
     </char>
-    <char cp="2588" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2588">
       <nl:alias>Pełny blok</nl:alias>
     </char>
-    <char cp="25CA" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="25CA">
       <nl:alias>Romb</nl:alias>
     </char>
-    <char cp="2609" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2609">
       <nl:alias>Słoneczko</nl:alias>
     </char>
-    <char cp="2641" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2641">
       <nl:alias>Ziemia</nl:alias>
     </char>
-    <char cp="2643" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2643">
       <nl:alias>Jowisz</nl:alias>
     </char>
-    <char cp="2644" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2644">
       <nl:alias>Ziemia</nl:alias>
     </char>
-    <char cp="2645" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2645">
       <nl:alias>Ziemia</nl:alias>
     </char>
-    <char cp="2707" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2707">
       <nl:alias>Stacja taśm</nl:alias>
     </char>
-    <char cp="2708" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2708">
       <nl:alias>Samolot</nl:alias>
     </char>
-    <char cp="2709" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2709">
       <nl:alias>Koperta</nl:alias>
     </char>
-    <char cp="270F" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="270F">
       <nl:alias>Ołówek</nl:alias>
     </char>
-    <char cp="2713" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="2713">
       <nl:alias>Znacznik</nl:alias>
     </char>
-    <char cp="3008" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="3008">
       <nl:alias>Lewy nawias kątowy</nl:alias>
     </char>
-    <char cp="3009" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="3009">
       <nl:alias>Prawy nawias kątowy</nl:alias>
     </char>
-    <char cp="FFFC" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="FFFC">
       <nl:alias>Znak zastępczy obiektu</nl:alias>
     </char>
-    <char cp="FFFD" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="FFFD">
       <nl:alias>Znak zastępczy</nl:alias>
     </char>
-    <char cp="FFFE" xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt" xmlns="http://www.unicode.org/ns/2003/ucd/1.0">
+    <char cp="FFFE">
       <nl:alias>Niezdefiniowane</nl:alias>
     </char>
   </repertoire>
