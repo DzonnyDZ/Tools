@@ -5,6 +5,7 @@ Imports System.Xml.Serialization
 Imports Tools.ComponentModelT
 Imports Tools.ExtensionsT
 Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
+Imports System.Globalization
 
 Namespace TextT.UnicodeT
     ''' <summary>Represens a Unicode block from Unicode Character Database XML</summary>
@@ -110,5 +111,48 @@ Namespace TextT.UnicodeT
         Public Overrides Function ToString() As String
             Return Name
         End Function
+
+
+        ''' <summary>Gets localized name for current UI culture</summary>
+        ''' <remarks>For details see <see cref="GetLocalizedName"/>.</remarks>
+        ''' <seelaso cref="GetLocalizedName"/>
+        Public ReadOnly Property LocalizedName As String
+            Get
+                Return GetLocalizedName(Nothing)
+            End Get
+        End Property
+
+        ''' <summary>Gets localized name of this block (if available)</summary>
+        ''' <param name="culture">Culture to get localized name for. If null current UI culture is used.</param>
+        ''' <returns>Localized or other name of the block. See remarks for details.</returns>
+        ''' <remarks>
+        ''' This method atempts to obtain code-point name in following order:
+        ''' <list type="list">
+        ''' <item>From localization. If localization for the culture is not loaded and localization provider is available localizations are loaded using the provider.</item>
+        ''' <item><see cref="Name"/>.</item>
+        ''' </list>
+        ''' </remarks>
+        Public Function GetLocalizedName(culture As CultureInfo) As String
+            If culture Is Nothing Then culture = CultureInfo.CurrentUICulture
+            Dim ns = UcdLocalizationProvider.GetCultureNamespace(culture.Name)
+            Dim extensions = Element.Document.Annotation(Of IDictionary(Of String, UnicodeCharacterDatabase))()
+            Dim locucd As UnicodeCharacterDatabase
+            If extensions IsNot Nothing AndAlso extensions.Containskey(ns) Then
+                locucd = extensions(ns)
+            End If
+            If locucd Is Nothing Then
+                Dim tmpucd = New UnicodeCharacterDatabase(Element.Document)
+                tmpucd.GetLocalization(culture)
+                locucd = extensions(ns)
+            End If
+
+            If locucd IsNot Nothing Then
+                Dim lblock = locucd.FindBlock(FirstCodePoint.CodePoint)
+                If lblock IsNot Nothing AndAlso lblock.FirstCodePoint.CodePoint = Me.FirstCodePoint.CodePoint AndAlso lblock.LastCodePoint.CodePoint = Me.LastCodePoint.CodePoint Then Return lblock.Name
+            End If
+
+            Return Name
+        End Function
+    End Class
     End Class
 End Namespace

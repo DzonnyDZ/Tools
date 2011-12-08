@@ -1,8 +1,9 @@
 ﻿Imports System.Globalization.CultureInfo
-Imports Tools.ComponentModelT
+Imports Tools.ComponentModelT, System.Xml.Linq, System.Linq
 Imports Tools.ExtensionsT
 Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
 Imports System.Xml.Serialization
+Imports System.Globalization
 
 Namespace TextT.UnicodeT
     ''' <summary>Represents single Unicode code point and provides information about it</summary>
@@ -411,6 +412,49 @@ Namespace TextT.UnicodeT
                 If aliases.TryGetValue(CodePoint.Value, aarr) Then Return aarr Else Return New String() {}
             End Get
         End Property
+
+        ''' <summary>Gets localized name for current UI culture</summary>
+        ''' <remarks>For details see <see cref="GetLocalizedName"/>.</remarks>
+        ''' <seelaso cref="GetLocalizedName"/>
+        Public ReadOnly Property LocalizedName As String
+            Get
+                Return GetLocalizedName(Nothing)
+            End Get
+        End Property
+
+        ''' <summary>Gets localized name of this code-point (if available)</summary>
+        ''' <param name="culture">Culture to get localized name for. If null current UI culture is used.</param>
+        ''' <returns>Localized or other name of the code point. See remarks for details.</returns>
+        ''' <remarks>
+        ''' This method atempts to obtain code-point name in following order:
+        ''' <list type="list">
+        ''' <item>From localization. If localization for the culture is not loaded and localization provider is available localizations are loaded using the provider.</item>
+        ''' <item>First informative alias from <see cref="NamesListExtensions.Aliases"/>.</item>
+        ''' <item><see cref="UniversalName"/>.</item>
+        ''' </list>
+        ''' </remarks>
+        Public Function GetLocalizedName(culture As CultureInfo) As String
+            If culture Is Nothing Then culture = CultureInfo.CurrentUICulture
+            Dim ns = UcdLocalizationProvider.GetCultureNamespace(culture.Name)
+            Dim locucd = GetExtension(ns)
+            If locucd Is Nothing Then
+                Dim tmpucd = New UnicodeCharacterDatabase(Element.Document)
+                tmpucd.GetLocalization(culture)
+                locucd = GetExtensions(ns)
+            End If
+
+            If locucd IsNot Nothing AndAlso CodePoint.HasValue Then
+                Dim loccp = locucd.FindCodePoint(CodePoint.Value)
+                Dim a = loccp.Element.Elements(XName.Get("alias", ns)).FirstOrDefault
+                If a IsNot Nothing Then Return a.Value
+            End If
+
+            If CodePoint.HasValue Then
+                Dim aliases = NamesListExtensions.Aliases(Me)
+                If aliases IsNot Nothing AndAlso aliases.Count > 0 Then Return aliases(0)
+            End If
+            Return UniversalName
+        End Function
     End Class
 
     ''' <summary>Enumerates Unicode code point types</summary>

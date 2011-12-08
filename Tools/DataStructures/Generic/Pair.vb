@@ -21,6 +21,7 @@
     ''' <typeparam name="T2">Type of Value2</typeparam>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.4">THis class now overrides methods <see cref="[Object].Equals"/> and <see cref="[Object].GetHashCode"/> and <see cref="[Object].ToString"/>.</version>
     Public Class Pair(Of T1, T2)
         Inherits Cloenable(Of Pair(Of T1, T2))
         Implements IPair(Of T1, T2)
@@ -103,6 +104,36 @@
         Public Shared Widening Operator CType(ByVal a As KeyValuePair(Of T1, T2)) As Pair(Of T1, T2)
             Return New Pair(Of T1, T2)(a.Key, a.Value)
         End Operator
+
+        ''' <summary>Serves as a hash function for a particular type. </summary>
+        ''' <returns>A hash code for the current <see cref="T:System.Object" />.</returns>
+        ''' <version>This method override at this level is new in version 1.5.4</version>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Function GetHashCode() As Integer
+            Return If(Value1 Is Nothing, 0, Value1.GetHashCode) Or If(Value2 Is Nothing, 0, Value2.GetHashCode)
+        End Function
+        ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>
+        ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        ''' <version>This method override at this level is new in version 1.5.4</version>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Function Equals(obj As Object) As Boolean
+            If Not TypeOf obj Is Pair(Of T1, T2) Then Return MyBase.Equals(obj)
+            Dim o As Pair(Of T1, T2) = obj
+            Return ((Me.Value1 Is Nothing) = (o.Value1 Is Nothing) AndAlso (Me.Value1 Is Nothing OrElse Me.Value1.Equals(o.Value1))) AndAlso
+                   ((Me.Value2 Is Nothing) = (o.Value2 Is Nothing) AndAlso (Me.Value2 Is Nothing OrElse Me.Value2.Equals(o.Value2)))
+        End Function
+
+        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>
+        ''' A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.
+        ''' This implementation returns string values of <see cref="Value1"/> and <see cref="Value2"/> in format <c>{{Value1}, {Value2}}</c>.
+        ''' </returns>
+        ''' <version>This method override at this level is new in version 1.5.4</version>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Function ToString() As String
+            Return String.Format("{{{0}, {1}}}", Value1, Value2)
+        End Function
     End Class
 
     ''' <summary>Limits <see cref="Pair(Of T1, T2)"/> to contain only values of the same type</summary>

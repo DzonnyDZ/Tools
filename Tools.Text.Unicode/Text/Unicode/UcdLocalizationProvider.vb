@@ -1,8 +1,12 @@
-﻿Imports System.Reflection
-Imports Tools.ExtensionsT, Tools.ReflectionT
-Imports System.Resources
-Imports System.Globalization
+﻿Imports System.Globalization
+Imports System.Globalization.CultureInfo
 Imports System.IO.Compression
+Imports System.Reflection
+Imports System.Web
+Imports Tools.DataStructuresT.GenericT
+Imports Tools.ExtensionsT
+Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
+Imports <xmlns:nl="http://unicode.org/Public/UNIDATA/NamesList.txt#loc">
 
 Namespace TextT.UnicodeT
 
@@ -10,10 +14,14 @@ Namespace TextT.UnicodeT
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public MustInherit Class UcdLocalizationProvider
+        ''' <summary>A template for <see cref="[String].Format"/> to produce namespace name of localization namespace.</summary>
+        ''' <remarks>Placeholder {0} must be replaced with <see cref="HttpUtility.UrlEncode">URL-encoded</see> culture name.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Const LocalizationNamespaceTemplate$ = "http://unicode.org/Public/UNIDATA/NamesList.txt?culture={0}"
         ''' <summary>Gets default UCD locallization provider that uses built-in localizations</summary>
         Public Shared ReadOnly Property [Default] As UcdLocalizationProvider
             Get
-                Return New ResourceUcdLocalizationProvider(resourceName, GetType(UcdLocalizationProvider), AddressOf UnGZipResource)
+                Return New ResourceUcdLocalizationProvider(ResourceName, GetType(UcdLocalizationProvider), AddressOf UnGZipResource)
             End Get
         End Property
 
@@ -72,6 +80,96 @@ Namespace TextT.UnicodeT
         Public Shared Function UnGZipResource(gzipped As IO.Stream) As IO.Stream
             If gzipped Is Nothing Then Throw New ArgumentNullException("gzipped")
             Return New GZipStream(gzipped, CompressionMode.Decompress)
+        End Function
+
+        ''' <summary>Creates a name of XML namespace to be used for specific culture localizations</summary>
+        ''' <param name="cultureName">Name of the culture</param>
+        ''' <returns>A namespace that is used for localizations of given culture</returns>
+        ''' <seelaso cref="LocalizationNamespaceTemplate"/>
+        Public Shared Function GetCultureNamespace$(cultureName$)
+            Return String.Format(LocalizationNamespaceTemplate, HttpUtility.UrlEncode(cultureName))
+        End Function
+
+
+        ''' <summary>Constructs an XML document that contains localized value for all possible items in UCD</summary>
+        ''' <param name="culture">Culture to get localized value for. If null current UI culture is used.</param>
+        ''' <returns>A XML document that contains values localized for given culture of one of its parent cultures. This document is usually combination of several documents.</returns>
+        ''' <remarks>
+        ''' Resulting XML document is in UCD XML format similar to UCD localization files (obtained via <see cref="GetDocument"/>).
+        ''' <para>
+        ''' Code point names are localized in /ucd/repertoire/char/nl:alias elements. (Also similar to name list XML format.)
+        ''' But the nl prefix represents different namespace for each <paramref name="culture"/>.
+        ''' The namespace name is in form http://unicode.org/Public/UNIDATA/NamesList.txt?culture={Culture} where culture is <see cref="HttpUtility.UrlEncode">URL-encoded</see> <paramref name="culture"/>.<see cref="CultureInfo.Name">Name</see>.
+        ''' Also the root &lt;ucd> elemtn has xml:lang attribute set to <paramref name="culture"/>.<see cref="CultureInfo.Name">Name</see>.
+        ''' In case localization of character name comes from different (parent) culture than <paramref name="culture"/> a &lt;nl:alias> element has the xml:lang attribute that reffers to actual culture localized name came from.
+        ''' All codepoints are localized using the &lt;char> (even non-characters and others) element identified by cp attribute (code point in hex).
+        ''' </para>
+        ''' <para>
+        ''' Block names are localized in /ucd/blocks/block/@name.
+        ''' If localized name of block comes from culture other than <paramref name="culture"/> the &lt;block> element has xml:lang attribute.
+        ''' </para>
+        ''' <para>Default namespace is http://www.unicode.org/ns/2003/ucd/1.0.</para>
+        ''' </remarks>
+        Public Function GetLocalizedDocument(culture As CultureInfo) As XDocument
+            Dim ret = <?xml version="1.0"?>
+                      <ucd xml:lang=<%= culture.Name %>>
+                          <repertoire/>
+                          <blocks/>
+                      </ucd>
+
+            If culture Is Nothing Then culture = CultureInfo.CurrentUICulture
+
+            Dim repertoire = ret.<ucd>.<repertoire>.Single
+            Dim blocks = ret.<ucd>.<blocks>.Single
+
+            Dim localizedCodePoints As New HashSet(Of UInteger)
+            Dim localizedBlocks As New HashSet(Of Pair(Of UInteger, UInteger))
+            Dim cultureNamespace = XNamespace.Get(GetCultureNamespace(culture.Name))
+
+            While culture IsNot Nothing
+                If DocumentExists(culture.Name) Then
+                    Dim locdoc = GetDocument(culture.Name)
+                    Dim docLang = locdoc.<ucd>.@xml:lang
+                    Dim lrepertoire = locdoc.<udc>.<repertoire>.SingleOrDefault
+                    If lrepertoire IsNot Nothing Then
+                        For Each [char] In lrepertoire.<char>
+                            If [char].@cp IsNot Nothing AndAlso [char].<nl:alias>.Any Then
+                                Dim cp = UInteger.Parse([char].@cp, NumberStyles.HexNumber, InvariantCulture)
+                                If Not localizedCodePoints.Contains(cp) Then
+                                    Dim ch2 As XElement = New XElement([char])
+                                    ch2.Add(
+                                        From [alias] In ch2.<nl:alias>
+                                        Select <<%= cultureNamespace.GetName("alias") %> xml:lang=<%= If(docLang = culture.Name, Nothing, docLang) %>>
+                                                   <%= [alias].Value %>
+                                               </>
+                                    )
+                                    localizedCodePoints.Add(cp)
+                                    repertoire.Add([char])
+                                End If
+                            End If
+                        Next
+                    End If
+                    Dim lblocks = locdoc.<ucd>.<blocks>.SingleOrDefault
+                    If lblocks IsNot Nothing Then
+                        For Each block In lblocks.<block>
+                            If block.@<first-cp> IsNot Nothing AndAlso block.@<last-cp> IsNot Nothing Then
+                                Dim firstCp = UInteger.Parse(block.@<first-cp>, NumberStyles.HexNumber, InvariantCulture)
+                                Dim lastCp = UInteger.Parse(block.@<last-cp>, NumberStyles.HexNumber, InvariantCulture)
+                                Dim p As New Pair(Of UInteger, UInteger)(firstCp, lastCp)
+                                If Not localizedBlocks.Contains(p) Then
+                                    Dim b2 As XElement = New XElement(block)
+                                    If docLang <> culture.Name Then b2.@xml:lang = docLang
+                                    localizedBlocks.Add(p)
+                                    blocks.Add(block)
+                                End If
+                            End If
+                        Next
+                    End If
+                End If
+                If culture.Name = "" Then culture = Nothing Else culture = culture.Parent
+            End While
+
+            Return ret
         End Function
     End Class
 

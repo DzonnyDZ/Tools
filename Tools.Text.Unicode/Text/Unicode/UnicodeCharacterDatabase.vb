@@ -124,6 +124,21 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
+        ''' <summary>Gets an instance of <see cref="UnicodeCharacterDatabase"/> that can provide localization values for given culture</summary>
+        ''' <param name="culture">Culture to get localized UCD for</param>
+        ''' <returns>An instance of <see cref="UnicodeCharacterDatabase"/> that can be used to access localizations. Null if <see cref="LocalizationProvider"/> is null.</returns>
+        Public Function GetLocalization(culture As Globalization.CultureInfo) As UnicodeCharacterDatabase
+            If culture Is Nothing Then culture = Globalization.CultureInfo.CurrentUICulture
+            If LocalizationProvider Is Nothing Then Return Nothing
+            Dim ns = UcdLocalizationProvider.GetCultureNamespace(culture.Name)
+            If Extensions.ContainsKey(ns) Then
+                Return Extensions(ns)
+            Else
+                Extensions.Add(ns, New UnicodeCharacterDatabase(LocalizationProvider.GetLocalizedDocument(culture)))
+                Return Extensions(ns)
+            End If
+        End Function
+
         ''' <summary>Gets or sets provider that provides localizations for unicode character database</summary>
         ''' <remarks>Localizations are stored as <see cref="XObject.Annotation"/> of type <see cref="UcdLocalizationProvider"/>.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>

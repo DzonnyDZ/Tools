@@ -201,7 +201,7 @@ Namespace TextT.UnicodeT
         ''' <returns>True if NsmesList XML extension is loaded, false if it is not</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="ucd"/> is null</exception>
         <Extension()>
-        Public Function IsNamesListLLoaded(ucd As UnicodeCharacterDatabase) As Boolean
+        Public Function IsNamesListLoaded(ucd As UnicodeCharacterDatabase) As Boolean
             If ucd Is Nothing Then Throw New ArgumentNullException("ucd")
             Return ucd.Extensions.ContainsKey(XmlNamespace)
         End Function
@@ -236,7 +236,7 @@ Namespace TextT.UnicodeT
         <Extension()>
         Public Sub LoadNamesList(target As UnicodeCharacterDatabase)
             If target Is Nothing Then Throw New ArgumentNullException("target")
-            If target.IsNamesListLLoaded Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_NamesListAlreadyLoaded)
+            If target.IsNamesListLoaded Then Throw New InvalidOperationException(TextT.UnicodeT.UnicodeResources.ex_NamesListAlreadyLoaded)
             target.Extensions.Add(XmlNamespace, [DefaultNamesList])
         End Sub
 
