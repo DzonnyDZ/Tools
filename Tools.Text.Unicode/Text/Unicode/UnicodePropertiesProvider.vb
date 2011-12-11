@@ -10,8 +10,6 @@ Imports System.Xml.Serialization
 'XML format specification http://www.unicode.org/reports/tr42/
 'Property value aliases http://www.unicode.org/Public/6.0.0/ucd/PropertyValueAliases.txt
 
-'TODO: Localize DisplayName
-
 Namespace TextT.UnicodeT
     ''' <summary>Common base class for Unicode code points and groups. This class holds character properties</summary>
     ''' <remarks>
@@ -53,7 +51,7 @@ Namespace TextT.UnicodeT
     ''' </description></item>
     ''' </list>
     ''' <note>May boolean properties' names are prefixed with the "Is" prefix which is not used in UCD.</note>
-    ''' <note>Unihan database properties has prefix "Han" (Uninah property can be also determined by use of <see cref="UnihanPropertyCategoryAttribute"/> instead of <see cref="UnicodePropertyCategoryAttribute"/>).</note>
+    ''' <note>Unihan database properties has prefix "Han" (unihan property can be also determined by use of <see cref="UnihanPropertyCategoryAttribute"/> instead of <see cref="UnicodePropertyCategoryAttribute"/>).</note>
     ''' <note>XML serialization attributes used to decorate properties of this class are not intended for XML serialization, they are rather intended as machine-readable documentation where the property originates from in UCD XML.</note>
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
@@ -197,7 +195,7 @@ Namespace TextT.UnicodeT
         ''' <para>Underlying XML attribute is @age.</para></remarks>
         <XmlAttribute("age")>
         <UcdProperty("Age", "DerivedAge.txt", UnicodePropertyType.Catalog, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
-        <DisplayName("Age")>
+        <LDisplayName(GetType(UnicodeResources), "d_Age")>
         Public ReadOnly Property Age As Version
             Get
                 Dim value = GetPropertyValue("age")
@@ -215,7 +213,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("na")>
         <UcdProperty("Name", "UnicodeData.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
-        <DisplayName("Name")>
+        <LDisplayName(GetType(UnicodeResources), "d_Name")>
         Public Overridable ReadOnly Property Name As String
             Get
                 Return GetPropertyValue("na")
@@ -231,7 +229,7 @@ Namespace TextT.UnicodeT
         <XmlAttribute("na1")>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         <UcdProperty("Unicode_1_Name", "UnicodeData.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Unicode 1 Name")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_Name1")>
         Public Overridable ReadOnly Property Name1 As String
             Get
                 Return GetPropertyValue("na1")
@@ -247,7 +245,7 @@ Namespace TextT.UnicodeT
         <XmlAttribute("gc")>
         <DefaultValue(Globalization.UnicodeCategory.OtherNotAssigned)>
         <UcdProperty("General_Category", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
-        <DisplayName("General Category")>
+        <LDisplayName(GetType(UnicodeResources), "d_GeneralCategory")>
         Public ReadOnly Property GeneralCategory As Globalization.UnicodeCategory
             Get
                 Dim value = GetPropertyValue("gc")
@@ -299,6 +297,8 @@ Namespace TextT.UnicodeT
         ''' <seelaso cref="UnicodeExtensions.GetClass"/>
         <XmlIgnore()>
         <DefaultValue(UnicodeGeneralCategoryClass.Other)>
+        <LDisplayName(GetType(UnicodeResources), "d_other_GeneralCategoryClass")>
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.Misc)>
         Public ReadOnly Property GeneralCategoryClass As UnicodeGeneralCategoryClass
             Get
                 Return GeneralCategory.GetClass
@@ -310,7 +310,7 @@ Namespace TextT.UnicodeT
         ''' <para>The classes used for the Canonical Ordering Algorithm in the Unicode Standard. This property could be considered either an enumerated property or a numeric property: the principal use of the property is in terms of the numeric values.</para></remarks>
         <XmlAttribute("ccc")>
         <UcdProperty("Canonical_Combining_Class", "UnicodeData.txt", UnicodePropertyType.Numeric, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.Normalization)>
-        <DisplayName("Canonical Combining Class")>
+        <LDisplayName(GetType(UnicodeResources), "d_CanonicalCombiningClass")>
         Public ReadOnly Property CanonicalCombiningClass As UnicodeCombiningClass
             Get
                 Dim value = GetPropertyValue("ccc")
@@ -328,7 +328,7 @@ Namespace TextT.UnicodeT
         <XmlAttribute("bc")>
         <UcdProperty("Bidi_Class", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
-        <DisplayName("Bidi Class")>
+        <LDisplayName(GetType(UnicodeResources), "d_BidiClass")>
         Public ReadOnly Property BidiCategory As UnicodeBidiCategory?
             Get
                 Dim value = GetPropertyValue("bc")
@@ -372,6 +372,7 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Gets bidirectional strenght of the character</summary>
         <XmlIgnore()>
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.Misc), LDisplayName(GetType(UnicodeResources), "d_other_BidiStrength")>
         Public ReadOnly Property BidiStrength As UnicodeBidiCategoryStrenght?
             Get
                 Dim value = BidiCategory
@@ -385,7 +386,7 @@ Namespace TextT.UnicodeT
         <XmlAttribute("Bidi_M")>
         <UcdProperty("Bidi_Mirrored", "UnicodeData.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
-        <DisplayName("Bidi Mirrored")>
+        <LDisplayName(GetType(UnicodeResources), "d_BidiMirrored")>
         Public ReadOnly Property IsMirrored As Boolean
             Get
                 Return GetPropertyValue("Bidi_M") = "Y"
@@ -397,7 +398,7 @@ Namespace TextT.UnicodeT
         <XmlAttribute("bmg")>
         <UcdProperty("Bidi_Mirroring_Glyph", "BidiMirroring.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
-        <DisplayName("Bidi Mirroring Glyph")>
+        <LDisplayName(GetType(UnicodeResources), "d_BidiMirroringGlyph")>
         Public ReadOnly Property BidiMirroringGlyph As CodePointInfo
             Get
                 Dim value = GetPropertyValue("bmg")
@@ -411,7 +412,7 @@ Namespace TextT.UnicodeT
         <XmlAttribute("Bidi_C")>
         <UcdProperty("Bidi_Control", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
-        <DisplayName("Bidi Control")>
+        <LDisplayName(GetType(UnicodeResources), "d_IsBidiControl")>
         Public ReadOnly Property IsBidiControl As Boolean?
             Get
                 Dim value = GetPropertyValue("Bidi_C")
@@ -428,7 +429,7 @@ Namespace TextT.UnicodeT
         <XmlAttribute("dt"), DefaultValue(UnicodeDecompositionType.none)>
         <UcdProperty("Decomposition_Type", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization)>
-        <DisplayName("Decomposition type")>
+        <LDisplayName(GetType(UnicodeResources), "d_DecompositionType")>
         Public ReadOnly Property DecompositionType As UnicodeDecompositionType?
             Get
                 Dim value = GetPropertyValue("dt")
@@ -461,7 +462,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @dm.</remarks>
         <XmlAttribute("dm")>
         <UcdProperty("Decomposition_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Decomposition Mapping")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_DecompositionMapping")>
         Public Overridable ReadOnly Property DecompositionMapping As CodePointInfoCollection
             Get
                 Dim value = GetPropertyValue("dm")
@@ -479,7 +480,7 @@ Namespace TextT.UnicodeT
         ''' <seelaso cref="FullCompositionExclusion"/>
         <XmlAttribute("CE")>
         <UcdProperty("Composition_Exclusion", "CompositionExclusions.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Composition Exclusion")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_CompositionExclusion")>
         Public ReadOnly Property CompositionExclusion As Boolean
             Get
                 Return GetPropertyValue("CE") = "Y"
@@ -491,19 +492,20 @@ Namespace TextT.UnicodeT
         ''' <seelaso cref="CompositionExclusion"/>
         <XmlAttribute("Comp_Ex")>
         <UcdProperty("Full_Composition_Exclusion", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Full Composition Exclusion")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_FullCompositionExclusion")>
         Public ReadOnly Property FullCompositionExclusion As Boolean
             Get
                 Return GetPropertyValue("Comp_Ex") = "Y"
             End Get
         End Property
+
 #Region "Normalization form quick check"
         ''' <summary>Gets value indicating if character never (false), sometimes (null) or always (true) appears in normalization from C</summary>
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is newither N nor M nor Y.</exception>
         ''' <remarks>Underlying XML attribute is @NFC_QC</remarks>
         <XmlAttribute("NFC_QC"), DefaultValue(True)>
         <UcdProperty("NFC_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Normalization Form C Quick Check")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormCQuickCheck")>
         Public ReadOnly Property NormalizationFormCQuickCheck As Boolean?
             Get
                 Select Case GetPropertyValue("NFC_QC")
@@ -519,7 +521,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @NFC_QD.</remarks>
         <XmlAttribute("NFD_QC"), DefaultValue(True)>
         <UcdProperty("NFD_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Normalization Form D Quick Check")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormDQuickCheck")>
         Public ReadOnly Property NormalizationFormDQuickCheck As Boolean
             Get
                 Return GetPropertyValue("NFD_QC") <> "N"
@@ -530,7 +532,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @NFKC_QC.</remarks>
         <XmlAttribute("NFKC_QC"), DefaultValue(True)>
         <UcdProperty("NFKC_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Normalization Form KC Quick Check")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormKCQuickCheck")>
         Public ReadOnly Property NormalizationFormKCQuickCheck As Boolean?
             Get
                 Select Case GetPropertyValue("NFC_QC")
@@ -545,7 +547,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @NFKD_QC.</remarks>
         <XmlAttribute("NFKD_QC"), DefaultValue(True)>
         <UcdProperty("NFKD_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Normalization Form KD Quick Check")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormKDQuickCheck")>
         Public ReadOnly Property NormalizationFormKDQuickCheck As Boolean
             Get
                 Return GetPropertyValue("NFD_QC") <> "N"
@@ -557,7 +559,7 @@ Namespace TextT.UnicodeT
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFC.</remarks>
         <XmlAttribute("XO_NFC"), Obsolete("Property Expands_On_NFC is deprecated as of Unicode 6.0.0")>
         <UcdProperty("Expands_On_NFC", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Expands on Normalization Form C")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnC")>
         Public ReadOnly Property ExpandOnC As Boolean
             Get
                 Return GetPropertyValue("XO_NFC") = "Y"
@@ -567,7 +569,7 @@ Namespace TextT.UnicodeT
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFD.</remarks>
         <XmlAttribute("XO_NFD"), Obsolete("Property Expands_On_NFD is deprecated as of Unicode 6.0.0")>
         <UcdProperty("Expands_On_NFD", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Expands on Normalization Form D")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnD")>
         Public ReadOnly Property ExpandOnD As Boolean
             Get
                 Return GetPropertyValue("XO_NFD") = "Y"
@@ -577,7 +579,7 @@ Namespace TextT.UnicodeT
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFKC.</remarks>
         <XmlAttribute("XO_NFKC"), Obsolete("Property Expands_On_NFKC is deprecated as of Unicode 6.0.0")>
         <UcdProperty("Expands_On_NFKC", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Expands on Normalization Form KC")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnKC")>
         Public ReadOnly Property ExpandOnKC As Boolean
             Get
                 Return GetPropertyValue("XO_NFKC") = "Y"
@@ -587,7 +589,7 @@ Namespace TextT.UnicodeT
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFKD.</remarks>
         <XmlAttribute("XO_NFKD"), Obsolete("Property Expands_On_NFKD is deprecated as of Unicode 6.0.0")>
         <UcdProperty("Expands_On_NFKD", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Expands on Normalization Form KD")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnKD")>
         Public ReadOnly Property ExpandOnKD As Boolean
             Get
                 Return GetPropertyValue("XO_NFKD") = "Y"
@@ -600,7 +602,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>This property is obsolete as of Unicode 6.0<para>Underlying XML attribute is @FC_NFKC.</para></remarks>
         <XmlAttribute("FC_NFKC"), Obsolete("The FC_NFKC_Closure is deprecated as of Unicode 6.0.0")>
         <UcdProperty("FC_NFKC_Closure", "DerivedNormalizationProps.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Case Folding Closure Mapping KC")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_CaseFoldingClosureMappingKC")>
         Public ReadOnly Property CaseFoldingClosureExtraMappingKC As CodePointInfoCollection
             Get
                 Dim value = GetPropertyValue("FC_NFKC")
@@ -616,7 +618,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @nt.</remarks>
         <XmlAttribute("nt"), DefaultValue(UnicodeCharacterNumericType.None)>
         <UcdProperty("Numeric_Type", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Numeric), DisplayName("Numeric Type")>
+        <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_NumericType")>
         Public ReadOnly Property NumericType As UnicodeCharacterNumericType
             Get
                 Dim value = GetPropertyValue("nt")
@@ -635,7 +637,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attributes id @nv.</remarks>
         <XmlAttribute("nv")>
         <UcdProperty("Numeric_Value", "UnicodeData.txt", UnicodePropertyType.Numeric, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Numeric), DisplayName("Numeric Value")>
+        <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_NumericValue")>
         Public ReadOnly Property NumericValue As SRational?
             Get
                 If NumericType = UnicodeCharacterNumericType.None Then Return Nothing
@@ -653,7 +655,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @jt.</remarks>
         <XmlAttribute("jt")>
         <UcdProperty("Joining_Type", "ArabicShaping.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("Joining Type")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_JoiningType")>
         Public ReadOnly Property JoiningType As UnicodeJoiningType
             Get
                 Dim value = GetPropertyValue("jt")
@@ -682,7 +684,7 @@ Namespace TextT.UnicodeT
         ''' <note>XML attribute value <c>Alef_Maqsurah</c> (which seems not to be used after Unicode 2.x) silently maps to <see cref="UnicodeJoiningGroup.YehWithTail"/>.</note></remarks>
         <DefaultValue(UnicodeJoiningGroup.none), XmlAttribute("jg")>
         <UcdProperty("Joining_Group", "ArabicShaping.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("Joining Group")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_JoiningGroup")>
         Public ReadOnly Property JoiningGroup As UnicodeJoiningGroup
             Get
                 Dim value = GetPropertyValue("jg")
@@ -756,7 +758,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlaying XML attribute is @Join_C.</remarks>
         <XmlAttribute("Join_C")>
         <UcdProperty("Join_Control", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("Join Control")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_JoinControl")>
         Public ReadOnly Property IsJoinControl As Boolean
             Get
                 Return GetPropertyValue("Join_C") = "Y"
@@ -770,7 +772,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @lb</remarks>
         <XmlAttribute("lb"), DefaultValue(UnicodeLineBreakType.Unknown)>
         <UcdProperty("Line_Break", "LineBreak.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("Line Break")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_LineBreak")>
         Public ReadOnly Property LineBreak As UnicodeLineBreakType
             Get
                 Dim value = GetPropertyValue("lb")
@@ -825,7 +827,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @ea</remarks>
         <XmlAttribute("ea"), DefaultValue(UnicodeEastAsianWidth.Neutral)>
         <UcdProperty("East_Asian_Width", "EastAsianWidth.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("East Asian Width")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_EastAsianWidth")>
         Public ReadOnly Property EastAsianWidth As UnicodeEastAsianWidth
             Get
                 Dim value = GetPropertyValue("ea")
@@ -848,7 +850,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Upper</remarks>
         <XmlAttribute("Upper")>
         <UcdProperty("Uppercase", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Uppercase")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsUppercase")>
         Public ReadOnly Property IsUppercase As Boolean
             Get
                 Return GetPropertyValue("Upper") = "Y"
@@ -858,7 +860,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Lower</remarks>
         <XmlAttribute("Lower")>
         <UcdProperty("Lowercase", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Lowercase")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsLowercase")>
         Public ReadOnly Property IsLowercase As Boolean
             Get
                 Return GetPropertyValue("Lower") = "Y"
@@ -870,7 +872,7 @@ Namespace TextT.UnicodeT
         ''' <para>Used in deriving the <see cref="IsLowercase"/> property.</para></remarks>
         <XmlAttribute("OUpper"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         <UcdProperty("Other_Uppercase", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), Description("Other Uppercase")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherUppercase")>
         Public ReadOnly Property IsOtherUppercase As Boolean
             Get
                 Return GetPropertyValue("OUpper") = "Y"
@@ -882,7 +884,7 @@ Namespace TextT.UnicodeT
         ''' <para>Used in deriving the <see cref="IsUppercase"/> property.</para></remarks>
         <XmlAttribute("OLower"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         <UcdProperty("Other_Lowercase", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Other Lowercase")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherLowercase")>
         Public ReadOnly Property IsOtherLowercase As Boolean
             Get
                 Return GetPropertyValue("OLower") = "Y"
@@ -897,7 +899,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("suc")>
         <UcdProperty("Simple_Uppercase_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Simple Uppercase Mapping")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleUppercaseMapping")>
         Public ReadOnly Property SimpleUppercaseMapping As CodePointInfo
             Get
                 Return CodePointInfo.Parse(GetPropertyValue("suc", True), Element.Document)
@@ -912,7 +914,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("slc")>
         <UcdProperty("Simple_Lowercase_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Simple Lowercase Mapping")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleLowercaseMapping")>
         Public ReadOnly Property SimpleLowercaseMapping As CodePointInfo
             Get
                 Return CodePointInfo.Parse(GetPropertyValue("slc", True), Element.Document)
@@ -927,7 +929,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("stc")>
         <UcdProperty("Simple_Titlecase_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Simple Tilecase Mapping")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleTilecaseMapping")>
         Public ReadOnly Property SimpleTilecaseMapping As CodePointInfo
             Get
                 Dim value As String = GetPropertyValue("stc", True)
@@ -940,7 +942,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @uc, if it does not provide value <see cref="SimpleUppercaseMapping"/> is used instead</remarks>
         <XmlAttribute("uc")>
         <UcdProperty("Uppercase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Uppercase Mapping")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_UppercaseMapping")>
         Public ReadOnly Property UppercaseMappping As CodePointInfoCollection
             Get
                 Dim value As String = GetPropertyValue("uc", True)
@@ -953,7 +955,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @lc, if it does not provide value <see cref="SimpleLowercaseMapping"/> is used instead</remarks>
         <XmlAttribute("lc")>
         <UcdProperty("Lowercase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Lowercase Mapping")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_LowercaseMapping")>
         Public ReadOnly Property LowercaseMappping As CodePointInfoCollection
             Get
                 Dim value As String = GetPropertyValue("lc", True)
@@ -966,7 +968,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @tc, if it does not provide value <see cref="SimpleTilecaseMapping"/> is used instead. If it does not provide value <see cref="SimpleUppercaseMapping"/> is used instead.</remarks>
         <XmlAttribute("tc")>
         <UcdProperty("Titlecase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Tilecase Mapping")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_TilecaseMapping")>
         Public ReadOnly Property TilecaseMappping As CodePointInfoCollection
             Get
                 Dim value As String = GetPropertyValue("tc", True)
@@ -980,7 +982,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @scf.<para>If this property does not providde value check <see cref="CaseFolding"/>.</para></remarks>
         <XmlAttribute("scf")>
         <UcdProperty("Simple_Case_Folding", "CaseFolding.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Simple Case Folding")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleCaseFolding")>
         Public ReadOnly Property SimpleCaseFolding As CodePointInfo
             Get
                 Dim value As String = GetPropertyValue("scf", True)
@@ -993,7 +995,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @scf. If this attribute is not specified this propertxy returns value of <see cref="SimpleCaseFolding"/> as one-item collection.</remarks>
         <XmlAttribute("cf")>
         <UcdProperty("Case_Folding", "CaseFolding.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Case Folding")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_CaseFolding")>
         Public ReadOnly Property CaseFolding As CodePointInfoCollection
             Get
                 Dim value As String = GetPropertyValue("cf", True)
@@ -1007,7 +1009,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @CI</remarks> 
         <XmlAttribute("CI")>
         <UcdProperty("Case_Ignorable", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Case Ignorable")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsCaseIgnorable")>
         Public ReadOnly Property IsCaseIgnorable As Boolean
             Get
                 Return GetPropertyValue("CI") = "Y"
@@ -1018,7 +1020,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Cased</remarks> 
         <XmlAttribute("CI")>
         <UcdProperty("Cased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Cased")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsCased")>
         Public ReadOnly Property IsCased As Boolean
             Get
                 Return GetPropertyValue("Cased") = "Y"
@@ -1030,7 +1032,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @CWCF</remarks> 
         <XmlAttribute("CWCF")>
         <UcdProperty("Changes_When_Casefolded", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Changes when Casefolded")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenCasefolded")>
         Public ReadOnly Property ChangesWhenCasefolded As Boolean
             Get
                 Return GetPropertyValue("CWCF") = "Y"
@@ -1041,7 +1043,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @CWCM</remarks> 
         <XmlAttribute("CWCM")>
         <UcdProperty("Changes_When_Casemapped", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Changes when Casemapped")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenCasemapped")>
         Public ReadOnly Property ChangesWhenCasemapped As Boolean
             Get
                 Return GetPropertyValue("CWCM") = "Y"
@@ -1053,7 +1055,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @CWL</remarks> 
         <XmlAttribute("CWL")>
         <UcdProperty("Changes_When_Lowercased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Changes when Loweracsed")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenLoweracsed")>
         Public ReadOnly Property ChangesWhenLowercased As Boolean
             Get
                 Return GetPropertyValue("CWL") = "Y"
@@ -1077,7 +1079,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @CWL</remarks> 
         <XmlAttribute("CWT")>
         <UcdProperty("Changes_When_Titlecased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Changes when Tilecased")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenTilecased")>
         Public ReadOnly Property ChangesWhenTilecased As Boolean
             Get
                 Return GetPropertyValue("CWT") = "Y"
@@ -1089,7 +1091,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @CWKCF</remarks> 
         <XmlAttribute("CWKCF")>
         <UcdProperty("Changes_When_NFKC_Casefolded", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Changes when Normalization Form KC Casefold")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenNfKCCasefold")>
         Public ReadOnly Property ChangesWhenNfKCCasefold As Boolean
             Get
                 Return GetPropertyValue("CWKCF") = "Y"
@@ -1100,7 +1102,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @NFKC_CF</remarks>
         <XmlAttribute("NFKC_CF")>
         <UcdProperty("NFKC_Casefold", "DerivedNormalizationProps.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Normalization), DisplayName("Normalization form KC Casefold")>
+        <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NfKCCasefold")>
         Public ReadOnly Property NfKCCasefold As CodePointInfoCollection
             Get
                 Return New CodePointInfoCollection(Element.Document, GetPropertyValue("NFKC_CF", True))
@@ -1116,7 +1118,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("sc")>
         <UcdProperty("Script", "Scripts.txt", UnicodePropertyType.Catalog, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Script")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_Script")>
         Public ReadOnly Property Script$
             Get
                 Return GetPropertyValue("sc")
@@ -1130,7 +1132,7 @@ Namespace TextT.UnicodeT
         ''' <para>This property is deprecated: As of Unicode 5.2.0, this field no longer contains any non-null values.</para></remarks>
         <XmlAttribute("isc"), EditorBrowsable(EditorBrowsableState.Advanced), Obsolete("As of Unicode 5.2.0, this field no longer contains any non-null values.")>
         <UcdProperty("ISO_Comment", "UnicodeData.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("ISO Comment")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsoComment")>
         Public ReadOnly Property IsoComment$
             Get
                 Return GetPropertyValue("isc")
@@ -1144,7 +1146,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @hst</remarks>
         <XmlAttribute("hst")>
         <UcdProperty("Hangul_Syllable_Type", "HangulSyllableType.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Jangul Syllable Type")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_HangulSyllableType")>
         Public ReadOnly Property HangulSyllableType As UnicodeHangulSyllableType
             Get
                 Dim value = GetPropertyValue("hst")
@@ -1165,7 +1167,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @JSN</remarks>
         <XmlAttribute("JSN")>
         <UcdProperty("Jamo_Short_Name", "Jamo.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Jamo Short Name")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_JamoShortName")>
         Public ReadOnly Property JamoShortName$
             Get
                 Return GetPropertyValue("JSN")
@@ -1178,7 +1180,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @InSC</remarks>
         <XmlAttribute("InSC")>
         <UcdProperty("Indic_Syllabic_Category", "IndicSyllabicCategory.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Provisional)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Indic Syllabic Category")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IndicSyllabicCategory")>
         Public ReadOnly Property IndicSyllabicCategory$
             Get
                 Return GetPropertyValue("InSC")
@@ -1189,7 +1191,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @InMC</remarks>
         <XmlAttribute("InMC")>
         <UcdProperty("Indic_Matra_Category", "IndicMatraCategory.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Provisional)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Indic Mantra Category")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IndicMantraCategory")>
         Public ReadOnly Property IndicMatraCategory$
             Get
                 Return GetPropertyValue("InMC")
@@ -1202,7 +1204,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @IDS</remarks>
         <XmlAttribute("IDS")>
         <UcdProperty("ID_Start", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Identifiers), DisplayName("Identifier Start")>
+        <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdStart")>
         Public ReadOnly Property IsIdStart As Boolean
             Get
                 Return GetPropertyValue("IDS") = "Y"
@@ -1213,7 +1215,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @OIDS</remarks>
         <XmlAttribute("OIDS"), EditorBrowsable(EditorBrowsableState.Advanced)>
         <UcdProperty("Other_ID_Start", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Other Identifier Start")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherIdStart")>
         Public ReadOnly Property IsOtherIdStart As Boolean
             Get
                 Return GetPropertyValue("OIDS") = "Y"
@@ -1224,7 +1226,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @XIDS</remarks>
         <XmlAttribute("XIDS")>
         <UcdProperty("XID_Start", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Identifiers), DisplayName("Identifier Start alternative")>
+        <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdStartEx")>
         Public ReadOnly Property IsIdStartEx As Boolean
             Get
                 Return GetPropertyValue("XIDS") = "Y"
@@ -1235,7 +1237,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @IDC</remarks>
         <XmlAttribute("IDC")>
         <UcdProperty("ID_Continue", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Identifiers), DisplayName("Identifier Continuation")>
+        <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdContinue")>
         Public ReadOnly Property IsIdContinue As Boolean
             Get
                 Return GetPropertyValue("IDC") = "Y"
@@ -1246,7 +1248,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @OIDC</remarks>
         <XmlAttribute("OIDC"), EditorBrowsable(EditorBrowsableState.Advanced)>
         <UcdProperty("Other_ID_Continue", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Other Identifier Continuation")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherIdContinue")>
         Public ReadOnly Property IsOtherIdContinue As Boolean
             Get
                 Return GetPropertyValue("OIDC") = "Y"
@@ -1257,7 +1259,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @XIDC</remarks>
         <XmlAttribute("XIDC")>
         <UcdProperty("XID_Continue", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Identifiers), DisplayName("Identifier Continuation alternative")>
+        <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdContinueEx")>
         Public ReadOnly Property IsIdContinueEx As Boolean
             Get
                 Return GetPropertyValue("XIDC") = "Y"
@@ -1268,7 +1270,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Pat_Syn</remarks>
         <XmlAttribute("Pat_Syn")>
         <UcdProperty("Pattern_Syntax", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Identifiers), DisplayName("Pattern Syntax")>
+        <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsPatternSyntax")>
         Public ReadOnly Property IsPatternSyntax As Boolean
             Get
                 Return GetPropertyValue("Pat_Syn") = "Y"
@@ -1279,7 +1281,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Pat_WS</remarks>
         <XmlAttribute("Pat_WS")>
         <UcdProperty("Pattern_White_Space", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Identifiers), DisplayName("Pattern Whitespace")>
+        <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsPatternWhiteSpace")>
         Public ReadOnly Property IsPatternWhiteSpace As Boolean
             Get
                 Return GetPropertyValue("Pat_WS") = "Y"
@@ -1292,7 +1294,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Dash</remarks>
         <XmlAttribute("Dash")>
         <UcdProperty("Dash", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Dash")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsDash")>
         Public ReadOnly Property IsDash As Boolean
             Get
                 Return GetPropertyValue("Dash") = "Y"
@@ -1304,7 +1306,7 @@ Namespace TextT.UnicodeT
         ''' <para>This property is deprecated as of Unicode 6.0</para></remarks>
         <XmlAttribute("Hyphen"), Obsolete("This property is deprecated as of Unicode 6.0")>
         <UcdProperty("Hyphen", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Hyphen")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsHyphen")>
         Public ReadOnly Property IsHyphen As Boolean
             Get
                 Return GetPropertyValue("Hyphen") = "Y"
@@ -1315,7 +1317,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @QMark</remarks>
         <XmlAttribute("QMark")>
         <UcdProperty("Quotation_Mark", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Quotation Mark")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsQuotationMark")>
         Public ReadOnly Property IsQuotationMark As Boolean
             Get
                 Return GetPropertyValue("QMark") = "Y"
@@ -1326,7 +1328,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Term</remarks>
         <XmlAttribute("Term")>
         <UcdProperty("Terminal_Punctuation", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Terminal Punctuation")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsTerminalPunctuation")>
         Public ReadOnly Property IsTerminalPunctuation As Boolean
             Get
                 Return GetPropertyValue("Term") = "Y"
@@ -1337,7 +1339,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @STerm</remarks>
         <XmlAttribute("STerm")>
         <UcdProperty("STerm", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Sentence Terminal")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsSentenceTerminal")>
         Public ReadOnly Property IsSentenceTerminal As Boolean
             Get
                 Return GetPropertyValue("STerm") = "Y"
@@ -1349,7 +1351,7 @@ Namespace TextT.UnicodeT
         ''' <para>Note: Some diacritics are not combining characters and some combining characters are not diacritics.</para></remarks>
         <XmlAttribute("Dia")>
         <UcdProperty("Diacritic", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Diacritic")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsDiacritic")>
         Public ReadOnly Property IsDiacritic As Boolean
             Get
                 Return GetPropertyValue("Dia") = "Y"
@@ -1360,7 +1362,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Ext</remarks>
         <XmlAttribute("Ext")>
         <UcdProperty("Extender", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Extender")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsExtender")>
         Public ReadOnly Property IsExtender As Boolean
             Get
                 Return GetPropertyValue("Ext") = "Y"
@@ -1372,7 +1374,7 @@ Namespace TextT.UnicodeT
         ''' <para>An accent placed on this character causes the dot to disappear. Explicit dot above can be added if required.</para></remarks>
         <XmlAttribute("SD")>
         <UcdProperty("Soft_Dotted", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Soft-dotted")>
+        <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsSoftDotted")>
         Public ReadOnly Property IsSoftDotted As Boolean
             Get
                 Return GetPropertyValue("SD") = "Y"
@@ -1383,7 +1385,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Alpha</remarks>
         <XmlAttribute("Alpha")>
         <UcdProperty("Alphabetic", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Alphabetic")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsAlphabetic")>
         Public ReadOnly Property IsAlphabetic As Boolean
             Get
                 Return GetPropertyValue("Alpha") = "Y"
@@ -1394,7 +1396,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @OAlpha</remarks>
         <XmlAttribute("OAlpha"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         <UcdProperty("Other_Alphabetic", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Other Alphabetic")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherAlphabetic")>
         Public ReadOnly Property IsOtherAlphabetic As Boolean
             Get
                 Return GetPropertyValue("OAlpha") = "Y"
@@ -1405,7 +1407,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Math</remarks>
         <XmlAttribute("Math")>
         <UcdProperty("Math", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Math")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsMath")>
         Public ReadOnly Property IsMath As Boolean
             Get
                 Return GetPropertyValue("Math") = "Y"
@@ -1416,7 +1418,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @OMath</remarks>
         <XmlAttribute("OMath"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         <UcdProperty("Other_Math", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Other Math")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherMath")>
         Public ReadOnly Property IsOtherMath As Boolean
             Get
                 Return GetPropertyValue("OMath") = "Y"
@@ -1427,7 +1429,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Hex</remarks>
         <XmlAttribute("Hex")>
         <UcdProperty("Hex_Digit", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Numeric), DisplayName("Hexa-digit")>
+        <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_IsHexaDigit")>
         Public ReadOnly Property IsHexaDigit As Boolean
             Get
                 Return GetPropertyValue("Hex") = "Y"
@@ -1438,7 +1440,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @AHex</remarks>
         <XmlAttribute("AHex")>
         <UcdProperty("ASCII_Hex_Digit", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Numeric), DisplayName("ASCII Hexa-digit")>
+        <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_IsAsciiHex")>
         Public ReadOnly Property IsAsciiHex As Boolean
             Get
                 Return GetPropertyValue("AHex") = "Y"
@@ -1449,7 +1451,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @DI</remarks>
         <XmlAttribute("DI")>
         <UcdProperty("Default_Ignorable_Code_Point", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Default Ignorable Code Point")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsDefaultIgnorable")>
         Public ReadOnly Property IsDefaultIgnorable As Boolean
             Get
                 Return GetPropertyValue("DI") = "Y"
@@ -1460,7 +1462,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @ODI</remarks>
         <XmlAttribute("ODI"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         <UcdProperty("Other_Default_Ignorable_Code_Point", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Other Default Ignorable Code Point")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherDefaultIgnorable")>
         Public ReadOnly Property IsOtherDefaultIgnorable As Boolean
             Get
                 Return GetPropertyValue("ODI") = "Y"
@@ -1471,7 +1473,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @LOE<para>A small number of spacing vowel letters occurring in certain Southeast Asian scripts such as Thai and Lao, which use a visual order display model. These letters are stored in text ahead of syllable-initial consonants, and require special handling for processes such as searching and sorting.</para></remarks>
         <XmlAttribute("LOE")>
         <UcdProperty("Logical_Order_Exception", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Logical Order Exception")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsLogicalOrderException")>
         Public ReadOnly Property IsLogicalOrderException As Boolean
             Get
                 Return GetPropertyValue("LOE") = "Y"
@@ -1482,7 +1484,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @WSpace</remarks>
         <XmlAttribute("WSpace")>
         <UcdProperty("White_Space", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Whitespace")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsWhitespace")>
         Public ReadOnly Property IsWhitespace As Boolean
             Get
                 Return GetPropertyValue("WSpace") = "Y"
@@ -1495,7 +1497,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Gr_Base</remarks>
         <XmlAttribute("Gr_Base")>
         <UcdProperty("Grapheme_Base", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Grapheme Base")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsGraphemeBase")>
         Public ReadOnly Property IsGraphemeBase As Boolean
             Get
                 Return GetPropertyValue("Gr_Base") = "Y"
@@ -1506,7 +1508,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Gr_Ext</remarks>
         <XmlAttribute("Gr_Ext")>
         <UcdProperty("Grapheme_Extend", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Grapheme Extend")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsGraphemeExtend")>
         Public ReadOnly Property IsGraphemeExtend As Boolean
             Get
                 Return GetPropertyValue("Gr_Ext") = "Y"
@@ -1517,7 +1519,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @OGr_Ext</remarks>
         <XmlAttribute("OGr_Ext"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         <UcdProperty("Other_Grapheme_Extend", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
-        <UcdCategory(UnicodePropertyCategory.Contributory), DisplayName("Other Grapheme Extend")>
+        <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherGraphemeExtend")>
         Public ReadOnly Property IsOtherGraphemeExtend As Boolean
             Get
                 Return GetPropertyValue("OGr_Ext") = "Y"
@@ -1528,7 +1530,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Gr_Link<para>This property is deprecated as of Unicode 5.0</para></remarks>
         <XmlAttribute("Gr_Link"), Obsolete("Deprecated as of Unicode 5.0")>
          <UcdProperty("Grapheme_Link ", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Miscellaneous), DisplayName("Grapheme Link")>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsGraphemeLink")>
         Public ReadOnly Property IsGraphemeLink As Boolean
             Get
                 Return GetPropertyValue("Gr_Link") = "Y"
@@ -1540,7 +1542,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @GCB</remarks>
         <XmlAttribute("GCB"), DefaultValue(UnicodeGraphemeClusterBreak.other)>
         <UcdProperty("Grapheme_Cluster_Break", "GraphemeBreakProperty.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("Grapheme Cluster Break")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_GraphemeClusterBreak")>
         Public ReadOnly Property GraphemeClusterBreak As UnicodeGraphemeClusterBreak
             Get
                 Dim value = GetPropertyValue("GCB")
@@ -1568,7 +1570,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @WB</remarks>
         <XmlAttribute("WB"), DefaultValue(UnicodeWordBreakType.other)>
         <UcdProperty("Word_Break", "WordBreakProperty.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("Word Break")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_WordBreak")>
         Public ReadOnly Property WordBreak As UnicodeWordBreakType
             Get
                 Dim value = GetPropertyValue("WB")
@@ -1597,7 +1599,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @SB</remarks>
         <XmlAttribute("SB")>
         <UcdProperty("Sentence_Break", "SentenceBreakProperty.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), DisplayName("Sentence Break")>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_SentenceBreak")>
         Public ReadOnly Property SentenceBreak As UnicodeSentenceBreakType
             Get
                 Dim value = GetPropertyValue("SB")
@@ -1629,7 +1631,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Ideo</remarks>
         <XmlAttribute("Ideo")>
         <UcdProperty("Ideographic", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
-        <UcdCategory(UnicodePropertyCategory.Cjk), DisplayName("Ideographic")>
+        <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsIdeograph")>
         Public ReadOnly Property IsIdeograph As Boolean
             Get
                 Return GetPropertyValue("Ideo") = "Y"
@@ -1640,7 +1642,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @UIdeo</remarks>
         <XmlAttribute("UIdeo")>
         <UcdProperty("Unified_Ideograph", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Cjk), DisplayName("Unified Ideograph")>
+        <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsUnifiedIdeograph")>
         Public ReadOnly Property IsUnifiedIdeograph As Boolean
             Get
                 Return GetPropertyValue("UIdeo") = "Y"
@@ -1651,7 +1653,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @ISDB</remarks>
         <XmlAttribute("ISDB")>
         <UcdProperty("IDS_Binary_Operator", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Cjk), DisplayName("Ideographic Description Sequence Binary Operator")>
+        <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsIdsBinaryOperator")>
         Public ReadOnly Property IsIdsBinaryOperator As Boolean
             Get
                 Return GetPropertyValue("ISDB") = "Y"
@@ -1662,7 +1664,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @ISDT</remarks>
         <XmlAttribute("ISDT")>
         <UcdProperty("IDS_Trinary_Operator", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Cjk), DisplayName("Ideographic Description Sequence Trinary Operator")>
+        <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsIdsTrinaryOperator")>
         Public ReadOnly Property IsIdsTrinaryOperator As Boolean
             Get
                 Return GetPropertyValue("ISDT") = "Y"
@@ -1673,7 +1675,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Radical</remarks>
         <XmlAttribute("Radical")>
         <UcdProperty("Radical", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.Cjk), DisplayName("CJK Radical")>
+        <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsRadical")>
         Public ReadOnly Property IsRadical As Boolean
             Get
                 Return GetPropertyValue("Radical") = "Y"
@@ -1686,7 +1688,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Dep</remarks>
         <XmlAttribute("Dep")>
         <UcdProperty("Deprecated", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Deprecated")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsDeprecated")>
         Public ReadOnly Property IsDeprecated As Boolean
             Get
                 Return GetPropertyValue("Dep") = "Y"
@@ -1697,7 +1699,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @VS</remarks>
         <XmlAttribute("VS")>
         <UcdProperty("Variation_Selector", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Variation Selector")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsVariationSelector")>
         Public ReadOnly Property IsVariationSelector As Boolean
             Get
                 Return GetPropertyValue("VS") = "Y"
@@ -1708,7 +1710,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @NChar</remarks>
         <XmlAttribute("NChar")>
         <UcdProperty("Noncharacter_Code_Point", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
-        <UcdCategory(UnicodePropertyCategory.General), DisplayName("Non-character Code Point")>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsNonCharacter")>
         Public ReadOnly Property IsNonCharacter As Boolean
             Get
                 Return GetPropertyValue("NChar") = "Y"
@@ -1829,7 +1831,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Accounting numerals are used in East Asia to prevent fraud. Because a number like ten (十) is easily turned into one thousand (千) with a stroke of a brush, monetary documents will often use an accounting form of the numeral ten (such as 拾) in their place.</remarks>
         <XmlAttribute("kAccountingNumeric")>
         <UcdProperty("kAccountingNumeric", UnihanPropertyCategory.NumericValues, UnicodePropertyStatus.Informative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), DisplayName("Unihan Accounting Numeric")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), LDisplayName(GetType(UnicodeResources), "d_unihan_HanAccountingNumeric")>
         Public ReadOnly Property HanAccountingNumeric As Integer()
             Get
                 Return GetIntArray("kAccountingNumeric")
@@ -1840,7 +1842,7 @@ Namespace TextT.UnicodeT
         ''' <remarks><note>This does not cover any of the Big Five extensions in common use, including the ETEN extensions.</note></remarks>
         <XmlAttribute("kBigFive")>
         <UcdProperty("kBigFive", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Big 5 Mapping")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanBig5")>
         Public ReadOnly Property HanBig5 As Integer()
             Get
                 Return GetHexArray("kBigFive")
@@ -1851,7 +1853,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>This incorporates data from the file cangjie-table.b5 by Christian Wittern.</remarks>
         <XmlAttribute("kCangjie")>
         <UcdProperty("kCangjie", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Cangjie code")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCangjie")>
         Public ReadOnly Property HanCangjie As String()
             Get
                 Return GetStringArray("kCangjie")
@@ -1861,7 +1863,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The Cantonese pronunciation(s) for this character using the jyutping romanization.</summary>
         <XmlAttribute("kCantonese")>
         <UcdProperty("kCantonese", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Cantonese Pronounciation")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCantonese")>
         Public ReadOnly Property HanCantonese As String()
             Get
                 Return GetStringArray("kCantonese")
@@ -1871,7 +1873,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The CCCII mapping for this character</summary>
         <XmlAttribute("kCCCII")>
         <UcdProperty("kCCCII", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan CCCII Mapping")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCccii")>
         Public ReadOnly Property HanCccii As Integer()
             Get
                 Return GetHexArray("kCCCII")
@@ -1892,7 +1894,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kCheungBauer")>
         <UcdProperty("kCheungBauer", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Cheung-Bauer Reading")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCheungBauer")>
         Public ReadOnly Property HanCheungBauer As String()
             Get
                 Return GetStringArray("kCheungBauer")
@@ -1903,7 +1905,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The format is a three-digit page number followed by a two-digit position number, separated by a period.</remarks>
         <XmlAttribute("kCheungBauerIndex")>
         <UcdProperty("kCheungBauerIndex", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Cheung-Bauer Index")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCheungBauerIndex")>
         Public ReadOnly Property HanCheungBauerIndex As String()
             Get
                 Return GetStringArray("kCheungBauerIndex")
@@ -1914,7 +1916,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The position is indicated by a decimal number. The digits to the left of the decimal are the page number. The first digit after the decimal is the row on the page, and the remaining two digits after the decimal are the position on the row.</remarks>
         <XmlAttribute("kCihaiT")>
         <UcdProperty("kCihaiT", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Cihai")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCihai")>
         Public ReadOnly Property HanCihai As String()
             Get
                 Return GetStringArray("kCihaiT")
@@ -1925,7 +1927,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The strings returned by this property match to following regular expression <c>^[12E]-[0-9A-F]{4}$</c></remarks>
         <XmlAttribute("kCNS1986")>
         <UcdProperty("kCNS1986", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan CNS 11643-1986 Mapping")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCns1986")>
         Public ReadOnly Property HanCns1986 As String()
             Get
                 Return GetStringArray("kCNS1986")
@@ -1936,7 +1938,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The strings returned by this property match to following regular expression <c>^[1-9]-[0-9A-F]{4}$</c></remarks>
         <XmlAttribute("kCNS1992")>
         <UcdProperty("kCNS1992", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan CNS 11643-1992 Mapping")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCns1992")>
         Public ReadOnly Property HanCns1992 As String()
             Get
                 Return GetStringArray("kCNS1992")
@@ -1947,7 +1949,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Derived from the UnicodeData.txt file.</remarks>
         <XmlAttribute("kCompatibilityVariant")>
         <UcdProperty("kCompatibilityVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Compatibility Variant")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCompatibilityVariant")>
         Public ReadOnly Property HanCompatibilityVariant As String()
             Get
                 Return GetUnicodeArray("kCompatibilityVariant")
@@ -1959,7 +1961,7 @@ Namespace TextT.UnicodeT
         ''' <para>Approximately 100 characters from Cowles which are not currently encoded are being submitted to the IRG by Unicode for inclusion in future versions of the standard.</para></remarks>
         <XmlAttribute("kCowles")>
         <UcdProperty("kCowles", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Cowles")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanCowles")>
         Public ReadOnly Property HanCowles As Decimal()
             Get
                 Return GetDecimalArray("kCowles")
@@ -1970,7 +1972,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The position is in the form “page.position” with the final digit in the position being “0” for characters actually in the dictionary and “1” for characters not found in the dictionary and assigned a “virtual” position in the dictionary.</remarks>
         <XmlAttribute("kDaeJaweon")>
         <UcdProperty("kDaeJaweon", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Dae Jaweon")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanDaeJaweon")>
         Public ReadOnly Property HanDaeJaweon As String()
             Get
                 Return GetStringArray("kDaeJaweon")
@@ -1984,7 +1986,7 @@ Namespace TextT.UnicodeT
         ''' <para>Major definitions are separated by semicolons, and minor definitions by commas. Any valid Unicode character (except for tab, double-quote, and any line break character) may be used within the definition field.</para></remarks>
         <XmlAttribute("kDefinition")>
         <UcdProperty("kDefinition", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Definition")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanDefinition")>
         Public ReadOnly Property HanDefinition As String
             Get
                 Return GetPropertyValue("kDefinition")
@@ -1994,7 +1996,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The EACC mapping for this character.</summary>
         <XmlAttribute("kEACC")>
         <UcdProperty("kEACC", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan EACC")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanEacc")>
         Public ReadOnly Property HanEacc As Integer()
             Get
                 Return GetHexArray("kEACC")
@@ -2010,7 +2012,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kFenn")>
         <UcdProperty("kFenn", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Fenn")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanFenn")>
         Public ReadOnly Property HanFenn As String()
             Get
                 Return GetStringArray("kFenn")
@@ -2021,7 +2023,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The position is indicated by a three-digit page number followed by a period and a two-digit position on the page.</remarks>
         <XmlAttribute("kFennIndex")>
         <UcdProperty("kFennIndex", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Fenn Index")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanFennIndex")>
         Public ReadOnly Property HanFennIndex As Decimal()
             Get
                 Return GetDecimalArray("kFennIndex")
@@ -2036,7 +2038,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kFourCornerCode")>
         <UcdProperty("kFourCornerCode", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Four-corner Code")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanFourCornerCode")>
         Public ReadOnly Property HanFourCornerCode As Decimal()
             Get
                 Return GetDecimalArray("kFourCornerCode")
@@ -2047,7 +2049,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Characters with a <see cref="HanFrequency"/> of 1 are the most common, those with a <see cref="HanFrequency"/> of 2 are less common, and so on, through a <see cref="HanFrequency"/> of 5.</remarks>
         <XmlAttribute("kFrequency")>
         <UcdProperty("kFrequency", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), Description("Unihan Frequency")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanFrequency")>
         Public ReadOnly Property HanFrequency As Integer()
             Get
                 Return GetIntArray("kFrequency")
@@ -2057,7 +2059,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The GB 2312-80 mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kGB0")>
         <UcdProperty("kGB0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 2312-80")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGB0")>
         Public ReadOnly Property HanGB0 As Integer()
             Get
                 Return GetIntArray("kGB0")
@@ -2068,7 +2070,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The GB 12345-90 mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kGB1")>
         <UcdProperty("kGB1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 12345-90")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGB1")>
         Public ReadOnly Property HanGB1 As Integer()
             Get
                 Return GetIntArray("kGB1")
@@ -2078,7 +2080,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The GB 7589-87 mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kGB3")>
         <UcdProperty("kGB3", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 7589-87")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGB3")>
         Public ReadOnly Property HanGB3 As Integer()
             Get
                 Return GetIntArray("kGB3")
@@ -2088,7 +2090,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The GB 7590-87 mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kGB5")>
         <UcdProperty("kGB5", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 7590-87")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGB5")>
         Public ReadOnly Property HanGB5 As Integer()
             Get
                 Return GetIntArray("kGB5")
@@ -2098,7 +2100,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The GB 8565-89 mapping for this character in ku/ten form (GB7).</summary>
         <XmlAttribute("kGB7")>
         <UcdProperty("kGB7", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 8565-89 (GB7)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGB7")>
         Public ReadOnly Property HanGB7 As Integer()
             Get
                 Return GetIntArray("kGB7")
@@ -2108,7 +2110,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The GB 8565-89 mapping for this character in ku/ten form (GB8).</summary>
         <XmlAttribute("kGB8")>
         <UcdProperty("kGB8", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan GB 8565-89 (GB8)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGB8")>
         Public ReadOnly Property HanGB8 As Integer()
             Get
                 Return GetIntArray("kGB8")
@@ -2120,7 +2122,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>This data is derived from 朗文初級中文詞典, Hong Kong: Longman, 2001.</remarks>
         <XmlAttribute("kGradeLevel")>
         <UcdProperty("kGradeLevel", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Grade Level")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGradeLevel")>
         Public ReadOnly Property HanGradeLevel As Integer()
             Get
                 Return GetIntArray("kGradeLevel")
@@ -2131,7 +2133,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>This dataset contains a total of 7,405 records. References are given in the form DDDDa('), where “DDDD” is a set number in the range [0001..1260] zero-padded to 4-digits, “a” is a letter in the range [a..z] (excluding “w”), optionally followed by apostrophe ('). The data from which this mapping table is extracted contains a total of 10,023 references. References to inscriptional forms have been omitted.</remarks>
         <XmlAttribute("kGSR")>
         <UcdProperty("kGSR", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Grammata Serica Recensa")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanGsr")>
         Public ReadOnly Property HanGsr As String()
             Get
                 Return GetStringArray("kGSR")
@@ -2142,7 +2144,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Strings returned are composed only from characters from range 0x1100 ÷ 0x11FF (ᄀ÷ᇿ)</remarks>
         <XmlAttribute("kHangul")>
         <UcdProperty("kHangul", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Readings")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanHangul")>
         Public ReadOnly Property HanHangul As String()
             Get
                 Return GetStringArray("kHangul")
@@ -2156,7 +2158,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kHanYu")>
         <UcdProperty("kHanYu", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Hanyu Da Zidian")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanHanYu")>
         Public ReadOnly Property HanHanYu As String()
             Get
                 Return GetStringArray("kHanYu")
@@ -2173,7 +2175,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kHanyuPinlu")>
         <UcdProperty("kHanyuPinlu", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Inihan Xindai Hanyu Pinlu Cidian")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanHanyuPinlu")>
         Public ReadOnly Property HanHanyuPinlu As String()
             Get
                 Return GetStringArray("kHanyuPinlu")
@@ -2194,7 +2196,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kHanyuPinyin")>
         <UcdProperty("kHanyuPinyin", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Hànyǔ Dà Zìdiǎn")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanHanyuPinyin")>
         Public ReadOnly Property HanHanyuPinyin As String()
             Get
                 Return GetStringArray("kHanyuPinyin")
@@ -2205,7 +2207,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The field consists of the radical (with its Unicode code point), a colon, and then the Hanyu Da Zidian position as in the kHanyu field.</remarks>
         <XmlAttribute("kHDZRadBreak")>
         <UcdProperty("kHDZRadBreak", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Hanyu Da Zidian Break")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanHDZRadBreak")>
         Public ReadOnly Property HanHDZRadBreak As String
             Get
                 Return GetPropertyValue("kHDZRadBreak")
@@ -2216,7 +2218,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>This publication gives the “proper” shapes for 4759 characters as used in the Hong Kong school system. The index is an integer, zero-padded to four digits.</remarks>
         <XmlAttribute("kHKGlyph")>
         <UcdProperty("kHKGlyph", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Hong Kong Glyph")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanHKGlyph")>
         Public ReadOnly Property HanHKGlyph As Integer()
             Get
                 Return GetIntArray("kHKGlyph")
@@ -2226,7 +2228,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Mappings to the Big Five extended code points used for the Hong Kong Supplementary Character Set.</summary>
         <XmlAttribute("kHKSCS")>
         <UcdProperty("kHKSCS", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Hong Kong Supplementary Character Set")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanHkscs")>
         Public ReadOnly Property HanHkscs As Integer()
             Get
                 Return GetHexArray("kHKSCS")
@@ -2237,7 +2239,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Format of each string is <c>^F[ABC][0-9A-F]{2}$</c></remarks>
         <XmlAttribute("kIBMJapan")>
         <UcdProperty("kIBMJapan", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan IBM Japan")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIbmJapan")>
         Public ReadOnly Property HanIbmJapan As String()
             Get
                 Return GetStringArray("kIBMJapan")
@@ -2248,7 +2250,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The only value currently in this field is “2.1”, which is the identifier of the version of IICore used to populate this field.</remarks>
         <XmlAttribute("kIICore")>
         <UcdProperty("kIICore", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IICore")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIICore")>
         Public ReadOnly Property HanIICore As Version()
             Get
                 Return GetVersionArray("kIICore")
@@ -2263,7 +2265,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRGDaeJaweon")>
         <UcdProperty("kIRGDaeJaweon", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Dae Jaweon (IRG)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgDaeJaweon")>
         Public ReadOnly Property HanIrgDaeJaweon As String()
             Get
                 Return GetStringArray("kIRGDaeJaweon")
@@ -2274,7 +2276,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>This field represents the official position of the character within the DaiKanwa dictionary as used by the IRG in the four-dictionary sorting algorithm.</remarks>
         <XmlAttribute("kIRGDaiKanwaZiten")>
         <UcdProperty("kIRGDaiKanwaZiten", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), Description("Unihan Dai Kanwa Ziten (IRG)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgDaiKanwaZiten")>
         Public ReadOnly Property HanIrgDaiKanwaZiten As String()
             Get
                 Return GetStringArray("kIRGDaiKanwaZiten")
@@ -2289,7 +2291,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRGHanyuDaZidian")>
         <UcdProperty("kIRGHanyuDaZidian", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), Description("Unihan Hanyu Da Zidian (IRG)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgHanyuDaZidian")>
         Public ReadOnly Property HanIrgHanyuDaZidian As String()
             Get
                 Return GetStringArray("kIRGHanyuDaZidian")
@@ -2303,7 +2305,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRGKangXi")>
         <UcdProperty("kIRGKangXi", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), Description("Unihan Kang Xi (IRG)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgKangXi")>
         Public ReadOnly Property HanIrgKangXi As String()
             Get
                 Return GetStringArray("kIRGKangXi")
@@ -2343,7 +2345,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRG_GSource")>
         <UcdProperty("kIRG_GSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""G"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgGSource")>
         Public ReadOnly Property HanIrgGSource As String '““G””
             Get
                 Return GetPropertyValue("kIRG_GSource")
@@ -2354,7 +2356,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The IRG “H” source consists of data from the Hong Kong Supplementary Character Set – 2008.</remarks>
         <XmlAttribute("kIRG_HSource")>
         <UcdProperty("kIRG_HSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""H"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgHSource")>
         Public ReadOnly Property HanIrgHSource As String '““H””
             Get
                 Return GetPropertyValue("kIRG_HSource")
@@ -2378,7 +2380,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRG_JSource")>
         <UcdProperty("kIRG_JSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""J"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgJSource")>
         Public ReadOnly Property HanIrgJSource As String '““J””
             Get
                 Return GetPropertyValue("kIRG_JSource")
@@ -2395,7 +2397,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRG_KPSource")>
         <UcdProperty("kIRG_KPSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""KP"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgKPSource")>
         Public ReadOnly Property HanIrgKPSource As String '““KP””
             Get
                 Return GetPropertyValue("kIRG_KPSource")
@@ -2416,7 +2418,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRG_KSource")>
         <UcdProperty("kIRG_KSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""K"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgKSource")>
         Public ReadOnly Property HanIrgKSource As String '““K””
             Get
                 Return GetPropertyValue("kIRG_KSource")
@@ -2427,7 +2429,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>The IRG “M” source consists of data from the Macao Information System Character Set (澳門資訊系統字集).</remarks>
         <XmlAttribute("kIRG_MSource")>
         <UcdProperty("kIRG_MSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""M"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgMSource")>
         Public ReadOnly Property HanIrgMSource As String '““M””
             Get
                 Return GetPropertyValue("kIRG_MSource")
@@ -2454,7 +2456,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRG_TSource")>
         <UcdProperty("kIRG_TSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""T"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgTSource")>
         Public ReadOnly Property HanIrgTSource As String '““T””
             Get
                 Return GetPropertyValue("kIRG_TSource")
@@ -2465,7 +2467,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>U-source references are a reference into the U-source ideograph database; see UTR #45. These consist of “UTC” followed by a five-digit, zero-padded index into the database.</remarks>
         <XmlAttribute("kIRG_USource")>
         <UcdProperty("kIRG_USource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""U"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgUSource")>
         Public ReadOnly Property HanIrgUSource As String '““U””
             Get
                 Return GetPropertyValue("kIRG_USource")
@@ -2485,7 +2487,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("kIRG_VSource")>
         <UcdProperty("kIRG_VSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Normative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), DisplayName("Unihan IRG ""V"" Source")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_HanIrgVSource")>
         Public ReadOnly Property HanIrgVSource As String '““V””
             Get
                 Return GetPropertyValue("kIRG_VSource")
@@ -2497,7 +2499,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>This property is superseded by <see cref="HanHanYu"/>.</remarks>
         <XmlAttribute("kAlternateHanYu")>
         <UcdProperty("kAlternateHanYu", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate Han Yu")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), LDisplayName(GetType(UnicodeResources), "d_unihan_HanAlternateHanYu")>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 3.2. Its superseded by HanHanYu.")>
         Public ReadOnly Property HanAlternateHanYu As String
             Get
@@ -2508,7 +2510,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Meaning of this property is not documented in Unicode Standard. It was dropped in Unicdoe 3.1</summary>
         <XmlAttribute("kAlternateJEF")>
         <UcdProperty("kAlternateJEF", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate JEF")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), LDisplayName(GetType(UnicodeResources), "d_unihan_HanAlternateJef")>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 3.1.")>
         Public ReadOnly Property HanAlternateJef As String
             Get
@@ -2519,7 +2521,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Meaning of this property is not documented in Unicode Standard. It was dropped in Unicdoe 4.1</summary>
         <XmlAttribute("kAlternateKangXi")>
         <UcdProperty("kAlternateKangXi", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate Kang Xi")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), LDisplayName(GetType(UnicodeResources), "d_unihan_HanAlternateKangXi")>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 4.1.")>
         Public ReadOnly Property HanAlternateKangXi As String
             Get
@@ -2530,7 +2532,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Meaning of this property is not documented in Unicode Standard. It was dropped in Unicdoe 4.1</summary>
         <XmlAttribute("kAlternateMorohashi")>
         <UcdProperty("kAlternateMorohashi", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Alternate Morohashi")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), LDisplayName(GetType(UnicodeResources), "d_unihan_HanAlternateMorohashi")>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped in Unicode 4.1.")>
         Public ReadOnly Property HanAlternateMorohashi As String
             Get
@@ -2543,7 +2545,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The Japanese pronunciation(s) of this character.</summary>
         <XmlAttribute("kJapaneseKun")>
         <UcdProperty("kJapaneseKun", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Japanese Kun")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanJapaneseKun")>
         Public ReadOnly Property HanJapaneseKun As String()
             Get
                 Return GetStringArray("kJapaneseKun")
@@ -2553,7 +2555,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The Sino-Japanese pronunciation(s) of this character.</summary>
         <XmlAttribute("kJapaneseOn")>
         <UcdProperty("kJapaneseOn", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Japanese On")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanJapaneseOn")>
         Public ReadOnly Property HanJapaneseOn As String()
             Get
                 Return GetStringArray("kJapaneseOn")
@@ -2563,7 +2565,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The JIS X 0208-1990 mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kJis0")>
         <UcdProperty("kJis0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan JIS X 0208-1990")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanJis0208")>
         Public ReadOnly Property HanJis0208 As Integer()
             Get
                 Return GetIntArray("kJis0")
@@ -2573,7 +2575,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The JIS X 0213-2000 mapping for this character in min,ku,ten form.</summary>
         <XmlAttribute("kJIS0213")>
         <UcdProperty("kJIS0213", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan JIS X 0213-2000")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanJis0213")>
         Public ReadOnly Property HanJis0213 As String()
             Get
                 Return GetStringArray("kJIS0213")
@@ -2583,7 +2585,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The JIS X 0212-1990 mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kJis1")>
         <UcdProperty("kJis1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan JIS X 0212-1190")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanJisX0212")>
         Public ReadOnly Property HanJisX0212 As Integer()
             Get
                 Return GetIntArray("kJis1")
@@ -2595,7 +2597,7 @@ Namespace TextT.UnicodeT
         ''' <para>Thus, “1187.060” indicates the sixth character on page 1187. A character not in this dictionary but assigned a position between the 6th and 7th characters on page 1187 for sorting purposes would have the code “1187.061”.</para></remarks>
         <XmlAttribute("kKangXi")>
         <UcdProperty("kKangXi", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Kang Xi")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanKangXi")>
         Public ReadOnly Property HanKangXi As String()
             Get
                 Return GetStringArray("kKangXi")
@@ -2607,7 +2609,7 @@ Namespace TextT.UnicodeT
         ''' <para>If the index is followed by an asterisk (*), then the index is an interpolated one, indicating where the character would be found if it were to have been included in the dictionary. Note that while the index itself is usually an integer, there are some cases where it is an integer followed by an “A”.</para></remarks>
         <XmlAttribute("kKarlgren")>
         <UcdProperty("kKarlgren", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Karlgren")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanKarlgren")>
         Public ReadOnly Property HanKarlgren As String()
             Get
                 Return GetStringArray("kKarlgren")
@@ -2618,7 +2620,7 @@ Namespace TextT.UnicodeT
         ''' <remarks> (See <a href="http://www.coffeesigns.com/Resources/romanization/korean.asp">http://www.coffeesigns.com/Resources/romanization/korean.asp</a> for a comparison of the various Korean romanization systems.)</remarks>
         <XmlAttribute("kKorean")>
         <UcdProperty("kKorean", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Korean")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanKorean")>
         Public ReadOnly Property HanKorean As String()
             Get
                 Return GetStringArray("kKorean")
@@ -2628,7 +2630,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The KPS 9566-97 mapping for this character in hexadecimal form.</summary>
         <XmlAttribute("kKPS0")>
         <UcdProperty("kKPS0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KPS 9566-97")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanKps9566")>
         Public ReadOnly Property HanKps9566 As Integer()
             Get
                 Return GetHexArray("kKPS0")
@@ -2638,7 +2640,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The KPS 10721-2000 mapping for this character in hexadecimal form.</summary>
         <XmlAttribute("kKPS1")>
         <UcdProperty("kKPS1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KPS 10721-2000")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanKps10721")>
         Public ReadOnly Property HanKps10721 As Integer()
             Get
                 Return GetHexArray("kKPS1")
@@ -2648,7 +2650,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The KS X 1001:1992 (KS C 5601-1989) mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kKSC0")>
         <UcdProperty("kKSC0", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KS X 1001:1992")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanKSX1001")>
         Public ReadOnly Property HanKSX1001 As Integer()
             Get
                 Return GetIntArray("kKSC0")
@@ -2658,7 +2660,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The KS X 1002:1991 (KS C 5657-1991) mapping for this character in ku/ten form.</summary>
         <XmlAttribute("kKSC1")>
         <UcdProperty("kKSC1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan KS X 1002:1991")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanKSX1002")>
         Public ReadOnly Property HanKSX1002 As Integer()
             Get
                 Return GetIntArray("kKSC1")
@@ -2670,7 +2672,7 @@ Namespace TextT.UnicodeT
         ''' <para>The index consists of an integer. Missing indices indicate unencoded characters which are being submitted to the IRG for inclusion in future versions of the standard.</para></remarks>
         <XmlAttribute("kLau")>
         <UcdProperty("kLau", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Lau")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanLau")>
         Public ReadOnly Property HanLau As Integer()
             Get
                 Return GetIntArray("kLau")
@@ -2681,7 +2683,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>derived from “Kanzi denpou koudo henkan-hyou” (“Chinese character telegraph code conversion table”), Lin Jinyi, KDD Engineering and Consulting, Tokyo, 1984.</remarks>
         <XmlAttribute("kMainlandTelegraph")>
         <UcdProperty("kMainlandTelegraph", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Chinese Telegraph")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanMainlandTelegraph")>
         Public ReadOnly Property HanMainlandTelegraph As Integer()
             Get
                 Return GetIntArray("kMainlandTelegraph")
@@ -2692,7 +2694,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Mandarin pronunciations are sorted in order of frequency, not alphabetically.</remarks>
         <XmlAttribute("kMandarin")>
         <UcdProperty("kMandarin", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Mandarin")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanMandarin")>
         Public ReadOnly Property HanMandarin As String()
             Get
                 Return GetStringArray("kMandarin")
@@ -2704,7 +2706,7 @@ Namespace TextT.UnicodeT
         ''' <para>Note that the field name is kMatthews instead of kMathews to maintain compatibility with earlier versions of this file, where it was inadvertently misspelled.</para></remarks>
         <XmlAttribute("kMatthews")>
         <UcdProperty("kMatthews", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Matthews")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanMatthews")>
         Public ReadOnly Property HanMatthews As String()
             Get
                 Return GetStringArray("kMatthews")
@@ -2715,7 +2717,7 @@ Namespace TextT.UnicodeT
         ''' <remarks> The index is an integer, optionally followed by a lower-case Latin letter if the listing is in a subsidiary entry and not a main one. In some cases where the character is found in the radical-stroke index, but not in the main body of the dictionary, the integer is followed by an asterisk (e.g., U+50E5, which is listed as 736* as well as 1185a).</remarks>
         <XmlAttribute("kMeyerWempe")>
         <UcdProperty("kMeyerWempe", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Meyer & Wempe")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanMeyerWempe")>
         Public ReadOnly Property HanMeyerWempe As String()
             Get
                 Return GetStringArray("kMeyerWempe")
@@ -2727,7 +2729,7 @@ Namespace TextT.UnicodeT
         ''' <para>The edition used is the revised edition, published in Tokyo by Taishuukan Shoten, 1986.</para></remarks>
         <XmlAttribute("kMorohashi")>
         <UcdProperty("kMorohashi", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Morohashi")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanMorohashi")>
         Public ReadOnly Property HanMorohashi As String()
             Get
                 Return GetStringArray("kMorohashi")
@@ -2737,7 +2739,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The index of this character in The Modern Reader’s Japanese-English Character Dictionary by Andrew Nathaniel Nelson, Rutland, Vermont: Charles E. Tuttle Company, 1974.</summary>
         <XmlAttribute("kNelson")>
         <UcdProperty("kNelson", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Nelson")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanNelson")>
         Public ReadOnly Property HanNelson As Integer()
             Get
                 Return GetIntArray("kNelson")
@@ -2749,7 +2751,7 @@ Namespace TextT.UnicodeT
         ''' <para>The three numeric-value fields should have no overlap; that is, characters with a kOtherNumeric value should not have a kAccountingNumeric or kPrimaryNumeric value as well.</para></remarks>
         <XmlAttribute("kOtherNumeric")>
         <UcdProperty("kOtherNumeric", UnihanPropertyCategory.NumericValues, UnicodePropertyStatus.Informative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), DisplayName("Unihan Other Numeric")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), LDisplayName(GetType(UnicodeResources), "d_unihan_HanOtherNumeric")>
         Public ReadOnly Property HanOtherNumeric As Integer()
             Get
                 Return GetIntArray("kOtherNumeric")
@@ -2759,7 +2761,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The phonetic index for the character from <em>Ten Thousand Characters: An Analytic Dictionary</em>, by G. Hugh Casey, S.J. Hong Kong: Kelley and Walsh, 1980.</summary>
         <XmlAttribute("kPhonetic")>
         <UcdProperty("kPhonetic", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Phonetic")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanPhonetic")>
         Public ReadOnly Property HanPhonetic As String()
             Get
                 Return GetStringArray("kPhonetic")
@@ -2771,7 +2773,7 @@ Namespace TextT.UnicodeT
         ''' <para>The three numeric-value fields should have no overlap; that is, characters with a kPrimaryNumeric value should not have a kAccountingNumeric or kOtherNumeric value as well.</para></remarks>
         <XmlAttribute("kPrimaryNumeric")>
         <UcdProperty("kPrimaryNumeric", UnihanPropertyCategory.NumericValues, UnicodePropertyStatus.Informative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), DisplayName("Unihan Primary Numeric")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.NumericValues), LDisplayName(GetType(UnicodeResources), "d_unihan_HanPrimaryNumeric")>
         Public ReadOnly Property HanPrimaryNumeric As Integer()
             Get
                 Return GetIntArray("kPrimaryNumeric")
@@ -2782,7 +2784,7 @@ Namespace TextT.UnicodeT
         ''' <remarks> Pseudo-GB1 codes were used to provide official code points for characters not already in national standards, such as characters used to write Cantonese, and so on.</remarks>
         <XmlAttribute("kPseudoGB1")>
         <UcdProperty("kPseudoGB1", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Pseudo GB 12345-90")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanPseudoGB1")>
         Public ReadOnly Property HanPseudoGB1 As Integer()
             Get
                 Return GetIntArray("kPseudoGB1")
@@ -2795,7 +2797,7 @@ Namespace TextT.UnicodeT
         ''' <item>C or V. “C” indicates that the Unicode code point maps directly to the Adobe-Japan1-6 CID that appears after it, and “V” indicates that it is considered a variant form, and thus not directly encoded.</item></remarks>
         <XmlAttribute("kRSAdobe_Japan1_6")>
         <UcdProperty("kRSAdobe_Japan1_6", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Adobe-Japan1-6")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSAdobeJapan")>
         Public ReadOnly Property HanRSAdobeJapan As String()
             Get
                 Return GetStringArray("kRSAdobe_Japan1_6")
@@ -2805,7 +2807,7 @@ Namespace TextT.UnicodeT
         ''' <summary>A Japanese radical/stroke count for this character in the form “radical.additional strokes”.</summary>
         <XmlAttribute("kRSJapanese")>
         <UcdProperty("kRSJapanese", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Japanese)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSJapanese")>
         Public ReadOnly Property HanRSJapanese As RadicalStrokeCount()
             Get
                 Return GetRadicalStrokeCountArray("kRSJapanese")
@@ -2815,7 +2817,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The KangXi radical/stroke count for this character consistent with the value of the kKangXi field in the form “radical.additional strokes”.</summary>
         <XmlAttribute("kRSKangXi")>
         <UcdProperty("kRSKangXi", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Kang Xi)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSKangXi")>
         Public ReadOnly Property HanRSKangXi As RadicalStrokeCount()
             Get
                 Return GetRadicalStrokeCountArray("kRSKangXi")
@@ -2825,7 +2827,7 @@ Namespace TextT.UnicodeT
         ''' <summary>A Morohashi radical/stroke count for this character in the form “radical.additional strokes”.</summary>
         <XmlAttribute("kRSKanWa")>
         <UcdProperty("kRSKanWa", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Morohashi)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSKanWa")>
         Public ReadOnly Property HanRSKanWa As RadicalStrokeCount()
             Get
                 Return GetRadicalStrokeCountArray("kRSKanWa")
@@ -2835,7 +2837,7 @@ Namespace TextT.UnicodeT
         ''' <summary>A Korean radical/stroke count for this character in the form “radical.additional strokes”.</summary>
         <XmlAttribute("kRSKorean")>
         <UcdProperty("kRSKorean", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Korean)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSKorean")>
         Public ReadOnly Property HanRSKorean As RadicalStrokeCount()
             Get
                 Return GetRadicalStrokeCountArray("kRSKorean")
@@ -2848,7 +2850,7 @@ Namespace TextT.UnicodeT
         ''' <para>The first value is intended to reflect the same radical as the kRSKangXi field and the stroke count of the glyph used to print the character within the Unicode Standard.</para></remarks>
         <XmlAttribute("kRSUnicode")>
         <UcdProperty("kRSUnicode", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Informative)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Unicode)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSUnicode")>
         Public ReadOnly Property HanRSUnicode As RadicalStrokeCount()
             Get
                 Return GetRadicalStrokeCountArray("kRSUnicode")
@@ -2860,7 +2862,7 @@ Namespace TextT.UnicodeT
         ''' <para>The 25334 character references are given in the form “ABC.XY”, in which: “ABC” is the zero-padded page number [004..546]; “XY” is the zero-padded number of the character on the page [01..73]. For example, 364.38 indicates the 38th character on Page 364 (i.e. 澍). Where a given Unicode Scalar Value (USV) has more than one reference, these are space-delimited.</para></remarks>
         <XmlAttribute("kSBGY")>
         <UcdProperty("kSBGY", UnihanPropertyCategory.DictionaryIndices, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), DisplayName("Unihan Song Ben Guang Yun")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanSongBenGuangYun")>
         Public ReadOnly Property HanSongBenGuangYun As String()
             Get
                 Return GetStringArray("kSBGY")
@@ -2875,7 +2877,7 @@ Namespace TextT.UnicodeT
         ''' <para>Z is used if the source explicitly indicates that the given character is the preferred form. Thus, kHanYu indicates that U+5231 刱 and U+5275 創 are semantic variants and that U+5275 創 is the preferred form.</para></remarks>
         <XmlAttribute("kSemanticVariant")>
         <UcdProperty("kSemanticVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Semantic Variant")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), LDisplayName(GetType(UnicodeResources), "d_unihan_HanSemanticVariant")>
         Public ReadOnly Property HanSemanticVariant As String()
             Get
                 Return GetStringArray("kSemanticVariant")
@@ -2889,7 +2891,7 @@ Namespace TextT.UnicodeT
         ''' <para>Much of the of the data on simplified and traditional variants was supplied by Wenlin <a href="http://www.wenlin.com">http://www.wenlin.com</a></para></remarks>
         <XmlAttribute("kSimplifiedVariant")>
         <UcdProperty("kSimplifiedVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Simplified Variant")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), LDisplayName(GetType(UnicodeResources), "d_unihan_HanSimplifiedVariant")>
         Public ReadOnly Property HanSimplifiedVariant As String()
             Get
                 Return GetUnicodeArray("kSimplifiedVariant")
@@ -2901,7 +2903,7 @@ Namespace TextT.UnicodeT
         ''' <para>A specialized semantic variant is an x- or y-variant with similar or identical meaning only in certain contexts (such as accountants’ numerals).</para></remarks>
         <XmlAttribute("kSpecializedSemanticVariant")>
         <UcdProperty("kSpecializedSemanticVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Specialized Semantic Variant")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), LDisplayName(GetType(UnicodeResources), "d_unihan_HanSpecializedSemanticVariant")>
         Public ReadOnly Property HanSpecializedSemanticVariant As String()
             Get
                 Return GetStringArray("kSpecializedSemanticVariant")
@@ -2911,7 +2913,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The Taiwanese telegraph code for this character, derived from “Kanzi denpou koudo henkan-hyou” (“Chinese character telegraph code conversion table”), Lin Jinyi, KDD Engineering and Consulting, Tokyo, 1984.</summary>
         <XmlAttribute("kTaiwanTelegraph")>
         <UcdProperty("kTaiwanTelegraph", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Taiwan Telegraph")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanTaiwanTelegraph")>
         Public ReadOnly Property HanTaiwanTelegraph As Integer()
             Get
                 Return GetIntArray("kTaiwanTelegraph")
@@ -2922,7 +2924,7 @@ Namespace TextT.UnicodeT
         ''' <remarks> An asterisk indicates that the word or morpheme represented in toto or in part by the given character with the given reading occurs more than four times in the seven hundred poems covered.</remarks>
         <XmlAttribute("kTang")>
         <UcdProperty("kTang", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Tang")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanTang")>
         Public ReadOnly Property HanTang As String()
             Get
                 Return GetStringArray("kTang")
@@ -2933,7 +2935,7 @@ Namespace TextT.UnicodeT
         ''' <remarks> This value is for the character as drawn in the Unicode charts.</remarks>
         <XmlAttribute("kTotalStrokes")>
         <UcdProperty("kTotalStrokes", UnihanPropertyCategory.DictionaryLikeData, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), DisplayName("Unihan Total Strokes")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryLikeData), LDisplayName(GetType(UnicodeResources), "d_unihan_HanTotalStrokes")>
         Public ReadOnly Property HanTotalStrokes As Integer()
             Get
                 Return GetIntArray("kTotalStrokes")
@@ -2947,7 +2949,7 @@ Namespace TextT.UnicodeT
         ''' <para>Much of the of the data on simplified and traditional variants was graciously supplied by Wenlin Institute, Inc. <a href="http://www.wenlin.com">http://www.wenlin.com</a>.</para></remarks>
         <XmlAttribute("kTraditionalVariant")>
         <UcdProperty("kTraditionalVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Traditional Variant")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), LDisplayName(GetType(UnicodeResources), "d_unihan_HanTraditionalVariant")>
         Public ReadOnly Property HanTraditionalVariant As String()
             Get
                 Return GetUnicodeArray("kTraditionalVariant")
@@ -2957,7 +2959,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The character’s pronunciation(s) in Quốc ngữ.</summary>
         <XmlAttribute("kVietnamese")>
         <UcdProperty("kVietnamese", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Vietnamese")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanVietnamese")>
         Public ReadOnly Property HanVietnamese As String()
             Get
                 Return GetStringArray("kVietnamese")
@@ -2967,7 +2969,7 @@ Namespace TextT.UnicodeT
         ''' <summary>The Xerox code for this character.</summary>
         <XmlAttribute("kXerox")>
         <UcdProperty("kXerox", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), DisplayName("Unihan Xerox")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanXerox")>
         Public ReadOnly Property HanXerox As String()
             Get
                 Return GetStringArray("kXerox")
@@ -2979,7 +2981,7 @@ Namespace TextT.UnicodeT
         ''' <para>Each pīnyīn reading is preceded by the character’s location(s) in the dictionary, separated from the reading by “:” (colon); multiple locations for a given reading are separated by “,” (comma); multiple “location: reading” values are separated by “ ” (space). Each location reference is of the form /[0-9]{4}\.[0-9]{3}\*?/ . The number preceding the period is the page number, zero-padded to four digits. The first two digits of the number following the period are the entry’s position on the page, zero-padded. The third digit is 0 for a main entry and greater than 0 for a parenthesized variant of the main entry. A trailing “*” (asterisk) on the location indicates an encoded variant substituted for an unencoded character (see below).</para></remarks>
         <XmlAttribute("kXHC1983")>
         <UcdProperty("kXHC1983", UnihanPropertyCategory.Readings, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), DisplayName("Unihan Xiàndài Hànyǔ Cídiǎn")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Readings), LDisplayName(GetType(UnicodeResources), "d_unihan_HanXiàndàiHànyǔCídiǎn")>
         Public ReadOnly Property HanXiàndàiHànyǔCídiǎn As String()
             Get
                 Return GetStringArray("kXHC1983")
@@ -2991,7 +2993,7 @@ Namespace TextT.UnicodeT
         ''' <para>The basic syntax is a Unicode scalar value. It may optionally be followed by additional data. The additional data is separated from the Unicode scalar value by a less-than sign (&lt;), and may be subdivided itself into substrings by commas. The additional data consists of a series of field tags for another field in the Unihan database indicating the source of the information.</para></remarks>
         <XmlAttribute("kZVariant")>
         <UcdProperty("kZVariant", UnihanPropertyCategory.Variants, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), DisplayName("Unihan Z-variant")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.Variants), LDisplayName(GetType(UnicodeResources), "d_unihan_HanZVariant")>
         Public ReadOnly Property HanZVariant As String()
             Get
                 Return GetStringArray("kZVariant")
@@ -3003,7 +3005,7 @@ Namespace TextT.UnicodeT
         ''' <summary>This property is undocumented in Unicode standard</summary>
         <XmlAttribute("kJHJ")>
         <UcdProperty("kJHJ", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan JHJ")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), LDisplayName(GetType(UnicodeResources), "d_unihan_HanJhj")>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public ReadOnly Property HanJhj As String
             Get
@@ -3015,7 +3017,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Meaning of this property is not documented in Unicode standard but it seems to be merge of some or all Radical/stroke Count properties. This property was dropped in Unicode 3.1</summary>
         <XmlAttribute("kRSMerged")>
         <UcdProperty("kRSMerged", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), DisplayName("Unihan Radical/stroke Count (Merged)")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSMerged")>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), Obsolete("This property was dropped from Unicode 3.1")>
         Public ReadOnly Property HanRSMerged As String
             Get
@@ -3026,7 +3028,7 @@ Namespace TextT.UnicodeT
         ''' <summary>This property is undocumented in Unicode standard</summary>
         <XmlAttribute("kWubi")>
         <UcdProperty("kWubi", UnihanPropertyCategory.unknown, UnicodePropertyStatus.Provisional)>
-        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), DisplayName("Unihan Wubi")>
+        <UcdCategoryUnihan(UnihanPropertyCategory.unknown), LDisplayName(GetType(UnicodeResources), "d_unihan_HanWubi")>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public ReadOnly Property HanWubi As String
             Get
@@ -3036,9 +3038,6 @@ Namespace TextT.UnicodeT
 
 #End Region
 
-        'TODO: Properties:
-        'Name_Alias
-        'Block
 #End Region
 
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>

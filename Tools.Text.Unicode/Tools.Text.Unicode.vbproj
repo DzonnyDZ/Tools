@@ -178,6 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Text\Unicode\ucd.xml" />
+    <EmbeddedResource Include="Text\Unicode\UnicodeResources.cs.resx">
+      <DependentUpon>UnicodeResources.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\UnicodeResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UnicodeResources.Designer.vb</LastGenOutput>

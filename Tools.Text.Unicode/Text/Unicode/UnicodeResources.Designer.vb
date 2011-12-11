@@ -65,6 +65,123 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Age.
+        '''</summary>
+        Friend Shared ReadOnly Property d_Age() As String
+            Get
+                Return ResourceManager.GetString("d_Age", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Bidi Class.
+        '''</summary>
+        Friend Shared ReadOnly Property d_BidiClass() As String
+            Get
+                Return ResourceManager.GetString("d_BidiClass", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Bidi Mirrored.
+        '''</summary>
+        Friend Shared ReadOnly Property d_BidiMirrored() As String
+            Get
+                Return ResourceManager.GetString("d_BidiMirrored", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Bidi Mirroring Glyph.
+        '''</summary>
+        Friend Shared ReadOnly Property d_BidiMirroringGlyph() As String
+            Get
+                Return ResourceManager.GetString("d_BidiMirroringGlyph", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Canonical Combining Class.
+        '''</summary>
+        Friend Shared ReadOnly Property d_CanonicalCombiningClass() As String
+            Get
+                Return ResourceManager.GetString("d_CanonicalCombiningClass", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Case Folding.
+        '''</summary>
+        Friend Shared ReadOnly Property d_CaseFolding() As String
+            Get
+                Return ResourceManager.GetString("d_CaseFolding", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Case Folding Closure Mapping KC.
+        '''</summary>
+        Friend Shared ReadOnly Property d_CaseFoldingClosureMappingKC() As String
+            Get
+                Return ResourceManager.GetString("d_CaseFoldingClosureMappingKC", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Changes when Casefolded.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ChangesWhenCasefolded() As String
+            Get
+                Return ResourceManager.GetString("d_ChangesWhenCasefolded", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Changes when Casemapped.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ChangesWhenCasemapped() As String
+            Get
+                Return ResourceManager.GetString("d_ChangesWhenCasemapped", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Changes when Loweracsed.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ChangesWhenLoweracsed() As String
+            Get
+                Return ResourceManager.GetString("d_ChangesWhenLoweracsed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Changes when Normalization Form KC Casefold.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ChangesWhenNfKCCasefold() As String
+            Get
+                Return ResourceManager.GetString("d_ChangesWhenNfKCCasefold", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Changes when Tilecased.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ChangesWhenTilecased() As String
+            Get
+                Return ResourceManager.GetString("d_ChangesWhenTilecased", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Composition Exclusion.
+        '''</summary>
+        Friend Shared ReadOnly Property d_CompositionExclusion() As String
+            Get
+                Return ResourceManager.GetString("d_CompositionExclusion", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Bidi Category.
         '''</summary>
         Friend Shared ReadOnly Property d_CSUR_BidiCategory() As String
@@ -137,6 +254,681 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Decomposition Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_DecompositionMapping() As String
+            Get
+                Return ResourceManager.GetString("d_DecompositionMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Decomposition type.
+        '''</summary>
+        Friend Shared ReadOnly Property d_DecompositionType() As String
+            Get
+                Return ResourceManager.GetString("d_DecompositionType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to East Asian Width.
+        '''</summary>
+        Friend Shared ReadOnly Property d_EastAsianWidth() As String
+            Get
+                Return ResourceManager.GetString("d_EastAsianWidth", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Expands on Normalization Form C.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ExpandsOnC() As String
+            Get
+                Return ResourceManager.GetString("d_ExpandsOnC", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Expands on Normalization Form D.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ExpandsOnD() As String
+            Get
+                Return ResourceManager.GetString("d_ExpandsOnD", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Expands on Normalization Form KC.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ExpandsOnKC() As String
+            Get
+                Return ResourceManager.GetString("d_ExpandsOnKC", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Expands on Normalization Form KD.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ExpandsOnKD() As String
+            Get
+                Return ResourceManager.GetString("d_ExpandsOnKD", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Full Composition Exclusion.
+        '''</summary>
+        Friend Shared ReadOnly Property d_FullCompositionExclusion() As String
+            Get
+                Return ResourceManager.GetString("d_FullCompositionExclusion", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to General Category.
+        '''</summary>
+        Friend Shared ReadOnly Property d_GeneralCategory() As String
+            Get
+                Return ResourceManager.GetString("d_GeneralCategory", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Grapheme Cluster Break.
+        '''</summary>
+        Friend Shared ReadOnly Property d_GraphemeClusterBreak() As String
+            Get
+                Return ResourceManager.GetString("d_GraphemeClusterBreak", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Hangul Syllable Type.
+        '''</summary>
+        Friend Shared ReadOnly Property d_HangulSyllableType() As String
+            Get
+                Return ResourceManager.GetString("d_HangulSyllableType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Indic Mantra Category.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IndicMantraCategory() As String
+            Get
+                Return ResourceManager.GetString("d_IndicMantraCategory", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Indic Syllabic Category.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IndicSyllabicCategory() As String
+            Get
+                Return ResourceManager.GetString("d_IndicSyllabicCategory", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Alphabetic.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsAlphabetic() As String
+            Get
+                Return ResourceManager.GetString("d_IsAlphabetic", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ASCII Hexa-digit.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsAsciiHex() As String
+            Get
+                Return ResourceManager.GetString("d_IsAsciiHex", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Bidi Control.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsBidiControl() As String
+            Get
+                Return ResourceManager.GetString("d_IsBidiControl", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cased.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsCased() As String
+            Get
+                Return ResourceManager.GetString("d_IsCased", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Case Ignorable.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsCaseIgnorable() As String
+            Get
+                Return ResourceManager.GetString("d_IsCaseIgnorable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Dash.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsDash() As String
+            Get
+                Return ResourceManager.GetString("d_IsDash", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Default Ignorable Code Point.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsDefaultIgnorable() As String
+            Get
+                Return ResourceManager.GetString("d_IsDefaultIgnorable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Deprecated.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsDeprecated() As String
+            Get
+                Return ResourceManager.GetString("d_IsDeprecated", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Diacritic.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsDiacritic() As String
+            Get
+                Return ResourceManager.GetString("d_IsDiacritic", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Extender.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsExtender() As String
+            Get
+                Return ResourceManager.GetString("d_IsExtender", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Grapheme Base.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsGraphemeBase() As String
+            Get
+                Return ResourceManager.GetString("d_IsGraphemeBase", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Grapheme Extend.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsGraphemeExtend() As String
+            Get
+                Return ResourceManager.GetString("d_IsGraphemeExtend", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Grapheme Link.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsGraphemeLink() As String
+            Get
+                Return ResourceManager.GetString("d_IsGraphemeLink", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Hexa-digit.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsHexaDigit() As String
+            Get
+                Return ResourceManager.GetString("d_IsHexaDigit", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Hyphen.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsHyphen() As String
+            Get
+                Return ResourceManager.GetString("d_IsHyphen", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Identifier Continuation.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsIdContinue() As String
+            Get
+                Return ResourceManager.GetString("d_IsIdContinue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Identifier Continuation alternative.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsIdContinueEx() As String
+            Get
+                Return ResourceManager.GetString("d_IsIdContinueEx", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Ideographic.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsIdeograph() As String
+            Get
+                Return ResourceManager.GetString("d_IsIdeograph", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Ideographic Description Sequence Binary Operator.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsIdsBinaryOperator() As String
+            Get
+                Return ResourceManager.GetString("d_IsIdsBinaryOperator", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Identifier Start.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsIdStart() As String
+            Get
+                Return ResourceManager.GetString("d_IsIdStart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Identifier Start alternative.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsIdStartEx() As String
+            Get
+                Return ResourceManager.GetString("d_IsIdStartEx", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Ideographic Description Sequence Trinary Operator.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsIdsTrinaryOperator() As String
+            Get
+                Return ResourceManager.GetString("d_IsIdsTrinaryOperator", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Logical Order Exception.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsLogicalOrderException() As String
+            Get
+                Return ResourceManager.GetString("d_IsLogicalOrderException", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Lowercase.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsLowercase() As String
+            Get
+                Return ResourceManager.GetString("d_IsLowercase", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Math.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsMath() As String
+            Get
+                Return ResourceManager.GetString("d_IsMath", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Non-character Code Point.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsNonCharacter() As String
+            Get
+                Return ResourceManager.GetString("d_IsNonCharacter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ISO Comment.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsoComment() As String
+            Get
+                Return ResourceManager.GetString("d_IsoComment", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Alphabetic.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherAlphabetic() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherAlphabetic", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Default Ignorable Code Point.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherDefaultIgnorable() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherDefaultIgnorable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Grapheme Extend.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherGraphemeExtend() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherGraphemeExtend", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Identifier Continuation.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherIdContinue() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherIdContinue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Identifier Start.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherIdStart() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherIdStart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Lowercase.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherLowercase() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherLowercase", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Math.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherMath() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherMath", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Other Uppercase.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsOtherUppercase() As String
+            Get
+                Return ResourceManager.GetString("d_IsOtherUppercase", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Pattern Syntax.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsPatternSyntax() As String
+            Get
+                Return ResourceManager.GetString("d_IsPatternSyntax", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Pattern Whitespace.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsPatternWhiteSpace() As String
+            Get
+                Return ResourceManager.GetString("d_IsPatternWhiteSpace", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Quotation Mark.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsQuotationMark() As String
+            Get
+                Return ResourceManager.GetString("d_IsQuotationMark", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to CJK Radical.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsRadical() As String
+            Get
+                Return ResourceManager.GetString("d_IsRadical", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Sentence Terminal.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsSentenceTerminal() As String
+            Get
+                Return ResourceManager.GetString("d_IsSentenceTerminal", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Soft-dotted.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsSoftDotted() As String
+            Get
+                Return ResourceManager.GetString("d_IsSoftDotted", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Terminal Punctuation.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsTerminalPunctuation() As String
+            Get
+                Return ResourceManager.GetString("d_IsTerminalPunctuation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unified Ideograph.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsUnifiedIdeograph() As String
+            Get
+                Return ResourceManager.GetString("d_IsUnifiedIdeograph", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Uppercase.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsUppercase() As String
+            Get
+                Return ResourceManager.GetString("d_IsUppercase", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Variation Selector.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsVariationSelector() As String
+            Get
+                Return ResourceManager.GetString("d_IsVariationSelector", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Whitespace.
+        '''</summary>
+        Friend Shared ReadOnly Property d_IsWhitespace() As String
+            Get
+                Return ResourceManager.GetString("d_IsWhitespace", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Jamo Short Name.
+        '''</summary>
+        Friend Shared ReadOnly Property d_JamoShortName() As String
+            Get
+                Return ResourceManager.GetString("d_JamoShortName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Join Control.
+        '''</summary>
+        Friend Shared ReadOnly Property d_JoinControl() As String
+            Get
+                Return ResourceManager.GetString("d_JoinControl", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Joining Group.
+        '''</summary>
+        Friend Shared ReadOnly Property d_JoiningGroup() As String
+            Get
+                Return ResourceManager.GetString("d_JoiningGroup", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Joining Type.
+        '''</summary>
+        Friend Shared ReadOnly Property d_JoiningType() As String
+            Get
+                Return ResourceManager.GetString("d_JoiningType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Line Break.
+        '''</summary>
+        Friend Shared ReadOnly Property d_LineBreak() As String
+            Get
+                Return ResourceManager.GetString("d_LineBreak", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Lowercase Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_LowercaseMapping() As String
+            Get
+                Return ResourceManager.GetString("d_LowercaseMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Name.
+        '''</summary>
+        Friend Shared ReadOnly Property d_Name() As String
+            Get
+                Return ResourceManager.GetString("d_Name", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unicode 1 Name.
+        '''</summary>
+        Friend Shared ReadOnly Property d_Name1() As String
+            Get
+                Return ResourceManager.GetString("d_Name1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Normalization form KC Casefold.
+        '''</summary>
+        Friend Shared ReadOnly Property d_NfKCCasefold() As String
+            Get
+                Return ResourceManager.GetString("d_NfKCCasefold", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Normalization Form C Quick Check.
+        '''</summary>
+        Friend Shared ReadOnly Property d_NormalizationFormCQuickCheck() As String
+            Get
+                Return ResourceManager.GetString("d_NormalizationFormCQuickCheck", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Normalization Form D Quick Check.
+        '''</summary>
+        Friend Shared ReadOnly Property d_NormalizationFormDQuickCheck() As String
+            Get
+                Return ResourceManager.GetString("d_NormalizationFormDQuickCheck", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Normalization Form KC Quick Check.
+        '''</summary>
+        Friend Shared ReadOnly Property d_NormalizationFormKCQuickCheck() As String
+            Get
+                Return ResourceManager.GetString("d_NormalizationFormKCQuickCheck", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Normalization Form KD Quick Check.
+        '''</summary>
+        Friend Shared ReadOnly Property d_NormalizationFormKDQuickCheck() As String
+            Get
+                Return ResourceManager.GetString("d_NormalizationFormKDQuickCheck", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Numeric Type.
+        '''</summary>
+        Friend Shared ReadOnly Property d_NumericType() As String
+            Get
+                Return ResourceManager.GetString("d_NumericType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Numeric Value.
+        '''</summary>
+        Friend Shared ReadOnly Property d_NumericValue() As String
+            Get
+                Return ResourceManager.GetString("d_NumericValue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Bidi Strength.
+        '''</summary>
+        Friend Shared ReadOnly Property d_other_BidiStrength() As String
+            Get
+                Return ResourceManager.GetString("d_other_BidiStrength", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Code point.
         '''</summary>
         Friend Shared ReadOnly Property d_other_CodePoint() As String
@@ -155,6 +947,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to General category class.
+        '''</summary>
+        Friend Shared ReadOnly Property d_other_GeneralCategoryClass() As String
+            Get
+                Return ResourceManager.GetString("d_other_GeneralCategoryClass", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Last Code-point.
         '''</summary>
         Friend Shared ReadOnly Property d_other_LastCodePoint() As String
@@ -164,11 +965,992 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Localized name.
+        '''</summary>
+        Friend Shared ReadOnly Property d_other_LocalizedName() As String
+            Get
+                Return ResourceManager.GetString("d_other_LocalizedName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Normative name aliases.
+        '''</summary>
+        Friend Shared ReadOnly Property d_other_NameAliases() As String
+            Get
+                Return ResourceManager.GetString("d_other_NameAliases", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Type.
         '''</summary>
         Friend Shared ReadOnly Property d_other_Type() As String
             Get
                 Return ResourceManager.GetString("d_other_Type", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Script.
+        '''</summary>
+        Friend Shared ReadOnly Property d_Script() As String
+            Get
+                Return ResourceManager.GetString("d_Script", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Sentence Break.
+        '''</summary>
+        Friend Shared ReadOnly Property d_SentenceBreak() As String
+            Get
+                Return ResourceManager.GetString("d_SentenceBreak", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Simple Case Folding.
+        '''</summary>
+        Friend Shared ReadOnly Property d_SimpleCaseFolding() As String
+            Get
+                Return ResourceManager.GetString("d_SimpleCaseFolding", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Simple Lowercase Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_SimpleLowercaseMapping() As String
+            Get
+                Return ResourceManager.GetString("d_SimpleLowercaseMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Simple Tilecase Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_SimpleTilecaseMapping() As String
+            Get
+                Return ResourceManager.GetString("d_SimpleTilecaseMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Simple Uppercase Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_SimpleUppercaseMapping() As String
+            Get
+                Return ResourceManager.GetString("d_SimpleUppercaseMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tilecase Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_TilecaseMapping() As String
+            Get
+                Return ResourceManager.GetString("d_TilecaseMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Accounting Numeric.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanAccountingNumeric() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanAccountingNumeric", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Alternate Han Yu.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanAlternateHanYu() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanAlternateHanYu", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Alternate JEF.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanAlternateJef() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanAlternateJef", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Alternate Kang Xi.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanAlternateKangXi() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanAlternateKangXi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Alternate Morohashi.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanAlternateMorohashi() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanAlternateMorohashi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Big 5 Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanBig5() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanBig5", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Cangjie code.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCangjie() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCangjie", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Cantonese Pronounciation.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCantonese() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCantonese", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan CCCII Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCccii() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCccii", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Cheung-Bauer Reading.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCheungBauer() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCheungBauer", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Cheung-Bauer Index.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCheungBauerIndex() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCheungBauerIndex", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Cihai.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCihai() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCihai", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan CNS 11643-1986 Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCns1986() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCns1986", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan CNS 11643-1992 Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCns1992() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCns1992", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Compatibility Variant.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCompatibilityVariant() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCompatibilityVariant", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Cowles.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanCowles() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanCowles", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Dae Jaweon.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanDaeJaweon() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanDaeJaweon", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Definition.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanDefinition() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanDefinition", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan EACC.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanEacc() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanEacc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Fenn.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanFenn() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanFenn", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Fenn Index.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanFennIndex() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanFennIndex", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Four-corner Code.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanFourCornerCode() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanFourCornerCode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Frequency.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanFrequency() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanFrequency", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan GB 2312-80.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGB0() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGB0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan GB 12345-90.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGB1() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGB1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan GB 7589-87.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGB3() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGB3", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan GB 7590-87.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGB5() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGB5", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan GB 8565-89 (GB7).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGB7() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGB7", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan GB 8565-89 (GB8).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGB8() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGB8", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Grade Level.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGradeLevel() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGradeLevel", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Grammata Serica Recensa.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanGsr() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanGsr", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Readings.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanHangul() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanHangul", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Hanyu Da Zidian.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanHanYu() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanHanYu", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Xindai Hanyu Pinlu Cidian.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanHanyuPinlu() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanHanyuPinlu", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Hànyǔ Dà Zìdiǎn.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanHanyuPinyin() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanHanyuPinyin", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Hanyu Da Zidian Break.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanHDZRadBreak() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanHDZRadBreak", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Hong Kong Glyph.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanHKGlyph() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanHKGlyph", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Hong Kong Supplementary Character Set.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanHkscs() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanHkscs", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IBM Japan.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIbmJapan() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIbmJapan", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IICore.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIICore() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIICore", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Dae Jaweon (IRG).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgDaeJaweon() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgDaeJaweon", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Dai Kanwa Ziten (IRG).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgDaiKanwaZiten() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgDaiKanwaZiten", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “G” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgGSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgGSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Hanyu Da Zidian (IRG).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgHanyuDaZidian() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgHanyuDaZidian", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “H” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgHSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgHSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “J” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgJSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgJSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Kang Xi (IRG).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgKangXi() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgKangXi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “KP” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgKPSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgKPSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “K” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgKSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgKSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “M” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgMSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgMSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “T” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgTSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgTSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “U” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgUSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgUSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan IRG “V” Source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanIrgVSource() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanIrgVSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Japanese Kun.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanJapaneseKun() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanJapaneseKun", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Japanese On.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanJapaneseOn() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanJapaneseOn", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan JHJ.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanJhj() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanJhj", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan JIS X 0208-1990.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanJis0208() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanJis0208", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan JIS X 0213-2000.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanJis0213() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanJis0213", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan JIS X 0212-1190.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanJisX0212() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanJisX0212", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Kang Xi.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanKangXi() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanKangXi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Karlgren.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanKarlgren() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanKarlgren", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Korean.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanKorean() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanKorean", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan KPS 10721-2000.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanKps10721() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanKps10721", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan KPS 9566-97.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanKps9566() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanKps9566", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan KS X 1001:1992.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanKSX1001() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanKSX1001", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan KS X 1002:1991.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanKSX1002() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanKSX1002", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Lau.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanLau() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanLau", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Chinese Telegraph.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanMainlandTelegraph() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanMainlandTelegraph", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Mandarin.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanMandarin() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanMandarin", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Matthews.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanMatthews() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanMatthews", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Meyer &amp; Wempe.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanMeyerWempe() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanMeyerWempe", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Morohashi.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanMorohashi() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanMorohashi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Nelson.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanNelson() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanNelson", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Other Numeric.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanOtherNumeric() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanOtherNumeric", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Phonetic.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanPhonetic() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanPhonetic", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Primary Numeric.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanPrimaryNumeric() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanPrimaryNumeric", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Pseudo GB 12345-90.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanPseudoGB1() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanPseudoGB1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Adobe-Japan1-6.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanRSAdobeJapan() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanRSAdobeJapan", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Radical/stroke Count (Japanese).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanRSJapanese() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanRSJapanese", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Radical/stroke Count (Kang Xi).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanRSKangXi() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanRSKangXi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Radical/stroke Count (Morohashi).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanRSKanWa() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanRSKanWa", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Radical/stroke Count (Korean).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanRSKorean() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanRSKorean", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Radical/stroke Count (Merged).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanRSMerged() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanRSMerged", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Radical/stroke Count (Unicode).
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanRSUnicode() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanRSUnicode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Semantic Variant.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanSemanticVariant() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanSemanticVariant", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Simplified Variant.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanSimplifiedVariant() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanSimplifiedVariant", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Song Ben Guang Yun.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanSongBenGuangYun() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanSongBenGuangYun", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Specialized Semantic Variant.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanSpecializedSemanticVariant() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanSpecializedSemanticVariant", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Taiwan Telegraph.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanTaiwanTelegraph() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanTaiwanTelegraph", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Tang.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanTang() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanTang", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Total Strokes.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanTotalStrokes() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanTotalStrokes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Traditional Variant.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanTraditionalVariant() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanTraditionalVariant", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Vietnamese.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanVietnamese() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanVietnamese", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Wubi.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanWubi() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanWubi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Xerox.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanXerox() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanXerox", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Xiàndài Hànyǔ Cídiǎn.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanXiàndàiHànyǔCídiǎn() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanXiàndàiHànyǔCídiǎn", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unihan Z-variant.
+        '''</summary>
+        Friend Shared ReadOnly Property d_unihan_HanZVariant() As String
+            Get
+                Return ResourceManager.GetString("d_unihan_HanZVariant", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Friendly name.
+        '''</summary>
+        Friend Shared ReadOnly Property d_UniversalName() As String
+            Get
+                Return ResourceManager.GetString("d_UniversalName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Uppercase Mapping.
+        '''</summary>
+        Friend Shared ReadOnly Property d_UppercaseMapping() As String
+            Get
+                Return ResourceManager.GetString("d_UppercaseMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Word Break.
+        '''</summary>
+        Friend Shared ReadOnly Property d_WordBreak() As String
+            Get
+                Return ResourceManager.GetString("d_WordBreak", resourceCulture)
             End Get
         End Property
         

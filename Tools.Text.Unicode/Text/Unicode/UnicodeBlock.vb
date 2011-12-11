@@ -116,6 +116,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets localized name for current UI culture</summary>
         ''' <remarks>For details see <see cref="GetLocalizedName"/>.</remarks>
         ''' <seelaso cref="GetLocalizedName"/>
+        <XmlIgnore()>
         Public ReadOnly Property LocalizedName As String
             Get
                 Return GetLocalizedName(Nothing)
@@ -136,7 +137,7 @@ Namespace TextT.UnicodeT
             If culture Is Nothing Then culture = CultureInfo.CurrentUICulture
             Dim ns = UcdLocalizationProvider.GetCultureNamespace(culture.Name)
             Dim extensions = Element.Document.Annotation(Of IDictionary(Of String, UnicodeCharacterDatabase))()
-            Dim locucd As UnicodeCharacterDatabase
+            Dim locucd As UnicodeCharacterDatabase = Nothing
             If extensions IsNot Nothing AndAlso extensions.Containskey(ns) Then
                 locucd = extensions(ns)
             End If
@@ -153,6 +154,5 @@ Namespace TextT.UnicodeT
 
             Return Name
         End Function
-    End Class
     End Class
 End Namespace

@@ -144,6 +144,7 @@ Namespace TextT.UnicodeT
         ''' </list>
         ''' <note type="inheritinfo">Derived class may provide different for <see cref="UniversalName"/> lookup.</note>
         ''' </returns>
+        <XmlIgnore(), LDisplayName(GetType(UnicodeResources), "d_UniversalName")>
         Public Overridable ReadOnly Property UniversalName As String
             Get
                 If NameAliases IsNot Nothing AndAlso NameAliases.Length > 0 Then Return NameAliases(0)
@@ -269,6 +270,69 @@ Namespace TextT.UnicodeT
                 Return New CodePointInfoCollection(Element.Document, value)
             End Get
         End Property
+
+        ''' <summary>Gets a Unicode block this code-point belongs to</summary>
+        ''' <returns>
+        ''' A Unicode block this code-point belongs to, null if corresponding block cannot be found.
+        ''' In case <see cref="CodePoint"/> is null and <see cref="FirstCodePoint"/> and <see cref="LastCodePoint"/> are specified the block is returned only in case both - <see cref="FirstCodePoint"/> and <see cref="LastCodePoint"/> belong to the same block.
+        ''' If <see cref="CodePoint"/> is null and also either <see cref="FirstCodePoint"/> or <see cref="LastCodePoint"/> is null, this function always returns null.
+        ''' </returns>
+        ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
+        ''' <seelaso cref="UnicodeCharacterDatabase.FindBlock"/>
+        <Browsable(False), XmlIgnore()>
+        Public ReadOnly Property Block As UnicodeBlock
+            Get
+                If CodePoint.HasValue Then
+                    Dim bel As XElement
+                    Try
+                        bel = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, CodePoint.Value, False)
+                    Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
+                        Throw New InvalidOperationException(ex.Message, ex)
+                    End Try
+                    If bel IsNot Nothing Then Return New UnicodeBlock(bel)
+                ElseIf FirstCodePoint.HasValue AndAlso LastCodePoint.HasValue Then
+                    Dim bel1 As XElement
+                    Dim bel2 As XElement
+                    Try
+                        bel1 = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, FirstCodePoint.Value, False)
+                        bel2 = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, LastCodePoint.Value, False)
+                    Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
+                        Throw New InvalidOperationException(ex.Message, ex)
+                    End Try
+                    If bel1 Is bel2 Then Return New UnicodeBlock(bel1)
+                End If
+                Return Nothing
+            End Get
+        End Property
+
+        ''' <summary>Gets normative name aliases for name of this code point</summary>
+        ''' <returns>
+        ''' Name aliases (alternative normative names) for this code-point.
+        ''' Retturns null if <see cref="CodePoint"/> is null or if name aliases are not registered.
+        ''' Returns an empty array if there ane no formal aliases for name of current code point.
+        ''' </returns>
+        ''' <remarks>This property returns non-null values only if NameAliases.txt textual extension was registered for parent UCD</remarks>
+        ''' <seelaso cref="UnicodeCharacterDatabase.NameAliases"/>
+        <XmlIgnore(), LDisplayName(GetType(UnicodeResources), "d_other_NameAliases")>
+        Public ReadOnly Property NameAliases As String()
+            Get
+                If Not CodePoint.HasValue Then Return Nothing
+                Dim aliases = TryCast(GetTextualExtension("NameAliases.txt"), Dictionary(Of UInteger, String()))
+                If aliases Is Nothing Then Return Nothing
+                Dim aarr As String() = Nothing
+                If aliases.TryGetValue(CodePoint.Value, aarr) Then Return aarr Else Return New String() {}
+            End Get
+        End Property
+
+        ''' <summary>Gets localized name for current UI culture</summary>
+        ''' <remarks>For details see <see cref="GetLocalizedName"/>.</remarks>
+        ''' <seelaso cref="GetLocalizedName"/>
+        <XmlIgnore(), LDisplayName(GetType(UnicodeResources), "d_other_LocalizedName")>
+        Public ReadOnly Property LocalizedName As String
+            Get
+                Return GetLocalizedName(Nothing)
+            End Get
+        End Property
 #End Region
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
         ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
@@ -316,6 +380,7 @@ Namespace TextT.UnicodeT
             clone._codePoint = codePoint
             Return clone
         End Function
+
         ''' <summary>Makes single-character instance form range instance</summary>
         ''' <param name="codePoint">Code point from current range to make single-character instance pointing to</param>
         ''' <returns>
@@ -360,67 +425,6 @@ Namespace TextT.UnicodeT
             If ret Is Nothing Then Throw New InvalidOperationException(UnicodeResources.ex_CannotFindCodePoint)
             Return ret
         End Operator
-
-        ''' <summary>Gets a Unicode block this code-point belongs to</summary>
-        ''' <returns>
-        ''' A Unicode block this code-point belongs to, null if corresponding block cannot be found.
-        ''' In case <see cref="CodePoint"/> is null and <see cref="FirstCodePoint"/> and <see cref="LastCodePoint"/> are specified the block is returned only in case both - <see cref="FirstCodePoint"/> and <see cref="LastCodePoint"/> belong to the same block.
-        ''' If <see cref="CodePoint"/> is null and also either <see cref="FirstCodePoint"/> or <see cref="LastCodePoint"/> is null, this function always returns null.
-        ''' </returns>
-        ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
-        ''' <seelaso cref="UnicodeCharacterDatabase.FindBlock"/>
-        <Browsable(False), XmlIgnore()>
-        Public ReadOnly Property Block As UnicodeBlock
-            Get
-                If CodePoint.HasValue Then
-                    Dim bel As XElement
-                    Try
-                        bel = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, CodePoint.Value, False)
-                    Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
-                        Throw New InvalidOperationException(ex.Message, ex)
-                    End Try
-                    If bel IsNot Nothing Then Return New UnicodeBlock(bel)
-                ElseIf FirstCodePoint.HasValue AndAlso LastCodePoint.HasValue Then
-                    Dim bel1 As XElement
-                    Dim bel2 As XElement
-                    Try
-                        bel1 = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, FirstCodePoint.Value, False)
-                        bel2 = UnicodeCharacterDatabase.FindBlock(Element.Document.<ucd>.<blocks>.<block>, LastCodePoint.Value, False)
-                    Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
-                        Throw New InvalidOperationException(ex.Message, ex)
-                    End Try
-                    If bel1 Is bel2 Then Return New UnicodeBlock(bel1)
-                End If
-                Return Nothing
-            End Get
-        End Property
-
-        ''' <summary>Gets normative name aliases for name of this code point</summary>
-        ''' <returns>
-        ''' Name aliases (alternative normative names) for this code-point.
-        ''' Retturns null if <see cref="CodePoint"/> is null or if name aliases are not registered.
-        ''' Returns an empty array if there ane no formal aliases for name of current code point.
-        ''' </returns>
-        ''' <remarks>This property returns non-null values only if NameAliases.txt textual extension was registered for parent UCD</remarks>
-        ''' <seelaso cref="UnicodeCharacterDatabase.NameAliases"/>
-        Public ReadOnly Property NameAliases As String()
-            Get
-                If Not CodePoint.HasValue Then Return Nothing
-                Dim aliases = TryCast(GetTextualExtension("NameAliases.txt"), Dictionary(Of UInteger, String()))
-                If aliases Is Nothing Then Return Nothing
-                Dim aarr As String() = Nothing
-                If aliases.TryGetValue(CodePoint.Value, aarr) Then Return aarr Else Return New String() {}
-            End Get
-        End Property
-
-        ''' <summary>Gets localized name for current UI culture</summary>
-        ''' <remarks>For details see <see cref="GetLocalizedName"/>.</remarks>
-        ''' <seelaso cref="GetLocalizedName"/>
-        Public ReadOnly Property LocalizedName As String
-            Get
-                Return GetLocalizedName(Nothing)
-            End Get
-        End Property
 
         ''' <summary>Gets localized name of this code-point (if available)</summary>
         ''' <param name="culture">Culture to get localized name for. If null current UI culture is used.</param>

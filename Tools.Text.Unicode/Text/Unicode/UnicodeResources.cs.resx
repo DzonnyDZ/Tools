@@ -112,189 +112,187 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="propcat_General" xml:space="preserve">
-    <value>General</value>
+    <value>Obecné</value>
   </data>
   <data name="propcat_Case" xml:space="preserve">
-    <value>Case</value>
+    <value>Velikost</value>
   </data>
   <data name="propcat_Normalization" xml:space="preserve">
-    <value>Normalization</value>
+    <value>Normalizace</value>
   </data>
   <data name="propcat_ShapingAndRendering" xml:space="preserve">
-    <value>Shaping and Rendering</value>
+    <value>Tvary a vykreslování</value>
   </data>
   <data name="propcat_Bidirectional" xml:space="preserve">
-    <value>Bidirectional</value>
+    <value>Obousměrnost</value>
   </data>
   <data name="propcat_Identifiers" xml:space="preserve">
-    <value>Identifiers</value>
+    <value>Identifikátory</value>
   </data>
   <data name="propcat_Cjk" xml:space="preserve">
     <value>CJK</value>
   </data>
   <data name="propcat_Miscellaneous" xml:space="preserve">
-    <value>Miscellaneous</value>
+    <value>Různé</value>
   </data>
   <data name="propcat_Contributory" xml:space="preserve">
-    <value>Contributory</value>
+    <value>Dílčí</value>
   </data>
   <data name="propcat_Numeric" xml:space="preserve">
-    <value>Numeric</value>
+    <value>Číselné</value>
   </data>
   <data name="propstat_Normative" xml:space="preserve">
-    <value>Normative</value>
+    <value>Normativní</value>
   </data>
   <data name="propstat_Informative" xml:space="preserve">
-    <value>Informative</value>
+    <value>Informativní</value>
   </data>
   <data name="propstat_Contributory" xml:space="preserve">
-    <value>Contributory</value>
+    <value>Dílčí</value>
   </data>
   <data name="propstat_Provisional" xml:space="preserve">
-    <value>Provisional</value>
+    <value>Provizorní</value>
   </data>
   <data name="proptype_Catalog" xml:space="preserve">
-    <value>Catalog</value>
+    <value>Katalog</value>
   </data>
   <data name="proptype_Enumeration" xml:space="preserve">
-    <value>Enumeration</value>
+    <value>Výčet</value>
   </data>
   <data name="proptype_Binary" xml:space="preserve">
-    <value>Binary</value>
+    <value>Binární</value>
   </data>
   <data name="proptype_String" xml:space="preserve">
-    <value>String</value>
+    <value>Řetězec</value>
   </data>
   <data name="proptype_Numeric" xml:space="preserve">
-    <value>Numeric</value>
+    <value>Číslo</value>
   </data>
   <data name="proptype_Miscellaneous" xml:space="preserve">
-    <value>Miscellaneous</value>
+    <value>Různé</value>
   </data>
   <data name="propcat_unihan_IrgSources" xml:space="preserve">
-    <value>IRG Sources</value>
+    <value>IRG zdroje</value>
   </data>
   <data name="propcat_unihan_OtherMappings" xml:space="preserve">
-    <value>Other Mappings</value>
+    <value>Ostatní mapování</value>
   </data>
   <data name="propcat_unihan_DictionaryIndices" xml:space="preserve">
-    <value>Dictionary Indices</value>
+    <value>Odkazy do slovníků</value>
   </data>
   <data name="propcat_unihan_Readings" xml:space="preserve">
-    <value>Readings</value>
+    <value>Čtení</value>
   </data>
   <data name="propcat_unihan_DictionaryLikeData" xml:space="preserve">
-    <value>Dictionary-like Data</value>
+    <value>Slovníková data</value>
   </data>
   <data name="propcat_unihan_RadicalStrokeCount" xml:space="preserve">
-    <value>Radical Stroke Count</value>
+    <value>Počet tahů</value>
   </data>
   <data name="propcat_unihan_Variants" xml:space="preserve">
-    <value>Variants</value>
+    <value>Varianty</value>
   </data>
   <data name="propcat_unihan_NumericValues" xml:space="preserve">
-    <value>Numeric Values</value>
+    <value>Číslené hodnoty</value>
   </data>
   <data name="propcat_unihan_UnihanPrefix" xml:space="preserve">
     <value>Unihan - </value>
   </data>
   <data name="ex_CodepointMustStartWithUPlus" xml:space="preserve">
-    <value>Codepoint must start with U+</value>
+    <value>COdepoint musí začínat na U+</value>
   </data>
   <data name="propcat_unihan_Unknown" xml:space="preserve">
-    <value>unknown</value>
+    <value>naznámé</value>
   </data>
   <data name="ex_InvalidXmlElement" xml:space="preserve">
-    <value>Element must be {0}</value>
+    <value>Element musí být {0}</value>
   </data>
   <data name="ex_UnrecognizedFormatCharacter" xml:space="preserve">
-    <value>Unrecognized format character {0}</value>
-    <comment>ex_UnrecognizedFormatCharacter description</comment>
+    <value>Nerozpoznaný formátovací znak {0}</value>
   </data>
   <data name="ex_CannotFindCodePoint" xml:space="preserve">
-    <value>Cannot find code point represented by {0}. {1} instance was either initialized without XML document or information is not available for current code point.</value>
+    <value>Nebylo možno nalézt codepoint reprezentovaný {0}. Instance {1} byla buďto inicializována bez XML dokumentu nebo informace pro tento codepoint není dostupná.</value>
   </data>
   <data name="ex_MakeSingleFromSingle" xml:space="preserve">
-    <value>Only range characters can be used to make single characters.</value>
+    <value>Jen znaky představující rozsahy mohou být použitý k vytvoření jednotlivých znaků.</value>
   </data>
   <data name="ex_NotAllowedForPlaceholderCharacters" xml:space="preserve">
-    <value>Not allowed for placeholder characters.</value>
+    <value>Není povoleno pro zástupné znaky.</value>
   </data>
   <data name="ex_OperationIsNotValidForCharacterRanges" xml:space="preserve">
-    <value>Operation is not valid for character ranges.</value>
+    <value>Operace naní platná pro rozsahy znaků.</value>
   </data>
   <data name="ex_RangeNotFullySpecified" xml:space="preserve">
-    <value>This range is not fully specified. Either first or last codepoint is not specified.</value>
+    <value>Tento rozsah není plně specifikován. Buďto počáteční nebo koncový codepoint chybí.</value>
   </data>
   <data name="ex_SequenceContainsPlaceholder" xml:space="preserve">
-    <value>Sequence contains placeholder</value>
-    <comment>SequenceContainsPlaceholder description</comment>
+    <value>Sekvence obsahuje zástupný znak.</value>
   </data>
   <data name="ex_SurrogatePair" xml:space="preserve">
-    <value>Character represents surrogate pair</value>
+    <value>Znak reprezentuje pár náhrad.</value>
   </data>
   <data name="ex_UnsupportedBidirectionalCategory" xml:space="preserve">
-    <value>Unsupported bidirectional category {0}</value>
+    <value>Nepodporovaná bidi kategorie {0}</value>
   </data>
   <data name="ex_UnsuppportedGeneralCategory" xml:space="preserve">
-    <value>Unsuppported general category {0}</value>
+    <value>Nepodporovaná obecná kategorie {0}</value>
   </data>
   <data name="ex_ValueCannotBeParsed" xml:space="preserve">
-    <value>Value {0} cannot be parsed as {1}</value>
+    <value>Hodnota {0} nemůže být naparzována jako {1}</value>
   </data>
   <data name="propcat_CSUR_CSUR" xml:space="preserve">
     <value>CSUR</value>
   </data>
   <data name="d_CSUR_Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Typ</value>
   </data>
   <data name="d_CSUR_BidiCategory" xml:space="preserve">
-    <value>Bidi Category</value>
+    <value>Bidi kategorie</value>
   </data>
   <data name="d_CSUR_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Název</value>
   </data>
   <data name="d_CSUR_LastRevision" xml:space="preserve">
-    <value>Last revision</value>
+    <value>Poslední revize</value>
   </data>
   <data name="d_CSUR_ReservedFor" xml:space="preserve">
-    <value>Reserved for</value>
+    <value>Rezervováno pro</value>
   </data>
   <data name="d_CSUR_Status" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="d_CSUR_Script" xml:space="preserve">
-    <value>Script</value>
+    <value>Skript</value>
   </data>
   <data name="propcat_other_Infrastructure" xml:space="preserve">
-    <value>Infrastructure</value>
+    <value>Pomocné</value>
   </data>
   <data name="d_other_Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Typ</value>
   </data>
   <data name="d_other_CodePoint" xml:space="preserve">
-    <value>Code point</value>
+    <value>Codepoint</value>
   </data>
   <data name="d_other_FirstCodePoint" xml:space="preserve">
-    <value>First Code-point</value>
+    <value>První znak</value>
   </data>
   <data name="d_other_LastCodePoint" xml:space="preserve">
-    <value>Last Code-point</value>
+    <value>Poslední znak</value>
   </data>
   <data name="d_CSUR_Creator" xml:space="preserve">
-    <value>Creator</value>
+    <value>Autor</value>
   </data>
   <data name="ex_ErrorReadingNameAliases" xml:space="preserve">
-    <value>Erorr while reading name aliases on line {0}: {1}</value>
+    <value>Chyba při čtení aliasů jmen na řádku {0}: {1}</value>
   </data>
   <data name="ex_NameAlias_NotHex" xml:space="preserve">
-    <value>Unexpected character. Expected uppercase hexadecimal digit</value>
+    <value>Neučekávaný znak. Očekáváno hexačíslo velkými písmeny.</value>
   </data>
   <data name="prefix_CSUR" xml:space="preserve">
     <value>CSUR: </value>
@@ -306,358 +304,358 @@
     <value>Alias: </value>
   </data>
   <data name="ex_NamesListAlreadyLoaded" xml:space="preserve">
-    <value>NamesList extension is already loaded</value>
+    <value>Rozšíření NamesLis jej již načteno</value>
   </data>
   <data name="ex_CollectionCopyToSmallArray" xml:space="preserve">
-    <value>Not enough space in destination array</value>
+    <value>V cílovém poli není dost místa</value>
   </data>
   <data name="ex_FirstLastCharSwapped" xml:space="preserve">
-    <value>First character cannot be greater than last charatcer</value>
+    <value>První znak nemůže být větší než poslední znak</value>
   </data>
   <data name="ex_NoCharsInCollection" xml:space="preserve">
-    <value>No characters in collection</value>
+    <value>V kolekci se nenacházejí žádné znaky</value>
   </data>
   <data name="ex_MultidimensionalArray" xml:space="preserve">
-    <value>Array is multidimensional</value>
+    <value>Pole je vícerozměrné</value>
   </data>
   <data name="ex_EnumeratorState" xml:space="preserve">
-    <value>Enumeration has not yet started or it has already finished.</value>
-  </data>
-  <data name="d_UniversalName" xml:space="preserve">
-    <value>Friendly name</value>
+    <value>Procházení buďto ještě nezačalo nebo již skončilo.</value>
   </data>
   <data name="d_other_NameAliases" xml:space="preserve">
-    <value>Normative name aliases</value>
+    <value>Normativní aliasy jmen</value>
   </data>
   <data name="d_other_LocalizedName" xml:space="preserve">
-    <value>Localized name</value>
-  </data>
-  <data name="d_Age" xml:space="preserve">
-    <value>Age</value>
-  </data>
-  <data name="d_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="d_Name1" xml:space="preserve">
-    <value>Unicode 1 Name</value>
-  </data>
-  <data name="d_GeneralCategory" xml:space="preserve">
-    <value>General Category</value>
+    <value>Localizovaný název</value>
   </data>
   <data name="d_other_GeneralCategoryClass" xml:space="preserve">
-    <value>General category class</value>
-  </data>
-  <data name="d_CanonicalCombiningClass" xml:space="preserve">
-    <value>Canonical Combining Class</value>
-  </data>
-  <data name="d_BidiClass" xml:space="preserve">
-    <value>Bidi Class</value>
+    <value>Třída obecné kategorie</value>
   </data>
   <data name="d_other_BidiStrength" xml:space="preserve">
-    <value>Bidi Strength</value>
+    <value>Bidi síla</value>
+  </data>
+  <data name="d_UniversalName" xml:space="preserve">
+    <value>Čitelný název</value>
+  </data>
+  <data name="d_Age" xml:space="preserve">
+    <value>Věk</value>
+  </data>
+  <data name="d_Name" xml:space="preserve">
+    <value>Název</value>
+  </data>
+  <data name="d_Name1" xml:space="preserve">
+    <value>Název Unicode 1</value>
+  </data>
+  <data name="d_GeneralCategory" xml:space="preserve">
+    <value>Obecná ktegorie</value>
+  </data>
+  <data name="d_CanonicalCombiningClass" xml:space="preserve">
+    <value>Kanonická kombinační třída</value>
+  </data>
+  <data name="d_BidiClass" xml:space="preserve">
+    <value>Bidi kategorie</value>
   </data>
   <data name="d_BidiMirrored" xml:space="preserve">
-    <value>Bidi Mirrored</value>
+    <value>Bidi zrdcadlově</value>
   </data>
   <data name="d_BidiMirroringGlyph" xml:space="preserve">
-    <value>Bidi Mirroring Glyph</value>
+    <value>Bidi zrdcadlový glyph</value>
   </data>
   <data name="d_IsBidiControl" xml:space="preserve">
-    <value>Bidi Control</value>
+    <value>Bidi kontrolní</value>
   </data>
   <data name="d_DecompositionType" xml:space="preserve">
-    <value>Decomposition type</value>
+    <value>Dekompoziční typ</value>
   </data>
   <data name="d_DecompositionMapping" xml:space="preserve">
-    <value>Decomposition Mapping</value>
+    <value>Dekompoziční mapování</value>
   </data>
   <data name="d_CompositionExclusion" xml:space="preserve">
-    <value>Composition Exclusion</value>
+    <value>Výjimka z kompozice</value>
   </data>
   <data name="d_FullCompositionExclusion" xml:space="preserve">
-    <value>Full Composition Exclusion</value>
+    <value>Výjimka z plné kompozice</value>
   </data>
   <data name="d_NormalizationFormCQuickCheck" xml:space="preserve">
-    <value>Normalization Form C Quick Check</value>
+    <value>Rychlá kontrola normalizační formy C</value>
   </data>
   <data name="d_NormalizationFormDQuickCheck" xml:space="preserve">
-    <value>Normalization Form D Quick Check</value>
+    <value>Rychlá kontrola normalizační formy D</value>
   </data>
   <data name="d_NormalizationFormKCQuickCheck" xml:space="preserve">
-    <value>Normalization Form KC Quick Check</value>
+    <value>Rychlá kontrola normalizační formy KC</value>
   </data>
   <data name="d_NormalizationFormKDQuickCheck" xml:space="preserve">
-    <value>Normalization Form KD Quick Check</value>
+    <value>Rychlá kontrola normalizační formy KD</value>
   </data>
   <data name="d_CaseFoldingClosureMappingKC" xml:space="preserve">
-    <value>Case Folding Closure Mapping KC</value>
+    <value>Uzavření změny velikosti při mapování KC</value>
   </data>
   <data name="d_ExpandsOnC" xml:space="preserve">
-    <value>Expands on Normalization Form C</value>
+    <value>Expanduje při normalizační formě C</value>
   </data>
   <data name="d_ExpandsOnD" xml:space="preserve">
-    <value>Expands on Normalization Form D</value>
+    <value>Expanduje při normalizační formě D</value>
   </data>
   <data name="d_ExpandsOnKC" xml:space="preserve">
-    <value>Expands on Normalization Form KC</value>
+    <value>Expanduje při normalizační formě KC</value>
   </data>
   <data name="d_ExpandsOnKD" xml:space="preserve">
-    <value>Expands on Normalization Form KD</value>
+    <value>Expanduje při normalizační formě KD</value>
   </data>
   <data name="d_NumericType" xml:space="preserve">
-    <value>Numeric Type</value>
+    <value>Numerický typ</value>
   </data>
   <data name="d_NumericValue" xml:space="preserve">
-    <value>Numeric Value</value>
+    <value>Numerická hodnota</value>
   </data>
   <data name="d_JoiningType" xml:space="preserve">
-    <value>Joining Type</value>
+    <value>Typ spojování</value>
   </data>
   <data name="d_JoiningGroup" xml:space="preserve">
-    <value>Joining Group</value>
+    <value>Spojovací skupina</value>
   </data>
   <data name="d_JoinControl" xml:space="preserve">
-    <value>Join Control</value>
+    <value>Kontrol spojování</value>
   </data>
   <data name="d_LineBreak" xml:space="preserve">
-    <value>Line Break</value>
+    <value>Konec řádku</value>
   </data>
   <data name="d_EastAsianWidth" xml:space="preserve">
-    <value>East Asian Width</value>
+    <value>Východoasijská šířka</value>
   </data>
   <data name="d_IsUppercase" xml:space="preserve">
-    <value>Uppercase</value>
+    <value>Velké</value>
   </data>
   <data name="d_IsLowercase" xml:space="preserve">
-    <value>Lowercase</value>
+    <value>Malé</value>
   </data>
   <data name="d_IsOtherUppercase" xml:space="preserve">
-    <value>Other Uppercase</value>
+    <value>Jiné velké</value>
   </data>
   <data name="d_IsOtherLowercase" xml:space="preserve">
-    <value>Other Lowercase</value>
+    <value>Jiné malé</value>
   </data>
   <data name="d_SimpleUppercaseMapping" xml:space="preserve">
-    <value>Simple Uppercase Mapping</value>
+    <value>Jednoduché mapování na velká písmena</value>
   </data>
   <data name="d_SimpleLowercaseMapping" xml:space="preserve">
-    <value>Simple Lowercase Mapping</value>
+    <value>Jednoduché mapování na malá písmena</value>
   </data>
   <data name="d_SimpleTilecaseMapping" xml:space="preserve">
-    <value>Simple Tilecase Mapping</value>
+    <value>Jednoduché mapování na verzálky</value>
   </data>
   <data name="d_UppercaseMapping" xml:space="preserve">
-    <value>Uppercase Mapping</value>
+    <value>Mapování na velká písmena</value>
   </data>
   <data name="d_LowercaseMapping" xml:space="preserve">
-    <value>Lowercase Mapping</value>
+    <value>Mapování na malá písmena</value>
   </data>
   <data name="d_TilecaseMapping" xml:space="preserve">
-    <value>Tilecase Mapping</value>
+    <value>Mapování na verzálky</value>
   </data>
   <data name="d_SimpleCaseFolding" xml:space="preserve">
-    <value>Simple Case Folding</value>
+    <value>Jednoduchá změna velikosti</value>
   </data>
   <data name="d_CaseFolding" xml:space="preserve">
-    <value>Case Folding</value>
+    <value>Změna velikosti</value>
   </data>
   <data name="d_IsCaseIgnorable" xml:space="preserve">
-    <value>Case Ignorable</value>
+    <value>Ignoruje velikost písmen</value>
   </data>
   <data name="d_IsCased" xml:space="preserve">
-    <value>Cased</value>
+    <value>Rozlišuje velikost písmen</value>
   </data>
   <data name="d_ChangesWhenCasefolded" xml:space="preserve">
-    <value>Changes when Casefolded</value>
+    <value>Změna při změně velikosti</value>
   </data>
   <data name="d_ChangesWhenCasemapped" xml:space="preserve">
-    <value>Changes when Casemapped</value>
+    <value>Změna při mapování velikosti</value>
   </data>
   <data name="d_ChangesWhenLoweracsed" xml:space="preserve">
-    <value>Changes when Loweracsed</value>
+    <value>Změna při převodu na malá písmena</value>
   </data>
   <data name="d_ChangesWhenTilecased" xml:space="preserve">
-    <value>Changes when Tilecased</value>
+    <value>Změna při převodu na verzálky</value>
   </data>
   <data name="d_ChangesWhenNfKCCasefold" xml:space="preserve">
-    <value>Changes when Normalization Form KC Casefold</value>
+    <value>Změna při změně velikosti normalizační formy KC</value>
   </data>
   <data name="d_NfKCCasefold" xml:space="preserve">
-    <value>Normalization form KC Casefold</value>
+    <value>Změna velikosti normalizační formy KC</value>
   </data>
   <data name="d_Script" xml:space="preserve">
-    <value>Script</value>
+    <value>Skript</value>
   </data>
   <data name="d_IsoComment" xml:space="preserve">
-    <value>ISO Comment</value>
+    <value>ISO komentář</value>
   </data>
   <data name="d_HangulSyllableType" xml:space="preserve">
-    <value>Hangul Syllable Type</value>
+    <value>Typ Hangŭl slabiky</value>
   </data>
   <data name="d_JamoShortName" xml:space="preserve">
-    <value>Jamo Short Name</value>
+    <value>Krátké jméno Džamo</value>
   </data>
   <data name="d_IndicSyllabicCategory" xml:space="preserve">
-    <value>Indic Syllabic Category</value>
+    <value>Kategorie indických slabik</value>
   </data>
   <data name="d_IndicMantraCategory" xml:space="preserve">
-    <value>Indic Mantra Category</value>
+    <value>Kategorie indické mantry</value>
   </data>
   <data name="d_IsIdStart" xml:space="preserve">
-    <value>Identifier Start</value>
+    <value>Začátek identifikátoru</value>
   </data>
   <data name="d_IsOtherIdStart" xml:space="preserve">
-    <value>Other Identifier Start</value>
+    <value>Jiný začátek identifikátoru</value>
   </data>
   <data name="d_IsIdStartEx" xml:space="preserve">
-    <value>Identifier Start alternative</value>
+    <value>Alternativní začátek identifikátoru</value>
   </data>
   <data name="d_IsIdContinue" xml:space="preserve">
-    <value>Identifier Continuation</value>
+    <value>Pokračování identifikátoru</value>
   </data>
   <data name="d_IsOtherIdContinue" xml:space="preserve">
-    <value>Other Identifier Continuation</value>
+    <value>Jiné pokračování identifikátoru</value>
   </data>
   <data name="d_IsIdContinueEx" xml:space="preserve">
-    <value>Identifier Continuation alternative</value>
+    <value>Alternativní pokračování identifikátoru</value>
   </data>
   <data name="d_IsPatternSyntax" xml:space="preserve">
-    <value>Pattern Syntax</value>
+    <value>Syntaxe vzoru</value>
   </data>
   <data name="d_IsPatternWhiteSpace" xml:space="preserve">
-    <value>Pattern Whitespace</value>
+    <value>Bílý znka vzoru</value>
   </data>
   <data name="d_IsDash" xml:space="preserve">
-    <value>Dash</value>
+    <value>Pomlčka</value>
   </data>
   <data name="d_IsHyphen" xml:space="preserve">
-    <value>Hyphen</value>
+    <value>Spojovník</value>
   </data>
   <data name="d_IsQuotationMark" xml:space="preserve">
-    <value>Quotation Mark</value>
+    <value>Uvozovky</value>
   </data>
   <data name="d_IsTerminalPunctuation" xml:space="preserve">
-    <value>Terminal Punctuation</value>
+    <value>Koncová interpunkce</value>
   </data>
   <data name="d_IsSentenceTerminal" xml:space="preserve">
-    <value>Sentence Terminal</value>
+    <value>Konec věty</value>
   </data>
   <data name="d_IsDiacritic" xml:space="preserve">
-    <value>Diacritic</value>
+    <value>Diakritika</value>
   </data>
   <data name="d_IsExtender" xml:space="preserve">
-    <value>Extender</value>
+    <value>Rozšíření</value>
   </data>
   <data name="d_IsSoftDotted" xml:space="preserve">
-    <value>Soft-dotted</value>
+    <value>Volná tečka</value>
   </data>
   <data name="d_IsAlphabetic" xml:space="preserve">
-    <value>Alphabetic</value>
+    <value>Písmeno</value>
   </data>
   <data name="d_IsOtherAlphabetic" xml:space="preserve">
-    <value>Other Alphabetic</value>
+    <value>Jiné písmeno</value>
   </data>
   <data name="d_IsMath" xml:space="preserve">
-    <value>Math</value>
+    <value>Matematický</value>
   </data>
   <data name="d_IsOtherMath" xml:space="preserve">
-    <value>Other Math</value>
+    <value>Jiný matematický</value>
   </data>
   <data name="d_IsHexaDigit" xml:space="preserve">
-    <value>Hexa-digit</value>
+    <value>Hexačíslo</value>
   </data>
   <data name="d_IsAsciiHex" xml:space="preserve">
-    <value>ASCII Hexa-digit</value>
+    <value>ASCII hexačíslo</value>
   </data>
   <data name="d_IsDefaultIgnorable" xml:space="preserve">
-    <value>Default Ignorable Code Point</value>
+    <value>Obvykle ignorovaný codepoint</value>
   </data>
   <data name="d_IsOtherDefaultIgnorable" xml:space="preserve">
-    <value>Other Default Ignorable Code Point</value>
+    <value>Jiný obvykle ignorovaný codepoint</value>
   </data>
   <data name="d_IsLogicalOrderException" xml:space="preserve">
-    <value>Logical Order Exception</value>
+    <value>Výjimka z logického řazení</value>
   </data>
   <data name="d_IsWhitespace" xml:space="preserve">
-    <value>Whitespace</value>
+    <value>Bílý znak</value>
   </data>
   <data name="d_IsGraphemeBase" xml:space="preserve">
-    <value>Grapheme Base</value>
+    <value>Základ grafému</value>
   </data>
   <data name="d_IsGraphemeExtend" xml:space="preserve">
-    <value>Grapheme Extend</value>
+    <value>Rozšíření grafému</value>
   </data>
   <data name="d_IsOtherGraphemeExtend" xml:space="preserve">
-    <value>Other Grapheme Extend</value>
+    <value>Jiné rozšíření grafému</value>
   </data>
   <data name="d_IsGraphemeLink" xml:space="preserve">
-    <value>Grapheme Link</value>
+    <value>Propojení grafému</value>
   </data>
   <data name="d_GraphemeClusterBreak" xml:space="preserve">
-    <value>Grapheme Cluster Break</value>
+    <value>Přerušení skupiny grafémů</value>
   </data>
   <data name="d_WordBreak" xml:space="preserve">
-    <value>Word Break</value>
+    <value>Přerušení slova</value>
   </data>
   <data name="d_SentenceBreak" xml:space="preserve">
-    <value>Sentence Break</value>
+    <value>Přerušení věty</value>
   </data>
   <data name="d_IsIdeograph" xml:space="preserve">
-    <value>Ideographic</value>
+    <value>Ideograf</value>
   </data>
   <data name="d_IsUnifiedIdeograph" xml:space="preserve">
-    <value>Unified Ideograph</value>
+    <value>Unifikovaný ideograf</value>
   </data>
   <data name="d_IsIdsBinaryOperator" xml:space="preserve">
-    <value>Ideographic Description Sequence Binary Operator</value>
+    <value>Binární operátor popisu sekvence ideografů</value>
   </data>
   <data name="d_IsIdsTrinaryOperator" xml:space="preserve">
-    <value>Ideographic Description Sequence Trinary Operator</value>
+    <value>Ternární operátor popisu sekvence ideografů</value>
   </data>
   <data name="d_IsRadical" xml:space="preserve">
-    <value>CJK Radical</value>
+    <value>CJK základ</value>
   </data>
   <data name="d_IsDeprecated" xml:space="preserve">
-    <value>Deprecated</value>
+    <value>Zavrženo</value>
   </data>
   <data name="d_IsVariationSelector" xml:space="preserve">
-    <value>Variation Selector</value>
+    <value>Výběr varianty</value>
   </data>
   <data name="d_IsNonCharacter" xml:space="preserve">
-    <value>Non-character Code Point</value>
+    <value>Není znak</value>
   </data>
   <data name="d_unihan_HanAccountingNumeric" xml:space="preserve">
-    <value>Unihan Accounting Numeric</value>
+    <value>Unihan účetnicé číslo</value>
   </data>
   <data name="d_unihan_HanBig5" xml:space="preserve">
-    <value>Unihan Big 5 Mapping</value>
+    <value>Unihan mapování Big 5</value>
   </data>
   <data name="d_unihan_HanCangjie" xml:space="preserve">
-    <value>Unihan Cangjie code</value>
+    <value>Unihan Cchang-džie kód</value>
   </data>
   <data name="d_unihan_HanCantonese" xml:space="preserve">
-    <value>Unihan Cantonese Pronounciation</value>
+    <value>Unihan kantonská výslovnost</value>
   </data>
   <data name="d_unihan_HanCccii" xml:space="preserve">
-    <value>Unihan CCCII Mapping</value>
+    <value>Unihan CCCII mapování</value>
   </data>
   <data name="d_unihan_HanCheungBauer" xml:space="preserve">
-    <value>Unihan Cheung-Bauer Reading</value>
+    <value>Unihan výslovnost podle Čang-Bauer</value>
   </data>
   <data name="d_unihan_HanCheungBauerIndex" xml:space="preserve">
-    <value>Unihan Cheung-Bauer Index</value>
+    <value>Unihan odkaz do Čang-Bauer</value>
   </data>
   <data name="d_unihan_HanCihai" xml:space="preserve">
-    <value>Unihan Cihai</value>
+    <value>Unihan C-hai</value>
   </data>
   <data name="d_unihan_HanCns1986" xml:space="preserve">
-    <value>Unihan CNS 11643-1986 Mapping</value>
+    <value>Uniham mapování CNS 11643-1986</value>
   </data>
   <data name="d_unihan_HanCns1992" xml:space="preserve">
-    <value>Unihan CNS 11643-1992 Mapping</value>
+    <value>Unihan mapování CNS 11643-1992</value>
   </data>
   <data name="d_unihan_HanCompatibilityVariant" xml:space="preserve">
-    <value>Unihan Compatibility Variant</value>
+    <value>Unihan kompatibilní varianta</value>
   </data>
   <data name="d_unihan_HanCowles" xml:space="preserve">
     <value>Unihan Cowles</value>
@@ -666,7 +664,7 @@
     <value>Unihan Dae Jaweon</value>
   </data>
   <data name="d_unihan_HanDefinition" xml:space="preserve">
-    <value>Unihan Definition</value>
+    <value>Unihan definice</value>
   </data>
   <data name="d_unihan_HanEacc" xml:space="preserve">
     <value>Unihan EACC</value>
@@ -675,13 +673,13 @@
     <value>Unihan Fenn</value>
   </data>
   <data name="d_unihan_HanFennIndex" xml:space="preserve">
-    <value>Unihan Fenn Index</value>
+    <value>Unihan odkaz do Fenn</value>
   </data>
   <data name="d_unihan_HanFourCornerCode" xml:space="preserve">
-    <value>Unihan Four-corner Code</value>
+    <value>Unihan čtyřrohový kód</value>
   </data>
   <data name="d_unihan_HanFrequency" xml:space="preserve">
-    <value>Unihan Frequency</value>
+    <value>Unihan četnost</value>
   </data>
   <data name="d_unihan_HanGB0" xml:space="preserve">
     <value>Unihan GB 2312-80</value>
@@ -702,34 +700,34 @@
     <value>Unihan GB 8565-89 (GB8)</value>
   </data>
   <data name="d_unihan_HanGradeLevel" xml:space="preserve">
-    <value>Unihan Grade Level</value>
+    <value>Unihan ročník</value>
   </data>
   <data name="d_unihan_HanGsr" xml:space="preserve">
     <value>Unihan Grammata Serica Recensa</value>
   </data>
   <data name="d_unihan_HanHangul" xml:space="preserve">
-    <value>Unihan Readings</value>
+    <value>Unihan výslovnost</value>
   </data>
   <data name="d_unihan_HanHanYu" xml:space="preserve">
-    <value>Unihan Hanyu Da Zidian</value>
+    <value>Unihan Chan-jou</value>
   </data>
   <data name="d_unihan_HanHanyuPinlu" xml:space="preserve">
-    <value>Unihan Xindai Hanyu Pinlu Cidian</value>
+    <value>Unihan Šin-dai Han-ju Pin-lu Zidi-jan</value>
   </data>
   <data name="d_unihan_HanHanyuPinyin" xml:space="preserve">
-    <value>Unihan Hànyǔ Dà Zìdiǎn</value>
+    <value>Unihan Chan-jou Dac Zidi-jan</value>
   </data>
   <data name="d_unihan_HanHDZRadBreak" xml:space="preserve">
-    <value>Unihan Hanyu Da Zidian Break</value>
+    <value>Unihan Chan-jou Dac Zidi-jan přerušení</value>
   </data>
   <data name="d_unihan_HanHKGlyph" xml:space="preserve">
-    <value>Unihan Hong Kong Glyph</value>
+    <value>Unihan hongkongský glyph</value>
   </data>
   <data name="d_unihan_HanHkscs" xml:space="preserve">
-    <value>Unihan Hong Kong Supplementary Character Set</value>
+    <value>Unihan doplňková hongkongská znaková sada</value>
   </data>
   <data name="d_unihan_HanIbmJapan" xml:space="preserve">
-    <value>Unihan IBM Japan</value>
+    <value>Unihan IBM Japonsko</value>
   </data>
   <data name="d_unihan_HanIICore" xml:space="preserve">
     <value>Unihan IICore</value>
@@ -741,55 +739,55 @@
     <value>Unihan Dai Kanwa Ziten (IRG)</value>
   </data>
   <data name="d_unihan_HanIrgHanyuDaZidian" xml:space="preserve">
-    <value>Unihan Hanyu Da Zidian (IRG)</value>
+    <value>Unihan Chan-jou Da Zidi-jan (IRG)</value>
   </data>
   <data name="d_unihan_HanIrgKangXi" xml:space="preserve">
-    <value>Unihan Kang Xi (IRG)</value>
+    <value>Unihan Kang Ši (IRG)</value>
   </data>
   <data name="d_unihan_HanAlternateHanYu" xml:space="preserve">
-    <value>Unihan Alternate Han Yu</value>
+    <value>Unihan alternativní Han Ju</value>
   </data>
   <data name="d_unihan_HanIrgGSource" xml:space="preserve">
-    <value>Unihan IRG “G” Source</value>
+    <value>Unihan IRG “G” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgHSource" xml:space="preserve">
-    <value>Unihan IRG “H” Source</value>
+    <value>Unihan IRG “H” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgJSource" xml:space="preserve">
-    <value>Unihan IRG “J” Source</value>
+    <value>Unihan IRG “J” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgKPSource" xml:space="preserve">
-    <value>Unihan IRG “KP” Source</value>
+    <value>Unihan IRG “KP” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgKSource" xml:space="preserve">
-    <value>Unihan IRG “K” Source</value>
+    <value>Unihan IRG “K” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgMSource" xml:space="preserve">
-    <value>Unihan IRG “M” Source</value>
+    <value>Unihan IRG “M” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgTSource" xml:space="preserve">
-    <value>Unihan IRG “T” Source</value>
+    <value>Unihan IRG “T” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgUSource" xml:space="preserve">
-    <value>Unihan IRG “U” Source</value>
+    <value>Unihan IRG “U” zdroj</value>
   </data>
   <data name="d_unihan_HanIrgVSource" xml:space="preserve">
-    <value>Unihan IRG “V” Source</value>
+    <value>Unihan IRG “V” zdroj</value>
   </data>
   <data name="d_unihan_HanAlternateJef" xml:space="preserve">
-    <value>Unihan Alternate JEF</value>
+    <value>Unihan alternativní JEF</value>
   </data>
   <data name="d_unihan_HanAlternateKangXi" xml:space="preserve">
-    <value>Unihan Alternate Kang Xi</value>
+    <value>Unihan alternativní Kang Ši</value>
   </data>
   <data name="d_unihan_HanAlternateMorohashi" xml:space="preserve">
-    <value>Unihan Alternate Morohashi</value>
+    <value>Unihan alternativní Morohaši</value>
   </data>
   <data name="d_unihan_HanJapaneseKun" xml:space="preserve">
-    <value>Unihan Japanese Kun</value>
+    <value>Unihan japonský kun</value>
   </data>
   <data name="d_unihan_HanJapaneseOn" xml:space="preserve">
-    <value>Unihan Japanese On</value>
+    <value>Unihan japonský on</value>
   </data>
   <data name="d_unihan_HanJis0208" xml:space="preserve">
     <value>Unihan JIS X 0208-1990</value>
@@ -801,13 +799,13 @@
     <value>Unihan JIS X 0212-1190</value>
   </data>
   <data name="d_unihan_HanKangXi" xml:space="preserve">
-    <value>Unihan Kang Xi</value>
+    <value>Unihan Kang Ši</value>
   </data>
   <data name="d_unihan_HanKarlgren" xml:space="preserve">
     <value>Unihan Karlgren</value>
   </data>
   <data name="d_unihan_HanKorean" xml:space="preserve">
-    <value>Unihan Korean</value>
+    <value>Unihan korejský</value>
   </data>
   <data name="d_unihan_HanKps9566" xml:space="preserve">
     <value>Unihan KPS 9566-97</value>
@@ -825,10 +823,10 @@
     <value>Unihan Lau</value>
   </data>
   <data name="d_unihan_HanMainlandTelegraph" xml:space="preserve">
-    <value>Unihan Chinese Telegraph</value>
+    <value>Unihan čínský telegraf</value>
   </data>
   <data name="d_unihan_HanMandarin" xml:space="preserve">
-    <value>Unihan Mandarin</value>
+    <value>Unihan mandarinský</value>
   </data>
   <data name="d_unihan_HanMatthews" xml:space="preserve">
     <value>Unihan Matthews</value>
@@ -837,84 +835,84 @@
     <value>Unihan Meyer &amp; Wempe</value>
   </data>
   <data name="d_unihan_HanMorohashi" xml:space="preserve">
-    <value>Unihan Morohashi</value>
+    <value>Unihan Morohaši</value>
   </data>
   <data name="d_unihan_HanNelson" xml:space="preserve">
     <value>Unihan Nelson</value>
   </data>
   <data name="d_unihan_HanOtherNumeric" xml:space="preserve">
-    <value>Unihan Other Numeric</value>
+    <value>Unihan jiná čísla</value>
   </data>
   <data name="d_unihan_HanPhonetic" xml:space="preserve">
-    <value>Unihan Phonetic</value>
+    <value>Unihan foneticky</value>
   </data>
   <data name="d_unihan_HanPrimaryNumeric" xml:space="preserve">
-    <value>Unihan Primary Numeric</value>
+    <value>Unihan primární čísla</value>
   </data>
   <data name="d_unihan_HanPseudoGB1" xml:space="preserve">
     <value>Unihan Pseudo GB 12345-90</value>
   </data>
   <data name="d_unihan_HanRSAdobeJapan" xml:space="preserve">
-    <value>Unihan Adobe-Japan1-6</value>
+    <value>Unihan Adobe-Japonsko 1-6</value>
   </data>
   <data name="d_unihan_HanRSJapanese" xml:space="preserve">
-    <value>Unihan Radical/stroke Count (Japanese)</value>
+    <value>Unihan základ/počet tahů (Japonsko)</value>
   </data>
   <data name="d_unihan_HanRSKangXi" xml:space="preserve">
-    <value>Unihan Radical/stroke Count (Kang Xi)</value>
+    <value>Unihan základ/počet tahů (Kang Ši)</value>
   </data>
   <data name="d_unihan_HanRSKanWa" xml:space="preserve">
-    <value>Unihan Radical/stroke Count (Morohashi)</value>
+    <value>Unihan základ/počet tahů (Morohaši)</value>
   </data>
   <data name="d_unihan_HanRSKorean" xml:space="preserve">
-    <value>Unihan Radical/stroke Count (Korean)</value>
+    <value>Unihan základ/počet tahů (Korea)</value>
   </data>
   <data name="d_unihan_HanRSUnicode" xml:space="preserve">
-    <value>Unihan Radical/stroke Count (Unicode)</value>
+    <value>Unihan základ/počet tahů (Unicode)</value>
   </data>
   <data name="d_unihan_HanSongBenGuangYun" xml:space="preserve">
-    <value>Unihan Song Ben Guang Yun</value>
+    <value>Unihan Song Ben Kuang Jun</value>
   </data>
   <data name="d_unihan_HanSemanticVariant" xml:space="preserve">
-    <value>Unihan Semantic Variant</value>
+    <value>Unihan sémantická varianta</value>
   </data>
   <data name="d_unihan_HanSimplifiedVariant" xml:space="preserve">
-    <value>Unihan Simplified Variant</value>
+    <value>Unihan zjednodušená varianta</value>
   </data>
   <data name="d_unihan_HanSpecializedSemanticVariant" xml:space="preserve">
-    <value>Unihan Specialized Semantic Variant</value>
+    <value>Unihan specializovaná sémantická varianta</value>
   </data>
   <data name="d_unihan_HanTaiwanTelegraph" xml:space="preserve">
-    <value>Unihan Taiwan Telegraph</value>
+    <value>Unihan taiwanský telegraf</value>
   </data>
   <data name="d_unihan_HanTang" xml:space="preserve">
     <value>Unihan Tang</value>
   </data>
   <data name="d_unihan_HanTotalStrokes" xml:space="preserve">
-    <value>Unihan Total Strokes</value>
+    <value>Unihan celkový počet tahů</value>
   </data>
   <data name="d_unihan_HanTraditionalVariant" xml:space="preserve">
-    <value>Unihan Traditional Variant</value>
+    <value>Unihan tradiční varianta</value>
   </data>
   <data name="d_unihan_HanVietnamese" xml:space="preserve">
-    <value>Unihan Vietnamese</value>
+    <value>Unihan vietnamsky</value>
   </data>
   <data name="d_unihan_HanXerox" xml:space="preserve">
     <value>Unihan Xerox</value>
   </data>
   <data name="d_unihan_HanXiàndàiHànyǔCídiǎn" xml:space="preserve">
-    <value>Unihan Xiàndài Hànyǔ Cídiǎn</value>
+    <value>Unihan Šin-dai Han-ju Zidi-jan</value>
   </data>
   <data name="d_unihan_HanZVariant" xml:space="preserve">
-    <value>Unihan Z-variant</value>
+    <value>Unihan Z-varianta</value>
   </data>
   <data name="d_unihan_HanJhj" xml:space="preserve">
     <value>Unihan JHJ</value>
   </data>
   <data name="d_unihan_HanRSMerged" xml:space="preserve">
-    <value>Unihan Radical/stroke Count (Merged)</value>
+    <value>Unihan základ/počet tahů (sjednocený)</value>
   </data>
   <data name="d_unihan_HanWubi" xml:space="preserve">
-    <value>Unihan Wubi</value>
+    <value>Unihan Vu-bi</value>
   </data>
 </root>
