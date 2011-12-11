@@ -465,6 +465,7 @@ Public Module TypeTools
         If obj Is Nothing Then
             If type Is Nothing Then Return Nothing
             If type.IsValueType Then Return Activator.CreateInstance(type)
+            Return Nothing
         End If
         If type Is Nothing Then Throw New ArgumentNullException("Type")
         Dim ObjType = obj.GetType

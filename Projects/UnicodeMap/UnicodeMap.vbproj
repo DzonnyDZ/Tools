@@ -90,6 +90,7 @@
       <DependentUpon>CharacterChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="CharPresenter.vb" />
+    <Compile Include="CodePointConverter.vb" />
     <Compile Include="MainWindow.xaml.vb">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

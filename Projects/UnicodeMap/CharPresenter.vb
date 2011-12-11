@@ -1,4 +1,4 @@
-﻿Imports Tools.WindowsT.WPF
+﻿Imports Tools.WindowsT.WPF, Tools, Tools.ExtensionsT
 Imports System.ComponentModel
 
 ''' <summary>Represents single character in character map</summary>
@@ -48,9 +48,20 @@ Public Class CharPresenter
     ''' <param name="e">Event arguments</param>
     <CLSCompliant(False)>
     Protected Overridable Sub OnCodePointChanged(ByVal e As System.Windows.DependencyPropertyChangedEventArgs)
-        If CodePoint <> Char.ConvertToUtf32(Character, 0) Then Character = Char.ConvertFromUtf32(CodePoint)
+        If CodePoint <> Char.ConvertToUtf32(Character, 0) Then Character = ConvertFromUtf32Internal(CodePoint)
         OnPropertyChanged("CharName")
     End Sub
+
+    ''' <summary>Converts character from UTF32 code to string. SUpports surrogate conversion</summary>
+    ''' <param name="codePoint">UTF-32 code point code</param>
+    ''' <returns>String representing code-point with code <paramref name="codePoint"/>. It can be one normal character for code-points U+0000 to U+DF7F and U+E000 to U+FFFF, orphan surrogates for code-points U+D800 to U+DFFF and surrogate pairs for code-points U+D10000 to U+10FFFF.</returns>
+    ''' <exception cref="ArgumentOutOfRangeException"><paramref name="codePoint"/> is not a valid 21-bit Unicode code point ranging from U+000 through U+10FFFF (including the surrogate pair range from U+D800 through U+DFFF).</exception>
+    Private Shared Function ConvertFromUtf32Internal(codePoint As UInteger) As String
+        If codePoint <= &HFFFF Then Return ChrW(codePoint)
+        Return Char.ConvertFromUtf32(codePoint.BitwiseSame)
+    End Function
+
+
     ''' <summary>Called whenever a value of the <see cref="CodePoint"/> dependency property is being re-evaluated, or coercion is specifically requested.</summary>
     ''' <param name="d">The object that the property exists on. When the callback is invoked, the property system passes this value.</param>
     ''' <param name="baseValue">The new value of the property, prior to any coercion attempt.</param>

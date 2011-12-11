@@ -108,7 +108,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Placeholder # is replace only if <see cref="CodePoint"/> is not null.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Overrides Function GetPropertyValue(namespace$, name$, allowResolving As Boolean) As String
-            Dim ret = GetPropertyValue(name, [namespace])
+            Dim ret = GetPropertyValue([namespace], name)
             If allowResolving AndAlso ret <> "" AndAlso ret.Contains("#") AndAlso CodePoint.HasValue Then _
                 Return ret.Replace("#", CodePoint.Value.ToString("X", InvariantCulture))
             Return ret
@@ -449,7 +449,9 @@ Namespace TextT.UnicodeT
 
             If locucd IsNot Nothing AndAlso CodePoint.HasValue Then
                 Dim loccp = locucd.FindCodePoint(CodePoint.Value)
-                Dim a = loccp.Element.Elements(XName.Get("alias", ns)).FirstOrDefault
+                Dim a As XElement = Nothing
+                If loccp IsNot Nothing Then _
+                    a = loccp.Element.Elements(XName.Get("alias", ns)).FirstOrDefault
                 If a IsNot Nothing Then Return a.Value
             End If
 

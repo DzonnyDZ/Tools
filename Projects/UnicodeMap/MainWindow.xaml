@@ -8,21 +8,40 @@
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        <tcnv:ChoiceBooleanConverter x:Key="ChoiceBooleanConverter"/>         
+        <tcnv:ChoiceBooleanConverter x:Key="ChoiceBooleanConverter"/>
+        <my:CodePointConverter x:Key="CodePointConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"><!--Blocks etc.--></ColumnDefinition>                                     
-            <ColumnDefinition Width="3*"><!--Charmap--></ColumnDefinition>
-            <ColumnDefinition Width="1*"><!--All properties--></ColumnDefinition>                                     
+            <ColumnDefinition Width="1*">
+                <!--Blocks etc.-->
+            </ColumnDefinition>
+            <ColumnDefinition Width="3*">
+                <!--Charmap-->
+            </ColumnDefinition>
+            <ColumnDefinition Width="1*">
+                <!--All properties-->
+            </ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"><!--Menu--></RowDefinition>
-            <RowDefinition Height="auto"><!--Toolbar--></RowDefinition>
-            <RowDefinition Height="auto"><!--Font etc.--></RowDefinition>
-            <RowDefinition Height="1*"><!--Charmap--></RowDefinition>
-            <RowDefinition Height="auto"><!--Basic character info--></RowDefinition>
-            <RowDefinition Height=".25*"><!--Text box--></RowDefinition>
+            <RowDefinition Height="auto">
+                <!--Menu-->
+            </RowDefinition>
+            <RowDefinition Height="auto">
+                <!--Toolbar-->
+            </RowDefinition>
+            <RowDefinition Height="auto">
+                <!--Font etc.-->
+            </RowDefinition>
+            <RowDefinition Height="1*">
+                <!--Charmap-->
+            </RowDefinition>
+            <RowDefinition Height="auto">
+                <!--Basic character info-->
+            </RowDefinition>
+            <RowDefinition Height=".25*">
+                <!--Text box-->
+            </RowDefinition>
         </Grid.RowDefinitions>
         <!--Menu-->
         <Menu Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
@@ -73,7 +92,7 @@
             <ToggleButton Content="I" FontStyle="Italic" ToolTip="Italic" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Name="tgbItalic"/>
         </StackPanel>
         <!--Charmap-->
-        <my:CharacterChart Grid.Row="3" Grid.Column="1"
+        <my:CharacterChart Grid.Row="3" Grid.Column="1" x:Name="cchChart"
                            ChartFontFamily="{Binding ElementName=cmbFont, Path=SelectedItem, Mode=OneWay}"
                            ChartFontSize="{Binding ElementName=nudFontSize, Path=Value, Mode=OneWay}"
                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxHeight="300"
@@ -81,32 +100,34 @@
                            ChartFontStyle="{Binding IsChecked, ElementName=tgbItalic, Converter={StaticResource ChoiceBooleanConverter}, ConverterParameter=Italic|Normal}"
         />
         <!--Basic character info-->
-        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal"
+                    DataContext="{Binding ElementName=cchChart, Path=SelectedCodePoint, Converter={StaticResource CodePointConverter}, Mode=OneWay}">
             <!--TODO: Binding-->
-            <TextBlock>
-                <TextBlock Text="U+0000"/> / <TextBlock Text="0"/>
+            <TextBlock Margin="0,0,10,0">
+                <TextBlock Text="{Binding CodePoint, StringFormat=U+{0:X4}}"/> / <TextBlock Text="{Binding CodePoint}"/>
             </TextBlock>
-            <TextBlock Text="SELECTED CHARACTER NAME"/>
-            <TextBlock Text="Selected character Windows name"/>
+            <TextBlock Text="{Binding Name}" Margin="0,0,10,0"/>
+            <TextBlock>
+                (<TextBlock Text="{Binding LocalizedName}"/>)
+            </TextBlock>
         </StackPanel>
         <!--Properties-->
-        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Stretch">
-            <Expander IsExpanded="True">
-                <!--<wfi:WindowsFormsHost>
-                    <wf:PropertyGrid Name="prgUnicode"/>
-                </wfi:WindowsFormsHost>-->                
-            </Expander>
-            <Expander IsExpanded="False">
-                <!--<wfi:WindowsFormsHost>
-                    <wf:PropertyGrid Name="prgCsur"/>
-                </wfi:WindowsFormsHost>-->
-            </Expander>
-            <Expander IsExpanded="False">
-                <!--<wfi:WindowsFormsHost>
-                    <wf:PropertyGrid Name="prgOther"/>
-                </wfi:WindowsFormsHost>-->
-            </Expander>
-        </StackPanel>
-        <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Name="txtText"/>
+        <Grid Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Stretch"
+              DataContext="{Binding ElementName=cchChart, Path=SelectedCodePoint, Converter={StaticResource CodePointConverter}, Mode=OneWay}" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="1" Name="btnUnicode" Content="All Unicode properties"/>
+            <Button Grid.Row="2" Name="btnCSUR" Content="All CSUR properties"/>
+        </Grid>
+        <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Name="txtText"
+            FontFamily="{Binding ElementName=cmbFont, Path=SelectedItem, Mode=OneWay}"
+            FontSize="{Binding ElementName=nudFontSize, Path=Value, Mode=OneWay}"
+            FontWeight="{Binding IsChecked, ElementName=tgbBold, Converter={StaticResource ChoiceBooleanConverter}, ConverterParameter=Bold|Normal}"
+            FontStyle="{Binding IsChecked, ElementName=tgbItalic, Converter={StaticResource ChoiceBooleanConverter}, ConverterParameter=Italic|Normal}"
+        />
     </Grid>
 </Window>

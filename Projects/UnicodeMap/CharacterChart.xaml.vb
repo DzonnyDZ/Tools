@@ -266,7 +266,6 @@ Public Class CharacterChart
         End Get
     End Property
 
-
     ''' <summary>Resets source of data for main grid</summary>
     Private Sub ResetDataSource()
         dgChars.ItemsSource = New CharsSource(If(DataSource, CharsList.Empty)) With {.Columns = Me.ColumnCount}
