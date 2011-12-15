@@ -68,6 +68,13 @@ Namespace WindowsT.InteropT
         End Function
 
 #Region "Color"
+        ''' <summary>Gets <see cref="Media.Color"/> from ARGB value</summary>
+        ''' <param name="argb">COlor ARGB value</param>
+        ''' <returns>A color instance initialized from <paramref name="argb"/>.</returns>
+        ''' <version version="1.5.4">This method is new in version 1.5.4</version>
+        Public Function ColorFromArgb(argb As Integer) As Media.Color
+            Return Drawing.Color.FromArgb(argb).ToColor
+        End Function
         ''' <summary>Gets the 32-bit ARGB value of given <see cref="Media.Color"/> structure.</summary>
         ''' <param name="Color">Color to get ARGB value of</param>
         ''' <returns>The 32-bit ARGB value of <paramref name="Color"/>.</returns>

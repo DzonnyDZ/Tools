@@ -1,0 +1,10 @@
+﻿<my:SaverBase x:Class="BlackSaver"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:my="clr-namespace:Tools.Unisave" >
+    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Canvas.Background>
+            <SolidColorBrush Color="{Binding RelativeSource={RelativeSource AncestorType=my:BlackSaver}, Path=BackColor}"/>
+        </Canvas.Background>
+    </Canvas>
+</my:SaverBase>
