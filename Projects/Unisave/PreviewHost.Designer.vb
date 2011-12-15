@@ -28,8 +28,11 @@ Partial Class PreviewHost
         '
         'ehWpfHost
         '
+        Me.ehWpfHost.BackColor = System.Drawing.Color.Black
+        Me.ehWpfHost.BackColorTransparent = True
         Me.ehWpfHost.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ehWpfHost.Location = New System.Drawing.Point(0, 0)
+        Me.ehWpfHost.Margin = New System.Windows.Forms.Padding(0)
         Me.ehWpfHost.Name = "ehWpfHost"
         Me.ehWpfHost.Size = New System.Drawing.Size(150, 150)
         Me.ehWpfHost.TabIndex = 0
@@ -39,7 +42,9 @@ Partial Class PreviewHost
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.Black
         Me.Controls.Add(Me.ehWpfHost)
+        Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "PreviewHost"
         Me.ResumeLayout(False)
 
