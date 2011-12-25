@@ -222,6 +222,7 @@
     <Compile Include="Extensions\StringParsing.vb" />
     <Compile Include="Globalization\Arabic.vb" />
     <Compile Include="Linq\ForEnumerator.vb" />
+    <Compile Include="Numerics\Operators.vb" />
     <Compile Include="misc\CharComparer.vb" />
     <Compile Include="Numerics\Conversions.vb" />
     <Compile Include="Reflection\AttributteValueProvider.vb" />

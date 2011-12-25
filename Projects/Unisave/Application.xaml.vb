@@ -14,4 +14,17 @@ Friend Class Application
             Return appconfig.<config:configuration>.<my:config>.Single
         End Get
     End Property
+
+    Private Sub Application_Startup(sender As Object, e As System.Windows.StartupEventArgs) Handles Me.Startup
+        If e.Args.Count > 0 Then
+            Select Case e.Args(0)
+                Case "/p" 'TODO
+                Case "/c" 'Configuration
+                    Dim win As New PropertiesWindow
+                    win.Show()
+                    Exit Sub
+            End Select
+        End If
+        'TODO: Run screen saver
+    End Sub
 End Class

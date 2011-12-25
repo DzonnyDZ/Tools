@@ -75,18 +75,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="IUnisaveContext.vb" />
+    <Compile Include="PropertiesWindow.xaml.vb">
+      <DependentUpon>PropertiesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaverBase.vb" />
     <Compile Include="SaverScreen.vb" />
     <Compile Include="Savers\Black.xaml.vb">
       <DependentUpon>Black.xaml</DependentUpon>
     </Compile>
     <Compile Include="SSaverHost.vb" />
-    <Compile Include="PreviewHost.Designer.vb">
-      <DependentUpon>PreviewHost.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PreviewHost.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <None Include="app.config" />
     <None Include="Unisave.Layouts\4.xaml">
       <SubType>Designer</SubType>
@@ -104,6 +101,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PropertiesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Savers\Black.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,9 +150,6 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PreviewHost.resx">
-      <DependentUpon>PreviewHost.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

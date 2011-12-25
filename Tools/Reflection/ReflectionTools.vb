@@ -718,12 +718,15 @@ Namespace ReflectionT
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <returns>Array of operators of kind <paramref name="Operator"/> specified for <paramref name="Type"/>. An empty aray when no operator was found.</returns>
         ''' <version stage="Nightly" version="1.5.2">Function introduced</version>
-        <Extension()> Public Function GetOperators(ByVal Type As Type, ByVal [Operator] As Operators, ByVal BindingAttr As BindingFlags) As MethodInfo()
+        <Extension()>
+        Public Function GetOperators(ByVal Type As Type, ByVal [Operator] As Operators, ByVal BindingAttr As BindingFlags) As MethodInfo()
             If Type Is Nothing Then Throw New ArgumentNullException("Type")
             Return (From Method In Type.GetMethods((BindingFlags.Static Or BindingAttr) And Not BindingFlags.Instance) _
                     Where Method.IsOperator = [Operator] _
-                    Select Method).ToArray
+                    Select Method
+                   ).ToArray
         End Function
+
         ''' <summary>Gets all operator defined by given type</summary>
         ''' <param name="Type">Type to look for operators on</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
@@ -811,6 +814,133 @@ Namespace ReflectionT
             If Best3(0).Rank = Best3(1).Rank Then Return Best3(0).Operator
             Throw New AmbiguousMatchException(ResourcesT.Exceptions.NoCastOperatorIsMostSpecific)
         End Function
+
+
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <param name="typeA">Type of left operand</param>
+        ''' <param name="typeB">Type of right operand</param>
+        ''' <param name="bindingFlags">Binding flags to find operor. Note: <see cref="BindingFlags.[Static]"/> is always used and <see cref="BindingFlags.Instance"/> is never used.</param>
+        ''' <param name="fallbackProviders">In case operator is found neither in type <paramref name="typeA"/> nor in <paramref name="typeB"/> this method allows search in arbitrary types for externally defined operators. Operator methods must have same name as operator methods defined in one ope operands' type. Operator methods must be static. Special name is not required.</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, bindingFlags As BindingFlags, fallbackProviders As Type()) As [Delegate]
+            If typeA Is Nothing Then Throw New ArgumentNullException("typeA")
+            If typeB Is Nothing Then Throw New ArgumentNullException("typeB")
+            Dim operators = From op In typeA.GetOperators([operator], bindingFlags).UnionAll(typeB.GetOperators([operator], bindingFlags))
+                            Where op.GetParameters()(0).ParameterType.IsAssignableFrom(typeA) AndAlso op.GetParameters()(1).ParameterType.IsAssignableFrom(typeB)
+                            Select Method = op, DistanceA = ComputeDistance(op.GetParameters()(0).ParameterType, typeA), DistanceB = ComputeDistance(op.GetParameters()(0).ParameterType, typeB)
+                            Order By DistanceA + DistanceB
+            Dim opMethod As MethodInfo = Nothing
+            If operators.Any AndAlso operators.Skip(1).IsEmpty Then 'Single
+                opMethod = operators(0).Method
+            ElseIf operators.Skip(1).Any AndAlso operators(0).DistanceA + operators(0).DistanceB = operators(1).DistanceA + operators(1).DistanceB Then 'More than one and 1st and 2nd are of same specificity
+                Throw New AmbiguousMatchException("No operator is most specific")
+            ElseIf operators.Any > 0 Then 'More than one, 1st if most specific
+                opMethod = operators(0).Method
+            End If
+            If opMethod Is Nothing Then
+                If fallbackProviders Is Nothing Then Return Nothing
+                Dim fallbackOperators As IEnumerable(Of MethodInfo) = New MethodInfo() {}
+                For Each fbp In fallbackProviders
+                    fallbackOperators = From op In fallbackOperators.UnionAll(fbp.GetMethods((bindingFlags Or Reflection.BindingFlags.Static) And Not bindingFlags.Instance))
+                                        Where op.GetParameters().Length = 2 AndAlso op.ReturnType <> GetType(Void) AndAlso
+                                              op.Name = "op_" & [operator].ToString AndAlso
+                                              op.GetParameters()(0).ParameterType.IsAssignableFrom(typeA) AndAlso op.GetParameters()(1).ParameterType.IsAssignableFrom(typeB)
+                Next
+                operators = From op In fallbackOperators Select Method = op, DistanceA = ComputeDistance(op.GetParameters()(0).ParameterType, typeA), DistanceB = ComputeDistance(op.GetParameters()(1).ParameterType, typeB)
+                If operators.Any AndAlso operators.Skip(1).IsEmpty Then 'Single
+                    opMethod = operators(0).Method
+                ElseIf operators.Skip(1).Any AndAlso operators(0).DistanceA + operators(0).DistanceB = operators(1).DistanceA + operators(1).DistanceB Then 'More than one and 1st and 2nd are of same specificity
+                    Throw New Reflection.AmbiguousMatchException("No fallaback operator is most specific")
+                ElseIf operators.Any > 0 Then 'More than one, 1st if most specific
+                    opMethod = operators(0).Method
+                End If
+            End If
+
+            If opMethod Is Nothing Then Return Nothing
+            Dim opDelType = GetType(Func(Of ,,)).MakeGenericType(opMethod.GetParameters()(0).ParameterType, opMethod.GetParameters()(1).ParameterType, opMethod.ReturnType)
+            Return [Delegate].CreateDelegate(opDelType, opMethod)
+        End Function
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <param name="typeA">Type of left operand</param>
+        ''' <param name="typeB">Type of right operand</param>
+        ''' <param name="bindingFlags">Binding flags to find operor. Note: <see cref="BindingFlags.[Static]"/> is always used and <see cref="BindingFlags.Instance"/> is never used.</param>
+        ''' <param name="useFallback">In case operator is found neither in type <paramref name="typeA"/> nor in <paramref name="typeB"/> when this parameter is true type <see cref="NumericsT.Operators"/> is sought ofr externaly defined operators.</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, bindingFlags As BindingFlags, useFallback As Boolean) As [Delegate]
+            Return FindBinaryOperator([operator], typeA, typeB, bindingFlags, If(useFallback, New Type() {GetType(NumericsT.Operators)}, Type.EmptyTypes))
+        End Function
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <param name="typeA">Type of left operand</param>
+        ''' <param name="typeB">Type of right operand</param>
+        ''' <param name="useFallback">In case operator is found neither in type <paramref name="typeA"/> nor in <paramref name="typeB"/> when this parameter is true type <see cref="NumericsT.Operators"/> is sought ofr externaly defined operators.</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, useFallback As Boolean) As [Delegate]
+            Return FindBinaryOperator([operator], typeA, typeB, BindingFlags.Public, If(useFallback, New Type() {GetType(NumericsT.Operators)}, Type.EmptyTypes))
+        End Function
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <param name="typeA">Type of left operand</param>
+        ''' <param name="typeB">Type of right operand</param>
+        ''' <param name="fallbackProviders">In case operator is found neither in type <paramref name="typeA"/> nor in <paramref name="typeB"/> this method allows search in arbitrary types for externally defined operators. Operator methods must have same name as operator methods defined in one ope operands' type. Operator methods must be static. Special name is not required.</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, ParamArray fallbackProviders As Type()) As [Delegate]
+            Return FindBinaryOperator([operator], typeA, typeB, BindingFlags.Public, fallbackProviders)
+        End Function
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <param name="typeA">Type of left operand</param>
+        ''' <param name="typeB">Type of right operand</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type) As [Delegate]
+            Return FindBinaryOperator([operator], typeA, typeB, False)
+        End Function
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <typeparam name="TA">Type of left operand</typeparam>
+        ''' <typeparam name="TB">Type of right operand</typeparam>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator(Of TA, TB)([operator] As Operators) As Func(Of TA, TB, Object)
+            Return CType(FindBinaryOperator([operator], GetType(TA), GetType(TB)), Func(Of TA, TB, Object))
+        End Function
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <typeparam name="TA">Type of left operand</typeparam>
+        ''' <typeparam name="TB">Type of right operand</typeparam>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <param name="bindingFlags">Binding flags to find operor. Note: <see cref="BindingFlags.[Static]"/> is always used and <see cref="BindingFlags.Instance"/> is never used.</param>
+        ''' <param name="fallbackProviders">In case operator is found neither in type <paramref name="typeA"/> nor in <paramref name="typeB"/> this method allows search in arbitrary types for externally defined operators. Operator methods must have same name as operator methods defined in one ope operands' type. Operator methods must be static. Special name is not required.</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator(Of TA, TB)([operator] As Operators, bindingFlags As BindingFlags, fallbackProviders As Type()) As Func(Of TA, TB, Object)
+            Return CType(FindBinaryOperator([operator], GetType(TA), GetType(TB), bindingFlags, fallbackProviders), Func(Of TA, TB, Object))
+        End Function
+        ''' <summary>Finds a method that represents operator for given operation</summary>
+        ''' <typeparam name="TA">Type of left operand</typeparam>
+        ''' <typeparam name="TB">Type of right operand</typeparam>
+        ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
+        ''' <param name="useFallback">In case operator is found neither in type <paramref name="typeA"/> nor in <paramref name="typeB"/> when this parameter is true type <see cref="NumericsT.Operators"/> is sought ofr externaly defined operators.</param>
+        ''' <returns>Delegate to operator, or nulll if operator cannot be found</returns>
+        ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function FindBinaryOperator(Of TA, TB)([operator] As Operators, useFallback As Boolean) As Func(Of TA, TB, Object)
+            Return CType(FindBinaryOperator([operator], GetType(TA), GetType(TB), useFallback), Func(Of TA, TB, Object))
+        End Function
+
         ''' <summary>Numerically evaluates distance between base type and derived type</summary>
         ''' <param name="BaseType">Type to be base of <paramref name="DerivedType"/></param>
         ''' <param name="DerivedType">Type to be derived from <paramref name="BaseType"/></param>
