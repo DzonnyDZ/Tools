@@ -3,65 +3,90 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:Tools.Unisave"
         xmlns:tconv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
+        xmlns:tinput="clr-namespace:Tools.WindowsT.WPF.InputT;assembly=Tools.Windows"
+        xmlns:tctl="clr-namespace:Tools.WindowsT.WPF.ControlsT;assembly=Tools.Windows"
         Title="PropertiesWindow" Height="300" Width="300"
 >
     <Window.Resources>
-        <tconv:BinaryOperationConverter Operation="Exponent" x:Key="Exp"/> 
+        <tconv:BinaryOperationConverter Operation="Exponent" x:Key="Exp"/>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static tinput:UICommands.ZoomIn}" Executed="ZoomIn_Executed"/>
+        <CommandBinding Command="{x:Static tinput:UICommands.ZoomOut}" Executed="ZoomOut_Executed"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <tinput:FreeInputBinding Command="{x:Static tinput:UICommands.ZoomIn}">
+            <tinput:FreeInputBinding.Gesture>
+                <tinput:MouseWheelGesture Modifiers="Ctrl" Direction="Plus"/>
+            </tinput:FreeInputBinding.Gesture>
+        </tinput:FreeInputBinding>
+        <tinput:FreeInputBinding Command="{x:Static tinput:UICommands.ZoomOut}">
+            <tinput:FreeInputBinding.Gesture>
+                <tinput:MouseWheelGesture Modifiers="Ctrl" Direction="Minus"/>
+            </tinput:FreeInputBinding.Gesture>
+        </tinput:FreeInputBinding>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <tctl:InputFriendlyScrollViewer Name="svwScreenScroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
         >
-            <Grid Width="auto" Height="auto">
-                <Grid.RenderTransform>
+            <ItemsControl Name="icScreens">
+                <ItemsControl.LayoutTransform>
                     <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=sldZoom,Path=Value}" ScaleY="{Binding ElementName=sldZoom,Path=Value}"/>
-                </Grid.RenderTransform>
-                <ItemsControl Name="icScreens">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas IsItemsHost="True" Background="Black"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding Path=Left}" />
-                            <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}" 
+                </ItemsControl.LayoutTransform>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas IsItemsHost="True" Background="Black"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding Path=Left}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}" 
                                     Width="{Binding Width}" Height="{Binding Height}"
                                     BorderThickness="1" BorderBrush="White"
                             >
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Primary}" Value="true">
-                                                <Setter Property="BorderThickness" Value="3"/>
-                                                <Setter Property="BorderBrush" Value="Red"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                                <Grid>
-                                    <my:SaverScreen HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding DeviceName}" Foreground="Yellow">
-                                        <TextBlock.RenderTransform>
-                                            <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=sldZoom,Path=Value}" ScaleY="{Binding ElementName=sldZoom,Path=Value}"/>  
-                                        </TextBlock.RenderTransform>
-                                    </TextBlock>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
-        </ScrollViewer>
-        <Slider Name="sldZoom" Value="0.3" Minimum="0.1" Maximum="1" Grid.Row="1" HorizontalAlignment="Right" Width="125" />
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Primary}" Value="true">
+                                            <Setter Property="BorderThickness" Value="3"/>
+                                            <Setter Property="BorderBrush" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <my:SaverScreen HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding DeviceName}" Foreground="Yellow">
+                                        <TextBlock.LayoutTransform>
+                                            <ScaleTransform CenterX="0" CenterY="0"
+                                                            ScaleX="{Binding ElementName=sldZoom, Path=Value, Converter={StaticResource Exp}, ConverterParameter=-1}"
+                                                            ScaleY="{Binding ElementName=sldZoom, Path=Value, Converter={StaticResource Exp}, ConverterParameter=-1}"
+                                            />  
+                                        </TextBlock.LayoutTransform>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </tctl:InputFriendlyScrollViewer>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+            <TextBlock Text="{Binding ElementName=sldZoom, Path=Value, StringFormat=P0}"/>
+            <Slider Name="sldZoom" Value="0.3" Minimum="0.1" Maximum="1"  Width="125" />
+        </StackPanel>
+        <ScrollBar Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Minimum="0" Maximum="100" SmallChange="5" />
+
     </Grid>
 </Window>

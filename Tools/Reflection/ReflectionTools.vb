@@ -828,10 +828,11 @@ Namespace ReflectionT
         Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, bindingFlags As BindingFlags, fallbackProviders As Type()) As [Delegate]
             If typeA Is Nothing Then Throw New ArgumentNullException("typeA")
             If typeB Is Nothing Then Throw New ArgumentNullException("typeB")
-            Dim operators = From op In typeA.GetOperators([operator], bindingFlags).UnionAll(typeB.GetOperators([operator], bindingFlags))
-                            Where op.GetParameters()(0).ParameterType.IsAssignableFrom(typeA) AndAlso op.GetParameters()(1).ParameterType.IsAssignableFrom(typeB)
-                            Select Method = op, DistanceA = ComputeDistance(op.GetParameters()(0).ParameterType, typeA), DistanceB = ComputeDistance(op.GetParameters()(0).ParameterType, typeB)
-                            Order By DistanceA + DistanceB
+            Dim operators = (From op In typeA.GetOperators([operator], bindingFlags).UnionAll(typeB.GetOperators([operator], bindingFlags))
+                             Where op.GetParameters()(0).ParameterType.IsAssignableFrom(typeA) AndAlso op.GetParameters()(1).ParameterType.IsAssignableFrom(typeB)
+                             Select Method = op, DistanceA = ComputeDistance(op.GetParameters()(0).ParameterType, typeA), DistanceB = ComputeDistance(op.GetParameters()(0).ParameterType, typeB)
+                             Order By DistanceA + DistanceB
+                            ).AsEnumerable
             Dim opMethod As MethodInfo = Nothing
             If operators.Any AndAlso operators.Skip(1).IsEmpty Then 'Single
                 opMethod = operators(0).Method
@@ -844,10 +845,12 @@ Namespace ReflectionT
                 If fallbackProviders Is Nothing Then Return Nothing
                 Dim fallbackOperators As IEnumerable(Of MethodInfo) = New MethodInfo() {}
                 For Each fbp In fallbackProviders
-                    fallbackOperators = From op In fallbackOperators.UnionAll(fbp.GetMethods((bindingFlags Or Reflection.BindingFlags.Static) And Not bindingFlags.Instance))
-                                        Where op.GetParameters().Length = 2 AndAlso op.ReturnType <> GetType(Void) AndAlso
-                                              op.Name = "op_" & [operator].ToString AndAlso
-                                              op.GetParameters()(0).ParameterType.IsAssignableFrom(typeA) AndAlso op.GetParameters()(1).ParameterType.IsAssignableFrom(typeB)
+                    fallbackOperators = fallbackOperators.UnionAll(
+                        From op In fbp.GetMethods((bindingFlags Or Reflection.BindingFlags.Static) And Not bindingFlags.Instance)
+                        Where op.GetParameters().Length = 2 AndAlso op.ReturnType <> GetType(Void) AndAlso
+                              op.Name = "op_" & [operator].ToString AndAlso
+                              op.GetParameters()(0).ParameterType.IsAssignableFrom(typeA) AndAlso op.GetParameters()(1).ParameterType.IsAssignableFrom(typeB)
+                    )
                 Next
                 operators = From op In fallbackOperators Select Method = op, DistanceA = ComputeDistance(op.GetParameters()(0).ParameterType, typeA), DistanceB = ComputeDistance(op.GetParameters()(1).ParameterType, typeB)
                 If operators.Any AndAlso operators.Skip(1).IsEmpty Then 'Single
@@ -873,7 +876,7 @@ Namespace ReflectionT
         ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, bindingFlags As BindingFlags, useFallback As Boolean) As [Delegate]
-            Return FindBinaryOperator([operator], typeA, typeB, bindingFlags, If(useFallback, New Type() {GetType(Operators)}, Type.EmptyTypes))
+            Return FindBinaryOperator([operator], typeA, typeB, bindingFlags, If(useFallback, New Type() {GetType(Global.Tools.Operators)}, Type.EmptyTypes))
         End Function
         ''' <summary>Finds a method that represents operator for given operation</summary>
         ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
@@ -884,7 +887,7 @@ Namespace ReflectionT
         ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, useFallback As Boolean) As [Delegate]
-            Return FindBinaryOperator([operator], typeA, typeB, BindingFlags.Public, If(useFallback, New Type() {GetType(Operators)}, Type.EmptyTypes))
+            Return FindBinaryOperator([operator], typeA, typeB, BindingFlags.Public, If(useFallback, New Type() {GetType(Global.Tools.Operators)}, Type.EmptyTypes))
         End Function
         ''' <summary>Finds a method that represents operator for given operation</summary>
         ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>

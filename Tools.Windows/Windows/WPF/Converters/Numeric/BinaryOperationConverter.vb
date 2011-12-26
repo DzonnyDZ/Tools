@@ -95,10 +95,14 @@ Namespace WindowsT.WPF.ConvertersT
             ElseIf p2 Is Nothing Then
                 ret = v2
             Else
-                Dim key = String.Format("{0}||{1}||{3}", operation, value.GetType, parameter.GetType)
+                Dim key = String.Format("{0}||{1}||{2}", operation, value.GetType, parameter.GetType)
 
                 Dim op As [Delegate] = Nothing
-                If Not opCache.TryGetValue(key, op) Then
+                If opCache.TryGetValue(key, op) Then
+                    If op IsNot Nothing AndAlso Not op.Method.GetParameters()(1).ParameterType.IsAssignableFrom(parameter.GetType) Then
+                        p2 = DynamicCast(parameter, value.GetType)
+                    End If
+                Else
                     op = FindBinaryOperator(operation, v2.GetType, p2.GetType, True)
                     If op Is Nothing Then
                         p2 = DynamicCast(p2, v2.GetType, True)
@@ -108,11 +112,7 @@ Namespace WindowsT.WPF.ConvertersT
                             op = FindBinaryOperator(operation, v2.GetType, p2.GetType, True)
                         End If
                     End If
-                Else
-                    opCache.Add(key, Nothing)
-                    If op IsNot Nothing AndAlso Not op.Method.GetParameters()(1).ParameterType.IsAssignableFrom(parameter.GetType) Then
-                        p2 = DynamicCast(parameter, value.GetType)
-                    End If
+                    opCache.Add(key, op)
                 End If
                 If op IsNot Nothing Then
                     ret = op.DynamicInvoke(v2, p2)
