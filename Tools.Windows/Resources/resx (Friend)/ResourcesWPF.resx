@@ -150,4 +150,19 @@
     <value>Service provider doesn't provide {0}</value>
     <comment>Inner exception message</comment>
   </data>
+  <data name="ex_OperatorNotSupported" xml:space="preserve">
+    <value>Operator {0} is not supported</value>
+  </data>
+  <data name="ex_CannotInvertOperator" xml:space="preserve">
+    <value>Cannot invert operator {0}.</value>
+  </data>
+  <data name="ex_AssignmentOperator" xml:space="preserve">
+    <value>Assignment operators are not supported.</value>
+  </data>
+  <data name="ex_OnlyBinaryOperators" xml:space="preserve">
+    <value>Only binary operators are supported.</value>
+  </data>
+  <data name="ex_CannotFindOperator" xml:space="preserve">
+    <value>Cannot find operator {0} for types {1} and {2}</value>
+  </data>
 </root>

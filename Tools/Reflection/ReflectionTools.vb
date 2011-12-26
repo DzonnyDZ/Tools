@@ -873,7 +873,7 @@ Namespace ReflectionT
         ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, bindingFlags As BindingFlags, useFallback As Boolean) As [Delegate]
-            Return FindBinaryOperator([operator], typeA, typeB, bindingFlags, If(useFallback, New Type() {GetType(NumericsT.Operators)}, Type.EmptyTypes))
+            Return FindBinaryOperator([operator], typeA, typeB, bindingFlags, If(useFallback, New Type() {GetType(Operators)}, Type.EmptyTypes))
         End Function
         ''' <summary>Finds a method that represents operator for given operation</summary>
         ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>
@@ -884,7 +884,7 @@ Namespace ReflectionT
         ''' <exception cref="AmbiguousMatchException">More than one operaotr with same level specifyiness found.</exception>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         Public Function FindBinaryOperator([operator] As Operators, typeA As Type, typeB As Type, useFallback As Boolean) As [Delegate]
-            Return FindBinaryOperator([operator], typeA, typeB, BindingFlags.Public, If(useFallback, New Type() {GetType(NumericsT.Operators)}, Type.EmptyTypes))
+            Return FindBinaryOperator([operator], typeA, typeB, BindingFlags.Public, If(useFallback, New Type() {GetType(Operators)}, Type.EmptyTypes))
         End Function
         ''' <summary>Finds a method that represents operator for given operation</summary>
         ''' <param name="operator">Indicates which operator to retrieve. This method supports only binary operators.</param>

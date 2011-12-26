@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.InteropServices, Tools.ExtensionsT.Numbers
+Imports System.Runtime.CompilerServices
+Imports Ops = Tools.ReflectionT.Operators
 
 #If Config <= Nightly Then 'Stage: Nightly
 
@@ -22,8 +24,9 @@ Public Module Operators 'TODO: Implement cross-type operators
             Me.[uShort] = [ushort]
         End Sub
     End Structure
+
 #Region "Unary"
-#Region "Decrement"
+#Region "Decrement --"
     ''' <summary>Unary decrement operator (--)</summary>
     ''' <param name="a">A value</param>
     ''' <returns><paramref name="a"/> - 1</returns>
@@ -109,7 +112,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Increment"
+#Region "Increment ++"
     ''' <summary>Unary increment operator (++)</summary>
     ''' <param name="a">A value</param>
     ''' <returns><paramref name="a"/> - 1</returns>
@@ -193,7 +196,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "UnaryNegation"
+#Region "UnaryNegation -"
     ''' <summary>Unary negation operator (-)</summary>
     ''' <param name="a">A value</param>
     ''' <returns>-<paramref name="a"/></returns>
@@ -277,7 +280,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "UnaryPlus"
+#Region "UnaryPlus +"
     ''' <summary>Unary plus operator (+)</summary>
     ''' <param name="a">A value</param>
     ''' <returns>+<paramref name="a"/></returns>
@@ -352,7 +355,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "LogicalNot"
+#Region "LogicalNot !, Not"
     ''' <summary>Logical not operator (!, Not)</summary>
     ''' <param name="a">A value</param>
     ''' <returns>Not <paramref name="a"/></returns>
@@ -532,7 +535,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "OnesComplement"
+#Region "OnesComplement Not, ~"
     ''' <summary>One's complement operator (binary not; Not, ~)</summary>
     ''' <param name="a">A value</param>
     ''' <returns>One's complement of <paramref name="a"/></returns>
@@ -603,7 +606,7 @@ Public Module Operators 'TODO: Implement cross-type operators
 #End Region
 
 #Region "Binary - single type"
-#Region "Addition"
+#Region "Addition +"
     ''' <summary>Addition (plus) operator (+)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -715,7 +718,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Subtraction"
+#Region "Subtraction -"
     ''' <summary>Subtraction (minus) operator (-)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -819,7 +822,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Multiply"
+#Region "Multiply *"
     ''' <summary>Multiply operator (*)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -923,7 +926,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Division"
+#Region "Division /"
     ''' <summary>Division operator (/; integral)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1017,7 +1020,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Modulus"
+#Region "Modulus %, Mod"
     ''' <summary>Modulus (plus) operator (%, Mod)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1111,7 +1114,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "ExclusiveOr"
+#Region "ExclusiveOr Xor, ^"
     ''' <summary>Binary exclusive or operator (Xor, ^)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1191,7 +1194,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "BitwiseAnd"
+#Region "BitwiseAnd And, &"
     ''' <summary>Bitwise And operator (And, &amp;)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1271,7 +1274,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "BitwiseOr"
+#Region "BitwiseOr Or, |"
     ''' <summary>Bitwise Or operator (Or, |)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1351,7 +1354,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "LogicalAnd"
+#Region "LogicalAnd AndAlso, &&"
     ''' <summary>Logical And operator (And, &amp;&amp;)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1446,7 +1449,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "LogicalOr"
+#Region "LogicalOr Or, ||"
     ''' <summary>Logical Or operator (Or, ||)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1543,7 +1546,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Assign"
+#Region "Assign =, <-"
     ''' <summary>Assignment operator (=, &lt;-)</summary>
     ''' <param name="a">Target of assignment. When function returns this parameter contains value of <paramref name="b"/>.</param>
     ''' <param name="b">Source of assignment</param>
@@ -1555,7 +1558,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "LeftShift"
+#Region "LeftShift <<"
     ''' <summary>Left shift operator (&lt;&lt;)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -1642,19 +1645,21 @@ Public Module Operators 'TODO: Implement cross-type operators
 
 #End Region
 
-#Region "RightShift"
-    ''' <summary>Left shift operator (>>)</summary>
+#Region "RightShift >>"
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     Public Function op_RightShift(ByVal a As Byte, ByVal b As Byte) As Byte
         If b > 7 Then Return 0
         Return a >> b
     End Function
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     <CLSCompliant(False)>
     Public Function op_RightShift(ByVal a As SByte, ByVal b As SByte) As SByte
         Const hFF As Byte = &HFF
@@ -1662,72 +1667,78 @@ Public Module Operators 'TODO: Implement cross-type operators
         If b > 7 Then Return If(b.MSB, hFF.BitwiseSame, CSByte(0))
         Return a >> b
     End Function
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     Public Function op_RightShift(ByVal a As Short, ByVal b As Short) As Short
         If b < 0 Then Return op_LeftShift(a, -b)
         If b > 15 Then Return If(b.MSB, &HFFFFS, 0S)
         Return a >> b
     End Function
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     <CLSCompliant(False)>
     Public Function op_RightShift(ByVal a As UShort, ByVal b As UShort) As UShort
         If b > 15 Then Return 0
         Return a >> b
     End Function
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     Public Function op_RightShift(ByVal a As Integer, ByVal b As Integer) As Integer
         If b < 0 Then Return op_LeftShift(a, -b)
         If b > 31 Then Return If(b.MSB, &HFFFFFFFFI, 0I)
         Return a >> b
     End Function
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     <CLSCompliant(False)>
     Public Function op_RightShift(ByVal a As UInteger, ByVal b As UInteger) As UInteger
         If b > 31 Then Return 0
         Return a >> b
     End Function
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     Public Function op_RightShift(ByVal a As Long, ByVal b As Long) As Long
         If b < 0 Then Return op_LeftShift(a, -b)
         If b > 63 Then Return If(b.MSB, &HFFFFFFFFFFFFFFFFL, 0I)
         Return a >> b
     End Function
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     <CLSCompliant(False)>
     Public Function op_RightShift(ByVal a As ULong, ByVal b As ULong) As ULong
         If b > 63 Then Return 0
         Return a >> b
     End Function
 
-    ''' <summary>Left shift operator (>>)</summary>
+    ''' <summary>Right shift operator (>>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
     ''' <returns><paramref name="a"/> >> <paramref name="b"/></returns>
+    ''' <version version="1.5.4">Fix in documentation: Documentation wrongly stated that this method is Left shift operator.</version>
     Public Function op_RightShift(ByVal a As Char, ByVal b As Char) As Char
         Dim ha As New CharHelper(a), hb As New CharHelper(b)
         If hb.uShort > 15 Then Return Chars.NullChar
         ha.uShort >>= hb.uShort
         Return ha.char
     End Function
-
 #End Region
 
 #Region "SignedRightShift"
@@ -1885,7 +1896,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Equality"
+#Region "Equality =="
     ''' <summary>Compares thwo objects for equality (a == operator)</summary>
     ''' <param name="a">A object</param>
     ''' <param name="b">A object</param>
@@ -1896,7 +1907,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "Inequality"
+#Region "Inequality !=, <>"
     ''' <summary>Compares thwo objects for inequality</summary>
     ''' <param name="a">A object</param>
     ''' <param name="b">A object</param>
@@ -1907,7 +1918,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "GreaterThan"
+#Region "GreaterThan >"
     ''' <summary>Greater than comparison operator (>)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -2009,7 +2020,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "LessThan"
+#Region "LessThan <"
     ''' <summary>Less than comparison operator (&lt;)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -2111,8 +2122,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-
-#Region "GreaterThanOrEqual"
+#Region "GreaterThanOrEqual >="
     ''' <summary>Greater than or equal comparison operator (>=)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -2214,7 +2224,7 @@ Public Module Operators 'TODO: Implement cross-type operators
     End Function
 #End Region
 
-#Region "GreaterThanOrEqual"
+#Region "LessThanOrEqual <="
     ''' <summary>Less than or equal comparison operator (&lt;=)</summary>
     ''' <param name="a">A value</param>
     ''' <param name="b">A value</param>
@@ -2315,7 +2325,8 @@ Public Module Operators 'TODO: Implement cross-type operators
         Return a <= b
     End Function
 #End Region
-#Region "Comma"
+
+#Region "Comma ,"
     ''' <summary>Implements the comma (,) operator</summary>
     ''' <param name="a">Ignored</param>
     ''' <param name="b">Returned</param>
@@ -2325,6 +2336,334 @@ Public Module Operators 'TODO: Implement cross-type operators
         Return b
     End Function
 #End Region
+
+#Region "VB-only"
+#Region "Concatenate &"
+    ''' <summary>Implements the string concatenation operator (VB &amp;, PHP .)</summary>
+    ''' <param name="a">First string</param>
+    ''' <param name="b">2nd string</param>
+    ''' <returns>Strings <paramref name="a"/> and <paramref name="b"/> concatenated</returns>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Concatenate(a As String, b As String) As String
+        Return a & b
+    End Function
+    ''' <summary>Implements the string concatenation operator (concatenates two chars to a string; VB &amp;, PHP .)</summary>
+    ''' <param name="a">First character</param>
+    ''' <param name="b">2nd character</param>
+    ''' <returns>Chars <paramref name="a"/> and <paramref name="b"/> concatenated</returns>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Concatenate(a As Char, b As Char) As String
+        Return a & b
+    End Function
+#End Region
+#Region "Exponent ^"
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_Exponent(a As SByte, b As SByte) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Exponent(a As Byte, b As Byte) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Exponent(a As Short, b As Short) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_Exponent(a As UShort, b As UShort) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Exponent(a As Integer, b As Integer) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_Exponent(a As UInteger, b As UInteger) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Exponent(a As Long, b As Long) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_Exponent(a As ULong, b As ULong) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Exponent(a As Decimal, b As Decimal) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Exponent(a As Single, b As Single) As Double
+        Return a ^ b
+    End Function
+    ''' <summary>Implements exponent operator (powers giwen number to given power; VB ^)</summary>
+    ''' <param name="a">The number to be powered</param>
+    ''' <param name="b">Power</param>
+    ''' <returns>Number <paramref name="a"/> powered by <paramref name="b"/>.</returns>
+    ''' <exception cref="OverflowException">An arithmetic operation results to a number that is out of range of <see cref="Double"/> type.</exception>
+    ''' <remarks>This is VisualBasic-specific operator</remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_Exponent(a As Double, b As Double) As Double
+        Return a ^ b
+    End Function
+#End Region
+#Region "IntegerDivision \"
+    ''' <summary>Implements the integer division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="SByte"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_IntegerDivision(a As SByte, b As SByte) As SByte
+        Return a \ b
+    End Function
+    ''' <summary>Implements the integer division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="Byte"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function op_IntegerDivision(a As Byte, b As Byte) As Byte
+        Return a \ b
+    End Function
+    ''' <summary>Implements the short division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="short"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_shortDivision(a As Short, b As Short) As Short
+        Return a \ b
+    End Function
+    ''' <summary>Implements the short division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="Ushort"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_shortDivision(a As UShort, b As UShort) As Short
+        Return a \ b
+    End Function
+    ''' <summary>Implements the integer division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="Integer"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_IntegerDivision(a As Integer, b As Integer) As Integer
+        Return a \ b
+    End Function
+    ''' <summary>Implements the integer division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="UInteger"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_IntegerDivision(a As UInteger, b As UInteger) As Integer
+        Return a \ b
+    End Function
+    ''' <summary>Implements the Long division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="Long"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_LongDivision(a As Long, b As Long) As Long
+        Return a \ b
+    End Function
+    ''' <summary>Implements the Long division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator. For language compatibility reason implementation of this operator and <see cref="op_Division"/> for type <see cref="ULong"/> is the same.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_LongDivision(a As ULong, b As ULong) As Long
+        Return a \ b
+    End Function
+    ''' <summary>Implements the Single division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_SingleDivision(a As Single, b As Single) As Long
+        Return a \ b
+    End Function
+    ''' <summary>Implements the Double division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_DoubleDivision(a As Double, b As Double) As Long
+        Return a \ b
+    End Function
+    ''' <summary>Implements the Long division operator (VB \)</summary>
+    ''' <param name="a">Number to be divided</param>
+    ''' <param name="b">Number to divide <paramref name="a"/> by</param>
+    ''' <returns>Integral part of result of division of <paramref name="a"/> / <paramref name="b"/>.</returns>
+    ''' <remarks>This is VisualBasic-specific operator.</remarks>
+    ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <CLSCompliant(False)>
+    Public Function op_LongDivision(a As Decimal, b As Decimal) As Long
+        Return a \ b
+    End Function
+#End Region
+#End Region
+#End Region
+
+#Region "Helpers"
+
+    ''' <summary>Gets inverse operator to given operator (if possible, approxiomately)</summary>
+    ''' <param name="operator">Operator to get inverse operator for</param>
+    ''' <returns>An operator that is inversion to <paramref name="operator"/>. <see cref="Ops.no"/> is no inversion exists or <paramref name="operator"/> is not a known <see cref="Ops"/> value.</returns>
+    ''' <remarks>Inversion means that if <c>a × b == c</c> and ¤ is inversion of × then <c>c ¤ b == a</c></remarks>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    <Extension()>
+    Public Function Reverse([operator] As Ops) As Ops
+        Select Case [operator]
+            Case Ops.Addition : Return Ops.Subtraction
+            Case Ops.AddressOf : Return Ops.PointerDereference
+            Case Ops.AditionAssignment : Return Ops.SubtractionAssignment
+                'Case Ops.Assign : Return Ops.no
+                'Case Ops.BitwiseAnd : Return Ops.no
+                'Case Ops.BitwiseAndAssignment : Return Ops.no
+                'Case Ops.BitwiseOr : Return Ops.no
+                'Case Ops.BitwiseOrAssignment : Return Ops.no
+                'Case ops.Comma : Return Ops.no
+                'Case ops.Concatenate : Return Ops.no
+            Case Ops.Decrement : Return Ops.Increment
+            Case Ops.Division : Return Ops.Multiply
+            Case Ops.DivisionAssignment : Return Ops.MultiplicationAssignment
+                'Case ops.Equality : Return Ops.no
+                'Case ops.ExclusiveOr : Return Ops.no
+                'Case ops.ExclusiveOrAssignment : Return Ops.no
+            Case Ops.Explicit : Return Ops.Explicit
+                'Case ops.Exponent : Return Ops.no
+                'Case ops.False : Return Ops.no
+                'Case ops.GreaterThan : Return Ops.no
+                'Case ops.GreaterThanOrEqual : Return Ops.no
+            Case Ops.Implicit : Return Ops.Implicit
+            Case Ops.Increment : Return Ops.Decrement
+                'Case ops.Inequality : Return Ops.no
+            Case Ops.IntegerDivision : Return Ops.Multiply
+            Case Ops.LeftShift : Return Ops.RightShift
+            Case Ops.LeftShiftAssignment : Return Ops.RightShifAssignment
+            Case Ops.LessThan : Return Ops.False
+                'Case ops.LessThanOrEqual : Return Ops.no
+                'Case ops.LogicalAnd : Return Ops.no
+            Case Ops.LogicalNot : Return Ops.LogicalNot
+                'Case ops.LogicalOr : Return Ops.no
+                'Case ops.MemberSelection : Return Ops.no
+                'Case ops.Modulus : Return Ops.no
+                'Case ops.ModulusAssignment : Return Ops.no
+            Case Ops.MultiplicationAssignment : Return Ops.DivisionAssignment
+            Case Ops.Multiply : Return Ops.Division
+                'Case ops.no : Return ops.no
+            Case Ops.OnesComplement : Return Ops.OnesComplement
+            Case Ops.PointerDereference : Return Ops.AddressOf
+            Case Ops.PointerToMemberSelection : Return Nothing
+            Case Ops.RightShifAssignment : Return Ops.LeftShiftAssignment
+            Case Ops.RightShift : Return Ops.LeftShift
+            Case Ops.SignedRightShift : Return Ops.LeftShift
+            Case Ops.Subtraction : Return Ops.Addition
+            Case Ops.SubtractionAssignment : Return Ops.AditionAssignment
+                'Case ops.True : Return ops.no
+            Case Ops.UnaryNegation : Return Ops.UnaryNegation
+            Case Ops.UnaryPlus : Return Ops.UnaryPlus
+            Case Ops.UnsignedRightShift : Return Ops.LeftShift
+            Case Ops.UnsignedRightShiftAssignment : Return Ops.LeftShiftAssignment
+            Case Else : Return Ops.no
+        End Select
+    End Function
+
 #End Region
 End Module
 

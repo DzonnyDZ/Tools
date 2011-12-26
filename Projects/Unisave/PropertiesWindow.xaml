@@ -6,7 +6,7 @@
         Title="PropertiesWindow" Height="300" Width="300"
 >
     <Window.Resources>
-        <tconv:MathOperationMultiConverter 
+        <tconv:BinaryOperationConverter Operation="Exponent" x:Key="Exp"/> 
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

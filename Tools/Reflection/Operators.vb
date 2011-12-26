@@ -65,7 +65,8 @@ Namespace ReflectionT
         ''' <summary>Right shift (binary, like C++/C#/VB >>) <c>op_RightShift</c></summary>
         RightShift = &H1702
         ''' <summary>Signed right shift (binary) <c>op_SignedRightShift</c></summary>
-        SignedRightShif = &H1802
+        ''' <version version="1.5.4">Fix: member renamed form <c>SignedRightShif</c> to <c>SignedRightShift</c></version>
+        SignedRightShift = &H1802
         ''' <summary>Unsigned right shift (binary) <c>op_UnignedRightShift</c></summary>
         UnsignedRightShift = &H1902
         ''' <summary>Equality comparison (binary, like C++/C# ==, VB =) <c>op_Equality</c></summary>

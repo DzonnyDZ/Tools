@@ -522,7 +522,7 @@ Namespace ReflectionT
                 Case Operators.PointerToMemberSelection : Return "AddressOf." 'Does not exists
                 Case Operators.RightShifAssignment : Return ">>=" 'Cannot be overloaded
                 Case Operators.RightShift : Return ">>"
-                Case Operators.SignedRightShif : Return ">>S" 'Nothing like this exists
+                Case Operators.SignedRightShift : Return ">>S" 'Nothing like this exists
                 Case Operators.Subtraction : Return "-"
                 Case Operators.SubtractionAssignment : Return "-=" 'Cannot be overloaded
                 Case Operators.True : Return "IsTrue"
