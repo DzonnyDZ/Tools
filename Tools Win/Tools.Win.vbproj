@@ -163,6 +163,7 @@
     <Compile Include="IO\UnmanagedMemoryStream.vb" />
     <Compile Include="Text\Unicode\UnicodeNative.vb" />
     <Compile Include="Windows\Interop\NativeInteropExtensions.vb" />
+    <Compile Include="Windows\WPF\Input\Mouse.vb" />
     <Compile Include="Windows\WPF\WPFNativeExtensions.vb" />
     <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
       <Link>Resources\Exceptions.Designer.vb</Link>

@@ -8,7 +8,7 @@ Namespace WindowsT.WPF.InputT
         Partial Private Sub New()
         End Sub
 
-        Private Shared ReadOnly _scrollDown As New RoutedUICommand("Scroll down", "ScrollDown", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus)})
+        Private Shared ReadOnly _scrollDown As New RoutedUICommand(WPF.Resources.ScrollDown, "ScrollDown", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus)})
         ''' <summary>Gets a scroll down command - generic scroll down</summary>
         Public Shared ReadOnly Property ScrollDown As RoutedUICommand
             Get
@@ -16,7 +16,7 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
-        Private Shared ReadOnly _scrollUp As New RoutedUICommand("Scroll up", "ScrollUp", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Plus)})
+        Private Shared ReadOnly _scrollUp As New RoutedUICommand(WPF.Resources.ScrollUp, "ScrollUp", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Plus)})
         ''' <summary>Gets a scroll up command - generic scroll up</summary>
         Public Shared ReadOnly Property ScrollUp As RoutedUICommand
             Get
@@ -24,7 +24,7 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
-        Private Shared ReadOnly _scrollLeft As New RoutedUICommand("Scroll left", "ScrollLeft", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Plus, , ModifierKeys.Shift)})
+        Private Shared ReadOnly _scrollLeft As New RoutedUICommand(WPF.Resources.ScrollLeft, "ScrollLeft", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Plus, , ModifierKeys.Shift)})
         ''' <summary>Gets a scroll left command - generic scroll left</summary>
         Public Shared ReadOnly Property ScrollLeft As RoutedUICommand
             Get
@@ -32,7 +32,7 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
-        Private Shared ReadOnly _scrollRight As New RoutedUICommand("Scroll right", "ScrollRight", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus, , ModifierKeys.Shift)})
+        Private Shared ReadOnly _scrollRight As New RoutedUICommand(WPF.Resources.ScrollRight, "ScrollRight", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus, , ModifierKeys.Shift)})
         ''' <summary>Gets a scroll right command - generic scroll right</summary>
         Public Shared ReadOnly Property ScrollRight As RoutedUICommand
             Get
@@ -40,7 +40,7 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
-        Private Shared ReadOnly _zoomIn As New RoutedUICommand("Zoom in", "ZoomIn", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Plus, , ModifierKeys.Control)})
+        Private Shared ReadOnly _zoomIn As New RoutedUICommand(WPF.Resources.ZoomIn, "ZoomIn", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Plus, , ModifierKeys.Control)})
         ''' <summary>Gets a zoom in command (magnification)</summary>
         Public Shared ReadOnly Property ZoomIn As RoutedUICommand
             Get
@@ -48,7 +48,7 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
-        Private Shared ReadOnly _zoomOut As New RoutedUICommand("Zoom out", "ZoomOut", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus, , ModifierKeys.Control)})
+        Private Shared ReadOnly _zoomOut As New RoutedUICommand(WPF.Resources.ZoomOut, "ZoomOut", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus, , ModifierKeys.Control)})
         ''' <summary>Gets a zoom out command (unmagnification)</summary>
         Public Shared ReadOnly Property ZoomOut As RoutedUICommand
             Get

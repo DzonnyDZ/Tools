@@ -165,4 +165,22 @@
   <data name="ex_CannotFindOperator" xml:space="preserve">
     <value>Cannot find operator {0} for types {1} and {2}</value>
   </data>
+  <data name="ScrollDown" xml:space="preserve">
+    <value>Scroll down</value>
+  </data>
+  <data name="ScrollUp" xml:space="preserve">
+    <value>Scroll up</value>
+  </data>
+  <data name="ScrollLeft" xml:space="preserve">
+    <value>Scroll left</value>
+  </data>
+  <data name="ScrollRight" xml:space="preserve">
+    <value>Scroll right</value>
+  </data>
+  <data name="ZoomOut" xml:space="preserve">
+    <value>Zoom out</value>
+  </data>
+  <data name="ZoomIn" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
 </root>

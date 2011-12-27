@@ -4,6 +4,7 @@ Imports System.Windows.Markup
 Imports System.Text.RegularExpressions
 Imports System.Globalization.CultureInfo
 Imports Tools.WindowsT.WPF.MarkupT
+Imports System.Windows.Controls
 
 Namespace WindowsT.WPF.InputT
 
@@ -74,7 +75,7 @@ Namespace WindowsT.WPF.InputT
             End Set
         End Property
 
-        Private Shared regex As New Regex("^\s*(?<Direction>(Plus)|(Minus)|(Any))?\s*(?<Delta>\d+)?\s*(\+(?<Modifier>(Alt)|(Control)|(Ctrl)|(Shift)|(Win(dows)?)|(None)))*\s*$", RegexOptions.Compiled Or RegexOptions.CultureInvariant Or RegexOptions.IgnoreCase Or RegexOptions.ExplicitCapture)
+        Private Shared regex As New Regex("^\s*(?<Direction>(Plus)|(Minus)|(Any))?\s*(?<Delta>\d+)?\s*(?<Orientation>(Horizontal)|(Vertical))?\s*(\+(?<Modifier>(Alt)|(Control)|(Ctrl)|(Shift)|(Win(dows)?)|(None)))*\s*$", RegexOptions.Compiled Or RegexOptions.CultureInvariant Or RegexOptions.IgnoreCase Or RegexOptions.ExplicitCapture)
 
         '(Plus|Minus)?\s*(Value)?\s*(+Modifiers)?
         ''' <summary>CTor - creates a new instance of the <see cref="MouseWheelGesture"/> class from it's string representation</summary>
@@ -103,6 +104,9 @@ Namespace WindowsT.WPF.InputT
                 If result.Groups!Delta.Captures.Count > 0 Then
                     Delta = Integer.Parse(result.Groups!Delta.Captures(0).Value, InvariantCulture)
                 End If
+                If result.Groups!Orientation.Captures.Count > 0 Then
+                    Orientation = [Enum].Parse(GetType(Orientation), result.Groups!Orientation.Captures(0).Value, True)
+                End If
                 For Each capt As Capture In result.Groups!Modifier.Captures
                     Select Case capt.Value.ToLowerInvariant
                         Case "alt" : Modifiers = Modifiers Or ModifierKeys.Alt
@@ -121,6 +125,7 @@ Namespace WindowsT.WPF.InputT
             Dim ret As String = ""
             If Direction <> MouseWheelDirection.Any Then ret &= Direction.ToString & " "
             If Delta <> 0 Then ret &= Delta.ToString(InvariantCulture) & " "
+            ret &= Orientation.ToString & " "
             If Modifiers.HasFlag(ModifierKeys.Control) Then ret &= "+Win"
             If Modifiers.HasFlag(ModifierKeys.Control) Then ret &= "+Ctrl"
             If Modifiers.HasFlag(ModifierKeys.Alt) Then ret &= "+Alt"
@@ -133,9 +138,15 @@ Namespace WindowsT.WPF.InputT
         ' ''' <remarks>The gesture matches only if these keys are pressed on keyboard during wheel event</remarks>
         '<DefaultValue(ModifierKeys.None)>
         'Public Property Modifiers As ModifierKeys
+
         ''' <summary>Gets or sets value indicating which directions of mouse wheel movement will match</summary>
         <DefaultValue(MouseWheelDirection.Any)>
         Public Property Direction As MouseWheelDirection
+
+        ''' <summary>Gets or sets value indicating wheather horizontal or vertical mouse wheel action will match.</summary>
+        <DefaultValue(Orientation.Vertical)>
+        Public Property Orientation As Orientation
+
         ''' <summary>Gets or sets number of wheel clicks this operation will match.</summary>
         ''' <value>0 means any</value>
         <DefaultValue(0I)>
@@ -154,6 +165,10 @@ Namespace WindowsT.WPF.InputT
             Select Case Direction
                 Case MouseWheelDirection.Plus : If mwea.Delta < 0 Then Return False
                 Case MouseWheelDirection.Minus : If mwea.Delta > 0 Then Return False
+            End Select
+            Select Case Orientation
+                Case Orientation.Horizontal : If Not TypeOf mwea Is MouseWheelEventArgsEx OrElse DirectCast(mwea, MouseWheelEventArgsEx).Orientation <> Windows.Controls.Orientation.Horizontal Then Return False
+                Case Orientation.Vertical : If TypeOf mwea Is MouseWheelEventArgsEx AndAlso DirectCast(mwea, MouseWheelEventArgsEx).Orientation <> Windows.Controls.Orientation.Vertical Then Return False
             End Select
             If Delta = 0 Then Return True
             Return Math.Abs(Delta) = Math.Abs(mwea.Delta)

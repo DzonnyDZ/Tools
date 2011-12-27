@@ -187,6 +187,42 @@ Namespace WindowsT.WPF
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Scroll down'.
+        '''</summary>
+        Public ReadOnly Property ScrollDown() As String
+            Get
+                Return ResourceManager.GetString("ScrollDown", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Scroll left'.
+        '''</summary>
+        Public ReadOnly Property ScrollLeft() As String
+            Get
+                Return ResourceManager.GetString("ScrollLeft", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Scroll right'.
+        '''</summary>
+        Public ReadOnly Property ScrollRight() As String
+            Get
+                Return ResourceManager.GetString("ScrollRight", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Scroll up'.
+        '''</summary>
+        Public ReadOnly Property ScrollUp() As String
+            Get
+                Return ResourceManager.GetString("ScrollUp", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Value cannot be null'.
         '''</summary>
         Public ReadOnly Property ValueCannotBeNull() As String
@@ -201,6 +237,24 @@ Namespace WindowsT.WPF
         Public ReadOnly Property ValueHasIncorrectFormat() As String
             Get
                 Return ResourceManager.GetString("ValueHasIncorrectFormat", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Zoom in'.
+        '''</summary>
+        Public ReadOnly Property ZoomIn() As String
+            Get
+                Return ResourceManager.GetString("ZoomIn", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Zoom out'.
+        '''</summary>
+        Public ReadOnly Property ZoomOut() As String
+            Get
+                Return ResourceManager.GetString("ZoomOut", _resourceCulture)
             End Get
         End Property
         
@@ -314,6 +368,38 @@ Namespace WindowsT.WPF
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the ScrollDown property value.
+        '''</summary>
+        '''<returns>The ScrollDown property value.</returns>
+        Public Function ScrollDownFormat() As String
+            Return ScrollDown
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ScrollLeft property value.
+        '''</summary>
+        '''<returns>The ScrollLeft property value.</returns>
+        Public Function ScrollLeftFormat() As String
+            Return ScrollLeft
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ScrollRight property value.
+        '''</summary>
+        '''<returns>The ScrollRight property value.</returns>
+        Public Function ScrollRightFormat() As String
+            Return ScrollRight
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ScrollUp property value.
+        '''</summary>
+        '''<returns>The ScrollUp property value.</returns>
+        Public Function ScrollUpFormat() As String
+            Return ScrollUp
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the ValueCannotBeNull property value.
         '''</summary>
         '''<returns>The ValueCannotBeNull property value.</returns>
@@ -327,6 +413,22 @@ Namespace WindowsT.WPF
         '''<returns>The ValueHasIncorrectFormat property value.</returns>
         Public Function ValueHasIncorrectFormatFormat() As String
             Return ValueHasIncorrectFormat
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ZoomIn property value.
+        '''</summary>
+        '''<returns>The ZoomIn property value.</returns>
+        Public Function ZoomInFormat() As String
+            Return ZoomIn
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ZoomOut property value.
+        '''</summary>
+        '''<returns>The ZoomOut property value.</returns>
+        Public Function ZoomOutFormat() As String
+            Return ZoomOut
         End Function
     End Module
 End Namespace

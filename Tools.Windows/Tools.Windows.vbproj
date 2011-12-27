@@ -256,6 +256,7 @@
     <Compile Include="Windows\WPF\Converters\Type-safe\XmlXPathConverter.vb" />
     <Compile Include="Windows\WPF\Input\FreeInputBinding.vb" />
     <Compile Include="Windows\WPF\Input\FreeKeyGesture.vb" />
+    <Compile Include="Windows\WPF\Input\MouseWheelEventArgsEx.vb" />
     <Compile Include="Windows\WPF\Input\MouseWheelGesture.vb" />
     <Compile Include="Windows\WPF\Input\UICommands.vb" />
     <Compile Include="Windows\WPF\Markup\TypeConverterBasedValueSerializer.vb" />
