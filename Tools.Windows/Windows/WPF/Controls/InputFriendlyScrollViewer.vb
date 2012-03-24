@@ -20,13 +20,15 @@ Namespace WindowsT.WPF.ControlsT
         Protected Sub New(initializeBindings As Boolean)
             InputBindings.Clear()
             If initializeBindings Then
-                InputBindings.Add(New FreeInputBinding() With {.Command = UICommands.ScrollDown, .Gesture = UICommands.ScrollDown.InputGestures(0)})
-                InputBindings.Add(New FreeInputBinding() With {.Command = UICommands.ScrollUp, .Gesture = UICommands.ScrollUp.InputGestures(0)})
-                InputBindings.Add(New FreeInputBinding() With {.Command = UICommands.ScrollRight, .Gesture = UICommands.ScrollRight.InputGestures(0)})
-                InputBindings.Add(New FreeInputBinding() With {.Command = UICommands.ScrollLeft, .Gesture = UICommands.ScrollLeft.InputGestures(0)})
+                For Each cmd In {UICommands.ScrollDown, UICommands.ScrollUp, UICommands.ScrollLeft, UICommands.ScrollRight}
+                    For Each ig In cmd.InputGestures
+                        InputBindings.Add(New FreeInputBinding() With {.Command = cmd, .Gesture = ig})
+                    Next
+                Next
             End If
 
             CommandBindings.Clear()
+
             If initializeBindings Then
                 CommandBindings.Add(New CommandBinding(UICommands.ScrollDown, AddressOf OnScrollDown, AddressOf CanScrollDown))
                 CommandBindings.Add(New CommandBinding(UICommands.ScrollUp, AddressOf OnScrollUp, AddressOf CanScrollUp))
@@ -36,7 +38,7 @@ Namespace WindowsT.WPF.ControlsT
         End Sub
 
         Protected Overrides Sub OnMouseWheel(e As MouseWheelEventArgs)
-            'MyBase.OnMouseWheel(e)
+            'MyBase.OnMouseWheel(e) - do not call base class method to fix some behavior
         End Sub
 
 #Region "ScrollDown"
@@ -135,5 +137,6 @@ Namespace WindowsT.WPF.ControlsT
         End Sub
 #End Region
 
+        
     End Class
 End Namespace

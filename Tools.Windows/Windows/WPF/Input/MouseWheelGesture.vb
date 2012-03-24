@@ -75,7 +75,7 @@ Namespace WindowsT.WPF.InputT
             End Set
         End Property
 
-        Private Shared regex As New Regex("^\s*(?<Direction>(Plus)|(Minus)|(Any))?\s*(?<Delta>\d+)?\s*(?<Orientation>(Horizontal)|(Vertical))?\s*(\+(?<Modifier>(Alt)|(Control)|(Ctrl)|(Shift)|(Win(dows)?)|(None)))*\s*$", RegexOptions.Compiled Or RegexOptions.CultureInvariant Or RegexOptions.IgnoreCase Or RegexOptions.ExplicitCapture)
+        Private Shared ReadOnly regex As New Regex("^\s*(?<Direction>(Plus)|(Minus)|(Any))?\s*(?<Delta>\d+)?\s*(?<Orientation>(Horizontal)|(Vertical))?\s*(\+(?<Modifier>(Alt)|(Control)|(Ctrl)|(Shift)|(Win(dows)?)|(None)))*\s*$", RegexOptions.Compiled Or RegexOptions.CultureInvariant Or RegexOptions.IgnoreCase Or RegexOptions.ExplicitCapture)
 
         '(Plus|Minus)?\s*(Value)?\s*(+Modifiers)?
         ''' <summary>CTor - creates a new instance of the <see cref="MouseWheelGesture"/> class from it's string representation</summary>
@@ -141,11 +141,11 @@ Namespace WindowsT.WPF.InputT
 
         ''' <summary>Gets or sets value indicating which directions of mouse wheel movement will match</summary>
         <DefaultValue(MouseWheelDirection.Any)>
-        Public Property Direction As MouseWheelDirection
+        Public Property Direction As MouseWheelDirection = MouseWheelDirection.Any
 
         ''' <summary>Gets or sets value indicating wheather horizontal or vertical mouse wheel action will match.</summary>
         <DefaultValue(Orientation.Vertical)>
-        Public Property Orientation As Orientation
+        Public Property Orientation As Orientation = Orientation.Vertical
 
         ''' <summary>Gets or sets number of wheel clicks this operation will match.</summary>
         ''' <value>0 means any</value>
@@ -156,7 +156,7 @@ Namespace WindowsT.WPF.InputT
         ''' <param name="targetElement">The target of the command.</param>
         ''' <param name="inputEventArgs">The input event data to compare this gesture to.</param>
         ''' <returns>true if the gesture matches the input; otherwise, false.</returns>
-        Public Overrides Function Matches(targetElement As Object, inputEventArgs As System.Windows.Input.InputEventArgs) As Boolean
+        Public Overrides Function Matches(targetElement As Object, inputEventArgs As InputEventArgs) As Boolean
             Dim mwea = TryCast(inputEventArgs, MouseWheelEventArgs)
             If mwea Is Nothing Then Return False
             If MouseAction <> Windows.Input.MouseAction.WheelClick Then Return False

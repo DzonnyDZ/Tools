@@ -2,6 +2,7 @@
 Imports System.Linq
 Imports Tools.WindowsT.WPF
 Imports System.Windows.Controls.Primitives
+Imports Tools.WindowsT.WPF.InputT
 
 ''' <summary>A windows for configuring a screen saver</summary>
 Friend Class PropertiesWindow
@@ -18,14 +19,20 @@ Friend Class PropertiesWindow
                                        Left = s.Bounds.Left - minx, Top = s.Bounds.Top - miny
         icScreens.Width = maxx - minx
         icScreens.Height = maxy - miny
+
+        MouseT.RegisterHorizontalMouseWheelEvents(Me)
     End Sub
 
     Private Sub ZoomIn_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
-        Dim newValue = Math.Min(sldZoom.Maximum, sldZoom.Value + 0.1)
+        Dim newValue = Math.Min(sldZoom.Maximum, sldZoom.Value + 0.10000000000000001)
         sldZoom.Value = newValue
     End Sub
     Private Sub ZoomOut_Executed(sender As System.Object, e As System.Windows.Input.ExecutedRoutedEventArgs)
-        Dim newValue = Math.Max(sldZoom.Minimum, sldZoom.Value - 0.1)
+        Dim newValue = Math.Max(sldZoom.Minimum, sldZoom.Value - 0.10000000000000001)
         sldZoom.Value = newValue
+    End Sub
+
+    Private Sub Window_PreviewHorizontalMouseWheel(sender As System.Object, e As System.Windows.RoutedEventArgs)
+
     End Sub
 End Class

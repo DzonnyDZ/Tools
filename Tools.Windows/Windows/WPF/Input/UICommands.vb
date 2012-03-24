@@ -1,4 +1,6 @@
 ﻿Imports System.Windows.Input
+Imports System.Windows.Controls
+
 
 Namespace WindowsT.WPF.InputT
     ''' <summary>Defines additional standard commands that are not defined in core WPF</summary>
@@ -24,7 +26,10 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
-        Private Shared ReadOnly _scrollLeft As New RoutedUICommand(WPF.Resources.ScrollLeft, "ScrollLeft", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Plus, , ModifierKeys.Shift)})
+        Private Shared ReadOnly _scrollLeft As New RoutedUICommand(WPF.Resources.ScrollLeft, "ScrollLeft", GetType(UICommands), New InputGestureCollection From {
+            New MouseWheelGesture(MouseWheelDirection.Plus, , ModifierKeys.Shift),
+            New MouseWheelGesture(MouseWheelDirection.Plus) With {.Orientation = Orientation.Horizontal}
+        })
         ''' <summary>Gets a scroll left command - generic scroll left</summary>
         Public Shared ReadOnly Property ScrollLeft As RoutedUICommand
             Get
@@ -32,7 +37,10 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
-        Private Shared ReadOnly _scrollRight As New RoutedUICommand(WPF.Resources.ScrollRight, "ScrollRight", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus, , ModifierKeys.Shift)})
+        Private Shared ReadOnly _scrollRight As New RoutedUICommand(WPF.Resources.ScrollRight, "ScrollRight", GetType(UICommands), New InputGestureCollection From {
+            New MouseWheelGesture(MouseWheelDirection.Minus, , ModifierKeys.Shift),
+            New MouseWheelGesture(MouseWheelDirection.Minus) With {.Orientation = Orientation.Horizontal}
+        })
         ''' <summary>Gets a scroll right command - generic scroll right</summary>
         Public Shared ReadOnly Property ScrollRight As RoutedUICommand
             Get

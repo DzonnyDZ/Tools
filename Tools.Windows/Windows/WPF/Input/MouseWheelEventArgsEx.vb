@@ -23,5 +23,8 @@ Namespace WindowsT.WPF.InputT
             End Get
         End Property
 
+        Protected Overrides Sub InvokeEventHandler(genericHandler As System.Delegate, genericTarget As Object)
+            MyBase.InvokeEventHandler(genericHandler, genericTarget)
+        End Sub
     End Class
 End Namespace

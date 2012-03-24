@@ -5,7 +5,9 @@
         xmlns:tconv="clr-namespace:Tools.WindowsT.WPF.ConvertersT;assembly=Tools.Windows"
         xmlns:tinput="clr-namespace:Tools.WindowsT.WPF.InputT;assembly=Tools.Windows"
         xmlns:tctl="clr-namespace:Tools.WindowsT.WPF.ControlsT;assembly=Tools.Windows"
+        xmlns:tinput32="clr-namespace:Tools.WindowsT.WPF.InputT;assembly=Tools.Win"
         Title="PropertiesWindow" Height="300" Width="300"
+        tinput32:MouseT.PreviewHorizontalMouseWheel="Window_PreviewHorizontalMouseWheel"
 >
     <Window.Resources>
         <tconv:BinaryOperationConverter Operation="Exponent" x:Key="Exp"/>
@@ -86,7 +88,7 @@
             <TextBlock Text="{Binding ElementName=sldZoom, Path=Value, StringFormat=P0}"/>
             <Slider Name="sldZoom" Value="0.3" Minimum="0.1" Maximum="1"  Width="125" />
         </StackPanel>
-        <ScrollBar Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Minimum="0" Maximum="100" SmallChange="5" />
+        <!--<ScrollBar Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Minimum="0" Maximum="100" SmallChange="5" />-->
 
     </Grid>
 </Window>
