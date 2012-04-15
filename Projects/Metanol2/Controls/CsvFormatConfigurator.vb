@@ -185,6 +185,7 @@ Public Class CsvFormatConfigurator
                                 Else : strValue = String.Format(Culture, "{0}", value)
                                 End If
                             End If
+                            If strValue.EndsWith(Chars.NullChar) Then strValue = strValue.TrimEnd(Chars.NullChar)
                             Dim useQualifier = AlwaysUseTextQualifier OrElse strValue.Contains(Separator) OrElse strValue.StartsWith(TextQualifier) OrElse strValue.Contains(vbCr) OrElse strValue.Contains(vbLf)
                             If useQualifier AndAlso strValue.Contains(TextQualifier) Then
                                 Select Case QualifierEspaing
@@ -196,11 +197,11 @@ Public Class CsvFormatConfigurator
                             If useQualifier Then w.Write(TextQualifier)
                             w.Write(strValue)
                             If useQualifier Then w.Write(TextQualifier)
+                            column += 1
                         Next field
                     Finally
                         If metadata IsNot Nothing AndAlso TypeOf metadata Is IDisposable Then DirectCast(metadata, IDisposable).Dispose()
                     End Try
-                    column += 1
                 Next category
                 line += 1
             Next file
