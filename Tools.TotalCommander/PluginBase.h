@@ -54,6 +54,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>
         /// Because Total Commander iztself does not use managed objects (or any objects in terms of classes as a matter of fact) in it's plugin interface, Total Commander plugins are not initialized using constructor but rather using special instance methods.
         /// After this plugin-type-specific method is called by Total Commander this property is set to true.
+        /// </remarks>
         /// <version version="1.5.4">This property is new in version 1.5.4</version>
         virtual property bool Initialized{bool get() abstract;}
     protected:

@@ -165,7 +165,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks><see cref="FsFindFirst"/> may be called directly with a subdirectory of the plugin! You cannot rely on it being called with the root \ after it is loaded. Reason: Users may have saved a subdirectory to the plugin in the Ctrl+D directory hotlist in a previous session with the plugin.
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter names converted to camelCase</version>
-        /// <version version="1.5.4">Type of argument <paramref name="path"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/>.</version>
+        /// <version version="1.5.4">Type of argument <paramref name="path"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>*.</version>
         /// <version version="1.5.4">Type of argument <paramref name="findData"/> formally changed from <see cref="WIN32_FIND_DATA"/> to <see cref="WIN32_FIND_DATAW"/> (but there's no difference between the two types).</version>
         /// <version version="1.5.4">Function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
@@ -229,9 +229,9 @@ namespace Tools{namespace TotalCommanderT{
 
 #pragma region Callbacks
         /// <summary>Callback function, which the plugin can call to show copy progress.</summary>
-        /// <param name="SourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plugin file system.</param>
-        /// <param name="TargetName">Name to which the file is copied.</param>
-        /// <param name="PercentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
+        /// <param name="sourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plugin file system.</param>
+        /// <param name="targetName">Name to which the file is copied.</param>
+        /// <param name="percentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
         /// <returns>Total Commander returns <c>true</c> if the user wants to abort copying, and <c>false</c> if the operation can continue.</returns>
         /// <remarks>You should call this function at least twice in the copy functions <see cref="GetFile"/>, <see cref="PutFile"/> and <see cref="RenMovFile"/>, at the beginning and at the end. If you can't determine the progress, call it with 0% at the beginning and 100% at the end.
         /// <para>During the <see cref="FindFirst"/>/<see cref="FindNext"/>/<see cref="FindClose"/> loop, the plugin may now call the <see cref="ProgressProc"/> to make a progess dialog appear. This is useful for very slow connections. Don't call <see cref="ProgressProc"/> for fast connections! The progress dialog will only be shown for normal dir changes, not for compound operations like get/put. The calls to <see cref="ProgressProc"/> will also be ignored during the first 5 seconds, so the user isn't bothered with a progress dialog on every dir change.</para></remarks>
@@ -240,18 +240,18 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">Parameter names changed to camelCase</version>
         bool ProgressProc(String^ sourceName, String^ targetName,int percentDone);
         /// <summary>Callback function, which the plugin can call to show the FTP connections toolbar, and to pass log messages to it. Totalcmd can show these messages in the log window (ftp toolbar) and write them to a log file.</summary>
-        /// <param name="MsgType">Can be one of the <see cref="LogKind"/> flags</param>
-        /// <param name="LogString">String which should be logged.
+        /// <param name="msgType">Can be one of the <see cref="LogKind"/> flags</param>
+        /// <param name="logString">String which should be logged.
         /// <para>When <paramref name="MsgType"/>is <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the string MUST have a specific format:</para>
         /// <para><c>"CONNECT"</c> followed by a single whitespace, then the root of the file system which was connected, without trailing backslash. Example: <c>CONNECT \Filesystem</c></para>
-        /// <para>When <paramref name="MsgType"/> is <see2 cref2="F:Tools.TotalCommanderT.LogKind.TransferComplete"/>, this parameter should contain both the source and target names, separated by an arrow <c>" -> "</c>, e.g. <c>Download complete: \Filesystem\dir1\file1.txt -> c:\localdir\file1.txt</c></para></param>
+        /// <para>When <paramref name="msgType"/> is <see2 cref2="F:Tools.TotalCommanderT.LogKind.TransferComplete"/>, this parameter should contain both the source and target names, separated by an arrow <c>" -> "</c>, e.g. <c>Download complete: \Filesystem\dir1\file1.txt -> c:\localdir\file1.txt</c></para></param>
         /// <remarks>Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect! If you call it with <paramref name="MsgType"/> <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>, the function <see cref="Disconnect"/> will be called (if defined) when the user presses the Disconnect button.</remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <version version="1.5.4">The method now supports Unicode</version>
         /// <version version="1.5.4">Parameter names changed to camelCase</version>
         void LogProc(LogKind msgType, String^ logString);
         /// <summary>Specialized version of the <see cref="LogProc"/> function used for logging conection open.</summary>
-        /// <param name="FileSystem">Name of the filesystem plugin has connected to. The name must start with a backslash.</param>
+        /// <param name="fileSystem">Name of the filesystem plugin has connected to. The name must start with a backslash.</param>
         /// <remarks>Do not call this function when file system implemeneted by the plugin does not reguire connection</remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <exception cref="ArgumentNullException"><paramref name="FileSystem"/> is null</exception>
@@ -259,17 +259,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">Parameter name <c>FileSystem</c> changed to <c>fileSystem</c></version>
         void LogProcConnect(String^ fileSystem);
         /// <summary>Specialized version of the <see cref="LogProc"/> function used for transfer completion advertisement.</summary>
-        /// <param name="Source">Path of source file. It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
-        /// <param name="Target">Path of destination file.  It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
+        /// <param name="source">Path of source file. It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
+        /// <param name="target">Path of destination file.  It can be either file in plugin file system (address staring with "\") or it can be file in TC file system (address like C:\ or starting with \\).</param>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
         /// <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
         /// <version version="1.5.4">Parameter names changed to camelCase</version>
         void LogProcTransferComplete(String^ source, String^ target);
         /// <summary>callback function, which the plugin can call to request input from the user. When using one of the standard parameters, the request will be in the selected language.</summary>
-        /// <param name="RequestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
-        /// <param name="CustomTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>
-        /// <param name="CustomText">Override the text defined with <paramref name="RequestType"/>. Set this to NULL or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
-        /// <param name="DefaultText">This string contains the default text presented to the user. Set <paramref name="DefaultText"/>[0]=0 to have no default text.</param>
+        /// <param name="requestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
+        /// <param name="customTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>
+        /// <param name="customText">Override the text defined with <paramref name="RequestType"/>. Set this to NULL or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
+        /// <param name="defaultText">This string contains the default text presented to the user. Set <paramref name="DefaultText"/>[0]=0 to have no default text.</param>
         /// <param name="maxlen">Maximum length allowed for returned text.</param>
         /// <returns>User-entered text if user clicked Yes or OK. Null otherwise</returns>
         /// <remarks>Leave <paramref name="CustomText"/> empty if you want to use the (translated) default strings!</remarks>
@@ -286,7 +286,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="mode">Then mode of operation</param>
         /// <param name="connectionName">Name of the connection for this operation</param>
         /// <param name="password">Operation-specific, usually the password to be stored, or the target connection when copying/moving a connection</param>
-        /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommanderT.CryptMode.LoadPassword"/> or <see cref="F:Tools.TotalCommanderT.CryptMode.LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
+        /// <returns>Password retrieved. Only when <paramref name="mode"/> is <see cref2="F:Tools.TotalCommanderT.CryptMode.LoadPassword"/> or <see cref="CryptMode::LoadPasswordNoUI"/>. Otherwise returns <paramref name="password"/>.</returns>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
         /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
@@ -296,13 +296,13 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsable(EditorBrowsableState::Advanced)]
         String^ CryptProc(CryptMode mode, String^ connectionName, String^ password, int maxlen);
         /// <summary>Saves a password for given connection is Total Commander secure password store</summary>
-        /// <param name="connectioName">Name of the connection to save password for</param>
+        /// <param name="connectionName">Name of the connection to save password for</param>
         /// <param name="password">The password to be saved</param>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
         /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> or <paramref name="password"/> is null</exception>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
-        void SavePassword(String^ connectioName, String^ password);
+        void SavePassword(String^ connectionName, String^ password);
         /// <summary>Loads a password form Total Commander secure password store for given connection</summary>
         /// <param name="connectionName">Name of the connection to load password for</param>
         /// <param name="showUI">True to ask user for master password, false to load password only when master password was already enetered</param>
@@ -326,7 +326,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="ArgumentNullException"><paramref name="sourceConnectionName"/> or <paramref name="targetConnectionName"/> is null</exception>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         void MovePassword(String^ sourceConnectionName, String^ targetConnectionName, bool deleteOriginal);
-        /// <summary>Deletes a passowrd stored for given connection in Total Commander safe password store</summary>
+        /// <summary>Deletes a password stored for given connection in Total Commander safe password store</summary>
         /// <param name="connectionName">Name of connection to delete the password of</param>
         /// <exception cref="CryptException">Crypto operation failed.</exception>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is false (i.e. either current version of Total Commander or plugin implementation does not support crypto).</exception>
@@ -462,8 +462,8 @@ namespace Tools{namespace TotalCommanderT{
         
         /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use. Use this function instead of <see cref="FsSetCryptCallback"/> when using the plugin outside of Total Commander.</summary>
         /// <param name="cryptProc">Crypto callback delegate. See <see cref="CryptCallback"/> for a description of this function.</param>
-        /// <param name="CryptoNr">A parameter which needs to be passed to the callback function</param>
-        /// <param name="Flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
+        /// <param name="cryptoNr">A parameter which needs to be passed to the callback function</param>
+        /// <param name="flags">Flags regarding the crypto connection. <see cref="CryptFlags"/></param>
         /// <exception cref="InvalidOperationException"><see cref="CryptInitialized"/> is true</exception>
         /// <exception cref="ArgumentNullException"><paramref name="cryptProc"/> is null and this plugin implementation supports crypto</exception>
         /// <remarks><para>Use this function to initialize the plugin when used outside of Total Commander.</para>
@@ -502,7 +502,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>Return TRUE if the directory could be created, FALSE if not.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter name <c>Path</c> changed to <c>path</c></version>
-        /// <version version="1.5.4">Type of parameter <paramref name="path"/> chaanged from <see cref="char*"/> to <see cref="wchar_t*/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="path"/> chaanged from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("MkDir", "TC_FS_MKDIR")]
@@ -523,7 +523,7 @@ namespace Tools{namespace TotalCommanderT{
 #pragma endregion
 #pragma region ExecuteFile    
 public:
-        /// <summary>Called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
+        /// <summary>Called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="remoteName"/>="\" and <paramref name="verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="mainWin">Parent window which can be used for showing a property sheet.</param>
         /// <param name="remoteName">Name of the file to be executed, with full path.</param>
         /// <param name="verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
@@ -542,7 +542,7 @@ public:
         /// </list>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter names changed to camelCase</version>
-        /// <version version="1.5.4">Type of parameters <paramref name="remoteName"/> and <paramref name="verb"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="remoteName"/> and <paramref name="verb"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("ExecuteFile", "TC_FS_EXECUTEFILE")]
@@ -556,12 +556,12 @@ public:
         /// <para>See <see cref="FsExecuteFile(HWND,char*,char*)"/> for details.</para></remarks>
         /// <seelaso cref="FsExecuteFile(HWND,char*,char*)"/>
         /// <version version="1.5.4">Parameter names changed to camelCase</version>
-        /// <version version="1.5.4">Type of parameters <paramref name="remoteName"/> and <paramref name="verb"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="remoteName"/> and <paramref name="verb"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         int FsExecuteFile(HANDLE mainWin, wchar_t* remoteName, wchar_t* verb); 
     public:
-        /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
+        /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="remoteName"/>="\" and <paramref name="verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
         /// <param name="remoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c> number", "<c>quote</c> commandline" or "<c>mode</c> type" (case-insensitive).</param>
@@ -702,12 +702,12 @@ public:
         /// <param name="ri">A structure of type <see cref="RemoteInfoStruct"/> which contains the parameters of the file being renamed/moved (not of the target file!). In TC 5.51, the fields are set as follows for directories: <c>RemoteInfoStruct::SizeLow = 0</c>, <c>RemoteInfoStruct::SizeHigh = 0xFFFFFFFF</c></param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
-        /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
+        /// <list type="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
         /// <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
         /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter names converted to camelCase</version>
-        /// <version version="1.5.4">Type of parameters <paramref name="oldName"/> and <paramref name="newName"/> changed from <see cref="char*"/> to <see cref="wchar_t*/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="oldName"/> and <paramref name="newName"/> changed from <see cref="char"/>* to <see cref="wchar_t*/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("RenMovFile", "TC_FS_RENMOVFILE")]
@@ -741,9 +741,9 @@ public:
 #pragma region GetFile
     public:
         /// <summary>Called to transfer a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
-        /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
-        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
-        /// <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
+        /// <param name="remoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
+        /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
+        /// <param name="copyFlags">Can be combination of the <see cref="copyFlags"/> values</param>
         /// <param name="ri">This parameter contains information about the remote file which was previously retrieved via <see cref="FsFindFirst"/>/<see cref="FsFindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
@@ -765,7 +765,7 @@ public:
         /// <summary>When overriden in derived class transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="remoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
         /// <param name="localName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="MaxPath"/> or uncatchable <see cref="System::IO::PathTooLongException"/> will be thrown.</param>
-        /// <param name="copyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
+        /// <param name="copyFlags">Can be combination of the <see cref="copyFlags"/> values</param>
         /// <param name="info">This parameter contains information about the remote file which was previously retrieved via <see cref="FindFirst"/>/<see cref="FindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
         /// <remarks>Total Commander usually calls this function twice:
@@ -818,7 +818,7 @@ public:
         /// <param name="remoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign string longer than <see cref="MaxPath"/> to this parameter or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="copyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
-        /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
+        /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="copyFlags"/>:
         /// <list type="bullet">
         /// <item>once with neither <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> nor <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/> set. If the remote file exists and resume is supported, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/>. If resume isn't allowed, return <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.FileExists"/></item>
         /// <item>a second time with <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Resume"/> or <see2 cref2="F:Tools.TotalCommanderT.CopyFlags.Overwrite"/>, depending on the user's choice. The resume option is only offered to the user if <see2 cref2="F:Tools.TotalCommanderT.FileSystemExitCode.ExistsResumeAllowed"/> was returned by the first call.</item>
@@ -847,7 +847,7 @@ public:
         /// <returns>Return TRUE if the file could be deleted, FALSE if not.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("DeleteFile", "TC_FS_DELETEFILE")]
@@ -873,7 +873,7 @@ public:
         /// <returns>Return TRUE if the directory could be removed, FALSE if not.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*/> to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("RemoveDir", "TC_FS_REMOVEDIR")]
@@ -895,7 +895,7 @@ public:
 #pragma region Disconnect
     public:
         /// <summary>Called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
-        /// <param name="DisconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plugin to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
+        /// <param name="disconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plugin to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
         /// <returns>Return TRUE if the connection was closed (or never open), FALSE if it couldn't be closed.</returns>
         /// <remarks>To get calls to this function, the plugin MUST call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>. The parameter LogString MUST start with "<c>CONNECT</c>", followed by one whitespace and the root of the file system which has been connected. This file system root will be passed to <see cref="FsDisconnect"/> when the user presses the Disconnect button, so the plugin knows which connection to close.
         /// Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect!
@@ -904,14 +904,14 @@ public:
         /// <item>Access to local file systems (e.g. Linux EXT2) does not require connect/disconnect, so don't call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>.</item></list>
         /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter name <c>DisconnectRoot</c> changed to <c>disconnectRoot</c></version>
-        /// <version version="1.5.4">Type of parameter <paramref name="disconnectRoot"/> changed form <see cref="char*"/> to <see cref="wchar_t*/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="disconnectRoot"/> changed form <see cref="char"/>* to <see cref="wchar_t*/> - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("Disconnect", "TC_FS_DISCONNECT")]
         BOOL FsDisconnect(wchar_t* disconnectRoot);
     public:
         /// <summary>When overridden in derived class, called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
-        /// <param name="DisconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plugin to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
+        /// <param name="disconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plugin to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
         /// <returns>Return true if the connection was closed (or never open), false if it couldn't be closed.</returns>
         /// <remarks>To get calls to this function, the plugin MUST call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>. The parameter LogString MUST start with "<c>CONNECT</c>", followed by one whitespace and the root of the file system which has been connected. This file system root will be passed to <see cref="Disconnect"/> when the user presses the Disconnect button, so the plugin knows which connection to close.
         /// Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect!
@@ -934,7 +934,7 @@ public:
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter names converter to camelCase</version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("SetAttr", "TC_FS_SETATTR")]
@@ -963,7 +963,7 @@ public:
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter names converter to camelCase</version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("SetTime", "TC_FS_SETTIME")]
@@ -994,7 +994,7 @@ public:
         /// <para>This function has been added for the convenience of plugin writers. All calls to plugin functions will be enclosed in a pair of <see cref="FsStatusInfo"/> calls: At the start, <see cref="FsStatusInfo"/>(...,FS_STATUS_START,...) and when the operation is done FsStatusInfo(...,FS_STATUS_END,...). Multiple plugin calls can be between these two calls. For example, a download may contain multiple calls to <see cref="FsGetFile"/>, and <see cref="FsFindFirst"/>, <see cref="FsFindNext"/>, <see cref="FsFindClose"/> (for copying subdirs).</para>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para></remarks>
         /// <version version="1.5.4">Parameter names converter to camelCase</version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteDir"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supporst Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteDir"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supporst Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("StatusInfo", "TC_FS_STATUSINFO")]
@@ -1043,7 +1043,7 @@ public:
         /// <remarks>Example: The root name may be "Linux file system" for a plugin which accesses Linux drives. If this function isn't implemented, Totalcmd will suggest the name of the DLL (without extension .DLL) as the plugin root. This function is called directly after loading the plugin (when the user installs it), <see cref="FsInit"/> is NOT called when installing the plugin.
         /// <para>This function is called by Total Commander and is not intended for direct use</para>
         /// <para>This function is ASNI-only.</para></remarks>
-        /// <version version="1.5.4"/>Parameter name <c>DefRootName</c> changed to <c>defRootName</c></version>
+        /// <version version="1.5.4">Parameter name <c>DefRootName</c> changed to <c>defRootName</c></version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_GETDEFROOTNAME")]
@@ -1052,24 +1052,24 @@ public:
 #pragma region ExtractCustomIcon
     public:
         /// <summary>Called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
-        /// <param name="remoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="MaxPath"/> characters (including terminating 0!). The icon handle must still be returned in <paramref name="TheIcon"/>!</param>
+        /// <param name="remoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="MaxPath"/> characters (including terminating 0!). The icon handle must still be returned in <paramref name="theIcon"/>!</param>
         /// <param name="extractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
         /// <param name="theIcon">Here you need to return the icon handle.</param>
         /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
         /// <remarks>If you return <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/>, <see cref="FsExtractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="FsExtractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see2 cref2="F:Tools.TotalCommanderT.IconExtractFlags.BackgroundThread"/> flag.
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
         /// <para>This function is new in wfx version 1.1. It requires Total Commander >=5.51, but is ignored by older versions.</para></remarks>
-        /// <exception cref="IO::PathTooLongException">String passed by plugin function <see cref="ExctractCustomIcon"/> to <paramref name="RemoteName"/> is longer than <see cref="MaxPath"/> - 1.</exception> 
+        /// <exception cref="IO::PathTooLongException">String passed by plugin function <see cref="ExctractCustomIcon"/> to <paramref name="remoteName"/> is longer than <see cref="MaxPath"/> - 1.</exception> 
         /// <version version="1.5.4">Parameter namemes converted to camelCase</version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> converted from <see cref="char*"/> to <see cref="wchar_t*"/> - this function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> converted from <see cref="char"/>* to <see cref="wchar_t"/>* - this function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("ExctractCustomIcon", "TC_FS_EXTRACTCUSTOMICON")]
         int FsExtractCustomIcon(wchar_t* remoteName, int extractFlags, HICON* theIcon);
         /// <summary>When overriden in derived class, called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
-        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="theIcon"/>!</param>
-        /// <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
-        /// <param name="TheIcon">Here you need to return the icon, unless return value is <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/> or <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.UseDefault"/></param>
+        /// <param name="remoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="theIcon"/>!</param>
+        /// <param name="extractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
+        /// <param name="theIcon">Here you need to return the icon, unless return value is <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/> or <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.UseDefault"/></param>
         /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
         /// <remarks>If you return <see2 cref2="F:Tools.TotalCommanderT.IconExtractResult.Delayed"/>, <see cref="ExctractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="ExctractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see2 cref2="F:Tools.TotalCommanderT.IconExtractFlags.BackgroundThread"/> flag.
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
@@ -1106,7 +1106,7 @@ public:
 #pragma region GetPreviewBitmap
     public:
         /// <summary>Called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
-        /// <param name="remoteName">This is the full path to the file or directory whose bitmap is to be retrieved. When extracting a bitmap, you can return a bitmap name here - this ensures that the icon is only cached once in the calling program. The returned bitmap name must not be longer than <see cref="MaxPath"/> characters (including terminating 0!). The bitmap handle must still be returned in <paramref name="ReturnedBitmap"/>!</param>
+        /// <param name="remoteName">This is the full path to the file or directory whose bitmap is to be retrieved. When extracting a bitmap, you can return a bitmap name here - this ensures that the icon is only cached once in the calling program. The returned bitmap name must not be longer than <see cref="MaxPath"/> characters (including terminating 0!). The bitmap handle must still be returned in <paramref name="returnedBitmap"/>!</param>
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="returnedBitmap">Here you need to return the bitmap handle.</param>
@@ -1121,7 +1121,7 @@ public:
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
         /// </remarks>
         /// <version version="1.5.4">Parameter names <c>RemoteName</c> and <c>ReturnedBitmap</c> converted to camelCase</version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> converted from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supporst Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> converted from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supporst Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetPreviewBitmap", "TC_FS_GETPREVIEWBITMAP")]
@@ -1193,7 +1193,7 @@ public:
 #pragma region GetLocalName
     public:
         /// <summary>Gets local name of plugin file</summary>
-        /// <param name="RemoteName">
+        /// <param name="remoteName">
         /// <para>In: Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</para>
         /// <para>Out: Return the path of the file on the local file system, e.g. c:\windows\file.ext</para>
         /// </param>
@@ -1204,13 +1204,13 @@ public:
         /// <seelaso cref="FsLinksToLocalFiles"/><seealso cref="GetLocalName"/>
         /// <exception cref="IO::PathTooLongException">String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
         /// <version version="1.5.4">Parameter name <c>RemoteName</c> changed to <c>remoteName</c></version>
-        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - this function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - this function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetLocalName", "TC_FS_GETLOCALNAME")]
         BOOL FsGetLocalName(wchar_t* remoteName, int maxlen);
         /// <summary>When overriden in derved class gets local name of plugin file</summary>
-        /// <param name="RemoteName">Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</param>
+        /// <param name="remoteName">Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</param>
         /// <param name="maxlen">Maximum number of characters you can return. Do not return longer strings because uncatchable <see cref="IO::PathTooLongException"/> will be throw by <see cref="FsGetLocalName"/>.</param>
         /// <returns>Return the path of the file on the local file system, e.g. c:\windows\file.ext; null if the name does not point to a local file. Do not return paths longer than <see cref="FindData:MaxPath"/> - 1 otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</returns>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
@@ -1223,22 +1223,22 @@ public:
 #pragma region ContentgetDefaultView
     public:
         /// <summary>Called to get the default view to which Total Commander should switch when this file system plugin is entered.</summary>
-        /// <param name="ViewContents">Return the default fields for this plugin here, e.g. "<c>[=&lt;fs>.size.bkM2]\n[=fs.writetime]</c>"
+        /// <param name="viewContents">Return the default fields for this plugin here, e.g. "<c>[=&lt;fs>.size.bkM2]\n[=fs.writetime]</c>"
         /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note></param>
-        /// <param name="ViewHeaders">Return the default headers shown in the sorting header bar, e.g. "<c>Size\nDate/Time</c>"</param>
-        /// <param name="ViewWidths">Return the default column widths shown in the sorting header bar, e.g. "<c>148,23,-35,-35</c>" Negative values mean that the field is right-aligned. The first two widths are for name and extension</param>
-        /// <param name="ViewOptions">The two values, separated by a vertical line, mean:
+        /// <param name="viewHeaders">Return the default headers shown in the sorting header bar, e.g. "<c>Size\nDate/Time</c>"</param>
+        /// <param name="viewWidths">Return the default column widths shown in the sorting header bar, e.g. "<c>148,23,-35,-35</c>" Negative values mean that the field is right-aligned. The first two widths are for name and extension</param>
+        /// <param name="viewOptions">The two values, separated by a vertical line, mean:
         /// <list type="number">
         /// <item><c>auto-adjust-width</c>, or <c>-1</c> for no adjust</item>
         /// <item>horizontal scrollbar flag</item></list></param>
         /// <returns>Return true if you returned a default view, false if no default view should be shown.</returns>
-        /// <remarks>It's best to create a custom columns view in Total Commander, save it, and then copy the definitions from the Wincmd.ini to your plugin. The values in <paramref name="ViewContents"/> and <paramref name="ViewHeaders"/> are separated by a backslash and lowercase 'n' character.
+        /// <remarks>It's best to create a custom columns view in Total Commander, save it, and then copy the definitions from the Wincmd.ini to your plugin. The values in <paramref name="viewContents"/> and <paramref name="viewHeaders"/> are separated by a backslash and lowercase 'n' character.
         /// <note>Note that in C, you need to write \\n to return a backslash and 'n' instead of a newline character!</note>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para></remarks>
         /// <seealso cref="GetDefaultView"/>
         /// <version version="1.5.3">This function is new in version 1.5.3</version>
         /// <version version="1.5.4">Parameter names converted to camelCase</version>
-        /// <version version="1.5.4">Type of parameters <paramref name="viewContents"/>, <paramref name="viewHeaders"/>, <paramref name="viewWidths"/>, <paramref name="viewOptions"/> changed from <see cref="char*"/> to <see cref="wchar_t*"/> - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameters <paramref name="viewContents"/>, <paramref name="viewHeaders"/>, <paramref name="viewWidths"/>, <paramref name="viewOptions"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetDefaultView", "TC_FS_GETDEFAULTVIEW")]
@@ -1264,7 +1264,7 @@ public:
         /// and <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMulti"/> for uploads.
         /// A corresponding <see cref2="F:Tools.TotalCommanderT.OperationStatus.End"/> is sent when the transfer is done.
         /// These notifications can be used to build up the background connection and to close it when done.
-        /// You need to use <see cref="System.Threading.Thread"/> to recognize a background operation.
+        /// You need to use <see cref="System::Threading::Thread"/> to recognize a background operation.
         /// Same thread is used for the entire operation in <see cref="FsStatusInfo"/>, <see cref="FsGetFile"/> and <see cref="FsPutFile"/>.
         /// </para>
         /// <para>
@@ -1283,7 +1283,7 @@ public:
         [PluginMethod("get_BackgroundFlags", "TC_FS_GETBACKGROUNDFLAGS")]
         int FsGetBackgroundFlags(void);
         
-        /// <summary>When implemneted in derived class gets value indicating whether the plugin supports background operations (uploads and downloads), and if yes, how they are supported.</summmary>
+        /// <summary>When implemneted in derived class gets value indicating whether the plugin supports background operations (uploads and downloads), and if yes, how they are supported.</summary>
         /// <returns>A combination of <see cref="BackgroundTransferSupport"/> flags</returns>
         /// <exception cref="NotSupportedException">The actual implementation of getter is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>
@@ -1295,7 +1295,7 @@ public:
         /// and <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMultiThread"/> instead of <see cref2="F:Tools.TotalCommanderT.OperationKind.PutMulti"/> for uploads.
         /// A corresponding <see cref2="F:Tools.TotalCommanderT.OperationStatus.End"/> is sent when the transfer is done.
         /// These notifications can be used to build up the background connection and to close it when done.
-        /// You need to use <see cref="System.Threading.Thread"/> to recognize a background operation.
+        /// You need to use <see cref="System::Threading::Thread"/> to recognize a background operation.
         /// Same thread is used for the entire operation in <see cref="FsStatusInfo"/>, <see cref="FsGetFile"/> and <see cref="FsPutFile"/>.
         /// </para>
         /// <para>

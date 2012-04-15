@@ -30,7 +30,7 @@ namespace Tools{ namespace TotalCommanderT{
             if(source == nullptr) throw gcnew InvalidOperationException(String::Format(ResourcesT::Exceptions::PluginNotRegistered, PluginNr));
             return this->managed(source, gcnew String(SourceName), gcnew String(TargetName), PercentDone) ? TRUE : FALSE;
         }else if(this->ansi){
-            this->ansi(PluginNr, SourceName, TargetName, PercentDone);
+            return this->ansi(PluginNr, SourceName, TargetName, PercentDone);
         }else if(this->unicode){
             wchar_t* sn = AnsiToUnicode(SourceName);
             try{
@@ -55,12 +55,12 @@ namespace Tools{ namespace TotalCommanderT{
                 }finally{ delete[] tn; }
             }finally{ delete[] sn; }
         }else if(this->unicode){
-            this->unicode(PluginNr, SourceName, TargetName, PercentDone);
+            return this->unicode(PluginNr, SourceName, TargetName, PercentDone);
         }else throw gcnew InvalidOperationException(ResourcesT::Exceptions::NotInitialized);
     }
     bool ProgressProcWrapper::operator()(FileSystemPlugin^ sender, String^ sourceName, String^ targetName, int percentDone){//Managed
         if(this->managed){
-            this->managed(sender, sourceName, targetName, percentDone);
+            return this->managed(sender, sourceName, targetName, percentDone);
         }else if(this->ansi){
             if(sender == nullptr) throw gcnew ArgumentNullException("sender");
             char* sn = StringCopyA(sourceName);

@@ -22,13 +22,13 @@ namespace Tools{namespace TotalCommanderT{
         /// Returns tur if the method is not decorated with <see cref="MethodNotSupportedAttribute"/>.
         /// If it is decorated with <see cref="MethodNotSupportedAttribute"/> or derived attribute returns its <see cref="IsSupported"/>.
         /// </returns>
-        /// <exception cref="ArgumentNulllException"><paramref name="method"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="method"/> is null</exception>
         /// <exception cref="InvalidOperationException"><see cref="MethodNotSupportedAttribute"/> is specified more than once on <paramref name="method"/></exception>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         static bool Supported(Reflection::MethodInfo^ method);
         /// <summary>Gets value indicating if this instance of <see cref="MethodNotSupportedAttribute"/> indicates supported or unsupported method</summary>
         /// <param name="method">Pass actual method this instance was applied on here. Derived implementation may use it or may ignore it. This implementation ignores it.</param>
-        /// <exception cref="ArgumentNulllException">Derived class may throw this exception if <paramref name="method"/> is null</exception>
+        /// <exception cref="ArgumentNullException">Derived class may throw this exception if <paramref name="method"/> is null</exception>
         /// <returns>True if this instance indicates supported method, false if this instance indicates non supported method. This implementation always returns true.</returns>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
         virtual bool IsSupported(Reflection::MethodInfo^ method);
@@ -72,7 +72,7 @@ namespace Tools{namespace TotalCommanderT{
         
         /// <summary>Gets value indicating if this instance of <see cref="MethodNotSupportedAttribute"/> indicates supported or unsupported method</summary>
         /// <param name="method">Pass actual method this instance was applied on here.</param>
-        /// <exception cref="ArgumentNulllException"><paramref name="method"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="method"/> is null</exception>
         /// <returns>True if this instance indicates supported method, false if this instance indicates non supported method.</returns>
         /// <exception cref="System::Reflection::AmbiguousMatchException">Either <see cref="MethodParameters"/> is null and more methods with name <see cref="Method"/> exist on target type or method identification using parameter types is not unique.</exception>
         /// <exception cref="InvalidOperationException">
@@ -84,7 +84,7 @@ namespace Tools{namespace TotalCommanderT{
         virtual bool IsSupported(Reflection::MethodInfo^ method) override;
         /// <summary>Gets method this attribute redirects to</summary>
         /// <param name="attributeMethod">Pass actual method this instance was applied on here.</param>
-        /// <exception cref="ArgumentNulllException"><paramref name="method"/> is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeMethod"/> is null</exception>
         /// <returns>A method this attribute redirects to</returns>
         /// <exception cref="System::Reflection::AmbiguousMatchException">Either <see cref="MethodParameters"/> is null and more methods with name <see cref="Method"/> exist on target type or method identification using parameter types is not unique.</exception>
         /// <exception cref="InvalidOperationException">

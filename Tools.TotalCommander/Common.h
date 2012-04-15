@@ -112,16 +112,16 @@ namespace Tools{namespace TotalCommanderT{
     
     /// <summary>Creates a new instance of the <see cref="String"/> class to the value indicated by a specified pointer to an array of Unicode characters.</summary>
     /// <param name="source">A pointer to a null-terminated array of Unicode characters.</param>
-    /// <returns>A new instance of <see cref="String"> initialized to <paramref name="source"/>. Null if <paramref name="source"/> is null.</returns>
+    /// <returns>A new instance of <see cref="String"/> initialized to <paramref name="source"/>. Null if <paramref name="source"/> is null.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The current process does not have read access to all the addressed characters.</exception>
-    /// <exception cref="ArgumentException"><paramref name="source"> specifies an array that contains an invalid Unicode character, or value specifies an address less than 64000.</exception>
+    /// <exception cref="ArgumentException"><paramref name="source"/> specifies an array that contains an invalid Unicode character, or value specifies an address less than 64000.</exception>
     /// <remarks>This function is basically only a wrapper around <see cref="String"/> CTor</remarks>
     /// <seealso cref="String::.ctor(wchar_t*)"/>
     /// <version version="1.5.4">This overload is new in version 1.5.4</version>
     MAKE_PUBLIC String^ StringCopy(const wchar_t* source) throw(ArgumentOutOfRangeException, ArgumentException);
     /// <summary>Creates a new instance of the <see cref="String"/> class to the value indicated by a pointer to an array of 8-bit signed integers.</summary>
     /// <param name="source">A pointer to a null-terminated array of 8-bit signed integers.</param>
-    /// <returns>A new instance of <see cref="String"> initialized to <paramref name="source"/>. Null if <paramref name="source"/> is null.</returns>
+    /// <returns>A new instance of <see cref="String"/> initialized to <paramref name="source"/>. Null if <paramref name="source"/> is null.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The length of the new string to initialize, which is determined by the null termination character of <paramref name="source"/>, is too large to allocate. </exception>
     /// <exception cref="ArgumentException">A new instance of <see cref="String"/> could not be initialized using value, assuming value is encoded in ANSI. </exception>
     /// <exception cref="AccessViolationException"><paramref name="source"/> specifies an invalid address.</exception>
@@ -171,7 +171,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
         property System::Delegate^ Delegate{System::Delegate^ get();}
         /// <summary>Calls internal function</summary>
-        /// <param name="">Parameters for internal managed function (delegate)</param>
+        /// <param name="a1">Parameters for internal managed function (delegate)</param>
         /// <returns>Delegate call result, null if delegate returns <see cref="Void"/></returns>
         /// <exception cref="MemberAccessException">The caller does not have access to the method represented by <see cref="Delegate"/> (for example, if the method is private).-or- The number, order, or type of parameters listed in args is invalid.</exception>
         /// <exception cref="System::Reflection::TargetException">The method represented by <see cref="Delegate"/> is an instance method and the target object is null.-or- The method represented by <see cref="Delegate"/> is invoked on an object or a class that does not support it. (both situations mean that delegate was not properly created in implementing class)</exception>
@@ -180,7 +180,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <seealso cref="Invoke"/>
         Object^ operator()(... cli::array<Object^>^);
         /// <summary>Calls internal function</summary>
-        /// <param name="">Parameters for internal managed function (delegate)</param>
+        /// <param name="a1">Parameters for internal managed function (delegate)</param>
         /// <returns>Delegate call result, null if delegate returns <see cref="Void"/></returns>
         /// <exception cref="MemberAccessException">The caller does not have access to the method represented by <see cref="Delegate"/> (for example, if the method is private).-or- The number, order, or type of parameters listed in args is invalid.</exception>
         /// <exception cref="System::Reflection::TargetException">The method represented by <see cref="Delegate"/> is an instance method and the target object is null.-or- The method represented by <see cref="Delegate"/> is invoked on an object or a class that does not support it. (both situations mean that delegate was not properly created in implementing class)</exception>
@@ -200,7 +200,7 @@ namespace Tools{namespace TotalCommanderT{
         virtual property System::Delegate^ Delegate{System::Delegate^ get() abstract = ICallbackWrapper::Delegate::get;}
 
         /// <summary>Calls internal function</summary>
-        /// <param name="">Parameters for internal managed function (delegate)</param>
+        /// <param name="a1">Parameters for internal managed function (delegate)</param>
         /// <returns>Delegate call result, null if delegate returns <see cref="Void"/></returns>
         /// <exception cref="MemberAccessException">The caller does not have access to the method represented by <see cref="Delegate"/> (for example, if the method is private).-or- The number, order, or type of parameters listed in args is invalid.</exception>
         /// <exception cref="System::Reflection::TargetException">The method represented by <see cref="Delegate"/> is an instance method and the target object is null.-or- The method represented by <see cref="Delegate"/> is invoked on an object or a class that does not support it. (both situations mean that delegate was not properly created in derived class)</exception>

@@ -93,6 +93,7 @@ namespace Tools{namespace TotalCommanderT{
             }
             if(targetMethod == nullptr) throw gcnew MissingMethodException(String::Format(ResourcesT::Exceptions::DerivedMehtodNotFound, this->Hint->FullName, this->Method, targetType->FullName));
         }
+        return targetMethod;
     }
 #pragma endregion
 

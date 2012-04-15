@@ -108,7 +108,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="streamKey">Key in form "<c>path|index</c>" of stream inside <see cref="StreamCache"/></param>
         /// <param name="offset">Offset to stream to start reading at; -1 to remove stream from cache.</param>
         /// <param name="fieldValue">Target to copy stream data to</param>
-        /// <param name="maxlen">Maximum number of bytes to be read from stream to <paramref name="FieldValue"/> (including terminating 0)</param>
+        /// <param name="maxlen">Maximum number of bytes to be read from stream to <paramref name="fieldValue"/> (including terminating 0)</param>
         /// <returns><see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.FullText"/> when data fron stream was read or <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.FieldEmpty"/> when <paramref name="offset"/> is beyond the end of the stream. Returns <see2 cref2="F:Tools.TotalCommanderT.GetContentFieldValueReturnCode.NoSuchField"/> when stream with key <paramref name="StreamKey"/> does not exist in <see cref="StreamCache"/>.</returns> 
         /// <version version="1.5.4">Names of parameters <c>StreamKey</c> and <c>FieldValue</c> changed to caleCase</version>
         int GetCachedStreamData(String^ streamKey, int offset, Byte* fieldValue, int maxlen);
