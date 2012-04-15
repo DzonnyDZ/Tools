@@ -6,6 +6,12 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DevelopmentTools\VersionUpdater\VersionUpdater.vbproj">
+      <Project>{5425d659-18c8-479a-bc2c-75b99fc71254}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>

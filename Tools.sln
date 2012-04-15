@@ -86,6 +86,116 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{F797B3BC-7A54-
 		Articles\en\VBXMLDoc.Xml.html = Articles\en\VBXMLDoc.Xml.html
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ildoc", "ildoc", "{10C22CD7-1CB7-4E4D-8422-F9C589A3F743}"
+	ProjectSection(SolutionItems) = preProject
+		Articles\en\ildoc\ildoc.xml = Articles\en\ildoc\ildoc.xml
+		Articles\en\ildoc\ildoc.xml.css = Articles\en\ildoc\ildoc.xml.css
+		Articles\en\ildoc\ildoc.xsd = Articles\en\ildoc\ildoc.xsd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLI", "CLI", "{3469B02D-8F18-4333-94F7-0DD3D240C7A1}"
+	ProjectSection(SolutionItems) = preProject
+		Used doc\CLI\Ecma-335.pdf = Used doc\CLI\Ecma-335.pdf
+		Used doc\CLI\MS Partition I.pdf = Used doc\CLI\MS Partition I.pdf
+		Used doc\CLI\MS Partition II.pdf = Used doc\CLI\MS Partition II.pdf
+		Used doc\CLI\MS Partition III.pdf = Used doc\CLI\MS Partition III.pdf
+		Used doc\CLI\Partition I Architecture.doc = Used doc\CLI\Partition I Architecture.doc
+		Used doc\CLI\Partition II Metadata.doc = Used doc\CLI\Partition II Metadata.doc
+		Used doc\CLI\Partition III CIL.doc = Used doc\CLI\Partition III CIL.doc
+		Used doc\CLI\Partition IV Library.doc = Used doc\CLI\Partition IV Library.doc
+		Used doc\CLI\Partition V Binary Formats.doc = Used doc\CLI\Partition V Binary Formats.doc
+		Used doc\CLI\Partition VI - Annexes.doc = Used doc\CLI\Partition VI - Annexes.doc
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Basic", "Visual Basic", "{752D1A5C-9013-4D5B-A7A8-2DA12197A275}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\Visual Basic\Tools\CustomEvent.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\CustomEvent.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{D99EA3E2-E522-4C20-867D-065A478FD56A}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged Coerce.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged Coerce.snippet
+		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet
+		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help", "Help", "{9611D0E6-CEA6-4CD6-8C1C-FE9932372416}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandcastle customization", "Sandcastle customization", "{69CAA1BD-A7B6-419E-BA1E-05347BB80698}"
+	ProjectSection(SolutionItems) = preProject
+		Help\Sandcastle customization\Tools.AuthorAndVersion.xslt = Help\Sandcastle customization\Tools.AuthorAndVersion.xslt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionHistory", "VersionHistory", "{3CF08082-4063-4345-84BC-92248A5C2F29}"
+	ProjectSection(SolutionItems) = preProject
+		Help\VersionHistory\1.5.2.aml = Help\VersionHistory\1.5.2.aml
+		Help\VersionHistory\1.5.3.aml = Help\VersionHistory\1.5.3.aml
+		Help\VersionHistory\1.5.4.aml = Help\VersionHistory\1.5.4.aml
+		Help\VersionHistory\AllComments.xml = Help\VersionHistory\AllComments.xml
+		Help\VersionHistory\AllVersionHistory.bat = Help\VersionHistory\AllVersionHistory.bat
+		Help\VersionHistory\brief.aml = Help\VersionHistory\brief.aml
+		Help\VersionHistory\VersionHistory-all.xslt = Help\VersionHistory\VersionHistory-all.xslt
+		Help\VersionHistory\VersionHistory.wiki.xslt = Help\VersionHistory\VersionHistory.wiki.xslt
+		Help\VersionHistory\VersionHistory.xslt = Help\VersionHistory\VersionHistory.xslt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML", "XML", "{6683BA1C-8DD6-4A33-9139-7BDF9566524A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharp", "CSharp", "{276528FB-1D01-4BB7-96AB-C29CA1C25EC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScript", "JavaScript", "{416ABC6F-4C14-4468-B51B-E2D2929DF808}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{A7B3C91E-E7FF-4E53-957A-1F7BEFA8585B}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\C#\Tools\ASP.NET\ViewStateProperty.snippet = DevelopmentTools\Snippets\C#\Tools\ASP.NET\ViewStateProperty.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET AJAX", "ASP.NET AJAX", "{A9BDC9A0-7D55-4615-B290-C661E13DF997}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Control.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Control.snippet
+		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Event.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Event.snippet
+		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Property.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Property.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Special", "Special", "{64F2641B-ECF2-4ACF-83FB-69BF28C54ECE}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\Visual Basic\Tools\Special\WindowMessage.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\Special\WindowMessage.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{3662CABF-2023-4A0B-96AC-8AFA0818A704}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\XML\Tools\Visual Studio\snippet.snippet = DevelopmentTools\Snippets\XML\Tools\Visual Studio\snippet.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML-Schema", "XML-Schema", "{339C78F1-563A-472D-A5CC-3A03358EE202}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet = DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conceptual", "Conceptual", "{EBF0E95D-737E-4092-95DE-6EF91FA05FF3}"
+	ProjectSection(SolutionItems) = preProject
+		Help\Conceptual\AssemblyPostprocessor.aml = Help\Conceptual\AssemblyPostprocessor.aml
+		Help\Conceptual\CommentsMerge.aml = Help\Conceptual\CommentsMerge.aml
+		Help\Conceptual\conceptual.css = Help\Conceptual\conceptual.css
+		Help\Conceptual\DevelopmentTools.aml = Help\Conceptual\DevelopmentTools.aml
+		Help\Conceptual\License.aml = Help\Conceptual\License.aml
+		Help\Conceptual\PseudoZip.aml = Help\Conceptual\PseudoZip.aml
+		Help\Conceptual\ResXFileCodeGeneratorEx.aml = Help\Conceptual\ResXFileCodeGeneratorEx.aml
+		Help\Conceptual\ResXFileGenerator.aml = Help\Conceptual\ResXFileGenerator.aml
+		Help\Conceptual\SplashScreenGenerator.aml = Help\Conceptual\SplashScreenGenerator.aml
+		Help\Conceptual\Total Commander Plugin Builder.aml = Help\Conceptual\Total Commander Plugin Builder.aml
+		Help\Conceptual\Total Commander Plugin Builder.png = Help\Conceptual\Total Commander Plugin Builder.png
+		Help\Conceptual\Total Commander Plugin Builder.vsd = Help\Conceptual\Total Commander Plugin Builder.vsd
+		Help\Conceptual\TransformCodeGenerator.aml = Help\Conceptual\TransformCodeGenerator.aml
+		Help\Conceptual\VersionCorrector.aml = Help\Conceptual\VersionCorrector.aml
+		Help\Conceptual\VersionUpdater.aml = Help\Conceptual\VersionUpdater.aml
+		Help\Conceptual\XsdGenerator.aml = Help\Conceptual\XsdGenerator.aml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}"
+EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC883124-C0D6-4349-B3D7-22A688CE6BA2} = {EC883124-C0D6-4349-B3D7-22A688CE6BA2}
@@ -161,11 +271,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UnitTests", "UnitTests\Unit
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.TotalCommander", "Tools.TotalCommander\Tools.TotalCommander.vcxproj", "{7F278F32-47B4-4F4E-85B2-BAEAA406951B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
-		{833877EA-2CEA-46EE-B475-14051B77D9F0} = {833877EA-2CEA-46EE-B475-14051B77D9F0}
-		{FAE8EBEF-6351-4699-AD8E-88D1DFF3CD92} = {FAE8EBEF-6351-4699-AD8E-88D1DFF3CD92}
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ResXFileGenerator", "DevelopmentTools\ResXFileGenerator\ResXFileGenerator.vbproj", "{833877EA-2CEA-46EE-B475-14051B77D9F0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -207,50 +312,12 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj
 		{FAE8EBEF-6351-4699-AD8E-88D1DFF3CD92} = {FAE8EBEF-6351-4699-AD8E-88D1DFF3CD92}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ildoc", "ildoc", "{10C22CD7-1CB7-4E4D-8422-F9C589A3F743}"
-	ProjectSection(SolutionItems) = preProject
-		Articles\en\ildoc\ildoc.xml = Articles\en\ildoc\ildoc.xml
-		Articles\en\ildoc\ildoc.xml.css = Articles\en\ildoc\ildoc.xml.css
-		Articles\en\ildoc\ildoc.xsd = Articles\en\ildoc\ildoc.xsd
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLI", "CLI", "{3469B02D-8F18-4333-94F7-0DD3D240C7A1}"
-	ProjectSection(SolutionItems) = preProject
-		Used doc\CLI\Ecma-335.pdf = Used doc\CLI\Ecma-335.pdf
-		Used doc\CLI\MS Partition I.pdf = Used doc\CLI\MS Partition I.pdf
-		Used doc\CLI\MS Partition II.pdf = Used doc\CLI\MS Partition II.pdf
-		Used doc\CLI\MS Partition III.pdf = Used doc\CLI\MS Partition III.pdf
-		Used doc\CLI\Partition I Architecture.doc = Used doc\CLI\Partition I Architecture.doc
-		Used doc\CLI\Partition II Metadata.doc = Used doc\CLI\Partition II Metadata.doc
-		Used doc\CLI\Partition III CIL.doc = Used doc\CLI\Partition III CIL.doc
-		Used doc\CLI\Partition IV Library.doc = Used doc\CLI\Partition IV Library.doc
-		Used doc\CLI\Partition V Binary Formats.doc = Used doc\CLI\Partition V Binary Formats.doc
-		Used doc\CLI\Partition VI - Annexes.doc = Used doc\CLI\Partition VI - Annexes.doc
-	EndProjectSection
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Data.Schema.Deploy", "Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj", "{4FA454BC-332A-4226-A229-38D87C504F8F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Basic", "Visual Basic", "{752D1A5C-9013-4D5B-A7A8-2DA12197A275}"
-	ProjectSection(SolutionItems) = preProject
-		DevelopmentTools\Snippets\Visual Basic\Tools\CustomEvent.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\CustomEvent.snippet
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{D99EA3E2-E522-4C20-867D-065A478FD56A}"
-	ProjectSection(SolutionItems) = preProject
-		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged Coerce.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged Coerce.snippet
-		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty OnChanged.snippet
-		DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\WPF\DependencyProperty.snippet
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tools.Hardcore", "Tools.Hardcore\Tools.Hardcore.vcxproj", "{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SplashScreenGenerator", "DevelopmentTools\SplashScreenGenerator\SplashScreenGenerator.vbproj", "{5664DF0B-6BE5-42A4-A7AE-0CAEE046918E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -263,84 +330,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ReportingEngineLite", "Repo
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_Tools.PreBuild", "Tools.PreBuild\Tools.PreBuild.vcxproj", "{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5425D659-18C8-479A-BC2C-75B99FC71254} = {5425D659-18C8-479A-BC2C-75B99FC71254}
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VersionUpdater", "DevelopmentTools\VersionUpdater\VersionUpdater.vbproj", "{5425D659-18C8-479A-BC2C-75B99FC71254}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help", "Help", "{9611D0E6-CEA6-4CD6-8C1C-FE9932372416}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandcastle customization", "Sandcastle customization", "{69CAA1BD-A7B6-419E-BA1E-05347BB80698}"
-	ProjectSection(SolutionItems) = preProject
-		Help\Sandcastle customization\Tools.AuthorAndVersion.xslt = Help\Sandcastle customization\Tools.AuthorAndVersion.xslt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionHistory", "VersionHistory", "{3CF08082-4063-4345-84BC-92248A5C2F29}"
-	ProjectSection(SolutionItems) = preProject
-		Help\VersionHistory\1.5.2.aml = Help\VersionHistory\1.5.2.aml
-		Help\VersionHistory\1.5.3.aml = Help\VersionHistory\1.5.3.aml
-		Help\VersionHistory\1.5.4.aml = Help\VersionHistory\1.5.4.aml
-		Help\VersionHistory\AllComments.xml = Help\VersionHistory\AllComments.xml
-		Help\VersionHistory\AllVersionHistory.bat = Help\VersionHistory\AllVersionHistory.bat
-		Help\VersionHistory\brief.aml = Help\VersionHistory\brief.aml
-		Help\VersionHistory\VersionHistory-all.xslt = Help\VersionHistory\VersionHistory-all.xslt
-		Help\VersionHistory\VersionHistory.wiki.xslt = Help\VersionHistory\VersionHistory.wiki.xslt
-		Help\VersionHistory\VersionHistory.xslt = Help\VersionHistory\VersionHistory.xslt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML", "XML", "{6683BA1C-8DD6-4A33-9139-7BDF9566524A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharp", "CSharp", "{276528FB-1D01-4BB7-96AB-C29CA1C25EC8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScript", "JavaScript", "{416ABC6F-4C14-4468-B51B-E2D2929DF808}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{A7B3C91E-E7FF-4E53-957A-1F7BEFA8585B}"
-	ProjectSection(SolutionItems) = preProject
-		DevelopmentTools\Snippets\C#\Tools\ASP.NET\ViewStateProperty.snippet = DevelopmentTools\Snippets\C#\Tools\ASP.NET\ViewStateProperty.snippet
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET AJAX", "ASP.NET AJAX", "{A9BDC9A0-7D55-4615-B290-C661E13DF997}"
-	ProjectSection(SolutionItems) = preProject
-		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Control.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Control.snippet
-		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Event.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Event.snippet
-		DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Property.snippet = DevelopmentTools\Snippets\JavaScript\Tools\ASP.NET AJAX\Property.snippet
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Special", "Special", "{64F2641B-ECF2-4ACF-83FB-69BF28C54ECE}"
-	ProjectSection(SolutionItems) = preProject
-		DevelopmentTools\Snippets\Visual Basic\Tools\Special\WindowMessage.snippet = DevelopmentTools\Snippets\Visual Basic\Tools\Special\WindowMessage.snippet
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{3662CABF-2023-4A0B-96AC-8AFA0818A704}"
-	ProjectSection(SolutionItems) = preProject
-		DevelopmentTools\Snippets\XML\Tools\Visual Studio\snippet.snippet = DevelopmentTools\Snippets\XML\Tools\Visual Studio\snippet.snippet
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML-Schema", "XML-Schema", "{339C78F1-563A-472D-A5CC-3A03358EE202}"
-	ProjectSection(SolutionItems) = preProject
-		DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet = DevelopmentTools\Snippets\XML\Tools\XML-Schema\ddue annotation appinfo.snippet
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conceptual", "Conceptual", "{EBF0E95D-737E-4092-95DE-6EF91FA05FF3}"
-	ProjectSection(SolutionItems) = preProject
-		Help\Conceptual\AssemblyPostprocessor.aml = Help\Conceptual\AssemblyPostprocessor.aml
-		Help\Conceptual\CommentsMerge.aml = Help\Conceptual\CommentsMerge.aml
-		Help\Conceptual\conceptual.css = Help\Conceptual\conceptual.css
-		Help\Conceptual\DevelopmentTools.aml = Help\Conceptual\DevelopmentTools.aml
-		Help\Conceptual\License.aml = Help\Conceptual\License.aml
-		Help\Conceptual\PseudoZip.aml = Help\Conceptual\PseudoZip.aml
-		Help\Conceptual\ResXFileCodeGeneratorEx.aml = Help\Conceptual\ResXFileCodeGeneratorEx.aml
-		Help\Conceptual\ResXFileGenerator.aml = Help\Conceptual\ResXFileGenerator.aml
-		Help\Conceptual\SplashScreenGenerator.aml = Help\Conceptual\SplashScreenGenerator.aml
-		Help\Conceptual\Total Commander Plugin Builder.aml = Help\Conceptual\Total Commander Plugin Builder.aml
-		Help\Conceptual\Total Commander Plugin Builder.png = Help\Conceptual\Total Commander Plugin Builder.png
-		Help\Conceptual\Total Commander Plugin Builder.vsd = Help\Conceptual\Total Commander Plugin Builder.vsd
-		Help\Conceptual\TransformCodeGenerator.aml = Help\Conceptual\TransformCodeGenerator.aml
-		Help\Conceptual\VersionCorrector.aml = Help\Conceptual\VersionCorrector.aml
-		Help\Conceptual\VersionUpdater.aml = Help\Conceptual\VersionUpdater.aml
-		Help\Conceptual\XsdGenerator.aml = Help\Conceptual\XsdGenerator.aml
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "DLLs\Mono.Cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
 EndProject
@@ -353,8 +344,6 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MetanolBrowser", "Projects\MetanolBrowser\MetanolBrowser.vbproj", "{092FE8E0-7C8B-4B3B-BB89-2FE2FFACD047}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.VisualStudio.Debugger", "Tools.VisualStudio.Debugger\Tools.VisualStudio.Debugger.vbproj", "{991AA564-5CCF-481C-A2FE-E657D7379E67}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.TotalCommander.Extensions", "Tools.TotalCommander\Tools.TotalCommander.Extensions\Tools.TotalCommander.Extensions.vbproj", "{370D8C48-8190-4DE0-9DB3-51B07B7C86B9}"
 EndProject
@@ -1393,9 +1382,10 @@ Global
 		{982F36B7-A3E5-4782-96B0-9979A95610F1} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{B1BD67A4-BEC2-442D-8F70-DAEB27735602} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{8129B61A-3FCE-4012-8013-377A87D4132B} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
-		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{9611D0E6-CEA6-4CD6-8C1C-FE9932372416} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
+		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
+		{A55DC44A-FAA2-4691-8C8F-5DB19B870FA5} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{43599321-D767-4BF7-A725-34850D057B4E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{A8636D77-B876-4E6A-863D-8C924E40955C} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
@@ -1404,7 +1394,6 @@ Global
 		{833877EA-2CEA-46EE-B475-14051B77D9F0} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{FE543F37-B717-412E-98A1-4EA3DDE2EF34} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{E53031CE-1C1E-4CF0-9683-982C6BF5E2FD} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
-		{A55DC44A-FAA2-4691-8C8F-5DB19B870FA5} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{5664DF0B-6BE5-42A4-A7AE-0CAEE046918E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{5425D659-18C8-479A-BC2C-75B99FC71254} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{FAE8EBEF-6351-4699-AD8E-88D1DFF3CD92} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
@@ -1424,9 +1413,6 @@ Global
 		{97FA3B48-FA55-43A0-9B86-82415A1E29F3} = {708C9420-4676-4314-B690-7A887F8CC992}
 		{370D8C48-8190-4DE0-9DB3-51B07B7C86B9} = {708C9420-4676-4314-B690-7A887F8CC992}
 		{10C22CD7-1CB7-4E4D-8422-F9C589A3F743} = {F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}
-		{6904C0F4-0535-48EB-AFC1-CE1396418D00} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
-		{991AA564-5CCF-481C-A2FE-E657D7379E67} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
-		{DCD6658E-6008-4668-BBDF-CCB0F0267759} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
 		{752D1A5C-9013-4D5B-A7A8-2DA12197A275} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
 		{6683BA1C-8DD6-4A33-9139-7BDF9566524A} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
 		{276528FB-1D01-4BB7-96AB-C29CA1C25EC8} = {A55DC44A-FAA2-4691-8C8F-5DB19B870FA5}
@@ -1440,5 +1426,8 @@ Global
 		{339C78F1-563A-472D-A5CC-3A03358EE202} = {6683BA1C-8DD6-4A33-9139-7BDF9566524A}
 		{A7B3C91E-E7FF-4E53-957A-1F7BEFA8585B} = {276528FB-1D01-4BB7-96AB-C29CA1C25EC8}
 		{A9BDC9A0-7D55-4615-B290-C661E13DF997} = {416ABC6F-4C14-4468-B51B-E2D2929DF808}
+		{DCD6658E-6008-4668-BBDF-CCB0F0267759} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
+		{6904C0F4-0535-48EB-AFC1-CE1396418D00} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
+		{991AA564-5CCF-481C-A2FE-E657D7379E67} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
 	EndGlobalSection
 EndGlobal

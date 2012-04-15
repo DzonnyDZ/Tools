@@ -53,6 +53,9 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='general|Win32'">.$(PluginOutputExtension)</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='general|Win32'">false</LinkIncremental>
     <ExtensionsToDeleteOnClean Condition="'$(Configuration)|$(Platform)'=='general|Win32'">.$(PluginOutputExtension);$(ExtensionsToDeleteOnClean)</ExtensionsToDeleteOnClean>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='general|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='general|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='general|Win32'" />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='general|Win32'">
     <PreBuildEvent>
