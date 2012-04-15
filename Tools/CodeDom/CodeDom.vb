@@ -4,7 +4,7 @@
         ' Generator: TransformCodeGenerator, Version=1.5.3.1, Culture=neutral, PublicKeyToken=373c02ac923768e6
         ' Version: 1.5.3.1
         ' Generated code from "CodeDom.xsd"
-        ' Created: 30. března 2011 by: BiggerBook\Honza
+        ' Created: 15. dubna 2012 by: BiggerBook\Honza
     
         Imports System.Xml.Linq, <xmlns="http://dzonny.cz/xml/schemas/CodeDom">
         Imports System.CodeDom

@@ -12,7 +12,7 @@
 
     ''' <summary>When applied a module indicates that a type declared in that module will be made <c>public</c>.</summary>
     ''' <remarks>Applying this attribute on a type or a member causes nothing on itself. You must run supporting post-processsing tool (such as AssemblyPostprocessoer) on your assembly once it's compiled to apply changes denoted by this attributes.
-    ''' <para>Use this sttribute instead of <see cref="MakePublicAttribute"/> if you don't have access to the type (such as <c>&ltModule></c>). Does not work with nested types.</para></remarks>
+    ''' <para>Use this sttribute instead of <see cref="MakePublicAttribute"/> if you don't have access to the type (such as <c>&lt;Module></c>). Does not work with nested types.</para></remarks>
     ''' <seealso cref="T:Tools.RuntimeT.CompilerServicesT.AssemblyPostporcessor"/>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     <AttributeUsage(AttributeTargets.Module, allowmultiple:=True, inherited:=False)>

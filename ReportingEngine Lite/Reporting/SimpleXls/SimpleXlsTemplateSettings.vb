@@ -2,7 +2,7 @@
 Namespace ReportingT.ReportingEngineLite
     
     <System.Xml.Serialization.XmlIncludeAttribute(GetType(RepeatedXlsSettings)),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.208"),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
      System.SerializableAttribute(),  _
      System.ComponentModel.DesignerCategoryAttribute("code"),  _
      System.Xml.Serialization.XmlTypeAttribute([Namespace]:="urn:eos-ksi/KolUni/Reporting/SimpleXls"),  _
@@ -453,13 +453,13 @@ Namespace ReportingT.ReportingEngineLite
         End Sub
         
         '''<summary>Raises the <see cref='PropertyChanging'/> event</summary>
-        '''<param name='e'>Event arguments</param>
+        '''<param name='e'>Event arguments</summary>
         Protected Overridable Sub OnPropertyChanging(ByVal e As System.ComponentModel.PropertyChangingEventArgs)
             RaiseEvent PropertyChanging(Me, e)
         End Sub
     End Class
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.208"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
      System.SerializableAttribute(),  _
      System.ComponentModel.DesignerCategoryAttribute("code"),  _
      System.Xml.Serialization.XmlTypeAttribute([Namespace]:="urn:eos-ksi/KolUni/Reporting/SimpleXls"),  _
@@ -576,8 +576,8 @@ Namespace ReportingT.ReportingEngineLite
         End Sub
         
         '''<summary>Raises the <see cref='PropertyChanging'/> event</summary>
-        '''<param name='e'>Event arguments</param>
-        Protected Overridable Shadows Sub OnPropertyChanging(ByVal e As System.ComponentModel.PropertyChangingEventArgs)
+        '''<param name='e'>Event arguments</summary>
+        Protected Overridable Sub OnPropertyChanging(ByVal e As System.ComponentModel.PropertyChangingEventArgs)
             RaiseEvent PropertyChanging(Me, e)
         End Sub
     End Class

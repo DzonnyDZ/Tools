@@ -1,7 +1,7 @@
 
 Namespace ReportingT.ReportingEngineLite
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.208"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
      System.SerializableAttribute(),  _
      System.ComponentModel.DesignerCategoryAttribute("code"),  _
      System.Xml.Serialization.XmlTypeAttribute([Namespace]:="urn:eos-ksi/KolUni/Reporting/Xml"),  _
