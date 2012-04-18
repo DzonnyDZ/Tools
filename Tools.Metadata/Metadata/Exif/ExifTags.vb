@@ -6,7 +6,7 @@
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 26. června 2010
+' Created: 15. dubna 2012
 ' By:BiggerBook\Honza
 '
 'Localize: This auto-generated file was skipped during localization
@@ -207,7 +207,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Number of bits per component</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("Bits per sample"), Category("ImageDataStructure"), Description("Number of bits per component")> _
 			<CLSCompliant(False)> _
 			Public Property BitsPerSample As UInt16()
@@ -381,7 +384,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Subsampling ratio of Y to C</summary>
+			''' <returns>Typical number of items in an array returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 2 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("YCbCr sub-sampling"), Category("ImageDataStructure"), Description("Subsampling ratio of Y to C")> _
 			<CLSCompliant(False)> _
 			Public Property YCbCrSubSampling As UInt16()
@@ -601,7 +607,10 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "ImageDataCharacteristicsMain"
 			''' <summary>Transfer function</summary>
+			''' <returns>Typical number of items in an array returned by this property is 768.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 768 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("Transfer function"), Category("ImageDataCharacteristicsMain"), Description("Transfer function")> _
 			<CLSCompliant(False)> _
 			Public Property TransferFunction As UInt16()
@@ -628,7 +637,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>White point chromaticity</summary>
+			''' <returns>Typical number of items in an array returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 2 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("White point"), Category("ImageDataCharacteristicsMain"), Description("White point chromaticity")> _
 			<CLSCompliant(False)> _
 			Public Property WhitePoint As URational()
@@ -655,7 +667,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Chromaticities of primaries</summary>
+			''' <returns>Typical number of items in an array returned by this property is 6.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 6 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("Primnary chromacities"), Category("ImageDataCharacteristicsMain"), Description("Chromaticities of primaries")> _
 			<CLSCompliant(False)> _
 			Public Property PrimaryChromaticities As URational()
@@ -682,7 +697,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Color space transformation matrix coefficients</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("YCbCr coeficients"), Category("ImageDataCharacteristicsMain"), Description("Color space transformation matrix coefficients")> _
 			<CLSCompliant(False)> _
 			Public Property YCbCrCoefficients As URational()
@@ -709,7 +727,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Pair of black and white reference values</summary>
+			''' <returns>Typical number of items in an array returned by this property is 6.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 6 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("Reference black/white"), Category("ImageDataCharacteristicsMain"), Description("Pair of black and white reference values")> _
 			<CLSCompliant(False)> _
 			Public Property ReferenceBlackWhite As URational()
@@ -738,7 +759,11 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "IFDOther"
 			''' <summary>File change date and time</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 20.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 19 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
 			<DisplayName("Date-time"), Category("IFDOther"), Description("File change date and time")> _
 			Public Property DateTime As String
 				Get
@@ -753,6 +778,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Image title</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Image description"), Category("IFDOther"), Description("Image title")> _
 			Public Property ImageDescription As String
 				Get
@@ -767,6 +794,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Image input equipment manufacturer</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Make"), Category("IFDOther"), Description("Image input equipment manufacturer")> _
 			Public Property Make As String
 				Get
@@ -781,6 +810,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Image input equipment model</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Model"), Category("IFDOther"), Description("Image input equipment model")> _
 			Public Property Model As String
 				Get
@@ -795,6 +826,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Software used</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Software"), Category("IFDOther"), Description("Software used")> _
 			Public Property Software As String
 				Get
@@ -809,6 +842,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Person who created the image</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Artist"), Category("IFDOther"), Description("Person who created the image")> _
 			Public Property Artist As String
 				Get
@@ -823,6 +858,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Copyright holder</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Copyright"), Category("IFDOther"), Description("Copyright holder")> _
 			Public Property Copyright As String
 				Get
@@ -1100,7 +1137,10 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "Version"
 			''' <summary>Exif version</summary>
+			''' <returns>Typical number of items in an array returned by this property is 4.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 4 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("Exif version"), Category("Version"), Description("Exif version")> _
 			Public Property ExifVersion As Byte()
 				Get
@@ -1131,6 +1171,8 @@ Namespace MetadataT.ExifT
 				Flashpix10 = 0100
 			End Enum
 			''' <summary>Supported Flashpix version</summary>
+			''' <returns>Typical number of items in an array returned by this property is 4.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 4 items</exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="FlashpixVersionValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("Flashpix version"), Category("Version"), Description("Supported Flashpix version")> _
@@ -1213,6 +1255,8 @@ Namespace MetadataT.ExifT
 				B = 6
 			End Enum
 			''' <summary>Meaning of each component</summary>
+			''' <returns>Typical number of items in an array returned by this property is 4.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 4 items</exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="ComponentsConfigurationValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("Components configuration"), Category("ImageConfiguration"), Description("Meaning of each component")> _
@@ -1354,7 +1398,11 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "FileInformation"
 			''' <summary>Related audio file</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 13.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 12 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
 			<DisplayName("Relate sound file"), Category("FileInformation"), Description("Related audio file")> _
 			Public Property RelatedSoundFile As String
 				Get
@@ -1370,7 +1418,11 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "DateAndTime"
 			''' <summary>Date and time of original data generation</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 19.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 18 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
 			<DisplayName("Date-time original"), Category("DateAndTime"), Description("Date and time of original data generation")> _
 			Public Property DateTimeOriginal As String
 				Get
@@ -1384,7 +1436,11 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Date and time of digital data generation</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 19.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 18 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
 			<DisplayName("Date-time digitized"), Category("DateAndTime"), Description("Date and time of digital data generation")> _
 			Public Property DateTimeDigitized As String
 				Get
@@ -1399,6 +1455,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>DateTime subseconds</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Sub-sec time"), Category("DateAndTime"), Description("DateTime subseconds")> _
 			Public Property SubSecTime As String
 				Get
@@ -1413,6 +1471,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>DateTimeOriginal subseconds</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Sub-sec time oroginal"), Category("DateAndTime"), Description("DateTimeOriginal subseconds")> _
 			Public Property SubSecTimeOriginal As String
 				Get
@@ -1427,6 +1487,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>DateTimeDigitized subseconds</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Sub-sec time digitized"), Category("DateAndTime"), Description("DateTimeDigitized subseconds")> _
 			Public Property SubSecTimeDigitized As String
 				Get
@@ -1940,7 +2002,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Subject location</summary>
+			''' <returns>Typical number of items in an array returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 2 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("Subject location"), Category("PictureTakingConditions"), Description("Subject location")> _
 			<CLSCompliant(False)> _
 			Public Property SubjectLocation As UInt16()
@@ -2425,7 +2490,11 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "OtherExif"
 			''' <summary>Unique image ID</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 33.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 32 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
 			<DisplayName("Image unique ID"), Category("OtherExif"), Description("Unique image ID")> _
 			Public Property ImageUniqueID As String
 				Get
@@ -2611,7 +2680,10 @@ Namespace MetadataT.ExifT
 #Region "Properties"
 #Region "GPS"
 			''' <summary>GPS tag version</summary>
+			''' <returns>Typical number of items in an array returned by this property is 4.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 4 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("GPS version ID"), Category("GPS"), Description("GPS tag version")> _
 			Public Property GPSVersionID As Byte()
 				Get
@@ -2644,6 +2716,8 @@ Namespace MetadataT.ExifT
 				South = AscW("S"c)
 			End Enum
 			''' <summary>North or South Latitude</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLatitudeRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS Latitude ref"), Category("GPS"), Description("North or South Latitude")> _
@@ -2678,7 +2752,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Latitude</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("GPS latitude"), Category("GPS"), Description("Latitude")> _
 			<CLSCompliant(False)> _
 			Public Property GPSLatitude As URational()
@@ -2712,6 +2789,8 @@ Namespace MetadataT.ExifT
 				West = AscW("W"c)
 			End Enum
 			''' <summary>East or West Longitude</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLongitudeRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS longitude ref"), Category("GPS"), Description("East or West Longitude")> _
@@ -2746,7 +2825,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Longitude</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("GPS longitude"), Category("GPS"), Description("Longitude")> _
 			<CLSCompliant(False)> _
 			Public Property GPSLongitude As URational()
@@ -2815,7 +2897,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>GPS time (atomic clock)</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("GPS time-stamp"), Category("GPS"), Description("GPS time (atomic clock)")> _
 			<CLSCompliant(False)> _
 			Public Property GPSTimeStamp As URational()
@@ -2843,6 +2928,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>GPS satellites used for measurement</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("GPS satellites"), Category("GPS"), Description("GPS satellites used for measurement")> _
 			Public Property GPSSatellites As String
 				Get
@@ -2863,6 +2950,8 @@ Namespace MetadataT.ExifT
 				Interoperability = AscW("V"c)
 			End Enum
 			''' <summary>GPS receiver status</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSStatusValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS status"), Category("GPS"), Description("GPS receiver status")> _
@@ -2904,6 +2993,8 @@ Namespace MetadataT.ExifT
 				Measurement3D = AscW("3"c)
 			End Enum
 			''' <summary>GPS measurement mode</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSMeasureModeValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS measure mode"), Category("GPS"), Description("GPS measurement mode")> _
@@ -2962,6 +3053,8 @@ Namespace MetadataT.ExifT
 				Knots = AscW("N"c)
 			End Enum
 			''' <summary>Speed unit</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSSpeedRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS speed ref"), Category("GPS"), Description("Speed unit")> _
@@ -3018,6 +3111,8 @@ Namespace MetadataT.ExifT
 				MagneticDirection = AscW("M"c)
 			End Enum
 			''' <summary>Reference for direction of movement</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSTrackRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS track ref"), Category("GPS"), Description("Reference for direction of movement")> _
@@ -3067,6 +3162,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Reference for direction of image</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSTrackRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS img. derection ref"), Category("GPS"), Description("Reference for direction of image")> _
@@ -3117,6 +3214,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Geodetic survey data used</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("GPS map datum"), Category("GPS"), Description("Geodetic survey data used")> _
 			Public Property GPSMapDatum As String
 				Get
@@ -3130,6 +3229,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Reference for latitude of destination</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLatitudeRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS dest. latitude ref"), Category("GPS"), Description("Reference for latitude of destination")> _
@@ -3164,7 +3265,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Latitude of destination</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("GPS dest. latitude"), Category("GPS"), Description("Latitude of destination")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDestLatitude As URational()
@@ -3191,6 +3295,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Reference for longitude of destination</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLongitudeRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS dest. longitude ref"), Category("GPS"), Description("Reference for longitude of destination")> _
@@ -3225,7 +3331,10 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Longitude of destination</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			<DisplayName("GPS dest. longitude"), Category("GPS"), Description("Longitude of destination")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDestLongitude As URational()
@@ -3252,6 +3361,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Reference for bearing of destination</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSTrackRefValues"/></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS dest. bearing ref"), Category("GPS"), Description("Reference for bearing of destination")> _
@@ -3301,9 +3412,14 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Reference for distance to destination</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 1 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("GPS dest. distance ref"), Category("GPS"), Description("Reference for distance to destination")> _
-			Public Property GPSDestDistanceRef As String
+			Public Property GPSDestDistanceRef As Char
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDestDistanceRef)
 					If value Is Nothing Then Return Nothing Else Return value.Data
@@ -3382,7 +3498,11 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>GPS date</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 11.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 10 characters.<note><Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></exception>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
 			<DisplayName("GPS date stamp"), Category("GPS"), Description("GPS date")> _
 			Public Property GPSDateStamp As String
 				Get
@@ -3472,6 +3592,8 @@ Namespace MetadataT.ExifT
 #Region "Interop"
 			''' <summary>Indicates the identification of the Interoperability rule.</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
 			<DisplayName("Interoperability index"), Category("Interop"), Description("Indicates the identification of the Interoperability rule.")> _
 			Public Property InteroperabilityIndex As String
 				Get

@@ -33,6 +33,8 @@
     <OptionInfer>On</OptionInfer>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -45,10 +47,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -223,14 +223,16 @@
     <Compile Include="Globalization\Arabic.vb" />
     <Compile Include="Linq\ForEnumerator.vb" />
     <Compile Include="misc\CharComparer.vb" />
+    <Compile Include="Numerics\Angle.vb" />
     <Compile Include="Numerics\Conversions.vb" />
+    <Compile Include="Numerics\SRational.vb" />
+    <Compile Include="Numerics\URational.vb" />
     <Compile Include="Reflection\AttributteValueProvider.vb" />
     <Compile Include="misc\EmptyArray.vb" />
     <Compile Include="misc\Operators.vb" />
     <Compile Include="misc\SyntaxErrorException.vb" />
     <Compile Include="misc\VersionPart.vb" />
     <Compile Include="Numerics\IntegerUnion.vb" />
-    <Compile Include="Numerics\Rational.vb" />
     <Compile Include="Reflection\NamespaceInfo.vb" />
     <Compile Include="Reflection\Operators.vb" />
     <Compile Include="Security\Cryptography\Encryption\Asymmetric.vb" />
@@ -579,6 +581,16 @@
     <Folder Include="XML Schemas\" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.4.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 4 SP1</ProductName>

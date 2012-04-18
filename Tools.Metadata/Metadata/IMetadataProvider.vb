@@ -89,6 +89,14 @@
         ''' <remarks>The <paramref name="key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <version version="1.5.3">Parameter <c>Key</c> renamed to <paramref name="key"/>.</version>
         Function GetStringValue$(ByVal key$)
+        ''' <summary>Gets metadata value with given key as string using supplied culture</summary>
+        ''' <param name="key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <param name="provider">Culture to be used. If null current is used.</param>
+        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+        Function GetStringValue$(ByVal key$, provider As IFormatProvider)
     End Interface
 #End If
 End Namespace

@@ -495,7 +495,7 @@ Namespace MetadataT.ExifT
         End Sub
 #End Region
         ''' <summary>Contains value of the <see cref="Exif"/> property</summary>
-        Private _Exif As Exif
+        Private _exif As Exif
         ''' <summary>Gets instance of <see cref="Exif"/> this IFD behaves as instance of</summary>
         ''' <value>Setting this property changes <see cref="Exif"/> property of all subsequent IFDs in <see cref="Following"/> linked-list and of all subIFDs in <see cref="SubIFDs"/>.</value>
         ''' <returns>Instance of the <see cref="MetadataT.ExifT.Exif"/> class this instance is associated with; or null if this instance is not associated with instance of <see cref="Exif"/>.</returns>
@@ -504,13 +504,13 @@ Namespace MetadataT.ExifT
         <Browsable(False)> _
         Public Property Exif() As Exif
             Get
-                Return _Exif
+                Return _exif
             End Get
             Friend Set(ByVal value As Exif)
                 If value Is Exif Then Exit Property
                 If Me.Previous IsNot Nothing AndAlso Me.Previous.Exif IsNot value Then _
                     Throw New ArgumentException(ResourcesT.Exceptions.CannotSetValueOfTheExifPropertyToOtherInstanceThenIsValueOfExifPropertyOfPreviousIFD)
-                _Exif = value
+                _exif = value
                 If Me.Following IsNot Nothing Then Me.Following.Exif = value
                 For Each MySubIFD In Me.SubIFDs
                     MySubIFD.Value.Exif = value
@@ -524,13 +524,13 @@ Namespace MetadataT.ExifT
         End Sub
 #Region "Records"
         ''' <summary>Contains value of the <see cref="Records"/> property</summary>
-        Private _Records As New RecordDic(False, True)
+        Private _records As New RecordDic(False, True)
         ''' <summary>Records in this Image File Directory</summary>
         ''' <remarks>Record cannot be removed from or replaced in the collection when it points to subIFD. The <see cref="OperationCanceledException"/> is thrown in case of attempt to do so.</remarks>
         <CLSCompliant(False), Browsable(False)> _
         Public ReadOnly Property Records() As RecordDic
             Get
-                Return _Records
+                Return _records
             End Get
         End Property
         ''' <summary>Gets or sets value of specified record</summary>

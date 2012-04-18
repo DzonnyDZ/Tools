@@ -188,206 +188,209 @@ Namespace MetadataT.ExifT
     ''' <version version="1.5.2" stage="Nightly">Updated to use 2×32 bit <see cref="SRational"/> and <see cref="URational"/> instead of 2×16 bits ones.</version>
     Public Class DirectoryEntry
         ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As UShort
-        Private _DataType As ExifDataTypes
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _tag As UShort
+        Private _dataType As ExifDataTypes
         ''' <summary>Contains value of the <see cref="Components"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Componets As UInt32
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _componets As UInt32
         ''' <summary>Contains value of the <see cref="DataIsStoredOutside"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _DataIsStoredOutside As Boolean
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _dataIsStoredOutside As Boolean
         ''' <summary>Contains value of the <see cref="Data"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Data As Object
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _data As Object
         ''' <summary>CTor with <see cref="ExifReader.ExifReaderContext"/></summary>
-        ''' <param name="Tag">Tag identifier</param>
-        ''' <param name="Kind">Data type</param>
-        ''' <param name="Components">Number of components</param>
-        ''' <param name="Data">Data or offset to data</param>
-        ''' <param name="Exif"><see cref="ExifReader"/> to obtain data from when <paramref name="Data"/> doesn't contain data but offset to data</param>
-        ''' <param name="Context">Setting which takes effect on reading.</param>
+        ''' <param name="tag">Tag identifier</param>
+        ''' <param name="kind">Data type</param>
+        ''' <param name="components">Number of components</param>
+        ''' <param name="data">Data or offset to data</param>
+        ''' <param name="exif"><see cref="ExifReader"/> to obtain data from when <paramref name="Data"/> doesn't contain data but offset to data</param>
+        ''' <param name="context">Setting which takes effect on reading.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Kind"/> is not member of <see cref="ExifDataTypes"/></exception>
         ''' <exception cref="InvalidDataException">Tag data are placed otside the tag and cannot be read -or- <paramref name="Kind"/> is <see cref="ExifDataTypes.ASCII"/> and ASCII string is not ended with nullchar. Not thrown when exception is recoverable via <paramref name="Context"/></exception>
         ''' <exception cref="ArgumentnullException"><paramref name="Context"/> is null</exception>
         ''' <version version="1.5.2"><see cref="InvalidDataException"/> is thrown when <paramref name="Kind"/> is <see cref="ExifDataTypes.ASCII"/> and string does not end with nullchar.</version>
+        ''' <version version="1.5.4">Parameter names changed to camelCase.</version>
         <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Sub New(ByVal Tag As UShort, ByVal Kind As ExifDataTypes, ByVal Components As UInt32, ByVal Data As Byte(), ByVal Exif As ExifReader, ByVal Context As ExifReader.ExifReaderContext)
-            _Tag = Tag
-            _DataType = Kind
-            _Componets = Components
+        Public Sub New(ByVal tag As UShort, ByVal kind As ExifDataTypes, ByVal components As UInt32, ByVal data As Byte(), ByVal exif As ExifReader, ByVal context As ExifReader.ExifReaderContext)
+            _tag = tag
+            _dataType = kind
+            _componets = components
             Dim SizeTotal As Long
             Try
-                SizeTotal = BytesPerComponent(Kind) * Components
+                SizeTotal = BytesPerComponent(kind) * components
             Catch ex As InvalidEnumArgumentException
-                Context.OnError(ex) 'Throw
-                SizeTotal = Components
+                context.OnError(ex) 'Throw
+                SizeTotal = components
             End Try
-            _DataIsStoredOutside = SizeTotal > 4
+            _dataIsStoredOutside = SizeTotal > 4
             Dim TagData As Byte()
-            If _DataIsStoredOutside Then
-                Dim Str As New MemoryStream(Data, False)
-                Dim r As New Tools.IOt.BinaryReader(Str, Exif.ByteOrder)
+            If _dataIsStoredOutside Then
+                Dim Str As New MemoryStream(data, False)
+                Dim r As New Tools.IOt.BinaryReader(Str, exif.ByteOrder)
                 Str.Position = 0
                 Dim Offset As UInt32 = r.ReadUInt32
-                Exif.Stream.Position = Offset
+                exif.Stream.Position = Offset
                 ReDim TagData(SizeTotal - 1)
                 Dim BytesRead As UInteger = 0
                 While BytesRead < SizeTotal
-                    Dim NowRead = Exif.Stream.Read(TagData, BytesRead, SizeTotal - BytesRead)
+                    Dim NowRead = exif.Stream.Read(TagData, BytesRead, SizeTotal - BytesRead)
                     If NowRead = 0 Then Exit While
                     BytesRead += NowRead
                 End While
                 If BytesRead <> SizeTotal Then
-                    Context.OnError(New InvalidDataException(ResourcesT.Exceptions.CannotReadTagDataFromStream)) 'Throw
+                    context.OnError(New InvalidDataException(ResourcesT.Exceptions.CannotReadTagDataFromStream)) 'Throw
                     If BytesRead > 0 Then _
                         ReDim Preserve TagData(BytesRead - 1) _
                     Else Erase TagData
                 End If
-                Context.OnItem(Me, ExifReader.ReaderItemKinds.ExternalTagData, , , TagData, Offset, SizeTotal) 'Event
+                context.OnItem(Me, ExifReader.ReaderItemKinds.ExternalTagData, , , TagData, Offset, SizeTotal) 'Event
             Else
-                TagData = Data
+                TagData = data
             End If
-            _Data = ReadData(Kind, TagData, Components, Exif.ByteOrder, Context)
+            _data = ReadData(kind, TagData, components, exif.ByteOrder, context)
         End Sub
         ''' <summary>CTor (uses default settings)</summary>
-        ''' <param name="Tag">Tag identifier</param>
-        ''' <param name="Kind">Data type</param>
-        ''' <param name="Components">Number of components</param>
-        ''' <param name="Data">Data or offset to data</param>
-        ''' <param name="Exif"><see cref="ExifReader"/> to obtain data from when <paramref name="Data"/> doesn't contain data but offset to data</param>
+        ''' <param name="tag">Tag identifier</param>
+        ''' <param name="kind">Data type</param>
+        ''' <param name="components">Number of components</param>
+        ''' <param name="data">Data or offset to data</param>
+        ''' <param name="exif"><see cref="ExifReader"/> to obtain data from when <paramref name="Data"/> doesn't contain data but offset to data</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Kind"/> is not member of <see cref="ExifDataTypes"/></exception>
         ''' <exception cref="InvalidDataException">Tag data are placed otside the tag and cannot be read</exception>
+        ''' <version version="1.5.4">Parameter names changed to camelCase</version>
         <CLSCompliant(False)> _
-        Public Sub New(ByVal Tag As UShort, ByVal Kind As ExifDataTypes, ByVal Components As UInt32, ByVal Data As Byte(), ByVal Exif As ExifReader)
-            Me.new(Tag, Kind, Components, Data, Exif, New ExifReader.ExifReaderContext(Exif, New ExifReaderSettings()))
+        Public Sub New(ByVal tag As UShort, ByVal kind As ExifDataTypes, ByVal components As UInt32, ByVal data As Byte(), ByVal exif As ExifReader)
+            Me.new(tag, kind, components, data, exif, New ExifReader.ExifReaderContext(exif, New ExifReaderSettings()))
         End Sub
 
         ''' <summary>Reads data of specified type freom given <see cref="Array"/> of <see cref="Byte"/>s</summary>
-        ''' <param name="Type">Type of data to read</param>
-        ''' <param name="Align">Format in whicvh data are stored</param>
-        ''' <param name="Buffer">Buffer to read data from</param>
-        ''' <param name="Components">Number of components to be read</param>
+        ''' <param name="type">Type of data to read</param>
+        ''' <param name="align">Format in whicvh data are stored</param>
+        ''' <param name="buffer">Buffer to read data from</param>
+        ''' <param name="components">Number of components to be read</param>
         ''' <returns>Data read from buffer. If <paramref name="Components"/> is 1 scalar of specified type is returned, <see cref="Array"/> otherwise with exceptions: 1 component of type <see cref="ExifDataTypes.ASCII"/> resuts to <see cref="Char"/>, more components results to <see cref="String"/>; <see cref="ExifDataTypes.NA"/> always results to <see cref="Array"/> of <see cref="Byte"/>s</returns>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="ExifDataTypes"/> (and error recovery is not allowed).</exception>
         ''' <exception cref="InvalidDataException"><paramref name="Type"/> is <see cref="ExifDataTypes.ASCII"/> and string is not terminated with nullchar  (and error recovery is not allowed).</exception>
         ''' <param name="Context">Setting which takes effect on reading.</param>
         ''' <version version="1.5.2">Updated to use 2×32 bits <see cref="SRational"/> and <see cref="URational"/> instead fo 2×16 bits.</version>
         ''' <version version="1.5.2">ASCII values are required to end with nullchar, it's trimmed and <see cref="InvalidDataException"/> is thrown when they don't end.</version>
-        Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAlign, ByVal Context As ExifReader.ExifReaderContext) As Object
-            Dim Str As New MemoryStream(Buffer, False)
+        ''' <version version="1.5.4">Parameter names changed to camelCase</version>
+        Private Shared Function ReadData(ByVal type As ExifDataTypes, ByVal buffer As Byte(), ByVal components As Integer, ByVal align As Tools.IOt.BinaryReader.ByteAlign, ByVal context As ExifReader.ExifReaderContext) As Object
+            Dim Str As New MemoryStream(buffer, False)
             Str.Position = 0
-            Dim r As New Tools.IOt.BinaryReader(Str, System.Text.Encoding.Default, Align)
-            Select Case Type
+            Dim r As New Tools.IOt.BinaryReader(Str, System.Text.Encoding.Default, align)
+            Select Case type
                 Case ExifDataTypes.Byte
-                    If Components = 1 Then Return CByte(Buffer(0)) Else Return Buffer.Clone
+                    If components = 1 Then Return CByte(buffer(0)) Else Return buffer.Clone
                 Case ExifDataTypes.ASCII
-                    If Components = 1 Then
+                    If components = 1 Then
                         Dim ret = r.ReadChar()
                         If ret <> vbNullChar Then
-                            Context.OnError(New InvalidDataException(ResourcesT.Exceptions.ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith)) 'Throw
+                            context.OnError(New InvalidDataException(ResourcesT.Exceptions.ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith)) 'Throw
                         End If
                         Return ret
                     Else
-                        Dim ret As New String(r.ReadChars(Buffer.Length))
+                        Dim ret As New String(r.ReadChars(buffer.Length))
                         If ret(ret.Length - 1) = vbNullChar Then
                             Return ret.Substring(0, ret.Length - 1)
                         Else
-                            Context.OnError(New InvalidDataException(ResourcesT.Exceptions.ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith)) 'Throw
+                            context.OnError(New InvalidDataException(ResourcesT.Exceptions.ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith)) 'Throw
                             Return ret
                         End If
                     End If
                 Case ExifDataTypes.UInt16
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return r.ReadUInt16
                     Else
-                        Dim ret(Components - 1) As UInt16
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As UInt16
+                        For i As Integer = 1 To components
                             ret(i - 1) = r.ReadUInt16
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.UInt32
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return r.ReadUInt32
                     Else
-                        Dim ret(Components - 1) As UInt32
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As UInt32
+                        For i As Integer = 1 To components
                             ret(i - 1) = r.ReadUInt32
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.URational
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return New URational(r.ReadUInt32, r.ReadUInt32)
                     Else
-                        Dim ret(Components - 1) As URational
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As URational
+                        For i As Integer = 1 To components
                             ret(i - 1) = New URational(r.ReadUInt32, r.ReadUInt32)
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.SByte
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return r.ReadSByte
                     Else
-                        Dim ret(Components - 1) As SByte
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As SByte
+                        For i As Integer = 1 To components
                             ret(i - 1) = r.ReadSByte
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.NA
-                    Return Buffer.Clone
+                    Return buffer.Clone
                 Case ExifDataTypes.Int16
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return r.ReadInt16
                     Else
-                        Dim ret(Components - 1) As Int16
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As Int16
+                        For i As Integer = 1 To components
                             ret(i - 1) = r.ReadInt16
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.Int32
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return r.ReadInt32
                     Else
-                        Dim ret(Components - 1) As Int32
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As Int32
+                        For i As Integer = 1 To components
                             ret(i - 1) = r.ReadInt32
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.SRational
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return New SRational(r.ReadInt32, r.ReadInt32)
                     Else
-                        Dim ret(Components - 1) As SRational
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As SRational
+                        For i As Integer = 1 To components
                             ret(i - 1) = New SRational(r.ReadInt32, r.ReadInt32)
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.Single
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return r.ReadSingle
                     Else
-                        Dim ret(Components - 1) As Single
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As Single
+                        For i As Integer = 1 To components
                             ret(i - 1) = r.ReadSingle
                         Next i
                         Return ret
                     End If
                 Case ExifDataTypes.Double
-                    If Components = 1 Then
+                    If components = 1 Then
                         Return r.ReadDouble
                     Else
-                        Dim ret(Components - 1) As Double
-                        For i As Integer = 1 To Components
+                        Dim ret(components - 1) As Double
+                        For i As Integer = 1 To components
                             ret(i - 1) = r.ReadDouble
                         Next i
                         Return ret
                     End If
                 Case Else
-                    Context.OnError(New InvalidEnumArgumentException("Type", Type, GetType(ExifDataTypes))) 'Throw
-                    Return Buffer.Clone
+                    context.OnError(New InvalidEnumArgumentException("Type", type, GetType(ExifDataTypes))) 'Throw
+                    Return buffer.Clone
             End Select
         End Function
         ''' <summary>Gets number of bytes per component of specified Exif data type</summary>
@@ -416,34 +419,44 @@ Namespace MetadataT.ExifT
         <CLSCompliant(False)> _
         Public ReadOnly Property Tag() As UShort
             Get
-                Return _Tag
+                Return _tag
             End Get
         End Property
         ''' <summary>Kind of data stored in this directory entry</summary>
         <CLSCompliant(False)> _
         Public ReadOnly Property DataType() As ExifDataTypes
             Get
-                Return _DataType
+                Return _dataType
             End Get
         End Property
         ''' <summary>Number of components of data stored in this directory entry</summary>
         <CLSCompliant(False)> _
         Public ReadOnly Property Components() As UInt32
             Get
-                Return _Componets
+                Return _componets
             End Get
         End Property
         ''' <summary>Gets wheather data is store inside directory entry (true) or outside (false)</summary>
         Public ReadOnly Property DataIsStoredOutside() As Boolean
             Get
-                Return _DataIsStoredOutside
+                Return _dataIsStoredOutside
             End Get
         End Property
         ''' <summary>Data of this directory entry</summary>
-        ''' <remarks>Actual data type of this property depends on <see cref="DataType"/></remarks>
+        ''' <remarks>
+        ''' Actual data type of this property depends on <see cref="DataType"/>
+        ''' <para>For ASCII properties data are terurned without terminating nullchar.</para>
+        ''' <note>If ASCII value contains a nullchar in middle of data only part before first nullchar is returned because as per Exif specificcation ASCII values are nullchar-terminated.</note>
+        ''' </remarks>
+        ''' <version version="1.5.4">Added nullchar handling</version>
         Public ReadOnly Property Data() As Object
             Get
-                Return _Data
+                If DataType = ExifDataTypes.ASCII AndAlso TypeOf _data Is String Then
+                    Dim sdata$ = _data
+                    If sdata.Contains(Chars.NullChar) Then Return sdata.Substring(0, sdata.IndexOf(Chars.NullChar))
+                    Return sdata
+                End If
+                Return _data
             End Get
         End Property
     End Class

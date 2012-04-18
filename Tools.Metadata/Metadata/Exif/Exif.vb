@@ -1,4 +1,5 @@
 Imports System.Linq
+Imports System.Globalization.CultureInfo
 Imports RecordDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.MetadataT.ExifT.ExifRecord)
 Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.MetadataT.ExifT.SubIfd)
 Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.ExifRecord)
@@ -389,6 +390,241 @@ Namespace MetadataT.ExifT
 #Region "IMetadata"
         'Proposed format: IFDNumber:Tag (ie. 0:124, 1:124); E:Tag (Exif sub-IFD); G:Tag (GPS), I:Tag (Interop)
         'TODO: Implement, version
+#Region "Interface implemenatation"
+        ''' <summary>Gets value indicating wheather metadata value with given key is present in current instance</summary>
+        ''' <param name="Key">Key (or name) to check presence of (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>True when value for given key is present; false otherwise</returns>
+        ''' <remarks>The <paramref name="Key"/> parameter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
+        ''' <version version="1.5.2">Function added</version>
+        Public Function ContainsKey(ByVal Key As String) As Boolean Implements IMetadata.ContainsKey
+            Dim IFD As IFDIndexes, RecordNumber As UShort
+            InterpretKey(Key, IFD, RecordNumber)
+            If Me.IFD(IFD) IsNot Nothing Then Return Me.IFD(IFD).Records.ContainsKey(RecordNumber)
+            Return False
+        End Function
+        ''' <summary>Gets keys of all the metadata present in curent instance</summary>
+        ''' <returns>Keys in metadata-specific format of all the metadata present in curent instance. Never returns null; may return anempt enumeration.</returns>
+        ''' <version version="1.5.2">Function added</version>
+        Public Function GetContainedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetContainedKeys
+            Dim ret As New List(Of String)
+            Dim IFD As Ifd = IFD0
+            Dim i% = 0
+            While IFD IsNot Nothing
+                ret.AddRange(From tag In IFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "{0}:{1}", i, tag))
+                IFD = IFD.Following
+                i += 1
+            End While
+            If IFD0 IsNot Nothing AndAlso IFD0.ExifSubIFD IsNot Nothing Then
+                ret.AddRange(From tag In IFD0.ExifSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "E:{0}", tag))
+                If IFD0.ExifSubIFD.InteropSubIFD IsNot Nothing Then
+                    ret.AddRange(From tag In IFD0.ExifSubIFD.InteropSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "I:{0}", tag))
+                End If
+            End If
+            If IFD0 IsNot Nothing AndAlso IFD0.GPSSubIFD IsNot Nothing Then
+                ret.AddRange(From tag In IFD0.GPSSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "G:{0}", tag))
+            End If
+            Return ret
+        End Function
+
+        ''' <summary>Gets localized description for given key (or name)</summary>
+        ''' <param name="Key">Key (or name) to get description of</param>
+        ''' <returns>Localized description of purpose of metadata item identified by <paramref name="Key"/>; nul when description is not available.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> is in invalid format or it is not one of predefined names.</exception>
+        ''' <version version="1.5.2"></version>
+        Public Function GetDescription(ByVal Key As String) As String Implements IMetadata.GetDescription
+            Dim prp = GetProperty(Key)
+            If prp Is Nothing Then Return Nothing
+            Dim attr = prp.GetAttribute(Of DescriptionAttribute)()
+            If attr Is Nothing Then Return Nothing
+            Return attr.Description
+        End Function
+
+        ''' <summary>Gets localized human-readable name for given key (or name)</summary>
+        ''' <param name="Key">Key (or name) to get name for</param>
+        ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="Key"/>; null when no such name is defined/known.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
+        ''' <version version="1.5.2">Function added</version>
+        Public Function GetHumanName(ByVal Key As String) As String Implements IMetadata.GetHumanName
+            'TODO: DisplayName attributes
+            Dim prp = GetProperty(Key)
+            If prp Is Nothing Then Return Nothing
+            Dim attr = prp.GetAttribute(Of DisplayNameAttribute)()
+            If attr Is Nothing Then Return Nothing
+            Return attr.DisplayName
+        End Function
+        ''' <summary>Gets key for predefined name</summary>
+        ''' <param name="name">Name to get key for</param>
+        ''' <returns>Key in metadata-specific format for given predefined metadata item name</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
+        ''' <version version="1.5.2">Function added</version>
+        ''' <version version="1.5.3">Parameter <c>Name</c> renamed to <paramref name="name"/></version>
+        Public Function GetKeyOfName(ByVal name As String) As String Implements IMetadata.GetKeyOfName
+            Return GetKeyOfName(name, True)
+        End Function
+
+        ''' <summary>Gets name for key</summary>
+        ''' <param name="Key">Key to get name for</param>
+        ''' <returns>One of predefined names to use instead of <paramref name="Key"/>; null when given key has no corresponding name.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
+        ''' <version version="1.5.2">Function added</version>
+        Public Function GetNameOfKey(ByVal Key As String) As String Implements IMetadata.GetNameOfKey
+            Dim IFD As IFDIndexes, RecordNumber As UShort
+            InterpretKey(Key, IFD, RecordNumber, False)
+            Dim enm As Type
+            Select Case IFD
+                Case IFDIndexes.Exif : enm = GetType(IfdExif.Tags)
+                Case IFDIndexes.GPS : enm = GetType(IfdGps.Tags)
+                Case IFDIndexes.Interop : enm = GetType(IfdInterop.Tags)
+                Case IFDIndexes.IFD0 : enm = GetType(IfdMain.Tags)
+                Case Else : Return Nothing
+            End Select
+            Dim cns = TypeTools.GetConstant(TypeTools.GetEnumValue(enm, RecordNumber))
+            If cns Is Nothing Then Return Nothing
+            If GetKeyOfName(cns.Name) = Key Then Return cns.Name Else Return Nothing
+        End Function
+
+        ''' <summary>Gets all keys predefined for curent metadata format</summary>
+        ''' <returns>Eumeration containing all predefined (well-known) keys of metadata for this metadata format. Returns always the same enumeration event when values for some keys are not present. Never returns null; may return an empty enumeration.</returns>
+        ''' <version version="1.5.2">Function added</version>
+        Public Function GetPredefinedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedKeys
+            Dim ret As New List(Of String)
+            ret.AddRange(From val As IfdMain.Tags In [Enum].GetValues(GetType(IfdMain.Tags)) Select String.Format(InvariantCulture, "0:{0:d}", val))
+            ret.AddRange(From val As IfdExif.Tags In [Enum].GetValues(GetType(IfdExif.Tags)) Select String.Format(InvariantCulture, "E:{0:d}", val))
+            ret.AddRange(From val As IfdGps.Tags In [Enum].GetValues(GetType(IfdGps.Tags)) Select String.Format(InvariantCulture, "G:{0:d}", val))
+            ret.AddRange(From val As IfdInterop.Tags In [Enum].GetValues(GetType(IfdInterop.Tags)) Select String.Format(InvariantCulture, "I:{0:d}", val))
+
+            ''Special formatted keys
+            'ret.Add(String.Format(InvariantCulture, "G:{0:d}*", IfdGps.Tags.GPSAltitude))
+            'ret.Add(String.Format(InvariantCulture, "G:{0:d}*", IfdGps.Tags.GPSLatitude))
+            'ret.Add(String.Format(InvariantCulture, "G:{0:d}*", IfdGps.Tags.GPSLongitude))
+            'ret.Add(String.Format(InvariantCulture, "G:{0:d}*", IfdGps.Tags.GPSDestLatitude))
+            'ret.Add(String.Format(InvariantCulture, "G:{0:d}*", IfdGps.Tags.GPSDestLongitude))
+            Return ret
+        End Function
+
+        ''' <summary>Gets all predefined names for metadata keys</summary>
+        ''' <returns>Enumeration containing all predefined names of metadata items for this metadada format. Never returns null; may return an empty enumeration.</returns>
+        ''' <remarks>Names retuned are actually names of items from enumerations <see cref="IfdMain.Tags"/>, <see cref="IfdExif.Tags"/>, <see cref="IfdGps.Tags"/> and <see cref="IfdInterop.Tags"/>. There are no names predefined for IFD1 and following.</remarks>
+        ''' <version version="1.5.2">Function added</version>
+        Public Function GetPredefinedNames() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedNames
+            Dim ret As New List(Of String)
+            ret.AddRange([Enum].GetNames(GetType(IfdMain.Tags)))
+            'TODO: Debug if there are duplicities
+            For Each Name As String In [Enum].GetNames(GetType(IfdExif.Tags))
+                If Not ret.Contains(Name) Then ret.Add(Name)
+            Next
+            For Each Name As String In [Enum].GetNames(GetType(IfdExif.Tags))
+                If Not ret.Contains(Name) Then ret.Add(Name)
+            Next
+            For Each Name As String In [Enum].GetNames(GetType(IfdGps.Tags))
+                If Not ret.Contains(Name) Then ret.Add(Name)
+            Next
+            For Each Name As String In [Enum].GetNames(GetType(IfdInterop.Tags))
+                If Not ret.Contains(Name) Then ret.Add(Name)
+            Next
+
+            ''Special formatted keys
+            'ret.Add(IfdGps.Tags.GPSAltitude.GetName() & "*")
+            'ret.Add(IfdGps.Tags.GPSLatitude.GetName() & "*")
+            'ret.Add(IfdGps.Tags.GPSLongitude.GetName() & "*")
+            'ret.Add(IfdGps.Tags.GPSDestLatitude.GetName() & "*")
+            'ret.Add(IfdGps.Tags.GPSDestLongitude.GetName() & "*")
+            Return ret
+        End Function
+
+        ''' <summary>Gets name of metadata format represented by implementation</summary>
+        ''' <returns><see cref="ExifName"/></returns>
+        ''' <remarks>All <see cref="IMetadataProvider">IMetadataProviders</see> returning Exif format should identify the format by this name.</remarks>
+        ''' <version version="1.5.2">Property added</version>
+        Private ReadOnly Property Name() As String Implements IMetadata.Name
+            Get
+                Return ExifName
+            End Get
+        End Property
+
+        ''' <summary>Gets medata value with given key</summary>
+        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>Value of metadata item with given key; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
+        ''' <version version="1.5.2">Property added</version>
+        Public ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
+            Get
+                Dim IFD As IFDIndexes, RecordNumber As UShort
+                InterpretKey(Key, IFD, RecordNumber)
+                Dim IFDObject = Me.IFD(IFD)
+                If IFDObject Is Nothing Then Return Nothing
+                If Not IFDObject.Records.ContainsKey(RecordNumber) Then Return Nothing
+                Return IFDObject.Records(RecordNumber).Data
+            End Get
+        End Property
+        ''' <summary>Gets metadata value with given key as string</summary>
+        ''' <param name="key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <param name="provider">Culture to be used. If null current is used.</param>
+        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.4">Method added</version>
+        Public Function GetStringValue(ByVal key As String, provider As IFormatProvider) As String Implements IMetadata.GetStringValue
+            Dim ret = Value(Key)
+            Dim IFD As IFDIndexes, RecordNumber As UShort
+            If ret Is Nothing Then Return Nothing
+
+            InterpretKey(key, IFD, RecordNumber)
+            If provider Is Nothing Then provider = CurrentCulture
+
+            If IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSAltitude AndAlso TypeOf ret Is URational Then
+                Return CType(DirectCast(ret, URational), Decimal).ToString("0.0", provider)
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLatitude AndAlso TypeOf ret Is URational() Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLongitude AndAlso TypeOf ret Is URational() Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLongitude AndAlso TypeOf ret Is URational() Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLatitude AndAlso TypeOf ret Is URational() Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLongitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLatitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLatitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLongitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
+            End If
+
+            If TypeOf ret Is IEnumerable(Of Byte) Then
+                Dim r2 As New System.Text.StringBuilder
+                For Each b In DirectCast(ret, IEnumerable(Of Byte))
+                    r2.Append(b.ToString("x2"))
+                Next
+                Return r2.ToString
+            ElseIf TypeOf ret Is IEnumerable AndAlso Not TypeOf ret Is String Then
+                Dim r2 As New System.Text.StringBuilder
+                For Each item In DirectCast(ret, IEnumerable)
+                    If r2.Length <> 0 Then r2.Append(If(TryCast(provider.GetFormat(GetType(Globalization.TextInfo)), Globalization.TextInfo), CurrentCulture.TextInfo).ListSeparator & " ")
+                    If TypeOf item Is IFormattable Then
+                        r2.Append(DirectCast(item, IFormattable).ToString(provider))
+                    Else
+                        r2.Append(item.ToString)
+                    End If
+                Next
+                Return r2.ToString
+            ElseIf TypeOf ret Is IFormattable Then
+                Return DirectCast(ret, IFormattable).ToString(provider)
+            Else
+                Return ret.ToString
+            End If
+        End Function
+        ''' <summary>Gets metadata value with given key as string</summary>
+        ''' <param name="key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.2">Method added</version>
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        Public Function GetStringValue(ByVal key As String) As String Implements IMetadata.GetStringValue
+            Return GetStringValue(Key, Nothing)
+        End Function
+#End Region
         ''' <summary>Stores either non-negative (any, even undefined in this enumeration) value for IFD number or negative value for known sub-IFD</summary>
         Private Enum IFDIndexes
             ''' <summary>Exif sub-IFD</summary>
@@ -462,71 +698,7 @@ Namespace MetadataT.ExifT
                 Return Nothing
             End Get
         End Property
-        ''' <summary>Gets value indicating wheather metadata value with given key is present in current instance</summary>
-        ''' <param name="Key">Key (or name) to check presence of (see <see cref="GetPredefinedKeys"/> for possible values)</param>
-        ''' <returns>True when value for given key is present; false otherwise</returns>
-        ''' <remarks>The <paramref name="Key"/> parameter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
-        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
-        ''' <version version="1.5.2">Function added</version>
-        Public Function ContainsKey(ByVal Key As String) As Boolean Implements IMetadata.ContainsKey
-            Dim IFD As IFDIndexes, RecordNumber As UShort
-            InterpretKey(Key, IFD, RecordNumber)
-            If Me.IFD(IFD) IsNot Nothing Then Return Me.IFD(IFD).Records.ContainsKey(RecordNumber)
-            Return False
-        End Function
 
-        ''' <summary>Gets keys of all the metadata present in curent instance</summary>
-        ''' <returns>Keys in metadata-specific format of all the metadata present in curent instance. Never returns null; may return anempt enumeration.</returns>
-        ''' <version version="1.5.2">Function added</version>
-        Public Function GetContainedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetContainedKeys
-            Dim ret As New List(Of String)
-            Dim IFD As Ifd = IFD0
-            Dim i% = 0
-            While IFD IsNot Nothing
-                ret.AddRange(From tag In IFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "{0}:{1}", i, tag))
-                IFD = IFD.Following
-                i += 1
-            End While
-            If IFD0 IsNot Nothing AndAlso IFD0.ExifSubIFD IsNot Nothing Then
-                ret.AddRange(From tag In IFD0.ExifSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "E:{0}", tag))
-                If IFD0.ExifSubIFD.InteropSubIFD IsNot Nothing Then
-                    ret.AddRange(From tag In IFD0.ExifSubIFD.InteropSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "I:{0}", tag))
-                End If
-            End If
-            If IFD0 IsNot Nothing AndAlso IFD0.GPSSubIFD IsNot Nothing Then
-                ret.AddRange(From tag In IFD0.GPSSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "G:{0}", tag))
-            End If
-            Return ret
-        End Function
-
-        ''' <summary>Gets localized description for given key (or name)</summary>
-        ''' <param name="Key">Key (or name) to get description of</param>
-        ''' <returns>Localized description of purpose of metadata item identified by <paramref name="Key"/>; nul when description is not available.</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> is in invalid format or it is not one of predefined names.</exception>
-        ''' <version version="1.5.2"></version>
-        Public Function GetDescription(ByVal Key As String) As String Implements IMetadata.GetDescription
-            Dim prp = GetProperty(Key)
-            If prp Is Nothing Then Return Nothing
-            Dim attr = prp.GetAttribute(Of DescriptionAttribute)()
-            If attr Is Nothing Then Return Nothing
-            Return attr.Description
-        End Function
-
-        ''' <summary>Gets localized human-readable name for given key (or name)</summary>
-        ''' <param name="Key">Key (or name) to get name for</param>
-        ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="Key"/>; null when no such name is defined/known.</returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
-        ''' <version version="1.5.2">Function added</version>
-        Public Function GetHumanName(ByVal Key As String) As String Implements IMetadata.GetHumanName
-            'TODO: DisplayName attributes
-            Dim prp = GetProperty(Key)
-            If prp Is Nothing Then Return Nothing
-            Dim attr = prp.GetAttribute(Of DisplayNameAttribute)()
-            If attr Is Nothing Then Return Nothing
-            Return attr.DisplayName
-        End Function
         ''' <summary>Gets IFD property from tag key</summary>
         ''' <param name="Key">Key to get property for</param>
         ''' <returns>Property of <see cref="ExifT.Ifd"/>-derived class representing metadata item with key <paramref name="Key"/></returns>
@@ -552,16 +724,6 @@ Namespace MetadataT.ExifT
 
         ''' <summary>Gets key for predefined name</summary>
         ''' <param name="name">Name to get key for</param>
-        ''' <returns>Key in metadata-specific format for given predefined metadata item name</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
-        ''' <version version="1.5.2">Function added</version>
-        ''' <version version="1.5.3">Parameter <c>Name</c> renamed to <paramref name="name"/></version>
-        Public Function GetKeyOfName(ByVal name As String) As String Implements IMetadata.GetKeyOfName
-            Return GetKeyOfName(name, True)
-        End Function
-
-        ''' <summary>Gets key for predefined name</summary>
-        ''' <param name="name">Name to get key for</param>
         ''' <param name="throwException">True to throw <see cref="ArgumentException"/> whan <paramref name="name"/> is not known name.</param>
         ''' <returns>Key in metadata-specific format for given predefined metadata item nam; null if key is not known.</returns>
         ''' <exception cref="ArgumentException"><paramref name="throwException"/> is true and <paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
@@ -574,116 +736,7 @@ Namespace MetadataT.ExifT
             Return Nothing
         End Function
 
-        ''' <summary>Gets name for key</summary>
-        ''' <param name="Key">Key to get name for</param>
-        ''' <returns>One of predefined names to use instead of <paramref name="Key"/>; null when given key has no corresponding name.</returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
-        ''' <version version="1.5.2">Function added</version>
-        Public Function GetNameOfKey(ByVal Key As String) As String Implements IMetadata.GetNameOfKey
-            Dim IFD As IFDIndexes, RecordNumber As UShort
-            InterpretKey(Key, IFD, RecordNumber, False)
-            Dim enm As Type
-            Select Case IFD
-                Case IFDIndexes.Exif : enm = GetType(IfdExif.Tags)
-                Case IFDIndexes.GPS : enm = GetType(IfdGps.Tags)
-                Case IFDIndexes.Interop : enm = GetType(IfdInterop.Tags)
-                Case IFDIndexes.IFD0 : enm = GetType(IfdMain.Tags)
-                Case Else : Return Nothing
-            End Select
-            Dim cns = TypeTools.GetConstant(TypeTools.GetEnumValue(enm, RecordNumber))
-            If cns Is Nothing Then Return Nothing
-            If GetKeyOfName(cns.Name) = Key Then Return cns.Name Else Return Nothing
-        End Function
-
-        ''' <summary>Gets all keys predefined for curent metadata format</summary>
-        ''' <returns>Eumeration containing all predefined (well-known) keys of metadata for this metadata format. Returns always the same enumeration event when values for some keys are not present. Never returns null; may return an empty enumeration.</returns>
-        ''' <version version="1.5.2">Function added</version>
-        Public Function GetPredefinedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedKeys
-            Dim ret As New List(Of String)
-            ret.AddRange(From val As IfdMain.Tags In [Enum].GetValues(GetType(IfdMain.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "0:{0:d}", val))
-            ret.AddRange(From val As IfdExif.Tags In [Enum].GetValues(GetType(IfdExif.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "E:{0:d}", val))
-            ret.AddRange(From val As IfdGps.Tags In [Enum].GetValues(GetType(IfdGps.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "G:{0:d}", val))
-            ret.AddRange(From val As IfdInterop.Tags In [Enum].GetValues(GetType(IfdInterop.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "I:{0:d}", val))
-            Return ret
-        End Function
-
-        ''' <summary>Gets all predefined names for metadata keys</summary>
-        ''' <returns>Enumeration containing all predefined names of metadata items for this metadada format. Never returns null; may return an empty enumeration.</returns>
-        ''' <remarks>Names retuned are actually names of items from enumerations <see cref="IfdMain.Tags"/>, <see cref="IfdExif.Tags"/>, <see cref="IfdGps.Tags"/> and <see cref="IfdInterop.Tags"/>. There are no names predefined for IFD1 and following.</remarks>
-        ''' <version version="1.5.2">Function added</version>
-        Public Function GetPredefinedNames() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedNames
-            Dim ret As New List(Of String)
-            ret.AddRange([Enum].GetNames(GetType(IfdMain.Tags)))
-            'TODO: Debug if there are duplicities
-            For Each Name As String In [Enum].GetNames(GetType(IfdExif.Tags))
-                If Not ret.Contains(Name) Then ret.Add(Name)
-            Next
-            For Each Name As String In [Enum].GetNames(GetType(IfdExif.Tags))
-                If Not ret.Contains(Name) Then ret.Add(Name)
-            Next
-            For Each Name As String In [Enum].GetNames(GetType(IfdGps.Tags))
-                If Not ret.Contains(Name) Then ret.Add(Name)
-            Next
-            For Each Name As String In [Enum].GetNames(GetType(IfdInterop.Tags))
-                If Not ret.Contains(Name) Then ret.Add(Name)
-            Next
-            Return ret
-        End Function
-
-        ''' <summary>Gets name of metadata format represented by implementation</summary>
-        ''' <returns><see cref="ExifName"/></returns>
-        ''' <remarks>All <see cref="IMetadataProvider">IMetadataProviders</see> returning Exif format should identify the format by this name.</remarks>
-        ''' <version version="1.5.2">Property added</version>
-        Private ReadOnly Property Name() As String Implements IMetadata.Name
-            Get
-                Return ExifName
-            End Get
-        End Property
-
-        ''' <summary>Gets medata value with given key</summary>
-        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
-        ''' <returns>Value of metadata item with given key; or null if given metadata value is not supported</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
-        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
-        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
-        ''' <version version="1.5.2">Property added</version>
-        Public ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
-            Get
-                Dim IFD As IFDIndexes, RecordNumber As UShort
-                InterpretKey(Key, IFD, RecordNumber)
-                Dim IFDObject = Me.IFD(IFD)
-                If IFDObject Is Nothing Then Return Nothing
-                If Not IFDObject.Records.ContainsKey(RecordNumber) Then Return Nothing
-                Return IFDObject.Records(RecordNumber).Data
-            End Get
-        End Property
-        ''' <summary>Gets metadata value with given key as string</summary>
-        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
-        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
-        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
-        ''' <version version="1.5.2">Method added</version>
-        Public Function GetStringValue(ByVal Key As String) As String Implements IMetadata.GetStringValue
-            Dim ret = Value(Key)
-            If ret Is Nothing Then Return Nothing
-            If TypeOf ret Is IEnumerable(Of Byte) Then
-                Dim r2 As New System.Text.StringBuilder
-                For Each b In DirectCast(ret, IEnumerable(Of Byte))
-                    r2.Append(b.ToString("x2"))
-                Next
-                Return r2.ToString
-            ElseIf TypeOf ret Is IEnumerable AndAlso Not TypeOf ret Is String Then
-                Dim r2 As New System.Text.StringBuilder
-                For Each item In DirectCast(ret, IEnumerable)
-                    If r2.Length <> 0 Then r2.Append(Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator & " ")
-                    r2.Append(item.ToString)
-                Next
-                Return r2.ToString
-            End If
-            Return ret.ToString
-        End Function
+       
 #End Region
 
 
@@ -799,33 +852,39 @@ Namespace MetadataT.ExifT
         Implements IReportsChange
         ''' <summary>Contains value of the <see cref="Data"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Data As Object
+        Private _data As Object
         ''' <summary>Contains value of the <see cref="DataType"/> property</summary>
-        Private _DataType As ExifRecordDescription
+        Private _dataType As ExifRecordDescription
         ''' <summary>Contains value of the <see cref="Fixed"/> property</summary>
-        Private _Fixed As Boolean
+        Private _fixed As Boolean
         ''' <summary>True if <see cref="ExifRecordDescription.NumberOfElements"/> of this record is fixed</summary>
         ''' <version version="1.5.3">Fix: Throws <see cref="StackOverflowException"/></version>
         Public ReadOnly Property Fixed() As Boolean
             Get
-                Return _Fixed
+                Return _fixed
             End Get
         End Property
         ''' <summary>Datatype and number of items of record</summary>
         <CLSCompliant(False)> _
         Public ReadOnly Property DataType() As ExifRecordDescription
             Get
-                Return _DataType
+                Return _dataType
             End Get
         End Property
         ''' <summary>Value of record</summary>
         ''' <remarks>Actual type depends on <see cref="DataType"/></remarks>
+        ''' <value>
+        ''' When passing a value to this property and <see cref="DataType"/>.<see cref="ExifRecordDescription.DataType">DataType</see> is <see cref="ExifDataTypes.ASCII"/>
+        ''' if value being passed is not null-terminated a null character (termination) is added to a value.
+        ''' So, for non-fixed values, value being passed must be one-character shorther than actual site of dataset.
+        ''' </value>
         ''' <exception cref="InvalidCastException">Setting value of incompatible type</exception>
-        ''' <exception cref="ArgumentException">Attempt to assigne value with other number of components when <see cref="Fixed"/> set to true</exception>
+        ''' <exception cref="ArgumentException">Attempt to assign value with other number of components when <see cref="Fixed"/> set to true</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
+        ''' <version version="1.5.4">Added llogic to add terminating null char for ASCII data sets.</version>
         Public Property Data() As Object
             Get
-                Return _Data
+                Return _data
             End Get
             Protected Set(ByVal value As Object)
                 If value Is Nothing Then Throw New ArgumentNullException("value")
@@ -834,9 +893,10 @@ Namespace MetadataT.ExifT
                         If TypeOf value Is Char Then value = CStr(CChar(value))
                         If TryCast(value, String) IsNot Nothing Then
                             Dim newV As String = System.Text.Encoding.Default.GetString(System.Text.Encoding.Default.GetBytes(CStr(value)))
+                            If Not newV.EndsWith(vbNullChar) Then newV &= vbNullChar
                             If Me.DataType.NumberOfElements = newV.Length OrElse Not Fixed Then
-                                _Data = newV
-                                Me.DataType.NumberOfElements = CStr(_Data).Length
+                                _data = newV
+                                Me.DataType.NumberOfElements = CStr(_data).Length
                             Else
                                 Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
                             End If
@@ -866,7 +926,7 @@ Namespace MetadataT.ExifT
                     Case ExifDataTypes.URational
                         SetDataValue(Of URational)(value)
                 End Select
-                _Data = value
+                _data = value
             End Set
         End Property
         ''' <summary>Sets <paramref name="value"/> to <see cref="_Data"/> according to <see cref="DataType"/></summary>
@@ -875,13 +935,13 @@ Namespace MetadataT.ExifT
         ''' <exception cref="InvalidCastException">Setting value of incompatible type</exception>
         ''' <exception cref="ArgumentException">Attempt to assigne value with other number of components when <see cref="Fixed"/> set to true</exception>
         Private Sub SetDataValue(Of T)(ByVal value As Object)
-            Dim old As Object = _Data
+            Dim old As Object = _data
             Dim changed As Boolean = False
             If Not IsArray(value) Then
                 Try
                     Dim newV As T = CType(value, T)
                     If Me.DataType.NumberOfElements = 1 OrElse Not Me.Fixed Then
-                        _Data = newV
+                        _data = newV
                         Me.DataType.NumberOfElements = 1
                         changed = True
                     Else
@@ -895,7 +955,7 @@ Namespace MetadataT.ExifT
                 Try
                     Dim newV As T() = CType(value, T())
                     If Me.DataType.NumberOfElements = newV.Length OrElse Not Fixed Then
-                        _Data = newV
+                        _data = newV
                         Me.DataType.NumberOfElements = newV.Length
                         changed = True
                     Else
@@ -907,7 +967,7 @@ Namespace MetadataT.ExifT
                 'End Try
             End If
             If changed Then
-                OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, _Data, "Data"))
+                OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, _data, "Data"))
             End If
         End Sub
         ''' <summary>CTor</summary>
@@ -919,8 +979,8 @@ Namespace MetadataT.ExifT
         ''' <exception cref="ArgumentNullException"><paramref name="Data"/> is null</exception>
         <CLSCompliant(False)> _
         Public Sub New(ByVal Type As ExifRecordDescription, ByVal Data As Object, Optional ByVal Fixed As Boolean = False)
-            Me._DataType = Type
-            Me._Fixed = Fixed
+            Me._dataType = Type
+            Me._fixed = Fixed
             Me.Data = Data
         End Sub
         ''' <summary>CTor</summary>

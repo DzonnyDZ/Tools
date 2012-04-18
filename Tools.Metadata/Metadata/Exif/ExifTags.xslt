@@ -300,19 +300,72 @@
             <xsl:text>&#9;&#9;&#9;''' &lt;summary></xsl:text>
             <xsl:value-of select="et:summary"/>
             <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:if test="@Components != 'any' and @Components > 1">
+                <xsl:text>&#9;&#9;&#9;''' &lt;returns>Typical number of </xsl:text>
+                <xsl:choose>
+                    <xsl:when test="et:Type[1]='ASCII'">
+                        <xsl:text>characters in a string</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>items in an array</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text> returned by this property is </xsl:text>
+                <xsl:value-of select="@Components"/>
+                <xsl:text>.&lt;/returns>&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;''' &lt;exception cref='ArgumentException'>Value being set is neither null nor it is </xsl:text>
+                <xsl:choose>
+                    <xsl:when test="et:Type[1]='ASCII'">
+                        <xsl:text>string</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>array</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text> of exactly </xsl:text>
+                <xsl:choose>
+                    <xsl:when test="et:Type[1]='ASCII'">
+                        <xsl:value-of select="@Components - 1"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="@Components"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:choose>
+                    <xsl:when test="et:Type[1]='ASCII'">
+                        <xsl:text> characters.&lt;note>&lt;Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text> items</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>&lt;/exception>&#xD;&#xA;</xsl:text>
+            </xsl:if>
             <xsl:choose>
-            <xsl:when test="count(et:enum)>0 and @Components=0">
-                <xsl:text>&#9;&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">Value of &lt;paramref name="value"/> is not member of &lt;see cref="</xsl:text>
-                <xsl:value-of select="$EnumName"/>
-                <xsl:text>"/>&lt;/exception>&#xD;&#xA;</xsl:text>
-            </xsl:when>
-            <xsl:when test="count(et:enum)>0">
-                <xsl:text>&#9;&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">Value of item of &lt;paramref name="value"/> is not member of &lt;see cref="</xsl:text>
-                <xsl:value-of select="$EnumName"/>
-                <xsl:text>"/>&lt;/exception>&#xD;&#xA;</xsl:text>
-            </xsl:when>
+                <xsl:when test="count(et:enum)>0 and @Components=0">
+                    <xsl:text>&#9;&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">Value of &lt;paramref name="value"/> is not member of &lt;see cref="</xsl:text>
+                    <xsl:value-of select="$EnumName"/>
+                    <xsl:text>"/>&lt;/exception>&#xD;&#xA;</xsl:text>
+                </xsl:when>
+                <xsl:when test="count(et:enum)>0">
+                    <xsl:text>&#9;&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">Value of item of &lt;paramref name="value"/> is not member of &lt;see cref="</xsl:text>
+                    <xsl:value-of select="$EnumName"/>
+                    <xsl:text>"/>&lt;/exception>&#xD;&#xA;</xsl:text>
+                </xsl:when>
             </xsl:choose>
             <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="DisplayNameAttribute"/> added&lt;/version>&#xD;&#xA;</xsl:text>
+            <xsl:if test="@Components != 'any' and @Components > 1 and count(et:enum) = 0">
+                <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.4">&lt;see cref="ArgumentException"/> documentation added&lt;/version>&#xD;&#xA;</xsl:text>                
+            </xsl:if>
+            <xsl:if test="et:Type[1]='ASCII' and (@Components = 'any' or @Components > 1) and count(et:enum) = 0">
+                <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.&lt;/version>&#xD;&#xA;</xsl:text>
+            </xsl:if>
+            <xsl:if test="et:Type[1]='ASCII' and (@Components = 'any' or @Components = 2) and count(et:enum) = 0">
+                <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.4">Type changed from &lt;see cref="String"/> to &lt;see cref="Char"/>.&lt;/version>&#xD;&#xA;</xsl:text>
+            </xsl:if>
+            <xsl:if test="et:Type[1]='ASCII' and @Components = 1 and count(et:enum) = 0">
+                <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.4">Type changed from &lt;see cref="Char"/> to &lt;see cref="String"/>. &lt;note>This property always represents an empty string because 1st and only character is supposed to be a nullchar (terminator).&lt;/note>&lt;/version>&#xD;&#xA;</xsl:text>
+            </xsl:if>
             <xsl:text>&#9;&#9;&#9;&lt;DisplayName("</xsl:text>
             <xsl:value-of select="@DisplayName"/>
             <xsl:text>"), Category("</xsl:text>
@@ -343,7 +396,8 @@
                         <xsl:text>()</xsl:text>
                     </xsl:if>
                 </xsl:when>
-                <xsl:when test="et:Type[1]='ASCII' and @Components=1">
+                <xsl:when test="et:Type[1]='ASCII' and @Components=2">
+                    <!--Single character requires two fields - the character and null terminator-->
                     <xsl:text>Char</xsl:text>
                 </xsl:when>
                 <xsl:when test="et:Type[1]='ASCII'">
