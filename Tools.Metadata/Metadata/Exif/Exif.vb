@@ -1,11 +1,11 @@
-Imports System.Linq
 Imports System.Globalization.CultureInfo
-Imports RecordDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.MetadataT.ExifT.ExifRecord)
-Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.MetadataT.ExifT.SubIfd)
-Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.ExifRecord)
-Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.SubIfd)
-Imports Tools.ComponentModelT, Tools.IOt.StreamTools, Tools.ExtensionsT
+Imports System.Linq
 Imports System.Runtime.InteropServices
+Imports CultureInfo = System.Globalization.CultureInfo
+Imports NumberStyles = System.Globalization.NumberStyles
+Imports TextInfo = System.Globalization.TextInfo
+Imports Tools.ExtensionsT
+Imports Tools.IOt.StreamTools
 Imports Tools.NumericsT
 
 Namespace MetadataT.ExifT
@@ -412,18 +412,18 @@ Namespace MetadataT.ExifT
             Dim IFD As Ifd = IFD0
             Dim i% = 0
             While IFD IsNot Nothing
-                ret.AddRange(From tag In IFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "{0}:{1}", i, tag))
+                ret.AddRange(From tag In IFD.GetRecordKeys Select String.Format(CultureInfo.InvariantCulture, "{0}:{1}", i, tag))
                 IFD = IFD.Following
                 i += 1
             End While
             If IFD0 IsNot Nothing AndAlso IFD0.ExifSubIFD IsNot Nothing Then
-                ret.AddRange(From tag In IFD0.ExifSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "E:{0}", tag))
+                ret.AddRange(From tag In IFD0.ExifSubIFD.GetRecordKeys Select String.Format(CultureInfo.InvariantCulture, "E:{0}", tag))
                 If IFD0.ExifSubIFD.InteropSubIFD IsNot Nothing Then
-                    ret.AddRange(From tag In IFD0.ExifSubIFD.InteropSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "I:{0}", tag))
+                    ret.AddRange(From tag In IFD0.ExifSubIFD.InteropSubIFD.GetRecordKeys Select String.Format(CultureInfo.InvariantCulture, "I:{0}", tag))
                 End If
             End If
             If IFD0 IsNot Nothing AndAlso IFD0.GPSSubIFD IsNot Nothing Then
-                ret.AddRange(From tag In IFD0.GPSSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "G:{0}", tag))
+                ret.AddRange(From tag In IFD0.GPSSubIFD.GetRecordKeys Select String.Format(CultureInfo.InvariantCulture, "G:{0}", tag))
             End If
             Return ret
         End Function
@@ -600,7 +600,7 @@ Namespace MetadataT.ExifT
             ElseIf TypeOf ret Is IEnumerable AndAlso Not TypeOf ret Is String Then
                 Dim r2 As New System.Text.StringBuilder
                 For Each item In DirectCast(ret, IEnumerable)
-                    If r2.Length <> 0 Then r2.Append(If(TryCast(provider.GetFormat(GetType(Globalization.TextInfo)), Globalization.TextInfo), CurrentCulture.TextInfo).ListSeparator & " ")
+                    If r2.Length <> 0 Then r2.Append(If(TryCast(provider.GetFormat(GetType(TextInfo)), TextInfo), CurrentCulture.TextInfo).ListSeparator & " ")
                     If TypeOf item Is IFormattable Then
                         r2.Append(DirectCast(item, IFormattable).ToString(provider))
                     Else
@@ -665,13 +665,13 @@ Namespace MetadataT.ExifT
                 Case "I"c : ifd = IFDIndexes.Interop
                 Case Else
                     Dim value%
-                    If Not Integer.TryParse(Parts(0), Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, value) Then
+                    If Not Integer.TryParse(Parts(0), NumberStyles.Integer, CultureInfo.InvariantCulture, value) Then
                         Throw New ArgumentException(ResourcesT.Exceptions.IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust)
                     End If
                     ifd = value
             End Select
             Try
-                recordNumber = UShort.Parse(Parts(1), Globalization.CultureInfo.InvariantCulture)
+                recordNumber = UShort.Parse(Parts(1), CultureInfo.InvariantCulture)
             Catch ex As Exception When TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException
                 Throw New ArgumentException(ResourcesT.Exceptions.RecordNumberPartOfExifMetadataIdentificationIsInvalid, ex)
             End Try
@@ -728,15 +728,15 @@ Namespace MetadataT.ExifT
         ''' <returns>Key in metadata-specific format for given predefined metadata item nam; null if key is not known.</returns>
         ''' <exception cref="ArgumentException"><paramref name="throwException"/> is true and <paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
         Private Function GetKeyOfName(ByVal name As String, ByVal throwException As Boolean) As String
-            If [Enum].GetNames(GetType(IfdMain.Tags)).Contains(name) Then Return "0:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdMain.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
-            If [Enum].GetNames(GetType(IfdExif.Tags)).Contains(name) Then Return "E:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdExif.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
-            If [Enum].GetNames(GetType(IfdGps.Tags)).Contains(name) Then Return "G:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdGps.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
-            If [Enum].GetNames(GetType(IfdInterop.Tags)).Contains(name) Then Return "I:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdInterop.Tags)).GetValue(Nothing), IFormattable).ToString("d", Globalization.CultureInfo.InvariantCulture)
+            If [Enum].GetNames(GetType(IfdMain.Tags)).Contains(name) Then Return "0:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdMain.Tags)).GetValue(Nothing), IFormattable).ToString("d", CultureInfo.InvariantCulture)
+            If [Enum].GetNames(GetType(IfdExif.Tags)).Contains(name) Then Return "E:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdExif.Tags)).GetValue(Nothing), IFormattable).ToString("d", CultureInfo.InvariantCulture)
+            If [Enum].GetNames(GetType(IfdGps.Tags)).Contains(name) Then Return "G:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdGps.Tags)).GetValue(Nothing), IFormattable).ToString("d", CultureInfo.InvariantCulture)
+            If [Enum].GetNames(GetType(IfdInterop.Tags)).Contains(name) Then Return "I:" & DirectCast(TypeTools.GetConstant(name, GetType(IfdInterop.Tags)).GetValue(Nothing), IFormattable).ToString("d", CultureInfo.InvariantCulture)
             If throwException Then Throw New ArgumentException(ResourcesT.Exceptions.UnknownPredefinedName0.f(name))
             Return Nothing
         End Function
 
-       
+
 #End Region
 
 

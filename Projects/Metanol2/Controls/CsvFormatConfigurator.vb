@@ -1,4 +1,6 @@
-﻿Imports Tools.MetadataT
+﻿Imports CultureInfo = System.Globalization.CultureInfo
+Imports CultureTypes = System.Globalization.CultureTypes
+Imports Tools.MetadataT
 
 ''' <summary>Configures export in CSV format</summary>
 ''' <version version="2.0.5">This class is new in version 2.0.5</version>
@@ -33,9 +35,9 @@ Public Class CsvFormatConfigurator
             i += 1
         Next
 
-        cmbCulture.DataSource = System.Globalization.CultureInfo.GetCultures(Globalization.CultureTypes.AllCultures)
+        cmbCulture.DataSource = CultureInfo.GetCultures(CultureTypes.AllCultures)
         i = 0
-        For Each item As System.Globalization.CultureInfo In cmbCulture.Items
+        For Each item As CultureInfo In cmbCulture.Items
             If item.Name = System.Globalization.CultureInfo.CurrentCulture.Name Then
                 cmbCulture.SelectedIndex = i
                 Exit For

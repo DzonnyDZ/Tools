@@ -1,8 +1,19 @@
-﻿Imports System.Xml.Linq, System.Xml.Schema, Tools.XmlT.LinqT, System.Linq, Tools.LinqT, Tools.ExtensionsT
-Imports System.CodeDom
+﻿Imports System.CodeDom
+Imports System.Linq
+Imports System.Reflection
+Imports System.Xml.Linq
+Imports System.Xml.Schema
+Imports CultureInfo = System.CultureInfo
+Imports NumberStyles = System.NumberStyles
+Imports Tools.CollectionsT.SpecializedT.AsTypeSafe
+Imports Tools.ExtensionsT
+Imports Tools.LinqT
+Imports Tools.XmlT.LinqT
 Imports <xmlns="http://dzonny.cz/xml/schemas/CodeDom">
 Imports <xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-Imports System.Reflection, Tools.CollectionsT.SpecializedT.AsTypeSafe
+Imports CultureInfo = System.Globalization.CultureInfo
+Imports NumberStyles = System.Globalization.NumberStyles
+Imports DateTimeStyles = System.Globalization.DateTimeStyles
 
 '#If Config <= Nightly Then 'Stage of this file set in Tools.vbproj
 'Stage:Nightly
@@ -424,7 +435,7 @@ Namespace CodeDomT
                 tr.TypeArguments.Add(GetTypeReference(tya))
             Next
             If Xml.@BaseType IsNot Nothing Then tr.BaseType = Xml.@BaseType
-            If Xml.@ArrayRank IsNot Nothing Then tr.ArrayRank = Integer.Parse(Xml.@ArrayRank, Globalization.CultureInfo.InvariantCulture)
+            If Xml.@ArrayRank IsNot Nothing Then tr.ArrayRank = Integer.Parse(Xml.@ArrayRank, CultureInfo.InvariantCulture)
             If Xml.@Options IsNot Nothing Then
                 Select Case Xml.@Options
                     Case "GlobalReference" : tr.Options = CodeTypeReferenceOptions.GlobalReference
@@ -688,7 +699,7 @@ Namespace CodeDomT
             For Each init In Xml.<Initializers>.Elements
                 ace.Initializers.Add(GetExpression(init))
             Next
-            If Xml.@Size IsNot Nothing Then ace.Size = Integer.Parse(Xml.@Size, Globalization.CultureInfo.InvariantCulture)
+            If Xml.@Size IsNot Nothing Then ace.Size = Integer.Parse(Xml.@Size, CultureInfo.InvariantCulture)
             PopulateExpression(ace, Xml)
             Return ace
         End Function
@@ -835,31 +846,31 @@ Namespace CodeDomT
                 Select Case .Name
                     Case Names.String : pie.Value = .Value
                     Case Names.Char : pie.Value = CChar(.Value)
-                    Case Names.Byte : pie.Value = Byte.Parse(.Value, Globalization.NumberStyles.Integer And Not Globalization.NumberStyles.AllowLeadingSign, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.SByte : pie.Value = SByte.Parse(.Value, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.Int16 : pie.Value = Int16.Parse(.Value, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.UInt16 : pie.Value = UInt16.Parse(.Value, Globalization.NumberStyles.Integer And Not Globalization.NumberStyles.AllowLeadingSign, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.Int32 : pie.Value = Int32.Parse(.Value, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.UInt32 : pie.Value = UInt32.Parse(.Value, Globalization.NumberStyles.Integer And Not Globalization.NumberStyles.AllowLeadingSign, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.Int64 : pie.Value = Int64.Parse(.Value, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.UInt64 : pie.Value = UInt64.Parse(.Value, Globalization.NumberStyles.Integer And Not Globalization.NumberStyles.AllowLeadingSign, Globalization.CultureInfo.InvariantCulture)
-                    Case Names.Decimal : pie.Value = Decimal.Parse(.Value, Globalization.NumberStyles.Integer Or Globalization.NumberStyles.AllowDecimalPoint, Globalization.CultureInfo.InvariantCulture)
+                    Case Names.Byte : pie.Value = Byte.Parse(.Value, NumberStyles.Integer And Not NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture)
+                    Case Names.SByte : pie.Value = SByte.Parse(.Value, NumberStyles.Integer, CultureInfo.InvariantCulture)
+                    Case Names.Int16 : pie.Value = Int16.Parse(.Value, NumberStyles.Integer, CultureInfo.InvariantCulture)
+                    Case Names.UInt16 : pie.Value = UInt16.Parse(.Value, NumberStyles.Integer And Not NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture)
+                    Case Names.Int32 : pie.Value = Int32.Parse(.Value, NumberStyles.Integer, CultureInfo.InvariantCulture)
+                    Case Names.UInt32 : pie.Value = UInt32.Parse(.Value, NumberStyles.Integer And Not NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture)
+                    Case Names.Int64 : pie.Value = Int64.Parse(.Value, NumberStyles.Integer, CultureInfo.InvariantCulture)
+                    Case Names.UInt64 : pie.Value = UInt64.Parse(.Value, NumberStyles.Integer And Not NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture)
+                    Case Names.Decimal : pie.Value = Decimal.Parse(.Value, NumberStyles.Integer Or NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture)
                     Case Names.Single
                         Select Case .Value
                             Case "-INF" : pie.Value = Single.NegativeInfinity
                             Case "INF" : pie.Value = Single.PositiveInfinity
                             Case "NaN" : pie.Value = Single.NaN
-                            Case Else : pie.Value = Single.Parse(.Value, Globalization.NumberStyles.Float, Globalization.CultureInfo.InvariantCulture)
+                            Case Else : pie.Value = Single.Parse(.Value, NumberStyles.Float, CultureInfo.InvariantCulture)
                         End Select
                     Case Names.Double
                         Select Case .Value
                             Case "-INF" : pie.Value = Double.NegativeInfinity
                             Case "INF" : pie.Value = Double.PositiveInfinity
                             Case "NaN" : pie.Value = Double.NaN
-                            Case Else : pie.Value = Double.Parse(.Value, Globalization.NumberStyles.Float, Globalization.CultureInfo.InvariantCulture)
+                            Case Else : pie.Value = Double.Parse(.Value, NumberStyles.Float, CultureInfo.InvariantCulture)
                         End Select
                     Case Names.DateTime
-                        Dim [date] = DateTime.ParseExact(.Value, New String() {"yyyy-MM-dd'T'hh:mm:ss.ffffffff", "yyyy-MM-dd'T'hh:mm:ss.fffffff", "yyyy-MM-dd'T'hh:mm:ss.ffffff", "yyyy-MM-dd'T'hh:mm:ss.fffff", "yyyy-MM-dd'T'hh:mm:ss.ffff", "yyyy-MM-dd'T'hh:mm:ss.fff", "yyyy-MM-dd'T'hh:mm:ss.ff", "yyyy-MM-dd'T'hh:mm:ss.f", "yyyy-MM-dd'T'hh:mm:ss", "yyyy-MM-dd'T'hh:mm:ss.ffffffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.fffffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.ffffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.fffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.ffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.fff'Z'", "yyyy-MM-dd'T'hh:mm:ss.ff'Z'", "yyyy-MM-dd'T'hh:mm:ss.f'Z'", "yyyy-MM-dd'T'hh:mm:ss'Z'", "yyyy-MM-dd'T'hh:mm:ss.ffffffffzzz", "yyyy-MM-dd'T'hh:mm:ss.fffffffzzz", "yyyy-MM-dd'T'hh:mm:ss.ffffffzzz", "yyyy-MM-dd'T'hh:mm:ss.fffffzzz", "yyyy-MM-dd'T'hh:mm:ss.ffffzzz", "yyyy-MM-dd'T'hh:mm:ss.fffzzz", "yyyy-MM-dd'T'hh:mm:ss.ffzzz", "yyyy-MM-dd'T'hh:mm:ss.fzzz", "yyyy-MM-dd'T'hh:mm:sszzz"}, Globalization.CultureInfo.InvariantCulture, Globalization.DateTimeStyles.AllowLeadingWhite Or Globalization.DateTimeStyles.AllowTrailingWhite)
+                        Dim [date] = DateTime.ParseExact(.Value, New String() {"yyyy-MM-dd'T'hh:mm:ss.ffffffff", "yyyy-MM-dd'T'hh:mm:ss.fffffff", "yyyy-MM-dd'T'hh:mm:ss.ffffff", "yyyy-MM-dd'T'hh:mm:ss.fffff", "yyyy-MM-dd'T'hh:mm:ss.ffff", "yyyy-MM-dd'T'hh:mm:ss.fff", "yyyy-MM-dd'T'hh:mm:ss.ff", "yyyy-MM-dd'T'hh:mm:ss.f", "yyyy-MM-dd'T'hh:mm:ss", "yyyy-MM-dd'T'hh:mm:ss.ffffffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.fffffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.ffffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.fffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.ffff'Z'", "yyyy-MM-dd'T'hh:mm:ss.fff'Z'", "yyyy-MM-dd'T'hh:mm:ss.ff'Z'", "yyyy-MM-dd'T'hh:mm:ss.f'Z'", "yyyy-MM-dd'T'hh:mm:ss'Z'", "yyyy-MM-dd'T'hh:mm:ss.ffffffffzzz", "yyyy-MM-dd'T'hh:mm:ss.fffffffzzz", "yyyy-MM-dd'T'hh:mm:ss.ffffffzzz", "yyyy-MM-dd'T'hh:mm:ss.fffffzzz", "yyyy-MM-dd'T'hh:mm:ss.ffffzzz", "yyyy-MM-dd'T'hh:mm:ss.fffzzz", "yyyy-MM-dd'T'hh:mm:ss.ffzzz", "yyyy-MM-dd'T'hh:mm:ss.fzzz", "yyyy-MM-dd'T'hh:mm:sszzz"}, CultureInfo.InvariantCulture, DateTimeStyles.AllowLeadingWhite Or DateTimeStyles.AllowTrailingWhite)
                         If .Value.EndsWith("Z"c) Then [date] = New DateTime([date].Year, [date].Month, [date].Day, [date].Hour, [date].Minute, [date].Second, [date].Millisecond, DateTimeKind.Utc)
                         pie.Value = [date]
                     Case Names.Null : pie.Value = Nothing
@@ -1260,7 +1271,7 @@ Namespace CodeDomT
         Private Function Enum2List(ByVal enm As [Enum]) As String
             Dim ret As New System.Text.StringBuilder
             For Each value As [Enum] In [Enum].GetValues(enm.GetType)
-                If (enm.GetValue.ToInt64(Globalization.CultureInfo.InvariantCulture) And value.GetValue.ToInt64(Globalization.CultureInfo.InvariantCulture)) = value.GetValue.ToInt64(Globalization.CultureInfo.InvariantCulture) Then
+                If (enm.GetValue.ToInt64(CultureInfo.InvariantCulture) And value.GetValue.ToInt64(CultureInfo.InvariantCulture)) = value.GetValue.ToInt64(CultureInfo.InvariantCulture) Then
                     Dim name = value.GetName
                     If Not name.EndsWith("Mask") Then
                         If ret.Length <> 0 Then ret.Append(" ")

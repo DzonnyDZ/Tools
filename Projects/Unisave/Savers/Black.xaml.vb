@@ -1,7 +1,8 @@
-﻿Imports <xmlns:black="clr-namespace:Tools.Unisave;assembly=Unisave#BlackSaver">
+﻿Imports System.Windows.Forms
+Imports NumberStyles = System.Globalization.NumberStyles
 Imports System.Globalization.CultureInfo
-Imports System.Windows.Forms
 Imports Tools.WindowsT.InteropT
+Imports <xmlns:black="clr-namespace:Tools.Unisave;assembly=Unisave#BlackSaver">
 
 ''' <summary>Single color saver part</summary>
 Public Class BlackSaver
@@ -33,7 +34,7 @@ Public Class BlackSaver
     ''' <param name="settings">An XML element to load settings from</param>
     Public Overrides Sub LoadSettings(settings As System.Xml.Linq.XElement)
         If settings.@<black:background-color> IsNot Nothing Then
-            BackgroundColor = ColorFromArgb(Integer.Parse(settings.@<black:background-color>, Globalization.NumberStyles.HexNumber, InvariantCulture))
+            BackgroundColor = ColorFromArgb(Integer.Parse(settings.@<black:background-color>, NumberStyles.HexNumber, InvariantCulture))
         End If
     End Sub
 

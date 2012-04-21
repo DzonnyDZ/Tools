@@ -1,8 +1,11 @@
-﻿Imports System.ComponentModel, System.Linq, Tools.ExtensionsT
-Imports System.Runtime.InteropServices
+﻿Imports System.ComponentModel
+Imports System.Linq
 Imports System.Runtime.CompilerServices
-Imports Tools.ComponentModelT
+Imports System.Runtime.InteropServices
+Imports CultureInfo = System.Globalization.CultureInfo
 Imports Microsoft.Win32.SafeHandles
+Imports Tools.ComponentModelT
+Imports Tools.ExtensionsT
 
 #If Config <= Nightly Then 'Stage: Nighlty
 Namespace DevicesT.RawInputT
@@ -867,13 +870,13 @@ Namespace DevicesT.RawInputT
         ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="RawDeviceName" />.</returns>
         ''' <remarks>This function uses the G format.</remarks>
         Public Overrides Function ToString() As String
-            Return String.Format(Globalization.CultureInfo.InvariantCulture, "\\?\{0}#{1}#{2}#{3:B}", ClassCode, SubClassCode, ProtocolCode, ClassGuid)
+            Return String.Format(CultureInfo.InvariantCulture, "\\?\{0}#{1}#{2}#{3:B}", ClassCode, SubClassCode, ProtocolCode, ClassGuid)
         End Function
         ''' <summary>Formats the value of the current instance using the specified format.</summary>
         ''' <returns>A <see cref="T:System.String" /> containing the value of the current instance in the specified format.</returns>
         ''' <param name="format">The <see cref="T:System.String" /> specifying the format to use. -or-
         ''' null to use the default format defined for the type of the <see cref="T:System.IFormattable" /> implementation.</param>
-        ''' <param name="formatProvider">Ignored. This class always uses <see cref="Globalization.CultureInfo.InvariantCulture"/> as both formats must be culture invariant.</param>
+        ''' <param name="formatProvider">Ignored. This class always uses <see cref="CultureInfo.InvariantCulture"/> as both formats must be culture invariant.</param>
         ''' <remarks>Suported formats are
         ''' <list type="table"><listheader><term>Format string</term><description>Result</description></listheader>
         ''' <item><term>null or an empty string</term><description>G is used</description></item>
@@ -890,7 +893,7 @@ Namespace DevicesT.RawInputT
             If format Is Nothing OrElse format = "" OrElse format = "G" OrElse format = "g" Then
                 Return Me.ToString
             ElseIf format = "R" OrElse format = "r" Then
-                Return String.Format(Globalization.CultureInfo.InvariantCulture, "{0}\{1}\{2}", ClassCode, SubClassCode, ProtocolCode)
+                Return String.Format(CultureInfo.InvariantCulture, "{0}\{1}\{2}", ClassCode, SubClassCode, ProtocolCode)
             Else
                 Throw New FormatException(ResourcesT.Exceptions.InvalidFormatSpecifier)
             End If

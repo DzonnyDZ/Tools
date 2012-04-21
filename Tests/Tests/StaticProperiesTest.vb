@@ -1,5 +1,7 @@
-﻿Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
-Imports System.Reflection
+﻿Imports System.Reflection
+Imports CultureInfo = System.Globalization.CultureInfo
+Imports CultureTypes = System.Globalization.CultureTypes
+Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 Imports Tools.ReflectionT
 Imports Tools.TestsT
 
@@ -12,9 +14,9 @@ Namespace TestsT
                 obwSelectType.Objects.Add(Reflection.Assembly.Load(asm))
             Next
             tscCultures.ComboBox.DisplayMember = "DisplayName"
-            tscCultures.Items.Add(Globalization.CultureInfo.InvariantCulture)
-            Dim selc As Globalization.CultureInfo = Nothing
-            For Each cul In Globalization.CultureInfo.GetCultures(Globalization.CultureTypes.NeutralCultures)
+            tscCultures.Items.Add(CultureInfo.InvariantCulture)
+            Dim selc As CultureInfo = Nothing
+            For Each cul In CultureInfo.GetCultures(CultureTypes.NeutralCultures)
                 tscCultures.Items.Add(cul)
                 If cul.Equals(Threading.Thread.CurrentThread.CurrentUICulture) Then selc = cul
             Next

@@ -1,6 +1,9 @@
-﻿Imports Tools.ComponentModelT, Tools.ExtensionsT, System.Globalization.CultureInfo, System.Linq
+﻿Imports System.Globalization.CultureInfo
+Imports CultureInfo = System.Globalization.CultureInfo
+Imports NumberStyles = System.Globalization.NumberStyles
+Imports Tools.ComponentModelT
+Imports Tools.ExtensionsT
 Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
-Imports System.Xml.Linq
 
 Namespace TextT.UnicodeT
     ''' <summary>Provides information about Emoji source</summary>
@@ -49,7 +52,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim val = Element.@docomo
                 If val.IsNullOrEmpty Then Return Nothing
-                Return Integer.Parse(val, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return Integer.Parse(val, NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 
@@ -58,7 +61,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim val = Element.@kddi
                 If val.IsNullOrEmpty Then Return Nothing
-                Return Integer.Parse(val, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return Integer.Parse(val, NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 
@@ -67,7 +70,7 @@ Namespace TextT.UnicodeT
             Get
                 Dim val = Element.@softbank
                 If val.IsNullOrEmpty Then Return Nothing
-                Return Integer.Parse(val, Globalization.NumberStyles.HexNumber, InvariantCulture)
+                Return Integer.Parse(val, NumberStyles.HexNumber, InvariantCulture)
             End Get
         End Property
 

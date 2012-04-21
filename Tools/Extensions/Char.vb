@@ -1,5 +1,8 @@
-﻿Imports System.Runtime.CompilerServices
-Imports System.Globalization
+﻿Imports System.Globalization
+Imports System.Runtime.CompilerServices
+Imports CultureInfo = System.Globalization.CultureInfo
+Imports UnicodeCategory = System.Globalization.UnicodeCategory
+
 #If Config <= RC Then 'Stage: RC
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.Char"/></summary>
@@ -13,11 +16,11 @@ Namespace ExtensionsT
         <Extension()> Public Function NumericValue(ByVal c As Char) As Double
             Return Char.GetNumericValue(c)
         End Function
-        ''' <summary>Categorizes a specified Unicode character into a group identified by one of the <see cref="System.Globalization.UnicodeCategory" /> values.</summary>
+        ''' <summary>Categorizes a specified Unicode character into a group identified by one of the <see cref="System.UnicodeCategory" /> values.</summary>
         ''' <param name="c">A Unicode character.</param>
-        ''' <returns>A <see cref="System.Globalization.UnicodeCategory" /> value that identifies the group that contains c.</returns>
+        ''' <returns>A <see cref="System.UnicodeCategory" /> value that identifies the group that contains c.</returns>
         ''' <seealso cref="System.Char.GetUnicodeCategory"/>
-        <Extension()> Public Function UnicodeCategory(ByVal c As Char) As Globalization.UnicodeCategory
+        <Extension()> Public Function UnicodeCategory(ByVal c As Char) As UnicodeCategory
             Return Char.GetUnicodeCategory(c)
         End Function
         ' ''' <summary>Gets generalized Unicode category of character</summary>
@@ -128,7 +131,7 @@ Namespace ExtensionsT
         End Function
         ''' <summary>Converts the value of a specified Unicode character to its lowercase equivalent using specified culture-specific formatting information.</summary>
         ''' <param name="c">A Unicode character.</param>
-        ''' <param name="culture">A <see cref="System.Globalization.CultureInfo" /> object that supplies culture-specific casing rules, or null.</param>
+        ''' <param name="culture">A <see cref="System.CultureInfo" /> object that supplies culture-specific casing rules, or null.</param>
         ''' <returns>The lowercase equivalent of c, modified according to culture, or the unchanged value of c, if c is already lowercase or not alphabetic.</returns>
         ''' <exception cref="System.ArgumentNullException">culture is null.</exception>
         ''' <seealso cref="System.Char.ToLower"/>
@@ -151,7 +154,7 @@ Namespace ExtensionsT
         End Function
         ''' <summary>Converts the value of a specified Unicode character to its uppercase equivalent using specified culture-specific formatting information.</summary>
         ''' <param name="c">A Unicode character.</param>
-        ''' <param name="culture">A <see cref="System.Globalization.CultureInfo" /> object that supplies culture-specific casing rules, or null.</param>
+        ''' <param name="culture">A <see cref="System.CultureInfo" /> object that supplies culture-specific casing rules, or null.</param>
         ''' <returns>The uppercase equivalent of c, modified according to culture, or the unchanged value of c, if c is already uppercase or not alphabetic.</returns>
         ''' <exception cref="System.ArgumentNullException">culture is null.</exception>
         ''' <seealso cref="System.Char.ToUpper"/>

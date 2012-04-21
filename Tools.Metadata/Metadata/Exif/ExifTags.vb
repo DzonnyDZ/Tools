@@ -3418,18 +3418,18 @@ Namespace MetadataT.ExifT
 			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
 			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
 			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
-			<DisplayName("GPS dest. distance ref"), Category("GPS"), Description("Reference for distance to destination")> _
-			Public Property GPSDestDistanceRef As Char
-				Get
-					Dim value As ExifRecord = Record(Tags.GPSDestDistanceRef)
-					If value Is Nothing Then Return Nothing Else Return value.Data
-				End Get
-				Set
-					If value IsNot Nothing Then
-						Records(Tags.GPSDestDistanceRef) = New ExifRecord(TagFormat(Tags.GPSDestDistanceRef), value, False)
-					Else : Records(Tags.GPSDestDistanceRef) = Nothing : End If
-				End Set
-			End Property
+        <DisplayName("GPS dest. distance ref"), Category("GPS"), Description("Reference for distance to destination")> _
+        Public Property GPSDestDistanceRef As Char?
+            Get
+                Dim value As ExifRecord = Record(Tags.GPSDestDistanceRef)
+                If value Is Nothing Then Return Nothing Else Return value.Data
+            End Get
+            Set(value As Char?)
+                If Value IsNot Nothing Then
+                    Records(Tags.GPSDestDistanceRef) = New ExifRecord(TagFormat(Tags.GPSDestDistanceRef), Value, False)
+                Else : Records(Tags.GPSDestDistanceRef) = Nothing : End If
+            End Set
+        End Property
 			''' <summary>Distance to destination</summary>
 			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
 			<DisplayName("GPS dest. distance"), Category("GPS"), Description("Distance to destination")> _

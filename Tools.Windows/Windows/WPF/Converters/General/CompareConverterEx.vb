@@ -1,9 +1,9 @@
-﻿Imports Tools.TypeTools, Tools.ReflectionT, Tools.ExtensionsT
-Imports System.ComponentModel, System.Linq
-Imports System.Security
-Imports System.Numerics
-Imports System.Net, Tools.WindowsT.InteropT
+﻿Imports System.Numerics
 Imports System.Windows.Data
+Imports NumberStyles = System.Globalization.NumberStyles
+Imports Tools.ExtensionsT
+Imports Tools.ReflectionT
+Imports Tools.TypeTools
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.ConvertersT
@@ -137,37 +137,37 @@ SkipQuotes:
                     Try
                         If TypeOf value Is Integer Then
                             Dim ival As Integer
-                            If Integer.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Integer)(value), DirectCast(value, Integer)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If Integer.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Integer)(value), DirectCast(value, Integer)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is UInteger Then
                             Dim ival As UInteger
-                            If UInteger.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of UInteger)(value), DirectCast(value, UInteger)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If UInteger.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of UInteger)(value), DirectCast(value, UInteger)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is Short Then
                             Dim ival As Short
-                            If Short.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Short)(value), DirectCast(value, Short)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If Short.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Short)(value), DirectCast(value, Short)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is UShort Then
                             Dim ival As UShort
-                            If UShort.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of UShort)(value), DirectCast(value, UShort)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If UShort.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of UShort)(value), DirectCast(value, UShort)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is Byte Then
                             Dim ival As Byte
-                            If Byte.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Byte)(value), DirectCast(value, Byte)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If Byte.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Byte)(value), DirectCast(value, Byte)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is SByte Then
                             Dim ival As SByte
-                            If SByte.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of SByte)(value), DirectCast(value, SByte)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If SByte.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of SByte)(value), DirectCast(value, SByte)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is UShort Then
                             Dim ival As ULong
-                            If ULong.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of ULong)(value), DirectCast(value, ULong)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If ULong.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of ULong)(value), DirectCast(value, ULong)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is Long Then
                             Dim ival As Long
-                            If Long.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Long)(value), DirectCast(value, Long)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If Long.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Long)(value), DirectCast(value, Long)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is Single Then
                             Dim ival As Single
-                            If Single.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Single)(value), DirectCast(value, Single)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If Single.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Single)(value), DirectCast(value, Single)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is Double Then
                             Dim ival As Double
-                            If Double.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Double)(value), DirectCast(value, Double)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If Double.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Double)(value), DirectCast(value, Double)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is Decimal Then
                             Dim ival As Decimal
-                            If Decimal.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Decimal)(value), DirectCast(value, Decimal)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If Decimal.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Decimal)(value), DirectCast(value, Decimal)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is DateTime Then
                             Dim ival As DateTime
                             If DateTime.TryParse(compVal, culture, Globalization.DateTimeStyles.AllowInnerWhite, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of DateTime)(value), DirectCast(value, DateTime)).CompareTo(ival) Else ret = False : GoTo [return]
@@ -188,13 +188,13 @@ SkipQuotes:
                             If Boolean.TryParse(compVal, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of Boolean)(value), DirectCast(value, Boolean)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf TypeOf value Is IntPtr Then
                             Dim ival As Long
-                            If Long.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of IntPtr)(value), DirectCast(value, IntPtr)).ToInt64.CompareTo(ival) Else Return False
+                            If Long.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of IntPtr)(value), DirectCast(value, IntPtr)).ToInt64.CompareTo(ival) Else Return False
                         ElseIf TypeOf value Is UIntPtr Then
                             Dim ival As ULong
-                            If ULong.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of UIntPtr)(value), DirectCast(value, UIntPtr)).ToUInt64.CompareTo(ival) Else Return False
+                            If ULong.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of UIntPtr)(value), DirectCast(value, UIntPtr)).ToUInt64.CompareTo(ival) Else Return False
                         ElseIf TypeOf value Is BigInteger Then
                             Dim ival As BigInteger = BigInteger.Zero
-                            If BigInteger.TryParse(compVal, Globalization.NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of BigInteger)(value), DirectCast(value, BigInteger)).CompareTo(ival) Else ret = False : GoTo [return]
+                            If BigInteger.TryParse(compVal, NumberStyles.Any, culture, ival) Then res = If(DynamicCastAllowed, DynamicCast(Of BigInteger)(value), DirectCast(value, BigInteger)).CompareTo(ival) Else ret = False : GoTo [return]
                         ElseIf op = "=" Then : ret = value.Equals(compVal) : GoTo [return]
                         ElseIf op = "===" Then : ret = (value.GetType.IsAssignableFrom(compVal.GetType) OrElse compVal.GetType.IsAssignableFrom(value.GetType)) AndAlso value.Equals(compVal) : GoTo [return]
                         ElseIf op = "<>" Then : ret = Not value.Equals(compVal) : GoTo [return]

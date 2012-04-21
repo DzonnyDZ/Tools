@@ -1,4 +1,6 @@
+Imports CultureInfo = System.Globalization.CultureInfo
 Imports Tools.ResourcesT
+
 Namespace ResourcesT
     Public Class frmSystemResources
         ''' <summary>Show test form</summary>
@@ -40,8 +42,8 @@ Namespace ResourcesT
 
         Private Sub cmdAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAll.Click
             Dim b As New System.Text.StringBuilder
-            Dim oldC As Globalization.CultureInfo = Threading.Thread.CurrentThread.CurrentUICulture
-            Threading.Thread.CurrentThread.CurrentUICulture = Globalization.CultureInfo.InvariantCulture  'New Globalization.CultureInfo("en-US")
+            Dim oldC As CultureInfo = Threading.Thread.CurrentThread.CurrentUICulture
+            Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture  'New CultureInfo("en-US")
             Try
                 For Each kName As String In SystemResources.KeyNames
                     Dim Key As String = SystemResources.Key(kName)

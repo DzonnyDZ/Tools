@@ -349,6 +349,7 @@ Namespace NumericsT
         'End Operator
 #End Region
 #End Region
+#End Region
 
 #Region "Parse"
         ''' <summary>Converts <see cref="String"/> to <see cref="URational"/></summary>

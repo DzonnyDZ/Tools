@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports CultureInfo = System.Globalization.CultureInfo
 
 Namespace ExtensionsT
 #If Config <= Nightly Then 'Stage:Nightly
@@ -59,17 +60,17 @@ Namespace ExtensionsT
         ''' <remarks>This method does not allow formatting, so "{{" gets to output as "{{" and "}}" as "}}".</remarks>
         <Extension()> _
         Public Function CEscape(ByVal str As String) As String
-            Return CFormat(Globalization.CultureInfo.CurrentCulture, str, New Object() {}, False)
+            Return CFormat(CultureInfo.CurrentCulture, str, New Object() {}, False)
         End Function
         ''' <summary>Formats and escape string according to rules described for <see cref="StringFormatting"/></summary>
         ''' <param name="str">Formatting string</param>
         ''' <param name="Args">Objects to format</param>
         ''' <returns>String formatted</returns>
         ''' <exception cref="FormatException"><paramref name="str"/> is invalid format string</exception>
-        ''' <remarks>This method uses <see cref="Globalization.CultureInfo.CurrentCulture"/></remarks>
+        ''' <remarks>This method uses <see cref="CultureInfo.CurrentCulture"/></remarks>
         <Extension()> _
         Public Function CFormat(ByVal str As String, ByVal ParamArray Args As Object()) As String
-            Return CFormat(str, Globalization.CultureInfo.CurrentCulture, Args)
+            Return CFormat(str, CultureInfo.CurrentCulture, Args)
         End Function
         ''' <summary>Fine State Automaton states for string formatting and escaping</summary>
         Private Enum CFormatFSA
@@ -110,7 +111,7 @@ Namespace ExtensionsT
         ''' <returns>String formatted</returns>
         ''' <exception cref="FormatException"><paramref name="str"/> contains invalid format string</exception>
         Private Function CFormat(ByVal provider As IFormatProvider, ByVal str As String, ByVal args As Object(), ByVal format As Boolean) As String
-            If provider Is Nothing Then provider = Globalization.CultureInfo.CurrentCulture
+            If provider Is Nothing Then provider = CultureInfo.CurrentCulture
             If str = "" Then Return ""
             If args Is Nothing Then args = New Object() {}
             Dim ret As New System.Text.StringBuilder

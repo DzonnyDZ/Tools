@@ -463,6 +463,25 @@
     <None Include="Reflection\Resources\ValueType.png" />
     <None Include="Reflection\Resources\Attribute.png" />
     <None Include="Resources\Images\play.png" />
+    <EmbeddedResource Include="Numerics\AngleFormatInfo.resx">
+      <LogicalName>Tools.GlobalizationT.AngleFormatInfo.resources</LogicalName>
+    </EmbeddedResource>
+
+      <EmbeddedResource Include="Numerics\AngleFormatInfo.cs.resx">
+          <DependentUpon>AngleFormatInfo.resx</DependentUpon>
+          <LogicalName>Tools.GlobalizationT.AngleFormatInfo.cs.resources</LogicalName>
+      </EmbeddedResource>
+
+      <EmbeddedResource Include="Numerics\AngleFormatInfo.de.resx">
+          <DependentUpon>AngleFormatInfo.resx</DependentUpon>
+          <LogicalName>Tools.GlobalizationT.AngleFormatInfo.de.resources</LogicalName>
+      </EmbeddedResource>
+
+      <EmbeddedResource Include="Numerics\AngleFormatInfo.el.resx">
+          <DependentUpon>AngleFormatInfo.resx</DependentUpon>
+          <LogicalName>Tools.GlobalizationT.AngleFormatInfo.el.resources</LogicalName>
+      </EmbeddedResource>
+      
     <EmbeddedResource Include="Text\Encoding\ISO2022.xml">
       <DependentUpon>ISO2022.vb</DependentUpon>
       <LogicalName>Tools.TextT.EncodingT.ISO2022.xml</LogicalName>

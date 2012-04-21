@@ -7,6 +7,8 @@ Imports Tools.ComponentModelT
 Imports System.Reflection, System.Drawing
 Imports Icons = Tools.ResourcesT.Icons, Tools.TypeTools
 Imports Tools.DrawingT
+Imports CultureInfo = System.Globalization.CultureInfo
+Imports NumberStyles = System.Globalization.NumberStyles
 
 #If Config <= Beta Then 'Stage Beta
 Imports System.Windows.Forms
@@ -1822,7 +1824,7 @@ Namespace WindowsT.IndependentT
             ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
             ''' <param name="value">Value to be converted to type <see cref="MessageBoxOptions"/></param>
             ''' <returns>Value of type <see cref="MessageBoxOptions"/> initialized by <paramref name="value"/></returns>
-            Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As MessageBoxOptions
+            Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As String) As MessageBoxOptions
                 Return FlagsFromString(Of MessageBoxOptions)(value)
             End Function
 
@@ -1839,14 +1841,14 @@ Namespace WindowsT.IndependentT
                     Case MessageBoxOptions.AlignLeft : ret = "AlignLeft"
                     Case MessageBoxOptions.AlignRight : ret = "AlignRight"
                 End Select
-                ret &= Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator
+                ret &= CultureInfo.CurrentCulture.TextInfo.ListSeparator
                 If (value And MessageBoxOptions.Rtl) = MessageBoxOptions.Ltr Then
                     ret &= "Ltr"
                 Else
                     ret &= "Rtl"
                 End If
                 If (value And MessageBoxOptions.BringToFront) = MessageBoxOptions.BringToFront Then _
-                    ret &= Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator & "BringToFront"
+                    ret &= CultureInfo.CurrentCulture.TextInfo.ListSeparator & "BringToFront"
                 Return ret
             End Function
         End Class

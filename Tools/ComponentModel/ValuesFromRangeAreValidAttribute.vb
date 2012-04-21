@@ -1,4 +1,6 @@
-﻿Imports Tools.ExtensionsT
+﻿Imports CultureInfo = System.Globalization.CultureInfo
+Imports Tools.ExtensionsT
+
 #If Config <= Nightly Then
 Namespace ComponentModelT
     ''' <summary>For enumeration this attribute is applied onto indicates which additional values that are not member of enumeration are valid enumeration values</summary>
@@ -64,11 +66,11 @@ Namespace ComponentModelT
         ''' <remarks>If <paramref name="Value"/> is greater than <see cref="Int64.MaxValue"/> attribute testing is skipped.</remarks>
         Public Shared Function IsValidValue(ByVal Value As [Enum]) As Boolean
             If Value.IsDefined Then Return True
-            If [Enum].GetUnderlyingType(Value.GetType).Equals(GetType(ULong)) AndAlso Value.GetValue.ToUInt64(Globalization.CultureInfo.InvariantCulture) > CULng(Long.MaxValue) Then Return False
+            If [Enum].GetUnderlyingType(Value.GetType).Equals(GetType(ULong)) AndAlso Value.GetValue.ToUInt64(CultureInfo.InvariantCulture) > CULng(Long.MaxValue) Then Return False
             Dim Attributes = Value.GetType.GetAttributes(Of ValuesFromRangeAreValidAttribute)()
             If Attributes Is Nothing Then Return False
             For Each Attribute In Attributes
-                If Value.GetValue.ToInt64(Globalization.CultureInfo.InstalledUICulture) >= Attribute.Min AndAlso Value.GetValue.ToInt64(Globalization.CultureInfo.InstalledUICulture) <= Attribute.Max Then Return True
+                If Value.GetValue.ToInt64(CultureInfo.InstalledUICulture) >= Attribute.Min AndAlso Value.GetValue.ToInt64(CultureInfo.InstalledUICulture) <= Attribute.Max Then Return True
             Next
             Return False
         End Function

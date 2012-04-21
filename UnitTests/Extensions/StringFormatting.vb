@@ -1,8 +1,6 @@
-﻿Imports System.Collections
-Imports System.Collections.Generic
+﻿Imports Globalization = System.Globalization
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Tools.ExtensionsT
-
 
 Namespace ExtensionsUT
     <TestClass()> _

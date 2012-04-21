@@ -1,4 +1,6 @@
-﻿'Attributes used mainly internally by ĐTools are defined here
+﻿Imports CultureInfo = System.Globalization.CultureInfo
+
+'Attributes used mainly internally by ĐTools are defined here
 #If Config <= Release Then
 Imports System.Reflection
 Namespace InternalT
@@ -287,10 +289,10 @@ Namespace InternalT
         ''' <exception cref="System.FormatException">Value being set does not contain a valid string representation of a date and time.</exception>
         Public Property LastChange() As String
             Get
-                Return _LastChange.ToString("d", Globalization.CultureInfo.InvariantCulture)
+                Return _LastChange.ToString("d", CultureInfo.InvariantCulture)
             End Get
             Set(ByVal value As String)
-                _LastChange = Date.Parse(value, Globalization.CultureInfo.InvariantCulture)
+                _LastChange = Date.Parse(value, CultureInfo.InvariantCulture)
             End Set
         End Property
         ''' <summary>Date of last modification</summary>
@@ -361,7 +363,7 @@ Namespace InternalT
         ''' <exception cref="System.FormatException">Value being set does not contain a valid string representation of a date and time.</exception>
         Public Property FirstVerStr() As String
             Get
-                Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+                Dim c As CultureInfo = CultureInfo.InvariantCulture
                 Return FirstVersionDate.ToString(c.DateTimeFormat)
             End Get
             Private Set(ByVal value As String)
