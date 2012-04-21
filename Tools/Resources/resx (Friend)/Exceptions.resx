@@ -1480,4 +1480,7 @@
   <data name="MaximumBaseSupported" xml:space="preserve">
     <value>Maximum supported base is {0}</value>
   </data>
+  <data name="ValueCannotBeNaNOrInfinity" xml:space="preserve">
+    <value>Value cannot be NaN or infinity</value>
+  </data>
 </root>

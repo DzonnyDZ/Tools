@@ -9,50 +9,63 @@ Imports System.Globalization
 #If Config <= Alpha Then 'Stage: Alpha
 Namespace NumericsT
     ''' <summary>Represents angle or time (such as GPS coordinates)</summary>
-    <StructLayout(LayoutKind.Sequential)>
+    ''' <remarks>This class provides common methods for working with angles and it provides angle-specific string formatting</remarks>
+    ''' <version version="1.5.4">This structure is new in version 1.5.4</version>
+    <StructLayout(LayoutKind.Sequential), Serializable()>
     Public Structure Angle
         Implements IFormattable
-
+        ''' <summary>Angle value in degrees</summary>
         Private _value As Double
 
 #Region "Basic properties"
-
+        ''' <summary>Gets number of whole degrees of this angle</summary>
         Public ReadOnly Property Degrees As Integer
             Get
                 Return Math.Floor(_value)
             End Get
         End Property
 
+        ''' <summary>Gets number of whole minutes of this angle. The value exludes <see cref="Degrees"/></summary>
+        ''' <remarks>Each degree has 60 minutes</remarks>
         Public ReadOnly Property Minutes As Integer
             Get
                 Return Math.Floor((_value - Degrees) * 60.0#)
             End Get
         End Property
+
+        ''' <summary>Gets number of seconds of this angle. The value excludes <see cref="Degrees"/> and <see cref="Minutes"/></summary>
+        ''' <remarks>Each minute has 60 seconds</remarks>
         Public ReadOnly Property Seconds As Double
             Get
                 Return ((_value - Degrees) * 60.0# - Minutes) * 60.0#
             End Get
         End Property
 
-
+        ''' <summary>Gets total number of degrees in this angle</summary>
         Public ReadOnly Property TotalDegrees As Double
             Get
                 Return _value
             End Get
         End Property
 
+        ''' <summary>Gets total number of minutes in this angle (including <see cref="Degrees"/>)</summary>
+        ''' <remarks>Each degree has 60 minutes</remarks>
         Public ReadOnly Property TotalMinutes As Double
             Get
                 Return _value * 60.0#
             End Get
         End Property
 
+        ''' <summary>Gets total number of seconds in this nagle (including <see cref="Degrees"/> and <see cref="Minutes"/>)</summary>
+        ''' <remarks>Each minute has 60 seconds</remarks>
         Public ReadOnly Property TotalSeconds As Double
             Get
                 Return _value * 60.0# * 60.0#
             End Get
         End Property
 
+        ''' <summary>Gets number of rotations this angle represents</summary>
+        ''' <remarks>Each rotation is 360 degrees</remarks>
         Public ReadOnly Property Rotations As Double
             Get
                 Return _value / 360.0#
@@ -61,67 +74,127 @@ Namespace NumericsT
 #End Region
 
 #Region "Conversion"
+        ''' <summary>Gets value of this angle as degrees</summary>
+        ''' <returns><see cref="Degrees"/></returns>
         Public Function ToDegrees#()
             Return _value
         End Function
+        ''' <summary>Gets value as this angle as radians</summary>
+        ''' <returns>Value of this angle in radisna</returns>
+        ''' <remarks>360 degrees is 2*π radians</remarks>
         Public Function ToRadians#()
             Return _value * (Math.PI / 180.0#)
         End Function
+        ''' <summary>Creates an <see cref="Angle"/> value form degrees</summary>
+        ''' <param name="value">Number of degrees for new angle</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="value"/> degrees.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
         Public Shared Function FromDegrees(value#) As Angle
             Return New Angle(value)
         End Function
+        ''' <summary>Creates an <see cref="Angle"/> value from radians</summary>
+        ''' <param name="value">Angle in radians</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to equivalent of <paramref name="value"/> radians</returns>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <remarks>360 degrees is 2*π radians</remarks>
         Public Shared Function FromRadians(value#) As Angle
             Return New Angle(value * (180.0# / Math.PI))
         End Function
+        ''' <summary>Creates an <see cref="Angle"/> value from rotations</summary>
+        ''' <param name="value">Number of raotations</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to equivalent of <paramref name="value"/> rotations</returns>
+        ''' <remarks>One rotation is 360 degrees</remarks>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
         Public Shared Function FromRotations(value#) As Angle
             Return New Angle(value / 360.0#)
         End Function
+        ''' <summary>Gets value of this angle in gradians (grads)</summary>
+        ''' <returns>Value of this angle in gradians (grads)</returns>
+        ''' <remarks>360 degrees is 400 grads</remarks>
         Public Function ToGradians#()
             Return Rotations * 400.0#
         End Function
+        ''' <summary>Creates an <see cref="Angle"/> value from gradians (grads)</summary>
+        ''' <param name="value">Angle in grads</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to equaivalent of <paramref name="value"/> gradians</returns>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <remarks>100 gradians is 90 degrees</remarks>
         Public Shared Function FromGradians(value#) As Angle
             Return FromRotations(value / 400.0#)
+        End Function
+        ''' <summary>Gets value of this angle in rotations</summary>
+        ''' <returns>Value of this angle in rotations</returns>
+        ''' <remarks>One rotation is 360 degrees</remarks>
+        Public Function ToRotations() As Double
+            Return Rotations
         End Function
 #End Region
 
 #Region "Values"
+        ''' <summary>A zero angle (0°)</summary>
         Public Shared ReadOnly zero As New Angle(0)
+        ''' <summary>Positive right angle (90°)</summary>
         Public Shared ReadOnly right As New Angle(90)
+        ''' <summary>Straight angle (180°)</summary>
         Public Shared ReadOnly straing As New Angle(180)
+        ''' <summary>Full angle (one rotation; 360°)</summary>
         Public Shared ReadOnly full As New Angle(360)
 #End Region
 
 #Region "CTors"
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> structure from degrees as <see cref="Single"/></summary>
+        ''' <param name="value">Number of degrees</param>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
         Public Sub New(value As Single)
-            If Single.IsNaN(value) OrElse Single.IsInfinity(value) Then Throw New ArgumentException("Value cannot be NaN or infinity", "value")
+            If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "value")
             _value = value
         End Sub
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> structure from degrees as <see cref="Double"/></summary>
+        ''' <param name="value">Number of degrees</param>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
         Public Sub New(value As Double)
-            If Double.IsNaN(value) OrElse Double.IsInfinity(value) Then Throw New ArgumentException("Value cannot be NaN or infinity", "value")
+            If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "value")
             _value = value
         End Sub
 
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> structure from degrees as <see cref="Decimal"/></summary>
+        ''' <param name="value">Number of degrees</param>
         Public Sub New(value As Decimal)
             _value = value
         End Sub
 
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> structure from degrees as <see cref="Integer"/></summary>
+        ''' <param name="value">Number of degrees</param>
         Public Sub New(value As Integer)
             _value = value
         End Sub
 
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second</summary>
+        ''' <param name="degrees">Number of degrees</param>
+        ''' <param name="minutes">Number of minutes</param>
+        ''' <param name="second">Number of second</param>
+        ''' <exception cref="ArgumentException"><paramref name="second"/> is NaN or infinity</exception>
         Public Sub New(degrees As Integer, minutes As Integer, second As Double)
+            If second.IsNaN OrElse second.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "second")
             _value = CDbl(degrees) + CDbl(minutes) / 60.0# + second / 60.0# / 60.0#
         End Sub
 #End Region
 
 #Region "Methods"
+        ''' <summary>Creates a new instance of <see cref="Angle"/> that has value between 0° (inclusive) and 360° (exclusive)</summary>
+        ''' <returns>An <see cref="Angle"/> that represents same azimuth and has value in range &lt;0°, 360°)</returns>
         Public Function Normalize() As Angle
             Dim angle = _value
             If angle <= 0.0# Then angle = 360.0# - angle
             Return angle Mod 360.0#
         End Function
 
+        ''' <summary>Creates a new instance of <see cref="Angle"/> that has value in certain range</summary>
+        ''' <param name="maxAngle">Maximum allowed (exclusive) angle value</param>
+        ''' <returns>An <see cref="Angle"/> that represents same azimuth and has value in range &lt;<paramref name="maxAngle"/>-360, <paramref name="maxAngle"/>)</returns>
+        ''' <exception cref="ArgumentException"><paramref name="maxAngle"/> is NaN or infinity</exception>
         Public Function Normalize(maxAngle As Double) As Angle
+            If maxAngle.IsNaN OrElse maxAngle.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "maxAngle")
             Dim angle = Normalize._value
             If angle > maxAngle Then Return angle - ((angle - maxAngle) \ 360) * 360 - 360.0#
             If angle < maxAngle - 360 Then Return angle + ((maxAngle - 360 - angle) \ 360) * 360 + 360.0#
@@ -159,11 +232,11 @@ Namespace NumericsT
             Return a.TotalDegrees
         End Operator
 
-        Public Shared Widening Operator CType(a As Angle) As Single
+        Public Shared Narrowing Operator CType(a As Angle) As Single
             Return a.TotalDegrees
         End Operator
 
-        Public Shared Widening Operator CType(a As Angle) As Decimal
+        Public Shared Narrowing Operator CType(a As Angle) As Decimal
             Return a.TotalDegrees
         End Operator
 
@@ -258,13 +331,48 @@ Namespace NumericsT
         Public Shared Operator /(a As Angle, b As Integer) As Angle
             Return New Angle(a._value / b)
         End Operator
+
+        Public Shared Operator \(a As Angle, b As Integer) As Integer
+            Return Math.Floor(a.Rotations) \ b
+        End Operator
+
+        Public Shared Operator -(a As Angle) As Angle
+            Return New Angle(-a._value)
+        End Operator
+        Public Shared Operator +(a As Angle) As Angle
+            Return a
+        End Operator
+
+
+        Public Shared Operator +(a As Angle, b As Angle) As Angle
+            Return New Angle(a._value + b._value)
+        End Operator
+        Public Shared Operator -(a As Angle, b As Angle) As Angle
+            Return New Angle(a._value - b._value)
+        End Operator
 #End Region
 #End Region
 
 #Region "Override"
+        ''' <summary>Returns the hash code for this instance.</summary>
+        ''' <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        ''' <remarks>Hash code is computed from 360-normalized value</remarks>
+        ''' <filterpriority>2</filterpriority>
         Public Overrides Function GetHashCode() As Integer
             Return Normalize._value.GetHashCode
         End Function
+        ''' <summary>Indicates whether this instance and a specified object are equal.</summary>
+        ''' <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.</returns>
+        ''' <param name="obj">Another object to compare to. </param>
+        ''' <remarks>
+        ''' <see cref="Angle"/> and <paramref name="obj"/> are considered equal if:
+        ''' <list type="list">
+        ''' <item><paramref name="obj"/> is <see cref="Angle"/> of same 360-normalized value as sthi instance</item>
+        ''' <item><paramref name="obj"/> is numeric value (all standard .NET numeric types are supported including <see cref="Decimal"/> and <see cref="Numerics.BigInteger"/>; <see cref="Char"/> is not supported)</item>
+        ''' <item><paramref name="obj"/> is <see cref="TimeSpan"/> or <see cref="TimeSpanFormattable"/> with same <see cref="TimeSpan.TotalHours"/> as <see cref="TotalDegrees"/>.</item>
+        ''' </list>
+        ''' </remarks>
+        ''' <filterpriority>2</filterpriority>
         Public Overrides Function Equals(obj As Object) As Boolean
             If TypeOf obj Is Angle Then Return Me = DirectCast(obj, Angle)
             If TypeOf obj Is Double Then Return Me = DirectCast(obj, Double)
@@ -278,6 +386,7 @@ Namespace NumericsT
             If TypeOf obj Is UShort Then Return Me = CDbl(DirectCast(obj, UShort))
             If TypeOf obj Is UInteger Then Return Me = CDbl(DirectCast(obj, UInteger))
             If TypeOf obj Is ULong Then Return Me = CDbl(DirectCast(obj, ULong))
+            If TypeOf obj Is Numerics.BigInteger Then Return CType(Me._value, Numerics.BigInteger) = DirectCast(obj, Numerics.BigInteger)
             If TypeOf obj Is TimeSpan Then Return Me = CType(DirectCast(obj, TimeSpan), Angle)
             If TypeOf obj Is TimeSpanFormattable Then Return Me = CType(DirectCast(obj, TimeSpanFormattable), Angle)
             Return False
@@ -589,8 +698,8 @@ Namespace NumericsT
                     Case FState.Normalize1 'N
                         Select Case ch
                             Case "-"c : state = FState.NormalizeMinus
-                            Case "0"c To "9"c            :value = ch.NumericValue :state = FState.Normalize
-                            Case Else                         :normalizedValue = Normalize():i -= 1 : state = FState.Normal
+                            Case "0"c To "9"c : value = ch.NumericValue : state = FState.Normalize
+                            Case Else : normalizedValue = Normalize() : i -= 1 : state = FState.Normal
                         End Select
                     Case FState.NormalizeMinus 'N-
                         Select Case ch
@@ -905,24 +1014,21 @@ Namespace NumericsT
             Public Property Meaningful As Boolean
         End Class
 #End Region
+
 #Region "Parse"
-        Public Shared Function Parse(value As String) As Angle
+        'Public Shared Function Parse(value As String) As Angle
 
-        End Function
-        Public Shared Function Parse(value As String, formatProvider As IFormatProvider)
+        'End Function
+        'Public Shared Function Parse(value As String, formatProvider As IFormatProvider)
 
-        End Function
-        Public Shared Function TryParse(value As String, <Out()> ByRef result As Angle) As Boolean
+        'End Function
+        'Public Shared Function TryParse(value As String, <Out()> ByRef result As Angle) As Boolean
 
-        End Function
-        Public Shared Function TryParse(value As String, formatProvider As IFormatProvider, <Out()> ByRef result As Angle) As Boolean
+        'End Function
+        'Public Shared Function TryParse(value As String, formatProvider As IFormatProvider, <Out()> ByRef result As Angle) As Boolean
 
-        End Function
+        'End Function
 #End Region
-
-
-
-
     End Structure
 End Namespace
 
