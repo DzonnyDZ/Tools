@@ -9,11 +9,19 @@ Imports System.Globalization
 #If Config <= Alpha Then 'Stage: Alpha
 Namespace NumericsT
     ''' <summary>Represents angle or time (such as GPS coordinates)</summary>
-    ''' <remarks>This class provides common methods for working with angles and it provides angle-specific string formatting</remarks>
+    ''' <remarks>
+    ''' This class provides common methods for working with angles and it provides angle-specific string formatting.
+    ''' <para>
+    ''' When an <see cref="Angle"/> is used as a key in <see cref="Dictionary(Of T, U)"/> or <see cref="HashSet(Of T)"/> beaware that only 360°-normalized value is provided by to a collection.
+    ''' <see cref="Angle.GetHashCode"/> works with 360°-normalized value only and <see cref="Angle.Equals"/> also compares only 360°-normalized values.
+    ''' To change this behavior use alternative comparer such as <see cref="AngleComparer.NonNormalizing"/>.
+    ''' </para>
+    ''' </remarks>
+    ''' <seelaso cref="Angle.Normalize"/>
     ''' <version version="1.5.4">This structure is new in version 1.5.4</version>
     <StructLayout(LayoutKind.Sequential), Serializable()>
     Public Structure Angle
-        Implements IFormattable
+        Implements IFormattable, IComparable(Of Angle)
         ''' <summary>Angle value in degrees</summary>
         Private _value As Double
 
@@ -139,6 +147,20 @@ Namespace NumericsT
         Public Shared ReadOnly straing As New Angle(180)
         ''' <summary>Full angle (one rotation; 360°)</summary>
         Public Shared ReadOnly full As New Angle(360)
+        ''' <summary>Largest possible negative angle</summary>
+        ''' <remarks>Equals <see cref="System.Double.MinValue"/></remarks>
+        Public Shared ReadOnly minValue As New Angle(Double.MinValue)
+        ''' <summary>Largest possible positive angle</summary>
+        ''' <remarks>Equals <see cref="System.Double.MaxValue"/></remarks>
+        Public Shared ReadOnly maxValue As New Angle(Double.MaxValue)
+        ''' <summary>An angle of 1°</summary>
+        Public Shared ReadOnly degree As New Angle(1)
+        ''' <summary>An angle of 1 rad</summary>
+        Public Shared ReadOnly radian As Angle = Angle.FromRadians(1)
+        ''' <summary>An angle of 1 grad</summary>
+        Public Shared ReadOnly gradian As Angle = Angle.FromGradians(1)
+        ''' <summary>An angle of 1π rad</summary>
+        Public Shared ReadOnly πRadians As Angle = Angle.FromGradians(Math.PI)
 #End Region
 
 #Region "CTors"
@@ -205,148 +227,357 @@ Namespace NumericsT
 #Region "Operators"
 #Region "Cast"
 #Region "From .NET types"
-
+        ''' <summary>Converts a <see cref="Double"/> value to <see cref="Angle"/></summary>
+        ''' <param name="a">Angle value in degrees</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/> degrees</returns>
+        ''' <exception cref="ArgumentException"><paramref name="a"/> is NaN or infinity</exception>
         Public Shared Widening Operator CType(a As Double) As Angle
             Return New Angle(a)
         End Operator
+        ''' <summary>Converts a <see cref="Single"/> value to <see cref="Angle"/></summary>
+        ''' <param name="a">Angle value in degrees</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/> degrees</returns>
+        ''' <exception cref="ArgumentException"><paramref name="a"/> is NaN or infinity</exception>
         Public Shared Widening Operator CType(a As Single) As Angle
             Return New Angle(a)
         End Operator
+        ''' <summary>Converts a <see cref="Double"/> value to <see cref="Angle"/></summary>
+        ''' <param name="a">Angle value in degrees</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/> degrees</returns>
         Public Shared Widening Operator CType(a As Decimal) As Angle
             Return New Angle(a)
         End Operator
+        ''' <summary>Converts a <see cref="Double"/> value to <see cref="Angle"/></summary>
+        ''' <param name="a">Angle value in degrees</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/> degrees</returns>
         Public Shared Widening Operator CType(a As Integer) As Angle
             Return New Angle(a)
         End Operator
-
+        ''' <summary>Converts a <see cref="TimeSpan"/> value to <see cref="Angle"/></summary>
+        ''' <param name="a">A <see cref="TimeSpan"/> to be converted</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/>.<see cref="TimeSpan.TotalHours">TotalHours</see> degrees</returns>
         Public Shared Widening Operator CType(a As TimeSpan) As Angle
             Return New Angle(a.TotalHours)
         End Operator
 
+        ''' <summary>Converts a <see cref="TimeSpanFormattable"/> value to <see cref="Angle"/></summary>
+        ''' <param name="a">A <see cref="TimeSpanFormattable"/> to be converted</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/>.<see cref="TimeSpanFormattable.TotalHours">TotalHours</see> degrees</returns>
         Public Shared Widening Operator CType(a As TimeSpanFormattable) As Angle
             Return New Angle(a.TotalHours)
         End Operator
 #End Region
 #Region "To .NET types"
+        ''' <summary>Converts an <see cref="Angle"/> value to <see cref="Double"/></summary>
+        ''' <param name="a">An angle value</param>
+        ''' <returns><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see></returns>
         Public Shared Widening Operator CType(a As Angle) As Double
             Return a.TotalDegrees
         End Operator
 
+        ''' <summary>Converts an <see cref="Angle"/> value to <see cref="Single"/></summary>
+        ''' <param name="a">An angle value</param>
+        ''' <returns><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> as <see cref="Single"/></returns>
+        ''' <exception cref="OverflowException"><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> is less than <see cref="System.Single.MinValue"/> or greater than <see cref="System.Single.MaxValue"/>.</exception>
         Public Shared Narrowing Operator CType(a As Angle) As Single
             Return a.TotalDegrees
         End Operator
 
+        ''' <summary>Converts an <see cref="Angle"/> value to <see cref="Decimal"/></summary>
+        ''' <param name="a">An angle value</param>
+        ''' <returns><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> as <see cref="Decimal"/></returns>
+        ''' <exception cref="OverflowException"><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/>.</exception>
         Public Shared Narrowing Operator CType(a As Angle) As Decimal
             Return a.TotalDegrees
         End Operator
 
+        ''' <summary>Converts an <see cref="Angle"/> value to <see cref="Integer"/></summary>
+        ''' <param name="a">An angle value</param>
+        ''' <returns><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> as <see cref="Integer"/></returns>
+        ''' <exception cref="OverflowException"><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> is less than <see cref="Int32.MinValue"/> or greater than <see cref="Int32.MaxValue"/> (after rounding).</exception>
         Public Shared Narrowing Operator CType(a As Angle) As Integer
             Return a.TotalDegrees
         End Operator
 
-        Public Shared Widening Operator CType(a As Angle) As TimeSpan
+        ''' <summary>Converts an <see cref="Angle"/> value to <see cref="TimeSpan"/></summary>
+        ''' <param name="a">An angle value</param>
+        ''' <returns>A new instance of <see cref="TimeSpan"/> created <see cref="TimeSpan.FromHours">from hours</see> <paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see></returns>
+        ''' <exception cref="OverflowException"><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> is less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/>.</exception>
+        Public Shared Narrowing Operator CType(a As Angle) As TimeSpan
             Return TimeSpan.FromHours(a.TotalDegrees)
         End Operator
 
-        Public Shared Widening Operator CType(a As Angle) As TimeSpanFormattable
+        ''' <summary>Converts an <see cref="Angle"/> value to <see cref="TimeSpanFormattable"/></summary>
+        ''' <param name="a">An angle value</param>
+        ''' <returns>A new instance of <see cref="TimeSpanFormattable"/> created <see cref="TimeSpanFormattable.FromHours">from hours</see> <paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see></returns>
+        ''' <exception cref="OverflowException"><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> is less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/>.</exception>
+        Public Shared Narrowing Operator CType(a As Angle) As TimeSpanFormattable
             Return TimeSpanFormattable.FromHours(a.TotalDegrees)
         End Operator
 #End Region
 #End Region
 #Region "Comparison"
+#Region "Angle"
+        ''' <summary>Compares two angle values by less-then operator</summary>
+        ''' <param name="a">An angle value to be smaller than <paramref name="b"/></param>
+        ''' <param name="b">An angle value to be greater than <paramref name="a"/></param>
+        ''' <returns>True if normalized <paramref name="a"/> is smaller than normalized <paramref name="b"/>; false othervise.</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <(a As Angle, b As Angle) As Boolean
             Return a.Normalize._value < b.Normalize._value
         End Operator
+        ''' <summary>Compares two angle values by greater-then operator</summary>
+        ''' <param name="a">An angle value to be greater than <paramref name="b"/></param>
+        ''' <param name="b">An angle value to be smaller than <paramref name="a"/></param>
+        ''' <returns>True if normalized <paramref name="a"/> is greater than normalized <paramref name="b"/>; false othervise.</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >(a As Angle, b As Angle) As Boolean
             Return a.Normalize._value > b.Normalize._value
         End Operator
+        ''' <summary>Tests if one angle is less than or equal to another angle</summary>
+        ''' <param name="a">An angle value</param>
+        ''' <param name="b">An angle value</param>
+        ''' <returns>True if normalized <paramref name="a"/> is less than or equal to normalized <paramref name="b"/>; false othervise.</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <=(a As Angle, b As Angle) As Boolean
             Return a.Normalize._value <= b.Normalize._value
         End Operator
+        ''' <summary>Tests if one angle is greater than or equal to another angle</summary>
+        ''' <param name="a">An angle value</param>
+        ''' <param name="b">An angle value</param>
+        ''' <returns>True if normalized <paramref name="a"/> is greater than or equal to normalized <paramref name="b"/>; false othervise.</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >=(a As Angle, b As Angle) As Boolean
             Return a.Normalize._value >= b.Normalize._value
         End Operator
+        ''' <summary>Tests if two angles represents the same normalized angle</summary>
+        ''' <param name="a">An angle value</param>
+        ''' <param name="b">An angle value</param>
+        ''' <returns>True if normalized <paramref name="a"/> is equal to normalized <paramref name="b"/>; false othervise.</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator =(a As Angle, b As Angle) As Boolean
             Return a.Normalize._value = b.Normalize._value
         End Operator
+        ''' <summary>Tests if two angles represents different normalized angles</summary>
+        ''' <param name="a">An angle value</param>
+        ''' <param name="b">An angle value</param>
+        ''' <returns>True if normalized <paramref name="a"/> is differs from normalized <paramref name="b"/>; false othervise.</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <>(a As Angle, b As Angle) As Boolean
             Return a.Normalize._value <> b.Normalize._value
         End Operator
+#End Region
 
+#Region "Double"
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is smaller than another angle given as <see cref="Double"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is smaller than <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <(a As Angle, b As Double) As Boolean
             Return a.Normalize._value < CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is greater than another angle given as <see cref="Double"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is greater than <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >(a As Angle, b As Double) As Boolean
             Return a.Normalize._value > CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is smaller than or equal to another angle given as <see cref="Double"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is smaller than or equal to <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <=(a As Angle, b As Double) As Boolean
             Return a.Normalize._value <= CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is greater than or equal to another angle given as <see cref="Double"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is greater than or equal to <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >=(a As Angle, b As Double) As Boolean
             Return a.Normalize._value >= CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> and <see cref="Double"/> represent same normalized angle.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents the same angle as <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator =(a As Angle, b As Double) As Boolean
             Return a.Normalize._value = CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> and <see cref="Double"/> represent different normalized angles.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents different angle than <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <>(a As Angle, b As Double) As Boolean
             Return a.Normalize._value <> CType(b, Angle).Normalize._value
         End Operator
+#End Region
 
+#Region "Integer"
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is smaller than another angle given as <see cref="Integer"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is smaller than <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <(a As Angle, b As Integer) As Boolean
             Return a.Normalize._value < CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is greater than another angle given as <see cref="Integer"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is greater than <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >(a As Angle, b As Integer) As Boolean
             Return a.Normalize._value > CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is smaller than or equal to another angle given as <see cref="Integer"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is smaller than or equal to <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <=(a As Angle, b As Integer) As Boolean
             Return a.Normalize._value <= CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> value represents an angle that is greater than or equal to another angle given as <see cref="Integer"/>.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents an angle that is greater than or equal to <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >=(a As Angle, b As Integer) As Boolean
             Return a.Normalize._value >= CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> and <see cref="Integer"/> represent same normalized angle.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents the same angle as <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator =(a As Angle, b As Integer) As Boolean
             Return a.Normalize._value = CType(b, Angle).Normalize._value
         End Operator
+        ''' <summary>Test if <see cref="Angle"/> and <see cref="Integer"/> represent different normalized angles.</summary>
+        ''' <param name="a">An <see cref="Angle"/> value</param>
+        ''' <param name="b">Angle in degrees</param>
+        ''' <returns>True if <paramref name="a"/> normalized represents different angle than <paramref name="b"/> in degrees normalized; false otherwise</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <>(a As Angle, b As Integer) As Boolean
             Return a.Normalize._value <> CType(b, Angle).Normalize._value
         End Operator
 #End Region
+#End Region
 #Region "Arithmetic"
+        ''' <summary>Multiplies an <see cref="Angle"/> with given <see cref="Double"/> number</summary>
+        ''' <param name="a">An <see cref="Angle"/> to be multiplied</param>
+        ''' <param name="b">Value to multiply angle with</param>
+        ''' <returns>An angle that is <paramref name="b"/>-times greater than <paramref name="a"/>.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN or infinity</exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator *(a As Angle, b As Double) As Angle
             Return New Angle(a._value * b)
         End Operator
+
+        ''' <summary>Multiplies an <see cref="Angle"/> with given <see cref="Single"/> number</summary>
+        ''' <param name="a">An <see cref="Angle"/> to be multiplied</param>
+        ''' <param name="b">Value to multiply angle with</param>
+        ''' <returns>An angle that is <paramref name="b"/>-times greater than <paramref name="a"/>.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN or infinity</exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator *(a As Angle, b As Single) As Angle
-            Return New Angle(a._value * b)
+            Return New Angle(a._value * CDbl(b))
         End Operator
+        ''' <summary>Multiplies an <see cref="Angle"/> with given <see cref="Integer"/> number</summary>
+        ''' <param name="a">An <see cref="Angle"/> to be multiplied</param>
+        ''' <param name="b">Value to multiply angle with</param>
+        ''' <returns>An angle that is <paramref name="b"/>-times greater than <paramref name="a"/>.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN or infinity</exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator *(a As Angle, b As Integer) As Angle
-            Return New Angle(a._value * b)
+            Return New Angle(a._value * CInt(b))
         End Operator
 
+        ''' <summary>Divides an <see cref="Angle"/> by given <see cref="Double"/> number</summary>
+        ''' <param name="a">An <see cref="Angle"/> to be divided</param>
+        ''' <param name="b">A number to dividy angle by</param>
+        ''' <returns>An angle that is <paramref name="b"/>-times smaller than <paramref name="a"/>.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN</exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="DivideByZeroException"><paramref name="b"/> is 0</exception>
+        ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator /(a As Angle, b As Double) As Angle
+            If b = 0.0# Then Throw New DivideByZeroException()
             Return New Angle(a._value / b)
         End Operator
+        ''' <summary>Divides an <see cref="Angle"/> by given <see cref="Single"/> number</summary>
+        ''' <param name="a">An <see cref="Angle"/> to be divided</param>
+        ''' <param name="b">A number to dividy angle by</param>
+        ''' <returns>An angle that is <paramref name="b"/>-times smaller than <paramref name="a"/>.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN</exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="DivideByZeroException"><paramref name="b"/> is 0</exception>
+        ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator /(a As Angle, b As Single) As Angle
-            Return New Angle(a._value / b)
+            If b = 0.0! Then Throw New DivideByZeroException()
+            Return New Angle(a._value / CDbl(b))
         End Operator
+        ''' <summary>Divides an <see cref="Angle"/> by given <see cref="Integer"/> number</summary>
+        ''' <param name="a">An <see cref="Angle"/> to be divided</param>
+        ''' <param name="b">A number to dividy angle by</param>
+        ''' <returns>An angle that is <paramref name="b"/>-times smaller than <paramref name="a"/>.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN</exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="DivideByZeroException"><paramref name="b"/> is 0</exception>
+        ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator /(a As Angle, b As Integer) As Angle
-            Return New Angle(a._value / b)
+            If b = 0 Then Throw New DivideByZeroException
+            Return New Angle(a._value / CDbl(b))
         End Operator
 
+        ''' <summary>Divides a number of rotations by integer</summary>
+        ''' <param name="a">An angle whichs number of rotations to divide</param>
+        ''' <param name="b">An integral number to divide number of rotations by</param>
+        ''' <returns><paramref name="a"/>.<see cref="Rotations">Rotations</see> integraly divided by <paramref name="b"/></returns>
+        ''' <remarks>To get whole number of rotations use aither <c><see cref="Math.Floor"/>(<see cref="Rotations"/>)</c> or <c>x \ 1</c> (VB only).</remarks>
         Public Shared Operator \(a As Angle, b As Integer) As Integer
             Return Math.Floor(a.Rotations) \ b
         End Operator
 
+        ''' <summary>Makes an angle negative</summary>
+        ''' <param name="a">An angle to be made negative</param>
+        ''' <remarks>Angle whose value is negative of <paramref name="a"/></remarks>
         Public Shared Operator -(a As Angle) As Angle
             Return New Angle(-a._value)
         End Operator
+        ''' <summary>Implements unary plus operator</summary>
+        ''' <param name="a">An angle</param>
+        ''' <returns><paramref name="a"/> unchanged</returns>
         Public Shared Operator +(a As Angle) As Angle
             Return a
         End Operator
 
-
+        ''' <summary>Adds sizes of two angles</summary>
+        ''' <param name="a">An angle</param>
+        ''' <param name="b">An angle</param>
+        ''' <returns>An angle that is sum of sizes of two angles.</returns>
+        ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Double.MinValue"/> or greater than <see cref="[Double].MaxValue"/>.</exception>
+        ''' <remarks>No normalization is done</remarks>
         Public Shared Operator +(a As Angle, b As Angle) As Angle
             Return New Angle(a._value + b._value)
         End Operator
+
+        ''' <summary>Subtracts sizes of two angles</summary>
+        ''' <param name="a">An angle to subtract from</param>
+        ''' <param name="b">An angle be subtracted</param>
+        ''' <returns>An angle that is difference between the two angles. <paramref name="b"/> subtracted form <paramref name="a"/></returns>
+        ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Double.MinValue"/> or greater than <see cref="[Double].MaxValue"/>.</exception>
+        ''' <remarks>No normalization is done</remarks>
         Public Shared Operator -(a As Angle, b As Angle) As Angle
             Return New Angle(a._value - b._value)
         End Operator
@@ -371,6 +602,7 @@ Namespace NumericsT
         ''' <item><paramref name="obj"/> is numeric value (all standard .NET numeric types are supported including <see cref="Decimal"/> and <see cref="Numerics.BigInteger"/>; <see cref="Char"/> is not supported)</item>
         ''' <item><paramref name="obj"/> is <see cref="TimeSpan"/> or <see cref="TimeSpanFormattable"/> with same <see cref="TimeSpan.TotalHours"/> as <see cref="TotalDegrees"/>.</item>
         ''' </list>
+        ''' <note>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</note>
         ''' </remarks>
         ''' <filterpriority>2</filterpriority>
         Public Overrides Function Equals(obj As Object) As Boolean
@@ -390,6 +622,12 @@ Namespace NumericsT
             If TypeOf obj Is TimeSpan Then Return Me = CType(DirectCast(obj, TimeSpan), Angle)
             If TypeOf obj Is TimeSpanFormattable Then Return Me = CType(DirectCast(obj, TimeSpanFormattable), Angle)
             Return False
+        End Function
+        ''' <summary>Compares the current object with another object of the same type.</summary>
+        ''' <param name="other">An object to compare with this object.</param>
+        ''' <returns>A value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.Zero This object is equal to other. Greater than zero This object is greater than other.</returns>
+        Public Function CompareTo(other As Angle) As Integer Implements System.IComparable(Of Angle).CompareTo
+            Return Comparer(Of Double).Default.Compare(Me.Normalize.TotalDegrees, other.Normalize.TotalDegrees)
         End Function
 #End Region
 
@@ -1030,6 +1268,73 @@ Namespace NumericsT
         'End Function
 #End Region
     End Structure
+
+    ''' <summary>Implements <see cref="IComparer(Of T)"/> and <see cref="IEqualityComparer(Of T)"/> for <see cref="Angle"/></summary>
+    ''' <remarks>Instances of this class cannot be created. Use the two provided comparers: <see cref="AngleComparer.Normalizing"/> and <see cref="AngleComparer.NonNormalizing"/>.</remarks>
+    ''' <seelaso cref="Angle"/>
+    ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
+    Public NotInheritable Class AngleComparer
+        Inherits Comparer(Of Angle)
+        Implements IEqualityComparer(Of Angle)
+
+        Private ReadOnly _normalizes As Boolean
+        ''' <summary>CTor - creates a new instance of the <see cref="AngleComparer"/> class indicating if it does angle normalization or not</summary>
+        ''' <param name="normalizes">True to indicate that normalization is performed, false otherwise.</param>
+        Private Sub New(normalizes As Boolean)
+            Me._normalizes = normalizes
+        End Sub
+        ''' <summary>Gets value indicating if this comparer does angle normalization before comparison or not.</summary>
+        Public ReadOnly Property Normalizes As Boolean
+            Get
+                Return _normalizes
+            End Get
+        End Property
+
+        ''' <summary>Determines whether the specified objects are equal.</summary>
+        ''' <param name="x">The first <see cref="Angle"/> to compare.</param>
+        ''' <param name="y">The second <see cref="Angle"/> to compare.</param>
+        ''' <returns>true if the specified objects are equal; otherwise, false.</returns>
+        Public Overloads Function Equals(x As Angle, y As Angle) As Boolean Implements System.Collections.Generic.IEqualityComparer(Of Angle).Equals
+            If Normalizes Then Return x.Normalize.TotalDegrees = y.Normalize.TotalDegrees Else Return x.TotalDegrees = y.TotalDegrees
+        End Function
+
+        ''' <summary>Returns a hash code for the specified object.</summary>
+        ''' <param name="obj">The <see cref="Angle"/> for which a hash code is to be returned.</param>
+        ''' <returns>A hash code for the specified object.</returns>
+        Public Overloads Function GetHashCode(obj As Angle) As Integer Implements System.Collections.Generic.IEqualityComparer(Of Angle).GetHashCode
+            If Normalizes Then Return obj.Normalize.TotalDegrees.GetHashCode Else Return obj.TotalDegrees.GetHashCode
+        End Function
+
+        ''' <summary>Performs a comparison of two objects of the same type and returns a value indicating whether one object is less than, equal to, or greater than the other.</summary>
+        ''' <param name="x">The first <see cref="Angle"/> to compare.</param>
+        ''' <param name="y">The second <see cref="Angle"/> to compare.</param>
+        ''' <returns>A signed integer that indicates the relative values of <paramref name="x" /> and <paramref name="y" />, as shown in the following table.Value Meaning Less than zero <paramref name="x" /> is less than <paramref name="y" />.Zero <paramref name="x" /> equals <paramref name="y" />.Greater than zero <paramref name="x" /> is greater than <paramref name="y" />.</returns>
+        Public Overrides Function Compare(x As Angle, y As Angle) As Integer
+            If Normalizes Then
+                Return Comparer(Of Double).Default.Compare(x.Normalize.TotalDegrees, y.Normalize.TotalDegrees)
+            Else
+                Return Comparer(Of Double).Default.Compare(x.TotalDegrees, y.TotalDegrees)
+            End If
+        End Function
+
+        Private Shared ReadOnly _normalizing As New AngleComparer(True)
+        ''' <summary>Gets a normalizing <see cref="AngleComparer"/></summary>
+        ''' <returns>A comparer that does 360°-normalization of angle values before comparing them</returns>
+        Public Shared ReadOnly Property Normalizing As AngleComparer
+            Get
+                Return _normalizing
+            End Get
+        End Property
+        Private Shared ReadOnly _nonNormalizing As New AngleComparer(False)
+        ''' <summary>Gets a non-normalizing comparer</summary>
+        ''' <returns>A comparer that does not normalization and compares <see cref="Angle.TotalDegrees"/> directly.</returns>
+        Public Shared ReadOnly Property NonNormalizing As AngleComparer
+            Get
+                Return _nonNormalizing
+            End Get
+        End Property
+    End Class
 End Namespace
 
 Namespace GlobalizationT
