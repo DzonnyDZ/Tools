@@ -1483,4 +1483,7 @@
   <data name="ValueCannotBeNaNOrInfinity" xml:space="preserve">
     <value>Value cannot be NaN or infinity</value>
   </data>
+  <data name="TheImageFileIsInvalid" xml:space="preserve">
+    <value>The image file is invalid.</value>
+  </data>
 </root>

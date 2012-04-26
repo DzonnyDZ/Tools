@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices, System.Globalization.CultureInfo
+Imports System.Globalization
+Imports Tools.GlobalizationT
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace ExtensionsT
@@ -106,6 +108,109 @@ Namespace ExtensionsT
         End Function
 #End Region
 #End Region
+
+        ''' <summary>Gets instance of <see cref="NumberFormatInfo"/> form <see cref="IFormatProvider"/></summary>
+        ''' <param name="provider">An <see cref="IFormatProvider"/> (e.g. <see cref="CultureInfo"/>)to get <see cref="NumberFormatInfo"/> from.</param>
+        ''' <param name="default">AN instance to be returned when <paramref name="provider"/> does not provide <see cref="NumberFormatInfo"/>.</param>
+        ''' <returns>Three ways of getting<see cref="NumberFormatInfo"/> are tried:
+        ''' <list type="bullet">
+        ''' <item><paramref name="provider"/>.<see cref="IFormatProvider.GetFormat">GetFormat</see></item>
+        ''' <item>If <paramref name="provider"/> is <see cref="CultureInfo"/>: <see cref="CultureInfo.NumberFormat"/></item>
+        ''' <item><see cref="NumberFormatInfo.GetInstance"/></item>
+        ''' </list>
+        ''' Whichever first succeds it's result is used. If none succeeds <paramref name="default"/> is returned.
+        ''' </returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="provider"/> is null</exception>
+        ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+        <Extension()>
+        Public Function GetNumberFormatInfo(provider As IFormatProvider, Optional [default] As NumberFormatInfo = Nothing) As NumberFormatInfo
+            If provider Is Nothing Then Throw New ArgumentNullException("provider")
+            Dim ret = TryCast(provider.GetFormat(GetType(NumberFormatInfo)), NumberFormatInfo)
+            If ret Is Nothing AndAlso TypeOf provider Is CultureInfo Then ret = DirectCast(provider, CultureInfo).NumberFormat
+            If ret Is Nothing Then ret = NumberFormatInfo.GetInstance(provider)
+            Return If(ret, [default])
+        End Function
+        ''' <summary>Gets instance of <see cref="DateTimeFormatInfo"/> form <see cref="IFormatProvider"/></summary>
+        ''' <param name="provider">An <see cref="IFormatProvider"/> (e.g. <see cref="CultureInfo"/>)to get <see cref="DateTimeFormatInfo"/> from.</param>
+        ''' <param name="default">AN instance to be returned when <paramref name="provider"/> does not provide <see cref="DateTimeFormatInfo"/>.</param>
+        ''' <returns>Three ways of getting<see cref="DateTimeFormatInfo"/> are tried:
+        ''' <list type="bullet">
+        ''' <item><paramref name="provider"/>.<see cref="IFormatProvider.GetFormat">GetFormat</see></item>
+        ''' <item>If <paramref name="provider"/> is <see cref="CultureInfo"/>: <see cref="CultureInfo.DateTimeFormat"/></item>
+        ''' <item><see cref="DateTimeFormatInfo.GetInstance"/></item>
+        ''' </list>
+        ''' Whichever first succeds it's result is used. If none succeeds <paramref name="default"/> is returned.
+        ''' </returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="provider"/> is null</exception>
+        ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+        <Extension()>
+        Public Function GetDateTimeFormatInfo(provider As IFormatProvider, Optional [default] As DateTimeFormatInfo = Nothing) As DateTimeFormatInfo
+            If provider Is Nothing Then Throw New ArgumentNullException("provider")
+            Dim ret = TryCast(provider.GetFormat(GetType(DateTimeFormatInfo)), DateTimeFormatInfo)
+            If ret Is Nothing AndAlso TypeOf provider Is CultureInfo Then ret = DirectCast(provider, CultureInfo).DateTimeFormat
+            If ret Is Nothing Then ret = DateTimeFormatInfo.GetInstance(provider)
+            Return If(ret, [default])
+        End Function
+
+        ''' <summary>Gets instance of <see cref="TextInfo"/> form <see cref="IFormatProvider"/></summary>
+        ''' <param name="provider">An <see cref="IFormatProvider"/> (e.g. <see cref="CultureInfo"/>)to get <see cref="TextInfo"/> from.</param>
+        ''' <param name="default">AN instance to be returned when <paramref name="provider"/> does not provide <see cref="TextInfo"/>.</param>
+        ''' <returns>Two ways of getting<see cref="TextInfo"/> are tried:
+        ''' <list type="bullet">
+        ''' <item><paramref name="provider"/>.<see cref="IFormatProvider.GetFormat">GetFormat</see></item>
+        ''' <item>If <paramref name="provider"/> is <see cref="CultureInfo"/>: <see cref="CultureInfo.TextInfo"/></item>
+        ''' </list>
+        ''' Whichever first succeds it's result is used. If none succeeds <paramref name="default"/> is returned.
+        ''' </returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="provider"/> is null</exception>
+        ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+        <Extension()>
+        Public Function GetTextInfo(provider As IFormatProvider, Optional [default] As TextInfo = Nothing) As TextInfo
+            If provider Is Nothing Then Throw New ArgumentNullException("provider")
+            Dim ret = TryCast(provider.GetFormat(GetType(TextInfo)), TextInfo)
+            If ret Is Nothing AndAlso TypeOf provider Is CultureInfo Then ret = DirectCast(provider, CultureInfo).TextInfo
+            Return If(ret, [default])
+        End Function
+
+        ''' <summary>Gets instance of <see cref="CompareInfo"/> form <see cref="IFormatProvider"/></summary>
+        ''' <param name="provider">An <see cref="IFormatProvider"/> (e.g. <see cref="CultureInfo"/>)to get <see cref="CompareInfo"/> from.</param>
+        ''' <param name="default">AN instance to be returned when <paramref name="provider"/> does not provide <see cref="CompareInfo"/>.</param>
+        ''' <returns>Two ways of getting<see cref="CompareInfo"/> are tried:
+        ''' <list type="bullet">
+        ''' <item><paramref name="provider"/>.<see cref="IFormatProvider.GetFormat">GetFormat</see></item>
+        ''' <item>If <paramref name="provider"/> is <see cref="CultureInfo"/>: <see cref="CultureInfo.CompareInfo"/></item>
+        ''' </list>
+        ''' Whichever first succeds it's result is used. If none succeeds <paramref name="default"/> is returned.
+        ''' </returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="provider"/> is null</exception>
+        ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+        <Extension()>
+        Public Function GetCompareInfo(provider As IFormatProvider, Optional [default] As CompareInfo = Nothing) As CompareInfo
+            If provider Is Nothing Then Throw New ArgumentNullException("provider")
+            Dim ret = TryCast(provider.GetFormat(GetType(CompareInfo)), CompareInfo)
+            If ret Is Nothing AndAlso TypeOf provider Is CultureInfo Then ret = DirectCast(provider, CultureInfo).CompareInfo
+            Return If(ret, [default])
+        End Function
+
+        ''' <summary>Gets instance of <see cref="AngleFormatInfo"/> form <see cref="IFormatProvider"/></summary>
+        ''' <param name="provider">An <see cref="IFormatProvider"/> (e.g. <see cref="CultureInfo"/>)to get <see cref="AngleFormatInfo"/> from.</param>
+        ''' <param name="default">AN instance to be returned when <paramref name="provider"/> does not provide <see cref="AngleFormatInfo"/>.</param>
+        ''' <returns>Two ways of getting<see cref="AngleFormatInfo"/> are tried:
+        ''' <list type="bullet">
+        ''' <item><paramref name="provider"/>.<see cref="IFormatProvider.GetFormat">GetFormat</see></item>
+        ''' <item>If <paramref name="provider"/> is <see cref="CultureInfo"/>: <see cref="AngleFormatInfo.[Get]"/>(<paramref name="provider"/>)</item>
+        ''' </list>
+        ''' Whichever first succeds it's result is used. If none succeeds <paramref name="default"/> is returned.
+        ''' </returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="provider"/> is null</exception>
+        ''' <version version="1.5.4">This class is new in version 1.5.4</version>
+        <Extension()>
+        Public Function GetAngleFormatInfo(provider As IFormatProvider, Optional [default] As AngleFormatInfo = Nothing) As AngleFormatInfo
+            If provider Is Nothing Then Throw New ArgumentNullException("provider")
+            Dim ret = TryCast(provider.GetFormat(GetType(AngleFormatInfo)), AngleFormatInfo)
+            If ret Is Nothing AndAlso TypeOf provider Is CultureInfo Then ret = AngleFormatInfo.Get(DirectCast(provider, CultureInfo))
+            Return If(ret, [default])
+        End Function
     End Module
 End Namespace
 #End If

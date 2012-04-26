@@ -1,5 +1,5 @@
 Imports System.Globalization.CultureInfo
-Imports System.Linq
+Imports System.Linq, Tools.LinqT
 Imports System.Runtime.InteropServices
 Imports CultureInfo = System.Globalization.CultureInfo
 Imports NumberStyles = System.Globalization.NumberStyles
@@ -7,6 +7,7 @@ Imports TextInfo = System.Globalization.TextInfo
 Imports Tools.ExtensionsT
 Imports Tools.IOt.StreamTools
 Imports Tools.NumericsT
+Imports Tools.GlobalizationT
 
 Namespace MetadataT.ExifT
 #If Config <= Nightly Then
@@ -572,7 +573,7 @@ Namespace MetadataT.ExifT
         ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <version version="1.5.4">Method added</version>
         Public Function GetStringValue(ByVal key As String, provider As IFormatProvider) As String Implements IMetadata.GetStringValue
-            Dim ret = Value(Key)
+            Dim ret = Value(key)
             Dim IFD As IFDIndexes, RecordNumber As UShort
             If ret Is Nothing Then Return Nothing
 
@@ -581,14 +582,18 @@ Namespace MetadataT.ExifT
 
             If IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSAltitude AndAlso TypeOf ret Is URational Then
                 Return CType(DirectCast(ret, URational), Decimal).ToString("0.0", provider)
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLatitude AndAlso TypeOf ret Is URational() Then
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLongitude AndAlso TypeOf ret Is URational() Then
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLongitude AndAlso TypeOf ret Is URational() Then
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLatitude AndAlso TypeOf ret Is URational() Then
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLongitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSLatitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLatitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
-            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDestLongitudeRef AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber.In(IfdGps.Tags.GPSLatitude, IfdGps.Tags.GPSLongitude, IfdGps.Tags.GPSDestLongitude, IfdGps.Tags.GPSDestLatitude) AndAlso TypeOf ret Is URational() Then
+                Return CType(DirectCast(ret, URational()), Angle).ToString("G", provider)
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber.In(IfdGps.Tags.GPSLongitudeRef, IfdGps.Tags.GPSDestLongitudeRef) AndAlso TypeOf ret Is IfdGps.GPSLongitudeRefValues Then
+                Return If(DirectCast(ret, IfdGps.GPSLongitudeRefValues) = IfdGps.GPSLongitudeRefValues.East,
+                          AngleFormatInfo.Get(provider).LongitudeEastShortSymbol,
+                          AngleFormatInfo.Get(provider).LongitudeWestShortSymbol
+                         )
+            ElseIf IFD = IFDIndexes.GPS AndAlso RecordNumber.In(IfdGps.Tags.GPSLatitudeRef, IfdGps.Tags.GPSDestLatitudeRef) AndAlso TypeOf ret Is IfdGps.GPSLatitudeRefValues Then
+                Return If(DirectCast(ret, IfdGps.GPSLatitudeRefValues) = IfdGps.GPSLatitudeRefValues.North,
+                          AngleFormatInfo.Get(provider).LatitudeNorthShortSymbol,
+                          AngleFormatInfo.Get(provider).LatitudeSouthShortSymbol
+                         )
             End If
 
             If TypeOf ret Is IEnumerable(Of Byte) Then
@@ -599,8 +604,9 @@ Namespace MetadataT.ExifT
                 Return r2.ToString
             ElseIf TypeOf ret Is IEnumerable AndAlso Not TypeOf ret Is String Then
                 Dim r2 As New System.Text.StringBuilder
+                Dim ti = provider.GetTextInfo(CurrentCulture.TextInfo)
                 For Each item In DirectCast(ret, IEnumerable)
-                    If r2.Length <> 0 Then r2.Append(If(TryCast(provider.GetFormat(GetType(TextInfo)), TextInfo), CurrentCulture.TextInfo).ListSeparator & " ")
+                    If r2.Length <> 0 Then r2.Append(ti.ListSeparator & " ")
                     If TypeOf item Is IFormattable Then
                         r2.Append(DirectCast(item, IFormattable).ToString(provider))
                     Else
@@ -621,8 +627,11 @@ Namespace MetadataT.ExifT
         ''' <remarks>The <paramref name="key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <version version="1.5.2">Method added</version>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        ''' <version version="1.5.4">Following tags now receive special string representation:
+        ''' <see cref="IfdGps.Tags.GPSAltitude"/>, <see cref="IfdGps.Tags.GPSLatitude"/>, <see cref="IfdGps.Tags.GPSLongitude"/>, <see cref="IfdGps.Tags.GPSDestLongitude"/>, <see cref="IfdGps.Tags.GPSDestLatitude"/>, <see cref="IfdGps.Tags.GPSLongitudeRef"/>, <see cref="IfdGps.Tags.GPSDestLongitudeRef"/>, <see cref="IfdGps.Tags.GPSLatitudeRef"/>, <see cref="IfdGps.Tags.GPSDestLatitudeRef"/>
+        ''' </version>
         Public Function GetStringValue(ByVal key As String) As String Implements IMetadata.GetStringValue
-            Return GetStringValue(Key, Nothing)
+            Return GetStringValue(key, Nothing)
         End Function
 #End Region
         ''' <summary>Stores either non-negative (any, even undefined in this enumeration) value for IFD number or negative value for known sub-IFD</summary>

@@ -192,6 +192,7 @@
     </Compile>
     <Compile Include="Metadata\IPTC\IPTCTypedValues.vb" />
     <Compile Include="Metadata\IPTC\IPTCTypes helpers.vb" />
+    <Compile Include="Metadata\MetadataPropertyDescriptor.vb" />
     <Compile Include="Metadata\SystemMetadata.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

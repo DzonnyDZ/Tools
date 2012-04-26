@@ -256,6 +256,7 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="Numerics\AngleTest.vb" />
     <Compile Include="API\HelpersU.vb" />
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />

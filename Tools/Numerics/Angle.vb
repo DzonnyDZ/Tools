@@ -19,6 +19,7 @@ Namespace NumericsT
     ''' </remarks>
     ''' <seelaso cref="Angle.Normalize"/>
     ''' <version version="1.5.4">This structure is new in version 1.5.4</version>
+    'TODO: Percent / permile
     <StructLayout(LayoutKind.Sequential), Serializable()>
     Public Structure Angle
         Implements IFormattable, IComparable(Of Angle)
@@ -93,13 +94,30 @@ Namespace NumericsT
         Public Function ToRadians#()
             Return _value * (Math.PI / 180.0#)
         End Function
-        ''' <summary>Creates an <see cref="Angle"/> value form degrees</summary>
+        ''' <summary>Creates an <see cref="Angle"/> value from degrees</summary>
         ''' <param name="value">Number of degrees for new angle</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="value"/> degrees.</returns>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
         Public Shared Function FromDegrees(value#) As Angle
             Return New Angle(value)
         End Function
+
+        ''' <summary>Creates an <see cref="Angle"/> value from minutes</summary>
+        ''' <param name="value">Number of minutes (1/60 degree) for new angle</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="value"/> minutes.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        Public Shared Function FromMinutes(value#) As Angle
+            Return New Angle(value / 60.0#)
+        End Function
+
+        ''' <summary>Creates an <see cref="Angle"/> value from seconds</summary>
+        ''' <param name="value">Number of seconds (1/3600 degree) for new angle</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="value"/> seconds.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        Public Shared Function FromSeconds(value#) As Angle
+            Return New Angle(value / 60.0# / 60.0#)
+        End Function
+
         ''' <summary>Creates an <see cref="Angle"/> value from radians</summary>
         ''' <param name="value">Angle in radians</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to equivalent of <paramref name="value"/> radians</returns>
@@ -193,12 +211,15 @@ Namespace NumericsT
 
         ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second</summary>
         ''' <param name="degrees">Number of degrees</param>
-        ''' <param name="minutes">Number of minutes</param>
-        ''' <param name="second">Number of second</param>
+        ''' <param name="minutes">Number of minutes. If greater than 60 velue is tranferred to degrees.</param>
+        ''' <param name="second">Number of second. If greater than 60 value is transfered to seconds.</param>
+        ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered.</remarks>
         ''' <exception cref="ArgumentException"><paramref name="second"/> is NaN or infinity</exception>
         Public Sub New(degrees As Integer, minutes As Integer, second As Double)
             If second.IsNaN OrElse second.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "second")
-            _value = CDbl(degrees) + CDbl(minutes) / 60.0# + second / 60.0# / 60.0#
+            _value = CDbl(degrees)
+            _value += If(_value < 0, -1.0#, 1.0#) * (CDbl(minutes) / 60.0#)
+            _value += If(_value < 0, -1.0#, 1.0#) * (second / 60.0# / 60.0#)
         End Sub
 #End Region
 
@@ -222,6 +243,202 @@ Namespace NumericsT
             If angle < maxAngle - 360 Then Return angle + ((maxAngle - 360 - angle) \ 360) * 360 + 360.0#
             Return angle
         End Function
+
+        ''' <summary>Gets an absolute value of this angle</summary>
+        ''' <returns>Current angle without sign</returns>
+        ''' <seelaso cref="Math.Abs"/>
+        Public Function Abs() As Angle
+            Return New Angle(Math.Abs(_value))
+        End Function
+
+        ''' <summary>Gets sign of this angle</summary>
+        ''' <returns>-1 if current angle is negative, +1 if current angle is positive; 0 if current angle is zero</returns>
+        ''' <seelaso cref="Math.Sign"/>
+        Public Function Sign%()
+            Return Math.Sign(_value)
+        End Function
+
+#Region "Goniometry"
+        ''' <summary>Returns the cosine of current angle.</summary>
+        ''' <returns>Cosine of current angle</returns>
+        ''' <seelaso cref="Math.Cos"/>
+        Public Function Cos() As Double
+            Return Math.Cos(ToRadians)
+        End Function
+
+        ''' <summary>Returns the sine of current angle.</summary>
+        ''' <returns>Sine of current angle</returns>
+        ''' <seelaso cref="Math.Sin"/>
+        Public Function Sin() As Double
+            Return Math.Sin(ToRadians)
+        End Function
+
+        ''' <summary>Returns the tangent of current angle.</summary>
+        ''' <returns>Tangent of current angle</returns>
+        ''' <seelaso cref="Math.Tan"/>
+        Public Function Tan() As Double
+            Return Math.Tan(ToRadians)
+        End Function
+
+        ''' <summary>Returns the cotangent of current angle.</summary>
+        ''' <returns>Cotangent of current angle</returns>
+        ''' <remarks>Cot(x) is defined as 1/Tan(x)</remarks>
+        Public Function Cot() As Double
+            Return 1.0# / Math.Tan(ToRadians)
+        End Function
+
+        ''' <summary>Returns the cosecant of current angle.</summary>
+        ''' <returns>Cosecant of current angle</returns>
+        ''' <remarks>Csc(x) is defined as 1/Sin(x)</remarks>
+        Public Function Csc() As Double
+            Return 1.0# / Math.Sin(ToRadians)
+        End Function
+
+        ''' <summary>Returns the secant of current angle.</summary>
+        ''' <returns>Secant of current angle</returns>
+        ''' <remarks>Sec(x) is defined as 1/Cos(x)</remarks>
+        Public Function Sec() As Double
+            Return 1.0# / Math.Cos(ToRadians)
+        End Function
+
+#Region "Inverse"
+        ''' <summary>Arcussine: Returns the angle whose sine is the specified number.</summary>
+        ''' <param name="d">A number representing a sine, where <paramref name="d"/> must be greater than or equal to -1, but less than or equal to 1.</param>
+        ''' <returns>An angle, θ, measured in degrees, such that -90° ≤ θ ≤ 90°.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="d"/> &lt; -1 or <paramref name="d"/> > 1 or <paramref name="d"/> equals <see cref="System.Double.NaN"/></exception>
+        ''' <seelaso cref="Math.Asin"/>
+        Public Shared Function Asin(d As Double) As Angle
+            Return Angle.FromRadians(Math.Asin(d))
+        End Function
+
+        ''' <summary>Arcuscosine: Returns the angle whose cosine is the specified number.</summary>
+        ''' <param name="d">A number representing a cosine, where <paramref name="d"/> must be greater than or equal to -1, but less than or equal to 1.</param>
+        ''' <returns>An angle, θ, measured in degrees, such that 0° ≤ θ ≤ 180° -or-.</returns>
+        ''' <exception cref="ArgumentException">d<paramref name=" "/>&lt; -1 or <paramref name="d"/> &gt; 1 or d equals <see cref="System.Double.NaN" /></exception>
+        ''' <seelaso cref="Math.Acos"/>
+        Public Shared Function Acos(d As Double) As Angle
+            Return Angle.FromRadians(Math.Acos(d))
+        End Function
+        ''' <summary>Arcustangent: Returns the angle whose tangent is the specified number.</summary>
+        ''' <param name="d">A number representing a tangent.</param>
+        ''' <returns>An angle, θ, measured in degrees, such that -90° ≤ θ ≤ 90°. -90° if <paramref name="d"/> equals <see cref="System.Double.NegativeInfinity" />, or 90° if <paramref name="d"/> equals <see cref="System.Double.PositiveInfinity" />.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="d"/> equals <see cref="System.Double.NaN" /></exception>
+        ''' <seelaso cref="Math.Atan"/>
+        Public Shared Function Atan(d As Double) As Angle
+            Return Angle.FromRadians(Math.Atan(d))
+        End Function
+
+        ''' <summary>Arcuscotangent: Returns the angle whose cotangent is the specified number.</summary>
+        ''' <param name="d">A number representing a cotangent.</param>
+        ''' <returns>An angle, θ, measured in degrees, such that -90° ≤ θ ≤ 90°.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="d"/> equals <see cref="System.Double.NaN" /></exception>
+        Public Shared Function Acot(d As Double) As Angle
+            Return Angle.FromRadians(Math.Atan(1.0# / d))
+        End Function
+
+        ''' <summary>Arcussecant: Returns the angle whose cecant is the specified number.</summary>
+        ''' <param name="d">A number representing a secant, where <paramref name="d"/> must be less than or equal to -1, but greater than or equal to 1.</param>
+        ''' <returns>An angle, θ, measured in degrees, such that 0° ≤ θ ≤ 180° -or-.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="d"/> is > -1 and <paramref name="d"/> &lt; 1 or <paramref name="d"/> equals <see cref="System.Double.NaN"/></exception>
+        Public Shared Function Asec(d As Double) As Angle
+            Return Angle.FromRadians(Math.Acos(1.0# / d))
+        End Function
+
+        ''' <summary>Arcuscosecant: Returns the angle whose cosecant is the specified number.</summary>
+        ''' <param name="d">A number representing a cosecant, where <paramref name="d"/> must be less than or equal to -1, but greater than or equal to 1.</param>
+        ''' <returns>An angle, θ, measured in degrees, such that -90° ≤ θ ≤ 90°.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="d"/> is > -1 and <paramref name="d"/> &lt; 1 or <paramref name="d"/> equals <see cref="System.Double.NaN"/></exception>
+        Public Shared Function Acsc(d As Double) As Angle
+            Return Angle.FromRadians(Math.Sin(1.0# / d))
+        End Function
+
+#End Region
+#End Region
+
+        ''' <summary>Rounds current angle to nearest whole degrees</summary>
+        ''' <param name="mode">Optionaly defines how to round 30′</param>
+        ''' <returns>An angle consisiting of whole degrees only</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="mode"/> is neither <see cref="MidpointRounding.AwayFromZero"/> nor <see cref="MidpointRounding.ToEven"/>.</exception>
+        Public Function RoundToDegrees(Optional mode As MidpointRounding = MidpointRounding.AwayFromZero) As Angle
+            Select Case mode
+                Case MidpointRounding.AwayFromZero
+                    Return New Angle(Me.Degrees + If(Me.Minutes >= 30, 1, 0)) * Me.Sign
+                Case MidpointRounding.ToEven
+                    Return New Angle(Me.Degrees + If(Me.Minutes > 30, 1,
+                                                  If(Me.Minutes < 30, 0,
+                                                  If(Degrees \ 2 = 0, 0, 1
+                                     )))) * Me.Sign
+                Case Else : Throw New InvalidEnumArgumentException("mode", mode, mode.GetType)
+            End Select
+        End Function
+
+        ''' <summary>Truncates current angle to contain only whole degrees</summary>
+        ''' <returns>A new instance of <see cref="Angle"/> that contains only <see cref="Degrees"/>.</returns>
+        Public Function TruncateToDegrees() As Angle
+            Return New Angle(Me.Degrees) * Me.Sign
+        End Function
+
+        ''' <summary>Rounds current angle to nearest whole degrees</summary>
+        ''' <param name="mode">Optionaly defines how to round 30″</param>
+        ''' <returns>An angle consisiting of whole degrees and minutes only</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="mode"/> is neither <see cref="MidpointRounding.AwayFromZero"/> nor <see cref="MidpointRounding.ToEven"/>.</exception>
+        Public Function RoundToMinutes(Optional mode As MidpointRounding = MidpointRounding.AwayFromZero) As Angle
+            Select Case mode
+                Case MidpointRounding.AwayFromZero
+                    Return New Angle(Me.Degrees, Me.Minutes + If(Me.Seconds >= 30.0#, 1, 0), 0.0#) * Me.Sign
+                Case MidpointRounding.ToEven
+                    Return New Angle(Me.Degrees, Me.Minutes + If(Me.Seconds > 30.0#, 1,
+                                                              If(Me.Seconds < 30.0#, 0,
+                                                              If(Minutes \ 2 = 0, 0, 1)
+                                     )), 0.0#) * Me.Sign
+                Case Else : Throw New InvalidEnumArgumentException("mode", mode, mode.GetType)
+            End Select
+        End Function
+
+        ''' <summary>Truncates current angle to contain only whole degrees and minutes</summary>
+        ''' <returns>A new instance of <see cref="Angle"/> that contains only <see cref="Degrees"/> and <see cref="Minutes"/>.</returns>
+        Public Function TruncateToMinutes() As Angle
+            Return New Angle(Me.Degrees, Me.Minutes, 0) * Me.Sign
+        End Function
+
+        ''' <summary>Rounds current angle to nearest whole seconds or decimal seconds fraction</summary>
+        ''' <param name="digits">Optionally allows to round to second fraction. Defines to how much decimal places of seconds to rounbd.</param>
+        ''' <param name="mode">Optionaly defines how to round 0.5″</param>
+        ''' <returns>A rounded angle</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="mode"/> is neither <see cref="MidpointRounding.AwayFromZero"/> nor <see cref="MidpointRounding.ToEven"/>.</exception>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="digits"/> is less than 0 or greater than 15.</exception>
+        Public Function RoundToSeconds(Optional digits% = 0, Optional mode As MidpointRounding = MidpointRounding.AwayFromZero) As Angle
+            Try
+                Return New Angle(Me.Degrees, Me.Minutes, Math.Round(Me.Seconds, digits, mode)) * Me.Sign
+            Catch ex As ArgumentException When Not TypeOf ex Is ArgumentOutOfRangeException AndAlso mode <> MidpointRounding.AwayFromZero AndAlso mode <> MidpointRounding.ToEven
+                Throw New InvalidEnumArgumentException(ex.Message, ex)
+            End Try
+        End Function
+
+        ''' <summary>Truncates current angle to contain only whole degrees, minutes and seconds</summary>
+        ''' <returns>A new instance of <see cref="Angle"/> that contains only <see cref="Degrees"/>, <see cref="Minutes"/> and integral part of <see cref="Seconds"/></returns>
+        Public Function TruncateToSeconds() As Angle
+            Return New Angle(Me.Degrees, Me.Minutes, Math.Truncate(Me.Seconds)) * Me.Sign
+        End Function
+
+        ''' <summary>Converts an angle to nearest greater angle measured in whole degress.</summary>
+        ''' <returns>A new instance of angle that contains only whole degrees and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
+        Public Function CeilingDegrees() As Angle
+            Return New Angle(Math.Ceiling(Me.TotalDegrees)) * Me.Sign
+        End Function
+
+        ''' <summary>Converts an angle to nearest greater angle measured in whole degress and minutes.</summary>
+        ''' <returns>A new instance of angle that contains only whole degrees and minutes and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
+        Public Function CeilingMinutes() As Angle
+            Return Angle.FromMinutes(Math.Ceiling(Me.TotalMinutes)) * Me.Sign
+        End Function
+
+        ''' <summary>Converts an angle to nearest greater angle measured in whole degress, minutes and seconds.</summary>
+        ''' <returns>A new instance of angle that contains only whole degrees, minutes and seconds and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
+        Public Function CeilingSeconds() As Angle
+            Return Angle.FromSeconds(Math.Ceiling(Me.TotalSeconds)) * Me.Sign
+        End Function
+
 #End Region
 
 #Region "Operators"
@@ -315,6 +532,37 @@ Namespace NumericsT
             Return TimeSpanFormattable.FromHours(a.TotalDegrees)
         End Operator
 #End Region
+
+        ''' <summary>Converts array of <see cref="URational"/>s as used in Exif to <see cref="Angle"/></summary>
+        ''' <param name="a">An array that contains items degrees, minutes, second, second/60, second/60/60 etc.</param>
+        ''' <returns>An angle whose value value is computed as <paramref name="a"/>[0] + <paramref name="a"/>[1]/60 + <paramref name="a"/>[2]/60/60 etc.; Zero angle if <paramref name="a"/> is null or an empty array.</returns>
+        ''' <remarks>This operator is here to support conversion of Exif latitude/longitude data to <see cref="Angle"/>.</remarks>
+        <CLSCompliant(False)>
+        Public Shared Widening Operator CType(a As URational()) As Angle
+            If a Is Nothing Then Return 0
+            Dim value As Double = 0
+            Dim multiplier As Double = 1.0#
+            For Each v In a
+                value += v / multiplier
+                multiplier *= 60.0#
+            Next
+            Return value
+        End Operator
+
+        ''' <summary>Converts array of <see cref="SRational"/>s to <see cref="Angle"/></summary>
+        ''' <param name="a">An array that contains items degrees, minutes, second, second/60, second/60/60 etc.</param>
+        ''' <returns>An angle whose value value is computed as <paramref name="a"/>[0] + <paramref name="a"/>[1]/60 + <paramref name="a"/>[2]/60/60 etc.; Zero angle if <paramref name="a"/> is null or an empty array.</returns>
+        ''' <remarks>This operator is CLS-compliant companion to <see cref="URational"/>[] operator.</remarks>
+        Public Shared Narrowing Operator CType(a As SRational()) As Angle
+            If a Is Nothing Then Throw New ArgumentNullException("a")
+            Dim value As Double = 0
+            Dim multiplier As Double = 1.0#
+            For Each v In a
+                value += v / multiplier
+                multiplier *= 60.0#
+            Next
+            Return value
+        End Operator
 #End Region
 #Region "Comparison"
 #Region "Angle"

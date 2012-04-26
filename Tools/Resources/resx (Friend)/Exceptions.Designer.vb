@@ -3321,6 +3321,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'The image file is invalid.'.
+        '''</summary>
+        Public ReadOnly Property TheImageFileIsInvalid() As String
+            Get
+                Return ResourceManager.GetString("TheImageFileIsInvalid", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'The lenght of {0} exceeds limit'.
         '''</summary>
         Public ReadOnly Property TheLenghtOf0ExceedsLimit() As String
@@ -7296,6 +7305,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Function TheFile0CannotBeFoundFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, TheFile0CannotBeFound, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the TheImageFileIsInvalid property value.
+        '''</summary>
+        '''<returns>The TheImageFileIsInvalid property value.</returns>
+        Public Function TheImageFileIsInvalidFormat() As String
+            Return TheImageFileIsInvalid
         End Function
         
         '''<summary>

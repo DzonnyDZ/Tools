@@ -355,7 +355,19 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Function GetStringValue(ByVal key As String) As String Implements IMetadata.GetStringValue
-            Dim ret = Value(Key)
+            Return GetStringValue(key, Nothing)
+        End Function
+
+        ''' <summary>Gets metadata value with given key as string</summary>
+        ''' <param name="key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <param name="provider">Culture to be used. If null current is used.</param>
+        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+        Public Function GetStringValue(ByVal key As String, provider As IFormatProvider) As String Implements IMetadata.GetStringValue
+            If provider Is Nothing Then provider = Globalization.CultureInfo.CurrentCulture
+            Dim ret = Value(key)
             If ret Is Nothing Then Return Nothing
             If TypeOf ret Is IEnumerable(Of Byte) Then
                 Dim r2 As New System.Text.StringBuilder
@@ -365,17 +377,21 @@ Namespace MetadataT.IptcT
                 Return r2.ToString
             ElseIf TypeOf ret Is IEnumerable AndAlso Not TypeOf ret Is String Then
                 Dim r2 As New System.Text.StringBuilder
+                Dim ti = provider.GetTextInfo(Globalization.CultureInfo.CurrentCulture.TextInfo)
                 For Each item In DirectCast(ret, IEnumerable)
-                    If r2.Length <> 0 Then r2.Append(Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator & " ")
-                    r2.Append(item.ToString)
+                    If r2.Length <> 0 Then r2.Append(ti.ListSeparator & " ")
+                    r2.Append(If(TypeOf item Is IFormattable, DirectCast(item, IFormattable).ToString(provider), item.ToString))
                 Next
                 Return r2.ToString
+            ElseIf TypeOf ret Is IFormattable Then
+                Return DirectCast(ret, IFormattable).ToString(provider)
+            Else
+                Return ret.ToString
             End If
-            Return ret.ToString
         End Function
 #End Region
 
-       
+
     End Class
     ''' <summary>Represents common base for <see cref="IPTCGetException"/> and <see cref="IPTCSetException"/></summary>
     Public MustInherit Class IptcException : Inherits Exception

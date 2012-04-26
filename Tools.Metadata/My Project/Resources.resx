@@ -156,7 +156,7 @@
   <data name="d_IsReadOnly" xml:space="preserve">
     <value>Indicates if file is read only</value>
   </data>
-  <data name="d_IsCompresses" xml:space="preserve">
+  <data name="d_IsCompressed" xml:space="preserve">
     <value>Indicates if file is compresed</value>
   </data>
   <data name="d_IsSystem" xml:space="preserve">
@@ -210,7 +210,7 @@
   <data name="n_IsReadOnly" xml:space="preserve">
     <value>Read only</value>
   </data>
-  <data name="n_IsCompresses" xml:space="preserve">
+  <data name="n_IsCompressed" xml:space="preserve">
     <value>Compressed</value>
   </data>
   <data name="n_IsSystem" xml:space="preserve">
@@ -224,5 +224,38 @@
   </data>
   <data name="n_Attributes" xml:space="preserve">
     <value>Attributes</value>
+  </data>
+  <data name="ex_NotKnownImageMetadataItemName" xml:space="preserve">
+    <value>{0} is not known image metadata item name.</value>
+  </data>
+  <data name="n_Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="n_Hight" xml:space="preserve">
+    <value>Hight</value>
+  </data>
+  <data name="n_HorizontalResolution" xml:space="preserve">
+    <value>Horizontal resolution</value>
+  </data>
+  <data name="n_VerticalResolution" xml:space="preserve">
+    <value>Vertical resolution</value>
+  </data>
+  <data name="n_PixelFormat" xml:space="preserve">
+    <value>Pixel format</value>
+  </data>
+  <data name="d_Width" xml:space="preserve">
+    <value>Image width in pixels</value>
+  </data>
+  <data name="d_Height" xml:space="preserve">
+    <value>Image height in pixels</value>
+  </data>
+  <data name="d_HorizontalResolution" xml:space="preserve">
+    <value>Image horizontal resolution in pixels per inch</value>
+  </data>
+  <data name="d_VerticalResolution" xml:space="preserve">
+    <value>Image vertical resolution in pixels per inch</value>
+  </data>
+  <data name="d_PixelFormat" xml:space="preserve">
+    <value>Image pixel format</value>
   </data>
 </root>
