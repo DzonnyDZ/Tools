@@ -154,6 +154,21 @@ Namespace NumericsT
         Public Function ToRotations() As Double
             Return Rotations
         End Function
+
+        ''' <summary>Gets value of this angle as slope in percent</summary>
+        ''' <returns>A slope value in percent. Raising angles has positive slope, falling angles ahs negative slope.</returns>
+        ''' <remarks>Raising angle of 45° has slope +100%</remarks>
+        Public Function ToSlope() As Double
+            Return 100 * Tan()
+        End Function
+
+        ''' <summary>Creates ana angle value form slope in percent</summary>
+        ''' <param name="value">Slope in percent</param>
+        ''' <returns>Angle value calcutaletd from <paramref name="value"/> as slope in percent.</returns>
+        ''' <remarks>Raising angle of 45° has slope +100%</remarks>
+        Public Shared Function FromSlope(value As Double) As Angle
+            Return Atan(value / 100)
+        End Function
 #End Region
 
 #Region "Values"
@@ -874,6 +889,7 @@ Namespace NumericsT
         ''' <summary>Compares the current object with another object of the same type.</summary>
         ''' <param name="other">An object to compare with this object.</param>
         ''' <returns>A value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.Zero This object is equal to other. Greater than zero This object is greater than other.</returns>
+        ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Function CompareTo(other As Angle) As Integer Implements System.IComparable(Of Angle).CompareTo
             Return Comparer(Of Double).Default.Compare(Me.Normalize.TotalDegrees, other.Normalize.TotalDegrees)
         End Function
@@ -889,6 +905,7 @@ Namespace NumericsT
         ''' <summary>A regular expression to detect standard angle format</summary>
         Private Shared shortFormatRegex As New Regex("$[A-Za-Z][0-9]*^", RegexOptions.Compiled Or RegexOptions.CultureInvariant)
 
+        'TODO: Slope
         ''' <summary>Formats the value of the current instance using the specified format.</summary>
         ''' <param name="format">The format to use. Null or an empty string means default format (g). This can be either standard or custom format string.</param>
         ''' <param name="formatProvider">The provider to use to format the value.-or- A null reference (Nothing in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.</param>
