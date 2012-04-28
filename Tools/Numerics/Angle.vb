@@ -19,7 +19,6 @@ Namespace NumericsT
     ''' </remarks>
     ''' <seelaso cref="Angle.Normalize"/>
     ''' <version version="1.5.4">This structure is new in version 1.5.4</version>
-    'TODO: Percent / permile
     <StructLayout(LayoutKind.Sequential), Serializable()>
     Public Structure Angle
         Implements IFormattable, IComparable(Of Angle)
@@ -905,7 +904,6 @@ Namespace NumericsT
         ''' <summary>A regular expression to detect standard angle format</summary>
         Private Shared shortFormatRegex As New Regex("$[A-Za-Z][0-9]*^", RegexOptions.Compiled Or RegexOptions.CultureInvariant)
 
-        'TODO: Slope
         ''' <summary>Formats the value of the current instance using the specified format.</summary>
         ''' <param name="format">The format to use. Null or an empty string means default format (g). This can be either standard or custom format string.</param>
         ''' <param name="formatProvider">The provider to use to format the value.-or- A null reference (Nothing in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.</param>
@@ -926,6 +924,8 @@ Namespace NumericsT
         ''' <item>      <term>e                        </term><description>F normalized         </description><description>-14.975       </description><description>Number of decimal places                         </description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>N(TotalDegrees,R)          </description></item><item><term>other</term><description>NDx (where x is actual parameter value)     </description></item>                                                                                                                     </list></description></item>
         ''' <item>      <term>E                        </term><description>Rotations            </description><description>0.125         </description><description>Number of decimal places                         </description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>-E                         </description></item><item><term>other</term><description>-Ex (where x is actual parameter value)     </description></item>                                                                                                                     </list></description></item>
         ''' <item>      <term>F, f                     </term><description>Decimal              </description><description>-14.975       </description><description>Number of decimal places                         </description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>-(TotalDegrees,R)          </description></item><item><term>other</term><description>-Dx (where x is actual parameter value)     </description></item>                                                                                                                     </list></description></item>
+        ''' <item>      <term>l                        </term><description>Slope in permile     </description><description>-140,10‰      </description><description>Number of decimal places                         </description><description>culture-specific                  </description><description>-lx‰ where x is number of decimal palces                                                                                                                                                                                                                                                                                                                                                                                                       </description></item>
+        ''' <item>      <term>L                        </term><description>Slope in percent     </description><description>-14,01%       </description><description>Number of decimal places                         </description><description>culture-specific                  </description><description>-Lx% where x is number of decimal palces                                                                                                                                                                                                                                                                                                                                                                                                       </description></item>
         ''' <item>      <term>n                        </term><description>S normalized         </description><description>-14°09′05″    </description><description>Parameter is not allowed.                        </description><description>                                  </description><description>N-d°mm'ss"                                                                                                                                                                                                                                                                                                                                                                                                                                     </description></item>
         ''' <item>      <term>N                        </term><description>G normalized         </description><description>-14°00′05.33″ </description><description>Number of max decimal places for sub-second value</description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>Nd°mm'(RestSeconds,R)"     </description></item><item><term>0    </term><description>Nd°mm'ss"                                   </description></item><item><term>other</term><description>Nd°mm'ss.ffff" (as many fs as is value of parameter)       </description></item></list></description></item>
         ''' <item>      <term>O, Λ                     </term><description>GPS longitude long   </description><description>14°00′05.33″ E</description><description>Number of max decimal places for sub-second value</description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>N180d°mm'(RestSeconds,R)" o</description></item><item><term>0    </term><description>N180d°mm'ss" o                              </description></item><item><term>other</term><description>N180-d°mm'ss.ffff" o (as many fs as is value of parameter) </description></item></list></description></item>
@@ -948,27 +948,30 @@ Namespace NumericsT
         ''' <listheader><term>Specifier</term><description>Meaning                                 </description><description>Repeatable (and what does it mean)                    </description><description>Parameter                                                     </description><description>Notes                                                                                                                                                                                             </description></listheader>
         ''' <item>      <term>D        </term><description><see cref="TotalDegrees"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If you want to exclude days use H instead.                                                                                                                                                        </description></item>
         ''' <item>      <term>d        </term><description><see cref="Degrees"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>If you want to exclude days use h instead.                                                                                                                                                        </description></item>
-        ''' <item>      <term>M        </term><description><see cref="TotalMinutes"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes degrees if D, d, H or h was presenf before.                                                                                                                                              </description></item>
-        ''' <item>      <term>m        </term><description><see cref="Minutes"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>S        </term><description><see cref="TotalSeconds"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If M or m was present before <see cref="Seconds"/> is used instead. If D, d, H or h was present before (and neither m or M was present) <see cref="TotalSeconds"/> value does not contain degrees.</description></item>
-        ''' <item>      <term>s        </term><description><see cref="Seconds"/> - integral part   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                  </description></item>
+        ''' <item>      <term>e        </term><description><see cref="ToSlope"/> as number         </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>This is <see cref="ToSlope"/> * 100                                                                                                                                                               </description></item>
+        ''' <item>      <term>E        </term><description><see cref="Rotations"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
         ''' <item>      <term>f        </term><description>Fractional part of <see cref="Seconds"/></description><description>Yes - minimum number of digits                        </description><description>Number - maximum number of digits (as required if not present)</description><description>Contains part of <see cref="Seconds"/> right from decimnal point (&lt;1). Does not contain decimal point or any numerals before it. Use dot (.) to include decimal point.                         </description></item>
+        ''' <item>      <term>h        </term><description>Degrees (hours) without days (whole)    </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>Always excludes days                                                                                                                                                                              </description></item>
+        ''' <item>      <term>H        </term><description><see cref="TotalDegrees"/> (total hours)</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes days if Y or y was present before.                                                                                                                                                       </description></item>
+        ''' <item>      <term>l        </term><description><see cref="ToSlope"/> in permile        </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>                                                                                                                                                                                                  </description></item>
+        ''' <item>      <term>L        </term><description><see cref="ToSlope"/> in percent        </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>                                                                                                                                                                                                  </description></item>
+        ''' <item>      <term>m        </term><description><see cref="Minutes"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                  </description></item>
+        ''' <item>      <term>M        </term><description><see cref="TotalMinutes"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes degrees if D, d, H or h was presenf before.                                                                                                                                              </description></item>
+        ''' <item>      <term>p, π     </term><description>π-radians (<see cref="ToRadians"/> / π )</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>Value of <see cref="ToRadians"/> (angle in radians) divided by <see cref="Math.PI"/> - because radian values are often given as mupltiples of π (pi)                                              </description></item>
+        ''' <item>      <term>R        </term><description><see cref="ToRadians"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
+        ''' <item>      <term>s        </term><description><see cref="Seconds"/> - integral part   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                  </description></item>
+        ''' <item>      <term>S        </term><description><see cref="TotalSeconds"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If M or m was present before <see cref="Seconds"/> is used instead. If D, d, H or h was present before (and neither m or M was present) <see cref="TotalSeconds"/> value does not contain degrees.</description></item>
         ''' <item>      <term>Y        </term><description>Total days                              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Value of <see cref="TotalDegrees"/> / 24 (<see cref="Double"/>)                                                                                                                                   </description></item>
         ''' <item>      <term>y        </term><description>Days (whole)                            </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>Value of <see cref="TotalDegrees"/> / 24, decimal part truncated (<see cref="Integer"/>)                                                                                                          </description></item>
-        ''' <item>      <term>H        </term><description><see cref="TotalDegrees"/> (total hours)</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes days if Y or y was present before.                                                                                                                                                       </description></item>
-        ''' <item>      <term>h        </term><description>Degrees (hours) without days (whole)    </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>Always excludes days                                                                                                                                                                              </description></item>
-        ''' <item>      <term>E        </term><description><see cref="Rotations"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>R        </term><description><see cref="ToRadians"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
         ''' <item>      <term>Z        </term><description><see cref="ToGradians"/>                </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>π, p     </term><description>π-radians (<see cref="ToRadians"/> / π )</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>Value of <see cref="ToRadians"/> (angle in radians) divided by <see cref="Math.PI"/> - because radian values are often given as mupltiples of π (pi)                                              </description></item>
         ''' </list>
         ''' <para>Specifiers that produces symbols:</para>
         ''' <list type="table">
         ''' <listheader><term>Specifier</term><description>Meaning</description></listheader>
-        ''' <item><term>A, Φ</term><description>Long latitude (north/south) specifier (e.g. North; <see cref="GlobalizationT.AngleFormatInfo.LatitudeNorthLongSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LatitudeSouthLongSymbol"/>)</description></item>
-        ''' <item><term>O, Λ</term><description>Long longitude (west/east) specifier (e.g. East; <see cref="GlobalizationT.AngleFormatInfo.LongitudeEastLongSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LongitudeWestLongSymbol"/>)</description></item>
         ''' <item><term>a, φ</term><description>Short latitude (north/south) specifier (e.g. N; <see cref="GlobalizationT.AngleFormatInfo.LatitudeNorthShortSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LatitudeSouthShortSymbol"/>)</description></item>
+        ''' <item><term>A, Φ</term><description>Long latitude (north/south) specifier (e.g. North; <see cref="GlobalizationT.AngleFormatInfo.LatitudeNorthLongSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LatitudeSouthLongSymbol"/>)</description></item>
         ''' <item><term>o, λ</term><description>Short longitude (west/east) specifier (e.g. E; <see cref="GlobalizationT.AngleFormatInfo.LongitudeEastShortSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LongitudeWestShortSymbol"/>)</description></item>
+        ''' <item><term>O, Λ</term><description>Long longitude (west/east) specifier (e.g. East; <see cref="GlobalizationT.AngleFormatInfo.LongitudeEastLongSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LongitudeWestLongSymbol"/>)</description></item>
         ''' <item><term>-</term><description>Optinal sign. In case of negative value emits minus sing (e.g. -; <see cref="NumberFormatInfo.NegativeSign"/>). In case of positive or zero value emits nothing.</description></item>
         ''' <item><term>+</term><description>Compulsory sign. In case of negative value emits minus sign (e.g. -; <see cref="NumberFormatInfo.NegativeSign"/>), in case of positive or zero value emits plus sign (e.g. +; <see cref="NumberFormatInfo.PositiveSign"/>).</description></item>
         ''' <item><term>.</term><description>Decimal point (e.g. .; <see cref="NumberFormatInfo.NumberDecimalSeparator"/>)</description></item>
@@ -977,14 +980,16 @@ Namespace NumericsT
         ''' <item><term>', ′</term><description>Minute sign (e.g. ′; <see cref="GlobalizationT.AngleFormatInfo.MinuteSign"/>)</description></item>
         ''' <item><term>", ″</term><description>Second sign (e.g. ″; <see cref="GlobalizationT.AngleFormatInfo.SecondSign"/>)</description></item>
         ''' <item><term>\</term><description>Escape - any character that immediatelly follows \ is passed to output without being processed.<note>Be carefull in C#, C++/CLI and other languages that use backslash (\) as their escape charatcer. You have to include \\ in format string (or in C# use verbatim strings - i.e. @"").</note></description></item>
+        ''' <item><term>%</term><description>Produces culture-specific percent symbol (%). <note>When % is used as very first character of formatting string it is ignored. To include culture-specific percent sing as first output character use %%.</note></description></item>
+        ''' <item><term>‰</term><description>Produces culture-specific permile symbol (‰).</description></item>
         ''' </list>
         ''' <para>Specifiers that affect output:</para>
         ''' <para>These specifiers do not produce any output but affect how output that follows tham is processed</para>
         ''' <list type="table">
         ''' <listheader><term>Specifier</term><description>Meaning</description></listheader>
-        ''' <item><term>N</term><description>Causes value of angle to be normalized. Can be followed by a number - parameter for <see cref="Normalize"/>. If parameter is not specified 360 is used. Negative values for parameter are supported. If used more than once in single format string always the original angle is normalized (i.e. not the normalized one). This specifier (if used) is usually placed at the begining of format string. Examples: N; N360; N-45<note>N- alone is not valid normalization specifier and instead means: Normalize to 360, emit optional minus sign.</note></description></item>
-        ''' <item><term>%</term><description>Only at beginnign of format string. Causes format string that would otherwise be treated as standard format string to be treated as custom format string. The % charatcer itself is ignored. To include perecent as first charatcer of your string use %% or \%. <note>If percent is used anywhere else but as first charatcer it is passed to output normally.</note></description></item>
         ''' <item><term>c</term><description>Turn compatibility rendering on. Causes that all °, ' (′) and " (″) placeholders following this specifier will use compatibility rendering instead of typographicaly correct rendering. I.e. <see cref="GlobalizationT.AngleFormatInfo.CompatibilityDegreeSign"/>, <see cref="GlobalizationT.AngleFormatInfo.CompatibilityMinuteSign"/> and <see cref="GlobalizationT.AngleFormatInfo.CompatibilitySecondSign"/> will be used instead of <see cref="GlobalizationT.AngleFormatInfo.DegreeSign"/>, <see cref="GlobalizationT.AngleFormatInfo.MinuteSign"/> resp. <see cref="GlobalizationT.AngleFormatInfo.SecondSign"/>.<note>In many cultures including invariant <see cref="GlobalizationT.AngleFormatInfo.DegreeSign"/> and <see cref="GlobalizationT.AngleFormatInfo.CompatibilityDegreeSign"/> are same).</note>Compatibility rendering cannot be turned off once turned on /in same format string). This specififer (if used) is usually placed at begining of format string.</description></item>
+        ''' <item><term>N</term><description>Causes value of angle to be normalized. Can be followed by a number - parameter for <see cref="Normalize"/>. If parameter is not specified 360 is used. Negative values for parameter are supported. If used more than once in single format string always the original angle is normalized (i.e. not the normalized one). This specifier (if used) is usually placed at the begining of format string. Examples: N; N360; N-45<note>N- alone is not valid normalization specifier and instead means: Normalize to 360, emit optional minus sign.</note></description></item>
+        ''' <item><term>%</term><description>Only at beginnign of format string. Causes format string that would otherwise be treated as standard format string to be treated as custom format string. The % charatcer itself is ignored. To render culture-specific perecent sign as first charatcer of your string use %%. To render literal percent character as first character of your sttring use \%. <note>If percent is used anywhere else but as first charatcer it is processed as a specifier that produces culture-specific percent symbol.</note></description></item>
         ''' </list>
         ''' <para>Special specifiers:</para>
         ''' <list type="table">
@@ -1007,24 +1012,27 @@ Namespace NumericsT
         ''' <para>Supported properties are:</para>
         ''' <list type="table">
         ''' <listheader><term>Property</term><description>Type</description><description>Description</description></listheader>
+        ''' <item><term>Days</term><description><see cref="Integer"/></description><description>Whole part of <see cref="TotalDegrees"/> / 24</description></item>
         ''' <item><term>Degrees</term><description><see cref="Integer"/></description><description><see cref="Degrees"/></description></item>
+        ''' <item><term>Gradians</term><description><see cref="Double"/></description><description><see cref="ToGradians"/></description></item>
+        ''' <item><term>Hours</term><description><see cref="Integer"/></description><description><see cref="Degrees"/> excluding days</description></item>
         ''' <item><term>Minutes</term><description><see cref="Integer"/></description><description><see cref="Minutes"/></description></item>
+        ''' <item><term>PiRadians</term><description><see cref="Double"/></description><description><see cref="ToRadians"/> / <see cref="Math.PI"/></description></item>
+        ''' <item><term>Radians</term><description><see cref="Double"/></description><description><see cref="ToRadians"/></description></item>
+        ''' <item><term>RestHours</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/> excluding days</description></item>
+        ''' <item><term>RestMinutes</term><description><see cref="Double"/></description><description><see cref="TotalMinutes"/> excluding degrees</description></item>
+        ''' <item><term>RestSeconds</term><description><see cref="Double"/></description><description><see cref="TotalSeconds"/> excluding minutes and degrees</description></item>
+        ''' <item><term>Rotations</term><description><see cref="Double"/></description><description><see cref="Rotations"/></description></item>
         ''' <item><term>Seconds</term><description><see cref="Double"/></description><description><see cref="Seconds"/></description></item>
+        ''' <item><term>Slope, Slope100</term><description><see cref="Double"/></description><see cref="ToSlope"/> (in percent)</item>
+        ''' <item><term>Slope1</term><description><see cref="Double"/></description><see cref="ToSlope"/> * 100 (as number)</item>
+        ''' <item><term>Slope1000</term><description><see cref="Double"/></description><see cref="ToSlope"/> * 10 (in permile)</item>
+        ''' <item><term>Time</term><description><see cref="TimeSpan"/></description><description>Value as <see cref="TimeSpan"/></description></item>
+        ''' <item><term>TimeFormattable</term><description><see cref="TimeSpanFormattable"/></description><description>Value as <see cref="TimeSpanFormattable"/></description></item>
+        ''' <item><term>TotalDays</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/> / 24</description></item>
         ''' <item><term>TotalDegrees, TotalHours</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/></description></item>
         ''' <item><term>TotalMinutes</term><description><see cref="Double"/></description><description><see cref="TotalMinutes"/></description></item>
         ''' <item><term>TotalSeconds</term><description><see cref="Double"/></description><description><see cref="TotalSeconds"/></description></item>
-        ''' <item><term>Rotations</term><description><see cref="Double"/></description><description><see cref="Rotations"/></description></item>
-        ''' <item><term>Radians</term><description><see cref="Double"/></description><description><see cref="ToRadians"/></description></item>
-        ''' <item><term>Gradians</term><description><see cref="Double"/></description><description><see cref="ToGradians"/></description></item>
-        ''' <item><term>PiRadians</term><description><see cref="Double"/></description><description><see cref="ToRadians"/> / <see cref="Math.PI"/></description></item>
-        ''' <item><term>Days</term><description><see cref="Integer"/></description><description>Whole part of <see cref="TotalDegrees"/> / 24</description></item>
-        ''' <item><term>TotalDays</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/> / 24</description></item>
-        ''' <item><term>RestMinutes</term><description><see cref="Double"/></description><description><see cref="TotalMinutes"/> excluding degrees</description></item>
-        ''' <item><term>RestSeconds</term><description><see cref="Double"/></description><description><see cref="TotalSeconds"/> excluding minutes and degrees</description></item>
-        ''' <item><term>Hours</term><description><see cref="Integer"/></description><description><see cref="Degrees"/> excluding days</description></item>
-        ''' <item><term>RestHours</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/> excluding days</description></item>
-        ''' <item><term>Time</term><description><see cref="TimeSpan"/></description><description>Value as <see cref="TimeSpan"/></description></item>
-        ''' <item><term>TimeFormattable</term><description><see cref="TimeSpanFormattable"/></description><description>Value as <see cref="TimeSpanFormattable"/></description></item>
         ''' </list>
         ''' <note>All properties are obtained from <see cref="Angle"/> instance that could be affected by previous normalization by the N specifier.</note>
         ''' </description>
@@ -1034,52 +1042,61 @@ Namespace NumericsT
         ''' </remarks>
         Public Overloads Function ToString(format As String, formatProvider As IFormatProvider) As String Implements IFormattable.ToString
             If format = "" Then format = "G"
+            If formatProvider Is Nothing Then formatProvider = CurrentCulture
+            Dim ainfo = If(TypeOf formatProvider Is CultureInfo, GlobalizationT.AngleFormatInfo.Get(DirectCast(formatProvider, CultureInfo)), If(TryCast(formatProvider.GetFormat(GetType(GlobalizationT.AngleFormatInfo)), GlobalizationT.AngleFormatInfo), GlobalizationT.AngleFormatInfo.DefaultInvariant))
+            Dim ninfo = If(TryCast(formatProvider.GetFormat(GetType(NumberFormatInfo)), NumberFormatInfo), InvariantCulture.NumberFormat)
+            Dim dinfo = If(TryCast(formatProvider.GetFormat(GetType(DateTimeFormatInfo)), DateTimeFormatInfo), InvariantCulture.DateTimeFormat)
+
             If format.Length = 1 OrElse shortFormatRegex.IsMatch(format) Then
                 Dim param As Integer?
                 If format.Length > 1 Then param = Integer.Parse(format.Substring(1), InvariantCulture)
                 Select Case format(0)           '                                           parameter             no parameter   custom             
                     Case "G"c, "g"c, "l"c, "L"c 'General/long -14°10'15.33"                 no dec places for "   as required    -d°mm'ss[.f]"      
                         format = "-d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """"
-                    Case "S"c, "s"c             'Short -14°09'05"                             not allowed                           -d°mm'ss"         
-                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
-                        format = "-d°mm'ss"""
-                    Case "F"c, "f"c             'Decimal -14.978425                         no decimal places      as required    -D                
-                        format = If(param.HasValue, "-D" & param.ToString(InvariantCulture), "-(TotalDegrees,R)")
-                    Case "N"c                   'G - normalized 0-360                       no dec places for "    as required    N-d°mm'ss[.f]"    
-                        format = "Nd°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """"
-                    Case "n"c                   'S - normalized 0-360                       not allowed                           N-d°mm'ss"        
-                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
-                        format = "Nd°mm'ss"""
-                    Case "e"c                   'F - normalized 0-360                       no decimal places      as required    N-D               
-                        format = "N" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,R)")
-                    Case "A"c, "Φ"c             'GPS latitude 14°10'15.33" N                no dec places for "    as required    N180d°mm'ss[.f]" a
-                        format = "N180d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """ a"
                     Case "a"c, "φ"c             'GPS latitude 14°10'15 N                    not allowed                           N180d°mm'ss" a    
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "N180d°mm'ss"" a"
+                    Case "A"c, "Φ"c             'GPS latitude 14°10'15.33" N                no dec places for "    as required    N180d°mm'ss[.f]" a
+                        format = "N180d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """ a"
                     Case "b"c                   'GPS latitude 14.154 N                      no decimal places      as required    N180D a           
                         format = "N180" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,R)") & " a"
-                    Case "O"c, "Λ"c             'GPS longitude 14°10'15.33" E               no dec places for "    as required    N180d°mm'ss[.f]" o
-                        format = "N180d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """ o"
-                    Case "o"c, "λ"c             'GPS longitude 14°10'15" E                  not allowed                           N180d°mm'ss" o    
-                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
-                        format = "N180d°mm'ss"" o"
-                    Case "p"c                   'GPS longitude 14.33145 E                   no decimal places      as required    N180D o           
-                        format = "N180" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,R)") & " o"
-                    Case "t"c                   'Time short, no days 90:10:05               not allowed                           -d:mm:ss          
-                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
-                        format = "-d:mm:ss"
-                    Case "T"c                   'Time long, no days 90:10:05.335            no dec places for "    as required    -d:mm:ss[.f]      
-                        format = "-d:mm:ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)")
                     Case "d"c                   'Time short, with days 7.15:10:05           not allowed                           -[y.]d:mm:ss      
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "-[y.]h:mm:ss"
                     Case "D"c                   'Time long, with days 7.15:10:05.335        no dec places for "    as required    -[y.]d:mm:ss[.f]  
                         format = "-[y.]h:mm:ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)")
+                    Case "e"c                   'F - normalized 0-360                       no decimal places      as required    N-D               
+                        format = "N" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,R)")
                     Case "E"c, "e"c             'Rotations                                  no dec places          max 4          -E                
                         format = "-E" & param.ToString(InvariantCulture)
+                    Case "F"c, "f"c             'Decimal -14.978425                         no decimal places      as required    -D                
+                        format = If(param.HasValue, "-D" & param.ToString(InvariantCulture), "-(TotalDegrees,R)")
+                    Case "l"c                   'Slope in ‰                                 no dec places          culture-spec.  -l‰               
+                        format = "-L" & If(param.HasValue, param.Value, ninfo.NumberDecimalDigits).ToString(InvariantCulture) & "‰"
+                    Case "L"c                   'Slope in %                                 no dec places          culture-spec.  -L%               
+                        format = "-L" & If(param.HasValue, param.Value, ninfo.NumberDecimalDigits).ToString(InvariantCulture) & "%"
+                    Case "n"c                   'S - normalized 0-360                       not allowed                           N-d°mm'ss"        
+                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
+                        format = "Nd°mm'ss"""
+                    Case "N"c                   'G - normalized 0-360                       no dec places for "    as required    N-d°mm'ss[.f]"    
+                        format = "Nd°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """"
+                    Case "o"c, "λ"c             'GPS longitude 14°10'15" E                  not allowed                           N180d°mm'ss" o    
+                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
+                        format = "N180d°mm'ss"" o"
+                    Case "O"c, "Λ"c             'GPS longitude 14°10'15.33" E               no dec places for "    as required    N180d°mm'ss[.f]" o
+                        format = "N180d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """ o"
+                    Case "p"c                   'GPS longitude 14.33145 E                   no decimal places      as required    N180D o           
+                        format = "N180" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,R)") & " o"
                     Case "R"c, "r"c             'Radians                                    no dec places          max 4          -R                
                         format = "-R" & param.ToString(InvariantCulture)
+                    Case "S"c, "s"c             'Short -14°09'05"                             not allowed                           -d°mm'ss"         
+                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
+                        format = "-d°mm'ss"""
+                    Case "t"c                   'Time short, no days 90:10:05               not allowed                           -d:mm:ss          
+                        If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
+                        format = "-d:mm:ss"
+                    Case "T"c                   'Time long, no days 90:10:05.335            no dec places for "    as required    -d:mm:ss[.f]      
+                        format = "-d:mm:ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)")
                     Case "Z"c, "z"c             'Grads                                      no dec places          max 4          -Z                
                         format = "-Z" & param.ToString(InvariantCulture)
                     Case Else : Throw New FormatException("Unknown standard format specifier {0}".f(format(0)))
@@ -1097,9 +1114,6 @@ Namespace NumericsT
             Dim state As FState = FState.Start 'FSA state
             Dim leftPlaces As Integer? = Nothing 'Places left of . (negative values are recomendation)
             Dim rightPlaces As Integer? = Nothing 'Places right from . (negative values are recomendation)
-            Dim ainfo = If(TypeOf formatProvider Is CultureInfo, GlobalizationT.AngleFormatInfo.Get(DirectCast(formatProvider, CultureInfo)), If(TryCast(formatProvider.GetFormat(GetType(GlobalizationT.AngleFormatInfo)), GlobalizationT.AngleFormatInfo), GlobalizationT.AngleFormatInfo.DefaultInvariant))
-            Dim ninfo = If(TryCast(formatProvider.GetFormat(GetType(NumberFormatInfo)), NumberFormatInfo), InvariantCulture.NumberFormat)
-            Dim dinfo = If(TryCast(formatProvider.GetFormat(GetType(DateTimeFormatInfo)), DateTimeFormatInfo), InvariantCulture.DateTimeFormat)
             Dim useThousandSeparator As Boolean = False 'Use thousand (group) seperator for formatted value?
             Dim customName As StringBuilder = Nothing  'Builds up custom property name
             Dim customFormat As StringBuilder = Nothing 'Builds up custom format
@@ -1109,16 +1123,52 @@ Namespace NumericsT
                     Case FState.Start, FState.Normal
                         specifier = Nothing : value = Nothing : useThousandSeparator = False : customName = Nothing
                         Select Case ch
-                            Case "D"c  'D degrees, decimal                                                             no dec places          as required    min digits        
-                                value = normalizedValue.TotalDegrees : state = FState.SpecifierDouble : specifier = ch : has_d = True
+                            Case "a"c, "φ"c  'a Latitude specifier (N/S), short                                              not allowed                                       
+                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LatitudeNorthShortSymbol, ainfo.LatitudeSouthShortSymbol)) : state = FState.Normal
+                            Case "A"c, "Φ"c  'A Latitude specifier (north/south), long                                       not allowed                                       
+                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LatitudeNorthLongSymbol, ainfo.LatitudeSouthLongSymbol)) : state = FState.Normal
+                            Case "c"c  'c use comaptibility characters for °,Case ","c ',"                             not allowed                                             
+                                compatibilityRendering = True : state = FState.Normal
                             Case "d"c  'd degrees, whole                                                               not allowed                           min digits        
                                 value = normalizedValue.Degrees : state = FState.SpecifierInt : specifier = ch : has_d = True
-                            Case "M"c  'M minutes, decimal (excl degrees if d/D or h/H present)                                 no decimal places      as required    min digits        
-                                value = If(has_d, normalizedValue.TotalMinutes - CDbl(normalizedValue.Degrees) * 60.0#, normalizedValue.TotalMinutes)
-                                specifier = ch : state = FState.SpecifierDouble : has_m = True
+                            Case "D"c  'D degrees, decimal                                                             no dec places          as required    min digits        
+                                value = normalizedValue.TotalDegrees : state = FState.SpecifierDouble : specifier = ch : has_d = True
+                            Case "e"c  'o slope (absolute)                                                             no decimal places      as required        min digits    
+                                value = normalizedValue.ToSlope / 100.0# : specifier = ch : state = FState.SpecifierDouble
+                            Case "E"c  'E Rotations value                                                              no decimal places      max 4          min digits        
+                                value = normalizedValue.Rotations : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
+                            Case "f"c  'f second fraction                                                              no decimal places max  as required    min digits        
+                                value = normalizedValue.Seconds - Math.Floor(normalizedValue.Seconds)
+                                specifier = ch : state = FState.SpecifierF : leftPlaces = 1
+                            Case "h"c  'h degrees, whole, excl. days                                                      not allowed                        min digits        
+                                value = CInt(Math.Floor(normalizedValue.TotalDegrees - normalizedValue.TotalDegrees \ 24.0# * 24.0#))
+                                specifier = ch : state = FState.SpecifierInt : has_d = True
+                            Case "H"c  'H degrees, decimal (excl days if y/Y present)                                    no decimal places      as required    min digits      
+                                value = If(has_y, Math.Floor(normalizedValue.TotalDegrees - Math.Floor(normalizedValue.TotalDegrees / 24.0#) * 24.0#), normalizedValue.Degrees)
+                                specifier = ch : state = FState.SpecifierDouble : has_d = True
+                            Case "l"c  'l permile slope                                                                no decimal places      as required       min digits     
+                                value = normalizedValue.ToSlope * 10.0# : specifier = ch : state = FState.SpecifierDouble
+                            Case "L"c  'l percent slope                                                                no decimal places      as required       min digits     
+                                value = normalizedValue.ToSlope : specifier = ch : state = FState.SpecifierDouble
                             Case "m"c  'm minutes, whole                                                               not allowed                           min digits        
                                 value = normalizedValue.Minutes : state = FState.SpecifierInt : specifier = ch : has_m = True
-                            Case "S"c  'S seconds, decimal (excl degrees if d/D or h/H present, excl minutes if m/M present)      no decimal places      as required    min digits        
+                            Case "M"c  'M minutes, decimal (excl degrees if d/D or h/H present)                                 no decimal places      as required   min digits
+                                value = If(has_d, normalizedValue.TotalMinutes - CDbl(normalizedValue.Degrees) * 60.0#, normalizedValue.TotalMinutes)
+                                specifier = ch : state = FState.SpecifierDouble : has_m = True
+                            Case "N"c  'N normalize to range                                                           value for Normalize()  360                              
+                                state = FState.Normalize1 : value = Nothing : specifier = ch
+                            Case "o"c, "λ"c  'o Longitude specifier (E/W), short                                             not allowed                                       
+                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LongitudeEastShortSymbol, ainfo.LongitudeWestShortSymbol)) : state = FState.Normal
+                            Case "O"c, "Λ"c  'O Longitude specifier (east/west), long                                        not allowed                                       
+                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LongitudeEastLongSymbol, ainfo.LongitudeWestLongSymbol)) : state = FState.Normal
+                            Case "π"c, "p"c  'π-radians value                                                                no decimal places      max 4          min digits  
+                                value = normalizedValue.ToRadians / Math.PI : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
+                            Case "R"c  'R radians value                                                                no decimal places      max 4          min digits        
+                                value = normalizedValue.ToRadians : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
+                            Case "s"c  's seconds, whole                                                               not allowed                           min digits        
+                                value = CInt(Math.Floor(normalizedValue.Seconds))
+                                specifier = ch : state = FState.SpecifierInt
+                            Case "S"c  'S seconds, decimal (excl degrees if d/D or h/H present, excl minutes if m/M present) no decimal places      as required    min digits  
                                 If has_m Then
                                     value = normalizedValue.Seconds
                                 ElseIf has_d Then
@@ -1127,36 +1177,10 @@ Namespace NumericsT
                                     value = normalizedValue.TotalSeconds
                                 End If
                                 specifier = ch : state = FState.SpecifierDouble
-                            Case "s"c  's seconds, whole                                                               not allowed                           min digits        
-                                value = CInt(Math.Floor(normalizedValue.Seconds))
-                                specifier = ch : state = FState.SpecifierInt
-                            Case "f"c  'f second fraction                                                              no decimal places max  as required    min digits        
-                                value = normalizedValue.Seconds - Math.Floor(normalizedValue.Seconds)
-                                specifier = ch : state = FState.SpecifierF : leftPlaces = 1
-                            Case "Y"c  'Y days, decimal                                                                no decimal places      as required    min digits        
-                                value = normalizedValue.TotalDegrees / 24.0# : state = FState.SpecifierDouble : specifier = ch : has_y = True
                             Case "y"c  'y days, whole                                                                  not allowed                           min digits        
                                 value = Math.Floor(normalizedValue.TotalDegrees / 24) : state = FState.SpecifierInt : specifier = ch : has_y = True
-                            Case "H"c  'H degrees, decimal (excl days if y/Y present)                                    no decimal places      as required    min digits        
-                                value = If(has_y, Math.Floor(normalizedValue.TotalDegrees - Math.Floor(normalizedValue.TotalDegrees / 24.0#) * 24.0#), normalizedValue.Degrees)
-                                specifier = ch : state = FState.SpecifierDouble : has_d = True
-                            Case "h"c  'h degrees, whole, excl. days                                                      not allowed                        min digits
-                                value = CInt(Math.Floor(normalizedValue.TotalDegrees - normalizedValue.TotalDegrees \ 24.0# * 24.0#))
-                                specifier = ch : state = FState.SpecifierInt : has_d = True
-                            Case "A"c, "Φ"c  'A Latitude specifier (north/south), long                                       not allowed                                             
-                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LatitudeNorthLongSymbol, ainfo.LatitudeSouthLongSymbol)) : state = FState.Normal
-                            Case "O"c, "Λ"c  'O Longitude specifier (east/west), long                                        not allowed                                             
-                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LongitudeEastLongSymbol, ainfo.LongitudeWestLongSymbol)) : state = FState.Normal
-                            Case "a"c, "φ"c  'a Latitude specifier (N/S), short                                              not allowed                                             
-                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LatitudeNorthShortSymbol, ainfo.LatitudeSouthShortSymbol)) : state = FState.Normal
-                            Case "o"c, "λ"c  'o Longitude specifier (E/W), short                                             not allowed                                             
-                                builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LongitudeEastShortSymbol, ainfo.LongitudeWestShortSymbol)) : state = FState.Normal
-                            Case "E"c  'E Rotations value                                                              no decimal places      max 4          min digits        
-                                value = normalizedValue.Rotations : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
-                            Case "R"c  'R radians value                                                                no decimal places      max 4          min digits        
-                                value = normalizedValue.ToRadians : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
-                            Case "π"c, "p"c  'π-radians value                                                                no decimal places      max 4          min digits        
-                                value = normalizedValue.ToRadians / Math.PI : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
+                            Case "Y"c  'Y days, decimal                                                                no decimal places      as required    min digits        
+                                value = normalizedValue.TotalDegrees / 24.0# : state = FState.SpecifierDouble : specifier = ch : has_y = True
                             Case "Z"c  'Z grads value                                                                  no decimal places      max 4          min digits        
                                 value = normalizedValue.ToGradians : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
                             Case "-"c  '- minus sign (if required)                                                     not allowed                                             
@@ -1170,20 +1194,18 @@ Namespace NumericsT
                                 builders.Peek.Append(ninfo.NumberGroupSeparator) : state = FState.Normal
                             Case "°"c  '° degree sign                                                                  not allowed                                             
                                 builders.Peek.Append(If(compatibilityRendering, ainfo.CompatibilityDegreeSign, ainfo.DegreeSign)) : state = FState.Normal
-                            Case "'"c, "′"c  '' minute sing                                                                  not allowed                                             
+                            Case "'"c, "′"c  '' minute sing                                                                  not allowed                                       
                                 builders.Peek.Append(If(compatibilityRendering, ainfo.CompatibilityMinuteSign, ainfo.MinuteSign)) : state = FState.Normal
-                            Case """"c, "″"c '" second sing                                                                   not allowed                                             
+                            Case """"c, "″"c '" second sing                                                                   not allowed                                      
                                 builders.Peek.Append(If(compatibilityRendering, ainfo.CompatibilitySecondSign, ainfo.SecondSign)) : state = FState.Normal
                             Case ":"c  ': time separator                                                               not allowed                                             
                                 builders.Peek.Append(dinfo.TimeSeparator) : state = FState.Normal
                             Case "\"c  '\ escape                                                                       single char            error          \                 
                                 state = FState.Slash
-                            Case "%"c  '% if used as 1st character - ignored                                           rest of string         error          % as first        
-                                If state = FState.Start Then state = FState.Normal Else builders.Peek.Append(ch)
-                            Case "N"c  'N normalize to range                                                           value for Normalize()  360                              
-                                state = FState.Normalize1 : value = Nothing : specifier = ch
-                            Case "c"c  'c use comaptibility characters for °,Case ","c ',"                             not allowed                                             
-                                compatibilityRendering = True : state = FState.Normal
+                            Case "%"c  '% if used as 1st character - ignored, otherwise percent symbol                 rest of string         error          % as first        
+                                If state = FState.Start Then state = FState.Normal Else builders.Peek.Append(ninfo.PercentSymbol)
+                            Case "‰"c  '‰ permile symbol                                                                                                                       
+                                builders.Peek.Append(ninfo.PerMilleSymbol)
                             Case "["c  '[] optional component specifier, can be nested. reners only if inside non-zero inside                 empty                            
                                 builders.Push(New MeaningfulStringbuilder) : state = FState.Normal
                             Case "]"c
@@ -1343,22 +1365,25 @@ Namespace NumericsT
                 name = name.Substring(2)
             End If
             Select Case name.ToLowerInvariant
+                Case "days" : value = CInt(Math.Floor(normalizedValue.TotalDegrees / 24.0#))
                 Case "degrees" : value = normalizedValue.Degrees
+                Case "gradians" : value = normalizedValue.ToGradians
+                Case "hours" : value = CInt(Math.Floor(normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24.0#) * 24.0#))
                 Case "minutes" : value = normalizedValue.Minutes
+                Case "piradians" : value = normalizedValue.ToRadians / Math.PI
+                Case "radians" : value = normalizedValue.ToRadians
+                Case "resthours" : value = normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24.0#) * 24.0#
+                Case "restminutes" : value = normalizedValue.TotalMinutes - normalizedValue.TotalDegrees * 60.0#
+                Case "restseconds" : value = normalizedValue.TotalSeconds - normalizedValue.TotalMinutes * 60.0#
+                Case "rotations" : value = normalizedValue.Rotations
                 Case "seconds" : value = normalizedValue.Seconds
+                Case "slope", "slope100" : value = normalizedValue.ToSlope
+                Case "slope1" : value = normalizedValue.ToSlope / 100.0#
+                Case "slope1000" : value = normalizedValue.ToSlope * 10.0#
+                Case "totaldays" : value = normalizedValue.TotalDegrees / 24.0#
                 Case "totaldegrees", "totalhours" : value = normalizedValue.TotalDegrees
                 Case "totalminutes" : value = normalizedValue.TotalMinutes
                 Case "totalseconds" : value = normalizedValue.TotalSeconds
-                Case "rotations" : value = normalizedValue.Rotations
-                Case "radians" : value = normalizedValue.ToRadians
-                Case "gradians" : value = normalizedValue.ToGradians
-                Case "piradians" : value = normalizedValue.ToRadians / Math.PI
-                Case "days" : value = CInt(Math.Floor(normalizedValue.TotalDegrees / 24.0#))
-                Case "totaldays" : value = normalizedValue.TotalDegrees / 24.0#
-                Case "restminutes" : value = normalizedValue.TotalMinutes - normalizedValue.TotalDegrees * 60.0#
-                Case "restseconds" : value = normalizedValue.TotalSeconds - normalizedValue.TotalMinutes * 60.0#
-                Case "hours" : value = CInt(Math.Floor(normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24.0#) * 24.0#))
-                Case "resthours" : value = normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24.0#) * 24.0#
                 Case "time" : value = CType(normalizedValue, TimeSpan)
                 Case "timeformattable" : value = CType(normalizedValue, TimeSpanFormattable)
                 Case Else : Throw New FormatException("Unknown custom property name {0}".f(name))

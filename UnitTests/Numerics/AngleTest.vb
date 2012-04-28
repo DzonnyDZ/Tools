@@ -42,6 +42,9 @@ Namespace NumericsUT
             Assert.AreEqual(100, New Angle(90).ToGradians)
             Assert.AreEqual(-400, New Angle(-360).ToGradians)
             Assert.AreEqual(2.0# * Math.PI, New Angle(360).ToRadians)
+            Assert.AreEqual(100.0#, New Angle(45).ToSlope)
+            Assert.AreEqual(-100.0#, New Angle(-45).ToSlope)
+            Assert.AreEqual(0.0#, New Angle(0).ToSlope)
 
             Dim values() As Double = {0.0#, 1.0#, -1.0#, 180.0#, 360.0#, 90.0#, -90.0#, 3600.0#, 14.134971345645519#}
             For Each v In values
@@ -68,6 +71,9 @@ Namespace NumericsUT
             Assert.AreEqual(1.0# / 3600.0#, Angle.FromSeconds(1).TotalDegrees)
             Assert.AreEqual(1.0#, Angle.FromSeconds(3600).TotalDegrees)
             Assert.AreEqual(-1.0#, Angle.FromSeconds(-3600).TotalDegrees)
+            Assert.AreEqual(New Angle(45).TotalDegrees, Angle.FromSlope(100))
+            Assert.AreEqual(New Angle(-45).TotalDegrees, Angle.FromSlope(-100))
+            Assert.AreEqual(New Angle(0).TotalDegrees, Angle.FromSlope(0))
 
             Dim values() As Double = {0.0#, 1.0#, -1.0#, 180.0#, 360.0#, 90.0#, -90.0#, 3600.0#, 14.134971345645519#}
             For Each v In values
@@ -929,6 +935,6 @@ Namespace NumericsUT
             Assert.AreEqual(1, New Angle(180).CompareTo(New Angle(-181)))
         End Sub
 
-        'TODO:SLope
+
     End Class
 End Namespace
