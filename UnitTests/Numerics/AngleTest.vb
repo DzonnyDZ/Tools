@@ -1,5 +1,5 @@
-﻿Imports Tools
-
+﻿Imports Tools, System.Globalization.CultureInfo
+Imports Tools.ExtensionsT
 Imports System
 
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
@@ -935,6 +935,180 @@ Namespace NumericsUT
             Assert.AreEqual(1, New Angle(180).CompareTo(New Angle(-181)))
         End Sub
 
+        <TestMethod()>
+        Public Sub ToString_Symbols()
+            Dim a1 As New Angle(10) 'South, East
+            Dim a2 As New Angle(-10) 'North, West
+
+            For Each culture In {CurrentCulture, InvariantCulture, GetCultureInfo("ar"), GetCultureInfo("cs")}
+                Dim ni = culture.NumberFormat
+                Dim ai = culture.GetAngleFormatInfo
+                Assert.AreEqual(ai.LatitudeSouthShortSymbol, a1.ToString("%a", culture))
+                Assert.AreEqual(ai.LatitudeSouthShortSymbol, a1.ToString("%φ", culture))
+                Assert.AreEqual(ai.LatitudeNorthShortSymbol, a2.ToString("%a", culture))
+                Assert.AreEqual(ai.LatitudeNorthShortSymbol, a2.ToString("%φ", culture))
+                Assert.AreEqual(ai.LongitudeEastShortSymbol, a1.ToString("%o", culture))
+                Assert.AreEqual(ai.LongitudeEastShortSymbol, a1.ToString("%λ", culture))
+                Assert.AreEqual(ai.LongitudeWestShortSymbol, a2.ToString("%o", culture))
+                Assert.AreEqual(ai.LongitudeWestShortSymbol, a2.ToString("%λ", culture))
+
+                Assert.AreEqual(ai.LatitudeSouthLongSymbol, a1.ToString("%A", culture))
+                Assert.AreEqual(ai.LatitudeSouthLongSymbol, a1.ToString("%Φ", culture))
+                Assert.AreEqual(ai.LatitudeNorthLongSymbol, a2.ToString("%A", culture))
+                Assert.AreEqual(ai.LatitudeNorthLongSymbol, a2.ToString("%Φ", culture))
+                Assert.AreEqual(ai.LongitudeEastLongSymbol, a1.ToString("%O", culture))
+                Assert.AreEqual(ai.LongitudeEastLongSymbol, a1.ToString("%Λ", culture))
+                Assert.AreEqual(ai.LongitudeWestLongSymbol, a2.ToString("%O", culture))
+                Assert.AreEqual(ai.LongitudeWestLongSymbol, a2.ToString("%Λ", culture))
+
+                Assert.AreEqual("", a1.ToString("%-", culture))
+                Assert.AreEqual(ni.NegativeSign, a2.ToString("%-", culture))
+                Assert.AreEqual(ni.NegativeSign, a2.ToString("%+", culture))
+                Assert.AreEqual(ni.PositiveSign, a1.ToString("%+", culture))
+                Assert.AreEqual(ni.NumberDecimalSeparator, a1.ToString("%.", culture))
+                Assert.AreEqual(ni.NumberGroupSeparator, a1.ToString("%,", culture))
+                Assert.AreEqual(ai.DegreeSign, a1.ToString("%°", culture))
+                Assert.AreEqual(ai.SecondSign, a1.ToString("%'", culture))
+                Assert.AreEqual(ai.MinuteSign, a1.ToString("%""", culture))
+                Assert.AreEqual(ai.SecondSign, a1.ToString("%′", culture))
+                Assert.AreEqual(ai.MinuteSign, a1.ToString("%″", culture))
+                Assert.AreEqual(ai.CompatibilityDegreeSign, a1.ToString("c°", culture))
+                Assert.AreEqual(ai.CompatibilitySecondSign, a1.ToString("c'", culture))
+                Assert.AreEqual(ai.CompatibilityMinuteSign, a1.ToString("c""", culture))
+                Assert.AreEqual(ai.CompatibilitySecondSign, a1.ToString("c′", culture))
+                Assert.AreEqual(ai.CompatibilityMinuteSign, a1.ToString("c″", culture))
+
+                Assert.AreEqual("\", a1.ToString("\\", culture))
+                Assert.AreEqual(".", a1.ToString("\.", culture))
+                Assert.AreEqual(",", a1.ToString("\,", culture))
+                Assert.AreEqual("""", a1.ToString("\""", culture))
+                Assert.AreEqual("\%", a1.ToString("\%", culture))
+                Assert.AreEqual("D", a1.ToString("\D", culture))
+                Assert.AreEqual("(", a1.ToString("\(", culture))
+                Assert.AreEqual("[", a1.ToString("\[", culture))
+                Assert.AreEqual(")", a1.ToString("%)", culture))
+                Assert.AreEqual("]]", a1.ToString("]]", culture))
+
+                Assert.AreEqual(ni.PercentSymbol, a1.ToString("%%", culture))
+                Assert.AreEqual(ni.PerMilleSymbol, a1.ToString("%‰", culture))
+
+                Assert.AreEqual("", a1.ToString("%|", culture))
+                Assert.AreEqual("", a1.ToString("||", culture))
+                Assert.AreEqual("", a1.ToString("||||||", culture))
+                Assert.AreEqual("|", a1.ToString("\|", culture))
+            Next
+        End Sub
+
+        <TestMethod()>
+        Public Sub ToString_CustomSimple()
+            Dim a1 As New Angle(60, 30, 50.5#)
+            Dim a2 As New Angle(-60, 30, 50.5#)
+            Dim a3 As New Angle(225)
+            Dim culture = InvariantCulture
+            Assert.AreEqual(a1.TotalDegrees.ToString(culture), a1.ToString("%D", culture))
+            Assert.AreEqual(a1.TotalDegrees.ToString(culture), a1.ToString("%H", culture))
+            Assert.AreEqual((-a2.TotalDegrees).ToString(culture), a2.ToString("%D", culture))
+            Assert.AreEqual("-" & (-a2.TotalDegrees).ToString(culture), a2.ToString("-D", culture))
+            Assert.AreEqual("60", a1.ToString("%d", culture))
+            Assert.AreEqual("-60", a1.ToString("-d", culture))
+            Assert.AreEqual("60.5", a1.ToString("%D1", culture))
+            Assert.AreEqual("60", a1.ToString("%D0", culture))
+            Assert.AreEqual("60.51", a1.ToString("DD2", culture))
+            Assert.AreEqual("060.5", a1.ToString("DDD1", culture))
+            Assert.AreEqual("000,060.5", a1.ToString("DDD,DDD1", culture))
+            Assert.AreEqual("000,060.5", a1.ToString(",DDDDDD1", culture))
+            Assert.AreEqual("000,060.5", a1.ToString("DDDDDD,1", culture))
+            Assert.AreEqual("000,060.5", a1.ToString("DDDDDD1,", culture))
+
+            Assert.AreEqual((a1.ToSlope / 100.0#).ToString(culture), a1.ToString("%e", culture))
+            Assert.AreEqual(a1.Rotations.ToString(culture), a1.ToString("%E", culture))
+
+            Assert.AreEqual("5", a1.ToString("%f", culture))
+
+            Assert.AreEqual("12", a1.ToString("%h", culture))
+
+            Assert.AreEqual((a1.ToSlope * 10.0#).ToString(culture), a1.ToString("%l", culture))
+            Assert.AreEqual(a1.ToSlope.ToString(culture), a1.ToString("%L", culture))
+
+            Assert.AreEqual("30", a1.ToString("%m", culture))
+            Assert.AreEqual(a1.TotalMinutes.ToString(culture), a1.ToString("%M", culture))
+
+            Assert.AreEqual((a1.ToRadians / Math.PI).ToString(culture), a1.ToString("%p", culture))
+            Assert.AreEqual((a1.ToRadians / Math.PI).ToString(culture), a1.ToString("%π", culture))
+            Assert.AreEqual((a1.ToRadians / Math.PI).ToString(culture), a2.ToString("-π", culture))
+            Assert.AreEqual((a1.ToRadians / Math.PI).ToString(culture), a2.ToString("-p", culture))
+            Assert.AreEqual(a1.ToRadians.ToString(culture), a1.ToString("%R", culture))
+            Assert.AreEqual(a1.ToRadians.ToString(culture), a2.ToString("-R", culture))
+
+            Assert.AreEqual("50", a1.ToString("%s", culture))
+            Assert.AreEqual(a1.TotalSeconds.ToString(culture), a1.ToString("%S", culture))
+
+            Assert.AreEqual("2", a1.ToString("%y", culture))
+            Assert.AreEqual((a1.TotalDegrees / 24).ToString(culture), a1.ToString("%Y", culture))
+
+            Assert.AreEqual(a1.ToGradians.ToString(culture), a1.ToString("%Z", culture))
+            Assert.AreEqual(a2.ToGradians.ToString(culture), a2.ToString("-Z", culture))
+
+            Assert.AreEqual(a1.ToSlope.ToString(culture), a1.ToString("-L", culture))
+            Assert.AreEqual(a2.ToSlope.ToString(culture), a2.ToString("-L", culture))
+
+            Assert.AreEqual("-100", a3.ToString("-L", culture))
+            Assert.AreEqual("- 100", a3.ToString("- L", culture))
+            Assert.AreEqual("-" & vbCrLf & "100", a3.ToString("-" & vbCrLf & "L", culture))
+            Assert.AreEqual("100-", a3.ToString("L-", culture))
+            Assert.AreEqual("100  -", a3.ToString("L  -", culture))
+
+            Assert.AreEqual("45100", a3.ToString("d-L", culture))
+            Assert.AreEqual("100-45", a3.ToString("L-d", culture))
+            Assert.AreEqual("45+100", a3.ToString("d+L", culture))
+            Assert.AreEqual("100-45", a3.ToString("L+d", culture))
+
+            Assert.AreEqual("45-100", a3.ToString("d|-L", culture))
+            Assert.AreEqual("45100", a3.ToString("d-|L", culture))
+            Assert.AreEqual("100-45", a3.ToString("L-|d", culture))
+            Assert.AreEqual("10045", a3.ToString("L|-d", culture))
+            Assert.AreEqual("45+100", a3.ToString("d+|L", culture))
+            Assert.AreEqual("45-100", a3.ToString("d|+L", culture))
+            Assert.AreEqual("100-45", a3.ToString("L+|d", culture))
+            Assert.AreEqual("100-45", a3.ToString("L|+d", culture))
+
+            Assert.AreEqual("1", a3.ToString("e", culture))
+            Assert.AreEqual("-1000", a3.ToString("-e", culture))
+        End Sub
+
+        <TestMethod()>
+        Public Sub ToString_CustomProperties()
+            For Each culture In {InvariantCulture, CurrentCulture, GetCultureInfo("en-US"), GetCultureInfo("cs"), GetCultureInfo("ar"), Nothing}
+                For Each a In {New Angle(60, 30, 50.5#), New Angle(-60, 30, 50.5#), New Angle(100), New Angle(2000), New Angle(0), New Angle(0, 0, 0.0001#)}
+                    Assert.AreEqual((a.TotalDegrees \ 24).ToString("000.000", culture), a.ToString("(Days,000.000)", culture))
+                    Assert.AreEqual(a.Degrees.ToString("000", culture), a.ToString("(Degrees,000)", culture))
+                    Assert.AreEqual(a.ToGradians.ToString("000.###", culture), a.ToString("(Gradians,000.###)", culture))
+                    Assert.AreEqual((a.Degrees - (a.Degrees \ 24) * 24).ToString("0", culture), a.ToString("(Hours,0)", culture))
+                    Assert.AreEqual(a.Minutes.ToString("", culture), a.ToString("(Minutes,)", culture))
+                    Assert.AreEqual((a.ToRadians / Math.PI).ToString("###,###.0#", culture), a.ToString("(PiRadians,###,###.0#)", culture))
+                    Assert.AreEqual(a.ToRadians.ToString("###,###.0#", culture), a.ToString("(Radians,###\,###.0#)", culture))
+                    Assert.AreEqual((a.TotalDegrees - (a.TotalDegrees \ 24) * 24).ToString("f2", culture), a.ToString("(RestHours,f2)", culture))
+                    Assert.AreEqual((a.TotalMinutes - a.Degrees * 60.0#).ToString("e", culture), a.ToString("(RestMinutes,e)", culture))
+                    Assert.AreEqual((a.TotalSeconds - a.TotalMinutes \ 1 * 60.0#).ToString("N", culture), a.ToString("(RestSeconds,N)", culture))
+                    Assert.AreEqual(a.ToRotations.ToString("g2", culture), a.ToString("(Rotations,g2)", culture))
+                    Assert.AreEqual(a.Seconds.ToString(CStr(Nothing), culture), a.ToString("(Seconds)", culture))
+                    Assert.AreEqual(a.ToSlope.ToString(" 0\%", culture), a.ToString("(Slope, 0\\%)", culture))
+                    Assert.AreEqual(a.ToSlope.ToString(" 0\%", culture), a.ToString("(Slope100 , 0\\%)", culture))
+                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("p", culture), a.ToString("(Slope1,p)", culture))
+                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("0.00%", culture), a.ToString("(Slop\e1,0.00%)", culture))
+                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("0.0‰", culture), a.ToString("(Slope1,0.0‰)", culture))
+                    Assert.AreEqual((a.ToSlope * 10.0#).ToString("0.0\‰", culture), a.ToString("(Slope1000, 0.0\\‰)", culture))
+                    Assert.AreEqual(CType(a, TimeSpan).ToString("", culture), a.ToString("(Time,)", culture))
+                    Assert.AreEqual(CType(a, TimeSpanFormattable).ToString("[h]:mm:ss", culture), a.ToString("(TimeFormattable,[h]:mm:ss)", culture))
+                    Assert.AreEqual((a.TotalDegrees / 24.0#).ToString("g", culture), a.ToString("(TotalDays,g)", culture))
+                    Assert.AreEqual(a.TotalDegrees.ToString("0.00", culture), a.ToString("(TotalDegrees,0.00)", culture))
+                    Assert.AreEqual(a.TotalDegrees.ToString("0,00", culture), a.ToString("(TotalDegrees,0,00)", culture))
+                    Assert.AreEqual(a.TotalMinutes.ToString("0.00m", culture), a.ToString("(TotalMinutes,0.00)", culture))
+                    Assert.AreEqual(a.TotalSeconds.ToString("0.00m", culture), a.ToString("(TotalSeconds,0.00)", culture))
+                    Assert.AreEqual(a.Degrees.ToString("x", culture), a.ToString("(Degrees,x)", culture))
+                Next
+            Next
+        End Sub
 
     End Class
 End Namespace

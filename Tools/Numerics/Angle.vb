@@ -924,8 +924,8 @@ Namespace NumericsT
         ''' <item>      <term>e                        </term><description>F normalized         </description><description>-14.975       </description><description>Number of decimal places                         </description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>N(TotalDegrees,R)          </description></item><item><term>other</term><description>NDx (where x is actual parameter value)     </description></item>                                                                                                                     </list></description></item>
         ''' <item>      <term>E                        </term><description>Rotations            </description><description>0.125         </description><description>Number of decimal places                         </description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>-E                         </description></item><item><term>other</term><description>-Ex (where x is actual parameter value)     </description></item>                                                                                                                     </list></description></item>
         ''' <item>      <term>F, f                     </term><description>Decimal              </description><description>-14.975       </description><description>Number of decimal places                         </description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>-(TotalDegrees,R)          </description></item><item><term>other</term><description>-Dx (where x is actual parameter value)     </description></item>                                                                                                                     </list></description></item>
-        ''' <item>      <term>l                        </term><description>Slope in permile     </description><description>-140,10‰      </description><description>Number of decimal places                         </description><description>culture-specific                  </description><description>-lx‰ where x is number of decimal palces                                                                                                                                                                                                                                                                                                                                                                                                       </description></item>
-        ''' <item>      <term>L                        </term><description>Slope in percent     </description><description>-14,01%       </description><description>Number of decimal places                         </description><description>culture-specific                  </description><description>-Lx% where x is number of decimal palces                                                                                                                                                                                                                                                                                                                                                                                                       </description></item>
+        ''' <item>      <term>i                        </term><description>Slope in permile     </description><description>-140,10‰      </description><description>Number of decimal places                         </description><description>culture-specific                  </description><description>-lx‰ where x is number of decimal palces                                                                                                                                                                                                                                                                                                                                                                                                       </description></item>
+        ''' <item>      <term>c                        </term><description>Slope in percent     </description><description>-14,01%       </description><description>Number of decimal places                         </description><description>culture-specific                  </description><description>-Lx% where x is number of decimal palces                                                                                                                                                                                                                                                                                                                                                                                                       </description></item>
         ''' <item>      <term>n                        </term><description>S normalized         </description><description>-14°09′05″    </description><description>Parameter is not allowed.                        </description><description>                                  </description><description>N-d°mm'ss"                                                                                                                                                                                                                                                                                                                                                                                                                                     </description></item>
         ''' <item>      <term>N                        </term><description>G normalized         </description><description>-14°00′05.33″ </description><description>Number of max decimal places for sub-second value</description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>Nd°mm'(RestSeconds,R)"     </description></item><item><term>0    </term><description>Nd°mm'ss"                                   </description></item><item><term>other</term><description>Nd°mm'ss.ffff" (as many fs as is value of parameter)       </description></item></list></description></item>
         ''' <item>      <term>O, Λ                     </term><description>GPS longitude long   </description><description>14°00′05.33″ E</description><description>Number of max decimal places for sub-second value</description><description>as much decimal places as required</description><description><list type="table"><listheader><term>Parameter value</term><description>Custom format</description></listheader><item><term>not specified</term><description>N180d°mm'(RestSeconds,R)" o</description></item><item><term>0    </term><description>N180d°mm'ss" o                              </description></item><item><term>other</term><description>N180-d°mm'ss.ffff" o (as many fs as is value of parameter) </description></item></list></description></item>
@@ -945,25 +945,25 @@ Namespace NumericsT
         ''' <para>Some of the custom format specifiers can be repeated, some accept parameters.</para>
         ''' <para>Specifiers that produce value:</para>
         ''' <list type="table">
-        ''' <listheader><term>Specifier</term><description>Meaning                                 </description><description>Repeatable (and what does it mean)                    </description><description>Parameter                                                     </description><description>Notes                                                                                                                                                                                             </description></listheader>
-        ''' <item>      <term>D        </term><description><see cref="TotalDegrees"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If you want to exclude days use H instead.                                                                                                                                                        </description></item>
-        ''' <item>      <term>d        </term><description><see cref="Degrees"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>If you want to exclude days use h instead.                                                                                                                                                        </description></item>
-        ''' <item>      <term>e        </term><description><see cref="ToSlope"/> as number         </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>This is <see cref="ToSlope"/> * 100                                                                                                                                                               </description></item>
-        ''' <item>      <term>E        </term><description><see cref="Rotations"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>f        </term><description>Fractional part of <see cref="Seconds"/></description><description>Yes - minimum number of digits                        </description><description>Number - maximum number of digits (as required if not present)</description><description>Contains part of <see cref="Seconds"/> right from decimnal point (&lt;1). Does not contain decimal point or any numerals before it. Use dot (.) to include decimal point.                         </description></item>
-        ''' <item>      <term>h        </term><description>Degrees (hours) without days (whole)    </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>Always excludes days                                                                                                                                                                              </description></item>
-        ''' <item>      <term>H        </term><description><see cref="TotalDegrees"/> (total hours)</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes days if Y or y was present before.                                                                                                                                                       </description></item>
-        ''' <item>      <term>l        </term><description><see cref="ToSlope"/> in permile        </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>L        </term><description><see cref="ToSlope"/> in percent        </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>m        </term><description><see cref="Minutes"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>M        </term><description><see cref="TotalMinutes"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes degrees if D, d, H or h was presenf before.                                                                                                                                              </description></item>
-        ''' <item>      <term>p, π     </term><description>π-radians (<see cref="ToRadians"/> / π )</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>Value of <see cref="ToRadians"/> (angle in radians) divided by <see cref="Math.PI"/> - because radian values are often given as mupltiples of π (pi)                                              </description></item>
-        ''' <item>      <term>R        </term><description><see cref="ToRadians"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>s        </term><description><see cref="Seconds"/> - integral part   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                  </description></item>
-        ''' <item>      <term>S        </term><description><see cref="TotalSeconds"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If M or m was present before <see cref="Seconds"/> is used instead. If D, d, H or h was present before (and neither m or M was present) <see cref="TotalSeconds"/> value does not contain degrees.</description></item>
-        ''' <item>      <term>Y        </term><description>Total days                              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Value of <see cref="TotalDegrees"/> / 24 (<see cref="Double"/>)                                                                                                                                   </description></item>
-        ''' <item>      <term>y        </term><description>Days (whole)                            </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>Value of <see cref="TotalDegrees"/> / 24, decimal part truncated (<see cref="Integer"/>)                                                                                                          </description></item>
-        ''' <item>      <term>Z        </term><description><see cref="ToGradians"/>                </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                  </description></item>
+        ''' <listheader><term>Specifier</term><description>Meaning                                 </description><description>Repeatable (and what does it mean)                    </description><description>Parameter                                                     </description><description>Notes                                                                                                                                                                                               </description></listheader>
+        ''' <item>      <term>D        </term><description><see cref="TotalDegrees"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If you want to exclude days use H instead.                                                                                                                                                          </description></item>
+        ''' <item>      <term>d        </term><description><see cref="Degrees"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>If you want to exclude days use h instead.                                                                                                                                                          </description></item>
+        ''' <item>      <term>e        </term><description><see cref="ToSlope"/> as number         </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>This is <see cref="ToSlope"/> * 100. If - or + immediatelly precedes or follows (whitespace allowed) the e specifier the sign is generated based on slope value instead of (normalized) angle value.</description></item>
+        ''' <item>      <term>E        </term><description><see cref="Rotations"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                    </description></item>
+        ''' <item>      <term>f        </term><description>Fractional part of <see cref="Seconds"/></description><description>Yes - minimum number of digits                        </description><description>Number - maximum number of digits (as required if not present)</description><description>Contains part of <see cref="Seconds"/> right from decimnal point (&lt;1). Does not contain decimal point or any numerals before it. Use dot (.) to include decimal point.                           </description></item>
+        ''' <item>      <term>h        </term><description>Degrees (hours) without days (whole)    </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>Always excludes days                                                                                                                                                                                </description></item>
+        ''' <item>      <term>H        </term><description><see cref="TotalDegrees"/> (total hours)</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes days if Y or y was present before.                                                                                                                                                         </description></item>
+        ''' <item>      <term>l        </term><description><see cref="ToSlope"/> in permile        </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If - or + immediatelly precedes or follows (whitespace allowed) the l specifier the sign is generated based on slope value instead of (normalized) angle value.                                     </description></item>
+        ''' <item>      <term>L        </term><description><see cref="ToSlope"/> in percent        </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If - or + immediatelly precedes or follows (whitespace allowed) the L specifier the sign is generated based on slope value instead of (normalized) angle value.                                     </description></item>
+        ''' <item>      <term>m        </term><description><see cref="Minutes"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                    </description></item>
+        ''' <item>      <term>M        </term><description><see cref="TotalMinutes"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes degrees if D, d, H or h was presenf before.                                                                                                                                                </description></item>
+        ''' <item>      <term>p, π     </term><description>π-radians (<see cref="ToRadians"/> / π )</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>Value of <see cref="ToRadians"/> (angle in radians) divided by <see cref="Math.PI"/> - because radian values are often given as mupltiples of π (pi)                                                </description></item>
+        ''' <item>      <term>R        </term><description><see cref="ToRadians"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                    </description></item>
+        ''' <item>      <term>s        </term><description><see cref="Seconds"/> - integral part   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                    </description></item>
+        ''' <item>      <term>S        </term><description><see cref="TotalSeconds"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If M or m was present before <see cref="Seconds"/> is used instead. If D, d, H or h was present before (and neither m or M was present) <see cref="TotalSeconds"/> value does not contain degrees.  </description></item>
+        ''' <item>      <term>y        </term><description>Days (whole)                            </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>Value of <see cref="TotalDegrees"/> / 24, decimal part truncated (<see cref="Integer"/>)                                                                                                            </description></item>
+        ''' <item>      <term>Y        </term><description>Total days                              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Value of <see cref="TotalDegrees"/> / 24 (<see cref="Double"/>)                                                                                                                                     </description></item>
+        ''' <item>      <term>Z        </term><description><see cref="ToGradians"/>                </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                    </description></item>
         ''' </list>
         ''' <para>Specifiers that produces symbols:</para>
         ''' <list type="table">
@@ -972,8 +972,8 @@ Namespace NumericsT
         ''' <item><term>A, Φ</term><description>Long latitude (north/south) specifier (e.g. North; <see cref="GlobalizationT.AngleFormatInfo.LatitudeNorthLongSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LatitudeSouthLongSymbol"/>)</description></item>
         ''' <item><term>o, λ</term><description>Short longitude (west/east) specifier (e.g. E; <see cref="GlobalizationT.AngleFormatInfo.LongitudeEastShortSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LongitudeWestShortSymbol"/>)</description></item>
         ''' <item><term>O, Λ</term><description>Long longitude (west/east) specifier (e.g. East; <see cref="GlobalizationT.AngleFormatInfo.LongitudeEastLongSymbol"/> or <see cref="GlobalizationT.AngleFormatInfo.LongitudeWestLongSymbol"/>)</description></item>
-        ''' <item><term>-</term><description>Optinal sign. In case of negative value emits minus sing (e.g. -; <see cref="NumberFormatInfo.NegativeSign"/>). In case of positive or zero value emits nothing.</description></item>
-        ''' <item><term>+</term><description>Compulsory sign. In case of negative value emits minus sign (e.g. -; <see cref="NumberFormatInfo.NegativeSign"/>), in case of positive or zero value emits plus sign (e.g. +; <see cref="NumberFormatInfo.PositiveSign"/>).</description></item>
+        ''' <item><term>-</term><description>Optional sign. In case of negative value emits minus sing (e.g. -; <see cref="NumberFormatInfo.NegativeSign"/>). In case of positive or zero value emits nothing. The sign is generated based on current (possibly normalized through the N specifier) angle value. With exception when it immediatelly precedes or follows (whitespace allowed) L or l specifier. In such case it's based on slope value.</description></item>
+        ''' <item><term>+</term><description>Compulsory sign. In case of negative value emits minus sign (e.g. -; <see cref="NumberFormatInfo.NegativeSign"/>), in case of positive or zero value emits plus sign (e.g. +; <see cref="NumberFormatInfo.PositiveSign"/>). The sign is generated based on current (possibly normalized through the N specifier) angle value. With exception when it immediatelly precedes or follows (whitespace allowed) L or l specifier. In such case it's based on slope value.</description></item>
         ''' <item><term>.</term><description>Decimal point (e.g. .; <see cref="NumberFormatInfo.NumberDecimalSeparator"/>)</description></item>
         ''' <item><term>,</term><description>Thousand separator - in normal context emits thousnd separator (e.g. ,; <see cref="NumberFormatInfo.NumberGroupSeparator"/>). If used immediatelly after specifier that supports value; between repeateed letters of specifier that produces value; or between numbers in parameters of specifier that produces value and supports parameter indicates that thousands (group) separators will be used in renderd number (if required). I.e. all following examples specifie to use thousands specifier for total degrees: D,; D,D; D,D,D; D,DD; DD,D; D,0; D,5; D5,; D0,3; D,1,0,.</description></item>
         ''' <item><term>°</term><description>Degree sign (e.g. °; <see cref="GlobalizationT.AngleFormatInfo.DegreeSign"/>)</description></item>
@@ -990,6 +990,7 @@ Namespace NumericsT
         ''' <item><term>c</term><description>Turn compatibility rendering on. Causes that all °, ' (′) and " (″) placeholders following this specifier will use compatibility rendering instead of typographicaly correct rendering. I.e. <see cref="GlobalizationT.AngleFormatInfo.CompatibilityDegreeSign"/>, <see cref="GlobalizationT.AngleFormatInfo.CompatibilityMinuteSign"/> and <see cref="GlobalizationT.AngleFormatInfo.CompatibilitySecondSign"/> will be used instead of <see cref="GlobalizationT.AngleFormatInfo.DegreeSign"/>, <see cref="GlobalizationT.AngleFormatInfo.MinuteSign"/> resp. <see cref="GlobalizationT.AngleFormatInfo.SecondSign"/>.<note>In many cultures including invariant <see cref="GlobalizationT.AngleFormatInfo.DegreeSign"/> and <see cref="GlobalizationT.AngleFormatInfo.CompatibilityDegreeSign"/> are same).</note>Compatibility rendering cannot be turned off once turned on /in same format string). This specififer (if used) is usually placed at begining of format string.</description></item>
         ''' <item><term>N</term><description>Causes value of angle to be normalized. Can be followed by a number - parameter for <see cref="Normalize"/>. If parameter is not specified 360 is used. Negative values for parameter are supported. If used more than once in single format string always the original angle is normalized (i.e. not the normalized one). This specifier (if used) is usually placed at the begining of format string. Examples: N; N360; N-45<note>N- alone is not valid normalization specifier and instead means: Normalize to 360, emit optional minus sign.</note></description></item>
         ''' <item><term>%</term><description>Only at beginnign of format string. Causes format string that would otherwise be treated as standard format string to be treated as custom format string. The % charatcer itself is ignored. To render culture-specific perecent sign as first charatcer of your string use %%. To render literal percent character as first character of your sttring use \%. <note>If percent is used anywhere else but as first charatcer it is processed as a specifier that produces culture-specific percent symbol.</note></description></item>
+        ''' <item><term>|</term><description>Pattern breaker. Produces no output. Use when it is necessary to breake a pattern that would otherwise be merged. E.g. tro write <see cref="TotalDegrees"/> twice immediatellly folllowed use D|D (because DD would produce <see cref="TotalDegrees"/> value with two places left from decimal point). Also use this character to force minus sign to belong to next pattern. l-D generates minus sign depending on if slope is positive or negative (same as l-|D). l|-D generates minus sign depending on if angle is positive or negative. Use \| to produce pipe character (|).</description></item>
         ''' </list>
         ''' <para>Special specifiers:</para>
         ''' <list type="table">
@@ -1060,6 +1061,8 @@ Namespace NumericsT
                         format = "N180d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,R)") + """ a"
                     Case "b"c                   'GPS latitude 14.154 N                      no decimal places      as required    N180D a           
                         format = "N180" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,R)") & " a"
+                    Case "c"c                   'Slope in %                                 no dec places          culture-spec.  -L%               
+                        format = "-L" & If(param.HasValue, param.Value, ninfo.NumberDecimalDigits).ToString(InvariantCulture) & "%"
                     Case "d"c                   'Time short, with days 7.15:10:05           not allowed                           -[y.]d:mm:ss      
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "-[y.]h:mm:ss"
@@ -1071,10 +1074,8 @@ Namespace NumericsT
                         format = "-E" & param.ToString(InvariantCulture)
                     Case "F"c, "f"c             'Decimal -14.978425                         no decimal places      as required    -D                
                         format = If(param.HasValue, "-D" & param.ToString(InvariantCulture), "-(TotalDegrees,R)")
-                    Case "l"c                   'Slope in ‰                                 no dec places          culture-spec.  -l‰               
+                    Case "i"c                   'Slope in ‰                                 no dec places          culture-spec.  -l‰               
                         format = "-L" & If(param.HasValue, param.Value, ninfo.NumberDecimalDigits).ToString(InvariantCulture) & "‰"
-                    Case "L"c                   'Slope in %                                 no dec places          culture-spec.  -L%               
-                        format = "-L" & If(param.HasValue, param.Value, ninfo.NumberDecimalDigits).ToString(InvariantCulture) & "%"
                     Case "n"c                   'S - normalized 0-360                       not allowed                           N-d°mm'ss"        
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "Nd°mm'ss"""
@@ -1184,10 +1185,11 @@ Namespace NumericsT
                             Case "Z"c  'Z grads value                                                                  no decimal places      max 4          min digits        
                                 value = normalizedValue.ToGradians : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
                             Case "-"c  '- minus sign (if required)                                                     not allowed                                             
-                                If normalizedValue._value < 0.0# Then builders.Peek.Append(ninfo.NegativeSign)
-                                state = FState.Normal
+                                builders.Push(New MeaningfulStringbuilder)
+                                state = FState.Minus
                             Case "+"c  '+ plus/minus sign (always)                                                     not allowed                                             
-                                builders.Peek.Append(If(normalizedValue._value < 0.0#, ninfo.NegativeSign, ninfo.PositiveSign)) : state = FState.Normal
+                                builders.Push(New MeaningfulStringbuilder)
+                                state = FState.Plus
                             Case "."c  '. decimal point                                                                not allowed                                             
                                 builders.Peek.Append(ninfo.NumberDecimalSeparator) : state = FState.Normal
                             Case ","c ', thousand separator
@@ -1215,6 +1217,8 @@ Namespace NumericsT
                                 state = FState.Normal
                             Case "("c '() custom formatted property - format (propertyName,format)
                                 state = FState.Custom1
+                            Case "|"c '| pattern breaker
+                                state = FState.Normal
                             Case Else  'anything else emit
                                 builders.Peek.Append(ch) : state = FState.Normal
                         End Select
@@ -1245,6 +1249,22 @@ Namespace NumericsT
                                 If leftPlaces Is Nothing OrElse leftPlaces < 0 Then leftPlaces = 2 Else leftPlaces += 1
                             Case "0"c To "9"c : state = FState.SpecifierDoubleN : rightPlaces = ch.NumericValue
                             Case ","c : useThousandSeparator = True
+                            Case "-"c
+                                AppendValue(value, leftPlaces, rightPlaces, builders.Peek, useThousandSeparator, formatProvider)
+                                If specifier.Value = "l" OrElse specifier.Value = "L" OrElse specifier.Value = "e" Then
+                                    If normalizedValue.ToSlope < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                Else
+                                    If normalizedValue < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                End If
+                                state = FState.Normal
+                            Case "+"c
+                                AppendValue(value, leftPlaces, rightPlaces, builders.Peek, useThousandSeparator, formatProvider)
+                                If specifier.Value = "l" OrElse specifier.Value = "L" OrElse specifier.Value = "e" Then
+                                    builders.Peek.Append(If(normalizedValue.ToSlope < 0, ninfo.NegativeSign, ninfo.PositiveSign))
+                                Else
+                                    builders.Peek.Append(If(normalizedValue < 0, ninfo.NegativeSign, ninfo.PositiveSign))
+                                End If
+                                state = FState.Normal
                             Case Else
                                 AppendValue(value, leftPlaces, rightPlaces, builders.Peek, useThousandSeparator, formatProvider)
                                 state = FState.Normal : i -= 1
@@ -1255,9 +1275,53 @@ Namespace NumericsT
                                 If rightPlaces Is Nothing OrElse rightPlaces < 0 Then rightPlaces = 0
                                 rightPlaces = rightPlaces * 10 + ch.NumericValue
                             Case ","c : useThousandSeparator = True
+                            Case "-"c
+                                AppendValue(value, leftPlaces, rightPlaces, builders.Peek, useThousandSeparator, formatProvider)
+                                If specifier.Value = "l" OrElse specifier.Value = "L" OrElse specifier.Value = "e" Then
+                                    If normalizedValue.ToSlope < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                Else
+                                    If normalizedValue < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                End If
+                                state = FState.Normal
+                            Case "+"c
+                                AppendValue(value, leftPlaces, rightPlaces, builders.Peek, useThousandSeparator, formatProvider)
+                                If specifier.Value = "l" OrElse specifier.Value = "L" OrElse specifier.Value = "e" Then
+                                    builders.Peek.Append(If(normalizedValue.ToSlope < 0, ninfo.NegativeSign, ninfo.PositiveSign))
+                                Else
+                                    builders.Peek.Append(If(normalizedValue < 0, ninfo.NegativeSign, ninfo.PositiveSign))
+                                End If
+                                state = FState.Normal
                             Case Else
                                 AppendValue(value, leftPlaces, rightPlaces, builders.Peek, useThousandSeparator, formatProvider)
-                                state = FState.Normal : i -= 1
+                                If ch.IsWhiteSpace Then
+                                    state = FState.SpecifierNWhite
+                                    builders.Peek.Append(ch)
+                                Else
+                                    state = FState.Normal : i -= 1
+                                End If
+                        End Select
+                    Case FState.SpecifierNWhite 'Whitespace after completed specifier
+                        Select Case ch
+                            Case "-"c
+                                If specifier.Value = "l" OrElse specifier.Value = "L" OrElse specifier.Value = "e" Then
+                                    If normalizedValue.ToSlope < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                Else
+                                    If normalizedValue < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                End If
+                                state = FState.Normal
+                            Case "+"c
+                                If specifier.Value = "l" OrElse specifier.Value = "L" OrElse specifier.Value = "e" Then
+                                    builders.Peek.Append(If(normalizedValue.ToSlope < 0, ninfo.NegativeSign, ninfo.PositiveSign))
+                                Else
+                                    builders.Peek.Append(If(normalizedValue < 0, ninfo.NegativeSign, ninfo.PositiveSign))
+                                End If
+                                state = FState.Normal
+                            Case Else
+                                If ch.IsWhiteSpace Then
+                                    builders.Peek.Append(ch)
+                                Else
+                                    state = FState.Normal : i -= 1
+                                End If
                         End Select
                     Case FState.SpecifierInt 'Specifiers which include integer value
                         Select Case ch
@@ -1312,12 +1376,50 @@ Namespace NumericsT
                         End Select
                     Case FState.CustomFormatSlash '\ in () after ,
                         customFormat.Append(ch) : state = FState.CustomFormat
+                    Case FState.Minus '-
+                        Select Case ch
+                            Case "l"c, "L"c, "e"c
+                                Dim oldBuilder = builders.Pop
+                                If normalizedValue.ToSlope < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                builders.Peek.Append(oldBuilder.ToString)
+                                state = FState.Normal
+                                i -= 1
+                            Case Else
+                                If ch.IsWhiteSpace Then
+                                    builders.Peek.Append(ch)
+                                Else
+                                    Dim oldBuilder = builders.Pop
+                                    If normalizedValue < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                    builders.Peek.Append(oldBuilder.ToString)
+                                    state = FState.Normal
+                                    i -= 1
+                                End If
+                        End Select
+                    Case FState.Plus '+
+                        Select Case ch
+                            Case "l"c, "L"c, "e"c
+                                Dim oldBuilder = builders.Pop
+                                If normalizedValue.ToSlope < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                                builders.Peek.Append(oldBuilder.ToString)
+                                state = FState.Normal
+                                i -= 1
+                            Case Else
+                                If ch.IsWhiteSpace Then
+                                    builders.Peek.Append(ch)
+                                Else
+                                    Dim oldBuilder = builders.Pop
+                                    builders.Peek.Append(If(normalizedValue < 0, ninfo.NegativeSign, ninfo.PositiveSign))
+                                    builders.Peek.Append(oldBuilder.ToString)
+                                    state = FState.Normal
+                                    i -= 1
+                                End If
+                        End Select
                     Case Else : Throw New ApplicationException("Unknown FSA state {0}".f(state)) 'Should never happen
                 End Select
             Next
 [end]:
             Select Case state
-                Case FState.Normal, FState.Start
+                Case FState.Normal, FState.Start, FState.SpecifierNWhite
                     If builders.Count > 1 Then Throw New FormatException("Invalid format, {0} expected".f("]"c))
                 Case FState.Slash '\
                     builders.Peek.Append("\") : state = FState.Normal : GoTo [end]
@@ -1341,6 +1443,16 @@ Namespace NumericsT
                     state = FState.Normal : GoTo [end]
                 Case FState.Custom1, FState.Custom, FState.CustomWH, FState.CustomFormat, FState.CustomFormatSlash
                     Throw New FormatException("Invalid format, {0} expected".f("]"c))
+                Case FState.Minus '- and whitespaces
+                    Dim oldBuilder = builders.Pop
+                    If normalizedValue < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                    builders.Peek.Append(oldBuilder.ToString)
+                    state = FState.Normal : GoTo [end]
+                Case FState.Plus '+ and whitespaces
+                    Dim oldBuilder = builders.Pop
+                    If normalizedValue.ToSlope < 0 Then builders.Peek.Append(ninfo.NegativeSign)
+                    builders.Peek.Append(oldBuilder.ToString)
+                    state = FState.Normal : GoTo [end]
                 Case Else : Throw New ApplicationException("Unknown FSA state {0}".f(state)) 'Should never happen
             End Select
             Return builders.Single.ToString
@@ -1504,8 +1616,12 @@ Namespace NumericsT
             CustomFormat
             ''' <summary>Backslash in custom format (in () after ,)</summary>
             CustomFormatSlash
-
-
+            ''' <summary>- in normal state</summary>
+            Minus
+            ''' <summary>+ in normal state</summary>
+            Plus
+            ''' <summary>Whitespace after completed specifier</summary>
+            SpecifierNWhite
         End Enum
 
         ''' <summary>Wraps <see cref="StringBuilder"/> and adds a <see cref="MeaningfulStringbuilder.Meaningful">Meaningful</see> property</summary>
