@@ -373,7 +373,9 @@ Namespace NumericsT
         ''' <remarks>Returned <see cref="InvalidCastException"/> and <see cref="TypeMismatchException"/> should never be thrown.</remarks>
         ''' <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="System.Globalization.NumberStyles"/> value. -or- <paramref name="style"/> is not a combination of <see cref="System.Globalization.NumberStyles.AllowHexSpecifier"/> and <see cref="System.Globalization.NumberStyles.HexNumber"/> values. -or- <paramref name="style"/> is the <see cref="System.Globalization.NumberStyles.AllowHexSpecifier"/> value.</exception>
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
-        Private Shared Function TryParseInternal(ByVal str$, ByRef Value As URational, ByVal Provider As IFormatProvider, ByVal style As Globalization.NumberStyles) As Exception
+        ''' <version version="1.5.4">Parameter <c>Provider</c> renamed to <c>provider</c>, <c>Value</c> to <c>value</c></version>
+        ''' <version version="1.5.4">Added <see cref="OutAttribute"/> for <paramref name="value"/> parameter</version>
+        Private Shared Function TryParseInternal(str$, <Out()> ByRef value As URational, Provider As IFormatProvider, style As Globalization.NumberStyles) As Exception
             If str Is Nothing Then Return New ArgumentNullException("str")
             If str = "" Then Return New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "str")
             If str.Contains("/"c) Then
@@ -382,7 +384,7 @@ Namespace NumericsT
                 Dim a As Long, b As Long
                 If UInteger.TryParse(Parts(0), style, Provider, a) AndAlso UInteger.TryParse(Parts(1), style, Provider, b) Then
                     If a < 0 Xor b < 0 Then Return New OverflowException(ResourcesT.Exceptions.CannotBeNegative.f("URational"))
-                    Value = New URational(a, b)
+                    value = New URational(a, b)
                     Return Nothing
                 Else
                     Return New TypeMismatchException
@@ -390,7 +392,7 @@ Namespace NumericsT
             Else
                 Dim dValue As Double
                 If Double.TryParse(str, style, Provider, dValue) Then
-                    Value = dValue
+                    value = dValue
                     Return Nothing
                 Else
                     Return New InvalidCastException
@@ -405,7 +407,11 @@ Namespace NumericsT
         ''' <returns>true if s was converted successfully; otherwise, false.</returns>
         ''' <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="System.Globalization.NumberStyles"/> value. -or- <paramref name="style"/> is not a combination of <see cref="System.Globalization.NumberStyles.AllowHexSpecifier"/> and <see cref="System.Globalization.NumberStyles.HexNumber"/> values. -or- <paramref name="style"/> is the <see cref="System.Globalization.NumberStyles.AllowHexSpecifier"/> value.</exception>
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
-        Public Shared Function TryParse(ByVal str$, ByRef style As Globalization.NumberStyles, ByVal Provider As IFormatProvider, ByVal Value As URational) As Boolean
+        ''' <version version="1.5.4">Parameter <c>Value</c> renamed to <c>value</c></version>
+        ''' <version version="1.5.4">Parameter <paramref name="style"/> changed from parameter passed by reference to parameter passed by value.</version>
+        ''' <version version="1.5.4">Fix: Parameter <paramref name="value"/> was not passed by reference.</version>
+        ''' <version version="1.5.4">Added <see cref="OutAttribute"/> to parameter <paramref name="value"/>.</version>
+        Public Shared Function TryParse(str$, style As Globalization.NumberStyles, provider As IFormatProvider, <Out()> ByRef value As URational) As Boolean
             Return TryParseInternal(str, Value, Provider, style) Is Nothing
         End Function
         ''' <summary>Converts the string representation of a number in a specified style and culture-specific format to its <see cref="URational"/> equivalent. A return value indicates whether the conversion succeeded or failed.</summary>
@@ -413,8 +419,10 @@ Namespace NumericsT
         ''' <param name="Value"> When this method returns, contains the <see cref="URational"/> value equivalent to the number contained in <paramref name="str"/>, if the conversion succeeded.</param>
         ''' <returns>true if s was converted successfully; otherwise, false.</returns>
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
-        Public Shared Function TryParse(ByVal str$, ByRef Value As URational) As Boolean
-            Return TryParse(str, Globalization.NumberStyles.Any, Globalization.CultureInfo.CurrentCulture, Value)
+        ''' <version version="1.5.4">Parameter <c>Value</c> renamed to <c>value</c></version>
+        ''' <version version="1.5.4">Added <see cref="OutAttribute"/> to parameter <paramref name="value"/>.</version>
+        Public Shared Function TryParse(ByVal str$, <Out()> ByRef value As URational) As Boolean
+            Return TryParse(str, Globalization.NumberStyles.Any, Globalization.CultureInfo.CurrentCulture, value)
         End Function
         ''' <summary>Converts the string representation of a number in a specified style and culture-specific format to its <see cref="URational"/> equivalent. A return value indicates whether the conversion succeeded or failed.</summary>
         ''' <param name="str">A string containing a number to convert.</param>
@@ -426,9 +434,10 @@ Namespace NumericsT
         ''' <exception cref="FormatException"><paramref name="str"/> is not numeric value, or 2 numeric values separated by /.</exception>
         ''' <exception cref="OverflowException"><paramref name="str"/> represents value lower than <see cref="Double.MinValue"/> or greater than <see cref="Double.MaxValue"/> (for single-part number) -or- <paramref name="str"/> represents value lower than <see cref="UInteger.MinValue"/> or greater than <see cref="UInteger.MaxValue"/> (for double-part number)</exception>
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
-        Public Shared Function Parse(ByVal str$, ByVal style As Globalization.NumberStyles, ByVal Provider As IFormatProvider) As URational
+        ''' <version version="1.5.4">Parameter <c>Provider</c> renamed to <c>provider</c></version>
+        Public Shared Function Parse(ByVal str$, ByVal style As Globalization.NumberStyles, ByVal provider As IFormatProvider) As URational
             Dim value As URational
-            Dim ret = TryParseInternal(str, value, Provider, style)
+            Dim ret = TryParseInternal(str, value, provider, style)
             If ret Is Nothing Then Return value
             If TypeOf ret Is InvalidCastException Then
                 Return Double.Parse(str)
