@@ -21,144 +21,151 @@ Namespace NumericsUT
         '''</summary>
         Public Property TestContext() As TestContext
 
+        Private Const delta = 0.00000000000014999999999999999#
+
+
         <TestMethod()>
         Public Sub BasicProperties()
-            Dim values() As Double = {0.0#, 1.0#, -1.0#, 180.0#, 360.0#, 90.0#, -90.0#, 3600.0#, 14.134971345645519#}
+            Dim values = {0@, 1@, -1@, 180@, 360@, 90@, -90@, 3600@, 14.134971345645519@}
             For Each v In values
                 Dim a As New Angle(v)
-                Assert.AreEqual(v, a.TotalDegrees)
-                Assert.AreEqual(CInt(Math.Floor(v)), a.Degrees)
-                Assert.AreEqual(v * 60.0#, a.TotalDegrees)
-                Assert.AreEqual(CInt(Math.Floor(v * 60.0# - Math.Floor(v) * 60.0#)), a.Minutes)
-                Assert.AreEqual(v * 60.0# * 60.0#, a.TotalSeconds)
-                Assert.AreEqual((v - Math.Floor(v * 60.0#)) * 60.0#, a.Seconds)
-                Assert.AreEqual(v / 360.0#, a.Rotations)
+                Assert.AreEqual(v, a.TotalDegrees, String.Format("v={0}", v))
+                Assert.AreEqual(CInt(Math.Floor(v)), a.Degrees, String.Format("v={0}", v))
+                Assert.AreEqual(v * 60.0#, a.TotalMinutes, String.Format("v={0}", v))
+                Assert.AreEqual(CInt(Math.Floor(v * 60@ - Math.Floor(v) * 60@)), a.Minutes, String.Format("v={0}", v))
+                Assert.AreEqual(v * 60.0# * 60.0#, a.TotalSeconds, String.Format("v={0}", v))
+                Assert.AreEqual(v * 60@ * 60@ - Math.Floor(v * 60) * 60@, a.Seconds, delta, String.Format("v={0}", v))
+                Assert.AreEqual(v / 360.0#, a.Rotations, String.Format("v={0}", v))
             Next
         End Sub
 
         <TestMethod()>
         Public Sub ConversionTo()
-            Assert.AreEqual(1, New Angle(1).ToDegrees)
-            Assert.AreEqual(100, New Angle(90).ToGradians)
-            Assert.AreEqual(-400, New Angle(-360).ToGradians)
+            Assert.AreEqual(1.0#, New Angle(1).ToDegrees)
+            Assert.AreEqual(100.0#, New Angle(90).ToGradians)
+            Assert.AreEqual(-400.0#, New Angle(-360).ToGradians)
             Assert.AreEqual(2.0# * Math.PI, New Angle(360).ToRadians)
-            Assert.AreEqual(100.0#, New Angle(45).ToSlope)
-            Assert.AreEqual(-100.0#, New Angle(-45).ToSlope)
+            Assert.AreEqual(100.0#, New Angle(45).ToSlope, delta)
+            Assert.AreEqual(-100.0#, New Angle(-45).ToSlope, delta)
             Assert.AreEqual(0.0#, New Angle(0).ToSlope)
 
-            Dim values() As Double = {0.0#, 1.0#, -1.0#, 180.0#, 360.0#, 90.0#, -90.0#, 3600.0#, 14.134971345645519#}
+            Dim values = {0@, 1@, -1@, 180@, 360@, 90@, -90@, 3600@, 14.134971345645519@}
             For Each v In values
                 Dim a As New Angle(v)
-                Assert.AreEqual(v, a.ToDegrees)
-                Assert.AreEqual(v * (Math.PI / 180.0#), a.ToRadians)
-                Assert.AreEqual(v / 90.0# * 100.0#, a.ToGradians)
-                Assert.AreEqual(v / 360.0#, a.ToRotations)
+                Assert.AreEqual(CDbl(v), a.ToDegrees, String.Format("v={0}", v))
+                Assert.AreEqual(v * (Math.PI / 180.0#), a.ToRadians, String.Format("v={0}", v))
+                Assert.AreEqual(v / 90.0# * 100.0#, a.ToGradians, String.Format("v={0}", v))
+                Assert.AreEqual(v / 360.0#, a.ToRotations, String.Format("v={0}", v))
             Next
         End Sub
 
         <TestMethod()>
         Public Sub ConversionFrom()
-            Assert.AreEqual(1.0#, Angle.FromDegrees(1).TotalDegrees)
-            Assert.AreEqual(180.0#, Angle.FromDegrees(180).TotalDegrees)
-            Assert.AreEqual(360.0#, Angle.FromRotations(1).TotalDegrees)
-            Assert.AreEqual(180, Angle.FromRotations(0.5).TotalDegrees)
-            Assert.AreEqual(-180.0#, Angle.FromRotations(-1).TotalDegrees)
-            Assert.AreEqual(360.0#, Angle.FromRadians(2 * Math.PI).TotalDegrees)
-            Assert.AreEqual(90.0#, Angle.FromGradians(100).TotalDegrees)
-            Assert.AreEqual(360.0#, Angle.FromGradians(400).TotalDegrees)
-            Assert.AreEqual(1.0# / 60.0#, Angle.FromMinutes(1).TotalDegrees)
-            Assert.AreEqual(1.0#, Angle.FromMinutes(60).TotalDegrees)
-            Assert.AreEqual(1.0# / 3600.0#, Angle.FromSeconds(1).TotalDegrees)
-            Assert.AreEqual(1.0#, Angle.FromSeconds(3600).TotalDegrees)
-            Assert.AreEqual(-1.0#, Angle.FromSeconds(-3600).TotalDegrees)
-            Assert.AreEqual(New Angle(45).TotalDegrees, Angle.FromSlope(100))
-            Assert.AreEqual(New Angle(-45).TotalDegrees, Angle.FromSlope(-100))
-            Assert.AreEqual(New Angle(0).TotalDegrees, Angle.FromSlope(0))
+            Assert.AreEqual(1@, Angle.FromDegrees(1).TotalDegrees)
+            Assert.AreEqual(180@, Angle.FromDegrees(180).TotalDegrees)
+            Assert.AreEqual(360@, Angle.FromRotations(1).TotalDegrees)
+            Assert.AreEqual(180@, Angle.FromRotations(0.5).TotalDegrees)
+            Assert.AreEqual(-360@, Angle.FromRotations(-1).TotalDegrees)
+            Assert.AreEqual(360@, Angle.FromRadians(2 * Math.PI).TotalDegrees)
+            Assert.AreEqual(90@, Angle.FromGradians(100).TotalDegrees)
+            Assert.AreEqual(360@, Angle.FromGradians(400).TotalDegrees)
+            Assert.AreEqual(1@ / 60@, Angle.FromMinutes(1).TotalDegrees, delta)
+            Assert.AreEqual(1@, Angle.FromMinutes(60).TotalDegrees)
+            Assert.AreEqual(1@ / 3600@, Angle.FromSeconds(1).TotalDegrees)
+            Assert.AreEqual(1@, Angle.FromSeconds(3600).TotalDegrees)
+            Assert.AreEqual(-1@, Angle.FromSeconds(-3600).TotalDegrees)
+            Assert.AreEqual(New Angle(45).TotalDegrees, Angle.FromSlope(100).TotalDegrees)
+            Assert.AreEqual(New Angle(-45).TotalDegrees, Angle.FromSlope(-100).TotalDegrees)
+            Assert.AreEqual(New Angle(0).TotalDegrees, Angle.FromSlope(0).TotalDegrees)
 
-            Dim values() As Double = {0.0#, 1.0#, -1.0#, 180.0#, 360.0#, 90.0#, -90.0#, 3600.0#, 14.134971345645519#}
+            Dim values = {0@, 1@, -1@, 180@, 360@, 90@, -90@, 3600@, 14.134971345645519@}
             For Each v In values
-                Assert.AreEqual(v, Angle.FromDegrees(v).TotalDegrees)
-                Assert.AreEqual(v, Angle.FromRadians(v * (Math.PI / 180.0#)).TotalDegrees)
-                Assert.AreEqual(v, Angle.FromGradians(v / 90.0# * 100.0#).TotalDegrees)
-                Assert.AreEqual(v, Angle.FromRotations(v / 360.0#).TotalDegrees)
-                Assert.AreEqual(v, Angle.FromMinutes(v * 60.0#).TotalDegrees)
-                Assert.AreEqual(v, Angle.FromSeconds(v * 60.0# * 60.0#).TotalDegrees)
+                Assert.AreEqual(v, Angle.FromDegrees(v).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.AreEqual(v, Angle.FromRadians(v * (Math.PI / 180.0#)).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.AreEqual(v, Angle.FromGradians(v / 90.0# * 100.0#).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.AreEqual(v, Angle.FromRotations(v / 360.0#).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.AreEqual(v, Angle.FromMinutes(v * 60).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.AreEqual(v, Angle.FromSeconds(v * 60 * 60).TotalDegrees, delta, String.Format("v={0}", v))
             Next
         End Sub
 
         <TestMethod()>
         Public Sub Values()
-            Assert.AreEqual(0.0#, Angle.zero.TotalDegrees)
-            Assert.AreEqual(90.0#, Angle.right.TotalDegrees)
-            Assert.AreEqual(180.0#, Angle.straing.TotalDegrees)
-            Assert.AreEqual(360.0#, Angle.full.TotalDegrees)
-            Assert.AreEqual(Double.MinValue, Angle.minValue.TotalDegrees)
-            Assert.AreEqual(Double.MaxValue, Angle.maxValue.TotalDegrees)
-            Assert.AreEqual(1.0#, Angle.degree.TotalDegrees)
-            Assert.AreEqual(Math.PI / 180.0#, Angle.radian.TotalDegrees)
-            Assert.AreEqual(9.0# / 10.0#, Angle.gradian.TotalDegrees)
-            Assert.AreEqual(Math.PI * (Math.PI / 180.0#), Angle.πRadians.TotalDegrees)
+            Assert.AreEqual(0@, Angle.Zero.TotalDegrees)
+            Assert.AreEqual(90@, Angle.Right.TotalDegrees)
+            Assert.AreEqual(180@, Angle.Straing.TotalDegrees)
+            Assert.AreEqual(360@, Angle.Full.TotalDegrees)
+            Assert.AreEqual(Decimal.MinValue, Angle.MinValue.TotalDegrees)
+            Assert.AreEqual(Decimal.MaxValue, Angle.MaxValue.TotalDegrees)
+            Assert.AreEqual(1@, Angle.Degree.TotalDegrees)
+            Assert.AreEqual(180@ / Math.PI, Angle.Radian.TotalDegrees)
+            Assert.AreEqual(9@ / 10@, Angle.Gradian.TotalDegrees)
+            Assert.AreEqual(180@, Angle.ΠRadians.TotalDegrees)
         End Sub
 
         <TestMethod()>
         Public Sub CTor_Single()
             Dim values() As Single = {0.0!, 1.0!, -1.0!, 180.0!, 360.0!, 90.0!, -90.0!, 3600.0!, 14.1349716!}
             For Each v In values
-                Assert.AreEqual(CDbl(v), New Angle(v).TotalDegrees)
+                Assert.AreEqual(CDec(v), New Angle(v).TotalDegrees)
             Next
         End Sub
 
+        <TestMethod()>
         Public Sub CTor_Double()
             Dim values() As Double = {0.0#, 1.0#, -1.0#, 180.0#, 360.0#, 90.0#, -90.0#, 3600.0#, 14.134971345645519#}
             For Each v In values
-                Assert.AreEqual(v, New Angle(v).TotalDegrees)
+                Assert.AreEqual(CDec(v), New Angle(v).TotalDegrees, String.Format("v={0}", v))
             Next
         End Sub
 
+        <TestMethod()>
         Public Sub CTor_Decimal()
             Dim values() As Decimal = {0@, 1@, -1@, 180@, 360@, 90@, -90@, 3600@, 14.134971345645519@}
             For Each v In values
-                Assert.AreEqual(CDbl(v), New Angle(v).TotalDegrees)
+                Assert.AreEqual(CDec(v), New Angle(v).TotalDegrees, String.Format("v={0}", v))
             Next
         End Sub
 
+        <TestMethod()>
         Public Sub CTor_Int()
             Dim values() As Integer = {0%, 1%, -1%, 180%, 360%, 90%, -90%, 3600%}
             For Each v In values
-                Assert.AreEqual(CDbl(v), New Angle(v).TotalDegrees)
+                Assert.AreEqual(CDec(v), New Angle(v).TotalDegrees, String.Format("v={0}", v))
             Next
         End Sub
 
-        Public Sub CTor_dms_simple()
+        <TestMethod()>
+        Public Sub CTor_dms_simple_single()
             Dim a = New Angle(0, 0, 0.0#)
             Assert.IsTrue(a = 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
-            Assert.AreEqual(0.0#, a.Seconds)
+            Assert.AreEqual(0@, a.Seconds)
 
             a = New Angle(10, 10, 10.1#)
             Assert.IsTrue(a > 0)
             Assert.AreEqual(10, a.Degrees)
             Assert.AreEqual(10, a.Minutes)
-            Assert.AreEqual(10.1#, a.Seconds)
+            Assert.AreEqual(10.1@, a.Seconds)
 
             a = New Angle(-1, 0, 0.0#)
             Assert.IsTrue(a < 0)
             Assert.AreEqual(1, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
-            Assert.AreEqual(0.0#, a.Seconds)
+            Assert.AreEqual(0@, a.Seconds)
 
             a = New Angle(0, -1, 0.0#)
             Assert.IsTrue(a < 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(1, a.Minutes)
-            Assert.AreEqual(0.0#, a.Seconds)
+            Assert.AreEqual(0@, a.Seconds)
 
             a = New Angle(0, 0, -1.0#)
             Assert.IsTrue(a < 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
-            Assert.AreEqual(1.0#, a.Seconds)
+            Assert.AreEqual(1@, a.Seconds)
 
             Dim values() = {
                 New With {.d = 0, .m = 0, .s = 0.0#},
@@ -181,90 +188,152 @@ Namespace NumericsUT
             }
             For Each v In values
                 a = New Angle(v.d, v.m, v.s)
-                Assert.AreEqual(v.d < 0 OrElse v.m < 0 OrElse v.s < 0.0#, a < 0)
-                Assert.AreEqual(v.d, a.Degrees)
-                Assert.AreEqual(v.m, a.Minutes)
-                Assert.AreEqual(v.s, a.Seconds)
-                Assert.AreEqual(v.d + v.m / 60.0# + v.s / 60.0# / 60.0#, a.TotalDegrees)
+                Assert.AreEqual(v.d < 0 OrElse v.m < 0 OrElse v.s < 0.0#, a < 0, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(v.d, a.Degrees, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(v.m, a.Minutes, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(CDec(v.s), a.Seconds, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(CDec(v.d + v.m / 60.0# + v.s / 60.0# / 60.0#), a.TotalDegrees, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
             Next
         End Sub
 
-        Public Sub CTor_dms_ex()
+        <TestMethod()>
+        Public Sub CTor_dms_simple_decimal()
+            Dim a = New Angle(0, 0, 0@)
+            Assert.IsTrue(a = 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(10, 10, 10.1@)
+            Assert.IsTrue(a > 0)
+            Assert.AreEqual(10, a.Degrees)
+            Assert.AreEqual(10, a.Minutes)
+            Assert.AreEqual(10.1@, a.Seconds)
+
+            a = New Angle(-1, 0, 0@)
+            Assert.IsTrue(a < 0)
+            Assert.AreEqual(1, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(0, -1, 0@)
+            Assert.IsTrue(a < 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(1, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(0, 0, -1@)
+            Assert.IsTrue(a < 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(1@, a.Seconds)
+
+            Dim values() = {
+                New With {.d = 0, .m = 0, .s = 0@},
+                New With {.d = 0, .m = 0, .s = 0.10000000000000001@},
+                New With {.d = 0, .m = 0, .s = 1@},
+                New With {.d = 0, .m = 1, .s = 0@},
+                New With {.d = 0, .m = 59, .s = 0@},
+                New With {.d = 0, .m = 0, .s = 59@},
+                New With {.d = 0, .m = 0, .s = 59.990000000000002@},
+                New With {.d = 1, .m = 0, .s = 0@},
+                New With {.d = 360, .m = 0, .s = 0@},
+                New With {.d = 1, .m = 59, .s = 59.990000000000002@},
+                New With {.d = 0, .m = 0, .s = -0.01@},
+                New With {.d = 0, .m = 0, .s = -1@},
+                New With {.d = 0, .m = -1, .s = 0@},
+                New With {.d = -1, .m = 0, .s = 0@},
+                New With {.d = -1, .m = 1, .s = 0@},
+                New With {.d = -1, .m = 0, .s = 0.10000000000000001@},
+                New With {.d = -1, .m = 1, .s = 1@}
+            }
+            For Each v In values
+                a = New Angle(v.d, v.m, v.s)
+                Assert.AreEqual(v.d < 0 OrElse v.m < 0 OrElse v.s < 0@, a < 0, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(v.d, a.Degrees, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(v.m, a.Minutes, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(v.s, a.Seconds, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+                Assert.AreEqual(v.d + v.m / 60@ + v.s / 60@ / 60@, a.TotalDegrees, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+            Next
+        End Sub
+
+        <TestMethod()>
+        Public Sub CTor_dms_ex_double()
 
             Dim a As New Angle(0, 60, 0.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(1, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(0, 0, 60.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(1, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(0, 1, 60.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(2, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(1, 61, 1.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(2, a.Degrees)
             Assert.AreEqual(1, a.Minutes)
-            Assert.AreEqual(1.0#, a.Seconds)
+            Assert.AreEqual(1.0#, a.Seconds, delta)
 
             a = New Angle(1, -1, 0.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(59, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(0, 1, -1.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(59.0#, a.Seconds)
 
             a = New Angle(1, -60, 0.0#)
-            Assert.IsTrue(a = 0)
+            Assert.IsTrue(a.TotalDegrees = 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(0, 1, -60.0#)
-            Assert.IsTrue(a = 0)
+            Assert.IsTrue(a.TotalDegrees = 0)
             Assert.AreEqual(0, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(-1, 0, 0.0#)
-            Assert.IsTrue(a < 0)
+            Assert.IsTrue(a.TotalDegrees < 0)
             Assert.AreEqual(1, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(-1, -1, 60.0#)
-            Assert.IsTrue(a < 0)
-            Assert.AreEqual(0, a.Degrees)
-            Assert.AreEqual(59, a.Minutes)
+            Assert.IsTrue(a.TotalDegrees < 0)
+            Assert.AreEqual(1, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(1, 0, 60.0# * 60.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(2, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
-            a = New Angle(1, -120.0#, 0.0#)
-            Assert.IsTrue(a < 0)
+            a = New Angle(1, -120, 0.0#)
+            Assert.IsTrue(a.TotalDegrees < 0)
             Assert.AreEqual(1, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
 
             a = New Angle(-1, -120, 60.0#)
-            Assert.IsTrue(a > 0)
+            Assert.IsTrue(a.TotalDegrees > 0)
             Assert.AreEqual(1, a.Degrees)
             Assert.AreEqual(0, a.Minutes)
             Assert.AreEqual(0.0#, a.Seconds)
@@ -286,7 +355,109 @@ Namespace NumericsUT
             For Each v In values
                 a = New Angle(v.d, v.m, v.s)
                 Dim expeted = v.d + v.m / 60.0# + v.s / 60.0# / 60.0#
-                Assert.AreEqual(expeted, a.TotalDegrees)
+                Assert.AreEqual(expeted, a.TotalDegrees, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
+            Next
+        End Sub
+
+        <TestMethod()>
+        Public Sub CTor_dms_ex_decimal()
+
+            Dim a As New Angle(0, 60, 0@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(1, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(0, 0, 60@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(1, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(0, 1, 60@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(2, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(1, 61, 1@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(2, a.Degrees)
+            Assert.AreEqual(1, a.Minutes)
+            Assert.AreEqual(1@, a.Seconds, delta)
+
+            a = New Angle(1, -1, 0@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(59, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(0, 1, -1@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(59@, a.Seconds)
+
+            a = New Angle(1, -60, 0@)
+            Assert.IsTrue(a.TotalDegrees = 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(0, 1, -60@)
+            Assert.IsTrue(a.TotalDegrees = 0)
+            Assert.AreEqual(0, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(-1, 0, 0@)
+            Assert.IsTrue(a.TotalDegrees < 0)
+            Assert.AreEqual(1, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(-1, -1, 60@)
+            Assert.IsTrue(a.TotalDegrees < 0)
+            Assert.AreEqual(1, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(1, 0, 60@ * 60@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(2, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(1, -120, 0@)
+            Assert.IsTrue(a.TotalDegrees < 0)
+            Assert.AreEqual(1, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            a = New Angle(-1, -120, 60@)
+            Assert.IsTrue(a.TotalDegrees > 0)
+            Assert.AreEqual(1, a.Degrees)
+            Assert.AreEqual(0, a.Minutes)
+            Assert.AreEqual(0@, a.Seconds)
+
+            Dim values() = {
+               New With {.d = 0, .m = 1, .s = 66@},
+               New With {.d = 1, .m = 66, .s = 0.10000000000000001@},
+               New With {.d = 0, .m = 66, .s = 66.099999999999994@},
+               New With {.d = 1, .m = -1, .s = 0@},
+               New With {.d = 60, .m = -30, .s = -30@ * 60@},
+               New With {.d = -360, .m = -10, .s = 0@},
+               New With {.d = 0, .m = -30, .s = -8@},
+               New With {.d = -33, .m = 0, .s = -1@},
+               New With {.d = 33, .m = 0, .s = -1@},
+               New With {.d = 0, .m = 0, .s = 3600@},
+               New With {.d = 0, .m = 3600, .s = 0@},
+               New With {.d = 0, .m = -3600, .s = -3600 * 60@}
+           }
+            For Each v In values
+                a = New Angle(v.d, v.m, v.s)
+                Dim expeted = v.d + v.m / 60@ + v.s / 60@ / 60@
+                Assert.AreEqual(expeted, a.TotalDegrees, String.Format("v.d={0}, v.m={1}, v.s={2}", v.d, v.m, v.s))
             Next
         End Sub
 
@@ -340,7 +511,7 @@ Namespace NumericsUT
             Assert.AreEqual(359.0#, New Angle(359.0#).Normalize.TotalDegrees)
             Assert.AreEqual(359.99900000000002#, New Angle(359.99900000000002#).Normalize.TotalDegrees)
             Assert.AreEqual(0.0#, New Angle(360.0#).Normalize.TotalDegrees)
-            Assert.AreEqual(0.10000000000000001#, New Angle(360.10000000000002#).Normalize.TotalDegrees)
+            Assert.AreEqual(0.10000000000000001#, New Angle(360.10000000000002#).Normalize.TotalDegrees, delta)
             Assert.AreEqual(0.0#, New Angle(3600.0#).Normalize.TotalDegrees)
             Assert.AreEqual(359.0#, New Angle(-1.0#).Normalize.TotalDegrees)
             Assert.AreEqual(180.0#, New Angle(-180.0#).Normalize.TotalDegrees)
@@ -357,7 +528,7 @@ Namespace NumericsUT
             Assert.AreEqual(-90.0#, New Angle(270.0#).Normalize(180).TotalDegrees)
             Assert.AreEqual(-1.0#, New Angle(359.0#).Normalize(180).TotalDegrees)
             Assert.AreEqual(0.0#, New Angle(360.0#).Normalize(180).TotalDegrees)
-            Assert.AreEqual(0.10000000000000001#, New Angle(360.10000000000002#).Normalize(180).TotalDegrees)
+            Assert.AreEqual(0.10000000000000001#, New Angle(360.10000000000002#).Normalize(180).TotalDegrees, delta)
             Assert.AreEqual(0.0#, New Angle(3600.0#).Normalize(180).TotalDegrees)
             Assert.AreEqual(-1.0#, New Angle(-1.0#).Normalize(180).TotalDegrees)
             Assert.AreEqual(-180.0#, New Angle(-180.0#).Normalize(180).TotalDegrees)
@@ -368,17 +539,21 @@ Namespace NumericsUT
         <TestMethod()>
         Public Sub Normalize()
             Dim angels = {-3600.0#, -3599.0#, -620.0#, -600.0#, -370.0#, -365.0#, -360.10000000000002#, -360.0#, -359.89999999999998#, -270.0#, -269.0#, -200.0#, -181.0#, -180.0#, -179.0#, -91.0#, -90.0#, -89.0#, -46.0#, -45.0#, -44.0#, -33.0#, -30.0#, -10.0#, -2.0#, -1.0#, -0.5#, -0.10000000000000001#, 0.0#}
-            Dim normalize = {-360.0#, -180.0#, 0.0#, 1.0#, 35.0#, 45.0#, 90.0#, 180.0#, 360.0#, 720.0#, 3600.0#}
+            Dim normalize = {-360.0#, -180.0#, 0.0#, 1.0#, 35.0#, 45.0#, 90.0#, 180.0#, 360.0#, 720.0#, 3600.0#, 362.5#}
             For Each n In normalize
                 For Each m In {1.0#, -1.0#}
                     For Each v In angels
                         Dim value = m * v
                         Dim angle = New Angle(value)
                         Dim normalized = angle.Normalize(n)
-                        Assert.IsTrue(normalized >= n - 360.0#)
-                        Assert.IsTrue(normalized < n)
+                        Assert.IsTrue(normalized.TotalDegrees >= n - 360.0#, String.Format("n={0}, m={1}, v={2}", n, m, v))
+                        Assert.IsTrue(normalized.TotalDegrees < n, String.Format("n={0}, m={1}, v={2}", n, m, v))
                         Assert.AreEqual(0.10000000000000001#, 0.10000000000000001# Mod 360)
-                        Assert.AreEqual(normalized.TotalDegrees Mod 360, value Mod 360)
+                        Dim valueMod360 = value Mod 360
+                        If valueMod360 < 0 Then valueMod360 += 360
+                        Dim normalizedMod360 = normalized.TotalDegrees Mod 360
+                        If normalizedMod360 < 0 Then normalizedMod360 += 360
+                        Assert.AreEqual(valueMod360, normalizedMod360, delta, String.Format("n={0}, m={1}, v={2}", n, m, v))
                     Next
                 Next
             Next
@@ -406,9 +581,9 @@ Namespace NumericsUT
         Public Sub BasicTrigonometry()
             Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
             For Each v In angles
-                Assert.AreEqual(Math.Cos(v * (Math.PI / 180.0#)), New Angle(v).Cos)
-                Assert.AreEqual(Math.Sin(v * (Math.PI / 180.0#)), New Angle(v).Sin)
-                Assert.AreEqual(Math.Tan(v * (Math.PI / 180.0#)), New Angle(v).Tan)
+                Assert.AreEqual(Math.Cos(v * (Math.PI / 180.0#)), New Angle(v).Cos, String.Format("v={0}", v))
+                Assert.AreEqual(Math.Sin(v * (Math.PI / 180.0#)), New Angle(v).Sin, String.Format("v={0}", v))
+                Assert.AreEqual(Math.Tan(v * (Math.PI / 180.0#)), New Angle(v).Tan, String.Format("v={0}", v))
             Next
         End Sub
 
@@ -416,41 +591,110 @@ Namespace NumericsUT
         Public Sub ExtendedTrigonometry()
             Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
             For Each v In angles
-                Assert.AreEqual(1.0# / Math.Tan(v * (Math.PI / 180.0#)), New Angle(v).Cot)
-                Assert.AreEqual(1.0# / Math.Cos(v * (Math.PI / 180.0#)), New Angle(v).Sec)
-                Assert.AreEqual(1.0# / Math.Sin(v * (Math.PI / 180.0#)), New Angle(v).Csc)
+                Assert.AreEqual(1.0# / Math.Tan(v * (Math.PI / 180.0#)), New Angle(v).Cot, String.Format("v={0}", v))
+                Assert.AreEqual(1.0# / Math.Cos(v * (Math.PI / 180.0#)), New Angle(v).Sec, String.Format("v={0}", v))
+                Assert.AreEqual(1.0# / Math.Sin(v * (Math.PI / 180.0#)), New Angle(v).Csc, String.Format("v={0}", v))
             Next
         End Sub
-
+#Region "InvertTrigonometry"
         <TestMethod()>
-        Public Sub InvertTrigonometry()
+        Public Sub Asin()
+            'An angle, θ, measured in radians, such that -π/2 ≤ θ ≤ π/2 
             Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
             For Each v In angles
                 Dim a = New Angle(v)
-                Assert.AreEqual(a.Normalize(180).TotalDegrees, Angle.Asin(a.Sin).TotalDegrees)
-                Assert.AreEqual(a.Normalize(360).TotalDegrees, Angle.Acos(a.Cos).TotalDegrees)
-                Assert.AreEqual(a.Normalize(180).TotalDegrees, Angle.Atan(a.Tan).TotalDegrees)
-                Assert.AreEqual(a.Normalize(180).TotalDegrees, Angle.Acot(a.Cot).TotalDegrees)
-                Assert.AreEqual(a.Normalize(360).TotalDegrees, Angle.Asec(a.Sec).TotalDegrees)
-                Assert.AreEqual(a.Normalize(180).TotalDegrees, Angle.Acsc(a.Csc).TotalDegrees)
+                Assert.AreEqual(Angle.FromRadians(Math.Asin(Math.Sin(a.ToRadians))).TotalDegrees, Angle.Asin(a.Sin).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Asin(a.Sin).TotalDegrees >= -90, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Asin(a.Sin).TotalDegrees <= 90, String.Format("v={0}", v))
             Next
 
             For Each v In {-1.0#, -0.5#, -0.25#, -0.125#, 0.0#, 0.125#, 0.25#, 0.5#, 1.0#}
-                Assert.AreEqual(Angle.FromRadians(Math.Asin(v)).TotalDegrees, Angle.Asin(v).TotalDegrees)
-                Assert.AreEqual(Angle.FromRadians(Math.Acos(v)).TotalDegrees, Angle.Acos(v).TotalDegrees)
-            Next
-
-            For Each v In {Double.NegativeInfinity, -1000.0#, -1.0#, -0.5#, -0.25#, -0.125#, 0.0#, 0.125#, 0.25#, 0.5#, 1.0#, 1000.0#, Double.PositiveInfinity}
-                Assert.AreEqual(Angle.FromRadians(Math.Atan(v)).TotalDegrees, Angle.Atan(v).TotalDegrees)
-                Assert.AreEqual(Angle.FromRadians(Math.Atan(1.0# / v)).TotalDegrees, Angle.Acot(v).TotalDegrees)
+                Assert.AreEqual(Angle.FromRadians(Math.Asin(v)).TotalDegrees, Angle.Asin(v).TotalDegrees, String.Format("v={0}", v))
             Next
 
             For Each v In {Double.NegativeInfinity, -1000.0#, -1.0#, 1.0#, 1000.0#, Double.PositiveInfinity}
-                Assert.AreEqual(Angle.FromRadians(Math.Acos(1.0# / v)).TotalDegrees, Angle.Asec(v).TotalDegrees)
-                Assert.AreEqual(Angle.FromRadians(Math.Asin(1.0# / v)).TotalDegrees, Angle.Acsc(v).TotalDegrees)
+                Assert.AreEqual(Angle.FromRadians(Math.Acos(1.0# / v)).TotalDegrees, Angle.Asec(v).TotalDegrees, String.Format("v={0}", v))
             Next
         End Sub
+        <TestMethod()>
+        Public Sub Acos()
+            'An angle, θ, measured in radians, such that 0 ≤ θ ≤ π 
+            Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
+            For Each v In angles
+                Dim a = New Angle(v)
+                Assert.AreEqual(Angle.FromRadians(Math.Acos(Math.Cos(a.ToRadians))).TotalDegrees, Angle.Acos(a.Cos).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acos(a.Cos).TotalDegrees >= 0, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acos(a.Cos).TotalDegrees <= 180, String.Format("v={0}", v))
+            Next
 
+            For Each v In {-1.0#, -0.5#, -0.25#, -0.125#, 0.0#, 0.125#, 0.25#, 0.5#, 1.0#}
+                Assert.AreEqual(Angle.FromRadians(Math.Acos(v)).TotalDegrees, Angle.Acos(v).TotalDegrees, String.Format("v={0}", v))
+            Next
+
+            For Each v In {Double.NegativeInfinity, -1000.0#, -1.0#, 1.0#, 1000.0#, Double.PositiveInfinity}
+                Assert.AreEqual(Angle.FromRadians(Math.Asin(1.0# / v)).TotalDegrees, Angle.Acsc(v).TotalDegrees, String.Format("v={0}", v))
+            Next
+        End Sub
+        <TestMethod()>
+        Public Sub Atan()
+            'An angle, θ, measured in radians, such that -π/2 ≤ θ ≤ π/2.
+            Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
+            For Each v In angles
+                Dim a = New Angle(v)
+                Assert.AreEqual(Angle.FromRadians(Math.Atan(Math.Tan(a.ToRadians))).TotalDegrees, Angle.Atan(a.Tan).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Atan(a.Tan).TotalDegrees >= -90, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Atan(a.Tan).TotalDegrees <= 90, String.Format("v={0}", v))
+            Next
+
+            For Each v In {Double.NegativeInfinity, -1000.0#, -1.0#, -0.5#, -0.25#, -0.125#, 0.0#, 0.125#, 0.25#, 0.5#, 1.0#, 1000.0#, Double.PositiveInfinity}
+                Assert.AreEqual(Angle.FromRadians(Math.Atan(v)).TotalDegrees, Angle.Atan(v).TotalDegrees, String.Format("v={0}", v))
+            Next
+
+        End Sub
+
+        <TestMethod()>
+        Public Sub Acot()
+            Dim fCot = Function(x#) 1.0# / Math.Tan(x)
+            Dim fACot = Function(x#) Math.Atan(1.0# / x)
+            Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
+            For Each v In angles
+                Dim a = New Angle(v)
+                Assert.AreEqual(Angle.FromRadians(fACot(fCot(a.ToRadians))), Angle.Acot(a.Cot), delta, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acot(a.Cot).TotalDegrees >= -90, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acot(a.Cot).TotalDegrees <= 90, String.Format("v={0}", v))
+            Next
+
+            For Each v In {Double.NegativeInfinity, -1000.0#, -1.0#, -0.5#, -0.25#, -0.125#, 0.0#, 0.125#, 0.25#, 0.5#, 1.0#, 1000.0#, Double.PositiveInfinity}
+                Assert.AreEqual(Angle.FromRadians(Math.Atan(1.0# / v)).TotalDegrees, Angle.Acot(v).TotalDegrees, String.Format("v={0}", v))
+            Next
+
+        End Sub
+        <TestMethod()>
+        Public Sub Asec()
+            Dim fSec = Function(x#) 1.0# / Math.Cos(x)
+            Dim fASec = Function(x#) Math.Acos(1.0# / x)
+            Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
+            For Each v In angles
+                Dim a = New Angle(v)
+                Assert.AreEqual(Angle.FromRadians(fASec(fSec(a.ToRadians))).TotalDegrees, Angle.Asec(a.Sec).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acot(a.Cot).TotalDegrees >= -90, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acot(a.Cot).TotalDegrees <= 90, String.Format("v={0}", v))
+            Next
+        End Sub
+        <TestMethod()>
+        Public Sub Acsc()
+            Dim fCsc = Function(x#) 1.0# / Math.Sin(x)
+            Dim fACsc = Function(x#) Math.Asin(1.0# / x)
+            Dim angles = {-360.0#, -180.0#, -33.0#, 0.0#, 19.0#, 45.0#, 100.0#, 180.0#, 359.0#, 360.0#}
+            For Each v In angles
+                Dim a = New Angle(v)
+                Assert.AreEqual(Angle.FromRadians(fACsc(fCsc(a.ToRadians))).TotalDegrees, Angle.Acsc(a.Csc).TotalDegrees, delta, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acot(a.Cot).TotalDegrees >= -90, String.Format("v={0}", v))
+                Assert.IsTrue(Angle.Acot(a.Cot).TotalDegrees <= 90, String.Format("v={0}", v))
+            Next
+
+        End Sub
+#End Region
         <TestMethod()>
         Public Sub RoundToDegrees()
             Assert.AreEqual(New Angle(1), New Angle(1).RoundToDegrees)
@@ -597,20 +841,20 @@ Namespace NumericsUT
             Assert.AreEqual(New Angle(0).TotalDegrees, New Angle(0).CeilingSeconds.TotalDegrees)
 
             Assert.AreEqual(New Angle(1).TotalDegrees, New Angle(0, 1, 0).CeilingDegrees.TotalDegrees)
-            Assert.AreEqual(New Angle(0, 1, 0).TotalDegrees, New Angle(0, 0, 1).CeilingMinutes.TotalDegrees)
+            Assert.AreEqual(New Angle(0, 1, 0).TotalDegrees, New Angle(0, 0, 1).CeilingMinutes.TotalDegrees, delta)
             Assert.AreEqual(New Angle(0, 0, 1).TotalDegrees, New Angle(0, 0, 0.10000000000000001).CeilingSeconds.TotalDegrees)
 
             Assert.AreEqual(New Angle(-1).TotalDegrees, New Angle(0, -1, 0).CeilingDegrees.TotalDegrees)
-            Assert.AreEqual(New Angle(0, -1, 0).TotalDegrees, New Angle(0, 0, -1).CeilingMinutes.TotalDegrees)
+            Assert.AreEqual(New Angle(0, -1, 0).TotalDegrees, New Angle(0, 0, -1).CeilingMinutes.TotalDegrees, delta)
             Assert.AreEqual(New Angle(0, 0, -1).TotalDegrees, New Angle(0, 0, -0.10000000000000001).CeilingSeconds.TotalDegrees)
 
             Assert.AreEqual(New Angle(2).TotalDegrees, New Angle(1, 1, 0).CeilingDegrees.TotalDegrees)
-            Assert.AreEqual(New Angle(0, 2, 0).TotalDegrees, New Angle(0, 1, 1).CeilingMinutes.TotalDegrees)
+            Assert.AreEqual(New Angle(0, 2, 0).TotalDegrees, New Angle(0, 1, 1).CeilingMinutes.TotalDegrees, delta)
             Assert.AreEqual(New Angle(0, 0, 2).TotalDegrees, New Angle(0, 0, 1.1000000000000001).CeilingSeconds.TotalDegrees)
 
             Assert.AreEqual(New Angle(-2).TotalDegrees, New Angle(-1, 1, 0).CeilingDegrees.TotalDegrees)
-            Assert.AreEqual(New Angle(0, -2, 0).TotalDegrees, New Angle(0, -1, 1).CeilingMinutes.TotalDegrees)
-            Assert.AreEqual(New Angle(0, 0, -2).TotalDegrees, New Angle(0, 0, -1.1000000000000001).CeilingSeconds.TotalDegrees)
+            Assert.AreEqual(New Angle(0, -2, 0).TotalDegrees, New Angle(0, -1, 1).CeilingMinutes.TotalDegrees, delta)
+            Assert.AreEqual(New Angle(0, 0, -2).TotalDegrees, New Angle(0, 0, -1.1000000000000001).CeilingSeconds.TotalDegrees, delta)
         End Sub
 
         <TestMethod()>
@@ -670,7 +914,7 @@ Namespace NumericsUT
             Dim a10 As Angle = 10
             Dim a15 As Angle = 15
             Dim a360 As Angle = 360
-            Dim am360 As Angle = 360
+            Dim am360 As Angle = -360
             Dim a0 As Angle = 0
             Dim am180 As Angle = -180
             Dim a180 As Angle = 180
@@ -690,7 +934,7 @@ Namespace NumericsUT
 
             Assert.IsTrue(am360 = a360)
             Assert.IsTrue(am180 = a180)
-            Assert.IsTrue(am180 < am360)
+            Assert.IsFalse(am180 < am360) '180 < 0
             Assert.IsTrue(am180 > a0)
 
             Assert.AreEqual(am180, a180)
@@ -723,7 +967,7 @@ Namespace NumericsUT
 
             Assert.IsTrue(am360 = 360.0#)
             Assert.IsTrue(am180 = 180.0#)
-            Assert.IsTrue(am180 < 360.0#)
+            Assert.IsFalse(am180 < 360.0#) '180 < 0
             Assert.IsTrue(am180 > 0.0#)
 
             Assert.AreEqual(am180, 180.0#)
@@ -732,7 +976,7 @@ Namespace NumericsUT
         End Sub
 
         <TestMethod()>
-        Public Sub IntegerComparrison()
+        Public Sub IntegerComparison()
             Dim a10 As Angle = 10
             Dim a15 As Angle = 15
             Dim a360 As Angle = 360
@@ -756,7 +1000,7 @@ Namespace NumericsUT
 
             Assert.IsTrue(am360 = 360%)
             Assert.IsTrue(am180 = 180%)
-            Assert.IsTrue(am180 < 360%)
+            Assert.IsFalse(am180 < 360%) '180< 0
             Assert.IsTrue(am180 > 0%)
 
             Assert.AreEqual(am180, 180%)
@@ -787,7 +1031,7 @@ Namespace NumericsUT
             Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(30) * -1%).TotalDegrees)
 
             Assert.AreEqual(New Angle(-63).TotalDegrees, (New Angle(30) * -2.1000000000000001#).TotalDegrees)
-            Assert.AreEqual(New Angle(-63).TotalDegrees, (New Angle(30) * -2.0999999!).TotalDegrees)
+            Assert.AreEqual(New Angle(-63).TotalDegrees, (New Angle(30) * -2.0999999!).TotalDegrees, delta)
             Assert.AreEqual(New Angle(-60).TotalDegrees, (New Angle(30) * -2%).TotalDegrees)
 
             Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(60) * 0.5#).TotalDegrees)
@@ -807,9 +1051,9 @@ Namespace NumericsUT
             Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(30) / 1.0!).TotalDegrees)
             Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(30) / 1%).TotalDegrees)
 
-            Assert.AreEqual(New Angle(15).TotalDegrees, (New Angle(15) / 2.0#).TotalDegrees)
-            Assert.AreEqual(New Angle(15).TotalDegrees, (New Angle(15) / 2.0!).TotalDegrees)
-            Assert.AreEqual(New Angle(15).TotalDegrees, (New Angle(15) / 2%).TotalDegrees)
+            Assert.AreEqual(New Angle(7.5).TotalDegrees, (New Angle(15) / 2.0#).TotalDegrees)
+            Assert.AreEqual(New Angle(7.5).TotalDegrees, (New Angle(15) / 2.0!).TotalDegrees)
+            Assert.AreEqual(New Angle(7.5).TotalDegrees, (New Angle(15) / 2%).TotalDegrees)
 
             Assert.AreEqual(New Angle(10).TotalDegrees, (New Angle(30) / 3.0#).TotalDegrees)
             Assert.AreEqual(New Angle(10).TotalDegrees, (New Angle(30) / 3.0!).TotalDegrees)
@@ -824,16 +1068,16 @@ Namespace NumericsUT
             Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(30) / -1%).TotalDegrees)
 
             Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(63) / -2.1000000000000001#).TotalDegrees)
-            Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(63) / -2.0999999!).TotalDegrees)
+            Assert.AreEqual(New Angle(63.0# / -2.0999999!).TotalDegrees, (New Angle(63) / -2.0999999!).TotalDegrees, delta)
             Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(60) / -2%).TotalDegrees)
 
             Assert.AreEqual(New Angle(120).TotalDegrees, (New Angle(60) / 0.5#).TotalDegrees)
             Assert.AreEqual(New Angle(120).TotalDegrees, (New Angle(60) / 0.5!).TotalDegrees)
-            Assert.AreEqual(New Angle(120).TotalDegrees, (New Angle(90) / 0.29999999999999999#).TotalDegrees)
-            Assert.AreEqual(New Angle(120).TotalDegrees, (New Angle(90) / 0.300000012!).TotalDegrees)
+            Assert.AreEqual(New Angle(300).TotalDegrees, (New Angle(90) / 0.29999999999999999#).TotalDegrees)
+            Assert.AreEqual(New Angle(90.0# / 0.300000012!).TotalDegrees, (New Angle(90) / 0.300000012!).TotalDegrees, delta)
 
             Assert.AreEqual(New Angle(30000).TotalDegrees, (New Angle(30) / 0.001#).TotalDegrees)
-            Assert.AreEqual(New Angle(30000).TotalDegrees, (New Angle(30) / 0.00100000005!).TotalDegrees)
+            Assert.AreEqual(New Angle(30.0# / 0.00100000005!).TotalDegrees, (New Angle(30) / 0.00100000005!).TotalDegrees, delta)
         End Sub
 
         <TestMethod()>
@@ -867,7 +1111,7 @@ Namespace NumericsUT
             Dim array = {-360, -180, -270, -90, 0, 33, 45, 180, 360, 720}
             For Each a In array
                 For Each b In array
-                    Assert.AreEqual(New Angle(a + b).TotalDegrees, (New Angle(a) + New Angle(b)).TotalDegrees)
+                    Assert.AreEqual(New Angle(a + b).TotalDegrees, (New Angle(a) + New Angle(b)).TotalDegrees, String.Format("a={0}, b={1}", a, b))
                 Next
             Next
         End Sub
@@ -877,7 +1121,7 @@ Namespace NumericsUT
             Dim array = {-360, -180, -270, -90, 0, 33, 45, 180, 360, 720}
             For Each a In array
                 For Each b In array
-                    Assert.AreEqual(New Angle(a - b).TotalDegrees, (New Angle(a) - New Angle(b)).TotalDegrees)
+                    Assert.AreEqual(New Angle(a - b).TotalDegrees, (New Angle(a) - New Angle(b)).TotalDegrees, String.Format("a={0}, b={1}", a, b))
                 Next
             Next
         End Sub
@@ -943,59 +1187,59 @@ Namespace NumericsUT
             For Each culture In {CurrentCulture, InvariantCulture, GetCultureInfo("ar"), GetCultureInfo("cs")}
                 Dim ni = culture.NumberFormat
                 Dim ai = culture.GetAngleFormatInfo
-                Assert.AreEqual(ai.LatitudeSouthShortSymbol, a1.ToString("%a", culture))
-                Assert.AreEqual(ai.LatitudeSouthShortSymbol, a1.ToString("%φ", culture))
-                Assert.AreEqual(ai.LatitudeNorthShortSymbol, a2.ToString("%a", culture))
-                Assert.AreEqual(ai.LatitudeNorthShortSymbol, a2.ToString("%φ", culture))
-                Assert.AreEqual(ai.LongitudeEastShortSymbol, a1.ToString("%o", culture))
-                Assert.AreEqual(ai.LongitudeEastShortSymbol, a1.ToString("%λ", culture))
-                Assert.AreEqual(ai.LongitudeWestShortSymbol, a2.ToString("%o", culture))
-                Assert.AreEqual(ai.LongitudeWestShortSymbol, a2.ToString("%λ", culture))
+                Assert.AreEqual(ai.LatitudeSouthShortSymbol, a1.ToString("%a", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LatitudeSouthShortSymbol, a1.ToString("%φ", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LatitudeNorthShortSymbol, a2.ToString("%a", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LatitudeNorthShortSymbol, a2.ToString("%φ", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeEastShortSymbol, a1.ToString("%o", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeEastShortSymbol, a1.ToString("%λ", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeWestShortSymbol, a2.ToString("%o", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeWestShortSymbol, a2.ToString("%λ", culture), String.Format("culture={0}", culture.Name))
 
-                Assert.AreEqual(ai.LatitudeSouthLongSymbol, a1.ToString("%A", culture))
-                Assert.AreEqual(ai.LatitudeSouthLongSymbol, a1.ToString("%Φ", culture))
-                Assert.AreEqual(ai.LatitudeNorthLongSymbol, a2.ToString("%A", culture))
-                Assert.AreEqual(ai.LatitudeNorthLongSymbol, a2.ToString("%Φ", culture))
-                Assert.AreEqual(ai.LongitudeEastLongSymbol, a1.ToString("%O", culture))
-                Assert.AreEqual(ai.LongitudeEastLongSymbol, a1.ToString("%Λ", culture))
-                Assert.AreEqual(ai.LongitudeWestLongSymbol, a2.ToString("%O", culture))
-                Assert.AreEqual(ai.LongitudeWestLongSymbol, a2.ToString("%Λ", culture))
+                Assert.AreEqual(ai.LatitudeSouthLongSymbol, a1.ToString("%A", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LatitudeSouthLongSymbol, a1.ToString("%Φ", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LatitudeNorthLongSymbol, a2.ToString("%A", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LatitudeNorthLongSymbol, a2.ToString("%Φ", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeEastLongSymbol, a1.ToString("%O", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeEastLongSymbol, a1.ToString("%Λ", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeWestLongSymbol, a2.ToString("%O", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.LongitudeWestLongSymbol, a2.ToString("%Λ", culture), String.Format("culture={0}", culture.Name))
 
-                Assert.AreEqual("", a1.ToString("%-", culture))
-                Assert.AreEqual(ni.NegativeSign, a2.ToString("%-", culture))
-                Assert.AreEqual(ni.NegativeSign, a2.ToString("%+", culture))
-                Assert.AreEqual(ni.PositiveSign, a1.ToString("%+", culture))
-                Assert.AreEqual(ni.NumberDecimalSeparator, a1.ToString("%.", culture))
-                Assert.AreEqual(ni.NumberGroupSeparator, a1.ToString("%,", culture))
-                Assert.AreEqual(ai.DegreeSign, a1.ToString("%°", culture))
-                Assert.AreEqual(ai.SecondSign, a1.ToString("%'", culture))
-                Assert.AreEqual(ai.MinuteSign, a1.ToString("%""", culture))
-                Assert.AreEqual(ai.SecondSign, a1.ToString("%′", culture))
-                Assert.AreEqual(ai.MinuteSign, a1.ToString("%″", culture))
-                Assert.AreEqual(ai.CompatibilityDegreeSign, a1.ToString("c°", culture))
-                Assert.AreEqual(ai.CompatibilitySecondSign, a1.ToString("c'", culture))
-                Assert.AreEqual(ai.CompatibilityMinuteSign, a1.ToString("c""", culture))
-                Assert.AreEqual(ai.CompatibilitySecondSign, a1.ToString("c′", culture))
-                Assert.AreEqual(ai.CompatibilityMinuteSign, a1.ToString("c″", culture))
+                Assert.AreEqual("", a1.ToString("%-", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ni.NegativeSign, a2.ToString("%-", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ni.NegativeSign, a2.ToString("%+", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ni.PositiveSign, a1.ToString("%+", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ni.NumberDecimalSeparator, a1.ToString("%.", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ni.NumberGroupSeparator, a1.ToString("%,", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.DegreeSign, a1.ToString("%°", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.SecondSign, a1.ToString("%'", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.MinuteSign, a1.ToString("%""", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.SecondSign, a1.ToString("%′", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.MinuteSign, a1.ToString("%″", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.CompatibilityDegreeSign, a1.ToString("c°", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.CompatibilitySecondSign, a1.ToString("c'", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.CompatibilityMinuteSign, a1.ToString("c""", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.CompatibilitySecondSign, a1.ToString("c′", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ai.CompatibilityMinuteSign, a1.ToString("c″", culture), String.Format("culture={0}", culture.Name))
 
-                Assert.AreEqual("\", a1.ToString("\\", culture))
-                Assert.AreEqual(".", a1.ToString("\.", culture))
-                Assert.AreEqual(",", a1.ToString("\,", culture))
-                Assert.AreEqual("""", a1.ToString("\""", culture))
-                Assert.AreEqual("\%", a1.ToString("\%", culture))
-                Assert.AreEqual("D", a1.ToString("\D", culture))
-                Assert.AreEqual("(", a1.ToString("\(", culture))
-                Assert.AreEqual("[", a1.ToString("\[", culture))
-                Assert.AreEqual(")", a1.ToString("%)", culture))
-                Assert.AreEqual("]]", a1.ToString("]]", culture))
+                Assert.AreEqual("\", a1.ToString("\\", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(".", a1.ToString("\.", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(",", a1.ToString("\,", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("""", a1.ToString("\""", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("\%", a1.ToString("\%", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("D", a1.ToString("\D", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("(", a1.ToString("\(", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("[", a1.ToString("\[", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(")", a1.ToString("%)", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("]]", a1.ToString("]]", culture), String.Format("culture={0}", culture.Name))
 
-                Assert.AreEqual(ni.PercentSymbol, a1.ToString("%%", culture))
-                Assert.AreEqual(ni.PerMilleSymbol, a1.ToString("%‰", culture))
+                Assert.AreEqual(ni.PercentSymbol, a1.ToString("%%", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual(ni.PerMilleSymbol, a1.ToString("%‰", culture), String.Format("culture={0}", culture.Name))
 
-                Assert.AreEqual("", a1.ToString("%|", culture))
-                Assert.AreEqual("", a1.ToString("||", culture))
-                Assert.AreEqual("", a1.ToString("||||||", culture))
-                Assert.AreEqual("|", a1.ToString("\|", culture))
+                Assert.AreEqual("", a1.ToString("%|", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("", a1.ToString("||", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("", a1.ToString("||||||", culture), String.Format("culture={0}", culture.Name))
+                Assert.AreEqual("|", a1.ToString("\|", culture), String.Format("culture={0}", culture.Name))
             Next
         End Sub
 
@@ -1080,32 +1324,32 @@ Namespace NumericsUT
         Public Sub ToString_CustomProperties()
             For Each culture In {InvariantCulture, CurrentCulture, GetCultureInfo("en-US"), GetCultureInfo("cs"), GetCultureInfo("ar"), Nothing}
                 For Each a In {New Angle(60, 30, 50.5#), New Angle(-60, 30, 50.5#), New Angle(100), New Angle(2000), New Angle(0), New Angle(0, 0, 0.0001#)}
-                    Assert.AreEqual((a.TotalDegrees \ 24).ToString("000.000", culture), a.ToString("(Days,000.000)", culture))
-                    Assert.AreEqual(a.Degrees.ToString("000", culture), a.ToString("(Degrees,000)", culture))
-                    Assert.AreEqual(a.ToGradians.ToString("000.###", culture), a.ToString("(Gradians,000.###)", culture))
-                    Assert.AreEqual((a.Degrees - (a.Degrees \ 24) * 24).ToString("0", culture), a.ToString("(Hours,0)", culture))
-                    Assert.AreEqual(a.Minutes.ToString("", culture), a.ToString("(Minutes,)", culture))
-                    Assert.AreEqual((a.ToRadians / Math.PI).ToString("###,###.0#", culture), a.ToString("(PiRadians,###,###.0#)", culture))
-                    Assert.AreEqual(a.ToRadians.ToString("###,###.0#", culture), a.ToString("(Radians,###\,###.0#)", culture))
-                    Assert.AreEqual((a.TotalDegrees - (a.TotalDegrees \ 24) * 24).ToString("f2", culture), a.ToString("(RestHours,f2)", culture))
-                    Assert.AreEqual((a.TotalMinutes - a.Degrees * 60.0#).ToString("e", culture), a.ToString("(RestMinutes,e)", culture))
-                    Assert.AreEqual((a.TotalSeconds - a.TotalMinutes \ 1 * 60.0#).ToString("N", culture), a.ToString("(RestSeconds,N)", culture))
-                    Assert.AreEqual(a.ToRotations.ToString("g2", culture), a.ToString("(Rotations,g2)", culture))
-                    Assert.AreEqual(a.Seconds.ToString(CStr(Nothing), culture), a.ToString("(Seconds)", culture))
-                    Assert.AreEqual(a.ToSlope.ToString(" 0\%", culture), a.ToString("(Slope, 0\\%)", culture))
-                    Assert.AreEqual(a.ToSlope.ToString(" 0\%", culture), a.ToString("(Slope100 , 0\\%)", culture))
-                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("p", culture), a.ToString("(Slope1,p)", culture))
-                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("0.00%", culture), a.ToString("(Slop\e1,0.00%)", culture))
-                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("0.0‰", culture), a.ToString("(Slope1,0.0‰)", culture))
-                    Assert.AreEqual((a.ToSlope * 10.0#).ToString("0.0\‰", culture), a.ToString("(Slope1000, 0.0\\‰)", culture))
-                    Assert.AreEqual(CType(a, TimeSpan).ToString("", culture), a.ToString("(Time,)", culture))
-                    Assert.AreEqual(CType(a, TimeSpanFormattable).ToString("[h]:mm:ss", culture), a.ToString("(TimeFormattable,[h]:mm:ss)", culture))
-                    Assert.AreEqual((a.TotalDegrees / 24.0#).ToString("g", culture), a.ToString("(TotalDays,g)", culture))
-                    Assert.AreEqual(a.TotalDegrees.ToString("0.00", culture), a.ToString("(TotalDegrees,0.00)", culture))
-                    Assert.AreEqual(a.TotalDegrees.ToString("0,00", culture), a.ToString("(TotalDegrees,0,00)", culture))
-                    Assert.AreEqual(a.TotalMinutes.ToString("0.00m", culture), a.ToString("(TotalMinutes,0.00)", culture))
-                    Assert.AreEqual(a.TotalSeconds.ToString("0.00m", culture), a.ToString("(TotalSeconds,0.00)", culture))
-                    Assert.AreEqual(a.Degrees.ToString("x", culture), a.ToString("(Degrees,x)", culture))
+                    Assert.AreEqual((a.TotalDegrees \ 24).ToString("000.000", culture), a.ToString("(Days,000.000)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.Degrees.ToString("000", culture), a.ToString("(Degrees,000)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.ToGradians.ToString("000.###", culture), a.ToString("(Gradians,000.###)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.Degrees - (a.Degrees \ 24) * 24).ToString("0", culture), a.ToString("(Hours,0)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.Minutes.ToString("", culture), a.ToString("(Minutes,)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.ToRadians / Math.PI).ToString("###,###.0#", culture), a.ToString("(PiRadians,###,###.0#)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.ToRadians.ToString("###,###.0#", culture), a.ToString("(Radians,###\,###.0#)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.TotalDegrees - (a.TotalDegrees \ 24) * 24).ToString("f2", culture), a.ToString("(RestHours,f2)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.TotalMinutes - a.Degrees * 60.0#).ToString("e", culture), a.ToString("(RestMinutes,e)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.TotalSeconds - a.TotalMinutes \ 1 * 60.0#).ToString("N", culture), a.ToString("(RestSeconds,N)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.ToRotations.ToString("g2", culture), a.ToString("(Rotations,g2)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.Seconds.ToString(CStr(Nothing), culture), a.ToString("(Seconds)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.ToSlope.ToString(" 0\%", culture), a.ToString("(Slope, 0\\%)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.ToSlope.ToString(" 0\%", culture), a.ToString("(Slope100 , 0\\%)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("p", culture), a.ToString("(Slope1,p)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("0.00%", culture), a.ToString("(Slop\e1,0.00%)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.ToSlope / 100.0#).ToString("0.0‰", culture), a.ToString("(Slope1,0.0‰)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.ToSlope * 10.0#).ToString("0.0\‰", culture), a.ToString("(Slope1000, 0.0\\‰)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(CType(a, TimeSpan).ToString("", culture), a.ToString("(Time,)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(CType(a, TimeSpanFormattable).ToString("[h]:mm:ss", culture), a.ToString("(TimeFormattable,[h]:mm:ss)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual((a.TotalDegrees / 24.0#).ToString("g", culture), a.ToString("(TotalDays,g)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.TotalDegrees.ToString("0.00", culture), a.ToString("(TotalDegrees,0.00)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.TotalDegrees.ToString("0,00", culture), a.ToString("(TotalDegrees,0,00)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.TotalMinutes.ToString("0.00m", culture), a.ToString("(TotalMinutes,0.00)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.TotalSeconds.ToString("0.00m", culture), a.ToString("(TotalSeconds,0.00)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
+                    Assert.AreEqual(a.Degrees.ToString("x", culture), a.ToString("(Degrees,x)", culture), String.Format("culture={0}, a={1}", culture.Name, a))
                 Next
             Next
         End Sub

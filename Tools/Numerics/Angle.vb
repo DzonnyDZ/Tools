@@ -22,8 +22,10 @@ Namespace NumericsT
     <StructLayout(LayoutKind.Sequential), Serializable()>
     Public Structure Angle
         Implements IFormattable, IComparable(Of Angle)
+        ''' <summary>π value as <see cref="Decimal"/></summary>
+        Private Const π As Decimal = 3.1415926535897932384626433833@
         ''' <summary>Angle value in degrees</summary>
-        Private _value As Double
+        Private _value As Decimal
 
 #Region "Basic properties"
         ''' <summary>Gets number of whole degrees of this angle</summary>
@@ -37,20 +39,20 @@ Namespace NumericsT
         ''' <remarks>Each degree has 60 minutes</remarks>
         Public ReadOnly Property Minutes As Integer
             Get
-                Return Math.Floor((_value - Degrees) * 60.0#)
+                Return Math.Floor((_value - Degrees) * 60@)
             End Get
         End Property
 
         ''' <summary>Gets number of seconds of this angle. The value excludes <see cref="Degrees"/> and <see cref="Minutes"/></summary>
         ''' <remarks>Each minute has 60 seconds</remarks>
-        Public ReadOnly Property Seconds As Double
+        Public ReadOnly Property Seconds As Decimal
             Get
-                Return ((_value - Degrees) * 60.0# - Minutes) * 60.0#
+                Return ((_value - Degrees) * 60@ - Minutes) * 60@
             End Get
         End Property
 
         ''' <summary>Gets total number of degrees in this angle</summary>
-        Public ReadOnly Property TotalDegrees As Double
+        Public ReadOnly Property TotalDegrees As Decimal
             Get
                 Return _value
             End Get
@@ -83,7 +85,7 @@ Namespace NumericsT
 
 #Region "Conversion"
         ''' <summary>Gets value of this angle as degrees</summary>
-        ''' <returns><see cref="Degrees"/></returns>
+        ''' <returns><see cref="Degrees"/> as <see cref="Double"/></returns>
         Public Function ToDegrees#()
             Return _value
         End Function
@@ -91,12 +93,13 @@ Namespace NumericsT
         ''' <returns>Value of this angle in radisna</returns>
         ''' <remarks>360 degrees is 2*π radians</remarks>
         Public Function ToRadians#()
-            Return _value * (Math.PI / 180.0#)
+            Return _value * (π / 180.0#)
         End Function
         ''' <summary>Creates an <see cref="Angle"/> value from degrees</summary>
         ''' <param name="value">Number of degrees for new angle</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="value"/> degrees.</returns>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException"><paramref name="value"/> exceeds size of data type <see cref="Decimal"/> (Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/>).</exception>
         Public Shared Function FromDegrees(value#) As Angle
             Return New Angle(value)
         End Function
@@ -105,7 +108,9 @@ Namespace NumericsT
         ''' <param name="value">Number of minutes (1/60 degree) for new angle</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="value"/> minutes.</returns>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException"><paramref name="value"/> (or <paramref name="value"/> * 60) exceeds size of data type <see cref="Decimal"/> (Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/>).</exception>
         Public Shared Function FromMinutes(value#) As Angle
+            If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException("Value cannot be NaN or infinity", "value")
             Return New Angle(value / 60.0#)
         End Function
 
@@ -113,25 +118,42 @@ Namespace NumericsT
         ''' <param name="value">Number of seconds (1/3600 degree) for new angle</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="value"/> seconds.</returns>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException"><paramref name="value"/> (or <paramref name="value"/> * 60 * 60) exceeds size of data type <see cref="Decimal"/> (Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/>).</exception>
         Public Shared Function FromSeconds(value#) As Angle
-            Return New Angle(value / 60.0# / 60.0#)
+            If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException("Value cannot be NaN or infinity", "value")
+            Return New Angle(CDec(value) / 60@ / 60@)
         End Function
 
         ''' <summary>Creates an <see cref="Angle"/> value from radians</summary>
         ''' <param name="value">Angle in radians</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to equivalent of <paramref name="value"/> radians</returns>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException">Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/></exception>
         ''' <remarks>360 degrees is 2*π radians</remarks>
         Public Shared Function FromRadians(value#) As Angle
-            Return New Angle(value * (180.0# / Math.PI))
+            If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException("Value cannot be NaN or infinity", "value")
+            Return New Angle(value * (180.0# / π))
         End Function
+
+        ''' <summary>Creates an <see cref="Angle"/> value from radians</summary>
+        ''' <param name="value">Angle in radians</param>
+        ''' <returns>A new instance of <see cref="Angle"/> initialized to equivalent of <paramref name="value"/> radians</returns>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException">Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/></exception>
+        ''' <remarks>360 degrees is 2*π radians</remarks>
+        Private Shared Function FromRadians(value@) As Angle
+            Return New Angle(value * (180.0# / π))
+        End Function
+
         ''' <summary>Creates an <see cref="Angle"/> value from rotations</summary>
         ''' <param name="value">Number of raotations</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to equivalent of <paramref name="value"/> rotations</returns>
         ''' <remarks>One rotation is 360 degrees</remarks>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException">Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/></exception>
         Public Shared Function FromRotations(value#) As Angle
-            Return New Angle(value / 360.0#)
+            If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException("Value cannot be NaN or infinity", "value")
+            Return New Angle(value * 360.0#)
         End Function
         ''' <summary>Gets value of this angle in gradians (grads)</summary>
         ''' <returns>Value of this angle in gradians (grads)</returns>
@@ -143,8 +165,10 @@ Namespace NumericsT
         ''' <param name="value">Angle in grads</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to equaivalent of <paramref name="value"/> gradians</returns>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException">Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/></exception>
         ''' <remarks>100 gradians is 90 degrees</remarks>
         Public Shared Function FromGradians(value#) As Angle
+            If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException("Value cannot be NaN or infinity", "value")
             Return FromRotations(value / 400.0#)
         End Function
         ''' <summary>Gets value of this angle in rotations</summary>
@@ -165,6 +189,8 @@ Namespace NumericsT
         ''' <param name="value">Slope in percent</param>
         ''' <returns>Angle value calcutaletd from <paramref name="value"/> as slope in percent.</returns>
         ''' <remarks>Raising angle of 45° has slope +100%</remarks>
+        ''' <exception cref="OverflowException">Resulting value is less than <see cref="Angle.minValue"/> or greater than <see cref="Angle.maxValue"/></exception>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> is NaN</exception>
         Public Shared Function FromSlope(value As Double) As Angle
             Return Atan(value / 100)
         End Function
@@ -172,33 +198,34 @@ Namespace NumericsT
 
 #Region "Values"
         ''' <summary>A zero angle (0°)</summary>
-        Public Shared ReadOnly zero As New Angle(0)
+        Public Shared ReadOnly Zero As New Angle(0@)
         ''' <summary>Positive right angle (90°)</summary>
-        Public Shared ReadOnly right As New Angle(90)
+        Public Shared ReadOnly Right As New Angle(90@)
         ''' <summary>Straight angle (180°)</summary>
-        Public Shared ReadOnly straing As New Angle(180)
+        Public Shared ReadOnly Straing As New Angle(180@)
         ''' <summary>Full angle (one rotation; 360°)</summary>
-        Public Shared ReadOnly full As New Angle(360)
+        Public Shared ReadOnly Full As New Angle(360@)
         ''' <summary>Largest possible negative angle</summary>
-        ''' <remarks>Equals <see cref="System.Double.MinValue"/></remarks>
-        Public Shared ReadOnly minValue As New Angle(Double.MinValue)
+        ''' <remarks>Equals <see cref="System.Decimal.MinValue"/> degrees</remarks>
+        Public Shared ReadOnly MinValue As New Angle(Decimal.MinValue)
         ''' <summary>Largest possible positive angle</summary>
-        ''' <remarks>Equals <see cref="System.Double.MaxValue"/></remarks>
-        Public Shared ReadOnly maxValue As New Angle(Double.MaxValue)
+        ''' <remarks>Equals <see cref="System.Decimal.MaxValue"/>degrees</remarks>
+        Public Shared ReadOnly MaxValue As New Angle(Decimal.MaxValue)
         ''' <summary>An angle of 1°</summary>
-        Public Shared ReadOnly degree As New Angle(1)
+        Public Shared ReadOnly Degree As New Angle(1@)
         ''' <summary>An angle of 1 rad</summary>
-        Public Shared ReadOnly radian As Angle = Angle.FromRadians(1)
+        Public Shared ReadOnly Radian As Angle = Angle.FromRadians(1.0#)
         ''' <summary>An angle of 1 grad</summary>
-        Public Shared ReadOnly gradian As Angle = Angle.FromGradians(1)
+        Public Shared ReadOnly Gradian As Angle = Angle.FromGradians(1.0#)
         ''' <summary>An angle of 1π rad</summary>
-        Public Shared ReadOnly πRadians As Angle = Angle.FromGradians(Math.PI)
+        Public Shared ReadOnly ΠRadians As Angle = Angle.FromRadians(π)
 #End Region
 
 #Region "CTors"
         ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> structure from degrees as <see cref="Single"/></summary>
         ''' <param name="value">Number of degrees</param>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException"><paramref name="value"/> is less than <see cref="[Decimal].MinValue"/> or greater than <see cref="[Decimal].MaxValue"/></exception>
         Public Sub New(value As Single)
             If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "value")
             _value = value
@@ -206,6 +233,7 @@ Namespace NumericsT
         ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> structure from degrees as <see cref="Double"/></summary>
         ''' <param name="value">Number of degrees</param>
         ''' <exception cref="ArgumentException"><paramref name="value"/> is infinity or NaN</exception>
+        ''' <exception cref="OverflowException"><paramref name="value"/> is less than <see cref="[Decimal].MinValue"/> or greater than <see cref="[Decimal].MaxValue"/></exception>
         Public Sub New(value As Double)
             If value.IsNaN OrElse value.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "value")
             _value = value
@@ -226,24 +254,39 @@ Namespace NumericsT
         ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second</summary>
         ''' <param name="degrees">Number of degrees</param>
         ''' <param name="minutes">Number of minutes. If greater than 60 velue is tranferred to degrees.</param>
-        ''' <param name="second">Number of second. If greater than 60 value is transfered to seconds.</param>
+        ''' <param name="seconds">Number of second. If greater than 60 value is transfered to seconds.</param>
         ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered.</remarks>
         ''' <exception cref="ArgumentException"><paramref name="second"/> is NaN or infinity</exception>
-        Public Sub New(degrees As Integer, minutes As Integer, second As Double)
-            If second.IsNaN OrElse second.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "second")
+        ''' <exception cref="OverflowException">Resulting angle would be less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/></exception>
+        Public Sub New(degrees As Integer, minutes As Integer, seconds As Double)
+            If seconds.IsNaN OrElse seconds.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "second")
             _value = CDbl(degrees)
-            _value += If(_value < 0, -1.0#, 1.0#) * (CDbl(minutes) / 60.0#)
-            _value += If(_value < 0, -1.0#, 1.0#) * (second / 60.0# / 60.0#)
+            _value += If(_value < 0, -1@, 1@) * (CDec(minutes) / 60@)
+            _value += If(_value < 0, -1@, 1@) * (seconds / 60@ / 60@)
+        End Sub
+
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second</summary>
+        ''' <param name="degrees">Number of degrees</param>
+        ''' <param name="minutes">Number of minutes. If greater than 60 velue is tranferred to degrees.</param>
+        ''' <param name="seconds">Number of second. If greater than 60 value is transfered to seconds.</param>
+        ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered.</remarks>
+        ''' <exception cref="OverflowException">Resulting angle would be less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/></exception>
+        Public Sub New(degrees As Integer, minutes As Integer, seconds As Decimal)
+            _value = CDbl(degrees)
+            _value += If(_value < 0, -1@, 1@) * (CDec(minutes) / 60@)
+            _value += If(_value < 0, -1@, 1@) * (seconds / 60@ / 60@)
         End Sub
 #End Region
 
 #Region "Methods"
+
+
         ''' <summary>Creates a new instance of <see cref="Angle"/> that has value between 0° (inclusive) and 360° (exclusive)</summary>
         ''' <returns>An <see cref="Angle"/> that represents same azimuth and has value in range &lt;0°, 360°)</returns>
         Public Function Normalize() As Angle
             Dim angle = _value
-            If angle <= 0.0# Then angle = 360.0# - angle
-            Return angle Mod 360.0#
+            If angle <= 0@ Then angle = 360@ * -(angle \ 360@ - 1) + angle
+            Return angle Mod 360@
         End Function
 
         ''' <summary>Creates a new instance of <see cref="Angle"/> that has value in certain range</summary>
@@ -252,10 +295,11 @@ Namespace NumericsT
         ''' <exception cref="ArgumentException"><paramref name="maxAngle"/> is NaN or infinity</exception>
         Public Function Normalize(maxAngle As Double) As Angle
             If maxAngle.IsNaN OrElse maxAngle.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "maxAngle")
-            Dim angle = Normalize._value
-            If angle > maxAngle Then Return angle - ((angle - maxAngle) \ 360) * 360 - 360.0#
-            If angle < maxAngle - 360 Then Return angle + ((maxAngle - 360 - angle) \ 360) * 360 + 360.0#
-            Return angle
+            Dim ret = Normalize()._value + (maxAngle \ 360@) * 360@
+            If maxAngle < 0 Then ret -= 360@
+            If ret >= maxAngle Then ret -= 360@
+            If ret < maxAngle - 360@ Then ret += 360
+            Return New Angle(ret)
         End Function
 
         ''' <summary>Gets an absolute value of this angle</summary>
@@ -363,7 +407,7 @@ Namespace NumericsT
         ''' <returns>An angle, θ, measured in degrees, such that -90° ≤ θ ≤ 90°.</returns>
         ''' <exception cref="ArgumentException"><paramref name="d"/> is > -1 and <paramref name="d"/> &lt; 1 or <paramref name="d"/> equals <see cref="System.Double.NaN"/></exception>
         Public Shared Function Acsc(d As Double) As Angle
-            Return Angle.FromRadians(Math.Sin(1.0# / d))
+            Return Angle.FromRadians(Math.Asin(1.0# / d))
         End Function
 
 #End Region
@@ -389,7 +433,7 @@ Namespace NumericsT
         ''' <summary>Truncates current angle to contain only whole degrees</summary>
         ''' <returns>A new instance of <see cref="Angle"/> that contains only <see cref="Degrees"/>.</returns>
         Public Function TruncateToDegrees() As Angle
-            Return New Angle(Me.Degrees) * Me.Sign
+            Return New Angle(Me.Degrees) '* Me.Sign
         End Function
 
         ''' <summary>Rounds current angle to nearest whole degrees</summary>
@@ -399,12 +443,12 @@ Namespace NumericsT
         Public Function RoundToMinutes(Optional mode As MidpointRounding = MidpointRounding.AwayFromZero) As Angle
             Select Case mode
                 Case MidpointRounding.AwayFromZero
-                    Return New Angle(Me.Degrees, Me.Minutes + If(Me.Seconds >= 30.0#, 1, 0), 0.0#) * Me.Sign
+                    Return New Angle(Me.Degrees, Me.Minutes + If(Me.Seconds >= 30@, 1, 0), 0@) * Me.Sign
                 Case MidpointRounding.ToEven
-                    Return New Angle(Me.Degrees, Me.Minutes + If(Me.Seconds > 30.0#, 1,
-                                                              If(Me.Seconds < 30.0#, 0,
+                    Return New Angle(Me.Degrees, Me.Minutes + If(Me.Seconds > 30@, 1,
+                                                              If(Me.Seconds < 30@, 0,
                                                               If(Minutes \ 2 = 0, 0, 1)
-                                     )), 0.0#) * Me.Sign
+                                     )), 0@) * Me.Sign
                 Case Else : Throw New InvalidEnumArgumentException("mode", mode, mode.GetType)
             End Select
         End Function
@@ -438,19 +482,19 @@ Namespace NumericsT
         ''' <summary>Converts an angle to nearest greater angle measured in whole degress.</summary>
         ''' <returns>A new instance of angle that contains only whole degrees and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
         Public Function CeilingDegrees() As Angle
-            Return New Angle(Math.Ceiling(Me.TotalDegrees)) * Me.Sign
+            Return New Angle(Math.Ceiling(Me.TotalDegrees * Me.Sign)) * Me.Sign
         End Function
 
         ''' <summary>Converts an angle to nearest greater angle measured in whole degress and minutes.</summary>
         ''' <returns>A new instance of angle that contains only whole degrees and minutes and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
         Public Function CeilingMinutes() As Angle
-            Return Angle.FromMinutes(Math.Ceiling(Me.TotalMinutes)) * Me.Sign
+            Return Angle.FromMinutes(Math.Ceiling(Me.TotalMinutes * Me.Sign)) * Me.Sign
         End Function
 
         ''' <summary>Converts an angle to nearest greater angle measured in whole degress, minutes and seconds.</summary>
         ''' <returns>A new instance of angle that contains only whole degrees, minutes and seconds and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
         Public Function CeilingSeconds() As Angle
-            Return Angle.FromSeconds(Math.Ceiling(Me.TotalSeconds)) * Me.Sign
+            Return Angle.FromSeconds(Math.Ceiling(Me.TotalSeconds * Me.Sign)) * Me.Sign
         End Function
 
 #End Region
@@ -462,14 +506,16 @@ Namespace NumericsT
         ''' <param name="a">Angle value in degrees</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/> degrees</returns>
         ''' <exception cref="ArgumentException"><paramref name="a"/> is NaN or infinity</exception>
-        Public Shared Widening Operator CType(a As Double) As Angle
+        ''' <exception cref="OverflowException"><paramref name="a"/> is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
+        Public Shared Narrowing Operator CType(a As Double) As Angle
             Return New Angle(a)
         End Operator
         ''' <summary>Converts a <see cref="Single"/> value to <see cref="Angle"/></summary>
         ''' <param name="a">Angle value in degrees</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/> degrees</returns>
         ''' <exception cref="ArgumentException"><paramref name="a"/> is NaN or infinity</exception>
-        Public Shared Widening Operator CType(a As Single) As Angle
+        ''' <exception cref="OverflowException"><paramref name="a"/> is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
+        Public Shared Narrowing Operator CType(a As Single) As Angle
             Return New Angle(a)
         End Operator
         ''' <summary>Converts a <see cref="Double"/> value to <see cref="Angle"/></summary>
@@ -487,14 +533,16 @@ Namespace NumericsT
         ''' <summary>Converts a <see cref="TimeSpan"/> value to <see cref="Angle"/></summary>
         ''' <param name="a">A <see cref="TimeSpan"/> to be converted</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/>.<see cref="TimeSpan.TotalHours">TotalHours</see> degrees</returns>
-        Public Shared Widening Operator CType(a As TimeSpan) As Angle
+        ''' <exception cref="OverflowException">Resulting angle is less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/>.</exception>
+        Public Shared Narrowing Operator CType(a As TimeSpan) As Angle
             Return New Angle(a.TotalHours)
         End Operator
 
         ''' <summary>Converts a <see cref="TimeSpanFormattable"/> value to <see cref="Angle"/></summary>
         ''' <param name="a">A <see cref="TimeSpanFormattable"/> to be converted</param>
         ''' <returns>A new instance of <see cref="Angle"/> initialized to <paramref name="a"/>.<see cref="TimeSpanFormattable.TotalHours">TotalHours</see> degrees</returns>
-        Public Shared Widening Operator CType(a As TimeSpanFormattable) As Angle
+        ''' <exception cref="OverflowException">Resulting angle is less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/>.</exception>
+        Public Shared Narrowing Operator CType(a As TimeSpanFormattable) As Angle
             Return New Angle(a.TotalHours)
         End Operator
 #End Region
@@ -518,7 +566,7 @@ Namespace NumericsT
         ''' <param name="a">An angle value</param>
         ''' <returns><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> as <see cref="Decimal"/></returns>
         ''' <exception cref="OverflowException"><paramref name="a"/>.<see cref="TotalDegrees">TotalDegrees</see> is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/>.</exception>
-        Public Shared Narrowing Operator CType(a As Angle) As Decimal
+        Public Shared Widening Operator CType(a As Angle) As Decimal
             Return a.TotalDegrees
         End Operator
 
@@ -555,10 +603,10 @@ Namespace NumericsT
         Public Shared Widening Operator CType(a As URational()) As Angle
             If a Is Nothing Then Return 0
             Dim value As Double = 0
-            Dim multiplier As Double = 1.0#
+            Dim multiplier As Double = 1@
             For Each v In a
                 value += v / multiplier
-                multiplier *= 60.0#
+                multiplier *= 60@
             Next
             Return value
         End Operator
@@ -570,10 +618,10 @@ Namespace NumericsT
         Public Shared Narrowing Operator CType(a As SRational()) As Angle
             If a Is Nothing Then Throw New ArgumentNullException("a")
             Dim value As Double = 0
-            Dim multiplier As Double = 1.0#
+            Dim multiplier As Double = 1@
             For Each v In a
                 value += v / multiplier
-                multiplier *= 60.0#
+                multiplier *= 60@
             Next
             Return value
         End Operator
@@ -637,7 +685,7 @@ Namespace NumericsT
         ''' <returns>True if <paramref name="a"/> normalized represents an angle that is smaller than <paramref name="b"/> in degrees normalized; false otherwise</returns>
         ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <(a As Angle, b As Double) As Boolean
-            Return a.Normalize._value < CType(b, Angle).Normalize._value
+            Return a.Normalize._value < CType(b Mod 360, Angle).Normalize._value
         End Operator
         ''' <summary>Test if <see cref="Angle"/> value represents an angle that is greater than another angle given as <see cref="Double"/>.</summary>
         ''' <param name="a">An <see cref="Angle"/> value</param>
@@ -645,7 +693,7 @@ Namespace NumericsT
         ''' <returns>True if <paramref name="a"/> normalized represents an angle that is greater than <paramref name="b"/> in degrees normalized; false otherwise</returns>
         ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >(a As Angle, b As Double) As Boolean
-            Return a.Normalize._value > CType(b, Angle).Normalize._value
+            Return a.Normalize._value > CType(b Mod 360, Angle).Normalize._value
         End Operator
         ''' <summary>Test if <see cref="Angle"/> value represents an angle that is smaller than or equal to another angle given as <see cref="Double"/>.</summary>
         ''' <param name="a">An <see cref="Angle"/> value</param>
@@ -653,7 +701,7 @@ Namespace NumericsT
         ''' <returns>True if <paramref name="a"/> normalized represents an angle that is smaller than or equal to <paramref name="b"/> in degrees normalized; false otherwise</returns>
         ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <=(a As Angle, b As Double) As Boolean
-            Return a.Normalize._value <= CType(b, Angle).Normalize._value
+            Return a.Normalize._value <= CType(b Mod 360, Angle).Normalize._value
         End Operator
         ''' <summary>Test if <see cref="Angle"/> value represents an angle that is greater than or equal to another angle given as <see cref="Double"/>.</summary>
         ''' <param name="a">An <see cref="Angle"/> value</param>
@@ -661,7 +709,7 @@ Namespace NumericsT
         ''' <returns>True if <paramref name="a"/> normalized represents an angle that is greater than or equal to <paramref name="b"/> in degrees normalized; false otherwise</returns>
         ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator >=(a As Angle, b As Double) As Boolean
-            Return a.Normalize._value >= CType(b, Angle).Normalize._value
+            Return a.Normalize._value >= CType(b Mod 360, Angle).Normalize._value
         End Operator
         ''' <summary>Test if <see cref="Angle"/> and <see cref="Double"/> represent same normalized angle.</summary>
         ''' <param name="a">An <see cref="Angle"/> value</param>
@@ -669,7 +717,7 @@ Namespace NumericsT
         ''' <returns>True if <paramref name="a"/> normalized represents the same angle as <paramref name="b"/> in degrees normalized; false otherwise</returns>
         ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator =(a As Angle, b As Double) As Boolean
-            Return a.Normalize._value = CType(b, Angle).Normalize._value
+            Return a.Normalize._value = CType(b Mod 360, Angle).Normalize._value
         End Operator
         ''' <summary>Test if <see cref="Angle"/> and <see cref="Double"/> represent different normalized angles.</summary>
         ''' <param name="a">An <see cref="Angle"/> value</param>
@@ -677,7 +725,7 @@ Namespace NumericsT
         ''' <returns>True if <paramref name="a"/> normalized represents different angle than <paramref name="b"/> in degrees normalized; false otherwise</returns>
         ''' <remarks>All comaprisons on <see cref="Angle"/> are done after value is normalized to range &lt;0°, 360°> using <see cref="Normalize"/>. Then <see cref="TotalDegrees"/> values are compared.</remarks>
         Public Shared Operator <>(a As Angle, b As Double) As Boolean
-            Return a.Normalize._value <> CType(b, Angle).Normalize._value
+            Return a.Normalize._value <> CType(b Mod 360, Angle).Normalize._value
         End Operator
 #End Region
 
@@ -738,7 +786,7 @@ Namespace NumericsT
         ''' <param name="b">Value to multiply angle with</param>
         ''' <returns>An angle that is <paramref name="b"/>-times greater than <paramref name="a"/>.</returns>
         ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN or infinity</exception>
-        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
         ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator *(a As Angle, b As Double) As Angle
             Return New Angle(a._value * b)
@@ -749,7 +797,7 @@ Namespace NumericsT
         ''' <param name="b">Value to multiply angle with</param>
         ''' <returns>An angle that is <paramref name="b"/>-times greater than <paramref name="a"/>.</returns>
         ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN or infinity</exception>
-        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
         ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator *(a As Angle, b As Single) As Angle
             Return New Angle(a._value * CDbl(b))
@@ -759,7 +807,7 @@ Namespace NumericsT
         ''' <param name="b">Value to multiply angle with</param>
         ''' <returns>An angle that is <paramref name="b"/>-times greater than <paramref name="a"/>.</returns>
         ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN or infinity</exception>
-        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
         ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator *(a As Angle, b As Integer) As Angle
             Return New Angle(a._value * CInt(b))
@@ -770,7 +818,7 @@ Namespace NumericsT
         ''' <param name="b">A number to dividy angle by</param>
         ''' <returns>An angle that is <paramref name="b"/>-times smaller than <paramref name="a"/>.</returns>
         ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN</exception>
-        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
         ''' <exception cref="DivideByZeroException"><paramref name="b"/> is 0</exception>
         ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator /(a As Angle, b As Double) As Angle
@@ -782,7 +830,7 @@ Namespace NumericsT
         ''' <param name="b">A number to dividy angle by</param>
         ''' <returns>An angle that is <paramref name="b"/>-times smaller than <paramref name="a"/>.</returns>
         ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN</exception>
-        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
         ''' <exception cref="DivideByZeroException"><paramref name="b"/> is 0</exception>
         ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator /(a As Angle, b As Single) As Angle
@@ -794,7 +842,7 @@ Namespace NumericsT
         ''' <param name="b">A number to dividy angle by</param>
         ''' <returns>An angle that is <paramref name="b"/>-times smaller than <paramref name="a"/>.</returns>
         ''' <exception cref="ArgumentException"><paramref name="b"/> is NaN</exception>
-        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Double.MinValue"/> or greater than <see cref="System.Double.MaxValue"/></exception>
+        ''' <exception cref="OverflowAction">Resulting angle is less than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/></exception>
         ''' <exception cref="DivideByZeroException"><paramref name="b"/> is 0</exception>
         ''' <remarks>Resulting value is not normalized.</remarks>
         Public Shared Operator /(a As Angle, b As Integer) As Angle
@@ -828,7 +876,7 @@ Namespace NumericsT
         ''' <param name="a">An angle</param>
         ''' <param name="b">An angle</param>
         ''' <returns>An angle that is sum of sizes of two angles.</returns>
-        ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Double.MinValue"/> or greater than <see cref="[Double].MaxValue"/>.</exception>
+        ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/>.</exception>
         ''' <remarks>No normalization is done</remarks>
         Public Shared Operator +(a As Angle, b As Angle) As Angle
             Return New Angle(a._value + b._value)
@@ -838,7 +886,7 @@ Namespace NumericsT
         ''' <param name="a">An angle to subtract from</param>
         ''' <param name="b">An angle be subtracted</param>
         ''' <returns>An angle that is difference between the two angles. <paramref name="b"/> subtracted form <paramref name="a"/></returns>
-        ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Double.MinValue"/> or greater than <see cref="[Double].MaxValue"/>.</exception>
+        ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/>.</exception>
         ''' <remarks>No normalization is done</remarks>
         Public Shared Operator -(a As Angle, b As Angle) As Angle
             Return New Angle(a._value - b._value)
@@ -880,7 +928,7 @@ Namespace NumericsT
             If TypeOf obj Is UShort Then Return Me = CDbl(DirectCast(obj, UShort))
             If TypeOf obj Is UInteger Then Return Me = CDbl(DirectCast(obj, UInteger))
             If TypeOf obj Is ULong Then Return Me = CDbl(DirectCast(obj, ULong))
-            If TypeOf obj Is Numerics.BigInteger Then Return CType(Me._value, Numerics.BigInteger) = DirectCast(obj, Numerics.BigInteger)
+            If TypeOf obj Is Numerics.BigInteger Then Return Me = New Angle(CInt(DirectCast(obj, Numerics.BigInteger) Mod CType(360, Numerics.BigInteger)))
             If TypeOf obj Is TimeSpan Then Return Me = CType(DirectCast(obj, TimeSpan), Angle)
             If TypeOf obj Is TimeSpanFormattable Then Return Me = CType(DirectCast(obj, TimeSpanFormattable), Angle)
             Return False
@@ -902,7 +950,7 @@ Namespace NumericsT
             Return ToString(Nothing, Nothing)
         End Function
         ''' <summary>A regular expression to detect standard angle format</summary>
-        Private Shared shortFormatRegex As New Regex("$[A-Za-Z][0-9]*^", RegexOptions.Compiled Or RegexOptions.CultureInvariant)
+        Private Shared shortFormatRegex As New Regex("$[A-Za-z][0-9]*^", RegexOptions.Compiled Or RegexOptions.CultureInvariant)
 
         ''' <summary>Formats the value of the current instance using the specified format.</summary>
         ''' <param name="format">The format to use. Null or an empty string means default format (g). This can be either standard or custom format string.</param>
@@ -957,7 +1005,7 @@ Namespace NumericsT
         ''' <item>      <term>L        </term><description><see cref="ToSlope"/> in percent        </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If - or + immediatelly precedes or follows (whitespace allowed) the L specifier the sign is generated based on slope value instead of (normalized) angle value.                                     </description></item>
         ''' <item>      <term>m        </term><description><see cref="Minutes"/>                   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                    </description></item>
         ''' <item>      <term>M        </term><description><see cref="TotalMinutes"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>Excludes degrees if D, d, H or h was presenf before.                                                                                                                                                </description></item>
-        ''' <item>      <term>p, π     </term><description>π-radians (<see cref="ToRadians"/> / π )</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>Value of <see cref="ToRadians"/> (angle in radians) divided by <see cref="Math.PI"/> - because radian values are often given as mupltiples of π (pi)                                                </description></item>
+        ''' <item>      <term>p, π     </term><description>π-radians (<see cref="ToRadians"/> / π )</description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>Value of <see cref="ToRadians"/> (angle in radians) divided by <see cref="π"/> - because radian values are often given as mupltiples of π (pi)                                                </description></item>
         ''' <item>      <term>R        </term><description><see cref="ToRadians"/>                 </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (max 4 if not present)      </description><description>                                                                                                                                                                                                    </description></item>
         ''' <item>      <term>s        </term><description><see cref="Seconds"/> - integral part   </description><description>Yes - minimum number of digits                        </description><description>no                                                            </description><description>                                                                                                                                                                                                    </description></item>
         ''' <item>      <term>S        </term><description><see cref="TotalSeconds"/>              </description><description>Yes - minimum number of digits left from decimal point</description><description>Number - number of decimal places (as required if not present)</description><description>If M or m was present before <see cref="Seconds"/> is used instead. If D, d, H or h was present before (and neither m or M was present) <see cref="TotalSeconds"/> value does not contain degrees.  </description></item>
@@ -1018,20 +1066,20 @@ Namespace NumericsT
         ''' <item><term>Gradians</term><description><see cref="Double"/></description><description><see cref="ToGradians"/></description></item>
         ''' <item><term>Hours</term><description><see cref="Integer"/></description><description><see cref="Degrees"/> excluding days</description></item>
         ''' <item><term>Minutes</term><description><see cref="Integer"/></description><description><see cref="Minutes"/></description></item>
-        ''' <item><term>PiRadians</term><description><see cref="Double"/></description><description><see cref="ToRadians"/> / <see cref="Math.PI"/></description></item>
+        ''' <item><term>PiRadians</term><description><see cref="Double"/></description><description><see cref="ToRadians"/> / <see cref="π"/></description></item>
         ''' <item><term>Radians</term><description><see cref="Double"/></description><description><see cref="ToRadians"/></description></item>
-        ''' <item><term>RestHours</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/> excluding days</description></item>
-        ''' <item><term>RestMinutes</term><description><see cref="Double"/></description><description><see cref="TotalMinutes"/> excluding degrees</description></item>
-        ''' <item><term>RestSeconds</term><description><see cref="Double"/></description><description><see cref="TotalSeconds"/> excluding minutes and degrees</description></item>
+        ''' <item><term>RestHours</term><description><see cref="Decimal"/></description><description><see cref="TotalDegrees"/> excluding days</description></item>
+        ''' <item><term>RestMinutes</term><description><see cref="Decimal"/></description><description><see cref="TotalMinutes"/> excluding degrees</description></item>
+        ''' <item><term>RestSeconds</term><description><see cref="Decimal"/></description><description><see cref="TotalSeconds"/> excluding minutes and degrees</description></item>
         ''' <item><term>Rotations</term><description><see cref="Double"/></description><description><see cref="Rotations"/></description></item>
-        ''' <item><term>Seconds</term><description><see cref="Double"/></description><description><see cref="Seconds"/></description></item>
+        ''' <item><term>Seconds</term><description><see cref="Decimal"/></description><description><see cref="Seconds"/></description></item>
         ''' <item><term>Slope, Slope100</term><description><see cref="Double"/></description><see cref="ToSlope"/> (in percent)</item>
         ''' <item><term>Slope1</term><description><see cref="Double"/></description><see cref="ToSlope"/> * 100 (as number)</item>
         ''' <item><term>Slope1000</term><description><see cref="Double"/></description><see cref="ToSlope"/> * 10 (in permile)</item>
         ''' <item><term>Time</term><description><see cref="TimeSpan"/></description><description>Value as <see cref="TimeSpan"/></description></item>
         ''' <item><term>TimeFormattable</term><description><see cref="TimeSpanFormattable"/></description><description>Value as <see cref="TimeSpanFormattable"/></description></item>
         ''' <item><term>TotalDays</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/> / 24</description></item>
-        ''' <item><term>TotalDegrees, TotalHours</term><description><see cref="Double"/></description><description><see cref="TotalDegrees"/></description></item>
+        ''' <item><term>TotalDegrees, TotalHours</term><description><see cref="Decimal"/></description><description><see cref="TotalDegrees"/></description></item>
         ''' <item><term>TotalMinutes</term><description><see cref="Double"/></description><description><see cref="TotalMinutes"/></description></item>
         ''' <item><term>TotalSeconds</term><description><see cref="Double"/></description><description><see cref="TotalSeconds"/></description></item>
         ''' </list>
@@ -1163,7 +1211,7 @@ Namespace NumericsT
                             Case "O"c, "Λ"c  'O Longitude specifier (east/west), long                                        not allowed                                       
                                 builders.Peek.Append(If(normalizedValue <= Angle.zero, ainfo.LongitudeEastLongSymbol, ainfo.LongitudeWestLongSymbol)) : state = FState.Normal
                             Case "π"c, "p"c  'π-radians value                                                                no decimal places      max 4          min digits  
-                                value = normalizedValue.ToRadians / Math.PI : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
+                                value = normalizedValue.ToRadians / π : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
                             Case "R"c  'R radians value                                                                no decimal places      max 4          min digits        
                                 value = normalizedValue.ToRadians : specifier = ch : state = FState.SpecifierDouble : rightPlaces = -4
                             Case "s"c  's seconds, whole                                                               not allowed                           min digits        
@@ -1173,7 +1221,7 @@ Namespace NumericsT
                                 If has_m Then
                                     value = normalizedValue.Seconds
                                 ElseIf has_d Then
-                                    value = normalizedValue.TotalSeconds - normalizedValue.Degrees * 60.0# * 60.0#
+                                    value = normalizedValue.TotalSeconds - normalizedValue.Degrees * 60@ * 60@
                                 Else
                                     value = normalizedValue.TotalSeconds
                                 End If
@@ -1359,14 +1407,14 @@ Namespace NumericsT
                             Case ","c : state = FState.CustomFormat : customFormat = New StringBuilder
                             Case ")" : AppendCustom(customName.ToString, builders.Peek, Nothing, formatProvider, normalizedValue) : state = FState.Normal
                             Case Else
-                                If ch.IsWhiteSpace Then state = FState.CustomWH Else Throw New FormatException("Invallid format: Unexpected '{0}', expected , or )".f(ch))
+                                If ch.IsWhiteSpace Then state = FState.CustomWH Else Throw New FormatException("Invalid format: Unexpected '{0}', expected , or )".f(ch))
                         End Select
                     Case FState.CustomWH 'Whitespace after identifier in ()
                         Select Case ch
                             Case "," : state = FState.CustomFormat : customFormat = New StringBuilder
                             Case ")" : AppendCustom(customName.ToString, builders.Peek, Nothing, formatProvider, normalizedValue) : state = FState.Normal
                             Case Else
-                                If Not ch.IsWhiteSpace Then Throw New FormatException("Invallid format: Unexpected '{0}', expected , or )".f(ch))
+                                If Not ch.IsWhiteSpace Then Throw New FormatException("Invalid format: Unexpected '{0}', expected , or )".f(ch))
                         End Select
                     Case FState.CustomFormat 'In () after ,
                         Select Case ch
@@ -1477,22 +1525,22 @@ Namespace NumericsT
                 name = name.Substring(2)
             End If
             Select Case name.ToLowerInvariant
-                Case "days" : value = CInt(Math.Floor(normalizedValue.TotalDegrees / 24.0#))
+                Case "days" : value = CInt(Math.Floor(normalizedValue.TotalDegrees / 24@))
                 Case "degrees" : value = normalizedValue.Degrees
                 Case "gradians" : value = normalizedValue.ToGradians
-                Case "hours" : value = CInt(Math.Floor(normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24.0#) * 24.0#))
+                Case "hours" : value = CInt(Math.Floor(normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24@) * 24@))
                 Case "minutes" : value = normalizedValue.Minutes
-                Case "piradians" : value = normalizedValue.ToRadians / Math.PI
+                Case "piradians" : value = normalizedValue.ToRadians / π
                 Case "radians" : value = normalizedValue.ToRadians
-                Case "resthours" : value = normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24.0#) * 24.0#
-                Case "restminutes" : value = normalizedValue.TotalMinutes - normalizedValue.TotalDegrees * 60.0#
-                Case "restseconds" : value = normalizedValue.TotalSeconds - normalizedValue.TotalMinutes * 60.0#
+                Case "resthours" : value = normalizedValue.Degrees - Math.Floor(normalizedValue.Degrees / 24@) * 24@
+                Case "restminutes" : value = normalizedValue.TotalMinutes - normalizedValue.TotalDegrees * 60@
+                Case "restseconds" : value = normalizedValue.TotalSeconds - normalizedValue.TotalMinutes * 60@
                 Case "rotations" : value = normalizedValue.Rotations
                 Case "seconds" : value = normalizedValue.Seconds
                 Case "slope", "slope100" : value = normalizedValue.ToSlope
                 Case "slope1" : value = normalizedValue.ToSlope / 100.0#
                 Case "slope1000" : value = normalizedValue.ToSlope * 10.0#
-                Case "totaldays" : value = normalizedValue.TotalDegrees / 24.0#
+                Case "totaldays" : value = normalizedValue.TotalDegrees / 24@
                 Case "totaldegrees", "totalhours" : value = normalizedValue.TotalDegrees
                 Case "totalminutes" : value = normalizedValue.TotalMinutes
                 Case "totalseconds" : value = normalizedValue.TotalSeconds
