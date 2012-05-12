@@ -16,6 +16,7 @@
     <ProjectGuid>{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
     <ProjectName>_Tools.PreBuild</ProjectName>
+    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and $(VisualStudioVersion) == ''">$(VCTargetsPath11)</VCTargetsPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
@@ -23,6 +24,9 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='prebuild|Win32'">$(ProjectDir)$(Configuration)\obj\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='prebuild|Win32'">$(ProjectDir)$(Configuration)\bin\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='prebuild|Win32'">
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

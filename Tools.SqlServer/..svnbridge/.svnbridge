@@ -4,4 +4,9 @@ bin
 </Value></Property><Property><Name>svn:ignore</Name><Value>obj
 bin
 *.user
+</Value></Property><Property><Name>svn:ignore</Name><Value>obj
+bin
+*.user
+Sandbox
+*.dbmdl
 </Value></Property></Properties></ItemProperties>
