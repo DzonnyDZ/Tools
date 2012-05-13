@@ -9,4 +9,10 @@ bin
 *.user
 Sandbox
 *.dbmdl
+</Value></Property><Property><Name>svn:ignore</Name><Value>*.dbmdl
+*.user
+Sandbox
+Tools.SqlServer.sqlproj
+bin
+obj
 </Value></Property></Properties></ItemProperties>
