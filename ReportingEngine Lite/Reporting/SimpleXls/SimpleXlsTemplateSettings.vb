@@ -2,7 +2,7 @@
 Namespace ReportingT.ReportingEngineLite
     
     <System.Xml.Serialization.XmlIncludeAttribute(GetType(RepeatedXlsSettings)),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17625"),  _
      System.SerializableAttribute(),  _
      System.ComponentModel.DesignerCategoryAttribute("code"),  _
      System.Xml.Serialization.XmlTypeAttribute([Namespace]:="urn:eos-ksi/KolUni/Reporting/SimpleXls"),  _
@@ -459,7 +459,7 @@ Namespace ReportingT.ReportingEngineLite
         End Sub
     End Class
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17625"),  _
      System.SerializableAttribute(),  _
      System.ComponentModel.DesignerCategoryAttribute("code"),  _
      System.Xml.Serialization.XmlTypeAttribute([Namespace]:="urn:eos-ksi/KolUni/Reporting/SimpleXls"),  _

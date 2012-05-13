@@ -1,7 +1,7 @@
 
 Namespace ReportingT.ReportingEngineLite
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17625"),  _
      System.SerializableAttribute(),  _
      System.ComponentModel.DesignerCategoryAttribute("code"),  _
      System.Xml.Serialization.XmlTypeAttribute([Namespace]:="urn:eos-ksi/KolUni/Reporting/Csv"),  _
@@ -434,7 +434,7 @@ Namespace ReportingT.ReportingEngineLite
         End Sub
     End Class
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17625"),  _
      System.SerializableAttribute(),  _
      System.Xml.Serialization.XmlTypeAttribute(AnonymousType:=true, [Namespace]:="urn:eos-ksi/KolUni/Reporting/Csv")>  _
     Public Enum CsvTemplateSettingsTextqualifierusage
@@ -448,7 +448,7 @@ Namespace ReportingT.ReportingEngineLite
         alwaysontext
     End Enum
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17625"),  _
      System.SerializableAttribute(),  _
      System.Xml.Serialization.XmlTypeAttribute(AnonymousType:=true, [Namespace]:="urn:eos-ksi/KolUni/Reporting/Csv")>  _
     Public Enum CsvTemplateSettingsTextqualifierescape
@@ -463,7 +463,7 @@ Namespace ReportingT.ReportingEngineLite
         donothing
     End Enum
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17625"),  _
      System.SerializableAttribute(),  _
      System.Xml.Serialization.XmlTypeAttribute(AnonymousType:=true, [Namespace]:="urn:eos-ksi/KolUni/Reporting/Csv")>  _
     Public Enum CsvTemplateSettingsNewline
@@ -485,7 +485,7 @@ Namespace ReportingT.ReportingEngineLite
         System
     End Enum
     
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17379"),  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.17625"),  _
      System.SerializableAttribute(),  _
      System.Xml.Serialization.XmlTypeAttribute(AnonymousType:=true, [Namespace]:="urn:eos-ksi/KolUni/Reporting/Csv")>  _
     Public Enum CsvTemplateSettingsNlescape

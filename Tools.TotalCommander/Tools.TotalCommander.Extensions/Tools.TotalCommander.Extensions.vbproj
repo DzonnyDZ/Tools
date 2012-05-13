@@ -224,7 +224,7 @@
       <Name>Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools.TotalCommander.vcxproj">
-      <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
+      <Project>{7f278f32-47b4-4f4e-85b2-baeaa406951b}</Project>
       <Name>Tools.TotalCommander</Name>
     </ProjectReference>
   </ItemGroup>
