@@ -260,7 +260,7 @@ Namespace NumericsT
         ''' <exception cref="OverflowException">Resulting angle would be less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/></exception>
         Public Sub New(degrees As Integer, minutes As Integer, seconds As Double)
             If seconds.IsNaN OrElse seconds.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "second")
-            _value = CDbl(degrees)
+            _value = CDec(degrees)
             _value += If(_value < 0, -1@, 1@) * (CDec(minutes) / 60@)
             _value += If(_value < 0, -1@, 1@) * (seconds / 60@ / 60@)
         End Sub
@@ -272,7 +272,7 @@ Namespace NumericsT
         ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered.</remarks>
         ''' <exception cref="OverflowException">Resulting angle would be less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/></exception>
         Public Sub New(degrees As Integer, minutes As Integer, seconds As Decimal)
-            _value = CDbl(degrees)
+            _value = CDec(degrees)
             _value += If(_value < 0, -1@, 1@) * (CDec(minutes) / 60@)
             _value += If(_value < 0, -1@, 1@) * (seconds / 60@ / 60@)
         End Sub
