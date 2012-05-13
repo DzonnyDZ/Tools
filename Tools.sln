@@ -300,7 +300,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XsdGenerator", "Development
 		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
 	EndProjectSection
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Tools.SqlServer", "Tools.SqlServer\Tools.SqlServer.sqlproj", "{907623F1-8529-4CF3-BD18-1AB43F8AB980}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Tools.SqlServer", "Tools.SqlServer\Tools.SqlServer.vbproj", "{907623F1-8529-4CF3-BD18-1AB43F8AB980}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5} = {1FB7EE26-5AF3-4031-ADEA-C0524F3B89C5}
 	EndProjectSection
