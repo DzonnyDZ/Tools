@@ -237,11 +237,32 @@
             <include file='DevelopmentTools/SplashScreenGenerator/bin/Debug/SplashScreenGenerator.exe' path='.'/>
         </member>
         <member name='A:Tools.VisualStudio.Macros.dll'>
-            <summary>Contains Visual Studio macros</summary>
+            <summary>Contains Visual Studio macros migrated to Addin for VS11</summary>
             <remarks>
                 <para>DLL Any CPU Strong Named Standard Versioning Managed VB</para>
-                <para>This DLL is not intended for use from your code as reference. It's not distributed. It exists only as organizational unit for Visual Studio macros. Download macros source code instead.</para>
+                <para>Contains Visual Studio 2010 macros converted to Addin for Visual Studio 11.</para>
+                <para>
+                    Because Visual Studio 11 no longer supports macros this DLL is unlikely to be extended in feature.
+                    Main purpose of this DLL and Visual Studio Addin is to provide users of ĐTools with best possible experiance despite Microsoft constantly removing the most valuable features from Visual Studio in new versions.
+                    The Addin does not create any menu items or buttons.
+                    You have to assign commands provided by the addin to buttons, menu items or shortcuts manually or you can invoke commands from the Immediate window (till Microsoft removes it).
+                </para>
             </remarks>
+            <version version='1.5.4'>
+                Before 1.5.4 this DLL was only fake DLL used to generate XML documentation for Visual Studio macros.
+                Macro projects were provided for download.
+                Since 1.5.4 this DLL is full-featured Visual Studio 11 Addin DLL.
+            </version>
+            <version version='1.5.4'>
+                The assembly is now CLS-Compliant - added <see cref='T:System.CLSCompliantAttribute'/>(False).
+            </version>
+            <version version='1.5.4'>Assembly versioning now follows versioning of other DLL assemblies in ĐTools project.</version>
+            <version version='1.5.4'>
+                <see cref='T:System.Reflection.AssemblyTrademarkAttribute'/> removed.
+            </version>
+            <version version='1.5.4'>
+                <see cref='T:System.Runtime.InteropServices.ComVisibleAttribute'/> changed to True - the assembly is now COM-visible.
+             </version>
             <include file='DevelopmentTools/Macros/bin/Debug/Tools.VisualStudio.Macros.dll' path='.'/>
         </member>
         <member name='A:XsdGenerator.dll'>

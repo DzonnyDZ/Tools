@@ -415,6 +415,9 @@
             <version version="1.5.3">
                 Namespace name in macro projects changed from <see cref="N:Tools.VisualStudioT.MacrosT"/> to <see cref="N:Tools_VisualStudioT_MacrosT"/> to workaround Visual Studio 2010 bug <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=464968">464968</a>. This change does not affect this documentation and (publicly not available) binary DLL with macros.
             </version>
+            <version version="1.5.4">
+                Module <c>EnvironmentEvents</c> removed.
+            </version>
         </member>
         <member name="N:Tools_VisualStudioT_MacrosT">
             <summary>Placeholder namespace for Visual Studio Macros to workaround Visual Studio bug.</summary>
