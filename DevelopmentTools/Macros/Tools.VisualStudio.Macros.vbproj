@@ -187,15 +187,15 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>MD "%25UserProfile%25\Documents\Visual Studio 2010\Addins"
-COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\Tools.VisualStudio.Macros.AddIn"
-COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetFileName)"
-COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetName).pdb"
+    <PostBuildEvent>REM MD "%25UserProfile%25\Documents\Visual Studio 2010\Addins"
+REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\Tools.VisualStudio.Macros.AddIn"
+REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetFileName)"
+REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetName).pdb"
 
-MD "%25UserProfile%25\Documents\Visual Studio 11\Addins"
-COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 11\Addins\Tools.VisualStudio.Macros.AddIn"
-COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetFileName)"
-COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetName).pdb"</PostBuildEvent>
+REM MD "%25UserProfile%25\Documents\Visual Studio 11\Addins"
+REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 11\Addins\Tools.VisualStudio.Macros.AddIn"
+REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetFileName)"
+REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetName).pdb"</PostBuildEvent>
   </PropertyGroup>
   <ProjectExtensions />
 </Project>

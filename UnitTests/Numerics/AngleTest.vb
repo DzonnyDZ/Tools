@@ -23,6 +23,126 @@ Namespace NumericsUT
 
         Private Const delta = 0.00000000000014999999999999999#
 
+        <TestMethod>
+        Public Sub ToDms()
+            Dim d As UInteger, m As Byte, s As Decimal, sg As SByte
+            Angle.ToDms(10@, d, m, s, sg)
+            Assert.AreEqual(10UI, d)
+            Assert.AreEqual(CByte(0), m)
+            Assert.AreEqual(0@, s)
+            Assert.AreEqual(CSByte(1), 1)
+
+            For Each v In {
+                New With {.d = 0UI, .m = CByte(14), .s = 0@, .sg = CSByte(1)},
+                New With {.d = 0UI, .m = CByte(0), .s = 0@, .sg = CSByte(0)},
+                New With {.d = 20UI, .m = CByte(0), .s = 0@, .sg = CSByte(-1)},
+                New With {.d = 20UI, .m = CByte(0), .s = 3@, .sg = CSByte(1)},
+                New With {.d = 0UI, .m = CByte(0), .s = 1@, .sg = CSByte(-1)}
+            }
+                Angle.ToDms(v.d + (v.m + v.s / 60@) / 60@ * v.sg, d, m, s, sg)
+                Assert.AreEqual(v.d, d, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+                Assert.AreEqual(v.m, m, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+                Assert.AreEqual(v.s, s, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+                Assert.AreEqual(v.sg, sg, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+
+                Angle.ToDms(v.d + (v.m + v.s / 60.0#) / 60.0# * v.sg, d, m, s, sg)
+                Assert.AreEqual(v.d, d, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+                Assert.AreEqual(v.m, m, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+                Assert.AreEqual(v.s, s, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+                Assert.AreEqual(v.sg, sg, String.Format("v.d = {0}, v.m = {1}, v.s = {2}, v.sg = {3}", v.d, v.m, v.s, v.sg))
+            Next
+        End Sub
+
+        <TestMethod>
+        Public Sub NormalizeDms()
+            For Each v In {
+                New With {.d1 = 0I, .m1 = 0I, .s1 = 0@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(0)},
+                _
+                New With {.d1 = 1I, .m1 = 0I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 1I, .s1 = 0@, .d2 = 0UI, .m2 = CByte(1), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 0I, .s1 = 1@, .d2 = 0UI, .m2 = CByte(0), .s2 = 1@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 0I, .s1 = 0.1@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0.1@, .sg2 = CSByte(1)},
+                New With {.d1 = 1I, .m1 = 0I, .s1 = 1@, .d2 = 1UI, .m2 = CByte(0), .s2 = 1@, .sg2 = CSByte(1)},
+                New With {.d1 = 1I, .m1 = 1I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(1), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 1I, .m1 = 1I, .s1 = 1@, .d2 = 1UI, .m2 = CByte(1), .s2 = 1@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 1I, .s1 = 1@, .d2 = 0UI, .m2 = CByte(1), .s2 = 1@, .sg2 = CSByte(1)},
+                _
+                New With {.d1 = -1I, .m1 = 0I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = -1I, .s1 = 0@, .d2 = 0UI, .m2 = CByte(1), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = 0I, .s1 = -1@, .d2 = 0UI, .m2 = CByte(0), .s2 = 1@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = 0I, .s1 = -0.1@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0.1@, .sg2 = CSByte(-1)},
+                New With {.d1 = -1I, .m1 = 0I, .s1 = 1@, .d2 = 1UI, .m2 = CByte(0), .s2 = 1@, .sg2 = CSByte(-1)},
+                New With {.d1 = -1I, .m1 = 1I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(1), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = -1I, .m1 = 1I, .s1 = 1@, .d2 = 1UI, .m2 = CByte(1), .s2 = 1@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = -1I, .s1 = 1@, .d2 = 0UI, .m2 = CByte(1), .s2 = 1@, .sg2 = CSByte(-1)},
+                _
+                New With {.d1 = 0I, .m1 = 0I, .s1 = 62@, .d2 = 0UI, .m2 = CByte(1), .s2 = 2@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 0I, .s1 = -62@, .d2 = 0UI, .m2 = CByte(0), .s2 = 2@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = 62I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(2), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = -62I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(2), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 1I, .m1 = 62I, .s1 = 0@, .d2 = 2UI, .m2 = CByte(2), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = -1I, .m1 = 62I, .s1 = 0@, .d2 = 2UI, .m2 = CByte(2), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 1I, .m1 = 30I, .s1 = 128@, .d2 = 1UI, .m2 = CByte(32), .s2 = 8@, .sg2 = CSByte(1)},
+                New With {.d1 = -1I, .m1 = 30I, .s1 = 128@, .d2 = 1UI, .m2 = CByte(32), .s2 = 8@, .sg2 = CSByte(-1)},
+                _
+                New With {.d1 = 5I, .m1 = -1I, .s1 = 0@, .d2 = 4UI, .m2 = CByte(59), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 5I, .s1 = -30@, .d2 = 0UI, .m2 = CByte(4), .s2 = 30@, .sg2 = CSByte(1)},
+                New With {.d1 = 5I, .m1 = -125I, .s1 = 0@, .d2 = 2UI, .m2 = CByte(55), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 5I, .s1 = -125.1@, .d2 = 0UI, .m2 = CByte(2), .s2 = 54.9@, .sg2 = CSByte(1)},
+                _
+                New With {.d1 = -5I, .m1 = -1I, .s1 = 0@, .d2 = 4UI, .m2 = CByte(59), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = -5I, .s1 = -30@, .d2 = 0UI, .m2 = CByte(4), .s2 = 30@, .sg2 = CSByte(-1)},
+                New With {.d1 = -5I, .m1 = -125I, .s1 = 0@, .d2 = 2UI, .m2 = CByte(55), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = -5I, .s1 = -125.1@, .d2 = 0UI, .m2 = CByte(2), .s2 = 54.9@, .sg2 = CSByte(-1)},
+                _
+                New With {.d1 = 1I, .m1 = -60I, .s1 = 0@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(0)},
+                New With {.d1 = 1I, .m1 = -70I, .s1 = 0@, .d2 = 0UI, .m2 = CByte(10), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 1I, .m1 = -120I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 1I, .m1 = -130I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(10), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = 1I, .s1 = -60@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(0)},
+                New With {.d1 = 0I, .m1 = 1I, .s1 = -70@, .d2 = 0UI, .m2 = CByte(0), .s2 = 10@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = 1I, .s1 = -120@, .d2 = 0UI, .m2 = CByte(1), .s2 = 0@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = 1I, .s1 = -130@, .d2 = 0UI, .m2 = CByte(1), .s2 = 10@, .sg2 = CSByte(-1)},
+                New With {.d1 = 0I, .m1 = 1I, .s1 = -60.1@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0.1@, .sg2 = CSByte(-1)},
+                _
+                New With {.d1 = -1I, .m1 = -60I, .s1 = 0@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(0)},
+                New With {.d1 = -1I, .m1 = -70I, .s1 = 0@, .d2 = 0UI, .m2 = CByte(10), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = -1I, .m1 = -120I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = -1I, .m1 = -130I, .s1 = 0@, .d2 = 1UI, .m2 = CByte(10), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = -1I, .s1 = -60@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0@, .sg2 = CSByte(0)},
+                New With {.d1 = 0I, .m1 = -1I, .s1 = -70@, .d2 = 0UI, .m2 = CByte(0), .s2 = 10@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = -1I, .s1 = -120@, .d2 = 0UI, .m2 = CByte(1), .s2 = 0@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = -1I, .s1 = -130@, .d2 = 0UI, .m2 = CByte(1), .s2 = 10@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = -1I, .s1 = -60.1@, .d2 = 0UI, .m2 = CByte(0), .s2 = 0.1@, .sg2 = CSByte(1)},
+                _
+                New With {.d1 = 0I, .m1 = 0I, .s1 = 10933@, .d2 = 3UI, .m2 = CByte(2), .s2 = 13@, .sg2 = CSByte(1)},
+                New With {.d1 = 10I, .m1 = 33I, .s1 = 10933@, .d2 = 13UI, .m2 = CByte(35), .s2 = 13@, .sg2 = CSByte(1)},
+                New With {.d1 = 0I, .m1 = 0I, .s1 = -10933@, .d2 = 3UI, .m2 = CByte(2), .s2 = 13@, .sg2 = CSByte(-1)},
+                New With {.d1 = -10I, .m1 = 33I, .s1 = 10933@, .d2 = 13UI, .m2 = CByte(35), .s2 = 13@, .sg2 = CSByte(-1)},
+                _                  
+                New With {.d1 = 10I, .m1 = 0I, .s1 = -4001.3@, .d2 = 8UI, .m2 = CByte(53), .s2 = 18.9@, .sg2 = CSByte(1)},
+                New With {.d1 = -10I, .m1 = 0I, .s1 = -4001.3@, .d2 = 8UI, .m2 = CByte(53), .s2 = 18.9@, .sg2 = CSByte(-1)},
+                New With {.d1 = 1I, .m1 = 0I, .s1 = -4001.3@, .d2 = 1UI, .m2 = CByte(53), .s2 = 18.9@, .sg2 = CSByte(-1)},
+                New With {.d1 = -1I, .m1 = 0I, .s1 = -4001.3@, .d2 = 1UI, .m2 = CByte(53), .s2 = 18.9@, .sg2 = CSByte(1)},
+                _
+                New With {.d1 = 1I, .m1 = 1I, .s1 = 10003.3@, .d2 = 3UI, .m2 = CByte(47), .s2 = 43.3@, .sg2 = CSByte(1)},
+                New With {.d1 = 1I, .m1 = 32I, .s1 = 10003.3@, .d2 = 4UI, .m2 = CByte(18), .s2 = 43.3@, .sg2 = CSByte(1)},
+                New With {.d1 = -1I, .m1 = 1I, .s1 = 10003.3@, .d2 = 3UI, .m2 = CByte(47), .s2 = 43.3@, .sg2 = CSByte(-1)},
+                New With {.d1 = -1I, .m1 = 32I, .s1 = 10003.3@, .d2 = 4UI, .m2 = CByte(18), .s2 = 43.3@, .sg2 = CSByte(-1)}
+            }
+                Dim d2 As UInteger, m2 As Byte, s2 As Decimal, sg2 As SByte
+                Angle.NormalizeDms(v.d1, v.m1, v.s1, d2, m2, s2, sg2)
+                Dim msg = String.Format("{0}°{1}′{2}″ → {3:+}{4}°{5}′{6}″✓ {6:+}{7}°{8}′{9}″?", v.d1, v.m1, v.s1, v.sg2, v.d2, v.m2, v.s2, sg2, d2, m2, s2)
+                Assert.IsTrue(m2 < CByte(60), msg)
+                Assert.IsTrue(s2 >= 0@, msg)
+                Assert.IsTrue(s2 < 60@, msg)
+                Assert.IsTrue(sg2 = CSByte(-1) OrElse sg2 = CSByte(0) OrElse sg2 = CSByte(1), msg)
+                Assert.AreEqual(v.d2, d2, msg)
+                Assert.AreEqual(v.m2, m2, msg)
+                Assert.AreEqual(v.s2, s2, msg)
+                Assert.AreEqual(v.sg2, sg2, msg)
+            Next
+        End Sub
 
         <TestMethod()>
         Public Sub BasicProperties()
@@ -101,6 +221,8 @@ Namespace NumericsUT
             Assert.AreEqual(180@ / Math.PI, Angle.Radian.TotalDegrees)
             Assert.AreEqual(9@ / 10@, Angle.Gradian.TotalDegrees)
             Assert.AreEqual(180@, Angle.ΠRadians.TotalDegrees)
+            Assert.AreEqual(1.0#, Angle.Minute.TotalMinutes)
+            Assert.AreEqual(1.0#, Angle.Second.TotalSeconds)
         End Sub
 
         <TestMethod()>
@@ -934,12 +1056,12 @@ Namespace NumericsUT
 
             Assert.IsTrue(am360 = a360)
             Assert.IsTrue(am180 = a180)
-            Assert.IsFalse(am180 < am360) '180 < 0
+            Assert.IsFalse(am180 > am360)
             Assert.IsTrue(am180 > a0)
 
-            Assert.AreEqual(am180, a180)
-            Assert.AreEqual(a0, a360)
-            Assert.AreEqual(a0, am360)
+            'Assert.AreEqual(am180, a180)
+            'Assert.AreEqual(a0, a360)
+            'Assert.AreEqual(a0, am360)
         End Sub
 
         <TestMethod()>
@@ -967,12 +1089,12 @@ Namespace NumericsUT
 
             Assert.IsTrue(am360 = 360.0#)
             Assert.IsTrue(am180 = 180.0#)
-            Assert.IsFalse(am180 < 360.0#) '180 < 0
+            Assert.IsFalse(am180 > 360.0#)
             Assert.IsTrue(am180 > 0.0#)
 
-            Assert.AreEqual(am180, 180.0#)
-            Assert.AreEqual(a0, 360.0#)
-            Assert.AreEqual(a0, 360.0#)
+            'Assert.AreEqual(am180, 180.0#)
+            'Assert.AreEqual(a0, 360.0#)
+            'Assert.AreEqual(a0, 360.0#)
         End Sub
 
         <TestMethod()>
@@ -1000,48 +1122,48 @@ Namespace NumericsUT
 
             Assert.IsTrue(am360 = 360%)
             Assert.IsTrue(am180 = 180%)
-            Assert.IsFalse(am180 < 360%) '180< 0
+            Assert.IsFalse(am180 > 360%)
             Assert.IsTrue(am180 > 0%)
 
-            Assert.AreEqual(am180, 180%)
-            Assert.AreEqual(a0, 360%)
-            Assert.AreEqual(a0, 360%)
+            'Assert.AreEqual(am180, 180%)
+            'Assert.AreEqual(a0, 360%)
+            'Assert.AreEqual(a0, 360%)
         End Sub
 
         <TestMethod()>
         Public Sub Multiply()
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(30) * 1.0#).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(30) * 1.0!).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(30) * 1%).TotalDegrees)
+            Assert.AreEqual(New Angle(30), (New Angle(30) * 1.0#))
+            Assert.AreEqual(New Angle(30), (New Angle(30) * 1.0!))
+            Assert.AreEqual(New Angle(30), (New Angle(30) * 1%))
 
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(15) * 2.0#).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(15) * 2.0!).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(15) * 2%).TotalDegrees)
+            Assert.AreEqual(New Angle(30), (New Angle(15) * 2.0#))
+            Assert.AreEqual(New Angle(30), (New Angle(15) * 2.0!))
+            Assert.AreEqual(New Angle(30), (New Angle(15) * 2%))
 
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(10) * 3.0#).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(10) * 3.0!).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(10) * 3%).TotalDegrees)
+            Assert.AreEqual(New Angle(30), (New Angle(10) * 3.0#))
+            Assert.AreEqual(New Angle(30), (New Angle(10) * 3.0!))
+            Assert.AreEqual(New Angle(30), (New Angle(10) * 3%))
 
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(-30) * -1.0#).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(-30) * -1.0!).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(-30) * -1%).TotalDegrees)
+            Assert.AreEqual(New Angle(30), (New Angle(-30) * -1.0#))
+            Assert.AreEqual(New Angle(30), (New Angle(-30) * -1.0!))
+            Assert.AreEqual(New Angle(30), (New Angle(-30) * -1%))
 
-            Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(30) * -1.0#).TotalDegrees)
-            Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(30) * -1.0!).TotalDegrees)
-            Assert.AreEqual(New Angle(-30).TotalDegrees, (New Angle(30) * -1%).TotalDegrees)
+            Assert.AreEqual(New Angle(-30), (New Angle(30) * -1.0#))
+            Assert.AreEqual(New Angle(-30), (New Angle(30) * -1.0!))
+            Assert.AreEqual(New Angle(-30), (New Angle(30) * -1%))
 
-            Assert.AreEqual(New Angle(-63).TotalDegrees, (New Angle(30) * -2.1000000000000001#).TotalDegrees)
-            Assert.AreEqual(New Angle(-63).TotalDegrees, (New Angle(30) * -2.0999999!).TotalDegrees, delta)
-            Assert.AreEqual(New Angle(-60).TotalDegrees, (New Angle(30) * -2%).TotalDegrees)
+            Assert.AreEqual(New Angle(-63), (New Angle(30) * -2.1000000000000001#))
+            Assert.AreEqual(New Angle(-63), (New Angle(30) * -2.0999999!), delta)
+            Assert.AreEqual(New Angle(-60), (New Angle(30) * -2%))
 
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(60) * 0.5#).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(60) * 0.5!).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(90) * 0.29999999999999999#).TotalDegrees)
-            Assert.AreEqual(New Angle(30).TotalDegrees, (New Angle(90) * 0.300000012!).TotalDegrees)
+            Assert.AreEqual(New Angle(30), (New Angle(60) * 0.5#))
+            Assert.AreEqual(New Angle(30), (New Angle(60) * 0.5!))
+            Assert.AreEqual(New Angle(30), (New Angle(90) * 0.29999999999999999#))
+            Assert.AreEqual(New Angle(30), (New Angle(90) * 0.300000012!))
 
-            Assert.AreEqual(New Angle(30000).TotalDegrees, (New Angle(30) * 1000.0#).TotalDegrees)
-            Assert.AreEqual(New Angle(30000).TotalDegrees, (New Angle(30) * 1000.0!).TotalDegrees)
-            Assert.AreEqual(New Angle(30000).TotalDegrees, (New Angle(30) * 1000%).TotalDegrees)
+            Assert.AreEqual(New Angle(30000), (New Angle(30) * 1000.0#))
+            Assert.AreEqual(New Angle(30000), (New Angle(30) * 1000.0!))
+            Assert.AreEqual(New Angle(30000), (New Angle(30) * 1000%))
 
         End Sub
 
