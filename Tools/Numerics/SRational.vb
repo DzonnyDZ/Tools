@@ -270,21 +270,21 @@ Namespace NumericsT
         ''' <param name="a"><see cref="URational"/> to be converted</param>
         ''' <returns><see cref="Double"/> representation of <paramref name="a"/></returns>
         Public Shared Widening Operator CType(ByVal a As SRational) As Double
-            Return CDbl(a.Denominator) / CDbl(a.Numerator)
+            Return CDec(a.Numerator) / a.Denominator
         End Operator
 
         ''' <summary>Converts <see cref="URational"/> to <see cref="Double"/></summary>
         ''' <param name="a"><see cref="URational"/> to be converted</param>
         ''' <returns><see cref="Double"/> representation of <paramref name="a"/></returns>
         Public Shared Widening Operator CType(ByVal a As SRational) As Single
-            Return CSng(a.Denominator) / CSng(a.Numerator)
+            Return a.Numerator / a.Denominator
         End Operator
 
         ''' <summary>Converts <see cref="URational"/> to <see cref="Double"/></summary>
         ''' <param name="a"><see cref="URational"/> to be converted</param>
         ''' <returns><see cref="Double"/> representation of <paramref name="a"/></returns>
         Public Shared Widening Operator CType(ByVal a As SRational) As Decimal
-            Return CDec(a.Denominator) / CDec(a.Numerator)
+            Return CDec(a.Numerator) / a.Denominator
         End Operator
 #End Region
 

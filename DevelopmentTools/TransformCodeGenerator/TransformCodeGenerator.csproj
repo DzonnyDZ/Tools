@@ -184,7 +184,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TransforCodeGeneratorResources.resx</DependentUpon>
-      <LogicalName>Tools.ResourcesT.TransforCodeGeneratorResources.resx</LogicalName>
+      <LogicalName>Tools.ResourcesT.TransforCodeGeneratorResources.resources</LogicalName>
     </Compile>
     <Compile Include="TransformCodeGenerator.cs">
       <SubType>Code</SubType>

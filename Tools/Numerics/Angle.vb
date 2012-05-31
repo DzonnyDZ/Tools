@@ -57,10 +57,11 @@ Namespace NumericsT
             Else
                 sign = 1
             End If
-            d = Math.Floor(value)
-            Dim rest As Double = (value - d) * 60.0#
-            m = Math.Floor(rest)
-            s = (rest - m) * 60.0#
+            
+            d = Math.Truncate(value)
+            Dim restmin = (value - d) * 60.0#
+            m = Math.Truncate(restmin)
+            s = (restmin - m) * 60@
         End Sub
 
         ''' <summary>Converts <see cref="Decimal"/> value to degrees, minutes and seconds</summary>
@@ -83,10 +84,11 @@ Namespace NumericsT
             Else
                 sign = 1
             End If
-            d = Math.Floor(value)
-            Dim rest As Decimal = (value - d) * 60@
-            m = Math.Floor(rest)
-            s = (rest - m) * 60@
+
+            d = Math.Truncate(value)
+            Dim restmin = (value - d) * 60@
+            m = Math.Truncate(restmin)
+            s = (restmin - m) * 60@
         End Sub
 
         ''' <summary>Normalizes value given in degrees, minutes and seconds so that minutes and seconds are only in range &lt;0, 60)</summary>
@@ -125,11 +127,28 @@ Namespace NumericsT
             If s < -60@ Then
                 m -= -s \ 60@
                 s = -(-s Mod 60@)
+                If m < 0 Then
+                    If d = 0 Then
+                        m = -m
+                        sign = -sign
+                        s = -s
+                    ElseIf Math.Abs(m) / 60 > d Then
+                        'd=1, m=-66, d=-41.3
+                        s = -s
+                        'd=10, m=-66, s=-43.1
+                    Else
+                        s = 60 + s
+                        m -= 1
+                    End If
+                End If
             End If
-            If s < 0 Then
+            If s < 0 AndAlso m = 0 AndAlso d = 0 Then
+                sign = -sign
+                s = -s
+            ElseIf s < 0 Then
                 m -= 1
-                s = 60@ - s
-            ElseIf s > 60@ Then
+                s = 60@ + s
+            ElseIf s >= 60@ Then
                 m += s \ 60@
                 s = s Mod 60@
             End If
@@ -137,11 +156,21 @@ Namespace NumericsT
             If m < -60 Then
                 d -= -m \ 60
                 m = -(-m Mod 60)
+                If d < 0 OrElse (d = 0 AndAlso m < 0) Then
+                    sign = -sign
+                    d = -d
+                    m = -m
+                End If
             End If
             If m < 0 Then
                 d -= 1
-                m = 60 - m
-            ElseIf m > 60 Then
+                m = 60 + m
+                If d < 0 Then
+                    sign = -sign
+                    d = -d
+                    m = 60 - m
+                End If
+            ElseIf m >= 60 Then
                 d += m \ 60
                 m = m Mod 60
             End If
@@ -154,6 +183,7 @@ Namespace NumericsT
             d2 = d
             m2 = m
             s2 = s
+            If d = 0UI AndAlso m = 0 AndAlso s = 0@ Then sign = 0
         End Sub
 #End Region
 
@@ -185,7 +215,7 @@ Namespace NumericsT
         ''' <summary>Gets total number of degrees in this angle</summary>
         Public ReadOnly Property TotalDegrees As Double
             Get
-                Return _degrees + (_minutes + _seconds / 60.0#) / 60.0# * _sign
+                Return (_degrees + (_minutes + _seconds / 60.0#) / 60.0#) * _sign
             End Get
         End Property
 
@@ -193,7 +223,7 @@ Namespace NumericsT
         ''' <remarks>Each degree has 60 minutes</remarks>
         Public ReadOnly Property TotalMinutes As Double
             Get
-                Return _degrees * 60.0# + _minutes + _seconds * 60.0# * _sign
+                Return (_degrees * 60.0# + _minutes + _seconds / 60.0#) * _sign
             End Get
         End Property
 
@@ -201,7 +231,7 @@ Namespace NumericsT
         ''' <remarks>Each minute has 60 seconds</remarks>
         Public ReadOnly Property TotalSeconds As Double
             Get
-                Return (_degrees * 60.0# + _minutes) * 60.0# + _seconds * _sign
+                Return ((_degrees * 60.0# + _minutes) * 60.0# + _seconds) * _sign
             End Get
         End Property
 
@@ -395,13 +425,13 @@ Namespace NumericsT
             Init(d, m, s, sg)
         End Sub
 
-        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second</summary>
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second (<see cref="Double"/>)</summary>
         ''' <param name="degrees">Number of degrees</param>
-        ''' <param name="minutes">Number of minutes. If greater than 60 velue is tranferred to degrees.</param>
-        ''' <param name="seconds">Number of second. If greater than 60 value is transfered to seconds.</param>
-        ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered.</remarks>
-        ''' <exception cref="ArgumentException"><paramref name="second"/> is NaN or infinity</exception>
+        ''' <param name="minutes">Number of minutes. If greater than 60 velue is tranferred to degrees. If less than zero and <paramref name="degrees"/> is non-zero value if subtracted from <paramref name="degrees"/>.</param>
+        ''' <param name="seconds">Number of second. If greater than 60 value is transfered to seconds. If less than zero and either <paramref name="degrees"/> or <paramref name="minutes"/> is non-zero value is subtracted from <paramref name="minutes"/>.</param>
+        ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered. This can eventually lead to change of sign of entire angle.</remarks>
         ''' <exception cref="OverflowException">Resulting angle would be less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/></exception>
+
         Public Sub New(degrees As Integer, minutes As Integer, seconds As Double)
             If seconds.IsNaN OrElse seconds.IsInfinity Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeNaNOrInfinity, "second")
             Dim d As UInteger, m As Byte, s As Decimal, sg As SByte
@@ -409,11 +439,11 @@ Namespace NumericsT
             Init(d, m, s, sg)
         End Sub
 
-        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second</summary>
+        ''' <summary>CTor - creates a new instance of the <see cref="Angle"/> class from degrees, minutes and second (<see cref="Decimal"/>)</summary>
         ''' <param name="degrees">Number of degrees</param>
-        ''' <param name="minutes">Number of minutes. If greater than 60 velue is tranferred to degrees.</param>
-        ''' <param name="seconds">Number of second. If greater than 60 value is transfered to seconds.</param>
-        ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered.</remarks>
+        ''' <param name="minutes">Number of minutes. If greater than 60 velue is tranferred to degrees. If less than zero and <paramref name="degrees"/> is non-zero value if subtracted from <paramref name="degrees"/>.</param>
+        ''' <param name="seconds">Number of second. If greater than 60 value is transfered to seconds. If less than zero and either <paramref name="degrees"/> or <paramref name="minutes"/> is non-zero value is subtracted from <paramref name="minutes"/>.</param>
+        ''' <remarks>Sign of angle is determined by first non-zero argument. If an argument after first non-zero argument is negative angle absolute value is lowered. This can eventually lead to change of sign of entire angle.</remarks>
         ''' <exception cref="OverflowException">Resulting angle would be less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/></exception>
         Public Sub New(degrees As Integer, minutes As Integer, seconds As Decimal)
             Dim d As UInteger, m As Byte, s As Decimal, sg As SByte
@@ -426,8 +456,20 @@ Namespace NumericsT
         ''' <param name="minutes">Number of minutes from ragre &lt;0, 59></param>
         ''' <param name="seconds">Number of seconds from range &lt;0, 60)</param>
         ''' <param name="sign">Sign of newly created instance</param>
-        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="minutes"/> is greater than or equal to 60 -or- <paramref name="seconds"/> is less than zero or greater than or equal to 60</exception>
-        ''' <exception cref="ArgumentException"><paramref name="sign"/> is neither -1, 0 nor +1</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">
+        ''' <paramref name="minutes"/> is greater than or equal to 60. -or-
+        ''' <paramref name="seconds"/> is less than zero or greater than or equal to 60.
+        ''' </exception>
+        ''' <exception cref="ArgumentException">
+        ''' <paramref name="sign"/> is neither -1, 0 nor +1 -or- 
+        ''' <paramref name="sign"/> is non-zero and <paramref name="degrees"/>, <paramref name="minutes"/> and <paramref name="seconds"/> are zero. -or-
+        ''' <paramref name="sign"/> is zero and either <paramref name="degrees"/>, <paramref name="minutes"/> or <paramref name="seconds"/> is non-zero.
+        ''' </exception>
+        ''' <remarks>
+        ''' This CTor is primarily intended for internal use and for fast initialization of the <see cref="Angle"/> structure.
+        ''' Unlike other overloads this CTor strictly requires all parameters to be in valid ranges and requires sign to be passed as separate parameter.
+        ''' <para>This CTor overload is not CLS-compliant. There is no direct CLS-compliant equivalent. Use <see cref="M:Tools.NumericsT.Angle..ctor(System.Int32,System.Int32,System.Decimal)"/> which performs parameter normalization instead.</para>
+        ''' </remarks>
         <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Sub New(degrees As UInteger, minutes As Byte, seconds As Decimal, sign As SByte)
             Init(degrees, minutes, seconds, sign)
@@ -438,12 +480,22 @@ Namespace NumericsT
         ''' <param name="minutes">Number of minutes from ragre &lt;0, 59></param>
         ''' <param name="seconds">Number of seconds from range &lt;0, 60)</param>
         ''' <param name="sign">Sign</param>
-        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="minutes"/> is greater than or equal to 60 -or- <paramref name="seconds"/> is less than zero or greater than or equal to 60</exception>
-        ''' <exception cref="ArgumentException"><paramref name="sign"/> is neither -1, 0 nor +1</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">
+        ''' <paramref name="minutes"/> is greater than or equal to 60. -or-
+        ''' <paramref name="seconds"/> is less than zero or greater than or equal to 60.
+        ''' </exception>
+        ''' <exception cref="ArgumentException">
+        ''' <paramref name="sign"/> is neither -1, 0 nor +1 -or- 
+        ''' <paramref name="sign"/> is non-zero and <paramref name="degrees"/>, <paramref name="minutes"/> and <paramref name="seconds"/> are zero. -or-
+        ''' <paramref name="sign"/> is zero and either <paramref name="degrees"/>, <paramref name="minutes"/> or <paramref name="seconds"/> is non-zero.
+        ''' </exception>
         Private Sub Init(degrees As UInteger, minutes As Byte, seconds As Decimal, sign As SByte)
             If minutes >= 60 Then Throw New ArgumentOutOfRangeException("minutes")
             If seconds < 0@ OrElse seconds >= 60@ Then Throw New ArgumentOutOfRangeException("seconds")
             If sign < -1 OrElse sign > 1 Then Throw New ArgumentException(String.Format("Invalid sign {0}, must be -1, 0 or +1", sign), "sign")
+            If sign <> 0 AndAlso degrees = 0UI AndAlso minutes = 0 AndAlso seconds = 0@ Then Throw New ArgumentException("When all values are zero, sign must be zero", "sign")
+            If sign = 0 AndAlso (degrees <> 0UI OrElse minutes <> 0 OrElse seconds <> 0@) Then Throw New ArgumentException("When sign is zero all values must be zero")
+
             _degrees = degrees
             _seconds = seconds
             _minutes = minutes
@@ -457,9 +509,15 @@ Namespace NumericsT
         ''' <summary>Creates a new instance of <see cref="Angle"/> that has value between 0° (inclusive) and 360° (exclusive)</summary>
         ''' <returns>An <see cref="Angle"/> that represents same azimuth and has value in range &lt;0°, 360°)</returns>
         Public Function Normalize() As Angle
-            Dim ret = New Angle(_degrees Mod 360, _minutes, _seconds, _sign)
+            If Me >= Zero AndAlso Me < Full Then Return Me
+            Dim ret = Me Mod 360
+            If ret >= Full Then
+                ret -= Full
+            ElseIf ret <= -Full Then
+                ret += Full
+            End If
             If ret._sign < 0 Then
-                Return Full - ret
+                Return Full - -ret
             End If
             Return ret
         End Function
@@ -468,8 +526,11 @@ Namespace NumericsT
         ''' <param name="maxAngle">Maximum allowed (exclusive) angle value</param>
         ''' <returns>An <see cref="Angle"/> that represents same azimuth and has value in range &lt;<paramref name="maxAngle"/>-360, <paramref name="maxAngle"/>)</returns>
         Public Function Normalize(maxAngle As Integer) As Angle
-            Dim n360 = Normalize
-            Return n360 + maxAngle \ 360
+            Dim n360 = Normalize()
+            Dim ret = n360 + (maxAngle \ 360) * 360
+            If ret >= maxAngle Then ret -= 360
+            If ret >= maxAngle Then ret -= 360 'Only for negative maxAngle
+            Return ret
         End Function
 
         ''' <summary>Gets an absolute value of this angle</summary>
@@ -594,7 +655,7 @@ Namespace NumericsT
                 Case MidpointRounding.ToEven
                     Return New Angle(Me.Degrees + If(Me.Minutes > 30, 1,
                                                   If(Me.Minutes < 30, 0,
-                                                  If(Degrees \ 2 = 0, 0, 1
+                                                  If(Degrees Mod 2 = 0, 0, 1
                                      )))) * Me.Sign
                 Case Else : Throw New InvalidEnumArgumentException("mode", mode, mode.GetType)
             End Select
@@ -603,7 +664,7 @@ Namespace NumericsT
         ''' <summary>Truncates current angle to contain only whole degrees</summary>
         ''' <returns>A new instance of <see cref="Angle"/> that contains only <see cref="Degrees"/>.</returns>
         Public Function TruncateToDegrees() As Angle
-            Return New Angle(Me.Degrees) '* Me.Sign
+            Return New Angle(_degrees, 0, 0@, If(_degrees <> 0, _sign, 0))
         End Function
 
         ''' <summary>Rounds current angle to nearest whole degrees</summary>
@@ -617,7 +678,7 @@ Namespace NumericsT
                 Case MidpointRounding.ToEven
                     Return New Angle(Me.Degrees, Me.Minutes + If(Me.Seconds > 30@, 1,
                                                               If(Me.Seconds < 30@, 0,
-                                                              If(Minutes \ 2 = 0, 0, 1)
+                                                              If(Minutes Mod 2 = 0, 0, 1)
                                      )), 0@) * Me.Sign
                 Case Else : Throw New InvalidEnumArgumentException("mode", mode, mode.GetType)
             End Select
@@ -636,11 +697,15 @@ Namespace NumericsT
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="mode"/> is neither <see cref="MidpointRounding.AwayFromZero"/> nor <see cref="MidpointRounding.ToEven"/>.</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="digits"/> is less than 0 or greater than 15.</exception>
         Public Function RoundToSeconds(Optional digits% = 0, Optional mode As MidpointRounding = MidpointRounding.AwayFromZero) As Angle
-            Try
-                Return New Angle(Me.Degrees, Me.Minutes, Math.Round(Me.Seconds, digits, mode)) * Me.Sign
-            Catch ex As ArgumentException When Not TypeOf ex Is ArgumentOutOfRangeException AndAlso mode <> MidpointRounding.AwayFromZero AndAlso mode <> MidpointRounding.ToEven
-                Throw New InvalidEnumArgumentException(ex.Message, ex)
-            End Try
+            Dim newSec = Math.Abs(Math.Round(_seconds * _sign, digits, mode))
+            If newSec = 60 Then
+                If _minutes = 59 Then Return New Angle(_degrees + 1, 0, 0, _sign)
+                Return New Angle(_degrees, _minutes + 1, 0, _sign)
+            ElseIf newSec = 0 AndAlso _degrees = 0 AndAlso _minutes = 0 Then
+                Return Angle.Zero
+            Else
+                Return New Angle(_degrees, _minutes, newSec, _sign)
+            End If
         End Function
 
         ''' <summary>Truncates current angle to contain only whole degrees, minutes and seconds</summary>
@@ -652,19 +717,25 @@ Namespace NumericsT
         ''' <summary>Converts an angle to nearest greater angle measured in whole degress.</summary>
         ''' <returns>A new instance of angle that contains only whole degrees and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
         Public Function CeilingDegrees() As Angle
-            Return New Angle(Math.Ceiling(Me.TotalDegrees * Me.Sign)) * Me.Sign
+            If _minutes = 0 AndAlso _seconds = 0@ Then Return Me
+            Return New Angle(_degrees + 1, 0, 0, _sign)
         End Function
 
         ''' <summary>Converts an angle to nearest greater angle measured in whole degress and minutes.</summary>
         ''' <returns>A new instance of angle that contains only whole degrees and minutes and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
         Public Function CeilingMinutes() As Angle
-            Return Angle.FromMinutes(Math.Ceiling(Me.TotalMinutes * Me.Sign)) * Me.Sign
+            If _seconds = 0@ Then Return Me
+            If _minutes = 59 Then Return New Angle With {._degrees = _degrees + 1, ._minutes = 0, ._seconds = 0, ._sign = _sign}
+            Return New Angle With {._degrees = _degrees, ._minutes = _minutes + 1, ._seconds = 0, ._sign = _sign}
         End Function
 
         ''' <summary>Converts an angle to nearest greater angle measured in whole degress, minutes and seconds.</summary>
         ''' <returns>A new instance of angle that contains only whole degrees, minutes and seconds and whichs absolute value is greater than or equal to current instance. Keeps sign.</returns>
         Public Function CeilingSeconds() As Angle
-            Return Angle.FromSeconds(Math.Ceiling(Me.TotalSeconds * Me.Sign)) * Me.Sign
+            If Math.Ceiling(_seconds) = _seconds Then Return Me
+            If _seconds > 59@ AndAlso _minutes = 59 Then Return New Angle With {._degrees = _degrees + 1, ._minutes = 0, ._seconds = 0, ._sign = _sign}
+            If _seconds > 59@ Then Return New Angle With {._degrees = _degrees, ._minutes = _minutes + 1, ._seconds = 0, ._sign = _sign}
+            Return New Angle With {._degrees = _degrees, ._minutes = _minutes, ._seconds = Math.Ceiling(_seconds), ._sign = _sign}
         End Function
 
 #End Region
@@ -771,14 +842,22 @@ Namespace NumericsT
         ''' <remarks>This operator is here to support conversion of Exif latitude/longitude data to <see cref="Angle"/>.</remarks>
         <CLSCompliant(False)>
         Public Shared Widening Operator CType(a As URational()) As Angle
-            If a Is Nothing Then Return 0
-            Dim value As Double = 0
-            Dim multiplier As Double = 1@
-            For Each v In a
-                value += v / multiplier
-                multiplier *= 60@
+            If a Is Nothing Then Return Zero
+            If a.Length = 0 Then Return Zero
+            If a.Length = 1 Then Return Angle.FromDegrees(a(0))
+            Dim d As Double = a(0)
+            Dim m As Double = a(1)
+            Dim s As Double = 0.0#
+            Dim mul = 1
+            For i = 2 To a.Length - 1
+                s += CDbl(a(i)) / mul
+                mul *= 60.0#
             Next
-            Return value
+            m += (d Mod 1) * 60
+            d = Math.Truncate(d)
+            s += (m Mod 1) * 60
+            m = Math.Truncate(m)
+            Return New Angle(CInt(d), CInt(m), s)
         End Operator
 
         ''' <summary>Converts array of <see cref="SRational"/>s to <see cref="Angle"/></summary>
@@ -786,14 +865,36 @@ Namespace NumericsT
         ''' <returns>An angle whose value value is computed as <paramref name="a"/>[0] + <paramref name="a"/>[1]/60 + <paramref name="a"/>[2]/60/60 etc.; Zero angle if <paramref name="a"/> is null or an empty array.</returns>
         ''' <remarks>This operator is CLS-compliant companion to <see cref="URational"/>[] operator.</remarks>
         Public Shared Narrowing Operator CType(a As SRational()) As Angle
-            If a Is Nothing Then Throw New ArgumentNullException("a")
-            Dim value As Double = 0
-            Dim multiplier As Double = 1@
-            For Each v In a
-                value += v / multiplier
-                multiplier *= 60@
+            If a Is Nothing Then Return Zero
+            If a.Length = 0 Then Return Zero
+            If a Is Nothing Then Return Zero
+            If a.Length = 0 Then Return Zero
+            If a.Length = 1 Then Return Angle.FromDegrees(a(0))
+            Dim d As Double = a(0)
+            Dim m As Double = a(1)
+            Dim s As Double = 0.0#
+            Dim mul = 1
+            Dim sign = Math.Sign(d)
+            If sign = 0 Then sign = Math.Sign(m)
+            sign = Math.Abs(sign)
+            For i = 2 To a.Length - 1
+                If sign = 0 Then
+                    sign = Math.Sign(CDbl(a(i)))
+                    s += CDbl(a(i)) / mul
+                Else
+                    s += CDbl(a(i)) / mul * sign
+                End If
+                '* If(sign = 0, 1, sign)
+                'If sign = 0 AndAlso a(i) <> 0.0# Then
+                '    sign = If(a(i).Denominator < 0 Xor a(i).Numerator < 0, -1, 1)
+                'End If
+                mul *= 60.0#
             Next
-            Return value
+            m += (d Mod 1) * 60
+            d = Math.Truncate(d)
+            s += (m Mod 1) * 60
+            m = Math.Truncate(m)
+            Return New Angle(CInt(d), CInt(m), s)
         End Operator
 #End Region
 #Region "Comparison"
@@ -838,7 +939,7 @@ Namespace NumericsT
         ''' <param name="b">An angle value</param>
         ''' <returns>True if normalized <paramref name="a"/> is differs from normalized <paramref name="b"/>; false othervise.</returns>
         Public Shared Operator <>(a As Angle, b As Angle) As Boolean
-            Return a._degrees = b._degrees OrElse a._minutes = b._minutes OrElse a._seconds = b._seconds OrElse a._sign = b._sign
+            Return a._degrees <> b._degrees OrElse a._minutes <> b._minutes OrElse a._seconds <> b._seconds OrElse a._sign <> b._sign
         End Operator
 #End Region
 
@@ -1016,13 +1117,27 @@ Namespace NumericsT
             Return New Angle(a.TotalDegrees / b)
         End Operator
 
-        ''' <summary>Divides a number of rotations by integer</summary>
-        ''' <param name="a">An angle whichs number of rotations to divide</param>
-        ''' <param name="b">An integral number to divide number of rotations by</param>
-        ''' <returns><paramref name="a"/>.<see cref="Rotations">Rotations</see> integraly divided by <paramref name="b"/></returns>
-        ''' <remarks>To get whole number of rotations use aither <c><see cref="Math.Floor"/>(<see cref="Rotations"/>)</c> or <c>x \ 1</c> (VB only).</remarks>
+        ''' <summary>Divides number of degrees in this angle with integer number</summary>
+        ''' <param name="a">An angle whichs number of degrees to divide</param>
+        ''' <param name="b">An integral number to divide number of degrees by</param>
+        ''' <returns><paramref name="a"/>.<see cref="Rotations">Degrees</see> integraly divided by <paramref name="b"/></returns>
+        ''' <exception cref="OverflowException">Result of operation is greater than <see cref="Int32.MaxValue"/> or less than <see cref="Int32.MinValue"/> degreees</exception>
+        ''' <exception cref="DivideByZeroException"><paramref name="b"/> is zero</exception>
+        <CLSCompliant(False)>
         Public Shared Operator \(a As Angle, b As Integer) As Integer
-            Return Math.Floor(a.Rotations) \ b
+            Return (a._degrees \ CUInt(Math.Abs(b))) * (a._sign * Math.Sign(b))
+        End Operator
+
+        ''' <summary>Gets a remined of angle after substracting all whole amounts of degrees</summary>
+        ''' <param name="a">An angle to get reminder from</param>
+        ''' <param name="b">Modulo</param>
+        ''' <returns>
+        ''' Reminder after integral division of <paramref name="a"/> by <paramref name="b"/> number of degrees.
+        ''' It can be also interpreted as angle from range &lt;0°, <paramref name="b"/>°) (or (-<paramref name="b"/>°, 0°> if <paramref name="a"/> is less than zero XOR <paramref name="b"/> is less than zero) created by repeated substracting (adding in case of negative <paramref name="a"/> XOR <paramref name="b"/>) <paramref name="b"/>° to (from) <paramref name="a"/> till such range is reached.
+        ''' </returns>
+        Public Shared Operator Mod(a As Angle, b As Integer) As Angle
+            If b = 0 Then Throw New DivideByZeroException
+            Return New Angle(a._degrees Mod Math.Abs(b), a._minutes, a._seconds, If(a._degrees Mod b <> 0 OrElse a._seconds <> 0 OrElse a._minutes <> 0, a._sign * Math.Sign(b), 0))
         End Operator
 
         ''' <summary>Makes an angle negative</summary>
@@ -1038,51 +1153,65 @@ Namespace NumericsT
             Return a
         End Operator
 
-        ''' <summary>Adds sizes of two angles</summary>
+        ''' <summary>Adds two angles</summary>
         ''' <param name="a">An angle</param>
         ''' <param name="b">An angle</param>
         ''' <returns>An angle that is sum of sizes of two angles.</returns>
         ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/>.</exception>
         ''' <remarks>No normalization is done</remarks>
         Public Shared Operator +(a As Angle, b As Angle) As Angle
+            If a = Zero Then Return b
+            If b = Zero Then Return a
             If a._sign <> b._sign Then Return a - -b
 
             Dim d1 As UInteger = a._degrees + b._degrees
             Dim m1 As Integer = a._minutes + b._minutes
             Dim s1 As Decimal = a._seconds + b._seconds
 
-            If s1 > 60@ Then
+            If s1 >= 60@ Then
                 m1 += s1 \ 60
                 s1 = s1 Mod 60@
             End If
 
-            If m1 > 60 Then
+            If m1 >= 60 Then
                 d1 += m1 \ 60
                 m1 = m1 Mod 60
             End If
 
-            Return New Angle(d1, m1, s1, a._sign)
+            Return New Angle(d1, m1, s1, If(d1 = 0 AndAlso m1 = 0 AndAlso s1 = 0@, 0, a._sign))
         End Operator
 
-        ''' <summary>Subtracts sizes of two angles</summary>
+        ''' <summary>Subtracts two angles</summary>
         ''' <param name="a">An angle to subtract from</param>
         ''' <param name="b">An angle be subtracted</param>
         ''' <returns>An angle that is difference between the two angles. <paramref name="b"/> subtracted form <paramref name="a"/></returns>
         ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/>.</exception>
         ''' <remarks>No normalization is done</remarks>
         Public Shared Operator -(a As Angle, b As Angle) As Angle
+            Return OpMinusImpl(a, b)
+        End Operator
+
+        ''' <summary>Implements operator -</summary>
+        ''' <param name="a">An angle to subtract from</param>
+        ''' <param name="b">An angle be subtracted</param>
+        ''' <returns>An angle that is difference between the two angles. <paramref name="b"/> subtracted form <paramref name="a"/></returns>
+        ''' <exception cref="OverflowException">Resulting angle is smaller than <see cref="System.Decimal.MinValue"/> or greater than <see cref="System.Decimal.MaxValue"/>.</exception>
+        ''' <remarks>No normalization is done</remarks>
+        Private Shared Function OpMinusImpl(a As Angle, b As Angle) As Angle
+            If a = Zero Then Return -b
+            If b = Zero Then Return a
             If a._sign <> b._sign Then Return a + -b
 
-            If b > a Then Return -(b + -a)
+            If b.Abs > a.Abs Then Return -OpMinusImpl(b, a)
             Dim d1 As UInteger = a._degrees - b._degrees
-            Dim m1 As Integer = a._minutes - b._minutes
+            Dim m1 As Integer = CInt(a._minutes) - b._minutes
             Dim s1 As Decimal = a._seconds - b._seconds
 
             Dim d2 As UInteger, m2 As Byte, s2 As Decimal, sg2 As SByte
             NormalizeDms(d1, m1, s1, d2, m2, s2, sg2)
 
-            Return New Angle(d2, m2, s2, a._sign)
-        End Operator
+            Return New Angle(d2, m2, s2, If(d2 = 0 AndAlso m2 = 0 AndAlso s2 = 0@, 0, a._sign))
+        End Function
 #End Region
 #End Region
 
@@ -1167,7 +1296,7 @@ Namespace NumericsT
             If a._minutes = 0 AndAlso a._seconds = 0@ Then
                 Return Comparer(Of UInteger).Default.Compare(a._degrees, Math.Abs(b)) * a._sign
             Else
-                If a._degrees = b Then Return a._sign
+                If a._degrees = Math.Abs(b) Then Return a._sign
                 Return Comparer(Of UInteger).Default.Compare(a._degrees, Math.Abs(b)) * a._sign
             End If
         End Function

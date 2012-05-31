@@ -328,14 +328,6 @@
       <Project>{69B7448C-E445-4507-AE2A-469E3C99FC62}</Project>
       <Name>Tools.Text.Unicode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools.TotalCommander\Tools.TotalCommander.Extensions\Tools.TotalCommander.Extensions.vbproj">
-      <Project>{370D8C48-8190-4DE0-9DB3-51B07B7C86B9}</Project>
-      <Name>Tools.TotalCommander.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools.TotalCommander\Tools.TotalCommander.vcxproj">
-      <Project>{7f278f32-47b4-4f4e-85b2-baeaa406951b}</Project>
-      <Name>Tools.TotalCommander %28Visual Studio 2010%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Tools.VisualStudio.Debugger\Tools.VisualStudio.Debugger.vbproj">
       <Project>{991AA564-5CCF-481C-A2FE-E657D7379E67}</Project>
       <Name>Tools.VisualStudio.Debugger</Name>

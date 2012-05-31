@@ -468,15 +468,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Numerics\AngleFormatInfo.cs.resx">
       <DependentUpon>AngleFormatInfo.resx</DependentUpon>
-      <LogicalName>Tools.GlobalizationT.AngleFormatInfo.cs.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Numerics\AngleFormatInfo.de.resx">
       <DependentUpon>AngleFormatInfo.resx</DependentUpon>
-      <LogicalName>Tools.GlobalizationT.AngleFormatInfo.de.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Numerics\AngleFormatInfo.el.resx">
       <DependentUpon>AngleFormatInfo.resx</DependentUpon>
-      <LogicalName>Tools.GlobalizationT.AngleFormatInfo.el.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Encoding\ISO2022.xml">
       <DependentUpon>ISO2022.vb</DependentUpon>
@@ -522,7 +519,7 @@
       <DependentUpon>Exceptions.resx</DependentUpon>
       <SubType>Designer</SubType>
       <Visible>True</Visible>
-      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
@@ -541,13 +538,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\resx %28Friend%29\CLSComplianceCheckerResources.cs.resx">
-      <LogicalName>Tools.ResourcesT.CLSComplianceCheckerResources.resources</LogicalName>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
       <DependentUpon>Components.resx</DependentUpon>
       <SubType>Designer</SubType>
       <Visible>True</Visible>
-      <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
