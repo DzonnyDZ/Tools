@@ -225,31 +225,31 @@
     </None>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.cs.gz">
       <DependentUpon>ucd.cs.xml</DependentUpon>
-
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.cs.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.da.gz">
       <DependentUpon>ucd.da.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.da.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.de.gz">
       <DependentUpon>ucd.de.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.de.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.el.gz">
       <DependentUpon>ucd.el.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.el.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.en.gz">
       <DependentUpon>ucd.en.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.en.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.es.gz">
       <DependentUpon>ucd.es.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.es.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.fr.gz">
       <DependentUpon>ucd.fr.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.fr.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.gz">
       <LogicalName>Tools.TextT.UnicodeT.ucd.xml.gz</LogicalName>
@@ -257,23 +257,22 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.pl.gz">
       <DependentUpon>ucd.pl.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.pl.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.pt.gz">
       <DependentUpon>ucd.pt.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.pt.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.ru.gz">
       <DependentUpon>ucd.ru.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.ru.gz</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.tr.gz">
       <DependentUpon>ucd.tr.xml</DependentUpon>
-      
     </EmbeddedResource>
     <EmbeddedResource Include="Text\Unicode\ucd.xml.zh.gz">
       <DependentUpon>ucd.zh.xml</DependentUpon>
-      
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.zh.gz</LogicalName>
     </EmbeddedResource>
     <None Include="Text\Unicode\Unihan generator.xlsx" />
   </ItemGroup>
@@ -341,6 +340,7 @@
     </None>
     <None Include="Text\Unicode\ucd.tr.xml">
       <DependentUpon>ucd.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.tr.gz</LogicalName>
     </None>
     <None Include="Text\Unicode\ucd.zh.xml">
       <DependentUpon>ucd.xml</DependentUpon>
