@@ -28,11 +28,10 @@ Namespace TextT.UnicodeT
         ''' <returns>The localized name of the category, or null if a localized name does not exist.</returns>
         ''' <param name="value">The identifer for the category to look up. </param>
         Protected Overloads Overrides Function GetLocalizedString(value As String) As String
-            Const UnihanPrefix As String = "unihan - "
-            Return MyBase.GetLocalizedString(value)
+            Const unihanPrefix As String = "unihan - "
 
             Dim cat As UnihanPropertyCategory
-            If [Enum].TryParse(If(value.ToLowerInvariant.StartsWith(UnihanPrefix), value.Substring(UnihanPrefix.Length), value), True, cat) Then Return GetLocalizedString(cat)
+            If [Enum].TryParse(If(value.ToLowerInvariant.StartsWith(unihanPrefix), value.Substring(unihanPrefix.Length), value), True, cat) Then Return GetLocalizedString(cat)
 
             Select Case value.ToLowerInvariant
                 Case "irg sources", "unihan - irg sources" : cat = UnihanPropertyCategory.IrgSources
@@ -46,7 +45,6 @@ Namespace TextT.UnicodeT
                 Case "unknown" : cat = UnihanPropertyCategory.unknown
                 Case Else : Return MyBase.GetLocalizedString(value)
             End Select
-            Return GetLocalizedString(cat)
         End Function
 
         ''' <summary>Converts <see cref="UnihanPropertyCategory"/> value to human-readable localized string</summary>

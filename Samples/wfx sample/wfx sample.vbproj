@@ -162,7 +162,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcxproj">
       <Project>{7f278f32-47b4-4f4e-85b2-baeaa406951b}</Project>
-      <Name>Tools.TotalCommander %28Visual Studio 2010%29</Name>
+      <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj">
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>

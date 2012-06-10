@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TestSettings name="Local Test Run" id="327aec56-f360-4f00-a075-cdd69aed1382" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>This is a default test run configuration for a local test run.</Description>
+  <Deployment enabled="true">
+    <DeploymentItem filename="bin\Debug\AnyCPU\da\" outputDirectory="da"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\el\" outputDirectory="el"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\tr\" outputDirectory="tr"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\fr\" outputDirectory="fr"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\en\" outputDirectory="en"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\ru\" outputDirectory="ru"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\es\" outputDirectory="es"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\de\" outputDirectory="de"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\pl\" outputDirectory="pl"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\zh\" outputDirectory="zh"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\cs\" outputDirectory="cs"/>
+    <DeploymentItem filename="bin\Debug\AnyCPU\pt\" outputDirectory="pt"/>
+  </Deployment>
   <Execution>
     <TestTypeSpecific>
       <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">

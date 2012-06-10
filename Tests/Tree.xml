@@ -32,6 +32,9 @@
                 </node>
             </node>
         </node>
+        <node name="GlobalizationT" image="Namespace">
+            <node name="AngleFormatInfo" image="Class" tag="Tools.Tests.GlobalizationT.AngleFormatInfoTest.Test"/>
+        </node>
         <node name="InternalT" image="Namespace">
             <node name="ToolAssembly" image="Class" tag="Tools.Tests.InternalT.ToolAssembly.Test" />
             <node name="VersionAttribute" image="Class" tag="Tools.Tests.InternalT.VersionAttributeTest.Test" />
