@@ -769,14 +769,23 @@ Namespace MetadataT.ExifT
             Next
         End Sub
 #End Region
-    End Class
 
+        ''' <summary>When overriden in derived class gets format for tag specified</summary>
+        ''' <param name="Tag">Tag record number in current IFD</param>
+        ''' <returns>If <paramref name="tag"/> is known by current implementation returns its typical description. Null if tag is not known.</returns>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        <CLSCompliant(False)> Public Overridable ReadOnly Property TagFormat(ByVal tag As UShort) As ExifTagFormat
+            Get
+                Return Nothing
+            End Get
+        End Property
+    End Class
 
 #Region "IFD classes"
     ''' <summary>Exif main and thumbnail IFD</summary>
     ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added for <see cref="IfdMain.ExifSubIFD"/> and <see cref="IfdMain.GPSSubIFD"/>.</version>
-    Partial Class IfdMain : Inherits Ifd
+    Partial Public Class IfdMain : Inherits Ifd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()
         End Sub
@@ -1161,11 +1170,25 @@ Namespace MetadataT.ExifT
             ret._ThumbnailChanged = True
             Return ret
         End Function
+        ''' <summary>Gets format for tag specified</summary>
+        ''' <param name="Tag">Tag record number in current IFD</param>
+        ''' <returns>If <paramref name="tag"/> is known by current implementation returns its typical description. Null if tag is not known.</returns>
+        ''' <version version="1.5.4">This property overload is new in version 1.5.4</version>
+        <CLSCompliant(False)> Public Overloads Overrides ReadOnly Property TagFormat(ByVal tag As UShort) As ExifTagFormat
+            Get
+                Dim t As Tags = tag
+                If t.IsDefined Then
+                    Return TagFormat(t)
+                Else : Return Nothing
+                End If
+            End Get
+        End Property
     End Class
+
     ''' <summary>Exif Sub IFD</summary>
     ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added for <see cref="IfdExif.InteropSubIFD"/>.</version>
-    Partial Class IfdExif : Inherits SubIfd
+    Partial Public Class IfdExif : Inherits SubIfd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()
         End Sub
@@ -1296,9 +1319,24 @@ Namespace MetadataT.ExifT
                 End If
             End Set
         End Property
+
+        ''' <summary>Gets format for tag specified</summary>
+        ''' <param name="Tag">Tag record number in current IFD</param>
+        ''' <returns>If <paramref name="tag"/> is known by current implementation returns its typical description. Null if tag is not known.</returns>
+        ''' <version version="1.5.4">This property overload is new in version 1.5.4</version>
+        <CLSCompliant(False)> Public Overloads Overrides ReadOnly Property TagFormat(ByVal tag As UShort) As ExifTagFormat
+            Get
+                Dim t As Tags = tag
+                If t.IsDefined Then
+                    Return TagFormat(t)
+                Else : Return Nothing
+                End If
+            End Get
+        End Property
     End Class
+
     ''' <summary>Exif GPS IFD</summary>
-    Partial Class IfdGps : Inherits SubIfd
+    Partial Public Class IfdGps : Inherits SubIfd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()
         End Sub
@@ -1327,9 +1365,23 @@ Namespace MetadataT.ExifT
                 MyBase.Record(Me.TagFormat(Type)) = value
             End Set
         End Property
+        ''' <summary>Gets format for tag specified</summary>
+        ''' <param name="Tag">Tag record number in current IFD</param>
+        ''' <returns>If <paramref name="tag"/> is known by current implementation returns its typical description. Null if tag is not known.</returns>
+        ''' <version version="1.5.4">This property overload is new in version 1.5.4</version>
+        <CLSCompliant(False)> Public Overloads Overrides ReadOnly Property TagFormat(ByVal tag As UShort) As ExifTagFormat
+            Get
+                Dim t As Tags = tag
+                If t.IsDefined Then
+                    Return TagFormat(t)
+                Else : Return Nothing
+                End If
+            End Get
+        End Property
     End Class
+
     ''' <summary>Exif Interoperability IFD</summary>
-    Partial Class IfdInterop : Inherits SubIfd
+    Partial Public Class IfdInterop : Inherits SubIfd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()
         End Sub
@@ -1358,7 +1410,21 @@ Namespace MetadataT.ExifT
                 MyBase.Record(Me.TagFormat(Type)) = value
             End Set
         End Property
+        ''' <summary>Gets format for tag specified</summary>
+        ''' <param name="Tag">Tag record number in current IFD</param>
+        ''' <returns>If <paramref name="tag"/> is known by current implementation returns its typical description. Null if tag is not known.</returns>
+        ''' <version version="1.5.4">This property overload is new in version 1.5.4</version>
+        <CLSCompliant(False)> Public Overloads Overrides ReadOnly Property TagFormat(ByVal tag As UShort) As ExifTagFormat
+            Get
+                Dim t As Tags = tag
+                If t.IsDefined Then
+                    Return TagFormat(t)
+                Else : Return Nothing
+                End If
+            End Get
+        End Property
     End Class
+
     ''' <summary>Represents any Exif Sub-IFD (an IFD embdeded somewhere in IFD block and pointed by some tag from another IFD)</summary>
     ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     Public Class SubIfd : Inherits Ifd

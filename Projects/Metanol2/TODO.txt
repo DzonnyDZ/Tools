@@ -1,5 +1,4 @@
 ﻿* Uložení rotace
-* Zobrazení Exif
 * Exif miniatura
 * Exif zvuk (requires JPEG APP2 FPXR support)
 * Editace Exif
@@ -7,9 +6,7 @@
 * Zoomování v náhledu, posun výřezu
 * FileSystemWatcher
 * Exif
-* Export CSV
 * Command line (file, folder, files)
-* Slide show/browser
 * Follow *.lnk to images
 * IPTC/NAA/IIM file
 * Exif file

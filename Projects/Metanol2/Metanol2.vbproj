@@ -252,6 +252,9 @@
     <None Include="Database\DatabaseAccess.dbml.layout">
       <DependentUpon>DatabaseAccess.dbml</DependentUpon>
     </None>
+    <EmbeddedResource Include="Controls\CsvFormatConfigurator.cs.resx">
+      <DependentUpon>CsvFormatConfigurator.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CsvFormatConfigurator.resx">
       <DependentUpon>CsvFormatConfigurator.vb</DependentUpon>
     </EmbeddedResource>
@@ -286,6 +289,9 @@
     <EmbeddedResource Include="FolderDialog.resx">
       <DependentUpon>FolderDialog.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExport.cs.resx">
+      <DependentUpon>frmExport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmExport.resx">
       <DependentUpon>frmExport.vb</DependentUpon>
@@ -340,6 +346,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -379,10 +386,18 @@
       <DependentUpon>Metanol.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Files\VersionHistoryEnvelope.cs.htm" />
-    <Content Include="Resources\Files\VersionHistory_1.cs.htm" />
-    <Content Include="Resources\Files\VersionHistory_2.cs.htm" />
-    <Content Include="Resources\Files\VersionHistory_3.cs.htm" />
+    <None Include="Resources\Files\VersionHistoryEnvelope.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_1.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_2.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_3.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_5.htm" />
+    <None Include="Resources\Files\VersionHistory_5.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_4.htm" />
+    <None Include="Resources\Files\VersionHistory_4.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_6.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_6.htm" />
+    <None Include="Resources\Files\VersionHistory_7.cs.htm" />
+    <None Include="Resources\Files\VersionHistory_7.htm" />
     <Content Include="Resources\MetanolBig.png" />
     <Content Include="Resources\Up.png" />
     <Content Include="Shortcuts.txt" />

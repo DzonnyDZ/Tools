@@ -389,6 +389,15 @@ Namespace MetadataT.IptcT
                 Return ret.ToString
             End If
         End Function
+
+        ''' <summary>Gets value indicating if this instance was already disposed or not</summary>
+        ''' <returns>This implementation always returns false because this class does not implement <see cref="IDisposable"/></returns>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        Protected Overridable ReadOnly Property Disposed As Boolean Implements IMetadata.Disposed
+            Get
+                Return False
+            End Get
+        End Property
 #End Region
 
 

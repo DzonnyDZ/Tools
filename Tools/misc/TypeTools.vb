@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices, System.Linq
 Imports Tools.ReflectionT, Tools.ExtensionsT
 Imports System.Reflection
+Imports System.Runtime.InteropServices
 
 #If Config <= Nightly Then 'Stage:Nightly
 ''' <author www="http://dzonny.cz">Đonny</author>
@@ -52,7 +53,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>From</c> to <c>from</c>, <c>Inherit</c> to <c>inherit</c></version>
     <Extension()> _
     Public Function GetAttribute(Of T As Attribute)(ByVal from As Reflection.ICustomAttributeProvider, Optional ByVal inherit As Boolean = True) As T
-        Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
+        Dim attrs As Object() = from.GetCustomAttributes(GetType(T), inherit)
         If attrs Is Nothing OrElse attrs.Length = 0 Then Return Nothing Else Return attrs(0)
     End Function
     'TODO: There is more than one attribute of type attributeType defined on this member.
@@ -65,7 +66,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>From</c> to <c>from</c>, <c>Inherit</c> to <c>inherit</c></version>
     <Extension()> _
     Public Function GetAttributes(Of T As Attribute)(ByVal from As Reflection.ICustomAttributeProvider, Optional ByVal inherit As Boolean = True) As T()
-        Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
+        Dim attrs As Object() = from.GetCustomAttributes(GetType(T), inherit)
         If attrs Is Nothing Then Return Nothing
         Return (From Attr In attrs Select DirectCast(Attr, T)).ToArray
     End Function
@@ -85,7 +86,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
     <CLSCompliant(False)> _
     Public Function GetValueInEnumBaseType(ByVal type As Type, ByVal Value As IConvertible) As IConvertible
-        Dim EType As Type = [Enum].GetUnderlyingType(Type)
+        Dim EType As Type = [Enum].GetUnderlyingType(type)
         If GetType(Byte).Equals(EType) Then : Return Value.ToByte(System.Globalization.CultureInfo.InvariantCulture)
         ElseIf GetType(SByte).Equals(EType) Then : Return Value.ToSByte(System.Globalization.CultureInfo.InvariantCulture)
         ElseIf GetType(Short).Equals(EType) Then : Return Value.ToInt16(System.Globalization.CultureInfo.InvariantCulture)
@@ -118,8 +119,8 @@ Public Module TypeTools
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration</exception>
     ''' <version version="1.5.4">Parameter renamed: <c>EnumType</c> to <c>enumType</c></version>
     Public Function GetConstant(ByVal name As String, ByVal enumType As Type) As Reflection.FieldInfo
-        If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "Type"), "Type")
-        Dim field = EnumType.GetField(name, Reflection.BindingFlags.Static Or Reflection.BindingFlags.Public)
+        If Not enumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "Type"), "Type")
+        Dim field = enumType.GetField(name, Reflection.BindingFlags.Static Or Reflection.BindingFlags.Public)
         If field Is Nothing Then Return Nothing
         If Not field.IsLiteral Then Return Nothing
         Return field
@@ -146,8 +147,8 @@ Public Module TypeTools
     ''' <returns>Value of constant with name <paramref name="name"/> in type <paramref name="EnumType"/></returns>
     ''' <version version="1.5.4">Parameter renamed: <c>EnumType</c> to <c>enumType</c></version>
     Public Function GetValue(ByVal name$, ByVal enumType As Type) As [Enum]
-        Dim cns = GetConstant(name, EnumType)
-        If cns Is Nothing Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Constant0DoesNotExistInType1, name, EnumType.Name))
+        Dim cns = GetConstant(name, enumType)
+        If cns Is Nothing Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Constant0DoesNotExistInType1, name, enumType.Name))
         Return cns.GetValue(Nothing)
     End Function
     ''' <summary>Gets value of enum member</summary>
@@ -166,7 +167,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>Value</c> to <c>value</c></version>
     <CLSCompliant(False)> _
     Public Function GetEnumValue(Of T As {IConvertible, Structure})(ByVal value As IConvertible) As T
-        Return CObj(GetEnumValue(GetType(T), Value))
+        Return CObj(GetEnumValue(GetType(T), value))
     End Function
     ''' <summary>Converts specified <see cref="IConvertible"/> to specified <see cref="[Enum]"/> (type-unsafe)</summary>
     ''' <param name="value"><see cref="IConvertible"/> to be converted using invariant culture</param>
@@ -176,7 +177,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameters renamed: <c>Type</c> to <c>type</c>, <c>Value</c> to <c>value</c></version>
     <CLSCompliant(False)> _
     Public Function GetEnumValue(ByVal type As Type, ByVal value As IConvertible) As [Enum]
-        Return [Enum].ToObject(Type, GetValueInEnumBaseType(Type, Value))
+        Return [Enum].ToObject(type, GetValueInEnumBaseType(type, value))
     End Function
     ''' <summary>Gets value idicating if given value is defined as constant in enumeration</summary>
     ''' <param name="value">Value to be checked. Value must be to type of enumeration to be checked in</param>
@@ -194,22 +195,22 @@ Public Module TypeTools
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>EnumType</c> to <c>enumType</c>, <c>Separator</c> to <c>separator</c></version>
     Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal separator As String) As [Enum]
-        If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "EnumType"), "EnumType")
-        If [Enum].GetUnderlyingType(EnumType).Equals(GetType(SByte)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Short)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Integer)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Long)) Then
+        If Not enumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "EnumType"), "EnumType")
+        If [Enum].GetUnderlyingType(enumType).Equals(GetType(SByte)) OrElse [Enum].GetUnderlyingType(enumType).Equals(GetType(Short)) OrElse [Enum].GetUnderlyingType(enumType).Equals(GetType(Integer)) OrElse [Enum].GetUnderlyingType(enumType).Equals(GetType(Long)) Then
             Dim ret As Long = 0
-            For Each item In Flags.Split(Separator)
+            For Each item In flags.Split(separator)
                 If IsNumeric(item) Then ret = ret Or CLng(item) Else _
-                ret = ret Or CType(GetValue(item, EnumType).GetValue, Long)
+                ret = ret Or CType(GetValue(item, enumType).GetValue, Long)
             Next
-            Return [Enum].ToObject(EnumType, GetValueInEnumBaseType(EnumType, ret))
+            Return [Enum].ToObject(enumType, GetValueInEnumBaseType(enumType, ret))
         Else
             Dim ret As ULong = 0
-            For Each item In Flags.Split(Separator)
+            For Each item In flags.Split(separator)
                 If IsNumeric(item) AndAlso CDec(item) >= 0 Then : ret = ret Or CULng(item)
                 ElseIf IsNumeric(item) Then : Throw New ArgumentException(ResourcesT.Exceptions.EnumerationDoesNotAllowNegativeValues)
-                Else : ret = ret Or CType(GetValue(item, EnumType).GetValue, ULong) : End If
+                Else : ret = ret Or CType(GetValue(item, enumType).GetValue, ULong) : End If
             Next
-            Return [Enum].ToObject(EnumType, GetValueInEnumBaseType(EnumType, ret))
+            Return [Enum].ToObject(enumType, GetValueInEnumBaseType(enumType, ret))
         End If
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
@@ -220,7 +221,7 @@ Public Module TypeTools
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>EnumType</c> to <c>enumType</c>, <c>Culture</c> to <c>culture</c></version>
     Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal culture As Globalization.CultureInfo) As [Enum]
-        Return FlagsFromString(Flags, EnumType, Culture.TextInfo)
+        Return FlagsFromString(flags, enumType, culture.TextInfo)
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
@@ -229,7 +230,7 @@ Public Module TypeTools
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal textInfo As Globalization.TextInfo) As [Enum]
-        Return FlagsFromString(Flags, EnumType, TextInfo.ListSeparator)
+        Return FlagsFromString(flags, enumType, textInfo.ListSeparator)
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
@@ -239,7 +240,7 @@ Public Module TypeTools
     ''' <remarks>Obtains separator from current culture</remarks>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>EnumType</c> to <c>enumType</c></version>
     Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type) As [Enum]
-        Return FlagsFromString(Flags, EnumType, Globalization.CultureInfo.CurrentCulture)
+        Return FlagsFromString(flags, enumType, Globalization.CultureInfo.CurrentCulture)
     End Function
 
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
@@ -251,7 +252,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>Separator</c> to <c>separator</c></version>
     <CLSCompliant(False)> _
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal separator As String) As T
-        Return CObj(FlagsFromString(Flags, GetType(T), Separator))
+        Return CObj(FlagsFromString(flags, GetType(T), separator))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
@@ -262,7 +263,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>Culture</c> to <c>culture</c></version>
     <CLSCompliant(False)> _
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal culture As Globalization.CultureInfo) As T
-        Return CObj(FlagsFromString(Flags, GetType(T), Culture.TextInfo))
+        Return CObj(FlagsFromString(flags, GetType(T), culture.TextInfo))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
@@ -273,7 +274,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>TextInfo</c> to <c>textInfo</c></version>
     <CLSCompliant(False)> _
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal textInfo As Globalization.TextInfo) As T
-        Return CObj(FlagsFromString(Flags, GetType(T), TextInfo.ListSeparator))
+        Return CObj(FlagsFromString(flags, GetType(T), textInfo.ListSeparator))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
@@ -284,7 +285,7 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c></version>
     <CLSCompliant(False)> _
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String) As T
-        Return CObj(FlagsFromString(Flags, GetType(T), Globalization.CultureInfo.CurrentCulture))
+        Return CObj(FlagsFromString(flags, GetType(T), Globalization.CultureInfo.CurrentCulture))
     End Function
     ''' <summary>Gets toolbox bitmap assciated with given <see cref="Type"/></summary>
     ''' <param name="Type">Type to get toolbox bitmap for</param>
@@ -296,17 +297,17 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameters renamed to camelCase</version>
     <Extension()> _
     Public Function GetToolBoxBitmap(ByVal type As Type, Optional ByVal large As Boolean = False, Optional ByVal inherit As Boolean = False) As Drawing.Image
-        If Type Is Nothing Then Throw New ArgumentException("Type")
-        Dim attr = Type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(False)
-        If attr Is Nothing AndAlso Inherit Then attr = Type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(True)
+        If type Is Nothing Then Throw New ArgumentException("Type")
+        Dim attr = type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(False)
+        If attr Is Nothing AndAlso inherit Then attr = type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(True)
         If attr IsNot Nothing Then
-            Return attr.GetImage(Type, Large)
+            Return attr.GetImage(type, large)
         Else
-            Dim bmp = Drawing.ToolboxBitmapAttribute.GetImageFromResource(Type, Type.Name, Large)
+            Dim bmp = Drawing.ToolboxBitmapAttribute.GetImageFromResource(type, type.Name, large)
             If bmp IsNot Nothing Then Return bmp
         End If
-        If Inherit AndAlso Not Type.Equals(GetType(Object)) AndAlso Type.BaseType IsNot Nothing Then
-            Return Type.BaseType.GetToolBoxBitmap(Large, Inherit)
+        If inherit AndAlso Not type.Equals(GetType(Object)) AndAlso type.BaseType IsNot Nothing Then
+            Return type.BaseType.GetToolBoxBitmap(large, inherit)
         Else
             Return Nothing
         End If
@@ -321,8 +322,8 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameters renamed to camelCase</version>
     <Extension()> _
     Public Function GetDefaltCTor(ByVal type As Type, Optional ByVal attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Reflection.ConstructorInfo
-        If Type Is Nothing Then Throw New ArgumentException("Type")
-        Return Type.GetConstructor(Attributes Or Reflection.BindingFlags.Instance, Nothing, Type.EmptyTypes, Nothing)
+        If type Is Nothing Then Throw New ArgumentException("Type")
+        Return type.GetConstructor(attributes Or Reflection.BindingFlags.Instance, Nothing, type.EmptyTypes, Nothing)
     End Function
     ''' <summary>Gets value indicationg if given <see cref="Type"/> has default constructor</summary>
     ''' <param name="Type"><see cref="Type"/> to check</param>
@@ -333,8 +334,8 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameters renamed to camelCase</version>
     <Extension()> _
     Public Function HasDefaultCTor(ByVal type As Type, Optional ByVal attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Boolean
-        If Type Is Nothing Then Throw New ArgumentException("Type")
-        Return Type.GetDefaltCTor(Attributes) IsNot Nothing
+        If type Is Nothing Then Throw New ArgumentException("Type")
+        Return type.GetDefaltCTor(attributes) IsNot Nothing
     End Function
     ''' <summary>Gets value indicating if instance of geven type can be easily created using default CTor</summary>
     ''' <param name="Type"><see cref="Type"/> to check</param>
@@ -344,12 +345,12 @@ Public Module TypeTools
     ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
     <Extension()> _
     Public Function CanAutomaticallyCreateInstance(ByVal type As Type) As Boolean
-        If Type Is Nothing Then Throw New ArgumentException("Type")
-        If Type.IsInterface Then Return False
-        If Type.IsAbstract Then Return False
-        If Type.IsGenericTypeDefinition Then Return False
-        If Type.IsValueType Then Return True
-        If Type.HasDefaultCTor Then Return True
+        If type Is Nothing Then Throw New ArgumentException("Type")
+        If type.IsInterface Then Return False
+        If type.IsAbstract Then Return False
+        If type.IsGenericTypeDefinition Then Return False
+        If type.IsValueType Then Return True
+        If type.HasDefaultCTor Then Return True
         Return False
     End Function
     ''' <summary>Creates an instance of the specified type using that type's default constructor.</summary>
@@ -726,11 +727,11 @@ Public Module TypeTools
     ''' <version version="1.5.2">Function added</version>
     ''' <version version="1.5.4">Parameters renamed: <c>Parent</c> to <c>parent</c>, <c>Child</c> to <c>child</c></version>
     <Extension()> Public Function IsGenericParentOf(ByVal parent As Type, ByVal child As Type) As Boolean
-        If Child Is Nothing Then Throw New ArgumentNullException("Child")
-        If Parent Is Nothing Then Throw New ArgumentNullException("Parent")
-        If Not Parent.IsGenericTypeDefinition Then Return False
-        If Not Child.IsGenericType Then Return False
-        Return Child.GetGenericTypeDefinition.Equals(Parent)
+        If child Is Nothing Then Throw New ArgumentNullException("Child")
+        If parent Is Nothing Then Throw New ArgumentNullException("Parent")
+        If Not parent.IsGenericTypeDefinition Then Return False
+        If Not child.IsGenericType Then Return False
+        Return child.GetGenericTypeDefinition.Equals(parent)
     End Function
     ''' <summary>Gets value indicating if given type is generic type created from another type being generic type definition</summary>
     ''' <param name="Parent">Generic type definition to test if <paramref name="Child"/> is created from</param>
@@ -741,7 +742,7 @@ Public Module TypeTools
     ''' <version version="1.5.2">Function added</version>
     ''' <version version="1.5.4">Parameters renamed: <c>Parent</c> to <c>parent</c>, <c>Child</c> to <c>child</c></version>
     <Extension()> Public Function IsGenericCreatedFrom(ByVal child As Type, ByVal parent As Type) As Boolean
-        Return Parent.IsGenericParentOf(Child)
+        Return parent.IsGenericParentOf(child)
     End Function
     ''' <summary>Gets value indicating if given type is <see cref="Nullable(Of T)"/> and if another given type is its generic argument</summary>
     ''' <param name="NullableType">Type to be tested if its is <see cref="Nullable(Of T)"/>[<paramref name="InnerType"/>]</param>
@@ -751,9 +752,9 @@ Public Module TypeTools
     ''' <version version="1.5.2">Function added</version>
     ''' <version version="1.5.4">Parameters renamed: <c>NullableType</c> to <c>nullableType</c>, <c>InnerType</c> to <c>innerType</c></version>
     <Extension()> Public Function IsNullableOf(ByVal nullableType As Type, ByVal innerType As Type) As Boolean
-        If NullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
-        If InnerType Is Nothing Then Throw New ArgumentNullException("InnerType")
-        Return NullableType.IsGenericCreatedFrom(GetType(Nullable(Of ))) AndAlso NullableType.GetGenericArguments()(0).Equals(InnerType)
+        If nullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
+        If innerType Is Nothing Then Throw New ArgumentNullException("InnerType")
+        Return nullableType.IsGenericCreatedFrom(GetType(Nullable(Of ))) AndAlso nullableType.GetGenericArguments()(0).Equals(innerType)
     End Function
     ''' <summary>Gets value indicating if given type is nullable</summary>
     ''' <param name="NullableType">Type to test</param>
@@ -763,8 +764,8 @@ Public Module TypeTools
     ''' <version version="1.5.2">Function added</version>
     ''' <version version="1.5.4">Parameter renamed: <c>NullableType</c> to <c>nullableType</c></version>
     <Extension()> Public Function IsNullable(ByVal nullableType As Type) As Boolean
-        If NullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
-        Return NullableType.IsGenericCreatedFrom(GetType(Nullable(Of )))
+        If nullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
+        Return nullableType.IsGenericCreatedFrom(GetType(Nullable(Of )))
     End Function
     ''' <summary>Gets value indicating if type is vector</summary>
     ''' <param name="Type">Type to test</param>
@@ -773,7 +774,7 @@ Public Module TypeTools
     ''' <version version="1.5.2">Function added</version>
     ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
     <Extension()> Public Function IsVector(ByVal type As Type) As Boolean
-        If Type Is Nothing Then Throw New ArgumentNullException("Type")
+        If type Is Nothing Then Throw New ArgumentNullException("Type")
         Static Method As MethodInfo
         Static get_IsSzArray As Func(Of Type, Boolean)
         If get_IsSzArray Is Nothing Then
@@ -787,7 +788,7 @@ Public Module TypeTools
                 get_IsSzArray = Function(t) t.IsArray AndAlso t.FullName.EndsWith("[*]")
             End If
         End If
-        Return get_IsSzArray.Invoke(Type)
+        Return get_IsSzArray.Invoke(type)
     End Function
 
     ''' <summary>Gets value indicating of given object is of given type</summary>
@@ -799,6 +800,29 @@ Public Module TypeTools
     <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Function [Is](Of T)(obj As Object) As Boolean
         Return TypeOf obj Is T
+    End Function
+
+    ''' <summary>Attempts to parse enumeration value from string to actual enumeration</summary>
+    ''' <param name="enumType">Type of enumeration</param>
+    ''' <param name="strValue">String to parse</param>
+    ''' <param name="ignoreCase">True to ignore casing of <paramref name="strValue"/>, false to strictly match cassing.</param>
+    ''' <param name="enumValue">When parsing succeeds returns enumerated value of type <paramref name="enumType"/></param>
+    ''' <returns>True if conversion succeeded and <paramref name="enumValue"/> contains parsed value, false otherwise (<paramref name="enumValue"/> is unchanged in this case)</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="enumType"/> is null</exception>
+    ''' <exception cref="ArgumentException"><paramref name="enumType"/> ie not enum</exception>
+    ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+    Public Function TryParseEnum(enumType As Type, strValue As String, ignoreCase As Boolean, <Out> ByRef enumValue As [Enum]) As Boolean
+        If enumType Is Nothing Then Throw New ArgumentNullException("enumType")
+        If Not enumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TypeNotEnum, enumType.FullName))
+        If strValue Is Nothing Then Return False
+        Try
+            enumValue = [Enum].Parse(enumType, strValue, ignoreCase)
+            Return True
+        Catch ex As ArgumentException
+            Return False
+        Catch ex As OverflowException
+            Return False
+        End Try
     End Function
 End Module
 #End If

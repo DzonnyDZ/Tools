@@ -1,326 +1,326 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>10.0.20506</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <RootNamespace>Tools</RootNamespace>
-        <AssemblyName>Tools.Metadata</AssemblyName>
-        <MyType>Windows</MyType>
-        <SccProjectName>
-        </SccProjectName>
-        <SccLocalPath>
-        </SccLocalPath>
-        <SccAuxPath>
-        </SccAuxPath>
-        <SccProvider>
-        </SccProvider>
-        <Nightly>1</Nightly>
-        <Alpha>2</Alpha>
-        <Beta>3</Beta>
-        <RC>4</RC>
-        <Release>5</Release>
-        <Config>1</Config>
-        <FileUpgradeFlags>
-        </FileUpgradeFlags>
-        <OldToolsVersion>4</OldToolsVersion>
-        <UpgradeBackupLocation>
-        </UpgradeBackupLocation>
-        <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-        <OptionInfer>On</OptionInfer>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
-        <TargetFrameworkProfile />
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
-        <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
-        <Config>1</Config>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <DefineDebug>false</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <Optimize>true</Optimize>
-        <OutputPath>..\bin\Release\</OutputPath>
-        <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
-        <Config>5</Config>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Alpha\</OutputPath>
-        <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 4</DefineConstants>
-        <Config>2</Config>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Beta\</OutputPath>
-        <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 4</DefineConstants>
-        <Config>3</Config>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\RC\</OutputPath>
-        <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 4</DefineConstants>
-        <Config>4</Config>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="Accessibility" />
-        <Reference Include="PresentationCore">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="PresentationFramework">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="System.Core">
-            <RequiredTargetFramework>4</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="System.Data" />
-        <Reference Include="System.Data.OracleClient" />
-        <Reference Include="System.Deployment" />
-        <Reference Include="System.Design" />
-        <Reference Include="System.Drawing" />
-        <Reference Include="System.Drawing.Design" />
-        <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
-        <Reference Include="System.Security" />
-        <Reference Include="System.ServiceProcess" />
-        <Reference Include="System.Web" />
-        <Reference Include="System.Web.RegularExpressions" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.Xml" />
-        <Reference Include="System.Xml.Linq">
-            <RequiredTargetFramework>4</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="UIAutomationProvider">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="UIAutomationTypes">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="WindowsBase">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="WindowsFormsIntegration">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Import Include="Microsoft.VisualBasic" />
-        <Import Include="System" />
-        <Import Include="System.Collections" />
-        <Import Include="System.Collections.Generic" />
-        <Import Include="System.ComponentModel" />
-        <Import Include="System.Diagnostics" />
-        <Import Include="Tools.CollectionsT.GenericT" />
-        <Import Include="Tools.CollectionsT.SpecializedT" />
-        <Import Include="Tools.InternalT" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="..\SharedFiles\AssemblyStage.vb">
-            <Link>AssemblyStage.vb</Link>
-        </Compile>
-        <Compile Include="..\SharedFiles\Version.vb">
-            <Link>Version.vb</Link>
-        </Compile>
-        <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
-            <Link>Resources\Exceptions.Designer.vb</Link>
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Exceptions.resx</DependentUpon>
-        </None>
-        <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
-        <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
-        <Compile Include="Metadata\Exif\ExifMapGenerator.vb" />
-        <Compile Include="Metadata\Exif\ExifReader helpers.vb" />
-        <Compile Include="Metadata\Exif\ExifWriter.vb" />
-        <Compile Include="Metadata\Exif\IFD.vb" />
-        <Compile Include="Metadata\Exif\Exif.vb" />
-        <Compile Include="Metadata\Exif\ExifIFDReader.vb" />
-        <Compile Include="Metadata\Exif\ExifReader.vb" />
-        <Compile Include="Metadata\Exif\ExifTags.vb">
-            <DependentUpon>ExifTags.xml</DependentUpon>
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-        </Compile>
-        <Compile Include="Metadata\Exif\IExifGetter.vb" />
-        <Compile Include="Metadata\ImageMetadata.vb" />
-        <Compile Include="Metadata\IPTC\Groups.vb" />
-        <Compile Include="Metadata\IPTC\IPTC.vb" />
-        <Compile Include="Metadata\IPTC\IPTCReader.vb" />
-        <Compile Include="Metadata\IPTC\Interfaces.vb" />
-        <Compile Include="Metadata\IPTC\IPTCTypes.vb" />
-        <Compile Include="Metadata\IPTC\IPTCTags.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>IPTCTags.xml</DependentUpon>
-        </Compile>
-        <Compile Include="Metadata\IPTC\IPTCTypedValues.vb" />
-        <Compile Include="Metadata\IPTC\IPTCTypes helpers.vb" />
-        <Compile Include="Metadata\MetadataPropertyDescriptor.vb" />
-        <Compile Include="Metadata\SystemMetadata.vb" />
-        <Compile Include="My Project\AssemblyInfo.vb" />
-        <Compile Include="My Project\Application.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Application.myapp</DependentUpon>
-        </Compile>
-        <Compile Include="My Project\Resources.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-        <Compile Include="My Project\Settings.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Settings.settings</DependentUpon>
-            <DesignTimeSharedInput>True</DesignTimeSharedInput>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="My Project\Application.myapp">
-            <Generator>MyApplicationCodeGenerator</Generator>
-            <LastGenOutput>Application.Designer.vb</LastGenOutput>
-        </None>
-        <None Include="My Project\Settings.settings">
-            <Generator>SettingsSingleFileGenerator</Generator>
-            <CustomToolNamespace>My</CustomToolNamespace>
-            <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Metadata\Exif\ExifTags.xml">
-            <Generator>TransformCodeGenerator</Generator>
-            <LastGenOutput>ExifTags.vb</LastGenOutput>
-            <CustomToolNamespace>MetadataT.ExifT</CustomToolNamespace>
-        </None>
-        <None Include="Metadata\Exif\ExifTags.xsd">
-            <SubType>
-            </SubType>
-            <DependentUpon>ExifTags.xml</DependentUpon>
-        </None>
-        <None Include="Metadata\Exif\ExifTags.xslt">
-            <DependentUpon>ExifTags.xml</DependentUpon>
-            <SubType>Designer</SubType>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="..\SharedFiles\Tools.snk">
-            <Link>Tools.snk</Link>
-        </None>
-        <None Include="Metadata\IPTC\IPTCTags.xsd">
-            <SubType>
-            </SubType>
-            <DependentUpon>IPTCTags.xml</DependentUpon>
-        </None>
-        <None Include="Metadata\IPTC\IPTCTags.xslt">
-            <DependentUpon>IPTCTags.xml</DependentUpon>
-            <SubType>Designer</SubType>
-        </None>
-        <None Include="Metadata\Exif\ExifTags.css">
-            <DependentUpon>ExifTags.html</DependentUpon>
-        </None>
-        <None Include="Metadata\Exif\ExifTags.display.xslt">
-            <DependentUpon>ExifTags.html</DependentUpon>
-        </None>
-        <None Include="Metadata\Exif\ExifTags.html">
-            <DependentUpon>ExifTags.xml</DependentUpon>
-        </None>
-        <Content Include="Metadata\IPTC\IPTCTags.xml">
-            <Generator>TransformCodeGenerator</Generator>
-            <LastGenOutput>IPTCTags.vb</LastGenOutput>
-            <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
-        </Content>
-        <None Include="Resources\ReadMe.txt" />
-    </ItemGroup>
-    <ItemGroup>
-        <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Tools\Tools.vbproj">
-            <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-            <Name>Tools</Name>
-        </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="1==0">
-            <Link>Resources\Exceptions.resx</Link>
-            <CustomToolNamespace>ResourcesT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
-            <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Metadata\IMetadataProvider.vb" />
-        <Compile Include="misc.vb" />
-        <Compile Include="Resources\resx %28Friend%29\IPTCResources.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>IPTCResources.resx</DependentUpon>
-        </Compile>
-        <EmbeddedResource Include="My Project\Resources.cs.resx">
-            <DependentUpon>Resources.resx</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="My Project\Resources.resx">
-            <CustomToolNamespace>My.Resources</CustomToolNamespace>
-            <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-        </EmbeddedResource>
-
-        <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
-            <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
-            <LogicalName>Tools.MetadataT.IptcT.IptcResources.resources</LogicalName>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx">
-            <DependentUpon>IPTCResources.resx</DependentUpon>
-            <SubType>Designer</SubType>
-            <Visible>True</Visible>
-            <LogicalName>Tools.MetadataT.IptcT.IptcResources.cs.resources</LogicalName>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Metadata\XMP\" />
-    </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Tools</RootNamespace>
+    <AssemblyName>Tools.Metadata</AssemblyName>
+    <MyType>Windows</MyType>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <Nightly>1</Nightly>
+    <Alpha>2</Alpha>
+    <Beta>3</Beta>
+    <RC>4</RC>
+    <Release>5</Release>
+    <Config>1</Config>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OptionInfer>On</OptionInfer>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
+    <Config>1</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
+    <Config>5</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Alpha\</OutputPath>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 4</DefineConstants>
+    <Config>2</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Beta\</OutputPath>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 4</DefineConstants>
+    <Config>3</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\RC\</OutputPath>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 4</DefineConstants>
+    <Config>4</Config>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>4</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="Tools.CollectionsT.GenericT" />
+    <Import Include="Tools.CollectionsT.SpecializedT" />
+    <Import Include="Tools.InternalT" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>Version.vb</Link>
+    </Compile>
+    <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
+      <Link>Resources\Exceptions.Designer.vb</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </None>
+    <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
+    <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
+    <Compile Include="Metadata\Exif\ExifMapGenerator.vb" />
+    <Compile Include="Metadata\Exif\ExifReader helpers.vb" />
+    <Compile Include="Metadata\Exif\ExifWriter.vb" />
+    <Compile Include="Metadata\Exif\IFD.vb" />
+    <Compile Include="Metadata\Exif\Exif.vb" />
+    <Compile Include="Metadata\Exif\ExifIFDReader.vb" />
+    <Compile Include="Metadata\Exif\ExifReader.vb" />
+    <Compile Include="Metadata\Exif\ExifTags.vb">
+      <DependentUpon>ExifTags.xml</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Metadata\Exif\IExifGetter.vb" />
+    <Compile Include="Metadata\ImageMetadata.vb" />
+    <Compile Include="Metadata\IPTC\Groups.vb" />
+    <Compile Include="Metadata\IPTC\IPTC.vb" />
+    <Compile Include="Metadata\IPTC\IPTCReader.vb" />
+    <Compile Include="Metadata\IPTC\Interfaces.vb" />
+    <Compile Include="Metadata\IPTC\IPTCTypes.vb" />
+    <Compile Include="Metadata\IPTC\IPTCTags.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPTCTags.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\IPTC\IPTCTypedValues.vb" />
+    <Compile Include="Metadata\IPTC\IPTCTypes helpers.vb" />
+    <Compile Include="Metadata\MetadataPropertyDescriptor.vb" />
+    <Compile Include="Metadata\SystemMetadata.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Metadata\Exif\ExifTags.xml">
+      <Generator>TransformCodeGenerator</Generator>
+      <LastGenOutput>ExifTags.vb</LastGenOutput>
+      <CustomToolNamespace>MetadataT.ExifT</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Metadata\Exif\ExifTags.xsd">
+      <SubType>
+      </SubType>
+      <DependentUpon>ExifTags.xml</DependentUpon>
+    </None>
+    <None Include="Metadata\Exif\ExifTags.xslt">
+      <DependentUpon>ExifTags.xml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\SharedFiles\Tools.snk">
+      <Link>Tools.snk</Link>
+    </None>
+    <None Include="Metadata\IPTC\IPTCTags.xsd">
+      <SubType>
+      </SubType>
+      <DependentUpon>IPTCTags.xml</DependentUpon>
+    </None>
+    <None Include="Metadata\IPTC\IPTCTags.xslt">
+      <DependentUpon>IPTCTags.xml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Metadata\Exif\ExifTags.css">
+      <DependentUpon>ExifTags.html</DependentUpon>
+    </None>
+    <None Include="Metadata\Exif\ExifTags.display.xslt">
+      <DependentUpon>ExifTags.html</DependentUpon>
+    </None>
+    <None Include="Metadata\Exif\ExifTags.html">
+      <DependentUpon>ExifTags.xml</DependentUpon>
+    </None>
+    <Content Include="Metadata\IPTC\IPTCTags.xml">
+      <Generator>TransformCodeGenerator</Generator>
+      <LastGenOutput>IPTCTags.vb</LastGenOutput>
+      <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
+    </Content>
+    <None Include="Resources\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="1==0">
+      <Link>Resources\Exceptions.resx</Link>
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Metadata\IMetadataProvider.vb" />
+    <Compile Include="misc.vb" />
+    <Compile Include="Resources\resx %28Friend%29\IPTCResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPTCResources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="My Project\Resources.cs.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
+      <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.MetadataT.IptcT.IptcResources.resources</LogicalName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx">
+      <DependentUpon>IPTCResources.resx</DependentUpon>
+      <SubType>Designer</SubType>
+      <Visible>True</Visible>
+      <LogicalName>Tools.MetadataT.IptcT.IptcResources.cs.resources</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Metadata\XMP\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

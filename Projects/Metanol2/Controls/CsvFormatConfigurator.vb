@@ -141,7 +141,9 @@ Public Class CsvFormatConfigurator
     ''' <param name="stream">Stream to export metadata to</param>
     ''' <param name="selectedFields">Denotes which fields are selected for metadata</param>
     ''' <param name="data">Metadata to be saved. One item per file.</param>
-    Public Sub Save(ByVal stream As IO.Stream, ByVal selectedFields As IDictionary(Of String, List(Of String)), ByVal data As IEnumerable(Of IMetadataProvider)) Implements IExportFormatConfigurator.Save
+    ''' <param name="mCulture">Culture to use to format data</param>
+    ''' <version version="2.0.7">Added parameter <paramref name="mCulture"/></version>
+    Public Sub Save(ByVal stream As IO.Stream, ByVal selectedFields As IDictionary(Of String, List(Of String)), ByVal data As IEnumerable(Of IMetadataProvider), mCulture As IFormatProvider) Implements IExportFormatConfigurator.Save
         Using w As New IO.StreamWriter(stream, Encoding)
             'Header
             Dim hCol% = 0
@@ -173,31 +175,31 @@ Public Class CsvFormatConfigurator
                     Try
                         If file.Contains(category.Key) Then metadata = file.Metadata(category.Key)
                         For Each field In category.Value
-                            Dim value As Object = Nothing
-                            If metadata IsNot Nothing AndAlso metadata.ContainsKey(field) Then value = metadata(field)
-                            Dim strValue = ""
-                            If value IsNot Nothing Then
-                                If TypeOf value Is IEnumerable AndAlso Not TypeOf value Is String Then
-                                    Dim b As New System.Text.StringBuilder
-                                    For Each valueItem In DirectCast(value, IEnumerable)
-                                        If b.Length > 0 Then b.Append(Separator)
-                                        b.AppendFormat(Culture, "{0}", valueItem)
-                                    Next valueItem
-                                    strValue = b.ToString
-                                Else : strValue = String.Format(Culture, "{0}", value)
-                                End If
-                            End If
-                            If strValue.EndsWith(Chars.NullChar) Then strValue = strValue.TrimEnd(Chars.NullChar)
-                            Dim useQualifier = AlwaysUseTextQualifier OrElse strValue.Contains(Separator) OrElse strValue.StartsWith(TextQualifier) OrElse strValue.Contains(vbCr) OrElse strValue.Contains(vbLf)
-                            If useQualifier AndAlso strValue.Contains(TextQualifier) Then
+                            Dim value$ = Nothing
+                            If metadata IsNot Nothing AndAlso metadata.ContainsKey(field) Then value = metadata.GetStringValue(field, mCulture)
+                            'Dim strValue = ""
+                            'If value IsNot Nothing Then
+                            '    If TypeOf value Is IEnumerable AndAlso Not TypeOf value Is String Then
+                            '        Dim b As New System.Text.StringBuilder
+                            '        For Each valueItem In DirectCast(value, IEnumerable)
+                            '            If b.Length > 0 Then b.Append(Separator)
+                            '            b.AppendFormat(Culture, "{0}", valueItem)
+                            '        Next valueItem
+                            '        strValue = b.ToString
+                            '    Else : strValue = String.Format(Culture, "{0}", value)
+                            '    End If
+                            'End If
+                            If value IsNot Nothing Then value = value.Replace(vbNullChar, "") Else value = ""
+                            Dim useQualifier = AlwaysUseTextQualifier OrElse value.Contains(Separator) OrElse value.StartsWith(TextQualifier) OrElse value.Contains(vbCr) OrElse value.Contains(vbLf)
+                            If useQualifier AndAlso value.Contains(TextQualifier) Then
                                 Select Case QualifierEspaing
-                                    Case Escaping.Double : strValue = strValue.Replace(TextQualifier, TextQualifier & TextQualifier)
-                                    Case Else : strValue = strValue.Replace("\", "\\").Replace(TextQualifier, "\" & TextQualifier)
+                                    Case Escaping.Double : value = value.Replace(TextQualifier, TextQualifier & TextQualifier)
+                                    Case Else : value = value.Replace("\", "\\").Replace(TextQualifier, "\" & TextQualifier)
                                 End Select
                             End If
                             If column > 0 Then w.Write(Separator)
                             If useQualifier Then w.Write(TextQualifier)
-                            w.Write(strValue)
+                            w.Write(value)
                             If useQualifier Then w.Write(TextQualifier)
                             column += 1
                         Next field

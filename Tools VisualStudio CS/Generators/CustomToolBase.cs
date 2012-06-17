@@ -249,11 +249,15 @@ namespace Tools.VisualStudioT.GeneratorsT {
             return new Guid[] { CSharpCategoryGuid, VBCategoryGuid };
         }
         /// <summary>When overriden in derived class, gets array of srings identifying versions of Visual Studio this custom tool will be registered for</summary>
-        /// <returns>String representing versions of Visual Stuido and keys under HKLM\Software\Microsoft\VisualStudio <see cref="RegisterCustomTool(System.Type,bool)"/> will register/unregister this tool for. This implementation returns "8.0", "9.0" and "10.0".</returns>
+        /// <returns>
+        /// String representing versions of Visual Stuido and keys under HKLM\Software\Microsoft\VisualStudio <see cref="RegisterCustomTool(System.Type,bool)"/> will register/unregister this tool for.
+        /// This implementation returns "8.0", "9.0", "10.0" and "11.0".
+        /// </returns>
         /// <seealso cref="RegisterCustomTool(System.Type,bool)"/>
         /// <seealso cref="GetLanguages()"/>
+        /// <version version="1.5.4">This implementation now returns 11.0 (aka VS2012) in adddition to older values</version>
         public virtual string[] GetVisualStudioVersions() {
-            return new string[] { "8.0", "9.0", "10.0" };
+            return new string[] { "8.0", "9.0", "10.0", "11.0" };
         }
         #endregion
 
@@ -322,18 +326,22 @@ namespace Tools.VisualStudioT.GeneratorsT {
         /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
         /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
         /// <exception cref="InvalidOperationException">Registry operation error caused by invalid registry key name ocured. (This is caused by <see cref="ArgumentException"/> thrown by registry operation. See <see cref="Exception.InnerException"/>.)</exception>
+        /// <version version="1.5.4">Getter no longer throws exception when registry key does not exist</version>
         public string Name {
             get {
                 string[] parts = keyPath.Split(new char[] { '\\' });
                 if (parts.Length < 2) return null;
                 try {
-                    using (RegistryKey InstalledProducts = Tools.RegistryT.RegistryT.OpenKey(string.Join("\\", parts, 0, parts.Length - 2) + "\\InstalledProducts", false))
-                        foreach (string SubKeyName in InstalledProducts.GetSubKeyNames())
-                            using (RegistryKey SubKey = InstalledProducts.OpenSubKey(SubKeyName)) {
-                                object Package = SubKey.GetValue("Package");
-                                if (Package != null && Package.ToString().ToLower() == Guid.ToString("B").ToLower())
-                                    return SubKeyName;
+                    using (RegistryKey installedProducts = Tools.RegistryT.RegistryT.OpenKey(string.Join("\\", parts, 0, parts.Length - 2) + "\\InstalledProducts", false)) {
+                        if (installedProducts == null) return null;
+                        foreach (string subKeyName in installedProducts.GetSubKeyNames())
+                            using (RegistryKey subKey = installedProducts.OpenSubKey(subKeyName)) {
+                                if (subKey == null) return null;
+                                object package = subKey.GetValue("Package");
+                                if (package != null && package.ToString().ToLower() == Guid.ToString("B").ToLower())
+                                    return subKeyName;
                             }
+                    }
                 } catch (ArgumentException ex) {
                     throw new InvalidOperationException(ex.Message, ex.InnerException);
                 }

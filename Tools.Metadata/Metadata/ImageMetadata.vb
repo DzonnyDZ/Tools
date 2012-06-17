@@ -239,6 +239,16 @@ Namespace MetadataT
                 End Try
             End Get
         End Property
+
+        Private _disposed As Boolean
+        ''' <summary>Gets value indicating if this instance was already disposed or not</summary>
+        ''' <returns>True if <see cref="Dispose"/> was called on this instace, false otherwise</returns>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        Public ReadOnly Property Disposed As Boolean Implements IMetadata.Disposed
+            Get
+                Return _disposed
+            End Get
+        End Property
 #End Region
 #Region " IDisposable Support "
         ''' <summary>Allows an System.Object to attempt to free resources and perform other cleanup operations before the System.Object is reclaimed by garbage collection.</summary>
@@ -250,6 +260,7 @@ Namespace MetadataT
         Public Overridable Sub Dispose() Implements IDisposable.Dispose
             If CreatedImage AndAlso Image IsNot Nothing Then Image.Dispose()
             Image = Nothing
+            _Disposed = True
         End Sub
 #End Region
 

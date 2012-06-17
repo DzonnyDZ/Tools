@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Save_cmd" xml:space="preserve">
     <value>Uložit</value>
@@ -168,7 +168,7 @@
   <data name="Preview" xml:space="preserve">
     <value>Náhled</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="DontSave_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>N</value>
   </data>
@@ -213,60 +213,6 @@
     &lt;/body&gt;
 &lt;/html&gt;
 </value>
-  </data>
-  <data name="VersionHistory_1" xml:space="preserve">
-    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;
-    &lt;h2&gt;Version 2.0.0.0&lt;/h2&gt;
-    &lt;p class="note"&gt;Výchozí vydání verze 2&lt;/p&gt;
-    &lt;ul&gt;
-        &lt;li&gt;Verze 1.x kompletně předělána.&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;</value>
-  </data>
-  <data name="VersionHistory_2" xml:space="preserve">
-    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;
-    &lt;h2&gt;Verze 2.0.0.16891 8.8. 2008&lt;/h2&gt;
-    &lt;p class="note"&gt;Opravné vydání&lt;/p&gt;
-    &lt;ul&gt;
-        &lt;li&gt;Při změně kódu státu je změněn i stát.&lt;/li&gt;
-        &lt;li&gt;Při stisku Alt+Left/Alt+Right je aktivováno textové pole Název objektu.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Při stisku Alt+Left/Alt+Right se nezmění obrázek.&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;</value>
-  </data>
-  <data name="VersionHistory_3" xml:space="preserve">
-    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;
-    &lt;h2&gt;Verze 2.0.0.32031 26.8. 2008&lt;/h2&gt;
-    &lt;p class="note"&gt;Opravné vydání s přidanými vlastnostmi&lt;/p&gt;
-    &lt;ul&gt;
-        &lt;li&gt;Obrázky v okně náhledu mohou být otočeny v 90° krocích.&lt;/li&gt;
-        &lt;li&gt;Z okna náhledu lze změnit aktuální obrázek.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Průběh ukládání a chybové hlášky mají nesprávného vlastníka.&lt;/li&gt;
-        &lt;li&gt;Sloučení klíčových slov z více obrázků do jednoho.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Odkaz není nastaven na instanci objektu při stisku tabulátoru v editoru klíčových slov (někdy; u obrázků bez uložených IPTC informací - ale s editovanými)&lt;/li&gt;
-        &lt;li&gt;Chyba překročení délky IPTC je nyní výřečnější.&lt;/li&gt;
-        &lt;li&gt;&amp;amp;-navigace v hlavním okně.&lt;/li&gt;
-        &lt;li&gt;Alt+Shift+Left/Alt+Shift+Right umožňuje změnu aktuálního obrázku bez návratu zaměření na textové pole Název objektu.&lt;/li&gt;
-        &lt;li&gt;Náhled na celou obrazovku.&lt;/li&gt;
-        &lt;li&gt;Stavový řádek zobrazuje počet souborů ve složce.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Panel nástrojů a stavový řádek jsou někdy skryty.&lt;/li&gt;
-        &lt;li&gt;Lepší indikace vybraných obrázků, když seznam obrázků nemá focus.&lt;/li&gt;
-        &lt;li&gt;Editor klíčových slov podporuje kopírování a vkládání.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Vložená klíčová slova v editoru klíčových slov jsou vybrána a nascrollována.&lt;/li&gt;
-        &lt;li&gt;Lepší inikace změněných obrázků.&lt;/li&gt;
-        &lt;li&gt;Dočasný seznam pro automatické doplňování klíčových slov lze nyní editovat.&lt;/li&gt;
-        &lt;li&gt;Rychlejší odezva po kliknutí na OK v editoru tezauru a seznamu pro autodoplňování klíčových slov.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Občas se objeví NullReferenceException.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Při stisknutí enteru v okně editace tezauru a seznamu audodoplňování klíčových slov se okno vždy zavře.&lt;/li&gt;
-        &lt;li&gt;Seznam obrázků se chová podobně jako v Total Commanderu.&lt;/li&gt;
-        &lt;li&gt;Dialog historie verzí.&lt;/li&gt;
-        &lt;li&gt;OPRAVA: Miniatura na výšku orientovaných obrázků má špatnou velikost.&lt;/li&gt;
-        &lt;li&gt;Úvodní obrazovka.&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;</value>
   </data>
   <data name="SynchronizeWithDatabase" xml:space="preserve">
     <value>Synchronizovat s databází</value>
@@ -351,5 +297,27 @@
   </data>
   <data name="Rejected" xml:space="preserve">
     <value>☆☆☆☆☆ - odmítnuto</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="VersionHistory_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_1.cs.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VersionHistory_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_2.cs.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VersionHistory_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_3.cs.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VersionHistory_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_4.cs.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VersionHistory_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_5.cs.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VersionHistory_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_6.cs.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VersionHistory_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_7.cs.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

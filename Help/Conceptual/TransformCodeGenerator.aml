@@ -340,7 +340,9 @@
                     </externalLink>. The original tool has no specific license attached.
                     So I hope I'm not violating any implied license terms by making modified version of it part of ĐTools library.
                 </para>
-                <para>The other Custom Tools are my own work and are covered by <link address="cab7bff3-b8ec-4032-8ae1-1aa836c83531">ĐTools license</link>.</para>
+                <para>
+                    The other Custom Tools are my own work and are covered by <link address="cab7bff3-b8ec-4032-8ae1-1aa836c83531">ĐTools license</link>.
+                </para>
             </content>
         </section>
 
@@ -358,9 +360,10 @@
                                 </para>
                             </listItem>
                             <listItem>
-                                <para>
-                                    XSL Transform now can use document() function and contain scripts.
-                                </para>
+                                <para>XSL Transform now can use document() function and contain scripts.</para>
+                            </listItem>
+                            <listItem>
+                                <para>The custom tool now supports Visual Studio 11 (2012)</para>
                             </listItem>
                         </list>
                     </listItem>

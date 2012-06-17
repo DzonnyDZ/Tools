@@ -362,6 +362,7 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     ''' <version version="2.0.5">This property is new in version 2.0.5</version>
     Public ReadOnly Property ImageMetadata As ImageMetadata
         Get
+            If _ImageMetadata IsNot Nothing AndAlso DirectCast(_ImageMetadata, IMetadata).Disposed Then _ImageMetadata = Nothing
             If _ImageMetadata Is Nothing Then _ImageMetadata = New ImageMetadata(Path)
             Return _ImageMetadata
         End Get
@@ -372,6 +373,7 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     ''' <version version="2.0.5">This property is new in version 2.0.5</version>
     Public ReadOnly Property SystemMetadata As SystemMetadata
         Get
+            If _SystemMetadata IsNot Nothing AndAlso DirectCast(_SystemMetadata, IMetadata).Disposed Then _SystemMetadata = Nothing
             If _SystemMetadata Is Nothing Then _SystemMetadata = New SystemMetadata(Path)
             Return _SystemMetadata
         End Get

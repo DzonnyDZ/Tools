@@ -78,7 +78,7 @@
                     When registered using <externalLink>
                         <linkText>Regasm.exe</linkText>
                         <linkUri>http://msdn.microsoft.com/en-us/library/tzat5yw6.aspx</linkUri>
-                    </externalLink> both Custom Tools are registered for Visual Studio 8 (2005), Visual Studio 9 (2008) and Visual Studio 10 (2010) (if registry key for appropriate Visual Studio version is present (i.e. it's installed)).
+                    </externalLink> both Custom Tools are registered for Visual Studio 8 (2005), Visual Studio 9 (2008), Visual Studio 10 (2010) and Visual Studio 11 (2012) (if registry key for appropriate Visual Studio version is present (i.e. it's installed)).
                     Supported languages this custom tool automatically installs for are: C#, J#, Visual Basic.
                     However this custom tool uses CodeDom so it can be used with any .NET language with code generator defined when manually registered for that language.
                 </para>
@@ -125,6 +125,24 @@
                 </para>
             </content>
         </section>
+
+        <!--Version History-->
+        <section address="version-history">
+            <title>Version History</title>
+            <content>
+                <list class="nobullet">
+                    <listItem>
+                        <para>1.5.4</para>
+                        <list class="bullet">
+                            <listItem>
+                                <para>The custom tools now supports Visual Studio 11 (2012)</para>
+                            </listItem>
+                        </list>
+                    </listItem>
+                </list>
+            </content>
+        </section>
+        
         <relatedTopics>
             <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8"/>
             <link xlink:href="3b77b891-12ee-4be9-b6a2-374d8dfc09f8#CustomToolsInfo"/>

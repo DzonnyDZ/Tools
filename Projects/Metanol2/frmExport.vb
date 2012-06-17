@@ -1,5 +1,6 @@
 ﻿Imports Tools.MetadataT
 Imports mBox = Tools.WindowsT.IndependentT.MessageBox
+Imports System.Globalization
 
 ''' <summary>Configures and launches metadata export</summary>
 Friend Class frmExport
@@ -18,8 +19,29 @@ Friend Class frmExport
         cmbFormat.Items.Add(New CsvFormatConfigurator)
         cmbFormat.SelectedIndex = 0
         FillTree()
+
+        Dim i As Integer = 0, seli As Integer = 0
+        cmbCulture.DisplayMember = "NativeName"
+        For Each c In CultureInfo.GetCultures(CultureTypes.AllCultures)
+            cmbCulture.Items.Add(c)
+            If c.Name = CultureInfo.CurrentCulture.Name Then seli = i
+            i += 1
+        Next
+        cmbCulture.SelectedIndex = seli
     End Sub
 
+    ''' <summary>Stores paths of checked nodes to list</summary>
+    ''' <returns>ARray of full paths of checked nodes</returns>
+    Private Function GetChecked() As String()
+        Dim paths As New List(Of String)
+        For Each node As TreeNode In tvwFields.Nodes
+            If node.Checked Then paths.Add(node.FullPath)
+            For Each subNode As TreeNode In node.Nodes
+                If subNode.Checked Then paths.Add(subNode.FullPath)
+            Next
+        Next
+        Return paths.ToArray
+    End Function
 
     Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
         Dim configurator As IExportFormatConfigurator = cmbFormat.SelectedItem
@@ -30,6 +52,9 @@ Friend Class frmExport
         Else
             Exit Sub
         End If
+
+        My.Settings.ExportChecked = GetChecked()
+        My.Settings.Save()
 
         Dim metada As New Dictionary(Of String, List(Of String))
         For Each l1 As TreeNode In tvwFields.Nodes
@@ -46,7 +71,7 @@ Friend Class frmExport
         Try
             Using f = IO.File.Open(fileName, IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read)
                 Try
-                    configurator.Save(f, metada, files)
+                    configurator.Save(f, metada, files, cmbCulture.SelectedItem)
                 Catch ex As Exception
                     mBox.Error_XPTIBWO(ex, "Error while exporting metadata:", ex.GetType.Name)
                     Exit Sub
@@ -79,6 +104,10 @@ Friend Class frmExport
                 childNodes.Add(sNode)
             Next
             rNode.Nodes.AddRange((From n In childNodes Order By n.Text).ToArray)
+            If My.Settings.ExportChecked.Contains(rNode.FullPath) Then rNode.Checked = True
+            For Each chnode As TreeNode In rNode.Nodes
+                If My.Settings.ExportChecked.Contains(chnode.FullPath) Then chnode.Checked = True
+            Next
         Next mType
     End Sub
 

@@ -548,21 +548,46 @@ Namespace MetadataT.ExifT
         End Property
 
         ''' <summary>Gets medata value with given key</summary>
-        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <param name="key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
         ''' <returns>Value of metadata item with given key; or null if given metadata value is not supported</returns>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid format and it is not one of predefined names</exception>
         ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
-        ''' <exception cref="ArgumentNullException"><paramref name="Key"/> is null</exception>
-        ''' <exception cref="ArgumentException"><paramref name="Key"/> does not represent predefined Exif property name and: <paramref name="Key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="Key"/> is not valid <see cref="UShort"/> number.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="key"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="key"/> does not represent predefined Exif property name and: <paramref name="key"/> does not contain exactly 2 :-separated parts or 1st part of <paramref name="Key"/> is neither E, G, I or integer number. or Record number part or <paramref name="key"/> is not valid <see cref="UShort"/> number.</exception>
         ''' <version version="1.5.2">Property added</version>
-        Public ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
+        ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
+        ''' <version version="1.5.4">Newly utilizes <see cref="ExifTagFormat.EnumType"/>. If <see cref="ExifTagFormat.EnumType"/> is specified for current tag attempts to provide value of enumerated type rather than of underlying type or <see cref="String"/>.</version>
+        Public ReadOnly Property Value(ByVal key As String) As Object Implements IMetadata.Value
             Get
-                Dim IFD As IFDIndexes, RecordNumber As UShort
-                InterpretKey(Key, IFD, RecordNumber)
-                Dim IFDObject = Me.IFD(IFD)
+                Dim ifd As IFDIndexes, recordNumber As UShort
+                InterpretKey(key, ifd, recordNumber)
+                Dim IFDObject = Me.IFD(ifd)
                 If IFDObject Is Nothing Then Return Nothing
-                If Not IFDObject.Records.ContainsKey(RecordNumber) Then Return Nothing
-                Return IFDObject.Records(RecordNumber).Data
+                If Not IFDObject.Records.ContainsKey(recordNumber) Then Return Nothing
+                Dim rec = IFDObject.Records(recordNumber)
+                If rec Is Nothing Then Return Nothing
+                Dim data = rec.Data
+                If data Is Nothing Then Return Nothing
+                Dim tf = IFDObject.TagFormat(recordNumber)
+                If tf IsNot Nothing AndAlso tf.EnumType IsNot Nothing AndAlso data IsNot Nothing AndAlso Not data.GetType.Equals(tf.EnumType) Then
+                    If TypeOf data Is String AndAlso tf.DataType = ExifDataTypes.ASCII AndAlso DirectCast(data, String).Length = 1 Then
+                        Dim sh = AscW(DirectCast(data, String))
+                        Try
+                            data = [Enum].ToObject(tf.EnumType, sh)
+                        Catch ex As ArgumentException
+                            Dim eData As [Enum] = Nothing
+                            If TryParseEnum(tf.EnumType, data, True, eData) Then data = eData
+                        End Try
+                    ElseIf TypeOf data Is String Then
+                        Dim eData As [Enum] = Nothing
+                        If TryParseEnum(tf.EnumType, data, True, eData) Then data = eData
+                    ElseIf TypeOf data Is Byte OrElse TypeOf data Is SByte OrElse TypeOf data Is Short OrElse TypeOf data Is UShort OrElse TypeOf data Is Integer OrElse TypeOf data Is UInteger OrElse TypeOf data Is Long OrElse TypeOf data Is ULong Then
+                        Try
+                            data = [Enum].ToObject(tf.EnumType, data)
+                        Catch ex As ArgumentException : End Try
+                    End If
+                End If
+                    Return data
             End Get
         End Property
         ''' <summary>Gets metadata value with given key as string</summary>
@@ -594,6 +619,15 @@ Namespace MetadataT.ExifT
                           AngleFormatInfo.Get(provider).LatitudeNorthShortSymbol,
                           AngleFormatInfo.Get(provider).LatitudeSouthShortSymbol
                          )
+            ElseIf (
+                (IFD = IFDIndexes.IFD0 AndAlso RecordNumber = IfdMain.Tags.DateTime) OrElse
+                (IFD = IFDIndexes.Exif AndAlso RecordNumber.In(IfdExif.Tags.DateTimeDigitized, IfdExif.Tags.DateTimeOriginal)) OrElse
+                (IFD = IFDIndexes.GPS AndAlso RecordNumber = IfdGps.Tags.GPSDateStamp)
+            ) AndAlso TypeOf ret Is String Then
+                Dim dateValue As DateTime
+                If Date.TryParseExact(DirectCast(ret, String), {"yyyy:MM:dd HH:mm:ss", "yyyy:MM:DD", "yyyy:MM:dd   :  :  "}, InvariantCulture, Globalization.DateTimeStyles.None, dateValue) Then
+                    Return dateValue.ToString(provider)
+                End If
             End If
 
             If TypeOf ret Is IEnumerable(Of Byte) Then
@@ -633,6 +667,15 @@ Namespace MetadataT.ExifT
         Public Function GetStringValue(ByVal key As String) As String Implements IMetadata.GetStringValue
             Return GetStringValue(key, Nothing)
         End Function
+
+        ''' <summary>Gets value indicating if this instance was already disposed or not</summary>
+        ''' <returns>This implementation always returns false because this class does not implement <see cref="IDisposable"/></returns>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        Protected Overridable ReadOnly Property Disposed As Boolean Implements IMetadata.Disposed
+            Get
+                Return False
+            End Get
+        End Property
 #End Region
         ''' <summary>Stores either non-negative (any, even undefined in this enumeration) value for IFD number or negative value for known sub-IFD</summary>
         Private Enum IFDIndexes
@@ -755,40 +798,39 @@ Namespace MetadataT.ExifT
     ''' <remarks>Descibes which data type record actually contains, how many items of such datatype. For recognized tags also possible format is specified via <see cref="ExifTagFormat"/></remarks>
     <CLSCompliant(False)> _
     Public Class ExifRecordDescription
-        ''' <summary>Contains value of the <see cref="DataType"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _DataType As ExifDataTypes
-        ''' <summary>Contains value of the <see cref="NumberOfElements"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _NumberOfElements As UShort
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _dataType As ExifDataTypes
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _numberOfElements As UShort
+
         ''' <summary>Number of elements of type <see cref="DataType"/> contained in record</summary>
         ''' <remarks>Note for inheritors: Do not expose setter of this property. Do not change value of this property during live-time of instance. This restriction is here because <see cref="ExifRecord"/> cannot track changes of this property.</remarks>
         Public Property NumberOfElements() As UShort
             Get
-                Return _NumberOfElements
+                Return _numberOfElements
             End Get
             Protected Friend Set(ByVal value As UShort)
-                _NumberOfElements = value
+                _numberOfElements = value
             End Set
         End Property
         ''' <summary>Data type of items in record</summary>
         ''' <remarks>Note for inheritors: Do not expose setter of this property. Do not change value of this property during live-time of instance. This restriction is here because <see cref="ExifRecord"/> cannot track changes of this property.</remarks>
         Public Property DataType() As ExifDataTypes
             Get
-                Return _DataType
+                Return _dataType
             End Get
             Protected Set(ByVal value As ExifDataTypes)
-                _DataType = value
+                _dataType = value
             End Set
         End Property
         ''' <summary>CTor</summary>
         ''' <param name="DataType">Data type of record</param>
         ''' <param name="NumberOfElements">Number of elements of type <paramref name="DataType"/> in record.</param>
+        ''' <param name="enumType">Type of enumeration (in case this record's value is enumerated)</param>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="NumberOfElements"/> is 0</exception>
-        Public Sub New(ByVal DataType As ExifDataTypes, ByVal NumberOfElements As UShort)
-            If NumberOfElements = 0 Then Throw New ArgumentOutOfRangeException("NumberOfElements", ResourcesT.Exceptions.NumberOfElementsCannotBe0)
-            Me.DataType = DataType
-            Me.NumberOfElements = NumberOfElements
+        ''' <version version="1.5.4">Parameter names changed to cammelCase</version>
+        Public Sub New(ByVal dataType As ExifDataTypes, ByVal numberOfElements As UShort)
+            If numberOfElements = 0 Then Throw New ArgumentOutOfRangeException("NumberOfElements", ResourcesT.Exceptions.NumberOfElementsCannotBe0)
+            Me.DataType = dataType
+            Me.NumberOfElements = numberOfElements
         End Sub
         ''' <summary>Protected CTor that allows <see cref="NumberOfElements"/> to be zero</summary>
         ''' <param name="NumberOfElements">Number of elements of type <paramref name="DataType"/> in record.</param>
@@ -797,6 +839,7 @@ Namespace MetadataT.ExifT
             Me.DataType = DataType
             Me.NumberOfElements = NumberOfElements
         End Sub
+        
     End Class
 
     ''' <summary>Describes which data can be stored in recognized Exif tag</summary>
@@ -809,28 +852,59 @@ Namespace MetadataT.ExifT
         ''' <param name="Name">Short name of tag</param>
         ''' <param name="DataTypes">Possible datatypes of tag. First datatype specified must be the widest and must be always specified and will be used as default</param>
         ''' <exception cref="ArgumentNullException"><paramref name="DataTypes"/> is null or contains no element</exception>
-        Public Sub New(ByVal NumberOfElements As UShort, ByVal Tag As UShort, ByVal Name As String, ByVal ParamArray DataTypes As ExifDataTypes())
-            MyBase.New(NumberOfElements, TestThrowReturn(DataTypes)(0))
-            _Tag = Tag
-            _Name = Name
-            OtherDatatypes.AddRange(DataTypes)
-            OtherDatatypes.RemoveAt(0)
+        ''' <version version="1.5.4">Parameter names changed to cammelCase</version>
+        Public Sub New(ByVal numberOfElements As UShort, ByVal tag As UShort, ByVal name As String, ByVal ParamArray dataTypes As ExifDataTypes())
+            MyBase.New(numberOfElements, TestThrowReturn(DataTypes)(0))
+            _tag = tag
+            _name = name
+            otherDatatypes.AddRange(DataTypes)
+            otherDatatypes.RemoveAt(0)
         End Sub
+
+        ''' <summary>CTor</summary>
+        ''' <param name="NumberOfElements">Number of elemets that must exactly be in tag. If number of elements can varry pass 0 here</param>
+        ''' <param name="Tag">Number of tag</param>
+        ''' <param name="Name">Short name of tag</param>
+        ''' <param name="DataTypes">Possible datatypes of tag. First datatype specified must be the widest and must be always specified and will be used as default</param>
+        ''' <param name="enumType">Type of enum value of this tag is expected to be one of values of</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="DataTypes"/> is null or contains no element</exception>
+        ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+        Public Sub New(ByVal numberOfElements As UShort, ByVal tag As UShort, ByVal name As String, enumType As Type, ByVal ParamArray dataTypes As ExifDataTypes())
+            MyBase.New(numberOfElements, TestThrowReturn(dataTypes)(0))
+            If enumType IsNot Nothing AndAlso Not enumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TypeNotENum, enumType.FullName))
+            _tag = tag
+            _name = name
+            otherDatatypes.AddRange(dataTypes)
+            otherDatatypes.RemoveAt(0)
+            _enumType = enumType
+        End Sub
+
+        Private _enumType As Type
+        ''' <summary>Gets type of enumeration values of this tag should belong to</summary>
+        ''' <returns>Type of enumeration values of this tag should be member of, null if this tag does use enumerated values</returns>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        Public ReadOnly Property EnumType As Type
+            Get
+                Return _enumType
+            End Get
+        End Property
+
         ''' <summary>Test if <paramref name="DataTypes"/> is null or containc no element</summary>
         ''' <param name="DataTypes">Array to test</param>
         ''' <returns><paramref name="DataTypes"/></returns>
         ''' <remarks>Used by ctor</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="DataTypes"/> is null or contains no element</exception>
-        Private Shared Function TestThrowReturn(ByVal DataTypes As ExifDataTypes()) As ExifDataTypes()
+        ''' <version version="1.5.4">Parameter name <c>DataTypes</c> changed to <c>dataTypes</c></version>
+        Private Shared Function TestThrowReturn(ByVal dataTypes As ExifDataTypes()) As ExifDataTypes()
             If DataTypes Is Nothing OrElse DataTypes.Length = 0 Then Throw New ArgumentNullException("DataTypes", ResourcesT.Exceptions.DataTypesCannotBeNullAndMustContainAtLeastOneElement)
             Return DataTypes
         End Function
         ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
-        Private _Tag As UShort
+        Private _tag As UShort
         ''' <summary>Contains value of the <see cref="Name"/> property</summary>
-        Private _Name As String
+        Private _name As String
         ''' <summary>Contains list of possible datatypes for tag excepting datatype specified in <see cref="DataType"/></summary>
-        Private OtherDatatypes As New List(Of ExifDataTypes)
+        Private otherDatatypes As New List(Of ExifDataTypes)
         ''' <summary>Represents short unique name of tag used to reference it</summary>
         Public ReadOnly Property Name() As String
             Get
@@ -859,13 +933,10 @@ Namespace MetadataT.ExifT
     ''' <summary>Represents one Exif record</summary>
     Public Class ExifRecord
         Implements IReportsChange
-        ''' <summary>Contains value of the <see cref="Data"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _data As Object
-        ''' <summary>Contains value of the <see cref="DataType"/> property</summary>
-        Private _dataType As ExifRecordDescription
-        ''' <summary>Contains value of the <see cref="Fixed"/> property</summary>
-        Private _fixed As Boolean
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _data As Object
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _dataType As ExifRecordDescription
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _fixed As Boolean
+
         ''' <summary>True if <see cref="ExifRecordDescription.NumberOfElements"/> of this record is fixed</summary>
         ''' <version version="1.5.3">Fix: Throws <see cref="StackOverflowException"/></version>
         Public ReadOnly Property Fixed() As Boolean
@@ -880,6 +951,7 @@ Namespace MetadataT.ExifT
                 Return _dataType
             End Get
         End Property
+
         ''' <summary>Value of record</summary>
         ''' <remarks>Actual type depends on <see cref="DataType"/></remarks>
         ''' <value>
@@ -890,7 +962,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="InvalidCastException">Setting value of incompatible type</exception>
         ''' <exception cref="ArgumentException">Attempt to assign value with other number of components when <see cref="Fixed"/> set to true</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
-        ''' <version version="1.5.4">Added llogic to add terminating null char for ASCII data sets.</version>
+        ''' <version version="1.5.4">Added logic to add terminating null char for ASCII data sets.</version>
         Public Property Data() As Object
             Get
                 Return _data
@@ -986,11 +1058,12 @@ Namespace MetadataT.ExifT
         ''' <exception cref="InvalidCastException">Value passed to <paramref name="Data"/> is not compatible with <paramref name="Type"/> specified</exception>
         ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is set to true and lenght of <paramref name="Data"/> violates this constaint</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Data"/> is null</exception>
+        ''' <version version="1.5.4">Parameter names changed ton cammelCase</version>
         <CLSCompliant(False)> _
-        Public Sub New(ByVal Type As ExifRecordDescription, ByVal Data As Object, Optional ByVal Fixed As Boolean = False)
-            Me._dataType = Type
-            Me._fixed = Fixed
-            Me.Data = Data
+        Public Sub New(ByVal type As ExifRecordDescription, ByVal data As Object, Optional ByVal fixed As Boolean = False)
+            Me._dataType = type
+            Me._fixed = fixed
+            Me.Data = data
         End Sub
         ''' <summary>CTor</summary>
         ''' <param name="Data">Initial value of this record</param>
@@ -998,9 +1071,10 @@ Namespace MetadataT.ExifT
         ''' <param name="NumberOfComponents">Number of components of <paramref name="Type"/></param>
         ''' <param name="fixed">Determines if length of data can be changed</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Data"/> is null</exception>
+        ''' <version version="1.5.4">Parameter names changed ton cammelCase</version>
         <CLSCompliant(False)> _
-        Public Sub New(ByVal Data As Object, ByVal Type As ExifDataTypes, Optional ByVal NumberOfComponents As UShort = 1, Optional ByVal Fixed As Boolean = False)
-            Me.New(New ExifRecordDescription(Type, NumberOfComponents), Data, Fixed)
+        Public Sub New(ByVal data As Object, ByVal type As ExifDataTypes, Optional ByVal numberOfComponents As UShort = 1, Optional ByVal fixed As Boolean = False)
+            Me.New(New ExifRecordDescription(type, numberOfComponents), data, fixed)
         End Sub
         ''' <summary>Raises the <see cref="Changed"/> event</summary>
         ''' <param name="e">Event argument. Should be <see cref="IReportsChange.ValueChangedEventArgsBase"/>.</param>
@@ -1012,6 +1086,7 @@ Namespace MetadataT.ExifT
         ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ireportschange.ValueChangedEventArgs(Of T)"/> class)
         ''' <para>Changes of properties of <see cref="DataType"/> are not tracked.</para></remarks>
         Public Event Changed As IReportsChange.ChangedEventHandler Implements IReportsChange.Changed
+
     End Class
 #End If
 End Namespace

@@ -81,8 +81,10 @@
     </xsl:template>
     <xsl:template name="property-head">
         <xsl:text>&#9;&#9;&#9;''' &lt;summary>Gets format for tag specified&lt;/summary>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;''' &lt;param name="tag">Tag record number in current IFD&lt;/tag>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Tag"/> contains unknown value&lt;/exception>&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public ReadOnly Property TagFormat(ByVal Tag As Tags) As ExifTagFormat&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.4">Parameter &lt;c>Tag&lt;/c> renamed to &lt;c>tag&lt;/c>.&lt;/version>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Overloads ReadOnly Property TagFormat(ByVal tag As Tags) As ExifTagFormat&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;&#9;&#9;Const any As ushort=0&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;&#9;&#9;Select Case Tag&#xD;&#xA;</xsl:text>
@@ -91,7 +93,7 @@
     <xsl:template name="Tag-enums">
         <!--IFD-->
         <xsl:if test="/et:Root/et:Group[@IFD='IFD']">
-            <xsl:text>&#9;&#9;Partial Public Class IfdMain&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdMain : Inherits Ifd&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in IFD0 and IFD1&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
@@ -112,7 +114,7 @@
         </xsl:if>
         <!--Exif-->
         <xsl:if test="/et:Root/et:Group[@IFD='Exif']">
-            <xsl:text>&#9;&#9;Partial Public Class IfdExif&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdExif : Inherits SubIfd&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in Exif Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
@@ -133,7 +135,7 @@
         </xsl:if>
         <!--GPS-->
         <xsl:if test="/et:Root/et:Group[@IFD='GPS']">
-            <xsl:text>&#9;&#9;Partial Public Class IfdGps&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdGps : Inherits SubIfd&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in GPS Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
@@ -154,7 +156,7 @@
         </xsl:if>
         <!--Interop-->
         <xsl:if test="/et:Root/et:Group[@IFD='Interop']">
-            <xsl:text>&#9;&#9;Partial Public Class IfdInterop&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdInterop  : Inherits SubIfd&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in Exif Interoperability IFD&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
@@ -222,6 +224,18 @@
         <xsl:text>, "</xsl:text>
         <xsl:value-of select="@Name"/>
         <xsl:text>"</xsl:text>
+        <xsl:if test="et:enum">
+            <xsl:text>, GetType(</xsl:text>
+            <xsl:choose>
+                <xsl:when test="et:enum/et:ref">
+                    <xsl:value-of select="et:enum/et:ref/@ref"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="@Name"/>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>Values)</xsl:text>
+        </xsl:if>
         <xsl:for-each select="et:Type">
             <xsl:text>, ExifDataTypes.</xsl:text>
             <xsl:value-of select="."/>
@@ -333,7 +347,7 @@
                 </xsl:choose>
                 <xsl:choose>
                     <xsl:when test="et:Type[1]='ASCII'">
-                        <xsl:text> characters.&lt;note>&lt;Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!/note></xsl:text>
+                        <xsl:text> characters.&lt;note>Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!&lt;/note></xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:text> items</xsl:text>
@@ -398,7 +412,7 @@
                 </xsl:when>
                 <xsl:when test="et:Type[1]='ASCII' and @Components=2">
                     <!--Single character requires two fields - the character and null terminator-->
-                    <xsl:text>Char</xsl:text>
+                    <xsl:text>Char?</xsl:text>
                 </xsl:when>
                 <xsl:when test="et:Type[1]='ASCII'">
                     <xsl:text>String</xsl:text>
@@ -516,7 +530,7 @@
             <xsl:text>&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
             <!--Set method-->
             <xsl:text>&#9;&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
-            <xsl:if test="count(et:enum)>0 and @Components=1">
+            <xsl:if test="count(et:enum) > 0 and @Components = 1">
                 <xsl:text>&#9;&#9;&#9;&#9;&#9;If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(</xsl:text>
                 <xsl:value-of select="$EnumName"/>
                 <xsl:text>)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(</xsl:text>
@@ -547,7 +561,7 @@
             </xsl:choose>
             <xsl:text> Then&#xD;&#xA;</xsl:text>
             <xsl:choose>
-                <xsl:when test="count(et:enum)>0 and et:Type[1]='ASCII' and @Components=1">
+                <xsl:when test="count(et:enum) > 0 and et:Type[1] = 'ASCII' and @Components=1">
                     <!--ASCII enum-->
                     <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Records(Tags.</xsl:text>
                     <xsl:value-of select="@Name"/>

@@ -22,6 +22,7 @@ Partial Class frmExport
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmExport))
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.tapFields = New System.Windows.Forms.TabPage()
@@ -31,10 +32,13 @@ Partial Class frmExport
         Me.flpFormatSelector = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblFormat = New System.Windows.Forms.Label()
         Me.cmbFormat = New System.Windows.Forms.ComboBox()
+        Me.lblCulture = New System.Windows.Forms.Label()
+        Me.cmbCulture = New System.Windows.Forms.ComboBox()
         Me.tlpButtons = New System.Windows.Forms.TableLayoutPanel()
         Me.cmdOK = New System.Windows.Forms.Button()
         Me.cmdCancel = New System.Windows.Forms.Button()
         Me.sfdSave = New System.Windows.Forms.SaveFileDialog()
+        Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.tabMain.SuspendLayout()
         Me.tapFields.SuspendLayout()
         Me.tapFormat.SuspendLayout()
@@ -44,143 +48,120 @@ Partial Class frmExport
         '
         'tabMain
         '
+        resources.ApplyResources(Me.tabMain, "tabMain")
         Me.tabMain.Controls.Add(Me.tapFields)
         Me.tabMain.Controls.Add(Me.tapFormat)
-        Me.tabMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tabMain.Location = New System.Drawing.Point(0, 0)
         Me.tabMain.Name = "tabMain"
         Me.tabMain.SelectedIndex = 0
-        Me.tabMain.Size = New System.Drawing.Size(553, 392)
-        Me.tabMain.TabIndex = 0
+        Me.totToolTip.SetToolTip(Me.tabMain, resources.GetString("tabMain.ToolTip"))
         '
         'tapFields
         '
+        resources.ApplyResources(Me.tapFields, "tapFields")
         Me.tapFields.Controls.Add(Me.tvwFields)
-        Me.tapFields.Location = New System.Drawing.Point(4, 22)
         Me.tapFields.Name = "tapFields"
-        Me.tapFields.Padding = New System.Windows.Forms.Padding(3)
-        Me.tapFields.Size = New System.Drawing.Size(545, 366)
-        Me.tapFields.TabIndex = 0
-        Me.tapFields.Text = "Fields"
+        Me.totToolTip.SetToolTip(Me.tapFields, resources.GetString("tapFields.ToolTip"))
         Me.tapFields.UseVisualStyleBackColor = True
         '
         'tvwFields
         '
+        resources.ApplyResources(Me.tvwFields, "tvwFields")
         Me.tvwFields.CheckBoxes = True
-        Me.tvwFields.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tvwFields.Location = New System.Drawing.Point(3, 3)
         Me.tvwFields.Name = "tvwFields"
-        Me.tvwFields.Size = New System.Drawing.Size(539, 360)
-        Me.tvwFields.TabIndex = 0
+        Me.totToolTip.SetToolTip(Me.tvwFields, resources.GetString("tvwFields.ToolTip"))
         '
         'tapFormat
         '
+        resources.ApplyResources(Me.tapFormat, "tapFormat")
         Me.tapFormat.Controls.Add(Me.pnlFormatHolder)
         Me.tapFormat.Controls.Add(Me.flpFormatSelector)
-        Me.tapFormat.Location = New System.Drawing.Point(4, 22)
         Me.tapFormat.Name = "tapFormat"
-        Me.tapFormat.Padding = New System.Windows.Forms.Padding(3)
-        Me.tapFormat.Size = New System.Drawing.Size(545, 366)
-        Me.tapFormat.TabIndex = 1
-        Me.tapFormat.Text = "Format"
+        Me.totToolTip.SetToolTip(Me.tapFormat, resources.GetString("tapFormat.ToolTip"))
         Me.tapFormat.UseVisualStyleBackColor = True
         '
         'pnlFormatHolder
         '
-        Me.pnlFormatHolder.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pnlFormatHolder.Location = New System.Drawing.Point(3, 30)
+        resources.ApplyResources(Me.pnlFormatHolder, "pnlFormatHolder")
         Me.pnlFormatHolder.Name = "pnlFormatHolder"
-        Me.pnlFormatHolder.Size = New System.Drawing.Size(539, 333)
-        Me.pnlFormatHolder.TabIndex = 2
+        Me.totToolTip.SetToolTip(Me.pnlFormatHolder, resources.GetString("pnlFormatHolder.ToolTip"))
         '
         'flpFormatSelector
         '
-        Me.flpFormatSelector.AutoSize = True
-        Me.flpFormatSelector.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        resources.ApplyResources(Me.flpFormatSelector, "flpFormatSelector")
         Me.flpFormatSelector.Controls.Add(Me.lblFormat)
         Me.flpFormatSelector.Controls.Add(Me.cmbFormat)
-        Me.flpFormatSelector.Dock = System.Windows.Forms.DockStyle.Top
-        Me.flpFormatSelector.Location = New System.Drawing.Point(3, 3)
+        Me.flpFormatSelector.Controls.Add(Me.lblCulture)
+        Me.flpFormatSelector.Controls.Add(Me.cmbCulture)
         Me.flpFormatSelector.Name = "flpFormatSelector"
-        Me.flpFormatSelector.Size = New System.Drawing.Size(539, 27)
-        Me.flpFormatSelector.TabIndex = 1
+        Me.totToolTip.SetToolTip(Me.flpFormatSelector, resources.GetString("flpFormatSelector.ToolTip"))
         '
         'lblFormat
         '
-        Me.lblFormat.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblFormat.AutoSize = True
-        Me.lblFormat.Location = New System.Drawing.Point(3, 7)
+        resources.ApplyResources(Me.lblFormat, "lblFormat")
         Me.lblFormat.Name = "lblFormat"
-        Me.lblFormat.Size = New System.Drawing.Size(39, 13)
-        Me.lblFormat.TabIndex = 0
-        Me.lblFormat.Text = "Format"
+        Me.totToolTip.SetToolTip(Me.lblFormat, resources.GetString("lblFormat.ToolTip"))
         '
         'cmbFormat
         '
-        Me.cmbFormat.Anchor = System.Windows.Forms.AnchorStyles.Left
+        resources.ApplyResources(Me.cmbFormat, "cmbFormat")
         Me.cmbFormat.DisplayMember = "FormatName"
         Me.cmbFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbFormat.FormattingEnabled = True
-        Me.cmbFormat.Location = New System.Drawing.Point(48, 3)
         Me.cmbFormat.Name = "cmbFormat"
-        Me.cmbFormat.Size = New System.Drawing.Size(121, 21)
-        Me.cmbFormat.TabIndex = 1
+        Me.totToolTip.SetToolTip(Me.cmbFormat, resources.GetString("cmbFormat.ToolTip"))
+        '
+        'lblCulture
+        '
+        resources.ApplyResources(Me.lblCulture, "lblCulture")
+        Me.lblCulture.Name = "lblCulture"
+        Me.totToolTip.SetToolTip(Me.lblCulture, resources.GetString("lblCulture.ToolTip"))
+        '
+        'cmbCulture
+        '
+        resources.ApplyResources(Me.cmbCulture, "cmbCulture")
+        Me.cmbCulture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbCulture.FormattingEnabled = True
+        Me.cmbCulture.Name = "cmbCulture"
+        Me.totToolTip.SetToolTip(Me.cmbCulture, resources.GetString("cmbCulture.ToolTip"))
         '
         'tlpButtons
         '
-        Me.tlpButtons.AutoSize = True
-        Me.tlpButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpButtons.ColumnCount = 2
-        Me.tlpButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.tlpButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        resources.ApplyResources(Me.tlpButtons, "tlpButtons")
         Me.tlpButtons.Controls.Add(Me.cmdOK, 0, 0)
         Me.tlpButtons.Controls.Add(Me.cmdCancel, 1, 0)
-        Me.tlpButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.tlpButtons.Location = New System.Drawing.Point(0, 392)
         Me.tlpButtons.Name = "tlpButtons"
-        Me.tlpButtons.RowCount = 1
-        Me.tlpButtons.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.tlpButtons.Size = New System.Drawing.Size(553, 29)
-        Me.tlpButtons.TabIndex = 0
+        Me.totToolTip.SetToolTip(Me.tlpButtons, resources.GetString("tlpButtons.ToolTip"))
         '
         'cmdOK
         '
-        Me.cmdOK.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmdOK.Location = New System.Drawing.Point(100, 3)
+        resources.ApplyResources(Me.cmdOK, "cmdOK")
         Me.cmdOK.Name = "cmdOK"
-        Me.cmdOK.Size = New System.Drawing.Size(75, 23)
-        Me.cmdOK.TabIndex = 0
-        Me.cmdOK.Text = "Exp&ort ..."
+        Me.totToolTip.SetToolTip(Me.cmdOK, resources.GetString("cmdOK.ToolTip"))
         Me.cmdOK.UseVisualStyleBackColor = True
         '
         'cmdCancel
         '
-        Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.None
+        resources.ApplyResources(Me.cmdCancel, "cmdCancel")
         Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdCancel.Location = New System.Drawing.Point(377, 3)
         Me.cmdCancel.Name = "cmdCancel"
-        Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
-        Me.cmdCancel.TabIndex = 1
-        Me.cmdCancel.Text = "&Cancel"
+        Me.totToolTip.SetToolTip(Me.cmdCancel, resources.GetString("cmdCancel.ToolTip"))
         Me.cmdCancel.UseVisualStyleBackColor = True
         '
         'sfdSave
         '
-        Me.sfdSave.Title = "Export metadata"
+        resources.ApplyResources(Me.sfdSave, "sfdSave")
         '
         'frmExport
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.cmdCancel
-        Me.ClientSize = New System.Drawing.Size(553, 421)
         Me.Controls.Add(Me.tabMain)
         Me.Controls.Add(Me.tlpButtons)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimizeBox = False
         Me.Name = "frmExport"
         Me.ShowInTaskbar = False
-        Me.Text = "Export metadata"
+        Me.totToolTip.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.tabMain.ResumeLayout(False)
         Me.tapFields.ResumeLayout(False)
         Me.tapFormat.ResumeLayout(False)
@@ -204,4 +185,7 @@ Partial Class frmExport
     Friend WithEvents lblFormat As System.Windows.Forms.Label
     Friend WithEvents cmbFormat As System.Windows.Forms.ComboBox
     Friend WithEvents sfdSave As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents lblCulture As System.Windows.Forms.Label
+    Friend WithEvents cmbCulture As System.Windows.Forms.ComboBox
+    Friend WithEvents totToolTip As System.Windows.Forms.ToolTip
 End Class

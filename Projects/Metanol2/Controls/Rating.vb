@@ -7,12 +7,13 @@ Public Class Rating : Inherits ComboBox
     ''' <summary>CTor - creates a new instance of the <see cref="Rating"/> class</summary>
     Public Sub New()
         MyBase.DropDownStyle = ComboBoxStyle.DropDownList
-        Me.Items.Add(My.Resources.NotRated)
-        Me.Items.Add(My.Resources.Rejected)
+        MyBase.Items.Add(My.Resources.NotRated)
+        MyBase.Items.Add(My.Resources.Rejected)
         For i = 1 To 5
-            Me.Items.Add(New String("★"c, i) & New String("☆"c, 5 - i) & i)
+            MyBase.Items.Add(New String("★"c, i) & New String("☆"c, 5 - i) & i)
         Next
     End Sub
+
 
     ''' <summary>Gets or sets the rating value</summary>
     ''' <exception cref="InvalidEnumArgumentException">Value being set is not one of <see cref="CustomRating"/> values</exception>

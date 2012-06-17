@@ -20,6 +20,7 @@ namespace Tools.VisualStudioT.GeneratorsT {
     /// <version version="1.5.3">Class moved from namespace <c>Tools.GeneratorsT</c> to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     /// <version version="1.5.4">Script and document() function are now enabled in XSL transformations.</version>
     /// <version version="1.5.4">One more parameter is passed to XSL Template - <c>language</c>.</version>
+    /// <version version="1.5.4">This custom tool now supports Visual Studio 11 (2012)</version>
     [Guid("2F8B768B-DBEA-407d-9A43-416BE87FA6A5")]
     [CustomTool("TransformCodeGenerator", "Transform Code Generator")]
     public class TransformCodeGenerator : CustomToolBase {

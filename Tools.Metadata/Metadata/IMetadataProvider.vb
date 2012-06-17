@@ -22,6 +22,7 @@
         ''' <version version="1.5.4">Parameter <c>MetadataName</c> renamed to <c>metadataName</c></version>
         Default ReadOnly Property Metadata(ByVal metadataName$) As IMetadata
     End Interface
+
     ''' <summary>Represents kind of metadata provided by metadata provider (such as Exif or ID3)</summary>
     ''' <remarks>Purpose of this interface is read-only metadata retrieval</remarks>
     ''' <seelaso cref="IMetadataProvider"/>
@@ -97,6 +98,13 @@
         ''' <remarks>The <paramref name="key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
         ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
         Function GetStringValue$(ByVal key$, provider As IFormatProvider)
+        ''' <summary>Gets value indicating if this instance was already disposed or not</summary>
+        ''' <returns>
+        ''' If class that implements <see cref="IMetadata"/> does not implement <see cref="IDisposable"/> always returns false.
+        ''' If class that implements <see cref="IMetadata"/> implements <see cref="IDisposable"/> returns true when <see cref="IDisposable.Dispose"/> was called on that instance, false if it was not.
+        ''' </returns>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        ReadOnly Property Disposed As Boolean
     End Interface
 #End If
 End Namespace

@@ -36,7 +36,10 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator {
             V90,
             /// <summary>Version 10.0 (2010)</summary>
             [Description("10.0")]
-            V100
+            V100,
+            /// <summary>Version 11.0 (2012)</summary>
+            [Description("11.0")]
+            V110
         }
 
         /// <summary>Language GUIDs</summary>
@@ -338,6 +341,8 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator {
             return (null == descriptionAttribute) ? string.Empty : descriptionAttribute.Description;
         }
 
+        /// <summary>Performs additional actions when aa type is registered for COM interop</summary>
+        /// <param name="type">Type being registered</param>
         [ComRegisterFunction]
         public static void ComRegisterFunction(Type type) {
             VsNetVersion[] vsNetVersions = (VsNetVersion[])Enum.GetValues(typeof(VsNetVersion));
@@ -367,6 +372,8 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator {
             }
         }
 
+        /// <summary>Performs additional actions when aa type is unregistered from COM interop</summary>
+        /// <param name="type">Type being unregistered</param>
         [ComUnregisterFunction]
         public static void ComUnregisterFunction(Type type) {
             VsNetVersion[] vsNetVersions = (VsNetVersion[])Enum.GetValues(typeof(VsNetVersion));
