@@ -1,13 +1,13 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: msxsl
-' Version: 4.0
+' Generator: TransformCodeGenerator, Version=1.5.4.32727, Culture=neutral, PublicKeyToken=373c02ac923768e6
+' Version: 1.5.4.32727
 '
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 17.6.2012
-' By:Đonny
+' Created: 17. června 2012
+' By:BiggerBook\Honza
 '
 'Localize: This auto-generated file was skipped during localization
 #If Config <= Nightly 'Stage: Nightly
@@ -260,660 +260,660 @@ Namespace MetadataT.ExifT
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(CompressionValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(CompressionValues))
-                If value.HasValue Then
-                    Records(Tags.Compression) = New ExifRecord(TagFormat(Tags.Compression), value.Value, True)
-                Else : Records(Tags.Compression) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Possible values of the <see cref="PhotometricInterpretation"/> property</summary>
-        <CLSCompliant(False)> _
-        Public Enum PhotometricInterpretationValues As UInt16
-            ''' <summary>RGB</summary>
-            RGB = 2
-            ''' <summary>YCbCr</summary>
-            YCbCr = 6
-        End Enum
-        ''' <summary>Pixel composition</summary>
-        ''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="PhotometricInterpretationValues"/></exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Photometric interpretation"), Category("ImageDataStructure"), Description("Pixel composition")> _
-        <CLSCompliant(False)> _
-        Public Property PhotometricInterpretation As Nullable(Of PhotometricInterpretationValues)
-            Get
-                Dim value As ExifRecord = Record(Tags.PhotometricInterpretation)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt16)
-                End If
-            End Get
-            Set(value As Nullable(Of PhotometricInterpretationValues))
-                If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(PhotometricInterpretationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(PhotometricInterpretationValues))
-                If value.HasValue Then
-                    Records(Tags.PhotometricInterpretation) = New ExifRecord(TagFormat(Tags.PhotometricInterpretation), value.Value, True)
-                Else : Records(Tags.PhotometricInterpretation) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Possible values of the <see cref="Orientation"/> property</summary>
-        <CLSCompliant(False)> _
-        Public Enum OrientationValues As UInt16
-            ''' <summary>The 0th row is at the visual top of the image, and the 0th column is the visual left-hand side.</summary>
-            TopLeft = 1
-            ''' <summary>The 0th row is at the visual top of the image, and the 0th column is the visual right-hand side.</summary>
-            TopRight = 2
-            ''' <summary>The 0th row is at the visual bottom of the image, and the 0th column is the visual right-hand side.</summary>
-            BottomRight = 3
-            ''' <summary>The 0th row is at the visual bottom of the image, and the 0th column is the visual left-hand side.</summary>
-            BottomLeft = 4
-            ''' <summary>The 0th row is the visual left-hand side of the image, and the 0th column is the visual top.</summary>
-            LeftTop = 5
-            ''' <summary>The 0th row is the visual right-hand side of the image, and the 0th column is the visual top.</summary>
-            RightTop = 6
-            ''' <summary>The 0th row is the visual right-hand side of the image, and the 0th column is the visual bottom.</summary>
-            RightBottom = 7
-            ''' <summary>The 0th row is the visual left-hand side of the image, and the 0th column is the visual bottom.</summary>
-            LeftBottom = 8
-        End Enum
-        ''' <summary>Orientation of image</summary>
-        ''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="OrientationValues"/></exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Orientation"), Category("ImageDataStructure"), Description("Orientation of image")> _
-        <CLSCompliant(False)> _
-        Public Property Orientation As Nullable(Of OrientationValues)
-            Get
-                Dim value As ExifRecord = Record(Tags.Orientation)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt16)
-                End If
-            End Get
-            Set(value As Nullable(Of OrientationValues))
-                If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(OrientationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(OrientationValues))
-                If value.HasValue Then
-                    Records(Tags.Orientation) = New ExifRecord(TagFormat(Tags.Orientation), value.Value, True)
-                Else : Records(Tags.Orientation) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Number of components</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Samples per pixel"), Category("ImageDataStructure"), Description("Number of components")> _
-        <CLSCompliant(False)> _
-        Public Property SamplesPerPixel As Nullable(Of UInt16)
-            Get
-                Dim value As ExifRecord = Record(Tags.SamplesPerPixel)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt16)
-                End If
-            End Get
-            Set(value As Nullable(Of UInt16))
-                If value.HasValue Then
-                    Records(Tags.SamplesPerPixel) = New ExifRecord(TagFormat(Tags.SamplesPerPixel), value.Value, True)
-                Else : Records(Tags.SamplesPerPixel) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Possible values of the <see cref="PlanarConfiguration"/> property</summary>
-        <CLSCompliant(False)> _
-        Public Enum PlanarConfigurationValues As UInt16
-            ''' <summary>chunky format</summary>
-            Chunky = 1
-            ''' <summary>planar format</summary>
-            Planar = 2
-        End Enum
-        ''' <summary>Image data arrangement</summary>
-        ''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="PlanarConfigurationValues"/></exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Planar configuration"), Category("ImageDataStructure"), Description("Image data arrangement")> _
-        <CLSCompliant(False)> _
-        Public Property PlanarConfiguration As Nullable(Of PlanarConfigurationValues)
-            Get
-                Dim value As ExifRecord = Record(Tags.PlanarConfiguration)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt16)
-                End If
-            End Get
-            Set(value As Nullable(Of PlanarConfigurationValues))
-                If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(PlanarConfigurationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(PlanarConfigurationValues))
-                If value.HasValue Then
-                    Records(Tags.PlanarConfiguration) = New ExifRecord(TagFormat(Tags.PlanarConfiguration), value.Value, True)
-                Else : Records(Tags.PlanarConfiguration) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Subsampling ratio of Y to C</summary>
-        ''' <returns>Typical number of items in an array returned by this property is 2.</returns>
-        ''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 2 items</exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
-        <DisplayName("YCbCr sub-sampling"), Category("ImageDataStructure"), Description("Subsampling ratio of Y to C")> _
-        <CLSCompliant(False)> _
-        Public Property YCbCrSubSampling As UInt16()
-            Get
-                Dim value As ExifRecord = Record(Tags.YCbCrSubSampling)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is UInt16() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As UInt16
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
-                    Next
-                    Return ret
-                Else
-                    Return New UInt16() {CType(value.Data, UInt16)}
-                End If
-            End Get
-            Set(value As UInt16())
-                If value IsNot Nothing Then
-                    Records(Tags.YCbCrSubSampling) = New ExifRecord(TagFormat(Tags.YCbCrSubSampling), value, False)
-                Else : Records(Tags.YCbCrSubSampling) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Possible values of the <see cref="YCbCrPositioning"/> property</summary>
-        <CLSCompliant(False)> _
-        Public Enum YCbCrPositioningValues As UInt16
-            ''' <summary>centered</summary>
-            Centered = 1
-            ''' <summary>co-sited</summary>
-            Cosited = 2
-        End Enum
-        ''' <summary>Y and C positioning</summary>
-        ''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="YCbCrPositioningValues"/></exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("YCbCr positioning"), Category("ImageDataStructure"), Description("Y and C positioning")> _
-        <CLSCompliant(False)> _
-        Public Property YCbCrPositioning As Nullable(Of YCbCrPositioningValues)
-            Get
-                Dim value As ExifRecord = Record(Tags.YCbCrPositioning)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt16)
-                End If
-            End Get
-            Set(value As Nullable(Of YCbCrPositioningValues))
-                If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(YCbCrPositioningValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(YCbCrPositioningValues))
-                If value.HasValue Then
-                    Records(Tags.YCbCrPositioning) = New ExifRecord(TagFormat(Tags.YCbCrPositioning), value.Value, True)
-                Else : Records(Tags.YCbCrPositioning) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Image resolution in width direction</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("X-resolution"), Category("ImageDataStructure"), Description("Image resolution in width direction")> _
-        <CLSCompliant(False)> _
-        Public Property XResolution As Nullable(Of URational)
-            Get
-                Dim value As ExifRecord = Record(Tags.XResolution)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As Nullable(Of URational))
-                If value.HasValue Then
-                    Records(Tags.XResolution) = New ExifRecord(TagFormat(Tags.XResolution), value.Value, True)
-                Else : Records(Tags.XResolution) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Image resolution in height direction</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Y-resolution"), Category("ImageDataStructure"), Description("Image resolution in height direction")> _
-        <CLSCompliant(False)> _
-        Public Property YResolution As Nullable(Of URational)
-            Get
-                Dim value As ExifRecord = Record(Tags.YResolution)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As Nullable(Of URational))
-                If value.HasValue Then
-                    Records(Tags.YResolution) = New ExifRecord(TagFormat(Tags.YResolution), value.Value, True)
-                Else : Records(Tags.YResolution) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Unit of X and Y resolution</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Resolution unit"), Category("ImageDataStructure"), Description("Unit of X and Y resolution")> _
-        <CLSCompliant(False)> _
-        Public Property ResolutionUnit As Nullable(Of UInt16)
-            Get
-                Dim value As ExifRecord = Record(Tags.ResolutionUnit)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt16)
-                End If
-            End Get
-            Set(value As Nullable(Of UInt16))
-                If value.HasValue Then
-                    Records(Tags.ResolutionUnit) = New ExifRecord(TagFormat(Tags.ResolutionUnit), value.Value, True)
-                Else : Records(Tags.ResolutionUnit) = Nothing : End If
-            End Set
-        End Property
+					If value.HasValue Then
+						Records(Tags.Compression) = New ExifRecord(TagFormat(Tags.Compression), value.Value, True)
+					Else : Records(Tags.Compression) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Possible values of the <see cref="PhotometricInterpretation"/> property</summary>
+			<CLSCompliant(False)> _
+			Public Enum PhotometricInterpretationValues As UInt16
+				''' <summary>RGB</summary>
+				RGB = 2
+				''' <summary>YCbCr</summary>
+				YCbCr = 6
+			End Enum
+			''' <summary>Pixel composition</summary>
+			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="PhotometricInterpretationValues"/></exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Photometric interpretation"), Category("ImageDataStructure"), Description("Pixel composition")> _
+			<CLSCompliant(False)> _
+			Public Property PhotometricInterpretation As Nullable(Of PhotometricInterpretationValues)
+				Get
+					Dim value As ExifRecord = Record(Tags.PhotometricInterpretation)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
+				End Get
+				Set
+					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(PhotometricInterpretationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(PhotometricInterpretationValues))
+					If value.HasValue Then
+						Records(Tags.PhotometricInterpretation) = New ExifRecord(TagFormat(Tags.PhotometricInterpretation), value.Value, True)
+					Else : Records(Tags.PhotometricInterpretation) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Possible values of the <see cref="Orientation"/> property</summary>
+			<CLSCompliant(False)> _
+			Public Enum OrientationValues As UInt16
+				''' <summary>The 0th row is at the visual top of the image, and the 0th column is the visual left-hand side.</summary>
+				TopLeft = 1
+				''' <summary>The 0th row is at the visual top of the image, and the 0th column is the visual right-hand side.</summary>
+				TopRight = 2
+				''' <summary>The 0th row is at the visual bottom of the image, and the 0th column is the visual right-hand side.</summary>
+				BottomRight = 3
+				''' <summary>The 0th row is at the visual bottom of the image, and the 0th column is the visual left-hand side.</summary>
+				BottomLeft = 4
+				''' <summary>The 0th row is the visual left-hand side of the image, and the 0th column is the visual top.</summary>
+				LeftTop = 5
+				''' <summary>The 0th row is the visual right-hand side of the image, and the 0th column is the visual top.</summary>
+				RightTop = 6
+				''' <summary>The 0th row is the visual right-hand side of the image, and the 0th column is the visual bottom.</summary>
+				RightBottom = 7
+				''' <summary>The 0th row is the visual left-hand side of the image, and the 0th column is the visual bottom.</summary>
+				LeftBottom = 8
+			End Enum
+			''' <summary>Orientation of image</summary>
+			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="OrientationValues"/></exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Orientation"), Category("ImageDataStructure"), Description("Orientation of image")> _
+			<CLSCompliant(False)> _
+			Public Property Orientation As Nullable(Of OrientationValues)
+				Get
+					Dim value As ExifRecord = Record(Tags.Orientation)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
+				End Get
+				Set
+					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(OrientationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(OrientationValues))
+					If value.HasValue Then
+						Records(Tags.Orientation) = New ExifRecord(TagFormat(Tags.Orientation), value.Value, True)
+					Else : Records(Tags.Orientation) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Number of components</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Samples per pixel"), Category("ImageDataStructure"), Description("Number of components")> _
+			<CLSCompliant(False)> _
+			Public Property SamplesPerPixel As Nullable(Of UInt16)
+				Get
+					Dim value As ExifRecord = Record(Tags.SamplesPerPixel)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
+				End Get
+				Set
+					If value.HasValue Then
+						Records(Tags.SamplesPerPixel) = New ExifRecord(TagFormat(Tags.SamplesPerPixel), value.Value, True)
+					Else : Records(Tags.SamplesPerPixel) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Possible values of the <see cref="PlanarConfiguration"/> property</summary>
+			<CLSCompliant(False)> _
+			Public Enum PlanarConfigurationValues As UInt16
+				''' <summary>chunky format</summary>
+				Chunky = 1
+				''' <summary>planar format</summary>
+				Planar = 2
+			End Enum
+			''' <summary>Image data arrangement</summary>
+			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="PlanarConfigurationValues"/></exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Planar configuration"), Category("ImageDataStructure"), Description("Image data arrangement")> _
+			<CLSCompliant(False)> _
+			Public Property PlanarConfiguration As Nullable(Of PlanarConfigurationValues)
+				Get
+					Dim value As ExifRecord = Record(Tags.PlanarConfiguration)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
+				End Get
+				Set
+					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(PlanarConfigurationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(PlanarConfigurationValues))
+					If value.HasValue Then
+						Records(Tags.PlanarConfiguration) = New ExifRecord(TagFormat(Tags.PlanarConfiguration), value.Value, True)
+					Else : Records(Tags.PlanarConfiguration) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Subsampling ratio of Y to C</summary>
+			''' <returns>Typical number of items in an array returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 2 items</exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			<DisplayName("YCbCr sub-sampling"), Category("ImageDataStructure"), Description("Subsampling ratio of Y to C")> _
+			<CLSCompliant(False)> _
+			Public Property YCbCrSubSampling As UInt16()
+				Get
+					Dim value As ExifRecord = Record(Tags.YCbCrSubSampling)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.YCbCrSubSampling) = New ExifRecord(TagFormat(Tags.YCbCrSubSampling), value, False)
+					Else : Records(Tags.YCbCrSubSampling) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Possible values of the <see cref="YCbCrPositioning"/> property</summary>
+			<CLSCompliant(False)> _
+			Public Enum YCbCrPositioningValues As UInt16
+				''' <summary>centered</summary>
+				Centered = 1
+				''' <summary>co-sited</summary>
+				Cosited = 2
+			End Enum
+			''' <summary>Y and C positioning</summary>
+			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="YCbCrPositioningValues"/></exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("YCbCr positioning"), Category("ImageDataStructure"), Description("Y and C positioning")> _
+			<CLSCompliant(False)> _
+			Public Property YCbCrPositioning As Nullable(Of YCbCrPositioningValues)
+				Get
+					Dim value As ExifRecord = Record(Tags.YCbCrPositioning)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
+				End Get
+				Set
+					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(YCbCrPositioningValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(YCbCrPositioningValues))
+					If value.HasValue Then
+						Records(Tags.YCbCrPositioning) = New ExifRecord(TagFormat(Tags.YCbCrPositioning), value.Value, True)
+					Else : Records(Tags.YCbCrPositioning) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Image resolution in width direction</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("X-resolution"), Category("ImageDataStructure"), Description("Image resolution in width direction")> _
+			<CLSCompliant(False)> _
+			Public Property XResolution As Nullable(Of URational)
+				Get
+					Dim value As ExifRecord = Record(Tags.XResolution)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value.HasValue Then
+						Records(Tags.XResolution) = New ExifRecord(TagFormat(Tags.XResolution), value.Value, True)
+					Else : Records(Tags.XResolution) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Image resolution in height direction</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Y-resolution"), Category("ImageDataStructure"), Description("Image resolution in height direction")> _
+			<CLSCompliant(False)> _
+			Public Property YResolution As Nullable(Of URational)
+				Get
+					Dim value As ExifRecord = Record(Tags.YResolution)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value.HasValue Then
+						Records(Tags.YResolution) = New ExifRecord(TagFormat(Tags.YResolution), value.Value, True)
+					Else : Records(Tags.YResolution) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Unit of X and Y resolution</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Resolution unit"), Category("ImageDataStructure"), Description("Unit of X and Y resolution")> _
+			<CLSCompliant(False)> _
+			Public Property ResolutionUnit As Nullable(Of UInt16)
+				Get
+					Dim value As ExifRecord = Record(Tags.ResolutionUnit)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
+				End Get
+				Set
+					If value.HasValue Then
+						Records(Tags.ResolutionUnit) = New ExifRecord(TagFormat(Tags.ResolutionUnit), value.Value, True)
+					Else : Records(Tags.ResolutionUnit) = Nothing : End If
+				End Set
+			End Property
 #End Region
 #Region "RecordingOffset"
-        ''' <summary>Image data location</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Strip offsets"), Category("RecordingOffset"), Description("Image data location")> _
-        <CLSCompliant(False)> _
-        Public Property StripOffsets As UInt32()
-            Get
-                Dim value As ExifRecord = Record(Tags.StripOffsets)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is UInt32() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As UInt32
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt32)
-                    Next
-                    Return ret
-                Else
-                    Return New UInt32() {CType(value.Data, UInt32)}
-                End If
-            End Get
-            Set(value As UInt32())
-                If value IsNot Nothing Then
-                    Records(Tags.StripOffsets) = New ExifRecord(TagFormat(Tags.StripOffsets), value, False)
-                Else : Records(Tags.StripOffsets) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Number of rows per strip</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Rows per strip"), Category("RecordingOffset"), Description("Number of rows per strip")> _
-        <CLSCompliant(False)> _
-        Public Property RowsPerStrip As Nullable(Of UInt32)
-            Get
-                Dim value As ExifRecord = Record(Tags.RowsPerStrip)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt32)
-                End If
-            End Get
-            Set(value As Nullable(Of UInt32))
-                If value.HasValue Then
-                    Records(Tags.RowsPerStrip) = New ExifRecord(TagFormat(Tags.RowsPerStrip), value.Value, True)
-                Else : Records(Tags.RowsPerStrip) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Bytes per compressed strip</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("Strip byte counts"), Category("RecordingOffset"), Description("Bytes per compressed strip")> _
-        <CLSCompliant(False)> _
-        Public Property StripByteCounts As UInt32()
-            Get
-                Dim value As ExifRecord = Record(Tags.StripByteCounts)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is UInt32() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As UInt32
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt32)
-                    Next
-                    Return ret
-                Else
-                    Return New UInt32() {CType(value.Data, UInt32)}
-                End If
-            End Get
-            Set(value As UInt32())
-                If value IsNot Nothing Then
-                    Records(Tags.StripByteCounts) = New ExifRecord(TagFormat(Tags.StripByteCounts), value, False)
-                Else : Records(Tags.StripByteCounts) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Offset to JPEG SOI</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("JPEG interchange format"), Category("RecordingOffset"), Description("Offset to JPEG SOI")> _
-        <CLSCompliant(False)> _
-        Public Property JPEGInterchangeFormat As Nullable(Of UInt32)
-            Get
-                Dim value As ExifRecord = Record(Tags.JPEGInterchangeFormat)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt32)
-                End If
-            End Get
-            Set(value As Nullable(Of UInt32))
-                If value.HasValue Then
-                    Records(Tags.JPEGInterchangeFormat) = New ExifRecord(TagFormat(Tags.JPEGInterchangeFormat), value.Value, True)
-                Else : Records(Tags.JPEGInterchangeFormat) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Bytes of JPEG data</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        <DisplayName("JPEG interchange format length"), Category("RecordingOffset"), Description("Bytes of JPEG data")> _
-        <CLSCompliant(False)> _
-        Public Property JPEGInterchangeFormatLength As Nullable(Of UInt32)
-            Get
-                Dim value As ExifRecord = Record(Tags.JPEGInterchangeFormatLength)
-                If value Is Nothing Then
-                    Return Nothing
-                Else
-                    Return CType(value.Data, UInt32)
-                End If
-            End Get
-            Set(value As Nullable(Of UInt32))
-                If value.HasValue Then
-                    Records(Tags.JPEGInterchangeFormatLength) = New ExifRecord(TagFormat(Tags.JPEGInterchangeFormatLength), value.Value, True)
-                Else : Records(Tags.JPEGInterchangeFormatLength) = Nothing : End If
-            End Set
-        End Property
+			''' <summary>Image data location</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Strip offsets"), Category("RecordingOffset"), Description("Image data location")> _
+			<CLSCompliant(False)> _
+			Public Property StripOffsets As UInt32()
+				Get
+					Dim value As ExifRecord = Record(Tags.StripOffsets)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt32() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt32
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt32)
+						Next
+						Return ret
+					Else
+						Return New UInt32() {CType(value.Data, UInt32)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.StripOffsets) = New ExifRecord(TagFormat(Tags.StripOffsets), value, False)
+					Else : Records(Tags.StripOffsets) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Number of rows per strip</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Rows per strip"), Category("RecordingOffset"), Description("Number of rows per strip")> _
+			<CLSCompliant(False)> _
+			Public Property RowsPerStrip As Nullable(Of UInt32)
+				Get
+					Dim value As ExifRecord = Record(Tags.RowsPerStrip)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
+				End Get
+				Set
+					If value.HasValue Then
+						Records(Tags.RowsPerStrip) = New ExifRecord(TagFormat(Tags.RowsPerStrip), value.Value, True)
+					Else : Records(Tags.RowsPerStrip) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Bytes per compressed strip</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Strip byte counts"), Category("RecordingOffset"), Description("Bytes per compressed strip")> _
+			<CLSCompliant(False)> _
+			Public Property StripByteCounts As UInt32()
+				Get
+					Dim value As ExifRecord = Record(Tags.StripByteCounts)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt32() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt32
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt32)
+						Next
+						Return ret
+					Else
+						Return New UInt32() {CType(value.Data, UInt32)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.StripByteCounts) = New ExifRecord(TagFormat(Tags.StripByteCounts), value, False)
+					Else : Records(Tags.StripByteCounts) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Offset to JPEG SOI</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("JPEG interchange format"), Category("RecordingOffset"), Description("Offset to JPEG SOI")> _
+			<CLSCompliant(False)> _
+			Public Property JPEGInterchangeFormat As Nullable(Of UInt32)
+				Get
+					Dim value As ExifRecord = Record(Tags.JPEGInterchangeFormat)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
+				End Get
+				Set
+					If value.HasValue Then
+						Records(Tags.JPEGInterchangeFormat) = New ExifRecord(TagFormat(Tags.JPEGInterchangeFormat), value.Value, True)
+					Else : Records(Tags.JPEGInterchangeFormat) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Bytes of JPEG data</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("JPEG interchange format length"), Category("RecordingOffset"), Description("Bytes of JPEG data")> _
+			<CLSCompliant(False)> _
+			Public Property JPEGInterchangeFormatLength As Nullable(Of UInt32)
+				Get
+					Dim value As ExifRecord = Record(Tags.JPEGInterchangeFormatLength)
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
+				End Get
+				Set
+					If value.HasValue Then
+						Records(Tags.JPEGInterchangeFormatLength) = New ExifRecord(TagFormat(Tags.JPEGInterchangeFormatLength), value.Value, True)
+					Else : Records(Tags.JPEGInterchangeFormatLength) = Nothing : End If
+				End Set
+			End Property
 #End Region
 #Region "ImageDataCharacteristicsMain"
-        ''' <summary>Transfer function</summary>
-        ''' <returns>Typical number of items in an array returned by this property is 768.</returns>
-        ''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 768 items</exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
-        <DisplayName("Transfer function"), Category("ImageDataCharacteristicsMain"), Description("Transfer function")> _
-        <CLSCompliant(False)> _
-        Public Property TransferFunction As UInt16()
-            Get
-                Dim value As ExifRecord = Record(Tags.TransferFunction)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is UInt16() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As UInt16
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
-                    Next
-                    Return ret
-                Else
-                    Return New UInt16() {CType(value.Data, UInt16)}
-                End If
-            End Get
-            Set(value As UInt16())
-                If value IsNot Nothing Then
-                    Records(Tags.TransferFunction) = New ExifRecord(TagFormat(Tags.TransferFunction), value, False)
-                Else : Records(Tags.TransferFunction) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>White point chromaticity</summary>
-        ''' <returns>Typical number of items in an array returned by this property is 2.</returns>
-        ''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 2 items</exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
-        <DisplayName("White point"), Category("ImageDataCharacteristicsMain"), Description("White point chromaticity")> _
-        <CLSCompliant(False)> _
-        Public Property WhitePoint As URational()
-            Get
-                Dim value As ExifRecord = Record(Tags.WhitePoint)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is URational() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As URational
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
-                    Next
-                    Return ret
-                Else
-                    Return New URational() {CType(value.Data, URational)}
-                End If
-            End Get
-            Set(value As URational())
-                If value IsNot Nothing Then
-                    Records(Tags.WhitePoint) = New ExifRecord(TagFormat(Tags.WhitePoint), value, False)
-                Else : Records(Tags.WhitePoint) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Chromaticities of primaries</summary>
-        ''' <returns>Typical number of items in an array returned by this property is 6.</returns>
-        ''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 6 items</exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
-        <DisplayName("Primnary chromacities"), Category("ImageDataCharacteristicsMain"), Description("Chromaticities of primaries")> _
-        <CLSCompliant(False)> _
-        Public Property PrimaryChromaticities As URational()
-            Get
-                Dim value As ExifRecord = Record(Tags.PrimaryChromaticities)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is URational() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As URational
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
-                    Next
-                    Return ret
-                Else
-                    Return New URational() {CType(value.Data, URational)}
-                End If
-            End Get
-            Set(value As URational())
-                If value IsNot Nothing Then
-                    Records(Tags.PrimaryChromaticities) = New ExifRecord(TagFormat(Tags.PrimaryChromaticities), value, False)
-                Else : Records(Tags.PrimaryChromaticities) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Color space transformation matrix coefficients</summary>
-        ''' <returns>Typical number of items in an array returned by this property is 3.</returns>
-        ''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
-        <DisplayName("YCbCr coeficients"), Category("ImageDataCharacteristicsMain"), Description("Color space transformation matrix coefficients")> _
-        <CLSCompliant(False)> _
-        Public Property YCbCrCoefficients As URational()
-            Get
-                Dim value As ExifRecord = Record(Tags.YCbCrCoefficients)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is URational() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As URational
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
-                    Next
-                    Return ret
-                Else
-                    Return New URational() {CType(value.Data, URational)}
-                End If
-            End Get
-            Set(value As URational())
-                If value IsNot Nothing Then
-                    Records(Tags.YCbCrCoefficients) = New ExifRecord(TagFormat(Tags.YCbCrCoefficients), value, False)
-                Else : Records(Tags.YCbCrCoefficients) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Pair of black and white reference values</summary>
-        ''' <returns>Typical number of items in an array returned by this property is 6.</returns>
-        ''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 6 items</exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
-        <DisplayName("Reference black/white"), Category("ImageDataCharacteristicsMain"), Description("Pair of black and white reference values")> _
-        <CLSCompliant(False)> _
-        Public Property ReferenceBlackWhite As URational()
-            Get
-                Dim value As ExifRecord = Record(Tags.ReferenceBlackWhite)
-                If value Is Nothing Then
-                    Return Nothing
-                ElseIf TypeOf value.Data Is URational() Then
-                    Return value.Data
-                ElseIf IsArray(value.Data) Then
-                    Dim ret(DirectCast(value.Data, Array).Length) As URational
-                    For i As Integer = 0 To ret.length - 1
-                        ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
-                    Next
-                    Return ret
-                Else
-                    Return New URational() {CType(value.Data, URational)}
-                End If
-            End Get
-            Set(value As URational())
-                If value IsNot Nothing Then
-                    Records(Tags.ReferenceBlackWhite) = New ExifRecord(TagFormat(Tags.ReferenceBlackWhite), value, False)
-                Else : Records(Tags.ReferenceBlackWhite) = Nothing : End If
-            End Set
-        End Property
+			''' <summary>Transfer function</summary>
+			''' <returns>Typical number of items in an array returned by this property is 768.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 768 items</exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			<DisplayName("Transfer function"), Category("ImageDataCharacteristicsMain"), Description("Transfer function")> _
+			<CLSCompliant(False)> _
+			Public Property TransferFunction As UInt16()
+				Get
+					Dim value As ExifRecord = Record(Tags.TransferFunction)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.TransferFunction) = New ExifRecord(TagFormat(Tags.TransferFunction), value, False)
+					Else : Records(Tags.TransferFunction) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>White point chromaticity</summary>
+			''' <returns>Typical number of items in an array returned by this property is 2.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 2 items</exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			<DisplayName("White point"), Category("ImageDataCharacteristicsMain"), Description("White point chromaticity")> _
+			<CLSCompliant(False)> _
+			Public Property WhitePoint As URational()
+				Get
+					Dim value As ExifRecord = Record(Tags.WhitePoint)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.WhitePoint) = New ExifRecord(TagFormat(Tags.WhitePoint), value, False)
+					Else : Records(Tags.WhitePoint) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Chromaticities of primaries</summary>
+			''' <returns>Typical number of items in an array returned by this property is 6.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 6 items</exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			<DisplayName("Primnary chromacities"), Category("ImageDataCharacteristicsMain"), Description("Chromaticities of primaries")> _
+			<CLSCompliant(False)> _
+			Public Property PrimaryChromaticities As URational()
+				Get
+					Dim value As ExifRecord = Record(Tags.PrimaryChromaticities)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.PrimaryChromaticities) = New ExifRecord(TagFormat(Tags.PrimaryChromaticities), value, False)
+					Else : Records(Tags.PrimaryChromaticities) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Color space transformation matrix coefficients</summary>
+			''' <returns>Typical number of items in an array returned by this property is 3.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 3 items</exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			<DisplayName("YCbCr coeficients"), Category("ImageDataCharacteristicsMain"), Description("Color space transformation matrix coefficients")> _
+			<CLSCompliant(False)> _
+			Public Property YCbCrCoefficients As URational()
+				Get
+					Dim value As ExifRecord = Record(Tags.YCbCrCoefficients)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.YCbCrCoefficients) = New ExifRecord(TagFormat(Tags.YCbCrCoefficients), value, False)
+					Else : Records(Tags.YCbCrCoefficients) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Pair of black and white reference values</summary>
+			''' <returns>Typical number of items in an array returned by this property is 6.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is array of exactly 6 items</exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			<DisplayName("Reference black/white"), Category("ImageDataCharacteristicsMain"), Description("Pair of black and white reference values")> _
+			<CLSCompliant(False)> _
+			Public Property ReferenceBlackWhite As URational()
+				Get
+					Dim value As ExifRecord = Record(Tags.ReferenceBlackWhite)
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.ReferenceBlackWhite) = New ExifRecord(TagFormat(Tags.ReferenceBlackWhite), value, False)
+					Else : Records(Tags.ReferenceBlackWhite) = Nothing : End If
+				End Set
+			End Property
 #End Region
 #Region "IFDOther"
-        ''' <summary>File change date and time</summary>
-        ''' <returns>Typical number of characters in a string returned by this property is 20.</returns>
-        ''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 19 characters.<note>Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!</note></exception>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
-        ''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
-        <DisplayName("Date-time"), Category("IFDOther"), Description("File change date and time")> _
-        Public Property DateTime As String
-            Get
-                Dim value As ExifRecord = Record(Tags.DateTime)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As String)
-                If value IsNot Nothing Then
-                    Records(Tags.DateTime) = New ExifRecord(TagFormat(Tags.DateTime), value, False)
-                Else : Records(Tags.DateTime) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Image title</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
-        ''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
-        <DisplayName("Image description"), Category("IFDOther"), Description("Image title")> _
-        Public Property ImageDescription As String
-            Get
-                Dim value As ExifRecord = Record(Tags.ImageDescription)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As String)
-                If value IsNot Nothing Then
-                    Records(Tags.ImageDescription) = New ExifRecord(TagFormat(Tags.ImageDescription), value, False)
-                Else : Records(Tags.ImageDescription) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Image input equipment manufacturer</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
-        ''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
-        <DisplayName("Make"), Category("IFDOther"), Description("Image input equipment manufacturer")> _
-        Public Property Make As String
-            Get
-                Dim value As ExifRecord = Record(Tags.Make)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As String)
-                If value IsNot Nothing Then
-                    Records(Tags.Make) = New ExifRecord(TagFormat(Tags.Make), value, False)
-                Else : Records(Tags.Make) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Image input equipment model</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
-        ''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
-        <DisplayName("Model"), Category("IFDOther"), Description("Image input equipment model")> _
-        Public Property Model As String
-            Get
-                Dim value As ExifRecord = Record(Tags.Model)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As String)
-                If value IsNot Nothing Then
-                    Records(Tags.Model) = New ExifRecord(TagFormat(Tags.Model), value, False)
-                Else : Records(Tags.Model) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Software used</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
-        ''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
-        <DisplayName("Software"), Category("IFDOther"), Description("Software used")> _
-        Public Property Software As String
-            Get
-                Dim value As ExifRecord = Record(Tags.Software)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As String)
-                If value IsNot Nothing Then
-                    Records(Tags.Software) = New ExifRecord(TagFormat(Tags.Software), value, False)
-                Else : Records(Tags.Software) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Person who created the image</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
-        ''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
-        <DisplayName("Artist"), Category("IFDOther"), Description("Person who created the image")> _
-        Public Property Artist As String
-            Get
-                Dim value As ExifRecord = Record(Tags.Artist)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As String)
-                If value IsNot Nothing Then
-                    Records(Tags.Artist) = New ExifRecord(TagFormat(Tags.Artist), value, False)
-                Else : Records(Tags.Artist) = Nothing : End If
-            End Set
-        End Property
-        ''' <summary>Copyright holder</summary>
-        ''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
-        ''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
-        ''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
-        <DisplayName("Copyright"), Category("IFDOther"), Description("Copyright holder")> _
-        Public Property Copyright As String
-            Get
-                Dim value As ExifRecord = Record(Tags.Copyright)
-                If value Is Nothing Then Return Nothing Else Return value.Data
-            End Get
-            Set(value As String)
-                If value IsNot Nothing Then
-                    Records(Tags.Copyright) = New ExifRecord(TagFormat(Tags.Copyright), value, False)
-                Else : Records(Tags.Copyright) = Nothing : End If
-            End Set
-        End Property
+			''' <summary>File change date and time</summary>
+			''' <returns>Typical number of characters in a string returned by this property is 20.</returns>
+			''' <exception cref='ArgumentException'>Value being set is neither null nor it is string of exactly 19 characters.<note>Terminating nulchar is counted to total lenght of string wheather it is specififed in value being set or not. So, if you don't have a nullchar at the end of your string it must be one character shorther!</note></exception>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4"><see cref="ArgumentException"/> documentation added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			<DisplayName("Date-time"), Category("IFDOther"), Description("File change date and time")> _
+			Public Property DateTime As String
+				Get
+					Dim value As ExifRecord = Record(Tags.DateTime)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.DateTime) = New ExifRecord(TagFormat(Tags.DateTime), value, False)
+					Else : Records(Tags.DateTime) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Image title</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
+			<DisplayName("Image description"), Category("IFDOther"), Description("Image title")> _
+			Public Property ImageDescription As String
+				Get
+					Dim value As ExifRecord = Record(Tags.ImageDescription)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.ImageDescription) = New ExifRecord(TagFormat(Tags.ImageDescription), value, False)
+					Else : Records(Tags.ImageDescription) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Image input equipment manufacturer</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
+			<DisplayName("Make"), Category("IFDOther"), Description("Image input equipment manufacturer")> _
+			Public Property Make As String
+				Get
+					Dim value As ExifRecord = Record(Tags.Make)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.Make) = New ExifRecord(TagFormat(Tags.Make), value, False)
+					Else : Records(Tags.Make) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Image input equipment model</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
+			<DisplayName("Model"), Category("IFDOther"), Description("Image input equipment model")> _
+			Public Property Model As String
+				Get
+					Dim value As ExifRecord = Record(Tags.Model)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.Model) = New ExifRecord(TagFormat(Tags.Model), value, False)
+					Else : Records(Tags.Model) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Software used</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
+			<DisplayName("Software"), Category("IFDOther"), Description("Software used")> _
+			Public Property Software As String
+				Get
+					Dim value As ExifRecord = Record(Tags.Software)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.Software) = New ExifRecord(TagFormat(Tags.Software), value, False)
+					Else : Records(Tags.Software) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Person who created the image</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
+			<DisplayName("Artist"), Category("IFDOther"), Description("Person who created the image")> _
+			Public Property Artist As String
+				Get
+					Dim value As ExifRecord = Record(Tags.Artist)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.Artist) = New ExifRecord(TagFormat(Tags.Artist), value, False)
+					Else : Records(Tags.Artist) = Nothing : End If
+				End Set
+			End Property
+			''' <summary>Copyright holder</summary>
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			''' <version version="1.5.4">Fix: Returned string no longer contains terminating nullchars.</version>
+			''' <version version="1.5.4">Type changed from <see cref="String"/> to <see cref="Char"/>.</version>
+			<DisplayName("Copyright"), Category("IFDOther"), Description("Copyright holder")> _
+			Public Property Copyright As String
+				Get
+					Dim value As ExifRecord = Record(Tags.Copyright)
+					If value Is Nothing Then Return Nothing Else Return value.Data
+				End Get
+				Set
+					If value IsNot Nothing Then
+						Records(Tags.Copyright) = New ExifRecord(TagFormat(Tags.Copyright), value, False)
+					Else : Records(Tags.Copyright) = Nothing : End If
+				End Set
+			End Property
 #End Region
 #End Region
-        ''' <summary>Gets format for tag specified</summary>
-        ''' <param name="tag">Tag record number in current IFD</tag>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Tag"/> contains unknown value</exception>
-        ''' <version version="1.5.4">Parameter <c>Tag</c> renamed to <c>tag</c>.</version>
-        <CLSCompliant(False)> Public Overloads ReadOnly Property TagFormat(ByVal tag As Tags) As ExifTagFormat
-            Get
-                Const any As UShort = 0
-                Select Case Tag
-                    Case Tags.ExifIFD : Return New ExifTagFormat(1, &H8769, "ExifIFD", ExifDataTypes.UInt32)
-                    Case Tags.GPSIFD : Return New ExifTagFormat(1, &H8825, "GPSIFD", ExifDataTypes.UInt32)
-                    Case Tags.ImageWidth : Return New ExifTagFormat(1, &H100, "ImageWidth", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
-                    Case Tags.ImageLength : Return New ExifTagFormat(1, &H101, "ImageLength", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
-                    Case Tags.BitsPerSample : Return New ExifTagFormat(3, &H102, "BitsPerSample", ExifDataTypes.UInt16)
-                    Case Tags.Compression : Return New ExifTagFormat(1, &H103, "Compression", GetType(CompressionValues), ExifDataTypes.UInt16)
-                    Case Tags.PhotometricInterpretation : Return New ExifTagFormat(1, &H106, "PhotometricInterpretation", GetType(PhotometricInterpretationValues), ExifDataTypes.UInt16)
-                    Case Tags.Orientation : Return New ExifTagFormat(1, &H112, "Orientation", GetType(OrientationValues), ExifDataTypes.UInt16)
-                    Case Tags.SamplesPerPixel : Return New ExifTagFormat(1, &H115, "SamplesPerPixel", ExifDataTypes.UInt16)
-                    Case Tags.PlanarConfiguration : Return New ExifTagFormat(1, &H11C, "PlanarConfiguration", GetType(PlanarConfigurationValues), ExifDataTypes.UInt16)
-                    Case Tags.YCbCrSubSampling : Return New ExifTagFormat(2, &H212, "YCbCrSubSampling", ExifDataTypes.UInt16)
-                    Case Tags.YCbCrPositioning : Return New ExifTagFormat(1, &H213, "YCbCrPositioning", GetType(YCbCrPositioningValues), ExifDataTypes.UInt16)
-                    Case Tags.XResolution : Return New ExifTagFormat(1, &H11A, "XResolution", ExifDataTypes.URational)
-                    Case Tags.YResolution : Return New ExifTagFormat(1, &H11B, "YResolution", ExifDataTypes.URational)
-                    Case Tags.ResolutionUnit : Return New ExifTagFormat(1, &H128, "ResolutionUnit", ExifDataTypes.UInt16)
-                    Case Tags.StripOffsets : Return New ExifTagFormat(any, &H111, "StripOffsets", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
-                    Case Tags.RowsPerStrip : Return New ExifTagFormat(1, &H116, "RowsPerStrip", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
-                    Case Tags.StripByteCounts : Return New ExifTagFormat(any, &H117, "StripByteCounts", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
-                    Case Tags.JPEGInterchangeFormat : Return New ExifTagFormat(1, &H201, "JPEGInterchangeFormat", ExifDataTypes.UInt32)
-                    Case Tags.JPEGInterchangeFormatLength : Return New ExifTagFormat(1, &H202, "JPEGInterchangeFormatLength", ExifDataTypes.UInt32)
-                    Case Tags.TransferFunction : Return New ExifTagFormat(768, &H12D, "TransferFunction", ExifDataTypes.UInt16)
-                    Case Tags.WhitePoint : Return New ExifTagFormat(2, &H13E, "WhitePoint", ExifDataTypes.URational)
-                    Case Tags.PrimaryChromaticities : Return New ExifTagFormat(6, &H13F, "PrimaryChromaticities", ExifDataTypes.URational)
-                    Case Tags.YCbCrCoefficients : Return New ExifTagFormat(3, &H211, "YCbCrCoefficients", ExifDataTypes.URational)
-                    Case Tags.ReferenceBlackWhite : Return New ExifTagFormat(6, &H214, "ReferenceBlackWhite", ExifDataTypes.URational)
-                    Case Tags.DateTime : Return New ExifTagFormat(20, &H132, "DateTime", ExifDataTypes.ASCII)
-                    Case Tags.ImageDescription : Return New ExifTagFormat(any, &H10E, "ImageDescription", ExifDataTypes.ASCII)
-                    Case Tags.Make : Return New ExifTagFormat(any, &H10F, "Make", ExifDataTypes.ASCII)
-                    Case Tags.Model : Return New ExifTagFormat(any, &H110, "Model", ExifDataTypes.ASCII)
-                    Case Tags.Software : Return New ExifTagFormat(any, &H131, "Software", ExifDataTypes.ASCII)
-                    Case Tags.Artist : Return New ExifTagFormat(any, &H13B, "Artist", ExifDataTypes.ASCII)
-                    Case Tags.Copyright : Return New ExifTagFormat(any, &H8298, "Copyright", ExifDataTypes.ASCII)
+			''' <summary>Gets format for tag specified</summary>
+			''' <param name="tag">Tag record number in current IFD</tag>
+			''' <exception cref="InvalidEnumArgumentException"><paramref name="Tag"/> contains unknown value</exception>
+			''' <version version="1.5.4">Parameter <c>Tag</c> renamed to <c>tag</c>.</version>
+			<CLSCompliant(False)> Public Overloads ReadOnly Property TagFormat(ByVal tag As Tags) As ExifTagFormat
+				Get
+					Const any As ushort=0
+					Select Case Tag
+						Case Tags.ExifIFD : Return New ExifTagFormat(1, &h8769, "ExifIFD", ExifDataTypes.UInt32)
+						Case Tags.GPSIFD : Return New ExifTagFormat(1, &h8825, "GPSIFD", ExifDataTypes.UInt32)
+						Case Tags.ImageWidth : Return New ExifTagFormat(1, &h100, "ImageWidth", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.ImageLength : Return New ExifTagFormat(1, &h101, "ImageLength", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.BitsPerSample : Return New ExifTagFormat(3, &h102, "BitsPerSample", ExifDataTypes.UInt16)
+						Case Tags.Compression : Return New ExifTagFormat(1, &h103, "Compression", GetType(CompressionValues), ExifDataTypes.UInt16)
+						Case Tags.PhotometricInterpretation : Return New ExifTagFormat(1, &h106, "PhotometricInterpretation", GetType(PhotometricInterpretationValues), ExifDataTypes.UInt16)
+						Case Tags.Orientation : Return New ExifTagFormat(1, &h112, "Orientation", GetType(OrientationValues), ExifDataTypes.UInt16)
+						Case Tags.SamplesPerPixel : Return New ExifTagFormat(1, &h115, "SamplesPerPixel", ExifDataTypes.UInt16)
+						Case Tags.PlanarConfiguration : Return New ExifTagFormat(1, &h11C, "PlanarConfiguration", GetType(PlanarConfigurationValues), ExifDataTypes.UInt16)
+						Case Tags.YCbCrSubSampling : Return New ExifTagFormat(2, &h212, "YCbCrSubSampling", ExifDataTypes.UInt16)
+						Case Tags.YCbCrPositioning : Return New ExifTagFormat(1, &h213, "YCbCrPositioning", GetType(YCbCrPositioningValues), ExifDataTypes.UInt16)
+						Case Tags.XResolution : Return New ExifTagFormat(1, &h11A, "XResolution", ExifDataTypes.URational)
+						Case Tags.YResolution : Return New ExifTagFormat(1, &h11B, "YResolution", ExifDataTypes.URational)
+						Case Tags.ResolutionUnit : Return New ExifTagFormat(1, &h128, "ResolutionUnit", ExifDataTypes.UInt16)
+						Case Tags.StripOffsets : Return New ExifTagFormat(any, &h111, "StripOffsets", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.RowsPerStrip : Return New ExifTagFormat(1, &h116, "RowsPerStrip", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.StripByteCounts : Return New ExifTagFormat(any, &h117, "StripByteCounts", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.JPEGInterchangeFormat : Return New ExifTagFormat(1, &h201, "JPEGInterchangeFormat", ExifDataTypes.UInt32)
+						Case Tags.JPEGInterchangeFormatLength : Return New ExifTagFormat(1, &h202, "JPEGInterchangeFormatLength", ExifDataTypes.UInt32)
+						Case Tags.TransferFunction : Return New ExifTagFormat(768, &h12D, "TransferFunction", ExifDataTypes.UInt16)
+						Case Tags.WhitePoint : Return New ExifTagFormat(2, &h13E, "WhitePoint", ExifDataTypes.URational)
+						Case Tags.PrimaryChromaticities : Return New ExifTagFormat(6, &h13F, "PrimaryChromaticities", ExifDataTypes.URational)
+						Case Tags.YCbCrCoefficients : Return New ExifTagFormat(3, &h211, "YCbCrCoefficients", ExifDataTypes.URational)
+						Case Tags.ReferenceBlackWhite : Return New ExifTagFormat(6, &h214, "ReferenceBlackWhite", ExifDataTypes.URational)
+                    Case Tags.DateTime : Return New ExifTagFormat(20 + 1, &H132, "DateTime", ExifDataTypes.ASCII)
+                    Case Tags.ImageDescription : Return New ExifTagFormat(any + 1, &H10E, "ImageDescription", ExifDataTypes.ASCII)
+                    Case Tags.Make : Return New ExifTagFormat(any + 1, &H10F, "Make", ExifDataTypes.ASCII)
+                    Case Tags.Model : Return New ExifTagFormat(any + 1, &H110, "Model", ExifDataTypes.ASCII)
+                    Case Tags.Software : Return New ExifTagFormat(any + 1, &H131, "Software", ExifDataTypes.ASCII)
+                    Case Tags.Artist : Return New ExifTagFormat(any + 1, &H13B, "Artist", ExifDataTypes.ASCII)
+                    Case Tags.Copyright : Return New ExifTagFormat(any + 1, &H8298, "Copyright", ExifDataTypes.ASCII)
                     Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
                 End Select
             End Get
@@ -2529,12 +2529,12 @@ Namespace MetadataT.ExifT
                     Case Tags.PixelYDimension : Return New ExifTagFormat(1, &HA003, "PixelYDimension", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
                     Case Tags.MakerNote : Return New ExifTagFormat(any, &H927C, "MakerNote", ExifDataTypes.NA)
                     Case Tags.UserComment : Return New ExifTagFormat(any, &H9286, "UserComment", ExifDataTypes.NA)
-                    Case Tags.RelatedSoundFile : Return New ExifTagFormat(13, &HA004, "RelatedSoundFile", ExifDataTypes.ASCII)
-                    Case Tags.DateTimeOriginal : Return New ExifTagFormat(19, &H9003, "DateTimeOriginal", ExifDataTypes.ASCII)
-                    Case Tags.DateTimeDigitized : Return New ExifTagFormat(19, &H9004, "DateTimeDigitized", ExifDataTypes.ASCII)
-                    Case Tags.SubSecTime : Return New ExifTagFormat(any, &H9290, "SubSecTime", ExifDataTypes.ASCII)
-                    Case Tags.SubSecTimeOriginal : Return New ExifTagFormat(any, &H9291, "SubSecTimeOriginal", ExifDataTypes.ASCII)
-                    Case Tags.SubSecTimeDigitized : Return New ExifTagFormat(any, &H9292, "SubSecTimeDigitized", ExifDataTypes.ASCII)
+                    Case Tags.RelatedSoundFile : Return New ExifTagFormat(13 + 1, &HA004, "RelatedSoundFile", ExifDataTypes.ASCII)
+                    Case Tags.DateTimeOriginal : Return New ExifTagFormat(19 + 1, &H9003, "DateTimeOriginal", ExifDataTypes.ASCII)
+                    Case Tags.DateTimeDigitized : Return New ExifTagFormat(19 + 1, &H9004, "DateTimeDigitized", ExifDataTypes.ASCII)
+                    Case Tags.SubSecTime : Return New ExifTagFormat(any + 1, &H9290, "SubSecTime", ExifDataTypes.ASCII)
+                    Case Tags.SubSecTimeOriginal : Return New ExifTagFormat(any + 1, &H9291, "SubSecTimeOriginal", ExifDataTypes.ASCII)
+                    Case Tags.SubSecTimeDigitized : Return New ExifTagFormat(any + 1, &H9292, "SubSecTimeDigitized", ExifDataTypes.ASCII)
                     Case Tags.ExposureTime : Return New ExifTagFormat(1, &H829A, "ExposureTime", ExifDataTypes.URational)
                     Case Tags.FNumber : Return New ExifTagFormat(1, &H829D, "FNumber", ExifDataTypes.URational)
                     Case Tags.ExposureProgram : Return New ExifTagFormat(1, &H8822, "ExposureProgram", GetType(ExposureProgramValues), ExifDataTypes.UInt16)
@@ -2575,7 +2575,7 @@ Namespace MetadataT.ExifT
                     Case Tags.Sharpness : Return New ExifTagFormat(1, &HA40A, "Sharpness", GetType(SharpnessValues), ExifDataTypes.UInt16)
                     Case Tags.DeviceSettingDescription : Return New ExifTagFormat(any, &HA40B, "DeviceSettingDescription", ExifDataTypes.NA)
                     Case Tags.SubjectDistanceRange : Return New ExifTagFormat(1, &HA40C, "SubjectDistanceRange", GetType(SubjectDistanceRangeValues), ExifDataTypes.UInt16)
-                    Case Tags.ImageUniqueID : Return New ExifTagFormat(33, &HA420, "ImageUniqueID", ExifDataTypes.ASCII)
+                    Case Tags.ImageUniqueID : Return New ExifTagFormat(33 + 1, &HA420, "ImageUniqueID", ExifDataTypes.ASCII)
                     Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
                 End Select
             End Get
@@ -3549,35 +3549,35 @@ Namespace MetadataT.ExifT
                 Const any As UShort = 0
                 Select Case Tag
                     Case Tags.GPSVersionID : Return New ExifTagFormat(4, &H0, "GPSVersionID", ExifDataTypes.Byte)
-                    Case Tags.GPSLatitudeRef : Return New ExifTagFormat(2, &H1, "GPSLatitudeRef", GetType(GPSLatitudeRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSLatitudeRef : Return New ExifTagFormat(2 + 1, &H1, "GPSLatitudeRef", GetType(GPSLatitudeRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSLatitude : Return New ExifTagFormat(3, &H2, "GPSLatitude", ExifDataTypes.URational)
-                    Case Tags.GPSLongitudeRef : Return New ExifTagFormat(2, &H3, "GPSLongitudeRef", GetType(GPSLongitudeRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSLongitudeRef : Return New ExifTagFormat(2 + 1, &H3, "GPSLongitudeRef", GetType(GPSLongitudeRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSLongitude : Return New ExifTagFormat(3, &H4, "GPSLongitude", ExifDataTypes.URational)
                     Case Tags.GPSAltitudeRef : Return New ExifTagFormat(1, &H5, "GPSAltitudeRef", GetType(GPSAltitudeRefValues), ExifDataTypes.Byte)
                     Case Tags.GPSAltitude : Return New ExifTagFormat(1, &H6, "GPSAltitude", ExifDataTypes.URational)
                     Case Tags.GPSTimeStamp : Return New ExifTagFormat(3, &H7, "GPSTimeStamp", ExifDataTypes.URational)
-                    Case Tags.GPSSatellites : Return New ExifTagFormat(any, &H8, "GPSSatellites", ExifDataTypes.ASCII)
-                    Case Tags.GPSStatus : Return New ExifTagFormat(2, &H9, "GPSStatus", GetType(GPSStatusValues), ExifDataTypes.ASCII)
-                    Case Tags.GPSMeasureMode : Return New ExifTagFormat(2, &HA, "GPSMeasureMode", GetType(GPSMeasureModeValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSSatellites : Return New ExifTagFormat(any + 1, &H8, "GPSSatellites", ExifDataTypes.ASCII)
+                    Case Tags.GPSStatus : Return New ExifTagFormat(2 + 1, &H9, "GPSStatus", GetType(GPSStatusValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSMeasureMode : Return New ExifTagFormat(2 + 1, &HA, "GPSMeasureMode", GetType(GPSMeasureModeValues), ExifDataTypes.ASCII)
                     Case Tags.GPSDOP : Return New ExifTagFormat(1, &HB, "GPSDOP", ExifDataTypes.URational)
-                    Case Tags.GPSSpeedRef : Return New ExifTagFormat(2, &HC, "GPSSpeedRef", GetType(GPSSpeedRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSSpeedRef : Return New ExifTagFormat(2 + 1, &HC, "GPSSpeedRef", GetType(GPSSpeedRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSSpeed : Return New ExifTagFormat(1, &HD, "GPSSpeed", ExifDataTypes.URational)
-                    Case Tags.GPSTrackRef : Return New ExifTagFormat(2, &HE, "GPSTrackRef", GetType(GPSTrackRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSTrackRef : Return New ExifTagFormat(2 + 1, &HE, "GPSTrackRef", GetType(GPSTrackRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSTrack : Return New ExifTagFormat(1, &HF, "GPSTrack", ExifDataTypes.URational)
-                    Case Tags.GPSImgDirectionRef : Return New ExifTagFormat(2, &H10, "GPSImgDirectionRef", GetType(GPSTrackRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSImgDirectionRef : Return New ExifTagFormat(2 + 1, &H10, "GPSImgDirectionRef", GetType(GPSTrackRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSImgDirection : Return New ExifTagFormat(1, &H11, "GPSImgDirection", ExifDataTypes.URational)
-                    Case Tags.GPSMapDatum : Return New ExifTagFormat(any, &H12, "GPSMapDatum", ExifDataTypes.ASCII)
-                    Case Tags.GPSDestLatitudeRef : Return New ExifTagFormat(2, &H13, "GPSDestLatitudeRef", GetType(GPSLatitudeRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSMapDatum : Return New ExifTagFormat(any + 1, &H12, "GPSMapDatum", ExifDataTypes.ASCII)
+                    Case Tags.GPSDestLatitudeRef : Return New ExifTagFormat(2 + 1, &H13, "GPSDestLatitudeRef", GetType(GPSLatitudeRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSDestLatitude : Return New ExifTagFormat(3, &H14, "GPSDestLatitude", ExifDataTypes.URational)
-                    Case Tags.GPSDestLongitudeRef : Return New ExifTagFormat(2, &H15, "GPSDestLongitudeRef", GetType(GPSLongitudeRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSDestLongitudeRef : Return New ExifTagFormat(2 + 1, &H15, "GPSDestLongitudeRef", GetType(GPSLongitudeRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSDestLongitude : Return New ExifTagFormat(3, &H16, "GPSDestLongitude", ExifDataTypes.URational)
-                    Case Tags.GPSDestBearingRef : Return New ExifTagFormat(2, &H17, "GPSDestBearingRef", GetType(GPSTrackRefValues), ExifDataTypes.ASCII)
+                    Case Tags.GPSDestBearingRef : Return New ExifTagFormat(2 + 1, &H17, "GPSDestBearingRef", GetType(GPSTrackRefValues), ExifDataTypes.ASCII)
                     Case Tags.GPSDestBearing : Return New ExifTagFormat(1, &H18, "GPSDestBearing", ExifDataTypes.URational)
-                    Case Tags.GPSDestDistanceRef : Return New ExifTagFormat(2, &H19, "GPSDestDistanceRef", ExifDataTypes.ASCII)
+                    Case Tags.GPSDestDistanceRef : Return New ExifTagFormat(2 + 1, &H19, "GPSDestDistanceRef", ExifDataTypes.ASCII)
                     Case Tags.GPSDestDistance : Return New ExifTagFormat(1, &H1A, "GPSDestDistance", ExifDataTypes.URational)
                     Case Tags.GPSProcessingMethod : Return New ExifTagFormat(any, &H1B, "GPSProcessingMethod", ExifDataTypes.NA)
                     Case Tags.GPSAreaInformation : Return New ExifTagFormat(any, &H1C, "GPSAreaInformation", ExifDataTypes.NA)
-                    Case Tags.GPSDateStamp : Return New ExifTagFormat(11, &H1D, "GPSDateStamp", ExifDataTypes.ASCII)
+                    Case Tags.GPSDateStamp : Return New ExifTagFormat(11 + 1, &H1D, "GPSDateStamp", ExifDataTypes.ASCII)
                     Case Tags.GPSDifferential : Return New ExifTagFormat(1, &H1E, "GPSDifferential", ExifDataTypes.UInt16)
                     Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
                 End Select
@@ -3622,12 +3622,12 @@ Namespace MetadataT.ExifT
             Get
                 Const any As UShort = 0
                 Select Case Tag
-                    Case Tags.InteroperabilityIndex : Return New ExifTagFormat(any, &H1, "InteroperabilityIndex", ExifDataTypes.ASCII)
-                    Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
-                End Select
-            End Get
-        End Property
-    End Class
+                    Case Tags.InteroperabilityIndex : Return New ExifTagFormat(any + 1, &H1, "InteroperabilityIndex", ExifDataTypes.ASCII)
+						Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
+					End Select
+				End Get
+			End Property
+		End Class
 End Namespace
 #End Region
 #End If

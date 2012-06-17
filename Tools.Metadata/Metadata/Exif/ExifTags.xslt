@@ -218,7 +218,14 @@
         <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Case Tags.</xsl:text>
         <xsl:value-of select="@Name"/>
         <xsl:text> : Return New ExifTagFormat(</xsl:text>
-        <xsl:value-of select="@Components"/>
+        <xsl:choose>
+            <xsl:when test="et:Type[1] = 'ASCII'">
+                <xsl:value-of select="@Components"/><xsl:text> + 1</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="@Components"/>
+            </xsl:otherwise>
+        </xsl:choose>
         <xsl:text>, &amp;h</xsl:text>
         <xsl:value-of select="@Tag"/>        
         <xsl:text>, "</xsl:text>
