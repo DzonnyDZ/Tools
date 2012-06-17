@@ -1461,12 +1461,12 @@ Namespace NumericsT
                 If format.Length > 1 Then param = Integer.Parse(format.Substring(1), InvariantCulture)
                 Select Case format(0)           '                                           parameter             no parameter   custom             
                     Case "G"c, "g"c, "l"c, "L"c 'General/long -14°10'15.33"                 no dec places for "   as required    -d°mm'ss[.f]"      
-                        format = "-d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """"
+                        format = "-d°mm'" + If(param.HasValue, If(param.Value = 0, "ss", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """"
                     Case "a"c, "φ"c             'GPS latitude 14°10'15 N                    not allowed                           N180d°mm'ss" a    
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "N180d°mm'ss"" a"
                     Case "A"c, "Φ"c             'GPS latitude 14°10'15.33" N                no dec places for "    as required    N180d°mm'ss[.f]" a
-                        format = "N180d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """ a"
+                        format = "N180d°mm'" + If(param.HasValue, If(param.Value = 0, "ss", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """ a"
                     Case "b"c                   'GPS latitude 14.154 N                      no decimal places      as required    N180D a           
                         format = "N180" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,N)") & " a"
                     Case "c"c                   'Slope in %                                 no dec places          culture-spec.  -L%               
@@ -1475,7 +1475,7 @@ Namespace NumericsT
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "-[y.]h:mm:ss"
                     Case "D"c                   'Time long, with days 7.15:10:05.335        no dec places for "    as required    -[y.]d:mm:ss[.f]  
-                        format = "-[y.]h:mm:ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)")
+                        format = "-[y.]h:mm:" + If(param.HasValue, If(param.Value = 0, "ss", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)")
                     Case "e"c                   'F - normalized 0-360                       no decimal places      as required    N-D               
                         format = "N" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,N)")
                     Case "E"c, "e"c             'Rotations                                  no dec places          max 4          -E                
@@ -1488,12 +1488,12 @@ Namespace NumericsT
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "Nd°mm'ss"""
                     Case "N"c                   'G - normalized 0-360                       no dec places for "    as required    N-d°mm'ss[.f]"    
-                        format = "Nd°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """"
+                        format = "Nd°mm'" + If(param.HasValue, If(param.Value = 0, "ss", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """"
                     Case "o"c, "λ"c             'GPS longitude 14°10'15" E                  not allowed                           N180d°mm'ss" o    
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "N180d°mm'ss"" o"
                     Case "O"c, "Λ"c             'GPS longitude 14°10'15.33" E               no dec places for "    as required    N180d°mm'ss[.f]" o
-                        format = "N180d°mm'ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """ o"
+                        format = "N180d°mm'" + If(param.HasValue, If(param.Value = 0, "ss", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)") + """ o"
                     Case "p"c                   'GPS longitude 14.33145 E                   no decimal places      as required    N180D o           
                         format = "N180" & If(param.HasValue, "D" & param.ToString(InvariantCulture), "(TotalDegrees,N)") & " o"
                     Case "R"c, "r"c             'Radians                                    no dec places          max 4          -R                
@@ -1505,7 +1505,7 @@ Namespace NumericsT
                         If param.HasValue Then Throw New FormatException("Parameter is not allowed for standard numeric format {0}".f(format.Substring(0)))
                         format = "-d:mm:ss"
                     Case "T"c                   'Time long, no days 90:10:05.335            no dec places for "    as required    -d:mm:ss[.f]      
-                        format = "-d:mm:ss" + If(param.HasValue, If(param.Value = 0, "", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)")
+                        format = "-d:mm:" + If(param.HasValue, If(param.Value = 0, "ss", "[." & New String("f", param.Value)) + "]", "(RestSeconds,N)")
                     Case "Z"c, "z"c             'Grads                                      no dec places          max 4          -Z                
                         format = "-Z" & param.ToString(InvariantCulture)
                     Case Else : Throw New FormatException("Unknown standard format specifier {0}".f(format(0)))
