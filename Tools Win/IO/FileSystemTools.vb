@@ -141,6 +141,176 @@ Namespace IOt
             If attrs = INVALID_FILE_ATTRIBUTES Then Return False
             Return True
         End Function
+
+        ''' <summary>Creates a symbolic link</summary>
+        ''' <param name="linkTarget">A file or directory to create symbolic link to</param>
+        ''' <param name="linkPath">Path where to create symbolic link</param>
+        ''' <param name="isDirectory">
+        ''' True if <paramref name="linkTarget"/> represents directory.
+        ''' False if <paramref name="linkTarget"/> represents file.
+        ''' Null to detect (in this case <paramref name="linkTarget"/> must exist).
+        ''' </param>
+        ''' <exception cref="IO.FileNotFoundException"><paramref name="isDirectory"/> is null and <paramref name="linkTarget"/> does not exist.</exception>
+        ''' <exception cref="IO.IOException">Failed to create symbolic link</exception>
+        ''' <exception cref="ArgumentNullException">
+        ''' <paramref name="linkTarget"/> or <paramref name="linkPath"/> is null. -or-
+        ''' <paramref name="linkTarget"/> is root-relative (\something) or current-working-directoty-relative (X:something) and <paramref name="isDirectory"/> is null. 
+        ''' </exception>
+        ''' <exception cref="ArgumentException"><paramref name="linkTarget"/> or <paramref name="linkPath"/> is an empty string.</exception>
+        ''' <version version="1.5.4">This method is new in version 1.5.4</version>
+        Public Sub CreateSymbolicLink(linkTarget$, linkPath$, Optional isDirectory As Boolean? = Nothing)
+            If linkTarget Is Nothing Then Throw New ArgumentNullException("linkTarget")
+            If linkPath Is Nothing Then Throw New ArgumentNullException("linkPath")
+            If linkTarget = "" Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "linkTarget")
+            If linkPath = "" Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "linkPath")
+
+            If isDirectory Is Nothing Then
+                Dim check As String
+                If linkTarget.StartsWith("\") AndAlso Not linkTarget.StartsWith("\\") Then
+                    Throw New ArgumentException("When linkTarget is root-relative (\something) isDirectory cannot be null")
+                ElseIf linkTarget Like "[A-Za-z]:" AndAlso linkTarget.Length >= 3 AndAlso linkTarget(2) <> IO.Path.DirectorySeparatorChar AndAlso linkTarget(2) <> IO.Path.AltDirectorySeparatorChar Then
+                    Throw New ArgumentException("When linkTarget is working-directory-relative (X:something) isDirectory cannot be null")
+                ElseIf IO.Path.IsPathRooted(linkTarget) Then
+                    check = linkTarget
+                Else
+                    check = IO.Path.Combine(IO.Path.GetDirectoryName(linkPath), linkTarget)
+                End If
+                If IO.File.Exists(check) Then
+                    isDirectory = False
+                ElseIf IO.Directory.Exists(check) Then
+                    isDirectory = True
+                Else
+                    Throw New IO.FileNotFoundException(ResourcesT.Exceptions.FileNotFound, check)
+                End If
+            End If
+            If Not API.CreateSymbolicLink(linkPath, linkTarget, If(isDirectory, SYMBOLIC_LINK_FLAG.SYMBOLIC_LINK_FLAG_DIRECTORY, SYMBOLIC_LINK_FLAG.File)) Then
+                Dim last = Win32APIException.GetLastWin32Exception()
+                If TypeOf last Is IO.IOException Then Throw last
+                Throw New IO.IOException(If(last Is Nothing, Nothing, last.Message), last)
+            End If
+        End Sub
+
+        ''' <summary>Creates a hard-link</summary>
+        ''' <param name="existingFile">File to point hardlink to</param>
+        ''' <param name="newFile">Path to store hardlink into</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="existingFile"/> or <paramref name="newFile"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="existingFile"/> or <paramref name="newFile"/> is an empty string</exception>
+        ''' <exception cref="IO.IOException">Hard link creation failed.</exception>
+        ''' <version version="1.5.4">This method is new in version 1.5.4</version>
+        Public Sub CreateHardLink(existingFile$, newFile$)
+            If existingFile$ Is Nothing Then Throw New ArgumentNullException("existingFile")
+            If newFile$ Is Nothing Then Throw New ArgumentNullException("newFile")
+            If existingFile$ = "" Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "existingFile")
+            If newFile$ = "" Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "newFile")
+
+            If Not API.CreateHardLink(newFile, existingFile) Then
+                Dim last = Win32APIException.GetLastWin32Exception()
+                If TypeOf last Is IO.IOException Then Throw last
+                Throw New IO.IOException(If(last Is Nothing, Nothing, last.Message), last)
+            End If
+        End Sub
+
+        ''' <summary>Attempts to get target path of symbolic link</summary>
+        ''' <param name="symbolicLink">Path of symbolic link</param>
+        ''' <returns>Path symbolic link points to. Null if ptah cannot be obtained.</returns>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Function ResolveSymbolicLink(symbolicLink As String) As String
+            'Adapted from http://www.codeproject.com/Articles/21202/Reparse-Points-in-Vista
+            If symbolicLink Is Nothing Then Throw New ArgumentNullException("symbolicLink")
+            If symbolicLink = "" Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "symbolicLink")
+
+            Dim success As Boolean
+            Dim lastError%
+            ' Apparently we need to have backup privileges
+            Dim token As IntPtr
+            Dim tokenPrivileges = New TOKEN_PRIVILEGES()
+            ReDim tokenPrivileges.Privileges(0 To 1)
+            success = API.OpenProcessToken(API.GetCurrentProcess(), API.TOKEN_ADJUST_PRIVILEGES, token)
+            lastError = Marshal.GetLastWin32Error()
+            If success Then
+                Try
+                    success = API.LookupPrivilegeValue(Nothing, API.SE_BACKUP_NAME, tokenPrivileges.Privileges(0).Luid) 'null for local system
+                    lastError = Marshal.GetLastWin32Error()
+                    If success Then
+                        tokenPrivileges.PrivilegeCount = 1
+                        tokenPrivileges.Privileges(0).Attributes = API.SE_PRIVILEGE_ENABLED
+                        success = API.AdjustTokenPrivileges(token, False, tokenPrivileges, Marshal.SizeOf(tokenPrivileges), IntPtr.Zero, IntPtr.Zero)
+                        lastError = Marshal.GetLastWin32Error()
+                    End If
+                Finally
+                    CloseHandle(token)
+                End Try
+            End If
+
+            If success Then
+                'Open the file and get its handle
+                Using handle = CreateFile(symbolicLink, GenericFileAccess.GENERIC_READ, ShareModes.None, IntPtr.Zero, FileCreateDisposition.OPEN_EXISTING, FileFlagsAndAttributes.FILE_FLAG_OPEN_REPARSE_POINT Or FileFlagsAndAttributes.FILE_FLAG_BACKUP_SEMANTICS, IntPtr.Zero)
+                    lastError = Marshal.GetLastWin32Error()
+                    If Not handle.IsInvalid Then
+                        Dim buffer As REPARSE_DATA_BUFFER = New REPARSE_DATA_BUFFER()
+                        ' Make up the control code - see CTL_CODE on ntddk.h
+                        Dim controlCode = (API.FILE_DEVICE_FILE_SYSTEM << 16) Or (API.FILE_ANY_ACCESS << 14) Or (API.FSCTL_GET_REPARSE_POINT << 2) Or API.METHOD_BUFFERED
+                        Dim bytesReturned As UInt32
+                        success = API.DeviceIoControl(handle.DangerousGetHandle, controlCode, IntPtr.Zero, 0, buffer, API.MAXIMUM_REPARSE_DATA_BUFFER_SIZE, bytesReturned, IntPtr.Zero)
+                        lastError = Marshal.GetLastWin32Error()
+                        If success Then
+                            Dim subsString = ""
+                            Dim printString = ""
+                            'Note that according to http://wesnerm.blogs.com/net_undocumented/2006/10/symbolic_links_.html
+                            'Symbolic links store relative paths, while junctions use absolute paths
+                            'however, they can in fact be either, and may or may not have a leading \.
+                            Debug.Assert(buffer.ReparseTag = API.IO_REPARSE_TAG_SYMLINK OrElse buffer.ReparseTag = API.IO_REPARSE_TAG_MOUNT_POINT, "Unrecognised reparse tag")                     'We only recognise these two
+                            Dim tag As TagType
+                            If (buffer.ReparseTag = IO_REPARSE_TAG_SYMLINK) Then
+                                'for some reason symlinks seem to have an extra two characters on the front
+                                subsString = New String(buffer.ReparseTarget, (buffer.SubsNameOffset / 2 + 2), buffer.SubsNameLength / 2)
+                                printString = New String(buffer.ReparseTarget, (buffer.PrintNameOffset / 2 + 2), buffer.PrintNameLength / 2)
+                                tag = TagType.SymbolicLink
+                            ElseIf (buffer.ReparseTag = API.IO_REPARSE_TAG_MOUNT_POINT) Then
+                                'This could be a junction or a mounted drive - a mounted drive starts with "\\??\\Volume"
+                                subsString = New String(buffer.ReparseTarget, buffer.SubsNameOffset / 2, buffer.SubsNameLength / 2)
+                                printString = New String(buffer.ReparseTarget, buffer.PrintNameOffset / 2, buffer.PrintNameLength / 2)
+                                tag = If(subsString.StartsWith("\??\Volume"), TagType.MountPoint, TagType.JunctionPoint)
+                            End If
+
+                            'the printstring should give us what we want
+                            Dim normalisedTarget$
+                            If (Not String.IsNullOrEmpty(printString)) Then
+                                normalisedTarget = printString
+                            Else
+                                ' if not we can use the substring with a bit of tweaking
+                                normalisedTarget = subsString
+                                Debug.Assert(normalisedTarget.Length > 2, "Target string too short")
+                                Debug.Assert(
+                                    (normalisedTarget.StartsWith("\??\") AndAlso (normalisedTarget(5) = ":"c OrElse normalisedTarget.StartsWith("\??\Volume")) OrElse
+                                    (Not normalisedTarget.StartsWith("\??\") AndAlso normalisedTarget(1) <> ":"c)),
+                                    "Malformed subsString")
+                                'Junction points must be absolute
+                                Debug.Assert(buffer.ReparseTag = API.IO_REPARSE_TAG_SYMLINK OrElse normalisedTarget.StartsWith("\??\Volume") OrElse normalisedTarget(1) = ":"c, "Relative junction point")
+                                If (normalisedTarget.StartsWith("\??\")) Then
+                                    normalisedTarget = normalisedTarget.Substring(4)
+                                End If
+                            End If
+                            Dim actualTarget = normalisedTarget
+                            Return actualTarget
+                        End If
+                    End If
+                End Using
+            End If
+            Return Nothing
+        End Function
+
+        ''' <summary>Enumerates symbolic link types</summary>
+        Private Enum TagType
+            ''' <summary>Not detected</summary>
+            None = 0
+            ''' <summary>Volume mount point</summary>
+            MountPoint = 1
+            ''' <summary>Symbolic link (file link)</summary>
+            SymbolicLink = 2
+            ''' <summary>Junction (folder link)</summary>
+            JunctionPoint = 3
+        End Enum
     End Module
 
 End Namespace

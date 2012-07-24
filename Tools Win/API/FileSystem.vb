@@ -92,13 +92,74 @@ Namespace API
             <MarshalAs(UnmanagedType.LPWStr)> _
             Public shi0_netname As String
         End Structure
+
+        ''' <summary>Contains information about a set of privileges for an access token.</summary>
+        Public Structure TOKEN_PRIVILEGES
+            ''' <summary>This must be set to the number of entries in the <see cref="Privileges"/> array.</summary>
+            Public PrivilegeCount As UInteger
+            ' !! think we only need one
+            ''' <summary>Specifies an array of <see cref="LUID_AND_ATTRIBUTES"/> structures.</summary>
+            <MarshalAs(UnmanagedType.ByValArray, SizeConst:=1)>
+            Public Privileges As LUID_AND_ATTRIBUTES()
+        End Structure
+        ''' <summary>Represents a locally unique identifier (<see cref="LUID"/>) and its attributes.</summary>
+        <StructLayout(LayoutKind.Sequential)>
+        Public Structure LUID_AND_ATTRIBUTES
+            ''' <summary>Specifies an <see cref="LUID"/> value.</summary>
+            Public Luid As LUID
+            ''' <summary>Specifies attributes of the <see cref="LUID"/>.</summary>
+            ''' <remarks>This value contains up to 32 one-bit flags. Its meaning is dependent on the definition and use of the <see cref="LUID"/>.</remarks>
+            Public Attributes As UInt32
+        End Structure
+        ''' <summary>A 64-bit value guaranteed to be unique only on the system on which it was generated.</summary>
+        ''' <remarks>The uniqueness of a locally unique identifier (<see cref="LUID"/>) is guaranteed only until the system is restarted.</remarks>
+        <StructLayout(LayoutKind.Sequential)>
+        Public Structure LUID
+            ''' <summary>Low-order bits.</summary>
+            Public LowPart As UInt32
+            ''' <summary>High-order bits.</summary>
+            Public HighPart As Int32
+        End Structure
+
+        ''' <summary>Contains reparse point data for a Microsoft reparse point.</summary>
+        <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
+        Public Structure REPARSE_DATA_BUFFER
+            ''' <summary>Reparse point tag. Must be a Microsoft reparse point tag.</summary>
+            Public ReparseTag As UInteger
+            ''' <summary>Size, in bytes, of the reparse data in the DataBuffer member.</summary>
+            Public ReparseDataLength As Short
+            ''' <summary>Length, in bytes, of the unparsed portion of the file name pointed to by the FileName member of the associated file object.</summary>
+            Public Reserved As Short
+            ''' <summary>Offset, in bytes, of the substitute name string in the PathBuffer array. Note that this offset must be divided by sizeof(WCHAR) to get the array index.</summary>
+            Public SubsNameOffset As Short
+            ''' <summary>Length, in bytes, of the substitute name string. If this string is NULL-terminated, SubstituteNameLength does not include space for the UNICODE_NULL character.</summary>
+            Public SubsNameLength As Short
+            ''' <summary>Offset, in bytes, of the print name string in the PathBuffer array. Note that this offset must be divided by sizeof(WCHAR) to get the array index.</summary>
+            Public PrintNameOffset As Short
+            ''' <summary>Length, in bytes, of the print name string. If this string is NULL-terminated, PrintNameLength does not include space for the UNICODE_NULL character.</summary>
+            Public PrintNameLength As Short
+            <MarshalAs(UnmanagedType.ByValArray, SizeConst:=MAXIMUM_REPARSE_DATA_BUFFER_SIZE)>
+            Public ReparseTarget As Char()
+        End Structure
 #End Region
+
 #Region "Constants"
         ''' <summary>Maximum length of path for the <see cref="SHGetFileInfo"/> function</summary>
         Public Const MAX_PATH As Int32 = 260
         ''' <summary>Maximum value for prefferred data length of the <see cref="NetShareEnum"/> function</summary>
         Public Const MAX_PREFERRED_LENGTH% = &HFFFFFFFF
+        Public Const TOKEN_ADJUST_PRIVILEGES = &H20UI
+        Public Const SE_BACKUP_NAME$ = "SeBackupPrivilege"
+        Public Const SE_PRIVILEGE_ENABLED As UInt32 = &H2UI
+        Public Const FILE_DEVICE_FILE_SYSTEM = 9UI
+        Public Const FILE_ANY_ACCESS = 0UI
+        Public Const METHOD_BUFFERED = 0UI
+        Public Const FSCTL_GET_REPARSE_POINT = 42UI
+        Public Const MAXIMUM_REPARSE_DATA_BUFFER_SIZE% = 16 * 1024
+        Public Const IO_REPARSE_TAG_MOUNT_POINT = &HA0000003UI 'Moiunt point or junction, see winnt.h
+        Public Const IO_REPARSE_TAG_SYMLINK = &HA000000CUI 'SYMLINK or SYMLINKD (see http://wesnerm.blogs.com/net_undocumented/2006/10/index.html)
 #End Region
+
 #Region "Functions"
         ''' <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
         ''' <param name="pszPath">[in] A pointer to a null-terminated string of maximum length <see cref="MAX_PATH"/> that contains the path and file name. Both absolute and relative paths are valid.
@@ -338,7 +399,100 @@ Namespace API
         Public Declare Auto Function GetFileAttributes Lib "Kernel32.dll" (ByVal lpFileName As String) As FileAttributes
         ''' <summary>Value returned by <see cref="GetFileAttributes"/> in case of error</summary>
         Public Const INVALID_FILE_ATTRIBUTES As UInteger = &HFFFFFFFFUI
+
+        ''' <summary>Creates a symbolic link.</summary>
+        ''' <param name="lpSymlinkFileName">The symbolic link to be created.</param>
+        ''' <param name="lpTargetFileName">
+        ''' The name of the target for the symbolic link to be created.
+        ''' <para>If <paramref name="lpTargetFileName"/> has a device name associated with it, the link is treated as an absolute link; otherwise, the link is treated as a relative link.</para>
+        ''' </param>
+        ''' <param name="dwFlags">Indicates whether the link target, <paramref name="lpTargetFileName"/>, is a directory.</param>
+        ''' <returns>If the function succeeds, the return value true.</returns>
+        ''' <remarks>Symbolic links can either be absolute or relative links. Absolute links are links that specify each portion of the path name; relative links are determined relative to where relative–link specifiers are in a specified path.</remarks>
+        <DllImport("kernel32.dll")> _
+        Public Function CreateSymbolicLink(ByVal lpSymlinkFileName As String, ByVal lpTargetFileName As String, ByVal dwFlags As SYMBOLIC_LINK_FLAG) As Boolean
+        End Function
+        ''' <summary>Enumeration indicates if symbolic link is file or directory</summary>
+        Public Enum SYMBOLIC_LINK_FLAG As Integer
+            ''' <summary>The link target is a file.</summary>
+            File = 0
+            ''' <summary>The link target is a directory.</summary>
+            SYMBOLIC_LINK_FLAG_DIRECTORY = 1
+        End Enum
+        ''' <summary>Establishes a hard link between an existing file and a new file.</summary>
+        ''' <param name="lpFileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
+        ''' <param name="lpExistingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
+        ''' <param name="lpSecurityAttributes">Reserved. Must be <see cref="IntPtr.Zero"/></param>
+        ''' <returns>True on success</returns>
+        ''' <remarks>This function is only supported on the NTFS file system, and only for files, not directories.</remarks>
+        <DllImport("kernel32.dll", SetLastError:=True, CharSet:=CharSet.Auto)> _
+        Public Function CreateHardLink(ByVal lpFileName As String, ByVal lpExistingFileName As String, Optional ByVal lpSecurityAttributes As IntPtr = Nothing) As Boolean
+        End Function
+
+        ''' <summary>Opens the access token associated with a process.</summary>
+        ''' <param name="ProcessHandle">A handle to the process whose access token is opened.</param>
+        ''' <param name="DesiredAccessas">Specifies an access mask that specifies the requested types of access to the access token. These requested access types are compared with the discretionary access control list (DACL) of the token to determine which accesses are granted or denied.</param>
+        ''' <param name="TokenHandle">A pointer to a handle that identifies the newly opened access token when the function returns.</param>
+        ''' <returns>True on success</returns>
+        <DllImport("advapi32.dll", SetLastError:=True)>
+        Public Function OpenProcessToken(ProcessHandle As IntPtr, DesiredAccessas As UInt32, <Out> ByRef TokenHandle As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        End Function
+
+        ''' <summary>Retrieves a pseudo handle for the current process.</summary>
+        ''' <returns>The return value is a pseudo handle to the current process.</returns>
+        <DllImport("kernel32.dll")>
+        Public Function GetCurrentProcess() As IntPtr
+        End Function
+
+        ''' <summary>Retrieves the locally unique identifier (LUID) used on a specified system to locally represent the specified privilege name.</summary>
+        ''' <param name="lpSystemName">A pointer to a null-terminated string that specifies the name of the system on which the privilege name is retrieved. If a null string is specified, the function attempts to find the privilege name on the local system.</param>
+        ''' <param name="lpName">A pointer to a null-terminated string that specifies the name of the privilege, as defined in the Winnt.h header file. For example, this parameter could specify the constant, SE_SECURITY_NAME, or its corresponding string, "SeSecurityPrivilege".</param>
+        ''' <param name="lpLuid">A pointer to a variable that receives the LUID by which the privilege is known on the system specified by the lpSystemName parameter.</param>
+        ''' <returns>True on success</returns>
+        <DllImport("advapi32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
+        Public Function LookupPrivilegeValue(lpSystemName$, lpName$, <Out> ByRef lpLuid As LUID) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        End Function
+
+        ''' <summary>Enables or disables privileges in the specified access token. </summary>
+        ''' <param name="TokenHandle">A handle to the access token that contains the privileges to be modified.</param>
+        ''' <param name="DisableAllPrivileges">Specifies whether the function disables all of the token's privileges. If this value is TRUE, the function disables all privileges and ignores the NewState parameter. If it is FALSE, the function modifies privileges based on the information pointed to by the NewState parameter.</param>
+        ''' <param name="NewState">A pointer to a TOKEN_PRIVILEGES structure that specifies an array of privileges and their attributes. If the DisableAllPrivileges parameter is FALSE, the AdjustTokenPrivileges function enables, disables, or removes these privileges for the token. The following table describes the action taken by the AdjustTokenPrivileges function, based on the privilege attribute. If DisableAllPrivileges is TRUE, the function ignores this parameter.</param>
+        ''' <param name="BufferLength">Specifies the size, in bytes, of the buffer pointed to by the PreviousState parameter. This parameter can be zero if the PreviousState parameter is NULL.</param>
+        ''' <param name="PreviousState">A pointer to a buffer that the function fills with a TOKEN_PRIVILEGES structure that contains the previous state of any privileges that the function modifies. </param>
+        ''' <param name="ReturnLength">A pointer to a variable that receives the required size, in bytes, of the buffer pointed to by the PreviousState parameter. This parameter can be NULL if PreviousState is NULL.</param>
+        <DllImport("advapi32.dll", SetLastError:=True)>
+        Public Function AdjustTokenPrivileges(TokenHandle As IntPtr,
+            <MarshalAs(UnmanagedType.Bool)> DisableAllPrivileges As Boolean,
+            ByRef NewState As TOKEN_PRIVILEGES,
+            BufferLength As Int32,
+            PreviousState As IntPtr,
+            ReturnLength As IntPtr
+        ) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        End Function
+
+        ''' <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.</summary>
+        ''' <param name="hDevice">A handle to the device on which the operation is to be performed. The device is typically a volume, directory, file, or stream. To retrieve a device handle, use the CreateFile function. </param>
+        ''' <param name="dwIoControlCode">The control code for the operation. This value identifies the specific operation to be performed and the type of device on which to perform it.</param>
+        ''' <param name="lpInBuffer">A pointer to the input buffer that contains the data required to perform the operation. The format of this data depends on the value of the dwIoControlCode parameter.</param>
+        ''' <param name="nInBufferSize">The size of the input buffer, in bytes.</param>
+        ''' <param name="outBuffer">A pointer to the output buffer that is to receive the data returned by the operation. The format of this data depends on the value of the dwIoControlCode parameter.</param>
+        ''' <param name="nOutBufferSize">The size of the output buffer, in bytes.</param>
+        ''' <param name="lpBytesReturned">A pointer to a variable that receives the size of the data stored in the output buffer, in bytes.</param>
+        ''' <param name="lpOverlapped">A pointer to an OVERLAPPED structure.</param>
+        ''' <returns>True on success</returns>
+        <DllImport("kernel32.dll", ExactSpelling:=True, SetLastError:=True, CharSet:=CharSet.Auto)>
+        Public Function DeviceIoControl(
+             hDevice As IntPtr,
+            dwIoControlCode As UInteger,
+            lpInBuffer As IntPtr,
+            nInBufferSize As UInteger,
+            <Out> ByRef outBuffer As REPARSE_DATA_BUFFER,
+            nOutBufferSize As UInteger,
+            <Out> ByRef lpBytesReturned As UInteger,
+            lpOverlapped As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        End Function
 #End Region
+
 #Region "Enumerations"
         ''' <summary>The flags that specify the file information to retrieve. USed by <see cref="SHGetFileInfo"/>.</summary>
         <Flags()> _
@@ -509,12 +663,12 @@ Namespace API
             ''' <summary>Return information about shared resources, including the name and type of the resource, and a comment associated with the resource. The bufptr parameter points to an array of SHARE_INFO_1 structures. </summary>
             Resources = 1
             ''' <summary>Return information about shared resources, including name of the resource, type and permissions, password, and number of connections. The bufptr parameter points to an array of SHARE_INFO_2 structures.</summary>
-            ResourecesEx = 502
+            ResourecesEx = 2
             ''' <summary>Return information about shared resources, including name of the resource, type and permissions, number of connections, and other pertinent information. The bufptr parameter points to an array of SHARE_INFO_502 structures. Shares from different scopes are not returned. For more information about scoping, see the Remarks section of the documentation for the NetServerTransportAddEx function.</summary>
-            ResourecesSingleScope = 503
+            ResourecesSingleScope = 502
             ''' <summary>Return information about shared resources, including the name of the resource, type and permissions, number of connections, and other pertinent information. The bufptr parameter points to an array of SHARE_INFO_503 structures. Shares from all scopes are returned. If the shi503_servername member of this structure is "*", there is no configured server name and the NetShareEnum function enumerates shares for all the unscoped names.</summary>
             ''' <remarks>Windows Server 2003, Windows XP, Windows 2000 Server, and Windows 2000 Professional:  This information level is not supported.</remarks>
-            ResourcesAllScopes
+            ResourcesAllScopes = 503
         End Enum
         ''' <summary><see cref="SHELLEXECUTEINFO"/> errors</summary>
         Public Enum ShellExecuteErrors As Integer
@@ -590,6 +744,7 @@ Namespace API
             SEE_MASK_FLAG_LOG_USAGE = &H4000000
         End Enum
 #End Region
+
         '        ''' <summary>Copies, moves, renames, or deletes a file system object.</summary>
         '        ''' <param name="lpFileOp">[in] A pointer to an <see cref="SHFILEOPSTRUCT"/> structure that contains information this function needs to carry out the specified operation. This parameter must contain a valid value that is not NULL. You are responsible for validating the value. If you do not validate it, you will experience unexpected results.</param>
         '        ''' <returns><para>Returns zero if successful; otherwise nonzero. Applications normally should simply check for zero or nonzero.</para>
@@ -693,8 +848,6 @@ Namespace API
         '            End Enum
         '#End Region
         '        End Structure
-        
-
     End Module
 End Namespace
 #End If

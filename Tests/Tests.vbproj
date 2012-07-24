@@ -333,6 +333,12 @@
     <Compile Include="Interop\frmUnmanagedResources.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="IO\LinkOperations.Designer.vb">
+      <DependentUpon>LinkOperations.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IO\LinkOperations.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Metadata\frmMetadataProvider.Designer.vb">
       <DependentUpon>frmMetadataProvider.vb</DependentUpon>
     </Compile>
@@ -655,6 +661,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interop\frmUnmanagedResources.resx">
       <DependentUpon>frmUnmanagedResources.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IO\LinkOperations.resx">
+      <DependentUpon>LinkOperations.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Metadata\frmMetadataProvider.resx">
       <DependentUpon>frmMetadataProvider.vb</DependentUpon>

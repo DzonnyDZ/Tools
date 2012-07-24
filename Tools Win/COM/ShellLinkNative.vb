@@ -17,11 +17,20 @@ Namespace COM.ShellLink
     ''' <summary><see cref="IShellLinkW.Resolve"/> flags</summary>
     <Flags()> _
     Friend Enum SLR_FLAGS
-        ''' <summary>Do not display a dialog box if the link cannot be resolved. When <see cref="SLR_NO_UI"/> is set, the high-order word of fFlags can be set to a time-out value that specifies the maximum amount of time to be spent resolving the link. The function returns if the link cannot be resolved within the time-out duration. If the high-order word is set to zero, the time-out duration will be set to the default value of 3,000 milliseconds (3 seconds). To specify a value, set the high word of fFlags to the desired time-out duration, in milliseconds.</summary>
+        ''' <summary>
+        ''' Do not display a dialog box if the link cannot be resolved.
+        ''' When <see cref="SLR_NO_UI"/> is set, the high-order word of fFlags can be set to a time-out value that specifies the maximum amount of time to be spent resolving the link.
+        ''' The function returns if the link cannot be resolved within the time-out duration.
+        ''' If the high-order word is set to zero, the time-out duration will be set to the default value of 3,000 milliseconds (3 seconds).
+        ''' To specify a value, set the high word of fFlags to the desired time-out duration, in milliseconds.
+        ''' </summary>
         SLR_NO_UI = &H1
         ''' <summary><see cref="SLR_ANY_MATCH"/></summary>
         SLR_ANY_MATCH = &H2
-        ''' <summary>If the link object has changed, update its path and list of identifiers. If <see cref="SLR_UPDATE"/> is set, you do not need to call <see cref="IPersistFile.IsDirty"/> to determine whether or not the link object has changed.</summary>
+        ''' <summary>
+        ''' If the link object has changed, update its path and list of identifiers.
+        ''' If <see cref="SLR_UPDATE"/> is set, you do not need to call <see cref="IPersistFile.IsDirty"/> to determine whether or not the link object has changed.
+        ''' </summary>
         SLR_UPDATE = &H4
         ''' <summary>Do not update the link information.</summary>
         SLR_NOUPDATE = &H8
@@ -29,10 +38,25 @@ Namespace COM.ShellLink
         SLR_NOSEARCH = &H10
         ''' <summary>Do not use distributed link tracking.</summary>
         SLR_NOTRACK = &H20
-        ''' <summary>Disable distributed link tracking. By default, distributed link tracking tracks removable media across multiple devices based on the volume name. It also uses the Universal Naming Convention (UNC) path to track remote file systems whose drive letter has changed. Setting <see cref="SLR_NOLINKINFO"/> disables both types of tracking.</summary>
+        ''' <summary>
+        ''' Disable distributed link tracking.
+        ''' By default, distributed link tracking tracks removable media across multiple devices based on the volume name.
+        ''' It also uses the Universal Naming Convention (UNC) path to track remote file systems whose drive letter has changed.
+        ''' Setting <see cref="SLR_NOLINKINFO"/> disables both types of tracking.
+        ''' </summary>
         SLR_NOLINKINFO = &H40
         ''' <summary>Call the Microsoft Windows Installer.</summary>
         SLR_INVOKE_MSI = &H80
+        ''' <summary>(Only Windows XP and later)</summary>
+        SLR_NO_UI_WITH_MSG_PUMP = &H101
+        ''' <summary>(Only Windows 7 and later) Offer the option to delete the shortcut when this method is unable to resolve it, even if the shortcut is not a shortcut to a file.</summary>
+        SLR_OFFER_DELETE_WITHOUT_FILE = &H200
+        ''' <summary>(Only Windows 7 and later) Report as dirty if the target is a known folder and the known folder was redirected. This only works if the original target path was a file system path or ID list and not an aliased known folder ID list.</summary>
+        SLR_KNOWNFOLDER = &H400
+        ''' <summary>(Windows 7 and later) Resolve the computer name in UNC targets that point to a local computer. This value is used with SLDF_KEEP_LOCAL_IDLIST_FOR_UNC_TARGET.</summary>
+        SLR_MACHINE_IN_LOCAL_TARGET = &H800
+        ''' <summary>(Windows 7 and later) Update the computer GUID and user SID if necessary.</summary>
+        SLR_UPDATE_MACHINE_AND_SID = &H1000
     End Enum
 
     ''' <summary><see cref="IShellLinkW.GetPath"/> flags</summary>
@@ -76,41 +100,32 @@ Namespace COM.ShellLink
     Friend Interface IPersistFile
 
 #Region "Methods inherited from IPersist"
-
         ''' <summary>Retrieves the class identifier (CLSID) of an object. The CLSID is a unique value that identifies the code that can manipulate the persistent data.</summary>
         ''' <param name="pClassID">[out] Points to the location of the CLSID on return. The CLSID is a globally unique identifier (GUID) that uniquely represents an object class that defines the code that can manipulate the object's data.</param>
-        Sub GetClassID( _
-          <Out()> ByRef pClassID As Guid)
-
+        Sub GetClassID(<Out()> ByRef pClassID As Guid)
 #End Region
 
         ''' <summary>Checks an object for changes since it was last saved to its current file.</summary>
         ''' <returns>Non-zero if the object has changed since it was last saved. Zero if the object has not changed since the last save.</returns>
-        <PreserveSig()> _
+        <PreserveSig()>
         Function IsDirty() As Integer
 
         ''' <summary>Opens the specified file and initializes an object from the file contents.</summary>
         ''' <param name="pszFileName">[in] Points to a zero-terminated string containing the absolute path of the file to open.</param>
         ''' <param name="dwMode">[in] Specifies some combination of the values from the STGM enumeration to indicate the access mode to use when opening the file. IPersistFile::Load can treat this value as a suggestion, adding more restrictive permissions if necessary. If dwMode is zero, the implementation should open the file using whatever default permissions are used when a user opens the file.</param>
-        Sub Load( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String, _
-          ByVal dwMode As Integer)
+        Sub Load(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String, ByVal dwMode As Integer)
 
         ''' <summary>Saves a copy of the object into the specified file.</summary>
         ''' <param name="pszFileName">[in] Points to a zero-terminated string containing the absolute path of the file to which the object should be saved. If pszFileName is NULL, the object should save its data to the current file, if there is one.</param>
         ''' <param name="fRemember">[in] Indicates whether the pszFileName parameter is to be used as the current working file. If TRUE, pszFileName becomes the current file and the object should clear its dirty flag after the save. If FALSE, this save operation is a "Save A Copy As ..." operation. In this case, the current file is unchanged and the object should not clear its dirty flag. If pszFileName is NULL, the implementation should ignore the fRemember flag.</param>
-        Sub Save( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String, _
-          <MarshalAs(UnmanagedType.Bool)> ByVal fRemember As Boolean)
+        Sub Save(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String, <MarshalAs(UnmanagedType.Bool)> ByVal fRemember As Boolean)
 
         ''' <summary>Notifies the object that it can write to its file. It does this by notifying the object that it can revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it can). The component enters NoScribble mode when it receives an <see cref="IPersistFile.Save"/> call.</summary>
         ''' <param name="pszFileName">[in] Points to the absolute path of the file where the object was previously saved.</param>
-        Sub SaveCompleted( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String)
+        Sub SaveCompleted(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String)
 
         ''' <summary>Retrieves either the absolute path to the object's current working file or, if there is no current working file, the object's default filename prompt.</summary>        ''' <param name="ppszFileName">[out] Points to the location of a pointer to a zero-terminated string containing the path for the current file or the default filename prompt (such as *.txt). If an error occurs, ppszFileName is set to NULL.</param>
-        Sub GetCurFile( _
-          ByRef ppszFileName As IntPtr)
+        Sub GetCurFile(ByRef ppszFileName As IntPtr)
 
     End Interface
 
@@ -132,72 +147,56 @@ Namespace COM.ShellLink
 
         ''' <summary>Gets the list of item identifiers for a Shell link object.</summary>
         ''' <param name="ppidl">[out] When this method returns, contains the address of a pointer to an item identifier list (PIDL).</param>
-        Sub GetIDList( _
-          ByRef ppidl As IntPtr)
+        Sub GetIDList(ByRef ppidl As IntPtr)
 
         ''' <summary>Sets the pointer to an item identifier list (PIDL) for a Shell link object.</summary>
         ''' <param name="pidl">[in] The object's fully-qualified PIDL.</param>
-        Sub SetIDList( _
-          ByVal pidl As IntPtr)
+        Sub SetIDList(ByVal pidl As IntPtr)
 
         ''' <summary>Gets the description string for a Shell link object.</summary>
         ''' <param name="pszName">A pointer to the buffer that receives the description string.</param>
         ''' <param name="cchMaxName">The maximum number of characters to copy to the buffer pointed to by the pszName parameter.</param>
-        Sub GetDescription( _
-          <Out(), MarshalAs(UnmanagedType.LPWStr)> ByVal pszName As StringBuilder, _
-          ByVal cchMaxName As Integer)
+        Sub GetDescription(<Out(), MarshalAs(UnmanagedType.LPWStr)> ByVal pszName As StringBuilder, ByVal cchMaxName As Integer)
 
         ''' <summary>Sets the description for a Shell link object. The description can be any application-defined string.</summary>
         ''' <param name="pszName">A pointer to a buffer containing the new description string.</param>
-        Sub SetDescription( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszName As String)
+        Sub SetDescription(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszName As String)
 
         ''' <summary>Gets the name of the working directory for a Shell link object.</summary>
         ''' <param name="pszDir">The address of a buffer that receives the name of the working directory.</param>
         ''' <param name="cchMaxPath">The maximum number of characters to copy to the buffer pointed to by the pszDir parameter. The name of the working directory is truncated if it is longer than the maximum specified by this parameter.</param>
-        Sub GetWorkingDirectory( _
-          <Out(), MarshalAs(UnmanagedType.LPWStr)> ByVal pszDir As StringBuilder, _
-          ByVal cchMaxPath As Integer)
+        Sub GetWorkingDirectory(<Out(), MarshalAs(UnmanagedType.LPWStr)> ByVal pszDir As StringBuilder, ByVal cchMaxPath As Integer)
 
         ''' <summary>Sets the name of the working directory for a Shell link object.</summary>
         ''' <param name="pszDir">The address of a buffer that contains the name of the new working directory.</param>
         ''' <remarks>The working directory is optional unless the target requires a working directory. For example, if an application creates a Shell link to a Microsoft Word document that uses a template residing in a different directory, the application would use this method to set the working directory.</remarks>
-        Sub SetWorkingDirectory( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszDir As String)
-
+        Sub SetWorkingDirectory(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszDir As String)
 
         ''' <summary>Note  This interface cannot be used to create a link to a URL.</summary>
         ''' <param name="pszArgs">A pointer to the buffer that receives the command-line arguments.</param>
         ''' <param name="cchMaxPath">The maximum number of characters that can be copied to the buffer supplied by the pszArgs parameter.</param>
-        Sub GetArguments( _
-          <Out(), MarshalAs(UnmanagedType.LPWStr)> ByVal pszArgs As StringBuilder, _
-          ByVal cchMaxPath As Integer)
+        Sub GetArguments(<Out(), MarshalAs(UnmanagedType.LPWStr)> ByVal pszArgs As StringBuilder, ByVal cchMaxPath As Integer)
 
         ''' <summary>Sets the command-line arguments for a Shell link object.</summary>
         ''' <param name="pszArgs">A pointer to a buffer that contains the new command-line arguments.</param>
-        Sub SetArguments( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszArgs As String)
+        Sub SetArguments(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszArgs As String)
 
         ''' <summary>Gets the hot key for a Shell link object.</summary>
         ''' <param name="pwHotkey">The address of the hot key. The virtual key code is in the low-order byte, and the modifier flags are in the high-order byte.</param>
-        Sub GetHotkey( _
-          ByRef pwHotkey As Short)
+        Sub GetHotkey(ByRef pwHotkey As Short)
 
         ''' <summary>Sets a hot key for a Shell link object.</summary>
         ''' <param name="wHotkey">The new hot key. The virtual key code is in the low-order byte, and the modifier flags are in the high-order byte. The modifier flags can be a combination of the values specified in the description of the <see cref="IShellLinkW.GetHotkey"/> method.</param>
-        Sub SetHotkey( _
-          ByVal wHotkey As Short)
+        Sub SetHotkey(ByVal wHotkey As Short)
 
         ''' <summary>Gets the show command for a Shell link object.</summary>
         ''' <param name="piShowCmd">A pointer to the command.</param>
         ''' <remarks>The show command is used to set the initial show state of the corresponding object.</remarks>
-        Sub GetShowCmd( _
-          ByRef piShowCmd As Integer)
+        Sub GetShowCmd(ByRef piShowCmd As Integer)
 
         ''' <summary>Sets the show command for a Shell link object. The show command sets the initial show state of the window.</summary>
         ''' <param name="iShowCmd">Command</param>
-        Sub SetShowCmd( _
-          ByVal iShowCmd As Integer)
+        Sub SetShowCmd(ByVal iShowCmd As Integer)
 
         ''' <summary>Gets the location (path and index) of the icon for a Shell link object.</summary>
         ''' <param name="pszIconPath">The address of a buffer that receives the path of the file containing the icon.</param>
@@ -211,34 +210,35 @@ Namespace COM.ShellLink
         ''' <summary>Sets the location (path and index) of the icon for a Shell link object.</summary>
         ''' <param name="pszIconPath">The address of a buffer to contain the path of the file containing the icon.</param>
         ''' <param name="iIcon">The index of the icon.</param>
-        Sub SetIconLocation( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszIconPath As String, _
-          ByVal iIcon As Integer)
+        Sub SetIconLocation(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszIconPath As String, ByVal iIcon As Integer)
 
         ''' <summary>Sets the relative path to the Shell link object.</summary>
         ''' <param name="pszPathRel">The address of a buffer that contains the new relative path. It should be a file name, not a folder name.</param>
         ''' <param name="dwReserved">Reserved. Set this parameter to zero.</param>
-        ''' <remarks>Clients commonly define a relative link when it may be moved along with its target, causing the absolute path to become invalid. The SetRelativePath method can be used to help the link resolution process find its target based on a common path prefix between the target and the relative path. To assist in the resolution process, clients should set the relative path as part of the link creation process.</remarks>
-        Sub SetRelativePath( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszPathRel As String, _
-          ByVal dwReserved As Integer)
+        ''' <remarks>
+        ''' Clients commonly define a relative link when it may be moved along with its target, causing the absolute path to become invalid.
+        ''' The <see cref="SetRelativePath"/> method can be used to help the link resolution process find its target based on a common path prefix between the target and the relative path.
+        ''' To assist in the resolution process, clients should set the relative path as part of the link creation process.
+        ''' </remarks>
+        Sub SetRelativePath(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszPathRel As String, ByVal dwReserved As Integer)
 
         ''' <summary>Attempts to find the target of a Shell link, even if it has been moved or renamed.</summary>
-        ''' <param name="hwnd">A handle to the window that the Shell will use as the parent for a dialog box. The Shell displays the dialog box if it needs to prompt the user for more information while resolving a Shell link.</param>
+        ''' <param name="hwnd">
+        ''' A handle to the window that the Shell will use as the parent for a dialog box.
+        ''' The Shell displays the dialog box if it needs to prompt the user for more information while resolving a Shell link.
+        ''' </param>
         ''' <param name="fFlags">Action flags.</param>
-        Sub Resolve( _
-          ByVal hwnd As IntPtr, _
-          ByVal fFlags As SLR_FLAGS)
+        Sub Resolve(ByVal hwnd As IntPtr, ByVal fFlags As SLR_FLAGS)
 
         ''' <summary>Sets the path and file name of a Shell link object.</summary>
         ''' <param name="pszFile">The address of a buffer that contains the new path.</param>
-        Sub SetPath( _
-          <MarshalAs(UnmanagedType.LPWStr)> ByVal pszFile As String)
+        Sub SetPath(<MarshalAs(UnmanagedType.LPWStr)> ByVal pszFile As String)
 
     End Interface
+
     ''' <summary>COM-imported class which implements the <see cref="IShellLinkW"/> interface</summary>
-    <ComImport()> _
-    <Guid("00021401-0000-0000-C000-000000000046")> _
+    <ComImport()>
+    <Guid("00021401-0000-0000-C000-000000000046")>
     Friend NotInheritable Class ShellLink
         Implements IShellLinkW, IPersistFile
         ''' <summary>Implements <see cref="IPersistFile.GetClassID"/></summary>
