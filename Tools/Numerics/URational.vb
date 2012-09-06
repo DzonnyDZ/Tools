@@ -164,6 +164,7 @@ Namespace NumericsT
             Return a * b.Swap
         End Operator
 #End Region
+#End Region
 
 #Region "Cast"
         ''' <summary>Converts <see cref="URational"/> to <see cref="SRational"/></summary>
@@ -348,6 +349,9 @@ Namespace NumericsT
         '    End Try
         'End Operator
 #End Region
+
+#Region "Comparison"
+        'TODO: COmpariosn operators
 #End Region
 #End Region
 
