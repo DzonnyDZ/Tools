@@ -184,6 +184,9 @@
         </node>
         <node name="IOt" image="Namespace">
             <node name="ShellLink" image="Class" tag="Tools.Tests.IOt.frmShellLink.test" />
+            <node name="FileSystemTools" image="Module">
+                <node name="LinkOperations" image="Dialog ID" tag="Tools.Tests.IOt.LinkOperations.Test"/>
+            </node>
         </node>
     </node>
     <node name=".NET" image="Library" SortOrder="1">

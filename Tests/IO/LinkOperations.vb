@@ -26,7 +26,7 @@ Namespace IOt
                 For Each fse In IO.Directory.EnumerateFileSystemEntries(txtSrc.Text, txtMask.Text, If(chkRecursive.Checked, IO.SearchOption.AllDirectories, IO.SearchOption.TopDirectoryOnly))
                     Dim target = FileSystemTools.ResolveSymbolicLink(fse)
                     If target <> "" Then
-                        ShellLink.CreateLink(target, IO.Path.Combine(txtDest.Text, fse.Substring(txtSrc.Text.Length)))
+                        ShellLink.CreateLink(target, IO.Path.Combine(txtDest.Text, fse.Substring(txtSrc.Text.Length + 1)) & ".lnk")
                     End If
                 Next
             Catch ex As Exception
@@ -38,34 +38,26 @@ Namespace IOt
             Try
                 For Each fse In IO.Directory.EnumerateFileSystemEntries(txtSrc.Text, txtMask.Text, If(chkRecursive.Checked, IO.SearchOption.AllDirectories, IO.SearchOption.TopDirectoryOnly))
                     Dim link As New ShellLink(fse)
-                    FileSystemTools.CreateSymbolicLink(link.TargetPath, IO.Path.Combine(txtDest.Text, fse.Substring(txtSrc.Text.Length)))
+                    Dim relativePath = fse.Substring(txtSrc.Text.Length + 1)
+                    FileSystemTools.CreateSymbolicLink(
+                        link.TargetPath,
+                        IO.Path.Combine(txtDest.Text, IO.Path.GetDirectoryName(relativePath), IO.Path.GetFileNameWithoutExtension(relativePath) & IO.Path.GetExtension(link.TargetPath))
+                    )
                 Next
             Catch ex As Exception
                 mBox.Error_X(ex)
             End Try
         End Sub
 
-        Private Sub cmdLnk2Relative_Click(sender As Object, e As EventArgs) Handles cmdLnk2Relative.Click
-            Try
-                For Each fse In IO.Directory.EnumerateFileSystemEntries(txtSrc.Text, txtMask.Text, If(chkRecursive.Checked, IO.SearchOption.AllDirectories, IO.SearchOption.TopDirectoryOnly))
-                    Dim link As New ShellLink(fse)
-                    If IO.Path.IsPathRooted(link.TargetPath) Then
-                        If fse.StartsWith("//") <> link.TargetPath.StartsWith("//") Then Continue For
-                        Dim linkSegments = fse.Split("/"c)
-                        Dim targetSegments = fse.Split("/"c)
-                        For i = 0 To Math.Min(linkSegments.Length, targetSegments.Length) - 1
-                            If Not StringComparer.CurrentCultureIgnoreCase.Equals(linkSegments(i), targetSegments(i)) Then
-                                If i > 0 Then
-                                    'TODO:
-                                End If
-                                Exit For
-                            End If
-                        Next
-                    End If
-                Next
-            Catch ex As Exception
-                mBox.Error_X(ex)
-            End Try
-        End Sub
+        'Private Sub cmdLnk2Relative_Click(sender As Object, e As EventArgs) Handles cmdLnk2Relative.Click
+        '    Try
+        '        For Each fse In IO.Directory.EnumerateFiles(txtSrc.Text, txtMask.Text, If(chkRecursive.Checked, IO.SearchOption.AllDirectories, IO.SearchOption.TopDirectoryOnly))
+        '            Dim link As New ShellLink(fse)
+        '            Dim difference = Path.GetDifference(IO.Path.GetDirectoryName(fse), link.TargetPath)
+        '        Next
+        '    Catch ex As Exception
+        '        mBox.Error_X(ex)
+        '    End Try
+        'End Sub
     End Class
 End Namespace

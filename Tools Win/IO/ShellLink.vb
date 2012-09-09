@@ -6,7 +6,10 @@ Imports System.ComponentModel
 #If Config <= Nightly Then 'Stage Nightly
 Namespace IOt
     ''' <summary>Represents a *.LNK file (also called shortcut or link)</summary>
-    ''' <remarks>Implementation based on Mattias Sjögren's (© 2001÷2002) example http://www.msjogren.net/dotnet/, mattias@mvps.org</remarks>
+    ''' <remarks>
+    ''' Implementation based on Mattias Sjögren's (© 2001÷2002) example http://www.msjogren.net/dotnet/, mattias@mvps.org.
+    ''' <para>This is COM-based implementation. For managed implemetation look at <a href="http://sourceforge.net/projects/shellify/">Shellify</a>.</para>
+    ''' </remarks>
     Public Class ShellLink
         Implements IDisposable, IPathProvider
         ''' <summary>The <see cref="IShellLinkW"/> object this class is wrapper to</summary>
@@ -48,13 +51,12 @@ Namespace IOt
 #Region "Properties"
         ''' <summary>The path to the shortcut's executable.</summary>
         ''' <remarks>This property is for the shortcut's target path only. Any arguments to the shortcut must be placed in the <see cref="Arguments"/> property.</remarks>
-        ''' <value>The path to the shortcut's executable - absolute or relative.</value>
+        ''' <value>The path to the shortcut's executable.</value>
         ''' <returns>The path to the shortcut's executable.</returns>
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
         ''' <exception cref="ArgumentNullException">Value being set is nulll</exception>
         ''' <exception cref="ArgumentException">Value being set is an empty string.</exception>
         ''' <version version="1.5.4"><see cref="ArgumentNullException"/> and <see cref="ArgumentException"/> can be thrown.</version>
-        ''' <version version="1.5.4">If value being set is relative path it is now handled properly.</version>
         Public Property TargetPath() As String
             Get
                 Return GetTargetPath(SLGP_FLAGS.SLGP_UNCPRIORITY)
@@ -63,11 +65,11 @@ Namespace IOt
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
                 If value Is Nothing Then Throw New ArgumentNullException("value")
                 If value = "" Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "value")
-                If IO.Path.IsPathRooted(value) Then
-                    link.SetPath(value)
-                Else
-                    link.SetRelativePath(value, 0)
-                End If
+                'If IO.Path.IsPathRooted(value) Then
+                link.SetPath(value)
+                'Else
+                'link.SetRelativePath(value, 0)
+                'End If
             End Set
         End Property
 
@@ -336,11 +338,8 @@ Namespace IOt
         ''' <param name="relativePath">String contains the new relative path. It should be a file name, not a folder name.</param>
         ''' <remarks>
         ''' Clients commonly define a relative link when it may be moved along with its target, causing the absolute path to become invalid. The SetRelativePath method can be used to help the link resolution process find its target based on a common path prefix between the target and the relative path. To assist in the resolution process, clients should set the relative path as part of the link creation process.
-        ''' <para>This method is obsolete. Set the <see cref="TargetPath"/> property to relative path instead.</para>
         ''' </remarks>
-        ''' <version version="1.5.4">Method marked obsolete. The <see cref="TargetPath"/> property now supports relative paths.</version>
         ''' <version version="1.5.4">Parameter name <c>RelativePath</c> changed to <c>relativePath</c></version>
-        <Obsolete("Use the TargetPath property and set it to relative path instead")>
         Public Sub SetRelativePath(ByVal relativePath$)
             link.SetRelativePath(relativePath, 0)
         End Sub

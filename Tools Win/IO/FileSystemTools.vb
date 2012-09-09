@@ -150,6 +150,7 @@ Namespace IOt
         ''' False if <paramref name="linkTarget"/> represents file.
         ''' Null to detect (in this case <paramref name="linkTarget"/> must exist).
         ''' </param>
+        ''' <remarks>This operation may require administrator privilegies.</remarks>
         ''' <exception cref="IO.FileNotFoundException"><paramref name="isDirectory"/> is null and <paramref name="linkTarget"/> does not exist.</exception>
         ''' <exception cref="IO.IOException">Failed to create symbolic link</exception>
         ''' <exception cref="ArgumentNullException">
@@ -193,6 +194,7 @@ Namespace IOt
         ''' <summary>Creates a hard-link</summary>
         ''' <param name="existingFile">File to point hardlink to</param>
         ''' <param name="newFile">Path to store hardlink into</param>
+        ''' <remarks>This operation may require administrator privilegies.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="existingFile"/> or <paramref name="newFile"/> is null</exception>
         ''' <exception cref="ArgumentException"><paramref name="existingFile"/> or <paramref name="newFile"/> is an empty string</exception>
         ''' <exception cref="IO.IOException">Hard link creation failed.</exception>
@@ -225,7 +227,7 @@ Namespace IOt
             Dim token As IntPtr
             Dim tokenPrivileges = New TOKEN_PRIVILEGES()
             ReDim tokenPrivileges.Privileges(0 To 1)
-            success = API.OpenProcessToken(API.GetCurrentProcess(), API.TOKEN_ADJUST_PRIVILEGES, token)
+            success = API.OpenProcessToken(API.GetCurrentProcess(), API.AccessRightsForAccessTokenObjects.TOKEN_ADJUST_PRIVILEGES, token)
             lastError = Marshal.GetLastWin32Error()
             If success Then
                 Try
@@ -233,7 +235,7 @@ Namespace IOt
                     lastError = Marshal.GetLastWin32Error()
                     If success Then
                         tokenPrivileges.PrivilegeCount = 1
-                        tokenPrivileges.Privileges(0).Attributes = API.SE_PRIVILEGE_ENABLED
+                        tokenPrivileges.Privileges(0).Attributes = API.PrivilegeAttributes.SE_PRIVILEGE_ENABLED
                         success = API.AdjustTokenPrivileges(token, False, tokenPrivileges, Marshal.SizeOf(tokenPrivileges), IntPtr.Zero, IntPtr.Zero)
                         lastError = Marshal.GetLastWin32Error()
                     End If
@@ -249,7 +251,7 @@ Namespace IOt
                     If Not handle.IsInvalid Then
                         Dim buffer As REPARSE_DATA_BUFFER = New REPARSE_DATA_BUFFER()
                         ' Make up the control code - see CTL_CODE on ntddk.h
-                        Dim controlCode = (API.FILE_DEVICE_FILE_SYSTEM << 16) Or (API.FILE_ANY_ACCESS << 14) Or (API.FSCTL_GET_REPARSE_POINT << 2) Or API.METHOD_BUFFERED
+                        Dim controlCode = (API.FileDeviceTypes.FILE_DEVICE_FILE_SYSTEM << 16) Or (API.IOFileAccess.FILE_ANY_ACCESS << 14) Or (API.FSCTL_GET_REPARSE_POINT << 2) Or API.IOMethod.METHOD_BUFFERED
                         Dim bytesReturned As UInt32
                         success = API.DeviceIoControl(handle.DangerousGetHandle, controlCode, IntPtr.Zero, 0, buffer, API.MAXIMUM_REPARSE_DATA_BUFFER_SIZE, bytesReturned, IntPtr.Zero)
                         lastError = Marshal.GetLastWin32Error()
@@ -259,14 +261,14 @@ Namespace IOt
                             'Note that according to http://wesnerm.blogs.com/net_undocumented/2006/10/symbolic_links_.html
                             'Symbolic links store relative paths, while junctions use absolute paths
                             'however, they can in fact be either, and may or may not have a leading \.
-                            Debug.Assert(buffer.ReparseTag = API.IO_REPARSE_TAG_SYMLINK OrElse buffer.ReparseTag = API.IO_REPARSE_TAG_MOUNT_POINT, "Unrecognised reparse tag")                     'We only recognise these two
+                            Debug.Assert(buffer.ReparseTag = API.ReparseTags.IO_REPARSE_TAG_SYMLINK OrElse buffer.ReparseTag = API.ReparseTags.IO_REPARSE_TAG_MOUNT_POINT, "Unrecognised reparse tag")                     'We only recognise these two
                             Dim tag As TagType
-                            If (buffer.ReparseTag = IO_REPARSE_TAG_SYMLINK) Then
+                            If (buffer.ReparseTag = API.ReparseTags.IO_REPARSE_TAG_SYMLINK) Then
                                 'for some reason symlinks seem to have an extra two characters on the front
                                 subsString = New String(buffer.ReparseTarget, (buffer.SubsNameOffset / 2 + 2), buffer.SubsNameLength / 2)
                                 printString = New String(buffer.ReparseTarget, (buffer.PrintNameOffset / 2 + 2), buffer.PrintNameLength / 2)
                                 tag = TagType.SymbolicLink
-                            ElseIf (buffer.ReparseTag = API.IO_REPARSE_TAG_MOUNT_POINT) Then
+                            ElseIf (buffer.ReparseTag = API.ReparseTags.IO_REPARSE_TAG_MOUNT_POINT) Then
                                 'This could be a junction or a mounted drive - a mounted drive starts with "\\??\\Volume"
                                 subsString = New String(buffer.ReparseTarget, buffer.SubsNameOffset / 2, buffer.SubsNameLength / 2)
                                 printString = New String(buffer.ReparseTarget, buffer.PrintNameOffset / 2, buffer.PrintNameLength / 2)
@@ -286,7 +288,7 @@ Namespace IOt
                                     (Not normalisedTarget.StartsWith("\??\") AndAlso normalisedTarget(1) <> ":"c)),
                                     "Malformed subsString")
                                 'Junction points must be absolute
-                                Debug.Assert(buffer.ReparseTag = API.IO_REPARSE_TAG_SYMLINK OrElse normalisedTarget.StartsWith("\??\Volume") OrElse normalisedTarget(1) = ":"c, "Relative junction point")
+                                Debug.Assert(buffer.ReparseTag = API.ReparseTags.IO_REPARSE_TAG_SYMLINK OrElse normalisedTarget.StartsWith("\??\Volume") OrElse normalisedTarget(1) = ":"c, "Relative junction point")
                                 If (normalisedTarget.StartsWith("\??\")) Then
                                     normalisedTarget = normalisedTarget.Substring(4)
                                 End If

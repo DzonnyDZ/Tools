@@ -1,375 +1,375 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>
-        </ProductVersion>
-        <SchemaVersion>
-        </SchemaVersion>
-        <ProjectGuid>{69B7448C-E445-4507-AE2A-469E3C99FC62}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <RootNamespace>Tools</RootNamespace>
-        <AssemblyName>Tools.Text.Unicode</AssemblyName>
-        <FileAlignment>512</FileAlignment>
-        <MyType>Windows</MyType>
-        <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-        <PublishUrl>publish\</PublishUrl>
-        <Install>true</Install>
-        <InstallFrom>Disk</InstallFrom>
-        <UpdateEnabled>false</UpdateEnabled>
-        <UpdateMode>Foreground</UpdateMode>
-        <UpdateInterval>7</UpdateInterval>
-        <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-        <UpdatePeriodically>false</UpdatePeriodically>
-        <UpdateRequired>false</UpdateRequired>
-        <MapFileExtensions>true</MapFileExtensions>
-        <ApplicationRevision>0</ApplicationRevision>
-        <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-        <IsWebBootstrapper>false</IsWebBootstrapper>
-        <UseApplicationTrust>false</UseApplicationTrust>
-        <BootstrapperEnabled>true</BootstrapperEnabled>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
-        <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <DefineDebug>false</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <Optimize>true</Optimize>
-        <OutputPath>..\bin\Release\AnyCPU\</OutputPath>
-        <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup>
-        <OptionExplicit>On</OptionExplicit>
-    </PropertyGroup>
-    <PropertyGroup>
-        <OptionCompare>Binary</OptionCompare>
-    </PropertyGroup>
-    <PropertyGroup>
-        <OptionStrict>Off</OptionStrict>
-    </PropertyGroup>
-    <PropertyGroup>
-        <OptionInfer>On</OptionInfer>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Alpha|AnyCPU'">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Alpha\AnyCPU\</OutputPath>
-        <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <CodeAnalysisLogFile>bin\Debug\Tools.Text.Unicode.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-        <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-        <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-        <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-        <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-        <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-        <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-        <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 4</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Beta\AnyCPU\</OutputPath>
-        <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <CodeAnalysisLogFile>bin\Debug\Tools.Text.Unicode.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-        <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-        <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-        <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-        <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-        <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-        <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-        <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 4</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RC|AnyCPU'">
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\RC\AnyCPU\</OutputPath>
-        <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
-        <Optimize>true</Optimize>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>pdbonly</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <CodeAnalysisLogFile>bin\Release\Tools.Text.Unicode.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-        <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-        <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-        <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-        <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-        <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-        <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-        <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 4</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup>
-        <SignAssembly>true</SignAssembly>
-    </PropertyGroup>
-    <PropertyGroup>
-        <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="System" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Numerics" />
-        <Reference Include="System.Web" />
-        <Reference Include="System.Xml" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Data.DataSetExtensions" />
-    </ItemGroup>
-    <ItemGroup>
-        <Import Include="Microsoft.VisualBasic" />
-        <Import Include="System" />
-        <Import Include="System.Collections" />
-        <Import Include="System.Collections.Generic" />
-        <Import Include="System.ComponentModel" />
-        <Import Include="System.Data" />
-        <Import Include="System.Diagnostics" />
-        <Import Include="System.Linq" />
-        <Import Include="System.Xml.Linq" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="..\SharedFiles\Version.vb">
-            <Link>My Project\Version.vb</Link>
-        </Compile>
-        <Compile Include="My Project\AssemblyInfo.vb" />
-        <Compile Include="My Project\Application.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Application.myapp</DependentUpon>
-        </Compile>
-        <Compile Include="Text\Unicode\CharsLine.vb" />
-        <Compile Include="Text\Unicode\CharsList.vb" />
-        <Compile Include="Text\Unicode\CharsSource.vb" />
-        <Compile Include="Text\Unicode\CodePointInfo.vb" />
-        <Compile Include="Text\Unicode\CsurBlock.vb" />
-        <Compile Include="Text\Unicode\CsurEnums.vb" />
-        <Compile Include="Text\Unicode\CsurExtensions.vb" />
-        <Compile Include="Text\Unicode\CsurPropertiesProvider.vb" />
-        <Compile Include="Text\Unicode\EmojiSourceInfo.vb" />
-        <Compile Include="Text\Unicode\ICharNameProvider.vb" />
-        <Compile Include="Text\Unicode\NamesListParser.vb" />
-        <Compile Include="Text\Unicode\RadicalStrokeCount.vb" />
-        <Compile Include="Text\Unicode\UcdLocalizationProvider.vb" />
-        <Compile Include="Text\Unicode\UcdRepertoire.vb" />
-        <Compile Include="Text\Unicode\UnicodeBlock.vb" />
-        <Compile Include="Text\Unicode\UnicodeCharacterDatabase.vb" />
-        <Compile Include="Text\Unicode\UnicodeCharacterGroup.vb" />
-        <Compile Include="Text\Unicode\UnicodeCodePoint.vb" />
-        <Compile Include="Text\Unicode\UnicodeCollections.vb" />
-        <Compile Include="Text\Unicode\UnicodeEnums.vb" />
-        <Compile Include="Text\Unicode\UnicodeExtensions.vb" />
-        <Compile Include="Text\Unicode\UnicodeNamedSequence.vb" />
-        <Compile Include="Text\Unicode\UnicodeNormalizationCorrection.vb" />
-        <Compile Include="Text\Unicode\UnicodePropertiesProvider.vb" />
-        <Compile Include="Text\Unicode\UnicodePropertyAttribute.vb" />
-        <Compile Include="Text\Unicode\UnicodePropertyCategoryAttribute.vb" />
-        <Compile Include="Text\Unicode\UnicodeResources.Designer.vb">
-            <DependentUpon>UnicodeResources.resx</DependentUpon>
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-        </Compile>
-        <Compile Include="Text\Unicode\UnicodeStandartizedVariant.vb" />
-        <Compile Include="Text\Unicode\UnihanPropertyCategoryAttribute.vb" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Text\Unicode\ucd.xml" />
-        <EmbeddedResource Include="Text\Unicode\UnicodeResources.cs.resx">
-            <DependentUpon>UnicodeResources.resx</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\UnicodeResources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>UnicodeResources.Designer.vb</LastGenOutput>
-            <CustomToolNamespace>TextT.UnicodeT</CustomToolNamespace>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="..\SharedFiles\Tools.snk">
-            <Link>Tools.snk</Link>
-        </None>
-        <None Include="My Project\Application.myapp">
-            <Generator>MyApplicationCodeGenerator</Generator>
-            <LastGenOutput>Application.Designer.vb</LastGenOutput>
-        </None>
-        <EmbeddedResource Include="Text\Unicode\CSUR.xml.gz">
-            <LogicalName>Tools.TextT.UnicodeT.CSUR.xml.gz</LogicalName>
-            <DependentUpon>CSUR.xml</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\NamesList.txt.gz">
-            <DependentUpon>NamesList.txt</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.NamesList.txt.gz</LogicalName>
-        </EmbeddedResource>
-        <None Include="Text\Unicode\ucd.all.grouped.xml.gz">
-            <DependentUpon>ucd.all.grouped.xml</DependentUpon>
-        </None>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.cs.gz">
-            <DependentUpon>ucd.cs.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.cs.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.da.gz">
-            <DependentUpon>ucd.da.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.da.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.de.gz">
-            <DependentUpon>ucd.de.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.de.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.el.gz">
-            <DependentUpon>ucd.el.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.el.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.en.gz">
-            <DependentUpon>ucd.en.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.en.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.es.gz">
-            <DependentUpon>ucd.es.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.es.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.fr.gz">
-            <DependentUpon>ucd.fr.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.fr.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.gz">
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.gz</LogicalName>
-            <DependentUpon>ucd.xml</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.pl.gz">
-            <DependentUpon>ucd.pl.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.pl.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.pt.gz">
-            <DependentUpon>ucd.pt.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.pt.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.ru.gz">
-            <DependentUpon>ucd.ru.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.ru.gz</LogicalName>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.tr.gz">
-            <DependentUpon>ucd.tr.xml</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Text\Unicode\ucd.xml.zh.gz">
-            <DependentUpon>ucd.zh.xml</DependentUpon>
-            <LogicalName>Tools.TextT.UnicodeT.ucd.xml.zh.gz</LogicalName>
-        </EmbeddedResource>
-        <None Include="Text\Unicode\Unihan generator.xlsx" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Tools.Hardcore\Tools.Hardcore.vcxproj">
-            <Project>{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}</Project>
-            <Name>Tools.Hardcore</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
-            <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
-            <Name>Tools.Runtime.CompilerServices</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\Tools\Tools.vbproj">
-            <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-            <Name>Tools</Name>
-        </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Text\Unicode\ucd.all.grouped.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Text\Unicode\CSUR.xml">
-            <SubType>Designer</SubType>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Text\Unicode\NameAliases.txt">
-            <LogicalName>Tools.TextT.UnicodeT.NameAliases.txt</LogicalName>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Text\Unicode\NamesList.txt" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Text\Unicode\ucd.cs.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-            <SubType>Designer</SubType>
-        </None>
-        <None Include="Text\Unicode\ucd.da.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.de.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.el.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.en.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.es.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.fr.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.pl.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.pt.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.ru.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.tr.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-        <None Include="Text\Unicode\ucd.zh.xml">
-            <DependentUpon>ucd.xml</DependentUpon>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-            <Visible>False</Visible>
-            <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-            <Install>true</Install>
-        </BootstrapperPackage>
-        <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-            <Visible>False</Visible>
-            <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-            <Install>false</Install>
-        </BootstrapperPackage>
-        <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-            <Visible>False</Visible>
-            <ProductName>.NET Framework 3.5 SP1</ProductName>
-            <Install>false</Install>
-        </BootstrapperPackage>
-        <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-            <Visible>False</Visible>
-            <ProductName>Windows Installer 3.1</ProductName>
-            <Install>true</Install>
-        </BootstrapperPackage>
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-    <PropertyGroup>
-        <PreBuildEvent>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{69B7448C-E445-4507-AE2A-469E3C99FC62}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Tools</RootNamespace>
+    <AssemblyName>Tools.Text.Unicode</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
+    <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\AnyCPU\</OutputPath>
+    <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Alpha|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Alpha\AnyCPU\</OutputPath>
+    <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Tools.Text.Unicode.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 4</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Beta\AnyCPU\</OutputPath>
+    <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Tools.Text.Unicode.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 4</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RC|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\RC\AnyCPU\</OutputPath>
+    <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Tools.Text.Unicode.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 4</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>My Project\Version.vb</Link>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="Text\Unicode\CharsLine.vb" />
+    <Compile Include="Text\Unicode\CharsList.vb" />
+    <Compile Include="Text\Unicode\CharsSource.vb" />
+    <Compile Include="Text\Unicode\CodePointInfo.vb" />
+    <Compile Include="Text\Unicode\CsurBlock.vb" />
+    <Compile Include="Text\Unicode\CsurEnums.vb" />
+    <Compile Include="Text\Unicode\CsurExtensions.vb" />
+    <Compile Include="Text\Unicode\CsurPropertiesProvider.vb" />
+    <Compile Include="Text\Unicode\EmojiSourceInfo.vb" />
+    <Compile Include="Text\Unicode\ICharNameProvider.vb" />
+    <Compile Include="Text\Unicode\NamesListParser.vb" />
+    <Compile Include="Text\Unicode\RadicalStrokeCount.vb" />
+    <Compile Include="Text\Unicode\UcdLocalizationProvider.vb" />
+    <Compile Include="Text\Unicode\UcdRepertoire.vb" />
+    <Compile Include="Text\Unicode\UnicodeBlock.vb" />
+    <Compile Include="Text\Unicode\UnicodeCharacterDatabase.vb" />
+    <Compile Include="Text\Unicode\UnicodeCharacterGroup.vb" />
+    <Compile Include="Text\Unicode\UnicodeCodePoint.vb" />
+    <Compile Include="Text\Unicode\UnicodeCollections.vb" />
+    <Compile Include="Text\Unicode\UnicodeEnums.vb" />
+    <Compile Include="Text\Unicode\UnicodeExtensions.vb" />
+    <Compile Include="Text\Unicode\UnicodeNamedSequence.vb" />
+    <Compile Include="Text\Unicode\UnicodeNormalizationCorrection.vb" />
+    <Compile Include="Text\Unicode\UnicodePropertiesProvider.vb" />
+    <Compile Include="Text\Unicode\UnicodePropertyAttribute.vb" />
+    <Compile Include="Text\Unicode\UnicodePropertyCategoryAttribute.vb" />
+    <Compile Include="Text\Unicode\UnicodeResources.Designer.vb">
+      <DependentUpon>UnicodeResources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Text\Unicode\UnicodeStandartizedVariant.vb" />
+    <Compile Include="Text\Unicode\UnihanPropertyCategoryAttribute.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Text\Unicode\ucd.xml" />
+    <EmbeddedResource Include="Text\Unicode\UnicodeResources.cs.resx">
+      <DependentUpon>UnicodeResources.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\UnicodeResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnicodeResources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>TextT.UnicodeT</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\SharedFiles\Tools.snk">
+      <Link>Tools.snk</Link>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Text\Unicode\CSUR.xml.gz">
+      <LogicalName>Tools.TextT.UnicodeT.CSUR.xml.gz</LogicalName>
+      <DependentUpon>CSUR.xml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\NamesList.txt.gz">
+      <DependentUpon>NamesList.txt</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.NamesList.txt.gz</LogicalName>
+    </EmbeddedResource>
+    <None Include="Text\Unicode\ucd.all.grouped.xml.gz">
+      <DependentUpon>ucd.all.grouped.xml</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.cs.gz">
+      <DependentUpon>ucd.cs.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.cs.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.da.gz">
+      <DependentUpon>ucd.da.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.da.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.de.gz">
+      <DependentUpon>ucd.de.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.de.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.el.gz">
+      <DependentUpon>ucd.el.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.el.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.en.gz">
+      <DependentUpon>ucd.en.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.en.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.es.gz">
+      <DependentUpon>ucd.es.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.es.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.fr.gz">
+      <DependentUpon>ucd.fr.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.fr.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.gz">
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.gz</LogicalName>
+      <DependentUpon>ucd.xml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.pl.gz">
+      <DependentUpon>ucd.pl.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.pl.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.pt.gz">
+      <DependentUpon>ucd.pt.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.pt.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.ru.gz">
+      <DependentUpon>ucd.ru.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.ru.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.tr.gz">
+      <DependentUpon>ucd.tr.xml</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Unicode\ucd.xml.zh.gz">
+      <DependentUpon>ucd.zh.xml</DependentUpon>
+      <LogicalName>Tools.TextT.UnicodeT.ucd.xml.zh.gz</LogicalName>
+    </EmbeddedResource>
+    <None Include="Text\Unicode\Unihan generator.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools.Hardcore\Tools.Hardcore.vcxproj">
+      <Project>{bc69929d-f5b7-4bd1-b742-2773c2cdeaa8}</Project>
+      <Name>Tools.Hardcore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
+      <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
+      <Name>Tools.Runtime.CompilerServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Text\Unicode\ucd.all.grouped.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Text\Unicode\CSUR.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Text\Unicode\NameAliases.txt">
+      <LogicalName>Tools.TextT.UnicodeT.NameAliases.txt</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Text\Unicode\NamesList.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Text\Unicode\ucd.cs.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Text\Unicode\ucd.da.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.de.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.el.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.en.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.es.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.fr.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.pl.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.pt.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.ru.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.tr.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+    <None Include="Text\Unicode\ucd.zh.xml">
+      <DependentUpon>ucd.xml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
             "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml
             "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\CSUR.xml.gz" "$(ProjectDir)Text\Unicode" -sg CSUR.xml
             "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\NamesList.txt.gz" "$(ProjectDir)Text\Unicode" -sg NamesList.txt
@@ -388,14 +388,14 @@
             "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.tr.gz" "$(ProjectDir)Text\Unicode" -sg ucd.tr.xml
             "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.zh.gz" "$(ProjectDir)Text\Unicode" -sg ucd.zh.xml
         </PreBuildEvent>
-    </PropertyGroup>
-    <PropertyGroup>
-        <PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
             "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
             copy "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(TargetDir)ucd.all.grouped.xml.gz" /Y
         </PostBuildEvent>
-    </PropertyGroup>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

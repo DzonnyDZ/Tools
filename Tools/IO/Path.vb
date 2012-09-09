@@ -575,7 +575,8 @@ Namespace IOt
         ''' <summary>Indicates wheather current instance is parent of passed instance</summary>
         ''' <param name="Child">Posiible child of current instance</param>
         ''' <returns>True if <paramref name="Child"/> is sub-path of current instace</returns>
-        Public Function IsparentOf(ByVal Child As Path) As Boolean
+        ''' <version version="1.5.4">Renamed form <c>IsparentOf</c> to <c>IsParentOf</c></version>
+        Public Function IsParentOf(ByVal Child As Path) As Boolean
             Return Me > Child
         End Function
 #End Region
@@ -938,6 +939,117 @@ Namespace IOt
             Return Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText(text, pattern)
         End Function
 #End Region
+
+        ''' <summary>Gets relative path from <paramref name="b"/> to <paramref name="a"/></summary>
+        ''' <param name="a">Reference path. SHould be folder.</param>
+        ''' <param name="b">Path to make relative to <paramref name="a"/></param>
+        ''' <returns>
+        ''' A relative path, as <paramref name="a"/> is seen from <paramref name="b"/>.
+        ''' Returns <paramref name="b"/> if either <paramref name="a"/> or <paramref name="b"/> is relative.
+        ''' Returns <paramref name="b"/> if <paramref name="a"/> and <paramref name="b"/> has nothing in commmon.
+        ''' </returns>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Shared Function GetDifference(a As Path, b As Path) As Path
+            If a Is Nothing Then Throw New ArgumentNullException("a")
+            If b Is Nothing Then Throw New ArgumentNullException("b")
+            If Not b.IsRooted Then Return b
+            If Not a.IsRooted Then Return b
+
+            a = a.GetFullPath
+            b = b.GetFullPath
+
+            If a.Path.EndsWith(IO.Path.DirectorySeparatorChar) OrElse a.Path.EndsWith(IO.Path.AltDirectorySeparatorChar) Then a = New Path(a.Path.Substring(0, a.Path.Length - 1))
+            If b.Path.EndsWith(IO.Path.DirectorySeparatorChar) OrElse b.Path.EndsWith(IO.Path.AltDirectorySeparatorChar) Then b = New Path(b.Path.Substring(0, b.Path.Length - 1))
+
+            If a.IsUNC <> b.IsUNC Then Return b
+
+            Dim aSg = a.Segments
+            Dim bSg = b.Segments
+
+            Dim firstSg = If(a.IsUNC, 2, 0)
+
+            If aSg.Length <= firstSg OrElse bSg.Length <= firstSg Then Return b
+
+            Dim comparer = If(IsCaseSensitive, StringComparer.InvariantCulture, StringComparer.InvariantCultureIgnoreCase)
+
+            If Not comparer.Equals(aSg(firstSg), bSg(firstSg)) Then Return b
+
+            For i = firstSg + 1 To Math.Min(aSg.Length, bSg.Length) - 1
+                If Not comparer.Equals(aSg(i), bSg(i)) Then
+                    Dim bld As New System.Text.StringBuilder
+                    For j = i To aSg.Length - 1
+                        If j > i Then bld.Append(IO.Path.DirectorySeparatorChar)
+                        bld.Append("..")
+                    Next
+                    For j = i To bSg.Length - 1
+                        bld.Append(IO.Path.DirectorySeparatorChar & bSg(j))
+                    Next
+                    Return bld.ToString
+                End If
+            Next
+
+            If aSg.Length > bSg.Length Then
+                Dim bld As New System.Text.StringBuilder
+                For i = aSg.Length To bSg.Length
+                    If i > aSg.Length Then bld.Append(IO.Path.DirectorySeparatorChar)
+                    bld.Append("..")
+                Next
+                Return bld.ToString
+            Else
+                Return String.Join(IO.Path.DirectorySeparatorChar, bSg, aSg.Length, bSg.Length - aSg.Length)
+            End If
+        End Function
+
+        ''' <summary>Caches value of the <see cref="IsCaseSensitive"/> property (when not nulll)</summary>
+        ''' <threadsafety>Synchronize write access to this field uisng <see cref="isCaseSensitiveLock"/>.</threadsafety>
+        Private Shared _isCaseSensitive As Boolean?
+        ''' <summary>Use to synchronoze write access to <see cref="_isCaseSensitive"/></summary>
+        Private Shared isCaseSensitiveLock As New Object
+        ''' <summary>Gets value indicating if paths are cas-sensitive on current operating system</summary>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        ''' <threadsafety>This property is thread-safe</threadsafety>
+        Public Shared ReadOnly Property IsCaseSensitive As Boolean
+            Get
+                If _isCaseSensitive Is Nothing Then
+                    SyncLock isCaseSensitiveLock
+                        If _isCaseSensitive Is Nothing Then
+                            Dim fileName = Guid.NewGuid.ToString.ToLowerInvariant
+                            While Not fileName Like "*[a-f]*" OrElse New Path(IO.Path.Combine(IO.Path.GetTempPath(), fileName)).Exists OrElse New Path(IO.Path.Combine(IO.Path.GetTempPath(), fileName.ToUpperInvariant)).Exists
+                                fileName = Guid.NewGuid.ToString.ToLowerInvariant
+                            End While
+
+                            Dim path = IO.Path.Combine(IO.Path.GetTempPath(), fileName)
+                            Try
+                                Using File.Create(path)
+                                End Using
+
+                                _isCaseSensitive = Not IO.File.Exists(path.ToUpperInvariant)
+                            Finally
+                                Try
+                                    IO.File.Delete(path)
+                                Catch : End Try
+                                End Try
+                        End If
+                    End SyncLock
+                End If
+                Return _isCaseSensitive
+            End Get
+        End Property
+
+        ''' <summary>Gets relative path from <paramref name="b"/> to <paramref name="a"/></summary>
+        ''' <param name="a">Reference path. Should be folder.</param>
+        ''' <param name="b">Path to make relative to <paramref name="a"/></param>
+        ''' <returns>
+        ''' A relative path, as <paramref name="a"/> is seen from <paramref name="b"/>.
+        ''' Returns <paramref name="b"/> if either <paramref name="a"/> or <paramref name="b"/> is relative.
+        ''' Returns <paramref name="b"/> if <paramref name="a"/> and <paramref name="b"/> has nothing in commmon.
+        ''' </returns>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Shared Function GetDifference$(a$, b$)
+            If a Is Nothing Then Throw New ArgumentNullException("a")
+            If b Is Nothing Then Throw New ArgumentNullException("b")
+            Return GetDifference(CType(a, Path), CType(b, Path))
+        End Function
     End Class
 
     ''' <summary>Interface of object that provides path</summary>

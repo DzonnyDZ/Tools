@@ -109,7 +109,7 @@ Namespace API
             Public Luid As LUID
             ''' <summary>Specifies attributes of the <see cref="LUID"/>.</summary>
             ''' <remarks>This value contains up to 32 one-bit flags. Its meaning is dependent on the definition and use of the <see cref="LUID"/>.</remarks>
-            Public Attributes As UInt32
+            Public Attributes As PrivilegeAttributes
         End Structure
         ''' <summary>A 64-bit value guaranteed to be unique only on the system on which it was generated.</summary>
         ''' <remarks>The uniqueness of a locally unique identifier (<see cref="LUID"/>) is guaranteed only until the system is restarted.</remarks>
@@ -148,16 +148,12 @@ Namespace API
         Public Const MAX_PATH As Int32 = 260
         ''' <summary>Maximum value for prefferred data length of the <see cref="NetShareEnum"/> function</summary>
         Public Const MAX_PREFERRED_LENGTH% = &HFFFFFFFF
-        Public Const TOKEN_ADJUST_PRIVILEGES = &H20UI
+        ''' <summary>name of backup privilege</summary>
         Public Const SE_BACKUP_NAME$ = "SeBackupPrivilege"
-        Public Const SE_PRIVILEGE_ENABLED As UInt32 = &H2UI
-        Public Const FILE_DEVICE_FILE_SYSTEM = 9UI
-        Public Const FILE_ANY_ACCESS = 0UI
-        Public Const METHOD_BUFFERED = 0UI
+        ''' <summary>Retrieves the reparse point data associated with the file or directory identified by the specified handle.</summary>
         Public Const FSCTL_GET_REPARSE_POINT = 42UI
+        ''' <summary>Maximum size of reparse buffer data</summary>
         Public Const MAXIMUM_REPARSE_DATA_BUFFER_SIZE% = 16 * 1024
-        Public Const IO_REPARSE_TAG_MOUNT_POINT = &HA0000003UI 'Moiunt point or junction, see winnt.h
-        Public Const IO_REPARSE_TAG_SYMLINK = &HA000000CUI 'SYMLINK or SYMLINKD (see http://wesnerm.blogs.com/net_undocumented/2006/10/index.html)
 #End Region
 
 #Region "Functions"
@@ -435,7 +431,7 @@ Namespace API
         ''' <param name="TokenHandle">A pointer to a handle that identifies the newly opened access token when the function returns.</param>
         ''' <returns>True on success</returns>
         <DllImport("advapi32.dll", SetLastError:=True)>
-        Public Function OpenProcessToken(ProcessHandle As IntPtr, DesiredAccessas As UInt32, <Out> ByRef TokenHandle As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        Public Function OpenProcessToken(ProcessHandle As IntPtr, DesiredAccessas As AccessRightsForAccessTokenObjects, <Out> ByRef TokenHandle As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
         End Function
 
         ''' <summary>Retrieves a pseudo handle for the current process.</summary>
@@ -585,6 +581,7 @@ Namespace API
             ''' <summary>Scrolling is about to start or is currently occurring in the target. This value is used in addition to the other values.</summary>
             DROPEFFECT_SCROLL = &H80000000UI
         End Enum
+
         ''' <summary>File flags</summary>
         <Flags()> _
         Public Enum FileFlags As UInt32
@@ -656,6 +653,7 @@ Namespace API
             ''' <summary>When specified as input, SFGAO_VALIDATE instructs the folder to validate that the items pointed to by the contents of apidl exist. If one or more of those items do not exist, IShellFolder::GetAttributesOf returns a failure code. When used with the file system folder, SFGAO_VALIDATE instructs the folder to discard cached properties retrieved by clients of IShellFolder2::GetDetailsEx that may have accumulated for the specified items.</summary>
             SFGAO_VALIDATE = &H1000000UI
         End Enum
+
         ''' <summary>Levels for the <see cref="NetShareEnum"/> function</summary>
         Public Enum NetShareLevel As Integer
             ''' <summary>Return share names. The bufptr parameter points to an array of SHARE_INFO_0 structures.</summary>
@@ -670,6 +668,7 @@ Namespace API
             ''' <remarks>Windows Server 2003, Windows XP, Windows 2000 Server, and Windows 2000 Professional:  This information level is not supported.</remarks>
             ResourcesAllScopes = 503
         End Enum
+
         ''' <summary><see cref="SHELLEXECUTEINFO"/> errors</summary>
         Public Enum ShellExecuteErrors As Integer
             ''' <summary>File not found.</summary>
@@ -695,6 +694,7 @@ Namespace API
             ''' <summary>File association not available.</summary>
             SE_ERR_NOASSOC = 31
         End Enum
+
         ''' <summary><see cref="SHELLEXECUTEINFO"/> flags</summary>
         <Flags()> _
         Public Enum ShellExecuteInfoFlags As Integer
@@ -742,6 +742,246 @@ Namespace API
             SEE_MASK_WAITFORINPUTIDLE = &H2000000
             ''' <summary>Windows XP and later. Keep track of the number of times this application has been launched. Applications with sufficiently high counts appear in the Start Menu's list of most frequently used programs.</summary>
             SEE_MASK_FLAG_LOG_USAGE = &H4000000
+        End Enum
+
+        ''' <summary>Access flags for acccess to tokens</summary>
+        <Flags>
+        Public Enum AccessRightsForAccessTokenObjects As UInteger
+            ''' <summary>The right to delete the object.</summary>
+            DELETE = &H10000
+            ''' <summary>The right to read the information in the object's security descriptor, not including the information in the system access control list (SACL).</summary>
+            READ_CONTROL = &H20000
+            ''' <summary>The right to modify the discretionary access control list (DACL) in the object's security descriptor.</summary>
+            WRITE_DAC = &H40000
+            ''' <summary>The right to change the owner in the object's security descriptor.</summary>
+            WRITE_OWNER = &H80000
+            ''' <summary>The right to use the object for synchronization. This enables a thread to wait until the object is in the signaled state. Some object types do not support this access right.</summary>
+            SYNCHRONIZE = &H100000
+
+            ''' <summary>Combines <see cref="DELETE"/>, <see cref="READ_CONTROL"/>, <see cref="WRITE_DAC"/>, and <see cref="WRITE_OWNER"/> access.</summary>
+            STANDARD_RIGHTS_REQUIRED = &HF0000
+            ''' <summary>Currently defined to equal <see cref="READ_CONTROL"/>.</summary>
+            STANDARD_RIGHTS_READ = READ_CONTROL
+            ''' <summary>Currently defined to equal <see cref="READ_CONTROL"/>.</summary>
+            STANDARD_RIGHTS_WRITE = READ_CONTROL
+            ''' <summary>Currently defined to equal <see cref="READ_CONTROL"/>.</summary>
+            STANDARD_RIGHTS_EXECUTE = READ_CONTROL
+            ''' <summary>Combines <see cref="DELETE"/>, <see cref="READ_CONTROL"/>, <see cref="WRITE_DAC"/>, <see cref="WRITE_OWNER"/>, and <see cref="SYNCHRONIZE"/> access.</summary>
+            STANDARD_RIGHTS_ALL = &H1F0000
+            ''' <summary>All specific rights.</summary>
+            SPECIFIC_RIGHTS_ALL = &HFFFF
+
+            ''' <summary>controls the ability to get or set the SACL in an object's security descriptor. The system grants this access right only if the SE_SECURITY_NAME privilege is enabled in the access token of the requesting thread.</summary>
+            ACCESS_SYSTEM_SECURITY = &H1000000
+
+            ''' <summary>Required to change the default owner, primary group, or DACL of an access token.</summary>
+            TOKEN_ADJUST_DEFAULT = &H80
+            ''' <summary>Required to adjust the attributes of the groups in an access token.</summary>
+            TOKEN_ADJUST_GROUPS = &H40
+            ''' <summary>Required to enable or disable the privileges in an access token.</summary>
+            TOKEN_ADJUST_PRIVILEGES = &H20
+            ''' <summary>Required to adjust the session ID of an access token. The SE_TCB_NAME privilege is required.</summary>
+            TOKEN_ADJUST_SESSIONID = &H100
+            ''' <summary>Required to attach a primary token to a process. The SE_ASSIGNPRIMARYTOKEN_NAME privilege is also required to accomplish this task.</summary>
+            TOKEN_ASSIGN_PRIMARY = 1
+            ''' <summary>Required to duplicate an access token.</summary>
+            TOKEN_DUPLICATE = 2
+            ''' <summary>Combines <see cref="STANDARD_RIGHTS_EXECUTE"/> and <see cref="TOKEN_IMPERSONATE"/>.</summary>
+            TOKEN_EXECUTE
+            ''' <summary>Required to attach an impersonation access token to a process.</summary>
+            TOKEN_IMPERSONATE = 4
+            ''' <summary>Required to query an access token.</summary>
+            TOKEN_QUERY = 8
+            ''' <summary>Required to query the source of an access token.</summary>
+            TOKEN_QUERY_SOURCE = &H10
+            ''' <summary>Combines <see cref="STANDARD_RIGHTS_READ"/> and <see cref="TOKEN_QUERY"/>.</summary>
+            TOKEN_READ = STANDARD_RIGHTS_READ Or TOKEN_QUERY
+            ''' <summary>Combines <see cref="STANDARD_RIGHTS_WRITE"/>, <see cref="TOKEN_ADJUST_PRIVILEGES"/>, <see cref="TOKEN_ADJUST_GROUPS"/>, and <see cref="TOKEN_ADJUST_DEFAULT"/>.</summary>
+            TOKEN_WRITE = STANDARD_RIGHTS_WRITE Or TOKEN_ADJUST_PRIVILEGES Or TOKEN_ADJUST_GROUPS Or TOKEN_ADJUST_DEFAULT
+            ''' <summary>Combines all possible access rights for a token.</summary>
+            TOKEN_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED Or TOKEN_ASSIGN_PRIMARY Or TOKEN_DUPLICATE Or TOKEN_IMPERSONATE Or TOKEN_QUERY Or TOKEN_QUERY_SOURCE Or
+                               TOKEN_ADJUST_PRIVILEGES Or TOKEN_ADJUST_GROUPS Or TOKEN_ADJUST_DEFAULT Or TOKEN_ADJUST_SESSIONID
+        End Enum
+
+        ''' <summary>Privilege attributes</summary>
+        <Flags>
+        Public Enum PrivilegeAttributes As UInt32
+            ''' <summary>The privilege is enabled.</summary>
+            SE_PRIVILEGE_ENABLED = 2
+            ''' <summary>Used to remove a privilege. For details, see <see cref="AdjustTokenPrivileges"/>.</summary>
+            SE_PRIVILEGE_REMOVED = 4
+            ''' <summary>The privilege is enabled by default.</summary>
+            SE_PRIVILEGE_ENABLED_BY_DEFAULT = 1
+            ''' <summary>The privilege was used to gain access to an object or service. This flag is used to identify the relevant privileges in a set passed by a client application that may contain unnecessary privileges.</summary>
+            SE_PRIVILEGE_USED_FOR_ACCESS = 8
+        End Enum
+
+        ''' <summary>Device types that are availbable for file-like operations</summary>
+        Public Enum FileDeviceTypes As UInteger
+            ''' <summary>8042 pport</summary>
+            FILE_DEVICE_8042_PORT = &H27
+            ''' <summary>ACPI device</summary>
+            FILE_DEVICE_ACPI = &H32
+            ''' <summary>Battery</summary>
+            FILE_DEVICE_BATTERY = &H29
+            ''' <summary>Beep</summary>
+            FILE_DEVICE_BEEP = &H1
+            ''' <summary>Bus extender</summary>
+            FILE_DEVICE_BUS_EXTENDER = &H2A
+            ''' <summary>CR-ROM</summary>
+            FILE_DEVICE_CD_ROM = &H2
+            ''' <summary>CD-ROM file system</summary>
+            FILE_DEVICE_CD_ROM_FILE_SYSTEM = &H3
+            ''' <summary>CHanged</summary>
+            FILE_DEVICE_CHANGER = &H30
+            ''' <summary>Controller</summary>
+            FILE_DEVICE_CONTROLLER = &H4
+            ''' <summary>Data-link</summary>
+            FILE_DEVICE_DATALINK = &H5
+            ''' <summary>DFS</summary>
+            FILE_DEVICE_DFS = &H6
+            ''' <summary>DFS file system</summary>
+            FILE_DEVICE_DFS_FILE_SYSTEM = &H35
+            ''' <summary>DFS volume</summary>
+            FILE_DEVICE_DFS_VOLUME = &H36
+            ''' <summary>Disk</summary>
+            FILE_DEVICE_DISK = &H7
+            ''' <summary>Disk file system</summary>
+            FILE_DEVICE_DISK_FILE_SYSTEM = &H8
+            ''' <summary>DVD</summary>
+            FILE_DEVICE_DVD = &H33
+            ''' <summary>File system</summary>
+            FILE_DEVICE_FILE_SYSTEM = &H9
+            ''' <summary>FIPS</summary>
+            FILE_DEVICE_FIPS = &H3A
+            ''' <summary>Full-screen video</summary>
+            FILE_DEVICE_FULLSCREEN_VIDEO = &H34
+            ''' <summary>Input port</summary>
+            FILE_DEVICE_INPORT_PORT = &HA
+            ''' <summary>Keyboard</summary>
+            FILE_DEVICE_KEYBOARD = &HB
+            ''' <summary>KS</summary>
+            FILE_DEVICE_KS = &H2F
+            ''' <summary>KSEC</summary>
+            FILE_DEVICE_KSEC = &H39
+            ''' <summary>MAil slot</summary>
+            FILE_DEVICE_MAILSLOT = &HC
+            ''' <summary>Mass Storage device</summary>
+            FILE_DEVICE_MASS_STORAGE = &H2D
+            ''' <summary>MIDI input</summary>
+            FILE_DEVICE_MIDI_IN = &HD
+            ''' <summary>MIDI output</summary>
+            FILE_DEVICE_MIDI_OUT = &HE
+            ''' <summary>Modem</summary>
+            FILE_DEVICE_MODEM = &H2B
+            ''' <summary>Mouse</summary>
+            FILE_DEVICE_MOUSE = &HF
+            ''' <summary>Multy UNC provider</summary>
+            FILE_DEVICE_MULTI_UNC_PROVIDER = &H10
+            ''' <summary>Named pipe</summary>
+            FILE_DEVICE_NAMED_PIPE = &H11
+            ''' <summary>Network</summary>
+            FILE_DEVICE_NETWORK = &H12
+            ''' <summary>Network browser</summary>
+            FILE_DEVICE_NETWORK_BROWSER = &H13
+            ''' <summary>Network file system</summary>
+            FILE_DEVICE_NETWORK_FILE_SYSTEM = &H14
+            ''' <summary>Network redirector</summary>
+            FILE_DEVICE_NETWORK_REDIRECTOR = &H28
+            ''' <summary>NULL device</summary>
+            FILE_DEVICE_NULL = &H15
+            ''' <summary>LPT parallel port</summary>
+            FILE_DEVICE_PARALLEL_PORT = &H16
+            ''' <summary>Physical net card</summary>
+            FILE_DEVICE_PHYSICAL_NETCARD = &H17
+            ''' <summary>Printer</summary>
+            FILE_DEVICE_PRINTER = &H18
+            ''' <summary>Scanner</summary>
+            FILE_DEVICE_SCANNER = &H19
+            ''' <summary>Screen</summary>
+            FILE_DEVICE_SCREEN = &H1C
+            ''' <summary>Serial enumerator</summary>
+            FILE_DEVICE_SERENUM = &H37
+            ''' <summary>Serial mouse port</summary>
+            FILE_DEVICE_SERIAL_MOUSE_PORT = &H1A
+            ''' <summary>Serial port</summary>
+            FILE_DEVICE_SERIAL_PORT = &H1B
+            ''' <summary>Smart card</summary>
+            FILE_DEVICE_SMARTCARD = &H31
+            ''' <summary>SMB</summary>
+            FILE_DEVICE_SMB = &H2E
+            ''' <summary>Sound device</summary>
+            FILE_DEVICE_SOUND = &H1D
+            ''' <summary>Stream</summary>
+            FILE_DEVICE_STREAMS = &H1E
+            ''' <summary>Tape</summary>
+            FILE_DEVICE_TAPE = &H1F
+            ''' <summary>Tape file system</summary>
+            FILE_DEVICE_TAPE_FILE_SYSTEM = &H20
+            ''' <summary>Terminal server</summary>
+            FILE_DEVICE_TERMSRV = &H38
+            ''' <summary>Transport device</summary>
+            FILE_DEVICE_TRANSPORT = &H21
+            ''' <summary>Unknown device</summary>
+            FILE_DEVICE_UNKNOWN = &H22
+            ''' <summary>VDM</summary>
+            FILE_DEVICE_VDM = &H2C
+            ''' <summary>Video</summary>
+            FILE_DEVICE_VIDEO = &H23
+            ''' <summary>Virtual disk</summary>
+            FILE_DEVICE_VIRTUAL_DISK = &H24
+            ''' <summary>Wave input</summary>
+            FILE_DEVICE_WAVE_IN = &H25
+            ''' <summary>Wave output</summary>
+            FILE_DEVICE_WAVE_OUT = &H26
+        End Enum
+
+        ''' <summary>Specifies IO methods</summary>
+        Public Enum IOMethod As UInteger
+            ''' <summary>Specifies the buffered I/O method, which is typically used for transferring small amounts of data per request. </summary>
+            METHOD_BUFFERED = 0
+            ''' <summary>Specifies the direct I/O method, which is typically used for reading or writing large amounts of data. Use if caller will pass data to the driver.</summary>
+            METHOD_IN_DIRECT = 1
+            ''' <summary>Specifies the direct I/O method, which is typically used for reading or writing large amounts of data. Use if caller will receive data from the driver.</summary>
+            METHOD_OUT_DIRECT = 2
+            ''' <summary>Specifies neither buffered nor direct I/O. The I/O manager does not provide any system buffers or MDLs.</summary>
+            METHOD_NEITHER = 3
+        End Enum
+
+        ''' <summary>Specifies IO fidle access methods</summary>
+        Public Enum IOFileAccess As UInteger
+            ''' <summary>The I/O manager sends the IRP for any caller that has a handle to the file object that represents the target device object.</summary>
+            FILE_ANY_ACCESS = 0
+            ''' <summary>The I/O manager sends the IRP only for a caller with read access rights, allowing the underlying device driver to transfer data from the device to system memory.</summary>
+            FILE_READ_ACCESS = 1
+            ''' <summary>The I/O manager sends the IRP only for a caller with write access rights, allowing the underlying device driver to transfer data from system memory to its device.</summary>
+            FILE_WRITE_ACCESS = 2
+        End Enum
+
+        ''' <summary>Reparse tags values</summary>
+        Public Enum ReparseTags As UInteger
+            ''' <summary>Reserved reparse tag value.</summary>
+            IO_REPARSE_TAG_RESERVED_ZERO =&h00000000
+            ''' <summary>Reserved reparse tag value.</summary>
+            IO_REPARSE_TAG_RESERVED_ONE = &H1
+            ''' <summary>Used for mount point support, specified in section 2.1.2.5.</summary>
+            IO_REPARSE_TAG_MOUNT_POINT = &HA0000003UI
+            ''' <summary>Obsolete. Used by legacy Hierarchical Storage Manager Product.</summary>
+            IO_REPARSE_TAG_HSM = &HC0000004UI
+            ''' <summary>Obsolete. Used by legacy Hierarchical Storage Manager Product.</summary>
+            IO_REPARSE_TAG_HSM2 = &H80000006UI
+            ''' <summary>Home server drive extender.<3></summary>
+            IO_REPARSE_TAG_DRIVER_EXTENDER = &H80000005UI
+            ''' <summary>Used by single-instance storage (SIS) filter driver. Server-side interpretation only, not meaningful over the wire.</summary>
+            IO_REPARSE_TAG_SIS = &H80000007UI
+            ''' <summary>Used by the DFS filter. The DFS is described in the Distributed File System (DFS): Referral Protocol Specification [MS-DFSC]. Server-side interpretation only, not meaningful over the wire.</summary>
+            IO_REPARSE_TAG_DFS = &H8000000AUI
+            ''' <summary>Used by the DFS filter. The DFS is described in [MS-DFSC]. Server-side interpretation only, not meaningful over the wire.</summary>
+            IO_REPARSE_TAG_DFSR = &H80000012UI
+            ''' <summary>Used by filter manager test harness.<4></summary>
+            IO_REPARSE_TAG_FILTER_MANAGER = &H8000000BUI
+            ''' <summary>Used for symbolic link support. See section 2.1.2.</summary>
+            IO_REPARSE_TAG_SYMLINK = &HA000000CUI
         End Enum
 #End Region
 

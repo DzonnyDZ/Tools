@@ -25,9 +25,9 @@
         Private Sub InitializeComponent()
             Me.tlpPaths = New System.Windows.Forms.TableLayoutPanel()
             Me.lblSrc = New System.Windows.Forms.Label()
-            Me.lblDest = New System.Windows.Forms.Label()
             Me.txtSrc = New System.Windows.Forms.TextBox()
             Me.btnSrc = New System.Windows.Forms.Button()
+            Me.lblDest = New System.Windows.Forms.Label()
             Me.txtDest = New System.Windows.Forms.TextBox()
             Me.btnDest = New System.Windows.Forms.Button()
             Me.tlpOptions = New System.Windows.Forms.TableLayoutPanel()
@@ -35,11 +35,10 @@
             Me.txtMask = New System.Windows.Forms.TextBox()
             Me.chkRecursive = New System.Windows.Forms.CheckBox()
             Me.flpButtons = New System.Windows.Forms.FlowLayoutPanel()
-            Me.tlpMain = New System.Windows.Forms.TableLayoutPanel()
-            Me.fbdSelectFolder = New System.Windows.Forms.FolderBrowserDialog()
             Me.cmdLnk2Sym = New System.Windows.Forms.Button()
             Me.cmdSym2Lnk = New System.Windows.Forms.Button()
-            Me.cmdLnk2Relative = New System.Windows.Forms.Button()
+            Me.tlpMain = New System.Windows.Forms.TableLayoutPanel()
+            Me.fbdSelectFolder = New System.Windows.Forms.FolderBrowserDialog()
             Me.tlpPaths.SuspendLayout()
             Me.tlpOptions.SuspendLayout()
             Me.flpButtons.SuspendLayout()
@@ -81,17 +80,6 @@
             Me.lblSrc.TabIndex = 0
             Me.lblSrc.Text = "Source folder"
             '
-            'lblDest
-            '
-            Me.lblDest.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.lblDest.AutoSize = True
-            Me.tlpPaths.SetColumnSpan(Me.lblDest, 2)
-            Me.lblDest.Location = New System.Drawing.Point(322, 0)
-            Me.lblDest.Name = "lblDest"
-            Me.lblDest.Size = New System.Drawing.Size(67, 13)
-            Me.lblDest.TabIndex = 1
-            Me.lblDest.Text = "Target folder"
-            '
             'txtSrc
             '
             Me.txtSrc.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -113,6 +101,17 @@
             Me.btnSrc.TabIndex = 3
             Me.btnSrc.Text = "..."
             Me.btnSrc.UseVisualStyleBackColor = True
+            '
+            'lblDest
+            '
+            Me.lblDest.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Me.lblDest.AutoSize = True
+            Me.tlpPaths.SetColumnSpan(Me.lblDest, 2)
+            Me.lblDest.Location = New System.Drawing.Point(322, 0)
+            Me.lblDest.Name = "lblDest"
+            Me.lblDest.Size = New System.Drawing.Size(67, 13)
+            Me.lblDest.TabIndex = 1
+            Me.lblDest.Text = "Target folder"
             '
             'txtDest
             '
@@ -194,28 +193,10 @@
                 Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.flpButtons.Controls.Add(Me.cmdLnk2Sym)
             Me.flpButtons.Controls.Add(Me.cmdSym2Lnk)
-            Me.flpButtons.Controls.Add(Me.cmdLnk2Relative)
             Me.flpButtons.Location = New System.Drawing.Point(3, 106)
             Me.flpButtons.Name = "flpButtons"
             Me.flpButtons.Size = New System.Drawing.Size(638, 153)
             Me.flpButtons.TabIndex = 2
-            '
-            'tlpMain
-            '
-            Me.tlpMain.ColumnCount = 1
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpMain.Controls.Add(Me.tlpPaths, 0, 0)
-            Me.tlpMain.Controls.Add(Me.tlpOptions, 0, 1)
-            Me.tlpMain.Controls.Add(Me.flpButtons, 0, 2)
-            Me.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.tlpMain.Location = New System.Drawing.Point(0, 0)
-            Me.tlpMain.Name = "tlpMain"
-            Me.tlpMain.RowCount = 3
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle())
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle())
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpMain.Size = New System.Drawing.Size(644, 262)
-            Me.tlpMain.TabIndex = 3
             '
             'cmdLnk2Sym
             '
@@ -241,17 +222,22 @@
             Me.cmdSym2Lnk.Text = "Symlinks to links"
             Me.cmdSym2Lnk.UseVisualStyleBackColor = True
             '
-            'cmdLnk2Relative
+            'tlpMain
             '
-            Me.cmdLnk2Relative.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdLnk2Relative.AutoSize = True
-            Me.cmdLnk2Relative.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdLnk2Relative.Location = New System.Drawing.Point(207, 3)
-            Me.cmdLnk2Relative.Name = "cmdLnk2Relative"
-            Me.cmdLnk2Relative.Size = New System.Drawing.Size(91, 23)
-            Me.cmdLnk2Relative.TabIndex = 2
-            Me.cmdLnk2Relative.Text = "Links to relative"
-            Me.cmdLnk2Relative.UseVisualStyleBackColor = True
+            Me.tlpMain.ColumnCount = 1
+            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpMain.Controls.Add(Me.tlpPaths, 0, 0)
+            Me.tlpMain.Controls.Add(Me.tlpOptions, 0, 1)
+            Me.tlpMain.Controls.Add(Me.flpButtons, 0, 2)
+            Me.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.tlpMain.Location = New System.Drawing.Point(0, 0)
+            Me.tlpMain.Name = "tlpMain"
+            Me.tlpMain.RowCount = 3
+            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle())
+            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle())
+            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpMain.Size = New System.Drawing.Size(644, 262)
+            Me.tlpMain.TabIndex = 3
             '
             'LinkOperations
             '
@@ -288,6 +274,5 @@
         Friend WithEvents fbdSelectFolder As System.Windows.Forms.FolderBrowserDialog
         Friend WithEvents cmdLnk2Sym As System.Windows.Forms.Button
         Friend WithEvents cmdSym2Lnk As System.Windows.Forms.Button
-        Friend WithEvents cmdLnk2Relative As System.Windows.Forms.Button
     End Class
 End Namespace
