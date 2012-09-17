@@ -73,6 +73,7 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
@@ -109,6 +110,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItemProperties.VB" />
+    <Compile Include="Misc.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -176,13 +178,19 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\1.bmp" />
     <Content Include="Tools.VisualStudio.Macros.AddIn" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resource1.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.Targets" />
   <PropertyGroup>
     <PreBuildEvent>
