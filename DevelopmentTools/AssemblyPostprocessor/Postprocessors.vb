@@ -95,17 +95,25 @@ Namespace RuntimeT.CompilerServicesT
         ''' <param name="context">Postprocessing context</param>
         ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
         ''' <exception cref="InvalidOperationException">
-        ''' Type inside which <paramref name="item"/> is defined does not implement/inherit type specified in <paramref name="attr"/>.<see cref="ImplementsAttribute.Base">Base</see>. -or-
-        ''' <paramref name="item"/> is <see cref="MethodDefinition"/> which is static member. -or-
-        ''' <paramref name="item"/> is <see cref="EventDefinition"/> or <see cref="PropertyDefinition"/> with some accessors static.
+        '''     Type inside which <paramref name="item"/> is defined does not implement/inherit type specified in <paramref name="attr"/>.<see cref="ImplementsAttribute.Base">Base</see>. -or-
+        '''     <paramref name="item"/> is <see cref="MethodDefinition"/> which is static member. -or-
+        '''     <paramref name="item"/> is <see cref="EventDefinition"/> or <see cref="PropertyDefinition"/> with some accessors static.
         ''' </exception>
         ''' <exception cref="NotSupportedException">
-        ''' <paramref name="item"/> is neither <see cref="MethodDefinition"/> nor <see cref="PropertyDefinition"/> nor <see cref="EventDefinition"/>. -or-
-        ''' <paramref name="item"/> is <see cref="EventDefinition"/> or <see cref="PropertyDefinition"/> and the event or property has some instance and some static accessors or is missing get and set (property) or add and remove (event) accessoers.
+        '''     <paramref name="item"/> is neither <see cref="MethodDefinition"/> nor <see cref="PropertyDefinition"/> nor <see cref="EventDefinition"/>. -or-
+        '''     <paramref name="item"/> is <see cref="EventDefinition"/> or <see cref="PropertyDefinition"/> and the event or property has some instance and some static accessors or is missing get and set (property) or add and remove (event) accessoers. -or-
+        '''     <paramref name="item"/> is <see cref="EventDefinition"/> or <see cref="PropertyDefinition"/> and <paramref name="attr"/>.<see cref="ImplementsAttribute.Acceessor">Accessor</see> is not <see cref="Accessor.All"/>.
         ''' </exception>
         ''' <exception cref="MissingMemberException"><paramref name="item"/> is <see cref="EventDefinition"/> or <see cref="PropertyDefinition"/> and appropriate property to override cannot be found in base class/interface.</exception>
-        ''' <exception cref="MissingMethodException"><paramref name="item"/> is <see cref="MethodDefinition"/> and appropriate method cannot be found in base class.</exception>
+        ''' <exception cref="MissingMethodException">
+        '''     <paramref name="item"/> is <see cref="MethodDefinition"/> and appropriate method cannot be found in base class -or-
+        '''     <paramref name="item"/> is <see cref="PropertyDefinition"/> or <see cref="EventDefinition"/> and a overriding method (accessor) cannot be found.
+        ''' </exception>
         ''' <exception cref="Reflection.AmbiguousMatchException">More than one appropriates methods, properties or events found in base class.</exception>
+        ''' <version version="1.5.4"><see cref="MissingMethodException"/> can be thrown if <paramref name="item"/> is <see cref="PropertyDefinition"/> or <see cref="EventDefinition"/>.</version>
+        ''' <version version="1.5.4">Property or event can implement base property/event with fewer accessors than implementing property/event (as long as matching accessors exist).</version>
+        ''' <version version="1.5.4">Accessor matching for other accessors of events and properties is now done by name and signature (previously it was doen only by name).</version>
+        ''' <version version="1.5.4">Added support for <see cref="ImplementsAttribute.Acceessor"/>.</version>
         Public Sub [Implements](item As ICustomAttributeProvider, attr As ImplementsAttribute, context As IPostprocessorContext)
             If item Is Nothing Then Throw New ArgumentNullException("item")
             If attr Is Nothing Then Throw New ArgumentNullException("attr")
@@ -129,9 +137,39 @@ Namespace RuntimeT.CompilerServicesT
                     If method.IsStatic Then Throw New InvalidOperationException(String.Format(My.Resources.ex_StaticMethodCannotImplement, method.FullName))
 
 
-                    Dim candidates = From m In baseResolved.Methods
-                                 Where Not m.IsStatic AndAlso m.Name = If(attr.Member, member.Name) AndAlso (baseResolved.IsInterface OrElse m.IsVirtual) AndAlso
-                                       IsSameSignature(method, m, , TryCast(base, GenericInstanceType))
+                    Dim candidates As IEnumerable(Of MethodDefinition)
+                    Select Case attr.Acceessor
+                        Case Accessor.Get
+                            candidates = From p In baseResolved.Properties
+                                         Where p.GetMethod IsNot Nothing AndAlso Not p.GetMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
+                                               (baseResolved.IsInterface OrElse p.GetMethod.IsVirtual) AndAlso
+                                               IsSameSignature(method, p.GetMethod, , TryCast(base, GenericInstanceType))
+                        Case Accessor.Set
+                            candidates = From p In baseResolved.Properties
+                                         Where p.SetMethod IsNot Nothing AndAlso Not p.SetMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
+                                               (baseResolved.IsInterface OrElse p.SetMethod.IsVirtual) AndAlso
+                                               IsSameSignature(method, p.SetMethod, , TryCast(base, GenericInstanceType))
+                        Case Accessor.Add
+                            candidates = From p In baseResolved.Events
+                                         Where p.AddMethod IsNot Nothing AndAlso Not p.AddMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
+                                               (baseResolved.IsInterface OrElse p.AddMethod.IsVirtual) AndAlso
+                                               IsSameSignature(method, p.AddMethod, , TryCast(base, GenericInstanceType))
+                        Case Accessor.Remove
+                            candidates = From p In baseResolved.Events
+                                         Where p.RemoveMethod IsNot Nothing AndAlso Not p.RemoveMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
+                                               (baseResolved.IsInterface OrElse p.RemoveMethod.IsVirtual) AndAlso
+                                               IsSameSignature(method, p.RemoveMethod, , TryCast(base, GenericInstanceType))
+                        Case Accessor.Raise
+                            candidates = From p In baseResolved.Events
+                                         Where p.InvokeMethod IsNot Nothing AndAlso Not p.InvokeMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
+                                               (baseResolved.IsInterface OrElse p.InvokeMethod.IsVirtual) AndAlso
+                                               IsSameSignature(method, p.InvokeMethod, , TryCast(base, GenericInstanceType))
+                        Case Else
+                            candidates = From m In baseResolved.Methods
+                                         Where Not m.IsStatic AndAlso m.Name = If(attr.Member, member.Name) AndAlso (baseResolved.IsInterface OrElse m.IsVirtual) AndAlso
+                                               IsSameSignature(method, m, , TryCast(base, GenericInstanceType))
+                    End Select
+                    
                     If Not candidates.Any Then Throw New MissingMethodException(base.FullName, If(attr.Member, member.Name))
                     If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_MethodAmbiguous, base.FullName, If(attr.Member, member.Name)))
 
@@ -139,6 +177,7 @@ Namespace RuntimeT.CompilerServicesT
 
                     If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, method.FullName, candidates.First.FullName))
                 ElseIf TypeOf member Is PropertyDefinition Then
+                    If attr.Acceessor <> Accessor.All AndAlso attr.Acceessor <> Accessor.Standard Then Throw New NotSupportedException("For properties, accessor must be All or Standard")
                     Dim propty As PropertyDefinition = member
 
                     If propty.SetMethod Is Nothing AndAlso propty.GetMethod Is Nothing Then _
@@ -149,37 +188,41 @@ Namespace RuntimeT.CompilerServicesT
                         Throw New NotSupportedException(My.Resources.ex_PropertyExternalAccessor)
 
                     Dim candidates = From p In baseResolved.Properties
-                                     Where p.Name = If(attr.Member, member.Name) AndAlso p.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
-                                           (propty.GetMethod Is Nothing) = (p.GetMethod Is Nothing) AndAlso (propty.SetMethod Is Nothing) = (p.SetMethod Is Nothing) AndAlso
-                                           (p.SetMethod IsNot Nothing OrElse p.GetMethod IsNot Nothing) AndAlso p.OtherMethods.Count = propty.OtherMethods.Count AndAlso
+                                     Where p.Name = If(attr.Member, member.Name) AndAlso
+                                           p.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
+                                           (p.SetMethod IsNot Nothing OrElse p.GetMethod IsNot Nothing) AndAlso
                                            (p.GetMethod Is Nothing OrElse IsSameSignature(propty.GetMethod, p.GetMethod, , TryCast(base, GenericInstanceType))) AndAlso
-                                           (p.SetMethod Is Nothing OrElse IsSameSignature(propty.SetMethod, p.SetMethod, , TryCast(base, GenericInstanceType))) AndAlso
-                                           (propty.OtherMethods.Count = 0 OrElse (
-                                               (From propty_om In propty.OtherMethods Join p_om In p.OtherMethods On propty_om.Name Equals p_om.Name).All(
-                                                   Function(om) IsSameSignature(om.propty_om, om.p_om, , TryCast(base, GenericInstanceType))
-                                               )
-                                           ))
+                                           (p.SetMethod Is Nothing OrElse IsSameSignature(propty.SetMethod, p.SetMethod, , TryCast(base, GenericInstanceType)))
                     If Not candidates.Any Then Throw New MissingMemberException(base.FullName, If(attr.Member, member.Name))
                     If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_PropertyAmbiguous, base.FullName, If(attr.Member, member.Name)))
 
-                    If propty.GetMethod IsNot Nothing Then
-                        Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.GetMethod.Name, propty.GetMethod.ReturnType, candidates.Single.GetMethod.DeclaringType)
+                    Dim candidate As PropertyDefinition = candidates.Single
+                    If candidate.GetMethod IsNot Nothing AndAlso Not candidate.GetMethod.IsStatic AndAlso (baseResolved.IsInterface OrElse candidate.GetMethod.IsVirtual) Then
+                        If propty.GetMethod Is Nothing Then Throw New MissingMethodException(base.FullName, "get_" + If(attr.Member, member.Name))
+                        Dim implementedMethod As MethodReference = New MethodReference(candidate.GetMethod.Name, propty.GetMethod.ReturnType, candidate.GetMethod.DeclaringType)
                         propty.GetMethod.AddOverride(propty.GetMethod.Module.Import(candidates.First.GetMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, propty.GetMethod.FullName, implementedMethod.FullName))
                     End If
-                    If propty.SetMethod IsNot Nothing Then
-                        Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.SetMethod.Name, propty.SetMethod.ReturnType, candidates.Single.SetMethod.DeclaringType)
+                    If candidate.SetMethod IsNot Nothing AndAlso Not candidate.SetMethod.IsStatic AndAlso (baseResolved.IsInterface OrElse candidate.SetMethod.IsVirtual) Then
+                        If propty.SetMethod Is Nothing Then Throw New MissingMethodException(base.FullName, "set_" + If(attr.Member, member.Name))
+                        Dim implementedMethod As MethodReference = New MethodReference(candidate.SetMethod.Name, propty.SetMethod.ReturnType, candidate.SetMethod.DeclaringType)
                         propty.SetMethod.AddOverride(propty.SetMethod.Module.Import(candidates.First.SetMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, propty.SetMethod.FullName, implementedMethod.FullName))
                     End If
-                    If propty.OtherMethods.Count > 0 Then
-                        For Each om In From propty_om In propty.OtherMethods Join cand_om In candidates.Single.OtherMethods On propty_om.Name Equals cand_om.Name
-                            Dim implementedmethod As MethodReference = New MethodReference(om.cand_om.Name, om.propty_om.ReturnType, om.cand_om.DeclaringType)
-                            om.propty_om.AddOverride(om.propty_om.Module.Import(om.cand_om), TryCast(base, GenericInstanceType))
-                            If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, om.propty_om.FullName, implementedmethod.FullName))
+                    If propty.OtherMethods.Count > 0 AndAlso attr.Acceessor = Accessor.All Then
+                        For Each cand_om In candidate.OtherMethods
+                            If cand_om.IsStatic OrElse (Not cand_om.IsVirtual AndAlso Not baseResolved.IsInterface) Then Continue For
+                            Dim overridingMethodFound As MethodDefinition = Nothing
+                            For Each propty_om In propty.OtherMethods
+                                If cand_om.Name = propty_om.Name AndAlso IsSameSignature(cand_om, propty_om) Then
+                                    overridingMethodFound = cand_om : Exit For
+                                End If
+                            Next
+                            If overridingMethodFound Is Nothing Then Throw New MissingMethodException(member.DeclaringType.FullName, cand_om.Name)
                         Next
                     End If
                 ElseIf TypeOf member Is EventDefinition Then
+                    If attr.Acceessor <> Accessor.All AndAlso attr.Acceessor <> Accessor.Standard Then Throw New NotSupportedException("For events, accessor must be All or Standard")
                     Dim evt As EventDefinition = member
 
                     If evt.AddMethod Is Nothing AndAlso evt.RemoveMethod Is Nothing Then _
@@ -190,40 +233,46 @@ Namespace RuntimeT.CompilerServicesT
                         Throw New NotSupportedException(My.Resources.ex_EventExternalAccessor)
 
                     Dim candidates = From e In baseResolved.Events
-                                     Where e.Name = If(attr.Member, member.Name) AndAlso e.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
-                                           (evt.AddMethod Is Nothing) = (e.AddMethod Is Nothing) AndAlso (evt.RemoveMethod Is Nothing) = (e.RemoveMethod Is Nothing) AndAlso (evt.InvokeMethod Is Nothing) = (e.InvokeMethod Is Nothing) AndAlso
-                                           (e.RemoveMethod IsNot Nothing OrElse e.AddMethod IsNot Nothing) AndAlso e.OtherMethods.Count = evt.OtherMethods.Count AndAlso
+                                     Where e.Name = If(attr.Member, member.Name) AndAlso
+                                           e.AllMethods.All(Function(m) Not m.IsStatic AndAlso (m.IsVirtual OrElse baseResolved.IsInterface)) AndAlso
+                                           (e.RemoveMethod IsNot Nothing OrElse e.AddMethod IsNot Nothing) AndAlso
                                            (e.AddMethod Is Nothing OrElse IsSameSignature(evt.AddMethod, e.AddMethod, , TryCast(base, GenericInstanceType))) AndAlso
                                            (e.RemoveMethod Is Nothing OrElse IsSameSignature(evt.RemoveMethod, e.RemoveMethod, , TryCast(base, GenericInstanceType))) AndAlso
-                                           (e.InvokeMethod Is Nothing OrElse IsSameSignature(evt.InvokeMethod, e.InvokeMethod, , TryCast(base, GenericInstanceType))) AndAlso
-                                           (evt.OtherMethods.Count = 0 OrElse (
-                                               (From evt_om In evt.OtherMethods Join e_om In e.OtherMethods On evt_om.Name Equals e_om.Name).All(
-                                                   Function(om) IsSameSignature(om.evt_om, om.e_om, , TryCast(base, GenericInstanceType))
-                                               )
-                                           ))
+                                           (e.InvokeMethod Is Nothing OrElse IsSameSignature(evt.InvokeMethod, e.InvokeMethod, , TryCast(base, GenericInstanceType)))
+
                     If Not candidates.Any Then Throw New MissingMemberException(base.FullName, If(attr.Member, member.Name))
                     If candidates.Count > 1 Then Throw New Reflection.AmbiguousMatchException(String.Format(My.Resources.ex_EventAmbiguous, base.FullName, If(attr.Member, member.Name)))
 
-                    If evt.AddMethod IsNot Nothing Then
-                        Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.AddMethod.Name, evt.AddMethod.ReturnType, candidates.Single.AddMethod.DeclaringType)
+                    Dim candidate As EventDefinition = candidates.Single
+
+                    If candidate.AddMethod IsNot Nothing AndAlso Not candidate.AddMethod.IsStatic AndAlso (baseResolved.IsInterface OrElse candidate.AddMethod.IsVirtual) Then
+                        If evt.AddMethod Is Nothing Then Throw New MissingMethodException(base.FullName, "add_" + If(attr.Member, member.Name))
+                        Dim implementedMethod As MethodReference = New MethodReference(candidate.AddMethod.Name, evt.AddMethod.ReturnType, candidate.AddMethod.DeclaringType)
                         evt.AddMethod.AddOverride(evt.AddMethod.Module.Import(candidates.First.AddMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, evt.AddMethod.FullName, implementedMethod.FullName))
                     End If
-                    If evt.RemoveMethod IsNot Nothing Then
-                        Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.RemoveMethod.Name, evt.RemoveMethod.ReturnType, candidates.Single.RemoveMethod.DeclaringType)
+                    If candidate.RemoveMethod IsNot Nothing AndAlso Not candidate.RemoveMethod.IsStatic AndAlso (baseResolved.IsInterface OrElse candidate.RemoveMethod.IsVirtual) Then
+                        If evt.RemoveMethod Is Nothing Then Throw New MissingMethodException(base.FullName, "remove_" + If(attr.Member, member.Name))
+                        Dim implementedMethod As MethodReference = New MethodReference(candidate.RemoveMethod.Name, evt.RemoveMethod.ReturnType, candidate.RemoveMethod.DeclaringType)
                         evt.RemoveMethod.AddOverride(evt.RemoveMethod.Module.Import(candidates.First.RemoveMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, evt.RemoveMethod.FullName, implementedMethod.FullName))
                     End If
-                    If evt.InvokeMethod IsNot Nothing Then
-                        Dim implementedMethod As MethodReference = New MethodReference(candidates.Single.InvokeMethod.Name, evt.InvokeMethod.ReturnType, candidates.Single.InvokeMethod.DeclaringType)
+                    If candidate.InvokeMethod IsNot Nothing AndAlso Not candidate.InvokeMethod.IsStatic AndAlso (baseResolved.IsInterface OrElse candidate.InvokeMethod.IsVirtual) Then
+                        If evt.InvokeMethod Is Nothing Then Throw New MissingMethodException(base.FullName, "invoke_" + If(attr.Member, member.Name))
+                        Dim implementedMethod As MethodReference = New MethodReference(candidate.InvokeMethod.Name, evt.InvokeMethod.ReturnType, candidate.InvokeMethod.DeclaringType)
                         evt.InvokeMethod.AddOverride(evt.InvokeMethod.Module.Import(candidates.First.InvokeMethod), TryCast(base, GenericInstanceType))
                         If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, evt.InvokeMethod.FullName, implementedMethod.FullName))
                     End If
-                    If evt.OtherMethods.Count > 0 Then
-                        For Each om In From evt_om In evt.OtherMethods Join cand_om In candidates.Single.OtherMethods On evt_om.Name Equals cand_om.Name
-                            Dim implementedmethod As MethodReference = New MethodReference(om.cand_om.Name, om.evt_om.ReturnType, om.cand_om.DeclaringType)
-                            om.evt_om.AddOverride(om.evt_om.Module.Import(om.cand_om), TryCast(base, GenericInstanceType))
-                            If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources._Implements, om.evt_om.FullName, implementedmethod.FullName))
+                    If evt.OtherMethods.Count > 0 AndAlso attr.Acceessor = Accessor.All Then
+                        For Each cand_om In candidate.OtherMethods
+                            If cand_om.IsStatic OrElse (Not cand_om.IsVirtual AndAlso Not baseResolved.IsInterface) Then Continue For
+                            Dim overridingMethodFound As MethodDefinition = Nothing
+                            For Each evt_om In evt.OtherMethods
+                                If cand_om.Name = evt_om.Name AndAlso IsSameSignature(cand_om, evt_om) Then
+                                    overridingMethodFound = cand_om : Exit For
+                                End If
+                            Next
+                            If overridingMethodFound Is Nothing Then Throw New MissingMethodException(member.DeclaringType.FullName, cand_om.Name)
                         Next
                     End If
                 Else

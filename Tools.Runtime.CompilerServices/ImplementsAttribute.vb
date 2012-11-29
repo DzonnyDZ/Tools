@@ -48,5 +48,28 @@ Namespace RuntimeT.CompilerServicesT
                 Return _member
             End Get
         End Property
+
+        ''' <summary>gets or sets accessor to be implemented.</summary>
+        ''' <remarks>If <see cref="Acceessor"/> is not <see cref="Accessor.All"/> <see cref="Member"/> should point to a property or an event (depends on <see cref="Accessor"/> value) and this attribute should be applied on a method.</remarks>
+        Public Property Acceessor As Accessor
     End Class
+
+    ''' <summary>Enumeration fo comnbined members accessors</summary>
+    ''' <version version="1.5.4">The enumeration is new in version 1.5.4</version>
+    Public Enum Accessor
+        ''' <summary>Consider all implemented accessors</summary>
+        All
+        ''' <summary>A method is impelmenting property Get accessor</summary>
+        [Get]
+        ''' <summary>A method is implementing property Set accessor</summary>
+        [Set]
+        ''' <summary>A method is implementing event Add accessor</summary>
+        Add
+        ''' <summary>A method is implementing event Remove accessor</summary>
+        Remove
+        ''' <summary>A method is implemnenting event Raise accessor</summary>
+        Raise
+        ''' <summary>An event or property is implementing only standard (Get/Set or Add/Remove/Raise) accessors. Ignores other accessors.</summary>
+        Standard
+    End Enum
 End Namespace
