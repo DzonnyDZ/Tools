@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.Build.Framework
 Imports Microsoft.Build.Utilities
+Imports System.Reflection
 
 Namespace RuntimeT.CompilerServicesT
     ''' <summary>Implements MS Build task based on <see cref="AssemblyPostporcessor"/></summary>
@@ -99,11 +100,19 @@ Namespace RuntimeT.CompilerServicesT
             ''' <param name="ex">An exception which occured</param>
             ''' <param name="item">Name of item exception occured for (ma ybe null)</param>
             ''' <returns>True if processing should continue, false otherwise. This implementation always returns true.</returns>
+            ''' <version version="1.5.4">The method now reports all inner exceptions while increasing error counter only by 1.</version>
+            ''' <version version="1.5.4">The method treats <see cref="TargetInvocationException"/> if it has non-null <see cref="Exception.InnerException"/> transparently (it does not report the <see cref="TargetInvocationException"/>, only the <see cref="Exception.InnerException"/>).</version>
             Public Overridable Function OnError(ex As Exception, item$) As Boolean
-                Task.BuildEngine3.LogErrorEvent(New BuildErrorEventArgs(Nothing, Nothing, FileName, 0, 0, 0, 0, item & ": " & ex.Message, ex.HelpLink, GetType(AssemblyPostporcessorTask).Name))
+                While ex IsNot Nothing
+                    If ex.InnerException Is Nothing OrElse Not TypeOf ex Is TargetInvocationException Then
+                        Task.BuildEngine3.LogErrorEvent(New BuildErrorEventArgs(Nothing, Nothing, FileName, 0, 0, 0, 0, item & ": " & ex.Message, ex.HelpLink, GetType(AssemblyPostporcessorTask).Name))
+                    End If
+                    ex = ex.InnerException
+                End While
                 Task.errors += 1
-                Return (True)
+                Return True
             End Function
+
             ''' <summary>Losg info message</summary>
             ''' <param name="message">The message</param>
             ''' <param name="item">Name of item the message is generated for (may be null)</param>

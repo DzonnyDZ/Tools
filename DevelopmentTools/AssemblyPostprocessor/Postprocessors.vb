@@ -144,26 +144,31 @@ Namespace RuntimeT.CompilerServicesT
                                          Where p.GetMethod IsNot Nothing AndAlso Not p.GetMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
                                                (baseResolved.IsInterface OrElse p.GetMethod.IsVirtual) AndAlso
                                                IsSameSignature(method, p.GetMethod, , TryCast(base, GenericInstanceType))
+                                         Select p.GetMethod
                         Case Accessor.Set
                             candidates = From p In baseResolved.Properties
                                          Where p.SetMethod IsNot Nothing AndAlso Not p.SetMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
                                                (baseResolved.IsInterface OrElse p.SetMethod.IsVirtual) AndAlso
                                                IsSameSignature(method, p.SetMethod, , TryCast(base, GenericInstanceType))
+                                         Select p.SetMethod
                         Case Accessor.Add
                             candidates = From p In baseResolved.Events
                                          Where p.AddMethod IsNot Nothing AndAlso Not p.AddMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
                                                (baseResolved.IsInterface OrElse p.AddMethod.IsVirtual) AndAlso
                                                IsSameSignature(method, p.AddMethod, , TryCast(base, GenericInstanceType))
+                                         Select p.AddMethod
                         Case Accessor.Remove
                             candidates = From p In baseResolved.Events
                                          Where p.RemoveMethod IsNot Nothing AndAlso Not p.RemoveMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
                                                (baseResolved.IsInterface OrElse p.RemoveMethod.IsVirtual) AndAlso
                                                IsSameSignature(method, p.RemoveMethod, , TryCast(base, GenericInstanceType))
+                                         Select p.RemoveMethod
                         Case Accessor.Raise
                             candidates = From p In baseResolved.Events
                                          Where p.InvokeMethod IsNot Nothing AndAlso Not p.InvokeMethod.IsStatic AndAlso p.Name = If(attr.Member, member.Name) AndAlso
                                                (baseResolved.IsInterface OrElse p.InvokeMethod.IsVirtual) AndAlso
                                                IsSameSignature(method, p.InvokeMethod, , TryCast(base, GenericInstanceType))
+                                         Select p.InvokeMethod
                         Case Else
                             candidates = From m In baseResolved.Methods
                                          Where Not m.IsStatic AndAlso m.Name = If(attr.Member, member.Name) AndAlso (baseResolved.IsInterface OrElse m.IsVirtual) AndAlso
