@@ -112,6 +112,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ChangeAttributes.vb" />
     <Compile Include="PostprocessingAttribute.vb" />
     <Compile Include="PostprocessorAttribute.vb" />
     <Compile Include="RemoveAttribute.vb" />

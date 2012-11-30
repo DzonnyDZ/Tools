@@ -470,6 +470,8 @@ Namespace RuntimeT.CompilerServicesT
         ''' <param name="attr">A <see cref="AddResourceAttribute"/></param>
         ''' <param name="context">Postprocessing context</param>
         ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="item"/> is neither <see cref="AssemblyDefinition"/> nor <see cref="ModuleDefinition"/></exception>
+        ''' <version version="1.5.4">Added documentation of <see cref="NotSupportedException"/> being thrown.</version>
         Public Sub AddResource(item As ICustomAttributeProvider, attr As AddResourceAttribute, context As IPostprocessorContext)
             If item Is Nothing Then Throw New ArgumentNullException("item")
             If attr Is Nothing Then Throw New ArgumentNullException("attr")
@@ -491,6 +493,46 @@ Namespace RuntimeT.CompilerServicesT
                 If context IsNot Nothing Then context.LogInfo(item, String.Format(My.Resources.msg_AddedResource, If(attr.Embedded, My.Resources.resource_embeded, My.Resources.resource_linked), attr.Name, attr.File))
             Else
                 Throw New NotSupportedException(String.Format(My.Resources.ex_OnylAssemblyAndModule, GetType(AddResourceAttribute).Name))
+            End If
+        End Sub
+
+        ''' <summary>Implements postprocessing defined by <see cref="ChangeAttributesAttribute"/></summary>
+        ''' <param name="item">An item to postprocess</param>
+        ''' <param name="attr">A <see cref="ChangeAttributesAttribute"/></param>
+        ''' <param name="context">Postprocessing context</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="item"/> is neither <see cref="TypeDefinition"/>, <see cref="MethodDefinition"/>, <see cref="PropertyDefinition"/>, <see cref="EventDefinition"/> nor <see cref="FieldDefinition"/>.</exception>
+        ''' <version version="1.5.4">This method is new in version 1.5.4</version>
+        Public Sub ChangeAttributes(item As ICustomAttributeProvider, attr As ChangeAttributesAttribute, context As IPostprocessorContext)
+            If item Is Nothing Then Throw New ArgumentNullException("item")
+            If attr Is Nothing Then Throw New ArgumentNullException("attr")
+            If TypeOf item Is TypeDefinition Then
+                Dim itm As TypeDefinition = item
+                Dim olda = itm.Attributes
+                itm.Attributes = (itm.Attributes Or attr.Or) And attr.And
+                If context IsNot Nothing Then context.LogInfo(item, String.Format("Attributes {0} -> {1}", olda, itm.Attributes))
+            ElseIf TypeOf item Is MethodDefinition Then
+                Dim itm As MethodDefinition = item
+                Dim olda = itm.Attributes
+                itm.Attributes = (itm.Attributes Or attr.Or) And attr.And
+                If context IsNot Nothing Then context.LogInfo(item, String.Format("Attributes {0} -> {1}", olda, itm.Attributes))
+            ElseIf TypeOf item Is PropertyDefinition Then
+                Dim itm As PropertyDefinition = item
+                Dim olda = itm.Attributes
+                itm.Attributes = (itm.Attributes Or attr.Or) And attr.And
+                If context IsNot Nothing Then context.LogInfo(item, String.Format("Attributes {0} -> {1}", olda, itm.Attributes))
+            ElseIf TypeOf item Is EventDefinition Then
+                Dim itm As EventDefinition = item
+                Dim olda = itm.Attributes
+                itm.Attributes = (itm.Attributes Or attr.Or) And attr.And
+                If context IsNot Nothing Then context.LogInfo(item, String.Format("Attributes {0} -> {1}", olda, itm.Attributes))
+            ElseIf TypeOf item Is FieldDefinition Then
+                Dim itm As FieldDefinition = item
+                Dim olda = itm.Attributes
+                itm.Attributes = (itm.Attributes Or attr.Or) And attr.And
+                If context IsNot Nothing Then context.LogInfo(item, String.Format("Attributes {0} -> {1}", olda, itm.Attributes))
+            Else
+                Throw New NotSupportedException(String.Format(My.Resources.ex_AttrIsNotSupportedOnItem, GetType(RenameAttribute).Name, item.GetType.Name))
             End If
         End Sub
     End Module
