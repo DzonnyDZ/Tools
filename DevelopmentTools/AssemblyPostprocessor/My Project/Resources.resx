@@ -234,4 +234,27 @@
   <data name="msg_RemoveReference" xml:space="preserve">
     <value>Remove reference {0} from {1}</value>
   </data>
+  <data name="ShouldNotBeSpecifiedWhenIsAppliedOnType" xml:space="preserve">
+    <value>{0} should not be specified when {1} is applied on type</value>
+  </data>
+  <data name="DonTUseXAndYWhenTargetTypeIsNotGeneric" xml:space="preserve">
+    <value>Don't use {0} and {1} when target type is not generic</value>
+    <comment>DonTUseXAndYWhenTargetTypeIsNotGeneric description</comment>
+  </data>
+  <data name="MustBeNullEmptyOrItSLengthMustBeSameAsNumberOfGenericParameters" xml:space="preserve">
+    <value>{0} must be null, empty or it's length must be same as number of generic parameters of {1}</value>
+    <comment>MustBeNullEmptyOrItSLengthMustBeSameAsNumberOfGenericParameters description</comment>
+  </data>
+  <data name="SubstGParsAndSubstTypesExclusivityCheck" xml:space="preserve">
+    <value>When an index of {0} contains non-null value the same index of {1} must be null and vice versa. Index {2} is non-null for both.</value>
+    <comment>SubstGParsAndSubstTypesExclusivityCheck description</comment>
+  </data>
+  <data name="SubstGParsAndSubstTypesNullCheck" xml:space="preserve">
+    <value>Same index of {0} and {1} cannot be null in bot arrays. Index {2}</value>
+    <comment>SubstGParsAndSubstTypesNullCheck description</comment>
+  </data>
+  <data name="GenericParameterNotFound" xml:space="preserve">
+    <value>Generic parameter {0} not found on type {1}, index {2}</value>
+    <comment>GenericParameterNotFound description</comment>
+  </data>
 </root>

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ex_PropertyOrFieldNotFound" xml:space="preserve">
     <value>Ani vlastnost ani proměnná s názvem '{0}' nebyla nalezena</value>
@@ -230,5 +230,23 @@
   </data>
   <data name="msg_RemoveReference" xml:space="preserve">
     <value>Odstranit referenci {0} z {1}</value>
+  </data>
+  <data name="ShouldNotBeSpecifiedWhenIsAppliedOnType" xml:space="preserve">
+    <value>Nespecifikujte {0}, když {1} je aplikován na typ</value>
+  </data>
+  <data name="DonTUseXAndYWhenTargetTypeIsNotGeneric" xml:space="preserve">
+    <value>Nepoužívejte {0} a {1}, pokud cílový typ není generický.</value>
+  </data>
+  <data name="MustBeNullEmptyOrItSLengthMustBeSameAsNumberOfGenericParameters" xml:space="preserve">
+    <value>{0} musí být null, prázdný nebo jeho délka musí být stejná jeko je počet generických parametrů {1}</value>
+  </data>
+  <data name="SubstGParsAndSubstTypesExclusivityCheck" xml:space="preserve">
+    <value>Když položka na nějakém indexu v {0} obsahuje nenullovou hodnotu položka na stejném indexu v {1} musí být null (a naopak). Index {2} je nenullový v obou.</value>
+  </data>
+  <data name="SubstGParsAndSubstTypesNullCheck" xml:space="preserve">
+    <value>Stejný index v {0} a {1} nesmůže mít hodnotu null. Index {2}.</value>
+  </data>
+  <data name="GenericParameterNotFound" xml:space="preserve">
+    <value>Generický parametr {0} nebyl nalezen v typu {1}, index {2}.</value>
   </data>
 </root>
