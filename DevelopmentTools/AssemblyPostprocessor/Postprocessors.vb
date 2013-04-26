@@ -121,15 +121,6 @@ Namespace RuntimeT.CompilerServicesT
         '''     <paramref name="item"/> is type and <paramref name="attr"/>.<see cref="ImplementsAttribute.Member">Member</see> is not null. -or-
         '''     <paramref name="attr"/>.<see cref="ImplementsAttribute.GenericParameterSubstitutionWithGenericParameters">GenericParameterSubstitutionWithGenericParameters</see> or <paramref name="attr"/>.<see cref="ImplementsAttribute.GenericParameterSubstitutionWithTypes">GenericParameterSubstitutionWithTypes</see> is neither null nor an empty array and <paramref name="item"/> (if <paramref name="item"/> is type) or declaring type of <paramref name="item"/> (if item is member) is not open generic type.
         ''' </exception>
-        ''' <version version="1.5.4"><see cref="MissingMethodException"/> can be thrown if <paramref name="item"/> is <see cref="PropertyDefinition"/> or <see cref="EventDefinition"/>.</version>
-        ''' <version version="1.5.4">Property or event can implement base property/event with fewer accessors than implementing property/event (as long as matching accessors exist).</version>
-        ''' <version version="1.5.4">Accessor matching for other accessors of events and properties is now done by name and signature (previously it was doen only by name).</version>
-        ''' <version version="1.5.4">Added support for <see cref="ImplementsAttribute.Acceessor"/>.</version>
-        ''' <version version="1.5.4">Added support for <see cref="ImplementsAttribute"/> applied on types.</version>
-        ''' <version version="1.5.4"><see cref="ArgumentException"/> can be thrown in documented cases.</version>
-        ''' <version version="1.5.4">Added support for <see cref="ImplementsAttribute.GenericParameterSubstitutionWithGenericParameters"/> and <see cref="ImplementsAttribute.GenericParameterSubstitutionWithTypes"/>.</version>
-        ''' <version version="1.5.4"><see cref="MissingMemberException"/> can also be thrown when type cannot be found for generic parameters substitution.</version>
-        ''' <version version="1.5.4"><see cref="Reflection.AmbiguousMatchException"/> can be also thrown when there is duplicate option how to substitute generic parameters for base type.</version>
         Public Sub [Implements](item As ICustomAttributeProvider, attr As ImplementsAttribute, context As IPostprocessorContext)
             If item Is Nothing Then Throw New ArgumentNullException("item")
             If attr Is Nothing Then Throw New ArgumentNullException("attr")
@@ -149,11 +140,11 @@ Namespace RuntimeT.CompilerServicesT
                 Dim substTypes = attr.GenericParameterSubstitutionWithTypes
                 If baseType.HasGenericParameters Then
                     If (substGPars IsNot Nothing AndAlso substGPars.Length <> 0) OrElse (substTypes IsNot Nothing AndAlso substTypes.Length <> 0) Then
-                        If substGPars Is Nothing OrElse substGPars.Length = 0 Then ReDim substGPars(0 To declaringType.GenericParameters.Count - 1)
-                        If substTypes Is Nothing OrElse substTypes.Length = 0 Then ReDim substTypes(0 To declaringType.GenericParameters.Count - 1)
-                        If substTypes.Length <> declaringType.GenericParameters.Count Then _
+                        If substGPars Is Nothing OrElse substGPars.Length = 0 Then ReDim substGPars(0 To baseType.GenericParameters.Count - 1)
+                        If substTypes Is Nothing OrElse substTypes.Length = 0 Then ReDim substTypes(0 To baseType.GenericParameters.Count - 1)
+                        If substTypes.Length <> baseType.GenericParameters.Count Then _
                             Throw New ArgumentException(String.Format(My.Resources.Resources.MustBeNullEmptyOrItSLengthMustBeSameAsNumberOfGenericParameters, "GenericParameterSubstitutionWithTypes", "attr.Base"))
-                        If substGPars.Length <> declaringType.GenericParameters.Count Then _
+                        If substGPars.Length <> baseType.GenericParameters.Count Then _
                             Throw New ArgumentException(String.Format(My.Resources.Resources.MustBeNullEmptyOrItSLengthMustBeSameAsNumberOfGenericParameters, "GenericParameterSubstitutionWithGenericParameters", "attr.Base"))
                         Dim gtr As New GenericInstanceType(baseType)
                         baseType = gtr
@@ -537,7 +528,6 @@ Namespace RuntimeT.CompilerServicesT
         ''' <param name="context">Postprocessing context</param>
         ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
         ''' <exception cref="NotSupportedException"><paramref name="item"/> is neither <see cref="AssemblyDefinition"/> nor <see cref="ModuleDefinition"/></exception>
-        ''' <version version="1.5.4">Added documentation of <see cref="NotSupportedException"/> being thrown.</version>
         Public Sub AddResource(item As ICustomAttributeProvider, attr As AddResourceAttribute, context As IPostprocessorContext)
             If item Is Nothing Then Throw New ArgumentNullException("item")
             If attr Is Nothing Then Throw New ArgumentNullException("attr")
@@ -568,7 +558,6 @@ Namespace RuntimeT.CompilerServicesT
         ''' <param name="context">Postprocessing context</param>
         ''' <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="attr"/> is null</exception>
         ''' <exception cref="NotSupportedException"><paramref name="item"/> is neither <see cref="TypeDefinition"/>, <see cref="MethodDefinition"/>, <see cref="PropertyDefinition"/>, <see cref="EventDefinition"/> nor <see cref="FieldDefinition"/>.</exception>
-        ''' <version version="1.5.4">This method is new in version 1.5.4</version>
         Public Sub ChangeAttributes(item As ICustomAttributeProvider, attr As ChangeAttributesAttribute, context As IPostprocessorContext)
             If item Is Nothing Then Throw New ArgumentNullException("item")
             If attr Is Nothing Then Throw New ArgumentNullException("attr")

@@ -12,6 +12,9 @@ Namespace RuntimeT.CompilerServicesT
         Inherits Attribute
         ''' <summary>Gets or sets value indicating if attribute should be removed from member it decorates once postprocessing is done</summary>
         Public Property Remove As Boolean
+        ''' <summary>Gets or sets value indicating if this attribute should be applied before members of item the attribute is applied on are processed</summary>
+        ''' <remarks>AssemblyPostrocessor normally applies attributes first on child objects (e.g. methods of type) and then on type itself.</remarks>
+        Public Property Preorder As Boolean
     End Class
 
 End Namespace

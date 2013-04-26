@@ -213,7 +213,9 @@ Namespace RuntimeT.CompilerServicesT
             Dim [module] = ModuleDefinition.ReadModule(filename, rp)
             If MessageProcessor IsNot Nothing Then MessageProcessor.ProcessInfo([module].Assembly, My.Resources.msg_ProcessingAssembly)
 
+            Me.ProcessItem([module].Assembly, True)
             For Each mod2 In [module].Assembly.Modules.ToArray
+                Me.ProcessItem(mod2, True)
                 For Each type In mod2.Types
                     Me.ProcessType(type)
                 Next
@@ -271,9 +273,10 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         Public Sub ProcessType(ByVal type As TypeDefinition)
+            ProcessItem(type, True)
             If type.HasMethods Then
                 For Each mtd In type.Methods.ToArray
-                    ProcessItem(mtd)
+                    ProcessItem(mtd, True)
                     If mtd.HasParameters Then
                         For Each par In mtd.Parameters.ToArray
                             ProcessItem(par)
@@ -285,16 +288,18 @@ Namespace RuntimeT.CompilerServicesT
                         Next
                     End If
                     ProcessItem(mtd.MethodReturnType)
+                    ProcessItem(mtd)
                 Next
             End If
             If type.HasProperties Then
                 For Each prp In type.Properties.ToArray
-                    ProcessItem(prp)
+                    ProcessItem(prp, True)
                     If prp.HasParameters Then
                         For Each par In prp.Parameters
                             ProcessItem(par)
                         Next
                     End If
+                    ProcessItem(prp)
                 Next
             End If
             If type.HasEvents Then
@@ -321,6 +326,7 @@ Namespace RuntimeT.CompilerServicesT
         End Sub
         ''' <summary>Post-processes single item, non-recursive</summary>
         ''' <param name="item">An item to post-process</param>
+        ''' <param name="preorder">Process only attributes specifically declared as pre-order (see <see cref="PostprocessingAttribute.Preorder"/>)</param>
         ''' <exception cref="ArgumentNullException"><paramref name="item"/> is null</exception>
         ''' <exception cref="IO.FileNotFoundException">Cannot find assembly for attribute type or required dependent type or parameter type. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         ''' <exception cref="IO.FileLoadException">An assembly file that was found could not be loaded. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
@@ -331,7 +337,7 @@ Namespace RuntimeT.CompilerServicesT
         ''' <exception cref="Reflection.AmbiguousMatchException">More than one property found for named attribute argument. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         ''' <exception cref="MissingMemberException">Property or filed for named attribute argument was not found. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
         ''' <exception cref="InvalidOperationException">Value named attribute argument cannot be converted to field type, or the property is read-only. (This exception is only thrown if <see cref="MessageProcessor"/> is null or returns false.)</exception>
-        Public Sub ProcessItem(item As ICustomAttributeProvider)
+        Public Sub ProcessItem(item As ICustomAttributeProvider, Optional preorder As Boolean = False)
             If Not item.HasCustomAttributes Then Return
             Dim attributesToRemove As New List(Of CustomAttribute)
             For Each attr In item.CustomAttributes
@@ -346,13 +352,15 @@ Namespace RuntimeT.CompilerServicesT
                         If aa.AttributeType.FullName = GetType(PostprocessorAttribute).FullName Then
                             Try
                                 Dim pa As PostprocessorAttribute = InstantiateAttribute(aa)
-                                Dim what = InstantiateAttribute(attr)
-                                Dim ppMethod As System.Reflection.MethodInfo = pa.GetMethod()
-                                Dim args As Object() = If(ppMethod.GetParameters.Length = 2, New Object() {item, what}, New Object() {item, what, Me})
-                                If MessageProcessor IsNot Nothing Then MessageProcessor.ProcessInfo(item, String.Format(My.Resources.msg_Apply, attr.AttributeType.Name))
-                                ppMethod.Invoke(Nothing, args)
-                                If TypeOf what Is PostprocessingAttribute AndAlso DirectCast(what, PostprocessingAttribute).Remove Then
-                                    attributesToRemove.Add(attr)
+                                Dim what As PostprocessingAttribute = InstantiateAttribute(attr)
+                                If preorder = what.Preorder Then
+                                    Dim ppMethod As System.Reflection.MethodInfo = pa.GetMethod()
+                                    Dim args As Object() = If(ppMethod.GetParameters.Length = 2, New Object() {item, what}, New Object() {item, what, Me})
+                                    If MessageProcessor IsNot Nothing Then MessageProcessor.ProcessInfo(item, String.Format(My.Resources.msg_Apply, attr.AttributeType.Name))
+                                    ppMethod.Invoke(Nothing, args)
+                                    If TypeOf what Is PostprocessingAttribute AndAlso DirectCast(what, PostprocessingAttribute).Remove Then
+                                        attributesToRemove.Add(attr)
+                                    End If
                                 End If
                             Catch ex As Exception When MessageProcessor IsNot Nothing
                                 If Not MessageProcessor.ProcessError(ex, item) Then Throw
@@ -408,7 +416,16 @@ Namespace RuntimeT.CompilerServicesT
                         End If
                     Else
                         Try
-                            propertyToSet.SetValue(ainst, prp.Argument.Value, New Object() {})
+                            If prp.Argument.Type.IsArray AndAlso TypeOf prp.Argument.Value Is CustomAttributeArgument() Then
+                                Dim values As CustomAttributeArgument() = prp.Argument.Value
+                                Dim arr = Array.CreateInstance(CecilHelpers.GetType(prp.Argument.Type).GetElementType, values.Length)
+                                For i = 0 To values.Length - 1
+                                    arr.SetValue(values(i).Value, i)
+                                Next
+                                propertyToSet.SetValue(ainst, arr, New Object() {})
+                            Else
+                                propertyToSet.SetValue(ainst, prp.Argument.Value, New Object() {})
+                            End If
                         Catch ex As ArgumentException
                             Throw New InvalidOperationException(ex.Message, ex)
                         End Try
