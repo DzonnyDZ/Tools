@@ -499,7 +499,7 @@ DoItAgain:
                                 state = ReplaceFSA.CloseOpen
                             Case "\"c
                                 ret.Append(FormatInternal$(name.ToString, Nothing, 0, getValue, provider))
-                                If cEscapes Then state = ReplaceFSA.StringBackSlash Else ret.Append("\"c)
+                                If cEscapes Then state = ReplaceFSA.StringBackSlash Else ret.Append("\"c) : state = ReplaceFSA.String
                             Case Else
                                 ret.Append(FormatInternal$(name.ToString, Nothing, 0, getValue, provider))
                                 ret.Append(ch)
