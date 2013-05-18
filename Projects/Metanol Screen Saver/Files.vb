@@ -140,8 +140,8 @@ Friend Class FilesEnumerator : Implements IEnumerator(Of String)
     Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
         If Folders Is Nothing Then
             Folders = New Stack(Of IEnumerator(Of String))()
-            Folders.Push(IO.Directory.GetDirectories(Root))
-            If Not FoldersFirst Then Files = IO.Directory.GetFiles(Root)
+            Folders.Push(DirectCast(IO.Directory.GetDirectories(Root), IEnumerable(Of String)).GetEnumerator)
+            If Not FoldersFirst Then Files = DirectCast(IO.Directory.GetFiles(Root), IEnumerable(Of String)).GetEnumerator
         End If
         Return MoveNextInternal()
     End Function
@@ -185,12 +185,12 @@ Friend Class FilesEnumerator : Implements IEnumerator(Of String)
         End If
         If Not Folders.Peek.MoveNext() Then
             If FoldersFirst Then
-                Files = IO.Directory.GetFiles(Folders.Peek.Current)
+                Files = DirectCast(IO.Directory.GetFiles(Folders.Peek.Current), IEnumerable(Of String)).GetEnumerator
                 Return MoveNextInternal
             Else
                 Folders.Pop()
                 If Folders.Count > 0 Then
-                    Files = IO.Directory.GetFiles(Folders.Peek.Current)
+                    Files = DirectCast(IO.Directory.GetFiles(Folders.Peek.Current), IEnumerable(Of String)).GetEnumerator
                     Return MoveNextInternal
                 Else
                     Return False
@@ -199,7 +199,7 @@ Friend Class FilesEnumerator : Implements IEnumerator(Of String)
         Else
             If FoldersFirst Then
             Else
-                Files = IO.Directory.GetFiles(Folders.Peek.Current)
+                Files = DirectCast(IO.Directory.GetFiles(Folders.Peek.Current), IEnumerable(Of String)).GetEnumerator
             End If
         End If
     End Function

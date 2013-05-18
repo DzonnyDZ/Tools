@@ -134,7 +134,7 @@ Partial Friend Class frmSSaver
                     Try : IPTC = New Tools.MetadataT.IptcT.Iptc(JPEG) : Catch : End Try
                     Dim Exif As Tools.MetadataT.ExifT.IfdExif = Nothing
                     Try
-                        Exif = New Tools.MetadataT.ExifT.IfdExif(New Tools.MetadataT.ExifT.ExifReader(JPEG).ExifSubIFD)
+                        Exif = New Tools.MetadataT.ExifT.Exif(New Tools.MetadataT.ExifT.ExifReader(JPEG)).IFD0.ExifSubIFD
                     Catch : End Try
                     tlbInfo.AutoSize = True
                     'tlbInfo.Text = ParseText(My.Settings.InfoText, Exif, IPTC, New SysInfo(picMain.Image, path))

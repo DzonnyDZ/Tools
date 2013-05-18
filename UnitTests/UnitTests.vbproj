@@ -289,15 +289,15 @@
       <Name>Tools.VisualStudio.Macros</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj">
-      <Project>{43599321-D767-4BF7-A725-34850D057B4E}</Project>
+      <Project>{43599321-d767-4bf7-a725-34850d057b4e}</Project>
       <Name>TransformCodeGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools Visual Studio\Tools.VisualStudio.vbproj">
-      <Project>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</Project>
+      <Project>{dcd6658e-6008-4668-bbdf-ccb0f0267759}</Project>
       <Name>Tools.VisualStudio</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools VisualStudio CS\Tools.VisualStudio.CS.csproj">
-      <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
+      <Project>{6904c0f4-0535-48eb-afc1-ce1396418d00}</Project>
       <Name>Tools.VisualStudio.CS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools Win\Tools.Win.vbproj">

@@ -334,18 +334,6 @@ IF ERRORLEVEL 0 (
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DevelopmentTools\AssemblyPostprocessor\AssemblyPostprocessor.vbproj">
-      <Project>{fae8ebef-6351-4699-ad8e-88d1dff3cd92}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\DevelopmentTools\ResXFileGenerator\ResXFileGenerator.vbproj">
-      <Project>{833877ea-2cea-46ee-b475-14051b77d9f0}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools.PreBuild\Tools.PreBuild.vcxproj">
-      <Project>{1fb7ee26-5af3-4031-adea-c0524f3b89c5}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
       <Project>{97e0dd39-aa48-4288-82ad-3753c178c70a}</Project>
     </ProjectReference>

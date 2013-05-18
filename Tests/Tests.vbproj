@@ -848,6 +848,14 @@
     <None Include="Tree.xsd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tools Visual Studio\Tools.VisualStudio.vbproj">
+      <Project>{dcd6658e-6008-4668-bbdf-ccb0f0267759}</Project>
+      <Name>Tools.VisualStudio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools VisualStudio CS\Tools.VisualStudio.CS.csproj">
+      <Project>{6904c0f4-0535-48eb-afc1-ce1396418d00}</Project>
+      <Name>Tools.VisualStudio.CS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools.Metadata\Tools.Metadata.vbproj">
       <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>
       <Name>Tools.Metadata</Name>
@@ -867,14 +875,6 @@
     <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
       <Name>Tools.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools Visual Studio\Tools.VisualStudio.vbproj">
-      <Project>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</Project>
-      <Name>Tools.VisualStudio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools VisualStudio CS\Tools.VisualStudio.CS.csproj">
-      <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
-      <Name>Tools.VisualStudio.CS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools Win\Tools.Win.vbproj">
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>

@@ -176,12 +176,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Tools VisualStudio CS\Tools.VisualStudio.CS.csproj">
-      <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
-      <Name>Tools.VisualStudio.CS</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources.cs.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
@@ -189,6 +183,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Tools VisualStudio CS\Tools.VisualStudio.CS.csproj">
+      <Project>{6904c0f4-0535-48eb-afc1-ce1396418d00}</Project>
+      <Name>Tools.VisualStudio.CS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

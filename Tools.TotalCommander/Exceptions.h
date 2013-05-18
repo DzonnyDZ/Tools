@@ -18,9 +18,9 @@ namespace Tools {
     /// </summary>
     // Tato třída byla automaticky vygenerována pomocí třídy StronglyTypedResourceVuildeEx přes custom tool InternalResXFileCodeGeneratorEx.
     // Pro přidání nebo odebrání člena editujte váš .resx soubor a pak spusťte custom tool InternalResXFileCodeGeneratorEx nebo přebuildujte váš projek ve VS.NET.
-    // Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-2012 (http://tools.codeplex.com)
+    // Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-2013 (http://tools.codeplex.com)
     [System::CodeDom::Compiler::GeneratedCodeAttribute(L"Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx", 
-    L"1.5.4.32727"), 
+    L"1.5.4.37287"), 
     System::Diagnostics::DebuggerNonUserCodeAttribute, 
     System::Diagnostics::CodeAnalysis::SuppressMessageAttribute(L"Microsoft.Naming", L"CA1724:TypeNamesShouldNotMatchNamespaces")]
     ref class Exceptions {
