@@ -191,6 +191,12 @@ Namespace API
         ''' <returns>If the function succeeds, the return value is a handle to the loaded module. If the function fails, the return value is NULL.</returns>
         Public Declare Auto Function LoadLibraryEx Lib "kernel32" (ByVal lpFileName$, hFile As IntPtr, dwFlags As LoadLibraryMode) As IntPtr
 
+        ''' <summary>Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).</summary>
+        ''' <param name="hModule">A handle to the DLL module that contains the function or variable. </param>
+        ''' <param name="procedureName">The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.</param>
+        ''' <returns>If the function succeeds, the return value is the address of the exported function or variable.</returns>
+        Public Declare Auto Function GetProcAddress Lib "kernel32" (hModule As IntPtr, procedureName As String) As IntPtr
+
 #Region "Resources"
         ''' <summary>Determines the location of a resource with the specified type and name in the specified module.</summary>
         ''' <param name="hModule">A handle to the module whose portable executable file or an accompanying MUI file contains the resource. If this parameter is NULL, the function searches the module used to create the current process.</param>
@@ -290,7 +296,7 @@ Namespace API
         ''' <param name="nBufferMax">The size of the buffer, in characters. The string is truncated and null-terminated if it is longer than the number of characters specified. If this parameter is 0, then lpBuffer receives a read-only pointer to the resource itself.</param>
         ''' <returns>If the function succeeds, the return value is the number of characters copied into the buffer, not including the terminating null character, or zero if the string resource does not exist. </returns>
         <DllImport("User32", SetLastError:=True)> _
-        Public Function LoadString(ByVal hInstance As IntPtr, ByVal uID As UInt32, ByRef lpBuffer As IntPtr, ByVal nBufferMax As Integer) As Integer
+        Public Function LoadString(ByVal hInstance As IntPtr, ByVal uID As UInt32, lpBuffer As IntPtr, ByVal nBufferMax As Integer) As Integer
         End Function
 
         ''' <summary>Determines whether a value is an integer identifier for a resource.</summary>

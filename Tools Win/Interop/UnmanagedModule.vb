@@ -3,6 +3,7 @@ Imports System.Globalization.CultureInfo
 Imports System.Runtime.InteropServices
 Imports Microsoft.Win32.SafeHandles
 Imports System.IO.MemoryMappedFiles
+Imports System.Text
 
 Namespace InteropT
     ''' <summary>Represents an umnanaged (i.e. Win32) module (i.e. DLL or EXE tec.)</summary>
@@ -19,14 +20,25 @@ Namespace InteropT
             End Get
         End Property
 
-        ''' <summary>Loads and unmanaged module (DLL, EXE, MUI etc.) as datafile for further processing</summary>
-        ''' <param name="path">Path to a file to load. It can be any file that is in forat of unmanaged executable such as DLL, EXE, MUI, EFX and much other extensions.</param>
-        ''' <returns>An instance of <see cref="UnmanagedModule"/> class that holds loaded library.</returns>
+        ''' <summary>Loads an unmanaged module (DLL, EXE, MUI etc.) as datafile for further processing</summary>
+        ''' <param name="path">Path to a file to load. It can be any file that is in format of unmanaged executable such as DLL, EXE, MUI, EFX and much other extensions.</param>
+        ''' <returns>An instance of <see cref="UnmanagedModule"/> class that represents a library loaded as data file.</returns>
+        ''' <remarks>Some operations are not available when library is loaded as data file</remarks>
         ''' <exception cref="API.Win32APIException">Failed to load the library</exception>
         Public Shared Function LoadLibraryAsDataFile(path As String) As UnmanagedModule
             Dim handle = API.Common.LoadLibraryEx(path, IntPtr.Zero, API.LoadLibraryMode.LoadLibraryAsDatafile)
             If handle = IntPtr.Zero Then Throw New API.Win32APIException
-            Return New UnmanagedModule With {.hModule = handle}
+            Return New UnmanagedModule(handle, True)
+        End Function
+
+        ''' <summary>Load an unmanaged module (DLL, EXE, etc.) for further processing or execution</summary>
+        ''' <param name="path">Path to a file to load. It can be any file that is in format of unmanaged executable such as DLL, EXE, MUI, EFX and much other extensions.</param>
+        ''' <returns>An instance of <see cref="UnmanagedModule"/> class that represents a library loaded as data file.</returns>
+        ''' <exception cref="API.Win32APIException">Failed to load the library</exception>
+        Public Shared Function LoadLibrary(path As String) As UnmanagedModule
+            Dim handle = API.Common.LoadLibraryEx(path, IntPtr.Zero, 0)
+            If handle = IntPtr.Zero Then Throw New API.Win32APIException
+            Return New UnmanagedModule(handle, False)
         End Function
 
 #Region "IDisposable Support"
@@ -64,6 +76,17 @@ Namespace InteropT
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
+
+        ''' <summary>Gets a pointer to native method (or variable) in the module</summary>
+        ''' <param name="procedureName">Name of the method to get pointer to</param>
+        ''' <returns>Pointer to native method with given name</returns>
+        ''' <exception cref="API.Win32APIException">Failed to obtain method address</exception>
+        ''' <remarks>The spelling and case of a function name pointed to by <paramref name="procedureName"/> must be identical to that in the EXPORTS statement of the source DLL's module-definition (.def) file.</remarks>
+        Public Function GetProcedureAddress(procedureName$) As IntPtr
+            Dim ret = API.GetProcAddress(Handle, procedureName)
+            If ret = IntPtr.Zero Then Throw New API.Win32APIException
+            Return ret
+        End Function
 
         ''' <summary>Gets list of types of resources in this module</summary>
         ''' <returns>List of all types of resources in this module</returns>
@@ -139,27 +162,59 @@ Namespace InteropT
         ''' <returns>A stream that can be used to read resource data.</returns>
         ''' <exception cref="API.Win32APIException">Failed to obtain resource data</exception>
         Private Function GetResourceStream(hRes As IntPtr) As IO.Stream
-            Dim size = API.Common.SizeOfResource(Handle, hRes)
+            Dim size = API.Common.SizeofResource(Handle, hRes)
             Dim pt = API.Common.LoadResource(hModule, hRes)
             If pt = IntPtr.Zero Then Throw New API.Win32APIException()
             Return New IOt.UnmanagedMemoryStream(pt, size)
         End Function
 #End Region
-        '#Region "GetResourceString"
-        '        Public Function GetResourceString(name$) As String
-        '        End Function
+        ''' <summary>CTor - creates anew instance of the <see cref="UnmanagedModule"/> class</summary>
+        ''' <param name="hModule">Handle of the module</param>
+        ''' <param name="loadedAsDataFile">Indicates if library was loaded as data file</param>
+        Private Sub New(hModule As IntPtr, loadedAsDataFile As Boolean)
+            Me.hModule = hModule
+            Me._loadedAsDataFile = loadedAsDataFile
+        End Sub
 
-        '        Public Function GetResourceString(id%) As String
-        '            Dim ptr As IntPtr
-        '            API.Common.SetLastError(0)
-        '            Dim ret = API.Common.LoadString(hModule, id, ptr, 0)
-        '            If ret < 0 OrElse (ret = 0 AndAlso Marshal.GetLastWin32Error <> API.Common.ERROR_SUCCESS) Then Throw New API.Win32APIException
-        '            If ret = 0 Then Return ""
-        '            Return Marshal.PtrToStringAuto(ptr)
-        '        End Function
-        '#End Region
+        Private ReadOnly _loadedAsDataFile As Boolean
+        ''' <summary>Gets value indicating if the library was loaded as data file or loaded for execution</summary>
+        ''' <returns>True if the library was loaded as data file, false if it was loaded for execution</returns>
+        Public ReadOnly Property LoadedAsDataFile As Boolean
+            Get
+                Return _loadedAsDataFile
+            End Get
+        End Property
 
+        ''' <summary>Loads a string from module identified by resource ID</summary>
+        ''' <param name="id">ID of string to load</param>
+        ''' <returns>The string for given id</returns>
+        ''' <remarks>This overload is not CLS-compliant. CLS-compliant overload is provided.</remarks>
+        ''' <exception cref="API.Win32APIException">Failed to load string from module</exception>
+        <CLSCompliant(False)>
+        Public Function LoadString(id As UInteger) As String
+            'When passing 0 to nBufferMax LoadString writes pointer to the buffer to memory pointed by ptr
+            Dim bsize% = 2048
+            Dim ret%
+            Dim b As StringBuilder
+            Do
+                bsize *= 2
+                b = New StringBuilder(bsize)
+                ret = API.LoadString(Handle, id, b, bsize)
+                If ret < 0 OrElse (ret = 0 AndAlso Marshal.GetLastWin32Error <> API.Common.ERROR_SUCCESS) Then Throw New API.Win32APIException
+            Loop While ret = bsize 'This seems to be the only relaible way to load string longer than initial bufer size
+            Return b.ToString
+        End Function
 
+        ''' <summary>Loads a string from module identified by resource ID</summary>
+        ''' <param name="id">ID of string to load</param>
+        ''' <returns>The string for given id</returns>
+        ''' <remarks>This overload is provided only for CLS-compliance</remarks>
+        ''' <exception cref="API.Win32APIException">Failed to load string from module</exception>
+        ''' <exception cref="OverflowException"><paramref name="id"/> is greater than <see cref="UInteger.MaxValue"/> or less than zero</exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Function LoadString(id As Long) As String
+            Return LoadString(CUInt(id))
+        End Function
     End Class
 
     ''' <summary>Unmanaged resource identificator</summary>
@@ -227,7 +282,7 @@ Namespace InteropT
         ''' <summary>Gets an empty instance of <see cref="ResourceIdentifier"/></summary>
         Public Shared ReadOnly Property Empty As ResourceIdentifier
             Get
-                Return New resourceidentifier
+                Return New ResourceIdentifier
             End Get
         End Property
 

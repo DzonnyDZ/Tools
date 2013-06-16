@@ -87,5 +87,30 @@ Save:                       If sfdSave.ShowDialog(Me) = Windows.Forms.DialogResu
                 End Try
             End If
         End Sub
+
+        Private Sub tvwTree_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles tvwTree.AfterSelect
+            If e.Node.Parent IsNot Nothing Then
+                Try
+                    Using str = mdl.GetResourceStream(e.Node.Parent.Tag, e.Node.Tag)
+                        Using r As New IO.StreamReader(str, System.Text.Encoding.Unicode)
+                            txtPreview.Text = r.ReadToEnd.Replace(vbNullChar, "")
+                            txtPreview.ForeColor = SystemColors.WindowText
+                        End Using
+                    End Using
+                Catch ex As Exception
+                    txtPreview.Text = String.Format("{0}: {1}", ex.GetType.Name, ex.Message)
+                    txtPreview.ForeColor = Color.Red
+                End Try
+            End If
+        End Sub
+
+        Private Sub cmdLoadString_Click(sender As Object, e As EventArgs) Handles cmdLoadString.Click
+            Try
+                txtPreview.Text = mdl.LoadString(CUInt(nudStringId.Value))
+                txtPreview.ForeColor = SystemColors.WindowText
+            Catch ex As Exception
+                mBox.Error_X(ex)
+            End Try
+        End Sub
     End Class
 End Namespace
