@@ -2,10 +2,11 @@
 Imports System.Runtime.CompilerServices
 Imports System.Web
 
-Namespace Text
+Namespace TextT
 #If Config <= Nightly Then
     ''' <summary>Contains various methods for string escaping</summary>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>
+    ''' <version version="1.5.4">Changed namespace from <c>Text</c> to <see cref="TextT"/>.</version>
     Module Escaping
 #Region "Enums"
         ''' <summary>Indicates possible types of qotes used in many programming languages</summary>
@@ -208,13 +209,25 @@ Namespace Text
         ''' <returns><paramref name="str"/> with all ocurences of underscore (_) and percent sign (%) backslash-escaped. Null when <paramref name="str"/> is null.</returns>
         ''' <remarks>In conformat SQL implementations this string can be used on right side of LIKE operator only when followed by <c>ESCAPE '\'</c>. Some implementations (e.g. MySQL) may not require it.
         ''' <para>This function does not make string safe for any kind of SQL sttring literal. It only makes it safe for right side of the LIKE operator (if passed there in proper form). Use <see cref="EscapeSql"/> or SQL-engine-specific function to make string safe for SQL string.</para></remarks>
+        ''' <version version="1.5.4">Fix: Backslash (\) was not escaped</version>
         Public Function EscapeSqlLike(ByVal str As String) As String
+            Return EscapeSqlLike(str, "\"c)
+        End Function
+
+        ''' <summary>Escapes given string for right side of SQL LIKE operator to be treated as exact match.</summary>
+        ''' <param name="str">String to be made safe</param>
+        ''' <returns><paramref name="str"/> with all ocurences of underscore (_) and percent sign (%) escaped. Null when <paramref name="str"/> is null.</returns>
+        ''' <remarks>In conformat SQL implementations this string can be used on right side of LIKE operator only when followed by <c>ESCAPE '<paramref name="escape"/>'</c>. Some implementations (e.g. MySQL) may not require it.
+        ''' <para>This function does not make string safe for any kind of SQL sttring literal. It only makes it safe for right side of the LIKE operator (if passed there in proper form). Use <see cref="EscapeSql"/> or SQL-engine-specific function to make string safe for SQL string.</para></remarks>
+        ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
+        Public Function EscapeSqlLike(str As String, escape As Char) As String
             If str = "" Then Return str
             Dim b As New StringBuilder(str.Length)
             For Each ch In str
                 Select Case ch
-                    Case "_"c : b.Append("\_")
-                    Case "%"c : b.Append("\%")
+                    Case "_"c : b.Append(escape & "_")
+                    Case "%"c : b.Append(escape & "%")
+                    Case escape : b.Append(escape & escape)
                     Case Else : b.Append(ch)
                 End Select
             Next

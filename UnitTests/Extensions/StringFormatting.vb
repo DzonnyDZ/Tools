@@ -121,6 +121,37 @@ Namespace ExtensionsUT
         End Sub
 
         <TestMethod>
+        Public Sub ReplaceTransformation()
+            Assert.AreEqual("Test 01", "Test {a:00|html}".Replace(InvariantCulture, "a", 1))
+            Assert.AreEqual("Test 1", "Test {a|html}".Replace(InvariantCulture, "a", 1))
+            Assert.AreEqual("Test &lt;b", "Test {a|html}b".Replace(InvariantCulture, "a", "<"))
+            Assert.AreEqual("Test &amp;lt;b", "Test {a:|html|html}b".Replace(InvariantCulture, "a", "<"))
+            Assert.AreEqual("Alert('Hello \'world\'!');", "Alert('{message|JS}');".Replace(InvariantCulture, "message", "Hello 'world'!"))
+            Assert.AreEqual(
+                "<a onclick=""alert('Do you wanna go to page &lt;\&apos;Shit &amp; Hit\&apos;>?')"" href=""http://shitandhit.com?a=1&amp;b=2"">Shit &amp; Hit</a>",
+                "<a onclick=""alert('{message|JS|xmlAttribute}')"" href=""{url|htmlAttribute}"">{text|html}</a>".
+                    Replace(InvariantCulture,
+                        "message", "Do you wanna go to page <'Shit & Hit'>?",
+                        "url", "http://shitandhit.com?a=1&b=2",
+                        "text", "Shit & Hit"
+            ))
+        End Sub
+
+        <TestMethod>
+        Public Sub CFormatTransformation()
+            Assert.AreEqual("Test 01", "Test {0:00|html}".CFormat(InvariantCulture, 1))
+            Assert.AreEqual("Test 1", "Test {0|html}".CFormat(InvariantCulture, 1))
+            Assert.AreEqual("Test &lt;b", "Test {0|html}b".CFormat(InvariantCulture, "<"))
+            Assert.AreEqual("Test &amp;lt;b", "Test {0:|html|html}b".CFormat(InvariantCulture, "<"))
+            Assert.AreEqual("Alert('Hello \'world\'!');", "Alert('{0|JS}');".CFormat(InvariantCulture, "Hello 'world'!"))
+            Assert.AreEqual(
+                "<a onclick=""alert('Do you wanna go to page &lt;\&apos;Shit &amp; Hit\&apos;>?')"" href=""http://shitandhit.com?a=1&amp;b=2"">Shit &amp; Hit</a>",
+                "<a onclick=""alert('{0|JS|xmlAttribute}')"" href=""{1|htmlAttribute}"">{2|html}</a>".
+                    CFormat(InvariantCulture, "Do you wanna go to page <'Shit & Hit'>?", "http://shitandhit.com?a=1&b=2", "Shit & Hit"
+            ))
+        End Sub
+
+        <TestMethod>
         Public Sub ReplaceGet()
             Dim getter As Func(Of String, Object) =
                 Function(name$)
@@ -150,10 +181,10 @@ Namespace ExtensionsUT
             Assert.AreEqual("{vStr}", "{{{Str}{}}".Replace(getter))
             Assert.AreEqual("7", "{Int}".Replace(getter, InvariantCulture))
             Assert.AreEqual("007", "{Int:000}".Replace(getter, InvariantCulture))
-            Assert.AreEqual("|{1970}|", "{Date:|{yyyy}{}}|".Replace(getter, InvariantCulture))
-            Assert.AreEqual("|{1970}|", "{Date:|{{yyyy}}|}".Replace(getter, InvariantCulture))
+            Assert.AreEqual("|{1970}|", "{Date:||{yyyy}{}}|".Replace(getter, InvariantCulture))
+            Assert.AreEqual("|{1970}|", "{Date:||{{yyyy}}||}".Replace(getter, InvariantCulture))
             Assert.AreEqual("|{1970}|", "|{Date:{yyyy}}}|".Replace(getter, InvariantCulture))
-            Assert.AreEqual("{|1970|}", "{{{Date:|yyyy|}{}}".Replace(getter, InvariantCulture))
+            Assert.AreEqual("{|1970|}", "{{{Date:||yyyy||}{}}".Replace(getter, InvariantCulture))
             Assert.AreEqual(" 7", "{Int,2}".Replace(getter, InvariantCulture))
             Assert.AreEqual("7 ", "{Int,-2}".Replace(getter, InvariantCulture))
             Assert.AreEqual("7 ", "{Int,-02}".Replace(getter, InvariantCulture))

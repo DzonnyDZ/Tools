@@ -1,6 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports CultureInfo = System.Globalization.CultureInfo
 Imports System.Text
+Imports System.Web
+Imports Tools.TextT
 
 Namespace ExtensionsT
 #If Config <= Nightly Then 'Stage:Nightly
@@ -25,13 +27,14 @@ Namespace ExtensionsT
     ''' </list>
     ''' <para>
     ''' For various <see cref="StringFormatting.Replace"/> and <see cref="StringFormatting.CReplace"/> overloads escapes also work in name and format part.
-    ''' They does not work in align part. ({name,align:format})
+    ''' They does not work in align part. ({name,align:format|transform})
     ''' </para>
     ''' <para>For various <see cref="StringFormatting.Replace"/> and <see cref="StringFormatting.CReplace"/> overloads additional rules apply:</para>
     ''' <list type="table">
     ''' <listheader><term>Escape sequence</term><description>Description</description></listheader>
     ''' <item><term>::</term><description>Only in placeholder name part: :</description></item>
     ''' <item><term>,,</term><description>Only in placeholder name part: ,</description></item>
+    ''' <item><term>||</term><description>Only in placeholder name, format or transformation part: |</description></item>
     ''' <item><term>{}</term><description>An empty string (only immediatelly before or after placeholder). This rule was added for confilct resolution, see below.</description></item>
     ''' </list>
     ''' <note>You can also use \: and \, to escape : and , (only when C#-style escaping is allowed).</note>
@@ -55,7 +58,7 @@ Namespace ExtensionsT
     ''' <para>Following rules apply to fromatting (only when formating is being done):</para>
     ''' <list type="bullet">
     ''' <item>String may contain placeholers of arguments being formatted (passed in array). Each placeholder reffers to index within the array.</item>
-    ''' <item>Placeholder is in format  {index[,alignment][:formatString]}</item>
+    ''' <item>Placeholder is in format  {index[,alignment][:formatString][|transfomation]*}</item>
     ''' <item>Index is any non-negative decimal integral number [0-9]+</item>
     ''' <item>
     ''' Alignment is optional, preceded with comma and it is -?[0-9]+ decimal integral number delaring minimal width of string replacing the placeholder.
@@ -65,6 +68,11 @@ Namespace ExtensionsT
     ''' FormatString is optional formatting string passed to formating method of argument.
     ''' Ignored when argument does implement neither <see cref="ICustomFormatter"/> nor <see cref="IFormattable"/>.
     ''' </item>
+    ''' <item>
+    ''' Transformation is optional transformation identifier (case-insensitive), multiple identifiers can specifies be separated by |.
+    ''' Transformation identifiers must be registered in <see cref="StringFormatting.Transformations"/>. There are several pre-defined transformations.
+    ''' A transformation taks a string comming from formatting result and transform it. It can be used e.g. for HTML encoding.
+    ''' </item>
     ''' </list>
     ''' <para>In format string escaping is done in same way as described above.</para>
     ''' </remarks>
@@ -72,6 +80,7 @@ Namespace ExtensionsT
     ''' <version version="1.5.3">In 1.5.2 the module was not made public by mistake - so, accessibility changed from Friend (internal) to Public.</version>
     ''' <version version="1.5.4">Fixes in documentation (wrong formatting and clarification)</version>
     ''' <version version="1.5.4">Added various <see cref="StringFormatting.Replace"/> and <see cref="StringFormatting.CReplace"/> overloads</version>
+    ''' <version version="1.5.4">Added documentation for transformations</version>
     Public Module StringFormatting
         ''' <summary>Formats and escape string according to rules described for <see cref="StringFormatting"/></summary>
         ''' <param name="str">Formatting string</param>
@@ -79,16 +88,18 @@ Namespace ExtensionsT
         ''' <returns>String formatted</returns>
         ''' <param name="provider">Formatting provider</param>
         ''' <exception cref="FormatException"><paramref name="str"/> is invalid format string</exception>
-        <Extension()> _
-        Public Function CFormat(ByVal str As String, ByVal provider As IFormatProvider, ByVal ParamArray Args As Object()) As String
-            Return CFormat(provider, str, Args, True)
+        ''' <version version="1.5.4">Transformations (|) are now supported. This can cause breaking changes.</version>
+        ''' <version version="1.5.4">Parameter <c>Args</c> renamed to <c>args</c>.</version>
+        <Extension()>
+        Public Function CFormat(ByVal str As String, ByVal provider As IFormatProvider, ByVal ParamArray args As Object()) As String
+            Return CFormat(provider, str, args, True)
         End Function
-        ''' <summary>Un-escapes string according to rules described for <see cref="StringFormatting"/> without formatting it</summary>
+        ''' <summary>Escapes string according to rules described for <see cref="StringFormatting"/> without formatting it</summary>
         ''' <param name="str">String to un-escape</param>
         ''' <returns>String unescaped</returns>
         ''' <exception cref="FormatException"><paramref name="str"/> contains invalid escape sequence</exception>
         ''' <remarks>This method does not allow formatting, so "{{" gets to output as "{{" and "}}" as "}}".</remarks>
-        <Extension()> _
+        <Extension()>
         Public Function CEscape(ByVal str As String) As String
             Return CFormat(CultureInfo.CurrentCulture, str, New Object() {}, False)
         End Function
@@ -98,9 +109,11 @@ Namespace ExtensionsT
         ''' <returns>String formatted</returns>
         ''' <exception cref="FormatException"><paramref name="str"/> is invalid format string</exception>
         ''' <remarks>This method uses <see cref="CultureInfo.CurrentCulture"/></remarks>
-        <Extension()> _
-        Public Function CFormat(ByVal str As String, ByVal ParamArray Args As Object()) As String
-            Return CFormat(str, CultureInfo.CurrentCulture, Args)
+        ''' <version version="1.5.4">Transformations (|) are now supported. This can cause breaking changes.</version>
+        ''' <version version="1.5.4">Parameter <c>Args</c> renamed to <c>args</c>.</version>
+        <Extension()>
+        Public Function CFormat(ByVal str As String, ByVal ParamArray args As Object()) As String
+            Return CFormat(str, CultureInfo.CurrentCulture, args)
         End Function
         ''' <summary>Fine State Automaton states for string formatting and escaping</summary>
         Private Enum CFormatFSA
@@ -132,6 +145,14 @@ Namespace ExtensionsT
             cClose1
             ''' <summary>{0,-</summary>
             MinusWidth
+            ''' <summary>{0:aa|</summary>
+            CustomFormatPipe
+            ''' <summary>{0| or {0:x|a etc.</summary>
+            TransformName
+            ''' <summary>{0|a| or {0:x|a| etc.</summary>
+            TransformNamePipe
+            ''' <summary>{0|a\ or {0:x|a\ etc.</summary>
+            TransformNameBack
         End Enum
         ''' <summary>Internaly pefrorms the formatting process</summary>
         ''' <param name="provider">Provider providing formatting</param>
@@ -146,76 +167,77 @@ Namespace ExtensionsT
             If args Is Nothing Then args = New Object() {}
             Dim ret As New System.Text.StringBuilder
             Dim state As CFormatFSA = CFormatFSA.String
-            Dim NumEscapeValue% = 0
-            Dim ArgNum% = 0
-            Dim Width% = 0
-            Dim WidthSign% = 1
-            Dim CustomFormat As System.Text.StringBuilder = Nothing
-            Dim RetState As CFormatFSA = CFormatFSA.String
+            Dim numEscapeValue% = 0
+            Dim argNum% = 0
+            Dim width% = 0
+            Dim widthSign% = 1
+            Dim customFormat As System.Text.StringBuilder = Nothing
+            Dim retState As CFormatFSA = CFormatFSA.String
+            Dim trans As New List(Of StringBuilder)
             For Each ch As Char In str
 SelectCase:     Select Case state
                     Case CFormatFSA.String 'Normal situation
                         Select Case ch
                             Case "{"c : If format Then state = CFormatFSA.Open1 Else ret.Append(ch)
                             Case "}"c : If format Then state = CFormatFSA.Close1 Else ret.Append(ch)
-                            Case "\"c : state = CFormatFSA.Back : RetState = CFormatFSA.String
+                            Case "\"c : state = CFormatFSA.Back : retState = CFormatFSA.String
                             Case Else : ret.Append(ch)
                         End Select
                     Case CFormatFSA.Back '\
-                        Dim AppendTo As System.Text.StringBuilder = IIf(RetState = CFormatFSA.String, ret, CustomFormat)
+                        Dim AppendTo As System.Text.StringBuilder = IIf(retState = CFormatFSA.String, ret, customFormat)
                         Select Case ch
-                            Case "a"c : AppendTo.Append(ChrW(7)) : state = RetState  'Aletr
-                            Case "b"c : AppendTo.Append(ChrW(8)) : state = RetState 'Backspace
-                            Case "f"c : AppendTo.Append(ChrW(&HC)) : state = RetState 'Form feed
-                            Case "n"c : AppendTo.Append(ChrW(&HA)) : state = RetState 'New line
-                            Case "r"c : AppendTo.Append(ChrW(&HD)) : state = RetState 'Carriage return
-                            Case "t"c : AppendTo.Append(ChrW(9)) : state = RetState 'Horizontal tab
-                            Case "v"c : AppendTo.Append(ChrW(&HB)) : state = RetState 'Vertical tab
-                            Case "." : state = RetState
+                            Case "a"c : AppendTo.Append(ChrW(7)) : state = retState  'Aletr
+                            Case "b"c : AppendTo.Append(ChrW(8)) : state = retState 'Backspace
+                            Case "f"c : AppendTo.Append(ChrW(&HC)) : state = retState 'Form feed
+                            Case "n"c : AppendTo.Append(ChrW(&HA)) : state = retState 'New line
+                            Case "r"c : AppendTo.Append(ChrW(&HD)) : state = retState 'Carriage return
+                            Case "t"c : AppendTo.Append(ChrW(9)) : state = retState 'Horizontal tab
+                            Case "v"c : AppendTo.Append(ChrW(&HB)) : state = retState 'Vertical tab
+                            Case "."c : state = retState
                             Case "x"c, "X"c, "u"c, "U"c : state = CFormatFSA.X
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                state = CFormatFSA.NumEscape : NumEscapeValue = AscW(ch) - AscW("0"c)
-                            Case Else : AppendTo.Append(ch) : state = RetState
+                                state = CFormatFSA.NumEscape : numEscapeValue = AscW(ch) - AscW("0"c)
+                            Case Else : AppendTo.Append(ch) : state = retState
                         End Select
                     Case CFormatFSA.NumEscape '\0 \1 ...
-                        Dim AppendTo As System.Text.StringBuilder = IIf(RetState = CFormatFSA.String, ret, CustomFormat)
+                        Dim AppendTo As System.Text.StringBuilder = If(retState = CFormatFSA.String, ret, customFormat)
                         Select Case ch
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                NumEscapeValue = NumEscapeValue * 10 + AscW(ch) - AscW("0"c)
+                                numEscapeValue = numEscapeValue * 10 + AscW(ch) - AscW("0"c)
                             Case Else
-                                state = RetState
+                                state = retState
                                 Try
-                                    AppendTo.Append(Char.ConvertFromUtf32(NumEscapeValue))
+                                    AppendTo.Append(Char.ConvertFromUtf32(numEscapeValue))
                                 Catch ex As ArgumentOutOfRangeException
-                                    Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0D, NumEscapeValue), ex)
+                                    Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0D, numEscapeValue), ex)
                                 End Try
                                 GoTo SelectCase
                         End Select
                     Case CFormatFSA.X '\x \X \U \u
                         Select Case ch
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                NumEscapeValue = AscW(ch) - AscW("0"c) : state = CFormatFSA.Xnext
+                                numEscapeValue = AscW(ch) - AscW("0"c) : state = CFormatFSA.Xnext
                             Case "a"c, "b"c, "c"c, "d"c, "e"c, "f"c
-                                NumEscapeValue = AscW(ch) - AscW("a"c) + 10 : state = CFormatFSA.Xnext
+                                numEscapeValue = AscW(ch) - AscW("a"c) + 10 : state = CFormatFSA.Xnext
                             Case "A"c, "B"c, "C"c, "D"c, "E"c, "F"c
-                                NumEscapeValue = AscW(ch) - AscW("A"c) + 10 : state = CFormatFSA.Xnext
+                                numEscapeValue = AscW(ch) - AscW("A"c) + 10 : state = CFormatFSA.Xnext
                             Case Else : Throw New FormatException(ResourcesT.Exceptions.InvalidFormatStringInvalidHexadecimalEscapeSequence)
                         End Select
                     Case CFormatFSA.Xnext '\x1 \X1 \u1 \U1 ...
-                        Dim AppendTo As System.Text.StringBuilder = IIf(RetState = CFormatFSA.String, ret, CustomFormat)
+                        Dim AppendTo As System.Text.StringBuilder = IIf(retState = CFormatFSA.String, ret, customFormat)
                         Select Case ch
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                NumEscapeValue = NumEscapeValue * 16 + AscW(ch) - AscW("0"c)
+                                numEscapeValue = numEscapeValue * 16 + AscW(ch) - AscW("0"c)
                             Case "a"c, "b"c, "c"c, "d"c, "e"c, "f"c
-                                NumEscapeValue = NumEscapeValue * 16 + AscW(ch) - AscW("a"c) + 10
+                                numEscapeValue = numEscapeValue * 16 + AscW(ch) - AscW("a"c) + 10
                             Case "A"c, "B"c, "C"c, "D"c, "E"c, "F"c
-                                NumEscapeValue = NumEscapeValue * 16 + AscW(ch) - AscW("A"c) + 10
+                                numEscapeValue = numEscapeValue * 16 + AscW(ch) - AscW("A"c) + 10
                             Case Else
-                                state = RetState
+                                state = retState
                                 Try
-                                    AppendTo.Append(Char.ConvertFromUtf32(NumEscapeValue))
+                                    AppendTo.Append(Char.ConvertFromUtf32(numEscapeValue))
                                 Catch ex As ArgumentOutOfRangeException
-                                    Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0x0X, NumEscapeValue), ex)
+                                    Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0x0X, numEscapeValue), ex)
                                 End Try
                                 GoTo SelectCase
                         End Select
@@ -228,118 +250,156 @@ SelectCase:     Select Case state
                         Select Case ch
                             Case "{"c : ret.Append("{"c) : state = CFormatFSA.String
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                ArgNum = AscW(ch) - AscW("0"c) : state = CFormatFSA.ArgNum
+                                argNum = AscW(ch) - AscW("0"c) : state = CFormatFSA.ArgNum
                             Case Else : Throw New FormatException(ResourcesT.Exceptions.InvalidFormatStringArgumentNumberExpected)
                         End Select
                     Case CFormatFSA.ArgNum '{0, {1
                         Select Case ch
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                ArgNum = ArgNum * 10 + AscW(ch) - AscW("0"c)
+                                argNum = argNum * 10 + AscW(ch) - AscW("0"c)
                             Case ","c : state = CFormatFSA.Comma
-                            Case ":"c : state = CFormatFSA.CustomFormat : Width = 0 : CustomFormat = New System.Text.StringBuilder
-                            Case "}"c : ret.Append(FormatInternal(ArgNum, 0, Nothing, args, provider)) : state = CFormatFSA.String
+                            Case ":"c : state = CFormatFSA.CustomFormat : width = 0 : customFormat = New System.Text.StringBuilder
+                            Case "}"c : ret.Append(FormatInternal(argNum, 0, Nothing, args, provider, trans)) : state = CFormatFSA.String
+                            Case "|"c : state = CFormatFSA.TransformName : trans.Clear() : trans.Add(New StringBuilder) : customFormat = New StringBuilder()
                             Case Else : Throw New FormatException(ResourcesT.Exceptions.InvalidFormatStringNumeralOrExpected2)
                         End Select
                     Case CFormatFSA.Comma '{0,
                         Select Case ch
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                Width = AscW(ch) - AscW("0"c) : state = CFormatFSA.Width
-                                WidthSign = +1
-                            Case "-"c : WidthSign = -1 : state = CFormatFSA.MinusWidth
+                                width = AscW(ch) - AscW("0"c) : state = CFormatFSA.Width
+                                widthSign = +1
+                            Case "-"c : widthSign = -1 : state = CFormatFSA.MinusWidth
                             Case Else : Throw New Exception(ResourcesT.Exceptions.InvalidFormatStringExpectedWidthNumberOr)
                         End Select
                     Case CFormatFSA.MinusWidth '{0,-
                         Select Case ch
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                Width = AscW(ch) - AscW("0"c) : state = CFormatFSA.Width
+                                width = AscW(ch) - AscW("0"c) : state = CFormatFSA.Width
                             Case Else : Throw New Exception(ResourcesT.Exceptions.InvalidFormatStringExpectedWidthNumber)
                         End Select
                     Case CFormatFSA.Width '{0,0
                         Select Case ch
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
-                                Width = Width * 10 + AscW(ch) - AscW("0"c)
-                            Case ":"c : state = CFormatFSA.CustomFormat : CustomFormat = New System.Text.StringBuilder
-                            Case "}"c : ret.Append(FormatInternal(ArgNum, Width * WidthSign, Nothing, args, provider)) : state = CFormatFSA.String
+                                width = width * 10 + AscW(ch) - AscW("0"c)
+                            Case ":"c : state = CFormatFSA.CustomFormat : customFormat = New System.Text.StringBuilder
+                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, Nothing, args, provider, trans)) : state = CFormatFSA.String
+                            Case "|"c : state = CFormatFSA.TransformName : trans.Clear() : trans.Add(New StringBuilder) : customFormat = New StringBuilder
                             Case Else : Throw New FormatException(ResourcesT.Exceptions.InvalidFormatStringNumeralOrExpected)
                         End Select
                     Case CFormatFSA.CustomFormat  '{0:, {0,0:
                         Select Case ch
                             Case "{"c : state = CFormatFSA.cOpen1
                             Case "}"c : state = CFormatFSA.cClose1
-                            Case "\"c : state = CFormatFSA.Back : RetState = CFormatFSA.CustomFormat
-                            Case Else : CustomFormat.Append(ch)
+                            Case "\"c : state = CFormatFSA.Back : retState = CFormatFSA.CustomFormat
+                            Case "|"c : state = CFormatFSA.CustomFormatPipe
+                            Case Else : customFormat.Append(ch)
+                        End Select
+                    Case CFormatFSA.CustomFormatPipe '{0:a|
+                        Select Case ch
+                            Case "|"c : customFormat.Append("|"c) : state = CFormatFSA.CustomFormat
+                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, trans))
+                            Case Else : trans.Clear() : trans.Add(New StringBuilder(CStr(ch))) : state = CFormatFSA.TransformName
                         End Select
                     Case CFormatFSA.cOpen1
                         Select Case ch
-                            Case "{"c : CustomFormat.Append("{"c) : state = CFormatFSA.CustomFormat
-                            Case Else : state = CFormatFSA.CustomFormat : CustomFormat.Append("{"c) : GoTo SelectCase
+                            Case "{"c : customFormat.Append("{"c) : state = CFormatFSA.CustomFormat
+                            Case Else : state = CFormatFSA.CustomFormat : customFormat.Append("{"c) : GoTo SelectCase
                         End Select
                     Case CFormatFSA.cClose1
                         Select Case ch
-                            Case "}"c : CustomFormat.Append("}"c) : state = CFormatFSA.CustomFormat
-                            Case Else : ret.Append(FormatInternal(ArgNum, Width * WidthSign, CustomFormat.ToString, args, provider)) : state = CFormatFSA.String : GoTo SelectCase
+                            Case "}"c : customFormat.Append("}"c) : state = CFormatFSA.CustomFormat
+                            Case Else : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, trans)) : state = CFormatFSA.String : GoTo SelectCase
                         End Select
+                    Case CFormatFSA.TransformName
+                        Select Case ch
+                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, trans)) : state = CFormatFSA.String
+                            Case "|"c : state = CFormatFSA.TransformNamePipe
+                            Case "\"c : state = CFormatFSA.TransformNameBack
+                            Case Else : trans(trans.Count - 1).Append(ch)
+                        End Select
+                    Case CFormatFSA.TransformNamePipe
+                        Select Case ch
+                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, trans)) : state = CFormatFSA.String
+                            Case "|"c : trans(trans.Count - 1).Append("|"c) : state = CFormatFSA.TransformName
+                            Case Else : trans.Add(New StringBuilder(CStr(ch))) : state = CFormatFSA.TransformName
+                        End Select
+                    Case CFormatFSA.TransformNameBack
+                        trans(trans.Count - 1).Append(ch) : state = CFormatFSA.TransformName
                 End Select
             Next
             Select Case state
                 Case CFormatFSA.String 'Do nothing
                 Case CFormatFSA.Back
-                    If RetState = CFormatFSA.String Then ret.Append("\") Else Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
+                    If retState = CFormatFSA.String Then ret.Append("\") Else Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
                 Case CFormatFSA.NumEscape
-                    If RetState = CFormatFSA.String Then
+                    If retState = CFormatFSA.String Then
                         Try
-                            ret.Append(Char.ConvertFromUtf32(NumEscapeValue))
+                            ret.Append(Char.ConvertFromUtf32(numEscapeValue))
                         Catch ex As ArgumentOutOfRangeException
-                            Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0D, NumEscapeValue), ex)
+                            Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0D, numEscapeValue), ex)
                         End Try
                     Else : Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
                     End If
-                Case CFormatFSA.X : Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
                 Case CFormatFSA.Xnext
-                    If RetState = CFormatFSA.String Then
+                    If retState = CFormatFSA.String Then
                         Try
-                            ret.Append(Char.ConvertFromUtf32(NumEscapeValue))
+                            ret.Append(Char.ConvertFromUtf32(numEscapeValue))
                         Catch ex As ArgumentOutOfRangeException
-                            Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0x0X, NumEscapeValue), ex)
+                            Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0x0X, numEscapeValue), ex)
                         End Try
                     Else : Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
                     End If
                 Case CFormatFSA.Close1 : ret.Append("}"c)
                 Case CFormatFSA.Open1 : ret.Append("{"c)
-                Case CFormatFSA.ArgNum, CFormatFSA.Comma, CFormatFSA.MinusWidth, CFormatFSA.Width, CFormatFSA.CustomFormat, CFormatFSA.cOpen1
+                Case CFormatFSA.X, CFormatFSA.ArgNum, CFormatFSA.Comma, CFormatFSA.MinusWidth, CFormatFSA.Width, CFormatFSA.CustomFormat, CFormatFSA.cOpen1, CFormatFSA.CustomFormatPipe, CFormatFSA.TransformName, CFormatFSA.TransformNamePipe, CFormatFSA.TransformNameBack
                     Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
                 Case CFormatFSA.cClose1
-                    ret.Append(FormatInternal(ArgNum, Width * WidthSign, CustomFormat.ToString, args, provider))
+                    ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, trans))
             End Select
             Return ret.ToString
         End Function
         ''' <summary>Formats object using format string, width and format provider</summary>
-        ''' <param name="ArgNum">Number of argument - index to <paramref name="Args"/></param>
-        ''' <param name="Width">Specifies minimal width of returned string. Negative for left align, positive for right align.</param>
+        ''' <param name="argNum">Number of argument - index to <paramref name="Args"/></param>
+        ''' <param name="width">Specifies minimal width of returned string. Negative for left align, positive for right align.</param>
         ''' <param name="format">Format string fo value</param>
-        ''' <param name="Args">Arguments. Item with index <paramref name="ArgNum"/> from this array will be formatted</param>
+        ''' <param name="args">Arguments. Item with index <paramref name="ArgNum"/> from this array will be formatted</param>
         ''' <param name="provider">Formatting provider</param>
-        ''' <returns>Formatted <paramref name="Args"/>[<paramref name="ArgNum"/>]. If argument is null an empty string is used; if it is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used; if it is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used; otherwise <see cref="System.[Object].ToString"/>. After formatting, value if widhtened to <paramref name="Width"/>.</returns>
-        ''' <exception cref="FormatException"><paramref name="ArgNum"/> is greater than or equal to <paramref name="Args"/>.<see cref="Array.Length">Length</see> -or- <paramref name="format"/> is invalid according to object being formatted.</exception>
-        Private Function FormatInternal(ByVal ArgNum%, ByVal Width%, ByVal format As String, ByVal Args As Object(), ByVal provider As IFormatProvider) As String
-            If ArgNum >= Args.Length Then Throw New FormatException(String.Format("Invalid format string. Required argument number {0} missing.", ArgNum))
+        ''' <param name="trans">Identifiers of transformations to apply in given order</param>
+        ''' <returns>Formatted <paramref name="args"/>[<paramref name="argNum"/>]. If argument is null an empty string is used; if it is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used; if it is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used; otherwise <see cref="System.[Object].ToString"/>. After formatting, value if widhtened to <paramref name="Width"/>.</returns>
+        ''' <exception cref="FormatException"><paramref name="ArgNum"/> is greater than or equal to <paramref name="args"/>.<see cref="Array.Length">Length</see> -or- <paramref name="format"/> is invalid according to object being formatted.</exception>
+        Private Function FormatInternal(ByVal argNum%, ByVal width%, ByVal format As String, ByVal args As Object(), ByVal provider As IFormatProvider, trans As IEnumerable(Of StringBuilder)) As String
+            If argNum >= args.Length Then Throw New FormatException(String.Format("Invalid format string. Required argument number {0} missing.", argNum))
             Dim ret As String
-            If Args(ArgNum) Is Nothing Then
+            If args(argNum) Is Nothing Then
                 ret = ""
-            ElseIf TypeOf Args(ArgNum) Is ICustomFormatter Then
-                ret = DirectCast(Args(ArgNum), ICustomFormatter).Format(format, Args(ArgNum), provider)
-            ElseIf TypeOf Args(ArgNum) Is IFormattable Then
-                ret = DirectCast(Args(ArgNum), IFormattable).ToString(format, provider)
+            ElseIf TypeOf args(argNum) Is ICustomFormatter Then
+                ret = DirectCast(args(argNum), ICustomFormatter).Format(format, args(argNum), provider)
+            ElseIf TypeOf args(argNum) Is IFormattable Then
+                ret = DirectCast(args(argNum), IFormattable).ToString(format, provider)
             Else
-                ret = Args(ArgNum).ToString
+                ret = args(argNum).ToString
             End If
-            If ret.Length >= Math.Abs(Width) Then
-                Return ret
-            ElseIf Width > 0 Then 'Right
-                Return New String(" "c, Width - ret.Length) & ret
+            If ret.Length >= Math.Abs(width) Then
+                'do nothing
+            ElseIf width > 0 Then 'Right
+                ret = New String(" "c, width - ret.Length) & ret
             Else 'Left
-                Return ret & New String(" "c, -Width - ret.Length)
+                ret = ret & New String(" "c, -width - ret.Length)
             End If
+            'Apply transformations
+            If trans IsNot Nothing Then
+                For Each tr In trans
+                    Dim trs = tr.ToString
+                    If trs <> "" Then
+                        Dim trf As Func(Of String, String)
+                        If Not Transformations.TryGetValue(trs, trf) Then Throw New FormatException(String.Format("Transformation {0} is not defined", trs))
+                        If trf IsNot Nothing Then
+                            ret = trf(ret)
+                        End If
+                    End If
+                Next
+            End If
+            Return ret
         End Function
 
 #Region "Replace"
@@ -393,6 +453,20 @@ SelectCase:     Select Case state
             BackSlashHex
             ''' <summary>} in string</summary>
             Close
+            ''' <summary>{name|</summary>
+            NamePipe
+            ''' <summary>{name|a</summary>
+            Transformation
+            ''' <summary>{name:0|</summary>
+            FormatPipe
+            ''' <summary>{name|a}</summary>
+            TransformationClose
+            ''' <summary>{name|a\</summary>
+            TransformationBackSlash
+            ''' <summary>{name|a{</summary>
+            TransformationOpen
+            ''' <summary>{name|a|</summary>
+            TransformationPipe
         End Enum
 
         ''' <summary>Replaces placeholders with formatting in given string</summary>
@@ -416,6 +490,7 @@ SelectCase:     Select Case state
             Dim align = 0
             Dim code = 0
             Dim oldChar As Char = Chars.NullChar
+            Dim trans As New List(Of StringBuilder)
 
             Dim backslashAppendTo As StringBuilder = Nothing
             Dim backslashReturnTo As ReplaceFSA = ReplaceFSA.String
@@ -489,7 +564,13 @@ DoItAgain:
                             Case ","c : state = ReplaceFSA.NameComma
                             Case "}"c : state = ReplaceFSA.NameClose
                             Case "{"c : state = ReplaceFSA.NameOpen
+                            Case "|"c : state = ReplaceFSA.NamePipe
                             Case Else : name.Append(ch)
+                        End Select
+                    Case ReplaceFSA.NamePipe
+                        Select Case ch
+                            Case "|"c : name.Append("|"c) : state = ReplaceFSA.Name
+                            Case Else : state = ReplaceFSA.Transformation : trans.Clear() : trans.Add(New StringBuilder(CStr(ch))) : format = New StringBuilder
                         End Select
                     Case ReplaceFSA.NameClose '} in name of placeholder
                         Select Case ch
@@ -529,13 +610,15 @@ DoItAgain:
                             Case "0"c 'Do nothing
                             Case "1"c To "9"c : align = -ch.NumericValue : state = ReplaceFSA.Align
                             Case ":"c : align = 0 : state = ReplaceFSA.Format : format = New StringBuilder
-                            Case "}" : ret.Append(FormatInternal$(name.ToString, Nothing, 0, getValue, provider)) : state = ReplaceFSA.CloseOpen
+                            Case "|"c : align = 0 : state = ReplaceFSA.Transformation : format = New StringBuilder : trans.Clear() : trans.Add(New StringBuilder)
+                            Case "}"c : ret.Append(FormatInternal$(name.ToString, Nothing, 0, getValue, provider)) : state = ReplaceFSA.CloseOpen
                             Case Else : Throw New FormatException("Invalid formatting string - invalid align: Expected :, } or digit 0-9")
                         End Select
                     Case ReplaceFSA.Align 'alignemnt - number after ,
                         Select Case ch
                             Case "0"c To "9"c : align = align * 10 + ch.NumericValue
                             Case ":"c : state = ReplaceFSA.Format : format = New StringBuilder
+                            Case "|"c : state = ReplaceFSA.Name : format = New StringBuilder : trans.Clear() : trans.Add(New StringBuilder)
                             Case "}"c : ret.Append(FormatInternal$(name.ToString, Nothing, align, getValue, provider)) : state = ReplaceFSA.CloseOpen
                             Case Else : Throw New FormatException("Invalid formatting string - invalid align: Expected :, } or digit 0-9")
                         End Select
@@ -553,6 +636,7 @@ DoItAgain:
                                     format.Append("\"c)
                                     state = ReplaceFSA.Format
                                 End If
+                            Case "|"c : format = New StringBuilder : state = ReplaceFSA.FormatPipe : align = 0
                             Case Else : format = New StringBuilder() : format.Append(ch) : state = ReplaceFSA.Format : align = 0
                         End Select
                     Case ReplaceFSA.Format ':
@@ -560,7 +644,14 @@ DoItAgain:
                             Case "}"c : state = ReplaceFSA.FormatClose
                             Case "{"c : state = ReplaceFSA.FormatOpen
                             Case "\"c : If cEscapes Then state = ReplaceFSA.FormatBackSlash Else format.Append("\"c)
+                            Case "|"c : state = ReplaceFSA.FormatPipe
                             Case Else : format.Append(ch)
+                        End Select
+                    Case ReplaceFSA.FormatPipe '|
+                        Select Case ch
+                            Case "|"c : format.Append("|"c) : state = ReplaceFSA.Format
+                            Case "}"c : state = ReplaceFSA.TransformationClose : trans.Clear() : trans.Add(New StringBuilder)
+                            Case Else : state = ReplaceFSA.Transformation : trans.Clear() : trans.Add(New StringBuilder(CStr(ch)))
                         End Select
                     Case ReplaceFSA.FormatClose ':}
                         Select Case ch
@@ -589,6 +680,11 @@ DoItAgain:
                     Case ReplaceFSA.FormatBackSlash '\ in format
                         backslashAppendTo = format
                         backslashReturnTo = ReplaceFSA.Name
+                        state = ReplaceFSA.BackSlash
+                        GoTo DoItAgain
+                    Case ReplaceFSA.TransformationBackSlash '\ in transformation
+                        backslashAppendTo = format
+                        backslashReturnTo = ReplaceFSA.Transformation
                         state = ReplaceFSA.BackSlash
                         GoTo DoItAgain
                     Case ReplaceFSA.BackSlash 'General \ processing
@@ -646,6 +742,7 @@ DoItAgain:
                             Case ","c : state = ReplaceFSA.NameComma
                             Case "}"c : state = ReplaceFSA.NameClose
                             Case "{"c : state = ReplaceFSA.Name
+                            Case "|"c : state = ReplaceFSA.NamePipe
                             Case Else : name.Append(ch) : state = ReplaceFSA.Name
                         End Select
                     Case ReplaceFSA.FormatOpen '{ in format
@@ -654,7 +751,44 @@ DoItAgain:
                             Case "}"c : state = ReplaceFSA.FormatClose
                             Case "{"c : state = ReplaceFSA.Format
                             Case "\"c : If cEscapes Then state = ReplaceFSA.FormatBackSlash Else format.Append("\"c)
+                            Case "|"c : state = ReplaceFSA.FormatPipe
                             Case Else : format.Append(ch) : state = ReplaceFSA.Format
+                        End Select
+                    Case ReplaceFSA.TransformationOpen '{ in transformation
+                        trans(trans.Count - 1).Append("{")
+                        Select Case ch
+                            Case "}"c : state = ReplaceFSA.TransformationClose
+                            Case "{"c : state = ReplaceFSA.Transformation
+                            Case "\"c : If cEscapes Then state = ReplaceFSA.TransformationBackSlash Else format.Append("\"c)
+                            Case "|"c : state = ReplaceFSA.TransformationPipe
+                            Case Else : trans(trans.Count - 1).Append(ch) : state = ReplaceFSA.Transformation
+                        End Select
+                    Case ReplaceFSA.Transformation
+                        Select Case ch
+                            Case "|"c : state = ReplaceFSA.TransformationPipe
+                            Case "\"c : If cEscapes Then state = ReplaceFSA.TransformationBackSlash Else trans(trans.Count - 1).Append("\"c)
+                            Case "}"c : state = ReplaceFSA.TransformationClose
+                            Case "{"c : state = ReplaceFSA.TransformationOpen
+                            Case Else : trans(trans.Count - 1).Append(ch)
+                        End Select
+                    Case ReplaceFSA.TransformationPipe
+                        Select Case ch
+                            Case "|"c : trans(trans.Count - 1).Append(ch) : state = ReplaceFSA.Transformation
+                            Case Else : trans.Add(New StringBuilder(CStr(ch))) : state = ReplaceFSA.Transformation
+                        End Select
+                    Case ReplaceFSA.TransformationClose '|}
+                        Select Case ch
+                            Case "}"c : trans(trans.Count - 1).Append("}"c) : state = ReplaceFSA.Transformation
+                            Case "{"c
+                                ret.Append(FormatInternal$(name.ToString, format.ToString, align, getValue, provider, trans))
+                                state = ReplaceFSA.CloseOpen
+                            Case "\"c
+                                ret.Append(FormatInternal$(name.ToString, format.ToString, align, getValue, provider, trans))
+                                If cEscapes Then state = ReplaceFSA.StringBackSlash Else ret.Append("\"c) : state = ReplaceFSA.String
+                            Case Else
+                                ret.Append(FormatInternal$(name.ToString, format.ToString, align, getValue, provider, trans))
+                                ret.Append(ch)
+                                state = ReplaceFSA.String
                         End Select
                 End Select
             Next
@@ -665,7 +799,8 @@ DoItAgain:
                 Case ReplaceFSA.NameClose : ret.Append(FormatInternal$(name.ToString, Nothing, 0, getValue, provider))
                 Case ReplaceFSA.FormatClose : ret.Append(FormatInternal$(name.ToString, format.ToString, align, getValue, provider))
                 Case ReplaceFSA.Name, ReplaceFSA.NameComma, ReplaceFSA.AlignPlus, ReplaceFSA.AlignMinus, ReplaceFSA.AlignMinusZero, ReplaceFSA.Align,
-                     ReplaceFSA.NameColon, ReplaceFSA.Format
+                     ReplaceFSA.NameColon, ReplaceFSA.Format, ReplaceFSA.NamePipe, ReplaceFSA.Transformation, ReplaceFSA.FormatPipe, ReplaceFSA.TransformationBackSlash,
+                     ReplaceFSA.TransformationOpen, ReplaceFSA.TransformationPipe
                     Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
                 Case ReplaceFSA.StringBackSlash : ret.Append("\"c) 'Should not happen
                 Case ReplaceFSA.NameBackSlash, ReplaceFSA.FormatBackSlash : Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString) 'Should not happen
@@ -700,6 +835,8 @@ DoItAgain:
                             End Try
                         Case Else : Throw New FormatException(ResourcesT.Exceptions.IncompleteFormatString)
                     End Select
+                Case ReplaceFSA.TransformationClose
+                    ret.Append(FormatInternal$(name.ToString, format.ToString, align, getValue, provider, trans))
             End Select
             Return ret.ToString
         End Function
@@ -710,6 +847,7 @@ DoItAgain:
         ''' <param name="format">Format string for value</param>
         ''' <param name="getValue">Function that can get object to be formatted by name. <paramref name="name"/> is passed here.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="trans">Identifiers of transformations to apply in given order</param>
         ''' <returns>
         ''' Formatted <paramref name="getValue"/>(<paramref name="name"/>).
         ''' If argument is null or <paramref name="getValue"/> throws an exception an empty string is used; if it is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used; if it is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used; otherwise <see cref="System.[Object].ToString"/>.
@@ -718,11 +856,11 @@ DoItAgain:
         ''' <exception cref="ArgumentNullException"><paramref name="getValue"/> is null.</exception>
         ''' <exception cref="FormatException"><paramref name="format"/> is invalid according to object being formatted.</exception>
         ''' <remarks>
-        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' Specify placeholders in format {name[,align][:format][|transformation]}. See <see cref="StringFormatting"/> for details.
         ''' If <paramref name="getValue"/> throws an exception for particular name null is used as value for that placeholder.
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
-        Private Function FormatInternal$(name$, format$, align%, getValue As Func(Of String, Object), provider As IFormatProvider)
+        Private Function FormatInternal$(name$, format$, align%, getValue As Func(Of String, Object), provider As IFormatProvider, Optional trans As IEnumerable(Of StringBuilder) = Nothing)
             If getValue Is Nothing Then Throw New ArgumentNullException("getValue")
             Dim value As Object
             Try
@@ -742,12 +880,26 @@ DoItAgain:
                 ret = value.ToString
             End If
             If ret.Length >= Math.Abs(align) Then
-                Return ret
+                'Do nothing
             ElseIf align > 0 Then 'Right
-                Return New String(" "c, align - ret.Length) & ret
+                ret = New String(" "c, align - ret.Length) & ret
             Else 'Left
-                Return ret & New String(" "c, -align - ret.Length)
+                ret &= New String(" "c, -align - ret.Length)
             End If
+            'Apply transformations
+            If trans IsNot Nothing Then
+                For Each tr In trans
+                    Dim trs = tr.ToString
+                    If trs <> "" Then
+                        Dim trf As Func(Of String, String) = Nothing
+                        If Not Transformations.TryGetValue(trs, trf) Then Throw New FormatException(String.Format("Transformation {0} is not defined", trs))
+                        If trf IsNot Nothing Then
+                            ret = trf(ret)
+                        End If
+                    End If
+                Next
+            End If
+            Return ret
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string</summary>
@@ -1301,6 +1453,65 @@ DoItAgain:
         End Function
 #End Region
 #End Region
+
+        Private ReadOnly _transformations As New Dictionary(Of String, Func(Of String, String))(StringComparer.InvariantCultureIgnoreCase) From {
+            {"Html", AddressOf HttpUtility.HtmlEncode},
+            {"HtmlAttribute", AddressOf HttpUtility.HtmlAttributeEncode},
+            {"Url", AddressOf HttpUtility.UrlEncode},
+            {"UrlPath", AddressOf HttpUtility.UrlPathEncode},
+            {"SQL", AddressOf Escaping.EscapeSql},
+            {"Xml", AddressOf Escaping.EscapeXml},
+            {"XmlAttribute", AddressOf Escaping.EscapeXmlAttribute},
+            {"JS", AddressOf Escaping.EscapeJavaScript},
+            {"String.Format", AddressOf Escaping.EscapeStringFormat},
+            {"MySql", AddressOf Escaping.EscapeMySql},
+            {"PostrgreSql", Function(str) Escaping.EscapePostgreSql(Str, Mode.Native)},
+            {"SqlLike", AddressOf Escaping.EscapeSqlLike},
+            {"C#", AddressOf Escaping.EscapeCSharp},
+            {"C", AddressOf Escaping.EscapeC},
+            {"PHPSingle", AddressOf Escaping.EscapePhpSingle},
+            {"PHPDouble", AddressOf Escaping.EscapePhpDouble},
+            {"VBLike", AddressOf Escaping.EscapeVBLike},
+            {"CSS", AddressOf Escaping.EscapeCss},
+            {"RegEx", AddressOf Escaping.EscapeRegEx}
+        }
+
+        ''' <summary>Gets transformations registered for string formatting</summary>
+        ''' <remarks>
+        ''' You can register your own transformations here. You can also unregister or replace existing transformations. Beware that transformations are registered globaly.
+        ''' A transformations is a function that accepts a string and returns a string. It should never fail. It should accept nulls and empty strings as well.
+        ''' <para>Key of the dictionary are case-insensitive</para>
+        ''' <para>Predefined transformations are</para>
+        ''' <list type="table">
+        ''' <listheader><term>key</term><description>Implementation</description></listheader>
+        ''' <term><item>Html</item><description><see cref="HttpUtility.HtmlEncode"/></description></term>
+        ''' <term><item>HtmlAttribute</item><description><see cref="HttpUtility.HtmlAttributeEncode"/></description></term>
+        ''' <term><item>Url</item><description><see cref="HttpUtility.UrlEncode"/></description></term>
+        ''' <term><item>UrlPath</item><description><see cref="HttpUtility.UrlPathEncode"/></description></term>
+        ''' <term><item>SQL</item><description><see cref="Escaping.EscapeSql"/></description></item>
+        ''' <term><item>Xml</item><description><see cref="Escaping.EscapeXml"/></description></item>
+        ''' <term><item>XmlAttribute</item><description><see cref="Escaping.EscapeXmlAttribute"/></description></item>
+        ''' <term><item>JS</item><description><see cref="Escaping.EscapeJavaScript"/></description></item>
+        ''' <term><item>String.Format</item><description><see cref="Escaping.EscapeStringFormat"/></description></item>
+        ''' <term><item>MySql</item><description><see cref="Escaping.EscapeMySql"/></description></item>
+        ''' <term><item>PostrgreSql</item><description><see cref="Escaping.EscapePostgreSql"/> (uses <see cref="Escaping.Mode.Native"/> mode)</description></item>
+        ''' <term><item>SqlLike</item><description><see cref="Escaping.EscapeSqlLike"/></description></item>
+        ''' <term><item>C#</item><description><see cref="Escaping.EscapeCSharp"/></description></item>
+        ''' <term><item>C</item><description><see cref="Escaping.EscapeC"/></description></item>
+        ''' <term><item>PHPSingle</item><description><see cref="Escaping.EscapePhpSingle"/></description></item>
+        ''' <term><item>PHPDouble</item><description><see cref="Escaping.EscapePhpDouble"/></description></item>
+        ''' <term><item>VBLike</item><description><see cref="Escaping.EscapeVBLike"/></description></item>
+        ''' <term><item>CSS</item><description><see cref="Escaping.EscapeCss"/></description></item>
+        ''' <term><item>RegEx</item><description><see cref="Escaping.EscapeRegEx"/></description></item>
+        ''' </list>
+        ''' All functions use default parameters unless specified otherwise.
+        ''' </remarks>
+        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
+        Public ReadOnly Property Transformations As IDictionary(Of String, Func(Of String, String))
+            Get
+                Return _transformations
+            End Get
+        End Property
     End Module
 #End If
 End Namespace
