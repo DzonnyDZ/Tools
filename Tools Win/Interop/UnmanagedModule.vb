@@ -88,6 +88,15 @@ Namespace InteropT
             Return ret
         End Function
 
+        ''' <summary>Attempts to gets a pointer to native method (or variable) in the module</summary>
+        ''' <param name="procedureName">Name of the method to get pointer to</param>
+        ''' <returns>Pointer to native method with given name, <see cref="IntPtr.Zero"/> if the method cannot be found or operation failed.</returns>
+        ''' <remarks>The spelling and case of a function name pointed to by <paramref name="procedureName"/> must be identical to that in the EXPORTS statement of the source DLL's module-definition (.def) file.</remarks>
+        Public Function TryGetProcedureAddress(procedureName$) As IntPtr
+            Dim ret = API.GetProcAddress(Handle, procedureName)
+            Return ret
+        End Function
+
         ''' <summary>Gets list of types of resources in this module</summary>
         ''' <returns>List of all types of resources in this module</returns>
         ''' <exception cref="API.Win32APIException">Failed to obtain resource list</exception>

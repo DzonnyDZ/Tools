@@ -21,6 +21,7 @@
             Me.flpLoadString = New System.Windows.Forms.FlowLayoutPanel()
             Me.nudStringId = New System.Windows.Forms.NumericUpDown()
             Me.cmdLoadString = New System.Windows.Forms.Button()
+            Me.cmdProcAddr = New System.Windows.Forms.Button()
             CType(Me.splSplit, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.splSplit.Panel1.SuspendLayout()
             Me.splSplit.Panel2.SuspendLayout()
@@ -76,6 +77,7 @@
             Me.flpLoadString.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.flpLoadString.Controls.Add(Me.nudStringId)
             Me.flpLoadString.Controls.Add(Me.cmdLoadString)
+            Me.flpLoadString.Controls.Add(Me.cmdProcAddr)
             Me.flpLoadString.Dock = System.Windows.Forms.DockStyle.Top
             Me.flpLoadString.Location = New System.Drawing.Point(0, 0)
             Me.flpLoadString.Name = "flpLoadString"
@@ -89,18 +91,31 @@
             Me.nudStringId.Maximum = New Decimal(New Integer() {65535, 0, 0, 0})
             Me.nudStringId.Minimum = New Decimal(New Integer() {65535, 0, 0, -2147483648})
             Me.nudStringId.Name = "nudStringId"
-            Me.nudStringId.Size = New System.Drawing.Size(120, 20)
+            Me.nudStringId.Size = New System.Drawing.Size(94, 20)
             Me.nudStringId.TabIndex = 0
             '
             'cmdLoadString
             '
             Me.cmdLoadString.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdLoadString.Location = New System.Drawing.Point(129, 3)
+            Me.cmdLoadString.AutoSize = True
+            Me.cmdLoadString.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdLoadString.Location = New System.Drawing.Point(103, 3)
             Me.cmdLoadString.Name = "cmdLoadString"
-            Me.cmdLoadString.Size = New System.Drawing.Size(75, 23)
+            Me.cmdLoadString.Size = New System.Drawing.Size(68, 23)
             Me.cmdLoadString.TabIndex = 1
             Me.cmdLoadString.Text = "LoadString"
             Me.cmdLoadString.UseVisualStyleBackColor = True
+            '
+            'cmdProcAddr
+            '
+            Me.cmdProcAddr.AutoSize = True
+            Me.cmdProcAddr.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdProcAddr.Location = New System.Drawing.Point(177, 3)
+            Me.cmdProcAddr.Name = "cmdProcAddr"
+            Me.cmdProcAddr.Size = New System.Drawing.Size(94, 23)
+            Me.cmdProcAddr.TabIndex = 2
+            Me.cmdProcAddr.Text = "GetProcAddress"
+            Me.cmdProcAddr.UseVisualStyleBackColor = True
             '
             'frmUnmanagedResources
             '
@@ -116,6 +131,7 @@
             CType(Me.splSplit, System.ComponentModel.ISupportInitialize).EndInit()
             Me.splSplit.ResumeLayout(False)
             Me.flpLoadString.ResumeLayout(False)
+            Me.flpLoadString.PerformLayout()
             CType(Me.nudStringId, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
@@ -127,5 +143,6 @@
         Friend WithEvents flpLoadString As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents nudStringId As System.Windows.Forms.NumericUpDown
         Friend WithEvents cmdLoadString As System.Windows.Forms.Button
+        Friend WithEvents cmdProcAddr As System.Windows.Forms.Button
     End Class
 End Namespace

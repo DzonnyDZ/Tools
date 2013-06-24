@@ -171,17 +171,16 @@ Namespace API
         ''' <returns>If the function succeeds, the return value is a handle to the module. If the function fails, the return value is NULL.</returns>
         Public Declare Auto Function LoadLibrary Lib "kernel32" (ByVal lpLibFileName As String) As Integer
 
-
-        ''' <summary>Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).</summary>
-        ''' <param name="hModule"><para>A handle to the DLL module that contains the function or variable. The LoadLibrary, LoadLibraryEx, or GetModuleHandle function returns this handle.</para>
-        ''' <para>The GetProcAddress function does not retrieve addresses from modules that were loaded using the LOAD_LIBRARY_AS_DATAFILE flag. For more information, see LoadLibraryEx.</para></param>
-        ''' <param name="lpProcName">The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.</param>
-        ''' <returns>If the function succeeds, the return value is the address of the exported function or variable. If the function fails, the return value is NULL. </returns>
-        Public Declare Function GetProcAddress Lib "kernel32" (ByVal hModule As Integer, <MarshalAs(UnmanagedType.LPStr)> ByVal lpProcName As String) As Integer
+        ' ''' <summary>Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).</summary>
+        ' ''' <param name="hModule"><para>A handle to the DLL module that contains the function or variable. The LoadLibrary, LoadLibraryEx, or GetModuleHandle function returns this handle.</para>
+        ' ''' <para>The GetProcAddress function does not retrieve addresses from modules that were loaded using the LOAD_LIBRARY_AS_DATAFILE flag. For more information, see LoadLibraryEx.</para></param>
+        ' ''' <param name="lpProcName">The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.</param>
+        ' ''' <returns>If the function succeeds, the return value is the address of the exported function or variable. If the function fails, the return value is NULL. </returns>
+        'Public Declare Function GetProcAddress Lib "kernel32" (ByVal hModule As IntPtr, <MarshalAs(UnmanagedType.LPStr)> ByVal lpProcName As String) As Integer
         ''' <summary>Frees the loaded dynamic-link library (DLL) module and, if necessary, decrements its reference count. When the reference count reaches zero, the module is unloaded from the address space of the calling process and the handle is no longer valid.</summary>
         ''' <param name="hLibModule">A handle to the loaded library module. The LoadLibrary, LoadLibraryExGetModuleHandle, or GetModuleHandleEx function returns this handle.</param>
         ''' <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.</returns>
-        Public Declare Function FreeLibrary Lib "kernel32" (ByVal hLibModule As Integer) As Integer
+        Public Declare Function FreeLibrary Lib "kernel32" (ByVal hLibModule As IntPtr) As Integer
 #End Region
 
         ''' <summary>Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.</summary>
@@ -193,9 +192,11 @@ Namespace API
 
         ''' <summary>Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).</summary>
         ''' <param name="hModule">A handle to the DLL module that contains the function or variable. </param>
-        ''' <param name="procedureName">The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.</param>
+        ''' <param name="lpProcName">The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.</param>
         ''' <returns>If the function succeeds, the return value is the address of the exported function or variable.</returns>
-        Public Declare Auto Function GetProcAddress Lib "kernel32" (hModule As IntPtr, procedureName As String) As IntPtr
+        <DllImport("kernel32.dll", CharSet:=CharSet.Auto, ExactSpelling:=True)> _
+        Public Function GetProcAddress(<[In]> ByVal hModule As IntPtr, <[In], MarshalAs(UnmanagedType.LPStr)> ByVal lpProcName As String) As IntPtr
+        End Function
 
 #Region "Resources"
         ''' <summary>Determines the location of a resource with the specified type and name in the specified module.</summary>

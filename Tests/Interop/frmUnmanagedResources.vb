@@ -4,11 +4,15 @@ Imports mBox = Tools.WindowsT.IndependentT.MessageBox
 Namespace InteropT
     Public Class frmUnmanagedResources
         Private file$
-        Public Sub New(dll As String)
+        Private loadAsDataFile As Boolean
+        Public Sub New(dll As String, loadAsDataFile As Boolean)
             InitializeComponent()
             file = dll
+            Me.loadAsDataFile = loadAsDataFile
 
             Me.Text &= " for " & IO.Path.GetFileName(file)
+
+            cmdProcAddr.Enabled = Not loadAsDataFile
         End Sub
 
         Public Shared Sub Test()
@@ -16,7 +20,7 @@ Namespace InteropT
                 .Filter = "Libraries (*.dll)|*.dll|Executables (*.exe)|*.exe|MUI Files (*.mui)|*.mui|ActiveX Components (*.ocx)|*.ocx|All files (*.*)|*.*"
                 }
             If dlg.ShowDialog = Windows.Forms.DialogResult.OK Then
-                Dim frm As New frmUnmanagedResources(dlg.FileName)
+                Dim frm As New frmUnmanagedResources(dlg.FileName, MsgBox("Load as data file", MsgBoxStyle.Question Or MsgBoxStyle.YesNo) = MsgBoxResult.Yes)
                 frm.ShowDialog()
             End If
         End Sub
@@ -29,7 +33,11 @@ Namespace InteropT
                 shown = True
 
                 Try
-                    mdl = UnmanagedModule.LoadLibraryAsDataFile(file)
+                    If loadAsDataFile Then
+                        mdl = UnmanagedModule.LoadLibraryAsDataFile(file)
+                    Else
+                        mdl = UnmanagedModule.LoadLibrary(file)
+                    End If
 
                     For Each type In mdl.GetResourceTypes
                         Dim node = tvwTree.Nodes.Add(If(type.Name, type.Id.ToString))
@@ -111,6 +119,17 @@ Save:                       If sfdSave.ShowDialog(Me) = Windows.Forms.DialogResu
             Catch ex As Exception
                 mBox.Error_X(ex)
             End Try
+        End Sub
+
+        Private Sub cmdProcAddr_Click(sender As Object, e As EventArgs) Handles cmdProcAddr.Click
+            Dim name = InputBox("Procedure name")
+            If name <> "" Then
+                Try
+                    MsgBox(mdl.GetProcedureAddress(name))
+                Catch ex As Exception
+                    mBox.Error_X(ex)
+                End Try
+            End If
         End Sub
     End Class
 End Namespace
