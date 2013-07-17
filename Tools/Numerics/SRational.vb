@@ -379,15 +379,16 @@ Namespace NumericsT
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
         ''' <version version="1.5.4">Parameter <c>Provider</c> renamed to <c>provider</c>, <c>Value</c> to <c>value</c></version>
         ''' <version version="1.5.4">Added <see cref="OutAttribute"/> for <paramref name="value"/> parameter</version>
+        ''' <version version="1.5.4">Added support for colon (:) delimiter</version>
         Private Shared Function TryParseInternal(str$, <Out()> ByRef value As SRational, provider As IFormatProvider, style As Globalization.NumberStyles) As Exception
             If str Is Nothing Then Return New ArgumentNullException("str")
             If str = "" Then Return New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "str")
-            If str.Contains("/") Then
-                Dim Parts As String() = str.Split("/"c)
+            If str.Contains("/") OrElse str.Contains(":") Then
+                Dim Parts As String() = str.Split("/"c, ":"c)
                 If Parts.Length <> 2 Then Return New FormatException(ResourcesT.Exceptions.Value0CannotBeInterperetedAsRationalToManySlashes.f(str))
                 Dim a As Long, b As Long
                 If Integer.TryParse(Parts(0), style, provider, a) AndAlso Integer.TryParse(Parts(1), style, provider, b) Then
-                    Value = New SRational(a, b)
+                    value = New SRational(a, b)
                     Return Nothing
                 Else
                     Return New TypeMismatchException
@@ -395,7 +396,7 @@ Namespace NumericsT
             Else
                 Dim dValue As Double
                 If Double.TryParse(str, style, provider, dValue) Then
-                    Value = dValue
+                    value = dValue
                     Return Nothing
                 Else
                     Return New InvalidCastException
@@ -414,6 +415,7 @@ Namespace NumericsT
         ''' <version version="1.5.4">Parameter <paramref name="style"/> changed from parameter passed by reference to parameter passed by value.</version>
         ''' <version version="1.5.4">Fix: Parameter <paramref name="value"/> was not passed by reference.</version>
         ''' <version version="1.5.4">Added <see cref="OutAttribute"/> to parameter <paramref name="value"/>.</version>
+        ''' <version version="1.5.4">Added support for colon (:) delimiter</version>
         Public Shared Function TryParse(str$, style As Globalization.NumberStyles, Provider As IFormatProvider, <Out()> ByRef value As SRational) As Boolean
             Return TryParseInternal(str, value, Provider, style) Is Nothing
         End Function
@@ -424,6 +426,7 @@ Namespace NumericsT
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
         ''' <version version="1.5.4">Parameter <c>Value</c> renamed to <c>value</c></version>
         ''' <version version="1.5.4">Added <see cref="OutAttribute"/> to parameter <paramref name="value"/>.</version>
+        ''' <version version="1.5.4">Added support for colon (:) delimiter</version>
         Public Shared Function TryParse(str$, <Out()> ByRef value As SRational) As Boolean
             Return TryParse(str, Globalization.NumberStyles.Any, Globalization.CultureInfo.CurrentCulture, Value)
         End Function
@@ -438,6 +441,7 @@ Namespace NumericsT
         ''' <exception cref="OverflowException"><paramref name="str"/> represents value lower than <see cref="Double.MinValue"/> or greater than <see cref="Double.MaxValue"/> (for single-part number) -or- <paramref name="str"/> represents value lower than <see cref="Integer.MinValue"/> or greater than <see cref="Integer.MaxValue"/> (for double-part number)</exception>
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
         ''' <version version="1.5.4">Parameter <c>Provider</c> renamed to <c>provider</c></version>
+        ''' <version version="1.5.4">Added support for colon (:) delimiter</version>
         Public Shared Function Parse(str$, style As Globalization.NumberStyles, provider As IFormatProvider) As SRational
             Dim value As SRational
             Dim ret = TryParseInternal(str, value, provider, style)
@@ -445,7 +449,7 @@ Namespace NumericsT
             If TypeOf ret Is InvalidCastException Then
                 Return Double.Parse(str)
             ElseIf TypeOf ret Is TypeMismatchException Then
-                Dim parts = str.Split("/"c)
+                Dim parts = str.Split("/"c, ":"c)
                 Return New SRational(Integer.Parse(parts(0)), Integer.Parse(parts(1)))
             Else
                 Throw ret
@@ -458,6 +462,7 @@ Namespace NumericsT
         ''' <exception cref="FormatException"><paramref name="str"/> is not numeric value, or 2 numeric values separated by /.</exception>
         ''' <exception cref="OverflowException"><paramref name="str"/> represents value lower than <see cref="Double.MinValue"/> or greater than <see cref="Double.MaxValue"/> (for single-part number) -or- <paramref name="str"/> represents value lower than <see cref="Integer.MinValue"/> or greater than <see cref="Integer.MaxValue"/> (for double-part number)</exception>
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
+        ''' <version version="1.5.4">Added support for colon (:) delimiter</version>
         Public Shared Function Parse(ByVal str$) As SRational
             Return Parse(str, Globalization.NumberStyles.Any, Globalization.CultureInfo.CurrentCulture)
         End Function
@@ -490,21 +495,25 @@ Namespace NumericsT
         ''' <remarks>
         ''' Use sigle format string to format value as <see cref="Double"/>. Use two /-separated format strings to format this value as two <see cref="Integer"/> values separated by /.
         ''' Format(s) passed to <see cref="Double.ToString"/> or <see cref="Integer.ToString"/> can be empty, predefined (one letter) or custom.
-        ''' If two formats are specified, delimited by /, only first slash encountered is treatead as delimitter. Other slashes are passed to <see cref="Integer.Format"/>. In order to escape firts slahs, precede it with \.
+        ''' If two formats are specified, delimited by / or :, only first slash or colon encountered is treatead as delimitter. Other slashes or colons are passed to <see cref="UInteger.Format"/>. In order to escape firts slash or colon, precede it with \.
         ''' If <paramref name="format"/> is null or <see cref="String.Empty"/> G/G is used. 
         ''' </remarks>
         ''' <version stage="Alpha" version="1.5.2">Method introduced</version>
+        ''' <version version="1.5.4">Added support for colon (:) delimitter</version>
         Public Overloads Function ToString(ByVal format As String, ByVal formatProvider As System.IFormatProvider) As String Implements System.IFormattable.ToString
             If format = "" Then format = "G/G"
-            Dim FSplit As Integer = -1
+            Dim fSplit As Integer = -1
             For i As Integer = 0 To format.Length - 1
                 If format(i) = "/"c AndAlso (i = 0 OrElse format(i - 1) <> "\"c) Then
+                    FSplit = i
+                    Exit For
+                ElseIf format(i) = ":"c AndAlso (i = 0 OrElse format(i - 1) <> "\"c) Then
                     FSplit = i
                     Exit For
                 End If
             Next
             If FSplit >= 0 Then
-                Return Me.Numerator.ToString(format.Substring(0, FSplit), formatProvider) & "/" & Me.Denominator.ToString(format.Substring(FSplit + 1), formatProvider)
+                Return Me.Numerator.ToString(format.Substring(0, FSplit), formatProvider) & format(FSplit) & Me.Denominator.ToString(format.Substring(FSplit + 1), formatProvider)
             Else
                 If Me.Denominator = 0 AndAlso Me.Numerator = 0 Then
                     Return 0.ToString(format, formatProvider)

@@ -1120,7 +1120,7 @@
     <value>Cannot convert negative values to unsigned rational</value>
   </data>
   <data name="Value0CannotBeInterperetedAsRationalToManySlashes" xml:space="preserve">
-    <value>Value {0} cannot be interpereted as rational - to many slashes</value>
+    <value>Value {0} cannot be interpereted as rational - to many slashes or colons</value>
   </data>
   <data name="IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent" xml:space="preserve">
     <value>IFD being saved is invalid: Pointer to SubIFD must have one component.</value>

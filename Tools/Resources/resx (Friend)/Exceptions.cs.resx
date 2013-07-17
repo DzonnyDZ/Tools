@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TypeMustInheritFromMessageBox" xml:space="preserve">
     <value>Type musí dědit od MessageBox</value>
@@ -1123,7 +1123,7 @@
     <value>Nemuho převést záporné hodnoty na neznaménkový zlomek</value>
   </data>
   <data name="Value0CannotBeInterperetedAsRationalToManySlashes" xml:space="preserve">
-    <value>Hodnota {0} nemůže být interpretována jako zlomek - příliš mnoho lomítek</value>
+    <value>Hodnota {0} nemůže být interpretována jako zlomek - příliš mnoho lomítek nebo dvojteček</value>
   </data>
   <data name="IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent" xml:space="preserve">
     <value>Ukládané IFD je neplatné: Ukazatel na SubIFD musí mít jednu komponentu.</value>
