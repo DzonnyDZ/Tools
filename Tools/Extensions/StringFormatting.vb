@@ -540,7 +540,9 @@ DoItAgain:
                                     state = ReplaceFSA.String
                                     ret.Append("\"c)
                                 End If
-                            Case Else : ret.Append("{"c) : ret.Append(ch) : state = ReplaceFSA.String
+                            Case ":"c : name = New StringBuilder : state = ReplaceFSA.NameColon
+                            Case ","c : name = New StringBuilder : state = ReplaceFSA.NameComma
+                            Case Else : name = New StringBuilder : name.Append(ch) : state = ReplaceFSA.Name
                         End Select
                     Case ReplaceFSA.OpenClose '{}
                         Select Case ch
