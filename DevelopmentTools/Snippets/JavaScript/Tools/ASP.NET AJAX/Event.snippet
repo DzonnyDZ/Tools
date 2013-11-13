@@ -24,7 +24,7 @@
                 <Literal>
                     <ID>summary</ID>
                     <ToolTip>Summary description of the property</ToolTip>
-                    <Default>Raised when something happens</Default>
+                    <Default>something happens</Default>
                 </Literal>
                 <Literal>
                     <ID>senderType</ID>
@@ -32,25 +32,39 @@
                     <Default>Object</Default>
                 </Literal>
             </Declarations>
-            <Code Language="JScript">
+            <Code Language="JavaScript">
                 <![CDATA[
 add_$name$: function add_$name$(handler) {
-    /// <summary>$summary$</summary>
+    /// <summary>Raised when $summary$</summary>
     /// <param name="handler" type="Function">Event handler of type <see cref="$type$"/></param>
+    var e = Function.validateParameters(arguments, [{ name: "handler", type: Function }]);
+    if (e) throw e;
     this.get_events().addHandler("$name$", handler);
 },
 remove_$name$: function remove_$name$(handler) {
     /// <summary>Removes handler of the <see cref="$name$"/> event</summary>
     /// <param name="handler" type="Function">The handler to be removed (type <see cref="$type$"/>)</param>
+    var e = Function.validateParameters(arguments, [{ name: "handler", type: Function }]);
+    if (e) throw e;
     this.get_events().removeHandler("$name$", handler);
 },
 _raise_$name$: function raise_$name$(sender, e) {
     /// <summary>Raises the <see cref="$name$"/> event</summary>
     /// <param name="sender" type="$senderType$">Source of the event</param>
     /// <param name="e" type="$type$">Event arguments</param>
+    var ex = Function.validateParameters(arguments, [{ name: "sender", type: $senderType$ }, { name: "e", type: $type$ }]);
+    if (ex) throw ex;
     var handler = this.get_events().getHandler("$name$");
     if (handler) handler(sender, e);
 },
+on$name$: function on$name$(e){
+    /// <summary>(protected) Raises the <see cref="$name$"/> event</summary>
+    /// <param name="e" type="$type$">Event arguments</param>
+    /// <remarks>When overriden in derived class call base class method to raise the event</remarks>
+    var ex = Function.validateParameters(arguments, [{ name: "e", type: $type$ }]);
+    if (ex) throw ex;
+    this._raise_$name$(this, e);
+}
           ]]>
             </Code>
         </Snippet>

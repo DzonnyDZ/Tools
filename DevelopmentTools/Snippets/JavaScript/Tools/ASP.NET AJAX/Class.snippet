@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Class</Title>
+            <Author>Đonny</Author>
+            <Description>Adds code for JavaScript "class" using Microsft ASP.NET AJAX type system</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>Namespace</ID>
+                    <ToolTip>Name of namespace class will be defined in</ToolTip>
+                    <Default>Namespace</Default>
+                </Literal>
+                <Literal>
+                    <ID>ClassName</ID>
+                    <ToolTip>Name of the class</ToolTip>
+                    <Default>MyClass</Default>
+                </Literal>
+                <Literal>
+                    <ID>Summary</ID>
+                    <ToolTip>Summary documentation for class and constructor</ToolTip>
+                    <Default>This class does something</Default>
+                </Literal>
+                <Literal>
+                    <ID>base</ID>
+                    <ToolTip>Base class of this class</ToolTip>
+                    <Default>Object</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="JavaScript">
+<![CDATA[Type.registerNamespace('$Namespace$');
+
+$Namespace$.$ClassName$ = function () {
+    /// <summary>$Summary$</summary>
+    $Namespace$.$ClassName$.initializeBase(this); //If base class has parameters pass them in second argument as array.
+};
+$Namespace$.$ClassName$.prototype = {
+    //Add your code here
+};
+$Namespace$.$ClassName$.registerClass('$Namespace$.$ClassName$', $base$);]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

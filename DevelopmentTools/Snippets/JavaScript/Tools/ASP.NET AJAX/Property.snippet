@@ -24,16 +24,18 @@
                 <Literal>
                     <ID>value</ID>
                     <ToolTip>Summary description of the property</ToolTip>
-                    <Default>Gets or sets value</Default>
+                    <Default>a value</Default>
                 </Literal>
             </Declarations>
-            <Code Language="JScript">
+            <Code Language="JavaScript">
                 <![CDATA[
 get_$propertyName$: function get_$propertyName$() {
-    /// <value type="$propertyType$">$value$</value>
+    /// <value type="$propertyType$">Gets or sets $value$</value>
     return this._$propertyName$;
 },
 set_$propertyName$: function set_$propertyName$(value) {
+    var e = Function.validateParameters(arguments, [{name: "value", type: $propertyType$}]);
+    if(e) throw e;
     if (value !== this._$propertyName$) {
         this._$propertyName$ = value;
         this.raisePropertyChanged('$propertyName$');

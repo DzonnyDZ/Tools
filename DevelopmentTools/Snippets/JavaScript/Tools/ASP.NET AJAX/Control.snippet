@@ -18,13 +18,8 @@
                 </Literal>
                 <Literal>
                     <ID>ClassName</ID>
-                    <ToolTip>Name of the class</ToolTip>
+                    <ToolTip>Name of the class (will be appended with Behavior)</ToolTip>
                     <Default>MyClass</Default>
-                </Literal>
-                <Literal>
-                    <ID>Summary</ID>
-                    <ToolTip>Summary documentation for class and constructor</ToolTip>
-                    <Default>This class does something</Default>
                 </Literal>
                 <Literal>
                     <ID>base</ID>
@@ -32,26 +27,26 @@
                     <Default>Sys.UI.Control</Default>
                 </Literal>
             </Declarations>
-            <Code Language="JScript" Delimiter="§">
-<![CDATA[Type.registerNamespace('§Namespace§');
+            <Code Language="JavaScript">
+<![CDATA[Type.registerNamespace('$Namespace$');
 
-§Namespace§.§ClassName§ = function (element) {
-    /// <summary>§Summary§</summary>
+$Namespace$.$ClassName$Behavior = function (element) {
+    /// <summary>Provides client-side behavior for the <see cref="T:$Namespace$.$ClassName$"/> server-side class</summary>
     /// <param name="element" domElement="true">A HTML element this class provides client behavior of</param>
-    §Namespace§.§ClassName§.initializeBase(this, [element]);
+    $Namespace$.$ClassName$Behavior.initializeBase(this, [element]);
 };
-§Namespace§.§ClassName§.prototype = {
+$Namespace$.$ClassName$Behavior.prototype = {
     initialize: function initialize() {
-        /// <summary>Initializes a newly created instance of <see cref="§Namespace§.§ClassName§"/> class</summary>
-        §Namespace§.§ClassName§.callBaseMethod(this, 'initialize');
+        /// <summary>Initializes a newly created instance of <see cref="$Namespace$.$ClassName$Behavior"/> class</summary>
+        $Namespace$.$ClassName$Behavior.callBaseMethod(this, 'initialize');
     },
     dispose: function dispose() {
         /// <summary>Removes the component from the application.</summary>
-        §Namespace§.§ClassName§.callBaseMethod(this, 'dispose');
+        $Namespace$.$ClassName$Behavior.callBaseMethod(this, 'dispose');
     }
     //Add your code here
 };
-§Namespace§.§ClassName§.registerClass('§Namespace§.§ClassName§', §base§);]]>
+$Namespace$.$ClassName$Behavior.registerClass('$Namespace$.$ClassName$Behavior', $base$);]]>
             </Code>
         </Snippet>
     </CodeSnippet>
