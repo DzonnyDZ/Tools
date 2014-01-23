@@ -259,7 +259,7 @@ SelectCase:     Select Case state
                                 argNum = argNum * 10 + AscW(ch) - AscW("0"c)
                             Case ","c : state = CFormatFSA.Comma
                             Case ":"c : state = CFormatFSA.CustomFormat : width = 0 : customFormat = New System.Text.StringBuilder
-                            Case "}"c : ret.Append(FormatInternal(argNum, 0, Nothing, args, provider, trans)) : state = CFormatFSA.String
+                            Case "}"c : ret.Append(FormatInternal(argNum, 0, Nothing, args, provider, Nothing)) : state = CFormatFSA.String
                             Case "|"c : state = CFormatFSA.TransformName : trans.Clear() : trans.Add(New StringBuilder) : customFormat = New StringBuilder()
                             Case Else : Throw New FormatException(ResourcesT.Exceptions.InvalidFormatStringNumeralOrExpected2)
                         End Select
@@ -282,7 +282,7 @@ SelectCase:     Select Case state
                             Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
                                 width = width * 10 + AscW(ch) - AscW("0"c)
                             Case ":"c : state = CFormatFSA.CustomFormat : customFormat = New System.Text.StringBuilder
-                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, Nothing, args, provider, trans)) : state = CFormatFSA.String
+                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, Nothing, args, provider, Nothing)) : state = CFormatFSA.String
                             Case "|"c : state = CFormatFSA.TransformName : trans.Clear() : trans.Add(New StringBuilder) : customFormat = New StringBuilder
                             Case Else : Throw New FormatException(ResourcesT.Exceptions.InvalidFormatStringNumeralOrExpected)
                         End Select
@@ -297,7 +297,7 @@ SelectCase:     Select Case state
                     Case CFormatFSA.CustomFormatPipe '{0:a|
                         Select Case ch
                             Case "|"c : customFormat.Append("|"c) : state = CFormatFSA.CustomFormat
-                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, trans))
+                            Case "}"c : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, Nothing))
                             Case Else : trans.Clear() : trans.Add(New StringBuilder(CStr(ch))) : state = CFormatFSA.TransformName
                         End Select
                     Case CFormatFSA.cOpen1
@@ -308,7 +308,7 @@ SelectCase:     Select Case state
                     Case CFormatFSA.cClose1
                         Select Case ch
                             Case "}"c : customFormat.Append("}"c) : state = CFormatFSA.CustomFormat
-                            Case Else : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, trans)) : state = CFormatFSA.String : GoTo SelectCase
+                            Case Else : ret.Append(FormatInternal(argNum, width * widthSign, customFormat.ToString, args, provider, Nothing)) : state = CFormatFSA.String : GoTo SelectCase
                         End Select
                     Case CFormatFSA.TransformName
                         Select Case ch
