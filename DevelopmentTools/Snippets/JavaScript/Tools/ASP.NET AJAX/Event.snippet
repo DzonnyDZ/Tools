@@ -33,7 +33,7 @@
                 </Literal>
             </Declarations>
             <Code Language="JavaScript">
-                <![CDATA[
+                <![CDATA[//#region $name$ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 add_$name$: function add_$name$(handler) {
     /// <summary>Raised when $summary$</summary>
     /// <param name="handler" type="Function">Event handler of type <see cref="$type$"/></param>
@@ -65,7 +65,7 @@ on$name$: function on$name$(e){
     if (ex) throw ex;
     this._raise_$name$(this, e);
 }
-          ]]>
+//#endregion $name$ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]]>
             </Code>
         </Snippet>
     </CodeSnippet>

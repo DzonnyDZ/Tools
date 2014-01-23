@@ -33,16 +33,18 @@
                 </Literal>
             </Declarations>
             <Code Language="JavaScript">
-<![CDATA[Type.registerNamespace('$Namespace$');
+<![CDATA[//#region $ClassName$ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Type.registerNamespace('$Namespace$');
 
 $Namespace$.$ClassName$ = function () {
     /// <summary>$Summary$</summary>
-    $Namespace$.$ClassName$.initializeBase(this); //If base class has parameters pass them in second argument as array.
+    $Namespace$.$ClassName$.initializeBase(this); //(this, [basearg1, basearg2])
 };
 $Namespace$.$ClassName$.prototype = {
     //Add your code here
 };
-$Namespace$.$ClassName$.registerClass('$Namespace$.$ClassName$', $base$);]]>
+$Namespace$.$ClassName$.registerClass('$Namespace$.$ClassName$', $base$);
+//#endregion $ClassName$ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]]>
             </Code>
         </Snippet>
     </CodeSnippet>

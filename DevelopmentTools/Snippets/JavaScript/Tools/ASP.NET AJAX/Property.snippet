@@ -26,9 +26,15 @@
                     <ToolTip>Summary description of the property</ToolTip>
                     <Default>a value</Default>
                 </Literal>
+                <Literal>
+                    <ID>defaultValue</ID>
+                    <ToolTip>Default value of the property. If it is a reference type move initialization from prototype to constructor!</ToolTip>
+                    <Default>null</Default>
+                </Literal>
             </Declarations>
             <Code Language="JavaScript">
                 <![CDATA[
+_$propertyName$: $defaultValue$,                
 get_$propertyName$: function get_$propertyName$() {
     /// <value type="$propertyType$">Gets or sets $value$</value>
     return this._$propertyName$;
