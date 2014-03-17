@@ -6,11 +6,19 @@ using namespace Tools;
 using namespace System::Collections::Generic;
 using namespace System::Reflection;
 
-EnumCore::EnumCore(){/*do nothing*/}
+//EnumCore::EnumCore(){/*do nothing*/}
 
 generic <class T> where T:Enum
 bool EnumCore::HasFlagSet(T value, T flag){
     return value->HasFlag(flag);
+}
+
+generic <class T> where T : Enum
+bool EnumCore::HasFlagSet(T value, ... array<T>^ flags){
+    if (flags == nullptr)return false;
+    for each(T flag in flags)
+        if (value->HasFlag(flag)) return true;
+    return false;
 }
 
 generic <class T> where T:Enum, gcnew()

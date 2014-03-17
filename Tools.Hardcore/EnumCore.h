@@ -10,12 +10,12 @@ namespace Tools{
     /// <version version="1.5.3">This class is new in version 1.5.3</version>
     /// <version version="1.5.4">Added various overloaded <c>GetFlags</c> methods.</version>
     [Extension]
-    public ref class EnumCore{
-    private: 
-        /// <summary>Private CTor - this is static class</summary>
-        EnumCore(void);
+    public ref class EnumCore sealed abstract{
+    //private: 
+    //    /// <summary>Private CTor - this is static class</summary>
+    //    EnumCore(void);
     public:
-        /// <summary>Determines whether one or more bit fields are set in the current instance. (type-safe)</summary>
+        /// <summary>Determines whether one or more bit fields are set an enum. (type-safe)</summary>
         /// <typeparam name="T">Type of enumeration</typeparam>
         /// <param name="value">An enumeration value to test flags on (this possibly is OR-ed value of multiple flags)</param>
         /// <param name="flag">An enumeration value. - the flag(s) to test</param>
@@ -25,6 +25,17 @@ namespace Tools{
         generic <class T> where T:Enum
         [Extension]
         static bool HasFlagSet(T value, T flag);
+
+        /// <summary>Determines whether at least one of groups of one or more bit fields is set in an enum. (type-safe)</summary>
+        /// <typeparam name="T">Type of enumeration</typeparam>
+        /// <param name="value">An enumeration value to test flags on (this possibly is OR-ed value of multiple flags)</param>
+        /// <param name="flags">An enumeration values. - the flag(s) to test</param>
+        /// <returns>true if the bit field or bit fields that are set at least in one item of <paramref name="flags"/> are also set in <paramref name="value"/>; otherwise, false. False if <paramref name="flags"/> is null.</returns>
+        /// <exception cref="ArgumentException"><typeparamref name="T"/> is <see cref="Enum"/> (not a derived type) and actual types of <paramref name="value"/> and <paramref name="flag"/> differ.</exception>
+        /// <seelaso cref="Enum::HasFlag"/>
+        generic <class T> where T:Enum
+        [Extension]
+        static bool HasFlagSet(T value, array<T>^ flags);
 
         /// <summary>Retrieves an array of the values of the constants in an enumeration.</summary>
         /// <typeparam name="T">Type of enumeration to retrieve values of</typeparam>
