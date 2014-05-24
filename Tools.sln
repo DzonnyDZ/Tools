@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{847298BA-D4D1-4EBD-AF69-0193A77DC90C}"
 	ProjectSection(SolutionItems) = preProject
 		Latest.bat = Latest.bat
@@ -359,9 +361,6 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Unisave", "Projects\Unisave\Unisave.vbproj", "{94052F05-3D9B-42A8-BA84-C9DC28F93C73}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Tools.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
 		Alpha|Mixed Platforms = Alpha|Mixed Platforms
@@ -1467,5 +1466,8 @@ Global
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
 		{6904C0F4-0535-48EB-AFC1-CE1396418D00} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
 		{991AA564-5CCF-481C-A2FE-E657D7379E67} = {3A9F0F6C-1E67-460C-9A55-D4F4B60E9460}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Tools.vsmdi
 	EndGlobalSection
 EndGlobal

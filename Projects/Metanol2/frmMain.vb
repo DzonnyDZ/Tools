@@ -5,6 +5,10 @@ Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 Imports Tools.WindowsT.FormsT, Tools, Tools.ReflectionT
 Imports <xmlns="http://www.w3.org/1999/xhtml">
+Imports Tools.NumericsT
+Imports Tools.GlobalizationT
+Imports System.Globalization
+
 ''' <summary>Main form</summary>
 Public Class frmMain
     ''' <summary>Imake gey of ... item</summary>
@@ -537,22 +541,85 @@ Public Class frmMain
             prgIPTC.SelectedObjects = (From mtd In SelectedMetadata Select mtd.IPTC).ToArray
             SetExifPropertyGrids(From mtd In SelectedMetadata Select mtd.Exif)
             Dim exifTime As DateTime?
+
+            Dim latitude As Angle?, longitude? As Angle
+
+            Dim exitA = False, exitB = False
             For Each item In From mtd In SelectedMetadata Select mtd.Exif
-                If item IsNot Nothing AndAlso item.IFD0 IsNot Nothing AndAlso item.IFD0.ExifSubIFD IsNot Nothing AndAlso item.IFD0.ExifSubIFD.DateTimeDigitizedDate IsNot Nothing Then
-                    If exifTime Is Nothing Then
-                        exifTime = item.IFD0.ExifSubIFD.DateTimeDigitizedDate
-                    ElseIf exifTime.Value <> item.IFD0.ExifSubIFD.DateTimeDigitizedDate.Value Then
-                        exifTime = Nothing
-                        Exit For
+                'Date and time
+                If Not exitA Then
+                    If item IsNot Nothing AndAlso item.IFD0 IsNot Nothing AndAlso item.IFD0.ExifSubIFD IsNot Nothing AndAlso item.IFD0.ExifSubIFD.DateTimeDigitizedDate IsNot Nothing Then
+                        If exifTime Is Nothing Then
+                            exifTime = item.IFD0.ExifSubIFD.DateTimeDigitizedDate
+                        ElseIf exifTime.Value <> item.IFD0.ExifSubIFD.DateTimeDigitizedDate.Value Then
+                            exifTime = Nothing
+                            exitA = True
+                        End If
                     End If
                 End If
+                'GPS
+                If Not exitB Then
+                    If item IsNot Nothing AndAlso item.IFD0 IsNot Nothing AndAlso item.IFD0.GPSSubIFD IsNot Nothing Then
+                        If latitude Is Nothing AndAlso longitude Is Nothing Then
+                            latitude = item.IFD0.GPSSubIFD.Latitude
+                            longitude = item.IFD0.GPSSubIFD.Longitude
+                        ElseIf latitude Is Nothing OrElse longitude Is Nothing OrElse
+                                item.IFD0.GPSSubIFD.Latitude Is Nothing OrElse item.IFD0.GPSSubIFD.Longitude Is Nothing OrElse
+                                latitude <> item.IFD0.GPSSubIFD.Latitude OrElse longitude <> item.IFD0.GPSSubIFD.Longitude Then
+                            latitude = Nothing : longitude = Nothing
+                            exitB = True
+                        End If
+                    End If
+                End If
+
+                If exitA AndAlso exitB Then Exit For
             Next
             If exifTime IsNot Nothing Then lblExifDateTime.Text = exifTime.Value.ToString("F")
+            If latitude Is Nothing OrElse longitude Is Nothing Then
+                GpsEnabled = False
+                tslGps.Text = My.Resources.NA
+                gpsCoordinates = Nothing
+            Else
+                GpsEnabled = True
+                Dim afi = AngleFormatInfo.Get(CultureInfo.CurrentCulture)
+                tslGps.Text = String.Format(
+                    My.Resources.GpsTemplate,
+                    latitude.Value.Abs, If(latitude < 0, afi.LatitudeNorthShortSymbol, afi.LatitudeSouthShortSymbol),
+                    longitude.Value.Abs, If(longitude < 0, afi.LongitudeEastShortSymbol, afi.LongitudeWestShortSymbol),
+                    CultureInfo.CurrentCulture.TextInfo.ListSeparator
+                )
+                gpsCoordinates = Tuple.Create(latitude.Value, longitude.Value)
+                googleMapsNavigated = False
+                openStreetMapNavigated = False
+                If tabGps.SelectedTab Is tapGoogleMaps Then
+                    NavigateGoogleMaps(latitude.Value, longitude.Value)
+                ElseIf tabGps.SelectedTab Is tapOpenStreetMap Then
+                    NavigateOpenStreetMap(latitude.Value, longitude.Value)
+                End If
+            End If
         Else
             prgIPTC.SelectedObjects = New Object() {}
             SetExifPropertyGrids(New ExifInternal() {})
         End If
     End Sub
+
+    Private gpsCoordinates As Tuple(Of Angle, Angle)
+    Private googleMapsNavigated As Boolean = False
+    Private openStreetMapNavigated As Boolean = False
+
+    ''' <summary>Sets value indicating if GPS selection is allowed</summary>
+    Private WriteOnly Property GpsEnabled As Boolean
+        Set(value As Boolean)
+            tsbGoogleMaps.Enabled = value
+            tsbOpenStreetMap.Enabled = value
+            tsbGoogleEarth.Enabled = value
+            tsbGeoHack.Enabled = value
+            webGoogleMaps.Enabled = value
+            webOpenStreetMap.Enabled = value
+            tslGps.Enabled = value
+        End Set
+    End Property
+
     ''' <summary>Sets Exif selected objects</summary>
     ''' <param name="Exifs">Objects to select</param>
     Private Sub SetExifPropertyGrids(ByVal Exifs As IEnumerable(Of ExifInternal))
@@ -565,7 +632,7 @@ Public Class frmMain
     ''' <summary>Shows common values</summary>
     ''' <param name="IPTCs">IPTCs to load values from</param>
     ''' <param name="Filter">Filter properties (load only those which ors with <paramref name="Filter"/></param>
-    Private Sub ShowIPTCValues(ByVal IPTCs As IEnumerable(Of IPTCInternal), Optional ByVal Filter As CommonIPTCProperties = CommonIPTCProperties.All)
+    Private Sub ShowIPTCValues(ByVal IPTCs As IEnumerable(Of IptcInternal), Optional ByVal Filter As CommonIPTCProperties = CommonIPTCProperties.All)
         Dim Copyright = New With {.Value = CStr(Nothing), .Same = True}
         Dim Credit = New With {.Value = CStr(Nothing), .Same = True}
         Dim City = New With {.Value = CStr(Nothing), .Same = True}
@@ -1004,6 +1071,7 @@ Retry:              item.Save()
         End If
         If ResetActiveControl Then txtObjectName.Select()
     End Sub
+
     ''' <summary>Selects previous image</summary>
     ''' <param name="ResetActiveControl">True to reset active control of main form to Object Name text fiels, false to keep current</param>
     Public Sub GoPrevious(Optional ByVal ResetActiveControl As Boolean = True)
@@ -1053,6 +1121,7 @@ Retry:              item.Save()
         'If sender.Items.AsTypeSafe.FirstOrDefault(Function(i As ToolStripMenuItem) i.Visible) Is Nothing Then _
         '    e.Cancel = True : Exit Sub
         tmiExport.Enabled = lvwImages.SelectedItems.Count > 0
+        tmiOpen.Enabled = lvwImages.SelectedItems.Count = 1
     End Sub
     Private ReadOnly Property MergeKeywordsPossible() As Boolean
         Get
@@ -1086,13 +1155,23 @@ Retry:              item.Save()
         kweKeywords.Focus()
     End Sub
 
+    Private Sub tmiOpen_Click(sender As Object, e As EventArgs) Handles tmiOpen.Click
+        If lvwImages.SelectedItems.Count = 1 Then
+            Try
+                Process.Start(DirectCast(lvwImages.SelectedItems(0), MetadataItem).Path)
+            Catch ex As Exception
+                MBox.Error_X(ex)
+            End Try
+        End If
+    End Sub
+
     Private Sub tmiVersionHistory_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiVersionHistory.Click
         Dim d = XDocument.Parse(My.Resources.VersionHistoryEnvelope)
         Dim div = (From el In d.<html>.<body>.<div> Where el.@id = "history").First
         Dim i As Integer = 1
         Dim CurrentString$
         Do
-            Currentstring = Nothing
+            CurrentString = Nothing
             'Try
             CurrentString = My.Resources.Resources.ResourceManager.GetString(String.Format("VersionHistory_{0}", i))
             'Catch ex As Exception
@@ -1119,7 +1198,7 @@ Retry:              item.Save()
     Private Sub tmiExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiExport.Click
         Dim metadatas = (From item As MetadataItem In lvwImages.SelectedItems Where item IsNot Nothing).ToArray
         Using frm As New frmExport(metadatas)
-            frm.showdialog()
+            frm.ShowDialog()
         End Using
     End Sub
     Private suspendAutoRating As Boolean = False
@@ -1136,16 +1215,92 @@ Retry:              item.Save()
         End If
     End Sub
 
-    Private Sub Control_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, rtgTechnical.Validating, rtgOverall.Validating, rtgInfo.Validating, rtgArt.Validating, nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
-
+    Private Sub lvwImages_ItemActivate(sender As Object, e As EventArgs) Handles lvwImages.ItemActivate
+        tmiOpen_Click(sender, e)
     End Sub
 
-    Private Sub lvwImages_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
-
+    Private Sub tabGps_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabGps.SelectedIndexChanged
+        If gpsCoordinates IsNot Nothing Then
+            If tabGps.SelectedTab Is tapGoogleMaps Then
+                NavigateGoogleMaps(gpsCoordinates.Item1, gpsCoordinates.Item2)
+            ElseIf tabGps.SelectedTab Is tapOpenStreetMap Then
+                NavigateOpenStreetMap(gpsCoordinates.Item1, gpsCoordinates.Item2)
+            End If
+        End If
     End Sub
 
-    Private Sub lvwImages_DrawItem(sender As System.Object, e As System.Windows.Forms.DrawListViewItemEventArgs) Handles lvwImages.DrawItem
+    ''' <summary>Navigates Google Maps browser to Google Maps URL for GPS coordinates of current image</summary>
+    ''' <param name="latitude">GPS latitude</param>
+    ''' <param name="longitude">GPS longitude</param>
+    Private Sub NavigateGoogleMaps(latitude As Angle, longitude As Angle)
+        webGoogleMaps.Navigate(GetGoogleMapsUrl(longitude, latitude))
+    End Sub
 
+    ''' <summary>Navigates OpenStreetMap browser to OpenStreetMap URL for GPS coordinates of current image</summary>
+    ''' <param name="latitude">GPS latitude</param>
+    ''' <param name="longitude">GPS longitude</param>
+    Private Sub NavigateOpenStreetMap(latitude As Angle, longitude As Angle)
+        webOpenStreetMap.Navigate(GetOpenStreetMapUrl(longitude, latitude))
+    End Sub
+
+    ''' <summary>Gets URL to show coordinates in Google Maps</summary>
+    ''' <param name="latitude">GPS latitude</param>
+    ''' <param name="longitude">GPS longitude</param>
+    ''' <returns>URL to Google Maps pointing to given latitude and longitude</returns>
+    Private Function GetGoogleMapsUrl(latitude As Angle, longitude As Angle) As String
+        'https://maps.google.com/maps?q=3.152383,101.705681&z=15
+        Return String.Format(My.Settings.GoogleMapsUrlTemplate, latitude, longitude)
+    End Function
+
+    ''' <summary>Gets URL to show coordinates in OpenStreetMap</summary>
+    ''' <param name="latitude">GPS latitude</param>
+    ''' <param name="longitude">GPS longitude</param>
+    ''' <returns>URL to OpenStreetMap pointing to given latitude and longitude</returns>
+    Private Function GetOpenStreetMapUrl(longitude As Angle, latitude As Angle) As String
+        'http://www.openstreetmap.org/?mlat=3.152383&mlon=101.705681&zoom=15#map=15/3.1524/101.7057
+        Return String.Format(My.Settings.OpenStreetMapUrlTemplate, latitude, longitude)
+    End Function
+
+    ''' <summary>Gets URL to show coordinates in Geo Hack wiki</summary>
+    ''' <param name="latitude">GPS latitude</param>
+    ''' <param name="longitude">GPS longitude</param>
+    ''' <returns>URL to Geo Hack wiki pointing to given latitude and longitude</returns>
+    Private Function GetGeoHackUrlUrl(longitude As Angle, latitude As Angle) As String
+        'http://toolserver.org/~geohack/geohack.php?language=en&params=3.00_9.00_8.58_N_101.00_42.00_20.45_E
+        Return String.Format(My.Settings.GeoHackUrlTemplate, latitude.Abs, If(latitude < 0, "N", "S"), longitude.Abs, If(longitude < 0, "W", "E"))
+    End Function
+
+    Private Sub tsbGoogleMaps_Click(sender As Object, e As EventArgs) Handles tsbGoogleMaps.Click
+        If gpsCoordinates Is Nothing Then Exit Sub
+        Try
+            Process.Start(GetGoogleMapsUrl(gpsCoordinates.Item1, gpsCoordinates.Item2))
+        Catch ex As Exception
+            MBox.Error_X(ex)
+        End Try
+    End Sub
+
+    Private Sub tsbOpenStreetMap_Click(sender As Object, e As EventArgs) Handles tsbOpenStreetMap.Click
+        If gpsCoordinates Is Nothing Then Exit Sub
+        Try
+            Process.Start(GetOpenStreetMapUrl(gpsCoordinates.Item1, gpsCoordinates.Item2))
+        Catch ex As Exception
+            MBox.Error_X(ex)
+        End Try
+    End Sub
+
+
+    Private Sub tsbGoogleEarth_Click(sender As Object, e As EventArgs) Handles tsbGoogleEarth.Click
+        'TODO: Generate KML and start process with it ...
+        MBox.Show("Not supported yet", "Google Earth", MessageBoxButtons.OK, IndependentT.MessageBox.MessageBoxIcons.Exclamation)
+    End Sub
+
+    Private Sub tsbGeoHack_Click(sender As Object, e As EventArgs) Handles tsbGeoHack.Click
+        If gpsCoordinates Is Nothing Then Exit Sub
+        Try
+            Process.Start(GetGeoHackUrlUrl(gpsCoordinates.Item1, gpsCoordinates.Item2))
+        Catch ex As Exception
+            MBox.Error_X(ex)
+        End Try
     End Sub
 End Class
 

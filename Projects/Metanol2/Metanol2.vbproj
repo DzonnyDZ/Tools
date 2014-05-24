@@ -398,7 +398,11 @@
     <None Include="Resources\Files\VersionHistory_6.htm" />
     <None Include="Resources\Files\VersionHistory_7.cs.htm" />
     <None Include="Resources\Files\VersionHistory_7.htm" />
+    <None Include="Resources\GoogleMaps.ico" />
+    <None Include="Resources\GoogleEarth.ico" />
+    <None Include="Resources\GeoHack.png" />
     <Content Include="Resources\MetanolBig.png" />
+    <None Include="Resources\OpenStreetMap.ico" />
     <Content Include="Resources\Up.png" />
     <Content Include="Shortcuts.txt" />
     <Content Include="TODO.txt" />

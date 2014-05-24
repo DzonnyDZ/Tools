@@ -3,6 +3,7 @@ Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, 
 Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.ExifRecord)
 Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.SubIfd)
 Imports Tools.ComponentModelT, System.Linq
+Imports Tools.NumericsT
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace MetadataT.ExifT
@@ -1378,6 +1379,29 @@ Namespace MetadataT.ExifT
                 End If
             End Get
         End Property
+
+        ''' <summary>Gets <see cref="GPSLatitude"/> as <see cref="Angle"/></summary>
+        ''' <returns>Positive or negative <see cref="Angle"/> depending on <see cref="GPSLatitudeRef"/></returns>
+        ''' <version version="1.5.4">This property is new in 1.5.4</version>
+        Public ReadOnly Property Latitude As Angle?
+            Get
+                If (GPSLatitude Is Nothing OrElse GPSLatitude.Length = 0) Then Return Nothing
+                Return CType(GPSLatitude, Angle) *
+                    If(GPSLatitudeRef IsNot Nothing AndAlso GPSLatitudeRef.Length = 1 AndAlso GPSLatitudeRef(0) = GPSLatitudeRefValues.North, -1, 1)
+            End Get
+        End Property
+
+        ''' <summary>Gets <see cref="GPSLongitude"/> as <see cref="Angle"/></summary>
+        ''' <returns>Positive or negative <see cref="Angle"/> depending on <see cref="GPSLongitudeRef"/></returns>
+        ''' <version version="1.5.4">This property is new in 1.5.4</version>
+        Public ReadOnly Property Longitude As Angle?
+            Get
+                If (GPSLongitude Is Nothing OrElse GPSLongitude.Length = 0) Then Return Nothing
+                Return CType(GPSLongitude, Angle) *
+                    If(GPSLongitudeRef IsNot Nothing AndAlso GPSLongitudeRef.Length = 1 AndAlso GPSLongitudeRef(0) = GPSLongitudeRefValues.East, -1, 1)
+            End Get
+        End Property
+
     End Class
 
     ''' <summary>Exif Interoperability IFD</summary>

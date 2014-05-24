@@ -117,172 +117,146 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SavingChangedImages" xml:space="preserve">
-    <value>Saving changed images</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LeftArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TCBehavior_d" xml:space="preserve">
-    <value>List of images behaves like that one in Total Commander</value>
-  </data>
-  <data name="RotateLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RotateLeft.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LargeFloating_d" xml:space="preserve">
-    <value>Does preview window float over main window?</value>
-    <comment>PropertyGrid description</comment>
-  </data>
-  <data name="catBehavior" xml:space="preserve">
-    <value>Behavior</value>
-  </data>
-  <data name="ThumbSize_n" xml:space="preserve">
-    <value>Thumbnail size</value>
-    <comment>PropertyGrid property name</comment>
-  </data>
-  <data name="Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\up.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="WhyIsNotMergePossible" xml:space="preserve">
     <value>In order to perform keywords merging you must select at least 3 images and make the target one of them active.</value>
   </data>
-  <data name="TCBehavior_n" xml:space="preserve">
-    <value>TC Behavior</value>
-  </data>
-  <data name="RightArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ThumbSize_d" xml:space="preserve">
-    <value>Size of image preview in main window</value>
-    <comment>PropertyGrid description</comment>
-  </data>
-  <data name="RotateRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RotateRight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Net 31.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UnsavedChanges" xml:space="preserve">
-    <value>Current folder contains unsaved chages. Do you want to save them now? If you select not to save, changes will be lost!</value>
-  </data>
-  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FullScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FullScreen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DontSave_cmd" xml:space="preserve">
-    <value>Don't save</value>
-    <comment>Make sure you also localize DontSave_access</comment>
-  </data>
-  <data name="LargeFloating_n" xml:space="preserve">
-    <value>Floating preview</value>
-    <comment>Property gerid property name</comment>
-  </data>
-  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavBack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveChanges_dlgTitle" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="Preview" xml:space="preserve">
-    <value>Preview</value>
-  </data>
-  <data name="ErrorWhileSaving0" xml:space="preserve">
-    <value>Error while saving {0}:</value>
-  </data>
-  <data name="Metanol" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Metanol.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DontSave_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>D</value>
-  </data>
-  <data name="GoLtrHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GoLtrHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="KeywordsAreNotSupportedByCommponProperty_internalError" xml:space="preserve">
-    <value>Keywords are not supported by the Common property</value>
-  </data>
-  <data name="VersionHistory_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\files\versionhistory_2.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Save_cmd" xml:space="preserve">
-    <value>Save</value>
-    <comment>Make sure you also localize Save_access</comment>
-  </data>
-  <data name="ErrorWhileLoading0" xml:space="preserve">
-    <value>Error while loading {0}:</value>
+  <data name="Path0IsAlreadySelected" xml:space="preserve">
+    <value>Path {0} is already selected.</value>
   </data>
   <data name="catDisplay" xml:space="preserve">
     <value>Display</value>
     <comment>PropertyGrid category</comment>
   </data>
-  <data name="UnknownSplitter" xml:space="preserve">
-    <value>Unknown splitter</value>
-    <comment>Internal exception</comment>
+  <data name="DontSave_cmd" xml:space="preserve">
+    <value>Don't save</value>
+    <comment>Make sure you also localize DontSave_access</comment>
   </data>
-  <data name="VersionHistory_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\files\versionhistory_1.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Save_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>S</value>
-  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Symbol-Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Symbol-Delete.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VersionHistory_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\files\versionhistory_3.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GoogleEarth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GoogleEarth.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="IgnoreAll_AccessKey" type="System.Char, mscorlib" xml:space="preserve">
+    <value>a</value>
+  </data>
+  <data name="LargeFloating_n" xml:space="preserve">
+    <value>Floating preview</value>
+    <comment>Property gerid property name</comment>
+  </data>
+  <data name="FullScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FullScreen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SynchronizeWithDatabase" xml:space="preserve">
+    <value>Synchronize With Database</value>
   </data>
   <data name="Error_" xml:space="preserve">
     <value>Error</value>
     <comment>Dialog title</comment>
   </data>
-  <data name="CannotDrawItemWithoutListView" xml:space="preserve">
-    <value>Cannot draw item without ListView set</value>
+  <data name="catBehavior" xml:space="preserve">
+    <value>Behavior</value>
   </data>
-  <data name="SomeChangedSomeNot" xml:space="preserve">
-    <value>Warning: Some values were changed. Same value weren't changed</value>
+  <data name="Relocate" xml:space="preserve">
+    <value>Relocate</value>
   </data>
-  <data name="SaveAllHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SaveAllHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LargeFloating_d" xml:space="preserve">
+    <value>Does preview window float over main window?</value>
+    <comment>PropertyGrid description</comment>
   </data>
-  <data name="VersionHistoryEnvelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\files\versionhistoryenvelope.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="Save_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>S</value>
   </data>
-  <data name="MetanolBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MetanolBig.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Metanol" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Metanol.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SynchronizeWithDatabase" xml:space="preserve">
-    <value>Synchronize With Database</value>
+  <data name="VersionHistory_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_6.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="FileSuccessfullyCreated" xml:space="preserve">
-    <value>File successfully created.</value>
+  <data name="RightArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="DoNotShowThisDialogAgain" xml:space="preserve">
+    <value>Do not show this dialog again.</value>
   </data>
   <data name="CreateNewdatabaseFile" xml:space="preserve">
     <value>Create newdatabase file</value>
   </data>
-  <data name="TestConnectionFailed" xml:space="preserve">
-    <value>Test connection failed</value>
+  <data name="Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\up.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VersionHistory_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_7.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="IgnoreLenghtConstraints_n" xml:space="preserve">
+    <value>Ignore lenght constraints</value>
+  </data>
+  <data name="VersionHistory_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_1.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Folder0DoesNotExists" xml:space="preserve">
     <value>Folder {0} does not exists.</value>
   </data>
+  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NavBack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Net 31.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="catIPTC" xml:space="preserve">
+    <value>IPTC</value>
+  </data>
+  <data name="Relocate_AccessKey" type="System.Char, mscorlib" xml:space="preserve">
+    <value>R</value>
+  </data>
+  <data name="ThumbSize_n" xml:space="preserve">
+    <value>Thumbnail size</value>
+    <comment>PropertyGrid property name</comment>
+  </data>
   <data name="BadFolder" xml:space="preserve">
     <value>Bad folder</value>
   </data>
-  <data name="ChildFolder0Of1IsAlreadySelected" xml:space="preserve">
-    <value>Child folder {0} of {1} is already selected.</value>
+  <data name="UnsavedChanges" xml:space="preserve">
+    <value>Current folder contains unsaved chages. Do you want to save them now? If you select not to save, changes will be lost!</value>
+  </data>
+  <data name="SomeChangedSomeNot" xml:space="preserve">
+    <value>Warning: Some values were changed. Same value weren't changed</value>
+  </data>
+  <data name="KeywordsAreNotSupportedByCommponProperty_internalError" xml:space="preserve">
+    <value>Keywords are not supported by the Common property</value>
+  </data>
+  <data name="OpenStreetMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OpenStreetMap.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ErrorWhileLoading0" xml:space="preserve">
+    <value>Error while loading {0}:</value>
+  </data>
+  <data name="VersionHistory_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_3.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="ParentFolder0Of1IsAlreadySelected" xml:space="preserve">
     <value>Parent folder {0} of {1} is already selected.</value>
   </data>
-  <data name="Path0IsAlreadySelected" xml:space="preserve">
-    <value>Path {0} is already selected.</value>
+  <data name="SavingChangedImages" xml:space="preserve">
+    <value>Saving changed images</value>
   </data>
-  <data name="Counting" xml:space="preserve">
-    <value>Counting</value>
+  <data name="TCBehavior_d" xml:space="preserve">
+    <value>List of images behaves like that one in Total Commander</value>
+  </data>
+  <data name="FileSuccessfullyCreated" xml:space="preserve">
+    <value>File successfully created.</value>
+  </data>
+  <data name="ThumbSize_d" xml:space="preserve">
+    <value>Size of image preview in main window</value>
+    <comment>PropertyGrid description</comment>
+  </data>
+  <data name="IgnoreLenghtConstraints_d" xml:space="preserve">
+    <value>Allow to save longer string values than allowed by IPTC standard</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>please wait ...</value>
@@ -290,53 +264,73 @@
   <data name="ThereWasAnErrorProcessingFolder012" xml:space="preserve">
     <value>There was an error processing folder {0}:{1}{2}</value>
   </data>
-  <data name="IgnoreAll" xml:space="preserve">
-    <value>Ignore all</value>
+  <data name="CannotDrawItemWithoutListView" xml:space="preserve">
+    <value>Cannot draw item without ListView set</value>
   </data>
-  <data name="IgnoreAll_AccessKey" type="System.Char, mscorlib" xml:space="preserve">
-    <value>a</value>
+  <data name="SaveAllHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveAllHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ImageInDatabase" xml:space="preserve">
-    <value>Image in database</value>
+  <data name="TestConnectionFailed" xml:space="preserve">
+    <value>Test connection failed</value>
   </data>
-  <data name="DoNotShowThisDialogAgain" xml:space="preserve">
-    <value>Do not show this dialog again.</value>
+  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TheFileWithSameNameAs0AlreadyExistsInDatabaseInThe1" xml:space="preserve">
-    <value>The file with same name as {0} already exists in database in the {1} folder.</value>
+  <data name="UnknownSplitter" xml:space="preserve">
+    <value>Unknown splitter</value>
+    <comment>Internal exception</comment>
   </data>
-  <data name="Relocate" xml:space="preserve">
-    <value>Relocate</value>
+  <data name="Save_cmd" xml:space="preserve">
+    <value>Save</value>
+    <comment>Make sure you also localize Save_access</comment>
   </data>
-  <data name="Relocate_AccessKey" type="System.Char, mscorlib" xml:space="preserve">
-    <value>R</value>
+  <data name="ChildFolder0Of1IsAlreadySelected" xml:space="preserve">
+    <value>Child folder {0} of {1} is already selected.</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
   </data>
   <data name="TestSucceeded" xml:space="preserve">
     <value>Test succeeded.</value>
   </data>
-  <data name="TestConnection" xml:space="preserve">
-    <value>Test connection</value>
-  </data>
-  <data name="catIPTC" xml:space="preserve">
-    <value>IPTC</value>
-  </data>
-  <data name="IgnoreLenghtConstraints_d" xml:space="preserve">
-    <value>Allow to save longer string values than allowed by IPTC standard</value>
-  </data>
-  <data name="IgnoreLenghtConstraints_n" xml:space="preserve">
-    <value>Ignore lenght constraints</value>
-  </data>
-  <data name="IptcUtf8_d" xml:space="preserve">
-    <value>Save IPTC data in UTF-8 encoding</value>
-  </data>
-  <data name="IptcUtf8_n" xml:space="preserve">
-    <value>UTF-8</value>
+  <data name="VersionHistory_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_2.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CSV_Filter" xml:space="preserve">
     <value>Comma-separated values (*.csv)|*.csv|Text files (*.txt)|*.txt|Tab-separated values (*.tsv)|*.tsv|All files (*.*)|*.*</value>
   </data>
-  <data name="CSV" xml:space="preserve">
-    <value>CSV</value>
+  <data name="GoogleMaps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GoogleMaps.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TCBehavior_n" xml:space="preserve">
+    <value>TC Behavior</value>
+  </data>
+  <data name="DontSave_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="GoLtrHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GoLtrHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestConnection" xml:space="preserve">
+    <value>Test connection</value>
+  </data>
+  <data name="TheFileWithSameNameAs0AlreadyExistsInDatabaseInThe1" xml:space="preserve">
+    <value>The file with same name as {0} already exists in database in the {1} folder.</value>
+  </data>
+  <data name="VersionHistory_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistory_5.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="MetanolBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MetanolBig.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IptcUtf8_n" xml:space="preserve">
+    <value>UTF-8</value>
+  </data>
+  <data name="LeftArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ErrorWhileSaving0" xml:space="preserve">
+    <value>Error while saving {0}:</value>
   </data>
   <data name="NotRated" xml:space="preserve">
     <value>&lt;not rated&gt;</value>
@@ -344,16 +338,41 @@
   <data name="Rejected" xml:space="preserve">
     <value>☆☆☆☆☆ - rejected</value>
   </data>
+  <data name="VersionHistoryEnvelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\files\versionhistoryenvelope.htm;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SaveChanges_dlgTitle" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="RotateLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RotateLeft.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IptcUtf8_d" xml:space="preserve">
+    <value>Save IPTC data in UTF-8 encoding</value>
+  </data>
+  <data name="IgnoreAll" xml:space="preserve">
+    <value>Ignore all</value>
+  </data>
+  <data name="Counting" xml:space="preserve">
+    <value>Counting</value>
+  </data>
   <data name="VersionHistory_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\files\versionhistory_4.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="VersionHistory_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\files\versionhistory_5.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="RotateRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RotateRight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VersionHistory_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\files\versionhistory_6.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ImageInDatabase" xml:space="preserve">
+    <value>Image in database</value>
   </data>
-  <data name="VersionHistory_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\files\versionhistory_7.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GeoHack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GeoHack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GpsTemplate" xml:space="preserve">
+    <value>{0} {1}{2} {3}{4}</value>
+    <comment>latitude, NS, separator, longitude, EW</comment>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>
