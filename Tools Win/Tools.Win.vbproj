@@ -159,6 +159,7 @@
     <Compile Include="API\Notifications.vb" />
     <Compile Include="API\Threads.vb" />
     <Compile Include="Diagnostics\ProcessExtensions.vb" />
+    <Compile Include="Interop\ModuleVersionInformation.vb" />
     <Compile Include="Interop\UnmanagedModule.vb" />
     <Compile Include="IO\UnmanagedMemoryStream.vb" />
     <Compile Include="Text\Unicode\UnicodeNative.vb" />

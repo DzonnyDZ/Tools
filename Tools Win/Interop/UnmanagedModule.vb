@@ -41,6 +41,61 @@ Namespace InteropT
             Return New UnmanagedModule(handle, False)
         End Function
 
+        ''' <summary>Well-known identifiers for versioning informations</summary>
+        Private Shared ReadOnly versionInfoStringNames As String() = {
+            "Comments", "InternalName", "ProductName",
+            "CompanyName", "LegalCopyright", "ProductVersion",
+            "FileDescription", "LegalTrademarks", "PrivateBuild",
+            "FileVersion", "OriginalFilename", "SpecialBuild"
+        }
+
+        ''' <summary>Gets versioning information from managed or umnanaged module</summary>
+        ''' <param name="path">Path of module to get information from</param>
+        ''' <returns>Versioning information</returns>
+        Public Shared Function GetVersionInformation(path As String) As ModuleVersionInformation
+            Dim size = API.GetFileVersionInfoSize(path, 0)
+            If size = 0 Then Throw API.Win32APIException.GetLastWin32Exception
+            Dim buffPoint = Marshal.AllocHGlobal(size)
+            Try
+                If Not API.GetFileVersionInfo(path, 0, size, buffPoint) Then Throw API.Win32APIException.GetLastWin32Exception
+
+                Dim ptr As IntPtr = IntPtr.Zero
+                Dim busize As UInteger = 0
+
+                If Not API.VerQueryValue(buffPoint, "\", ptr, busize) Then Throw API.Win32APIException.GetLastWin32Exception
+                Dim fixedInfo As API.VS_FIXEDFILEINFO = Marshal.PtrToStructure(ptr, GetType(API.VS_FIXEDFILEINFO))
+
+                If Not API.VerQueryValue(buffPoint, "\VarFileInfo\Translation", ptr, busize) Then Throw API.Win32APIException.GetLastWin32Exception
+                Dim langAndCodes(0 To busize / 4 - 1) As Integer
+                Marshal.Copy(ptr, langAndCodes, 0, langAndCodes.Length)
+
+                Dim locData As New Dictionary(Of String, IDictionary(Of String, IDictionary(Of String, String)))
+
+                For i = 0 To langAndCodes.Length - 1 Step 2
+                    For Each viName In versionInfoStringNames
+                        If Not API.VerQueryValue(buffPoint, String.Format("\StringFileInfo\{0:x}-{1:x}\{2}", langAndCodes(i), langAndCodes(i + 1), viName), ptr, busize) Then Throw API.Win32APIException.GetLastWin32Exception
+                        Dim value$ = Marshal.PtrToStringAuto(ptr, busize)
+                        Dim lang1 As New StringBuilder(1024)
+                        Dim lang2 As New StringBuilder(1024)
+                        API.VerLanguageName(langAndCodes(i), lang1, lang1.Length)
+                        API.VerLanguageName(langAndCodes(i + 1), lang2, lang2.Length)
+                        Dim l1 = lang1.ToString
+                        Dim l2 = lang2.ToString
+
+                        If Not locData.ContainsKey(l1) Then locData.Add(l1, New Dictionary(Of String, IDictionary(Of String, String)))
+                        If Not locData(l1).ContainsKey(l2) Then locData(l1).Add(l2, New Dictionary(Of String, String))
+                        locData(l1)(l2)(viName) = value
+                    Next
+                Next
+
+                Return New ModuleVersionInformation(fixedInfo, locData)
+
+            Finally
+                Marshal.FreeHGlobal(buffPoint)
+            End Try
+
+        End Function
+
 #Region "IDisposable Support"
         ''' <summary>To detect redundant calls</summary>
         Private disposedValue As Boolean

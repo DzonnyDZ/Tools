@@ -1,4 +1,5 @@
 Imports System.Runtime.InteropServices, Tools.ExtensionsT
+Imports System.Text
 
 Namespace API
     ''' <summary>Generic exception caused by Win32 API</summary>
@@ -6,11 +7,11 @@ Namespace API
         ''' <summary>CTor with error number</summary>
         ''' <param name="Number">Error number</param>
         Public Sub New(ByVal Number As Integer)
-            MyBase.new(Number)
+            MyBase.New(Number)
         End Sub
         ''' <summary>CTor - error number will be obtained automatically via <see cref="GetLastError"/></summary>
         Public Sub New()
-            MyBase.new()
+            MyBase.New()
         End Sub
         ''' <summary>Gets exception for error caused by last Win32 API call</summary>
         ''' <returns>Exception obtained via <see cref="Marshal.GetExceptionForHR"/>(<see cref="Marshal.GetHRForLastWin32Error"/>)</returns>
@@ -307,6 +308,165 @@ Namespace API
         Public Function IsIntRresource(value As IntPtr) As Boolean
             Return value.ToInt64 <= UShort.MaxValue
         End Function
+
+        ''' <summary>Determines whether the operating system can retrieve version information for a specified file. If version information is available, <see cref="GetFileVersionInfoSize"/> returns the size, in bytes, of that information.</summary>
+        ''' <param name="lptstrFilename">The name of the file of interest. The function uses the search sequence specified by the <see cref="LoadLibrary"/> function.</param>
+        ''' <param name="lpdwHandle">A pointer to a variable that the function sets to zero.</param>
+        ''' <returns>If the function succeeds, the return value is the size, in bytes, of the file's version information. If the function fails, the return value is zero.</returns>
+        Public Declare Auto Function GetFileVersionInfoSize Lib "Version" (<[In], MarshalAs(UnmanagedType.LPTStr)> lptstrFilename As String, <Out> ByRef lpdwHandle As Integer) As Integer
+
+        ''' <summary>Retrieves version information for the specified file.</summary>
+        ''' <param name="lptstrFilename">The name of the file. If a full path is not specified, the function uses the search sequence specified by the <see cref="LoadLibrary"/> function.</param>
+        ''' <param name="dwHandle">This parameter is ignored.</param>
+        ''' <param name="dwLen">The size, in bytes, of the buffer pointed to by the <paramref name="lpData"/> parameter.</param>
+        ''' <param name="lpData">Pointer to a buffer that receives the file-version information.</param>
+        ''' <returns>If the function succeeds, the return value is nonzero.</returns>
+        Public Declare Auto Function GetFileVersionInfo Lib "Version" (<[In], MarshalAs(UnmanagedType.LPTStr)> lptstrFilename As String, dwHandle As Integer, dwLen As Integer, lpData As IntPtr) As Boolean
+
+        ''' <summary>Retrieves specified version information from the specified version-information resource.</summary>
+        ''' <param name="pBlock">The version-information resource returned by the <see cref="GetFileVersionInfo"/> function.</param>
+        ''' <param name="lpSubBlock">The version-information value to be retrieved. The string must consist of names separated by backslashes (\).</param>
+        ''' <param name="lplpBuffer">When this method returns, contains the address of a pointer to the requested version information in the buffer pointed to by <paramref name="pBlock"/>.</param>
+        ''' <param name="puLen">
+        ''' When this method returns, contains a pointer to the size of the requested data pointed to by <paramref name="lplpBuffer"/>:
+        ''' for version information values, the length in characters of the string stored at lplpBuffer;
+        ''' for translation array values, the size in bytes of the array stored at lplpBuffer;
+        ''' and for root block, the size in bytes of the structure.
+        ''' </param>
+        ''' <returns>
+        ''' If the specified version-information structure exists, and version information is available, the return value is nonzero.
+        ''' If the address of the length buffer is zero, no value is available for the specified version-information name.
+        ''' If the specified name does not exist or the specified resource is not valid, the return value is zero.
+        ''' </returns>
+        Public Declare Auto Function VerQueryValue Lib "Version" (pBlock As IntPtr, <MarshalAs(UnmanagedType.LPTStr)> lpSubBlock As String, <Out> ByRef lplpBuffer As IntPtr, <Out> ByRef puLen As UInteger) As Boolean
+
+        ''' <summary>Retrieves a description string for the language associated with a specified binary Microsoft language identifier.</summary>
+        ''' <param name="wLang">The binary language identifier.</param>
+        ''' <param name="szLang">The language specified by the wLang parameter.</param>
+        ''' <param name="cchLang">The size, in characters, of the buffer pointed to by <paramref name="szLang"/>.</param>
+        ''' <returns>The return value is the size, in characters, of the string returned in the buffer. This value does not include the terminating null character. If an error occurs, the return value is zero. Unknown language identifiers do not produce errors.</returns>
+        Public Declare Auto Function VerLanguageName Lib "Kernel32" (wLang As Integer, <Out, MarshalAs(UnmanagedType.LPTStr)> szLang As StringBuilder, cchLang As Integer) As Integer
+
+        <StructLayout(LayoutKind.Sequential)>
+        Public Structure VS_FIXEDFILEINFO
+            ''' <summary>Contains the value 0xFEEF04BD. This is used with the szKey member of the VS_VERSIONINFO structure when searching a file for the <see cref="VS_FIXEDFILEINFO"/> structure.</summary>
+            Public dwSignature As Integer
+            ''' <summary>The binary version number of this structure. The high-order word of this member contains the major version number, and the low-order word contains the minor version number.</summary>
+            Public dwStrucVersion As Integer
+            ''' <summary>The most significant 32 bits of the file's binary version number. This member is used with <see cref="dwFileVersionLS"/> to form a 64-bit value used for numeric comparisons.</summary>
+            Public dwFileVersionMS As Integer
+            ''' <summary>The least significant 32 bits of the file's binary version number. This member is used with <see cref="dwFileVersionMS"/> to form a 64-bit value used for numeric comparisons.</summary>
+            Public dwFileVersionLS As Integer
+            ''' <summary>The most significant 32 bits of the binary version number of the product with which this file was distributed. This member is used with <see cref="dwProductVersionLS"/> to form a 64-bit value used for numeric comparisons.</summary>
+            Public dwProductVersionMS As Integer
+            ''' <summary>The least significant 32 bits of the binary version number of the product with which this file was distributed. This member is used with <see cref="dwProductVersionMS"/> to form a 64-bit value used for numeric comparisons.</summary>
+            Public dwProductVersionLS As Integer
+            ''' <summary>Contains a bitmask that specifies the valid bits in <see cref="dwFileFlags"/>. A bit is valid only if it was defined when the file was created.</summary>
+            Public dwFileFlagsMask As FileVersionFlags
+            ''' <summary>Contains a bitmask that specifies the Boolean attributes of the file.</summary>
+            Public dwFileFlags As FileVersionFlags
+            ''' <summary>The operating system for which this file was designed. </summary>
+            Public dwFileOS As FileOs
+            ''' <summary>The general type of file. </summary>
+            Public dwFileType As GeneralFileType
+            ''' <summary>The function of the file. The possible values depend on the value of dwFileType.</summary>
+            Public dwFileSubtype As FileSubtype
+            ''' <summary>The most significant 32 bits of the file's 64-bit binary creation date and time stamp.</summary>
+            Public dwFileDateMS As Integer
+            ''' <summary>The least significant 32 bits of the file's 64-bit binary creation date and time stamp.</summary>
+            Public dwFileDateLS As Integer
+        End Structure
+
+        ''' <summary>Flags for version information</summary>
+        <Flags>
+        Public Enum FileVersionFlags As Integer
+            ''' <summary>The file contains debugging information or is compiled with debugging features enabled.</summary>
+            Debug = 1
+            ''' <summary>The file's version structure was created dynamically; therefore, some of the members in this structure may be empty or incorrect.</summary>
+            InfoInferred = &H10
+            ''' <summary>The file has been modified and is not identical to the original shipping file of the same version number.</summary>
+            Patched = 4
+            ''' <summary>The file is a development version, not a commercially released product.</summary>
+            PreRelease = 2
+            ''' <summary>The file was not built using standard release procedures.</summary>
+            PrivateBuild = 8
+            ''' <summary>The file was built by the original company using standard release procedures but is a variation of the normal file of the same version number. </summary>
+            SpecialBuild = &H20
+        End Enum
+
+        ''' <summary>Operation Systems identified by file version info</summary>
+        ''' <remarks>An application can combine these values to indicate that the file was designed for one operating system running on another.</remarks>
+        <Flags>
+        Public Enum FileOs As Integer
+            ''' <summary>The file was designed for MS-DOS.</summary>
+            Dos = &H10000
+            ''' <summary>The file was designed for Windows NT.</summary>
+            WindowsNT = &H40000
+            ''' <summary>The file was designed for 16-bit Windows.</summary>
+            Windows16 = &H1
+            ''' <summary>The file was designed for 32-bit Windows.</summary>
+            Windows32 = &H4
+            ''' <summary>The file was designed for 16-bit OS/2.</summary>
+            OS216 = &H30000
+            ''' <summary>The file was designed for 16-bit Presentation Manager.</summary>
+            PM16 = &H2
+            ''' <summary>The operating system for which the file was designed is unknown to the system.</summary>
+            Unknown = 0
+        End Enum
+
+        ''' <summary>General file types understood by versioning API</summary>
+        Public Enum GeneralFileType As Integer
+            ''' <summary>The file contains an application.</summary>
+            Application = 1
+            ''' <summary>The file contains a DLL.</summary>
+            Dll = 2
+            ''' <summary>The file contains a device driver.</summary>
+            Driver = 3
+            ''' <summary>The file contains a font. </summary>
+            Font = 4
+            ''' <summary>The file contains a static-link library.</summary>
+            StaticLibrary = 7
+            ''' <summary>The file type is unknown to the system.</summary>
+            Unknown = 0
+            ''' <summary>The file contains a virtual device.</summary>
+            VirtualDevice = 5
+        End Enum
+
+        ''' <summary>FIle sub-types understood by versioningAPI</summary>
+        Public Enum FileSubtype As Integer
+            ''' <summary>The file contains a communications driver.</summary>
+            CommDriver = &HA
+            ''' <summary>The file contains a display driver.</summary>
+            DisplayDriver = 4
+            ''' <summary>The file contains an installable driver.</summary>
+            InstallableDriver = 8
+            ''' <summary>The file contains a keyboard driver.</summary>
+            KeyboardDriver = 2
+            ''' <summary>The file contains a language driver.</summary>
+            LanguageDriver = 3
+            ''' <summary>The file contains a mouse driver.</summary>
+            MouseDriver = 5
+            ''' <summary>The file contains a network driver.</summary>
+            NetworkDriver = 6
+            ''' <summary>The file contains a printer driver.</summary>
+            PrinterDriver = 1
+            ''' <summary>The file contains a sound driver.</summary>
+            SoundDriver = 9
+            ''' <summary>The file contains a system driver.</summary>
+            SystemDriver = 7
+            ''' <summary>The file contains a versioned printer driver.</summary>
+            VersionedPrinterDriver = &HC
+
+            ''' <summary>The driver type is unknown by the system.</summary>
+            Unknown = 0
+
+            ''' <summary>The file contains a raster font.</summary>
+            ResterFont = 1
+            ''' <summary>The file contains a TrueType font.</summary>
+            TrueTypeFont = 3
+            ''' <summary>The file contains a vector font.</summary>
+            VectorFont = 2
+        End Enum
 #End Region
 
         ''' <summary>Deletes a logical pen, brush, font, bitmap, region, or palette, freeing all system resources associated with the object. After the object is deleted, the specified handle is no longer valid.</summary>
