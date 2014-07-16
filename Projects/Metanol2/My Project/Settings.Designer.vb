@@ -339,16 +339,17 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("https://maps.google.com/maps?q={0},{1}&z=15")>  _
-        Public ReadOnly Property GoogleMapsUrlTemplate() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("https://www.google.com/maps/embed/v1/place?q={0:f},{1:f}&key={2}")>  _
+        Public ReadOnly Property GoogleMapsUrlTemplateSmall() As String
             Get
-                Return CType(Me("GoogleMapsUrlTemplate"),String)
+                Return CType(Me("GoogleMapsUrlTemplateSmall"),String)
             End Get
         End Property
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("http://www.openstreetmap.org/?mlat={0}&mlon={1}&zoom=15#map=15/3.1524/101.7057")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("http://www.openstreetmap.org/?mlat={0:f}&mlon={1:f}&zoom=15#map=15/3.1524/101.705"& _ 
+            "7")>  _
         Public ReadOnly Property OpenStreetMapUrlTemplate() As String
             Get
                 Return CType(Me("OpenStreetMapUrlTemplate"),String)
@@ -357,10 +358,40 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("http://toolserver.org/~geohack/geohack.php?language=en&params={0}_{1}_{2}_{3}")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("http://toolserver.org/~geohack/geohack.php?language=en&params={0:d.00_m.00_s.00_a"& _ 
+            "}_{1:d.00_m.00_s.00_o}")>  _
         Public ReadOnly Property GeoHackUrlTemplate() As String
             Get
                 Return CType(Me("GeoHackUrlTemplate"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("AIzaSyBpHMzvHZ-Fo0iW2BTmxPi2zQmRsY6ep4k")>  _
+        Public ReadOnly Property GoogleMapsAPIKey() As String
+            Get
+                Return CType(Me("GoogleMapsAPIKey"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("https://maps.google.com/maps?q={0:f},{1:f}&z=15")>  _
+        Public ReadOnly Property GoogleMapsUrlTemplateSmallFull() As String
+            Get
+                Return CType(Me("GoogleMapsUrlTemplateSmallFull"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("<html>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<head>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<title>Google Maps</title>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<style type=""text/css"">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"* {{margin:0"& _ 
+            "; padding 0;}}"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"</style>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"</head>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<body>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<iframe src=""{0}"" width=""100%"" height"& _ 
+            "=""100%"" frameborder=""0"""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"></iframe>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"</body></html>")>  _
+        Public ReadOnly Property GoogleMapsHtmlTemplate() As String
+            Get
+                Return CType(Me("GoogleMapsHtmlTemplate"),String)
             End Get
         End Property
     End Class

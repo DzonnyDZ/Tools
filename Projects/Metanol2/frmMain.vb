@@ -1,5 +1,5 @@
 ﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileSystemTools, Tools.CollectionsT.GenericT
-Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
+Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT, System.Globalization.CultureInfo
 Imports Tools.MetadataT.IptcT, Tools.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
@@ -614,8 +614,8 @@ Public Class frmMain
             tsbOpenStreetMap.Enabled = value
             tsbGoogleEarth.Enabled = value
             tsbGeoHack.Enabled = value
-            webGoogleMaps.Enabled = value
-            webOpenStreetMap.Enabled = value
+            'webGoogleMaps.Enabled = value
+            'webOpenStreetMap.Enabled = value
             tslGps.Enabled = value
         End Set
     End Property
@@ -775,8 +775,8 @@ Public Class frmMain
     End Sub
     ''' <summary>Mouse down positions on splitters</summary>
     Private SplitterDowns As New Dictionary(Of Splitter, Point)
-    Private Sub splMain_MouseDown(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
-        Handles sptKeywords.MouseDown, sptImage.MouseDown, sptTitle.MouseDown
+    Private Sub sptAll_MouseDown(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
+        Handles sptKeywords.MouseDown, sptImage.MouseDown, sptTitle.MouseDown, sptGps.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left Then
             If Not SplitterDowns.ContainsKey(sender) Then _
                 SplitterDowns.Add(sender, e.Location) _
@@ -791,13 +791,14 @@ Public Class frmMain
             If splitter Is sptImage Then : Return panImage
             ElseIf splitter Is sptTitle Then : Return fraTitle
             ElseIf splitter Is sptKeywords Then : Return fraKeywords
+            ElseIf splitter Is sptGps Then : Return fraGps
             End If
             Throw New ApplicationException(My.Resources.UnknownSplitter)
         End Get
     End Property
 
-    Private Sub sptImage_MouseMove(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
-        Handles sptImage.MouseMove, sptKeywords.MouseMove, sptTitle.MouseMove
+    Private Sub splAll_MouseMove(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
+        Handles sptImage.MouseMove, sptKeywords.MouseMove, sptTitle.MouseMove, sptGps.MouseMove
         If e.Button = Windows.Forms.MouseButtons.Left AndAlso SplitterDowns.ContainsKey(sender) AndAlso SplitterDowns(sender).Y <> e.Location.Y Then
             Dim DeltaY = e.Location.Y - SplitterDowns(sender).Y
             With SplittedControl(sender)
@@ -807,8 +808,8 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub sptImage_MouseUp(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
-        Handles sptImage.MouseUp, sptKeywords.MouseUp, sptTitle.MouseUp
+    Private Sub sptAll_MouseUp(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
+        Handles sptImage.MouseUp, sptKeywords.MouseUp, sptTitle.MouseUp, sptGps.MouseUp
         If e.Button = Windows.Forms.MouseButtons.Left Then sender.Capture = False
     End Sub
 
@@ -1233,7 +1234,7 @@ Retry:              item.Save()
     ''' <param name="latitude">GPS latitude</param>
     ''' <param name="longitude">GPS longitude</param>
     Private Sub NavigateGoogleMaps(latitude As Angle, longitude As Angle)
-        webGoogleMaps.Navigate(GetGoogleMapsUrl(longitude, latitude))
+        webGoogleMaps.DocumentText = String.Format(InvariantCulture, My.Settings.GoogleMapsHtmlTemplate, GetGoogleMapsUrl(longitude, latitude, True))
     End Sub
 
     ''' <summary>Navigates OpenStreetMap browser to OpenStreetMap URL for GPS coordinates of current image</summary>
@@ -1246,10 +1247,12 @@ Retry:              item.Save()
     ''' <summary>Gets URL to show coordinates in Google Maps</summary>
     ''' <param name="latitude">GPS latitude</param>
     ''' <param name="longitude">GPS longitude</param>
+    ''' <param name="small">True to get URL for embeddable Google maps, false to get URL for full Google maps (to show in stand-alone browser)</param>
     ''' <returns>URL to Google Maps pointing to given latitude and longitude</returns>
-    Private Function GetGoogleMapsUrl(latitude As Angle, longitude As Angle) As String
+    Private Function GetGoogleMapsUrl(latitude As Angle, longitude As Angle, small As Boolean) As String
         'https://maps.google.com/maps?q=3.152383,101.705681&z=15
-        Return String.Format(My.Settings.GoogleMapsUrlTemplate, latitude, longitude)
+        'https://www.google.com/maps/embed/v1/place?q=3.152383,101.705681&key=AIzaSyBpHMzvHZ-Fo0iW2BTmxPi2zQmRsY6ep4k
+        Return String.Format(InvariantCulture, If(small, My.Settings.GoogleMapsUrlTemplateSmall, My.Settings.GoogleMapsUrlTemplateSmallFull), latitude, longitude, My.Settings.GoogleMapsAPIKey)
     End Function
 
     ''' <summary>Gets URL to show coordinates in OpenStreetMap</summary>
@@ -1258,7 +1261,7 @@ Retry:              item.Save()
     ''' <returns>URL to OpenStreetMap pointing to given latitude and longitude</returns>
     Private Function GetOpenStreetMapUrl(longitude As Angle, latitude As Angle) As String
         'http://www.openstreetmap.org/?mlat=3.152383&mlon=101.705681&zoom=15#map=15/3.1524/101.7057
-        Return String.Format(My.Settings.OpenStreetMapUrlTemplate, latitude, longitude)
+        Return String.Format(InvariantCulture, My.Settings.OpenStreetMapUrlTemplate, latitude, longitude)
     End Function
 
     ''' <summary>Gets URL to show coordinates in Geo Hack wiki</summary>
@@ -1267,13 +1270,13 @@ Retry:              item.Save()
     ''' <returns>URL to Geo Hack wiki pointing to given latitude and longitude</returns>
     Private Function GetGeoHackUrlUrl(longitude As Angle, latitude As Angle) As String
         'http://toolserver.org/~geohack/geohack.php?language=en&params=3.00_9.00_8.58_N_101.00_42.00_20.45_E
-        Return String.Format(My.Settings.GeoHackUrlTemplate, latitude.Abs, If(latitude < 0, "N", "S"), longitude.Abs, If(longitude < 0, "W", "E"))
+        Return String.Format(InvariantCulture, My.Settings.GeoHackUrlTemplate, latitude, longitude)
     End Function
 
     Private Sub tsbGoogleMaps_Click(sender As Object, e As EventArgs) Handles tsbGoogleMaps.Click
         If gpsCoordinates Is Nothing Then Exit Sub
         Try
-            Process.Start(GetGoogleMapsUrl(gpsCoordinates.Item1, gpsCoordinates.Item2))
+            Process.Start(GetGoogleMapsUrl(gpsCoordinates.Item1, gpsCoordinates.Item2, False))
         Catch ex As Exception
             MBox.Error_X(ex)
         End Try
@@ -1301,6 +1304,10 @@ Retry:              item.Save()
         Catch ex As Exception
             MBox.Error_X(ex)
         End Try
+    End Sub
+
+    Private Sub sptImage_MouseMove(sender As Object, e As MouseEventArgs) Handles sptTitle.MouseMove, sptKeywords.MouseMove, sptImage.MouseMove
+
     End Sub
 End Class
 
