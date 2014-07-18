@@ -8,22 +8,23 @@ Imports <xmlns="http://www.w3.org/1999/xhtml">
 Imports Tools.NumericsT
 Imports Tools.GlobalizationT
 Imports System.Globalization
+Imports System.Web
 
 ''' <summary>Main form</summary>
 Public Class frmMain
-    ''' <summary>Imake gey of ... item</summary>
+    ''' <summary>Make key of ... item</summary>
     Private Const UpKey As String = ".\.."
     ''' <summary>Number of columns in <see cref="flpCommon"/></summary>
     Private Const CommonColumns% = 2
     ''' <summary>Selected IPTCs</summary>
     Private WithEvents SelectedMetadata As New ListWithEvents(Of MetadataItem)
-    ''' <summary>Metadatas that was changed</summary>
+    ''' <summary>Metadata that was changed</summary>
     Private WithEvents ChangedMetadata As New ListWithEvents(Of MetadataItem)
     ''' <summary>If nonzero item properties are not shown as selection in <see cref="lvwImages"/> changes</summary>
     ''' <seelaso cref="IsChangingSuspended"/>
     <EditorBrowsable(EditorBrowsableState.Never)> _
     Private ChangingSuspendedCounter As Byte = 0
-    ''' <summary>Gets value indicationg if properties of items are updated as selection in <see cref="lvwImages"/> changes</summary>
+    ''' <summary>Gets value indicating if properties of items are updated as selection in <see cref="lvwImages"/> changes</summary>
     ''' <returns>True if properties are not updated, false if the are</returns>
     Private ReadOnly Property IsChangingSuspended() As Boolean
         Get
@@ -36,8 +37,8 @@ Public Class frmMain
         ChangingSuspendedCounter += 1
     End Sub
     ''' <summary>Resume updating of properties as selected image changes</summary>
-    ''' <remarks>Calls to <see cref="SuspendUpdate"/> and <see cref="ResumeUpdate"/> chan be stacked up to 255 levels</remarks>
-    ''' <param name="Force">True to ignore stacked calls and resume updating immediatelly</param>
+    ''' <remarks>Calls to <see cref="SuspendUpdate"/> and <see cref="ResumeUpdate"/> can be stacked up to 255 levels</remarks>
+    ''' <param name="Force">True to ignore stacked calls and resume updating immediately</param>
     Private Sub ResumeUpdate(Optional ByVal Force As Boolean = False)
         If Force Then ChangingSuspendedCounter = 0 Else ChangingSuspendedCounter = Math.Max(0, CInt(ChangingSuspendedCounter) - 1)
         DoSelectedImageChanged()
@@ -61,6 +62,7 @@ Public Class frmMain
         SizeInFlpCommon()
         SetCountryCodes()
     End Sub
+
     ''' <summary>Prepares country codes</summary>
     Private Sub SetCountryCodes()
         Dim c As New IptcT.IptcDataTypes.StringEnum(Of IptcT.Iptc.ISO3166).Converter
@@ -213,6 +215,7 @@ Public Class frmMain
         My.Settings.PreviewHeight = panImage.Height
         My.Settings.KeywordsHeight = fraKeywords.Height
         My.Settings.TextHeight = fraTitle.Height
+        My.Settings.GpsHeight = fraGps.Height
         Dim doc As New System.Xml.XmlDocument
         doc.Load(kweKeywords.GetKeywordsAsXML.CreateReader)
         My.Settings.Keywords = doc
@@ -258,6 +261,7 @@ Public Class frmMain
         Me.panImage.Height = My.Settings.PreviewHeight
         Me.fraKeywords.Height = My.Settings.KeywordsHeight
         Me.fraTitle.Height = My.Settings.TextHeight
+        Me.fraGps.Height = My.Settings.GpsHeight
         Me.lvwImages.TCBehaviour = My.Settings.TCBehavior
         ToolStripManager.LoadSettings(Me, "tosMain")
         Me.tosMain.Visible = True
@@ -1234,14 +1238,14 @@ Retry:              item.Save()
     ''' <param name="latitude">GPS latitude</param>
     ''' <param name="longitude">GPS longitude</param>
     Private Sub NavigateGoogleMaps(latitude As Angle, longitude As Angle)
-        webGoogleMaps.DocumentText = String.Format(InvariantCulture, My.Settings.GoogleMapsHtmlTemplate, GetGoogleMapsUrl(longitude, latitude, True))
+        webGoogleMaps.DocumentText = String.Format(InvariantCulture, My.Settings.GoogleMapsHtmlTemplate, GetGoogleMapsUrl(latitude, longitude, True))
     End Sub
 
     ''' <summary>Navigates OpenStreetMap browser to OpenStreetMap URL for GPS coordinates of current image</summary>
     ''' <param name="latitude">GPS latitude</param>
     ''' <param name="longitude">GPS longitude</param>
     Private Sub NavigateOpenStreetMap(latitude As Angle, longitude As Angle)
-        webOpenStreetMap.Navigate(GetOpenStreetMapUrl(longitude, latitude))
+        webOpenStreetMap.Navigate(GetOpenStreetMapUrl(latitude, longitude))
     End Sub
 
     ''' <summary>Gets URL to show coordinates in Google Maps</summary>
@@ -1259,7 +1263,7 @@ Retry:              item.Save()
     ''' <param name="latitude">GPS latitude</param>
     ''' <param name="longitude">GPS longitude</param>
     ''' <returns>URL to OpenStreetMap pointing to given latitude and longitude</returns>
-    Private Function GetOpenStreetMapUrl(longitude As Angle, latitude As Angle) As String
+    Private Function GetOpenStreetMapUrl(latitude As Angle, longitude As Angle) As String
         'http://www.openstreetmap.org/?mlat=3.152383&mlon=101.705681&zoom=15#map=15/3.1524/101.7057
         Return String.Format(InvariantCulture, My.Settings.OpenStreetMapUrlTemplate, latitude, longitude)
     End Function
@@ -1268,9 +1272,9 @@ Retry:              item.Save()
     ''' <param name="latitude">GPS latitude</param>
     ''' <param name="longitude">GPS longitude</param>
     ''' <returns>URL to Geo Hack wiki pointing to given latitude and longitude</returns>
-    Private Function GetGeoHackUrlUrl(longitude As Angle, latitude As Angle) As String
+    Private Function GetGeoHackUrlUrl(latitude As Angle, longitude As Angle) As String
         'http://toolserver.org/~geohack/geohack.php?language=en&params=3.00_9.00_8.58_N_101.00_42.00_20.45_E
-        Return String.Format(InvariantCulture, My.Settings.GeoHackUrlTemplate, latitude, longitude)
+        Return String.Format(InvariantCulture, My.Settings.GeoHackUrlTemplate, -latitude, longitude)
     End Function
 
     Private Sub tsbGoogleMaps_Click(sender As Object, e As EventArgs) Handles tsbGoogleMaps.Click
@@ -1293,8 +1297,45 @@ Retry:              item.Save()
 
 
     Private Sub tsbGoogleEarth_Click(sender As Object, e As EventArgs) Handles tsbGoogleEarth.Click
-        'TODO: Generate KML and start process with it ...
-        MBox.Show("Not supported yet", "Google Earth", MessageBoxButtons.OK, IndependentT.MessageBox.MessageBoxIcons.Exclamation)
+        If gpsCoordinates Is Nothing OrElse SelectedMetadata.Count = 0 Then Exit Sub
+        Try
+            Dim latitude = gpsCoordinates.Item1
+            Dim longitude = gpsCoordinates.Item2
+            Dim kml = <?xml version="1.0"?>
+                      <kml xmlns="http://earth.google.com/kml/2.0">
+                          <Placemark>
+                              <name><%= SelectedMetadata.First.SystemMetadata.FileName %> (Metanol)</name>
+                              <description>
+                                  <%= New XCData(
+                                      <div>
+                                          <strong>Lat: </strong><code><%= latitude %></code>,
+                                      <strong>Lon: </strong><code><%= longitude %></code>
+                                          <br/>
+                                          <img src=<%= "file:///" + HttpUtility.UrlEncode(SelectedMetadata.First.SystemMetadata.FullPath) %> width='200'/>
+                                          <br/>
+                                          <strong>File:</strong><br/>
+                                          <code><a href=<%= "file:///" + HttpUtility.UrlEncode(SelectedMetadata.First.SystemMetadata.FullPath) %>><%= SelectedMetadata.First.SystemMetadata.FullPath %></a></code>
+                                      </div>.ToString) %>
+                              </description>
+                              <LookAt>
+                                  <latitude><%= latitude.ToString("f", InvariantCulture) %></latitude>
+                                  <longitude><%= longitude.ToString("f", InvariantCulture) %></longitude>
+                                  <heading>0.000000</heading>
+                                  <range>800</range>
+                                  <tilt>45</tilt>
+                              </LookAt>
+                              <Point>
+                                  <coordinates><%= latitude.ToString("f", InvariantCulture) %>,<%= longitude.ToString("f", InvariantCulture) %></coordinates>
+                              </Point>
+                          </Placemark>
+                      </kml>
+
+            Dim temp = IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, "metanol.kml")
+            kml.Save(temp)
+            Process.Start(temp)
+        Catch ex As Exception
+            MBox.Error_X(ex)
+        End Try
     End Sub
 
     Private Sub tsbGeoHack_Click(sender As Object, e As EventArgs) Handles tsbGeoHack.Click
@@ -1306,7 +1347,13 @@ Retry:              item.Save()
         End Try
     End Sub
 
-    Private Sub sptImage_MouseMove(sender As Object, e As MouseEventArgs) Handles sptTitle.MouseMove, sptKeywords.MouseMove, sptImage.MouseMove
+    Private Sub Control_Validating(sender As Object, e As CancelEventArgs) Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, rtgTechnical.Validating, rtgOverall.Validating, rtgInfo.Validating, rtgArt.Validating, nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
+
+    End Sub
+    Private Sub lvwImages_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvwImages.SelectedIndexChanged
+
+    End Sub
+    Private Sub lvwImages_DrawItem(sender As Object, e As DrawListViewItemEventArgs) Handles lvwImages.DrawItem
 
     End Sub
 End Class

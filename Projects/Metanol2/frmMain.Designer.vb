@@ -28,7 +28,6 @@ Partial Class frmMain
         Me.splBrowser = New System.Windows.Forms.SplitContainer()
         Me.lvwFolders = New System.Windows.Forms.ListView()
         Me.imlFolders = New System.Windows.Forms.ImageList(Me.components)
-        Me.lvwImages = New Tools.Metanol.TotalCommanderListView()
         Me.cmsImages = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.tmiMerge = New System.Windows.Forms.ToolStripMenuItem()
         Me.tmiExport = New System.Windows.Forms.ToolStripMenuItem()
@@ -78,13 +77,9 @@ Partial Class frmMain
         Me.lblUrgency = New System.Windows.Forms.Label()
         Me.nudUrgency = New System.Windows.Forms.NumericUpDown()
         Me.lblTechnicalRating = New System.Windows.Forms.Label()
-        Me.rtgTechnical = New Tools.Metanol.Rating()
         Me.lblArtRating = New System.Windows.Forms.Label()
-        Me.rtgArt = New Tools.Metanol.Rating()
         Me.lblInfoRating = New System.Windows.Forms.Label()
-        Me.rtgInfo = New Tools.Metanol.Rating()
         Me.lblOverallRating = New System.Windows.Forms.Label()
-        Me.rtgOverall = New Tools.Metanol.Rating()
         Me.fraGps = New System.Windows.Forms.GroupBox()
         Me.tabGps = New System.Windows.Forms.TabControl()
         Me.tapGoogleMaps = New System.Windows.Forms.TabPage()
@@ -144,6 +139,11 @@ Partial Class frmMain
         Me.bgwImages = New System.ComponentModel.BackgroundWorker()
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog()
         Me.bgwSave = New System.ComponentModel.BackgroundWorker()
+        Me.lvwImages = New Tools.Metanol.TotalCommanderListView()
+        Me.rtgTechnical = New Tools.Metanol.Rating()
+        Me.rtgArt = New Tools.Metanol.Rating()
+        Me.rtgInfo = New Tools.Metanol.Rating()
+        Me.rtgOverall = New Tools.Metanol.Rating()
         CType(Me.splMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
@@ -235,18 +235,6 @@ Partial Class frmMain
         Me.imlFolders.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit
         resources.ApplyResources(Me.imlFolders, "imlFolders")
         Me.imlFolders.TransparentColor = System.Drawing.Color.Transparent
-        '
-        'lvwImages
-        '
-        Me.lvwImages.ContextMenuStrip = Me.cmsImages
-        resources.ApplyResources(Me.lvwImages, "lvwImages")
-        Me.lvwImages.HideSelection = False
-        Me.lvwImages.LargeImageList = Me.imlImages
-        Me.lvwImages.Name = "lvwImages"
-        Me.lvwImages.OwnerDraw = True
-        Me.lvwImages.ShowItemToolTips = True
-        Me.lvwImages.TabStop = False
-        Me.lvwImages.UseCompatibleStateImageBehavior = False
         '
         'cmsImages
         '
@@ -576,44 +564,20 @@ Partial Class frmMain
         resources.ApplyResources(Me.lblTechnicalRating, "lblTechnicalRating")
         Me.lblTechnicalRating.Name = "lblTechnicalRating"
         '
-        'rtgTechnical
-        '
-        resources.ApplyResources(Me.rtgTechnical, "rtgTechnical")
-        Me.rtgTechnical.Name = "rtgTechnical"
-        Me.rtgTechnical.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
-        '
         'lblArtRating
         '
         resources.ApplyResources(Me.lblArtRating, "lblArtRating")
         Me.lblArtRating.Name = "lblArtRating"
-        '
-        'rtgArt
-        '
-        resources.ApplyResources(Me.rtgArt, "rtgArt")
-        Me.rtgArt.Name = "rtgArt"
-        Me.rtgArt.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
         '
         'lblInfoRating
         '
         resources.ApplyResources(Me.lblInfoRating, "lblInfoRating")
         Me.lblInfoRating.Name = "lblInfoRating"
         '
-        'rtgInfo
-        '
-        resources.ApplyResources(Me.rtgInfo, "rtgInfo")
-        Me.rtgInfo.Name = "rtgInfo"
-        Me.rtgInfo.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
-        '
         'lblOverallRating
         '
         resources.ApplyResources(Me.lblOverallRating, "lblOverallRating")
         Me.lblOverallRating.Name = "lblOverallRating"
-        '
-        'rtgOverall
-        '
-        resources.ApplyResources(Me.rtgOverall, "rtgOverall")
-        Me.rtgOverall.Name = "rtgOverall"
-        Me.rtgOverall.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
         '
         'fraGps
         '
@@ -644,6 +608,7 @@ Partial Class frmMain
         '
         resources.ApplyResources(Me.webGoogleMaps, "webGoogleMaps")
         Me.webGoogleMaps.Name = "webGoogleMaps"
+        Me.webGoogleMaps.ScriptErrorsSuppressed = True
         '
         'tapOpenStreetMap
         '
@@ -656,6 +621,7 @@ Partial Class frmMain
         '
         resources.ApplyResources(Me.webOpenStreetMap, "webOpenStreetMap")
         Me.webOpenStreetMap.Name = "webOpenStreetMap"
+        Me.webOpenStreetMap.ScriptErrorsSuppressed = True
         '
         'imlGpsTabs
         '
@@ -986,6 +952,42 @@ Partial Class frmMain
         'bgwSave
         '
         Me.bgwSave.WorkerReportsProgress = True
+        '
+        'lvwImages
+        '
+        Me.lvwImages.ContextMenuStrip = Me.cmsImages
+        resources.ApplyResources(Me.lvwImages, "lvwImages")
+        Me.lvwImages.HideSelection = False
+        Me.lvwImages.LargeImageList = Me.imlImages
+        Me.lvwImages.Name = "lvwImages"
+        Me.lvwImages.OwnerDraw = True
+        Me.lvwImages.ShowItemToolTips = True
+        Me.lvwImages.TabStop = False
+        Me.lvwImages.UseCompatibleStateImageBehavior = False
+        '
+        'rtgTechnical
+        '
+        resources.ApplyResources(Me.rtgTechnical, "rtgTechnical")
+        Me.rtgTechnical.Name = "rtgTechnical"
+        Me.rtgTechnical.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
+        '
+        'rtgArt
+        '
+        resources.ApplyResources(Me.rtgArt, "rtgArt")
+        Me.rtgArt.Name = "rtgArt"
+        Me.rtgArt.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
+        '
+        'rtgInfo
+        '
+        resources.ApplyResources(Me.rtgInfo, "rtgInfo")
+        Me.rtgInfo.Name = "rtgInfo"
+        Me.rtgInfo.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
+        '
+        'rtgOverall
+        '
+        resources.ApplyResources(Me.rtgOverall, "rtgOverall")
+        Me.rtgOverall.Name = "rtgOverall"
+        Me.rtgOverall.Rating = CType(Tools.MetadataT.IptcT.Iptc.CustomRating.NotRated, Tools.MetadataT.IptcT.Iptc.CustomRating)
         '
         'frmMain
         '

@@ -348,8 +348,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("http://www.openstreetmap.org/?mlat={0:f}&mlon={1:f}&zoom=15#map=15/3.1524/101.705"& _ 
-            "7")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("http://www.openstreetmap.org/?mlat={0:f}&mlon={1:f}&zoom=15")>  _
         Public ReadOnly Property OpenStreetMapUrlTemplate() As String
             Get
                 Return CType(Me("OpenStreetMapUrlTemplate"),String)
@@ -393,6 +392,18 @@ Namespace My
             Get
                 Return CType(Me("GoogleMapsHtmlTemplate"),String)
             End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("400")>  _
+        Public Property GpsHeight() As UInteger
+            Get
+                Return CType(Me("GpsHeight"),UInteger)
+            End Get
+            Set
+                Me("GpsHeight") = value
+            End Set
         End Property
     End Class
 End Namespace
