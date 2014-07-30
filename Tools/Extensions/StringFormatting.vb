@@ -11,7 +11,7 @@ Namespace ExtensionsT
     ''' <para>If C#-like backslash (\) escape sequences are allowed formating combines C#-like string escaping and formatting used by <see cref="[String].Format"/>.</para>
     ''' <para>Escaping rules:</para>
     ''' <list type="table"><listheader><term>Escape sequence</term><description>Meaning</description></listheader>
-    ''' <item><term>\a</term><description>Allert 0x7 (only when C#-style escape sequences are allowed)</description></item>
+    ''' <item><term>\a</term><description>Alert 0x7 (only when C#-style escape sequences are allowed)</description></item>
     ''' <item><term>\b</term><description>Backspace 0x8 (only when C#-style escape sequences are allowed)</description></item>
     ''' <item><term>\f</term><description>Form feed 0xC (only when C#-style escape sequences are allowed)</description></item>
     ''' <item><term>\n</term><description>New line 0xA (only when C#-style escape sequences are allowed)</description></item>
@@ -35,7 +35,7 @@ Namespace ExtensionsT
     ''' <item><term>::</term><description>Only in placeholder name part: :</description></item>
     ''' <item><term>,,</term><description>Only in placeholder name part: ,</description></item>
     ''' <item><term>||</term><description>Only in placeholder name, format or transformation part: |</description></item>
-    ''' <item><term>{}</term><description>An empty string (only immediatelly before or after placeholder). This rule was added for confilct resolution, see below.</description></item>
+    ''' <item><term>{}</term><description>An empty string (only immediately before or after placeholder). This rule was added for conflict resolution, see below.</description></item>
     ''' </list>
     ''' <note>You can also use \: and \, to escape : and , (only when C#-style escaping is allowed).</note>
     ''' <para>Conflict resolution (only in <see cref="StringFormatting.Replace"/> and <see cref="StringFormatting.CReplace"/>):</para>
@@ -44,25 +44,25 @@ Namespace ExtensionsT
     ''' {} is treated as an empty string only when:
     ''' </para>
     ''' <list type="bullet">
-    ''' <item>It immediatelly follows closing } of placeholder</item>
-    ''' <item>It immediatelly precedes openning { of placeholder. Exception: {{} is not treated this way. Special behavior: {}{{ - {{ does not mean escape of {, it's treated as first chanacter of placeholder name</item>
+    ''' <item>It immediately follows closing } of placeholder</item>
+    ''' <item>It immediately precedes opening { of placeholder. Exception: {{} is not treated this way. Special behavior: {}{{ - {{ does not mean escape of {, it's treated as first chanacter of placeholder name</item>
     ''' </list>
     ''' <para>In particular following escape sequences are available:</para>
-    ''' <list type="table"><listheader><term>Escape sequance</term><description>Meaning</description></listheader>
+    ''' <list type="table"><listheader><term>Escape sequence</term><description>Meaning</description></listheader>
     ''' <item><term>\0</term><description>Nullchar</description></item>
     ''' <item><term>\\</term><description>\</description></item>
     ''' <item><term>\"</term><description>"</description></item>
     ''' <item><term>\'</term><description>'</description></item>
     ''' </list>
-    ''' <para>Be carefull when typign such string in languages that processes it like C#, C++ or PHP. Get output \ from escaping \\\\ must be typed.</para>
-    ''' <para>Following rules apply to fromatting (only when formating is being done):</para>
+    ''' <para>Be careful when typing such string in languages that processes it like C#, C++ or PHP. Get output \ from escaping \\\\ must be typed.</para>
+    ''' <para>Following rules apply to formatting (only when formating is being done):</para>
     ''' <list type="bullet">
-    ''' <item>String may contain placeholers of arguments being formatted (passed in array). Each placeholder reffers to index within the array.</item>
-    ''' <item>Placeholder is in format  {index[,alignment][:formatString][|transfomation]*}</item>
+    ''' <item>String may contain placeholders of arguments being formatted (passed in array). Each placeholder refers to index within the array.</item>
+    ''' <item>Placeholder is in format  {index[,alignment][:formatString][|transformation]*}</item>
     ''' <item>Index is any non-negative decimal integral number [0-9]+</item>
     ''' <item>
-    ''' Alignment is optional, preceded with comma and it is -?[0-9]+ decimal integral number delaring minimal width of string replacing the placeholder.
-    ''' Negative for left-align, positive for right aling. If padding is necessary space is used. Trimming never occurs.
+    ''' Alignment is optional, preceded with comma and it is -?[0-9]+ decimal integral number declaring minimal width of string replacing the placeholder.
+    ''' Negative for left-align, positive for right align. If padding is necessary space is used. Trimming never occurs.
     ''' </item>
     ''' <item>
     ''' FormatString is optional formatting string passed to formating method of argument.
@@ -70,8 +70,8 @@ Namespace ExtensionsT
     ''' </item>
     ''' <item>
     ''' Transformation is optional transformation identifier (case-insensitive), multiple identifiers can specifies be separated by |.
-    ''' Transformation identifiers must be registered in <see cref="StringFormatting.Transformations"/>. There are several pre-defined transformations.
-    ''' A transformation taks a string comming from formatting result and transform it. It can be used e.g. for HTML encoding.
+    ''' Transformation identifiers must be registered in <see cref="StringFormatting.Transformations"/>. There are several predefined transformations.
+    ''' A transformation task a string coming from formatting result and transform it. It can be used e.g. for HTML encoding.
     ''' </item>
     ''' </list>
     ''' <para>In format string escaping is done in same way as described above.</para>
@@ -86,14 +86,16 @@ Namespace ExtensionsT
         ''' <param name="str">Formatting string</param>
         ''' <param name="Args">Objects to format</param>
         ''' <returns>String formatted</returns>
-        ''' <param name="provider">Formatting provider</param>
+        ''' <param name="provider">Formatting provider. If it implements <see cref="IFormattingContextProvider"/> contextual replacements are possible.</param>
         ''' <exception cref="FormatException"><paramref name="str"/> is invalid format string</exception>
         ''' <version version="1.5.4">Transformations (|) are now supported. This can cause breaking changes.</version>
         ''' <version version="1.5.4">Parameter <c>Args</c> renamed to <c>args</c>.</version>
+        ''' <version version="1.5.4">Parameter <paramref name="provider"/> has now specific support for <see cref="IFormattingContextProvider"/>.</version>
         <Extension()>
         Public Function CFormat(ByVal str As String, ByVal provider As IFormatProvider, ByVal ParamArray args As Object()) As String
             Return CFormat(provider, str, args, True)
         End Function
+
         ''' <summary>Escapes string according to rules described for <see cref="StringFormatting"/> without formatting it</summary>
         ''' <param name="str">String to un-escape</param>
         ''' <returns>String unescaped</returns>
@@ -103,6 +105,7 @@ Namespace ExtensionsT
         Public Function CEscape(ByVal str As String) As String
             Return CFormat(CultureInfo.CurrentCulture, str, New Object() {}, False)
         End Function
+
         ''' <summary>Formats and escape string according to rules described for <see cref="StringFormatting"/></summary>
         ''' <param name="str">Formatting string</param>
         ''' <param name="Args">Objects to format</param>
@@ -115,6 +118,7 @@ Namespace ExtensionsT
         Public Function CFormat(ByVal str As String, ByVal ParamArray args As Object()) As String
             Return CFormat(str, CultureInfo.CurrentCulture, args)
         End Function
+
         ''' <summary>Fine State Automaton states for string formatting and escaping</summary>
         Private Enum CFormatFSA
             ''' <summary>Normal state</summary>
@@ -154,8 +158,9 @@ Namespace ExtensionsT
             ''' <summary>{0|a\ or {0:x|a\ etc.</summary>
             TransformNameBack
         End Enum
-        ''' <summary>Internaly pefrorms the formatting process</summary>
-        ''' <param name="provider">Provider providing formatting</param>
+
+        ''' <summary>Internally performs the formatting process</summary>
+        ''' <param name="provider">Provider providing formatting. If it implements <see cref="IFormattingContextProvider"/> contextual replacements are possible.</param>
         ''' <param name="str">Formatting string</param>
         ''' <param name="args">Arguments to format</param>
         ''' <param name="format">True to do formatting and escaping, false to do escaping only</param>
@@ -358,17 +363,24 @@ SelectCase:     Select Case state
             End Select
             Return ret.ToString
         End Function
+
         ''' <summary>Formats object using format string, width and format provider</summary>
         ''' <param name="argNum">Number of argument - index to <paramref name="Args"/></param>
         ''' <param name="width">Specifies minimal width of returned string. Negative for left align, positive for right align.</param>
-        ''' <param name="format">Format string fo value</param>
+        ''' <param name="format">Format string of value</param>
         ''' <param name="args">Arguments. Item with index <paramref name="ArgNum"/> from this array will be formatted</param>
-        ''' <param name="provider">Formatting provider</param>
+        ''' <param name="provider">Formatting provider. If it implements <see cref="IFormattingContextProvider"/> contextual replacements are possible.</param>
         ''' <param name="trans">Identifiers of transformations to apply in given order</param>
         ''' <returns>Formatted <paramref name="args"/>[<paramref name="argNum"/>]. If argument is null an empty string is used; if it is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used; if it is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used; otherwise <see cref="System.[Object].ToString"/>. After formatting, value if widhtened to <paramref name="Width"/>.</returns>
         ''' <exception cref="FormatException"><paramref name="ArgNum"/> is greater than or equal to <paramref name="args"/>.<see cref="Array.Length">Length</see> -or- <paramref name="format"/> is invalid according to object being formatted.</exception>
         Private Function FormatInternal(ByVal argNum%, ByVal width%, ByVal format As String, ByVal args As Object(), ByVal provider As IFormatProvider, trans As IEnumerable(Of StringBuilder)) As String
             If argNum >= args.Length Then Throw New FormatException(String.Format("Invalid format string. Required argument number {0} missing.", argNum))
+            Dim context As Object = Nothing
+            If TypeOf provider Is IFormattingContextProvider Then
+                context = DirectCast(provider, IFormattingContextProvider).Context
+                provider = DirectCast(provider, IFormattingContextProvider).Provider
+            End If
+
             Dim ret As String
             If args(argNum) Is Nothing Then
                 ret = ""
@@ -391,10 +403,12 @@ SelectCase:     Select Case state
                 For Each tr In trans
                     Dim trs = tr.ToString
                     If trs <> "" Then
-                        Dim trf As Func(Of String, String)
-                        If Not Transformations.TryGetValue(trs, trf) Then Throw New FormatException(String.Format("Transformation {0} is not defined", trs))
-                        If trf IsNot Nothing Then
-                            ret = trf(ret)
+                        Dim trf As [Delegate]
+                        If Not _transformations.TryGetValue(trs, trf) Then Throw New FormatException(String.Format("Transformation {0} is not defined", trs))
+                        If TypeOf trf Is SimpleTransformation Then
+                            ret = DirectCast(trf, SimpleTransformation)(ret)
+                        ElseIf TypeOf trf Is ContextAwareTransformation Then
+                            ret = DirectCast(trf, ContextAwareTransformation)(ret, context)
                         End If
                     End If
                 Next
@@ -894,7 +908,7 @@ DoItAgain:
                     Dim trs = tr.ToString
                     If trs <> "" Then
                         Dim trf As Func(Of String, String) = Nothing
-                        If Not Transformations.TryGetValue(trs, trf) Then Throw New FormatException(String.Format("Transformation {0} is not defined", trs))
+                        If Not _transformations.TryGetValue(trs, trf) Then Throw New FormatException(String.Format("Transformation {0} is not defined", trs))
                         If trf IsNot Nothing Then
                             ret = trf(ret)
                         End If
@@ -1456,64 +1470,226 @@ DoItAgain:
 #End Region
 #End Region
 
-        Private ReadOnly _transformations As New Dictionary(Of String, Func(Of String, String))(StringComparer.InvariantCultureIgnoreCase) From {
-            {"Html", AddressOf HttpUtility.HtmlEncode},
-            {"HtmlAttribute", AddressOf HttpUtility.HtmlAttributeEncode},
-            {"Url", AddressOf HttpUtility.UrlEncode},
-            {"UrlPath", AddressOf HttpUtility.UrlPathEncode},
-            {"SQL", AddressOf Escaping.EscapeSql},
-            {"Xml", AddressOf Escaping.EscapeXml},
-            {"XmlAttribute", AddressOf Escaping.EscapeXmlAttribute},
-            {"JS", AddressOf Escaping.EscapeJavaScript},
-            {"String.Format", AddressOf Escaping.EscapeStringFormat},
-            {"MySql", AddressOf Escaping.EscapeMySql},
-            {"PostrgreSql", Function(str) Escaping.EscapePostgreSql(Str, Mode.Native)},
-            {"SqlLike", AddressOf Escaping.EscapeSqlLike},
-            {"C#", AddressOf Escaping.EscapeCSharp},
-            {"C", AddressOf Escaping.EscapeC},
-            {"PHPSingle", AddressOf Escaping.EscapePhpSingle},
-            {"PHPDouble", AddressOf Escaping.EscapePhpDouble},
-            {"VBLike", AddressOf Escaping.EscapeVBLike},
-            {"CSS", AddressOf Escaping.EscapeCss},
-            {"RegEx", AddressOf Escaping.EscapeRegEx}
+        Private ReadOnly _transformations As New Dictionary(Of String, [Delegate])(StringComparer.InvariantCultureIgnoreCase) From {
+            {"Html", New SimpleTransformation(AddressOf HttpUtility.HtmlEncode)},
+            {"HtmlAttribute", New SimpleTransformation(AddressOf HttpUtility.HtmlAttributeEncode)},
+            {"Url", New SimpleTransformation(AddressOf HttpUtility.UrlEncode)},
+            {"UrlPath", New SimpleTransformation(AddressOf HttpUtility.UrlPathEncode)},
+            {"SQL", New SimpleTransformation(AddressOf Escaping.EscapeSql)},
+            {"Xml", New SimpleTransformation(AddressOf Escaping.EscapeXml)},
+            {"XmlAttribute", New SimpleTransformation(AddressOf Escaping.EscapeXmlAttribute)},
+            {"JS", New SimpleTransformation(AddressOf Escaping.EscapeJavaScript)},
+            {"String.Format", New SimpleTransformation(AddressOf Escaping.EscapeStringFormat)},
+            {"MySql", New SimpleTransformation(AddressOf Escaping.EscapeMySql)},
+            {"PostrgreSql", New SimpleTransformation(Function(str) Escaping.EscapePostgreSql(Str, Mode.Native))},
+            {"SqlLike", New SimpleTransformation(AddressOf Escaping.EscapeSqlLike)},
+            {"C#", New SimpleTransformation(AddressOf Escaping.EscapeCSharp)},
+            {"C", New SimpleTransformation(AddressOf Escaping.EscapeC)},
+            {"PHPSingle", New SimpleTransformation(AddressOf Escaping.EscapePhpSingle)},
+            {"PHPDouble", New SimpleTransformation(AddressOf Escaping.EscapePhpDouble)},
+            {"VBLike", New SimpleTransformation(AddressOf Escaping.EscapeVBLike)},
+            {"CSS", New SimpleTransformation(AddressOf Escaping.EscapeCss)},
+            {"RegEx", New SimpleTransformation(AddressOf Escaping.EscapeRegEx)}
         }
 
         ''' <summary>Gets transformations registered for string formatting</summary>
         ''' <remarks>
-        ''' You can register your own transformations here. You can also unregister or replace existing transformations. Beware that transformations are registered globaly.
         ''' A transformations is a function that accepts a string and returns a string. It should never fail. It should accept nulls and empty strings as well.
         ''' <para>Key of the dictionary are case-insensitive</para>
         ''' <para>Predefined transformations are</para>
         ''' <list type="table">
         ''' <listheader><term>key</term><description>Implementation</description></listheader>
-        ''' <term><item>Html</item><description><see cref="HttpUtility.HtmlEncode"/></description></term>
-        ''' <term><item>HtmlAttribute</item><description><see cref="HttpUtility.HtmlAttributeEncode"/></description></term>
-        ''' <term><item>Url</item><description><see cref="HttpUtility.UrlEncode"/></description></term>
-        ''' <term><item>UrlPath</item><description><see cref="HttpUtility.UrlPathEncode"/></description></term>
-        ''' <term><item>SQL</item><description><see cref="Escaping.EscapeSql"/></description></item>
-        ''' <term><item>Xml</item><description><see cref="Escaping.EscapeXml"/></description></item>
-        ''' <term><item>XmlAttribute</item><description><see cref="Escaping.EscapeXmlAttribute"/></description></item>
-        ''' <term><item>JS</item><description><see cref="Escaping.EscapeJavaScript"/></description></item>
-        ''' <term><item>String.Format</item><description><see cref="Escaping.EscapeStringFormat"/></description></item>
-        ''' <term><item>MySql</item><description><see cref="Escaping.EscapeMySql"/></description></item>
-        ''' <term><item>PostrgreSql</item><description><see cref="Escaping.EscapePostgreSql"/> (uses <see cref="Escaping.Mode.Native"/> mode)</description></item>
-        ''' <term><item>SqlLike</item><description><see cref="Escaping.EscapeSqlLike"/></description></item>
-        ''' <term><item>C#</item><description><see cref="Escaping.EscapeCSharp"/></description></item>
-        ''' <term><item>C</item><description><see cref="Escaping.EscapeC"/></description></item>
-        ''' <term><item>PHPSingle</item><description><see cref="Escaping.EscapePhpSingle"/></description></item>
-        ''' <term><item>PHPDouble</item><description><see cref="Escaping.EscapePhpDouble"/></description></item>
-        ''' <term><item>VBLike</item><description><see cref="Escaping.EscapeVBLike"/></description></item>
-        ''' <term><item>CSS</item><description><see cref="Escaping.EscapeCss"/></description></item>
-        ''' <term><item>RegEx</item><description><see cref="Escaping.EscapeRegEx"/></description></item>
+        ''' <item><term>Html</term><description><see cref="HttpUtility.HtmlEncode"/></description></item>
+        ''' <item><term>HtmlAttribute</term><description><see cref="HttpUtility.HtmlAttributeEncode"/></description></item>
+        ''' <item><term>Url</term><description><see cref="HttpUtility.UrlEncode"/></description></item>
+        ''' <item><term>UrlPath</term><description><see cref="HttpUtility.UrlPathEncode"/></description></item>
+        ''' <item><term>SQL</term><description><see cref="Escaping.EscapeSql"/></description></item>
+        ''' <item><term>Xml</term><description><see cref="Escaping.EscapeXml"/></description></item>
+        ''' <item><term>XmlAttribute</term><description><see cref="Escaping.EscapeXmlAttribute"/></description></item>
+        ''' <item><term>JS</term><description><see cref="Escaping.EscapeJavaScript"/></description></item>
+        ''' <item><term>String.Format</term><description><see cref="Escaping.EscapeStringFormat"/></description></item>
+        ''' <item><term>MySql</term><description><see cref="Escaping.EscapeMySql"/></description></item>
+        ''' <item><term>PostrgreSql</term><description><see cref="Escaping.EscapePostgreSql"/> (uses <see cref="Escaping.Mode.Native"/> mode)</description></item>
+        ''' <item><term>SqlLike</term><description><see cref="Escaping.EscapeSqlLike"/></description></item>
+        ''' <item><term>C#</term><description><see cref="Escaping.EscapeCSharp"/></description></item>
+        ''' <item><term>C</term><description><see cref="Escaping.EscapeC"/></description></item>
+        ''' <item><term>PHPSingle</term><description><see cref="Escaping.EscapePhpSingle"/></description></item>
+        ''' <item><term>PHPDouble</term><description><see cref="Escaping.EscapePhpDouble"/></description></item>
+        ''' <item><term>VBLike</term><description><see cref="Escaping.EscapeVBLike"/></description></item>
+        ''' <item><term>CSS</term><description><see cref="Escaping.EscapeCss"/></description></item>
+        ''' <item><term>RegEx</term><description><see cref="Escaping.EscapeRegEx"/></description></item>
         ''' </list>
-        ''' All functions use default parameters unless specified otherwise.
+        ''' All functions use default parameters unless specified otherwise. All default transformations are of type <see cref="SimpleTransformation"/>.
+        ''' <para>Custom transformations may be registered via <see cref="RegisterTransformation"/>.</para>
+        ''' <para>Items in the dictionary are either of type <see cref="SimpleTransformation"/> or <see cref="ContextAwareTransformation"/>.</para>
         ''' </remarks>
-        ''' <version version="1.5.4">This property is new in version 1.5.4</version>
-        Public ReadOnly Property Transformations As IDictionary(Of String, Func(Of String, String))
+        Public ReadOnly Property Transformations As IDictionary(Of String, [Delegate])
             Get
-                Return _transformations
+                Return New ReadOnlyDictionary(Of String, [Delegate])(_transformations)
             End Get
         End Property
+
+        ''' <summary>Delegate for simple string transformations. Takes a string and returns it transformed.</summary>
+        ''' <param name="string">A string to be transformed</param>
+        ''' <returns><paramref name="string"/> transformed</returns>
+        ''' <version version="1.5.4">This delegate is new in 1.5.4</version>
+        Public Delegate Function SimpleTransformation([string] As String) As String
+
+        ''' <summary>Registers a simple transformation</summary>
+        ''' <param name="name">Name of transformation. Must be unique - i.e. not yet present in <see cref="Transformations"/>.</param>
+        ''' <param name="transformation">Simple transformation delegate that performs the transformation</param>
+        ''' <exception cref="InvalidOperationException">The transformation with given <paramref name="name"/> is already registered in <see cref="Transformations"/></exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="transformation"/> is null</exception>
+        ''' <remarks>Beware that transformations are registered globally.</remarks>
+        ''' <version version="1.5.4">This method is new in 1.5.4</version>
+        Public Sub RegisterTransformation(name$, transformation As SimpleTransformation)
+            RegisterTransformation(name, DirectCast(transformation, [Delegate]))
+        End Sub
+
+        ''' <summary>Registers a simple or context-aware transformation</summary>
+        ''' <param name="name">Name of transformation. Must be unique - i.e. not yet present in <see cref="Transformations"/>.</param>
+        ''' <param name="transformation">Simple transformation delegate that performs the transformation</param>
+        ''' <exception cref="InvalidOperationException">The transformation with given <paramref name="name"/> is already registered in <see cref="Transformations"/></exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="transformation"/> is null</exception>
+        ''' <exception cref="TypeMismatchException"><paramref name="transformation"/> is neither <see cref="SimpleTransformation"/> nor <see cref="ContextAwareTransformation"/></exception>
+        ''' <remarks>Beware that transformations are registered globally.</remarks>
+        ''' <version version="1.5.4">This method is new in 1.5.4</version>
+        Private Sub RegisterTransformation(name$, transformation As [Delegate])
+            If transformation Is Nothing Then Throw New ArgumentNullException("transformation")
+            If Not TypeOf transformation Is SimpleTransformation AndAlso Not TypeOf transformation Is ContextAwareTransformation Then Throw New TypeMismatchException(transformation, "transformation", GetType(SimpleTransformation), GetType(ContextAwareTransformation))
+            Try
+                SyncLock _transformations
+                    _transformations.Add(name, transformation)
+                End SyncLock
+            Catch ex As ArgumentException When Not TypeOf ex Is ArgumentNullException
+                Throw New InvalidOperationException(ex.Message, ex)
+            End Try
+        End Sub
+
+        ''' <summary>Delegate for context-aware string transformations. Takes a string and returns it transformed, possibly using values provided in context.</summary>
+        ''' <param name="string">A string to be transformed</param>
+        ''' <param name="context">Context to take values from</param>
+        ''' <returns><paramref name="string"/> transformed</returns>
+        ''' <version version="1.5.4">This delegate is new in 1.5.4</version>
+        Public Delegate Function ContextAwareTransformation([string] As String, context As Object) As String
+
+        ''' <summary>Registers a context-aware transformation</summary>
+        ''' <param name="name">Name of transformation. Must be unique - i.e. not yet present in <see cref="Transformations"/>.</param>
+        ''' <param name="transformation">Context-aware transformation delegate that performs the transformation</param>
+        ''' <exception cref="InvalidOperationException">The transformation with given <paramref name="name"/> is already registered in <see cref="Transformations"/></exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="transformation"/> is null</exception>
+        ''' <remarks>Beware that transformations are registered globally.</remarks>
+        ''' <version version="1.5.4">This method is new in 1.5.4</version>
+        Public Sub RegisterTransformation(name$, transformation As ContextAwareTransformation)
+            RegisterTransformation(name, DirectCast(transformation, [Delegate]))
+        End Sub
+
+        ''' <summary>Removes transformation registration</summary>
+        ''' <param name="name">Name of transformation to unregister</param>
+        ''' <remarks>True if the transformation was previously registered and was successfully unregistered, false if it was not registered.</remarks>
+        ''' <version version="1.5.4">This method is new in 1.5.4</version>
+        Public Function UnregisterTransformation(name$) As Boolean
+            SyncLock _transformations
+                Return _transformations.Remove(name)
+            End SyncLock
+        End Function
+
+        ''' <summary>Registers a context-aware transformation or replaces existing registration</summary>
+        ''' <param name="name">Name of transformation. Must be unique - i.e. not yet present in <see cref="Transformations"/>.</param>
+        ''' <param name="transformation">Simple transformation delegate that performs the transformation</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="transformation"/> is null</exception>
+        ''' <remarks>Beware that transformations are registered globally.</remarks>
+        ''' <version version="1.5.4">This method is new in 1.5.4</version>
+        Public Sub ReplaceTransformation(name$, transformation As SimpleTransformation)
+            ReplaceTransformation(name, DirectCast(transformation, [Delegate]))
+        End Sub
+
+        ''' <summary>Registers a context-aware transformation or replaces existing registration</summary>
+        ''' <param name="name">Name of transformation. Must be unique - i.e. not yet present in <see cref="Transformations"/>.</param>
+        ''' <param name="transformation">Context-aware transformation delegate that performs the transformation</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="transformation"/> is null</exception>
+        ''' <remarks>Beware that transformations are registered globally.</remarks>
+        ''' <version version="1.5.4">This method is new in 1.5.4</version>
+        Public Sub ReplaceTransformation(name$, transformation As ContextAwareTransformation)
+            ReplaceTransformation(name, DirectCast(transformation, [Delegate]))
+        End Sub
+
+        ''' <summary>Registers a simple or context-aware transformation or replaces existing registration</summary>
+        ''' <param name="name">Name of transformation. Must be unique - i.e. not yet present in <see cref="Transformations"/>.</param>
+        ''' <param name="transformation">Simple transformation delegate that performs the transformation</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="transformation"/> is null</exception>
+        ''' <exception cref="TypeMismatchException"><paramref name="transformation"/> is neither <see cref="SimpleTransformation"/> nor <see cref="ContextAwareTransformation"/></exception>
+        ''' <remarks>Beware that transformations are registered globally.</remarks>
+        ''' <version version="1.5.4">This method is new in 1.5.4</version>
+        Private Sub ReplaceTransformation(name$, transformation As [Delegate])
+            If transformation Is Nothing Then Throw New ArgumentNullException("transformation")
+            If Not TypeOf transformation Is SimpleTransformation AndAlso Not TypeOf transformation Is ContextAwareTransformation Then Throw New TypeMismatchException(transformation, "transformation", GetType(SimpleTransformation), GetType(ContextAwareTransformation))
+            SyncLock _transformations
+                If _transformations.ContainsKey(name) Then
+                    _transformations(name) = transformation
+                Else
+                    _transformations.Add(name, transformation)
+                End If
+            End SyncLock
+        End Sub
     End Module
+
+    ''' <summary>An interface of object that provides context and <see cref="IFormatProvider"/></summary>
+    ''' <version version="1.5.4">This interface is new in 1.5.4</version>
+    Public Interface IFormattingContextProvider
+        Inherits IFormatProvider
+        ''' <summary>Gets the context. May be null.</summary>
+        ReadOnly Property Context As Object
+        ''' <summary>Gets <see cref="IFormatProvider"/></summary>
+        ''' <returns>
+        ''' If a class implementing this interface implements <see cref="IFormatProvider"/> by wrapping another instance of <see cref="IFormatProvider"/>
+        ''' this property should return that wrapped instance,
+        ''' and consumers of this interface should rather use value of this property when <see cref="IFormatProvider"/> is required,
+        ''' rather than using object implementing this interface as <see cref="IFormatProvider"/> directly.
+        ''' Otherwise this property should just return current instance.
+        ''' </returns>
+        ReadOnly Property Provider As IFormatProvider
+    End Interface
+
+    ''' <summary>Default implementation of <see cref="IFormattingContextProvider"/> that also implements <see cref="IFormatProvider"/></summary>
+    ''' <version version="1.5.4">This class is new in 1.5.4</version>
+    Public Class FormatContextProvider
+        Implements IFormattingContextProvider
+        Private _provider As IFormatProvider
+        Private _context As Object
+        ''' <summary>CTor - creates a new instance of the <see cref="FormatContextProvider"/> class</summary>
+        ''' <param name="provider">Wrapped <see cref="IFormatProvider"/></param>
+        ''' <param name="context">Context provided by this instance</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="provider"/> is null.</exception>
+        Public Sub New(provider As IFormatProvider, context As Object)
+            If provider Is Nothing Then Throw New ArgumentNullException("provider")
+            _provider = provider
+            _context = context
+        End Sub
+
+        ''' <summary>Returns an object that provides formatting services for the specified type.</summary>
+        ''' <returns>An instance of the object specified by 
+        ''' <paramref name="formatType" />, if the <see cref="T:System.IFormatProvider" /> implementation can supply that type of object; otherwise, null.</returns>
+        ''' <param name="formatType">An object that specifies the type of format object to return. </param>
+        ''' <filterpriority>1</filterpriority>
+        Public Function GetFormat(formatType As Type) As Object Implements IFormatProvider.GetFormat
+            Return _provider.GetFormat(formatType)
+        End Function
+
+        ''' <summary>Gets <see cref="IFormatProvider"/> wrapped by this instance</summary>
+        Public ReadOnly Property Provider As IFormatProvider Implements IFormattingContextProvider.Provider
+            Get
+                Return _provider
+            End Get
+        End Property
+
+        ''' <summary>Gets the context. May be null.</summary>
+        Public ReadOnly Property Context As Object Implements IFormattingContextProvider.Context
+            Get
+                Return _context
+            End Get
+        End Property
+    End Class
+
 #End If
 End Namespace
