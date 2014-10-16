@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>ArgumentNullException</Title>
+            <Author>Đonny</Author>
+            <Description>strongly typed contract to require parameter not to be null</Description>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+            <Shortcut>argnull</Shortcut>
+        </Header>
+        <Snippet>
+            <Imports>
+                <Import>
+                    <Namespace>System</Namespace>
+                </Import>
+                <Import>
+                    <Namespace>System.Diagnostics.Contracts</Namespace>
+                </Import>
+            </Imports>
+            <Declarations>
+                <Literal>
+                    <ID>param</ID>
+                    <ToolTip>Parameter name</ToolTip>
+                    <Default>param</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="CSharp" Delimiter="$">
+                <![CDATA[Contract.Requires<ArgumentNullException>($param$ != null, "$param$");]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
