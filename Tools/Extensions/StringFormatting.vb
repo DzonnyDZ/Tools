@@ -907,10 +907,14 @@ DoItAgain:
                 For Each tr In trans
                     Dim trs = tr.ToString
                     If trs <> "" Then
-                        Dim trf As Func(Of String, String) = Nothing
+                        Dim trf As [Delegate] = Nothing
                         If Not _transformations.TryGetValue(trs, trf) Then Throw New FormatException(String.Format("Transformation {0} is not defined", trs))
                         If trf IsNot Nothing Then
-                            ret = trf(ret)
+                            If TypeOf trf Is SimpleTransformation Then
+                                ret = DirectCast(trf, SimpleTransformation)(ret)
+                            ElseIf TypeOf trf Is ContextAwareTransformation Then
+                                ret = DirectCast(trf, ContextAwareTransformation)(ret, Nothing)
+                            End If
                         End If
                     End If
                 Next
