@@ -217,20 +217,14 @@
   <data name="fraLocation.Text" xml:space="preserve">
     <value>Umístění</value>
   </data>
-  <data name="fraKeywords.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 0</value>
-  </data>
   <data name="fraKeywords.Text" xml:space="preserve">
     <value>&amp;Klíčová slova</value>
-  </data>
-  <data name="sptKeywords.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 100</value>
   </data>
   <data name="lblCredit.Text" xml:space="preserve">
     <value>Kre&amp;dit</value>
   </data>
   <data name="fraAuthor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 103</value>
+    <value>196, 0</value>
   </data>
   <data name="fraAuthor.Text" xml:space="preserve">
     <value>Autor</value>
@@ -302,10 +296,96 @@
     <value>265, 148</value>
   </data>
   <data name="fraStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 159</value>
+    <value>196, 56</value>
   </data>
   <data name="fraStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>267, 164</value>
+  </data>
+  <data name="tapGoogleMaps.Text" xml:space="preserve">
+    <value>Google Mapy</value>
+  </data>
+  <data name="imlGpsTabs.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADa
+        DAAAAk1TRnQBSQFMAgEBAgEAAbABAAGwAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABEAMAAQEBAAEgBgABEBIAAxABFgEsAbQBmQH/ASwB6AHsAf8BLwHpAewB/wG7AU0BNwH/AboBTAE1
+        Af8BugFMATUB/wG4AUoBNAX/Aa0BSgE4Af8BuQFKATQB/wG5AUoBNAH/AbkBSgEzAf8BuAFJATIB/wG4
+        AUgBMQH/AbYBRwEwAf8EAAMBAQIDDwEUAwwBEAMAAQGsAAMRARcBMgGwAZIB/wE5AboBoAH/ATsB6wHu
+        Af8BQAHsAe8B/wHGAWIBUQH/AcYBYgFRAf8B8AHgAd8F/wG8AWMBVwH/AcUBYAFQAf8BxAFfAU4B/wHE
+        AV8BTgH/AcQBXwFOAf8BxAFfAU0B/wHEAV0BTAH/BAADEgEYAU0CTgGWA0gBhgMhATADBgEIAwABAQcA
+        AQEDBwEJAw0BEQMGAQgDAQECjAADEQEXAaMBzAHBAf8BPgG2AZoB/wFGAb8BpwH/AUsB7wHwAf8BTQHr
+        Ae0B/wH+AfQB9gn/AcsBiwFnAf8B0QGOAWkB/wHQAYwBZwH/AdABjAFnAf8BygGSAYUB/wGPAegB6QH/
+        AYgB+AH6Af8DDwEUAUQBRQFEAXwBQAGhAagB/QNQAfcBWwFhAWAB4QNVAbIDOwFkAycBOgNEAXkDWAG8
+        A2AB3gFWAlgBvAFIAUkBSAGHAyQBNQMAAQGEAAMRARcBmwHMAb0B/wH0AfcB9hX/AdMBowGYAf8B2wGj
+        AZcB/wHbAaIBlQH/AbsBwAG5Af8BhwL4Af8BiwL4Af8BjgH5AfoB/wGWAewB9AH/AxEBFwGmAd8BugH/
+        AVgBggFgAf8BIQEeASAB/wEhASIBIAH/AWABnAGIAf8BmwHHAcEB/wGoAbQBqgH9Aa8B5gHJAf8BwAHd
+        AcMB/wGrAeYByQH/AYIB0AGdAf8BhAHTAZ4B/wNZAccDBAEFhAADEQEXAUcBugGeAf8BTAG9AaIB/wFR
+        Ab4BpA3/AWYB7QHuAf8B4QG1AasB/wGgAeMB4gH/AYkB9wH4Af8BjgH3AfgB/wGRAvkB/wGiAdsB6gH/
+        AagBwAHaAf8BpgG+AdoB/wMBAQIDXwHgAa4B5QHFAf8BXAGKAWUB/wEoASUBJwH/AiUBIwH/AVkBjQGC
+        Af8BpgHRAcAB/wHBAdkBwAH/Aa0B3QHPAf8BsQHfAdEB/wGOAdMBqwH/AYIB0AGdAf8BZwFpAWcB8gMS
+        ARiEAAMRARcBTQG9AaMB/wFTAcABpgH/AV4BvwGnCf8BaAHPAbgB/wGIAfYB+AH/AYwB9wH6Af8BkAH3
+        AfgB/wGVAfYB9wH/AbAB0AHdAf8BsgHHAdkB/wGwAcUB2QH/Aa0BxAHZAf8BqgHBAdkB/wQAA1ABnQG7
+        AeUBygH/AbEB5wHLAf8BXAGOAWgB/wEvASwBLQH/AioBKAH/AZsBpgGbAf8BqwHWAckB/wGfAdEBuAH/
+        AZEBwQGsAf8BgQG1AZsB/wFnAb0BkQH/AZgB0AGsAf8DNgFZAwIBA4AAAxEBFwGGAcMBsAH/Ae0B9QHz
+        Df8BggHLAbIB/wGKAdYBwQH/AZUC+gH/AZgB+gH7Af8BuwHRAdcB/wG6Ac8B1wH/AYwBnAGrAf8BtAHL
+        AdcB/wGxAcgB1wH/Aa8BxQHZAf8DAAEBA0UBfAGhAeIBwwH/AaYB2wG+Af8BqgHQAcUB/wFfAYsBhAH/
+        AUoBZQGDAf8BPAFTAVAB/wFVAYgBYgH/AZsBtwGhAf8BrwHFAbMB/wGwAcoBsgH/AZ8BvgGmAf8BpAG/
+        AakB/wNGAX8DCgEOgAADEQEXCP8BaQHDAawB/wFpAcYBsQH/AbUB2AHOBf8BiwHPAbkB/wGVAdsBxgH/
+        AaIB/AH9Af8BpgH8Af0B/wGxAcIB2AH/ASEBJgFJAf8BkQGiAaoB/wG2Ac0B2QH/AbMByQHZAf8DBQEH
+        A1IBpwGkAeUBxgH/AZ8B1gHIAf8BqgHgAcUB/wHCAeABxwH/AcEBxAGvAf8BPAE3ATMB/wGmAaQBkwH/
+        Ac0B5wHLAf8BygHoAcwB/wHUAewB1QH/AeUB7gHkAf8BvAHEAbQB/wMzAVMDEAEWgAADEQEXBP8BZwHE
+        AawB/wGCAcwBtAH/AYYBzgG2Af8BiwHSAbkJ/wGZAdgBwwH/AZ8B4AHMAf8BrQP/AUMBVQHnAf8BCQEA
+        AawB/wFGAU8BUwH/AWUBiAGPAf8BqgG+AccB/wMGAQgDYAHeAaQB5QHGAf8BnwHVAcgB/wGpAeUByAH/
+        AbEB5AHDAf8BtwHAAagB/wGkAZkBiAH/AdYB3wHEAf8BygHnAcsB/wHLAegBzAH/Ac8B5wHMAf8B1AHs
+        AdQB/wHlAfEB5AH/A1YBsQMPARSAAAMRARcE/wGAAcsBsgH/AYYBzwG3Af8BiwHSAbkB/wGQAdUBvQn/
+        AZ8B0gG/Af8BowHfAcgB/wGqAeUB0QH/AQ0BAAHZAf8BDgEAAdwB/wE7AUIBRwH/AVIBXgFgAf8BggGQ
+        AZUB/wMVAR0BqgHoAcoB/wGtAeoBzQH/AaMB1gHLAf8BoQHjAcEB/wGjAd8BuQH/AZ8BuAGgAf8B6QHY
+        AcIB/wHbAecB0AH/AdMB6gHQAf8B5AHbAcIB/wHpAdYBvgH/Ac0B4gHFAf8BwwHjAcEB/wGtAbEBqgH9
+        AxQBG4AAAxEBFwH4AfwB+wH/AYcBzwG3Af8BiwHRAbkB/wGRAdUBvQH/AZQB1wHACf8BrgHWAccB/wGn
+        AeABygH/ARYBDAHZAf8BDwEBAd0B/wENAQAB2QH/AQ4BAAHcAf8BTgFXAVoB/wFlAYYBiQH/AwIBAwFi
+        AWMBYgHvAbUB7gHSAf8BrwHlAc4B/wGhAdgBxAH/AZEB1gGmAf8BpAG5AZ8B/wHsAd0BygH/Ae4B5QHV
+        Af8B8AHmAdcB/wHxAeIB0QH/Ae0B2gHEAf8B2AHZAb0B/wG5Ad4BtwH/AcAB2gG3Af8DJwE6gAADEQEX
+        AfgB/AH7Af8BiwHRAboB/wGRAdQBvQH/AZUB2AHBAf8BmAHYAcMJ/wGgAdgBwgH/AV0BkAHXAf8BEgEb
+        Ad4B/wEVASIB0QH/ARsBIAG5Af8BEAEFAeAB/wFDAVgB0QH/AbIBxAHHAf8EAANUAa8BuwHvAdYB/wG2
+        AesB0gH/AbEB4gHSAf8BlgHcAbUB/wGOAboBlQH/AeUB5AHSAf8B7gHtAd8B/wHuAeoB2wH/AfMB6AHa
+        Af8B7gHmAdUB/wHIAd4BvAH/AbkB3QG2Af8BvQHOAbEB/wMbASaAAAMRARcE/wGQAdQBvAH/AZUB1gHA
+        Af8BmgHaAcMB/wH5Af4B/AX/AekB9AHwAf8BrAHjAc0B/wFRAYYB3gH/ARsBNQHjAf8BEAEdAZIB/wEU
+        ASIBkAH/ARMBHQHjAf8BOQFEAeQB/wG4A/8DAAEBAz4BagGxAesB0AH/AasB5wHLAf8BpAHZAckB/wGo
+        AecByQH/AaAB1wG8Af8BxgHRAb4B/wHgAe8B3gH/AeAB8AHdAf8B5gHzAeQB/wHkAfIB4gH/Ac8B6AHN
+        Af8BuAHSAbMB/wNeAdCEAAMRARcBlwHLAbgF/wH1AfsB+hH/AfwB/wH+Af8BtQHmAdIB/wEdAUEB4QH/
+        ASYBVAHjAf8BHgE/AeUB/wEWASUB4QH/AbUB5AHbAf8BuAP/AwABAQNKAYsBpwHoAcgB/wGeAdQBxwH/
+        AaUB4QHJAf8BsQHrAc8B/wGlAeIBvwH/AZkBwQGiAf8B2AHhAdIB/wHeAewB3AH/Ad0B7gHcAf8B1AHn
+        AdEB/wHOAd8ByQH/AbgBxwGsAf8DPwFshAADCAELAZYB1wHAAf8BmgHYAcIB/wGdAdkBwwH/AaIB2QHG
+        Af8BpQHcAcgB/wGqAd4BygH/Aa4B4QHOAf8BsgHjAdAB/wG1AeYB0QH/AbwB6QHWAf8BVgGXAeEB/wFL
+        AYQB4gH/AbcB5QHYAf8BvAHrAdcB/wG8Ae4B3AH/BAADYAHUAagB6QHKAf8BogHbAckB/wG0Ae0B0gH/
+        AbQB7AHNAf8BpgHiAbsB/wGbAd0BsgH/AZkBygGtAf8BtwHJAbcB/wHIAc8BwQH/AcIBzAG7Af8BsQHH
+        Aa8B/wGwAdgBwgH/AyIBMsQAAyIBMQNdAdMDUgGkAy4BSAMVAR0DMwFTA04BmQNeAdgDVQGwAzkBXwMS
+        ARkDMAFLA04BlANcAc0DAQEChAABQgFNAT4HAAE+AwABKAMAAUADAAEQAwABAQEAAQEFAAGAFwAD/wMA
+        AYcB/wYAAYEBBwcAAQEHAAEBBwABAQYAAYAvAAGACAABAQcAAQEGAAGAAQEEAAL/AQABAQQACw==
+</value>
+  </data>
+  <data name="tsbGoogleMaps.Text" xml:space="preserve">
+    <value>Google Mapy</value>
+  </data>
+  <data name="tsbGoogleMaps.ToolTipText" xml:space="preserve">
+    <value>Zobrazit v mapách Google</value>
+  </data>
+  <data name="tsbOpenStreetMap.ToolTipText" xml:space="preserve">
+    <value>Zobrazit v OpenStreetMap</value>
+  </data>
+  <data name="tsbGoogleEarth.ToolTipText" xml:space="preserve">
+    <value>Zobrazit v Google Earth</value>
+  </data>
+  <data name="tsbGeoHack.ToolTipText" xml:space="preserve">
+    <value>Zobrazit v GeoHack</value>
+  </data>
+  <data name="fraGps.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 223</value>
+  </data>
+  <data name="sptGps.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 411</value>
   </data>
   <data name="tapCommon.Text" xml:space="preserve">
     <value>Obvyklé</value>
@@ -420,6 +500,15 @@
   </data>
   <data name="tsbSaveAll.Text" xml:space="preserve">
     <value>Uložit vše</value>
+  </data>
+  <data name="tmiCopyGpsCoordinates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 22</value>
+  </data>
+  <data name="tmiCopyGpsCoordinates.Text" xml:space="preserve">
+    <value>Kopírovat</value>
+  </data>
+  <data name="cmsdGpsCoordinates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 26</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

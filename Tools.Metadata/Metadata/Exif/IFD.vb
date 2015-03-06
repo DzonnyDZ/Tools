@@ -548,7 +548,7 @@ Namespace MetadataT.ExifT
                 If Records.ContainsKey(Type.Tag) Then
                     With Records(Type.Tag)
                         If Array.IndexOf(Type.DataTypes, Records(Type.Tag).DataType.DataType) >= 0 Then
-                            If Type.NumberOfElements = 0 OrElse Type.NumberOfElements = .DataType.NumberOfElements Then
+                            If Type.NumberOfElements = 0 OrElse Type.DataType = ExifDataTypes.ASCII OrElse Type.NumberOfElements = .DataType.NumberOfElements Then
                                 Return Records(Type.Tag)
                             Else
                                 Return Nothing
@@ -1387,7 +1387,7 @@ Namespace MetadataT.ExifT
             Get
                 If (GPSLatitude Is Nothing OrElse GPSLatitude.Length = 0) Then Return Nothing
                 Return CType(GPSLatitude, Angle) *
-                    If(GPSLatitudeRef IsNot Nothing AndAlso GPSLatitudeRef.Length = 1 AndAlso GPSLatitudeRef(0) = GPSLatitudeRefValues.North, -1, 1)
+                    If(GPSLatitudeRef IsNot Nothing AndAlso GPSLatitudeRef.Length = 1 AndAlso GPSLatitudeRef(0) = GPSLatitudeRefValues.North, 1, -1)
             End Get
         End Property
 
@@ -1398,7 +1398,7 @@ Namespace MetadataT.ExifT
             Get
                 If (GPSLongitude Is Nothing OrElse GPSLongitude.Length = 0) Then Return Nothing
                 Return CType(GPSLongitude, Angle) *
-                    If(GPSLongitudeRef IsNot Nothing AndAlso GPSLongitudeRef.Length = 1 AndAlso GPSLongitudeRef(0) = GPSLongitudeRefValues.East, -1, 1)
+                    If(GPSLongitudeRef IsNot Nothing AndAlso GPSLongitudeRef.Length = 1 AndAlso GPSLongitudeRef(0) = GPSLongitudeRefValues.East, 1, -1)
             End Get
         End Property
 

@@ -127,8 +127,8 @@ Public Class frmMain
     ''' <summary>When <see cref="LoadOnCancel"/> takes effect indicates if it is backward navigation</summary>
     Private LoadOnCancelIsBack As Boolean = False
     ''' <summary>Loads content of folder</summary>
-    ''' <param name="Path">Path of folder to load. May also be apth of link to follow.</param>
-    ''' <param name="isBack">True when backward navigation is occuring</param>
+    ''' <param name="Path">Path of folder to load. May also be path of link to follow.</param>
+    ''' <param name="isBack">True when backward navigation is occurring</param>
     Private Sub LoadFolder(ByVal Path As IOt.Path, Optional ByVal isBack As Boolean = False)
         ChangedMetadata.Clear()
         Changed = False
@@ -480,9 +480,7 @@ Public Class frmMain
         Dim item As MetadataItem = e.Item
         item.Draw(e)
     End Sub
-    Private Sub lvwImages_SelectedIndexChanged(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
-        ' DoSelectedImageChanged() moved to lvwImages_ItemSelectionChanged
-    End Sub
+
     Private Sub lvwImages_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles lvwImages.ItemSelectionChanged
         DirectCast(e.Item, MetadataItem).OnSelectedChanged()
         DoSelectedImageChanged()
@@ -511,9 +509,6 @@ Public Class frmMain
     End Sub
     ''' <summary>Shows info about selected images</summary>
     Private Sub ShowInfo()
-        'For Each item In SelectedIPTCs
-        '    RemoveHandler item.ValueChanged, AddressOf IPTC_ValueChanged
-        'Next item
         SelectedMetadata.Clear()
         splMain.Panel2.Enabled = lvwImages.SelectedItems.Count > 0
         lblExifDateTime.Text = ""
@@ -525,7 +520,7 @@ Public Class frmMain
                     Catch ex As Exception
                         MBox.MsgBox(String.Format(My.Resources.ErrorWhileLoading0, item.Path.Path) & vbCrLf & ex.Message, MsgBoxStyle.Critical, My.Resources.Error_)
                         item.Selected = False 'This causes this sub to be recalled
-                        'TODO: Line abowe may not work when metadata showing is optimalized
+                        'TODO: Line above may not work when metadata showing is optimized
                         Exit Sub
                     End Try
                 End If
@@ -618,8 +613,6 @@ Public Class frmMain
             tsbOpenStreetMap.Enabled = value
             tsbGoogleEarth.Enabled = value
             tsbGeoHack.Enabled = value
-            'webGoogleMaps.Enabled = value
-            'webOpenStreetMap.Enabled = value
             tslGps.Enabled = value
         End Set
     End Property
@@ -633,6 +626,7 @@ Public Class frmMain
         prgExifInterop.SelectedObjects = (From Exif In Exifs Where Exif IsNot Nothing AndAlso Exif.IFD0 IsNot Nothing AndAlso Exif.IFD0.ExifSubIFD IsNot Nothing AndAlso Exif.IFD0.ExifSubIFD.InteropSubIFD IsNot Nothing Select CObj(Exif.IFD0.ExifSubIFD.InteropSubIFD)).ToArray
         prgExifThumbnail.SelectedObjects = (From Exif In Exifs Where Exif IsNot Nothing AndAlso Exif.ThumbnailIFD IsNot Nothing Select CObj(Exif.ThumbnailIFD)).ToArray
     End Sub
+
     ''' <summary>Shows common values</summary>
     ''' <param name="IPTCs">IPTCs to load values from</param>
     ''' <param name="Filter">Filter properties (load only those which ors with <paramref name="Filter"/></param>
@@ -720,6 +714,7 @@ Public Class frmMain
             suspendAutoRating = False
         End Try
     End Sub
+
     ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
     Private _Changed As Boolean
     ''' <summary>Gets value indicating if there is any unsaved change</summary>
@@ -738,6 +733,7 @@ Public Class frmMain
             _Changed = value
         End Set
     End Property
+
     ''' <summary>Handles <see cref="IPTCInternal.ValueChanged"/></summary>
     Private Sub Item_Changed(ByVal sender As MetadataItem, ByVal e As MetadataItem.PartEventArgs)
         If Not ChangedMetadata.Contains(sender) Then
@@ -963,7 +959,7 @@ Public Class frmMain
         DoSave(sender, e)
     End Sub
     ''' <summary>Performs saving operations</summary>
-    ''' <param name="bgw">If called assynchronously <see cref="bgwSave"/></param>
+    ''' <param name="bgw">If called asynchronously <see cref="bgwSave"/></param>
     ''' <param name="e">If called assynchronously argument e of <see cref="bgwSave"/>.<see cref="BackgroundWorker.DoWork">DoWork</see></param>
     ''' <remarks>True if all changes have been saved or whan it have not been saved but user confirmed that changes may be lost.</remarks>
     Private Function DoSave(Optional ByVal bgw As BackgroundWorker = Nothing, Optional ByVal e As DoWorkEventArgs = Nothing) As Boolean
@@ -1347,14 +1343,20 @@ Retry:              item.Save()
         End Try
     End Sub
 
-    Private Sub Control_Validating(sender As Object, e As CancelEventArgs) Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, rtgTechnical.Validating, rtgOverall.Validating, rtgInfo.Validating, rtgArt.Validating, nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
-
+    Private Sub tslGps_DoubleClick(sender As Object, e As EventArgs) Handles tslGps.DoubleClick
+        Try
+            My.Computer.Clipboard.SetText(tslGps.Text)
+        Catch
+            Beep()
+        End Try
     End Sub
-    Private Sub lvwImages_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvwImages.SelectedIndexChanged
 
-    End Sub
-    Private Sub lvwImages_DrawItem(sender As Object, e As DrawListViewItemEventArgs) Handles lvwImages.DrawItem
-
+    Private Sub tmiCopyGpsCoordinates_Click(sender As Object, e As EventArgs) Handles tmiCopyGpsCoordinates.Click
+        Try
+            My.Computer.Clipboard.SetText(tslGps.Text)
+        Catch
+            Beep()
+        End Try
     End Sub
 End Class
 

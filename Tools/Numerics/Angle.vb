@@ -1481,7 +1481,7 @@ Namespace NumericsT
                     Case "E"c, "e"c             'Rotations                                  no dec places          max 4          -E                
                         format = "-E" & param.ToString(InvariantCulture)
                     Case "F"c, "f"c             'Decimal -14.978425                         no decimal places      as required    -D                
-                        format = If(param.HasValue, "-D" & param.ToString(InvariantCulture), "-(TotalDegrees,N)")
+                        format = If(param.HasValue, "-D" & param.ToString(InvariantCulture), "(TotalDegrees,N)")
                     Case "i"c                   'Slope in ‰                                 no dec places          culture-spec.  -l‰               
                         format = "-L" & If(param.HasValue, param.Value, ninfo.NumberDecimalDigits).ToString(InvariantCulture) & "‰"
                     Case "n"c                   'S - normalized 0-360                       not allowed                           N-d°mm'ss"        
@@ -1521,9 +1521,9 @@ Namespace NumericsT
             Dim value As IFormattable = Nothing 'Value to be formatted - Double or Integer
             Dim specifier As Char? = Nothing 'Currently processed specifier
             Dim state As FState = FState.Start 'FSA state
-            Dim leftPlaces As Integer? = Nothing 'Places left of . (negative values are recomendation)
-            Dim rightPlaces As Integer? = Nothing 'Places right from . (negative values are recomendation)
-            Dim useThousandSeparator As Boolean = False 'Use thousand (group) seperator for formatted value?
+            Dim leftPlaces As Integer? = Nothing 'Places left of . (negative values are recommendation)
+            Dim rightPlaces As Integer? = Nothing 'Places right from . (negative values are recommendation)
+            Dim useThousandSeparator As Boolean = False 'Use thousand (group) separator for formatted value?
             Dim customName As StringBuilder = Nothing  'Builds up custom property name
             Dim customFormat As StringBuilder = Nothing 'Builds up custom format
             For i = 0 To format.Length - 1
@@ -1533,10 +1533,10 @@ Namespace NumericsT
                         specifier = Nothing : value = Nothing : useThousandSeparator = False : customName = Nothing
                         Select Case ch
                             Case "a"c, "φ"c  'a Latitude specifier (N/S), short                                              not allowed                                       
-                                builders.Peek.Append(If(normalizedValue <= Angle.Zero, ainfo.LatitudeNorthShortSymbol, ainfo.LatitudeSouthShortSymbol)) : state = FState.Normal
+                                builders.Peek.Append(If(normalizedValue <= Angle.Zero, ainfo.LatitudeSouthShortSymbol, ainfo.LatitudeNorthShortSymbol)) : state = FState.Normal
                             Case "A"c, "Φ"c  'A Latitude specifier (north/south), long                                       not allowed                                       
-                                builders.Peek.Append(If(normalizedValue <= Angle.Zero, ainfo.LatitudeNorthLongSymbol, ainfo.LatitudeSouthLongSymbol)) : state = FState.Normal
-                            Case "c"c  'c use comaptibility characters for °,Case ","c ',"                             not allowed                                             
+                                builders.Peek.Append(If(normalizedValue <= Angle.Zero, ainfo.LatitudeSouthLongSymbol, ainfo.LatitudeNorthLongSymbol)) : state = FState.Normal
+                            Case "c"c  'c use compatibility characters for °,Case ","c ',"                             not allowed                                             
                                 compatibilityRendering = True : state = FState.Normal
                             Case "d"c  'd degrees, whole                                                               not allowed                           min digits        
                                 value = normalizedValue.Degrees : state = FState.SpecifierInt : specifier = ch : has_d = True
