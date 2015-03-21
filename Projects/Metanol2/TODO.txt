@@ -2,7 +2,6 @@
 * Exif miniatura
 * Exif zvuk (requires JPEG APP2 FPXR support)
 * Editace Exif
-* Zobrazení informací v náhledu
 * Zoomování v náhledu, posun výřezu
 * FileSystemWatcher
 * Exif
@@ -13,6 +12,7 @@
 * Search by typing using common prefix
 * Version history
 
+(done) Zobrazení informací v náhledu
 (done) Thesaurus button in keyword editor missing
 (done) Exif výtah
 (done) Možnost obejít IPTC Length constraint (pro variable lenght)

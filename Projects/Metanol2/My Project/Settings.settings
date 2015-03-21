@@ -85,7 +85,7 @@
       <Value Profile="(Default)">http://www.openstreetmap.org/?mlat={0:f}&amp;mlon={1:f}&amp;zoom=15</Value>
     </Setting>
     <Setting Name="GeoHackUrlTemplate" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://toolserver.org/~geohack/geohack.php?language=en&amp;params={0:d.00_m.00_s.00_a}_{1:d.00_m.00_s.00_o}</Value>
+      <Value Profile="(Default)">http://tools.wmflabs.org/geohack/geohack.php?language=en&amp;params={0:d.00_m.00_s.00_a}_{1:d.00_m.00_s.00_o}</Value>
     </Setting>
     <Setting Name="GoogleMapsAPIKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">AIzaSyBpHMzvHZ-Fo0iW2BTmxPi2zQmRsY6ep4k</Value>

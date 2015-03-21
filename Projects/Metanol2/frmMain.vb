@@ -1270,7 +1270,7 @@ Retry:              item.Save()
     ''' <returns>URL to Geo Hack wiki pointing to given latitude and longitude</returns>
     Private Function GetGeoHackUrlUrl(latitude As Angle, longitude As Angle) As String
         'http://toolserver.org/~geohack/geohack.php?language=en&params=3.00_9.00_8.58_N_101.00_42.00_20.45_E
-        Return String.Format(InvariantCulture, My.Settings.GeoHackUrlTemplate, -latitude, longitude)
+        Return String.Format(InvariantCulture, My.Settings.GeoHackUrlTemplate, latitude, longitude)
     End Function
 
     Private Sub tsbGoogleMaps_Click(sender As Object, e As EventArgs) Handles tsbGoogleMaps.Click
@@ -1305,7 +1305,7 @@ Retry:              item.Save()
                                   <%= New XCData(
                                       <div>
                                           <strong>Lat: </strong><code><%= latitude %></code>,
-                                      <strong>Lon: </strong><code><%= longitude %></code>
+                                          <strong>Lon: </strong><code><%= longitude %></code>
                                           <br/>
                                           <img src=<%= "file:///" + HttpUtility.UrlEncode(SelectedMetadata.First.SystemMetadata.FullPath) %> width='200'/>
                                           <br/>
@@ -1314,14 +1314,14 @@ Retry:              item.Save()
                                       </div>.ToString) %>
                               </description>
                               <LookAt>
-                                  <latitude><%= latitude.ToString("f", InvariantCulture) %></latitude>
                                   <longitude><%= longitude.ToString("f", InvariantCulture) %></longitude>
+                                  <latitude><%= latitude.ToString("f", InvariantCulture) %></latitude>
                                   <heading>0.000000</heading>
                                   <range>800</range>
                                   <tilt>45</tilt>
                               </LookAt>
                               <Point>
-                                  <coordinates><%= latitude.ToString("f", InvariantCulture) %>,<%= longitude.ToString("f", InvariantCulture) %></coordinates>
+                                  <coordinates><%= longitude.ToString("f", InvariantCulture) %>,<%= latitude.ToString("f", InvariantCulture) %></coordinates>
                               </Point>
                           </Placemark>
                       </kml>
