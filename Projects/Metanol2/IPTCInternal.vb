@@ -10,9 +10,10 @@ Public Class IptcInternal
     Inherits Iptc
     ''' <summary>CTor</summary>
     ''' <param name="ImagePath">Path of JPEG file</param>
+    ''' <param name="load">True to load IPTC data from the file, false not to load them</param>
     ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <paramref name="ImagePath"/> is invalid, such as being on an unmapped drive.</exception>
     ''' <exception cref="System.ArgumentNullException"><paramref name="ImagePath"/> is null.</exception>
-    ''' <exception cref="System.UnauthorizedAccessException">The access requested (readonly) is not permitted by the operating system for the specified path.</exception>
+    ''' <exception cref="System.UnauthorizedAccessException">The access requested (read-only) is not permitted by the operating system for the specified path.</exception>
     ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
     ''' <exception cref="System.ArgumentException"><paramref name="ImagePath"/> is an empty string (""), contains only white space, or contains one or more invalid characters.</exception>
     ''' <exception cref="System.IO.FileNotFoundException">The file cannot be found.</exception>
@@ -20,13 +21,13 @@ Public Class IptcInternal
     ''' <exception cref="System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
     ''' <exception cref="IO.InvalidDataException">
     ''' Invalid JPEG marker found (code doesn't start with FFh, length set to 0 or 2) -or-
-    ''' JPEG stream doesn't start with corect SOI marker -or-
-    ''' JPEG stream doesn't end with corect EOI marker -or-
+    ''' JPEG stream doesn't start with correct SOI marker -or-
+    ''' JPEG stream doesn't end with correct EOI marker -or-
     ''' Tag marker other than 1Ch found.
     ''' </exception>
     ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
-    Friend Sub New(ByVal ImagePath As String)
-        MyBase.New(New JPEG.JPEGReader(ImagePath, False))
+    Friend Sub New(ByVal ImagePath As String, Optional load As Boolean = True)
+        MyBase.New(If(load, New JPEG.JPEGReader(ImagePath, False), Nothing))
         _ImagePath = ImagePath
         IgnoreLenghtConstraints = My.Settings.IgnoreIptcLengthConstraints
         If Me.Tags.Count = 0 AndAlso My.Settings.IptcUtf8 Then

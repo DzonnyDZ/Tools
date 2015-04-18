@@ -7,13 +7,13 @@ Namespace MetadataT.IptcT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2">The <see cref="IMetadata"/> interface implemented</version>
     ''' <version version="1.5.2">The <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/> attributes removed</version>
-    ''' <version version="1.5.3">Added limited autodetection of UTF-8 encoding based on <see cref="Iptc.CodedCharacterSet"/>. See <see cref="Iptc.Encoding"/> for details.</version>
+    ''' <version version="1.5.3">Added limited auto-detection of UTF-8 encoding based on <see cref="Iptc.CodedCharacterSet"/>. See <see cref="Iptc.Encoding"/> for details.</version>
     ''' <version version="1.5.3">Changed encoding used when none is specified for <see cref="Iptc.GraphicCharacters_Value"/>, <see cref="Iptc.TextWithSpaces_Value"/>, <see cref="Iptc.Text_Value"/>, <see cref="Iptc.Num2_Str_Value"/>, <see cref="Iptc.Num3_Str_Value"/>, <see cref="Iptc.SubjectReference_Value"/>, <see cref="Iptc.Alpha_Value"/>: <see cref="Iptc.Encoding"/> is used for records 2 - 6 and 8, <see cref="System.Text.Encoding.ASCII"/> is used otherwise. (Previously: <see cref="Iptc.Encoding"/> is used whenever encoding is not specified).</version>
     ''' <version version="1.5.3">Added the <see cref="Iptc.IgnoreLenghtConstraints"/> property which when set to true allows values violating length constraints (according to IPTC standard) to be stored.</version>
     ''' <version version="1.5.3">Properties of type HHMMSS_HHMM are also read when stored as HHMMSS only (before 1.5.3 an exception was thrown)</version>
     Partial Public Class Iptc
         Implements IMetadata
-        ''' <summary>Name identifiying IPTC metadata in <see cref="IMetadataProvider"/></summary>
+        ''' <summary>Name identifying IPTC metadata in <see cref="IMetadataProvider"/></summary>
         ''' <version version="1.5.2">Constant introduced</version>
         Public Const IptcName$ = "IPTC"
         ''' <summary>Do nothing CTor</summary>
@@ -37,16 +37,16 @@ Namespace MetadataT.IptcT
         Private _Tags As New ListWithEvents(Of KeyValuePair(Of DataSetIdentification, Byte()))(True, True)
 
         ''' <summary>CTor from <see cref="IPTCReader"/></summary>
-        ''' <param name="Reader"><see cref="IPTCReader"/> to read all tags from</param>
-        ''' <exception cref="ArgumentNullException"><paramref name="reader"/> is null</exception>
+        ''' <param name="Reader"><see cref="IPTCReader"/> to read all tags from. No data loaded when null.</param>
         ''' <version version="1.5.4">Parameter <c>Reader</c> renamed to <c>reader</c></version>
-        ''' <version version="1.5.4">Changed exception when <paramref name="reader"/> is null. Now throws <see cref="ArgumentNullException"/>. Previoisly thrown <see cref="NullReferenceException"/>.</version>
+        ''' <version version="1.5.4">Exception is no longer thrown when <paramref name="reader"/> is null</version>
         Public Sub New(ByVal reader As IptcReader)
             Me.New()
-            If reader Is Nothing Then Throw New ArgumentNullException("reader")
-            For Each t As IptcRecord In Reader.Records
-                Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(DataSetIdentification.GetKnownDataSet(t.RecordNumber, t.Tag), t.Data))
-            Next t
+            If reader IsNot Nothing Then
+                For Each t As IptcRecord In reader.Records
+                    Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(DataSetIdentification.GetKnownDataSet(t.RecordNumber, t.Tag), t.Data))
+                Next t
+            End If
         End Sub
         ''' <summary>Gets details about tag format by tag record and number</summary>
         ''' <param name="Record">Recor number</param>
@@ -57,22 +57,22 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.4">Parameters renamed: <c>Record</c> to <c>record</c>, <c>TagNumber</c> to <c>tagNumber</c></version>
         Public Shared Function GetTag(ByVal record As RecordNumbers, ByVal tagNumber As Byte) As IptcTag
             Dim lUseThisGroup As GroupInfo = Nothing
-            Return GetTag(Record, TagNumber, lUseThisGroup)
+            Return GetTag(record, tagNumber, lUseThisGroup)
         End Function
         ''' <summary>CTor from <see cref="IIPTCGetter"/></summary>
-        ''' <param name="Getter"><see cref="IIPTCGetter"/> that contains IPTC stream</param>
-        ''' <exception cref="ArgumentNullException"><paramref name="Getter"/> is null</exception>
+        ''' <param name="Getter"><see cref="IIPTCGetter"/> that contains IPTC stream. No data loaded when null.</param>
         ''' <exception cref="IO.InvalidDataException">Tag marker other than 1Ch found</exception>
         ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
         ''' <version version="1.5.4">Parameter <c>Getter</c> renamed to <c>getter</c></version>
+        ''' <version version="1.5.4">Exception is no longer thrown when <paramref name="getter"/> is null.</version>
         Public Sub New(ByVal getter As IIptcGetter)
-            Me.New(New IptcReader(Getter))
+            Me.New(If(getter Is Nothing, Nothing, New IptcReader(getter)))
         End Sub
         ''' <summary>Removes all occurences of specified tag</summary>         
         ''' <param name="Key">Tag to remove</param>                            
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Overridable Sub Clear(ByVal key As DataSetIdentification)
-            _Tags.RemoveAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
+            _Tags.RemoveAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(key))
         End Sub
         ''' <summary>Removes all tags</summary>
         Public Sub Clear()
@@ -82,7 +82,7 @@ Namespace MetadataT.IptcT
         ''' <param name="Key">DataSet identification to count tags with</param>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Function Contains(ByVal key As DataSetIdentification) As Integer
-            Return _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key)).Count
+            Return _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(key)).Count
         End Function
         ''' <summary>Called when value of any tag changes</summary>
         ''' <param name="Tag">Recod and dataset number</param>
@@ -92,7 +92,7 @@ Namespace MetadataT.IptcT
         ''' </remarks>
         ''' <version version="1.5.4">Parameter <c>Tag</c> renamed to <c>tag</c></version>
         Protected Overridable Sub OnValueChanged(ByVal tag As DataSetIdentification)
-            Select Case Tag
+            Select Case tag
                 Case DataSetIdentification.Subfile 'Subfile - change corresponding tags
                     Dim Subfile As Byte() = Me.Subfile
                     Dim SubFileLen As Integer
@@ -113,7 +113,7 @@ Namespace MetadataT.IptcT
                 Case DataSetIdentification.CodedCharacterSet 'Coded Caharcter Set - reset encoding
                     If Not encodingSetExternally Then _Encoding = Nothing
             End Select
-            If Cache.ContainsKey(Tag) Then Cache.Remove(Tag)
+            If Cache.ContainsKey(tag) Then Cache.Remove(tag)
         End Sub
         ''' <summary>Gets or sets values associated with particular tag</summary>
         ''' <param name="Key">Tag identification</param>
@@ -125,7 +125,7 @@ Namespace MetadataT.IptcT
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Default Protected Property Tag(ByVal key As DataSetIdentification) As List(Of Byte())
             Get
-                Dim ret As List(Of KeyValuePair(Of DataSetIdentification, Byte())) = _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
+                Dim ret As List(Of KeyValuePair(Of DataSetIdentification, Byte())) = _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(key))
                 If ret IsNot Nothing AndAlso ret.Count > 0 Then
                     Dim ret2 As New List(Of Byte())
                     For Each Item As KeyValuePair(Of DataSetIdentification, Byte()) In ret
@@ -140,7 +140,7 @@ Namespace MetadataT.IptcT
                 For Each item As Byte() In value
                     If item.Length > 32767 Then Throw New NotSupportedException(ResourcesT.Exceptions.IPTCDataSetsLongerThat32767BytesAreNotSupported)
                 Next item
-                Dim Already As IReadOnlyList(Of Integer) = New DataSetIdentification.PairMatch(Key).GetIndices(Tags)
+                Dim Already As IReadOnlyList(Of Integer) = New DataSetIdentification.PairMatch(key).GetIndices(Tags)
                 Dim i As Integer = 0
                 'Replace values of existing tags with same key
                 For Each Item As Byte() In value
@@ -159,10 +159,10 @@ Namespace MetadataT.IptcT
                 Else
                     'Add tags (if value is longer than Already)
                     For j As Integer = i To value.Count - 1
-                        Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(Key, value(j)))
+                        Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(key, value(j)))
                     Next j
                 End If
-                OnValueChanged(Key)
+                OnValueChanged(key)
             End Set
         End Property
         ''' <summary>All tags and their values in IPTC stream</summary>
@@ -221,12 +221,12 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter names converted to camelCase</version>
         Private Function ParseKey(ByVal key As String, Optional ByVal tryPredefined As Boolean = True) As DataSetIdentification
-            If TryPredefined Then
-                Dim Ret As DataSetIdentification? = KeyFromPredefinedName(Key)
+            If tryPredefined Then
+                Dim Ret As DataSetIdentification? = KeyFromPredefinedName(key)
                 If Ret.HasValue Then Return Ret.Value
             End If
             Try
-                Return New DataSetIdentification(Key)
+                Return New DataSetIdentification(key)
             Catch ex As Exception
                 Throw New ArgumentException(ResourcesT.Exceptions.KeyIsInvalidForIPTCMetadata, ex)
             End Try
@@ -237,7 +237,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Private Function KeyFromPredefinedName(ByVal key$) As DataSetIdentification?
-            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = Key Select New DataSetIdentification?(dsi)).FirstOrDefault
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = key Select New DataSetIdentification?(dsi)).FirstOrDefault
         End Function
 
         ''' <summary>Gets value indicating wheather metadata value with given key is present in current instance</summary>
@@ -248,7 +248,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Function ContainsKey(ByVal key As String) As Boolean Implements IMetadata.ContainsKey
-            Return Me.Contains(ParseKey(Key))
+            Return Me.Contains(ParseKey(key))
         End Function
 
         ''' <summary>Gets keys of all the metadata present in curent instance</summary>
@@ -265,7 +265,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Function GetDescription(ByVal key As String) As String Implements IMetadata.GetDescription
-            Dim KeyDsi = ParseKey(Key)
+            Dim KeyDsi = ParseKey(key)
             Dim PropertyName = GetNameOfKey(KeyDsi.ToString)
             If PropertyName Is Nothing Then Return Nothing
             Dim Prp = GetType(Iptc).GetProperty(PropertyName)
@@ -282,7 +282,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Function GetHumanName(ByVal key As String) As String Implements IMetadata.GetHumanName
-            Dim KeyDsi = ParseKey(Key)
+            Dim KeyDsi = ParseKey(key)
             Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.RecordNumber Select dsi.DisplayName).FirstOrDefault
         End Function
 
@@ -293,7 +293,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter <c>Name</c> renamed to <c>name</c></version>
         Public Function GetKeyOfName(ByVal name As String) As String Implements IMetadata.GetKeyOfName
-            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = Name Select Key = dsi.ToString).FirstOrDefault
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = name Select Key = dsi.ToString).FirstOrDefault
         End Function
 
         ''' <summary>Gets name for key</summary>
@@ -303,7 +303,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Function GetNameOfKey(ByVal key As String) As String Implements IMetadata.GetNameOfKey
-            Dim KeyDsi = ParseKey(Key, False)
+            Dim KeyDsi = ParseKey(key, False)
             Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.RecordNumber Select dsi.PropertyName).FirstOrDefault
         End Function
 
@@ -344,7 +344,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.4">Parameter <c>Key</c> renamed to <c>key</c></version>
         Public Overloads ReadOnly Property Value(ByVal key As String) As Object Implements IMetadata.Value
             Get
-                Return Me.GetTypedValue(ParseKey(Key))
+                Return Me.GetTypedValue(ParseKey(key))
             End Get
         End Property
         ''' <summary>Gets metadata value with given key as string</summary>

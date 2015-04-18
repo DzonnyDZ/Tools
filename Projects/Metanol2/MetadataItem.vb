@@ -80,9 +80,11 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     Public Sub IPTCLoad(Optional ByVal SuppressExceptions As Boolean = False)
         Try
             Me.IPTC = New IptcInternal(Me.Path)
-        Catch ex As Exception
-            _IPTCContains = False
-            If Not SuppressExceptions Then Throw
+        Catch ex As Exception When SuppressExceptions
+            Me.IPTC = New IptcInternal(Me.Path, False)
+        Catch
+            Me._IPTCContains = False
+            Throw
         End Try
     End Sub
     Private Sub IPTC_Saved(ByVal sender As IptcInternal) Handles _IPTC.Saved
@@ -150,7 +152,7 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     End Sub
 #End Region
 #End Region
-    ''' <summary>Gets value indicating if any part is in usaved state</summary>
+    ''' <summary>Gets value indicating if any part is in unsaved state</summary>
     Public ReadOnly Property Changed() As Boolean
         Get
             'TODO: Exif
@@ -207,6 +209,10 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     End Sub
     ''' <summary>Handles any possible change of the <see cref="Changed"/> property</summary>
     Private Sub OnSaveStatusChanged()
+        If ListView.InvokeRequired Then
+            ListView.Invoke(New Action(AddressOf OnSaveStatusChanged))
+            Return
+        End If
         Me.ListView.Invalidate(Me.Bounds)
     End Sub
 #Region "Colors"

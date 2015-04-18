@@ -845,6 +845,10 @@ Public Class frmMain
             ctc = StringComparer.Create(System.Globalization.CultureInfo.CurrentCulture, Not kweKeywords.CaseSensitive)
         Dim i As Integer = 0
         Try
+            'For Each itm In SelectedMetadata
+            '    If itm.IPTC Is Nothing Then itm.IPTC = New IptcInternal(itm.SystemMetadata.FullPath)
+            'Next
+
             For Each currentitem In From item In SelectedMetadata Select item.IPTC
                 If ctl Is nudUrgency Then 'Needs special handling
                     If currentitem.Urgency <> nudUrgency.Value Then _
@@ -1357,6 +1361,14 @@ Retry:              item.Save()
         Catch
             Beep()
         End Try
+    End Sub
+
+    Private Sub Control_Validating(sender As Object, e As CancelEventArgs) Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, rtgTechnical.Validating, rtgOverall.Validating, rtgInfo.Validating, rtgArt.Validating, nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
+
+    End Sub
+
+    Private Sub lvwImages_DrawItem(sender As Object, e As DrawListViewItemEventArgs) Handles lvwImages.DrawItem
+
     End Sub
 End Class
 
