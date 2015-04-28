@@ -84,8 +84,12 @@ inline cli::array<UInt64>^ EnumCore::GetFlags(UInt64 value){return EnumCore::Get
 template <class TU>
 cli::array<TU>^ EnumCore::GetFlagsU(TU value, int size){
     auto ret = gcnew List<TU>();
-    for(TU i = 1; i <= TU::MaxValue / 2; i *= 2)
-        if((value & i) != 0) ret->Add(i);
+    TU prev = 0; //Overflow check
+    for (TU i = 1; i <= TU::MaxValue && i > prev;  i *= 2){
+        prev = i;
+        if ((value & i) != 0)
+            ret->Add(i);
+    }
     return ret->ToArray();
 }
 template <class TS, class TU>

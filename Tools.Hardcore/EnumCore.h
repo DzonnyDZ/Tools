@@ -120,6 +120,7 @@ namespace Tools{
         /// <param name="value">Value to get flags from</param>
         /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        /// <version version="1.5.5">Fixed bug that highest flag from the type (128) was ignored</version>
         [Extension]
         static cli::array<Byte>^ GetFlags(Byte value);
 
@@ -134,6 +135,7 @@ namespace Tools{
         /// <param name="value">Value to get flags from</param>
         /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        /// <version version="1.5.5">Fixed bug that highest flag from the type was ignored</version>
         [Extension, CLSCompliant(false)]
         static cli::array<UInt16>^ GetFlags(UInt16 value);
 
@@ -148,6 +150,7 @@ namespace Tools{
         /// <param name="value">Value to get flags from</param>
         /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        /// <version version="1.5.5">Fixed bug that highest flag from the type was ignored</version>
         [Extension, CLSCompliant(false)]
         static cli::array<UInt32>^ GetFlags(UInt32 value);
 
@@ -162,6 +165,7 @@ namespace Tools{
         /// <param name="value">Value to get flags from</param>
         /// <returns>An array containing separate flags set in <paramref name="value"/></returns>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
+        /// <version version="1.5.5">Fixed bug that highest flag from the type was ignored</version>
         [Extension]
         static cli::array<UInt64>^ GetFlags(UInt64 value);
 
