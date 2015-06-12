@@ -3,10 +3,10 @@ Imports System.Globalization
 
 #If Config <= Alpha Then 'Stage: Aplha
 Namespace WindowsT.WPF.ConvertersT
-    ''' <summary>Converter that converts <see cref="Windows.Forms.CheckState"/> to <see cref="Nullable(Of T)"/>[<see cref="Boolean"/>]</summary>
+    ''' <summary>Converter that converts <see cref="System.Windows.Forms.CheckState"/> to <see cref="Nullable(Of T)"/>[<see cref="Boolean"/>]</summary>
     ''' <version version="1.5.2" stage="Alpha">Class introduced</version>
     Public NotInheritable Class CheckStateConverter
-        Inherits StronglyTypedConverter(Of Windows.Forms.CheckState, Boolean?)
+        Inherits StronglyTypedConverter(Of System.Windows.Forms.CheckState, Boolean?)
 
         ''' <summary>Converts a value.</summary>
         ''' <param name="value">The value produced by the binding source.</param>

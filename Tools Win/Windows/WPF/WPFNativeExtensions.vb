@@ -25,7 +25,7 @@ Namespace WindowsT.WPF
         ''' <summary>Indicates if class handler was registered for <see cref="Window">Window</see>.<see cref="Window.LoadedEvent">LoadedEvent</see></summary>
         Private globallyHideNullIconsOfWindowsRegistered As Boolean = False
         ''' <summary>Gets or sets value indicating if icons of all WPF windows in this application with <see cref="Window.Icon"/> null will be hidden</summary>
-        ''' <remarks>This property affacts all <see cref="Window">Windows</see> with <see cref="Window.Icon"/> = null in current application domain. This property should be set during application startup and then should not be changed. When changed it has effect only on newly opened windows.</remarks>
+        ''' <remarks>This property affacts all <see cref="Window">Windows</see> with <see cref="Window.Icon"/> = null in current application domain. This property should be set during application startup and then should not be changed. When changed it has effect only on newly opened System.Windows.</remarks>
         Public Property GloballyHideNullIconsOfWindows As Boolean
             Get
                 Return _GloballyHideNullIconsOfWindows
@@ -48,7 +48,7 @@ Namespace WindowsT.WPF
             If Not TypeOf sender Is Window Then Exit Sub
             Dim win As Window = sender
             If win.Icon Is Nothing Then win.HideIcon()
-            windows.Add(win)
+            System.Windows.Add(win)
             AddHandler win.Closed, AddressOf OnWindowClosed
             AddHandler win.SourceInitialized, AddressOf OnIconChanged
             Dim desc = DependencyPropertyDescriptor.FromProperty(Window.IconProperty, GetType(Window))
@@ -66,7 +66,7 @@ Namespace WindowsT.WPF
             RemoveHandler win.SourceInitialized, AddressOf OnIconChanged
             Dim desc = DependencyPropertyDescriptor.FromProperty(Window.IconProperty, GetType(Window))
             desc.RemoveValueChanged(win, AddressOf OnIconChanged)
-            windows.Remove(win)
+            System.Windows.Remove(win)
         End Sub
         ''' <summary>Called whenever icon of window changes</summary>
         ''' <param name="sender">A <see cref="Window"/></param>

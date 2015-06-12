@@ -40,7 +40,7 @@ Namespace TextT.UnicodeT
         End Sub
 
         Private Sub cmdTargetPathBrowse_Click(sender As System.Object, e As System.EventArgs) Handles cmdTargetPathBrowse.Click
-            If sfdSaveXml.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            If sfdSaveXml.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
                 txtTarget.Text = sfdSaveXml.FileName
             End If
         End Sub
@@ -163,13 +163,13 @@ Namespace TextT.UnicodeT
         End Sub
 
         Private Sub cmdCheckAgainst_Click(sender As System.Object, e As System.EventArgs) Handles cmdCheckAgainst.Click
-            If ofdOpenXml.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            If ofdOpenXml.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
                 txtCheck.Text = ofdOpenXml.FileName
             End If
         End Sub
 
         Private Sub cmdAddMui_Click(sender As System.Object, e As System.EventArgs) Handles cmdAddMui.Click
-            If ofdMui.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            If ofdMui.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
                 cmbCharsLanguage.Items.Add(New With {.Name = IO.Path.GetFileName(ofdMui.FileName), .Path = ofdMui.FileName})
                 cmbCharsLanguage.SelectedIndex = cmbCharsLanguage.Items.Count - 1
             End If

@@ -57,11 +57,11 @@ Public Class RatingEditor
                     Case Key.Up : Return sender.Rating = CustomRating.Star5
                     Case Key.Down : Return sender.Rating = CustomRating.NotRated
                     Case Key.Left
-                        If sender.FlowDirection = Windows.FlowDirection.LeftToRight Then Return sender.Rating = CustomRating.Star5
-                        If sender.FlowDirection = Windows.FlowDirection.RightToLeft Then Return sender.Rating = CustomRating.NotRated
+                        If sender.FlowDirection = System.Windows.FlowDirection.LeftToRight Then Return sender.Rating = CustomRating.Star5
+                        If sender.FlowDirection = System.Windows.FlowDirection.RightToLeft Then Return sender.Rating = CustomRating.NotRated
                     Case Key.Right
-                        If sender.FlowDirection = Windows.FlowDirection.LeftToRight Then Return sender.Rating = CustomRating.NotRated
-                        If sender.FlowDirection = Windows.FlowDirection.RightToLeft Then Return sender.Rating = CustomRating.Star5
+                        If sender.FlowDirection = System.Windows.FlowDirection.LeftToRight Then Return sender.Rating = CustomRating.NotRated
+                        If sender.FlowDirection = System.Windows.FlowDirection.RightToLeft Then Return sender.Rating = CustomRating.Star5
                     Case Else : Return True
                 End Select
             ElseIf TypeOf e.InnerEvent Is TextCompositionEventArgs Then

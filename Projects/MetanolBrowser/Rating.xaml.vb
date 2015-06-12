@@ -166,8 +166,8 @@ Public Class Rating
         Select Case e.Key
             Case Key.Up, Key.Add : RatingPlus()
             Case Key.Down, Key.Subtract : RatingMinus()
-            Case Key.Left : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then RatingPlus() Else RatingMinus()
-            Case Key.Right : If Me.FlowDirection = Windows.FlowDirection.RightToLeft Then RatingMinus() Else RatingPlus()
+            Case Key.Left : If Me.FlowDirection = System.Windows.FlowDirection.RightToLeft Then RatingPlus() Else RatingMinus()
+            Case Key.Right : If Me.FlowDirection = System.Windows.FlowDirection.RightToLeft Then RatingMinus() Else RatingPlus()
             Case Key.NumPad0, Key.D0 : Rating = CustomRating.Rejected
             Case Key.NumPad1 To Key.NumPad5 : Rating = e.Key - Key.NumPad1 + 1
             Case Key.D1 To Key.D5 : Rating = e.Key - Key.D1 + 1

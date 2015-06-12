@@ -286,7 +286,7 @@ Namespace DrawingT.DrawingIOt
 
         Private Sub tmiExport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmiExport.Click
             If tvwResults.SelectedNode IsNot Nothing AndAlso TypeOf tvwResults.SelectedNode.Tag Is Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader Then
-                If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+                If sfdSave.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                     Dim r As Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader = tvwResults.SelectedNode.Tag
                     Dim data = r.Data
                     data.Seek(0, IO.SeekOrigin.Begin)
@@ -301,14 +301,14 @@ Namespace DrawingT.DrawingIOt
                     End Using
                 End If
             ElseIf tvwResults.SelectedNode IsNot Nothing AndAlso TypeOf tvwResults.SelectedNode.Tag Is Byte() Then
-                If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+                If sfdSave.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                     Using f = IO.File.Open(sfdSave.FileName, IO.FileMode.OpenOrCreate, IO.FileAccess.Write)
                         f.Write(tvwResults.SelectedNode.Tag, 0, CType(tvwResults.SelectedNode.Tag, Byte()).Length)
                         f.Flush()
                     End Using
                 End If
             ElseIf tvwResults.SelectedNode IsNot Nothing AndAlso TypeOf tvwResults.SelectedNode.Tag Is ex.IfdMain AndAlso tvwResults.SelectedNode.Text Like "*thumbnail*" Then
-                If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+                If sfdSave.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                     Using f = IO.File.Open(sfdSave.FileName, IO.FileMode.OpenOrCreate, IO.FileAccess.Write)
                         f.Write(CType(tvwResults.SelectedNode.Tag, ex.IfdMain).ThumbnailData, 0, CType(tvwResults.SelectedNode.Tag, ex.IfdMain).ThumbnailData.Length)
                         f.Flush()
@@ -432,7 +432,7 @@ Namespace DrawingT.DrawingIOt
                 MsgBox("Open file first")
                 Exit Sub
             End If
-            If sfdExif.ShowDialog <> Windows.Forms.DialogResult.OK Then Exit Sub
+            If sfdExif.ShowDialog <> System.Windows.Forms.DialogResult.OK Then Exit Sub
             Try
                 Using jrd As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(LastPath)
                     Dim es = jrd.GetExifStream
@@ -454,7 +454,7 @@ Namespace DrawingT.DrawingIOt
                 MsgBox("Open file first")
                 Exit Sub
             End If
-            If sfdExif.ShowDialog <> Windows.Forms.DialogResult.OK Then Exit Sub
+            If sfdExif.ShowDialog <> System.Windows.Forms.DialogResult.OK Then Exit Sub
             Try
                 Using jrd As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(LastPath)
                     Dim es = jrd.GetExifStream
@@ -480,7 +480,7 @@ Namespace DrawingT.DrawingIOt
                 MsgBox("Open file first")
                 Exit Sub
             End If
-            If sfdExif.ShowDialog <> Windows.Forms.DialogResult.OK Then Exit Sub
+            If sfdExif.ShowDialog <> System.Windows.Forms.DialogResult.OK Then Exit Sub
             Try
                 Using jrd As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(LastPath)
                     Dim es = jrd.GetExifStream

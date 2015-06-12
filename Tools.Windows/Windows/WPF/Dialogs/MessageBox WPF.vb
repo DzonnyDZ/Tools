@@ -18,7 +18,7 @@ Namespace WindowsT.WPF.DialogsT
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_MiddleControlPlaceholder, Type:=GetType(Controls.Panel))> _
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_BottomControlPlaceholder, Type:=GetType(Controls.Panel))> _
     Public Class MessageBoxImplementationControl
-        Inherits Windows.Controls.Control
+        Inherits System.Windows.Controls.Control
         Implements IDisposable
         ''' <summary>Identifies placeholder panel for additional control on top of message box window</summary>
         Protected Friend Const PART_TopControlPlaceholder As String = "PART_TopControlPlaceholder"
@@ -357,11 +357,11 @@ Namespace WindowsT.WPF.DialogsT
     ''' <remarks>Message box user interface is implemented by <see cref="MessageBoxImplementationControl"/>. To change style or template of message box, use that control.</remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     ''' <version version="1.5.3" stage="Beta">Added support for <see cref="Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
-    ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/>.</version>
+    ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="System.Windows.DependencyObject"/> hosted in <see cref="System.Windows.Window"/>.</version>
     ''' <version version="1.5.3">Messages are now centered to thair owner (if some conditions are met).
     ''' The conditions are: Owner is specified and - Owner is <see cref="Window"/> or it's <see cref="DependencyObject"/> for which a <see cref="Window"/> can be determined using <see cref="Window.GetWindow"/> -or- 
     ''' Owner is <see cref="Forms.Control"/> -or-
-    ''' Owner is either <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> and it's handle represents <see cref="Windows.Controls"/> -or-
+    ''' Owner is either <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> and it's handle represents <see cref="System.Windows.Controls"/> -or-
     ''' <para>
     ''' If owner is <see cref="Forms.Control"/> dialog is centered to control's parent <see cref="Forms.Form"/> (if it can be determined using <see cref="Forms.Control.FindForm"/>). If <see cref="Forms.Form"/> cannot be determined the dialog is centered to control itself.
     ''' If owner is <see cref="DependencyObject"/> dialog is centered to parent <see cref="Window"/> of the <see cref="DependencyObject"/>. If parent <see cref="Window"/> cannot be found (using <see cref="Window.GetWindow"/>) the dialog is not centered at all.
@@ -423,12 +423,12 @@ Namespace WindowsT.WPF.DialogsT
 
         ''' <summary>Shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null).  This implementation recognizes values of type <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.DependencyObject"/> (if hosted in <see cref="Windows.Window"/>). Unrecognized owners are treated as null.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null).  This implementation recognizes values of type <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/>, <see cref="System.Windows.Window"/> and <see cref="System.Windows.DependencyObject"/> (if hosted in <see cref="System.Windows.Window"/>). Unrecognized owners are treated as null.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="Forms.IWin32Window"/> to <see cref="Object"/> to support <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="Windows.DependencyObject"/> for which <see cref="Windows.Window.GetWindow"/> returns non-null value.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="Forms.IWin32Window"/> to <see cref="Object"/> to support <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="System.Windows.DependencyObject"/> for which <see cref="System.Windows.Window.GetWindow"/> returns non-null value.</version>
         ''' <version version="1.5.3">Parameters renamed: <c>Modal</c> to <c>modal</c>; <c>Owner</c> to <c>owner</c></version>
-        ''' <version version="1.5.3">Changed so that message box is now centered to it's parent (as long as the parent is <see cref="Forms.Control"/>, <see cref="Windows.Window"/> (or <see cref="DependencyObject"/> from a <see cref="Window"/>) or <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> representing <see cref="Forms.Control"/>). See class documentation for details.</version>
+        ''' <version version="1.5.3">Changed so that message box is now centered to it's parent (as long as the parent is <see cref="Forms.Control"/>, <see cref="System.Windows.Window"/> (or <see cref="DependencyObject"/> from a <see cref="Window"/>) or <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> representing <see cref="Forms.Control"/>). See class documentation for details.</version>
         Protected Overrides Sub PerformDialog(ByVal modal As Boolean, ByVal owner As Object)
             If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Window = New MessageBoxWindow()
@@ -580,8 +580,8 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns><see cref="FlowDirection.RightToLeft"/> when <paramref name="Options"/> has <see cref="iMsg.MessageBoxOptions.Rtl"/> bit set; <see cref="FlowDirection.LeftToRight"/> otherwise.</returns>
         Protected Shared Function OptionsToFlowDirection(ByVal Options As iMsg.MessageBoxOptions) As FlowDirection
             Select Case Options And MessageBoxOptions.Rtl
-                Case MessageBoxOptions.Rtl : Return Windows.FlowDirection.RightToLeft
-                Case Else : Return Windows.FlowDirection.LeftToRight
+                Case MessageBoxOptions.Rtl : Return System.Windows.FlowDirection.RightToLeft
+                Case Else : Return System.Windows.FlowDirection.LeftToRight
             End Select
         End Function
         ''' <summary>gets or set value indicating bidirectionl flow direction stored in <see cref="Options"/></summary>
@@ -598,7 +598,7 @@ Namespace WindowsT.WPF.DialogsT
             End Get
             Set(ByVal value As FlowDirection)
                 Select Case value
-                    Case Windows.FlowDirection.RightToLeft : Options = Options Or iMsg.MessageBoxOptions.Rtl
+                    Case System.Windows.FlowDirection.RightToLeft : Options = Options Or iMsg.MessageBoxOptions.Rtl
                     Case Else : Options = Options And Not iMsg.MessageBoxOptions.Rtl
                 End Select
             End Set
@@ -680,7 +680,7 @@ Namespace WindowsT.WPF.DialogsT
             End Get
         End Property
         ''' <summary>Gets control from object</summary>
-        ''' <param name="Control">Object that represents a control. It can be <see cref="System.Windows.Forms.Control"/>, <see cref="Windows.UIElement"/></param>
+        ''' <param name="Control">Object that represents a control. It can be <see cref="System.Windows.Forms.Control"/>, <see cref="System.Windows.UIElement"/></param>
         ''' <returns><see cref="UIelement"/> which represents <paramref name="Control"/>. For same <paramref name="Control"/> returns same <see cref="Control"/>. Returns null if <paramref name="Control"/> is null or it is of unsupported type.</returns>
         Protected Overridable Function GetControl(ByVal Control As Object) As UIElement
             If Control Is Nothing Then Return Nothing

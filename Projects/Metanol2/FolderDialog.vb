@@ -3,7 +3,7 @@ Friend Class frmFolderDialog
     ''' <summary>CTor</summary>
     Public Sub New()
         InitializeComponent()
-        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
     End Sub
     ''' <summary>CTor with path</summary>
     ''' <param name="Path">Path to be shown by default</param>
@@ -15,7 +15,7 @@ Friend Class frmFolderDialog
         Try
             fbdBrowse.SelectedPath = txtPath.Text
         Catch : End Try
-        If fbdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If fbdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             Try
                 txtPath.Text = fbdBrowse.SelectedPath
             Catch ex As Exception

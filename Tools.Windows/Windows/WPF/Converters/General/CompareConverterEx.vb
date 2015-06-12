@@ -16,7 +16,7 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <summary>Converts a value.</summary>
         ''' <returns>A converted value. If <paramref name="value"/> is null or <paramref name="parameter"/> is null, returns null. Otherwise returns boolean value indicating if <paramref name="value"/> equals to <paramref name="parameter"/> using <see cref="System.Object.Equals"/>.</returns>
         ''' <param name="value">The value produced by the binding source. This value will be compared with <paramref name="parameter"/>.</param>
-        ''' <param name="targetType">Type returned by conversion. Supported types are <see cref="Boolean"/>, <see cref="Windows.Visibility"/> and <see cref="Nullable(Of T)"/> of these types</param>
+        ''' <param name="targetType">Type returned by conversion. Supported types are <see cref="Boolean"/>, <see cref="System.Windows.Visibility"/> and <see cref="Nullable(Of T)"/> of these types</param>
         ''' <param name="parameter">Value to compare <paramref name="value"/> with. If parametr is <see cref="String"/> extended comparison is performed. Othervise parameter is tested for equality with <paramref name="value"/>.</param>
         ''' <param name="culture">Culture to convert string values to numbers/dates etc. Ignored when <paramref name="parameter"/> is not string.</param>
         ''' <remarks>Fully supported types are:
@@ -216,8 +216,8 @@ SkipQuotes:
             End If
 [return]:   If targetType Is Nothing OrElse targetType.IsAssignableFrom(GetType(Boolean)) OrElse targetType.IsAssignableFrom(GetType(Boolean?)) Then
                 Return ret
-            ElseIf targetType.IsAssignableFrom(GetType(Windows.Visibility)) OrElse targetType.IsAssignableFrom(GetType(Windows.Visibility?)) Then
-                Return If(ret, Windows.Visibility.Visible, Windows.Visibility.Collapsed)
+            ElseIf targetType.IsAssignableFrom(GetType(System.Windows.Visibility)) OrElse targetType.IsAssignableFrom(GetType(System.Windows.Visibility?)) Then
+                Return If(ret, System.Windows.Visibility.Visible, System.Windows.Visibility.Collapsed)
             Else
                 Throw New NotSupportedException("{0} can convert only to {0} and {1} and corresponding nullable types.")
             End If

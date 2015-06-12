@@ -4,6 +4,7 @@ Imports System.Windows.Forms
 Imports System.Drawing, System.CodeDom
 Imports System.ComponentModel.Design.Serialization
 Imports Tools.DrawingT.DesignT
+Imports Tools.MediaT.Sound
 
 'TODO: Test how it behaves in PropertyGrid for MessageBox
 'TODO: Verify codedom serialization behaviour
@@ -15,8 +16,8 @@ Namespace MediaT
     ''' </remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
-    <TypeConverter(GetType(Sound.SoundTypeConverter))> _
-    <Editor(GetType(Tools.DrawingT.DesignT.DropDownControlEditor(Of Sound, SoundDropDownList)), GetType(UITypeEditor))> _
+    <TypeConverter(GetType(Sound.SoundTypeConverter))>
+    <Editor(GetType(Tools.DrawingT.DesignT.DropDownControlEditor(Of Sound, SoundDropDownList)), GetType(UITypeEditor))>
     Public MustInherit Class Sound
         ''' <summary>When overriden in derived class plays sound. Returns when sound is finished</summary>
         ''' <remarks>Note for inheritors: If you do not override <see cref="PlayOnBackground"/> function this function is called when <see cref="PlayOnBackground"/> is invoked. In such case this function is called in another thread that object was created in.</remarks>
@@ -151,7 +152,7 @@ Namespace MediaT
                 If TypeOf value Is SoundPlayerWrapper Then
                     With DirectCast(value, SoundPlayerWrapper)
                         If .Player.SoundLocation.IsNullOrEmpty Then Throw New ArgumentException(ResourcesT.Exceptions.SystemSoundPlayerWrapperCanBeConvertedOnlyWhenItProvidesSoundLocation)
-                        Return New InstanceDescriptor(GetType(SoundPlayerWrapper).GetConstructor(New Type() {GetType(String)}), New Object() {.Player.SoundLocation}, True)
+                        Return New InstanceDescriptor(GetType(SoundPlayerWrapper).GetConstructor(New Type() {GetType(String)}), New Object() { .Player.SoundLocation}, True)
                     End With
                 ElseIf TypeOf value Is SystemSoundPlayer Then
                     Dim SSvalue As SystemSoundPlayer.KnownSystemSounds = DirectCast(value, SystemSoundPlayer)
@@ -167,9 +168,9 @@ Namespace MediaT
             ''' <summary><see cref="ListBox"/> which contains values to chose between</summary>
             Private WithEvents lstList As New ListBox With {.TabIndex = 0}
             ''' <summary><see cref="Label"/> to browse for file</summary>
-            Private WithEvents cmdBrowse As New Button With {.AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .TabIndex = 0}
+            Private WithEvents cmdBrowse As New Button With {.AutoSize = True, .AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink, .TabIndex = 0}
             ''' <summary>Button which plays the sound</summary>
-            Private WithEvents cmdPlay As New Button With {.Image = My.Resources.Play, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .TabIndex = 1}
+            Private WithEvents cmdPlay As New Button With {.Image = My.Resources.play, .AutoSize = True, .AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink, .TabIndex = 1}
             ''' <summary>Layout panel for <see cref="cmdBrowse"/> and <see cref="cmdPlay"/></summary>
             Private tlbBottom As New TableLayoutPanel With {.ColumnCount = 2, .RowCount = 1, .TabIndex = 1}
             ''' <summary>Tooltip for <see cref="cmdPlay"/></summary>
@@ -179,22 +180,22 @@ Namespace MediaT
             ''' <summary>CTor</summary>
             Public Sub New()
                 lstList.DisplayMember = "Value2"
-                lstList.Items.AddRange(New Object() { _
-                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Asterisk, ResourcesT.Components.Asterisk), _
-                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Beep, ResourcesT.Components.Beep), _
-                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Exclamation, ResourcesT.Components.Exclamation), _
-                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Hand, ResourcesT.Components.Hand), _
-                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Question, ResourcesT.Components.Question) _
+                lstList.Items.AddRange(New Object() {
+                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Asterisk, ResourcesT.Components.Asterisk),
+                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Beep, ResourcesT.Components.Beep),
+                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Exclamation, ResourcesT.Components.Exclamation),
+                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Hand, ResourcesT.Components.Hand),
+                    New Pair(Of SystemSoundPlayer, String)(SystemSounds.Question, ResourcesT.Components.Question)
                 })
                 cmdBrowse.Text = ResourcesT.Components.Browse
                 lstList.Dock = DockStyle.Fill
                 lstList.ClientSize = New Size(lstList.ClientSize.Width, lstList.ItemHeight * lstList.Items.Count)
                 Me.AutoSize = True
-                Me.AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink
+                Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
                 cmdBrowse.Anchor = AnchorStyles.Left
                 tlbBottom.Dock = DockStyle.Bottom
                 tlbBottom.AutoSize = True
-                tlbBottom.AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink
+                tlbBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
                 If tlbBottom.RowStyles.Count < 1 Then tlbBottom.RowStyles.Add(New RowStyle)
                 tlbBottom.RowStyles(0).SizeType = SizeType.AutoSize
                 If tlbBottom.ColumnStyles.Count < 1 Then tlbBottom.ColumnStyles.Add(New ColumnStyle)
@@ -274,7 +275,7 @@ Namespace MediaT
     End Class
     ''' <summary>Implements <see cref="Sound"/> which plays given <see cref="SystemSound"/></summary>
     ''' <completionlist cref="System.Media.SystemSounds"/>
-    <DebuggerDisplay("{ToString}")> _
+    <DebuggerDisplay("{ToString}")>
     Public NotInheritable Class SystemSoundPlayer : Inherits Sound
         ''' <summary><see cref="SystemSound"/> to be played</summary>
         Friend ReadOnly SystemSound As SystemSound
@@ -384,7 +385,7 @@ Namespace MediaT
         End Operator
     End Class
     ''' <summary>Wraps <see cref="SoundPlayer"/> as <see cref="Sound"/></summary>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Class SoundPlayerWrapper
         Inherits Sound
         ''' <summary>Countains value of the <see cref="Player"/> property</summary>
@@ -409,7 +410,7 @@ Namespace MediaT
         ''' <param name="Stream">A <see cref="System.IO.Stream"/> to a .wav file.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Stream"/> is null</exception>
         Public Sub New(ByVal Stream As IO.Stream)
-            Me.new(New SoundPlayer(ThrowOnNull(Stream)))
+            Me.New(New SoundPlayer(ThrowOnNull(Stream)))
         End Sub
         ''' <summary>Throws <see cref="ArgumentNullException"/> if given <see cref="IO.Stream"/> is null</summary>
         ''' <param name="stream"><see cref="IO.Stream"/> to check</param>

@@ -21,7 +21,7 @@ Namespace DiagnosticsT
         End Sub
 
         Private Sub cmdBw_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBw.Click
-            If ofdOpen.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdOpen.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Dim img As Bitmap
                 Try
                     img = New Bitmap(ofdOpen.FileName)

@@ -219,7 +219,7 @@ Namespace ReportingT.ReportingEngineLite
             If TargetFilePath = "" Then
                 Dim sfd As New SaveFileDialog With {.DefaultExt = DefaultExtension, .Filter = SaveFileMask}
                 Dim dialogResult As DialogResult = Context.Invoke(Function() sfd.ShowDialog)
-                If dialogResult = Windows.Forms.DialogResult.OK Then
+                If dialogResult = System.Windows.Forms.DialogResult.OK Then
                     TargetFilePath = sfd.FileName
                 Else
                     Throw New OperationCanceledException

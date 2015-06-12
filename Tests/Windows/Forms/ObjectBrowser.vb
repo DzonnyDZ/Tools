@@ -67,7 +67,7 @@ Namespace WindowsT.FormsT
 
         
         Private Sub cmdBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowse.Click
-            If ofdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 For Each file In ofdBrowse.FileNames
 Retry:              Try
                         Dim asm = Assembly.LoadFile(file)

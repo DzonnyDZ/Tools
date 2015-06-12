@@ -43,9 +43,9 @@ Namespace WindowsT.WPF.ConvertersT
             If value Is Nothing Then Throw New ArgumentNullException("value")
             If targetType Is Nothing Then Throw New ArgumentNullException("targetType")
             If value.GetType.Equals(targetType) Then Return value
-            If (Not TypeOf value Is Windows.HorizontalAlignment AndAlso Not TypeOf value Is Windows.TextAlignment) OrElse (Not targetType.Equals(GetType(Windows.HorizontalAlignment)) AndAlso Not targetType.Equals(GetType(Windows.TextAlignment))) Then _
-                Throw New NotSupportedException(ResourcesT.Exceptions.ThisConverterCanConvertOnlyBetweenTypes0And1.f(GetType(Windows.HorizontalAlignment).Name, GetType(Windows.VerticalAlignment).Name))
-            If TypeOf value Is Windows.HorizontalAlignment Then
+            If (Not TypeOf value Is System.Windows.HorizontalAlignment AndAlso Not TypeOf value Is System.Windows.TextAlignment) OrElse (Not targetType.Equals(GetType(System.Windows.HorizontalAlignment)) AndAlso Not targetType.Equals(GetType(System.Windows.TextAlignment))) Then _
+                Throw New NotSupportedException(ResourcesT.Exceptions.ThisConverterCanConvertOnlyBetweenTypes0And1.f(GetType(System.Windows.HorizontalAlignment).Name, GetType(System.Windows.VerticalAlignment).Name))
+            If TypeOf value Is System.Windows.HorizontalAlignment Then
                 Return Convert(DirectCast(value, HorizontalAlignment))
             Else
                 Return Convert(DirectCast(value, TextAlignment))

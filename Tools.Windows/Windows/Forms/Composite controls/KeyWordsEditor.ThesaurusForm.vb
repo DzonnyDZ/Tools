@@ -198,7 +198,7 @@ Namespace WindowsT.FormsT
 
         Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
             PerformOK()
-            Me.DialogResult = Windows.Forms.DialogResult.OK
+            Me.DialogResult = System.Windows.Forms.DialogResult.OK
             Me.Close()
         End Sub
         Private Sub PerformOK()
@@ -255,23 +255,23 @@ Namespace WindowsT.FormsT
             '        Next Backup
             '    End With
             'End If
-            Me.DialogResult = Windows.Forms.DialogResult.Cancel
+            Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.Close()
         End Sub
 
         Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
-            If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then 'MBox.ModalEx(My.Resources.ThisActionRequiresAllChangesToBeConfirmed, My.Resources.ConfirmChanges, New Object() {New MBox.MessageBoxButton(My.Resources.Continue_, Windows.Forms.DialogResult.OK, My.Resources.Continue_AccessKey), New MBox.MessageBoxButton(DialogResult.OK)}).DialogResult = Windows.Forms.DialogResult.OK AndAlso 
+            If sfdSave.ShowDialog = System.Windows.Forms.DialogResult.OK Then 'MBox.ModalEx(My.Resources.ThisActionRequiresAllChangesToBeConfirmed, My.Resources.ConfirmChanges, New Object() {New MBox.MessageBoxButton(My.Resources.Continue_, System.Windows.Forms.DialogResult.OK, My.Resources.Continue_AccessKey), New MBox.MessageBoxButton(DialogResult.OK)}).DialogResult = System.Windows.Forms.DialogResult.OK AndAlso 
                 Dim Doc = KeyWordsEditor.GetXML(kweAutoComplete.KeyWords, From px As SynProxy In cmbSyn.Items Select px.Syns)
 Retry:          Try
                     doc.Save(sfdSave.FileName)
                 Catch ex As Exception
-                    If MBox.[Error_XTBI](ex, My.Resources.Error_, IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then GoTo Retry
+                    If MBox.[Error_XTBI](ex, My.Resources.Error_, IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = System.Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = System.Windows.Forms.DialogResult.OK Then GoTo Retry
                 End Try
             End If
         End Sub
 
         Private Sub cmdOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOpen.Click
-            If ofdLoad.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdLoad.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Dim data As Tools.DataStructuresT.GenericT.IPair(Of System.Collections.Generic.IEnumerable(Of String), System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String(), String())))
                 Try
                     Data = KeyWordsEditor.ParseFromXml(Xml.Linq.XDocument.Load(ofdLoad.FileName))

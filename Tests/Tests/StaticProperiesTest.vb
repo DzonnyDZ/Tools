@@ -29,7 +29,7 @@ Namespace TestsT
 
 
         Private Sub tsbOpenAssembly_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbOpenAssembly.Click
-            If ofdOpenAssembly.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdOpenAssembly.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     obwSelectType.Objects.Add(Reflection.Assembly.LoadFile(ofdOpenAssembly.FileName))
                 Catch ex As Exception

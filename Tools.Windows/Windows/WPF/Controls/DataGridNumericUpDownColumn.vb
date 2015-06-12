@@ -104,7 +104,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <param name="element">The element to apply style onto</param>
         ''' <remarks>Code of this method was obtained from Reflector on <see cref="M:System.Windows.Controls.DataGridBoundColumn.ApplyStyle"/></remarks>
         Friend Sub ApplyStyle(ByVal isEditing As Boolean, ByVal defaultToElementStyle As Boolean, ByVal element As FrameworkElement)
-            Dim style As Windows.Style = Me.PickStyle(isEditing, defaultToElementStyle)
+            Dim style As System.Windows.Style = Me.PickStyle(isEditing, defaultToElementStyle)
             If (Not style Is Nothing) Then
                 element.Style = style
             End If
@@ -344,13 +344,13 @@ Namespace WindowsT.WPF.ControlsT
     ''' <summary>Event argumens of events related to creation of elemtnt in <see cref="DataGridColumn"/></summary>
     Public Class DataGridCellElementCreatingEventArgs : Inherits CancelEventArgs
         Private ReadOnly _dataItem As Object
-        Private ReadOnly _cell As Windows.Controls.DataGridCell
+        Private ReadOnly _cell As System.Windows.Controls.DataGridCell
         Private ReadOnly _column As DataGridColumn
         ''' <summary> - creates a new instance of the <see cref="DataGridCellElementCreatingEventArgs"/></summary>
         ''' <param name="column">Column cell belongs to</param>
         ''' <param name="cell">The cell</param>
         ''' <param name="dataItem">Data item cell is bound to</param>
-        Sub New(ByVal column As DataGridColumn, ByVal cell As Windows.Controls.DataGridCell, ByVal dataItem As Object)
+        Sub New(ByVal column As DataGridColumn, ByVal cell As System.Windows.Controls.DataGridCell, ByVal dataItem As Object)
             _column = column
             _cell = cell
             _dataItem = dataItem
@@ -362,7 +362,7 @@ Namespace WindowsT.WPF.ControlsT
             End Get
         End Property
         ''' <summary>Gets the cell object</summary>
-        Public ReadOnly Property Cell() As Windows.Controls.DataGridCell
+        Public ReadOnly Property Cell() As System.Windows.Controls.DataGridCell
             Get
                 Return _cell
             End Get

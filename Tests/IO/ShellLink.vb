@@ -34,7 +34,7 @@ Namespace IOt
         End Property
 
         Private Sub cmdCreate_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdCreate.Click
-            If ofdSelectFile.ShowDialog = Windows.Forms.DialogResult.OK AndAlso sfdSaveLink.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdSelectFile.ShowDialog = System.Windows.Forms.DialogResult.OK AndAlso sfdSaveLink.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Link = ShellLink.CreateLink(ofdSelectFile.FileName, sfdSaveLink.FileName)
                 Catch ex As Exception
@@ -44,7 +44,7 @@ Namespace IOt
         End Sub
 
         Private Sub cmdOpen_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdOpen.Click
-            If ofdOpenLink.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdOpenLink.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Link = New ShellLink(ofdOpenLink.FileName)
                 Catch ex As Exception
@@ -62,7 +62,7 @@ Namespace IOt
         End Sub
 
         Private Sub cmdSaveAs_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdSaveAs.Click
-            If sfdSaveLink.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If sfdSaveLink.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Link.SaveAs(sfdSaveLink.FileName)
                 Catch ex As Exception

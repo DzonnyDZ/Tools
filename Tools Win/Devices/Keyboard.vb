@@ -19,10 +19,12 @@ Namespace DevicesT
             End Get
         End Property
 
-
-        ''' <summary>There is no CTor</summary>
-        Partial Private Sub New()
+        ''' <summary>Private CTor to achieve pseudo-static class</summary>
+        ''' <exception cref="NotSupportedException">Always</exception>
+        Private Sub New()
+            Throw New NotSupportedException("This is static class")
         End Sub
+
         ''' <summary>Gets state of particular key.</summary>
         ''' <param name="Key">Key to get status of. Do not use shift keys (<see cref="Keys.Shift"/>, <see cref="Keys.Alt"/>, <see cref="Keys.Control"/>). <see cref="Keys.ShiftKey"/>, <see cref="Keys.Menu"/>, <see cref="Keys.ControlKey"/>, <see cref="Keys.RShiftKey"/>, <see cref="Keys.LShiftKey"/>, <see cref="Keys.LMenu"/>, <see cref="Keys.RMenu"/>, <see cref="Keys.LControlKey"/> and <see cref="Keys.RControlKey"/> are alloved.</param>
         ''' <returns>True if key is pressed at time when the property is being got.</returns>

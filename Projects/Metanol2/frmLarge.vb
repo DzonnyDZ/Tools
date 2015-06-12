@@ -49,7 +49,7 @@ Public Class frmLarge
         Me.WindowState = My.Settings.LargeState
         Me.FullScreen = My.Settings.LargeFullScreen
         If Me.Owner IsNot Nothing Then
-            Me.FormBorderStyle = Windows.Forms.FormBorderStyle.SizableToolWindow
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
             Me.MinimizeBox = False
             Me.MaximizeBox = False
             Me.ShowInTaskbar = False
@@ -66,13 +66,13 @@ Public Class frmLarge
             If value <> FullScreen Then
                 Dim MyScreen = Screen.FromControl(Me)
                 If value Then
-                    Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
+                    Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
                     Me.WindowState = FormWindowState.Maximized
                     Using Me32 As New WindowsT.NativeT.Win32Window(Me)
                         Me32.Area = MyScreen.Bounds 'TODO: Why I'm unable to do this via managed code???
                     End Using
                 Else
-                    Me.FormBorderStyle = Windows.Forms.FormBorderStyle.Sizable
+                    Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
                     Me.WindowState = FormWindowState.Maximized
                 End If
             End If

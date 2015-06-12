@@ -43,11 +43,11 @@ Namespace WindowsT.IndependentT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Fixed: Some static functions throws exception when icon is not set or when default button is used (even implicitly)</version>
-    ''' <version version="1.5.3">All owner parameters changed form <see cref="Windows.Forms.IWin32Window"/> to <see cref="Object"/> to support more types of owners - <see cref="Windows.Forms.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.Interop.IWin32Window"/>. Changes are required in derived classes to support this change and those new owners.</version>
-    ''' <version version="1.5.3">WPF (<see cref="WPF.DialogsT.MessageBox"/>) and WinForms (<see cref="FormsT.MessageBox"/>) implementations changed to support any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/> as owner.</version>
+    ''' <version version="1.5.3">All owner parameters changed form <see cref="System.Windows.Forms.IWin32Window"/> to <see cref="Object"/> to support more types of owners - <see cref="System.Windows.Forms.IWin32Window"/>, <see cref="System.Windows.Window"/> and <see cref="System.Windows.Interop.IWin32Window"/>. Changes are required in derived classes to support this change and those new owners.</version>
+    ''' <version version="1.5.3">WPF (<see cref="WPF.DialogsT.MessageBox"/>) and WinForms (<see cref="FormsT.MessageBox"/>) implementations changed to support any <see cref="System.Windows.DependencyObject"/> hosted in <see cref="System.Windows.Window"/> as owner.</version>
     ''' <version version="1.5.3">Fix: Bug in <see cref="MessageBox.ModalEx_PTEIOWMHS"/> caused that some functions rendered messagebox without buttons (or checkboxes/radios/combobox items).</version>
     ''' <version version="1.5.3">The <c>Error_xxx</c> methods now show inner exception message as well and throw <see cref="ArgumentNullException"/> (instead of <see cref="NullReferenceException"/>) when exception is null.</version>
-    <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
+    <DefaultProperty("Prompt"), DefaultEvent("Closed")>
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
         ''' <summary>Recomended format for displaying timer.</summary>
         ''' <remarks>This format is recognized by <see cref="TimeSpanFormattable"/>.</remarks>
@@ -115,9 +115,9 @@ Namespace WindowsT.IndependentT
 #Region "Properties"
         ''' <summary>Gets or sets value indicating if dialog can be closed without clicking any of buttons</summary>
         ''' <remarks>This does not affacet possibility to close message box programatically using the <see cref="Close"/> method.</remarks>
-        <DefaultValue(True)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(ResourcesT.Components), "AllowClose_d")> _
+        <DefaultValue(True)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(ResourcesT.Components), "AllowClose_d")>
         Public Property AllowClose() As Boolean
             Get
                 Return _AllowClose
@@ -132,9 +132,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Defines buttons displayed on message box</summary>
         ''' <remarks>This collection reports event. You can use them to track changed of the collection either via events of the collection itself or via the <see cref="ButtonsChanged"/> event.
         ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <LDescription(GetType(ResourcesT.Components), "Buttons_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)>
+        <LDescription(GetType(ResourcesT.Components), "Buttons_d")>
         Public ReadOnly Property Buttons() As ListWithEvents(Of MessageBoxButton)
             <DebuggerStepThrough()> Get
                 Return _Buttons
@@ -156,9 +156,9 @@ Namespace WindowsT.IndependentT
         ''' </remarks>
         ''' <seealso cref="System.Windows.Forms.Form.AcceptButton"/>
         ''' <seealso cref="System.Windows.Controls.Button.IsDefault"/>
-        <DefaultValue(0I)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(ResourcesT.Components), "DefaultButton_d")> _
+        <DefaultValue(0I)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(ResourcesT.Components), "DefaultButton_d")>
         Public Property DefaultButton() As Integer
             <DebuggerStepThrough()> Get
                 Return _DefaultButton
@@ -173,9 +173,9 @@ Namespace WindowsT.IndependentT
         ''' <remarks>Values that are not members of the <see cref="DialogResult"/> enumeration can be safely used.
         ''' <para>If <see cref="AllowClose"/> is false this property ahs effect only when mapped to one of buttons (has same value as <see cref="MessageBoxButton.Result"/> of one buttons) and user presses escape.</para></remarks>
         ''' <seealeo cref="DialogResult"/><seealso cref="Show"/>
-        <DefaultValue(GetType(DialogResult), "None")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(ResourcesT.Components), "CloseResponse_d")> _
+        <DefaultValue(GetType(DialogResult), "None")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(ResourcesT.Components), "CloseResponse_d")>
         Public Property CloseResponse() As DialogResult
             <DebuggerStepThrough()> Get
                 Return _CloseResponse
@@ -198,7 +198,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets value indicating if the <see cref="CloseResponse"/> property has its default value</summary>
         ''' <returns>True when <see cref="CloseResponse"/> equals to <see cref="GetDefaultCloseResponse"/>; false otherwise</returns>
         ''' <value>Setting value of the property to true causes reseting value of the <see cref="CloseResponse"/> to its default value (<see cref="GetDefaultCloseResponse"/>). Setting the property to false is ignored.</value>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property UseDefaultCloseResponse() As Boolean
             Get
                 Return CloseResponse = GetDefaultCloseResponse()
@@ -237,10 +237,10 @@ Namespace WindowsT.IndependentT
             Return DialogResult.None
         End Function
         ''' <summary>Gets or sets text of prompt of message box.</summary>
-        <DefaultValue(GetType(String), Nothing)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <LDescription(GetType(ResourcesT.Components), "Prompt_d")> _
-        <Localizable(True), Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(UITypeEditor))> _
+        <DefaultValue(GetType(String), Nothing)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+        <LDescription(GetType(ResourcesT.Components), "Prompt_d")>
+        <Localizable(True), Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(UITypeEditor))>
         Public Property Prompt() As String
             <DebuggerStepThrough()> Get
                 Return _Prompt
@@ -253,10 +253,10 @@ Namespace WindowsT.IndependentT
         End Property
         ''' <summary>Gets or sets title text of message box</summary>
         ''' <remarks>If value of thsi property is null or an empty string, application title is used (see <see cref="Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Title"/>)</remarks>
-        <DefaultValue(GetType(String), Nothing)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <LDescription(GetType(ResourcesT.Components), "Title_d")> _
-        <Localizable(True)> _
+        <DefaultValue(GetType(String), Nothing)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+        <LDescription(GetType(ResourcesT.Components), "Title_d")>
+        <Localizable(True)>
         Public Property Title() As String
             <DebuggerStepThrough()> Get
                 Return _Title
@@ -270,10 +270,10 @@ Namespace WindowsT.IndependentT
 
         ''' <summary>Gets or sets icon image to display on the message box</summary>
         ''' <remarks>Expected image size is 64×64px. Image is resized proportionaly to fit this size. This may be changed by derived class.</remarks>
-        <DefaultValue(GetType(Drawing.Image), Nothing)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <LDescription(GetType(ResourcesT.Components), "Icon_d")> _
-        <Localizable(True)> _
+        <DefaultValue(GetType(Drawing.Image), Nothing)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+        <LDescription(GetType(ResourcesT.Components), "Icon_d")>
+        <Localizable(True)>
         Public Property Icon() As Drawing.Image
             <DebuggerStepThrough()> Get
                 Return _Icon
@@ -286,11 +286,11 @@ Namespace WindowsT.IndependentT
         End Property
         ''' <summary>Gets or sets options of the message box</summary>
         ''' <remarks>Text align applies only to prompt part of message box. In right-to-left reading text align has oposite meaning - <see cref="MessageBoxOptions.AlignLeft"/> aligns to right and <see cref="MessageBoxOptions.AlignRight"/> aligns to left.</remarks>
-        <DefaultValue(GetType(MessageBoxOptions), "0")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <LDescription(GetType(ResourcesT.Components), "Options_d")> _
-        <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))> _
-        <Localizable(True)> _
+        <DefaultValue(GetType(MessageBoxOptions), "0")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)>
+        <LDescription(GetType(ResourcesT.Components), "Options_d")>
+        <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))>
+        <Localizable(True)>
         Public Property Options() As MessageBoxOptions
             <DebuggerStepThrough()> Get
                 Return _Options
@@ -304,9 +304,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Check boxes displayed in messaqge box</summary>
         ''' <remarks>This collection reports event. You can use them to track changes of the collection either via handling events of the collection or via the <see cref="CheckBoxesChanged"/> event.
         ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <LDescription(GetType(ResourcesT.Components), "CheckBoxes_d")> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)>
+        <LDescription(GetType(ResourcesT.Components), "CheckBoxes_d")>
         Public ReadOnly Property CheckBoxes() As ListWithEvents(Of MessageBoxCheckBox)
             <DebuggerStepThrough()> Get
                 Return _CheckBoxes
@@ -322,11 +322,11 @@ Namespace WindowsT.IndependentT
             CheckBoxes.Clear()
         End Sub
         ''' <summary>Gets or sets combo box (drop down list) displayed in message box</summary>
-        <DefaultValue(GetType(MessageBoxComboBox), Nothing)> _
-        <TypeConverter(GetType(ExpandableObjectConverter))> _
-        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <LDescription(GetType(ResourcesT.Components), "ComboBox_d")> _
+        <DefaultValue(GetType(MessageBoxComboBox), Nothing)>
+        <TypeConverter(GetType(ExpandableObjectConverter))>
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)>
+        <LDescription(GetType(ResourcesT.Components), "ComboBox_d")>
         Public Property ComboBox() As MessageBoxComboBox
             <DebuggerStepThrough()> Get
                 Return _ComboBox
@@ -340,9 +340,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Radio buttons displayed on message box</summary>
         ''' <remarks>This collection reports event. You can use them to track changes of the collection either via handling events of the collection or via the <see cref="RadiosChanged"/> event.
         ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <LDescription(GetType(ResourcesT.Components), "Radios_d")> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)>
+        <LDescription(GetType(ResourcesT.Components), "Radios_d")>
         Public ReadOnly Property Radios() As ListWithEvents(Of MessageBoxRadioButton)
             <DebuggerStepThrough()> Get
                 Return _Radios
@@ -358,9 +358,9 @@ Namespace WindowsT.IndependentT
             Radios.Clear()
         End Sub
         ''' <summary>Gets or sets additional control displayed at top of the message box (above message)</summary>
-        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
-        <DefaultValue(GetType(Object), Nothing)> _
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="System.Windows.Forms.Control"/> or <see cref="System.Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        <DefaultValue(GetType(Object), Nothing)>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property TopControl() As Object
             <DebuggerStepThrough()> Get
                 Return _TopControl
@@ -372,9 +372,9 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Gets or sets additional control displayed in the middle of the message box (above buttons)</summary>
-        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
-        <DefaultValue(GetType(Object), Nothing)> _
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="System.Windows.Forms.Control"/> or <see cref="System.Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        <DefaultValue(GetType(Object), Nothing)>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property MidControl() As Object
             <DebuggerStepThrough()> Get
                 Return _MidControl
@@ -386,9 +386,9 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Gets or sets additional control displayed at bottom of the message box (below buttons)</summary>
-        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
-        <DefaultValue(GetType(Object), Nothing)> _
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="System.Windows.Forms.Control"/> or <see cref="System.Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        <DefaultValue(GetType(Object), Nothing)>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property BottomControl() As Object
             <DebuggerStepThrough()> Get
                 Return _BottomControl
@@ -401,9 +401,9 @@ Namespace WindowsT.IndependentT
         End Property
         ''' <summary>Gets or sets value indicating for how long the message box will be displayed before it closes with <see cref="CloseResponse"/> as result.</summary>
         ''' <remarks><see cref="TimeSpan.Zero"/> or less vaklue meand then no count-down takes effect</remarks>
-        <DefaultValue(GetType(TimeSpan), "0:00:00")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(ResourcesT.Components), "Timer_d")> _
+        <DefaultValue(GetType(TimeSpan), "0:00:00")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(ResourcesT.Components), "Timer_d")>
         Public Property Timer() As TimeSpan
             <DebuggerStepThrough()> Get
                 Return _Timer
@@ -422,9 +422,9 @@ Namespace WindowsT.IndependentT
         ''' <item><term>>= <see cref="Buttons">Buttons</see>.<see cref="List(Of MessageBoxButton).Count">Count</see></term><description>Count down is not displayed</description></item>
         ''' </list>
         ''' Count down is displayed as time in format h:mm:ss, m:ss or s depending on current value of time remaining (always the shortest possible format is used).</remarks>
-        <DefaultValue(-1I)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(ResourcesT.Components), "TimeButton_d")> _
+        <DefaultValue(-1I)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(ResourcesT.Components), "TimeButton_d")>
         Public Property TimeButton() As Integer
             <DebuggerStepThrough()> Get
                 Return _TimeButton
@@ -438,9 +438,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets or sets sound played when message box is shown</summary>
         ''' <value>Sound played when message box is shown. Null if no sound shall be played.</value>
         ''' <remarks>Current sound to be played when message box is show. Null if no sound is played.</remarks>
-        <DefaultValue(GetType(MediaT.Sound), Nothing)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(ResourcesT.Components), "PlayOnShow_d")> _
+        <DefaultValue(GetType(MediaT.Sound), Nothing)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(ResourcesT.Components), "PlayOnShow_d")>
         Public Property PlayOnShow() As MediaT.Sound
             Get
                 Return _PlayOnShow
@@ -476,7 +476,7 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "Property events"
         ''' <summary>Raised when value of the <see cref="AllowClose"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event AllowCloseChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Boolean))
         ''' <summary>Raises tha <see cref="AllowCloseChanged"/> event. Calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -488,7 +488,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event information. For changes of <see cref="Buttons"/>, <see cref="CheckBoxes"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents.CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents.Changed"/>.</param>
         ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="IReportsChange.ValueChangedEventArgs"/> class)</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
         ''' <summary>Raises the <see cref="Changed"/> event</summary>
         ''' <param name="e">Event parameters</param>
@@ -496,7 +496,7 @@ Namespace WindowsT.IndependentT
             RaiseEvent Changed(Me, e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="DefaultButton"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event DefaultButtonChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Integer))
         ''' <summary>Raises the <see cref="DefaultButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -505,7 +505,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="CloseResponse"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event CloseResponseChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of DialogResult))
         ''' <summary>Raises the <see cref="OnCloseResponseChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -514,7 +514,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Prompt"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event PromptChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of String))
         ''' <summary>Raises the <see cref="PromptChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -523,7 +523,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Title"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TitleChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of String))
         ''' <summary>Raises the <see cref="TitleChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -532,7 +532,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Icon"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event IconChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Drawing.Image))
         ''' <summary>Raises the <see cref="IconChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -541,7 +541,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Options"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event OptionsChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions))
         ''' <summary>Raises the <see cref="OptionsChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -552,7 +552,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Raised when content of the <see cref="CheckBoxes"/> collection changes</summary>
         ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
         ''' <param name="e">Event arguments. Argument e of <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxCheckBox).CollectionChanged"/> is passed directly here.</param>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event CheckBoxesChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxCheckBox).ListChangedEventArgs)
         ''' <summary>Raises the <see cref="CheckBoxesChanged"/> event. Handles <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
         ''' <param name="sender">Source ot the event - <see cref="Radios"/></param>
@@ -563,7 +563,7 @@ Namespace WindowsT.IndependentT
         End Sub
         ''' <summary>Raised wghen value of the <see cref="ComboBox"/> property changes</summary>
         ''' <remarks>This event tracks only changes of value of the <see cref="ComboBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event ComboBoxChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxComboBox))
         ''' <summary>Raises the <see cref="ComboBoxChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -572,7 +572,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="TopControl"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TopControlChanged As ControlChangedEventHandler
         ''' <summary>Raises the <see cref="TopControlChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -581,7 +581,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="MidControl"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event MidControlChanged As ControlChangedEventHandler
         ''' <summary>Raises the <see cref="MidControlChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -590,12 +590,12 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="BottomControl"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event BottomControlChanged As ControlChangedEventHandler
         ''' <summary>Delegate for events <see cref="BottomControlChanged"/>, <see cref="TopControlChanged"/> and <see cref="MidControlChanged"/></summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event arguments</param>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Delegate Sub ControlChangedEventHandler(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
         ''' <summary>Raises the <see cref="BottomControlChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -604,7 +604,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Timer"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TimerChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of TimeSpan))
         ''' <summary>Raises the <see cref="TimerChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -613,7 +613,7 @@ Namespace WindowsT.IndependentT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="TimeButton"/> property changes</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TimeButtonChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Integer))
         ''' <summary>Raises the <see cref="TimeButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
@@ -624,7 +624,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Raised when content of the <see cref="Radios"/> collection changes</summary>
         ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
         ''' <param name="e">Event arguments. Argument e of <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged"/> is passed directly here.</param>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event RadiosChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxRadioButton).ListChangedEventArgs)
         ''' <summary>Raises the <see cref="RadiosChanged"/> event. Handles <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
         ''' <param name="sender">Source ot the event - <see cref="Radios"/></param>
@@ -636,7 +636,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Raised when content of the <see cref="Buttons"/> collection changes</summary>
         ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
         ''' <param name="e">Event arguments. Argument e of <see cref="Buttons">Radios</see>.<see cref="ListWithEvents(Of MessageBoxButton).CollectionChanged"/> is passed directly here.</param>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event ButtonsChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxButton).ListChangedEventArgs)
         ''' <summary>Raises the <see cref="ButtonsChanged"/> event. Handles <see cref="Buttons">Radios</see>.<see cref="ListWithEvents(Of MessageBoxButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
         ''' <param name="sender">Source ot the event - <see cref="Buttons"/></param>
@@ -650,7 +650,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Common base for predefined message box controls</summary>
         ''' <version version="1.5.2">Added implementation of the <see cref="INotifyPropertyChanged"/> interface. No changes needed in derived classes when they call <see cref="MessageBoxControl.OnChanged"/> with <see cref="IReportsChange.ValueChangedEventArgsBase"/> or <see cref="PropertyChangedEventArgs"/>.</version>
         ''' <version version="1.5.2">Added implementation of <see cref="CollectionsT.GenericT.ICollectionCancelItem"/></version>
-        <DefaultProperty("Text"), DefaultEvent("Changed")> _
+        <DefaultProperty("Text"), DefaultEvent("Changed")>
         Public MustInherit Class MessageBoxControl : Implements IReportsChange, INotifyPropertyChanged, CollectionsT.GenericT.ICollectionCancelItem
             ''' <summary>Contains value of the <see cref="Text"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Text As String
@@ -672,9 +672,9 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Information about old and new value</param>
             <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event EnabledChanged(ByVal sender As MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             ''' <summary>Gets or sets text displayed on control</summary>
-            <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <LDescription(GetType(ResourcesT.Components), "MessageBoxButton_Text_d")> _
-            <Localizable(True)> _
+            <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+            <LDescription(GetType(ResourcesT.Components), "MessageBoxButton_Text_d")>
+            <Localizable(True)>
             Public Property Text() As String
                 <DebuggerStepThrough()> Get
                     Return _Text
@@ -689,9 +689,9 @@ Namespace WindowsT.IndependentT
                 End Set
             End Property
             ''' <summary>Gets or sets tool tip text for the button</summary>
-            <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <LDescription(GetType(ResourcesT.Components), "ToolTip_d")> _
-            <Localizable(True)> _
+            <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+            <LDescription(GetType(ResourcesT.Components), "ToolTip_d")>
+            <Localizable(True)>
             Public Property ToolTip() As String
                 <DebuggerStepThrough()> Get
                     Return _ToolTip
@@ -706,8 +706,8 @@ Namespace WindowsT.IndependentT
                 End Set
             End Property
             ''' <summary>Gets or sets value indicating if button is enabled (accessible) or not</summary>
-            <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <LDescription(GetType(ResourcesT.Components), "Enabled_d")> _
+            <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+            <LDescription(GetType(ResourcesT.Components), "Enabled_d")>
             Public Property Enabled() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _Enabled
@@ -767,7 +767,7 @@ Namespace WindowsT.IndependentT
             ''' This property is intended to be used by GUI implementation to store instance of for example <see cref="Button"/> that currently represents the control.
             ''' Its up to implementation how and if it will use this property. Caller should not rely on content of the property.
             ''' </remarks>
-            <EditorBrowsable(EditorBrowsableState.Advanced), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+            <EditorBrowsable(EditorBrowsableState.Advanced), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
             Public Property Control() As Object
                 <DebuggerStepThrough()> Get
                     Return _Control
@@ -779,8 +779,8 @@ Namespace WindowsT.IndependentT
 
             ''' <summary>Occurs when a property value changes.</summary>
             ''' <version version="1.5.2">Event introduced</version>
-            <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
-            <LDescription(GetType(WindowsT.FormsT.Dialogs), "PropertyChanged_d")> _
+            <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)>
+            <LDescription(GetType(WindowsT.FormsT.Dialogs), "PropertyChanged_d")>
             Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
 #Region "ICollectionCancelItem"
             ''' <summary>Called before item is placed into collection</summary>
@@ -829,7 +829,7 @@ Namespace WindowsT.IndependentT
             ''' <summary>Gets messagebox this control is owned by</summary>
             ''' <returns><see cref="IndependentT.MessageBox"/> this control is owned by; or null</returns>
             ''' <version version="1.5.2">Property added</version>
-            <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
             Public ReadOnly Property OwnerMessageBox() As MessageBox
                 Get
                     If Collection Is Nothing Then Return Nothing Else Return Collection.Owner
@@ -876,7 +876,7 @@ Namespace WindowsT.IndependentT
         End Class
         ''' <summary>Represents button for <see cref="MessageBox"/></summary>
         ''' <completionlist cref="MessageBoxButton"/>
-        <DefaultEvent("ClickPreview")> _
+        <DefaultEvent("ClickPreview")>
         Public Class MessageBoxButton : Inherits MessageBoxControl
 #Region "Backing fields"
             ''' <summary>Contains value of the <see cref="Result"/> property</summary>
@@ -893,8 +893,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">Instance of <see cref="MessageBoxButton"/> that have raised the event</param>
             ''' <remarks>If <see cref="Result"/> is <see cref="HelpDialogResult"/> <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> is pre-set to true. That means that if it is not set to false, message box is not closed when help button is clicked.</remarks>
             ''' <version version="1.5.2">Fixed: Using <see cref="WindowsT.FormsT.MessageBox"/> dialog closes even when event is cancelled.</version>
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <LDescription(GetType(ResourcesT.Components), "ClickPreview_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+            <LDescription(GetType(ResourcesT.Components), "ClickPreview_d")>
             Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs)
 #Region "Change events"
             ''' <summary>Raised when value of the <see cref="Result"/> property changes</summary>
@@ -912,9 +912,9 @@ Namespace WindowsT.IndependentT
             ''' <para>Special result value <see cref="HelpDialogResult"/> defines help button. The <see cref="MessageBox"/> class does not pefrom any help-providing actions for that button, only, by default, thius button does not cause the messagebox to be closed.</para>
             ''' </remarks>
             ''' <seealso cref="MessageBoxButton.Help"/>
-            <DefaultValue(GetType(DialogResult), "None")> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <LDescription(GetType(ResourcesT.Components), "Result_d")> _
+            <DefaultValue(GetType(DialogResult), "None")>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+            <LDescription(GetType(ResourcesT.Components), "Result_d")>
             Public Property Result() As DialogResult
                 <DebuggerStepThrough()> Get
                     Return _Result
@@ -935,10 +935,10 @@ Namespace WindowsT.IndependentT
             ''' As <see cref="MessageBox"/> is underlaying-technology independent, mnemonics for accesskeys (such as &amp; in WinForms and _ in WPF) should not be used. You should rather use this property.
             ''' When you do not want to use accesskey for your button, set his property to 0 (null char, <see cref="vbNullChar"/>).
             ''' </remarks>
-            <DefaultValue(CChar(vbNullChar))> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <LDescription(GetType(ResourcesT.Components), "AccessKey_d")> _
-            <Localizable(True)> _
+            <DefaultValue(CChar(vbNullChar))>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+            <LDescription(GetType(ResourcesT.Components), "AccessKey_d")>
+            <Localizable(True)>
             Public Property AccessKey() As Char
                 <DebuggerStepThrough()> Get
                     Return _AccessKey
@@ -1051,28 +1051,28 @@ Namespace WindowsT.IndependentT
             ''' <exception cref="ArgumentException"><paramref name="Result"/> is <see cref="DialogResult.None"/></exception>
             Public Sub New(ByVal Result As DialogResult)
                 Select Case Result
-                    Case Windows.Forms.DialogResult.Abort : InitBy(Abort)
-                    Case Windows.Forms.DialogResult.Cancel : InitBy(Cancel)
-                    Case Windows.Forms.DialogResult.Ignore : InitBy(Ignore)
-                    Case Windows.Forms.DialogResult.No : InitBy(No)
-                    Case Windows.Forms.DialogResult.None : Throw New ArgumentException(ResourcesT.Exceptions.ResultCannotBeNone, "Result")
-                    Case Windows.Forms.DialogResult.OK : InitBy(OK)
-                    Case Windows.Forms.DialogResult.Retry : InitBy(Retry)
-                    Case Windows.Forms.DialogResult.Yes : InitBy(Yes)
+                    Case System.Windows.Forms.DialogResult.Abort : InitBy(Abort)
+                    Case System.Windows.Forms.DialogResult.Cancel : InitBy(Cancel)
+                    Case System.Windows.Forms.DialogResult.Ignore : InitBy(Ignore)
+                    Case System.Windows.Forms.DialogResult.No : InitBy(No)
+                    Case System.Windows.Forms.DialogResult.None : Throw New ArgumentException(ResourcesT.Exceptions.ResultCannotBeNone, "Result")
+                    Case System.Windows.Forms.DialogResult.OK : InitBy(OK)
+                    Case System.Windows.Forms.DialogResult.Retry : InitBy(Retry)
+                    Case System.Windows.Forms.DialogResult.Yes : InitBy(Yes)
                     Case Else : Throw New InvalidEnumArgumentException("Result", Result, Result.GetType)
                 End Select
             End Sub
-            ''' <summary>CTor from <see cref="Windows.MessageBoxResult"/></summary>
+            ''' <summary>CTor from <see cref="System.Windows.MessageBoxResult"/></summary>
             ''' <param name="Result">Result of this button. Also determines text.</param>
-            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Result"/> is not member of <see cref="Windows.MessageBoxResult"/></exception>
-            ''' <exception cref="ArgumentException"><paramref name="Result"/> is <see cref="Windows.MessageBoxResult.None"/></exception>
-            Public Sub New(ByVal Result As Windows.MessageBoxResult)
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Result"/> is not member of <see cref="System.Windows.MessageBoxResult"/></exception>
+            ''' <exception cref="ArgumentException"><paramref name="Result"/> is <see cref="System.Windows.MessageBoxResult.None"/></exception>
+            Public Sub New(ByVal Result As System.Windows.MessageBoxResult)
                 Select Case Result
-                    Case Windows.MessageBoxResult.Cancel : InitBy(Cancel)
-                    Case Windows.MessageBoxResult.No : InitBy(No)
-                    Case Windows.MessageBoxResult.No : Throw New ArgumentException(ResourcesT.Exceptions.ResultCannotBeNone, "Result")
-                    Case Windows.MessageBoxResult.OK : InitBy(OK)
-                    Case Windows.MessageBoxResult.Yes : InitBy(Yes)
+                    Case System.Windows.MessageBoxResult.Cancel : InitBy(Cancel)
+                    Case System.Windows.MessageBoxResult.No : InitBy(No)
+                    Case System.Windows.MessageBoxResult.No : Throw New ArgumentException(ResourcesT.Exceptions.ResultCannotBeNone, "Result")
+                    Case System.Windows.MessageBoxResult.OK : InitBy(OK)
+                    Case System.Windows.MessageBoxResult.Yes : InitBy(Yes)
                     Case Else : Throw New InvalidEnumArgumentException("Result", Result, Result.GetType)
                 End Select
             End Sub
@@ -1132,7 +1132,7 @@ Namespace WindowsT.IndependentT
             ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
             ''' <param name="Enabled">Initial value of the <see cref="Enabled"/> property</param>
             Public Sub New(ByVal Text$, ByVal Enabled As Boolean)
-                Me.new(Text)
+                Me.New(Text)
                 IsConstructing = True
                 Me.Enabled = Enabled
                 IsConstructing = False
@@ -1164,7 +1164,7 @@ Namespace WindowsT.IndependentT
             ''' <summary>Called by owner window when appropriate button is clicked. Raises the <see cref="ClickPreview"/> event</summary>
             ''' <returns>True if action associated with button can be performed. False when event was canceled</returns>
             ''' <remarks>This function should be called only by class derived from <see cref="MessageBox"/> which owns the button.</remarks>
-            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            <EditorBrowsable(EditorBrowsableState.Advanced)>
             Protected Friend Function OnClick() As Boolean
                 Dim e As New CancelEventArgs
                 If Me.Result = HelpDialogResult Then e.Cancel = True
@@ -1263,13 +1263,13 @@ Namespace WindowsT.IndependentT
             ''' <exception cref="InvalidEnumArgumentException"><paramref name="Buttons"/> is not member of <see cref="System.Windows.MessageBoxButton"/></exception>
             Public Shared Function GetButtons(ByVal Buttons As System.Windows.MessageBoxButton) As MessageBoxButton()
                 Select Case Buttons
-                    Case Windows.MessageBoxButton.OK '0
+                    Case System.Windows.MessageBoxButton.OK '0
                         Return New MessageBoxButton() {OK}
-                    Case Windows.MessageBoxButton.OKCancel '1
+                    Case System.Windows.MessageBoxButton.OKCancel '1
                         Return New MessageBoxButton() {OK, Cancel}
-                    Case Windows.MessageBoxButton.YesNo '4
+                    Case System.Windows.MessageBoxButton.YesNo '4
                         Return New MessageBoxButton() {Yes, No}
-                    Case Windows.MessageBoxButton.YesNoCancel '3
+                    Case System.Windows.MessageBoxButton.YesNoCancel '3
                         Return New MessageBoxButton() {Yes, No, Cancel}
                     Case Else : Throw New InvalidEnumArgumentException("Buttons", Buttons, GetType(Global.System.Windows.MessageBoxButton))
                 End Select
@@ -1298,7 +1298,7 @@ Namespace WindowsT.IndependentT
                 Return ret.ToArray
             End Function
             ''' <summary>Bit aray for predefined buttons</summary>
-            <Flags()> _
+            <Flags()>
             Public Enum Buttons As Byte
                 ''' <summary>OK button</summary>
                 OK = 1
@@ -1328,7 +1328,7 @@ Namespace WindowsT.IndependentT
             ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore defualt button at all or determine it from <see cref="MessageBox.DefaultButton"/>.</para></remarks>
             ''' <seelaso cref="DefaultButton"/>
             ''' <version version="1.5.2">Property added</version>
-            <Browsable(False)> _
+            <Browsable(False)>
             Public ReadOnly Property IsDefault() As Boolean
                 Get
                     Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.Buttons.IndexOf(Me) = OwnerMessageBox.DefaultButton
@@ -1340,7 +1340,7 @@ Namespace WindowsT.IndependentT
             ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore defualt button at all or determine it from <see cref="MessageBox.CloseResponse"/>.</para></remarks>
             ''' <seelaso cref="MessageBox.CloseResponse"/>
             ''' <version version="1.5.2">Property added</version>
-            <Browsable(False)> _
+            <Browsable(False)>
             Public ReadOnly Property IsCancel() As Boolean
                 Get
                     Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.CloseResponse = Me.Result AndAlso OwnerMessageBox.Buttons.FirstOrDefault(Function(a) a.Result = Me.Result) Is Me
@@ -1352,7 +1352,7 @@ Namespace WindowsT.IndependentT
             ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore timer button at all or determine it from <see cref="TimeButton"/>.</para></remarks>
             ''' <seelaso cref="TimeButton"/>
             ''' <version version="1.5.2">Property added</version>
-            <Browsable(False)> _
+            <Browsable(False)>
             Public ReadOnly Property IsTime() As Boolean
                 Get
                     Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.TimeButton = OwnerMessageBox.Buttons.IndexOf(Me)
@@ -1411,7 +1411,7 @@ Namespace WindowsT.IndependentT
             ''' <returns>If <see cref="OwnerMessageBox"/> is not set returns <see cref="Text"/>; if it is set uses <see cref="GetTextWithAccessKey"/>.</returns>
             ''' <remarks>Change of this property is notified via <see cref="INotifyPropertyChanged"/>.</remarks>
             ''' <version version="1.5.2">Property added</version>
-            <Browsable(False)> _
+            <Browsable(False)>
             Public Overridable ReadOnly Property TextIncludingAccessKey() As String
                 Get
                     If OwnerMessageBox Is Nothing Then Return Text
@@ -1429,7 +1429,7 @@ Namespace WindowsT.IndependentT
             ''' <returns>If <see cref="OwnerMessageBox"/> is not set or countdown timer is not enabled or this button is not time button returns <see cref="Text"/>; otherwise returns <see cref="Text"/> appedned by <see cref="TimerFormat"/>-formatted <see cref="OwnerMessageBox"/>.<see cref="CurrentTimer">CurrentTimer</see> enclosed in braces (()).</returns>
             ''' <remarks>Change of this property is notified via <see cref="INotifyPropertyChanged"/>. In order this to work correctly button must be stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>.</remarks>
             ''' <version version="1.5.2">Property added</version>
-            <Browsable(False)> _
+            <Browsable(False)>
             Public Overridable ReadOnly Property TextIncludingTimer() As String
                 Get
                     If Not IsTime AndAlso OwnerMessageBox.IsCountDown Then Return Text
@@ -1440,7 +1440,7 @@ Namespace WindowsT.IndependentT
             ''' <returns>If <see cref="OwnerMessageBox"/> is not set return <see cref="Text"/>; if this button is not time button or owning messagebox is not counting douw, returns <see cref="TextIncludingAccessKey"/>; otherwise returns <see cref="TextIncludingAccessKey"/>  appedned by <see cref="TimerFormat"/>-formatted <see cref="OwnerMessageBox"/>.<see cref="CurrentTimer">CurrentTimer</see> enclosed in braces (()).</returns>
             ''' <remarks>Change of this property is notofied via <see cref="INotifyPropertyChanged"/>. In order this to work correctly button must be stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>.</remarks>
             ''' <version version="1.5.2">Property added</version>
-            <Browsable(False)> _
+            <Browsable(False)>
             Public Overridable ReadOnly Property TextIncludingAccessKeyAndTimer$()
                 Get
                     If OwnerMessageBox Is Nothing Then Return Text
@@ -1450,10 +1450,10 @@ Namespace WindowsT.IndependentT
             End Property
         End Class
         ''' <summary>Value of the <see cref="MessageBoxButton.Result"/> property for predefined <see cref="Help">Help</see> button</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Const HelpDialogResult As DialogResult = Integer.MinValue
         ''' <summary>Represents check box control for <see cref="MessageBox"/></summary>
-        <DefaultEvent("StateChanged")> _
+        <DefaultEvent("StateChanged")>
         Public Class MessageBoxCheckBox : Inherits MessageBoxControl
             ''' <summary>Contains value of the <see cref="ThreeState"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _ThreeState As Boolean
@@ -1467,14 +1467,14 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="State"/> can be changed by user or programatically</remarks>
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <LDescription(GetType(ResourcesT.Components), "StateChanged_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+            <LDescription(GetType(ResourcesT.Components), "StateChanged_d")>
             Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
             ''' <summary>Gets or sets value indicating if user can change state of checkbox between 3 or 2 states</summary>
             ''' <remarks>2-state CheckBox allows user to change state only to <see cref="CheckState.Checked"/> or <see cref="CheckState.Unchecked"/></remarks>
-            <DefaultValue(False)> _
-            <LDescription(GetType(ResourcesT.Components), "ThreeState_d")> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+            <DefaultValue(False)>
+            <LDescription(GetType(ResourcesT.Components), "ThreeState_d")>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
             Public Property ThreeState() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _ThreeState
@@ -1490,9 +1490,9 @@ Namespace WindowsT.IndependentT
             End Property
             ''' <summary>Gets or sets current state of check box</summary>
             ''' <remarks>If <see cref="ThreeState"/> is false user cannot set checkbox to <see cref="CheckState.Indeterminate"/>, however you can achieve it programatically</remarks>
-            <DefaultValue(GetType(CheckState), "Unchecked")> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <LDescription(GetType(ResourcesT.Components), "State_d")> _
+            <DefaultValue(GetType(CheckState), "Unchecked")>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+            <LDescription(GetType(ResourcesT.Components), "State_d")>
             Public Property State() As CheckState
                 <DebuggerStepThrough()> Get
                     Return _State
@@ -1513,14 +1513,14 @@ Namespace WindowsT.IndependentT
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxCheckBox"/> class with text</summary>
             ''' <param name="Text">Initial text of the control (<see cref="Text"/> property)</param>
             Public Sub New(ByVal Text$)
-                Me.new()
+                Me.New()
                 Me.Text = Text
             End Sub
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxCheckBox"/> class with text and check state</summary>
             ''' <param name="Text">Initial text of the control (<see cref="Text"/> property)</param>
             ''' <param name="State">Initial state of the control (<see cref="State"/> property)</param>
             Public Sub New(ByVal Text$, ByVal State As CheckState)
-                Me.new(Text)
+                Me.New(Text)
                 Me.State = State
             End Sub
             ''' <summary>Raises the <see cref="StateChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -1539,7 +1539,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Represents combo box (drop down list) control for <see cref="MessageBox"/></summary>
         ''' <remarks>This class inherits implementation of <see cref="IReportsChange"/> from <see cref="MessageBoxControl"/>. The <see cref="MessageBoxComboBox.Changed"/> event when raised for change of <see cref="MessageBoxComboBox.Items"/> collection, reports event arguments of <see cref="MessageBoxComboBox.Items">Items</see>.<see cref="ListWithEvents(Of Object).CollectionChanged">CollectionChanged</see> event (instead of the <see cref="ListWithEvents(Of Object).Changed">Changed</see>).</remarks>
         ''' <seealco cref="MessageBoxComboBox.OnItemsChanged"/>
-        <DefaultProperty("Items"), DefaultEvent("SelectedIndexChanged")> _
+        <DefaultProperty("Items"), DefaultEvent("SelectedIndexChanged")>
         Public Class MessageBoxComboBox : Inherits MessageBoxControl
 #Region "Fields"
             ''' <summary>Contains value of the <see cref="Editable"/> property</summary>
@@ -1555,9 +1555,9 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "Properties"
             ''' <summary>gets or sets value indicating if user can type any text to combo box</summary>
-            <DefaultValue(False)> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <LDescription(GetType(ResourcesT.Components), "Editable_d")> _
+            <DefaultValue(False)>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+            <LDescription(GetType(ResourcesT.Components), "Editable_d")>
             Public Property Editable() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _Editable
@@ -1573,10 +1573,10 @@ Namespace WindowsT.IndependentT
             End Property
             ''' <summary>Itels in drop down of combo box</summary>
             ''' <remarks>Register handlers with events of <see cref="ListWithEvents(Of T)"/> returned by this property or use <see cref="ItemsChanged"/> event in order to track changes of the collection.</remarks>
-            <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-            <LDescription(GetType(ResourcesT.Components), "Items_d")> _
-            <Localizable(True)> _
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)>
+            <LDescription(GetType(ResourcesT.Components), "Items_d")>
+            <Localizable(True)>
             Public ReadOnly Property Items() As ListWithEvents(Of Object)
                 <DebuggerStepThrough()> Get
                     Return _Items
@@ -1592,9 +1592,9 @@ Namespace WindowsT.IndependentT
             End Sub
             ''' <summary>Indicates member (property or field) used to obtain text displayed in drop down for each item.</summary>
             ''' <seealso cref="ComboBox.DisplayMember"/>
-            <DefaultValue(GetType(String), Nothing)> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-            <LDescription(GetType(ResourcesT.Components), "DisplayMember_d")> _
+            <DefaultValue(GetType(String), Nothing)>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)>
+            <LDescription(GetType(ResourcesT.Components), "DisplayMember_d")>
             Public Property DisplayMember() As String
                 <DebuggerStepThrough()> Get
                     Return _DisplayMember
@@ -1610,7 +1610,7 @@ Namespace WindowsT.IndependentT
             End Property
             ''' <summary>Gets or sets value indicating currently selected item</summary>
             ''' <seealso cref="SelectedIndex"/>
-            <DefaultValue(GetType(Object), Nothing), Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            <DefaultValue(GetType(Object), Nothing), Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
             Public Property SelectedItem() As Object
                 <DebuggerStepThrough()> Get
                     Return _SelectedItem
@@ -1626,9 +1626,9 @@ Namespace WindowsT.IndependentT
             End Property
             ''' <summary>Indicates 0-based index of item diaplyed in combo box</summary>
             ''' <seealso cref="SelectedItem"/>
-            <DefaultValue(-1I)> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-            <LDescription(GetType(ResourcesT.Components), "SelectedIndex_d")> _
+            <DefaultValue(-1I)>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)>
+            <LDescription(GetType(ResourcesT.Components), "SelectedIndex_d")>
             Public Property SelectedIndex() As Integer
                 <DebuggerStepThrough()> Get
                     Return _SelectedIndex
@@ -1668,8 +1668,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="SelectedItem"/> can be changed by user or programatically</remarks>
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <LDescription(GetType(ResourcesT.Components), "SelectedItemChanged_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+            <LDescription(GetType(ResourcesT.Components), "SelectedItemChanged_d")>
             Public Event SelectedItemChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
             ''' <summary>Raises the <see cref="SelectedItemChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
@@ -1681,8 +1681,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="SelectedIndex"/> can be changed by user or programatically</remarks>
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <LDescription(GetType(ResourcesT.Components), "SelectedIndexChanged_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+            <LDescription(GetType(ResourcesT.Components), "SelectedIndexChanged_d")>
             Public Event SelectedIndexChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
             ''' <summary>Raises the <see cref="SelectedIndexChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
@@ -1706,7 +1706,7 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Event arguments</param>
             ''' <remarks>This event shadows <see cref="MessageBoxControl.TextChanged"/> event only in order to change it's <see cref="BrowsableAttribute"/> and <see cref="EditorBrowsableAttribute"/></remarks>
-            <Browsable(True), EditorBrowsable(EditorBrowsableState.Always)> _
+            <Browsable(True), EditorBrowsable(EditorBrowsableState.Always)>
             Public Shadows Event TextChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             ''' <summary>Raises the <see cref="TextChanged"/> event, calls <see cref="MessageBoxComboBox.OnChanged"/> base class method</summary>
             ''' <param name="e">Event argumernts</param>
@@ -1730,20 +1730,20 @@ Namespace WindowsT.IndependentT
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxComboBox"/> class with items</summary>
             ''' <param name="Items">Initial items in combo box</param>
             Public Sub New(ByVal ParamArray Items As Object())
-                Me.new()
+                Me.New()
                 Me.Items.AddRange(Items)
             End Sub
 #End Region
         End Class
         ''' <summary>Represents radio button (one from many check box) for <see cref="MessageBox"/></summary>
-        <DefaultEvent("CheckedChanged")> _
+        <DefaultEvent("CheckedChanged")>
         Public Class MessageBoxRadioButton : Inherits MessageBoxControl
             ''' <summary>Contains value of the <see cref="Checked"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Checked As Boolean
             ''' <summary>Gets or sets value indicating if control is checked or not</summary>
-            <DefaultValue(False)> _
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <LDescription(GetType(ResourcesT.Components), "Checked_d")> _
+            <DefaultValue(False)>
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+            <LDescription(GetType(ResourcesT.Components), "Checked_d")>
             Public Property Checked() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _Checked
@@ -1761,8 +1761,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">Source of the event</param>
             ''' <param name="e">Event arguments containing infomation about new and old value</param>
             ''' <remarks>The <see cref="Checked"/> property can be changed programatically or by user</remarks>
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <LDescription(GetType(ResourcesT.Components), "CheckedChanged_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+            <LDescription(GetType(ResourcesT.Components), "CheckedChanged_d")>
             Public Event CheckedChanged(ByVal sender As MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             ''' <summary>Raises the <see cref="CheckedChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
@@ -1776,14 +1776,14 @@ Namespace WindowsT.IndependentT
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxRadioButton"/> class with text</summary>
             ''' <param name="Text">Text of control</param>
             Public Sub New(ByVal Text$)
-                Me.new()
+                Me.New()
                 Me.Text = Text
             End Sub
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxRadioButton"/> class with text and check state</summary>
             ''' <param name="Text">Text of control</param>
             ''' <param name="Checked">Initial check state</param>
             Public Sub New(ByVal Text$, ByVal Checked As Boolean)
-                Me.new(Text)
+                Me.New(Text)
                 Me.Checked = Checked
             End Sub
         End Class
@@ -1794,9 +1794,9 @@ Namespace WindowsT.IndependentT
         ''' Align (<see cref="MessageBoxOptions.AlignCenter"/>,<see cref="MessageBoxOptions.AlignJustify"/>, <see cref="MessageBoxOptions.AlignLeft"/>, <see cref="MessageBoxOptions.AlignRight"/>),
         ''' Text flow (<see cref="MessageBoxOptions.Ltr"/>, <see cref="MessageBoxOptions.Rtl"/>) and
         ''' Focus (<see cref="MessageBoxOptions.BringToFront"/>).</remarks>
-        <Flags()> _
-        <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))> _
-        <TypeConverter(GetType(MessageBoxOptionsConverter))> _
+        <Flags()>
+        <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))>
+        <TypeConverter(GetType(MessageBoxOptionsConverter))>
         Public Enum MessageBoxOptions As Byte
             ''' <summary>Text is aligned left (default). In rtl reading aligns text to right.</summary>
             AlignLeft = 0 '0000
@@ -1861,10 +1861,10 @@ Namespace WindowsT.IndependentT
             Return Me.ShowDialog(Nothing)
         End Function
         ''' <summary>Show modal dialog (and waits until the dialog is closed)</summary>
-        ''' <param name="Owner">Parent window of dialog (may be null) Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null) Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Function ShowDialog(ByVal Owner As Object) As DialogResult
             PrePerformDialog(True, Owner)
             Return Me.DialogResult
@@ -1875,23 +1875,23 @@ Namespace WindowsT.IndependentT
             Me.DisplayBox(Nothing)
         End Sub
         ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
-        ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Sub DisplayBox(ByVal Owner As Object)
             PrePerformDialog(False, Owner)
         End Sub
         ''' <summary>If overriden in derived class shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/>. If implementation does not recognize type of owner it shall treat it as null.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>. If implementation does not recognize type of owner it shall treat it as null.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>. This requires changes in all derived classes!</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>. This requires changes in all derived classes!</version>
         Protected MustOverride Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
         ''' <summary>Calls <see cref="Recycle"/> if necessary, then calls <see cref="PerformDialog"/></summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null) Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null) Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Private Sub PrePerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
             If State <> States.Created Then Recycle()
             PerformDialog(Modal, Owner)
@@ -1942,11 +1942,11 @@ Namespace WindowsT.IndependentT
             Closed
         End Enum
         ''' <summary>Contains value of the <see cref="State"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _State As States = States.Created
         ''' <summary>Gets or sets value indicating current state of the message box</summary>
         ''' <remarks>Value of this property is set by <see cref="OnShown"/> and <see cref="OnClosed"/> methods</remarks>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property State() As States
             <DebuggerStepThrough()> Get
                 Return _State
@@ -1960,7 +1960,7 @@ Namespace WindowsT.IndependentT
         ''' <returns><see cref="MessageBoxButton.Result"/> of button user have clicked to or <see cref="CloseResponse"/> when message box was closed by pressing escape, closing the window or timer.</returns>
         ''' <value>Should be set by derived class when dialog is closed</value>
         ''' <remarks>Value of this property is valid only when <see cref="State"/> is <see cref="States.Closed"/></remarks>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property DialogResult() As DialogResult
             Get
                 Return _DialogResult
@@ -1970,12 +1970,12 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="DialogResult"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _DialogResult As DialogResult = Windows.Forms.DialogResult.None
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _DialogResult As DialogResult = System.Windows.Forms.DialogResult.None
         ''' <summary>Gets button user have clicked on</summary>
         ''' <returns>Button user have clicked on (or null if dialog was closed by window close button, pressing escape or timer)</returns>
         ''' <remarks>Value of this property is valid only when <see cref="State"/> is <see cref="States.Closed"/></remarks>
         ''' <value>Should be set by derived class when dialog is closed</value>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Overridable Property ClickedButton() As MessageBoxButton
             Get
                 Return _ClickedButton
@@ -1991,7 +1991,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets value indicationg if the message box was closed automatically after the time specified in <see cref="Timer"/> elapsed</summary>
         ''' <returns>True if the message box was closed due to time elapsed, false otherwise</returns>
         ''' <version version="1.5.2">Fixed: Value of this property is incorrect in handle of the <see cref="Closed"/> event</version>
-        <Browsable(False)> _
+        <Browsable(False)>
         Public ReadOnly Property ClosedByTimer() As Boolean
             <DebuggerStepThrough()> Get
                 Return _ClosedByTimer
@@ -2018,7 +2018,7 @@ Namespace WindowsT.IndependentT
         End Sub
         ''' <summary>Gets value indicationg if counting down is curently in progress</summary>
         ''' <remarks>In order to cahnge value of this prioperty use <see cref="ResumeCountDown"/> and <see cref="StopCountDown"/> methods</remarks>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public ReadOnly Property IsCountDown() As Boolean
             Get
                 Return CountDownTimer.Enabled
@@ -2040,7 +2040,7 @@ Namespace WindowsT.IndependentT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _CurrentTimer As TimeSpanFormattable
         ''' <summary>Gets or sets current remaining time of count-down timer</summary>
         ''' <remarks>If value id <see cref="TimeSpan.Zero"/> or less, count down ends and dialog is about to be closed</remarks>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property CurrentTimer() As TimeSpanFormattable
             <DebuggerStepThrough()> Get
                 Return _CurrentTimer
@@ -2071,16 +2071,16 @@ Namespace WindowsT.IndependentT
 #Region "Events"
         ''' <summary>Raised when count-down timer ticks</summary>
         ''' <remarks>Count down timer ticks each second once. First the event is raised immediatelly after the dialog is shown or count-down is resumed</remarks>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <LDescription(GetType(ResourcesT.Components), "CountDown_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+        <LDescription(GetType(ResourcesT.Components), "CountDown_d")>
         Public Event CountDown As EventHandler(Of IndependentT.MessageBox, EventArgs)
         ''' <summary>Raised after dialog is shown</summary>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <LDescription(GetType(ResourcesT.Components), "Shown_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+        <LDescription(GetType(ResourcesT.Components), "Shown_d")>
         Public Event Shown As EventHandler(Of IndependentT.MessageBox, EventArgs)
         ''' <summary>Raised after dialog is closed</summary>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <LDescription(GetType(ResourcesT.Components), "Closed_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+        <LDescription(GetType(ResourcesT.Components), "Closed_d")>
         Public Event Closed As EventHandler(Of IndependentT.MessageBox, EventArgs)
 #End Region
 #Region "Recycle"
@@ -2112,7 +2112,7 @@ Namespace WindowsT.IndependentT
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Closed"/>. This exception never occures in this implementation because <see cref="Recycle"/> ensures that <see cref="RecycleInternal"/> is caled only when <see cref="State"/> is <see cref="States.Closed"/>.</exception>
         Protected Overridable Sub RecycleInternal()
             If Me.State <> States.Closed Then Throw New InvalidOperationException(ResourcesT.Exceptions.RecycleInternalCanBeCalledOnlyOnClosedMessagebox)
-            Me.DialogResult = Windows.Forms.DialogResult.None
+            Me.DialogResult = System.Windows.Forms.DialogResult.None
             Me.ClickedButton = Nothing
             State = States.Created
             _ClosedByTimer = False
@@ -2151,7 +2151,7 @@ Namespace WindowsT.IndependentT
         ''' <exception cref="System.MissingMethodException">No matching public constructor was found.</exception>
         ''' <exception cref="System.Runtime.InteropServices.COMException"><see cref="DefaultImplementation"/> is a COM object but the class identifier used to obtain the type is invalid, or the identified class is not registered.</exception>
         ''' <exception cref="System.TypeLoadException"><see cref="DefaultImplementation"/> is not a valid type.</exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function GetDefault() As MessageBox
             Return Activator.CreateInstance(DefaultImplementation)
         End Function
@@ -2159,7 +2159,7 @@ Namespace WindowsT.IndependentT
         ''' <remarks>This class cannot be used as message box directly. But you can create instance of it and use it as template for another message boxes.</remarks>
         ''' <seelaso cref="ShowTemplate"/>
         ''' <seelaso cref="DisplayTemplate"/>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public NotInheritable Class FakeBox : Inherits MessageBox
             ''' <summary>Gets text which contains Accesskey marker (like &amp; in WinForms or _ in WPF)</summary>
             ''' <param name="Text">Text (if it contains character used as accesskey markers they must be escaped)</param>
@@ -2176,10 +2176,10 @@ Namespace WindowsT.IndependentT
             End Sub
             ''' <summary>If overriden in derived class shows the dialog</summary>
             ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-            ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+            ''' <param name="Owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
             ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
             ''' <exception cref="NotImplementedException">Always</exception>
-            ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+            ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
             Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
                 Throw New NotImplementedException(ResourcesT.Exceptions.ClassCannotBeUsedAsMessageBox)
             End Sub
@@ -2198,7 +2198,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Initializes instance of <see cref="MessageBox"/> obtained via <see cref="GetDefault"/> using <see cref="InitializeFrom"/></summary>
         ''' <param name="Other">Instance properties of which will be used to initialize returned instance</param>
         ''' <returns>Initialized instance of default implementation</returns>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Shared Function InitializeDafault(ByVal Other As MessageBox) As MessageBox
             Dim Inst As MessageBox
             Try
@@ -2214,7 +2214,7 @@ Namespace WindowsT.IndependentT
         ''' <remarks>Do not use this method for vloning message boxes. This method is mainly intended for internal use. The <paramref name="Other"/> <see cref="MessageBox"/> should be only used for initializing this instance and should be never shown.
         ''' This is because values of properties are simply copied form <paramref name="Other"/> to this instance ant thus both instances then shares same buttons and other controls which can cause instability when both instances are shown.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="Other"/> is null</exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Sub InitializeFrom(ByVal Other As MessageBox)
             If Other Is Nothing Then Throw New ArgumentNullException("Other")
             Me.AllowClose = Other.AllowClose
@@ -2241,14 +2241,14 @@ Namespace WindowsT.IndependentT
         ''' <summary>Shows given modal message box initialized with given instance of <see cref="MessageBox"/></summary>
         ''' <param name="Instance">Instance to be show</param>
         ''' <param name="InitializeFrom">Instance to initialize <paramref name="Instance"/> with</param>
-        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
         ''' <returns>Message box result</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="InitializeFrom"/> is null</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Shared Function ShowTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
             If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
             If InitializeFrom Is Nothing Then Throw New ArgumentNullException("InitializeFrom")
@@ -2260,13 +2260,13 @@ Namespace WindowsT.IndependentT
         ''' <summary>Display given message box initialized with given instance of <see cref="MessageBox"/> modeless</summary>
         ''' <param name="Instance">Instance to be show</param>
         ''' <param name="InitializeFrom">Instance to initialize <paramref name="Instance"/> with</param>
-        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="InitializeFrom"/> is null</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Shared Function DisplayTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
             If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
             If InitializeFrom Is Nothing Then Throw New ArgumentNullException("InitializeFrom")
@@ -2278,15 +2278,15 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Shows default (<see cref="GetDefault"/>) modal message box initialized with given instance of <see cref="MessageBox"/></summary>
         ''' <param name="InitializeFrom">Instance to initialize default message box with</param>
-        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Message box result</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="InitializeFrom"/> is null</exception>
         ''' <exception cref="TargetInvocationException">Ther was an error obtainin default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function ShowTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
             Dim lGetDefault As Tools.WindowsT.IndependentT.MessageBox
             Try
@@ -2298,14 +2298,14 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Display default (<see cref="GetDefault"/>) message box initialized with given instance of <see cref="MessageBox"/> modeless</summary>
         ''' <param name="InitializeFrom">Instance to initialize default message box with</param>
-        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="InitializeFrom"/> is null</exception>
         ''' <exception cref="TargetInvocationException">Ther was an error obtainin default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
         ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function DisplayTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As Object = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
             Dim lGetDefault As Tools.WindowsT.IndependentT.MessageBox
             Try
@@ -2319,7 +2319,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="code">Code of icon to be obtained</param>
         ''' <returns>Appropriate icon to code or null if no icon is associated with code</returns>
         ''' <remarks>You can change which function <see cref="MessageBox"/> globaly uses for obtaining icons by setting the <see cref="GetIconDelegate"/> static property</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function GetIcon(ByVal code As MessageBoxIcons) As IconOrBitmap
             Select Case code
                 Case MessageBoxIcons.Asterisk : Return Icons.Asterisk
@@ -2339,12 +2339,12 @@ Namespace WindowsT.IndependentT
                 Case Else : Return Nothing
             End Select
         End Function
-        ''' <summary>Converts <see cref="Windows.Forms.Messageboxicon"/> to <see cref="MessageBoxIcons"/> value</summary>
-        ''' <param name="code">A <see cref="Windows.Forms.MessageBoxIcon"/></param>
-        ''' <returns>Appropriate <see cref="MessageBoxIcons"/> value. If <paramref name="code"/> is not member of <see cref="Windows.Forms.MessageBoxIcon"/> returns <see cref="MessageBoxIcons.None"/></returns>
-        ''' <remarks>Several <see cref="Windows.Forms.MessageBoxIcon"/> values are converted to the same <see cref="MessageBoxIcons"/> value because they have same numerical values and it is not possible to distinguish between them. You'd better using <see cref="MessageBoxIcons"/> directly</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function ConvertIconConstant(ByVal code As Windows.Forms.MessageBoxIcon) As MessageBoxIcons
+        ''' <summary>Converts <see cref="System.Windows.Forms.Messageboxicon"/> to <see cref="MessageBoxIcons"/> value</summary>
+        ''' <param name="code">A <see cref="System.Windows.Forms.MessageBoxIcon"/></param>
+        ''' <returns>Appropriate <see cref="MessageBoxIcons"/> value. If <paramref name="code"/> is not member of <see cref="System.Windows.Forms.MessageBoxIcon"/> returns <see cref="MessageBoxIcons.None"/></returns>
+        ''' <remarks>Several <see cref="System.Windows.Forms.MessageBoxIcon"/> values are converted to the same <see cref="MessageBoxIcons"/> value because they have same numerical values and it is not possible to distinguish between them. You'd better using <see cref="MessageBoxIcons"/> directly</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Shared Function ConvertIconConstant(ByVal code As System.Windows.Forms.MessageBoxIcon) As MessageBoxIcons
             Select Case code
                 Case MessageBoxIcon.Information : Return MessageBoxIcons.Information
                 Case MessageBoxIcon.Asterisk : Return MessageBoxIcons.Asterisk
@@ -2359,9 +2359,9 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Converts <see cref="MsgBoxStyle"/> to <see cref="MessageBoxIcons"/> value</summary>
         ''' <param name="code">A <see cref="MsgBoxStyle"/></param>
-        ''' <returns>Appropriate <see cref="MessageBoxIcons"/> value. If <paramref name="code"/> is not member of <see cref="Windows.Forms.MessageBoxIcon"/> returns <see cref="MessageBoxIcons.None"/></returns>
+        ''' <returns>Appropriate <see cref="MessageBoxIcons"/> value. If <paramref name="code"/> is not member of <see cref="System.Windows.Forms.MessageBoxIcon"/> returns <see cref="MessageBoxIcons.None"/></returns>
         ''' <remarks>Only bits masked with 0x70 mask are considered for conversion</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function ConvertIconConstant(ByVal code As MsgBoxStyle) As MessageBoxIcons
             Select Case code And (MsgBoxStyle.Critical Or MsgBoxStyle.Exclamation Or MsgBoxStyle.Information Or MsgBoxStyle.Question)
                 Case MsgBoxStyle.Critical : Return MessageBoxIcons.Error
@@ -2371,33 +2371,33 @@ Namespace WindowsT.IndependentT
                 Case Else : Return MessageBoxIcons.None
             End Select
         End Function
-        ''' <summary>Converts <see cref="Windows.MessageBoxImage"/> to <see cref="MessageBoxIcons"/> value</summary>
-        ''' <param name="code">A <see cref="Windows.MessageBoxImage"/></param>
-        ''' <returns>Appropriate <see cref="MessageBoxIcons"/> value. If <paramref name="code"/> is not member of <see cref="Windows.Forms.MessageBoxIcon"/> returns <see cref="MessageBoxIcons.None"/></returns>
-        ''' <remarks>Several <see cref="Windows.MessageBoxImage"/> values are converted to the same <see cref="MessageBoxIcons"/> value because they have same numerical values and it is not possible to distinguish between them. You'd better using <see cref="MessageBoxIcons"/> directly</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function ConvertIconConstant(ByVal code As Windows.MessageBoxImage) As MessageBoxIcons
+        ''' <summary>Converts <see cref="System.Windows.MessageBoxImage"/> to <see cref="MessageBoxIcons"/> value</summary>
+        ''' <param name="code">A <see cref="System.Windows.MessageBoxImage"/></param>
+        ''' <returns>Appropriate <see cref="MessageBoxIcons"/> value. If <paramref name="code"/> is not member of <see cref="System.Windows.Forms.MessageBoxIcon"/> returns <see cref="MessageBoxIcons.None"/></returns>
+        ''' <remarks>Several <see cref="System.Windows.MessageBoxImage"/> values are converted to the same <see cref="MessageBoxIcons"/> value because they have same numerical values and it is not possible to distinguish between them. You'd better using <see cref="MessageBoxIcons"/> directly</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Shared Function ConvertIconConstant(ByVal code As System.Windows.MessageBoxImage) As MessageBoxIcons
             Select Case code
-                Case Windows.MessageBoxImage.Information : Return MessageBoxIcons.Information
-                Case Windows.MessageBoxImage.Asterisk : Return MessageBoxIcons.Asterisk
-                Case Windows.MessageBoxImage.Error : Return MessageBoxIcons.Error
-                Case Windows.MessageBoxImage.Hand : Return MessageBoxIcons.Hand
-                Case Windows.MessageBoxImage.Stop : Return MessageBoxIcons.Stop
-                Case Windows.MessageBoxImage.Exclamation : Return MessageBoxIcons.Exclamation
-                Case Windows.MessageBoxImage.Warning : Return MessageBoxIcons.Warning
-                Case Windows.MessageBoxImage.Question : Return MessageBoxIcons.Question
+                Case System.Windows.MessageBoxImage.Information : Return MessageBoxIcons.Information
+                Case System.Windows.MessageBoxImage.Asterisk : Return MessageBoxIcons.Asterisk
+                Case System.Windows.MessageBoxImage.Error : Return MessageBoxIcons.Error
+                Case System.Windows.MessageBoxImage.Hand : Return MessageBoxIcons.Hand
+                Case System.Windows.MessageBoxImage.Stop : Return MessageBoxIcons.Stop
+                Case System.Windows.MessageBoxImage.Exclamation : Return MessageBoxIcons.Exclamation
+                Case System.Windows.MessageBoxImage.Warning : Return MessageBoxIcons.Warning
+                Case System.Windows.MessageBoxImage.Question : Return MessageBoxIcons.Question
                 Case Else : Return MessageBoxIcons.None
             End Select
         End Function
         ''' <summary>Contains value of the <see cref="GetIconDelegate"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private Shared _GetIconDelegate As Func(Of MessageBoxIcons, IconOrBitmap) = AddressOf GetIcon
         ''' <summary>Gets or sets delegate which is used for converting enumeration values to icons for message box</summary>
         ''' <value>New delegate to be shared by all messageboxes for converting enumeration members to icons</value>
         ''' <returns>Current delegate that converts enumeration values to icons for message box</returns>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
         ''' <remarks>Default value is <see cref="GetIcon"/> function</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Property GetIconDelegate() As Func(Of MessageBoxIcons, IconOrBitmap)
             <DebuggerStepThrough()> Get
                 Return _GetIconDelegate
@@ -2411,35 +2411,35 @@ Namespace WindowsT.IndependentT
         ''' <remarks>The <see cref="MessageBox"/> API allows you to pass any <see cref="Drawing.Image"/> as your own icon</remarks>
         Public Enum MessageBoxIcons
             ''' <summary>By default represented by a yellow bulb</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Asterisk"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>
             ''' <seealso cref="Icons.Asterisk"/>
             Asterisk = 1
             ''' <summary>By default represented by white X in red circle</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Error"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Error"/>
             ''' <seealso cref="Icons.ErrorIcon"/>
             [Error] = 2
             ''' <summary>By default represented by black exclamation mark (!) in yellow triangle</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Exclamation"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>
             ''' <seealso cref="Icons.Exclamation"/>
             Exclamation = 3
             ''' <summary>By default represented by white hand in red circle</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Hand"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Hand"/>
             ''' <seealso cref="Icons.Hand"/>
             Hand = 4
             ''' <summary>By default represented by white lowercase i in blue circle</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Information"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Information"/>
             ''' <seealso cref="Icons.Information"/>
             Information = 5
             ''' <summary>By default represented by white question mark (?) in blue circle</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Question"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Question"/>
             ''' <seealso cref="Icons.Question"/>
             Question = 6
             ''' <summary>By default represented by default represented by no-entry (one way) traffic sign</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Stop"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Stop"/>
             ''' <seealso cref="Icons.StopIcon"/>
             [Stop] = 7
             ''' <summary>By default represented by black exclamation mark (!) in yellow circle</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.Warning"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.Warning"/>
             ''' <seealso cref="Icons.Warning"/>
             Warning = 8
             ''' <summary>By default represented by white check mark (✔) in green circle</summary>
@@ -2461,7 +2461,7 @@ Namespace WindowsT.IndependentT
             ''' <seealso cref="Icons.SecurityQuestion"/>
             SecurityQuestion = 16 Or Question
             ''' <summary>Represents no icon</summary>
-            ''' <seealso cref="Windows.Forms.MessageBoxIcon.None"/>
+            ''' <seealso cref="System.Windows.Forms.MessageBoxIcon.None"/>
             None = 0
         End Enum
 #End Region
@@ -2525,20 +2525,20 @@ Namespace WindowsT.IndependentT
         ''' <summary>Displays a message box that has a message and that returns a result.</summary>
         ''' <returns>A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies which message box button is clicked by the user.</returns>
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
-        ''' <remarks>This function is provided for compatibility with <see cref="Windows.MessageBox"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.MessageBoxResult
-            Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, String.Empty, Windows.MessageBoxButton.OK, Windows.MessageBoxImage.None, Windows.MessageBoxResult.None, Windows.MessageBoxOptions.None)
+        ''' <remarks>This function is provided for compatibility with <see cref="System.Windows.MessageBox"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function ShowWPF(ByVal messageBoxText As String) As System.Windows.MessageBoxResult
+            Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, String.Empty, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.None, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
 
         ''' <summary>Displays a message box that has a message and title bar caption; and that returns a result.</summary>
         ''' <returns>A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies which message box button is clicked by the user.</returns>
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
-        ''' <remarks>This function is provided for compatibility with <see cref="Windows.MessageBox"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function ShowWPF(ByVal messageBoxText As String, ByVal caption As String) As Windows.MessageBoxResult
-            Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, Windows.MessageBoxButton.OK, Windows.MessageBoxImage.None, Windows.MessageBoxResult.None, Windows.MessageBoxOptions.None)
+        ''' <remarks>This function is provided for compatibility with <see cref="System.Windows.MessageBox"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function ShowWPF(ByVal messageBoxText As String, ByVal caption As String) As System.Windows.MessageBoxResult
+            Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.None, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
 #End Region
 #Region "Show"
@@ -2547,8 +2547,8 @@ Namespace WindowsT.IndependentT
         ''' <param name="owner">A <see cref="T:System.Windows.Window" /> that represents the owner window of the message box.</param>
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides </remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides </remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, String.Empty, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.None, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2558,10 +2558,10 @@ Namespace WindowsT.IndependentT
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides </remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides </remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, System.Windows.MessageBoxImage.None, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2572,8 +2572,8 @@ Namespace WindowsT.IndependentT
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides </remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides </remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.None, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2583,11 +2583,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="T:System.Windows.MessageBoxImage" /> value that specifies the icon to display.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or = <paramref name="icon"/> is not member of <see cref="System.Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function is provided mainly for compatibility with <see cref="Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        ''' <remarks>This function is provided mainly for compatibility with <see cref="System.Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2597,10 +2597,10 @@ Namespace WindowsT.IndependentT
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As MessageBoxIcons) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2610,10 +2610,10 @@ Namespace WindowsT.IndependentT
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, System.Windows.MessageBoxImage.None, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2624,12 +2624,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="T:System.Windows.MessageBoxImage" /> value that specifies the icon to display.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
-        ''' <remarks>This function is provided mainly for compatibility with <see cref="Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
-        ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
+        ''' <remarks>This function is provided mainly for compatibility with <see cref="System.Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
+        ''' =or = <paramref name="icon"/> is not member of <see cref="System.Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2640,12 +2640,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As MessageBoxIcons, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2656,11 +2656,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="T:System.Windows.MessageBoxImage" /> value that specifies the icon to display.</param>
-        ''' <remarks>This function is provided mainly for compatibility with <see cref="Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
+        ''' <remarks>This function is provided mainly for compatibility with <see cref="System.Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or = <paramref name="icon"/> is not member of <see cref="System.Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2671,11 +2671,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As MessageBoxIcons) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2687,13 +2687,13 @@ Namespace WindowsT.IndependentT
         ''' <param name="icon">A <see cref="T:System.Windows.MessageBoxImage" /> value that specifies the icon to display.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
-        ''' <remarks>This function is provided mainly for compatibility with <see cref="Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
-        ''' =or= <paramref name="options"/> is not valid <see cref="windows.MessageBoxOptions"/> value
-        ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
+        ''' <remarks>This function is provided mainly for compatibility with <see cref="System.Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
+        ''' =or= <paramref name="options"/> is not valid <see cref="System.Windows.MessageBoxOptions"/> value
+        ''' =or = <paramref name="icon"/> is not member of <see cref="System.Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, options)
         End Function
@@ -2705,13 +2705,13 @@ Namespace WindowsT.IndependentT
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
-        ''' =or= <paramref name="options"/> is not valid <see cref="windows.MessageBoxOptions"/> value
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
+        ''' =or= <paramref name="options"/> is not valid <see cref="System.Windows.MessageBoxOptions"/> value
         '''</exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As MessageBoxIcons, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, options)
         End Function
@@ -2723,12 +2723,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="T:System.Windows.MessageBoxImage" /> value that specifies the icon to display.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
-        ''' <remarks>This function is provided mainly for compatibility with <see cref="Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="options"/> is not valid <see cref="windows.MessageBoxOptions"/> value
-        ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
+        ''' <remarks>This function is provided mainly for compatibility with <see cref="System.Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="options"/> is not valid <see cref="System.Windows.MessageBoxOptions"/> value
+        ''' =or = <paramref name="icon"/> is not member of <see cref="System.Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, defaultResult, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2740,12 +2740,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As MessageBoxIcons, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, defaultResult, System.Windows.MessageBoxOptions.None)
         End Function
@@ -2758,13 +2758,13 @@ Namespace WindowsT.IndependentT
         ''' <param name="icon">A <see cref="T:System.Windows.MessageBoxImage" /> value that specifies the icon to display.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
-        ''' <remarks>This function is provided mainly for compatibility with <see cref="Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
-        ''' =or= <paramref name="options"/> is not valid <see cref="windows.MessageBoxOptions"/> value
-        ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
+        ''' <remarks>This function is provided mainly for compatibility with <see cref="System.Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
+        ''' =or= <paramref name="options"/> is not valid <see cref="System.Windows.MessageBoxOptions"/> value
+        ''' =or = <paramref name="icon"/> is not member of <see cref="System.Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, defaultResult, options)
         End Function
@@ -2777,19 +2777,19 @@ Namespace WindowsT.IndependentT
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
-        ''' =or= <paramref name="options"/> is not valid <see cref="windows.MessageBoxOptions"/> value
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
+        ''' =or= <paramref name="options"/> is not valid <see cref="System.Windows.MessageBoxOptions"/> value
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As MessageBoxIcons, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, defaultResult, options)
         End Function
 #End Region
 #Region "ShowCore"
-        ''' <summary>Performs WPF-like message box with <see cref="Windows.MessageBoxImage"/></summary>
+        ''' <summary>Performs WPF-like message box with <see cref="System.Windows.MessageBoxImage"/></summary>
         ''' <returns>A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies which message box button is clicked by the user.</returns>
         ''' <param name="owner">A <see cref="T:System.Windows.Window" /> that represents the owner window of the message box.</param>
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
@@ -2798,12 +2798,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
-        ''' =or= <paramref name="options"/> is not valid <see cref="windows.MessageBoxOptions"/> value
-        ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
+        ''' =or= <paramref name="options"/> is not valid <see cref="System.Windows.MessageBoxOptions"/> value
+        ''' =or = <paramref name="icon"/> is not member of <see cref="System.Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        Private Shared Function ShowCore(ByVal owner As IntPtr, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
+        Private Shared Function ShowCore(ByVal owner As IntPtr, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             If Not MessageBox.IsValidMessageBoxImage(icon) Then _
                Throw New InvalidEnumArgumentException("icon", CInt(icon), GetType(System.Windows.MessageBoxImage))
             Return ShowCore(owner, messageBoxText, caption, button, ConvertIconConstant(icon), defaultResult, options)
@@ -2817,9 +2817,9 @@ Namespace WindowsT.IndependentT
         ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
-        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
-        ''' =or= <paramref name="options"/> is not valid <see cref="windows.MessageBoxOptions"/> value</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="System.Windows.MessageBoxButton"/>
+        ''' =or= <paramref name="defaultResult"/> is not member of <see cref="System.Windows.MessageBoxResult"/>
+        ''' =or= <paramref name="options"/> is not valid <see cref="System.Windows.MessageBoxOptions"/> value</exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         Private Shared Function ShowCore(ByVal owner As IntPtr, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As MessageBoxIcons, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             If Not MessageBox.IsValidMessageBoxButton(button) Then _
@@ -2833,26 +2833,26 @@ Namespace WindowsT.IndependentT
                 box.Buttons.Clear()
                 box.Buttons.AddRange(MessageBoxButton.GetButtons(button))
                 Select Case defaultResult
-                    Case Windows.MessageBoxResult.Cancel
+                    Case System.Windows.MessageBoxResult.Cancel
                         Select Case button
-                            Case Windows.MessageBoxButton.OKCancel : box.DefaultButton = 1
-                            Case Windows.MessageBoxButton.YesNoCancel : box.DefaultButton = 2
+                            Case System.Windows.MessageBoxButton.OKCancel : box.DefaultButton = 1
+                            Case System.Windows.MessageBoxButton.YesNoCancel : box.DefaultButton = 2
                             Case Else : box.DefaultButton = -1
                         End Select
-                    Case Windows.MessageBoxResult.OK
+                    Case System.Windows.MessageBoxResult.OK
                         Select Case button
-                            Case Windows.MessageBoxButton.OK, Windows.MessageBoxButton.OKCancel : box.DefaultButton = 0
+                            Case System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxButton.OKCancel : box.DefaultButton = 0
                             Case Else : box.DefaultButton = -1
                         End Select
-                    Case Windows.MessageBoxResult.No
+                    Case System.Windows.MessageBoxResult.No
                         Select Case button
-                            Case Windows.MessageBoxButton.YesNo, Windows.MessageBoxButton.YesNoCancel : box.DefaultButton = 1
+                            Case System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxButton.YesNoCancel : box.DefaultButton = 1
                             Case Else : box.DefaultButton = -1
                         End Select
-                    Case Windows.MessageBoxResult.None : box.DefaultButton = -1
-                    Case Windows.MessageBoxResult.Yes
+                    Case System.Windows.MessageBoxResult.None : box.DefaultButton = -1
+                    Case System.Windows.MessageBoxResult.Yes
                         Select Case button
-                            Case Windows.MessageBoxButton.YesNo, Windows.MessageBoxButton.YesNoCancel : box.DefaultButton = 0
+                            Case System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxButton.YesNoCancel : box.DefaultButton = 0
                             Case Else : box.DefaultButton = -1
                         End Select
                 End Select
@@ -2863,8 +2863,8 @@ Namespace WindowsT.IndependentT
                     Case MessageBoxIcons.Exclamation : box.PlayOnShow = Media.SystemSounds.Exclamation
                     Case MessageBoxIcons.Question : box.PlayOnShow = Media.SystemSounds.Question
                 End Select
-                If (options And Windows.MessageBoxOptions.RightAlign) = Windows.MessageBoxOptions.RightAlign Then box.Options = box.Options Or MessageBoxOptions.AlignRight
-                If (options And Windows.MessageBoxOptions.RtlReading) = Windows.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
+                If (options And System.Windows.MessageBoxOptions.RightAlign) = System.Windows.MessageBoxOptions.RightAlign Then box.Options = box.Options Or MessageBoxOptions.AlignRight
+                If (options And System.Windows.MessageBoxOptions.RtlReading) = System.Windows.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
                 Return ShowTemplate(box, New WPFWindow(owner))
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
                 Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex)
@@ -2873,16 +2873,16 @@ Namespace WindowsT.IndependentT
 #End Region
 #End Region
 
-#Region "Windows.Forms.MessageBox"
+#Region "System.Windows.Forms.MessageBox"
 #Region "Show"
         ''' <summary>Displays a message box with specified text.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="text">The text to display in the message box. </param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
-        <EditorBrowsable(EditorBrowsableState.Always)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function</remarks>
+        <EditorBrowsable(EditorBrowsableState.Always)>
         Public Shared Function Show(ByVal [text] As String) As DialogResult
-            Return MessageBox.ShowCore(Nothing, [text], String.Empty, MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
+            Return MessageBox.ShowCore(Nothing, [text], String.Empty, MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box with specified text and caption.</summary>
@@ -2890,22 +2890,22 @@ Namespace WindowsT.IndependentT
         ''' <param name="caption">The text to display in the title bar of the message box. </param>
         ''' <param name="text">The text to display in the message box. </param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
-        <EditorBrowsable(EditorBrowsableState.Always)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function</remarks>
+        <EditorBrowsable(EditorBrowsableState.Always)>
         Public Shared Function Show(ByVal [text] As String, ByVal caption As String) As DialogResult
-            Return MessageBox.ShowCore(Nothing, [text], caption, MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
+            Return MessageBox.ShowCore(Nothing, [text], caption, MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box in front of the specified object and with the specified text.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Always)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Always)>
         Public Shared Function Show(ByVal owner As Object, ByVal [text] As String) As DialogResult
-            Return MessageBox.ShowCore(owner, [text], String.Empty, MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
+            Return MessageBox.ShowCore(owner, [text], String.Empty, MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box with specified text, caption, and buttons.</summary>
@@ -2917,23 +2917,23 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="buttons"/> is not member of <see cref="MessageBoxButtons"/> =or=
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons) As DialogResult
-            Return MessageBox.ShowCore(Nothing, [text], caption, buttons, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
+            Return MessageBox.ShowCore(Nothing, [text], caption, buttons, System.Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box in front of the specified object and with the specified text and caption.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="caption">The text to display in the title bar of the message box. </param>
         ''' <param name="text">The text to display in the message box. </param>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Always)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Always)>
         Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String) As DialogResult
-            Return MessageBox.ShowCore(owner, [text], caption, MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
+            Return MessageBox.ShowCore(owner, [text], caption, MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box with specified text, caption, buttons, and icon.</summary>
@@ -2947,10 +2947,10 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="icon"/> is not member of <see cref="MessageBoxIcon"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
+        ''' <remarks>This overload is provided mainly for compatibility with <see cref="System.Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon) As DialogResult
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As System.Windows.Forms.MessageBoxIcon) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, MessageBoxDefaultButton.Button1, 0)
         End Function
         ''' <summary>Displays a message box with specified text, caption, buttons, and icon.</summary>
@@ -2964,14 +2964,14 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="icon"/> is not member of <see cref="MessageBoxIcons"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, MessageBoxDefaultButton.Button1, 0)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, and buttons.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
         ''' <param name="text">The text to display in the message box. </param>
@@ -2979,11 +2979,11 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="buttons"/> is not member of <see cref="MessageBoxButtons"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function</remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons) As DialogResult
-            Return MessageBox.ShowCore(owner, [text], caption, buttons, Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
+            Return MessageBox.ShowCore(owner, [text], caption, buttons, System.Windows.Forms.MessageBoxIcon.None, MessageBoxDefaultButton.Button1, 0)
         End Function
 
         ''' <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
@@ -2999,10 +2999,10 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
+        ''' <remarks>This overload is provided mainly for compatibility with <see cref="System.Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons,System.Windows.Forms.MessageBoxDefaultButton)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As System.Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, defaultButton, 0)
         End Function
         ''' <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
@@ -3018,8 +3018,8 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, defaultButton, 0)
         End Function
@@ -3028,7 +3028,7 @@ Namespace WindowsT.IndependentT
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
         ''' <exception cref="InvalidEnumArgumentException">
@@ -3036,18 +3036,18 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="icon"/> is not member of <see cref="MessageBoxIcon"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
+        ''' <remarks>This overload is provided mainly for compatibility with <see cref="System.Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As System.Windows.Forms.MessageBoxIcon) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, MessageBoxDefaultButton.Button1, 0)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, and icon.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
         ''' <exception cref="InvalidEnumArgumentException">
@@ -3055,9 +3055,9 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="icon"/> is not member of <see cref="MessageBoxIcons"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, MessageBoxDefaultButton.Button1, 0)
         End Function
@@ -3076,10 +3076,10 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
+        ''' <remarks>This overload is provided mainly for compatibility with <see cref="System.Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons,System.Windows.Forms.MessageBoxDefaultButton,System.Windows.Forms.MessageBoxOptions)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As System.Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As System.Windows.Forms.MessageBoxOptions) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, defaultButton, options)
         End Function
         ''' <summary>Displays a message box with the specified text, caption, buttons, icon, default button, and options.</summary>
@@ -3096,16 +3096,16 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Shared Function Show(ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As System.Windows.Forms.MessageBoxOptions) As DialogResult
             Return MessageBox.ShowCore(Nothing, [text], caption, buttons, icon, defaultButton, options)
         End Function
 
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, and default button.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values that specifies the default button for the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3116,17 +3116,17 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
+        ''' <remarks>This overload is provided mainly for compatibility with <see cref="System.Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons,System.Windows.Forms.MessageBoxDefaultButton)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As System.Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, 0)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, and default button.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values that specifies the default button for the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3137,9 +3137,9 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, 0)
         End Function
@@ -3149,7 +3149,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3159,11 +3159,11 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This overload is provided mainly for compatibility with <see cref="Windows.Forms.MessageBox"/>. You'd better use
+        ''' <remarks>This overload is provided mainly for compatibility with <see cref="System.Windows.Forms.MessageBox"/>. You'd better use
         ''' <see cref="M:Tools.WindowsT.IndependentT.MessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons,System.Windows.Forms.MessageBoxDefaultButton,System.Windows.Forms.MessageBoxOptions)">overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/></see>.</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As System.Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As System.Windows.Forms.MessageBoxOptions) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, options)
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, default button, and options.</summary>
@@ -3171,7 +3171,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3181,10 +3181,10 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <remarks>This function mimics the <see cref="Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        ''' <remarks>This function mimics the <see cref="System.Windows.Forms.MessageBox.Show"/> function, but the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Public Shared Function Show(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As System.Windows.Forms.MessageBoxOptions) As DialogResult
             Return MessageBox.ShowCore(owner, [text], caption, buttons, icon, defaultButton, options)
         End Function
 #End Region
@@ -3193,7 +3193,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3203,8 +3203,8 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        Private Shared Function ShowCore(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        Private Shared Function ShowCore(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcons, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As System.Windows.Forms.MessageBoxOptions) As DialogResult
             If Not InEnum(buttons) Then _
                 Throw New InvalidEnumArgumentException("buttons", buttons, GetType(MessageBoxButtons))
             If Not InEnum(icon) Then _
@@ -3231,18 +3231,18 @@ Namespace WindowsT.IndependentT
                     Case MessageBoxIcons.Exclamation : box.PlayOnShow = Media.SystemSounds.Exclamation
                     Case MessageBoxIcons.Question : box.PlayOnShow = Media.SystemSounds.Question
                 End Select
-                If (options And Windows.Forms.MessageBoxOptions.RightAlign) = Windows.Forms.MessageBoxOptions.RightAlign Then box.Options = box.Options Or MessageBoxOptions.AlignRight
-                If (options And Windows.Forms.MessageBoxOptions.RtlReading) = Windows.Forms.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
+                If (options And System.Windows.Forms.MessageBoxOptions.RightAlign) = System.Windows.Forms.MessageBoxOptions.RightAlign Then box.Options = box.Options Or MessageBoxOptions.AlignRight
+                If (options And System.Windows.Forms.MessageBoxOptions.RtlReading) = System.Windows.Forms.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
                 Return ShowTemplate(box, owner)
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
                 Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
         End Function
-        ''' <summary>Performs modal dialog for WinForms-like functions with <see cref="Windows.Forms.MessageBoxIcon"/></summary>
+        ''' <summary>Performs modal dialog for WinForms-like functions with <see cref="System.Windows.Forms.MessageBoxIcon"/></summary>
         ''' <param name="Text">The text to display in the message box. </param>
         ''' <param name="Icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
-        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Window that will own the modal dialog box. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values the specifies the default button for the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -3252,8 +3252,8 @@ Namespace WindowsT.IndependentT
         ''' <paramref name="defaultButton"/> is not membember of <see cref="MessageBoxDefaultButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error worink working with customized static properties such as <see cref="DefaultImplementation"/></exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        Private Shared Function ShowCore(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As Windows.Forms.MessageBoxOptions) As DialogResult
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        Private Shared Function ShowCore(ByVal owner As Object, ByVal [text] As String, ByVal caption As String, ByVal buttons As MessageBoxButtons, ByVal icon As System.Windows.Forms.MessageBoxIcon, ByVal defaultButton As MessageBoxDefaultButton, ByVal options As System.Windows.Forms.MessageBoxOptions) As DialogResult
             Return ShowCore(owner, text, caption, buttons, ConvertIconConstant(icon), defaultButton, options)
         End Function
 #End Region
@@ -3267,39 +3267,39 @@ Namespace WindowsT.IndependentT
         ''' <returns>The result of message box indicatin pressed button.</returns>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimisc behaviour of the <see cref="Microsoft.VisualBasic.Interaction.MsgBox"/> function</remarks>
-        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <version version="1.5.3" stage="Beta">Added parameter <paramref name="owner"/> because using <see cref="MsgBox"/> without owner caused bad behavior in WPF applications.</version>
         ''' <version version="1.5.4">Fix: <see cref="NullReferenceException"/> thrown if <paramref name="Title"/> or <paramref name="Prompt"/> is null.</version>
         ''' <version version="1.5.4">Parameters renamed: <c>Prompt</c> to <c>prompt</c>, <c>Buttons</c> to <c>buttons</c>, <c>Title</c> to <c>title</c></version>
         Public Shared Function MsgBox(ByVal prompt As Object, Optional ByVal buttons As MsgBoxStyle = 0, Optional ByVal title As Object = Nothing, Optional ByVal owner As Object = Nothing) As MsgBoxResult
             Try
-                Dim box As New FakeBox With {.Prompt = If(Prompt, "").ToString, .Title = If(Title, "").ToString}
+                Dim box As New FakeBox With {.Prompt = If(prompt, "").ToString, .Title = If(title, "").ToString}
                 box.Buttons.Clear()
-                box.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
-                box.Icon = GetIconDelegate.Invoke(ConvertIconConstant(Buttons))
-                Select Case Buttons And (MsgBoxStyle.DefaultButton1 Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.DefaultButton3)
+                box.Buttons.AddRange(MessageBoxButton.GetButtons(buttons))
+                box.Icon = GetIconDelegate.Invoke(ConvertIconConstant(buttons))
+                Select Case buttons And (MsgBoxStyle.DefaultButton1 Or MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.DefaultButton3)
                     Case MsgBoxStyle.DefaultButton1 : box.DefaultButton = 0
                     Case MsgBoxStyle.DefaultButton2 : box.DefaultButton = 1
                     Case MsgBoxStyle.DefaultButton3 : box.DefaultButton = 2
                     Case Else : box.DefaultButton = -1
                 End Select
-                Select Case Buttons And (MsgBoxStyle.Critical Or MsgBoxStyle.Exclamation Or MsgBoxStyle.Information Or MsgBoxStyle.Question)
+                Select Case buttons And (MsgBoxStyle.Critical Or MsgBoxStyle.Exclamation Or MsgBoxStyle.Information Or MsgBoxStyle.Question)
                     Case MsgBoxStyle.Critical : box.PlayOnShow = Media.SystemSounds.Hand
                     Case MsgBoxStyle.Exclamation : box.PlayOnShow = Media.SystemSounds.Exclamation
                     Case MsgBoxStyle.Question : box.PlayOnShow = Media.SystemSounds.Question
                 End Select
-                If (Buttons And MsgBoxStyle.MsgBoxSetForeground) = MsgBoxStyle.MsgBoxSetForeground Then box.Options = box.Options Or MessageBoxOptions.BringToFront
-                If (Buttons And MsgBoxStyle.MsgBoxRight) = MsgBoxStyle.MsgBoxRight Then box.Options = box.Options Or MessageBoxOptions.AlignRight
-                If (Buttons And MsgBoxStyle.MsgBoxRtlReading) = MsgBoxStyle.MsgBoxRtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
+                If (buttons And MsgBoxStyle.MsgBoxSetForeground) = MsgBoxStyle.MsgBoxSetForeground Then box.Options = box.Options Or MessageBoxOptions.BringToFront
+                If (buttons And MsgBoxStyle.MsgBoxRight) = MsgBoxStyle.MsgBoxRight Then box.Options = box.Options Or MessageBoxOptions.AlignRight
+                If (buttons And MsgBoxStyle.MsgBoxRtlReading) = MsgBoxStyle.MsgBoxRtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
                 Dim result As DialogResult = ShowTemplate(box, owner)
                 Select Case result
-                    Case Windows.Forms.DialogResult.Abort : Return MsgBoxResult.Abort
-                    Case Windows.Forms.DialogResult.Cancel : Return MsgBoxResult.Cancel
-                    Case Windows.Forms.DialogResult.Ignore : Return MsgBoxResult.Ignore
-                    Case Windows.Forms.DialogResult.No : Return MsgBoxResult.No
-                    Case Windows.Forms.DialogResult.OK : Return MsgBoxResult.Ok
-                    Case Windows.Forms.DialogResult.Retry : Return MsgBoxResult.Retry
-                    Case Windows.Forms.DialogResult.Yes : Return MsgBoxResult.Yes
+                    Case System.Windows.Forms.DialogResult.Abort : Return MsgBoxResult.Abort
+                    Case System.Windows.Forms.DialogResult.Cancel : Return MsgBoxResult.Cancel
+                    Case System.Windows.Forms.DialogResult.Ignore : Return MsgBoxResult.Ignore
+                    Case System.Windows.Forms.DialogResult.No : Return MsgBoxResult.No
+                    Case System.Windows.Forms.DialogResult.OK : Return MsgBoxResult.Ok
+                    Case System.Windows.Forms.DialogResult.Retry : Return MsgBoxResult.Retry
+                    Case System.Windows.Forms.DialogResult.Yes : Return MsgBoxResult.Yes
                     Case Else : Return result
                 End Select
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
@@ -3325,7 +3325,7 @@ Namespace WindowsT.IndependentT
         ''' <returns>The result of message box indicatin pressed button.</returns>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimisc and extends behaviour of the <see cref="Microsoft.VisualBasic.Interaction.MsgBox"/> function</remarks>
-        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="args">Formatting arguments passed to <see cref="String.Format"/> along with <paramref name="prompt"/> to form message</param>
         ''' <version version="1.5.3" stage="Beta">This function is new in version 1.5.3</version>
         Public Shared Function MsgBoxFW(ByVal prompt As String, ByVal buttons As MsgBoxStyle, ByVal title As String, ByVal owner As Object, ByVal ParamArray args As Object()) As MsgBoxResult
@@ -3593,7 +3593,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <version version="1.5.3" stage="Beta">This function is new in 1.5.3</version>
         Public Shared Function Modal_PTIW(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object) As DialogResult
@@ -3603,7 +3603,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <version version="1.5.3" stage="Beta">This function is new in 1.5.3</version>
         Public Shared Function Modal_PTIW(ByVal Prompt$, ByVal Title$, ByVal Icon As MessageBoxIcons, ByVal Owner As Object) As DialogResult
@@ -3640,12 +3640,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <version version="1.5.3" stage="Beta">Fixed: This function always returns <see cref="DialogResult.None"/></version>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Shared Function Modal_PTWBIO(ByVal Prompt$, ByVal Title$, ByVal Owner As Object, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
-            Dim box As New FakeBox With { _
-                .Prompt = Prompt, .Title = Title, _
+            Dim box As New FakeBox With {
+                .Prompt = Prompt, .Title = Title,
                 .Options = Options, .Icon = Icon}
             box.SetButtons(Buttons)
             Return ShowTemplate(box, Owner)
@@ -3653,34 +3653,34 @@ Namespace WindowsT.IndependentT
         ''' <summary>Display modal message box with formated promt, given title, owner, buttons, icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Shared Function ModalF_PTWBIa(ByVal Prompt$, ByVal Title$, ByVal Owner As Object, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
             Return Modal_PTWBIO(String.Format(Prompt, arguments), Title, Owner, Buttons, Icon)
         End Function
         ''' <summary>Display modal message box with formated promt, given title, owner, buttons, one of predefined icons</summary>
         ''' <param name="prompt">Format string for promt to be shown to user</param>
         ''' <param name="title">Message box title</param>
-        ''' <param name="owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="icon">Icon that will be shown on messagebox.</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <version version="1.5.3" stage="Beta">This overload is new in bersion 1.5.3</version>
         Public Shared Function ModalF_PTWBIa(ByVal prompt$, ByVal title$, ByVal owner As Object, ByVal buttons As MessageBoxButton.Buttons, ByVal icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return Modal_PTWBIO(String.Format(Prompt, arguments), Title, Owner, Buttons, GetIcon(Icon))
+            Return Modal_PTWBIO(String.Format(prompt, arguments), title, owner, buttons, GetIcon(icon))
         End Function
         ''' <summary>Dsiplays modal message box with formated prompt, given title and owner</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: This function always returns <see cref="DialogResult.None"/>.</version>
         Public Shared Function ModalF_PTWa(ByVal Prompt$, ByVal Title$, ByVal Owner As Object, ByVal ParamArray arguments As Object()) As DialogResult
             Return ModalF_PTWBIa(Prompt, Title, Owner, MessageBoxButton.Buttons.OK, CType(Nothing, Image), arguments)
@@ -3692,13 +3692,13 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <version version="1.5.3" stage="Beta">Fixed: This function always returns <see cref="DialogResult.None"/></version>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As TimeSpan, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing) As DialogResult
-            Dim box As New FakeBox With { _
-                .Prompt = Prompt, .Title = Title, _
+            Dim box As New FakeBox With {
+                .Prompt = Prompt, .Title = Title,
                 .Options = Options, .Icon = Icon, .Timer = Timer}
             box.SetButtons(Buttons)
             Return ShowTemplate(box, Owner)
@@ -3710,9 +3710,9 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As Integer, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing) As DialogResult
             Return Modal_PTMBIOW(Prompt, Title, TimeSpan.FromSeconds(Timer), Buttons, Icon, Options, Owner)
         End Function
@@ -3724,12 +3724,12 @@ Namespace WindowsT.IndependentT
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <param name="Sound">Sound to be played whne message box is shown.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fixed: Values in <paramref name="Items"/> are not processed. This bug affected may methods depending on this one.</version>
         Public Shared Function ModalEx_PTEIOWMHS(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As Object = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
             Dim box As New FakeBox With {.Options = Options, .Prompt = Prompt, .Title = Title, .Timer = TimeSpan.FromSeconds(Timer), .PlayOnShow = Sound}
@@ -3754,11 +3754,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIOWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],[Owner], [Timer], [ShownHandler]
@@ -3769,11 +3769,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
@@ -3785,11 +3785,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWMHB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
@@ -3801,9 +3801,9 @@ Namespace WindowsT.IndependentT
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Items"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWS(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
@@ -3815,9 +3815,9 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that objects in <paramref name="Buttons"/> were not processed.</version>
         Public Shared Function ModalEx_PTIWB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As Object, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
@@ -3860,7 +3860,7 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Displays modal message box with information about given <see cref="Exception"/> modal to giwen owner</summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is null</exception>
         ''' <version version="1.5.3">This function is new in version 1.5.3</version>
         Shared Function Error_XW(ByVal ex As Exception, ByVal owner As Object) As DialogResult
@@ -3880,10 +3880,10 @@ Namespace WindowsT.IndependentT
         ''' <summary>Displays modal message box with information about <see cref="Exception"/> with given title and owner</summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
         ''' <param name="Title">Message box title</param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>   
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
         ''' <version version="1.5.3"><see cref="ArgumentNullException"/> is thrown when <paramref name="ex"/> is null (instead of <see cref="NullReferenceException"/>)</version>
         Public Shared Function [Error_XTW](ByVal ex As Exception, ByVal Title$, ByVal Owner As Object) As DialogResult
@@ -3917,9 +3917,9 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is null</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that that messagebox was rendered without buttons.</version>
         ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
@@ -3932,10 +3932,10 @@ Namespace WindowsT.IndependentT
         ''' <param name="Title">Message box title</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is nulll</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was shown without buttons.</version>
         ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
@@ -3952,11 +3952,11 @@ Namespace WindowsT.IndependentT
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">The window message box window will be modal to (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Options">Dialog options</param>
         ''' <exception cref="ArgumentNullException"><paramref name="ex"/> is null</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         ''' <version version="1.5.3" stage="Beta">Fix: <paramref name="Buttons"/> goes to prompt rather than forming buttons. Only OK button si always show.</version>
         ''' <version version="1.5.3">Fix: Bug in <see cref="ModalEx_PTEIOWMHS"/> (which this method depends on) caused that messagebox was rendered without buttons.</version>
         ''' <version version="1.5.3">Message from inner exceptions is shown as well</version>
@@ -4026,10 +4026,10 @@ Namespace WindowsT.IndependentT
 #Region "Modal sync"
         ''' <summary>Displays modal messagebox in sync with given control</summary>
         ''' <param name="Control">Control to diplay dialog in thread control was created by</param>
-        ''' <param name="Owner">Optional owner of dialog (the window dialog will be modal to). Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Optional owner of dialog (the window dialog will be modal to). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Result of diloag identifiing pressed button</returns>
         ''' <remarks>This function can be used to display dialogs from background worker thread</remarks>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Function ModalSync(ByVal Control As Control, Optional ByVal Owner As Object = Nothing) As DialogResult
             If Control.InvokeRequired Then
                 Dim shd As Func(Of IWin32Window, DialogResult) = AddressOf Me.ShowDialog
@@ -4043,13 +4043,13 @@ Namespace WindowsT.IndependentT
         ''' <param name="Template">Instance to initialize default message box with</param>
         ''' <param name="Prompt">If not null specified different prompt of messagebox</param>
         ''' <param name="Title">If not null specifies different title of messagebox</param>
-        ''' <param name="Owner">Optional owner of messagebox - the window messagebox will be modal to. Typical values are <see cref="IWin32Window"/> and <see cref="Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
+        ''' <param name="Owner">Optional owner of messagebox - the window messagebox will be modal to. Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Result of messagebox which identified button that was pressed</returns>
         ''' <seelaso cref="FakeBox"/>
         ''' <seelaso cref="ShowTemplate"/>
         ''' <seelaso cref="DisplayTemplate"/>
         ''' <seelaso cref="ModalSync"/>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
         Public Shared Function ModalSyncTemplate(ByVal Control As Control, ByVal Template As MessageBox, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing, Optional ByVal Owner As Object = Nothing) As DialogResult
             Dim Instance As Tools.WindowsT.IndependentT.MessageBox
             Try

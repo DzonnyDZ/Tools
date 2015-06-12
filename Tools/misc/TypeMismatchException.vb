@@ -262,7 +262,7 @@ Public Class TypeMismatchException : Inherits ArgumentException
     End Property
     ''' <summary>Gets collection of types value was expected to be of</summary>
     ''' <version version="1.5.3">This property is new in version 1.5.3</version>
-    Public ReadOnly Property ExpectedTypes As IReadOnlyCollection(Of Type)
+    Public ReadOnly Property ExpectedTypes As CollectionsT.GenericT.IReadOnlyCollection(Of Type)
         Get
             Return Array.AsReadOnly(_ExpectedTypes)
         End Get

@@ -95,39 +95,39 @@ Namespace WindowsT.InteropT
                 Return Nothing
             End If
         End Function
-        ''' <summary>Gets <see cref="System.Drawing.Color"/> equivalent to given <see cref="Windows.Media.Color"/></summary>
-        ''' <param name="Color"><see cref="Windows.Media.Color"/> to get <see cref="System.Drawing.Color"/> for</param>
+        ''' <summary>Gets <see cref="System.Drawing.Color"/> equivalent to given <see cref="System.Windows.Media.Color"/></summary>
+        ''' <param name="Color"><see cref="System.Windows.Media.Color"/> to get <see cref="System.Drawing.Color"/> for</param>
         ''' <returns><see cref="System.Drawing.Color"/> initialized to same ARGB as <paramref name="Color"/></returns>
         ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
         <Extension()>
-        Function ToColor(ByVal Color As Windows.Media.Color) As System.Drawing.Color
+        Function ToColor(ByVal Color As System.Windows.Media.Color) As System.Drawing.Color
             Return System.Drawing.Color.FromArgb(Color.A, Color.R, Color.G, Color.B)
         End Function
-        ''' <summary>Gets <see cref="System.Drawing.Color"/> equivalent to given <see cref="Windows.Media.Color"/></summary>
-        ''' <param name="Color"><see cref="Windows.Media.Color"/> to get <see cref="System.Drawing.Color"/> for</param>
+        ''' <summary>Gets <see cref="System.Drawing.Color"/> equivalent to given <see cref="System.Windows.Media.Color"/></summary>
+        ''' <param name="Color"><see cref="System.Windows.Media.Color"/> to get <see cref="System.Drawing.Color"/> for</param>
         ''' <returns><see cref="System.Drawing.Color"/> initialized to same ARGB as <paramref name="Color"/>; null when <paramref name="Color"/> is null</returns>
         ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
         <Extension()>
-        Function ToColor(ByVal Color As Windows.Media.Color?) As System.Drawing.Color?
+        Function ToColor(ByVal Color As System.Windows.Media.Color?) As System.Drawing.Color?
             If Color Is Nothing Then Return Nothing
             Return System.Drawing.Color.FromArgb(Color.Value.A, Color.Value.R, Color.Value.G, Color.Value.B)
         End Function
-        ''' <summary>Gets <see cref="Windows.Media.Color"/> equivalent to given <see cref="System.Drawing.Color"/></summary>
-        ''' <param name="Color"><see cref="System.Drawing.Color"/> to get <see cref="Windows.Media.Color"/> for</param>
-        ''' <returns><see cref="Windows.Media.Color"/> initialized to same ARGB as <paramref name="Color"/></returns>
+        ''' <summary>Gets <see cref="System.Windows.Media.Color"/> equivalent to given <see cref="System.Drawing.Color"/></summary>
+        ''' <param name="Color"><see cref="System.Drawing.Color"/> to get <see cref="System.Windows.Media.Color"/> for</param>
+        ''' <returns><see cref="System.Windows.Media.Color"/> initialized to same ARGB as <paramref name="Color"/></returns>
         ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
         <Extension()>
-        Function ToColor(ByVal Color As System.Drawing.Color) As Windows.Media.Color
-            Return Windows.Media.Color.FromArgb(Color.A, Color.R, Color.G, Color.B)
+        Function ToColor(ByVal Color As System.Drawing.Color) As System.Windows.Media.Color
+            Return System.Windows.Media.Color.FromArgb(Color.A, Color.R, Color.G, Color.B)
         End Function
-        ''' <summary>Gets <see cref="Windows.Media.Color"/> equivalent to given <see cref="System.Drawing.Color"/></summary>
-        ''' <param name="Color"><see cref="System.Drawing.Color"/> to get <see cref="Windows.Media.Color"/> for</param>
-        ''' <returns><see cref="Windows.Media.Color"/> initialized to same ARGB as <paramref name="Color"/>; null when <paramref name="Color"/> is null</returns>
+        ''' <summary>Gets <see cref="System.Windows.Media.Color"/> equivalent to given <see cref="System.Drawing.Color"/></summary>
+        ''' <param name="Color"><see cref="System.Drawing.Color"/> to get <see cref="System.Windows.Media.Color"/> for</param>
+        ''' <returns><see cref="System.Windows.Media.Color"/> initialized to same ARGB as <paramref name="Color"/>; null when <paramref name="Color"/> is null</returns>
         ''' <version version="1.5.3.">This function is new in version 1.5.3</version>
         <Extension()>
-        Function ToColor(ByVal Color As System.Drawing.Color?) As Windows.Media.Color?
+        Function ToColor(ByVal Color As System.Drawing.Color?) As System.Windows.Media.Color?
             If Color Is Nothing Then Return Nothing
-            Return Windows.Media.Color.FromArgb(Color.Value.A, Color.Value.R, Color.Value.G, Color.Value.B)
+            Return System.Windows.Media.Color.FromArgb(Color.Value.A, Color.Value.R, Color.Value.G, Color.Value.B)
         End Function
 #End Region
 #End Region
@@ -176,12 +176,12 @@ Namespace WindowsT.InteropT
                 Window.Show()
             End If
         End Sub
-        ''' <summary>Shows <see cref="Forms.Form"/> floating over <see cref="Windows.Interop.IWin32Window"/></summary>
+        ''' <summary>Shows <see cref="Forms.Form"/> floating over <see cref="System.Windows.Interop.IWin32Window"/></summary>
         ''' <param name="Form"><see cref="Forms.Form"/> to be shown</param>
-        ''' <param name="Owner">Owner <see cref="Windows.Interop.IWin32Window"/>; can be null</param>
+        ''' <param name="Owner">Owner <see cref="System.Windows.Interop.IWin32Window"/>; can be null</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Form"/> is null</exception>
         ''' <version version="1.5.3">Method instroduced</version>
-        <Extension()> Public Sub Show(ByVal Form As Forms.Form, ByVal Owner As Windows.Interop.IWin32Window)
+        <Extension()> Public Sub Show(ByVal Form As Forms.Form, ByVal Owner As System.Windows.Interop.IWin32Window)
             If Form Is Nothing Then Throw New ArgumentException("Form")
             If Owner IsNot Nothing Then Form.Show(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Form.Show()
         End Sub
@@ -190,17 +190,17 @@ Namespace WindowsT.InteropT
         ''' <param name="Owner">Owner form or other native window. Can be null.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
         ''' <version version="1.5.3">Method instroduced</version>
-        <Extension()> Public Sub Show(ByVal Window As Window, ByVal Owner As Windows.Interop.IWin32Window)
+        <Extension()> Public Sub Show(ByVal Window As Window, ByVal Owner As System.Windows.Interop.IWin32Window)
             If Window Is Nothing Then Throw New ArgumentException("Window")
             If Owner IsNot Nothing Then Window.Show(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Window.Show()
         End Sub
-        ''' <summary>Shows <see cref="Forms.Form"/> modally for given <see cref="Windows.Interop.IWin32Window"/></summary>
+        ''' <summary>Shows <see cref="Forms.Form"/> modally for given <see cref="System.Windows.Interop.IWin32Window"/></summary>
         ''' <param name="Form"><see cref="Forms.Form"/> to be shown</param>
-        ''' <param name="Owner">Owner <see cref="Windows.Interop.IWin32Window"/>. Can be null.</param>
+        ''' <param name="Owner">Owner <see cref="System.Windows.Interop.IWin32Window"/>. Can be null.</param>
         ''' <returns>One of <see cref="forms.DialogResult"/> values</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Form"/> is null</exception>
         ''' <version version="1.5.3">Method instroduced</version>
-        <Extension()> Public Function ShowDialog(ByVal Form As Forms.Form, ByVal Owner As Windows.Interop.IWin32Window) As Forms.DialogResult
+        <Extension()> Public Function ShowDialog(ByVal Form As Forms.Form, ByVal Owner As System.Windows.Interop.IWin32Window) As Forms.DialogResult
             If Form Is Nothing Then Throw New ArgumentException("Form")
             If Owner IsNot Nothing Then Return Form.ShowDialog(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Return Form.ShowDialog()
         End Function
@@ -210,7 +210,7 @@ Namespace WindowsT.InteropT
         ''' <returns>A <see cref="System.Nullable(Of T)"/> value of type <see cref="System.Boolean"/> that signifies how <paramref name="Window"/> was closed by the user.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
         ''' <version version="1.5.3">Method instroduced</version>
-        <Extension()> Public Function ShowDialog(ByVal Window As Window, ByVal Owner As Windows.Interop.IWin32Window) As Boolean?
+        <Extension()> Public Function ShowDialog(ByVal Window As Window, ByVal Owner As System.Windows.Interop.IWin32Window) As Boolean?
             If Window Is Nothing Then Throw New ArgumentException("Window")
             If Owner IsNot Nothing Then Return Window.ShowDialog(Forms.NativeWindow.FromHandle(Owner.Handle)) Else Return Window.ShowDialog()
         End Function
@@ -275,9 +275,9 @@ Namespace WindowsT.InteropT
 #End Region
 
 #Region "CommonDialogs"
-        ''' <summary>Runs a common dialog box with the specified owner (<see cref="Windows.Window"/>).</summary>
+        ''' <summary>Runs a common dialog box with the specified owner (<see cref="System.Windows.Window"/>).</summary>
         ''' <param name="dlg">A dialog to be shown</param>
-        ''' <param name="owner">A <see cref="Windows.Window"/> that will own modal dialog. If null modal dialog is shown without explicit parent.</param>
+        ''' <param name="owner">A <see cref="System.Windows.Window"/> that will own modal dialog. If null modal dialog is shown without explicit parent.</param>
         ''' <returns>True if the user clicks OK in the dialog box; otherwise, False.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="dlg"/> is null</exception>
         ''' <version version="1.3.5">This function is new in version 1.3.5</version>
@@ -302,12 +302,12 @@ Namespace WindowsT.InteropT
         <EditorBrowsable(EditorBrowsableState.Never)>
         Private Class Win32WindowHelper
             Implements Forms.IWin32Window, Interop.IWin32Window
-            ''' <summary>CTor - creates a new instance of the <see cref="Win32WindowHelper"/> class from <see cref="Windows.Window"/></summary>
-            ''' <param name="window">A <see cref="Windows.Window"/></param>
+            ''' <summary>CTor - creates a new instance of the <see cref="Win32WindowHelper"/> class from <see cref="System.Windows.Window"/></summary>
+            ''' <param name="window">A <see cref="System.Windows.Window"/></param>
             ''' <exception cref="ArgumentNullException"><paramref name="window"/> is null</exception>
             Public Sub New(ByVal window As System.Windows.Window)
                 If window Is Nothing Then Throw New ArgumentNullException("window")
-                _Handle = New Windows.Interop.WindowInteropHelper(window).Handle
+                _Handle = New System.Windows.Interop.WindowInteropHelper(window).Handle
             End Sub
             ''' <summary>CTor - creates a new instance of the <see cref="Win32WindowHelper"/> class from <see cref="Interop.IWin32Window"/></summary>
             ''' <param name="window">A <see cref="Interop.IWin32Window"/></param>

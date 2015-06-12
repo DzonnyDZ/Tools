@@ -19,7 +19,7 @@ Namespace InteropT
             Dim dlg As New OpenFileDialog() With {
                 .Filter = "Libraries (*.dll)|*.dll|Executables (*.exe)|*.exe|MUI Files (*.mui)|*.mui|ActiveX Components (*.ocx)|*.ocx|All files (*.*)|*.*"
                 }
-            If dlg.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If dlg.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Dim frm As New frmUnmanagedResources(dlg.FileName, MsgBox("Load as data file", MsgBoxStyle.Question Or MsgBoxStyle.YesNo) = MsgBoxResult.Yes)
                 frm.ShowDialog()
             End If
@@ -77,7 +77,7 @@ Namespace InteropT
                             If mBox.MsgBox(stringData.Replace(NullChar, " "c) & vbCrLf & vbCrLf & "Save?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then str.Position = 0 : GoTo Save
                             'End Using
                         Else
-Save:                       If sfdSave.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+Save:                       If sfdSave.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
                                 Using f = IO.File.OpenWrite(sfdSave.FileName)
                                     Dim buff(1024) As Byte
                                     Dim readNo%

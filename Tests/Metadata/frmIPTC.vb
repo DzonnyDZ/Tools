@@ -24,7 +24,7 @@ Namespace MetadataT.IptcT
             If JPEG IsNot Nothing Then JPEG.Dispose()
         End Sub
         Private Sub frmIPTC_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-            If ofdIPTC.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If ofdIPTC.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
                 Try
                     picImage.Load(ofdIPTC.FileName)
                     JPEG = New JPEG.JPEGReader(ofdIPTC.FileName, True)

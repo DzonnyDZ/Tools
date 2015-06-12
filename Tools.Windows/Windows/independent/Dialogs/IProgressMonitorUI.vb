@@ -17,7 +17,7 @@ Namespace WindowsT.IndependentT
         ''' <list type="table"><listheader><term>UI change requested</term><description>Data to be passed</description></listheader>
         ''' <item><term>Report percentage progress</term><description>Pass number from range 0÷100 to first parameter of <see cref="BackgroundWorker.ReportProgress"/>. Or pass <see cref="Integer"/> from range 0÷100 to user state.</description></item>
         ''' <item><term>Make progress monitor UI ignore reported percentage progress</term><description>Pass number lower than zero to first parameter of <see cref="BackgroundWorker.ReportProgress"/>.</description></item>
-        ''' <item><term>Change style of progress bar</term><description>Pass value of type <see cref="IndependentT.ProgressBarStyle"/> to user data. <note>Some implementations of <see cref="IProgressMonitorUI"/> may also support values of type <see cref="Windows.Forms.ProgressBarStyle"/> or may support values which are not explicitly specified for either of these types.</note></description></item>
+        ''' <item><term>Change style of progress bar</term><description>Pass value of type <see cref="IndependentT.ProgressBarStyle"/> to user data. <note>Some implementations of <see cref="IProgressMonitorUI"/> may also support values of type <see cref="System.Windows.Forms.ProgressBarStyle"/> or may support values which are not explicitly specified for either of these types.</note></description></item>
         ''' <item><term>Show textual description of current status to user (set the <see cref="Information"/> property)</term><description>Pass <see cref="String"/> to user state.</description></item>
         ''' <item><term>Allow or disallow process cancelllation (set the <see cref="CanCancel"/> property)</term><description>Pass <see cref="Boolean"/> to user state. <note>When passing <c>True</c>, <see cref="BackgroundWorker.WorkerSupportsCancellation"/> must be <c>True</c> as well.</note></description></item>
         ''' <item><term>Call the <see cref="Reset"/> method</term><see>Pass <see cref="BackgroundWorker"/> (same instance) to user data.</see></item>
@@ -65,24 +65,24 @@ Namespace WindowsT.IndependentT
         ''' <returns>Current title of window showing progress</returns>
         Property Title As String
         ''' <summary>Shows window modally</summary>
-        ''' <param name="owner">Owner object of dialog. Each implementation should support at least objects of type <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> and <see cref="Windows.Window"/>. When owner is not of recognized type (or is null, it's ignored.</param>
+        ''' <param name="owner">Owner object of dialog. Each implementation should support at least objects of type <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> and <see cref="System.Windows.Window"/>. When owner is not of recognized type (or is null, it's ignored.</param>
         ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
         Function ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean
         ''' <summary>Gets an object that can be used as owner for modal windows</summary>
-        ''' <returns>Depending on implementation this method returns either <see cref="Windows.Forms.IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. Null when owner object was not created yet or if it was already closed or destroyed.</returns>
+        ''' <returns>Depending on implementation this method returns either <see cref="System.Windows.Forms.IWin32Window"/>, <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="System.Windows.Window"/>. Null when owner object was not created yet or if it was already closed or destroyed.</returns>
         ReadOnly Property OwnerObject As Object
     End Interface
 
     ''' <summary>Defines different progressbar styles</summary>
-    ''' <seelaso cref="Windows.Forms.ProgressBarStyle"/>
+    ''' <seelaso cref="System.Windows.Forms.ProgressBarStyle"/>
     ''' <remarks>Any value different from <see cref="ProgressBarStyle.Indefinite"/> means that progressbar indicates actual progress. When value differes from <see cref="ProgressBarStyle.Definite"/> the style is implementation dependent.</remarks>
     Public Enum ProgressBarStyle
         ''' <summary>Progressbar does not show actual progresss. It only indicates that something is going on.</summary>
-        ''' <seelaso cref="Windows.Forms.ProgressBarStyle.Marquee"/>
-        Indefinite = Windows.Forms.ProgressBarStyle.Marquee
+        ''' <seelaso cref="System.Windows.Forms.ProgressBarStyle.Marquee"/>
+        Indefinite = System.Windows.Forms.ProgressBarStyle.Marquee
         ''' <summary>Progressbar indicates actual progress in form of bar or otherwise</summary>
-        ''' <seelaso cref="Windows.Forms.ProgressBarStyle.Blocks"/>
-        Definite = Windows.Forms.ProgressBarStyle.Blocks
+        ''' <seelaso cref="System.Windows.Forms.ProgressBarStyle.Blocks"/>
+        Definite = System.Windows.Forms.ProgressBarStyle.Blocks
     End Enum
 
 End Namespace

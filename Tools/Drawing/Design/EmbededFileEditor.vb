@@ -35,7 +35,7 @@ Namespace DrawingT.DesignT
                 End If
                 AddHandler Lst.Click, AddressOf Lst_Click
                 Lst.Height = Lst.Items.Count * Lst.ItemHeight + (Lst.Height - Lst.ClientSize.Height)
-                Service = provider.GetService(GetType(Windows.Forms.Design.IWindowsFormsEditorService))
+                Service = provider.GetService(GetType(System.Windows.Forms.Design.IWindowsFormsEditorService))
                 Service.DropDownControl(Lst)
                 Return Me.Value
             End Using
@@ -43,7 +43,7 @@ Namespace DrawingT.DesignT
         ''' <summary>The context parameter of <see cref="EditValue"/> used by <see cref="Lst_Click"/></summary>
         Private Context As ITypeDescriptorContext
         ''' <summary>service obtained from provider parameter of <see cref="EditValue"/> used by <see cref="Lst_Click"/></summary>
-        Private Service As Windows.Forms.Design.IWindowsFormsEditorService
+        Private Service As System.Windows.Forms.Design.IWindowsFormsEditorService
         ''' <summary>Property value is passed through this field between <see cref="EditValue"/> and <see cref="Lst_Click"/></summary>
         Private Value As Byte()
         ''' <summary>Invoked when <see cref="ListBox"/> that provided drop-down UI is clicked</summary>
@@ -118,7 +118,7 @@ Namespace DrawingT.DesignT
                 End If
                 AddHandler Lst.Click, AddressOf Lst_Click
                 Lst.Height = Lst.Items.Count * Lst.ItemHeight + (Lst.Height - Lst.ClientSize.Height)
-                Service = provider.GetService(GetType(Windows.Forms.Design.IWindowsFormsEditorService))
+                Service = provider.GetService(GetType(System.Windows.Forms.Design.IWindowsFormsEditorService))
                 Service.DropDownControl(Lst)
                 Return Me.Value
             End Using
@@ -126,7 +126,7 @@ Namespace DrawingT.DesignT
         ''' <summary>The context parameter of <see cref="EditValue"/> used by <see cref="Lst_Click"/></summary>
         Private Context As ITypeDescriptorContext
         ''' <summary>service obtained from provider parameter of <see cref="EditValue"/> used by <see cref="Lst_Click"/></summary>
-        Private Service As Windows.Forms.Design.IWindowsFormsEditorService
+        Private Service As System.Windows.Forms.Design.IWindowsFormsEditorService
         ''' <summary>Property value is passed through this field between <see cref="EditValue"/> and <see cref="Lst_Click"/></summary>
         Private Value As Image
         ''' <summary>Invoked when <see cref="ListBox"/> that provided drop-down UI is clicked</summary>

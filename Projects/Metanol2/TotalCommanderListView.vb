@@ -185,7 +185,7 @@ Public Class TotalCommanderListView
     ''' <summary>Raises the <see cref="E:System.Windows.Forms.Control.MouseDown" /> event.</summary>
     ''' <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data. </param>
     Protected Overrides Sub OnMouseDown(ByVal e As System.Windows.Forms.MouseEventArgs)
-        If (e.Button And Windows.Forms.MouseButtons.Left) = Windows.Forms.MouseButtons.Left OrElse (e.Button And Windows.Forms.MouseButtons.Right) = Windows.Forms.MouseButtons.Right Then
+        If (e.Button And System.Windows.Forms.MouseButtons.Left) = System.Windows.Forms.MouseButtons.Left OrElse (e.Button And System.Windows.Forms.MouseButtons.Right) = System.Windows.Forms.MouseButtons.Right Then
             OnBeforeSelectionChange(e)
         End If
         MyBase.OnMouseDown(e)
@@ -193,7 +193,7 @@ Public Class TotalCommanderListView
     ''' <summary>Raises the <see cref="E:System.Windows.Forms.Control.MouseUp" /> event.</summary>
     ''' <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data. </param>
     Protected Overrides Sub OnMouseUp(ByVal e As System.Windows.Forms.MouseEventArgs)
-        If (e.Button And Windows.Forms.MouseButtons.Left) = Windows.Forms.MouseButtons.Left OrElse (e.Button And Windows.Forms.MouseButtons.Right) = Windows.Forms.MouseButtons.Right Then
+        If (e.Button And System.Windows.Forms.MouseButtons.Left) = System.Windows.Forms.MouseButtons.Left OrElse (e.Button And System.Windows.Forms.MouseButtons.Right) = System.Windows.Forms.MouseButtons.Right Then
             OnAfterSelectionChange(e)
         End If
         MyBase.OnMouseUp(e)

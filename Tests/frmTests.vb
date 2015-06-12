@@ -85,7 +85,7 @@ Friend Class frmTests
     End Function
 
     Private Sub cmdExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExport.Click
-        If sfdXml.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If sfdXml.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             Try
                 Dim doc = _
                     <?xml version="1.0" encoding="utf-8"?>

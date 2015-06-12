@@ -27,7 +27,7 @@ Namespace WindowsT.FormsT
             obwControl.Objects.Add(GetType(System.Windows.Forms.Control).Assembly)
             obwControl.Objects.Add(GetType(Tools.WindowsT.FormsT.KeyWordsEditor).Assembly)
             obwControl.Objects.Add(GetType(Tools.WindowsT.FormsT.ExtendedForm).Assembly)
-            obwControl.Objects.Add(GetType(Windows.FrameworkElement).Assembly)
+            obwControl.Objects.Add(GetType(System.Windows.FrameworkElement).Assembly)
         End Sub
         ''' <summary>Enables/disables buttons according to <see cref="iMsg.State"/> of <see cref="Box"/></summary>
         Private Sub ApplyState()
@@ -173,14 +173,14 @@ Namespace WindowsT.FormsT
         Private Sub obwControl_ItemFiltering(ByVal sender As Object, ByVal e As Tools.ComponentModelT.CancelItemEventArgs(Of Object)) Handles obwControl.ItemFiltering
             If TypeOf e.Item Is Type Then
                 With DirectCast(e.Item, Type)
-                    e.Cancel = Not GetType(Windows.Forms.Control).IsAssignableFrom(.self) AndAlso Not GetType(Windows.UIElement).IsAssignableFrom(.self)
+                    e.Cancel = Not GetType(System.Windows.Forms.Control).IsAssignableFrom(.self) AndAlso Not GetType(System.Windows.UIElement).IsAssignableFrom(.self)
                 End With
             End If
         End Sub
 
         Private Sub cmdSetTop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSetTop.Click, cmdSetMid.Click, cmdSetBottom.Click
-            If Not TypeOf obwControl.SelectedItem Is Type OrElse (Not GetType(Windows.Forms.Control).IsAssignableFrom(obwControl.SelectedItem) AndAlso Not GetType(Windows.UIElement).IsAssignableFrom(obwControl.SelectedItem)) Then
-                MsgBox("Select type derived from Windows.Forms.Control or Windows.FrameworkElement", MsgBoxStyle.Exclamation, "Incorrect type")
+            If Not TypeOf obwControl.SelectedItem Is Type OrElse (Not GetType(System.Windows.Forms.Control).IsAssignableFrom(obwControl.SelectedItem) AndAlso Not GetType(System.Windows.UIElement).IsAssignableFrom(obwControl.SelectedItem)) Then
+                MsgBox("Select type derived from System.Windows.Forms.Control or System.Windows.FrameworkElement", MsgBoxStyle.Exclamation, "Incorrect type")
                 Exit Sub
             End If
             Dim Instance As Object

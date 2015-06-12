@@ -36,7 +36,7 @@ Namespace WindowsT.WPF
   
         Private Sub Label1_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Input.MouseButtonEventArgs) Handles Label1.MouseDoubleClick
             Dim frm As New Form With {.Width = 300, .Height = 300}
-            frm.Controls.Add(New Windows.Forms.Button With {.Width = frm.ClientSize.Width - 20, .Height = frm.ClientSize.Height - 20, .Left = 10, .Top = 20, .Anchor = AnchorStyles.Left Or AnchorStyles.Right Or AnchorStyles.Top Or AnchorStyles.Bottom, .Text = "Ahoj;-)"})
+            frm.Controls.Add(New System.Windows.Forms.Button With {.Width = frm.ClientSize.Width - 20, .Height = frm.ClientSize.Height - 20, .Left = 10, .Top = 20, .Anchor = AnchorStyles.Left Or AnchorStyles.Right Or AnchorStyles.Top Or AnchorStyles.Bottom, .Text = "Ahoj;-)"})
             frm.Show()
         End Sub
     End Class

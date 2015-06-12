@@ -4,9 +4,12 @@ Imports System.Runtime.CompilerServices
 ''' <typeparam name="T">Type of array to get</typeparam>
 ''' <version version="1.5.4">This class is new in version 1.5.4</version>
 Public Class EmptyArray(Of T)
-    ''' <summary>There is not CTor, this is static class</summary>
-    Partial Private Sub New()
+    ''' <summary>Private CTor to achieve pseudo-static class</summary>
+    ''' <exception cref="NotSupportedException">Always</exception>
+    Private Sub New()
+        Throw New NotSupportedException("This is static class")
     End Sub
+
     ''' <summary>Gets static empty array of given type</summary>
     ''' <remarks>For type <see cref="Type"/> gets <see cref="Type.EmptyTypes"/></remarks>
     Public Shared ReadOnly value As T() = If(GetType(T).Equals(GetType(Type)), DirectCast(CObj(Type.EmptyTypes), T()), New T() {})
@@ -15,8 +18,10 @@ End Class
 ''' <summary>Provides static instances of empty arrays of common .NET types</summary>
 ''' <version version="1.5.4">This class is new in version 1.5.4</version>
 Public Class EmptyArray
-    ''' <summary>There is not CTor, this is static class</summary>
-    Partial Private Sub New()
+    ''' <summary>Private CTor to achieve pseudo-static class</summary>
+    ''' <exception cref="NotSupportedException">Always</exception>
+    Private Sub New()
+        Throw New NotSupportedException("This is static class")
     End Sub
 
     ''' <summary>Gets an empty array of type <see cref="System.[Byte]"/></summary>

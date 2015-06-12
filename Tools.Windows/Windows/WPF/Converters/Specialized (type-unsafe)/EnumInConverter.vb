@@ -14,18 +14,18 @@ Namespace WindowsT.WPF.ConvertersT
         Implements IValueConverter
 
         ''' <summary>Converts a value. </summary>
-        ''' <returns>A converted value. True when <paramref name="value"/> is one of values given in <paramref name="parameter"/>; false otherwise. When <paramref name="targetType"/> is <see cref="Windows.Visibility"/> returns either <see cref="Windows.Visibility.Visible"/> or <see cref="Windows.Visibility.Hidden"/>.</returns>
+        ''' <returns>A converted value. True when <paramref name="value"/> is one of values given in <paramref name="parameter"/>; false otherwise. When <paramref name="targetType"/> is <see cref="System.Windows.Visibility"/> returns either <see cref="System.Windows.Visibility.Visible"/> or <see cref="System.Windows.Visibility.Hidden"/>.</returns>
         ''' <param name="value">The value produced by the binding source. Value must be of type <see cref="[Enum]"/> or null.</param>
-        ''' <param name="targetType">The type of the binding target property. It must be <see cref="Boolean"/>, <see cref="Windows.Visibility"/> or <see cref="Nullable(Of T)"/> of that type.</param>
+        ''' <param name="targetType">The type of the binding target property. It must be <see cref="Boolean"/>, <see cref="System.Windows.Visibility"/> or <see cref="Nullable(Of T)"/> of that type.</param>
         ''' <param name="parameter">The converter parameter to use. String. Comma-seperated list of value to test <paramref name="value"/> for.</param>
         ''' <param name="culture">The culture to use in the converter. Ignored.</param>
-        ''' <exception cref="ArgumentException"><paramref name="targetType"/> <see cref="Type.IsAssignableFrom">is assignable from</see> neither from <see cref="Boolean"/>, <see cref="Windows.Visibility"/> nor from <see cref="Nullable(Of T)"/> of <see cref="Boolean"/> or <see cref="Windows.Visibility"/>.</exception>
+        ''' <exception cref="ArgumentException"><paramref name="targetType"/> <see cref="Type.IsAssignableFrom">is assignable from</see> neither from <see cref="Boolean"/>, <see cref="System.Windows.Visibility"/> nor from <see cref="Nullable(Of T)"/> of <see cref="Boolean"/> or <see cref="System.Windows.Visibility"/>.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="parameter"/> is null</exception>
         ''' <exception cref="TypeMismatchException"><paramref name="parameter"/> is not <see cref="String"/></exception>
         Public Function Convert(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
-            If Not targetType.IsAssignableFrom(GetType(Boolean)) AndAlso Not targetType.IsAssignableFrom(GetType(Windows.Visibility)) AndAlso
-                Not targetType.IsAssignableFrom(GetType(Boolean?)) AndAlso Not targetType.IsAssignableFrom(GetType(Windows.Visibility?)) Then _
-                Throw New ArgumentException(WindowsT.WPF.ConvertersT.ConverterResources.ex_ConverterCanConvertOnlyTo_2.f([GetType].Name, GetType(Boolean), GetType(Windows.Visibility)))
+            If Not targetType.IsAssignableFrom(GetType(Boolean)) AndAlso Not targetType.IsAssignableFrom(GetType(System.Windows.Visibility)) AndAlso
+                Not targetType.IsAssignableFrom(GetType(Boolean?)) AndAlso Not targetType.IsAssignableFrom(GetType(System.Windows.Visibility?)) Then _
+                Throw New ArgumentException(WindowsT.WPF.ConvertersT.ConverterResources.ex_ConverterCanConvertOnlyTo_2.f([GetType].Name, GetType(Boolean), GetType(System.Windows.Visibility)))
             Dim ret As Boolean
             If parameter Is Nothing Then Throw New ArgumentNullException("parameter")
             If Not TypeOf parameter Is String Then Throw New TypeMismatchException("parameter", parameter, GetType(String))
@@ -53,7 +53,7 @@ Namespace WindowsT.WPF.ConvertersT
             If targetType.IsAssignableFrom(GetType(Boolean)) OrElse targetType.IsAssignableFrom(GetType(Boolean?)) Then
                 Return ret
             Else 'Visibility
-                Return If(ret, Windows.Visibility.Visible, Windows.Visibility.Collapsed)
+                Return If(ret, System.Windows.Visibility.Visible, System.Windows.Visibility.Collapsed)
             End If
         End Function
 

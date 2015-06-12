@@ -45,7 +45,7 @@ Namespace WindowsT.FormsT
         ''' <param name="bgw">Worker to run</param>
         ''' <param name="Text">Title text of window (see <see  cref="Text"/>)</param>
         ''' <param name="Prompt">Text prompt (see <see cref="Prompt"/>)</param>
-        ''' <param name="Owner">Any object that implements <see cref="System.Windows.Forms.IWin32Window"/> or <see cref="Windows.Interop.IWin32Window"/>, or <see cref="Windows.Window"/> that represents the top-level window that will own the modal dialog box.</param>
+        ''' <param name="Owner">Any object that implements <see cref="System.Windows.Forms.IWin32Window"/> or <see cref="System.Windows.Interop.IWin32Window"/>, or <see cref="System.Windows.Window"/> that represents the top-level window that will own the modal dialog box.</param>
         ''' <param name="WorkerArgument">Optional parameter for background worker</param>
         ''' <returns>Result of work of <paramref name="bgw"/></returns>
         ''' <version version="1.5.3">Type of parameter <paramref name="Owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support WPF owners.</version>
@@ -58,18 +58,18 @@ Namespace WindowsT.FormsT
         End Function
 
         ''' <summary>Shows window modally</summary>
-        ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
+        ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="System.Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
         ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
         ''' <version version="1.5.3">This function is new in version 1.5.3</version>
         Private Overloads Function IProgressMonitorUI_ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean Implements IProgressMonitorUI.ShowDialog
-            If TypeOf owner Is Windows.Window Then
-                Return Tools.WindowsT.InteropT.InteropExtensions.ShowDialog(Me, DirectCast(owner, Windows.Window)) = Windows.Forms.DialogResult.OK
-            ElseIf TypeOf owner Is Windows.Forms.IWin32Window Then
-                Return Me.ShowDialog(DirectCast(owner, Windows.Forms.IWin32Window)) = Windows.Forms.DialogResult.OK
-            ElseIf TypeOf owner Is Windows.Interop.IWin32Window Then
-                Return Tools.WindowsT.InteropT.InteropExtensions.ShowDialog(Me, DirectCast(owner, Windows.Interop.IWin32Window)) = Windows.Forms.DialogResult.OK
+            If TypeOf owner Is System.Windows.Window Then
+                Return Tools.WindowsT.InteropT.InteropExtensions.ShowDialog(Me, DirectCast(owner, System.Windows.Window)) = System.Windows.Forms.DialogResult.OK
+            ElseIf TypeOf owner Is System.Windows.Forms.IWin32Window Then
+                Return Me.ShowDialog(DirectCast(owner, System.Windows.Forms.IWin32Window)) = System.Windows.Forms.DialogResult.OK
+            ElseIf TypeOf owner Is System.Windows.Interop.IWin32Window Then
+                Return Tools.WindowsT.InteropT.InteropExtensions.ShowDialog(Me, DirectCast(owner, System.Windows.Interop.IWin32Window)) = System.Windows.Forms.DialogResult.OK
             Else
-                Return Me.ShowDialog = Windows.Forms.DialogResult.OK
+                Return Me.ShowDialog = System.Windows.Forms.DialogResult.OK
             End If
         End Function
         ''' <summary>Raises the <see cref="E:System.Windows.Forms.Form.Shown" /> event.</summary>
@@ -82,7 +82,7 @@ Namespace WindowsT.FormsT
         <EditorBrowsable(EditorBrowsableState.Never)> Private WithEvents bgw As BackgroundWorker
         ''' <summary>Gets <see cref="BackgroundWorker"/> this form repports progress of</summary>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property BackgroundWorker() As BackgroundWorker Implements IProgressMonitorUI.BackgroundWorker
             <DebuggerStepThrough()> Get
                 Return bgw
@@ -92,41 +92,41 @@ Namespace WindowsT.FormsT
                 If value IsNot bgw Then
                     bgw = value
                     CanCancel = bgw.WorkerSupportsCancellation
-                    pgbProgress.Style = If(bgw.WorkerReportsProgress, Windows.Forms.ProgressBarStyle.Blocks, Windows.Forms.ProgressBarStyle.Marquee)
+                    pgbProgress.Style = If(bgw.WorkerReportsProgress, System.Windows.Forms.ProgressBarStyle.Blocks, System.Windows.Forms.ProgressBarStyle.Marquee)
                 End If
             End Set
         End Property
         ''' <summary>Gets or sets style of <see cref="ProgressBar"/> that indicates progress of process</summary>
         ''' <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value is not a member of the <see cref="System.Windows.Forms.ProgressBarStyle"/> enumeration.</exception>
         ''' <seelaso cref="ProgressBar.Style"/>
-        <DefaultValue(GetType(Windows.Forms.ProgressBarStyle), "Blocks")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <LDescription(GetType(CompositeControls), "ProgressBarStyle_d")> _
-        Public Property ProgressBarStyle() As Windows.Forms.ProgressBarStyle
+        <DefaultValue(GetType(System.Windows.Forms.ProgressBarStyle), "Blocks")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+        <LDescription(GetType(CompositeControls), "ProgressBarStyle_d")>
+        Public Property ProgressBarStyle() As System.Windows.Forms.ProgressBarStyle
             <DebuggerStepThrough()> Get
                 Return pgbProgress.Style
             End Get
-            <DebuggerStepThrough()> Set(ByVal value As Windows.Forms.ProgressBarStyle)
+            <DebuggerStepThrough()> Set(ByVal value As System.Windows.Forms.ProgressBarStyle)
                 pgbProgress.Style = value
             End Set
         End Property
 
         ''' <summary>Gets or sets current style of progress bar</summary>
-        ''' <remarks>This implementation supports all values defined in the <see cref="Windows.Forms.ProgressBarStyle"/> enumeration. Other values are corced to <see cref="IndependentT.ProgressBarStyle.Definite"/>.</remarks>
+        ''' <remarks>This implementation supports all values defined in the <see cref="System.Windows.Forms.ProgressBarStyle"/> enumeration. Other values are corced to <see cref="IndependentT.ProgressBarStyle.Definite"/>.</remarks>
         ''' <version version="1.5.3">This property is new in version 1.5.3</version>
         Private Property IProgressMonitorUI_ProgressBarStyle As IndependentT.ProgressBarStyle Implements IProgressMonitorUI.ProgressBarStyle
             Get
                 Return ProgressBarStyle
             End Get
             Set(ByVal value As IndependentT.ProgressBarStyle)
-                If Not CType(value, Windows.Forms.ProgressBarStyle).IsDefined Then value = IndependentT.ProgressBarStyle.Definite
+                If Not CType(value, System.Windows.Forms.ProgressBarStyle).IsDefined Then value = IndependentT.ProgressBarStyle.Definite
                 ProgressBarStyle = value
             End Set
         End Property
 
         ''' <summary>Gets or sets current value of <see cref="ProgressBar"/> that reports progress</summary>
         ''' <exception cref="ArgumentException">Value being set is smaller than 0 or greater than 100.</exception>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Progress() As Integer Implements IProgressMonitorUI.Progress
             <DebuggerStepThrough()> Get
                 Return pgbProgress.Value
@@ -140,9 +140,9 @@ Namespace WindowsT.FormsT
 
         ''' <summary>Gets or sets value indicating if form automatically closes when <see cref="BackgroundWorker"/>.<see cref="BackgroundWorker.RunWorkerCompleted">RunWorkerCompleted</see> event occures.</summary>
         ''' <value>New behavoir. Defalt value is true.</value>
-        <DefaultValue(True)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(CompositeControls), "CloseOnFinish_d")> _
+        <DefaultValue(True)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(CompositeControls), "CloseOnFinish_d")>
         Public Property CloseOnFinish() As Boolean Implements IProgressMonitorUI.CloseOnFinish
             Get
                 Return _CloseOnFinish
@@ -170,7 +170,7 @@ Namespace WindowsT.FormsT
         ''' <remarks>This implementation treats values of some types in a special way:
         ''' <list type="table">
         ''' <listheader><term>Type</term><description>Action taken</description></listheader>
-        ''' <item><term><see cref="Windows.Forms.ProgressBarStyle"/> or <see cref="IndependentT.ProgressBarStyle"/></term><description>The value is passedto the <see cref="ProgressBarStyle"/> property.</description></item>
+        ''' <item><term><see cref="System.Windows.Forms.ProgressBarStyle"/> or <see cref="IndependentT.ProgressBarStyle"/></term><description>The value is passedto the <see cref="ProgressBarStyle"/> property.</description></item>
         ''' <item><term><see cref="String"/></term><description>The value is passed to the <see cref="Information"/> property.</description></item>
         ''' <item><term><see cref="Boolean"/></term><description>The value is passed to the <see cref="CanCancel"/> property.</description></item>
         ''' <item><term><see cref="System.ComponentModel.BackgroundWorker"/> (same instance as <see cref="BackgroundWorker"/>)</term><description>The <see cref="Reset"/> method is called.</description></item>
@@ -180,7 +180,7 @@ Namespace WindowsT.FormsT
         ''' Null values and values of unsupported types are ignored.</remarks>
         ''' <version version="1.5.3">This method is new in version 1.5.3 (it extracts user state application logic from <see cref="OnProgressChanged"/>.</version>
         Protected Overridable Sub ApplyUserState(ByVal userState As Object)
-            If TypeOf userState Is Windows.Forms.ProgressBarStyle OrElse TypeOf userState Is IndependentT.ProgressBarStyle Then
+            If TypeOf userState Is System.Windows.Forms.ProgressBarStyle OrElse TypeOf userState Is IndependentT.ProgressBarStyle Then
                 ProgressBarStyle = userState
             ElseIf TypeOf userState Is String Then
                 Information = userState
@@ -201,9 +201,9 @@ Namespace WindowsT.FormsT
         ''' <param name="e">event arguments</param>
         ''' <remarks>This implementation sets <see cref="DialogResult"/> to <see cref="DialogResult.Cancel"/> when <paramref name="e"/>.<see cref="RunWorkerCompletedEventArgs.Cancelled">Cancelled</see> is true; to <see cref="DialogResult.Abort"/> when <paramref name="e"/>.<see cref="RunWorkerCompletedEventArgs.[Error]"/> isnot nothing and to <see cref="DialogResult.OK"/> in all other cases. Then sets <see cref="WorkerResult"/>. If <see cref="CloseOnFinish"/> is true, closes the form.</remarks>
         Protected Overridable Sub OnRunWorkerCompleted(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgw.RunWorkerCompleted
-            If e.Cancelled Then : Me.DialogResult = Windows.Forms.DialogResult.Cancel
-            ElseIf e.Error IsNot Nothing Then : Me.DialogResult = Windows.Forms.DialogResult.Abort
-            Else : Me.DialogResult = Windows.Forms.DialogResult.OK : End If
+            If e.Cancelled Then : Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            ElseIf e.Error IsNot Nothing Then : Me.DialogResult = System.Windows.Forms.DialogResult.Abort
+            Else : Me.DialogResult = System.Windows.Forms.DialogResult.OK : End If
             WorkerResult = e
             If CloseOnFinish Then
                 Me.Close()

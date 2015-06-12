@@ -47,7 +47,7 @@ Friend Class frmExport
         Dim configurator As IExportFormatConfigurator = cmbFormat.SelectedItem
         sfdSave.Filter = configurator.FileFilter
         Dim fileName$
-        If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If sfdSave.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             fileName = sfdSave.FileName
         Else
             Exit Sub
@@ -81,12 +81,12 @@ Friend Class frmExport
             mBox.Error_X(ex)
             Exit Sub
         End Try
-        Me.DialogResult = Windows.Forms.DialogResult.OK
+        Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
 
     Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
-        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Close()
     End Sub
 

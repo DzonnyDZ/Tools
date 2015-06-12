@@ -76,7 +76,7 @@ Namespace MetadataT
             Next
         End Sub
         Private Sub cmdJpeg_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdJpeg.Click
-            If ofdJPEG.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdJPEG.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Provider = New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(ofdJPEG.FileName)
                 Catch ex As Exception

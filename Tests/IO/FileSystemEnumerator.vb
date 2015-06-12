@@ -16,7 +16,7 @@ Namespace IOt
 
         Private Sub cmdRoot_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRoot.Click
             fbdRoot.SelectedPath = txtRoot.Text
-            If fbdRoot.ShowDialog = Windows.Forms.DialogResult.OK Then _
+            If fbdRoot.ShowDialog = System.Windows.Forms.DialogResult.OK Then _
                 txtRoot.Text = fbdRoot.SelectedPath
         End Sub
 

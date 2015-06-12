@@ -17,7 +17,7 @@ Namespace WindowsT.WPF.ControlsT
     '<SnippetStaticCtorOfCustomClassCommonTasks>
     ''' <summary>Represents a Windows spin box (also known as an up-down control) that displays numeric values.</summary>
     ''' <remarks>
-    ''' <para>This is companion class to <see cref="Windows.Forms.NumericUpDown"/>.</para>
+    ''' <para>This is companion class to <see cref="System.Windows.Forms.NumericUpDown"/>.</para>
     ''' <para>This class is bsed on http://msdn.microsoft.com/en-us/library/ms771573.aspx, converted by http://labs.developerfusion.co.uk/convert/csharp-to-vb.aspx</para>
     ''' <para>This control contains following template parts:
     ''' <list type="table"><listheader><term>Part</term><description>Description</description></listheader>

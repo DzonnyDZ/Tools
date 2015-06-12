@@ -77,8 +77,8 @@ Namespace WindowsT.FormsT
                     lblPrompt.Anchor = AnchorStyles.Top
             End Select
             If (MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.Rtl) = IndependentT.MessageBox.MessageBoxOptions.Rtl Then _
-                Me.RightToLeft = Windows.Forms.RightToLeft.Yes _
-                Else Me.RightToLeft = Windows.Forms.RightToLeft.No
+                Me.RightToLeft = System.Windows.Forms.RightToLeft.Yes _
+                Else Me.RightToLeft = System.Windows.Forms.RightToLeft.No
         End Sub
         ''' <summary>Initializes tis form by <see cref="MessageBox"/>, called from CTor</summary>
         Protected Overridable Sub Initialize()
@@ -305,7 +305,7 @@ Namespace WindowsT.FormsT
         Private Function CreateButton(ByVal Button As MessageBox.MessageBoxButton) As Button
             Dim text As String = If(Button.Text IsNot Nothing, Button.Text.Replace("&", "&&"), "")
             If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then text = text.Insert(text.IndexOf(Button.AccessKey), "&")
-            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .Tag = Button, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .Anchor = AnchorStyles.None} '.DialogResult = Button.Result
+            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .Tag = Button, .AutoSize = True, .AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink, .Anchor = AnchorStyles.None} '.DialogResult = Button.Result
             If Button.ToolTip <> "" Then totToolTip.SetToolTip(CmdButton, Button.ToolTip)
             Button.Control = CmdButton
             AddHandler CmdButton.Click, AddressOf Button_Click
@@ -729,12 +729,12 @@ Namespace WindowsT.FormsT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
-    ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) derived from <see cref="Windows.UIElement"/> are not shown.</version>
+    ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) derived from <see cref="System.Windows.UIElement"/> are not shown.</version>
     ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) get disposed when message box is closed.</version>
     ''' <version version="1.5.2">Fixed: When custom control (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) is replaced wne message box is shown, the change does not take effect.</version>
     ''' <version version="1.5.2">Fixed: Dialog closes even when button click operation is cancelled (see <see cref="iMsg.MessageBoxButton.ClickPreview"/>)</version>
-    ''' <version version="1.5.3" stage="Beta">Added support for <see cref="Windows.Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
-    ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="Windows.DependencyObject"/> hosted in <see cref="Windows.Window"/>.</version>
+    ''' <version version="1.5.3" stage="Beta">Added support for <see cref="System.Windows.Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
+    ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="System.Windows.DependencyObject"/> hosted in <see cref="System.Windows.Window"/>.</version>
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
     Public Class MessageBox
         Inherits iMsg
@@ -773,22 +773,22 @@ Namespace WindowsT.FormsT
 
         ''' <summary>Shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null). This implementation recognizes values of type <see cref="IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="Windows.DependencyObject"/> (if hosted in <see cref="Windows.Window"/>). Unrecognized owners are treated as null.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null). This implementation recognizes values of type <see cref="IWin32Window"/>, <see cref="System.Windows.Interop.IWin32Window"/>, <see cref="System.Windows.Window"/> and <see cref="System.Windows.DependencyObject"/> (if hosted in <see cref="System.Windows.Window"/>). Unrecognized owners are treated as null.</param>
         ''' <remarks>Note for inheritors: If you override thie method and do not call base class method, you must set value of the <see cref="Form"/> property</remarks>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/></exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support <see cref="IWin32Window"/>, <see cref="Windows.Interop.IWin32Window"/> and <see cref="Windows.Window"/>.</version>
-        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="Windows.DependencyObject"/> for which <see cref="Windows.Window.GetWindow"/> returns non-null value.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support <see cref="IWin32Window"/>, <see cref="System.Windows.Interop.IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="System.Windows.DependencyObject"/> for which <see cref="System.Windows.Window.GetWindow"/> returns non-null value.</version>
         Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
             If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Form = New MessageBoxForm(Me)
             If TypeOf Owner Is IWin32Window Then
                 If Modal Then Form.ShowDialog(DirectCast(Owner, IWin32Window)) Else Form.Show(DirectCast(Owner, IWin32Window))
-            ElseIf TypeOf Owner Is Windows.Interop.IWin32Window Then
-                If Modal Then Form.ShowDialog(DirectCast(Owner, Windows.Interop.IWin32Window)) Else Form.Show(DirectCast(Owner, Windows.Interop.IWin32Window))
-            ElseIf TypeOf Owner Is Windows.Window Then
-                If Modal Then Form.ShowDialog(DirectCast(Owner, Windows.Window)) Else Form.Show(DirectCast(Owner, Windows.Window))
-            ElseIf TypeOf Owner Is Windows.DependencyObject Then
-                Dim owningWindow = Windows.Window.GetWindow(Owner)
+            ElseIf TypeOf Owner Is System.Windows.Interop.IWin32Window Then
+                If Modal Then Form.ShowDialog(DirectCast(Owner, System.Windows.Interop.IWin32Window)) Else Form.Show(DirectCast(Owner, System.Windows.Interop.IWin32Window))
+            ElseIf TypeOf Owner Is System.Windows.Window Then
+                If Modal Then Form.ShowDialog(DirectCast(Owner, System.Windows.Window)) Else Form.Show(DirectCast(Owner, System.Windows.Window))
+            ElseIf TypeOf Owner Is System.Windows.DependencyObject Then
+                Dim owningWindow = System.Windows.Window.GetWindow(Owner)
                 If owningWindow IsNot Nothing Then
                     If Modal Then Form.ShowDialog(owningWindow) Else Form.Show(owningWindow)
                 End If
@@ -814,7 +814,7 @@ Namespace WindowsT.FormsT
         ''' <returns><see cref="Control"/> which represents <see cref="TopControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="MidControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="TopControl"/>
-        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="Windows.UIElement"/> returns null.</version>
+        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="System.Windows.UIElement"/> returns null.</version>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Friend ReadOnly Property TopControlControl() As Control
             Get
@@ -825,7 +825,7 @@ Namespace WindowsT.FormsT
         ''' <returns><see cref="Control"/> which represents <see cref="MidControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="MidControl"/>
-        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="Windows.UIElement"/> returns null.</version>
+        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="System.Windows.UIElement"/> returns null.</version>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Friend ReadOnly Property MidControlControl() As Control
             Get
@@ -836,7 +836,7 @@ Namespace WindowsT.FormsT
         ''' <returns><see cref="Control"/> which represents <see cref="BottomControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="MidControlControl"/>
         ''' <seealso cref="BottomControl"/>
-        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="Windows.UIElement"/> returns null.</version>
+        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="System.Windows.UIElement"/> returns null.</version>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Friend ReadOnly Property BottomControlControl() As Control
             Get
@@ -844,15 +844,15 @@ Namespace WindowsT.FormsT
             End Get
         End Property
         ''' <summary>Gets control from object</summary>
-        ''' <param name="Control">Object that represents a control. It can be <see cref="Control"/>, <see cref="Windows.UIElement"/></param>
+        ''' <param name="Control">Object that represents a control. It can be <see cref="Control"/>, <see cref="System.Windows.UIElement"/></param>
         ''' <returns><see cref="Control"/> which represents <paramref name="Control"/>. For same <paramref name="Control"/> returns same <see cref="Control"/>. Returns null if <paramref name="Control"/> is null or it is of unsupported type.</returns>
-        ''' <version version="1.5.2">Fixed: First call for <paramref name="Control"/> being <see cref="Windows.UIElement"/> returns null.</version>
+        ''' <version version="1.5.2">Fixed: First call for <paramref name="Control"/> being <see cref="System.Windows.UIElement"/> returns null.</version>
         Protected Overridable Function GetControl(ByVal Control As Object) As Control
             If Control Is Nothing Then Return Nothing
             If TypeOf Control Is Control Then Return Control
-            If TypeOf Control Is Windows.UIElement Then
-                Static WPFHosts As Dictionary(Of Windows.FrameworkElement, Windows.Forms.Integration.ElementHost)
-                If WPFHosts Is Nothing Then WPFHosts = New Dictionary(Of Windows.FrameworkElement, Windows.Forms.Integration.ElementHost)
+            If TypeOf Control Is System.Windows.UIElement Then
+                Static WPFHosts As Dictionary(Of System.Windows.FrameworkElement, System.Windows.Forms.Integration.ElementHost)
+                If WPFHosts Is Nothing Then WPFHosts = New Dictionary(Of System.Windows.FrameworkElement, System.Windows.Forms.Integration.ElementHost)
                 If WPFHosts.ContainsKey(Control) Then Return WPFHosts(Control)
                 Dim WPFHost As New Integration.ElementHost With {.Dock = DockStyle.Fill}
                 WPFHost.HostContainer.Children.Add(Control)

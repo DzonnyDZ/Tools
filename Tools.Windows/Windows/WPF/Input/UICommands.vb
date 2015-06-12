@@ -6,8 +6,10 @@ Namespace WindowsT.WPF.InputT
     ''' <summary>Defines additional standard commands that are not defined in core WPF</summary>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public Class UICommands
-        ''' <summary>This is static class (no CTor)</summary>
-        Partial Private Sub New()
+        ''' <summary>Private CTor to achieve pseudo-static class</summary>
+        ''' <exception cref="NotSupportedException">Always</exception>
+        Private Sub New()
+            Throw New NotSupportedException("This is static class")
         End Sub
 
         Private Shared ReadOnly _scrollDown As New RoutedUICommand(WPF.Resources.ScrollDown, "ScrollDown", GetType(UICommands), New InputGestureCollection From {New MouseWheelGesture(MouseWheelDirection.Minus)})

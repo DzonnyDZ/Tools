@@ -38,10 +38,10 @@ Public Class ConsoleT
     '    Protected Overrides Function NewWndProc(ByVal hwnd As System.IntPtr, ByVal msg As API.Messages.WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
     '        Select Case msg
     '            Case API.Messages.WindowMessages.WM_CLOSE
-    '                If Me.CloseReason = Windows.Forms.CloseReason.None Then Me.CloseReason = Windows.Forms.CloseReason.TaskManagerClosing
+    '                If Me.CloseReason = System.Windows.Forms.CloseReason.None Then Me.CloseReason = System.Windows.Forms.CloseReason.TaskManagerClosing
     '                Return WmClose(hwnd, msg, wParam, lParam)
     '            Case API.Messages.WindowMessages.WM_QUERYENDSESSION, API.Messages.WindowMessages.WM_ENDSESSION
-    '                Me.CloseReason = Windows.Forms.CloseReason.WindowsShutDown
+    '                Me.CloseReason = System.Windows.Forms.CloseReason.WindowsShutDown
     '                Return WmClose(hwnd, msg, wParam, lParam)
     '            Case Else : Return MyBase.NewWndProc(hwnd, msg, wParam, lParam)
     '        End Select

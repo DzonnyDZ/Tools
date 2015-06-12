@@ -9,7 +9,7 @@ Imports System.Windows.Media.Imaging
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Implements <see cref="IValueConverter"/> that converts URI (path) to cached <see cref="BitmapImage"/></summary>
-    ''' <remarks>Use this converter to avoid images to be locked by <see cref="Windows.Controls.Image"/> control.</remarks>
+    ''' <remarks>Use this converter to avoid images to be locked by <see cref="System.Windows.Controls.Image"/> control.</remarks>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
     Public Class CachedImageConverter
         Implements IValueConverter

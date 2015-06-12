@@ -81,8 +81,8 @@ Namespace API.Messages
         Public Sub New(ByVal hWnd As IntPtr, ByVal Message As WindowMessages, ByVal wParam%, ByVal lParam%)
             Me.New(hWnd, Message, wParam, lParam, 0)
         End Sub
-        ''' <summary>CTor from <see cref="Windows.Forms.Message"/></summary>
-        ''' <param name="Message">A <see cref="Windows.Forms.Message"/></param>
+        ''' <summary>CTor from <see cref="System.Windows.Forms.Message"/></summary>
+        ''' <param name="Message">A <see cref="System.Windows.Forms.Message"/></param>
         Public Sub New(ByVal Message As Message)
             Me.New(Message.HWnd, Message.Msg, Message.WParam, Message.LParam, Message.Result)
         End Sub
@@ -166,15 +166,15 @@ Namespace API.Messages
         End Property
 #End Region
 #Region "Operators and equals"
-        ''' <summary>Converts <see cref="WindowMessage"/> to <see cref="windows.Forms.Message"/></summary>
+        ''' <summary>Converts <see cref="WindowMessage"/> to <see cref="System.Windows.Forms.Message"/></summary>
         ''' <param name="a">A <see cref="WindowMessage"/></param>
-        ''' <returns>Equivalent <see cref="windows.Forms.Message"/> (<see cref="Empty"/> instance when <paramref name="a"/> is null)</returns>
+        ''' <returns>Equivalent <see cref="System.Windows.Forms.Message"/> (<see cref="Empty"/> instance when <paramref name="a"/> is null)</returns>
         Public Shared Widening Operator CType(ByVal a As WindowMessage) As Message
             If a Is Nothing Then Return Nothing
             Return New Message() With {.HWnd = a.hWnd, .Msg = a.Message, .LParam = a.lParam, .WParam = a.wParam, .Result = a.ReturnValue}
         End Operator
-        ''' <summary>Converts <see cref="windows.Forms.Message"/> to <see cref="WindowMessage"/></summary>
-        ''' <param name="a">A <see cref="windows.Forms.Message"/></param>
+        ''' <summary>Converts <see cref="System.Windows.Forms.Message"/> to <see cref="WindowMessage"/></summary>
+        ''' <param name="a">A <see cref="System.Windows.Forms.Message"/></param>
         ''' <returns>Equivalent <see cref="WindowMessage"/></returns>
         Public Shared Widening Operator CType(ByVal a As Message) As WindowMessage
             Return New WindowMessage(a)
@@ -195,7 +195,7 @@ Namespace API.Messages
         ''' <returns>true if the current object is equal to the 
         ''' <paramref name="other" /> parameter; otherwise, false.</returns>
         ''' <param name="other">An object to compare with this object.</param>
-        ''' <remarks><see cref="WindowMessage" /> is consideret equal to <see cref="windows.Forms.Message"/> when appropriate properties has same values</remarks>
+        ''' <remarks><see cref="WindowMessage" /> is consideret equal to <see cref="System.Windows.Forms.Message"/> when appropriate properties has same values</remarks>
         Public Overloads Function Equals(ByVal other As System.Windows.Forms.Message) As Boolean Implements System.IEquatable(Of System.Windows.Forms.Message).Equals
             Return other.HWnd = Me.hWnd AndAlso other.Msg = Me.Message AndAlso other.LParam = Me.lParam AndAlso other.WParam = Me.wParam AndAlso other.Result = Me.ReturnValue
         End Function
@@ -439,15 +439,15 @@ Namespace API.Messages
     ''' <summary>Defines API functions to worki with windows messages</summary>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>
     Friend Module Messages
-        ''' <summary>Sends the specified message to a window or windows. The <see cref="SendMessage"/>  function calls the window procedure for the specified window and does not return until the window procedure has processed the message.</summary>
-        ''' <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see cref="GUI.SpecialWindowHandles.HWND_BROADCAST"/>, the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child windows.</param>
+        ''' <summary>Sends the specified message to a window or System.Windows. The <see cref="SendMessage"/>  function calls the window procedure for the specified window and does not return until the window procedure has processed the message.</summary>
+        ''' <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see cref="GUI.SpecialWindowHandles.HWND_BROADCAST"/>, the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child System.Windows.</param>
         ''' <param name="msg">The message to be sent.</param>
         ''' <param name="wParam">Additional message-specific information.</param>
         ''' <param name="lParam">Additional message-specific information.</param>
         ''' <returns>The return value specifies the result of the message processing; it depends on the message sent.</returns>
         Public Declare Auto Function SendMessage Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal msg As WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
-        ''' <summary>Sends the specified message to a window or windows. The <see cref="SendMessage"/>  function calls the window procedure for the specified window and does not return until the window procedure has processed the message. (<paramref name="lParam"/> as pointer to string)</summary>
-        ''' <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see cref="GUI.SpecialWindowHandles.HWND_BROADCAST"/>, the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child windows.</param>
+        ''' <summary>Sends the specified message to a window or System.Windows. The <see cref="SendMessage"/>  function calls the window procedure for the specified window and does not return until the window procedure has processed the message. (<paramref name="lParam"/> as pointer to string)</summary>
+        ''' <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see cref="GUI.SpecialWindowHandles.HWND_BROADCAST"/>, the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child System.Windows.</param>
         ''' <param name="msg">The message to be sent.</param>
         ''' <param name="wParam">Additional message-specific information.</param>
         ''' <param name="lParam">Additional message-specific information.</param>
@@ -456,7 +456,7 @@ Namespace API.Messages
         Public Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As WindowMessages, ByVal wParam As Integer, ByVal lParam As System.Text.StringBuilder) As Integer
         End Function
         ''' <summary>Places (posts) a message in the message queue associated with the thread that created the specified window and returns without waiting for the thread to process the message.</summary>
-        ''' <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see cref="GUI.SpecialWindowHandles.HWND_BROADCAST"/>, the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child windows.</param>
+        ''' <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see cref="GUI.SpecialWindowHandles.HWND_BROADCAST"/>, the message is sent to all top-level windows in the system, including disabled or invisible unowned windows, overlapped windows, and pop-up windows; but the message is not sent to child System.Windows.</param>
         ''' <param name="msg">The message to be sent.</param>
         ''' <param name="wParam">Additional message-specific information.</param>
         ''' <param name="lParam">Additional message-specific information.</param>

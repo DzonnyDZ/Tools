@@ -22,7 +22,7 @@ Namespace ReflectionT
         End Sub
 
         Private Sub tmiOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiOpen.Click
-            If ofdOpen.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdOpen.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Dim asm = Reflection.Assembly.LoadFile(ofdOpen.FileName)
                     obBrowser.Objects.Add(asm)

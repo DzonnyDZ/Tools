@@ -3,8 +3,10 @@ Imports Tools.WindowsT.WPF.InputT
 
 ''' <summary>Defines commands for file operations</summary>
 Public NotInheritable Class FileCommands
-    ''' <summary>Private constructor not present - this is static class</summary>
-    Partial Private Sub New()
+    ''' <summary>Private CTor to achieve pseudo-static class</summary>
+    ''' <exception cref="NotSupportedException">Always</exception>
+    Private Sub New()
+        Throw New NotSupportedException("This is static class")
     End Sub
     Private Shared _fileCopy As New RoutedUICommand(My.Resources.txt_Copy, "FileCopy", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.F5)})
     ''' <summary>Gets a command for cyping file</summary>
@@ -25,9 +27,12 @@ End Class
 
 ''' <summary>Defines command for displaying</summary>
 Public NotInheritable Class DisplayCommands
-    ''' <summary>Private constructor not present - this is static class</summary>
-    Partial Private Sub New()
+    ''' <summary>Private CTor to achieve pseudo-static class</summary>
+    ''' <exception cref="NotSupportedException">Always</exception>
+    Private Sub New()
+        Throw New NotSupportedException("This is static class")
     End Sub
+
     Private Shared _toggleFullscreen As New RoutedUICommand(My.Resources.txt_ToggleFullscreen, "ToggleFullscreen", GetType(FileCommands), New InputGestureCollection() From {New KeyGesture(Key.Return, ModifierKeys.Alt)})
     ''' <summary>Gets a command for toggling a fullscreen view</summary>
     Public Shared ReadOnly Property ToggleFullscreen As RoutedUICommand
@@ -40,9 +45,12 @@ End Class
 
 ''' <summary>Defines MetanolBrowser-specific commands</summary>
 Public NotInheritable Class MetanolBrowserCommands
-    ''' <summary>Private constructor not present - this is static class</summary>
-    Partial Private Sub New()
+    ''' <summary>Private CTor to achieve pseudo-static class</summary>
+    ''' <exception cref="NotSupportedException">Always</exception>
+    Private Sub New()
+        Throw New NotSupportedException("This is static class")
     End Sub
+
     Private Shared _editIptc As New RoutedUICommand(My.Resources.txt_EditIptc, "EditIptc", GetType(MetanolBrowserCommands), New InputGestureCollection() From {New FreeKeyGesture(Key.I)})
     ''' <summary>Gets a command for editing IPTC data</summary>
     Public Shared ReadOnly Property EditIptc As RoutedUICommand

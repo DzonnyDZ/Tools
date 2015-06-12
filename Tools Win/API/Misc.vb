@@ -51,7 +51,7 @@ Namespace API
         ''' <summary>Retrieves the calling thread's last-error code value. The last-error code is maintained on a per-thread basis. Multiple threads do not overwrite each other's last-error code.</summary>
         ''' <returns>The return value is the calling thread's last-error code.
         ''' <para>The Return Value section of the documentation for each function that sets the last-error code notes the conditions under which the function sets the last-error code. Most functions that set the thread's last-error code set it when they fail. However, some functions also set the last-error code when they succeed. If the function is not documented to set the last-error code, the value returned by this function is simply the most recent last-error code to have been set; some functions set the last-error code to 0 on success and others do not.</para>
-        ''' <para>Windows Me/98/95:  Functions that are actually implemented in 16-bit code do not set the last-error code. You should ignore the last-error code when you call these functions. They include window management functions, GDI functions, and Multimedia functions. For functions that do set the last-error code, you should not rely on GetLastError returning the same value as it does under other versions of Windows.</para></returns>
+        ''' <para>Windows Me/98/95:  Functions that are actually implemented in 16-bit code do not set the last-error code. You should ignore the last-error code when you call these functions. They include window management functions, GDI functions, and Multimedia functions. For functions that do set the last-error code, you should not rely on GetLastError returning the same value as it does under other versions of System.Windows.</para></returns>
         ''' <remarks>Visual Basic:  Applications should call <see cref="ErrObject.LastDllError"/> of <see cref="err"/> instead of <see cref="GetLastError"/>.
         ''' <para>Use <see cref="Marshal.GetLastWin32Error"/> instead.</para></remarks>
         <Obsolete("Use Marshal.GetLastWin32Error  instead")> _
@@ -402,9 +402,9 @@ Namespace API
             Dos = &H10000
             ''' <summary>The file was designed for Windows NT.</summary>
             WindowsNT = &H40000
-            ''' <summary>The file was designed for 16-bit Windows.</summary>
+            ''' <summary>The file was designed for 16-bit System.Windows.</summary>
             Windows16 = &H1
-            ''' <summary>The file was designed for 32-bit Windows.</summary>
+            ''' <summary>The file was designed for 32-bit System.Windows.</summary>
             Windows32 = &H4
             ''' <summary>The file was designed for 16-bit OS/2.</summary>
             OS216 = &H30000

@@ -54,7 +54,7 @@ Namespace API.Public
         ControlParent = API.GUI.ExStyles.WS_EX_CONTROLPARENT
         ''' <summary>The window has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the dwStyle parameter.</summary>
         DialogModalFrame = API.GUI.ExStyles.WS_EX_DLGMODALFRAME
-        ''' <summary>The window is a layered window. Note that this cannot be used for child windows. Also, this cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.</summary>
+        ''' <summary>The window is a layered window. Note that this cannot be used for child System.Windows. Also, this cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.</summary>
         Layered = API.GUI.ExStyles.WS_EX_LAYERED
         ''' <summary>If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.</summary>
         LayoutRtl = API.GUI.ExStyles.WS_EX_LAYOUTRTL
@@ -68,7 +68,7 @@ Namespace API.Public
         MdiChild = API.GUI.ExStyles.WS_EX_MDICHILD
         ''' <summary>A top-level window created with this style does not become the foreground window when the user clicks it. The system does not bring this window to the foreground when the user minimizes or closes the foreground window.</summary>
         NoActive = API.GUI.ExStyles.WS_EX_NOACTIVATE
-        ''' <summary>The window does not pass its window layout to its child windows.</summary>
+        ''' <summary>The window does not pass its window layout to its child System.Windows.</summary>
         NoInheritLayout = API.GUI.ExStyles.WS_EX_NOINHERITLAYOUT
         ''' <summary>The child window created with this style does not send the <see cref="API.Messages.WindowMessages.WM_PARENTNOTIFY"/> message to its parent window when it is created or destroyed.</summary>
         NoParentNotify = API.GUI.ExStyles.WS_EX_NOPARENTNOTIFY

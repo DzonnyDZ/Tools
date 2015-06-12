@@ -28,7 +28,7 @@ Namespace DrawingT.DesignT
                 Lbl.Tag = context
                 AddHandler Lbl.Click, AddressOf Lbl_Click
                 Me.Context = context
-                Service = provider.GetService(GetType(Windows.Forms.Design.IWindowsFormsEditorService))
+                Service = provider.GetService(GetType(System.Windows.Forms.Design.IWindowsFormsEditorService))
                 Service.DropDownControl(Lbl)
                 If Lbl.Tag Is Nothing Then Return value Else Return Lbl.Tag
             End Using
@@ -36,7 +36,7 @@ Namespace DrawingT.DesignT
         ''' <summary>The context parameter of <see cref="EditValue"/> used by <see cref="Lbl_Click"/></summary>
         Private Context As ITypeDescriptorContext
         ''' <summary>service obtained from provider parameter of <see cref="EditValue"/> used by <see cref="Lbl_Click"/></summary>
-        Private Service As Windows.Forms.Design.IWindowsFormsEditorService
+        Private Service As System.Windows.Forms.Design.IWindowsFormsEditorService
         ''' <summary>Handles <see cref="Label.Click"/> event of label used to provide drop-down UI</summary>
         ''' <param name="sender">The <see cref="Label"/></param>
         ''' <param name="e">Event params</param>

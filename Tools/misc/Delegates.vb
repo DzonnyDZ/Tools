@@ -77,9 +77,9 @@ Public Delegate Function dFunction(Of TRet, T1, T2, T3, T4)(ByVal arg1 As T1, By
 ''' <summary>Represents type-safe event handler</summary>
 ''' <typeparam name="TControl">Type of <paramref name="source"/></typeparam>
 ''' <typeparam name=" TEventArgs">Type of <paramref name="e"/></typeparam>
-''' <param name="source"><see cref="Windows.Forms.Control"/> that caused the event</param>
+''' <param name="source"><see cref="System.Windows.Forms.Control"/> that caused the event</param>
 ''' <param name="e">Event arguments</param>
-Public Delegate Sub ControlEventHandler(Of TControl As Windows.Forms.Control, TEventArgs As EventArgs)(ByVal source As TControl, ByVal e As TEventArgs)
+Public Delegate Sub ControlEventHandler(Of TControl As System.Windows.Forms.Control, TEventArgs As EventArgs)(ByVal source As TControl, ByVal e As TEventArgs)
 ''' <summary>Generic event handler delegate</summary>
 ''' <typeparam name="TSender">Type of the <paramref name="sender"/> argument</typeparam>
 ''' <typeparam name="TEventArgs">Type of the <paramref name="e"/> argument</typeparam>

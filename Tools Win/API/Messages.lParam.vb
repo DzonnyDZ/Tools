@@ -104,9 +104,9 @@ Namespace API.Messages.lParam
         End Enum
         ''' <summary>Values used for lParam of the <see cref="WindowMessages.WM_PRINT"/> message</summary>
         <Flags()> Public Enum WM_PRINT As Integer
-            ''' <summary>Draws all visible children windows.</summary>
+            ''' <summary>Draws all visible children System.Windows.</summary>
             PRF_CHECKVISIBLE = &H1I
-            ''' <summary>Draws all visible children windows.</summary>
+            ''' <summary>Draws all visible children System.Windows.</summary>
             PRF_CHILDREN = &H10I
             ''' <summary>Draws the client area of the window.</summary>
             PRF_CLIENT = &H4I
@@ -114,7 +114,7 @@ Namespace API.Messages.lParam
             PRF_ERASEBKGND = &H8I
             ''' <summary>Draws the nonclient area of the window.</summary>
             PRF_NONCLIENT = &H2I
-            ''' <summary>Draws all owned windows.</summary>
+            ''' <summary>Draws all owned System.Windows.</summary>
             PRF_OWNED = &H20I
         End Enum
         ''' <summary>Values used for lParam of the <see cref="WindowMessages.WM_QUERYENDSESSION"/> message</summary>

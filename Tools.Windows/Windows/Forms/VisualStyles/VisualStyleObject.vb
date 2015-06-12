@@ -301,16 +301,16 @@ Namespace WindowsT.FormsT.VisualStylesT
     '                    _State = value
     '                End Set
     '            End Property
-    '            ''' <summary>Gets state to be rendered as <see cref="Windows.Forms.ButtonState"/></summary>
+    '            ''' <summary>Gets state to be rendered as <see cref="System.Windows.Forms.ButtonState"/></summary>
     '            ''' <returns>If <see cref="State"/> is <see cref="PushButtonState.Pressed"/> returns <see cref="ButtonState.Pushed"/>.
     '            ''' If <see cref="State"/> is <see cref="PushButtonState.Disabled"/> return <see cref="ButtonState.Inactive"/>.
     '            ''' Otherwise returns <see cref="ButtonState.Normal"/></returns>
     '            Public ReadOnly Property ButtonState() As ButtonState
     '                Get
     '                    Select Case State
-    '                        Case PushButtonState.Pressed : Return Windows.Forms.ButtonState.Pushed
-    '                        Case PushButtonState.Disabled : Return Windows.Forms.ButtonState.Inactive
-    '                        Case Else : Return Windows.Forms.ButtonState.Normal
+    '                        Case PushButtonState.Pressed : Return System.Windows.Forms.ButtonState.Pushed
+    '                        Case PushButtonState.Disabled : Return System.Windows.Forms.ButtonState.Inactive
+    '                        Case Else : Return System.Windows.Forms.ButtonState.Normal
     '                    End Select
     '                End Get
     '            End Property
@@ -393,7 +393,7 @@ Namespace WindowsT.FormsT.VisualStylesT
     '        ''' <param name="ClassName">String identifiying class of visual element</param>
     '        ''' <param name="Part">Part of visual element</param>
     '        ''' <param name="State">State of visual element</param>
-    '        ''' <exception cref="InvalidOperationException">The operating system does not support visual styles.-or-Visual styles are disabled by the user in the operating system.-or-Visual styles are not applied to the client area of application windows.</exception>
+    '        ''' <exception cref="InvalidOperationException">The operating system does not support visual styles.-or-Visual styles are disabled by the user in the operating system.-or-Visual styles are not applied to the client area of application System.Windows.</exception>
     '        ''' <exception cref="ArgumentException">The combination of <paramref name="className"/>, <paramref name="part"/>, and <paramref name="state"/> is not defined by the current visual style.</exception>
     '        ''' <seelaso cref="VisualStyleRenderer"/>
     '        Public Sub New(ByVal ClassName$, ByVal Part%, ByVal State%)
@@ -403,7 +403,7 @@ Namespace WindowsT.FormsT.VisualStylesT
     '        ''' <param name="CLass">Value identifiying class of visual element</param>
     '        ''' <param name="Part">Part of visual element</param>
     '        ''' <param name="State">State of visual element</param>
-    '        ''' <exception cref="InvalidOperationException">The operating system does not support visual styles.-or-Visual styles are disabled by the user in the operating system.-or-Visual styles are not applied to the client area of application windows.</exception>
+    '        ''' <exception cref="InvalidOperationException">The operating system does not support visual styles.-or-Visual styles are disabled by the user in the operating system.-or-Visual styles are not applied to the client area of application System.Windows.</exception>
     '        ''' <exception cref="ArgumentException">The combination of <paramref name="className"/>, <paramref name="part"/>, and <paramref name="state"/> is not defined by the current visual style.</exception>
     '        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Class"/> is neither zero nor member of <see cref="VisualStyleClass"/>. Note: When <paramref name="Class"/> is zero, <see cref="ArgumentException"/> is thrown.</exception>
     '        ''' <seelaso cref="VisualStyleRenderer"/>
@@ -412,7 +412,7 @@ Namespace WindowsT.FormsT.VisualStylesT
     '        End Sub
     '        ''' <summary>CTor form <see cref="VisualStyleElement"/></summary>
     '        ''' <param name="Element">Visual element to encapsulate</param>
-    '        ''' <exception cref="InvalidOperationException">The operating system does not support visual styles.-or-Visual styles are disabled by the user in the operating system.-or-Visual styles are not applied to the client area of application windows.</exception>
+    '        ''' <exception cref="InvalidOperationException">The operating system does not support visual styles.-or-Visual styles are disabled by the user in the operating system.-or-Visual styles are not applied to the client area of application System.Windows.</exception>
     '        ''' <exception cref="ArgumentException"><paramref name="element"/> is not defined by the current visual style.</exception>
     '        ''' <seelaso cref="VisualStyleRenderer"/>
     '        Public Sub New(ByVal Element As VisualStyleElement)

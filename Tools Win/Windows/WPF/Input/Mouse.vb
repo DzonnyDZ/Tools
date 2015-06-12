@@ -10,8 +10,10 @@ Namespace WindowsT.WPF.InputT
     ''' <summary>Provides additional mouse events for WPF such as horizontal scrolling</summary>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public Class MouseT
-        ''' <summary>No CTor - this is static class</summary>
-        Partial Private Sub New()
+        ''' <summary>Private CTor to achieve pseudo-static class</summary>
+        ''' <exception cref="NotSupportedException">Always</exception>
+        Private Sub New()
+            Throw New NotSupportedException("This is static class")
         End Sub
 
 #Region "Horizontal wheel"

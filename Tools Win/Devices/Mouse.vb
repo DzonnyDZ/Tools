@@ -7,9 +7,12 @@ Imports System.Threading
 Namespace DevicesT
     ''' <summary>Contains methods for working with mouse</summary>
     Public Class Mouse
-        ''' <summary>There is no CTor</summary>
-        Partial Private Sub New()
+        ''' <summary>Private CTor to achieve pseudo-static class</summary>
+        ''' <exception cref="NotSupportedException">Always</exception>
+        Private Sub New()
+            Throw New NotSupportedException("This is static class")
         End Sub
+
         ''' <summary>Value raised by mouse-wheel-related events for one wheel click</summary>
         Public Const WheelStep As Short = 120
         ''' <summary>Registers low-level mouse hook</summary>

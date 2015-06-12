@@ -668,7 +668,7 @@ Namespace API.Messages
         ''' <description>If an application processes this message, it should return zero. </description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms649026.aspx</seealso></remarks>
         WM_HSCROLLCLIPBOARD = &H30E
-        ''' <summary>Windows NT 3.51 and earlier: The WM_ICONERASEBKGND message is sent to a minimized window when the background of the icon must be filled before painting the icon. A window receives this message only if a class icon is defined for the window; otherwise, WM_ERASEBKGND is sent. This message is not sent by newer versions of Windows.</summary>
+        ''' <summary>Windows NT 3.51 and earlier: The WM_ICONERASEBKGND message is sent to a minimized window when the background of the icon must be filled before painting the icon. A window receives this message only if a class icon is defined for the window; otherwise, WM_ERASEBKGND is sent. This message is not sent by newer versions of System.Windows.</summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>
         ''' <description>Handle to the device context of the icon.</description></item>
@@ -849,7 +849,7 @@ Namespace API.Messages
         ''' <para>Note that lParam has the handle to the RAWINPUT structure, not a pointer to it. To get the raw data, use the handle in the call to GetRawInputData.</para>
         ''' <para>Raw input is available only when the application calls RegisterRawInputDevices with valid device specifications</para></remarks>
         WM_INPUT = &HFF
-        ''' <summary>The WM_INPUTLANGCHANGE message is sent to the topmost affected window after an application's input language has been changed. You should make any application-specific settings and pass the message to the DefWindowProc function, which passes the message to all first-level child windows. These child windows can pass the message to DefWindowProc to have it pass the message to their child windows, and so on.
+        ''' <summary>The WM_INPUTLANGCHANGE message is sent to the topmost affected window after an application's input language has been changed. You should make any application-specific settings and pass the message to the DefWindowProc function, which passes the message to all first-level child System.Windows. These child windows can pass the message to DefWindowProc to have it pass the message to their child windows, and so on.
         ''' A window receives this message through its WindowProc function. </summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>
@@ -1175,7 +1175,7 @@ Namespace API.Messages
         ''' <description>The return value is the handle to the active MDI child window. </description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms644915.aspx</seealso></remarks>
         WM_MDIGETACTIVE = &H229
-        ''' <summary>An application sends the WM_MDIICONARRANGE message to a multiple document interface (MDI) client window to arrange all minimized MDI child windows. It does not affect child windows that are not minimized.</summary>
+        ''' <summary>An application sends the WM_MDIICONARRANGE message to a multiple document interface (MDI) client window to arrange all minimized MDI child System.Windows. It does not affect child windows that are not minimized.</summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>
         ''' <description>not used; must be zero </description></item>
@@ -1200,7 +1200,7 @@ Namespace API.Messages
         ''' <item><term>wParam</term>
         ''' <description>Handle to the MDI child window. The system activates the child window that is immediately before or after the specified child window, depending on the value of the lParam parameter. If the wParam parameter is NULL, the system activates the child window that is immediately before or after the currently active child window.</description></item>
         ''' <item><term>lParam</term>
-        ''' <description>If this parameter is zero, the system activates the next MDI child window and places the child window identified by the wParam parameter behind all other child windows. If this parameter is nonzero, the system activates the previous child window, placing it in front of the child window identified by wParam.</description></item>
+        ''' <description>If this parameter is zero, the system activates the next MDI child window and places the child window identified by the wParam parameter behind all other child System.Windows. If this parameter is nonzero, the system activates the previous child window, placing it in front of the child window identified by wParam.</description></item>
         ''' <item><term>Return value</term>
         ''' <description>The return value is always zero. </description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms644918.aspx</seealso></remarks>

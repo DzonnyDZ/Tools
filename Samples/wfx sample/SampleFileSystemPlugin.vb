@@ -377,7 +377,7 @@ Public Class SampleFileSystemPlugin
         Dim Path = GetRealPath(RemoteName)
         If IsFavoriteAdd(RemoteName) Then
             Dim dlg As New AddFavoriteItemDialog
-            If dlg.ShowDialog(New WindowsT.NativeT.Win32Window(hMainWin)) = Windows.Forms.DialogResult.OK Then
+            If dlg.ShowDialog(New WindowsT.NativeT.Win32Window(hMainWin)) = System.Windows.Forms.DialogResult.OK Then
                 Dim fi = GetFavoriteItem(dlg.Name)
                 If fi IsNot Nothing OrElse dlg.Name = My.Resources.AddNewFavoriteItem Then
                     WindowsT.IndependentT.MessageBox.Modal_PTWBIO(My.Resources.ItemAlreadyExists, My.Resources.Error_, New WindowsT.NativeT.Win32Window(hMainWin), , Tools.WindowsT.IndependentT.MessageBox.GetIcon(WindowsT.IndependentT.MessageBox.MessageBoxIcons.Error))

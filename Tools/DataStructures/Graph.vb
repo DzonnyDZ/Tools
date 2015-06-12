@@ -11,7 +11,7 @@ Namespace DataStructuresT.GenericT
         Private WithEvents _Edges As New ListWithEvents(Of GraphEdge) With {.Owner = Me}
         ''' <summary>Gets edges of this node</summary>
         ''' <returns>Edges from and to this node</returns>
-        Public ReadOnly Property Edges() As IReadOnlyList(Of GraphEdge)
+        Public ReadOnly Property Edges() As CollectionsT.GenericT.IReadOnlyList(Of GraphEdge)
             Get
                 Return _Edges
             End Get
@@ -610,14 +610,14 @@ Namespace DataStructuresT.GenericT
             If From Is Nothing Then Throw New ArgumentNullException("From")
             If From.Graph IsNot Me Then Throw New ArgumentException("Node must be member of current graph") 'Localize: Exception
             If bgw IsNot Nothing AndAlso bgw.WorkerReportsProgress Then
-                bgw.ReportProgress(-1, Windows.Forms.ProgressBarStyle.Blocks)
+                bgw.ReportProgress(-1, System.Windows.Forms.ProgressBarStyle.Blocks)
             End If
             'Init-paths
             For Each Node In Nodes
                 Node.AlghoritmData = New GraphAlghoritmData With {.DoubleDistance = Double.PositiveInfinity, .Predecessor = Nothing, .PredecessorEdge = Nothing}
             Next
             From.AlghoritmData.DoubleDistance = 0
-            Dim Queue As New PriorityQueue(Of GraphNode)( _
+            Dim Queue As New PriorityQueue(Of GraphNode)(
                     New GenericComparer(Of GraphNode)(Function(a, b) a.AlghoritmData.DoubleDistance.CompareTo(b.AlghoritmData.DoubleDistance)), PriorityTarget.MinimumFirst)
             For Each node In Nodes
                 Queue.Push(node)
@@ -630,7 +630,7 @@ Namespace DataStructuresT.GenericT
                 Next
                 If bgw IsNot Nothing AndAlso bgw.CancellationPending Then Throw New OperationCanceledException()
                 If bgw IsNot Nothing AndAlso bgw.WorkerReportsProgress Then
-                    bgw.ReportProgress(100 - Math.Max(Queue.Count / Nodes.Count, 1) * 100, Windows.Forms.ProgressBarStyle.Blocks)
+                    bgw.ReportProgress(100 - Math.Max(Queue.Count / Nodes.Count, 1) * 100, System.Windows.Forms.ProgressBarStyle.Blocks)
                 End If
             End While
         End Sub

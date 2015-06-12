@@ -111,7 +111,7 @@ Namespace CodeDomT
 
         Private Sub cmdBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowseR.Click, cmdBrowseL.Click
             Dim Target As TextBox = If(sender Is cmdBrowseL, txtLeft, txtRight)
-            If ofdOpen.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdOpen.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Target.Text = My.Computer.FileSystem.ReadAllText(ofdOpen.FileName)
                 Catch ex As Exception
@@ -155,7 +155,7 @@ Namespace CodeDomT
         End Sub
 
         Private Sub tmiBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiBrowse.Click
-            If ofdDll.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdDll.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Dim asm As Reflection.Assembly
                 Try
                     asm = Reflection.Assembly.LoadFile(ofdDll.FileName)
@@ -172,7 +172,7 @@ Namespace CodeDomT
                     For Each tlex In ex.LoaderExceptions
                         msg.AppendLine(tlex.Message)
                     Next
-                    MBox.Show(msg.ToString, ex.GetType.Name, Windows.MessageBoxButton.OK, Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons.Error)
+                    MBox.Show(msg.ToString, ex.GetType.Name, System.Windows.MessageBoxButton.OK, Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons.Error)
                     Exit Sub
                 End Try
                 If Types.IsEmpty Then
@@ -186,7 +186,7 @@ Namespace CodeDomT
                     mTemplate.Title = "Select an assembly"
                     mTemplate.ComboBox = New MBox.MessageBoxComboBox("FullName", (From type In Types Select CObj(type)).ToArray)
                     mTemplate.ComboBox.SelectedIndex = 0
-                    If MBox.ShowTemplate(mTemplate, Me) = Windows.Forms.DialogResult.OK Then
+                    If MBox.ShowTemplate(mTemplate, Me) = System.Windows.Forms.DialogResult.OK Then
                         CodeType = mTemplate.ComboBox.SelectedItem
                     Else
                         Exit Sub

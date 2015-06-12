@@ -239,9 +239,9 @@ Namespace API
             HWND_BROADCAST = 65535
             ''' <summary>Places the window at the top of the Z order.</summary>
             HWND_TOP = 0
-            ''' <summary>Places the window at the bottom of the Z order. If the hWnd parameter identifies a topmost window, the window loses its topmost status and is placed at the bottom of all other windows.</summary>
+            ''' <summary>Places the window at the bottom of the Z order. If the hWnd parameter identifies a topmost window, the window loses its topmost status and is placed at the bottom of all other System.Windows.</summary>
             HWND_BOTTOM = 1
-            ''' <summary>Places the window above all non-topmost windows. The window maintains its topmost position even when it is deactivated.</summary>
+            ''' <summary>Places the window above all non-topmost System.Windows. The window maintains its topmost position even when it is deactivated.</summary>
             HWND_TOPMOST = -1
             ''' <summary>Places the window above all non-topmost windows (that is, behind all topmost windows). This flag has no effect if the window is already a non-topmost window.</summary>
             HWND_NOTOPMOST = -2
@@ -293,7 +293,7 @@ Namespace API
             WS_EX_CONTROLPARENT = &H10000I
             ''' <summary>The window has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the dwStyle parameter.</summary>
             WS_EX_DLGMODALFRAME = &H1I
-            ''' <summary>The window is a layered window. Note that this cannot be used for child windows. Also, this cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.</summary>
+            ''' <summary>The window is a layered window. Note that this cannot be used for child System.Windows. Also, this cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.</summary>
             WS_EX_LAYERED = &H80000
             ''' <summary>If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.</summary>
             WS_EX_LAYOUTRTL = &H400000I
@@ -308,7 +308,7 @@ Namespace API
             ''' <summary>A top-level window created with this style does not become the foreground window when the user clicks it. The system does not bring this window to the foreground when the user minimizes or closes the foreground window.</summary>
             ''' <remarks>To activate the window, use the SetActiveWindow or SetForegroundWindow function. The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the <see cref="WS_EX_APPWINDOW"/> style.</remarks>
             WS_EX_NOACTIVATE = &H8000000I
-            ''' <summary>The window does not pass its window layout to its child windows.</summary>
+            ''' <summary>The window does not pass its window layout to its child System.Windows.</summary>
             WS_EX_NOINHERITLAYOUT = &H100000I
             ''' <summary>The child window created with this style does not send the <see cref="API.Messages.WindowMessages.WM_PARENTNOTIFY"/> message to its parent window when it is created or destroyed.</summary>
             WS_EX_NOPARENTNOTIFY = &H4I
@@ -421,7 +421,7 @@ Namespace API
         ''' <param name="lParam">Specifies additional message information. The content of this parameter depends on the value of the Msg parameter.</param>
         ''' <returns>The return value is the result of the message processing and depends on the message.</returns>
         Public Declare Auto Function DefWindowProc Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal wMsg As Messages.WindowMessages, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
-        ''' <summary>The FindWindow function retrieves a handle to the top-level window whose class name and window name match the specified strings. This function does not search child windows. This function does not perform a case-sensitive search.</summary>
+        ''' <summary>The FindWindow function retrieves a handle to the top-level window whose class name and window name match the specified strings. This function does not search child System.Windows. This function does not perform a case-sensitive search.</summary>
         ''' <param name="lpClassName">[in] Pointer to a null-terminated string that specifies the class name or a class atom created by a previous call to the RegisterClass or RegisterClassEx function. The atom must be in the low-order word of lpClassName; the high-order word must be zero.
         ''' <para>If lpClassName points to a string, it specifies the window class name. The class name can be any name registered with RegisterClass or RegisterClassEx, or any of the predefined control-class names.</para>
         ''' <para>If lpClassName is NULL, it finds any window whose title matches the lpWindowName parameter. </para></param>

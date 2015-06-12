@@ -111,7 +111,7 @@ Public Class frmMain
 
     Private Sub tmiBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiBrowse.Click
         If Not OnBeforeFolderChange() Then Exit Sub
-        If fbdGoTo.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If fbdGoTo.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             Dim spath$
             Try
                 spath = fbdGoTo.SelectedPath
@@ -343,7 +343,7 @@ Public Class frmMain
     Private Sub tmiGoTo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiGoTo.Click
         If Not OnBeforeFolderChange() Then Exit Sub
         Dim dlg As New frmFolderDialog(CurrentFolder)
-        If dlg.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If dlg.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             LoadFolder(dlg.txtPath.Text)
         End If
     End Sub
@@ -428,7 +428,7 @@ Public Class frmMain
     Private Sub tmiOptions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiOptions.Click
         Dim frm As New frmSettings
         Dim oldFloating As Boolean = My.Settings.LargeFloating
-        If frm.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+        If frm.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
             If imlImages.ImageSize <> My.Settings.ThumbSize Then
                 imlImages.Images.Clear()
                 imlImages.ImageSize = My.Settings.ThumbSize
@@ -777,7 +777,7 @@ Public Class frmMain
     Private SplitterDowns As New Dictionary(Of Splitter, Point)
     Private Sub sptAll_MouseDown(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
         Handles sptKeywords.MouseDown, sptImage.MouseDown, sptTitle.MouseDown, sptGps.MouseDown
-        If e.Button = Windows.Forms.MouseButtons.Left Then
+        If e.Button = System.Windows.Forms.MouseButtons.Left Then
             If Not SplitterDowns.ContainsKey(sender) Then _
                 SplitterDowns.Add(sender, e.Location) _
             Else _
@@ -799,7 +799,7 @@ Public Class frmMain
 
     Private Sub splAll_MouseMove(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
         Handles sptImage.MouseMove, sptKeywords.MouseMove, sptTitle.MouseMove, sptGps.MouseMove
-        If e.Button = Windows.Forms.MouseButtons.Left AndAlso SplitterDowns.ContainsKey(sender) AndAlso SplitterDowns(sender).Y <> e.Location.Y Then
+        If e.Button = System.Windows.Forms.MouseButtons.Left AndAlso SplitterDowns.ContainsKey(sender) AndAlso SplitterDowns(sender).Y <> e.Location.Y Then
             Dim DeltaY = e.Location.Y - SplitterDowns(sender).Y
             With SplittedControl(sender)
                 .Height += DeltaY
@@ -810,7 +810,7 @@ Public Class frmMain
 
     Private Sub sptAll_MouseUp(ByVal sender As Splitter, ByVal e As System.Windows.Forms.MouseEventArgs) _
         Handles sptImage.MouseUp, sptKeywords.MouseUp, sptTitle.MouseUp, sptGps.MouseUp
-        If e.Button = Windows.Forms.MouseButtons.Left Then sender.Capture = False
+        If e.Button = System.Windows.Forms.MouseButtons.Left Then sender.Capture = False
     End Sub
 
     Private Sub cmbCountryCode_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCountryCode.SelectedIndexChanged
@@ -903,7 +903,7 @@ Public Class frmMain
             Dim msg$ = ex.Message
             If i > 0 Then msg &= vbCrLf & My.Resources.SomeChangedSomeNot
             Select Case MBox.Modal_PTBI(msg, My.Resources.Error_, MButton.Buttons.OK Or MButton.Buttons.Cancel, MBox.MessageBoxIcons.Error)
-                Case Windows.Forms.DialogResult.OK : Return False
+                Case System.Windows.Forms.DialogResult.OK : Return False
                 Case Else
                     ShowIPTCValues((From item In SelectedMetadata Select item.IPTC), Prp)
                     Return True
@@ -937,11 +937,11 @@ Public Class frmMain
         StoreActiveConrol()
         If Not Me.Changed Then Return True
         Select Case MBox.Modal_PTOIB(My.Resources.UnsavedChanges, My.Resources.SaveChanges_dlgTitle, MBox.MessageBoxOptions.AlignLeft, MBox.GetIconDelegate.Invoke(MBox.MessageBoxIcons.Question), _
-                New MButton(My.Resources.Save_cmd, Nothing, Windows.Forms.DialogResult.OK, My.Resources.Save_access), _
-                New MButton(My.Resources.DontSave_cmd, Nothing, Windows.Forms.DialogResult.No, My.Resources.DontSave_access), _
+                New MButton(My.Resources.Save_cmd, Nothing, System.Windows.Forms.DialogResult.OK, My.Resources.Save_access), _
+                New MButton(My.Resources.DontSave_cmd, Nothing, System.Windows.Forms.DialogResult.No, My.Resources.DontSave_access), _
                 MButton.Cancel)
-            Case Windows.Forms.DialogResult.OK : Return SaveAll()
-            Case Windows.Forms.DialogResult.Cancel : Return False
+            Case System.Windows.Forms.DialogResult.OK : Return SaveAll()
+            Case System.Windows.Forms.DialogResult.Cancel : Return False
             Case Else 'No
                 Return True
         End Select
@@ -979,8 +979,8 @@ Retry:              item.Save()
                     Select Case MBox.ModalSyncTemplate(Me, _
                             New MBox.FakeBox(MButton.Buttons.Cancel Or MButton.Buttons.Retry Or MButton.Buttons.Ignore), _
                             String.Format(My.Resources.ErrorWhileSaving0, item.Path) & vbCrLf & ex.Message, My.Resources.Error_, Me)
-                        Case Windows.Forms.DialogResult.Cancel : Return False
-                        Case Windows.Forms.DialogResult.Retry : GoTo Retry
+                        Case System.Windows.Forms.DialogResult.Cancel : Return False
+                        Case System.Windows.Forms.DialogResult.Retry : GoTo Retry
                             'Case Else do nothing
                     End Select
                 End Try

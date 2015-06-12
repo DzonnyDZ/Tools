@@ -2,13 +2,13 @@
 Friend Class AddFavoriteItemDialog
 
     Private Sub cmdFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdFile.Click
-        If ofdFile.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If ofdFile.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             txtPath.Text = ofdFile.FileName
         End If
     End Sub
 
     Private Sub cmdFolder_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdFolder.Click
-        If fbdFolder.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If fbdFolder.ShowDialog = System.Windows.Forms.DialogResult.OK Then
             txtPath.Text = fbdFolder.SelectedPath
         End If
     End Sub
@@ -19,7 +19,7 @@ Friend Class AddFavoriteItemDialog
     ''' <summary>CTor</summary>
     Public Sub New()
         InitializeComponent()
-        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
     End Sub
 
     Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
@@ -33,13 +33,13 @@ Friend Class AddFavoriteItemDialog
         End If
         txtPath.Text = txtPath.Text.TrimEnd("\"c)
         If txtPath.Text.StartsWith("\\") AndAlso txtPath.Text.Length > 2 AndAlso txtPath.Text.IndexOf("\"c, 2) < 0 AndAlso (From ch In txtPath.Text.Substring(2) Where IO.Path.GetInvalidFileNameChars.Contains(ch)).Count = 0 Then
-            Me.DialogResult = Windows.Forms.DialogResult.OK
+            Me.DialogResult = System.Windows.Forms.DialogResult.OK
             Me.Close()
             Exit Sub
         End If
         Try
             If IO.File.Exists(txtPath.Text) OrElse IO.Directory.Exists(txtPath.Text) Then
-                Me.DialogResult = Windows.Forms.DialogResult.OK
+                Me.DialogResult = System.Windows.Forms.DialogResult.OK
                 Me.Close()
             Else
                 MsgBox(My.Resources.SelectValidFileOrDirectoryPlase, MsgBoxStyle.Critical, My.Resources.Error_)

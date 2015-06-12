@@ -11,7 +11,7 @@
     </StartupObject>
     <AssemblyName>Tools.VisualStudio.Macros</AssemblyName>
     <OptionStrict>Off</OptionStrict>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -113,9 +113,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DteHelper.vb" />
-    <Compile Include="InteractionHelpers.VB">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="InteractionHelpers.VB" />
     <Compile Include="ItemProperties.VB" />
     <Compile Include="Misc.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -10,13 +10,13 @@ Namespace IOt
         End Sub
 
         Private Sub btnSrc_Click(sender As Object, e As EventArgs) Handles btnSrc.Click
-            If fbdSelectFolder.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If fbdSelectFolder.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 txtSrc.Text = fbdSelectFolder.SelectedPath
             End If
         End Sub
 
         Private Sub btnDest_Click(sender As Object, e As EventArgs) Handles btnDest.Click
-            If fbdSelectFolder.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If fbdSelectFolder.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 txtDest.Text = fbdSelectFolder.SelectedPath
             End If
         End Sub

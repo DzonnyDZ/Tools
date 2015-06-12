@@ -38,7 +38,7 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
 
         Private Sub Copy_Executed(ByVal sender As System.Object, ByVal e As System.Windows.Input.ExecutedRoutedEventArgs)
-            My.Computer.Clipboard.SetText(MsgBoxControl.GetCopyText, Windows.Forms.TextDataFormat.UnicodeText)
+            My.Computer.Clipboard.SetText(MsgBoxControl.GetCopyText, System.Windows.Forms.TextDataFormat.UnicodeText)
         End Sub
 
         Private Sub Copy_CanExecute(ByVal sender As System.Object, ByVal e As System.Windows.Input.CanExecuteRoutedEventArgs)

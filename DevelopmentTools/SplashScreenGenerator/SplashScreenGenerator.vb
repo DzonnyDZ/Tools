@@ -45,9 +45,12 @@ Imports Tools.ExtensionsT
 ''' </list>
 ''' </remarks>
 Public NotInheritable Class SplashScreenGenerator
-    ''' <summary>There's no CTor - <see cref="SplashScreenGenerator"/> is static class</summary>
-    Partial Private Sub New()
+    ''' <summary>Private CTor to achieve pseudo-static class</summary>
+    ''' <exception cref="NotSupportedException">Always</exception>
+    Private Sub New()
+        Throw New NotSupportedException("This is static class")
     End Sub
+
     ''' <summary>Entry point method for Splash Screen Generator application</summary>
     Friend Shared Sub Main()
         Try

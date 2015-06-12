@@ -47,7 +47,7 @@ Namespace WindowsT.WPF.InputT
         Inherits MouseGesture
         ''' <summary>CTor - creates a new instance of the <see cref="MouseWheelGesture"/> class with default settings</summary>
         Public Sub New()
-            MouseAction = Windows.Input.MouseAction.WheelClick
+            MouseAction = System.Windows.Input.MouseAction.WheelClick
         End Sub
         ''' <summary>CTor - creates a new instance of the <see cref="MouseWheelGesture"/> class setting its properties</summary>
         ''' <param name="direction">Direction of wheel movement</param>
@@ -70,7 +70,7 @@ Namespace WindowsT.WPF.InputT
                 Return MyBase.MouseAction
             End Get
             Set(value As MouseAction)
-                If value <> Windows.Input.MouseAction.WheelClick Then Throw New NotSupportedException(ResourcesT.Exceptions.ValueMustBeFor.f("MouseAction", MouseAction.WheelClick, GetType(MouseWheelGesture).Name))
+                If value <> System.Windows.Input.MouseAction.WheelClick Then Throw New NotSupportedException(ResourcesT.Exceptions.ValueMustBeFor.f("MouseAction", MouseAction.WheelClick, GetType(MouseWheelGesture).Name))
                 MyBase.MouseAction = value
             End Set
         End Property
@@ -159,7 +159,7 @@ Namespace WindowsT.WPF.InputT
         Public Overrides Function Matches(targetElement As Object, inputEventArgs As InputEventArgs) As Boolean
             Dim mwea = TryCast(inputEventArgs, MouseWheelEventArgs)
             If mwea Is Nothing Then Return False
-            If MouseAction <> Windows.Input.MouseAction.WheelClick Then Return False
+            If MouseAction <> System.Windows.Input.MouseAction.WheelClick Then Return False
             If mwea.Delta = 0 Then Return False
             If Modifiers <> Keyboard.Modifiers Then Return False
             Select Case Direction
@@ -167,8 +167,8 @@ Namespace WindowsT.WPF.InputT
                 Case MouseWheelDirection.Minus : If mwea.Delta > 0 Then Return False
             End Select
             Select Case Orientation
-                Case Orientation.Horizontal : If Not TypeOf mwea Is MouseWheelEventArgsEx OrElse DirectCast(mwea, MouseWheelEventArgsEx).Orientation <> Windows.Controls.Orientation.Horizontal Then Return False
-                Case Orientation.Vertical : If TypeOf mwea Is MouseWheelEventArgsEx AndAlso DirectCast(mwea, MouseWheelEventArgsEx).Orientation <> Windows.Controls.Orientation.Vertical Then Return False
+                Case Orientation.Horizontal : If Not TypeOf mwea Is MouseWheelEventArgsEx OrElse DirectCast(mwea, MouseWheelEventArgsEx).Orientation <> System.Windows.Controls.Orientation.Horizontal Then Return False
+                Case Orientation.Vertical : If TypeOf mwea Is MouseWheelEventArgsEx AndAlso DirectCast(mwea, MouseWheelEventArgsEx).Orientation <> System.Windows.Controls.Orientation.Vertical Then Return False
             End Select
             If Delta = 0 Then Return True
             Return Math.Abs(Delta) = Math.Abs(mwea.Delta)

@@ -129,7 +129,7 @@ Class BrowserWindow
             oldWindowState = WindowState
             If ResizeMode <> ResizeMode.NoResize Then ResizeMode = ResizeMode.NoResize
             If WindowStyle <> WindowStyle.None Then WindowStyle = WindowStyle.None
-            If WindowState = Windows.WindowState.Maximized Then WindowState = Windows.WindowState.Normal 'To ensure normal-maximized change (required to cover taskbar)
+            If WindowState = System.Windows.WindowState.Maximized Then WindowState = System.Windows.WindowState.Normal 'To ensure normal-maximized change (required to cover taskbar)
             If WindowState <> WindowState.Maximized Then WindowState = WindowState.Maximized
         Else
             If ResizeMode <> ResizeMode.CanResize AndAlso ResizeMode <> ResizeMode.CanResizeWithGrip Then ResizeMode = ResizeMode.CanResize

@@ -5239,8 +5239,8 @@ Namespace DevicesT.RawInputT
         Public Sub New(ByVal hWnd As IntPtr, ByVal Message As API.Messages.WindowMessages, ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam%)
             MyBase.New(hWnd, CheckMessage(Message), wParam, lParam)
         End Sub
-        ''' <summary>CTor from <see cref="Windows.Forms.Message"/></summary>
-        ''' <param name="Message">A <see cref="Windows.Forms.Message"/></param>
+        ''' <summary>CTor from <see cref="System.Windows.Forms.Message"/></summary>
+        ''' <param name="Message">A <see cref="System.Windows.Forms.Message"/></param>
         Public Sub New(ByVal Message As Message)
             MyBase.New(CheckMessage(Message))
         End Sub

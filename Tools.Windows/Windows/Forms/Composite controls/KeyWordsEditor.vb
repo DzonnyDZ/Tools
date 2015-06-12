@@ -912,7 +912,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         Private Sub lstKW_MouseDown(ByVal sender As ListBox, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstKW.MouseDown
-            If e.Button = Windows.Forms.MouseButtons.Right Then
+            If e.Button = System.Windows.Forms.MouseButtons.Right Then
                 If Not ContextMenuEnabled Then Exit Sub
                 tmiCopy.Enabled = sender.SelectedItems.Count > 0
                 tmiCut.Enabled = tmiCopy.Enabled

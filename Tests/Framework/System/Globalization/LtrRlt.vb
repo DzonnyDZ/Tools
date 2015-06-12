@@ -23,9 +23,9 @@ Namespace Framework.SystemF.GlobalizationF
         Private Sub frmLtrRtl_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             chkRightToLeftLayout.Checked = Me.RightToLeftLayout
             Select Case Me.RightToLeft
-                Case Windows.Forms.RightToLeft.Yes : chkRightToLeft.CheckState = CheckState.Checked
-                Case Windows.Forms.RightToLeft.No : chkRightToLeft.CheckState = CheckState.Unchecked
-                Case Windows.Forms.RightToLeft.Inherit : chkRightToLeft.CheckState = CheckState.Indeterminate
+                Case System.Windows.Forms.RightToLeft.Yes : chkRightToLeft.CheckState = CheckState.Checked
+                Case System.Windows.Forms.RightToLeft.No : chkRightToLeft.CheckState = CheckState.Unchecked
+                Case System.Windows.Forms.RightToLeft.Inherit : chkRightToLeft.CheckState = CheckState.Indeterminate
             End Select
             Loaded = True
         End Sub
@@ -33,9 +33,9 @@ Namespace Framework.SystemF.GlobalizationF
         Private Sub chkRightToLeft_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRightToLeft.CheckedChanged
             If Not Loaded Then Exit Sub
             Select Case chkRightToLeft.CheckState
-                Case CheckState.Checked : Me.RightToLeft = Windows.Forms.RightToLeft.Yes
-                Case CheckState.Indeterminate : Me.RightToLeft = Windows.Forms.RightToLeft.Inherit
-                Case CheckState.Unchecked : Me.RightToLeft = Windows.Forms.RightToLeft.No
+                Case CheckState.Checked : Me.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+                Case CheckState.Indeterminate : Me.RightToLeft = System.Windows.Forms.RightToLeft.Inherit
+                Case CheckState.Unchecked : Me.RightToLeft = System.Windows.Forms.RightToLeft.No
             End Select
         End Sub
 

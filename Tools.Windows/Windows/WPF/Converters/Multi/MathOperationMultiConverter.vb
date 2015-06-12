@@ -108,7 +108,7 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <exception cref="InvalidCastException">Value cannot be casted for arithmetic operation or to <paramref name="targetType"/>.</exception>
         ''' <exception cref="OverflowException">Can occur during cast or during arithmetic operation</exception>
         ''' <exception cref="Reflection.AmbiguousMatchException">When converting return value to <paramref name="targetType"/>: Conversion operands found but no one is most specific.</exception>
-        ''' <version version="1.5.3">Fix: Didn't work with parameter containing decimal point</version>
+        ''' <version version="1.5.4">Fix: Didn't work with parameter containing decimal point</version>
         Public Function Convert(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
             If parameter Is Nothing Then Throw New ArgumentNullException("parameter")
             If TypeOf parameter Is Array Then

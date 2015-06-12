@@ -31,7 +31,7 @@ Namespace MetadataT
         End Sub
 
         Private Sub tmiOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiOpen.Click
-            If ofdOpen.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If ofdOpen.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Select Case ofdOpen.FilterIndex
                         Case 1  'Jpeg
@@ -75,7 +75,7 @@ Namespace MetadataT
         End Sub
 
         Private Sub tmiSaveAs_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiSaveAs.Click
-            If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If sfdSave.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Try
                     Select Case sfdSave.FilterIndex
                         Case 1 '1:1

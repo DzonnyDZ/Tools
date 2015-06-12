@@ -15,7 +15,7 @@ Namespace WindowsT.WPF.DialogsT
     <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_Cancel, Type:=GetType(Button))>
     <TemplatePart(Name:=ProgressMonitorImplementationControl.PART_ProgressInfo, Type:=GetType(TextBlock))>
     Public Class ProgressMonitorImplementationControl
-        Inherits Windows.Controls.Control
+        Inherits System.Windows.Controls.Control
         ''' <summary>Identifies template part representing main information text block</summary>
         ''' <remarks>This template part is optional. If present must be of type <see cref="TextBlock"/> and <see cref="TextBlock.Text"/> should be bound to <see cref="Prompt"/> property.</remarks>
         Public Const PART_MainInfo As String = "PART_MainInfo"
@@ -269,7 +269,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <param name="bgw">Worker to run</param>
         ''' <param name="Text">Title text of window (see <see  cref="Text"/>)</param>
         ''' <param name="Prompt">Text prompt (see <see cref="Prompt"/>)</param>
-        ''' <param name="Owner">Any object that implements <see cref="System.Windows.Forms.IWin32Window"/> or <see cref="Windows.Interop.IWin32Window"/>, or <see cref="Windows.Window"/> that represents the top-level window that will own the modal dialog box.</param>
+        ''' <param name="Owner">Any object that implements <see cref="System.Windows.Forms.IWin32Window"/> or <see cref="System.Windows.Interop.IWin32Window"/>, or <see cref="System.Windows.Window"/> that represents the top-level window that will own the modal dialog box.</param>
         ''' <param name="WorkerArgument">Optional parameter for background worker</param>
         ''' <returns>Result of work of <paramref name="bgw"/></returns>
         Public Overloads Shared Function ShowDialog(ByVal bgw As BackgroundWorker, ByVal text As String, ByVal prompt As String, Optional ByVal owner As Object = Nothing, Optional ByVal workerArgument As Object = Nothing) As RunWorkerCompletedEventArgs
@@ -284,17 +284,17 @@ Namespace WindowsT.WPF.DialogsT
         'Private WithEvents control As ProgressMonitorImplementationControl
 
         ''' <summary>Shows window modally</summary>
-        ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="Windows.Forms.Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
+        ''' <param name="owner">Owner object of dialog. It can be either <see cref="System.Windows.Forms.IWin32Window"/> (e.g. <see cref="System.Windows.Forms.Form"/>), <see cref="System.Windows.Interop.IWin32Window"/> or <see cref="System.Windows.Window"/>. When owner is not of recognized type (or is null), it's ignored.</param>
         ''' <returns>True when dialog was closed normally, false if it was closed because of user has cancelled the operation</returns>
         ''' <exception cref="ObjectDisposedException">This instance has already been dispose (<see cref="IsDisposed"/> is true).</exception>
         Public Overloads Function ShowDialog(Optional ByVal owner As Object = Nothing) As Boolean Implements IProgressMonitorUI.ShowDialog
             If IsDisposed Then Throw New ObjectDisposedException([GetType].Name)
             _window = New ProgressMonitorWindow(Me)
-            If TypeOf owner Is Windows.Window Then
+            If TypeOf owner Is System.Windows.Window Then
                 Return _window.ShowDialog(DirectCast(owner, Window))
-            ElseIf TypeOf owner Is Windows.Forms.IWin32Window Then
+            ElseIf TypeOf owner Is System.Windows.Forms.IWin32Window Then
                 Return WindowsT.InteropT.InteropExtensions.ShowDialog(_window, DirectCast(owner, Forms.IWin32Window))
-            ElseIf TypeOf owner Is Windows.Interop.IWin32Window Then
+            ElseIf TypeOf owner Is System.Windows.Interop.IWin32Window Then
                 Return WindowsT.InteropT.InteropExtensions.ShowDialog(_window, DirectCast(owner, Interop.IWin32Window))
             Else
                 Return _window.ShowDialog
@@ -557,7 +557,7 @@ Namespace WindowsT.WPF.DialogsT
             End Set
         End Property
         ''' <summary>Gets an object that can be used as owner for modal windows</summary>
-        ''' <returns>When progress monitor dialog is currently shown, returns a <see cref="Windows.Window"/> representing the dialog; otherwise null.</returns>
+        ''' <returns>When progress monitor dialog is currently shown, returns a <see cref="System.Windows.Window"/> representing the dialog; otherwise null.</returns>
         ''' <seelaso cref="Window"/>
         Private ReadOnly Property IProgressMonitorUI_OwnerObject As Object Implements IndependentT.IProgressMonitorUI.OwnerObject
             Get
@@ -565,7 +565,7 @@ Namespace WindowsT.WPF.DialogsT
             End Get
         End Property
         ''' <summary>Gets an object that can be used as owner for modal windows</summary>
-        ''' <returns>When progress monitor dialog is currently shown, returns a <see cref="Windows.Window"/> representing the dialog; otherwise null.</returns>
+        ''' <returns>When progress monitor dialog is currently shown, returns a <see cref="System.Windows.Window"/> representing the dialog; otherwise null.</returns>
         Public ReadOnly Property Window As Window
             Get
                 Return _window
@@ -645,7 +645,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <remarks>This impementation handles <paramref name="userState"/> following way depending on its type:
         ''' <list type="table">
         ''' <listheader><term>Type of <paramref name="userState"/></term><description>Action taken</description></listheader>
-        ''' <item><term><see cref="Windows.Forms.ProgressBarStyle"/> or <see cref="ProgressBarStyle"/></term><description>Value is passsed to the <see cref="ProgressBarStyle"/> property.</description></item>
+        ''' <item><term><see cref="System.Windows.Forms.ProgressBarStyle"/> or <see cref="ProgressBarStyle"/></term><description>Value is passsed to the <see cref="ProgressBarStyle"/> property.</description></item>
         ''' <item><term><see cref="String"/></term><description>Value is passed to the <see cref="Information"/> property.</description></item>
         ''' <item><term><see cref="Integer"/> (from range 0÷100)</term><description>Value is passed to the <see cref="Progress"/> property (same as passing the value to the <see cref="ProgressChangedEventArgs.ProgressPercentage"/>)</description></item>
         ''' <item><term><see cref="Boolean"/></term><description>Value is passed to the <see cref="CanCancel"/> property.</description></item>

@@ -14,15 +14,15 @@
         Partial Class Xml2CodeDom
             ''' <summary>Contains definitions of XML elements used by <see cref="Xml2CodeDom"/> class</summary>
             Private Class Names
-                ''' <summary>This method actually does not exists which prevents this class of being instantiated</summary>
-                Private Partial Sub New()
-                End Sub
-                
-                    ''' <summary>Represents name of the &lt;CompileUnit> element and CompileUnit type</summary>
-                    Public Shared Readonly [CompileUnit] As XName = <CompileUnit/>.Name
-                
-                    ''' <summary>Represents name of the &lt;Namespace> element and Namespace type</summary>
-                    Public Shared Readonly [Namespace] As XName = <Namespace/>.Name
+            ''' <summary>This method actually does not exists which prevents this class of being instantiated</summary>
+            Private Sub New()
+            End Sub
+
+            ''' <summary>Represents name of the &lt;CompileUnit> element and CompileUnit type</summary>
+            Public Shared ReadOnly [CompileUnit] As XName = <CompileUnit/>.Name
+
+            ''' <summary>Represents name of the &lt;Namespace> element and Namespace type</summary>
+            Public Shared Readonly [Namespace] As XName = <Namespace/>.Name
                 
                     ''' <summary>Represents name of the &lt;AttributeDeclaration> element and AttributeDeclaration type</summary>
                     Public Shared Readonly [AttributeDeclaration] As XName = <AttributeDeclaration/>.Name

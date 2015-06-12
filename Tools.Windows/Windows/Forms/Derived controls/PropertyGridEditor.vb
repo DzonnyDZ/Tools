@@ -63,7 +63,7 @@ Namespace WindowsT.FormsT
         ''' <remarks>This method sets <see cref="ShowHelp"/> to true and <see cref="HelpNavigator"/> to <see cref="HelpNavigator.Topic"/></remarks>
         Public Sub SetHelp(ByVal helpNamespace$, ByVal helpKeyword$)
             Me.ShowHelp = True
-            Me.HelpNavigator = Windows.Forms.HelpNavigator.Topic
+            Me.HelpNavigator = System.Windows.Forms.HelpNavigator.Topic
             Me.HelpNamespace = helpNamespace
             Me.HelpKeyword = helpKeyword
         End Sub

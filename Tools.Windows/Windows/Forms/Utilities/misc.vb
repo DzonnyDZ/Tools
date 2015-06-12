@@ -121,7 +121,7 @@ Namespace WindowsT.FormsT.UtilitiesT
         ''' <remarks>Maximal allowed gap or overlap between screens is 5px. For screen (B) to be considered neighbour with <paramref name="Screen"/> (A) screen edges must either share at least 25% of appropriate edge of <paramref name="Screen"/> (A) or screen (B) must share 100% of it's appropriate edge with <paramref name="Screen"/> (A).</remarks>
         ''' <version version="1.5.3">This function is new in version 1.5.3</version>
         <Extension()>
-        Public Function GetNeighbourScreen(ByVal Screen As Windows.Forms.Screen, ByVal Direction As Direction) As Windows.Forms.Screen
+        Public Function GetNeighbourScreen(ByVal Screen As System.Windows.Forms.Screen, ByVal Direction As Direction) As System.Windows.Forms.Screen
             If Screen Is Nothing Then Throw New ArgumentNullException("Screen")
             For Each scr In Screen.AllScreens
                 If Screen Is scr Then Continue For

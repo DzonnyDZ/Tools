@@ -156,7 +156,7 @@ Namespace API.Messages.ReturnValues
         HTMAXBUTTON = 9
         ''' <summary>	In a Minimize button.</summary>
         HTMINBUTTON = 8
-        ''' <summary>On the screen background or on a dividing line between windows.</summary>
+        ''' <summary>On the screen background or on a dividing line between System.Windows.</summary>
         HTNOWHERE = 0
         ''' <summary>In a Minimize button.</summary>
         HTREDUCE = HTMINBUTTON

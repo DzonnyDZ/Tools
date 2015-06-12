@@ -316,7 +316,7 @@ Namespace API
             ''' <para>If this flag is specified, the file can be used for simultaneous read and write operations.</para>
             ''' <para>If this flag is not specified, then I/O operations are serialized, even if the calls to the read and write functions specify an OVERLAPPED structure.</para></summary>
             FILE_FLAG_OVERLAPPED = &H40000000
-            ''' <summary>Access will occur according to POSIX rules. This includes allowing multiple files with names, differing only in case, for file systems that support that naming. Use care when using this option, because files created with this flag may not be accessible by applications that are written for MS-DOS or 16-bit Windows.</summary>
+            ''' <summary>Access will occur according to POSIX rules. This includes allowing multiple files with names, differing only in case, for file systems that support that naming. Use care when using this option, because files created with this flag may not be accessible by applications that are written for MS-DOS or 16-bit System.Windows.</summary>
             FILE_FLAG_POSIX_SEMANTICS = &H100000
             ''' <summary><para>Access is intended to be random. The system can use this as a hint to optimize file caching.</para>
             ''' <para>This flag has no effect if the file system does not support cached I/O and <see cref="FILE_FLAG_NO_BUFFERING"/>.</para></summary>
@@ -708,7 +708,7 @@ Namespace API
             ''' <remarks><note><see cref="SEE_MASK_INVOKEIDLIST"/> overrides <see cref="SEE_MASK_IDLIST"/>.</note></remarks>
             SEE_MASK_INVOKEIDLIST = &HC
             ''' <summary>Use the icon given by the <see cref="SHELLEXECUTEINFO.hIcon"/> member. This flag cannot be combined with <see cref="SEE_MASK_HMONITOR"/>.</summary>
-            ''' <remarks><note>Note  This flag is available only in Microsoft Windows XP and earlier. It is not available in Windows Vista and later versions of Windows.</note></remarks>
+            ''' <remarks><note>Note  This flag is available only in Microsoft Windows XP and earlier. It is not available in Windows Vista and later versions of System.Windows.</note></remarks>
             SEE_MASK_ICON = &H10
             ''' <summary>Use the keyboard shortcut given by the <see cref="SHELLEXECUTEINFO.dwHotKey"/> member.</summary>
             SEE_MASK_HOTKEY = &H20

@@ -108,7 +108,7 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or sets state of menu item</summary>
         ''' <param name="Menu">Menu item to get or set state for</param>
-        Protected Property MenuState(ByVal Menu As Windows.Forms.ToolStripMenuItem) As UtilitiesT.ControlState
+        Protected Property MenuState(ByVal Menu As System.Windows.Forms.ToolStripMenuItem) As UtilitiesT.ControlState
             Get
                 Return Menu.Tag
             End Get

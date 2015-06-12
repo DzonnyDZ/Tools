@@ -14,9 +14,12 @@ Imports System.ComponentModel
 Namespace SecurityT.CryptographyT.EncryptionT
     ''' <summary>Provides static utility methods used by multiple <see cref="EncryptionT"/> classes</summary>
     Friend Class EncryptionUtilities
-        ''' <summary>There's no CTor - this is static class</summary>
-        Partial Private Sub New()
+        ''' <summary>Private CTor to achieve pseudo-static class</summary>
+        ''' <exception cref="NotSupportedException">Always</exception>
+        Private Sub New()
+            Throw New NotSupportedException("This is static class")
         End Sub
+
         ''' <summary>Converts an array of bytes to a string Hex representation</summary>
         ''' <param name="data">Array of bytes</param>
         ''' <returns>Hexadecimal representation of <paramref name="data"/>; null if <paramref name="data"/> is null; <see cref="System.String.Empty"/> if <paramref name="data"/> is an empty array.</returns>

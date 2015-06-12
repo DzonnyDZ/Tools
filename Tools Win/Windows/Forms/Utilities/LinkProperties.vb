@@ -8,9 +8,12 @@ Namespace WindowsT.FormsT.UtilitiesT
     ''' <author www="http://dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Release"><c>VersionAttribute</c> and <c>AuthorAttribute</c> removed</version>
     Public NotInheritable Class LinkProperties
-        ''' <summary>There is no CTor</summary>
-        Partial Private Sub New()
+        ''' <summary>Private CTor to achieve pseudo-static class</summary>
+        ''' <exception cref="NotSupportedException">Always</exception>
+        Private Sub New()
+            Throw New NotSupportedException("This is static class")
         End Sub
+
         ''' <summary>Color of not visited not hovered hyperlink</summary>
         ''' <remarks>This system value can be also accesed via <see cref="System.Windows.Forms.ToolstripLabel.LinkColor"/></remarks>
         Public Shared ReadOnly Property Color() As Color
@@ -61,9 +64,12 @@ Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Copy of Micforoft's internal System.Windows.Forms.LinkUtilities class that gives access to link setting of Internet Explorer</summary>
     ''' <remarks>This is 1:1 copy of <see cref="T:System.Windows.Forms.LinkUtilities"/> got by Reflector</remarks>
     Friend NotInheritable Class LinkUtilities
-        ''' <summary>There is no CTor</summary>
-        Partial Private Sub New()
+        ''' <summary>Private CTor to achieve pseudo-static class</summary>
+        ''' <exception cref="NotSupportedException">Always</exception>
+        Private Sub New()
+            Throw New NotSupportedException("This is static class")
         End Sub
+
         ''' <summary>Gets link fonts</summary>
         ''' <param name="baseFont">Default font</param>
         ''' <param name="link">Custom link behavior, pass <see cref="LinkBehavior.SystemDefault"/> to use system default</param>

@@ -11,7 +11,7 @@ Public Interface IUnisaveContext
     ''' <returns>Result of form shown</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="form"/> is null</exception>
     Function ShowDialog(form As Forms.Form) As Forms.DialogResult
-    ''' <summary>Shows <see cref="Windows.Forms.CommonDialog"/> modally</summary>
+    ''' <summary>Shows <see cref="System.Windows.Forms.CommonDialog"/> modally</summary>
     ''' <param name="dialog">A dialog to be shown</param>
     ''' <returns>Dialog result</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="dialog"/> is null</exception>
