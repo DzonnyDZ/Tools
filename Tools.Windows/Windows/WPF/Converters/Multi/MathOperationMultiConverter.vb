@@ -5,8 +5,8 @@ Imports System.Globalization, Tools.LinqT
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Converter performing given arithmetical operation on collection members</summary>
-    ''' <remarks>This converter is one-way. This converter can behave both - as multivalue converter and as single value converter.</remarks>
-    ''' <version version="1.5.3" stage="Nightly">This clas sis new in version 1.5.3</version>
+    ''' <remarks>This converter is one-way. This converter can behave both - as multi-value converter and as single value converter.</remarks>
+    ''' <version version="1.5.3" stage="Nightly">This class sis new in version 1.5.3</version>
     Public Class MathOperationMultiConverter
         Implements IMultiValueConverter, IValueConverter
 
@@ -38,8 +38,8 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <exception cref="ArgumentException"><paramref name="parameter"/> does not represent supported arithmetic operation</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="parameter"/> is null</exception>
         ''' <exception cref="InvalidCastException">Value cannot be casted for arithmetic operation or to <paramref name="targetType"/>.</exception>
-        ''' <exception cref="OverflowException">Can occure during cast or during arithmetic operation</exception>
-        ''' <exception cref="Reflection.AmbiguousMatchException">When converting return value to <paramref name="targetType"/>: Conversion operands fouind but no one is most specific.</exception>
+        ''' <exception cref="OverflowException">Can occur during cast or during arithmetic operation</exception>
+        ''' <exception cref="Reflection.AmbiguousMatchException">When converting return value to <paramref name="targetType"/>: Conversion operands found but no one is most specific.</exception>
         Public Function Convert(ByVal values() As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IMultiValueConverter.Convert
             If parameter Is Nothing Then Throw New ArgumentNullException("parameter")
             Dim outputConverter As IValueConverter = Nothing
@@ -97,8 +97,8 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <param name="value">Value to be converter. SHould be numeric value. Null and <see cref="DependencyProperty.UnsetValue"/> are ignored.</param>
         ''' <param name="targetType">The type of the binding target property. Ignored if null. <see cref="DynamicCast"/> is used.</param>
         ''' <param name="parameter"><list type="bullet">
-        ''' <item>Either <see cref="Array"/> containign operator at index 0 and optionally other operands at indexes 1+</item>
-        ''' <item>Or <see cref="String"/> where 1st character is operator and rest is either <see cref="Integer"/> or <see cref="Double"/> number. It it can be parsed naither as <see cref="Integer"/> nor as <see cref="Double"/> it's passed to the operation as string.</item>
+        ''' <item>Either <see cref="Array"/> containing operator at index 0 and optionally other operands at indexes 1+</item>
+        ''' <item>Or <see cref="String"/> where 1st character is operator and rest is either <see cref="Integer"/> or <see cref="Double"/> number. It it can be parsed neither as <see cref="Integer"/> nor as <see cref="Double"/> it's passed to the operation as string.</item>
         ''' </list></param>
         ''' <param name="culture">Culture - used in string-number parsing</param>
         ''' <returns>Converted value</returns>
@@ -106,8 +106,9 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <exception cref="ArgumentException"><paramref name="parameter"/> does not supply supported arithmetic operation</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="parameter"/> is null</exception>
         ''' <exception cref="InvalidCastException">Value cannot be casted for arithmetic operation or to <paramref name="targetType"/>.</exception>
-        ''' <exception cref="OverflowException">Can occure during cast or during arithmetic operation</exception>
-        ''' <exception cref="Reflection.AmbiguousMatchException">When converting return value to <paramref name="targetType"/>: Conversion operands fouind but no one is most specific.</exception>
+        ''' <exception cref="OverflowException">Can occur during cast or during arithmetic operation</exception>
+        ''' <exception cref="Reflection.AmbiguousMatchException">When converting return value to <paramref name="targetType"/>: Conversion operands found but no one is most specific.</exception>
+        ''' <version version="1.5.3">Fix: Didn't work with parameter containing decimal point</version>
         Public Function Convert(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
             If parameter Is Nothing Then Throw New ArgumentNullException("parameter")
             If TypeOf parameter Is Array Then
@@ -123,7 +124,7 @@ Namespace WindowsT.WPF.ConvertersT
                 Dim dbl As Double
                 If Integer.TryParse(parameter.ToString.Substring(1), NumberStyles.Integer, culture, int) Then
                     val = int
-                ElseIf Double.TryParse(ParagraphSeparator.ToString.Substring(1), NumberStyles.Any, culture, dbl) Then
+                ElseIf Double.TryParse(parameter.ToString.Substring(1), NumberStyles.Any, culture, dbl) Then
                     val = dbl
                 Else : val = parameter.ToString.Substring(1)
                 End If
