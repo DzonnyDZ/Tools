@@ -57,19 +57,19 @@ Public Class frmLarge
         End If
     End Sub
     ''' <summary>Contains value of the <see cref="FullScreen"/> property</summary>
-    Private _FullScreen As Boolean = False
+    Private _fullScreen As Boolean = False
     Public Property FullScreen() As Boolean
         Get
             Return _FullScreen
         End Get
         Set(ByVal value As Boolean)
             If value <> FullScreen Then
-                Dim MyScreen = Screen.FromControl(Me)
+                Dim myScreen = Screen.FromControl(Me)
                 If value Then
                     Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
                     Me.WindowState = FormWindowState.Maximized
-                    Using Me32 As New WindowsT.NativeT.Win32Window(Me)
-                        Me32.Area = MyScreen.Bounds 'TODO: Why I'm unable to do this via managed code???
+                    Using me32 As New WindowsT.NativeT.Win32Window(Me)
+                        me32.Area = myScreen.Bounds 'TODO: Why I'm unable to do this via managed code???
                     End Using
                 Else
                     Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
@@ -82,10 +82,10 @@ Public Class frmLarge
     ''' <summary>Instance of <see cref="frmMain"/> which owns this instance</summary>
     Private WithEvents frmMain As frmMain
     ''' <summary>CTor</summary>
-    ''' <param name="MainForm">Instance of <see cref="frmMain"/> which will own this instance - this is not owner for <see cref="Show"/>!</param>
-    ''' <exception cref="ArgumentNullException"><paramref name="MainForm"/> is null</exception>
-    Friend Sub New(ByVal MainForm As frmMain)
-        If MainForm Is Nothing Then Throw New ArgumentNullException("MainForm")
+    ''' <param name="mainForm">Instance of <see cref="frmMain"/> which will own this instance - this is not owner for <see cref="Show"/>!</param>
+    ''' <exception cref="ArgumentNullException"><paramref name="mainForm"/> is null</exception>
+    Friend Sub New(ByVal mainForm As frmMain)
+        If mainForm Is Nothing Then Throw New ArgumentNullException("mainForm")
         InitializeComponent()
         Me.frmMain = MainForm
     End Sub

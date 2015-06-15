@@ -11,3 +11,4 @@
 Option Strict On
 Option Explicit On
 
+'<Assembly: Global.System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.6", FrameworkDisplayName:=".NET Framework 4.6")>

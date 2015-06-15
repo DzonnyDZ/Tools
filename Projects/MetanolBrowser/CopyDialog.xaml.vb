@@ -40,35 +40,6 @@ Public Class CopyConfig
         End Set
     End Property
 
-    Public Property CopySelected As Boolean
-        Get
-
-        End Get
-    End Property
-
-    Public Property MoveSelected As Boolean
-        Get
-
-        End Get
-    End Property
-
-    Public Property LinkSelected As Boolean
-        Get
-
-        End Get
-    End Property
-
-    Public Property SymLinkSelected As Boolean
-        Get
-
-        End Get
-    End Property
-
-    Public Property HardLinkSelected As Boolean
-        Get
-
-        End Get
-    End Property
 
     Private _files() As copyfileinfo
     Public ReadOnly Property Files As CopyFileInfo()

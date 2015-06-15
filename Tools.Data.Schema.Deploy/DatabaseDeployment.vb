@@ -9,32 +9,31 @@ Imports Microsoft.Data.Schema.SchemaModel
 Imports System.Xml
 Imports System.Collections.ObjectModel
 
-''' <summary>Encapsulates functionality of programatic deployment of database schema to MIcrosft SQL Server database</summary>
+''' <summary>Encapsulates functionality of programmatic deployment of database schema to MIcrosft SQL Server database</summary>
 ''' <version version="1.5.3" stage="Nightly">This class is new in version 1.5.3</version>
 Public Class DatabaseDeployment
     Implements IDisposable
 #Region "Fields"
-    Private _ConnectionString As String
-    Private _DatabaseName As String
-    Private _ManifestPath As String
+    Private _connectionString As String
+    Private _databaseName As String
+    Private _manifestPath As String
     Private ReadOnly _Properties As New Dictionary(Of String, String)
-    Private _DeployToDatabase As Boolean = True
-    Private _DeployScriptPath$
+    Private _deployScriptPath$
     ''' <summary>Indicates if deployment script will be deleted once this instance is disposed</summary>
-    ''' <remarks>Deployment script is deleted whn value of the <see cref="DeployScriptPath"/> was not provided externally</remarks>
-    Private DeleteScriptOnDispose As Boolean = False
-    Private _Deployed As Boolean
-    Private _Errors As New List(Of DataSchemaError)
+    ''' <remarks>Deployment script is deleted when value of the <see cref="DeployScriptPath"/> was not provided externally</remarks>
+    Private _deleteScriptOnDispose As Boolean = False
+    Private ReadOnly _Deployed As Boolean
+    Private _errors As New List(Of DataSchemaError)
 #End Region
 
 #Region "CTors"
     ''' <summary>Encapsulates CTor functionality</summary>
-    ''' <param name="connectionString">Connection string to Microsft SQL Server</param>
+    ''' <param name="connectionString">Connection string to Microsoft SQL Server</param>
     ''' <param name="databaseName">Name of target database to deploy to</param>
     ''' <param name="manifestPath">Path to database deployment manifest (*.deploymanifest) file</param>
     ''' <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="databaseName"/> or <paramref name="manifestPath"/> is null</exception>
     ''' <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="databaseName"/> or <paramref name="manifestPath"/> is an empty string</exception>
-    ''' <remarks>The folder deployment manifets is located in must contain all other files required by deployment process.</remarks>
+    ''' <remarks>The folder deployment manifest is located in must contain all other files required by deployment process.</remarks>
     Private Sub Init(ByVal connectionString$, ByVal databaseName$, ByVal manifestPath$)
         If connectionString Is Nothing Then Throw New ArgumentNullException("connectionString")
         If databaseName Is Nothing Then Throw New ArgumentNullException("databaseName")
@@ -42,18 +41,19 @@ Public Class DatabaseDeployment
         If connectionString = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "connectionString"), "connectionString")
         If databaseName = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "databaseName"), "databaseName")
         If manifestPath = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "manifestPath"), "manifestPath")
-        _ConnectionString = connectionString
-        _DatabaseName = databaseName
-        _ManifestPath = manifestPath
+        _connectionString = connectionString
+        _databaseName = databaseName
+        _manifestPath = manifestPath
     End Sub
     ''' <summary>CTor - creates a new instance of the <see cref="DatabaseDeployment"/> class</summary>
-    ''' <param name="connectionString">Connection string to Microsft SQL Server</param>
+    ''' <param name="connectionString">Connection string to Microsoft SQL Server</param>
     ''' <param name="databaseName">Name of target database to deploy to</param>
     ''' <param name="manifestPath">Path to database deployment manifest (*.deploymanifest) file</param>
     ''' <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="databaseName"/> or <paramref name="manifestPath"/> is null</exception>
     ''' <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="databaseName"/> or <paramref name="manifestPath"/> is an empty string</exception>
-    ''' <remarks>The folder deployment manifets is located in must contain all other files required by deployment process.</remarks>
-    Public Sub New(ByVal connectionString$, ByVal databaseName$, ByVal manifestPath$)
+    ''' <remarks>The folder deployment manifest is located in must contain all other files required by deployment process.</remarks>
+    Public Sub New(ByVal connectionString$, ByVal databaseName$, ByVal manifestPath$, deployed As Boolean)
+        _Deployed = deployed
         Init(connectionString, databaseName, manifestPath)
     End Sub
     ''' <summary>CTor - creates a new instance of the <see cref="DatabaseDeployment"/> class. Name of target database if inferred from connection string.</summary>
@@ -63,9 +63,10 @@ Public Class DatabaseDeployment
     ''' <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="manifestPath"/> is an empty string -or- <paramref name="connectionString"/> is an invalid connection string. -or- Initial Catalog not not cpecified in <paramref name="connectionString"/>.</exception>
     ''' <exception cref="KeyNotFoundException"><paramref name="connectionString"/> contains unrecognized option</exception>
     ''' <exception cref="FormatException"><paramref name="connectionString"/> contains an invalid value (specifically when numeric or boolean value is expected but not specified)</exception>
-    ''' <remarks>The folder deployment manifets is located in must contain all other files required by deployment process.</remarks>
-    ''' <seelaso cref="SqlConnectionStringBuilder.InitialCatalog"/>
-    Public Sub New(ByVal connectionString$, ByVal manifestPath$)
+    ''' <remarks>The folder deployment manifest is located in must contain all other files required by deployment process.</remarks>
+    ''' <seealso cref="SqlConnectionStringBuilder.InitialCatalog"/>
+    Public Sub New(ByVal connectionString$, ByVal manifestPath$, deployed As Boolean)
+        _Deployed = deployed
         If connectionString Is Nothing Then Throw New ArgumentNullException("connectionString")
         If connectionString = "" Then Throw New ArgumentException(String.Format(My.Resources.err_CannotBeEmptyString, "connectionString"), "connectionString")
         Init(connectionString, New SqlConnectionStringBuilder(connectionString).InitialCatalog, manifestPath)
@@ -76,22 +77,22 @@ Public Class DatabaseDeployment
     ''' <summary>Gets a connection string used to connect to database</summary>
     Public ReadOnly Property ConnectionString() As String
         Get
-            Return _ConnectionString
+            Return _connectionString
         End Get
     End Property
     ''' <summary>Gets name of database to deploy schema to</summary>
     Public ReadOnly Property DatabaseName() As String
         Get
-            Return _DatabaseName
+            Return _databaseName
         End Get
     End Property
     ''' <summary>Gets path of database deployment manifest (*.deploymanifest) file</summary>
     Public ReadOnly Property ManifestPath() As String
         Get
-            Return _ManifestPath
+            Return _manifestPath
         End Get
     End Property
-    ''' <summary>Gest dictionary containing names and values of additional deployment properties</summary>
+    ''' <summary>Gets dictionary containing names and values of additional deployment properties</summary>
     Public ReadOnly Property Properties() As Dictionary(Of String, String)
         Get
             Return _Properties
@@ -100,24 +101,18 @@ Public Class DatabaseDeployment
     ''' <summary>Gets or sets value indicating if model is deployed to database or only deployment script is generated</summary>
     ''' <value>True to deploy model to database, false to generate deployment script file only</value>
     <DefaultValue(True)>
-    Public Property DeployToDatabase() As Boolean
-        Get
-            Return _DeployToDatabase
-        End Get
-        Set(ByVal value As Boolean)
-            _DeployToDatabase = value
-        End Set
-    End Property
+    Public Property DeployToDatabase As Boolean = True
+
     ''' <summary>Gets or sets path to save deploy script to</summary>
     ''' <exception cref="ObjectDisposedException"><see cref="Deployed"/> is true (this instance has already been used to deploy a database).</exception>
     ''' <remarks>When not set before the <see cref="Deploy"/> method is called, script is stored to a temporary directory and deleted when object is disposed.</remarks>
     Public Property DeployScriptPath$
         Get
-            Return _DeployScriptPath
+            Return _deployScriptPath
         End Get
         Set(ByVal value$)
             If Deployed Then Throw New ObjectDisposedException(String.Format(My.Resources.err_CannotChangeValueOnceDeployed, "DeployScriptPath"))
-            _DeployScriptPath = value
+            _deployScriptPath = value
         End Set
     End Property
     ''' <summary>Contains value indicating deployment was already attempted or not</summary>
@@ -132,17 +127,17 @@ Public Class DatabaseDeployment
     Public ReadOnly Property Errors() As ReadOnlyCollection(Of DataSchemaError)
         Get
             If disposedValue Then Throw New ObjectDisposedException(My.Resources.err_ObjectDisposed)
-            Return _Errors.AsReadOnly
+            Return _errors.AsReadOnly
         End Get
     End Property
 
 #End Region
 
 #Region "Events"
-    ''' <summary>Raised when an eror occurs or a message is generated by deployment engine</summary>
+    ''' <summary>Raised when an error occurs or a message is generated by deployment engine</summary>
     ''' <remarks>
-    ''' When this event is faired it does not neccessarilly mean that error has occured. Check <see cref="DataSchemaErrorEventArgs.[Error]"/>.<see cref="DataSchemaError.Severity">Severity</see>.
-    ''' <para>Throw any exception from handler of this event to immediatelly break excution.</para>
+    ''' When this event is faired it does not necessarily mean that error has occurred. Check <see cref="DataSchemaErrorEventArgs.[Error]"/>.<see cref="DataSchemaError.Severity">Severity</see>.
+    ''' <para>Throw any exception from handler of this event to immediately break execution.</para>
     ''' </remarks>
     ''' <seelaso cref="DataSchemaError"/>
     Public Event ErrorOccured As EventHandler(Of DataSchemaErrorEventArgs)
@@ -155,8 +150,8 @@ Public Class DatabaseDeployment
 
 #Region "Deploy"
     ''' <summary>Deploys database schema to target database</summary>
-    ''' <exception cref="InvalidOperationException">This instance has already been used to attempt to deploy a database shcema -or-
-    ''' <paramref name="ManifestPath"/> does not exist -or-
+    ''' <exception cref="InvalidOperationException">This instance has already been used to attempt to deploy a database schema -or-
+    ''' <see cref="ManifestPath"/> does not exist -or-
     ''' A property from the <see cref="Properties"/> dictionary was not recognized</exception>
     ''' <exception cref="DeploymentFailedException">An error ocuured while deploying schema to database</exception>
     ''' <remarks>The <see cref="Deploy"/> method can be called only once for each instance of the <see cref="DatabaseDeployment"/> class</remarks>
@@ -248,7 +243,7 @@ Public Class DatabaseDeployment
             engine.SetDeployToDatabase(DeployToDatabase)
             If DeployScriptPath = "" Then
                 DeployScriptPath = IO.Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, String.Format("{0}.sql", Guid.NewGuid))
-                DeleteScriptOnDispose = True
+                _deleteScriptOnDispose = True
             End If
             engine.SetDeployToScript(Not DeployToDatabase, DeployScriptPath)
             engine.Options.TargetConnectionString = ConnectionString
@@ -382,7 +377,7 @@ Public Class DatabaseDeployment
             End If
 
             ' free unmanaged resources (unmanaged objects) and override Finalize() below.
-            If DeleteScriptOnDispose AndAlso IO.File.Exists(DeployScriptPath) Then
+            If _deleteScriptOnDispose AndAlso IO.File.Exists(DeployScriptPath) Then
                 Try
                     IO.File.Delete(DeployScriptPath)
                 Catch : End Try

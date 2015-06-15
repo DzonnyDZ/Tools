@@ -115,6 +115,8 @@
     <Reference Include="Metanol, Version=2.0.5.34506, Culture=neutral, PublicKeyToken=373c02ac923768e6, processorArchitecture=MSIL">
       <ExecutableExtension>.exe</ExecutableExtension>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq">
@@ -134,6 +136,7 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>4</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
