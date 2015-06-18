@@ -1,8 +1,12 @@
 ﻿Imports System.Globalization.CultureInfo
 
-Module Config
+''' <summary>Provides global functionality of the application</summary>
+Friend Module Config
+    ''' <summary>Ranges of all code pints defined by Unicode (excluding surrogates)</summary>
     Private ReadOnly defaultRanges As Tuple(Of UInteger, UInteger)() = {Tuple.Create(0UI, &HD800UI - 1UI), Tuple.Create(&HDFFUI + 1UI, &H10FFFFUI)} 'Excludes just surrogates
 
+    ''' <summary>Gets instance of composite font that contains many Unicode character definitions</summary>
+    ''' <returns>Instance of composite font form application resources</returns>
     Public ReadOnly Property CompositeFont As FontFamily
         Get
             Dim font = New FontFamily(New Uri("pack://application:,,,/"), "./#Unicode composite font")
@@ -10,6 +14,8 @@ Module Config
         End Get
     End Property
 
+    ''' <summary>Gets character ranges covered by <see cref="CompositeFont"/></summary>
+    ''' <returns>Character ranges covered by <see cref="CompositeFont"/>. Each range contains 1ts code point, last code point, name of font used</returns>
     Private ReadOnly Iterator Property RangesInFont As IEnumerable(Of Tuple(Of UInteger, UInteger, String))
         Get
             For Each map In CompositeFont.FamilyMaps
@@ -30,6 +36,9 @@ Module Config
         End Get
     End Property
 
+    ''' <summary>Finds which range form <see cref="RangesInFont"/> given code point belongs to</summary>
+    ''' <param name="code">A code point to find range for</param>
+    ''' <returns>Range <paramref name="code"/> belongs to. Null if appropriate range is not defined by <see cref="RangesInFont"/>.</returns>
     Public Function GetRange(code As UInteger) As Tuple(Of UInteger, UInteger, String)
         For Each range In RangesInFont
             If code >= range.Item1 AndAlso code <= range.Item2 Then Return range
@@ -37,6 +46,10 @@ Module Config
         Return Nothing
     End Function
 
+    ''' <summary>Gets Unicode code point by index to all code points defined in <see cref="Ranges"/></summary>
+    ''' <param name="index">0-based index</param>
+    ''' <returns>Code point in one of the ranges defined in <see cref="Ranges"/> and appropriate 0-based index counted across all ranges.</returns>
+    ''' <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is greater or equal to <see cref="TotalCharacters"/></exception>
     Public Function GetCharacter(index As UInteger) As UInteger
         Dim i As UInteger = 0
         For Each range In Ranges
@@ -49,6 +62,7 @@ Module Config
         Throw New ArgumentOutOfRangeException("index")
     End Function
 
+    ''' <summary>Gets ranges configured to be shown</summary>
     Public ReadOnly Property Ranges As IEnumerable(Of Tuple(Of UInteger, UInteger, String))
         Get
             'Return {Tuple.Create(0UI, 1024UI, "aaa")}
@@ -56,6 +70,7 @@ Module Config
         End Get
     End Property
 
+    ''' <summary>Gets total count of characters in all <see cref="Ranges"/></summary>
     Public ReadOnly Property TotalCharacters As UInteger
         Get
             Dim ret As UInteger = 0

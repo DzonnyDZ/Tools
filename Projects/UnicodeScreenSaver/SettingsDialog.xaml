@@ -1,0 +1,16 @@
+﻿<Window x:Class="SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tc="clr-namespace:Tools.WindowsT.WPF.ControlsT;assembly=Tools.Windows"
+        xmlns:local="clr-namespace:Dzonny.UnicodeScreenSaver"
+        mc:Ignorable="d"
+        Title="SettingsDialog" Height="300" Width="300">
+    <UniformGrid Columns="2">
+        <Label>Duration [s]</Label>
+        <TextBox Text="{Binding Interval, Mode=TwoWay}"/>
+        <Button IsDefault="True" Click="OK_Click">OK</Button>
+        <Button IsCancel="True" Click="Cancel_Click">Cancel</Button>
+    </UniformGrid>
+</Window>

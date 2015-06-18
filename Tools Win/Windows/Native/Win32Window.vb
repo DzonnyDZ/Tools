@@ -819,7 +819,7 @@ Namespace WindowsT.NativeT
 
 #Region "Shared"
         ''' <summary>Gets window that represents the desktop</summary>
-        ''' <exception cref="API.Win32APIException">An error occured</exception>
+        ''' <exception cref="API.Win32APIException">An error occurred</exception>
         Public Shared ReadOnly Property Desktop() As Win32Window
             Get
                 Dim dhWnd As Integer = API.GetDesktopWindow
@@ -830,9 +830,10 @@ Namespace WindowsT.NativeT
                 End If
             End Get
         End Property
+
         ''' <summary>Gets all the top-level windows</summary>
         ''' <returns>List of all top-level windows</returns>
-        ''' <exception cref="API.Win32APIException">An error occured</exception>
+        ''' <exception cref="API.Win32APIException">An error occurred</exception>
         Public Shared ReadOnly Property TopLevelWindows() As IReadOnlyList(Of Win32Window)
             Get
                 Dim List As New List(Of Win32Window)
@@ -848,7 +849,17 @@ Namespace WindowsT.NativeT
                 End If
             End Get
         End Property
+
+        ''' <summary>Retrieves the foreground window (the window with which the user is currently working)</summary>
+        ''' <returns>The foreground window.  The foreground window can be null in certain circumstances, such as when a window is losing activation. </returns>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Shared Function GetForegroundWindow() As Win32Window
+            Dim hwnd = API.GetForegroundWindow
+            If hwnd = IntPtr.Zero Then Return Nothing
+            Return New Win32Window(hwnd)
+        End Function
 #End Region
+
         ''' <summary>Gets a GUI thread this window belongs to</summary>
         ''' <exception cref="API.Win32APIException">Failed to obtain thread id for current window</exception> 
         ''' <version version="1.5.3">This property is new in version 1.5.3</version>

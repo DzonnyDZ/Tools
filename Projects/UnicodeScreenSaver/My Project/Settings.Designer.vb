@@ -52,6 +52,18 @@ Partial Friend NotInheritable Class MySettings
             Return defaultInstance
         End Get
     End Property
+    
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("00:00:05")>  _
+    Public Property Interval() As Global.System.TimeSpan
+        Get
+            Return CType(Me("Interval"),Global.System.TimeSpan)
+        End Get
+        Set
+            Me("Interval") = value
+        End Set
+    End Property
 End Class
 
 Namespace My

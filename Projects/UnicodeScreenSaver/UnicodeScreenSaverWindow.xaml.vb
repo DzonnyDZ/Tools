@@ -1,25 +1,28 @@
-﻿
-Imports System.Timers
+﻿Imports System.Timers
 
-Class UnicodeScreenSaverWindow
+''' <summary>Main screensaver UI</summary>
+Friend Class UnicodeScreenSaverWindow
 
+    ''' <summary>Timer ticks to change the character displayed</summary>
     Private WithEvents timer As Timer
 
     Private Sub timer_Elapsed(sender As Object, e As ElapsedEventArgs) Handles timer.Elapsed
-        OnTimer
+        OnTimer()
     End Sub
 
     Private Sub UnicodeScreenSaverWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        OnTimer
+        OnTimer()
         timer = New Timer()
-        timer.Interval = 10000
+        timer.Interval = My.Settings.Interval.TotalMilliseconds
         timer.Start()
     End Sub
 
+    ''' <summary>Called when time relapses</summary>
     Private Sub OnTimer()
         Me.Dispatcher.Invoke(Sub() DataContext = GetNextCharacter())
     End Sub
 
+    ''' <summary>Random number generator for generating Unicode code points</summary>
     Private ReadOnly rnd As New Random
     Private Function GetNextCharacter() As CharacterInfo
         Dim unicode = Config.GetCharacter(rnd.Next(Config.TotalCharacters - 1))

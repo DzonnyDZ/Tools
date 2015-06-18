@@ -3021,7 +3021,7 @@ Tools.Text.Unicode
  <summary>Gets normalization corrections between Unicode versions</summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.StandartizedVariants">
- <summary>Gets Unicode standartized variants</summary>
+ <summary>Gets Unicode standardized variants</summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.CjkRadicals">
  <summary>Gets list of CJK Radicals</summary>
@@ -3031,7 +3031,7 @@ Tools.Text.Unicode
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.Repertoire">
  <summary>Gets repertoire of groups and code points</summary>
- <remarks>Tis is helper property. You ususally don't need it. You usually use <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.Groups"/> and <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.CodePoints"/> directly.</remarks>
+ <remarks>This is helper property. You usually don't need it. You usually use <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.Groups"/> and <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.CodePoints"/> directly.</remarks>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.Equals(System.Object)">
  <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase" />.</summary>

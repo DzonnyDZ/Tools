@@ -62,6 +62,9 @@
     <Reference Include="Tools.Text.Unicode">
       <HintPath>lib\Tools.Text.Unicode.dll</HintPath>
     </Reference>
+    <Reference Include="Tools.Win">
+      <HintPath>lib\Tools.Win.dll</HintPath>
+    </Reference>
     <Reference Include="Tools.Windows">
       <HintPath>lib\Tools.Windows.dll</HintPath>
     </Reference>
@@ -73,6 +76,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>
+    <Page Include="SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UnicodeScreenSaverWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,6 +91,9 @@
     <Compile Include="CharacterInfo.vb" />
     <Compile Include="Config.vb" />
     <Compile Include="Native.vb" />
+    <Compile Include="SettingsDialog.xaml.vb">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UnicodeScreenSaverWindow.xaml.vb">
       <DependentUpon>UnicodeScreenSaverWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

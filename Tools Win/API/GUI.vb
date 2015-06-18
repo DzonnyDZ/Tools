@@ -58,7 +58,7 @@ Namespace API
             SC_MOVE = &HF010
             ''' <summary>Maximize button (doesn't work)</summary>
             SC_MAXIMIZE = &HF030I
-            ''' <summary>Mninimize button (doesn't work)</summary>
+            ''' <summary>Minimize button (doesn't work)</summary>
             SC_MINIMIZE = &HF020I
             ''' <summary>Resize menu item (doesn't work)</summary>
             SC_SIZE = &HF000
@@ -466,11 +466,17 @@ Namespace API
             Public rcCaret As RECT
         End Structure
 
+        ''' <summary>Defines GUI thread states</summary>
         Public Enum GuiThreadInfoFlags As Integer
+            ''' <summary>The caret's blink state. This bit is set if the caret is visible. </summary>
             GUI_CARETBLINKING = &H1
+            ''' <summary>The thread's menu state. This bit is set if the thread is in menu mode. </summary>
             GUI_INMENUMODE = &H4
+            ''' <summary>The thread's move state. This bit is set if the thread is in a move or size loop. </summary>
             GUI_INMOVESIZE = &H2
+            ''' <summary>The thread's pop-up menu state. This bit is set if the thread has an active pop-up menu.</summary>
             GUI_POPUPMENUMODE = &H10
+            ''' <summary>The thread's system menu state. This bit is set if the thread is in a system menu mode.</summary>
             GUI_SYSTEMMENUMODE = &H8
         End Enum
 
@@ -491,5 +497,10 @@ Namespace API
         ''' <returns>If the window was brought to the foreground, the return value is nonzero.
         ''' If the window was not brought to the foreground, the return value is zero.</returns>
         Public Declare Ansi Function SetForegroundWindow Lib "user32.dll" Alias "SetForegroundWindow" (ByVal hwnd As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+
+        ''' <summary>Retrieves a handle to the foreground window (the window with which the user is currently working). The system assigns a slightly higher priority to the thread that creates the foreground window than it does to other threads. </summary>
+        ''' <returns>The return value is a handle to the foreground window. The foreground window can be null in certain circumstances, such as when a window is losing activation.</returns>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Public Declare Ansi Function GetForegroundWindow Lib "User32.dll" () As IntPtr
     End Module
 End Namespace

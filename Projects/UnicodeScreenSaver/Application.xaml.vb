@@ -1,19 +1,23 @@
 ﻿Imports System.Globalization.CultureInfo
-Imports Tools.WindowsT.InteropT
+Imports Tools.WindowsT.NativeT, Tools.WindowsT.InteropT
 Imports Tools.WindowsT.WPF
 Imports System.Windows.Forms
 Imports System.Windows.Interop
 Imports System.Globalization
 
-Class Application
+''' <summary>Entry point class of the application</summary>
+Friend Class Application
 
+    ''' <summary>Instance of currently running application</summary>
     Private Shared theApplication
+
+    ''' <summary>Entry point</summary>
     Public Shared Sub Main()
         theApplication = New Application
         If Environment.GetCommandLineArgs.Count > 1 Then
             Select Case Environment.GetCommandLineArgs(1)
                 Case "/c" 'Settings modal to foreground window
-                    ShowSettings()
+                    ShowSettings(True)
                 Case "/p" '<HWND> show preview as child of given HWND
                     If Environment.GetCommandLineArgs.Count > 2 Then _
                         RunInPreviewMode(Int64.Parse(Environment.GetCommandLineArgs(2), Globalization.NumberStyles.Any, InvariantCulture)) _
@@ -31,13 +35,12 @@ Class Application
                     Next
             End Select
         Else
-            Select Case MsgBox("No settings implemented. Run the screen saver?", MsgBoxStyle.YesNo, "Unicode Screen Saver")
-                Case MsgBoxResult.Yes : RunScreenSaver()
-                Case Else : End
-            End Select
+            ShowSettings(False)
         End If
     End Sub
 
+    ''' <summary>Runs the screensaver in full-screen mode</summary>
+    ''' <param name="screenIndices%">When not null screensaver is run only on screens identified by indexes</param>
     Private Shared Sub RunScreenSaver(Optional screenIndices%() = Nothing)
         Dim i = 0
         For Each sc In Screen.AllScreens
@@ -56,6 +59,8 @@ Class Application
         theApplication.run
     End Sub
 
+    ''' <summary>Runs screensaver in preview mode</summary>
+    ''' <param name="hwnd">Handle of window to display preview in</param>
     Private Shared Sub RunInPreviewMode(hwnd As IntPtr)
 
         Dim lpRect = New RECT()
@@ -81,7 +86,15 @@ Class Application
         End
     End Sub
 
-    Private Shared Sub ShowSettings()
-        MsgBox("No settings implemented yet")
+    ''' <summary>Displays screensaver settings</summary>
+    ''' <param name="modal">True to show settings modal to foreground window, false to show them non modal</param>
+    Private Shared Sub ShowSettings(modal As Boolean)
+        Dim dialog As New SettingsDialog
+        If modal Then
+            Dim foregroundWindow = Win32Window.GetForegroundWindow
+            dialog.ShowDialog(DirectCast(foregroundWindow, Forms.IWin32Window))
+        Else
+            dialog.ShowDialog()
+        End If
     End Sub
 End Class

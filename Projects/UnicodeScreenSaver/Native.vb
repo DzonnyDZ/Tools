@@ -1,18 +1,27 @@
 ﻿Imports System.Runtime.InteropServices
 
+''' <summary>Defines Win32 API functions</summary>
 Friend Module Native
-    <DllImport("user32.dll")>
-    Public Function GetClientRect(hWnd As IntPtr, ByRef lpRect As RECT) As <MarshalAs(UnmanagedType.Bool)> Boolean
-    End Function
+    ''' <summary>Retrieves the coordinates of a window's client area. The client coordinates specify the upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left corner of a window's client area, the coordinates of the upper-left corner are (0,0). </summary>
+    ''' <param name="hWnd">A handle to the window whose client coordinates are to be retrieved. </param>
+    ''' <param name="lpRect">A pointer to a <see cref="RECT"/> structure that receives the client coordinates. The left and top members are zero. The right and bottom members contain the width and height of the window. </param>
+    ''' <returns>If the function succeeds, the return value is true. If the Function fails, the Return value Is false. </returns>
+    Public Declare Ansi Function GetClientRect Lib "user32.dll" (hWnd As IntPtr, ByRef lpRect As RECT) As <MarshalAs(UnmanagedType.Bool)> Boolean
 End Module
 
-Friend Structure RECT
+''' <summary>Defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
+Friend Structure Rect
+    ''' <summary>The x-coordinate of the upper-left corner of the rectangle.</summary>
     Public Left%
+    ''' <summary>The y-coordinate of the upper-left corner of the rectangle.</summary>
     Public Top%
+    ''' <summary>The x-coordinate of the lower-right corner of the rectangle.</summary>
     Public Right%
+    ''' <summary>The y-coordinate of the lower-right corner of the rectangle.</summary>
     Public Bottom%
 End Structure
 
+''' <summary>Defines various WIndow styles</summary>
 Friend Enum WindowStyles As UInteger
     WS_OVERLAPPED = &H00000000
     WS_POPUP = &H80000000UI
