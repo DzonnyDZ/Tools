@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FontFamily Baseline="0.9" LineSpacing="1.2" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/composite-font" xmlns:unicode="http://www.unicode.org/ns/2003/ucd/1.0" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <FontFamily.FamilyNames>
+    <System:String x:Key="en-US">Unicode composite font</System:String>
+  </FontFamily.FamilyNames>
+  <FontFamily.FamilyTypefaces>
+    <FamilyTypeface Weight="Normal" Stretch="Normal" Style="Normal" UnderlinePosition="-0.1" UnderlineThickness="0.05" StrikethroughPosition="0.3" StrikethroughThickness="0.05" CapsHeight="0.5" XHeight="0.3" />
+    <FamilyTypeface Weight="Bold" Stretch="Normal" Style="Normal" UnderlinePosition="-0.1" UnderlineThickness="0.05" StrikethroughPosition="0.3" StrikethroughThickness="0.05" CapsHeight="0.5" XHeight="0.3" />
+  </FontFamily.FamilyTypefaces>
+  <FontFamily.FamilyMaps>
+	<FontFamilyMap Unicode="0000-007F" Target="Cambria" Scale="1.0"><!--Basic Latin--></FontFamilyMap>
+	<FontFamilyMap Unicode="0080-00FF" Target="Cambria" Scale="1.0"><!--Latin-1 Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="0100-017F" Target="Cambria" Scale="1.0"><!--Latin Extended-A--></FontFamilyMap>
+	<FontFamilyMap Unicode="0180-024F" Target="Cambria" Scale="1.0"><!--Latin Extended-B--></FontFamilyMap>
+	<FontFamilyMap Unicode="0250-02AF" Target="Cambria" Scale="1.0"><!--IPA Extensions--></FontFamilyMap>
+	<FontFamilyMap Unicode="02B0-02FF" Target="Cambria" Scale="1.0"><!--Spacing Modifier Letters--></FontFamilyMap>
+	<FontFamilyMap Unicode="0300-036F" Target="Cambria" Scale="1.0"><!--Combining Diacritical Marks--></FontFamilyMap>
+	<FontFamilyMap Unicode="0370-03FF" Target="Symbola" Scale="1.0"><!--Greek and Coptic--></FontFamilyMap>
+	<FontFamilyMap Unicode="0400-04FF" Target="Times New Roman" Scale="1.0"><!--Cyrillic--></FontFamilyMap>
+	<FontFamilyMap Unicode="0500-052F" Target="Symbola" Scale="1.0"><!--Cyrillic Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="0530-058F" Target="Segoe WP" Scale="1.0"><!--Armenian--></FontFamilyMap>
+	<FontFamilyMap Unicode="0590-05FF" Target="Times New Roman" Scale="1.0"><!--Hebrew--></FontFamilyMap>
+	<FontFamilyMap Unicode="0600-06FF" Target="Segoe WP" Scale="1.0"><!--Arabic--></FontFamilyMap>
+	<FontFamilyMap Unicode="0700-074F" Target="Estrangelo Edessa" Scale="1.0"><!--Syriac--></FontFamilyMap>
+	<FontFamilyMap Unicode="0750-077F" Target="Microsoft Uighur" Scale="1.0"><!--Arabic Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="0780-07BF" Target="MV Boli" Scale="1.0"><!--Thaana--></FontFamilyMap>
+	<FontFamilyMap Unicode="07C0-07FF" Target="Ebrima" Scale="1.0"><!--NKo--></FontFamilyMap>
+	
+	
+	
+	<FontFamilyMap Unicode="0900-097F" Target="Nirmala UI" Scale="1.0"><!--Devanagari--></FontFamilyMap>
+	<FontFamilyMap Unicode="0980-09FF" Target="Nirmala UI" Scale="1.0"><!--Bengali--></FontFamilyMap>
+	<FontFamilyMap Unicode="0A00-0A7F" Target="Raavi" Scale="1.0"><!--Gurmukhi--></FontFamilyMap>
+	<FontFamilyMap Unicode="0A80-0AFF" Target="Shruti" Scale="1.0"><!--Gujarati--></FontFamilyMap>
+	<FontFamilyMap Unicode="0B00-0B7F" Target="Kalinga" Scale="1.0"><!--Oriya--></FontFamilyMap>
+	<FontFamilyMap Unicode="0B80-0BFF" Target="Vijaya" Scale="1.0"><!--Tamil--></FontFamilyMap>
+	<FontFamilyMap Unicode="0C00-0C7F" Target="Vani" Scale="1.0"><!--Telugu--></FontFamilyMap>
+	<FontFamilyMap Unicode="0C80-0CFF" Target="Tunga" Scale="1.0"><!--Kannada--></FontFamilyMap>
+	<FontFamilyMap Unicode="0D00-0D7F" Target="Nirmala UI" Scale="1.0"><!--Malayalam--></FontFamilyMap>
+	<FontFamilyMap Unicode="0D80-0DFF" Target="Iskoola Pota" Scale="1.0"><!--Sinhala--></FontFamilyMap>
+	<FontFamilyMap Unicode="0E00-0E7F" Target="Angsana New" Scale="1.0"><!--Thai--></FontFamilyMap>
+	<FontFamilyMap Unicode="0E80-0EFF" Target="Lao UI" Scale="1.0"><!--Lao--></FontFamilyMap>
+	<FontFamilyMap Unicode="0F00-0FFF" Target="Microsoft Himalaya" Scale="1.0"><!--Tibetan--></FontFamilyMap>
+	<FontFamilyMap Unicode="1000-109F" Target="Code2000" Scale="1.0"><!--Myanmar--></FontFamilyMap>
+	<FontFamilyMap Unicode="10A0-10FF" Target="Segoe WP" Scale="1.0"><!--Georgian--></FontFamilyMap>
+	<FontFamilyMap Unicode="1100-11FF" Target="Microsoft NeoGothic" Scale="1.0"><!--Hangul Jamo--></FontFamilyMap>
+	<FontFamilyMap Unicode="1200-137F" Target="Nyala" Scale="1.0"><!--Ethiopic--></FontFamilyMap>
+	<FontFamilyMap Unicode="1380-139F" Target="Nyala" Scale="1.0"><!--Ethiopic Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="13A0-13FF" Target="Plantagenet Cherokee" Scale="1.0"><!--Cherokee--></FontFamilyMap>
+	<FontFamilyMap Unicode="1400-167F" Target="Gadugi" Scale="1.0"><!--Unified Canadian Aboriginal Syllabics--></FontFamilyMap>
+	<FontFamilyMap Unicode="1680-169F" Target="Segoe UI Symbol" Scale="1.0"><!--Ogham--></FontFamilyMap>
+	<FontFamilyMap Unicode="16A0-16FF" Target="Segoe UI Symbol" Scale="1.0"><!--Runic--></FontFamilyMap>
+	<FontFamilyMap Unicode="1700-171F" Target="Tagalog Doctrina 1593" Scale="1.0"><!--Tagalog--></FontFamilyMap>
+	<FontFamilyMap Unicode="1720-173F" Target="Tagalog Doctrina 1593" Scale="1.0"><!--Hanunoo--></FontFamilyMap>
+	<FontFamilyMap Unicode="1740-175F" Target="Code2000" Scale="1.0"><!--Buhid--></FontFamilyMap>
+	<FontFamilyMap Unicode="1760-177F" Target="Tagbanwa" Scale="1.0"><!--Tagbanwa--></FontFamilyMap>
+	<FontFamilyMap Unicode="1780-17FF" Target="Khmer UI" Scale="1.0"><!--Khmer--></FontFamilyMap>
+	<FontFamilyMap Unicode="1800-18AF" Target="Mongolian Baiti" Scale="1.0"><!--Mongolian--></FontFamilyMap>
+	<FontFamilyMap Unicode="18B0-18FF" Target="Gadugi" Scale="1.0"><!--Unified Canadian Aboriginal Syllabics Extended--></FontFamilyMap>
+	<FontFamilyMap Unicode="1900-194F" Target="Code2000" Scale="1.0"><!--Limbu--></FontFamilyMap>
+	<FontFamilyMap Unicode="1950-197F" Target="Microsoft Tai Le" Scale="1.0"><!--Tai Le--></FontFamilyMap>
+	<FontFamilyMap Unicode="1980-19DF" Target="Microsoft New Tai Lue" Scale="1.0"><!--New Tai Lue--></FontFamilyMap>
+	<FontFamilyMap Unicode="19E0-19FF" Target="Khmer UI" Scale="1.0"><!--Khmer Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="1A00-1A1F" Target="Code2000" Scale="1.0"><!--Buginese--></FontFamilyMap>
+	<FontFamilyMap Unicode="1A20-1AAF" Target="Lanna Alif" Scale="1.0"><!--Tai Tham--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="1B00-1B7F" Target="Aksara Bali" Scale="1.0"><!--Balinese--></FontFamilyMap>
+	<FontFamilyMap Unicode="1B80-1BBF" Target="Sundanese Unicode" Scale="1.0"><!--Sundanese--></FontFamilyMap>
+	
+	
+	<FontFamilyMap Unicode="1C50-1C7F" Target="Nirmala UI" Scale="1.0"><!--Ol Chiki--></FontFamilyMap>
+	
+	
+	<FontFamilyMap Unicode="1D00-1D7F" Target="Cambria" Scale="1.0"><!--Phonetic Extensions--></FontFamilyMap>
+	<FontFamilyMap Unicode="1D80-1DBF" Target="Cambria" Scale="1.0"><!--Phonetic Extensions Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="1DC0-1DFF" Target="Times New Roman" Scale="1.0"><!--Combining Diacritical Marks Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="1E00-1EFF" Target="Code2000" Scale="1.0"><!--Latin Extended Additional--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F00-1FFF" Target="Segoe WP" Scale="1.0"><!--Greek Extended--></FontFamilyMap>
+	<FontFamilyMap Unicode="2000-206F" Target="Symbola" Scale="1.0"><!--General Punctuation--></FontFamilyMap>
+	<FontFamilyMap Unicode="2070-209F" Target="Symbola" Scale="1.0"><!--Superscripts and Subscripts--></FontFamilyMap>
+	<FontFamilyMap Unicode="20A0-20CF" Target="Symbola" Scale="1.0"><!--Currency Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="20D0-20FF" Target="Symbola" Scale="1.0"><!--Combining Diacritical Marks for Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="2100-214F" Target="Symbola" Scale="1.0"><!--Letterlike Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="2150-218F" Target="Symbola" Scale="1.0"><!--Number Forms--></FontFamilyMap>
+	<FontFamilyMap Unicode="2190-21FF" Target="Segoe UI Symbol" Scale="1.0"><!--Arrows--></FontFamilyMap>
+	<FontFamilyMap Unicode="2200-22FF" Target="Segoe UI Symbol" Scale="1.0"><!--Mathematical Operators--></FontFamilyMap>
+	<FontFamilyMap Unicode="2300-23FF" Target="Symbola" Scale="1.0"><!--Miscellaneous Technical--></FontFamilyMap>
+	<FontFamilyMap Unicode="2400-243F" Target="Segoe UI Symbol" Scale="1.0"><!--Control Pictures--></FontFamilyMap>
+	<FontFamilyMap Unicode="2440-245F" Target="Symbola" Scale="1.0"><!--Optical Character Recognition--></FontFamilyMap>
+	<FontFamilyMap Unicode="2460-24FF" Target="Symbola" Scale="1.0"><!--Enclosed Alphanumerics--></FontFamilyMap>
+	<FontFamilyMap Unicode="2500-257F" Target="Segoe UI Symbol" Scale="1.0"><!--Box Drawing--></FontFamilyMap>
+	<FontFamilyMap Unicode="2580-259F" Target="Symbola" Scale="1.0"><!--Block Elements--></FontFamilyMap>
+	<FontFamilyMap Unicode="25A0-25FF" Target="Segoe UI Symbol" Scale="1.0"><!--Geometric Shapes--></FontFamilyMap>
+	<FontFamilyMap Unicode="2600-26FF" Target="Symbola" Scale="1.0"><!--Miscellaneous Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="2700-27BF" Target="Symbola" Scale="1.0"><!--Dingbats--></FontFamilyMap>
+	<FontFamilyMap Unicode="27C0-27EF" Target="Symbola" Scale="1.0"><!--Miscellaneous Mathematical Symbols-A--></FontFamilyMap>
+	<FontFamilyMap Unicode="27F0-27FF" Target="Segoe UI Symbol" Scale="1.0"><!--Supplemental Arrows-A--></FontFamilyMap>
+	<FontFamilyMap Unicode="2800-28FF" Target="Segoe UI Symbol" Scale="1.0"><!--Braille Patterns--></FontFamilyMap>
+	<FontFamilyMap Unicode="2900-297F" Target="Segoe UI Symbol" Scale="1.0"><!--Supplemental Arrows-B--></FontFamilyMap>
+	<FontFamilyMap Unicode="2980-29FF" Target="Segoe UI Symbol" Scale="1.0"><!--Miscellaneous Mathematical Symbols-B--></FontFamilyMap>
+	<FontFamilyMap Unicode="2A00-2AFF" Target="Segoe UI Symbol" Scale="1.0"><!--Supplemental Mathematical Operators--></FontFamilyMap>
+	<FontFamilyMap Unicode="2B00-2BFF" Target="Symbola" Scale="1.0"><!--Miscellaneous Symbols and Arrows--></FontFamilyMap>
+	<FontFamilyMap Unicode="2C00-2C5F" Target="Segoe UI Symbol" Scale="1.0"><!--Glagolitic--></FontFamilyMap>
+	<FontFamilyMap Unicode="2C60-2C7F" Target="Code2000" Scale="1.0"><!--Latin Extended-C--></FontFamilyMap>
+	<FontFamilyMap Unicode="2C80-2CFF" Target="Code2000" Scale="1.0"><!--Coptic--></FontFamilyMap>
+	<FontFamilyMap Unicode="2D00-2D2F" Target="Segoe WP" Scale="1.0"><!--Georgian Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="2D30-2D7F" Target="Ebrima" Scale="1.0"><!--Tifinagh--></FontFamilyMap>
+	<FontFamilyMap Unicode="2D80-2DDF" Target="Nyala" Scale="1.0"><!--Ethiopic Extended--></FontFamilyMap>
+	<FontFamilyMap Unicode="2DE0-2DFF" Target="Segoe WP" Scale="1.0"><!--Cyrillic Extended-A--></FontFamilyMap>
+	<FontFamilyMap Unicode="2E00-2E7F" Target="Symbola" Scale="1.0"><!--Supplemental Punctuation--></FontFamilyMap>
+	<FontFamilyMap Unicode="2E80-2EFF" Target="Code2000" Scale="1.0"><!--CJK Radicals Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="2F00-2FDF" Target="Meiryo" Scale="1.0"><!--Kangxi Radicals--></FontFamilyMap>
+	<FontFamilyMap Unicode="2FF0-2FFF" Target="Microsoft YaHei UI" Scale="1.0"><!--Ideographic Description Characters--></FontFamilyMap>
+	<FontFamilyMap Unicode="3000-303F" Target="Microsoft YaHei UI" Scale="1.0"><!--CJK Symbols and Punctuation--></FontFamilyMap>
+	<FontFamilyMap Unicode="3040-309F" Target="Meiryo UI" Scale="1.0"><!--Hiragana--></FontFamilyMap>
+	<FontFamilyMap Unicode="30A0-30FF" Target="Microsoft JhengHei" Scale="1.0"><!--Katakana--></FontFamilyMap>
+	<FontFamilyMap Unicode="3100-312F" Target="Code2000" Scale="1.0"><!--Bopomofo--></FontFamilyMap>
+	<FontFamilyMap Unicode="3130-318F" Target="Dotum" Scale="1.0"><!--Hangul Compatibility Jamo--></FontFamilyMap>
+	<FontFamilyMap Unicode="3190-319F" Target="Microsoft JhengHei" Scale="1.0"><!--Kanbun--></FontFamilyMap>
+	<FontFamilyMap Unicode="31A0-31BF" Target="Microsoft YaHei UI" Scale="1.0"><!--Bopomofo Extended--></FontFamilyMap>
+	<FontFamilyMap Unicode="31C0-31EF" Target="Code2000" Scale="1.0"><!--CJK Strokes--></FontFamilyMap>
+	<FontFamilyMap Unicode="31F0-31FF" Target="Meiryo UI" Scale="1.0"><!--Katakana Phonetic Extensions--></FontFamilyMap>
+	<FontFamilyMap Unicode="3200-32FF" Target="Code2000" Scale="1.0"><!--Enclosed CJK Letters and Months--></FontFamilyMap>
+	<FontFamilyMap Unicode="3300-33FF" Target="Code2000" Scale="1.0"><!--CJK Compatibility--></FontFamilyMap>
+	<FontFamilyMap Unicode="3400-4DBF" Target="MingLiU_HKSCS" Scale="1.0"><!--CJK Unified Ideographs Extension A--></FontFamilyMap>
+	<FontFamilyMap Unicode="4DC0-4DFF" Target="Symbola" Scale="1.0"><!--Yijing Hexagram Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="4E00-9FFF" Target="Code2000" Scale="1.0"><!--CJK Unified Ideographs--></FontFamilyMap>
+	<FontFamilyMap Unicode="A000-A48F" Target="Microsoft Yi Baiti" Scale="1.0"><!--Yi Syllables--></FontFamilyMap>
+	<FontFamilyMap Unicode="A490-A4CF" Target="Microsoft Yi Baiti" Scale="1.0"><!--Yi Radicals--></FontFamilyMap>
+	<FontFamilyMap Unicode="A4D0-A4FF" Target="Segoe WP" Scale="1.0"><!--Lisu--></FontFamilyMap>
+	<FontFamilyMap Unicode="A500-A63F" Target="Ebrima" Scale="1.0"><!--Vai--></FontFamilyMap>
+	<FontFamilyMap Unicode="A640-A69F" Target="Segoe WP" Scale="1.0"><!--Cyrillic Extended-B--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="A700-A71F" Target="Code2000" Scale="1.0"><!--Modifier Tone Letters--></FontFamilyMap>
+	<FontFamilyMap Unicode="A720-A7FF" Target="Code2000" Scale="1.0"><!--Latin Extended-D--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="A830-A83F" Target="Nirmala UI" Scale="1.0"><!--Common Indic Number Forms--></FontFamilyMap>
+	<FontFamilyMap Unicode="A840-A87F" Target="Microsoft PhagsPa" Scale="1.0"><!--Phags-pa--></FontFamilyMap>
+	<FontFamilyMap Unicode="A880-A8DF" Target="Code2000" Scale="1.0"><!--Saurashtra--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="A900-A92F" Target="Code2000" Scale="1.0"><!--Kayah Li--></FontFamilyMap>
+	<FontFamilyMap Unicode="A930-A95F" Target="Code2000" Scale="1.0"><!--Rejang--></FontFamilyMap>
+	
+	
+	
+	<FontFamilyMap Unicode="AA00-AA5F" Target="Code2000" Scale="1.0"><!--Cham--></FontFamilyMap>
+	
+	
+	
+	
+	
+	
+	<FontFamilyMap Unicode="AC00-D7AF" Target="Dotum" Scale="1.0"><!--Hangul Syllables--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="E000-F8FF" Target="MingLiU_HKSCS" Scale="1.0"><!--Private Use Area--></FontFamilyMap>
+	<FontFamilyMap Unicode="F900-FAFF" Target="Code2000" Scale="1.0"><!--CJK Compatibility Ideographs--></FontFamilyMap>
+	<FontFamilyMap Unicode="FB00-FB4F" Target="Code2000" Scale="1.0"><!--Alphabetic Presentation Forms--></FontFamilyMap>
+	<FontFamilyMap Unicode="FB50-FDFF" Target="Arial Unicode MS" Scale="1.0"><!--Arabic Presentation Forms-A--></FontFamilyMap>
+	<FontFamilyMap Unicode="FE00-FE0F" Target="Code2000" Scale="1.0"><!--Variation Selectors--></FontFamilyMap>
+	<FontFamilyMap Unicode="FE10-FE1F" Target="Microsoft JhengHei" Scale="1.0"><!--Vertical Forms--></FontFamilyMap>
+	<FontFamilyMap Unicode="FE20-FE2F" Target="Symbola" Scale="1.0"><!--Combining Half Marks--></FontFamilyMap>
+	<FontFamilyMap Unicode="FE30-FE4F" Target="Microsoft JhengHei" Scale="1.0"><!--CJK Compatibility Forms--></FontFamilyMap>
+	<FontFamilyMap Unicode="FE50-FE6F" Target="Microsoft YaHei UI" Scale="1.0"><!--Small Form Variants--></FontFamilyMap>
+	<FontFamilyMap Unicode="FE70-FEFF" Target="Traditional Arabic" Scale="1.0"><!--Arabic Presentation Forms-B--></FontFamilyMap>
+	<FontFamilyMap Unicode="FF00-FFEF" Target="Microsoft JhengHei UI" Scale="1.0"><!--Halfwidth and Fullwidth Forms--></FontFamilyMap>
+	<FontFamilyMap Unicode="FFF0-FFFF" Target="Symbola" Scale="1.0"><!--Specials--></FontFamilyMap>
+	<FontFamilyMap Unicode="10000-1007F" Target="Code2001" Scale="1.0"><!--Linear B Syllabary--></FontFamilyMap>
+	<FontFamilyMap Unicode="10080-100FF" Target="Code2001" Scale="1.0"><!--Linear B Ideograms--></FontFamilyMap>
+	<FontFamilyMap Unicode="10100-1013F" Target="Symbola" Scale="1.0"><!--Aegean Numbers--></FontFamilyMap>
+	<FontFamilyMap Unicode="10140-1018F" Target="Symbola" Scale="1.0"><!--Ancient Greek Numbers--></FontFamilyMap>
+	<FontFamilyMap Unicode="10190-101CF" Target="Symbola" Scale="1.0"><!--Ancient Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="101D0-101FF" Target="Symbola" Scale="1.0"><!--Phaistos Disc--></FontFamilyMap>
+	
+	
+	<FontFamilyMap Unicode="102E0-102FF" Target="Symbola" Scale="1.0"><!--Coptic Epact Numbers--></FontFamilyMap>
+	<FontFamilyMap Unicode="10300-1032F" Target="Segoe UI Symbol" Scale="1.0"><!--Old Italic--></FontFamilyMap>
+	<FontFamilyMap Unicode="10330-1034F" Target="Segoe UI Symbol" Scale="1.0"><!--Gothic--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="10380-1039F" Target="Code2001" Scale="1.0"><!--Ugaritic--></FontFamilyMap>
+	<FontFamilyMap Unicode="103A0-103DF" Target="Code2001" Scale="1.0"><!--Old Persian--></FontFamilyMap>
+	<FontFamilyMap Unicode="10400-1044F" Target="Segoe UI Symbol" Scale="1.0"><!--Deseret--></FontFamilyMap>
+	<FontFamilyMap Unicode="10450-1047F" Target="Code2001" Scale="1.0"><!--Shavian--></FontFamilyMap>
+	<FontFamilyMap Unicode="10480-104AF" Target="Code2001" Scale="1.0"><!--Osmanya--></FontFamilyMap>
+	
+	
+	
+	<FontFamilyMap Unicode="10800-1083F" Target="Code2001" Scale="1.0"><!--Cypriot Syllabary--></FontFamilyMap>
+	
+	
+	
+	<FontFamilyMap Unicode="10900-1091F" Target="Code2001" Scale="1.0"><!--Phoenician--></FontFamilyMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<FontFamilyMap Unicode="10C00-10C4F" Target="Segoe UI Symbol" Scale="1.0"><!--Old Turkic--></FontFamilyMap>
+	
+	
+	
+	<FontFamilyMap Unicode="110D0-110FF" Target="Nirmala UI" Scale="1.0"><!--Sora Sompeng--></FontFamilyMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<FontFamilyMap Unicode="12000-123FF" Target="Code2001" Scale="1.0"><!--Cuneiform--></FontFamilyMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<FontFamilyMap Unicode="1D000-1D0FF" Target="Symbola" Scale="1.0"><!--Byzantine Musical Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="1D100-1D1FF" Target="Symbola" Scale="1.0"><!--Musical Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="1D200-1D24F" Target="Symbola" Scale="1.0"><!--Ancient Greek Musical Notation--></FontFamilyMap>
+	<FontFamilyMap Unicode="1D300-1D35F" Target="Symbola" Scale="1.0"><!--Tai Xuan Jing Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="1D360-1D37F" Target="Symbola" Scale="1.0"><!--Counting Rod Numerals--></FontFamilyMap>
+	<FontFamilyMap Unicode="1D400-1D7FF" Target="Symbola" Scale="1.0"><!--Mathematical Alphanumeric Symbols--></FontFamilyMap>
+	
+	
+	<FontFamilyMap Unicode="1F000-1F02F" Target="Symbola" Scale="1.0"><!--Mahjong Tiles--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F030-1F09F" Target="Symbola" Scale="1.0"><!--Domino Tiles--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F0A0-1F0FF" Target="Symbola" Scale="1.0"><!--Playing Cards--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F100-1F1FF" Target="Symbola" Scale="1.0"><!--Enclosed Alphanumeric Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F200-1F2FF" Target="Symbola" Scale="1.0"><!--Enclosed Ideographic Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F300-1F5FF" Target="Symbola" Scale="1.0"><!--Miscellaneous Symbols and Pictographs--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F600-1F64F" Target="Symbola" Scale="1.0"><!--Emoticons--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F650-1F67F" Target="Symbola" Scale="1.0"><!--Ornamental Dingbats--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F680-1F6FF" Target="Symbola" Scale="1.0"><!--Transport and Map Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F700-1F77F" Target="Symbola" Scale="1.0"><!--Alchemical Symbols--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F780-1F7FF" Target="Symbola" Scale="1.0"><!--Geometric Shapes Extended--></FontFamilyMap>
+	<FontFamilyMap Unicode="1F800-1F8FF" Target="Symbola" Scale="1.0"><!--Supplemental Arrows-C--></FontFamilyMap>
+	<FontFamilyMap Unicode="20000-2A6DF" Target="MingLiU_HKSCS-ExtB" Scale="1.0"><!--CJK Unified Ideographs Extension B--></FontFamilyMap>
+	<FontFamilyMap Unicode="2A700-2B73F" Target="Microsoft MHei" Scale="1.0"><!--CJK Unified Ideographs Extension C--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="2F800-2FA1F" Target="Meiryo" Scale="1.0"><!--CJK Compatibility Ideographs Supplement--></FontFamilyMap>
+	<FontFamilyMap Unicode="E0000-E007F" Target="Code2001" Scale="1.0"><!--Tags--></FontFamilyMap>
+	
+	<FontFamilyMap Unicode="F0000-FFFFF" Target="Code2001" Scale="1.0"><!--Supplementary Private Use Area-A--></FontFamilyMap>
+	
+</FontFamily.FamilyMaps>
+</FontFamily>
