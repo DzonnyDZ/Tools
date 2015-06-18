@@ -353,7 +353,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets Unicode standartized variants</summary>
+        ''' <summary>Gets Unicode standardized variants</summary>
         Public ReadOnly Property StandartizedVariants As IEnumerable(Of UnicodeStandardizedVariant)
             Get
                 Return From el In Xml.<ucd>.<standardized-variants>.<standardized-variant> Select New UnicodeStandardizedVariant(el)
@@ -375,7 +375,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets repertoire of groups and code points</summary>
-        ''' <remarks>Tis is helper property. You ususally don't need it. You usually use <see cref="Groups"/> and <see cref="CodePoints"/> directly.</remarks>
+        ''' <remarks>This is helper property. You usually don't need it. You usually use <see cref="Groups"/> and <see cref="CodePoints"/> directly.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public ReadOnly Property Repertoire As UcdRepertoire
             Get
