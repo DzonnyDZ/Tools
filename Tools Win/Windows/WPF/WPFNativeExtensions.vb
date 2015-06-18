@@ -48,7 +48,7 @@ Namespace WindowsT.WPF
             If Not TypeOf sender Is Window Then Exit Sub
             Dim win As Window = sender
             If win.Icon Is Nothing Then win.HideIcon()
-            System.Windows.Add(win)
+            windows.Add(win)
             AddHandler win.Closed, AddressOf OnWindowClosed
             AddHandler win.SourceInitialized, AddressOf OnIconChanged
             Dim desc = DependencyPropertyDescriptor.FromProperty(Window.IconProperty, GetType(Window))
@@ -66,7 +66,7 @@ Namespace WindowsT.WPF
             RemoveHandler win.SourceInitialized, AddressOf OnIconChanged
             Dim desc = DependencyPropertyDescriptor.FromProperty(Window.IconProperty, GetType(Window))
             desc.RemoveValueChanged(win, AddressOf OnIconChanged)
-            System.Windows.Remove(win)
+            windows.Remove(win)
         End Sub
         ''' <summary>Called whenever icon of window changes</summary>
         ''' <param name="sender">A <see cref="Window"/></param>
