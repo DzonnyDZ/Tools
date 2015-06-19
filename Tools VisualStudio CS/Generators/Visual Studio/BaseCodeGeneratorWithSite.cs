@@ -12,11 +12,11 @@ namespace Tools.VisualStudioT.GeneratorsT {
     using Microsoft.VisualStudio.Designer.Interfaces;
     using Microsoft.VisualStudio.OLE.Interop;
 
-    /// <summary>This class exists to be cocreated a in a preprocessor build step.</summary>
+    /// <summary>This class exists to be co-created a in a preprocessor build step.</summary>
     /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to <see cref="Tools.VisualStudioT.GeneratorsT"/></version>
     /// <version version="1.5.3">Base class changed from <see cref="Tools.VisualStudioT.GeneratorsT.BaseCodeGenerator"/> to <see cref="Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGeneratorWithSite"/>. Methods implemented by <see cref="Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGeneratorWithSite"/> removed from this class.</version>
     public abstract class BaseCodeGeneratorWithSite : Microsoft.VisualStudio.TextTemplating.VSHost.BaseCodeGeneratorWithSite {
-        /// <summary>Guid of dom interface</summary>
+        /// <summary>GUID of DOM interface</summary>
         private static Guid CodeDomInterfaceGuid = new Guid("{73E59688-C7C4-4a85-AF64-A538754784C5}");
         /// <summary>Same as <see cref="CodeDomInterfaceGuid"/></summary>
         private static Guid CodeDomServiceGuid = CodeDomInterfaceGuid;

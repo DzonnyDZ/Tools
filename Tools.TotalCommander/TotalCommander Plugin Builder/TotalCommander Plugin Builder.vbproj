@@ -166,7 +166,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Tools.TotalCommander.vcxproj">
       <Project>{7f278f32-47b4-4f4e-85b2-baeaa406951b}</Project>
-      <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
+      <Name>Tools.TotalCommander</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

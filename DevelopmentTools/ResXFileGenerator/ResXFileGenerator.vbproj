@@ -172,7 +172,7 @@
       <Name>Tools.VisualStudio.CS</Name>
     </ProjectReference>
     <ProjectReference Include="..\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj">
-      <Project>{A8636D77-B876-4E6A-863D-8C924E40955C}</Project>
+      <Project>{a8636d77-b876-4e6a-863d-8c924e40955c}</Project>
       <Name>ResXFileCodeGeneratorEx</Name>
     </ProjectReference>
   </ItemGroup>

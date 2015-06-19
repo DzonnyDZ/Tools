@@ -1,9 +1,7 @@
 ﻿Imports Tools, System.Globalization.CultureInfo
 Imports Tools.ExtensionsT
 Imports System
-
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
-
 Imports Tools.NumericsT
 Imports System.Numerics
 Imports System.Resources

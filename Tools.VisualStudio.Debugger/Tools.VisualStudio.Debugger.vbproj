@@ -163,7 +163,9 @@
     <Compile Include="Diagnostics\DbCommandVisualizer.xaml.vb">
       <DependentUpon>DbCommandVisualizer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Diagnostics\ImageVisualizer.vb" />
+    <Compile Include="Diagnostics\ImageVisualizer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -195,7 +195,9 @@
     <Compile Include="Console\ConsoleT.vb" />
     <Compile Include="Devices\LowLevelMouseHook.vb" />
     <Compile Include="Devices\Mouse.vb" />
-    <Compile Include="Devices\RawInput.vb" />
+    <Compile Include="Devices\RawInput.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Devices\Win32Hook.vb" />
     <Compile Include="Devices\LowLevelKeyboardHook.vb" />
     <Compile Include="IO\FileSystemTools.vb" />

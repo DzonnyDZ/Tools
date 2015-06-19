@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports System.Collections.Generic
-
-'Namespace SpecialUT
+Imports Tools.DelegateCore
 
 '''<summary>This is a test class for <see cref="DelegateCore"/> and is intended to contain all <see cref="DelegateCore"/> Unit Tests</summary>
 <TestClass()> _
@@ -28,7 +27,7 @@ Public Class DelegateCoreUT
         Dim a As Action = AddressOf CombineWith_Delegate_Delegate
         Dim b As Action = AddressOf Helper
 
-        Dim c = a.CombineWith(b)
+        Dim c = CombineWith(a,b)
 
         Assert.AreEqual(2, c.GetInvocationList.Length)
         Assert.AreSame(a, c.GetInvocationList(0))
@@ -42,7 +41,7 @@ Public Class DelegateCoreUT
         Dim c As Action = Sub() Console.WriteLine()
         Dim d = Sub() Console.Write("a")
 
-        Dim comb = a.CombineWith(b, c, d)
+        Dim comb = CombineWith(a,b, c, d)
 
         Assert.AreEqual(4, comb.GetInvocationList.Length)
         Assert.AreEqual(a, comb.GetInvocationList(0))
@@ -60,7 +59,7 @@ Public Class DelegateCoreUT
         Dim b As Action = AddressOf Helper
         Dim c As Action = Sub() Console.WriteLine()
         Dim d = Sub() Console.Write("a")
-        Dim comb = a.CombineWith(b, c, d)
+        Dim comb = CombineWith(a,b, c, d)
         Assert.AreEqual(4, comb.GetInvocationList.Length)
         Assert.AreEqual(a, comb.GetInvocationList(0))
         Assert.AreEqual(b, comb.GetInvocationList(1))
@@ -68,15 +67,15 @@ Public Class DelegateCoreUT
         Assert.AreEqual(CType(d, Action), comb.GetInvocationList(3))
 
         Assert.IsTrue(comb.GetInvocationList.Contains(c))
-        comb = comb.Remove(c)
+        comb = Remove(comb,c)
         Assert.AreEqual(3, comb.GetInvocationList.Length)
         Assert.IsFalse(comb.GetInvocationList.Contains(c))
 
-        comb = a.CombineWith(b, c, d, c, b)
+        comb = CombineWith(a,b, c, d, c, b)
         Assert.AreEqual(6, comb.GetInvocationList.Length)
         Assert.AreEqual(c, comb.GetInvocationList(2))
         Assert.AreEqual(c, comb.GetInvocationList(4))
-        comb = comb.Remove(c)
+        comb = Remove(comb,c)
         Assert.AreEqual(c, comb.GetInvocationList(2))
         Assert.AreNotEqual(c, comb.GetInvocationList(4))
         Assert.AreEqual(1, (From del In comb.GetInvocationList Where del.Equals(c)).Count)
@@ -88,15 +87,11 @@ Public Class DelegateCoreUT
         Dim b As Action = AddressOf Helper
         Dim c As Action = Sub() Console.WriteLine()
         Dim d = Sub() Console.Write("a")
-        Dim comb = a.CombineWith(b, c, d, c, b)
+        Dim comb = CombineWith(a, b, c, d, c, b)
         Assert.AreEqual(6, comb.GetInvocationList.Length)
         Assert.AreEqual(2, (From del In comb.GetInvocationList Where del.Equals(c)).Count)
-        comb = comb.RemoveAll(c)
+        comb = RemoveAll(comb,c)
         Assert.IsFalse(comb.GetInvocationList.Contains(c))
         Assert.AreEqual(4, comb.GetInvocationList.Length)
     End Sub
-
-
-
 End Class
-'End Namespace

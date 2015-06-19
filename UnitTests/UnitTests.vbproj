@@ -317,7 +317,7 @@
       <Name>Tools.Data.Schema.Deploy</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools.Hardcore\Tools.Hardcore.vcxproj">
-      <Project>{BC69929D-F5B7-4BD1-B742-2773C2CDEAA8}</Project>
+      <Project>{bc69929d-f5b7-4bd1-b742-2773c2cdeaa8}</Project>
       <Name>Tools.Hardcore</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools.Metadata\Tools.Metadata.vbproj">
@@ -345,7 +345,7 @@
       <Name>Tools.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
-      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Project>{fcf346ac-d1c3-42db-9026-9144240fb766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
   </ItemGroup>

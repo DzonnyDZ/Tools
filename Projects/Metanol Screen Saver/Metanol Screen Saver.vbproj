@@ -210,7 +210,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj">
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
-      <Name>Tools Win</Name>
+      <Name>Tools.Win</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tools.Metadata\Tools.Metadata.vbproj">
       <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>

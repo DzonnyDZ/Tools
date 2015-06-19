@@ -1,9 +1,6 @@
 ﻿Imports System.Collections
-
 Imports System.Collections.Generic
-
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
-
 Imports Tools.CollectionsT.GenericT
 
 Namespace CollectionsUT.GenericUT
@@ -31,7 +28,7 @@ Namespace CollectionsUT.GenericUT
         '<ClassInitialize()> _
         'Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
         'End Sub
-        Private Instance As PriorityQueue(Of Integer)
+        Private Instance As priorityQueue(Of Integer)
         '
         'Use ClassCleanup to run code after all tests in a class have run
         '<ClassCleanup()>  _

@@ -2,23 +2,17 @@
 Imports System.Globalization.CultureInfo
 Imports System.Collections.Generic
 Imports System.Reflection
+Imports Tools.EnumCore
 
-
-
-'''<summary>
-'''This is a test class for CollectionToolsTest and is intended
-'''to contain all CollectionToolsTest Unit Tests
-'''</summary>
-<TestClass()> _
+''' <summary>This is a test class for CollectionToolsTest and is intended to contain all CollectionToolsTest Unit Tests</summary>
+<TestClass()> 
 Public Class EnumCoreUT
-
-
     Private testContextInstance As TestContext
 
-    '''<summary>
-    '''Gets or sets the test context which provides
-    '''information about and functionality for the current test run.
-    '''</summary>
+    ''' <summary>
+    ''' Gets or sets the test context which provides
+    ''' information about and functionality for the current test run.
+    ''' </summary>
     Public Property TestContext() As TestContext
         Get
             Return testContextInstance
@@ -27,37 +21,14 @@ Public Class EnumCoreUT
             testContextInstance = value
         End Set
     End Property
-
-    '<TestMethod()> _
-    'Public Sub LoadAssembly()
-    '    Dim path = IO.Path.Combine(My.Application.Info.DirectoryPath, "Tools.IL.dll")
-    '    Dim asm = Reflection.Assembly.LoadFile(path)
-    '    Dim TypeTools = asm.GetType("Tools.SpecialT.TypeTools")
-    '    Dim IsDefined = TypeTools.GetMethod("IsDefined")
-    '    Assert.IsNotNull(IsDefined)
-    '    Dim GetConstant = TypeTools.GetMethod("GetConstant")
-    '    Assert.IsNotNull(GetConstant)
-    '    IsDefined = IsDefined.MakeGenericMethod(New Type() {GetType(AppWinStyle)})
-    '    GetConstant = GetConstant.MakeGenericMethod(New Type() {GetType(AppWinStyle)})
-    '    Dim IsDefined_MaximizedFocus As Boolean = IsDefined.Invoke(Nothing, New Object() {AppWinStyle.MaximizedFocus})
-    '    Dim IsDefined_502 As Boolean = IsDefined.Invoke(Nothing, New Object() {CType(502, AppWinStyle)})
-    '    Assert.IsTrue(IsDefined_MaximizedFocus)
-    '    Assert.IsFalse(IsDefined_502)
-    '    Dim Const_MaximizedFocus As Reflection.FieldInfo = GetConstant.Invoke(Nothing, New Object() {AppWinStyle.MaximizedFocus})
-    '    Dim Const_502 As Reflection.FieldInfo = GetConstant.Invoke(Nothing, New Object() {CType(502, AppWinStyle)})
-    '    Assert.IsNotNull(Const_MaximizedFocus)
-    '    Assert.AreEqual(Const_MaximizedFocus.Name, "MaximizedFocus")
-    '    Assert.AreEqual(Const_MaximizedFocus.GetValue(Nothing), AppWinStyle.MaximizedFocus)
-    '    Assert.IsNull(Const_502)
-    'End Sub
-
-    <TestMethod()> _
+    
+    <TestMethod()> 
     Public Sub IsDefinedU()
         Assert.IsTrue(EnumCore.IsDefined(AppDomainManagerInitializationOptions.None), "IsDefined identifies returned false for member that is defined")
-        Assert.IsFalse(EnumCore.IsDefined(CType(14, AppDomainManagerInitializationOptions)), "IsDefined identifies that member is not edfined")
+        Assert.IsFalse(EnumCore.IsDefined(CType(14, AppDomainManagerInitializationOptions)), "IsDefined identifies that member is not defined")
     End Sub
 
-    <TestMethod()> _
+    <TestMethod()>
     Public Sub GetConstantU()
         Dim constant = EnumCore.GetConstant(AppWinStyle.MaximizedFocus)
         Assert.IsTrue(constant.Name = "MaximizedFocus" AndAlso constant.DeclaringType.Equals(GetType(AppWinStyle)), "GetConstant correctly gets constant")
@@ -68,10 +39,10 @@ Public Class EnumCoreUT
     <TestMethod()>
     Public Sub HasFlagSetU()
         Dim flags As BindingFlags = BindingFlags.GetField Or BindingFlags.Static Or BindingFlags.Public
-        Assert.IsTrue(flags.HasFlagSet(BindingFlags.GetField))
-        Assert.IsTrue(flags.HasFlagSet(BindingFlags.Static))
-        Assert.IsTrue(flags.HasFlagSet(BindingFlags.Static Or BindingFlags.Public))
-        Assert.IsFalse(flags.HasFlagSet(BindingFlags.Instance))
+        Assert.IsTrue(HasFlagSet(flags,BindingFlags.GetField))
+        Assert.IsTrue(HasFlagSet(flags,BindingFlags.Static))
+        Assert.IsTrue(HasFlagSet(flags,BindingFlags.Static Or BindingFlags.Public))
+        Assert.IsFalse(HasFlagSet(flags,BindingFlags.Instance))
     End Sub
 
     <TestMethod()>
@@ -91,11 +62,11 @@ Public Class EnumCoreUT
         dictionary.Add("B", BindingFlags.CreateInstance Or BindingFlags.IgnoreCase Or BindingFlags.ExactBinding)
         dictionary.Add("C", BindingFlags.Public Or BindingFlags.SetField)
 
-        Assert.IsTrue(dictionary.HasFlagSet(BindingFlags.DeclaredOnly))
-        Assert.IsTrue(dictionary.HasFlagSet(BindingFlags.DeclaredOnly Or BindingFlags.SetField))
-        Assert.IsTrue(dictionary.HasFlagSet(BindingFlags.CreateInstance Or BindingFlags.ExactBinding))
-        Assert.IsFalse(dictionary.HasFlagSet(BindingFlags.Public Or BindingFlags.ExactBinding))
-        Assert.IsFalse(dictionary.HasFlagSet(BindingFlags.NonPublic))
+        Assert.IsTrue(HasFlagSet (dictionary,BindingFlags.DeclaredOnly))
+        Assert.IsTrue(HasFlagSet (dictionary,BindingFlags.DeclaredOnly Or BindingFlags.SetField))
+        Assert.IsTrue(HasFlagSet (dictionary,BindingFlags.CreateInstance Or BindingFlags.ExactBinding))
+        Assert.IsFalse(HasFlagSet(dictionary,BindingFlags.Public Or BindingFlags.ExactBinding))
+        Assert.IsFalse(HasFlagSet(dictionary,BindingFlags.NonPublic))
 
     End Sub
 

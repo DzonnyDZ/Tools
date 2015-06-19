@@ -21,7 +21,7 @@ using Microsoft.VisualStudio.TextTemplating.VSHost;
 namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator {
     /// <summary>Common base class for RESX file code generators</summary>
     /// <version version="1.5.3">This class is new in version 1.5.3 It was moved from namespace <c>DMKSoftware.CodeGenerators</c>.</version>
-    /// <version version="1.5.3">Base class chaged to <see cref="Tools.VisualStudioT.GeneratorsT.BaseCodeGeneratorWithSite"/></version>
+    /// <version version="1.5.3">Base class changed to <see cref="Tools.VisualStudioT.GeneratorsT.BaseCodeGeneratorWithSite"/></version>
     /// <version version="1.5.3">When &lt;LogicalName> is specified in project file for RESX file, class name is obtained from logical name rather than from file name of RESX file.</version>
     /// <version version="1.5.3">Modules are generated for Visual Basic. For other languages class constructor is made <see langword="private"/> (previously <see langword="internal"/>).</version>
     /// <version version="1.5.3">Members of resource class (module for VB) are always <see langword="public"/>, even when the class (module) is <see langword="internal"/>.</version>
@@ -173,7 +173,6 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator {
 
         /// <summary>Fired before <see cref="ICodeGenerator"/> is used to generate actual text</summary>
         public event System.Action<ICodeGenerator> BeforeGenerateText;//Added by Ðonny
-
        
         /// <summary>Performs additional operations with <see cref="CodeCompileUnit"/></summary>
         /// <param name="ccu">A <see cref="CodeCompileUnit"/> to be processed</param>
@@ -200,6 +199,7 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator {
 
             return false;
         }
+
 #region IVsRefactorNotify
         int IVsRefactorNotify.OnAddParams(IVsHierarchy phier, uint itemId, string lpszRQName, uint cParams, uint[] rgszParamIndexes, string[] rgszRQTypeNames, string[] rgszParamNames) {
             if (null != RefactorNotifyImplementer)

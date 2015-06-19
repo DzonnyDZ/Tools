@@ -2,8 +2,8 @@
 Imports Tools.NumericsT
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Tools
-Imports Tools.ExtensionsT
-
+Imports Tools.ExtensionsT  
+Imports Tools.enumcore  
 
 <TestClass()> _
 Public Class EnumCoreTest
@@ -12,7 +12,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_Enum()
-        Dim flags = (MyEnum.Flag1 Or MyEnum.Flag2 Or MyEnum.Flag3).GetFlags()
+        Dim flags = GetFlags(MyEnum.Flag1 Or MyEnum.Flag2 Or MyEnum.Flag3)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(MyEnum.Flag1))
         Assert.IsTrue(flags.Contains(MyEnum.Flag2))
@@ -29,7 +29,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_Int64()
-        Dim flags = (2L Or 4L Or 1024L).GetFlags()
+        Dim flags = GetFlags(2L Or 4L Or 1024L)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(2L))
         Assert.IsTrue(flags.Contains(4L))
@@ -38,7 +38,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_UInt32()
-        Dim flags = (2UI Or 4UI Or 1024UI).GetFlags()
+        Dim flags =GetFlags (2UI Or 4UI Or 1024UI)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(2UI))
         Assert.IsTrue(flags.Contains(4UI))
@@ -47,7 +47,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_UInt16()
-        Dim flags = (2US Or 4US Or 1024US).GetFlags()
+        Dim flags = GetFlags(2US Or 4US Or 1024US)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(2US))
         Assert.IsTrue(flags.Contains(4US))
@@ -56,7 +56,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_UInt64()
-        Dim flags = (2UL Or 4UL Or 1024UL).GetFlags()
+        Dim flags = GetFlags(2UL Or 4UL Or 1024UL)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(2UL))
         Assert.IsTrue(flags.Contains(4UL))
@@ -65,7 +65,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_Int16()
-        Dim flags = (2S Or 4S Or 1024S).GetFlags()
+        Dim flags = GetFlags(2S Or 4S Or 1024S)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(2S))
         Assert.IsTrue(flags.Contains(4S))
@@ -74,7 +74,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_Byte()
-        Dim flags = (CByte(2) Or CByte(4) Or CByte(128)).GetFlags()
+        Dim flags = GetFlags(CByte(2) Or CByte(4) Or CByte(128))
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(CByte(2)))
         Assert.IsTrue(flags.Contains(CByte(4)))
@@ -83,7 +83,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_Int32()
-        Dim flags = (2I Or 4I Or 1024I).GetFlags()
+        Dim flags = GetFlags(2I Or 4I Or 1024I)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(2I))
         Assert.IsTrue(flags.Contains(4I))
@@ -92,7 +92,7 @@ Public Class EnumCoreTest
 
     <TestMethod()> _
     Public Sub GetFlagsTest_SByte()
-        Dim flags = (CSByte(2) Or CSByte(4) Or CByte(128).BitwiseSame).GetFlags()
+        Dim flags = GetFlags(CSByte(2) Or CSByte(4) Or CByte(128).BitwiseSame)
         Assert.AreEqual(3, flags.Length)
         Assert.IsTrue(flags.Contains(CSByte(2)))
         Assert.IsTrue(flags.Contains(CSByte(4)))
