@@ -80,7 +80,7 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("TC_FS_INIT")]
-        int FsInit(int plug-inNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc);
+        int FsInit(int pluginNr, tProgressProcW pProgressProc, tLogProcW pLogProc, tRequestProcW pRequestProc);
         /// <summary>Called when loading the plug-in. The passed values should be stored in the plug-in for later use. (ANSI implementation)</summary>
         /// <param name="plug-inNr">Internal number this plug-in was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plug-in has sent the request.</param>
         /// <param name="pProgressProc">Pointer to the progress callback function.</param>
@@ -99,7 +99,7 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false), Obsolete("This is ANSI function. Use Unicode overload instead")]
         [PluginMethod("TC_FS_INIT")]
-        int FsInit(int plug-inNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc);
+        int FsInit(int pluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc);
         /// <summary>Called when loading the plug-in outside of Total Commander environment instead of <see cref="FsInit"/>. The passed values should be stored in the plug-in for later use.</summary>
         /// <param name="PluginNr">Internal number this plug-in was given in Total Commander. Has to be passed as the first parameter in all callback functions so Total Commander knows which plug-in has sent the request.</param>
         /// <param name="progress">Delegate to the progress callback function.</param>
@@ -112,7 +112,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <version version="1.5.4">The <see cref="InvalidOperationException"/> is nor really thrown when plug-in was already initialized before. (It was documented to be thrown in previous versions but it actually wasn't.)</version>
         /// <version version="1.5.4">Parameter <c>PluginNr</c> renamed to <c>plug-inNr</c></version>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
-        void InitializePlugin(int plug-inNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
+        void InitializePlugin(int pluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
     private:
         bool isInTotalCommander;
         bool unicode;
@@ -203,7 +203,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Contains value of the <see cref="Initialized"/> property</summary>
         bool initialized;
         /// <summary>Contains value of the <see cref="PluginNr"/> property</summary>
-        int plug-inNr;
+        int pluginNr;
     public:
         /// <summary>Gets plug-in number this plug-in instance is recognized by Total Commander under</summary>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
