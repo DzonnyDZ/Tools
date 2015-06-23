@@ -672,9 +672,7 @@
     <Compile Include="Windows\Interop\DependencyPropertyChangedEventArgsEventArgs.vb" />
     <Compile Include="Windows\Interop\InteropConverters.vb" />
     <Compile Include="Windows\Interop\SizeInfoEventArgs.vb" />
-    <Compile Include="Windows\WPF\Dialogs\MessageBox WPF.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Windows\WPF\Dialogs\MessageBox WPF.vb" />
     <Compile Include="Windows\WPF\Dialogs\MessageBoxWindow.xaml.vb">
       <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>

@@ -264,9 +264,7 @@
     <Compile Include="Data\Objects\EntityFrameworkExtensions.vb" />
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
     <Compile Include="Drawing\Design\NewEditor.vb" />
-    <Compile Include="Drawing\Design\UITypeEditor.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Drawing\Design\UITypeEditor.vb" />
     <Compile Include="Drawing\IconOrBitmap.vb" />
     <Compile Include="Extensions\DelegateExtensions.vb" />
     <Compile Include="IO\BinaryWriter.vb" />
@@ -286,9 +284,7 @@
     <Compile Include="Web\Css\Lexical\SelectorLexer.vb" />
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues .vb" />
     <Compile Include="Xml\Linq\Extensions.vb" />
-    <Compile Include="Media\Sound.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Media\Sound.vb" />
     <Compile Include="Drawing\ImageTools.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Extensions\Char.vb" />

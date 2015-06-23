@@ -67,7 +67,11 @@ namespace Tools.VisualStudioT.GeneratorsT.ResXFileGenerator {
         /// <returns>True when internal (friend in VB) class is generated, false if generated class is public</returns>
         protected abstract bool GenerateInternalClass { get; }
 
-        
+
+        /// <summary>Performs code generation</summary>
+        /// <param name="inputFileName">Name of file to convert. Note: May be invalid or inactual. <paramref name="inputFileContent"/> is more important.</param>
+        /// <param name="inputFileContent">Content of file to convert</param>
+        /// <returns>Converted content</returns>
         protected override byte[] GenerateCode(string inputFileName, string inputFileContent) {
             CodeCompileUnit codeCompileUnit;
             if (string.IsNullOrEmpty(inputFileContent) || IsLocalizedFile(inputFileName)) {

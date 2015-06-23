@@ -172,9 +172,9 @@ Public Class Generator
     End Property
     ''' <summary>Contains value of the <see cref="Filter"/> property</summary>
     Private _Filer As PluginType = PluginType.Content Or PluginType.FileSystem Or PluginType.Lister Or PluginType.Packer
-    ''' <summary>Gets or sets plugin type filter. Only plugins of types according to given OR-mask will be generated.</summary>
-    ''' <returns>OR-ed values of <see cref="PluginType"/> type indicating which plugin types are generated</returns>
-    ''' <value>Set plugin types to generate plugins for. By default all the plugin types are generated.</value>
+    ''' <summary>Gets or sets plug-in type filter. Only plug-ins of types according to given OR-mask will be generated.</summary>
+    ''' <returns>OR-ed values of <see cref="PluginType"/> type indicating which plug-in types are generated</returns>
+    ''' <value>Set plug-in types to generate plug-ins for. By default all the plug-in types are generated.</value>
     Public Property Filer() As PluginType
         <DebuggerStepThrough()> Get
             Return _Filer
@@ -185,8 +185,8 @@ Public Class Generator
     End Property
     ''' <summary>Contains value of the <see cref="RenamingDictionary"/> property</summary>
     Private _RenamingDictionary As New Dictionary(Of String, String)
-    ''' <summary>Dictionary containing <see cref="Type.FullName"/>s as key and plugin files names (witout extension) as values.</summary>
-    ''' <remarks>Generated plugin files are named according to this dictionary. When dictionary entry for any type is missing, plugin is named according to full name of type.
+    ''' <summary>Dictionary containing <see cref="Type.FullName"/>s as key and plug-in files names (without extension) as values.</summary>
+    ''' <remarks>Generated plug-in files are named according to this dictionary. When dictionary entry for any type is missing, plug-in is named according to full name of type.
     ''' <para><see cref="RenamingDictionary"/> takes precedence to <see cref="TotalCommanderPluginAttribute.Name"/>.</para></remarks>
     Public ReadOnly Property RenamingDictionary() As Dictionary(Of String, String)
         <DebuggerStepThrough()> Get
@@ -195,7 +195,7 @@ Public Class Generator
     End Property
     ''' <summary>Contains value of the <see cref="LogToConsole"/> property</summary>
     Private _LogToConsole As Boolean = False
-    ''' <summary>Gets or sets value indicationg if generator will log its progress to console</summary>
+    ''' <summary>Gets or sets value indicating if generator will log its progress to console</summary>
     Friend Property LogToConsole() As Boolean
         <DebuggerStepThrough()> Get
             Return _LogToConsole

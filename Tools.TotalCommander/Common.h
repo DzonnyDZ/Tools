@@ -35,18 +35,18 @@ namespace Tools{namespace TotalCommanderT{
 #pragma region String
     /// <summary>Copies ANSI characters from string to character array</summary>
     /// <param name="source"><see cref="String"/> to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
-    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to.</param>
-    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char. If &lt;= 0 nothing is copyied.</param>
+    /// <param name="target">Pointer to first character of unmanaged character array to copy characters to.</param>
+    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char. If &lt;= 0 nothing is copied.</param>
     /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
     /// <version version="1.5.4">Function now correctly handles <paramref name="maxlen"/> &lt;= 0.</version>
     /// <version version="1.5.4">The limitation of C++/CLI (unable to create public methods) was worked around (via <see cref="Tools::RuntimeT::CompilerServicesT::MakePublicAttribute"/>), so this method is now public.</version>
     MAKE_PUBLIC void StringCopy(String^ source, char* target, int maxlen);
     /// <summary>Copies Unicode characters from string to character array</summary>
     /// <param name="source"><see cref="String"/> to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
-    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to. Array must be initialized to size <paramref name="maxlen"/>.</param>
-    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char. If &lt;= 0 nothing is copyied.</param>
+    /// <param name="target">Pointer to first character of unmanaged character array to copy characters to. Array must be initialized to size <paramref name="maxlen"/>.</param>
+    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char. If &lt;= 0 nothing is copied.</param>
     /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
-    /// <version version="1.5.4">Method reimplemented. Now it reliably works with Unicode characters and correctly deals with <paramref name="maxlen"/> &lt;= 0 or <paramref name="source"/> null.</version>
+    /// <version version="1.5.4">Method re-implemented. Now it reliably works with Unicode characters and correctly deals with <paramref name="maxlen"/> &lt;= 0 or <paramref name="source"/> null.</version>
     /// <version version="1.5.4">The limitation of C++/CLI (unable to create public methods) was worked around (via <see cref="Tools::RuntimeT::CompilerServicesT::MakePublicAttribute"/>), so this method is now public.</version>
     MAKE_PUBLIC void StringCopy(String^ source, wchar_t* target, int maxlen);
 
@@ -54,17 +54,17 @@ namespace Tools{namespace TotalCommanderT{
     /// <param name="source">A string to convert</param>
     /// <returns>A <see cref="wchar_t"/> (Unicode characters) array containing characters from <paramref name="source"/> plus one terminating nullchar; null if <paramref name="source"/> is null.</returns>
     /// <remarks>
-    /// Implementations of <see cref="StringCopyW(String^)"/> and <see cref="StringCopyA(String^)"/> are completelly different.
+    /// Implementations of <see cref="StringCopyW(String^)"/> and <see cref="StringCopyA(String^)"/> are completely different.
     /// This function uses <see cref="PtrToStringChars"/> internally and then copies result of it to another array. The advantage is that resulting array is not const.
-    /// <para>Calller is responsible for diposing returned array</para></remarks>
+    /// <para>Caller is responsible for disposing returned array</para></remarks>
     /// <seealso cref="StringCopyA(String^)"/>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
     MAKE_PUBLIC wchar_t* StringCopyW(String^ source);
     /// <summary>Creates a <see cref="char"/> array from <see cref="String"/></summary>
     /// <param name="source">A string to convert</param>
     /// <returns>A <see cref="char"/> (ANSI characters) array containing characters from <paramref name="source"/> plus one terminating nullchar; null if <paramref name="source"/> is null.</returns>
-    /// <remarks>Implementations of <see cref="StringCopyW(String^)"/> and <see cref="StringCopyA(String^)"/> are completelly different. <see cref="StringCopyA(String^)"/> uses <see cref="System::Text::Encoding::Default"/>.
-    /// <para>Calller is responsible for diposing returned array</para></remarks>
+    /// <remarks>Implementations of <see cref="StringCopyW(String^)"/> and <see cref="StringCopyA(String^)"/> are completely different. <see cref="StringCopyA(String^)"/> uses <see cref="System::Text::Encoding::Default"/>.
+    /// <para>Caller is responsible for disposing returned array</para></remarks>
     /// <seealso cref="StringCopyW(String^)"/>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
     MAKE_PUBLIC char* StringCopyA(String^ source);
@@ -84,15 +84,15 @@ namespace Tools{namespace TotalCommanderT{
 
     /// <summary>Converts array of Unicode characters to array of ANSI characters and reserves ANSI buffer of given size.</summary>
     /// <param name="source">Pointer to an array of Unicode characters to convert to ANSI</param>
-    /// <param name="maxlen">Lenght of buffer to reserve (including terminating nullchar). Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copied to returned array.</param>
-    /// <returns>An array of ANSI characters of lenght <paramref name="maxlen"/>. A nullchar is placed after last character from <paramref name="source"/>. If <paramref name="source"/> is null first char of returned array is nullchar. Null if <paramref name="maxlen"/> is &lt;= 0.</returns>
+    /// <param name="maxlen">Length of buffer to reserve (including terminating nullchar). Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copied to returned array.</param>
+    /// <returns>An array of ANSI characters of length <paramref name="maxlen"/>. A nullchar is placed after last character from <paramref name="source"/>. If <paramref name="source"/> is null first char of returned array is nullchar. Null if <paramref name="maxlen"/> is &lt;= 0.</returns>
     /// <remarks>Caller is responsible for disposing returned array</remarks>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
     MAKE_PUBLIC char* __clrcall UnicodeToAnsi(const wchar_t* source, int maxlen);
     /// <summary>Converts array of ANSI characters to array of Unicode characters and reserves Unicode buffer of given size.</summary>
     /// <param name="source">Pointer to an array of ANSI characters to convert to Unicode</param>
-    /// <param name="maxlen">Lenght of buffer to reserve (including terminating nullchar). Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copied to returned array.</param>
-    /// <returns>An array of Unicode characters of lenght <paramref name="maxlen"/>. A nullchar is placed after last character from <paramref name="source"/>. If <paramref name="source"/> is null first char of returned array is nullchar. Null if <paramref name="maxlen"/> is &lt;= 0.</returns>
+    /// <param name="maxlen">Length of buffer to reserve (including terminating nullchar). Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copied to returned array.</param>
+    /// <returns>An array of Unicode characters of length <paramref name="maxlen"/>. A nullchar is placed after last character from <paramref name="source"/>. If <paramref name="source"/> is null first char of returned array is nullchar. Null if <paramref name="maxlen"/> is &lt;= 0.</returns>
     /// <remarks>Caller is responsible for disposing returned array</remarks>
     /// <version version="1.5.4">This function is new in version 1.5.4</version>
     MAKE_PUBLIC wchar_t* __clrcall AnsiToUnicode(const char* source, int maxlen);
@@ -131,16 +131,16 @@ namespace Tools{namespace TotalCommanderT{
     MAKE_PUBLIC String^ StringCopy(const char* source) throw(ArgumentOutOfRangeException, ArgumentException, AccessViolationException);
 #pragma endregion
 
-    /// <summary>Recognized Total Commander plugin types</summary>
+    /// <summary>Recognized Total Commander plug-in types</summary>
     [FlagsAttribute]
     public enum class PluginType{
-        /// <summary>wfx: File system plugin for accessing file on devices, servers etc.</summary>
+        /// <summary>wfx: File system plug-in for accessing file on devices, servers etc.</summary>
         FileSystem = 1,
-        /// <summary>wlx: Lister plugin for showing file preview (on F3)</summary>
+        /// <summary>wlx: Lister plug-in for showing file preview (on F3)</summary>
         Lister = 2,
-        /// <summary>wdx: Content plugin providing custom properties of files</summary>
+        /// <summary>wdx: Content plug-in providing custom properties of files</summary>
         Content = 4,
-        /// <summary>wcx: Packer plugin providing access to content of archive files</summary>
+        /// <summary>wcx: Packer plug-in providing access to content of archive files</summary>
         Packer = 8
     };
 
@@ -151,7 +151,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <param name="source">Instance to populate <paramref name="target"/> with values of</param>
     /// <exception cref="ArgumentNullException"><paramref name="target"/> is null pointer</exception>
     /// <version version="1.5.3">This method is new in version 1.5.3</version>
-    /// <version version="1.5.4">As of version 1.5.4 this method is intensionally non-public. Before it was non-public because of limitations of C++/CLI.</version>
+    /// <version version="1.5.4">As of version 1.5.4 this method is intentionally non-public. Before it was non-public because of limitations of C++/CLI.</version>
     void PopulateWith(ptimeformat target, TimeSpan source) throw(ArgumentNullException);
     /// <summary>Converts <see cref="ptimeformat"/> to <see cref="TimeSpan"/></summary>
     /// <param name="source">A <see cref="ptimeformat"/></param>
@@ -185,7 +185,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="MemberAccessException">The caller does not have access to the method represented by <see cref="Delegate"/> (for example, if the method is private).-or- The number, order, or type of parameters listed in args is invalid.</exception>
         /// <exception cref="System::Reflection::TargetException">The method represented by <see cref="Delegate"/> is an instance method and the target object is null.-or- The method represented by <see cref="Delegate"/> is invoked on an object or a class that does not support it. (both situations mean that delegate was not properly created in implementing class)</exception>
         /// <exception cref="System::Reflection::TargetInvocationException">Call to <see cref="Delegate"/> has thrown an exception.</exception>
-        /// <remarks>This is just helper function for languages that cannot sonsume C++ functors. <see cref="Invoke"/> should be implemented same way as <see cref="operator()"/></remarks>
+        /// <remarks>This is just helper function for languages that cannot consume C++ functors. <see cref="Invoke"/> should be implemented same way as <see cref="operator()"/></remarks>
         /// <seelaso cref="operator()"/>
         Object^ Invoke(... cli::array<Object^>^);
     };
@@ -195,7 +195,7 @@ namespace Tools{namespace TotalCommanderT{
     [EditorBrowsable(EditorBrowsableState::Advanced)]
     public ref class CallbackWrapperBase abstract: ICallbackWrapper{
     protected: 
-        /// <summary>When overriden in derived class gets the delegate wrapped by this wrapper</summary>
+        /// <summary>When overridden in derived class gets the delegate wrapped by this wrapper</summary>
         /// <returns>A delegate wrapped by this wrapper. If the wrapper does not wrap a delegate returns delegate to method that translates delegate call to internal call.</returns>
         virtual property System::Delegate^ Delegate{System::Delegate^ get() abstract = ICallbackWrapper::Delegate::get;}
 
