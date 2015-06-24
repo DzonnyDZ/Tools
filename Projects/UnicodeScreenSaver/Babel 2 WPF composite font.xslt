@@ -9,6 +9,7 @@
                 exclude-result-prefixes="msxsl" xmlns=""
 >
     <xsl:output method="xml" indent="yes"/>
+    <xsl:param name="UCDXML"/>
 
     <xsl:template match="/CompositeFont">
         <FontFamily
@@ -33,7 +34,7 @@
     <xsl:template match="Block[text()]">
         <xsl:variable name="block" select="@name"/>
         <FontFamilyMap xmlns="http://schemas.microsoft.com/winfx/2006/xaml/composite-font"
-                       Unicode="{document('UCD blocks.xml')/unicode:ucd/unicode:blocks/unicode:block[@name=$block]/@first-cp}-{document('UCD blocks.xml')/unicode:ucd/unicode:blocks/unicode:block[@name=$block]/@last-cp}"
+                       Unicode="{$UCDXML/unicode:ucd/unicode:blocks/unicode:block[@name=$block]/@first-cp}-{$UCDXML/unicode:ucd/unicode:blocks/unicode:block[@name=$block]/@last-cp}"
                        Target="{text()}" Scale="1.0"
         >
             <xsl:comment>

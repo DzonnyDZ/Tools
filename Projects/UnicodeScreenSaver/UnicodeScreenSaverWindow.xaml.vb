@@ -1,4 +1,5 @@
 ﻿Imports System.Timers
+Imports Tools.TextT.UnicodeT
 
 ''' <summary>Main screensaver UI</summary>
 Friend Class UnicodeScreenSaverWindow
@@ -26,7 +27,7 @@ Friend Class UnicodeScreenSaverWindow
     Private ReadOnly rnd As New Random
     Private Function GetNextCharacter() As CharacterInfo
         Dim unicode = Config.GetCharacter(rnd.Next(Config.TotalCharacters - 1))
-        Dim codePoint = Tools.TextT.UnicodeT.UnicodeCharacterDatabase.Default.FindCodePoint(unicode)
+        Dim codePoint = UnicodeCharacterDatabase.Default.FindCodePoint(unicode)
         Return New CharacterInfo(unicode, codePoint?.Name, Config.GetRange(unicode)?.Item3, codePoint?.Script, codePoint?.Block.Name)
     End Function
 
