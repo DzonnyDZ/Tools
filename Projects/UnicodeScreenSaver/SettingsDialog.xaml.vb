@@ -129,56 +129,50 @@ Public Class SettingsDialog
         Dim toRemove As New List(Of XElement)
         For Each compositeMap In compositeXml.<cf:FontFamily>.<cf:FontFamily.FamilyMaps>.<cf:FontFamilyMap>
             Dim ff = New FontFamily(compositeMap.@Target)
-            Dim compositeRanges = From r In ParseRange(compositeMap.@Unicode) Where r.Item1 <= r.Item2 Order By r.Item1
-            Dim targetRanges As IEnumerable(Of Tuple(Of UInteger, UInteger)) = EmptyArray(Of Tuple(Of UInteger, UInteger)).value
-            For Each targetMap In ff.FamilyMaps
-                targetRanges = targetRanges.Concat(ParseRange(targetMap.Unicode))
+            Dim faces = ff.GetTypefaces
+            Dim glyphFaces As New List(Of GlyphTypeface)(faces.Count)
+            For Each f In faces
+                Dim gf As GlyphTypeface
+                If f.TryGetGlyphTypeface(gf) Then glyphFaces.Add(gf)
             Next
-            Dim tre = (From r In targetRanges Where r.Item1 <= r.Item2 Order By r.Item1).GetEnumerator
-            Dim outputRanges As New List(Of Tuple(Of UInteger, UInteger))
-            Dim targetRange As Tuple(Of UInteger, UInteger)
-            Dim moveTarget = Function()
-                                 If tre.MoveNext Then
-                                     targetRange = tre.Current
-                                     Return True
-                                 Else
-                                     targetRange = Nothing
-                                     Return False
-                                 End If
-                             End Function
-            If moveTarget() Then
-                For Each compositeRange As Tuple(Of UInteger, UInteger) In compositeRanges
-                    While targetRange.Item1 < compositeRange.Item2
-                        If Not moveTarget() Then Exit For
-                        outputRanges.Add(Tuple.Create(Math.Max(compositeRange.Item1, targetRange.Item1), Math.Min(compositeRange.Item2, targetRange.Item2)))
-                    End While
-                Next
-            End If
-            If outputRanges.Count = 0 Then
-                toRemove.Add(compositeMap)
-            Else
-                tre = outputRanges.GetEnumerator
-                outputRanges = New List(Of Tuple(Of UInteger, UInteger))(outputRanges.Count)
-                While tre.MoveNext
-                    Dim l = tre.Current.Item1
-                    Dim u = tre.Current.Item2
-                    While tre.MoveNext AndAlso tre.Current.Item1 = u
-                        u = tre.Current.Item1
-                    End While
-                    outputRanges.Add(Tuple.Create(l, u))
-                End While
 
+            Dim ranges As New List(Of Tuple(Of UInteger, UInteger))
+            For Each range In ParseRange(compositeMap.@Unicode)
+                Dim min As UInteger?, max As UInteger?
+                For character = range.Item1 To range.Item2
+                    Dim found As Boolean = False
+                    For Each face In glyphFaces
+                        Dim glyph As UShort
+                        If face.CharacterToGlyphMap.TryGetValue(character, glyph) Then
+                            found = True
+                            Exit For
+                        End If
+                    Next
+                    If found Then
+                        If min Is Nothing Then min = found
+                        max = found
+                    Else
+                        If min.HasValue Then ranges.Add(Tuple.Create(min.Value, max.Value))
+                        min = Nothing
+                        max = Nothing
+                    End If
+                Next
+                If min.HasValue Then ranges.Add(Tuple.Create(min.Value, max.Value))
+            Next
+            If ranges.Count > 0 Then
                 Dim b As New StringBuilder
-                For Each orng In outputRanges
+                For Each range In ranges
                     If b.Length > 0 Then b.Append(",")
-                    If orng.Item1 = orng.Item2 Then b.Append(orng.Item2.ToString("X", InvariantCulture)) _
-                        Else b.AppendFormat(InvariantCulture, "{0:X}-{1:X}", orng.Item1, orng.Item2)
+                    If range.Item1 = range.Item2 Then b.Append(range.Item1.ToString("X", InvariantCulture)) _
+                    Else b.AppendFormat(InvariantCulture, "{0:X}-{1:X}", range.Item1, range.Item2)
                 Next
                 compositeMap.@Unicode = b.ToString
+            Else
+                toRemove.Add(compositeMap)
             End If
-        Next
-        For Each mtr In toRemove
-            mtr.Remove()
+next
+        For Each tr In toRemove 
+            tr.Remove 
         Next
     End Sub
 
