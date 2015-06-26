@@ -1,7 +1,7 @@
 ﻿Imports Tools.ComponentModelT, Tools.ExtensionsT, System.Globalization.CultureInfo, System.Linq
 Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
 Imports System.Xml.Linq
-
+Imports System.Xml.Serialization
 
 Namespace TextT.UnicodeT
     ''' <summary>Represents a normalization correction - change in normalization that happpened between Unicode versions</summary>
@@ -37,7 +37,8 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets Unicode starndard version in which this corrrection was introduced</summary>
+        ''' <summary>Gets Unicode standard version in which this correction was introduced</summary>
+        <XmlElement("version")>
         Public ReadOnly Property Version As Version
             Get
                 Return Version.Parse(Element.@version)
@@ -45,6 +46,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets a code point this correction informs about change of normalization of</summary>
+        <XmlElement("cp")>
         Public ReadOnly Property CodePoint As CodePointInfo
             Get
                 Return New CodePointInfo(Element.Document, UInt32.Parse(Element.@cp, Globalization.NumberStyles.HexNumber, InvariantCulture))
@@ -52,6 +54,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets codepoint(s) indicating new normalization</summary>
+              <XmlElement("old")>
         Public ReadOnly Property NewNormalization As CodePointInfoCollection
             Get
                 Return New CodePointInfoCollection(Element.Document, Element.@old)
@@ -59,6 +62,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets codepoint(s) indicating old normalization</summary>
+        <XmlElement("new")>
         Public ReadOnly Property OldNormalization As CodePointInfoCollection
             Get
                 Return New CodePointInfoCollection(Element.Document, Element.@new)

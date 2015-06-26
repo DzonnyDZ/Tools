@@ -100,13 +100,13 @@ namespace Tools{namespace TotalCommanderT{
     /// <summary>Copies given number of characters from Unicode character buffer to ANSI character buffer</summary>
     /// <param name="source">Pointer to a Unicode character buffer to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
     /// <param name="target">Pointer to an ANSI character buffer of size <paramref name="maxlen"/> to copy characters to. The buffer must be pre-initialized!</param>
-    /// <param name="maxlen">Size of <paramref name="target"/> buffer. Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copyied to <paramref name="target"/>. if &lt;= 0 nothing is copyied.</param>
+    /// <param name="maxlen">Size of <paramref name="target"/> buffer. Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copied to <paramref name="target"/>. if &lt;= 0 nothing is copied.</param>
     /// <version version="1.5.4">This method is new in version 1.5.4</version>
     MAKE_PUBLIC void __clrcall UnicodeToAnsi(const wchar_t* source, char* target, int maxlen);
     /// <summary>Copies given number of characters from ANSI character buffer to Unicode character buffer</summary>
     /// <param name="source">Pointer to an ANSI character buffer to copy characters from. If null <paramref name="target"/>[0] is set to 0.</param>
     /// <param name="target">Pointer to a Unicode character buffer of size <paramref name="maxlen"/> to copy characters to. The buffer must be pre-initialized!</param>
-    /// <param name="maxlen">Size of <paramref name="target"/> buffer. Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copyied to <paramref name="target"/>. if &lt;= 0 nothing is copyied.</param>
+    /// <param name="maxlen">Size of <paramref name="target"/> buffer. Maximally <paramref name="maxlen"/> - 1 characters from <paramref name="source"/> is copied to <paramref name="target"/>. if &lt;= 0 nothing is copied.</param>
     /// <version version="1.5.4">This method is new in version 1.5.4</version>
     MAKE_PUBLIC void __clrcall AnsiToUnicode(const char* source, wchar_t* target, int maxlen);
     

@@ -147,13 +147,13 @@ Namespace TextT.UnicodeT
         <XmlIgnore(), LDisplayName(GetType(UnicodeResources), "d_UniversalName")>
         Public Overridable ReadOnly Property UniversalName As String
             Get
-                If NameAliases IsNot Nothing AndAlso NameAliases.Length > 0 Then Return NameAliases(0)
-                If Me.GeneralCategory = Globalization.UnicodeCategory.PrivateUse AndAlso Name = "" Then _
-                    If Me.Csur IsNot Nothing AndAlso Me.Csur.Name <> "" Then Return TextT.UnicodeT.UnicodeResources.prefix_CSUR & Me.Csur.Name
-                If Me.Name = "" AndAlso Me.Name1 <> "" Then Return TextT.UnicodeT.UnicodeResources.prefix_Unicode1 & Name1
+                If NameAliases IsNot Nothing AndAlso NameAliases.Length > 0 Then Return NameAliases(0)?.Alias
+                If Me.GeneralCategory = UnicodeCategory.PrivateUse AndAlso Name = "" Then _
+                    If Me.Csur IsNot Nothing AndAlso Me.Csur.Name <> "" Then Return UnicodeResources.prefix_CSUR & Me.Csur.Name
+                If Me.Name = "" AndAlso Me.Name1 <> "" Then Return UnicodeResources.prefix_Unicode1 & Name1
                 If Me.Name = "" Then
                     Dim a = NamesListExtensions.Aliases(Me)
-                    If a IsNot Nothing AndAlso a.Length > 0 Then Return TextT.UnicodeT.UnicodeResources.prefix_Alias & a(0)
+                    If a IsNot Nothing AndAlso a.Length > 0 Then Return UnicodeResources.prefix_Alias & a(0)
                 End If
                 Return Me.Name
             End Get
@@ -181,7 +181,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value of current code point</summary>
         ''' <remarks>
         ''' This property is null for character ranges. They have <see cref="FirstCodePoint"/> and <see cref="LastCodePoint"/> specified instead.
-        ''' <para>This property is not CLS-compliant. Corresponding CLS-compilant property is <see cref="CodePointSigned"/>.</para>
+        ''' <para>This property is not CLS-compliant. Corresponding CLS-compliant property is <see cref="CodePointSigned"/>.</para>
         ''' <para>Underlying XML attributes is @cp.</para>
         ''' </remarks>
         <CLSCompliant(False), LCategory(GetType(UnicodeResources), "propcat_other_Infrastructure", "Infrastructure"), LDisplayName(GetType(UnicodeResources), "d_other_CodePoint")>
@@ -195,7 +195,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>CLS-comliant version of <see cref="CodePoint"/> ptoperty</summary>
+        ''' <summary>CLS-compliant version of <see cref="CodePoint"/> property</summary>
         ''' <seelaso cref="CodePoint"/>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False), XmlIgnore()>
         Public ReadOnly Property CodePointSigned As Integer?
@@ -308,19 +308,29 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets normative name aliases for name of this code point</summary>
         ''' <returns>
         ''' Name aliases (alternative normative names) for this code-point.
-        ''' Retturns null if <see cref="CodePoint"/> is null or if name aliases are not registered.
-        ''' Returns an empty array if there ane no formal aliases for name of current code point.
+        ''' <para>In case name aliases are present in UCD XML returns name aliases from UCD XML.</para>
+        ''' <para>
+        ''' If they are not present and if NameAliases.txt textual extension is registered uses that extension following way:
+        ''' Returns null if <see cref="CodePoint"/> is null or if name aliases are not registered.
+        ''' </para>
+        ''' Returns an empty array if there are no formal aliases for name of current code point.
         ''' </returns>
-        ''' <remarks>This property returns non-null values only if NameAliases.txt textual extension was registered for parent UCD</remarks>
+        ''' <remarks>This property can only return non-empty arrays if newer version of UCD XML is loaded (default, from Unicode 6.2) or NameAliases.txt textual extension was registered for parent UCD.</remarks>
         ''' <seelaso cref="UnicodeCharacterDatabase.NameAliases"/>
-        <XmlIgnore(), LDisplayName(GetType(UnicodeResources), "d_other_NameAliases")>
-        Public ReadOnly Property NameAliases As String()
+        <XmlElement("name-alias"), LDisplayName(GetType(UnicodeResources), "d_other_NameAliases")>
+        Public ReadOnly Property NameAliases As UnicodeNameAlias()
             Get
-                If Not CodePoint.HasValue Then Return Nothing
-                Dim aliases = TryCast(GetTextualExtension("NameAliases.txt"), Dictionary(Of UInteger, String()))
-                If aliases Is Nothing Then Return Nothing
-                Dim aarr As String() = Nothing
-                If aliases.TryGetValue(CodePoint.Value, aarr) Then Return aarr Else Return New String() {}
+                If Element.<name-alias>.Any Then
+                    Return (From a In Element.<name-alias>
+                            Select New UnicodeNameAlias(a.@alias, If(a.@type Is Nothing, UnicodeNameAliasType.Unknown, EnumCore.Parse(Of UnicodeNameAliasType)(a.@type, True)))
+                           ).ToArray
+                Else
+                    If Not CodePoint.HasValue Then Return EmptyArray(Of UnicodeNameAlias).value
+                    Dim aliases = TryCast(GetTextualExtension("NameAliases.txt"), IDictionary(Of UInteger, UnicodeNameAlias()))
+                    If aliases Is Nothing Then Return EmptyArray(Of UnicodeNameAlias).value
+                    Dim aarr As UnicodeNameAlias() = Nothing
+                    If aliases.TryGetValue(CodePoint.Value, aarr) Then Return aarr Else Return EmptyArray(Of UnicodeNameAlias).value
+                End If
             End Get
         End Property
 

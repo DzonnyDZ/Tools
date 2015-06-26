@@ -1,6 +1,7 @@
 ﻿Imports Tools.ComponentModelT, Tools.ExtensionsT, System.Globalization.CultureInfo, System.Linq
 Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
 Imports System.Xml.Linq
+Imports System.Xml.Serialization
 
 Namespace TextT.UnicodeT
     ''' <summary>Represents Unicode standardized variant</summary>
@@ -39,22 +40,25 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets description of this standartized variant</summary>
+        ''' <summary>Gets description of this standardized variant</summary>
+        <XmlAttribute("desc")>
         Public ReadOnly Property Description As String
             Get
                 Return Element.@desc
             End Get
         End Property
 
-        ''' <summary>Gets codepoints that perticipate in this standartized variant</summary>
+        ''' <summary>Gets codepoints that participate in this standardized variant</summary>
         ''' <remarks>This collection should always contain exactly two items</remarks>
+        <XmlAttribute("cps")>
         Public ReadOnly Property CodePoints As CodePointInfoCollection
             Get
                 Return New CodePointInfoCollection(Element.Document, Element.@cps)
             End Get
         End Property
 
-        ''' <summary>Gets a string that indicates when this standartized variant is used</summary>
+        ''' <summary>Gets a string that indicates when this standardized variant is used</summary>
+        <XmlAttribute("when")>
         Public ReadOnly Property [When] As String
             Get
                 Return Element.@when

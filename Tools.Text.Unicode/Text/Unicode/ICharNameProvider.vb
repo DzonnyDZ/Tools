@@ -5,7 +5,7 @@
     Public Interface ICharNameProvider
         ''' <summary>Gets name of a character</summary>
         ''' <param name="codePoint">A Unicode (UTF-32) code-point</param>
-        ''' <returns>Name of the character, nulll of the source is not capable of providing character name</returns>
+        ''' <returns>Name of the character, null of the source is not capable of providing character name</returns>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="codePoint"/> is less than zero or greater than <see cref="UnicodeCharacterDatabase.MaxCodePoint"/>.</exception>
         Function GetName(codePoint%) As String
     End Interface
@@ -13,13 +13,13 @@
     ''' <summary>Simplistic implementation of <see cref="ICharNameProvider"/></summary>
     ''' <remarks>
     ''' This is singleton class. Use the <see cref="SimpleCharNameProvider.Instance"/> property to obtain singleton instance.
-    ''' You need instance of this class only if you want to pass it as <see cref="ICharNameProvider"/>, othrwise use static function <see cref="SimpleCharNameProvider.GetName"/>.
+    ''' You need instance of this class only if you want to pass it as <see cref="ICharNameProvider"/>, otherwise use static function <see cref="SimpleCharNameProvider.GetName"/>.
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Class SimpleCharNameProvider
         Implements ICharNameProvider
-        ''' <summary>Singleto class private CTor</summary>
+        ''' <summary>Singleton class private CTor</summary>
         Private Sub New()
         End Sub
         ''' <summary>Gets name of a character</summary>
@@ -40,15 +40,13 @@
 
         Private Shared _instance As SimpleCharNameProvider = New SimpleCharNameProvider
 
-        ''' <summary>Gets instancer of this singleton class</summary>
+        ''' <summary>Gets instance of this singleton class</summary>
         ''' <remarks>You only need instance of this class if you want to use it as <see cref="ICharNameProvider"/>, otherwise use static method <see cref="GetName"/>.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared ReadOnly Property Instance As SimpleCharNameProvider
             Get
                 Return _instance
             End Get
-        End Property
-
-    End Class
-
+        End Property   
+    End Class          
 End Namespace

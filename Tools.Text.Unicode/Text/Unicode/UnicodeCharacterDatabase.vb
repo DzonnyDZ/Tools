@@ -11,10 +11,10 @@ Imports Tools.ComponentModelT
 Imports System.Globalization.CultureInfo
 
 #If Config <= Nightly Then
-<Module: AddResource(unicodecharacterdatabase.UnicodeXmlDatabaseResourceName, unicodecharacterdatabase.UnicodeXmlDatabaseFileName, False, False, Remove:=True)> 
+<Module: AddResource(UnicodeCharacterDatabase.UnicodeXmlDatabaseResourceName, UnicodeCharacterDatabase.UnicodeXmlDatabaseFileName, False, False, Remove:=True)>
 
 Namespace TextT.UnicodeT
-    ''' <summary>Provides information from Unicode Charatcer Database</summary>
+    ''' <summary>Provides information from Unicode Character Database</summary>
     ''' <remarks>See http://www.unicode.org/ucd/.
     ''' <para>
     ''' To obtain data from Unicode Character Database you must have access to copy of it.
@@ -55,10 +55,6 @@ Namespace TextT.UnicodeT
         Public Const UnicodeXmlDatabaseResourceName As String = "Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz"
         ''' <summary>Name of file that contains Unicode Character Database XML</summary>
         Friend Const UnicodeXmlDatabaseFileName As String = "ucd.all.grouped.xml.gz"
-        ''' <summary>Name of assembly resource that contains default NameAliases.txt file from UCD</summary>
-        ''' <remarks>This resource is embeded resource in same assembly as <see cref="UnicodeCharacterDatabase"/> (Tools.Text.Unicode.txt)</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public Const NameAlisesResourceName$ = "Tools.TextT.UnicodeT.NameAliases.txt"
 
         ''' <summary>Gets Unicode Character Database in XML format</summary>
         ''' <returns>Content of linked resource <c>Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz</c> (<see cref="UnicodeXmlDatabaseResourceName"/>; file ucd.all.grouped.xml.gz) as <see cref="XDocument"/>.</returns>
@@ -99,11 +95,8 @@ Namespace TextT.UnicodeT
         Private Shared _default As UnicodeCharacterDatabase
         Private Shared ReadOnly defaultLock As New Object
         ''' <summary>Gets default instance of <see cref="UnicodeCharacterDatabase"/> class initialized with default copy of Unicode Character Database XML</summary>
-        ''' <returns>Default instance of Unicode Character Database; null if it cannot be initialized because default Unicode Character Database xml is not assessible (i.e. <see cref="GetXml"/> throws <see cref="IO.FileNotFoundException"/>).</returns>
-        ''' <remarks>
-        ''' This instance of Unicode character database is pre-loaded with ConScript Unicode Registry (CSUR) data (see <see cref="CsurExtensions"/>) and
-        ''' name aliases (see <see cref="NameAliases"/>).
-        ''' </remarks>
+        ''' <returns>Default instance of Unicode Character Database; null if it cannot be initialized because default Unicode Character Database XML is not accessible (i.e. <see cref="GetXml"/> throws <see cref="IO.FileNotFoundException"/>).</returns>
+        ''' <remarks>This instance of Unicode character database is pre-loaded with ConScript Unicode Registry (CSUR) data (see <see cref="CsurExtensions"/>).</remarks>
         Public Shared ReadOnly Property [Default] As UnicodeCharacterDatabase
             Get
                 If _default Is Nothing Then
@@ -115,8 +108,7 @@ Namespace TextT.UnicodeT
                             End Try
                             _default.Extensions.Add(CsurExtensions.XmlNamespace, CsurExtensions.DefaultCsurDatabase)
                             _default.Extensions.Add(NamesListExtensions.XmlNamespace, NamesListExtensions.DefaultNamesList)
-                            _default.LoadNameAliases()
-                            _default.LocalizationProvider = UcdLocalizationProvider.default
+                            _default.LocalizationProvider = UcdLocalizationProvider.Default
                         End If
                     End SyncLock
                 End If
@@ -448,7 +440,7 @@ Namespace TextT.UnicodeT
         ''' <param name="xPath">XPath query</param>
         ''' <returns>Objects retrieved suing given query</returns>
         ''' <remarks>Default namespace is mapped to http://www.unicode.org/ns/2003/ucd/1.0</remarks>
-        ''' <exception cref="ArgumentNullException"><paramref name="xPath"/> is nulll</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="xPath"/> is null</exception>
         Public Function Query(xPath As String) As IEnumerable
             If xPath Is Nothing Then Throw New ArgumentNullException("xPath")
             Dim r As New XmlNamespaceManager(New NameTable)
@@ -459,7 +451,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Queries Unicode Character Database XML using Linq-to-XML (XLINQ)</summary>
         ''' <param name="path">A delegate (typically λ-function) specifying a query to select XML Elements from Unicode Character Database XML</param>
         ''' <returns>Objects retrieved suing given query</returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="path"/> is nulll</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="path"/> is null</exception>
         Public Function Query(path As Func(Of XDocument, IEnumerable(Of XElement))) As IEnumerable
             If path Is Nothing Then Throw New ArgumentNullException("path")
             Return QueryToObjects(path(Xml))
@@ -468,14 +460,14 @@ Namespace TextT.UnicodeT
         ''' <summary>Converts each object in enumeration of <see cref="XElement"/>s to UCD object</summary>
         ''' <param name="query">Represents a query to Unicode Character Database XML</param>
         ''' <returns>An enumeration of objects instantiated from elements in <paramref name="query"/></returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="query"/> is nulll</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="query"/> is null</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared Function QueryToObjects(query As IEnumerable(Of XElement)) As IEnumerable(Of IXmlElementWrapper)
             If query Is Nothing Then Throw New ArgumentNullException("query")
             Return From el In query Where el IsNot Nothing Let ret = ElementToObject(el) Where ret IsNot Nothing Select ret
         End Function
 
-        ''' <summary>Converts a XML elemetn to one of Unicode Character Database object from <see cref="Tools.TextT.UnicodeT"/> namespace</summary>
+        ''' <summary>Converts a XML element to one of Unicode Character Database object from <see cref="Tools.TextT.UnicodeT"/> namespace</summary>
         ''' <param name="element">A <see cref="XElement"/> create wrapper object for</param>
         ''' <returns>A wrapper object for given element. Null if <paramref name="element"/> is null. <see cref="XElementWrapper"/> if element type is unknown.</returns>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
@@ -512,11 +504,11 @@ Namespace TextT.UnicodeT
         ''' <param name="checked">True to check for duplicate block, false to skip this check. If <paramref name="checked"/> is true <see cref="Enumerable.SingleOrDefault"/> is used to select a block, if it is false <see cref="Enumerable.FirstOrDefault"/> is used.</param>
         ''' <returns>
         ''' An element from the <paramref name="blocks"/> collection <paramref name="codePoint"/> falls in range of codepoints of.
-        ''' Null if no such element can ba found.
+        ''' Null if no such element can be found.
         ''' <note>What happens when more than such element is found depends on value of the <paramref name="checked"/> parameter. When <paramref name="checked"/> is true an <see cref="InvalidOperationException"/> is thrown. When <paramref name="checked"/> is false first matching block is returned and the other bllocks (elements) are ignored.</note>
         ''' </returns>
         ''' <remarks>
-        ''' Attributes forst-cp and last-cp are used to determine block range.
+        ''' Attributes first-cp and last-cp are used to determine block range.
         ''' <para>This method is not CLS-compliant and no CLS-compliant alternative is provided. Consumers not capable of using <see cref="UInteger"/> type should use one of instance overloads instead.</para>
         ''' </remarks>
         ''' <exception cref="ArgumentNullException">Attribute first-cp or last-cp of an element is not provided.</exception>
@@ -536,7 +528,7 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Gets a Unicode block that covers given code point</summary>
         ''' <param name="codePoint">A code point to get block that contains it</param>
-        ''' <returns>A Unicode block that cotains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
+        ''' <returns>A Unicode block that contains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
         ''' <remarks>This method is not CLS-compliant. CLS compliant alternative (overload) is provided.</remarks>
         ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
         ''' <seelaso cref="UnicodeCodePoint.Block"/>
@@ -554,7 +546,7 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Gets a Unicode block that covers given code point (CLS-compliant alternative</summary>
         ''' <param name="codePoint">A code point to get block that contains it</param>
-        ''' <returns>A Unicode block that cotains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
+        ''' <returns>A Unicode block that contains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
         ''' <remarks>This method is not CLS-compliant. CLS compliant alternative (overload) is provided.</remarks>
         ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
         ''' <seelaso cref="UnicodeCodePoint.Block"/>
@@ -566,14 +558,16 @@ Namespace TextT.UnicodeT
 
 #Region "NameALiases.txt"
         ''' <summary>Gets dictionary of name aliases for Unicode code-points</summary>
-        ''' <returns>A dictionary of name aliases. Null if name aliases were not loded.</returns>
+        ''' <returns>A dictionary of name aliases. Null if name aliases were not loaded.</returns>
         ''' <remarks>
         ''' Aliases are stored in <see cref="TextualExtensions"/> under key <c>NameAliases.txt</c>.
-        ''' <para>Name aliases are not part of Unicode Character Database XML and thus they are not loaded by default when loading <see cref="UnicodeCharacterDatabase"/>. You must load them explicitly uisng some of <see cref="LoadNameAliases"/> overloads or set them directly to <see cref="TextualExtensions"/> directly.</para>
+        ''' <para>Name aliases are not part of Unicode Character Database XML and thus they are not loaded by default when loading <see cref="UnicodeCharacterDatabase"/>. You must load them explicitly using some of <see cref="LoadNameAliases"/> overloads or set them directly to <see cref="TextualExtensions"/> directly.</para>
         ''' <para>This property is not CLS-compliant. Direct CLS-compliant alternative is not provided. Use aliases-related properties of <see cref="UnicodeCodePoint"/>.</para>
         ''' <para>Keys of the dictionary are code-point codes, values are alias names. Each code-point can have zero or more aliases. Currently there are only few (11 as of Unicode 6.0) aliases defined in the Unicode standard and no character has more than one alias.</para>
+        ''' <note type="note">Since Unicode 6.2 the name aliases are part of main UCD XML. So this textual extension is no longer needed and is considered obsolete and not loaded by default. Also the NameAliases.txt is no longer embedded in the assembly.</note>
         ''' </remarks>
-        <CLSCompliant(False)>
+        ''' <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this property became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced), Obsolete("This data are part of UCD XML starting with Unicode 6.2. So, no need for this property. Also NameAliases.txt extension is no longer loaded automatically.")>
         Public ReadOnly Property NameAliases As IDictionary(Of UInteger, String())
             Get
                 Dim ret As Object = Nothing
@@ -582,46 +576,45 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Loads default aliases names that are stored in an embeded resource inside Tools.Text.Unicode.dll</summary>
-        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="TextualExtensions"/> first.</exception>
-        ''' <seelaso cref="NameAliases"/>
-        Public Sub LoadNameAliases()
-            LoadNameAliases(New IO.StreamReader(GetType(UnicodeCharacterDatabase).Assembly.GetManifestResourceStream(NameAlisesResourceName)))
-        End Sub
-
         ''' <summary>Loads aliases from a file</summary>
         ''' <param name="path">Path to NameAliases.txt file from Unicode Character Database (UCD)</param>
         ''' <remarks>For Unicode 6.0 the file is publicly available at <a href="http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt">http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt</a>.</remarks>
-        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="TextualExtensions"/> first.</exception>
-        ''' <exception cref="FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unloaded them from <see cref="TextualExtensions"/> first.</exception>
+        ''' <exception cref="FormatException">Unexpected format of data in file being read. See inner exception for details.</exception>
         ''' <seelaso cref="NameAliases"/>
+        ''' <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this method became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
+        <Obsolete("No need to side-load NameAliases.txt since Unicode 6.2 the data are part of main UCD XML file"), EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Sub LoadNameAliases(path As String)
             LoadNameAliases(IO.File.OpenText(path))
         End Sub
 
         ''' <summary>Loads aliases from a text reader</summary>
         ''' <param name="reader">A reader to read aliases from. The reader should point to firs tile of file in NameAlias.txt format (as used in UCD)</param>
-        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="TextualExtensions"/> first.</exception>
-        ''' <exception cref="FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+        ''' <exception cref="InvalidOperationException">Name aliases were already loaded for this instance. You must unloaded them from <see cref="TextualExtensions"/> first.</exception>
+        ''' <exception cref="FormatException">Unexpected format of data in file being read. See inner exception for details.</exception>
         ''' <seelaso cref="NameAliases"/>
+        ''' <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this method became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
+        <Obsolete("No need to side-load NameAliases.txt since Unicode 6.2 the data are part of main UCD XML file"), EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Sub LoadNameAliases(reader As IO.TextReader)
             Dim a = ReadNameAliases(reader)
             TextualExtensions.Add("NameAliases.txt", a)
         End Sub
 
-        ''' <summary>Parses contant of NameAliases.txt file from Unicode Character Database to a dictionary of name aliases</summary>
+        ''' <summary>Parses constant of NameAliases.txt file from Unicode Character Database to a dictionary of name aliases</summary>
         ''' <param name="reader">A reader that points to first line of NameAliases.txt-like file (a file in compatible format)</param>
         ''' <returns>A dictionary keyed by code-points and valued by name aliases for that code-point</returns>
         ''' <remarks>
         ''' This function is not CLS-compliant. No direct CLS-compliant counterpart is provided. Use some of instance overloads of <see cref="LoadNameAliases"/>.
-        ''' <para>Parsing alghoritm provided by this method will work with proposed etxension of Unicode 6.1.0 but will ignore the Type field.</para>
+        ''' <para>Parsing algorithm provided by this method will work with proposed extension of Unicode 6.1.0 but will ignore the Type field.</para>
         ''' </remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="reader"/> is null.</exception>
-        ''' <exception cref="FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+        ''' <exception cref="FormatException">Unexpected format of data in file being read. See inner exception for details.</exception>
+        ''' <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this method became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
         <EditorBrowsable(EditorBrowsableState.Advanced), CLSCompliant(False)>
-        Public Shared Function ReadNameAliases(reader As IO.TextReader) As IDictionary(Of UInteger, String())
+        <Obsolete("No need to side-load NameAliases.txt since Unicode 6.2 the data are part of main UCD XML file")>
+        Public Shared Function ReadNameAliases(reader As IO.TextReader) As IDictionary(Of UInteger, UnicodeNameAlias())
             If reader Is Nothing Then Throw New ArgumentNullException("reader")
-            Dim aliases As New Dictionary(Of UInteger, List(Of String))
+            Dim aliases As New Dictionary(Of UInteger, List(Of UnicodeNameAlias))
 
             Dim line As String
             Dim lineNumber% = 0
@@ -633,13 +626,14 @@ Namespace TextT.UnicodeT
                 Dim parts = line.Split({";"c})
                 Try
                     Dim code = UInteger.Parse(parts(0), Globalization.NumberStyles.HexNumber, InvariantCulture)
-                    If aliases.ContainsKey(code) Then aliases(code).Add(parts(1)) Else aliases.Add(code, New List(Of String) From {parts(0)})
+                    Dim newAlias = New UnicodeNameAlias(parts(1), If(parts.Length > 2, [Enum].Parse(GetType(UnicodeNameAliasType), parts(2), True), UnicodeNameAliasType.Unknown))
+                    If aliases.ContainsKey(code) Then aliases(code).Add(newAlias) Else aliases.Add(code, New List(Of UnicodeNameAlias) From {newAlias})
                 Catch ex As Exception
                     Throw New FormatException(TextT.UnicodeT.UnicodeResources.ex_ErrorReadingNameAliases.f(lineNumber, ex.Message), ex)
                 End Try
             Loop Until line Is Nothing
 
-            Dim ret As New Dictionary(Of UInteger, String())(aliases.Count)
+            Dim ret As New Dictionary(Of UInteger, UnicodeNameAlias())(aliases.Count)
             For Each itm In aliases
                 ret.Add(itm.Key, itm.Value.ToArray)
             Next
@@ -653,7 +647,7 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Gets name of a character</summary>
         ''' <param name="codePoint">A Unicode (UTF-32) code-point</param>
-        ''' <returns>Name of the character, nulll of the source is not capable of providing character name</returns>
+        ''' <returns>Name of the character, null of the source is not capable of providing character name</returns>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="codePoint"/> is less than zero or greater than <see cref="UnicodeCharacterDatabase.MaxCodePoint"/>.</exception>
         Private Function GetName(codePoint As Integer) As String Implements ICharNameProvider.GetName
             Dim ch = FindCodePoint(codePoint)

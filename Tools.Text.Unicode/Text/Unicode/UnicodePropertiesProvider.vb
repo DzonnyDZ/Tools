@@ -5,6 +5,7 @@ Imports System.Xml.Linq
 Imports System.Globalization.CultureInfo
 Imports Tools.NumericsT
 Imports System.Xml.Serialization
+Imports Tools.LinqT
 
 'List of all properties http://www.unicode.org/reports/tr44/#Properties
 'XML format specification http://www.unicode.org/reports/tr42/
@@ -98,10 +99,10 @@ Namespace TextT.UnicodeT
             Return GetPropertyValue(Nothing, name)
         End Function
 
-        ''' <summary>When overriden in derived class get value of given property (attribute with namespace specified) resolving or not resolving placeholders in property value</summary>
+        ''' <summary>When overridden in derived class get value of given property (attribute with namespace specified) resolving or not resolving placeholders in property value</summary>
         ''' <param name="namespace">Name of attribute XML namespace</param>
         ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
-        ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overriden in derived class. This implementation never resolves placholders.</param>
+        ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overridden in derived class. This implementation never resolves placholders.</param>
         ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
         ''' <remarks>Derived class may provide fallback logic for providing property values when the property is not defined on <see cref="Element"/>.
         ''' <para>
@@ -113,11 +114,11 @@ Namespace TextT.UnicodeT
             Return GetPropertyValue([namespace], name)
         End Function
 
-        ''' <summary>When <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> overload is overriden overriden in derived class get value of given property (attribute with no namespace) resolving or not resolving placeholders in property value</summary>
+        ''' <summary>When <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> overload is overridden overridden in derived class get value of given property (attribute with no namespace) resolving or not resolving placeholders in property value</summary>
         ''' <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
-        ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overriden in derived class. This implementation never resolves placholders.</param>
+        ''' <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overridden in derived class. This implementation never resolves placholders.</param>
         ''' <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="Element"/>.</returns>
-        ''' <remarks>If <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> is not overriden resolving is never performed.</remarks>
+        ''' <remarks>If <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> is not overridden resolving is never performed.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Function GetPropertyValue$(name$, allowResolving As Boolean)
             Return GetPropertyValue(Nothing, name, allowResolving)
@@ -190,7 +191,7 @@ Namespace TextT.UnicodeT
 #Region "Properties"
 #Region "General"
         ''' <summary>Gets version of Unicode in which a code point was assigned to an abstract character, or made surrogate or non-character</summary>
-        ''' <returns>Version of Unicode standard or null. Null is retuened also when underlying XML attribute has value "unassigned".</returns>
+        ''' <returns>Version of Unicode standard or null. Null is returned also when underlying XML attribute has value "unassigned".</returns>
         ''' <remarks>Unicode standard defines values this property can have (i.e. it cannot have any version number and typically only <see cref="Version.Major"/> and <see cref="Version.Minor"/> numbers are used.
         ''' <para>Underlying XML attribute is @age.</para></remarks>
         <XmlAttribute("age")>
@@ -307,7 +308,8 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Gets combining class of the character</summary>
         ''' <remarks>Underlying XML attribute is @ccc.
-        ''' <para>The classes used for the Canonical Ordering Algorithm in the Unicode Standard. This property could be considered either an enumerated property or a numeric property: the principal use of the property is in terms of the numeric values.</para></remarks>
+        ''' <para>The classes used for the Canonical Ordering Algorithm in the Unicode Standard. This property could be considered either an enumerated property or a numeric property: the principal use of the property is in terms of the numeric values.</para>
+        ''' </remarks>
         <XmlAttribute("ccc")>
         <UcdProperty("Canonical_Combining_Class", "UnicodeData.txt", UnicodePropertyType.Numeric, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.Normalization)>
         <LDisplayName(GetType(UnicodeResources), "d_CanonicalCombiningClass")>
@@ -316,6 +318,17 @@ Namespace TextT.UnicodeT
                 Dim value = GetPropertyValue("ccc")
                 If value = "" Then Return 0
                 Return Byte.Parse(value, InvariantCulture)
+            End Get
+        End Property
+
+        ''' <summary>Gets name of block the character belongs to</summary>
+        ''' <remarks>Underlying XML attribute is @blk.</remarks>
+        <XmlAttribute("blk")>
+        <UcdProperty("Block", "Block.txt", UnicodePropertyType.Catalog, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
+        <LDisplayName(GetType(UnicodeResources), "d_Block")>
+        Public ReadOnly Property Block As String
+            Get
+                Return GetPropertyValue("blk")
             End Get
         End Property
 #End Region
@@ -597,7 +610,7 @@ Namespace TextT.UnicodeT
         End Property
 #End Region
 
-        ''' <summary>In case character requires extra meppings for closure under Case Folding plus Normalization Form KC this property returns it.</summary>
+        ''' <summary>In case character requires extra mappings for closure under Case Folding plus Normalization Form KC this property returns it.</summary>
         ''' <returns>If extra mapping is required, returns it. Otherwise returns null.</returns>
         ''' <remarks>This property is obsolete as of Unicode 6.0<para>Underlying XML attribute is @FC_NFKC.</para></remarks>
         <XmlAttribute("FC_NFKC"), Obsolete("The FC_NFKC_Closure is deprecated as of Unicode 6.0.0")>
@@ -642,7 +655,7 @@ Namespace TextT.UnicodeT
             Get
                 If NumericType = UnicodeCharacterNumericType.None Then Return Nothing
                 Dim value = GetPropertyValue("nv")
-                If value = "" Then Return Nothing
+                If value.In("", "NaN") Then Return Nothing '"" - for compatibility reasons, since Unicoe 6.2.0 proper null represenation is NaN
                 Return SRational.Parse(value, Globalization.NumberStyles.Integer, InvariantCulture)
             End Get
         End Property
@@ -693,7 +706,7 @@ Namespace TextT.UnicodeT
                     Case "Ain" : Return UnicodeJoiningGroup.Ain
                     Case "Alaph" : Return UnicodeJoiningGroup.Alaph
                     Case "Alef" : Return UnicodeJoiningGroup.Alef
-                    Case "Alef_Maqsurah" : Return UnicodeJoiningGroup.YehWithTail
+                    Case "Alef_Maqsurah" : Return UnicodeJoiningGroup.YehWithTail 'This is on purpose. See documentation of JoiningGroup and UnicodeJoiningGroup
                     Case "Beh" : Return UnicodeJoiningGroup.Beh
                     Case "Beth" : Return UnicodeJoiningGroup.Beth
                     Case "Burushaski_Yeh_Barree" : Return UnicodeJoiningGroup.BurushaskiYehBarree
@@ -749,6 +762,7 @@ Namespace TextT.UnicodeT
                     Case "Yudh_He" : Return UnicodeJoiningGroup.YudhHe
                     Case "Zain" : Return UnicodeJoiningGroup.Zain
                     Case "Zhain" : Return UnicodeJoiningGroup.SogdianZhain
+                    Case "Rohingya_Yeh" : Return UnicodeJoiningGroup.RohingyaYeh
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -815,6 +829,8 @@ Namespace TextT.UnicodeT
                     Case "JT" : Return UnicodeLineBreakType.HangulTJamo
                     Case "SA" : Return UnicodeLineBreakType.ComplexContextDependent
                     Case "XX" : Return UnicodeLineBreakType.Unknown
+                    Case "HL" : Return UnicodeLineBreakType.HebrewLetter
+                    Case "CJ" : Return UnicodeLineBreakType.ConditionalJapaneseStarter
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -979,7 +995,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets mapping from character to its case-folded forms (if the character maps to only one character).</summary>
-        ''' <remarks>Underlying XML attribute is @scf.<para>If this property does not providde value check <see cref="CaseFolding"/>.</para></remarks>
+        ''' <remarks>Underlying XML attribute is @scf.<para>If this property does not provide value check <see cref="CaseFolding"/>.</para></remarks>
         <XmlAttribute("scf")>
         <UcdProperty("Simple_Case_Folding", "CaseFolding.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleCaseFolding")>
@@ -992,7 +1008,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets mapping from character to its case-folded forms.</summary>
-        ''' <remarks>Underlying XML attribute is @scf. If this attribute is not specified this propertxy returns value of <see cref="SimpleCaseFolding"/> as one-item collection.</remarks>
+        ''' <remarks>Underlying XML attribute is @scf. If this attribute is not specified this property returns value of <see cref="SimpleCaseFolding"/> as one-item collection.</remarks>
         <XmlAttribute("cf")>
         <UcdProperty("Case_Folding", "CaseFolding.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_CaseFolding")>
@@ -1005,7 +1021,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets value idicating if the character is ignored for casing purposes</summary>
+        ''' <summary>Gets value indicating if the character is ignored for casing purposes</summary>
         ''' <remarks>Underlying XML attribute is @CI</remarks> 
         <XmlAttribute("CI")>
         <UcdProperty("Case_Ignorable", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
@@ -1016,9 +1032,9 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets value indicating if the character either llowercase, uppercase or tilecase character</summary>
+        ''' <summary>Gets value indicating if the character either lowercase, uppercase or tilecase character</summary>
         ''' <remarks>Underlying XML attribute is @Cased</remarks> 
-        <XmlAttribute("CI")>
+        <XmlAttribute("Cased")>
         <UcdProperty("Cased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsCased")>
         Public ReadOnly Property IsCased As Boolean
@@ -1122,6 +1138,20 @@ Namespace TextT.UnicodeT
         Public ReadOnly Property Script$
             Get
                 Return GetPropertyValue("sc")
+            End Get
+        End Property
+
+        ''' <summary>Indicates which characters are commonly used with more than one script, but With a limited number of scripts.</summary>
+        ''' <remarks>
+        ''' For each code point, there is one or more property values.  Each such value is a Script property value.
+        ''' <para>Underlying XML attributes is @scx.</para>
+        ''' </remarks>
+        <XmlAttribute("scx")>
+        <UcdProperty("Script_Extensions", "ScriptExtensions.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
+        <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_ScriptExtensions")>
+        Public ReadOnly Property ScriptExtensions As String()
+            Get
+                Return GetStringArray("scx")
             End Get
         End Property
 #End Region

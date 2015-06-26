@@ -101,6 +101,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Block.
+        '''</summary>
+        Friend Shared ReadOnly Property d_Block() As String
+            Get
+                Return ResourceManager.GetString("d_Block", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Canonical Combining Class.
         '''</summary>
         Friend Shared ReadOnly Property d_CanonicalCombiningClass() As String
@@ -997,6 +1006,15 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property d_Script() As String
             Get
                 Return ResourceManager.GetString("d_Script", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Script extensions.
+        '''</summary>
+        Friend Shared ReadOnly Property d_ScriptExtensions() As String
+            Get
+                Return ResourceManager.GetString("d_ScriptExtensions", resourceCulture)
             End Get
         End Property
         

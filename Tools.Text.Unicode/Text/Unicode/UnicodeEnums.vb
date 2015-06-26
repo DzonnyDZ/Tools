@@ -303,6 +303,8 @@ Namespace TextT.UnicodeT
         YehWithTail
         ''' <summary>Right joining Arabic group Yeh Barree (ے)</summary>
         YehBarree
+        ''' <summary>Right joining Arabic group Rohingya Yeh (ࢬ)</summary>
+        RohingyaYeh
 #End Region
 #Region "Other Arabic"
 #End Region
@@ -383,7 +385,10 @@ Namespace TextT.UnicodeT
     End Enum
 
     ''' <summary>Enumeration denotes origin of <see cref="UnicodeJoiningGroup"/> enumeration member</summary>
-    ''' <remarks>In description of individual enum items in braces is number of table from Unicode chapter 8 where the groups are defined.</remarks>
+    ''' <remarks>
+    ''' In description of individual enum items in braces is number of table from Unicode chapter 8 where the groups are defined.
+    ''' <para>Origin: http://unicode.org/reports/tr14/#Table1</para>
+    ''' </remarks>
     ''' <seelaso cref="UnicodeExtensions.Origin"/>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum UnicodeJoiningGroupOrigin
@@ -445,7 +450,7 @@ Namespace TextT.UnicodeT
         <XmlEnum("CP")> CloseParenthesis = 17
         ''' <summary>Exclamation/Interrogation (EX) - Prohibits break before</summary>
         <XmlElement("EX")> ExclamationInterrogation = 18
-        ''' <summary>Inseparable (IN) - Allow only indirect line breaks netween pairs</summary>
+        ''' <summary>Inseparable (IN) - Allow only indirect line breaks between pairs</summary>
         <XmlEnum("IN")> Inseparable = 19
         ''' <summary>Nonstarter (NS) - Allow only indirect line breaks before</summary>
         <XmlEnum("NS")> Nonstarter = 20
@@ -487,10 +492,14 @@ Namespace TextT.UnicodeT
         <XmlEnum("SA")> ComplexContextDependent = 36
         ''' <summary>Unknown (XX) - Have as yet unknown line breaking behavior or unassigned code positions</summary>
         <XmlEnum("XX")> Unknown = 0
+        ''' <summary>Conditional Japanese Starter (CJ) - From Small kana - Treat as NS or ID for strict or normal breaking.</summary>
+        <XmlEnum("CJ")> ConditionalJapaneseStarter = 37
+        ''' <summary>Hebrew Letter	(HL) - From Hebrew - Do not break around a following hyphen; otherwise act as Alphabetic</summary>
+        <XmlEnum("HL")> HebrewLetter = 38
 #End Region
     End Enum
 
-    ''' <summary>Defines width of Eas Asian character</summary>
+    ''' <summary>Defines width of East Asian character</summary>
     ''' <version version="1.5.4">This enum is new in version 1.5.4</version>
     Public Enum UnicodeEastAsianWidth
         ''' <summary>Neutral (Not East Asian) (N) - All other characters</summary>

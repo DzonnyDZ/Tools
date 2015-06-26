@@ -1,6 +1,7 @@
 ﻿Imports Tools.ComponentModelT, Tools.ExtensionsT, System.Globalization.CultureInfo, System.Linq
 Imports <xmlns='http://www.unicode.org/ns/2003/ucd/1.0'>
 Imports System.Xml.Linq
+Imports System.Xml.Serialization
 
 Namespace TextT.UnicodeT
     ''' <summary>Represents a named sequence of unicode characters</summary>
@@ -24,8 +25,6 @@ Namespace TextT.UnicodeT
             _element = element
         End Sub
 
-
-
         ''' <summary>Gets XML element this instance wraps</summary>
         Public ReadOnly Property Element As System.Xml.Linq.XElement Implements IXElementWrapper.Element
             Get
@@ -41,6 +40,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets name of this named sequence</summary>
+        <XmlElement("name")>
         Public ReadOnly Property Name$
             Get
                 Return Element.@name
@@ -48,6 +48,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets array of code points that belong to this named sequence</summary>
+        <XmlElement("cps")>
         Public ReadOnly Property CodePoints As CodePointInfoCollection
             Get
                 Return New CodePointInfoCollection(Element.Document, Element.@cps)

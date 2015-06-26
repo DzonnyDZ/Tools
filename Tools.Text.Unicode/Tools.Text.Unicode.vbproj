@@ -186,6 +186,7 @@
     <Compile Include="Text\Unicode\UnicodeCollections.vb" />
     <Compile Include="Text\Unicode\UnicodeEnums.vb" />
     <Compile Include="Text\Unicode\UnicodeExtensions.vb" />
+    <Compile Include="Text\Unicode\UnicodeNameAlias.vb" />
     <Compile Include="Text\Unicode\UnicodeNamedSequence.vb" />
     <Compile Include="Text\Unicode\UnicodeNormalizationCorrection.vb" />
     <Compile Include="Text\Unicode\UnicodePropertiesProvider.vb" />
@@ -303,11 +304,6 @@
     <None Include="Text\Unicode\CSUR.xml">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Text\Unicode\NameAliases.txt">
-      <LogicalName>Tools.TextT.UnicodeT.NameAliases.txt</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Text\Unicode\NamesList.txt" />

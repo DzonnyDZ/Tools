@@ -2,10 +2,10 @@
 <!--
     This file contains XML data for ConScript Unicode Registry (http://www.evertype.com/standards/csur).
     This file has same structure as Unicode Character database XML.
-    This file should be uased as addition to UCD XML.
+    This file should be used as addition to UCD XML.
     This file contains only characters from Unicode private-use ranges.
-    This file defines additional character properties. All properties are attributtes from namespace http://www.evertype.com/standards/csur.
-    This file was manually created for purposes of Unicode bindings impemented in Tools.TextT.UnicodeT.
+    This file defines additional character properties. All properties are attributes from namespace http://www.evertype.com/standards/csur.
+    This file was manually created for purposes of Unicode bindings implemented in Tools.TextT.UnicodeT.
     Tools.TextT.UnicodeT accepts this file as additional source, or it can be merged with main UCD XML file.
     This file uses grouping, however when providing your own version of this file you can use grouped of flat version - same as with UCD XML.
 -->
@@ -18,10 +18,10 @@
     status          Enumerated  Status of a character or a group in CSUR.
                     values:     Proposal        Script registration was proposed but it's not yet registered.
                                 Registered      Script was registered in ConScript Unicode Registry
-                                Reserved        Used for characters that are reserved for special purposes. NOT used for character marked as reserved within blocks of individual scipts (Proposal or Registered is used in this case)
+                                Reserved        Used for characters that are reserved for special purposes. NOT used for character marked as reserved within blocks of individual scripts (Proposal or Registered is used in this case)
                                 Unassigned      The character falls under CSUR range but is currently neither reserved for special purposes nor it is part of registered or proposed character block.
     reserved-for    Enumerated  In case status="Reserved" indicates purpose for which the character is reserved. If not indicated, it's not reserved for any special purpose.
-                                EncodingHacks   Reserrved for encoding hacks
+                                EncodingHacks   Reserved for encoding hacks
                                 FontHacks       Reserved for font hacks
                                 AppleHacks      Reserved for Apple hacks
     last-revision   Date        Date of last revision of CSUR proposal or registration.

@@ -104,7 +104,7 @@ Public Class SettingsDialog
                 MsgBox("Failed to transform the file " & ex.Message, MsgBoxStyle.Critical)
             End Try
 
-            If MsgBox("Wanna optimize the composite font now?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            If MsgBox("Wanna optimize the composite font now?" & vbCrLf & "Optimization will remove characters that composite mapping indicated to be present in the fonts but in fact they are not.", MsgBoxStyle.Question Or MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                 Try
                     OptimizeCompositeFont(saveDialog.FileName)
                 Catch ex As Exception
@@ -140,21 +140,13 @@ Public Class SettingsDialog
             For Each range In ParseRange(compositeMap.@Unicode)
                 Dim min As UInteger?, max As UInteger?
                 For character = range.Item1 To range.Item2
-                    Dim found As Boolean = False
-                    For Each face In glyphFaces
-                        Dim glyph As UShort
-                        If face.CharacterToGlyphMap.TryGetValue(character, glyph) Then
-                            found = True
-                            Exit For
-                        End If
-                    Next
-                    If found Then
-                        If min Is Nothing Then min = found
-                        max = found
-                    Else
-                        If min.HasValue Then ranges.Add(Tuple.Create(min.Value, max.Value))
-                        min = Nothing
-                        max = Nothing
+                    If FontFacesContainCodePoint(glyphFaces, character) Then
+                        If min Is Nothing Then min = character
+                        max = character
+                    Else    If min.HasValue Then
+                            ranges.Add(Tuple.Create(min.Value, max.Value))
+                            min = Nothing
+                            max = Nothing
                     End If
                 Next
                 If min.HasValue Then ranges.Add(Tuple.Create(min.Value, max.Value))
@@ -170,11 +162,24 @@ Public Class SettingsDialog
             Else
                 toRemove.Add(compositeMap)
             End If
-next
-        For Each tr In toRemove 
-            tr.Remove 
+        Next
+        For Each tr In toRemove
+            tr.Remove()
         Next
     End Sub
+
+    Private Function FontFacesContainCodePoint(glyphFaces As List(Of GlyphTypeface), character As UInteger) As Boolean
+
+        Dim found As Boolean = False
+        For Each face In glyphFaces
+            Dim glyph As UShort
+            If face.CharacterToGlyphMap.TryGetValue(character, glyph) Then
+                found = True
+                Exit For
+            End If
+        Next
+        Return found
+    End Function
 
     Private Sub Hyperlink_Click(sender As Hyperlink, e As RoutedEventArgs)
         Process.Start(sender.NavigateUri.ToString)
