@@ -923,4 +923,10 @@
   <data name="d_ScriptExtensions" xml:space="preserve">
     <value>Script extensions</value>
   </data>
+  <data name="d_BidiPairedBracket" xml:space="preserve">
+    <value>Bidi paired bracket</value>
+  </data>
+  <data name="d_BidiPairedBracketType" xml:space="preserve">
+    <value>Bidi paired bracket type</value>
+  </data>
 </root>

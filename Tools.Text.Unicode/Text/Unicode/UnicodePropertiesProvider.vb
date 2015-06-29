@@ -54,6 +54,7 @@ Namespace TextT.UnicodeT
     ''' <note>May boolean properties' names are prefixed with the "Is" prefix which is not used in UCD.</note>
     ''' <note>Unihan database properties has prefix "Han" (unihan property can be also determined by use of <see cref="UnihanPropertyCategoryAttribute"/> instead of <see cref="UnicodePropertyCategoryAttribute"/>).</note>
     ''' <note>XML serialization attributes used to decorate properties of this class are not intended for XML serialization, they are rather intended as machine-readable documentation where the property originates from in UCD XML.</note>
+    ''' <para>For list of Unicode properties see http://www.unicode.org/reports/tr44/#Property_Index</para>
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public MustInherit Class UnicodePropertiesProvider : Implements IXElementWrapper
@@ -379,6 +380,10 @@ Namespace TextT.UnicodeT
                 Case "RLO" : Return UnicodeBidiCategory.RightToLeftOverride
                 Case "S" : Return UnicodeBidiCategory.SegmentSeparator
                 Case "WS" : Return UnicodeBidiCategory.Whitespace
+                Case "LRI" : Return UnicodeBidiCategory.LeftToRightIsolate
+                Case "RLI" : Return UnicodeBidiCategory.RightToLeftIsolate
+                Case "FSI" : Return UnicodeBidiCategory.FirstStrongIsolate
+                Case "PDI" : Return UnicodeBidiCategory.PopDirectionalIsolate
                 Case Else : Throw New ArgumentException(UnicodeResources.ex_UnsupportedBidirectionalCategory.f(value), "value")
             End Select
         End Function
@@ -431,6 +436,52 @@ Namespace TextT.UnicodeT
                 Dim value = GetPropertyValue("Bidi_C")
                 If value = "" Then Return Nothing
                 Return value = "Y"
+            End Get
+        End Property
+
+        ''' <summary>Gets type of a paired bracket, either opening or closing.</summary>
+        ''' <remarks>
+        ''' This property is used in the implementation of parenthesis matching.
+        ''' <para>
+        ''' The Unicode property value stability policy guarantees that characters which have <see cref="BidiPairedBracketType"/> = <see cref=UnicodeBidiPairedBracketType.Open"/> or
+        ''' <see cref="BidiPairedBracketType"/> = <see cref=UnicodeBidiPairedBracketType.Close"/> also have <see cref="BidiCategory"/> = <see cref="UnicodeBidiCategory.OtherNeutrals"/>
+        ''' and <see cref="IsMirrored"/> = true. As a result, an implementation can optimize the lookup of the <see cref="BidiPairedBracketType"/> property values
+        ''' <see cref=UnicodeBidiPairedBracketType.Open">Open</see> and <see cref=UnicodeBidiPairedBracketType.Close">Close</see> by restricting the processing to characters with
+        ''' <see cref="BidiCategory"/> = <see cref="UnicodeBidiCategory.OtherNeutrals"/>.
+        ''' </para>
+        ''' <para>Underlying XML attribute is @bpt</para>
+        ''' </remarks>
+        <XmlAttribute("bpt")>
+        <UcdProperty("Bidi_Paired_Bracket_Type", "BidiBrackets.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdCategory(UnicodePropertyCategory.Bidirectional)>
+        <LDisplayName(GetType(UnicodeResources), "d_BidiPairedBracketType")>
+        Public ReadOnly Property BidiPairedBracketType As UnicodeBidiPairedBracketType
+            Get
+                Dim value = GetPropertyValue("bpt")
+                If value = "" Then Return UnicodeBidiPairedBracketType.Unknown
+                Select Case value
+                    Case "o" : Return UnicodeBidiPairedBracketType.Open
+                    Case "c" : Return UnicodeBidiPairedBracketType.Close
+                    Case "n" : Return UnicodeBidiPairedBracketType.Unknown
+                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.CannotBeInterpretedAs1.f(value, GetType(UnicodeBidiPairedBracketType).Name))
+                End Select
+            End Get
+        End Property
+
+        ''' <summary>For an opening bracket gets, the code point of the matching closing bracket. For a closing bracket gets, the code point of the matching opening bracket.</summary>
+        ''' <remarks>
+        ''' This property is used in the implementation of parenthesis matching.
+        ''' <para>Underlying XML attribute is @bpb</para>
+        ''' </remarks>
+        <XmlAttribute("bpb")>
+        <UcdProperty("Bidi_Paired_Bracket", "BidiBrackets.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative)>
+        <UcdCategory(UnicodePropertyCategory.Bidirectional)>
+        <LDisplayName(GetType(UnicodeResources), "d_BidiPairedBracket")>
+        Public ReadOnly Property BidiPairedBracket As CodePointInfo
+            Get
+                Dim value = GetPropertyValue("bpb")
+                If value = "" Then Return Nothing
+                Return New CodePointInfo(Element.Document, UInteger.Parse(value, Globalization.NumberStyles.HexNumber, InvariantCulture))
             End Get
         End Property
 #End Region
@@ -731,6 +782,35 @@ Namespace TextT.UnicodeT
                     Case "Knotted_Heh" : Return UnicodeJoiningGroup.KnottedHeh
                     Case "Lam" : Return UnicodeJoiningGroup.Lam
                     Case "Lamadh" : Return UnicodeJoiningGroup.Lamadh
+
+                    Case "Manichaean_Aleph" : Return UnicodeJoiningGroup.ManichaeanAleph
+                    Case "Manichaean_Ayin" : Return UnicodeJoiningGroup.ManichaeanAyin
+                    Case "Manichaean_Beth" : Return UnicodeJoiningGroup.ManichaeanBeth
+                    Case "Manichaean_Daleth" : Return UnicodeJoiningGroup.ManichaeanDaleth
+                    Case "Manichaean_Dhamedh" : Return UnicodeJoiningGroup.ManichaeanDhamedh
+                    Case "Manichaean_Five" : Return UnicodeJoiningGroup.ManichaeanFive
+                    Case "Manichaean_Gimel" : Return UnicodeJoiningGroup.ManichaeanGimel
+                    Case "Manichaean_Heth" : Return UnicodeJoiningGroup.ManichaeanHeth
+                    Case "Manichaean_Hundred" : Return UnicodeJoiningGroup.ManichaeanHundred
+                    Case "Manichaean_Kaph" : Return UnicodeJoiningGroup.ManichaeanKaph
+                    Case "Manichaean_Lamedh" : Return UnicodeJoiningGroup.ManichaeanLamedh
+                    Case "Manichaean_Mem" : Return UnicodeJoiningGroup.ManichaeanMem
+                    Case "Manichaean_Nun" : Return UnicodeJoiningGroup.ManichaeanNun
+                    Case "Manichaean_One" : Return UnicodeJoiningGroup.ManichaeanOne
+                    Case "Manichaean_Pe" : Return UnicodeJoiningGroup.ManichaeanPe
+                    Case "Manichaean_Qoph" : Return UnicodeJoiningGroup.ManichaeanQoph
+                    Case "Manichaean_Resh" : Return UnicodeJoiningGroup.ManichaeanResh
+                    Case "Manichaean_Sadhe" : Return UnicodeJoiningGroup.ManichaeanSadhe
+                    Case "Manichaean_Samekh" : Return UnicodeJoiningGroup.ManichaeanSamekh
+                    Case "Manichaean_Taw" : Return UnicodeJoiningGroup.ManichaeanTaw
+                    Case "Manichaean_Ten" : Return UnicodeJoiningGroup.ManichaeanTen
+                    Case "Manichaean_Teth" : Return UnicodeJoiningGroup.ManichaeanTeth
+                    Case "Manichaean_Thamedh" : Return UnicodeJoiningGroup.ManichaeanThamedh
+                    Case "Manichaean_Twenty" : Return UnicodeJoiningGroup.ManichaeanTwenty
+                    Case "Manichaean_Waw" : Return UnicodeJoiningGroup.ManichaeanWaw
+                    Case "Manichaean_Yodh" : Return UnicodeJoiningGroup.ManichaeanYodh
+                    Case "Manichaean_Zayin" : Return UnicodeJoiningGroup.ManichaeanZayin
+
                     Case "Meem" : Return UnicodeJoiningGroup.Meem
                     Case "Mim" : Return UnicodeJoiningGroup.Mim
                     Case "No_Joining_Group" : Return UnicodeJoiningGroup.none
@@ -742,11 +822,13 @@ Namespace TextT.UnicodeT
                     Case "Qaph" : Return UnicodeJoiningGroup.Qaph
                     Case "Reh" : Return UnicodeJoiningGroup.Reh
                     Case "Reversed_Pe" : Return UnicodeJoiningGroup.ReversedPe
+                    Case "Rohingya_Yeh" : Return UnicodeJoiningGroup.RohingyaYeh
                     Case "Sad" : Return UnicodeJoiningGroup.Sad
                     Case "Sadhe" : Return UnicodeJoiningGroup.Sadhe
                     Case "Seen" : Return UnicodeJoiningGroup.Seen
                     Case "Semkath" : Return UnicodeJoiningGroup.Semkath
                     Case "Shin" : Return UnicodeJoiningGroup.Shin
+                    Case "Straight_Wav" : Return UnicodeJoiningGroup.StraightWaw
                     Case "Swash_Kaf" : Return UnicodeJoiningGroup.SwashKaf
                     Case "Syriac_Waw" : Return UnicodeJoiningGroup.WawSyraic
                     Case "Tah" : Return UnicodeJoiningGroup.Tah
@@ -762,7 +844,6 @@ Namespace TextT.UnicodeT
                     Case "Yudh_He" : Return UnicodeJoiningGroup.YudhHe
                     Case "Zain" : Return UnicodeJoiningGroup.Zain
                     Case "Zhain" : Return UnicodeJoiningGroup.SogdianZhain
-                    Case "Rohingya_Yeh" : Return UnicodeJoiningGroup.RohingyaYeh
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1590,6 +1671,7 @@ Namespace TextT.UnicodeT
                     Case "T" : Return UnicodeGraphemeClusterBreak.HangulT
                     Case "V" : Return UnicodeGraphemeClusterBreak.HangulV
                     Case "XX" : Return UnicodeGraphemeClusterBreak.other
+                    Case "RI" : Return UnicodeGraphemeClusterBreak.RegionalIndicator
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1619,6 +1701,9 @@ Namespace TextT.UnicodeT
                     Case "MN" : Return UnicodeWordBreakType.MidNum
                     Case "NM" : Return UnicodeWordBreakType.Numeric
                     Case "EX" : Return UnicodeWordBreakType.ExtendNumSet
+                    Case "DQ" : Return UnicodeWordBreakType.DoubleQuote
+                    Case "HL" : Return UnicodeWordBreakType.HebrewLetter
+                    Case "SQ" : Return UnicodeWordBreakType.SingleQuote
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get

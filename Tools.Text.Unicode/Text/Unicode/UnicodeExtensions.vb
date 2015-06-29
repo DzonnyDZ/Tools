@@ -49,10 +49,13 @@ Namespace TextT.UnicodeT
             Select Case group
                 Case UnicodeJoiningGroup.none : Return UnicodeJoiningGroupOrigin.none
                 Case UnicodeJoiningGroup.Beh To UnicodeJoiningGroup.Lam : Return UnicodeJoiningGroupOrigin.ArabicDual
-                Case UnicodeJoiningGroup.Alef To UnicodeJoiningGroup.YehBarree : Return UnicodeJoiningGroupOrigin.ArabicRight
+                Case UnicodeJoiningGroup.Alef To UnicodeJoiningGroup.StraightWaw  : Return UnicodeJoiningGroupOrigin.ArabicRight
                 Case UnicodeJoiningGroup.Beth To UnicodeJoiningGroup.Shin : Return UnicodeJoiningGroupOrigin.SyriacDual
                 Case UnicodeJoiningGroup.Dalath To UnicodeJoiningGroup.Taw : Return UnicodeJoiningGroupOrigin.SyriacRight
                 Case UnicodeJoiningGroup.Alaph : Return UnicodeJoiningGroupOrigin.SyriacOther
+                Case UnicodeJoiningGroup.ManichaeanAleph To UnicodeJoiningGroup.ManichaeanTwenty : Return UnicodeJoiningGroupOrigin.ManichaeanDual
+                Case UnicodeJoiningGroup.ManichaeanDaleth To UnicodeJoiningGroup.ManichaeanYodh : Return UnicodeJoiningGroupOrigin.ManichaeanRight
+                Case UnicodeJoiningGroup.ManichaeanHeth To  UnicodeJoiningGroup.ManichaeanNun :Return UnicodeJoiningGroupOrigin.ManichaeanLeft 
                 Case Else : Throw New InvalidEnumArgumentException("group", group, group.GetType)
             End Select
         End Function

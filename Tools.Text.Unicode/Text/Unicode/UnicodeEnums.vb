@@ -23,57 +23,80 @@ Namespace TextT.UnicodeT
         Other
     End Enum
 
-    ''' <summary>Defines Unicode bidirectional categories of cahacters</summary>
-    ''' <remarks>To determine strength programatically match 2nd-least significant byte against <see cref="UnicodeBidiCategoryStrenght"/>.</remarks>
+    ''' <summary>Defines Unicode bidirectional categories of characters</summary>
+    ''' <remarks>
+    ''' To determine strength programatically match 2nd-least significant byte against <see cref="UnicodeBidiCategoryStrenght"/>.
+    ''' <para>Details in http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types</para>
+    ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public Enum UnicodeBidiCategory
+#Region "Strong"
         ''' <summary>Strong, left-to-right character (L; left-to-right letters and numerals)</summary>
         <XmlEnum("L")>
         LeftToRight = UnicodeBidiCategoryStrenght.Strong Or 1
-        ''' <summary>Strong, left-to-right embedding (LRE; LRE character)</summary>
-        <XmlEnum("LRE")>
-        LeftToRightEmbedding = UnicodeBidiCategoryStrenght.Strong Or 2
-        ''' <summary>Strong, left-to-right override (LRO; LRO character)</summary>
-        <XmlEnum("LRO")>
-        LeftToRightOverride = UnicodeBidiCategoryStrenght.Strong Or 3
         ''' <summary>Strong, right-to-left character (R; right-to-left letters)</summary>
         <XmlEnum("R")>
-        RightToLeft = UnicodeBidiCategoryStrenght.Strong Or 4
+        RightToLeft = UnicodeBidiCategoryStrenght.Strong Or 2
         ''' <summary>Strong, right-to-left Arabic (AL; Arabic and related scripts)</summary>
         <XmlEnum("AL")>
-        RightToLeftArabic = UnicodeBidiCategoryStrenght.Strong Or 5
+        RightToLeftArabic = UnicodeBidiCategoryStrenght.Strong Or 3
+#End Region
+
+#Region "Explicit Formatting"
+        ''' <summary>Strong, left-to-right embedding (LRE; LRE character)</summary>
+        <XmlEnum("LRE")>
+        LeftToRightEmbedding = UnicodeBidiCategoryStrenght.Explicit Or 1
+        ''' <summary>Strong, left-to-right override (LRO; LRO character)</summary>
+        <XmlEnum("LRO")>
+        LeftToRightOverride = UnicodeBidiCategoryStrenght.Explicit Or 2
         ''' <summary>Strong, right-to-left embedding (RLE; RLE character)</summary>
         <XmlEnum("RLE")>
-        RightToLeftEmbedding = UnicodeBidiCategoryStrenght.Strong Or 6
+        RightToLeftEmbedding = UnicodeBidiCategoryStrenght.Explicit Or 3
         ''' <summary>Strong, right-to.left override (RLO; RLO character)</summary>
         <XmlEnum("RLO")>
-        RightToLeftOverride = UnicodeBidiCategoryStrenght.Strong Or 7
-
-        ''' <summary>Weak, pop directional fromat (PDF; PDF character)</summary>
+        RightToLeftOverride = UnicodeBidiCategoryStrenght.Strong Or 4
+        ''' <summary>Weak, pop directional format (PDF; PDF character)</summary>
         <XmlEnum("PDF")>
-        PopDirectionalFormat = UnicodeBidiCategoryStrenght.Weak Or 1
+        PopDirectionalFormat = UnicodeBidiCategoryStrenght.Explicit Or 5
+        ''' <summary>Right-to-Left Isolate (RLI)</summary>
+        <XmlEnum("RLI")>
+        RightToLeftIsolate = UnicodeBidiCategoryStrenght.Explicit Or 6
+        ''' <summary>Left-to-Right Isolate (LRI)</summary>
+        <XmlEnum("LRI")>
+        LeftToRightIsolate = UnicodeBidiCategoryStrenght.Explicit Or 7
+        ''' <summary>First Strong Isolate (FSI)</summary>
+        <XmlEnum("FSI")>
+        FirstStrongIsolate = UnicodeBidiCategoryStrenght.Explicit Or 8
+        ''' <summary>Pop DIrectional Isolate (PDI)</summary>
+        <XmlEnum("PDI")>
+        PopDirectionalIsolate = UnicodeBidiCategoryStrenght.Explicit Or 9
+#End Region
+
+#Region "Weak"
         ''' <summary>Weak, European numbers (EN; European digits and Eastern Arabic-Indic digits etc.)</summary>
         <XmlEnum("EN")>
-        EuropeanNumber = UnicodeBidiCategoryStrenght.Weak Or 2
+        EuropeanNumber = UnicodeBidiCategoryStrenght.Weak Or 1
         ''' <summary>Weak, European number separators (ES; +, -)</summary>
         <XmlEnum("ES")>
-        EuropeanNumberSeparator = UnicodeBidiCategoryStrenght.Weak Or 3
+        EuropeanNumberSeparator = UnicodeBidiCategoryStrenght.Weak Or 2
         ''' <summary>Weak, European number terminators (ET; ° and currency symbols)</summary>
         <XmlEnum("ET")>
-        EuropeanNumberTerminator = UnicodeBidiCategoryStrenght.Weak Or 4
+        EuropeanNumberTerminator = UnicodeBidiCategoryStrenght.Weak Or 3
         ''' <summary>Weak, Arabic numbers (AN; Arabic-Indic digits)</summary>
         <XmlEnum("AN")>
-        ArabicNumber = UnicodeBidiCategoryStrenght.Weak Or 5
+        ArabicNumber = UnicodeBidiCategoryStrenght.Weak Or 4
         ''' <summary>Weak, common number separators (CS; :, ,, ., NBSP etc.)</summary>
         <XmlEnum("CS")>
-        CommonNumberSeparator = UnicodeBidiCategoryStrenght.Weak Or 6
+        CommonNumberSeparator = UnicodeBidiCategoryStrenght.Weak Or 5
         ''' <summary>Weak, non spacing mark (NSM; characters of general category <see cref="UnicodeCategory.NonSpacingMark"/> and <see cref="UnicodeCategory.EnclosingMark"/>)</summary>
         <XmlEnum("NSM")>
-        NonSpacingMark = UnicodeBidiCategoryStrenght.Weak Or 7
+        NonSpacingMark = UnicodeBidiCategoryStrenght.Weak Or 6
         ''' <summary>Weak, boundary neutral (BN; default ignorables)</summary>
         <XmlEnum("BN")>
-        BoundaryNeutral = UnicodeBidiCategoryStrenght.Weak Or 8
+        BoundaryNeutral = UnicodeBidiCategoryStrenght.Weak Or 7
+#End Region
 
+#Region "Neutral"
         ''' <summary>Neutral, paragraph separator (B; paragraph separators)</summary>
         <XmlEnum("B")>
         ParagraphSeparator = UnicodeBidiCategoryStrenght.Neutral Or 1
@@ -86,9 +109,10 @@ Namespace TextT.UnicodeT
         ''' <summary>Neutral, other neutrals (ON; other characters)</summary>
         <XmlEnum("ON")>
         OtherNeutrals = UnicodeBidiCategoryStrenght.Neutral Or 4
+#End Region
     End Enum
 
-    ''' <summary>Indicates bidirectional strenght</summary>
+    ''' <summary>Indicates bidirectional strength</summary>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum UnicodeBidiCategoryStrenght
         ''' <summary>Strong bidirectional characters (has direction and affect neutrals)</summary>
@@ -97,6 +121,8 @@ Namespace TextT.UnicodeT
         Weak = &H20
         ''' <summary>Neutral characters (directionality inherited from context - from strong characters)</summary>
         Neutral = &H0
+        ''' <summary>Characters with special purpose</summary>
+        Explicit = &H30
     End Enum
 
     ''' <summary>This enumeration describes well-known values of Unicode combining classes</summary>
@@ -209,7 +235,7 @@ Namespace TextT.UnicodeT
         None
         ''' <summary>Character is a decimal digit (0-9) which can be used in  a decimal radix positional numeral system. The character is incoded in Unicode in a contiguous ascending range 0..9.</summary>
         [Decimal]
-        ''' <summary>Character has an interal value 0-9. This cover digits that need special handling.</summary>
+        ''' <summary>Character has an integral value 0-9. This cover digits that need special handling.</summary>
         Digit
         ''' <summary>Numeric value of character is positive or negative integer or rational number expressed as fraction.</summary>
         Numeric
@@ -233,161 +259,228 @@ Namespace TextT.UnicodeT
     End Enum
 
     ''' <summary>Defines Unicode joining groups for Arabic and other Middle-Eastern scripts</summary>
-    ''' <remarks>Value Alef Maqsurah once exited in Unicode starndard (v2.x) but it does not appear in newer versions. It seems to be replaced with <see cref="UnicodeJoiningGroup.YehWithTail"/>. So Alef Maqsurah is not included in this implementation.</remarks>
+    ''' <remarks>Value Alef Maqsurah once exited in Unicode standard (v2.x) but it does not appear in newer versions. It seems to be replaced with <see cref="UnicodeJoiningGroup.YehWithTail"/>. So Alef Maqsurah is not included in this implementation.</remarks>
     ''' <seelaso cref="UnicodeExtensions.Origin"/>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum UnicodeJoiningGroup
         ''' <summary>No joining group</summary>
-        none
+        <XmlIgnore> none
+#Region "Arabic"
 #Region "Dual Arabic"
         ''' <summary>Dual joining Arabic group Beh (ب)</summary>
-        Beh
+        <XmlElement("Beh")> Beh
         ''' <summary>Dual joining Arabic group Noon (ن)</summary>
-        Noon
+        <XmlElement("Noon")> Noon
         ''' <summary>Dual joining Arabic group Nya (ڽ)</summary>
-        Nya
+        <XmlElement("Nya")> Nya
         ''' <summary>Dual joining Arabic group Yeh (ي)</summary>
-        Yeh
+        <XmlElement("Yeh")> Yeh
         ''' <summary>Dual joining Arabic group Farsi Yeh (ی)</summary>
-        FarsiYeh
+        <XmlElement("Farsi_Yeh")> FarsiYeh
         ''' <summary>Dual joining Arabic group Burushaski Yeh Barree</summary>
-        BurushaskiYehBarree
+        <XmlElement("Burushaski_Yeh_Barree")> BurushaskiYehBarree
         ''' <summary>Dual joining Arabic group Hah (ح)</summary>
-        Hah
+        <XmlElement("Hah")> Hah
         ''' <summary>Dual joining Arabic group Seen (س)</summary>
-        Seen
+        <XmlElement("Seen")> Seen
         ''' <summary>Dual joining Arabic group Sad (ص)</summary>
-        Sad
+        <XmlElement("Sad")> Sad
         ''' <summary>Dual joining Arabic group Tah (ط)</summary>
-        Tah
+        <XmlElement("Tah")> Tah
         ''' <summary>Dual joining Arabic group Ain (ع)</summary>
-        Ain
+        <XmlElement("Ain")> Ain
         ''' <summary>Dual joining Arabic group Feh (ف)</summary>
-        Feh
+        <XmlElement("Feh")> Feh
         ''' <summary>Dual joining Arabic group Qaf (ق)</summary>
-        Qaf
+        <XmlElement("Qaf")> Qaf
         ''' <summary>Dual joining Arabic group Meem (م)</summary>
-        Meem
+        <XmlElement("Meem")> Meem
         ''' <summary>Dual joining Arabic group Heh (ه)</summary>
-        Heh
+        <XmlElement("Heh")> Heh
         ''' <summary>Dual joining Arabic group knotted Heh</summary>
-        KnottedHeh
+        <XmlElement("Knotted_Heh")> KnottedHeh
         ''' <summary>Dual joining Arabic group Heh goal</summary>
-        HehGoal
+        <XmlElement("Heh_Goal")> HehGoal
         ''' <summary>Dual joining Arabic group Kaf (ك)</summary>
-        Kaf
+        <XmlElement("Kaf")> Kaf
         ''' <summary>Dual joining Arabic group Swash Kaf (ڪ)</summary>
-        SwashKaf
+        <XmlElement("Swash_Kaf")> SwashKaf
         ''' <summary>Dual joining Arabic group Gaf (گ)</summary>
-        Gaf
+        <XmlElement("Gaf")> Gaf
         ''' <summary>Dual joining Arabic group Lam (ل)</summary>
-        Lam
+        <XmlElement("Lam")> Lam
 #End Region
 #Region "Right Arabic"
         ''' <summary>Right joining Arabic group Alef (ا)</summary>
-        Alef
+        <XmlElement("Alef")> Alef
         ''' <summary>Right joining Arabic group Waw (و)</summary>
-        Waw
+        <XmlElement("Waw")> Waw
         ''' <summary>Right joining Arabic group Dal (د)</summary>
-        Dal
+        <XmlElement("Dal")> Dal
         ''' <summary>Right joining Arabic group Reh (ر)</summary>
-        Reh
+        <XmlElement("Reh")> Reh
         ''' <summary>Right joining Arabic group Teh Marbuta (ة)</summary>
-        TehMarbuta
+        <XmlElement("Teh_Marbuta")> TehMarbuta
         ''' <summary>Right joining Arabic group Teh Marbuta goal (ۃ)</summary>
-        TehMarbutaGoal
+        <XmlElement("Teh_Marbuta_Goal")> TehMarbutaGoal
         ''' <summary>This is legacy is alias of <see cref="TehMarbutaGoal"/>.</summary>
         ''' <remarks>This value property no longer apply on U+06C2 (Heh goal with Hamza above, &#x06C2;), it applies only to U+06C3 (Teh Marbuta goal, &#x06C3;), so new property alias <see cref="TehMarbutaGoal"/> was added to Unicode which makes more sense.</remarks>
-        HamzaOnHehGoal = TehMarbutaGoal
+        <XmlElement("Hamza_On_Heh_Goal")> HamzaOnHehGoal = TehMarbutaGoal
         ''' <summary>Right joining Arabic group Yeh with tail (ۍ)</summary>
-        YehWithTail
+        <XmlElement("Yeh_With_Tail")> YehWithTail
         ''' <summary>Right joining Arabic group Yeh Barree (ے)</summary>
-        YehBarree
+        <XmlElement("Yeh_Barree")> YehBarree
         ''' <summary>Right joining Arabic group Rohingya Yeh (ࢬ)</summary>
-        RohingyaYeh
+        <XmlElement("Tohingya_Yeh")> RohingyaYeh
+        ''' <summary>Right joining Arabic group Straight Waw (ࢱ)</summary>
+        <XmlElement("Straight_Waw")> StraightWaw
 #End Region
-#Region "Other Arabic"
 #End Region
+
+#Region "Syriac"
 #Region "Dual Syriac"
         ''' <summary>Dual Joining Syriac group Beth (ܒ)</summary>
-        Beth
+        <XmlElement("Beth")> Beth
         ''' <summary>Dual Joining Syriac group Persian Bheth (ܭ)</summary>
-        PersianBheth
+        <XmlElement("Persian_Beth")> PersianBheth
         ''' <summary>Dual Joining Syriac group Gamal (ܓ)</summary>
-        Gamal
+        <XmlElement("Gamal")> Gamal
         ''' <summary>Dual Joining Syriac group Gamal Garshuni (ܔ)</summary>
-        GamalGarshuni
+        <XmlElement("Gamal_Garshuni")> GamalGarshuni
         ''' <summary>Dual Joining Syriac group Persian Ghamal (ܮ)</summary>
-        PersianGhamal
+        <XmlElement("Persian_Ghamal")> PersianGhamal
         ''' <summary>Dual Joining Syriac group Heth (ܚ)</summary>
-        Heth
+        <XmlElement("Heth")> Heth
         ''' <summary>Dual Joining Syriac group Teth (ܛ)</summary>
-        Teth
+        <XmlElement("Teth")> Teth
         ''' <summary>Dual Joining Syriac group Teth Garshuni (ܜ)</summary>
-        TethGarshuni
+        <XmlElement("Teth_Garshuni")> TethGarshuni
         ''' <summary>Dual Joining Syriac group Yudh (ܝ)</summary>
-        Yudh
+        <XmlElement("Yudh")> Yudh
         ''' <summary>Dual Joining Syriac group Kaph (ܟ)</summary>
-        Kaph
+        <XmlElement("Kaph")> Kaph
         ''' <summary>Dual Joining Syriac group Sogdian Khaph (ݎ)</summary>
-        SogdianKhaph
+        <XmlElement("Sogdian_Kaph")> SogdianKhaph
         ''' <summary>Dual Joining Syriac group Lamadh (ܠ)</summary>
-        Lamadh
+        <XmlElement("Lamadh")> Lamadh
         ''' <summary>Dual Joining Syriac group Mim (ܡ)</summary>
-        Mim
+        <XmlElement("Mim")> Mim
         ''' <summary>Dual Joining Syriac group Nun (ܢ)</summary>
-        Nun
+        <XmlElement("Nun")> Nun
         ''' <summary>Dual Joining Syriac group Semkath (ܣ)</summary>
-        Semkath
+        <XmlElement("Semkath")> Semkath
         ''' <summary>Dual Joining Syriac group Semkath final (ܤ)</summary>
-        SemkathFinal
+        <XmlElement("Semkath_Final")> SemkathFinal
         ''' <summary>Dual Joining Syriac group E (ܥ)</summary>
-        E
+        <XmlElement("E")> E
         ''' <summary>Dual Joining Syriac group Pe (ܦ)</summary>
-        Pe
+        <XmlElement("Pe")> Pe
         ''' <summary>Dual Joining Syriac group reversed Pe (ܧ)</summary>
-        ReversedPe
+        <XmlElement("Reversed_Pe")> ReversedPe
         ''' <summary>Dual Joining Syriac group Sogdian Fe (ݏ)</summary>
-        SogdianFe
+        <XmlElement("Sogdian_Fe")> SogdianFe
         ''' <summary>Dual Joining Syriac group Qaph (ܩ)</summary>
-        Qaph
+        <XmlElement("Qaph")> Qaph
         ''' <summary>Dual Joining Syriac group Shin (ܫ)</summary>
-        Shin
+        <XmlElement("Shin")> Shin
 #End Region
 #Region "Right Syraic"
         ''' <summary>Right Joining Syriac group Dalath (ܕ)</summary>
-        Dalath
+        <XmlElement("Dalath")> Dalath
         ''' <summary>Right Joining Syriac group dotless Dalath Rish (ܖ)</summary>
-        DotlessDalathRish
+        <XmlElement("Dotless_Dalat_Rish")> DotlessDalathRish
         ''' <summary>Right Joining Syriac group Persian Dhalath (ܯ)</summary>
-        PersianDhalath
+        <XmlElement("Persian_Dalath")> PersianDhalath
         ''' <summary>Right Joining Syriac group He (ܗ)</summary>
-        He
+        <XmlElement("He")> He
         ''' <summary>Right Joining Syriac group Waw (ܘ)</summary>
-        WawSyraic
+        <XmlElement("Syriac_Waw")> WawSyraic
         ''' <summary>Right Joining Syriac group Zain (ܙ)</summary>
-        Zain
+        <XmlElement("Zain")> Zain
         ''' <summary>Right Joining Syriac group Sogdian Zhain (ݍ)</summary>
-        SogdianZhain
+        <XmlElement("Sogdian_Zhain")> SogdianZhain
         ''' <summary>Right Joining Syriac group Yudh He (ܞ)</summary>
-        YudhHe
+        <XmlElement("Yudh_He")> YudhHe
         ''' <summary>Right Joining Syriac group Sadhe (ܨ)</summary>
-        Sadhe
+        <XmlElement("Sadhe")> Sadhe
         ''' <summary>Right Joining Syriac group Rish (ܪ)</summary>
-        Rish
+        <XmlElement("Rish")> Rish
         ''' <summary>Right Joining Syriac group Taw (ܬ)</summary>
-        Taw
+        <XmlElement("Taw")> Taw
 #End Region
 #Region "Other Syraic"
         ''' <summary>Syraic letter Alaph (U+0710, ܐ) is right-joining character but it's glyph is subject to additional contextual shaping</summary>
-        Alaph
+        <XmlElement("Alaph")> Alaph
+#End Region
+#End Region
+
+#Region "Manichaean"
+#Region "Dual Manichaean"
+        ''' <summary>Dual joining Manichaean group Aleph (𐫀)</summary>
+        <XmlEnum("Manichaean_Aleph")> ManichaeanAleph
+        ''' <summary>Dual joining Manichaean group Beth (𐫁)</summary>
+        <XmlEnum("Manichaean_Beth")> ManichaeanBeth
+        ''' <summary>Dual joining Manichaean group Gimel (𐫃)</summary>
+        <XmlEnum("Manichaean_Gimel")> ManichaeanGimel
+        ''' <summary>Dual joining Manichaean group Ayin (𐫙)</summary>
+        <XmlEnum("Manichaean_Ayin")> ManichaeanAyin
+        ''' <summary>Dual joining Manichaean group Dhamedh (𐫔)</summary>
+        <XmlEnum("Manichaean_Dhamedh")> ManichaeanDhamedh
+        ''' <summary>Dual joining Manichaean group Five (𐫬)</summary>
+        <XmlEnum("Manichaean_Five")> ManichaeanFive
+        ''' <summary>Dual joining Manichaean group Lamedh (𐫓)</summary>
+        <XmlEnum("Manichaean_Lamedh")> ManichaeanLamedh
+        ''' <summary>Dual joining Manichaean group Mem (𐫖)</summary>
+        <XmlEnum("Manichaean_Mem")> ManichaeanMem
+        ''' <summary>Dual joining Manichaean group One (𐫫)</summary>
+        <XmlEnum("Manichaean_One")> ManichaeanOne
+        ''' <summary>Dual joining Manichaean group Pe (𐫛)</summary>
+        <XmlEnum("Manichaean_Pe")> ManichaeanPe
+        ''' <summary>Dual joining Manichaean group Qoph (𐫞)</summary>
+        <XmlEnum("Manichaean_Qoph")> ManichaeanQoph
+        ''' <summary>Dual joining Manichaean group Samekh (𐫘)</summary>
+        <XmlEnum("Manichaean_Samekh")> ManichaeanSamekh
+        ''' <summary>Dual joining Manichaean group Ten 𐫭()</summary>
+        <XmlEnum("Manichaean_Ten")> ManichaeanTen
+        ''' <summary>Dual joining Manichaean group Thamedh (𐫕)</summary>
+        <XmlEnum("Manichaean_Thamedh")> ManichaeanThamedh
+        ''' <summary>Dual joining Manichaean group Twenty (𐫮)</summary>
+        <XmlEnum("Manichaean_Twenty")> ManichaeanTwenty
+#End Region
+#Region "Right Manichaean"
+        ''' <summary>Right joining Manichaean group Daleth (𐫅)</summary>
+        <XmlEnum("Manichaean_Daleth")> ManichaeanDaleth
+        ''' <summary>Right joining Manichaean group Waw (𐫇)</summary>
+        <XmlEnum("Manichaean_Waw")> ManichaeanWaw
+        ''' <summary>Right joining Manichaean group Zayin (𐫉)</summary>
+        <XmlEnum("Manichaean_Zayin")> ManichaeanZayin
+        ''' <summary>Right joining Manichaean group Hundred (𐫯)</summary>
+        <XmlEnum("Manichaean_Hundred")> ManichaeanHundred
+        ''' <summary>Right joining Manichaean group Kaph (𐫐)</summary>
+        <XmlEnum("Manichaean_Kaph")> ManichaeanKaph
+        ''' <summary>Right joining Manichaean group Resh (𐫡)</summary>
+        <XmlEnum("Manichaean_Resh")> ManichaeanResh
+        ''' <summary>Right joining Manichaean group Sadhe (𐫝)</summary>
+        <XmlEnum("Manichaean_Sadhe")> ManichaeanSadhe
+        ''' <summary>Right joining Manichaean group Taw (𐫤)</summary>
+        <XmlEnum("Manichaean_Taw")> ManichaeanTaw
+        ''' <summary>Right joining Manichaean group Teth (𐫎)</summary>
+        <XmlEnum("Manichaean_Teth")> ManichaeanTeth
+        ''' <summary>Right joining Manichaean group Yodh (𐫏)</summary>
+        <XmlEnum("Manichaean_Yodh")> ManichaeanYodh
+#End Region
+#Region "Left Manichaean"
+        ''' <summary>Left joining Manichaean group Heth (𐫍)</summary>
+        <XmlEnum("Manichaean_Heth")> ManichaeanHeth
+        ''' <summary>Left joining Manichaean group Nun (𐫗)</summary>
+        <XmlEnum("Manichaean_Nun")> ManichaeanNun
+#End Region
 #End Region
     End Enum
 
     ''' <summary>Enumeration denotes origin of <see cref="UnicodeJoiningGroup"/> enumeration member</summary>
     ''' <remarks>
     ''' In description of individual enum items in braces is number of table from Unicode chapter 8 where the groups are defined.
-    ''' <para>Origin: http://unicode.org/reports/tr14/#Table1</para>
     ''' </remarks>
     ''' <seelaso cref="UnicodeExtensions.Origin"/>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
@@ -402,8 +495,14 @@ Namespace TextT.UnicodeT
         SyriacDual
         ''' <summary>Right-Joining Syriac Characters (8-14)</summary>
         SyriacRight
-        ''' <summary>Other Syriac charactres</summary>
+        ''' <summary>Other Syriac characters</summary>
         SyriacOther
+        ''' <summary>Dual-joining Manichaean characters</summary>
+        ManichaeanDual
+        ''' <summary>Right-joining Manichaean characters</summary>
+        ManichaeanRight
+        ''' <summary>Left-joining Manichaean characters</summary>
+        ManichaeanLeft
     End Enum
 
     ''' <summary>Indicates how character behaves in relation with line breaking</summary>
@@ -535,6 +634,7 @@ Namespace TextT.UnicodeT
 
     ''' <summary>Values of <see cref="UnicodePropertiesProvider.GraphemeClusterBreak"/> property</summary>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    ''' <remarks>Details provided in http://www.unicode.org/reports/tr29/</remarks>
     Public Enum UnicodeGraphemeClusterBreak
         ''' <summary>No indication</summary>
         <XmlEnum("XX")> other
@@ -542,13 +642,13 @@ Namespace TextT.UnicodeT
         <XmlEnum("CR")> Cr
         ''' <summary>Line Feed</summary>
         <XmlEnum("LF")> Lf
-        ''' <summary>General categoties Zl, Zp, Cc, Cf excluding characters CR, LF, ZWNJ, ZWJ</summary>
+        ''' <summary>General categories Zl, Zp, Cc, Cf excluding characters CR, LF, ZWNJ, ZWJ</summary>
         <XmlEnum("CN")> Control
         ''' <summary>General categories <see cref="System.Globalization.UnicodeCategory.NonSpacingMark"/> or <see cref="Globalization.UnicodeCategory.EnclosingMark"/>, characters <see cref="Chars.ZeroWidthNonJoiner"/> and <see cref="Chars.ZeroWidthJoiner"/> and a few spacing marks needed for canonical equivalence.</summary>
         <XmlEnum("EX")> Extend
         ''' <summary>Some characters which represents logical order exceptions</summary>
         <XmlEnum("PP")> Prepend
-        ''' <summary>General category is specing mark plus few other characters</summary>
+        ''' <summary>General category is specifying mark plus few other characters</summary>
         <XmlEnum("SM")> SpacingMark
         ''' <summary><see cref="UnicodeHangulSyllableType.LeadingJamo"/></summary>
         <XmlEnum("L")> HangulL
@@ -560,6 +660,9 @@ Namespace TextT.UnicodeT
         <XmlEnum("LV")> HangulLv
         ''' <summary><see cref="UnicodeHangulSyllableType.Lvt"/></summary>
         <XmlEnum("LVT")> HangulLvt
+        ''' <summary>The RI characters are used in pairs to denote Emoji national flag symbols corresponding to ISO country codes.</summary>
+        ''' <remarks>Sequences of more than two RI characters should be separated by other characters, such as U+200B ZERO WIDTH SPACE (ZWSP).</remarks>
+        <XmlEnum("RI")> RegionalIndicator
     End Enum
 
     ''' <summary>Specifies Unicode word-breaky types</summary>
@@ -591,12 +694,18 @@ Namespace TextT.UnicodeT
         <XmlEnum("NM")> Numeric
         ''' <summary><see cref="Globalization.UnicodeCategory.ConnectorPunctuation"/></summary>
         <XmlEnum("EX")> ExtendNumSet
+        ''' <summary>Quotation mark (")</summary>
+        <XmlEnum("DQ")> DoubleQuote
+        ''' <summary>Other letters of Hebrew script</summary>
+        <XmlEnum("HL")> HebrewLetter
+        ''' <summary>Apostrophe (')</summary>
+        <XmlEnum("SQ")> SingleQuote
     End Enum
 
     ''' <summary>Specifies sentence break types</summary>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     Public Enum UnicodeSentenceBreakType
-        ''' <summary>Not specifed</summary>
+        ''' <summary>Not specified</summary>
         <XmlEnum("XX")> other
         ''' <summary>Carriage Return (CR)</summary>
         <XmlEnum("CR")> Cr
@@ -612,7 +721,7 @@ Namespace TextT.UnicodeT
         <XmlEnum("SP")> Space
         ''' <summary>Lowercase but extended graphemes</summary>
         <XmlEnum("LO")> Lower
-        ''' <summary>Upppercase and tilecase</summary>
+        ''' <summary>Uppercase and tilecase</summary>
         <XmlEnum("UP")> Upper
         ''' <summary>Alphabetic neither <see cref="Lower"/> nor <see cref="Upper"/> nor <see cref="Extend"/> plus NBSP and U+05F3</summary>
         <XmlEnum("LE")> OLetter
@@ -626,5 +735,34 @@ Namespace TextT.UnicodeT
         <XmlEnum("ST")> STerm
         ''' <summary><see cref="Globalization.UnicodeCategory.OpenPunctuation"/> or <see cref="Globalization.UnicodeCategory.ClosePunctuation"/> or <see cref="UnicodeLineBreakType.Quotation"/> but U+05F3 (exluding <see cref="ATerm"/> and <see cref="STerm"/>)</summary>
         <XmlEnum("CL")> Close
+    End Enum
+
+    ''' <summary>Types of bracket characters. Used for bracket matching</summary>
+    ''' <version version="1.5.4">This enum is new in version 1.5.4</version>
+    Public Enum UnicodeBidiPairedBracketType
+        ''' <summary>Pairing bracket type is not specified</summary>
+        <XmlEnum("n")> Unknown
+        ''' <summary>The character is opening bracket</summary>
+        <XmlEnum("o")> Open
+        ''' <summary>The character is closing bracket</summary>
+        <XmlEnum("c")> Close
+    End Enum
+
+    ''' <summary>Types of Unicode name aliases</summary>
+    ''' <version version="1.5.4">This enum is new in version 1.5.4</version>
+    Public Enum UnicodeNameAliasType
+        ''' <summary>The alias type is not known or was not loaded</summary>
+        ''' <remarks>This can happen when older version of UCD NameAliases.txt is loaded</remarks>
+        <XmlIgnore> Unknown = 0
+        ''' <summary>Corrections for serious problems in the character names</summary>
+        <XmlElement("correction")> Correction = 1
+        ''' <summary>ISO 6429 names for C0 and C1 control functions, and other commonly occurring names For control codes</summary>
+        <XmlElement("control")> Control = 2
+        ''' <summary>A few widely used alternate names for format characters</summary>
+        <XmlElement("alternate")> Alternate = 3
+        ''' <summary>Several documented labels for C1 control code points which were never actually approved In any standard</summary>
+        <XmlElement("figment")> Figment = 4
+        ''' <summary>Commonly occurring abbreviations (or acronyms) for control codes, format characters, spaces, And variation selectors</summary>
+        <XmlElement("abbreviation")> Abbreviation = 5
     End Enum
 End Namespace

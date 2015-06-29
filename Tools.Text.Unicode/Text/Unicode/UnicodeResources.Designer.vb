@@ -101,6 +101,24 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Bidi paired bracket.
+        '''</summary>
+        Friend Shared ReadOnly Property d_BidiPairedBracket() As String
+            Get
+                Return ResourceManager.GetString("d_BidiPairedBracket", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Bidi paired bracket type.
+        '''</summary>
+        Friend Shared ReadOnly Property d_BidiPairedBracketType() As String
+            Get
+                Return ResourceManager.GetString("d_BidiPairedBracketType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Block.
         '''</summary>
         Friend Shared ReadOnly Property d_Block() As String

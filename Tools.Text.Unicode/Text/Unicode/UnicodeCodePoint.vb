@@ -308,7 +308,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets normative name aliases for name of this code point</summary>
         ''' <returns>
         ''' Name aliases (alternative normative names) for this code-point.
-        ''' <para>In case name aliases are present in UCD XML returns name aliases from UCD XML.</para>
+        ''' <para>In case name aliases are present in UCD XML returns name aliases from UCD XML (as of Unicode 6.2).</para>
         ''' <para>
         ''' If they are not present and if NameAliases.txt textual extension is registered uses that extension following way:
         ''' Returns null if <see cref="CodePoint"/> is null or if name aliases are not registered.
@@ -321,9 +321,7 @@ Namespace TextT.UnicodeT
         Public ReadOnly Property NameAliases As UnicodeNameAlias()
             Get
                 If Element.<name-alias>.Any Then
-                    Return (From a In Element.<name-alias>
-                            Select New UnicodeNameAlias(a.@alias, If(a.@type Is Nothing, UnicodeNameAliasType.Unknown, EnumCore.Parse(Of UnicodeNameAliasType)(a.@type, True)))
-                           ).ToArray
+                    Return (From a In Element.<name-alias> Select New UnicodeNameAlias(a)).ToArray
                 Else
                     If Not CodePoint.HasValue Then Return EmptyArray(Of UnicodeNameAlias).value
                     Dim aliases = TryCast(GetTextualExtension("NameAliases.txt"), IDictionary(Of UInteger, UnicodeNameAlias()))
