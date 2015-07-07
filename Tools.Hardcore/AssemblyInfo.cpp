@@ -12,12 +12,11 @@ using namespace System::Security::Permissions;
 // associated with an assembly.
 //
 [assembly:AssemblyTitleAttribute("Tools.Hardcore")];
-[assembly:AssemblyDescriptionAttribute("Common and useful functionaly that must be writting in C++/CLI becaue no other high-level language supports it.")];
+[assembly:AssemblyDescriptionAttribute("Common and useful functionality that can be implemented neither in C# nor in VB due to language limitations.")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("ÐTools teas")];
+[assembly:AssemblyCompanyAttribute("ÐTools team")];
 [assembly:AssemblyProductAttribute("ÐTools")];
-[assembly:AssemblyCopyrightAttribute("© Ðonny 2010")];
-[assembly:AssemblyTrademarkAttribute("")];
+[assembly:AssemblyCopyrightAttribute("© Ðonny 2010-2015")];
 [assembly:Resources::NeutralResourcesLanguageAttribute("en")]
 
 #include "..\SharedFiles\Version.cpp"
@@ -27,3 +26,5 @@ using namespace System::Security::Permissions;
 [assembly:CLSCompliantAttribute(true)];
 
 [assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = false)];
+
+[assembly:Extension()];

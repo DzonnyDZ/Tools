@@ -1,18 +1,18 @@
-﻿Imports System
-Imports System.Data
-Imports System.Data.SqlClient
-Imports System.Data.SqlTypes
-Imports Microsoft.SqlServer.Server
+﻿Imports System.Data.SqlTypes
 Imports System.Text.RegularExpressions
+
 Namespace DataT.SqlServerT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Contains user-defined functions for SQL server</summary>
     ''' <version version="1.5.3">Class introduced</version>
-    Partial Public Class UserDefinedFunctions
-        ''' <summary>This class has no costructor, it's C#-like static class</summary>
-        Partial Private Sub New()
+    Partial Public NotInheritable Class UserDefinedFunctions
+        ''' <summary>Private CTor - quasi-static class (C#-style)</summary>
+        ''' <version version="1.5.4">Constructor added, because in Roslyn version of VB it's no longer possible to have class without any constructor</version>
+        ''' <exception cref="NotImplementedException">Always</exception>
+        Private Sub New()
+            Throw New NotImplementedException("Do not construct static class")
         End Sub
-        ''' <summary>Reqular expression options used by <see cref="RegexMatch"/></summary>
+        ''' <summary>Regular expression options used by <see cref="RegexMatch"/></summary>
         Public Shared ReadOnly Options As RegexOptions = RegexOptions.IgnorePatternWhitespace Or RegexOptions.Singleline Or RegexOptions.CultureInvariant
         ''' <summary>Runs regular expression match</summary>
         ''' <param name="Input">Characters to be matched</param>
@@ -20,7 +20,7 @@ Namespace DataT.SqlServerT
         ''' <returns>A <see cref="SqlBoolean"/> value; <see ctef="SqlBoolean.True"/> if <paramref name="Input"/> matches <paramref name="Pattern"/>; <se cref="SqlBoolean.False"/> otherwise.
         ''' When <paramref name="Input"/> is null or <paramref name="Input"/>.<see cref="SqlChars.IsNull">IsNull</see> is true patter is run agains an empty string instead.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Pattern"/>.<see cref="SqlString.IsNull">IsNull</see> is true</exception>
-        <Microsoft.SqlServer.Server.SqlFunction()> _
+        <Microsoft.SqlServer.Server.SqlFunction()>
         Public Shared Function RegexMatch(ByVal Input As SqlChars, ByVal Pattern As SqlString) As SqlBoolean
             If Pattern.IsNull Then Throw New ArgumentNullException("Pattern")
             Dim regex As New Regex(Pattern.Value, Options)
