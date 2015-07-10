@@ -46,7 +46,7 @@ namespace Tools{ namespace TotalCommanderT{
         ProgressProcWrapper(ProgressCallback^ method);
 
         /// <summary>Invokes the inner representation of the function using ANSI parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="SourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plug-in file system.</param>
         /// <param name="TargetName">Name to which the file is copied.</param>
         /// <param name="PercentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
@@ -55,7 +55,7 @@ namespace Tools{ namespace TotalCommanderT{
         [CLSCompliant(false)]
         int operator()(int PluginNr, char* SourceName, char* TargetName, int PercentDone);//ANSI
         /// <summary>Invokes the inner representation of the function using Unicode parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="SourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plug-in file system.</param>
         /// <param name="TargetName">Name to which the file is copied.</param>
         /// <param name="PercentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
@@ -113,7 +113,7 @@ namespace Tools{ namespace TotalCommanderT{
         LogProcWrapper(LogCallback^ method);
 
         /// <summary>Invokes the inner representation of the function using ANSI parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="MsgType">One of the <see cref="LogKind"/> values</param>
         /// <param name="LogString">String which should be logged.</param>
         /// <exception cref="InvalidOperationException">Managed function is called and plug-in with number <paramref name="PluginNr"/> is not registered</exception>
@@ -121,7 +121,7 @@ namespace Tools{ namespace TotalCommanderT{
         [CLSCompliant(false)]
         void operator()(int PluginNr, int MsgType, char* LogString);
         /// <summary>Invokes the inner representation of the function using Unicode parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="MsgType">One of the <see cref="LogKind"/> values</param>
         /// <param name="LogString">String which should be logged.</param>
         /// <exception cref="InvalidOperationException">Managed function is called and plug-in with number <paramref name="PluginNr"/> is not registered</exception>
@@ -142,7 +142,7 @@ namespace Tools{ namespace TotalCommanderT{
         /// <summary>Invokes the inner representation of the function using managed parameters</summary>
         /// <param name="sender">The plug-in requesting the operation</param>
         /// <exception cref="ArgumentNullException"><paramref name="sender"/> is null</exception>
-        /// <remarks>This is CLS compliant alternative of <see cref="operator()"/></remarks>
+        /// <remarks>This is CLS compliant alternative of <see cref="operator()(FileSystemPlugin^,LogKind,String^)"/></remarks>
         void Invoke(FileSystemPlugin^ sender, LogKind msgType, String^ logString);
     };
 
@@ -176,7 +176,7 @@ namespace Tools{ namespace TotalCommanderT{
         RequestProcWrapper(RequestCallback^ method);
 
         /// <summary>Invokes the inner representation of the function using ANSI parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="RequestType">One of the <see cref="InputRequestKind"/> values</param>
         /// <param name="CustomTitle">Custom title for the dialog box. If null or empty, it will be "Total Commander"</param>
         /// <param name="CustomText">Override the text defined with RequestType. Set this to null or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
@@ -187,7 +187,7 @@ namespace Tools{ namespace TotalCommanderT{
         [CLSCompliant(false)]
         BOOL operator()(int PluginNr, int RequestType, char* CustomTitle, char* CustomText, char* ReturnedText, int maxlen);
         /// <summary>Invokes the inner representation of the function using Unicode parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="RequestType">One of the <see cref="InputRequestKind"/> values</param>
         /// <param name="CustomTitle">Custom title for the dialog box. If null or empty, it will be "Total Commander"</param>
         /// <param name="CustomText">Override the text defined with RequestType. Set this to null or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
@@ -255,7 +255,7 @@ namespace Tools{ namespace TotalCommanderT{
         CryptProcWrapper(CryptCallback^ method);
 
         /// <summary>Invokes the inner representation of the function using ANSI parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="CryptoNr">Here the plug-in needs to pass the crypto number received through the <see cref="FileSystemPlugin::FsSetCryptCallback"/> function.</param>
         /// <param name="Mode">The mode of operation (one of the <see cref="CryptMode"/> values)</param>
         /// <param name="ConnectionName">Name of the connection for this operation</param>
@@ -265,7 +265,7 @@ namespace Tools{ namespace TotalCommanderT{
         [CLSCompliant(false)]
         int operator()(int PluginNr, int CryptoNr, int Mode, char* ConnectionName, char* Password, int maxlen);
         /// <summary>Invokes the inner representation of the function using Unicode parameters</summary>
-        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit"/> function.</param>
+        /// <param name="PluginNr">Here the plug-in needs to pass the plug-in number received through the <see cref="FileSystemPlugin::FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> function.</param>
         /// <param name="CryptoNr">Here the plug-in needs to pass the crypto number received through the <see cref="FileSystemPlugin::FsSetCryptCallback"/> function.</param>
         /// <param name="Mode">The mode of operation (one of the <see cref="CryptMode"/> values)</param>
         /// <param name="ConnectionName">Name of the connection for this operation</param>

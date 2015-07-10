@@ -17,8 +17,8 @@ Namespace DataT.SqlServerT
         ''' <summary>Runs regular expression match</summary>
         ''' <param name="Input">Characters to be matched</param>
         ''' <param name="Pattern">Regular expression pattern to test</param>
-        ''' <returns>A <see cref="SqlBoolean"/> value; <see ctef="SqlBoolean.True"/> if <paramref name="Input"/> matches <paramref name="Pattern"/>; <se cref="SqlBoolean.False"/> otherwise.
-        ''' When <paramref name="Input"/> is null or <paramref name="Input"/>.<see cref="SqlChars.IsNull">IsNull</see> is true patter is run agains an empty string instead.</returns>
+        ''' <returns>A <see cref="SqlBoolean"/> value; <see ctef="SqlBoolean.True"/> if <paramref name="Input"/> matches <paramref name="Pattern"/>; <see cref="SqlBoolean.False"/> otherwise.
+        ''' When <paramref name="Input"/> is null or <paramref name="Input"/>.<see cref="SqlChars.IsNull">IsNull</see> is true patter is run against an empty string instead.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Pattern"/>.<see cref="SqlString.IsNull">IsNull</see> is true</exception>
         <Microsoft.SqlServer.Server.SqlFunction()>
         Public Shared Function RegexMatch(ByVal Input As SqlChars, ByVal Pattern As SqlString) As SqlBoolean

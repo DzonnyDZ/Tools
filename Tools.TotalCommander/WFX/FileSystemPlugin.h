@@ -34,7 +34,7 @@ namespace Tools{namespace TotalCommanderT{
         initonly WfxFunctions implementedFunctions;
     public:
         /// <summary>Gets plug-in by number</summary>
-        /// <param name="plug-inNr">Number of plug-in as passed to <see cref="FsInit"/></param>
+        /// <param name="plug-inNr">Number of plug-in as passed to <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/></param>
         /// <returns>Instance of file system plug-in registered with given number, null if no plug-in was registered under given number</returns>
         /// <remarks>When used from Total Commander only one plug-in is registered per application domain</remarks>
         /// <version version="1.5.4">This function is new in version 1.5.4</version>
@@ -70,7 +70,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="pLogProc">Pointer to the logging function</param>
         /// <param name="pRequestProc">Pointer to the request text proc</param>
         /// <returns>The return value is currently unused. You should return 0 when successful.</returns>
-        /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plug-in. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plug-in DLL is unloaded again. The plug-in DLL is loaded when the user enters the plug-in root in Network Neighborhood.
+        /// <remarks><see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> is NOT called when the user initially installs the plug-in. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plug-in DLL is unloaded again. The plug-in DLL is loaded when the user enters the plug-in root in Network Neighborhood.
         /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plug-in outside of Total Commander use <see cref="InitializePlugin"/> instead.</para>
         /// <para>This plug-in function is implemented by <see cref="OnInit"/>.</para>
         /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preferred.</para>
@@ -87,7 +87,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="pLogProc">Pointer to the logging function</param>
         /// <param name="pRequestProc">Pointer to the request text proc</param>
         /// <returns>The return value is currently unused. You should return 0 when successful.</returns>
-        /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plug-in. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plug-in DLL is unloaded again. The plug-in DLL is loaded when the user enters the plug-in root in Network Neighborhood.
+        /// <remarks><see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> is NOT called when the user initially installs the plug-in. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plug-in DLL is unloaded again. The plug-in DLL is loaded when the user enters the plug-in root in Network Neighborhood.
         /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plug-in outside of Total Commander use <see cref="InitializePlugin"/> instead.</para>
         /// <para>This plug-in function is implemented by <see cref="OnInit"/>.</para>
         /// <para>This function has two implementations (overloads) - <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)">ANSI</see> and <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see>. Use of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)">Unicode</see> is preferred.</para>
@@ -100,7 +100,7 @@ namespace Tools{namespace TotalCommanderT{
         [CLSCompliantAttribute(false), Obsolete("This is ANSI function. Use Unicode overload instead")]
         [PluginMethod("TC_FS_INIT")]
         int FsInit(int pluginNr, tProgressProc pProgressProc, tLogProc pLogProc, tRequestProc pRequestProc);
-        /// <summary>Called when loading the plug-in outside of Total Commander environment instead of <see cref="FsInit"/>. The passed values should be stored in the plug-in for later use.</summary>
+        /// <summary>Called when loading the plug-in outside of Total Commander environment instead of <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/>. The passed values should be stored in the plug-in for later use.</summary>
         /// <param name="PluginNr">Internal number this plug-in was given in Total Commander. Has to be passed as the first parameter in all callback functions so Total Commander knows which plug-in has sent the request.</param>
         /// <param name="progress">Delegate to the progress callback function.</param>
         /// <param name="log">Delegate to the logging function</param>
@@ -124,8 +124,8 @@ namespace Tools{namespace TotalCommanderT{
         /// </returns>
         /// <remarks>
         /// The plug-in determines whether it is in Total Commander or if it was initialized by managed application depending on which function was used to initialize the plug-in.
-        /// If <see cref="FsInit"/> was used this property returns true. If <see cref"InitializePlugin"/> was used this property returns false.
-        /// So, this property also returns true if the plug-in was loaded by any other unmanaged application capable of using Total Commander plug-ins or a managed application which either loads plug-in unmanaged way or calls <see cref="FsInit"/> instead of <see cref"InitializePlugin"/>.
+        /// If <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> was used this property returns true. If <see cref"InitializePlugin"/> was used this property returns false.
+        /// So, this property also returns true if the plug-in was loaded by any other unmanaged application capable of using Total Commander plug-ins or a managed application which either loads plug-in unmanaged way or calls <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> instead of <see cref"InitializePlugin"/>.
         /// </remarks>
         /// <version version="1.5.4"><see cref="InvalidOperationException"/> is no longer thrown if <see cref="Initialized"/> is false</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
@@ -137,7 +137,7 @@ namespace Tools{namespace TotalCommanderT{
         /// This property returns true until the plug-in is initialized (while <see cref="Initialized"/> is false).
         /// <returns>
         /// <remarks>
-        /// The plug-in determines wheather it is in ANSI or Unicode environment depending on which function was used to initialize it.
+        /// The plug-in determines whether it is in ANSI or Unicode environment depending on which function was used to initialize it.
         /// If <see cref="FsInit(int,tProgressProcW,tLogProcW,tRequestProcW)"/> or <see cref="InitializePlugin"/> was used environment is considered Unicode.
         /// Otherwise (if <see cref="FsInit(int,tProgressProc,tLogProc,tRequestProc)"/> was used) environment is considered ANSI.
         /// <para>
@@ -145,7 +145,7 @@ namespace Tools{namespace TotalCommanderT{
         /// that any non-ANSI characters passed from plug-in to Total Commander will be converted by default conversion process (usually co question marks (?)).
         /// </para>
         /// <para>
-        /// Beaware that even though the plug-in is in Unicode mode, not all methods of Total Commander plug-in interface are Unicode.
+        /// Beware that even though the plug-in is in Unicode mode, not all methods of Total Commander plug-in interface are Unicode.
         /// E.g. in version 2.0 of plug-in interface the <see cref="ContentGetSupportedField"/> function is ANSI-only.
         /// This may (or may not) change in later version of Total Commander but it will NOT make this enhancement automatically available to your plug-in until managed plug-in framework is updated too.
         /// <para>
@@ -311,7 +311,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="ArgumentNullException"><paramref name="connectionName"/> is null</exception>
         /// <remarks>
         /// When showing details of an existing connection this function should be first called with <paramref name="showUI"/> false.
-        /// In case ith throws an <see cref="CryptException"/> with <see cref="CryptException::Reason"/> <see cref="CryptResult::NoMasterPassword"/> show a button "Edit password".
+        /// In case it throws an <see cref="CryptException"/> with <see cref="CryptException::Reason"/> <see cref="CryptResult::NoMasterPassword"/> show a button "Edit password".
         /// Only call this function with <paramref name="showUI"/> true when user clicks that button, or tries to connect.
         /// This way the user does not have to enter the master password if he just wanted to make some other changes to the connection settings.
         /// </remarks>
@@ -487,7 +487,7 @@ namespace Tools{namespace TotalCommanderT{
         /// This function is only needed if you want to use the secure password store in Total Commander.
         /// No special code is needed in this function. If you derived directly from <see cref="FIleSystemPlugin"/> do not call base class method as it throws <see cref="NotSupportedException"/>.
         /// However it is necessary to override this function in derived class and NOT to decorate it with <seee cref="MethodNotSupportedAttribute"/> to indicate that your plug-in wants to the secure password store in Total Commander.
-        /// In older versions of Total Commmander (prior TC 7.55 / plug-in interface 2.0) this function is never called (indicating that the secure password store is not supported by that version of Total Commander).
+        /// In older versions of Total Commander (prior TC 7.55 / plug-in interface 2.0) this function is never called (indicating that the secure password store is not supported by that version of Total Commander).
         /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plug-in implementation does not support operation provided by the method.</para>
         /// <note type="inheritinfo">Do not throw any exceptions from this method. Any exceptions thrown will be passed to Total Commander which cannot handle them.</note>
         /// </remarks>
@@ -502,7 +502,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>Return TRUE if the directory could be created, FALSE if not.</returns>
         /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
         /// <version version="1.5.4">Parameter name <c>Path</c> changed to <c>path</c></version>
-        /// <version version="1.5.4">Type of parameter <paramref name="path"/> chaanged from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
+        /// <version version="1.5.4">Type of parameter <paramref name="path"/> changed from <see cref="char"/>* to <see cref="wchar_t"/>* - the function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("MkDir", "TC_FS_MKDIR")]
@@ -561,7 +561,7 @@ public:
         [CLSCompliantAttribute(false)]
         int FsExecuteFile(HANDLE mainWin, wchar_t* remoteName, wchar_t* verb); 
     public:
-        /// <summary>When overiden in derived class called to execute a file on the plug-in's file system, or show its property sheet. It is also called to show a plug-in configuration dialog when the user right clicks on the plug-in root and chooses 'properties'. The plug-in is then called with <paramref name="remoteName"/>="\" and <paramref name="verb"/>="properties" (requires TC>=5.51).</summary>
+        /// <summary>When overridden in derived class called to execute a file on the plug-in's file system, or show its property sheet. It is also called to show a plug-in configuration dialog when the user right clicks on the plug-in root and chooses 'properties'. The plug-in is then called with <paramref name="remoteName"/>="\" and <paramref name="verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
         /// <param name="remoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c> number", "<c>quote</c> commandline" or "<c>mode</c> type" (case-insensitive).</param>
@@ -662,7 +662,7 @@ public:
         /// <param name="remoteName">Full path of file or directory to show properties of</param>
         /// <returns>One of <see cref="ExecExitCode"/> values.</returns>
         /// <remarks>
-        /// <note type="inheritinfo">This method is called only when plug-in implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note>
+        /// <note type="inheritinfo">This method is called only when plug-in implements <see cref="ExecuteFile"/> function and that function calls base class method.</note>
         /// <note type="inheritinfo">Do not throw any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
         /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
@@ -675,7 +675,7 @@ public:
         virtual ExecExitCode ShowFileInfo(IntPtr hMainWin, String^ remoteName);
         /// <summary>When overridden in derived class executes command in plug-in space</summary>
         /// <param name="hMainWin">Handle to Total Commander window.</param>
-        /// <param name="remoteName">Full path of currently show directory in Total Commander. Includes trailing \. If command changes current directory (like cd in Total Commander) asingn full path of new directory to this parameter. Total COmmander will navigate there.
+        /// <param name="remoteName">Full path of currently show directory in Total Commander. Includes trailing \. If command changes current directory (like cd in Total Commander) assign full path of new directory to this parameter. Total COmmander will navigate there.
         /// <para>Do not assign string longer than <see cref="MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</para></param>
         /// <param name="command">Text of command to be executed. It's up to plug-in choose which commands to support, but <c>cd>/c> is very common.</param>
         /// <remarks>
@@ -895,7 +895,7 @@ public:
 #pragma region Disconnect
     public:
         /// <summary>Called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
-        /// <param name="disconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plug-in to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
+        /// <param name="disconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plug-in to have several open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
         /// <returns>Return TRUE if the connection was closed (or never open), FALSE if it couldn't be closed.</returns>
         /// <remarks>To get calls to this function, the plug-in MUST call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>. The parameter LogString MUST start with "<c>CONNECT</c>", followed by one whitespace and the root of the file system which has been connected. This file system root will be passed to <see cref="FsDisconnect"/> when the user presses the Disconnect button, so the plug-in knows which connection to close.
         /// Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plug-in does not require connect/disconnect!
@@ -911,7 +911,7 @@ public:
         BOOL FsDisconnect(wchar_t* disconnectRoot);
     public:
         /// <summary>When overridden in derived class, called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
-        /// <param name="disconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plug-in to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
+        /// <param name="disconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plug-in to have several open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
         /// <returns>Return true if the connection was closed (or never open), false if it couldn't be closed.</returns>
         /// <remarks>To get calls to this function, the plug-in MUST call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>. The parameter LogString MUST start with "<c>CONNECT</c>", followed by one whitespace and the root of the file system which has been connected. This file system root will be passed to <see cref="Disconnect"/> when the user presses the Disconnect button, so the plug-in knows which connection to close.
         /// Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plug-in does not require connect/disconnect!
@@ -989,7 +989,7 @@ public:
         /// <summary>Called just as an information to the plug-in that a certain operation starts or ends. It can be used to allocate/free buffers, and/or to flush data from a cache. There is no need to implement this function if the plug-in doesn't require it.</summary>
         /// <param name="remoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
         /// <param name="infoStartEnd">Information whether the operation starts or ends</param>
-        /// <param name="infoOperation">Information of which operaration starts/ends</param>
+        /// <param name="infoOperation">Information of which operation starts/ends</param>
         /// <remarks>Please note that future versions of the framework may send additional values!
         /// <para>This function has been added for the convenience of plug-in writers. All calls to plug-in functions will be enclosed in a pair of <see cref="FsStatusInfo"/> calls: At the start, <see cref="FsStatusInfo"/>(...,FS_STATUS_START,...) and when the operation is done FsStatusInfo(...,FS_STATUS_END,...). Multiple plug-in calls can be between these two calls. For example, a download may contain multiple calls to <see cref="FsGetFile"/>, and <see cref="FsFindFirst"/>, <see cref="FsFindNext"/>, <see cref="FsFindClose"/> (for copying subdirs).</para>
         /// <para>This function is called by Total Commander and is not intended for direct use.</para></remarks>
@@ -1003,7 +1003,7 @@ public:
         /// <summary>Called instead of <see cref="FsStatusInfo"/> when plug-in is used outside of Total Commander.</summary>
         /// <param name="remoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
         /// <param name="infoStartEnd">Information whether the operation starts or ends</param>
-        /// <param name="infoOperation">Information of which operaration starts/ends</param>
+        /// <param name="infoOperation">Information of which operation starts/ends</param>
         /// <exception cref="NotSupportedException">This implementation does not throw this exception. Derived implementation may throw it if it's decorated with <see cref="MethodNotSupportedAttribute"/>.</exception>
         /// <remarks>Please note that future versions of the framework may send additional values!
         /// <para>Unlike majority of Total Commander functions - this function is implemented automatically by this base class. You may or may not to override it.</para>
@@ -1017,13 +1017,13 @@ public:
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void StatusInfo(String^ remoteDir, OperationStatus infoStartEnd, OperationKind infoOperation);
     protected:
-        /// <summary>When overiden in derived class handles operation status change reported by Total Commander</summary>
+        /// <summary>When overridden in derived class handles operation status change reported by Total Commander</summary>
         /// <param name="e">Event arguments</param>
         /// <remarks>Do not call this method from your code. It is called by Total Commander. In case you use plug-in outside of Total Commander call <see cref="StatusInfo"/>.</remarks>
         /// <version version="1.5.4">Accessibility level changed from <see langword="public"/> to <see langword="protected"/>.</version>
         virtual void OnOperationStatusChanged(OperationEventArgs^ e);
         /// <summary>When overridden in derived class handles start of operation reported by Total Commander</summary>
-        /// <remarks>This method is called before operation sarts. Call of this method is always followed by call of <see cref="OnOperationStatusChanged"/>.
+        /// <remarks>This method is called before operation starts. Call of this method is always followed by call of <see cref="OnOperationStatusChanged"/>.
         /// <para>Do not call this method from your code. It is called by Total Commander. In case you use plug-in outside of Total Commander call <see cref="StatusInfo"/>.</para></remarks>
         /// <param name="e">Event arguments</param>
         /// <version version="1.5.4">Accessibility level changed from <see langword="public"/> to <see langword="protected"/>.</version>
@@ -1060,7 +1060,7 @@ public:
         /// <para>This function is called by Total Commander and is not intended for direct use.</para>
         /// <para>This function is new in wfx version 1.1. It requires Total Commander >=5.51, but is ignored by older versions.</para></remarks>
         /// <exception cref="IO::PathTooLongException">String passed by plug-in function <see cref="ExctractCustomIcon"/> to <paramref name="remoteName"/> is longer than <see cref="MaxPath"/> - 1.</exception> 
-        /// <version version="1.5.4">Parameter namemes converted to camelCase</version>
+        /// <version version="1.5.4">Parameter names converted to camelCase</version>
         /// <version version="1.5.4">Type of parameter <paramref name="remoteName"/> converted from <see cref="char"/>* to <see cref="wchar_t"/>* - this function now supports Unicode</version>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
