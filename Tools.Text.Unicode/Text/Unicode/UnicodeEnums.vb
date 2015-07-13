@@ -755,14 +755,47 @@ Namespace TextT.UnicodeT
         ''' <remarks>This can happen when older version of UCD NameAliases.txt is loaded</remarks>
         <XmlIgnore> Unknown = 0
         ''' <summary>Corrections for serious problems in the character names</summary>
-        <XmlElement("correction")> Correction = 1
+        <XmlEnum("correction")> Correction = 1
         ''' <summary>ISO 6429 names for C0 and C1 control functions, and other commonly occurring names For control codes</summary>
-        <XmlElement("control")> Control = 2
+        <XmlEnum("control")> Control = 2
         ''' <summary>A few widely used alternate names for format characters</summary>
-        <XmlElement("alternate")> Alternate = 3
+        <XmlEnum("alternate")> Alternate = 3
         ''' <summary>Several documented labels for C1 control code points which were never actually approved In any standard</summary>
-        <XmlElement("figment")> Figment = 4
+        <XmlEnum("figment")> Figment = 4
         ''' <summary>Commonly occurring abbreviations (or acronyms) for control codes, format characters, spaces, And variation selectors</summary>
-        <XmlElement("abbreviation")> Abbreviation = 5
+        <XmlEnum("abbreviation")> Abbreviation = 5
+    End Enum
+
+    ''' <summary>Defines the placement categories for dependent vowels, viramas, combining marks, and other characters used in Indic scripts.</summary>
+    ''' <version version="1.5.4">This enum is new in version 1.5.4</version>
+    Public Enum UnicodeIndicPositionalCategory
+        ''' <summary>The value is unknown or not specified</summary>
+        <XmlEnum("NA")> NA = 0
+        ''' <summary>Top position</summary>
+        <XmlEnum("Top")> Top = 1
+        ''' <summary>Right position</summary>
+        <XmlEnum("Right")> Right = 2
+        ''' <summary>Bottom position</summary>
+        <XmlEnum("Bottom")> Bottom = 3
+        ''' <summary>Left position</summary>
+        <XmlEnum("Left")> Left = 4
+        ''' <summary>Bottom-right position</summary>
+        <XmlEnum("Bottom_And_Right")> BottomRight = Bottom Or Right
+        ''' <summary>Left-right position</summary>
+        <XmlEnum("Left_And_Right")> LeftRight = Left Or Right
+        ''' <summary>Top and bottom position</summary>
+        <XmlEnum("Top_And_Bottom")> TopBottom = Top Or Bottom
+        ''' <summary>Top and bottom-right position</summary>
+        <XmlEnum("Top_And_Bottom_And_Right")> TopBottomRight = Top Or Bottom Or Right
+        ''' <summary>Top-left position</summary>
+        <XmlEnum("Top_And_Left")> TopLeft = Top Or Left
+        ''' <summary>Top-left and right position</summary>
+        <XmlEnum("Top_And_Left_And_Right")> TopLeftRight = Top Or UnicodeIndicPositionalCategory.Left Or Right
+        ''' <summary>Top-right position</summary>
+        <XmlEnum("Top_And_Right")> TopRight = Top Or Right
+        ''' <summary>Over-struck</summary>
+        <XmlEnum("Overstruck")> Overstruck = 8
+        ''' <summary>Visually order left</summary>
+        <XmlEnum("Visual_Order_Left")> VisualOrderLeft = 9
     End Enum
 End Namespace

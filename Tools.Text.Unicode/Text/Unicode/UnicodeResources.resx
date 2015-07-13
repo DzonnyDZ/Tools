@@ -929,4 +929,10 @@
   <data name="d_BidiPairedBracketType" xml:space="preserve">
     <value>Bidi paired bracket type</value>
   </data>
+  <data name="d_IndicPositionalCategory" xml:space="preserve">
+    <value>Indic Positional Catrgory</value>
+  </data>
+  <data name="d_unihan_kJa" xml:space="preserve">
+    <value>Unihan “JA” source</value>
+  </data>
 </root>

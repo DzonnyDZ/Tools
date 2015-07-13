@@ -522,7 +522,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets collection of characters that forms canonic decomposition of this charatcer</summary>
+        ''' <summary>Gets collection of characters that forms canonic decomposition of this character</summary>
         ''' <remarks>Underlying XML attribute is @dm.</remarks>
         <XmlAttribute("dm")>
         <UcdProperty("Decomposition_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
@@ -1035,7 +1035,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets uppercase mapping for this charatcer (that is one character or sequence of characters which form uppercase conterpart of current character)</summary>
+        ''' <summary>Gets uppercase mapping for this character (that is one character or sequence of characters which form uppercase conterpart of current character)</summary>
         ''' <remarks>Underlying XML attribute is @uc, if it does not provide value <see cref="SimpleUppercaseMapping"/> is used instead</remarks>
         <XmlAttribute("uc")>
         <UcdProperty("Uppercase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
@@ -1048,7 +1048,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets lowercase mapping for this charatcer (that is one character or sequence of characters which form lowercase conterpart of current character)</summary>
+        ''' <summary>Gets lowercase mapping for this character (that is one character or sequence of characters which form lowercase conterpart of current character)</summary>
         ''' <remarks>Underlying XML attribute is @lc, if it does not provide value <see cref="SimpleLowercaseMapping"/> is used instead</remarks>
         <XmlAttribute("lc")>
         <UcdProperty("Lowercase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
@@ -1061,7 +1061,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets uppercase mapping for this charatcer (that is one character or sequence of characters which form tilecase conterpart of current character)</summary>
+        ''' <summary>Gets uppercase mapping for this character (that is one character or sequence of characters which form tilecase conterpart of current character)</summary>
         ''' <remarks>Underlying XML attribute is @tc, if it does not provide value <see cref="SimpleTilecaseMapping"/> is used instead. If it does not provide value <see cref="SimpleUppercaseMapping"/> is used instead.</remarks>
         <XmlAttribute("tc")>
         <UcdProperty("Titlecase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
@@ -1308,6 +1308,35 @@ Namespace TextT.UnicodeT
                 Return GetPropertyValue("InMC")
             End Get
         End Property
+
+        ''' <summary>Defines the placement categories for dependent vowels, viramas, combining marks, and other characters used in Indic scripts.</summary>
+        ''' <remarks>Underlying XML attribute is @InPC</remarks>
+        <XmlAttribute("InPC")>
+        <UcdProperty("Indic_Positional_Category", "IndicPositionalCategory.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IndicPositionalCategory")>
+        Public ReadOnly Property IndicPositionalCategory As UnicodeIndicPositionalCategory
+            Get
+                Dim value = GetPropertyValue("InPc")
+                Select Case value
+                    Case "" : Return UnicodeIndicPositionalCategory.NA
+                    Case "Bottom" : Return UnicodeIndicPositionalCategory.Bottom
+                    Case "Bottom_And_Right" : Return UnicodeIndicPositionalCategory.BottomRight
+                    Case "Left" : Return UnicodeIndicPositionalCategory.Left
+                    Case "Left_And_Right" : Return UnicodeIndicPositionalCategory.LeftRight
+                    Case "NA" : Return UnicodeIndicPositionalCategory.NA
+                    Case "Overstruck" : Return UnicodeIndicPositionalCategory.Overstruck
+                    Case "Right" : Return UnicodeIndicPositionalCategory.Right
+                    Case "Top" : Return UnicodeIndicPositionalCategory.Top
+                    Case "Top_And_Bottom" : Return UnicodeIndicPositionalCategory.TopBottom
+                    Case "Top_And_Bottom_And_Right" : Return UnicodeIndicPositionalCategory.TopBottomRight
+                    Case "Top_And_Left" : Return UnicodeIndicPositionalCategory.TopLeft
+                    Case "Top_And_Left_And_Right" : Return UnicodeIndicPositionalCategory.TopLeftRight
+                    Case "Top_And_Right" : Return UnicodeIndicPositionalCategory.TopRight
+                    Case "Visual_Order_Left" : Return UnicodeIndicPositionalCategory.VisualOrderLeft
+                    Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
+                End Select
+            End Get
+        End Property
 #End Region
 
 #Region "Identifier and Pattern and programming language properties"
@@ -1377,7 +1406,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets value indicating if charatcer can be used in syntax of programming language</summary>
+        ''' <summary>Gets value indicating if character can be used in syntax of programming language</summary>
         ''' <remarks>Underlying XML attribute is @Pat_Syn</remarks>
         <XmlAttribute("Pat_Syn")>
         <UcdProperty("Pattern_Syntax", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
@@ -1388,7 +1417,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets value indicating if charatcer shopuld be treated as whitespace by programming language compiler or interpreter</summary>
+        ''' <summary>Gets value indicating if character shopuld be treated as whitespace by programming language compiler or interpreter</summary>
         ''' <remarks>Underlying XML attribute is @Pat_WS</remarks>
         <XmlAttribute("Pat_WS")>
         <UcdProperty("Pattern_White_Space", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
@@ -1637,10 +1666,10 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Formerly proposed for programatic determination of grapheme cluster boundaries.</summary>
+        ''' <summary>Formerly proposed for programmatic determination of grapheme cluster boundaries.</summary>
         ''' <remarks>Underlying XML attribute is @Gr_Link<para>This property is deprecated as of Unicode 5.0</para></remarks>
         <XmlAttribute("Gr_Link"), Obsolete("Deprecated as of Unicode 5.0")>
-         <UcdProperty("Grapheme_Link ", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Grapheme_Link ", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsGraphemeLink")>
         Public ReadOnly Property IsGraphemeLink As Boolean
             Get
@@ -2430,7 +2459,8 @@ Namespace TextT.UnicodeT
 #Region "IRG Sources"
         ''' <summary>The IRG “G” (China + Singapore) source mapping for this character in hex.</summary>
         ''' <remarks>
-        ''' The IRG G source consists of data from the following national standards, publications, and lists from the People’s Republic of China and Singapore. The versions of the standards used are those provided by the PRC to the IRG and may not always reflect published versions of the standards generally available.
+        ''' The IRG G source consists of data from the following national standards, publications, and lists from the People’s Republic of China and Singapore.
+        ''' The versions of the standards used are those provided by the PRC to the IRG and may not always reflect published versions of the standards generally available.
         ''' <list>
         ''' <item>G0 GB2312-80</item>
         ''' <item>G1 GB12345-90 with 58 Hong Kong and 92 Korean “Idu” characters</item>
@@ -2499,6 +2529,16 @@ Namespace TextT.UnicodeT
         Public ReadOnly Property HanIrgJSource As String '““J””
             Get
                 Return GetPropertyValue("kIRG_JSource")
+            End Get
+        End Property
+
+        ''' <summary>The IRG “JA” (Unified Japanese IT Vendors Contemporary Ideographs) source mapping for this character in hex.</summary>
+        <XmlAttribute("kJa")>
+        <UcdProperty("kIRG_JSource", UnihanPropertyCategory.IrgSources, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.IrgSources), LDisplayName(GetType(UnicodeResources), "d_unihan_kJa")>
+        Public ReadOnly Property HanIrgJASource As String
+            Get
+                Return GetPropertyValue("kJa")
             End Get
         End Property
 
