@@ -1,14 +1,10 @@
-﻿Imports System.Xml
-Imports Tools.XmlT.LinqT
-Imports Tools.XmlT
-Imports System.Globalization.CultureInfo
-Imports System.Linq
+﻿Imports System.Globalization.CultureInfo
 Imports System.Text
-Imports <xmlns:cf="http://schemas.microsoft.com/winfx/2006/xaml/composite-font">
+Imports System.Xml
 Imports System.Xml.Xsl
 Imports Microsoft.Win32
-Imports Tools
 Imports Tools.TextT.UnicodeT
+Imports <xmlns:cf="http://schemas.microsoft.com/winfx/2006/xaml/composite-font">
 
 ''' <summary>UI for setting up the screensaver</summary>
 Public Class SettingsDialog
@@ -143,10 +139,10 @@ Public Class SettingsDialog
                     If FontFacesContainCodePoint(glyphFaces, character) Then
                         If min Is Nothing Then min = character
                         max = character
-                    Else    If min.HasValue Then
-                            ranges.Add(Tuple.Create(min.Value, max.Value))
-                            min = Nothing
-                            max = Nothing
+                    ElseIf min.HasValue Then
+                        ranges.Add(Tuple.Create(min.Value, max.Value))
+                        min = Nothing
+                        max = Nothing
                     End If
                 Next
                 If min.HasValue Then ranges.Add(Tuple.Create(min.Value, max.Value))
@@ -184,5 +180,9 @@ Public Class SettingsDialog
     Private Sub Hyperlink_Click(sender As Hyperlink, e As RoutedEventArgs)
         Process.Start(sender.NavigateUri.ToString)
         e.Handled = True
+    End Sub
+    Private Sub btnFontDefault_Click(sender As Object, e As RoutedEventArgs)
+        txtFontPath.Text = "pack://application:,,,/"
+        cmbFonts.Text = "Unicode composite font"
     End Sub
 End Class

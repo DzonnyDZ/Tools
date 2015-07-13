@@ -8,7 +8,7 @@ Tools.Metadata
 <members>
 <member name="T:Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader">
  <summary>Represernts marker (block of JPEG file)</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader.Markers">
@@ -136,7 +136,7 @@ Tools.Metadata
  This <see cref="T:Tools.MetadataT.IMetadataProvider"/> provides Exif (<see cref="T:Tools.MetadataT.ExifT.Exif"/>), IPTC (<see cref="T:Tools.MetadataT.IptcT.Iptc"/>), image (<see cref="T:Tools.MetadataT.ImageMetadata"/>) and system (<see cref="T:Tools.MetadataT.SystemMetadata"/>) metadata.
  In order system and image metadata to be available instance must be constructed from <see cref="T:System.IO.FileStream"/> or form file path.
  </remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
  <version version="1.5.2">Added implementation of <see cref="T:Tools.MetadataT.ExifT.IExifWriter"/></version>
  <version version="1.5.2">Implemented the <see cref="T:Tools.MetadataT.IMetadataProvider"/> interface</version>
@@ -383,7 +383,7 @@ Tools.Metadata
 </member>
 <member name="T:Tools.DrawingT.DrawingIOt.JPEG.Photoshop8BIMReader">
  <summary>Represents Photoshop 8BIM segment</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
  <version version="1.5.3">Added <see cref="T:System.Diagnostics.DebuggerDisplayAttribute"/>.</version>
  <version version="1.5.3"><see cref="P:Tools.DrawingT.DrawingIOt.JPEG.Photoshop8BIMReader.WholeSize"/> may be reported incorrectly</version>
@@ -484,7 +484,7 @@ Tools.Metadata
 </member>
 <member name="T:Tools.MetadataT.ExifT.ExifReader">
  <summary>Provides low level access to stream of Exif data</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2">Exif data of type ASCII are required to be terminated with nullchar. The nullchar is trimmed.</version>
 </member>
 <member name="T:Tools.MetadataT.ExifT.ExifReader.ExifEventArgs">
@@ -3602,7 +3602,7 @@ Tools.Metadata
 <member name="T:Tools.MetadataT.ExifT.Exif">
  <summary>Provides high-level acces to Exif metadata</summary>
  <remarks>This <see cref="T:Tools.MetadataT.IMetadata"/> supports metadata keys in format "X:RecordNumber" where X is either number of main IFD or E for Exif sub-IFD, G for GPS sub-IFD or I for interop sub-IFD.</remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
  <version version="1.5.2">Methods <see cref="M:Tools.MetadataT.ExifT.Exif.Load(System.IO.Stream)"/>, <see cref="M:Tools.MetadataT.ExifT.Exif.LoadForUpdating(System.IO.Stream)"/>, <see cref="M:Tools.MetadataT.ExifT.Exif.Save(System.IO.Stream)"/> and <see cref="M:Tools.MetadataT.ExifT.Exif.Update(System.IO.Stream)"/> added.</version>
  <version version="1.5.2">Added implementation of <see cref="T:Tools.IReportsChange"/></version>
@@ -4092,7 +4092,7 @@ Tools.Metadata
 </member>
 <member name="T:Tools.MetadataT.ExifT.ExifIfdReader">
  <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
  <version version="1.5.2">ASCII Exif data are required to end with nullchar and the nullchar is trimmed</version>
 </member>
@@ -4323,7 +4323,7 @@ Tools.Metadata
 <member name="T:Tools.MetadataT.ExifT.IExifGetter">
  <summary>Represents provider that provides stream of Exif data</summary>
  <seealso cref="T:Tools.MetadataT.ExifT.IExifWriter"/><seealso cref="T:Tools.MetadataT.IptcT.IIptcGetter"/>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Beta"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MetadataT.ExifT.IExifGetter.GetExifStream">
@@ -4338,7 +4338,7 @@ Tools.Metadata
 <member name="T:Tools.MetadataT.ExifT.IExifWriter">
  <summary>Represents provider that provides stream of Exif data for reading and writing</summary>
  <seealso cref="T:Tools.MetadataT.ExifT.IExifGetter"/><seealso cref="T:Tools.MetadataT.IptcT.IIptcWriter"/>
- <author www="htp://dzonny.cz">Đonny</author>
+ <author www="htp://dzonny.cz">Ðonny</author>
  <version stage="Beta" version="1.5.2">Added <see cref="M:Tools.MetadataT.ExifT.IExifWriter.ExifEmbded(System.IO.Stream)"/> overload</version>
 </member>
 <member name="M:Tools.MetadataT.ExifT.IExifWriter.GetWritableExifStream">
@@ -4641,7 +4641,7 @@ Tools.Metadata
 <member name="T:Tools.MetadataT.IptcT.Iptc">
  <summary>Provides high-level access to IPTC metadata</summary>
  <remarks>Value key format for this <see cref="T:Tools.MetadataT.IMetadata"/> is "RecordNumber:DatasetNumber".</remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2">The <see cref="T:Tools.MetadataT.IMetadata"/> interface implemented</version>
  <version version="1.5.2">The <see cref="T:Tools.InternalT.AuthorAttribute"/>, <see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.FirstVersionAttribute"/> attributes removed</version>
  <version version="1.5.3">Added limited auto-detection of UTF-8 encoding based on <see cref="P:Tools.MetadataT.IptcT.Iptc.CodedCharacterSet"/>. See <see cref="P:Tools.MetadataT.IptcT.Iptc.Encoding"/> for details.</version>
@@ -9494,7 +9494,7 @@ Tools.Metadata
 </member>
 <member name="T:Tools.MetadataT.IptcT.IptcReader">
  <summary>Provides low level access to stream of IPTC data</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MetadataT.IptcT.IptcReader.#ctor(System.IO.Stream)">
@@ -9569,7 +9569,7 @@ Tools.Metadata
 <member name="T:Tools.MetadataT.IptcT.IIptcGetter">
  <summary>Represents provider that provides stream of IPTC data</summary>
  <seealso cref="T:Tools.MetadataT.IptcT.IIptcWriter"/><seealso cref="T:Tools.MetadataT.ExifT.IExifGetter"/>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Beta"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MetadataT.IptcT.IIptcGetter.GetIptcStream">
@@ -9584,7 +9584,7 @@ Tools.Metadata
 <member name="T:Tools.MetadataT.IptcT.IIptcWriter">
  <summary>Represents provider that provides method to writed IPTC data into container</summary>
  <seealso cref="T:Tools.MetadataT.IptcT.IIptcGetter"/><seealso cref="T:Tools.MetadataT.ExifT.IExifWriter"/>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Beta"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MetadataT.IptcT.IIptcWriter.IptcEmbded(System.Byte[])">

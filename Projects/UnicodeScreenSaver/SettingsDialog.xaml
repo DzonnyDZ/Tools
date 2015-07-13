@@ -11,7 +11,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -22,22 +23,23 @@
         </Grid.RowDefinitions>
         
         <Label    Grid.Row="0" Grid.Column="0"                     >Interval [s]</Label>
-        <TextBox  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Interval, Mode=TwoWay}" VerticalAlignment="Center"/>
+        <TextBox  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Interval, Mode=TwoWay}" VerticalAlignment="Center"/>
 
         <Label    Grid.Row="1" Grid.Column="0"                     xml:space="preserve">Font source&#xD;&#xa;(empty for font installed in system)</Label>
-        <TextBox  Grid.Row="1" Grid.Column="1"                     Text="{Binding FontPath, Mode=TwoWay}" VerticalAlignment="Top" Name="txtFontPath" TextChanged="txtFontPath_TextChanged"/>
+        <TextBox  Grid.Row="1" Grid.Column="1"                     Text="{Binding FontPath, Mode=TwoWay}" VerticalAlignment="Center" Name="txtFontPath" TextChanged="txtFontPath_TextChanged" />
         <Button   Grid.Row="1" Grid.Column="2"                     HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,0,5,2" Click="btnFontBrowse_Click">...</Button>
+        <Button   Grid.Row="1" Grid.Column="3" Grid.RowSpan="2"    HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,0,5,2" Click="btnFontDefault_Click">Default</Button>
 
         <Label    Grid.Row="2" Grid.Column="0"                     >Font name</Label>
         <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding FontName, Mode=TwoWay}" VerticalAlignment="Center" IsEditable="True" Name="cmbFonts"/>
 
-        <Button   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10,3" Margin="22,0" Click="btnConvertCompositeFont_Click">
+        <Button   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10,3" Margin="22,0" Click="btnConvertCompositeFont_Click">
             <TextBlock TextWrapping="Wrap">
                 Convert <Hyperlink NavigateUri="http://www.babelstone.co.uk/Software/BabelMap.html" Click="Hyperlink_Click">BabelMap</Hyperlink> composite font to .NET/WPF composite font...
             </TextBlock>
         </Button>
         
         <Button   Grid.Row="4" Grid.Column="0"                     IsDefault="True" Click="OK_Click" HorizontalAlignment="Center" MinWidth="60">OK</Button>
-        <Button   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" IsCancel="True" Click="Cancel_Click" HorizontalAlignment="Center" MinWidth="60">Cancel</Button>
+        <Button   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" IsCancel="True" Click="Cancel_Click" HorizontalAlignment="Center" MinWidth="60">Cancel</Button>
     </Grid>
 </Window>

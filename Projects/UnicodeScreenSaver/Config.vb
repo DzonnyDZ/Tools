@@ -5,20 +5,22 @@ Friend Module Config
     ''' <summary>Ranges of all code pints defined by Unicode (excluding surrogates)</summary>
     Private ReadOnly defaultRanges As Tuple(Of UInteger, UInteger)() = {Tuple.Create(0UI, &HD800UI - 1UI), Tuple.Create(&HDFFUI + 1UI, &H10FFFFUI)} 'Excludes just surrogates
 
-    ''' <summary>Gets instance of composite font that contains many Unicode character definitions</summary>
-    ''' <returns>Instance of composite font form application resources</returns>
-    Public ReadOnly Property CompositeFont As FontFamily
+    ''' <summary>Gets instance of font to display characters in</summary>
+    Public ReadOnly Property SelectedFont As FontFamily
         Get
-            Dim font = New FontFamily(New Uri("pack://application:,,,/"), "./#Unicode composite font")
-            Return font
+            If My.Settings.FontPath = "" Then
+                Return New FontFamily(My.Settings.FontName)
+            Else
+                Return New FontFamily(New Uri(My.Settings.FontPath), $"./#{My.Settings.FontName}")
+            End If
         End Get
     End Property
 
-    ''' <summary>Gets character ranges covered by <see cref="CompositeFont"/></summary>
-    ''' <returns>Character ranges covered by <see cref="CompositeFont"/>. Each range contains 1ts code point, last code point, name of font used</returns>
+    ''' <summary>Gets character ranges covered by <see cref="SelectedFont"/></summary>
+    ''' <returns>Character ranges covered by <see cref="SelectedFont"/>. Each range contains 1ts code point, last code point, name of font used</returns>
     Private ReadOnly Iterator Property RangesInFont As IEnumerable(Of Tuple(Of UInteger, UInteger, String))
         Get
-            For Each map In CompositeFont.FamilyMaps
+            For Each map In SelectedFont.FamilyMaps
                 For Each r In ParseRange(map.Unicode)
                     Yield Tuple.Create(r.Item1, r.Item2, map.Target)
                 Next

@@ -1229,19 +1229,19 @@ Tools.Text.Unicode
 <member name="M:Tools.TextT.UnicodeT.ICharNameProvider.GetName(System.Int32)">
  <summary>Gets name of a character</summary>
  <param name="codePoint">A Unicode (UTF-32) code-point</param>
- <returns>Name of the character, nulll of the source is not capable of providing character name</returns>
+ <returns>Name of the character, null of the source is not capable of providing character name</returns>
  <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="codePoint"/> is less than zero or greater than <see cref="F:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.MaxCodePoint"/>.</exception>
 </member>
 <member name="T:Tools.TextT.UnicodeT.SimpleCharNameProvider">
  <summary>Simplistic implementation of <see cref="T:Tools.TextT.UnicodeT.ICharNameProvider"/></summary>
  <remarks>
  This is singleton class. Use the <see cref="P:Tools.TextT.UnicodeT.SimpleCharNameProvider.Instance"/> property to obtain singleton instance.
- You need instance of this class only if you want to pass it as <see cref="T:Tools.TextT.UnicodeT.ICharNameProvider"/>, othrwise use static function <see cref="M:Tools.TextT.UnicodeT.SimpleCharNameProvider.GetName(System.Int32)"/>.
+ You need instance of this class only if you want to pass it as <see cref="T:Tools.TextT.UnicodeT.ICharNameProvider"/>, otherwise use static function <see cref="M:Tools.TextT.UnicodeT.SimpleCharNameProvider.GetName(System.Int32)"/>.
  </remarks>
  <version version="1.5.4">This class is new in version 1.5.4</version>
 </member>
 <member name="M:Tools.TextT.UnicodeT.SimpleCharNameProvider.#ctor">
- <summary>Singleto class private CTor</summary>
+ <summary>Singleton class private CTor</summary>
 </member>
 <member name="M:Tools.TextT.UnicodeT.SimpleCharNameProvider.GetName(System.Int32)">
  <summary>Gets name of a character</summary>
@@ -1256,7 +1256,7 @@ Tools.Text.Unicode
  <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="codePoint"/> is less than zero or greater than <see cref="F:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.MaxCodePoint"/>.</exception>
 </member>
 <member name="P:Tools.TextT.UnicodeT.SimpleCharNameProvider.Instance">
- <summary>Gets instancer of this singleton class</summary>
+ <summary>Gets instance of this singleton class</summary>
  <remarks>You only need instance of this class if you want to use it as <see cref="T:Tools.TextT.UnicodeT.ICharNameProvider"/>, otherwise use static method <see cref="M:Tools.TextT.UnicodeT.SimpleCharNameProvider.GetName(System.Int32)"/>.</remarks>
 </member>
 <member name="T:Tools.TextT.UnicodeT.NamesListParser">
@@ -2836,7 +2836,7 @@ Tools.Text.Unicode
  </remarks>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase">
- <summary>Provides information from Unicode Charatcer Database</summary>
+ <summary>Provides information from Unicode Character Database</summary>
  <remarks>See http://www.unicode.org/ucd/.
  <para>
  To obtain data from Unicode Character Database you must have access to copy of it.
@@ -2877,10 +2877,6 @@ Tools.Text.Unicode
 <member name="F:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.UnicodeXmlDatabaseFileName">
  <summary>Name of file that contains Unicode Character Database XML</summary>
 </member>
-<member name="F:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.NameAlisesResourceName">
- <summary>Name of assembly resource that contains default NameAliases.txt file from UCD</summary>
- <remarks>This resource is embeded resource in same assembly as <see cref="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase"/> (Tools.Text.Unicode.txt)</remarks>
-</member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.GetXml">
  <summary>Gets Unicode Character Database in XML format</summary>
  <returns>Content of linked resource <c>Tools.TextT.UnicodeT.ucd.all.grouped.xml.gz</c> (<see cref="F:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.UnicodeXmlDatabaseResourceName"/>; file ucd.all.grouped.xml.gz) as <see cref="T:System.Xml.Linq.XDocument"/>.</returns>
@@ -2892,11 +2888,8 @@ Tools.Text.Unicode
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.Default">
  <summary>Gets default instance of <see cref="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase"/> class initialized with default copy of Unicode Character Database XML</summary>
- <returns>Default instance of Unicode Character Database; null if it cannot be initialized because default Unicode Character Database xml is not assessible (i.e. <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.GetXml"/> throws <see cref="T:System.IO.FileNotFoundException"/>).</returns>
- <remarks>
- This instance of Unicode character database is pre-loaded with ConScript Unicode Registry (CSUR) data (see <see cref="T:Tools.TextT.UnicodeT.CsurExtensions"/>) and
- name aliases (see <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.NameAliases"/>).
- </remarks>
+ <returns>Default instance of Unicode Character Database; null if it cannot be initialized because default Unicode Character Database XML is not accessible (i.e. <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.GetXml"/> throws <see cref="T:System.IO.FileNotFoundException"/>).</returns>
+ <remarks>This instance of Unicode character database is pre-loaded with ConScript Unicode Registry (CSUR) data (see <see cref="T:Tools.TextT.UnicodeT.CsurExtensions"/>).</remarks>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.GetLocalization(System.Globalization.CultureInfo)">
  <summary>Gets an instance of <see cref="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase"/> that can provide localization values for given culture</summary>
@@ -3070,22 +3063,22 @@ Tools.Text.Unicode
  <param name="xPath">XPath query</param>
  <returns>Objects retrieved suing given query</returns>
  <remarks>Default namespace is mapped to http://www.unicode.org/ns/2003/ucd/1.0</remarks>
- <exception cref="T:System.ArgumentNullException"><paramref name="xPath"/> is nulll</exception>
+ <exception cref="T:System.ArgumentNullException"><paramref name="xPath"/> is null</exception>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.Query(System.Func{System.Xml.Linq.XDocument,System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement}})">
  <summary>Queries Unicode Character Database XML using Linq-to-XML (XLINQ)</summary>
  <param name="path">A delegate (typically λ-function) specifying a query to select XML Elements from Unicode Character Database XML</param>
  <returns>Objects retrieved suing given query</returns>
- <exception cref="T:System.ArgumentNullException"><paramref name="path"/> is nulll</exception>
+ <exception cref="T:System.ArgumentNullException"><paramref name="path"/> is null</exception>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.QueryToObjects(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})">
  <summary>Converts each object in enumeration of <see cref="T:System.Xml.Linq.XElement"/>s to UCD object</summary>
  <param name="query">Represents a query to Unicode Character Database XML</param>
  <returns>An enumeration of objects instantiated from elements in <paramref name="query"/></returns>
- <exception cref="T:System.ArgumentNullException"><paramref name="query"/> is nulll</exception>
+ <exception cref="T:System.ArgumentNullException"><paramref name="query"/> is null</exception>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.ElementToObject(System.Xml.Linq.XElement)">
- <summary>Converts a XML elemetn to one of Unicode Character Database object from <see cref="N:Tools.TextT.UnicodeT"/> namespace</summary>
+ <summary>Converts a XML element to one of Unicode Character Database object from <see cref="N:Tools.TextT.UnicodeT"/> namespace</summary>
  <param name="element">A <see cref="T:System.Xml.Linq.XElement"/> create wrapper object for</param>
  <returns>A wrapper object for given element. Null if <paramref name="element"/> is null. <see cref="T:Tools.ComponentModelT.XElementWrapper"/> if element type is unknown.</returns>
 </member>
@@ -3096,11 +3089,11 @@ Tools.Text.Unicode
  <param name="checked">True to check for duplicate block, false to skip this check. If <paramref name="checked"/> is true <see cref="M:System.Linq.Enumerable.SingleOrDefault``1(System.Collections.Generic.IEnumerable{``0})"/> is used to select a block, if it is false <see cref="M:System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0})"/> is used.</param>
  <returns>
  An element from the <paramref name="blocks"/> collection <paramref name="codePoint"/> falls in range of codepoints of.
- Null if no such element can ba found.
+ Null if no such element can be found.
  <note>What happens when more than such element is found depends on value of the <paramref name="checked"/> parameter. When <paramref name="checked"/> is true an <see cref="T:System.InvalidOperationException"/> is thrown. When <paramref name="checked"/> is false first matching block is returned and the other bllocks (elements) are ignored.</note>
  </returns>
  <remarks>
- Attributes forst-cp and last-cp are used to determine block range.
+ Attributes first-cp and last-cp are used to determine block range.
  <para>This method is not CLS-compliant and no CLS-compliant alternative is provided. Consumers not capable of using <see cref="T:System.UInt32"/> type should use one of instance overloads instead.</para>
  </remarks>
  <exception cref="T:System.ArgumentNullException">Attribute first-cp or last-cp of an element is not provided.</exception>
@@ -3111,7 +3104,7 @@ Tools.Text.Unicode
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.UInt32)">
  <summary>Gets a Unicode block that covers given code point</summary>
  <param name="codePoint">A code point to get block that contains it</param>
- <returns>A Unicode block that cotains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
+ <returns>A Unicode block that contains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
  <remarks>This method is not CLS-compliant. CLS compliant alternative (overload) is provided.</remarks>
  <exception cref="T:System.InvalidOperationException">The data in UCD XML are invalid - see <see cref="P:System.Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="P:System.Exception.InnerException"/>.</exception>
  <seelaso cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.Block"/>
@@ -3119,56 +3112,56 @@ Tools.Text.Unicode
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Int32)">
  <summary>Gets a Unicode block that covers given code point (CLS-compliant alternative</summary>
  <param name="codePoint">A code point to get block that contains it</param>
- <returns>A Unicode block that cotains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
+ <returns>A Unicode block that contains code-point identified by it's code given in <paramref name="codePoint"/>.</returns>
  <remarks>This method is not CLS-compliant. CLS compliant alternative (overload) is provided.</remarks>
  <exception cref="T:System.InvalidOperationException">The data in UCD XML are invalid - see <see cref="P:System.Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="P:System.Exception.InnerException"/>.</exception>
  <seelaso cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.Block"/>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.NameAliases">
  <summary>Gets dictionary of name aliases for Unicode code-points</summary>
- <returns>A dictionary of name aliases. Null if name aliases were not loded.</returns>
+ <returns>A dictionary of name aliases. Null if name aliases were not loaded.</returns>
  <remarks>
  Aliases are stored in <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> under key <c>NameAliases.txt</c>.
- <para>Name aliases are not part of Unicode Character Database XML and thus they are not loaded by default when loading <see cref="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase"/>. You must load them explicitly uisng some of <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.LoadNameAliases"/> overloads or set them directly to <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> directly.</para>
+ <para>Name aliases are not part of Unicode Character Database XML and thus they are not loaded by default when loading <see cref="T:Tools.TextT.UnicodeT.UnicodeCharacterDatabase"/>. You must load them explicitly using some of <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.LoadNameAliases(System.IO.TextReader)"/> overloads or set them directly to <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> directly.</para>
  <para>This property is not CLS-compliant. Direct CLS-compliant alternative is not provided. Use aliases-related properties of <see cref="T:Tools.TextT.UnicodeT.UnicodeCodePoint"/>.</para>
  <para>Keys of the dictionary are code-point codes, values are alias names. Each code-point can have zero or more aliases. Currently there are only few (11 as of Unicode 6.0) aliases defined in the Unicode standard and no character has more than one alias.</para>
+ <note type="note">Since Unicode 6.2 the name aliases are part of main UCD XML. So this textual extension is no longer needed and is considered obsolete and not loaded by default. Also the NameAliases.txt is no longer embedded in the assembly.</note>
  </remarks>
-</member>
-<member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.LoadNameAliases">
- <summary>Loads default aliases names that are stored in an embeded resource inside Tools.Text.Unicode.dll</summary>
- <exception cref="T:System.InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> first.</exception>
- <seelaso cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.NameAliases"/>
+ <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this property became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.LoadNameAliases(System.String)">
  <summary>Loads aliases from a file</summary>
  <param name="path">Path to NameAliases.txt file from Unicode Character Database (UCD)</param>
  <remarks>For Unicode 6.0 the file is publicly available at <a href="http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt">http://www.unicode.org/Public/6.0.0/ucd/NameAliases.txt</a>.</remarks>
- <exception cref="T:System.InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> first.</exception>
- <exception cref="T:System.FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+ <exception cref="T:System.InvalidOperationException">Name aliases were already loaded for this instance. You must unloaded them from <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> first.</exception>
+ <exception cref="T:System.FormatException">Unexpected format of data in file being read. See inner exception for details.</exception>
  <seelaso cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.NameAliases"/>
+ <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this method became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.LoadNameAliases(System.IO.TextReader)">
  <summary>Loads aliases from a text reader</summary>
  <param name="reader">A reader to read aliases from. The reader should point to firs tile of file in NameAlias.txt format (as used in UCD)</param>
- <exception cref="T:System.InvalidOperationException">Name aliases were already loaded for this instance. You must unlloaded them from <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> first.</exception>
- <exception cref="T:System.FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+ <exception cref="T:System.InvalidOperationException">Name aliases were already loaded for this instance. You must unloaded them from <see cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.TextualExtensions"/> first.</exception>
+ <exception cref="T:System.FormatException">Unexpected format of data in file being read. See inner exception for details.</exception>
  <seelaso cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.NameAliases"/>
+ <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this method became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.ReadNameAliases(System.IO.TextReader)">
- <summary>Parses contant of NameAliases.txt file from Unicode Character Database to a dictionary of name aliases</summary>
+ <summary>Parses constant of NameAliases.txt file from Unicode Character Database to a dictionary of name aliases</summary>
  <param name="reader">A reader that points to first line of NameAliases.txt-like file (a file in compatible format)</param>
  <returns>A dictionary keyed by code-points and valued by name aliases for that code-point</returns>
  <remarks>
- This function is not CLS-compliant. No direct CLS-compliant counterpart is provided. Use some of instance overloads of <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.LoadNameAliases"/>.
- <para>Parsing alghoritm provided by this method will work with proposed etxension of Unicode 6.1.0 but will ignore the Type field.</para>
+ This function is not CLS-compliant. No direct CLS-compliant counterpart is provided. Use some of instance overloads of <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.LoadNameAliases(System.IO.TextReader)"/>.
+ <para>Parsing algorithm provided by this method will work with proposed extension of Unicode 6.1.0 but will ignore the Type field.</para>
  </remarks>
  <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is null.</exception>
- <exception cref="T:System.FormatException">Unexpeced format of data in file being read. See inner exception for details.</exception>
+ <exception cref="T:System.FormatException">Unexpected format of data in file being read. See inner exception for details.</exception>
+ <version version="1.5.4">In mid-development cycle of 1.5.4 update to Unicode 8 has been done and this method became obsolete as the data are since Unicode 6.2 part of UCD XML, so no need to side-load them.</version>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.GetName(System.Int32)">
  <summary>Gets name of a character</summary>
  <param name="codePoint">A Unicode (UTF-32) code-point</param>
- <returns>Name of the character, nulll of the source is not capable of providing character name</returns>
+ <returns>Name of the character, null of the source is not capable of providing character name</returns>
  <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="codePoint"/> is less than zero or greater than <see cref="F:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.MaxCodePoint"/>.</exception>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeCharacterGroup">
@@ -3286,12 +3279,12 @@ Tools.Text.Unicode
  <summary>Gets value of current code point</summary>
  <remarks>
  This property is null for character ranges. They have <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.FirstCodePoint"/> and <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.LastCodePoint"/> specified instead.
- <para>This property is not CLS-compliant. Corresponding CLS-compilant property is <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePointSigned"/>.</para>
+ <para>This property is not CLS-compliant. Corresponding CLS-compliant property is <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePointSigned"/>.</para>
  <para>Underlying XML attributes is @cp.</para>
  </remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePointSigned">
- <summary>CLS-comliant version of <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePoint"/> ptoperty</summary>
+ <summary>CLS-compliant version of <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePoint"/> property</summary>
  <seelaso cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePoint"/>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCodePoint.FirstCodePoint">
@@ -3337,10 +3330,14 @@ Tools.Text.Unicode
  <summary>Gets normative name aliases for name of this code point</summary>
  <returns>
  Name aliases (alternative normative names) for this code-point.
- Retturns null if <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePoint"/> is null or if name aliases are not registered.
- Returns an empty array if there ane no formal aliases for name of current code point.
+ <para>In case name aliases are present in UCD XML returns name aliases from UCD XML (as of Unicode 6.2).</para>
+ <para>
+ If they are not present and if NameAliases.txt textual extension is registered uses that extension following way:
+ Returns null if <see cref="P:Tools.TextT.UnicodeT.UnicodeCodePoint.CodePoint"/> is null or if name aliases are not registered.
+ </para>
+ Returns an empty array if there are no formal aliases for name of current code point.
  </returns>
- <remarks>This property returns non-null values only if NameAliases.txt textual extension was registered for parent UCD</remarks>
+ <remarks>This property can only return non-empty arrays if newer version of UCD XML is loaded (default, from Unicode 6.2) or NameAliases.txt textual extension was registered for parent UCD.</remarks>
  <seelaso cref="P:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.NameAliases"/>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeCodePoint.LocalizedName">
@@ -3563,24 +3560,27 @@ Tools.Text.Unicode
  <summary>Other category</summary>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeBidiCategory">
- <summary>Defines Unicode bidirectional categories of cahacters</summary>
- <remarks>To determine strength programatically match 2nd-least significant byte against <see cref="T:Tools.TextT.UnicodeT.UnicodeBidiCategoryStrenght"/>.</remarks>
+ <summary>Defines Unicode bidirectional categories of characters</summary>
+ <remarks>
+ To determine strength programatically match 2nd-least significant byte against <see cref="T:Tools.TextT.UnicodeT.UnicodeBidiCategoryStrenght"/>.
+ <para>Details in http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types</para>
+ </remarks>
  <version version="1.5.4">This class is new in version 1.5.4</version>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.LeftToRight">
  <summary>Strong, left-to-right character (L; left-to-right letters and numerals)</summary>
-</member>
-<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.LeftToRightEmbedding">
- <summary>Strong, left-to-right embedding (LRE; LRE character)</summary>
-</member>
-<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.LeftToRightOverride">
- <summary>Strong, left-to-right override (LRO; LRO character)</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.RightToLeft">
  <summary>Strong, right-to-left character (R; right-to-left letters)</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.RightToLeftArabic">
  <summary>Strong, right-to-left Arabic (AL; Arabic and related scripts)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.LeftToRightEmbedding">
+ <summary>Strong, left-to-right embedding (LRE; LRE character)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.LeftToRightOverride">
+ <summary>Strong, left-to-right override (LRO; LRO character)</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.RightToLeftEmbedding">
  <summary>Strong, right-to-left embedding (RLE; RLE character)</summary>
@@ -3589,7 +3589,19 @@ Tools.Text.Unicode
  <summary>Strong, right-to.left override (RLO; RLO character)</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.PopDirectionalFormat">
- <summary>Weak, pop directional fromat (PDF; PDF character)</summary>
+ <summary>Weak, pop directional format (PDF; PDF character)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.RightToLeftIsolate">
+ <summary>Right-to-Left Isolate (RLI)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.LeftToRightIsolate">
+ <summary>Left-to-Right Isolate (LRI)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.FirstStrongIsolate">
+ <summary>First Strong Isolate (FSI)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.PopDirectionalIsolate">
+ <summary>Pop DIrectional Isolate (PDI)</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategory.EuropeanNumber">
  <summary>Weak, European numbers (EN; European digits and Eastern Arabic-Indic digits etc.)</summary>
@@ -3625,7 +3637,7 @@ Tools.Text.Unicode
  <summary>Neutral, other neutrals (ON; other characters)</summary>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeBidiCategoryStrenght">
- <summary>Indicates bidirectional strenght</summary>
+ <summary>Indicates bidirectional strength</summary>
  <version version="1.5.4">This enumeration is new in version 1.5.4</version>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategoryStrenght.Strong">
@@ -3636,6 +3648,9 @@ Tools.Text.Unicode
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategoryStrenght.Neutral">
  <summary>Neutral characters (directionality inherited from context - from strong characters)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiCategoryStrenght.Explicit">
+ <summary>Characters with special purpose</summary>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeCombiningClass">
  <summary>This enumeration describes well-known values of Unicode combining classes</summary>
@@ -3793,7 +3808,7 @@ Tools.Text.Unicode
  <summary>Character is a decimal digit (0-9) which can be used in  a decimal radix positional numeral system. The character is incoded in Unicode in a contiguous ascending range 0..9.</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeCharacterNumericType.Digit">
- <summary>Character has an interal value 0-9. This cover digits that need special handling.</summary>
+ <summary>Character has an integral value 0-9. This cover digits that need special handling.</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeCharacterNumericType.Numeric">
  <summary>Numeric value of character is positive or negative integer or rational number expressed as fraction.</summary>
@@ -3822,7 +3837,7 @@ Tools.Text.Unicode
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeJoiningGroup">
  <summary>Defines Unicode joining groups for Arabic and other Middle-Eastern scripts</summary>
- <remarks>Value Alef Maqsurah once exited in Unicode starndard (v2.x) but it does not appear in newer versions. It seems to be replaced with <see cref="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.YehWithTail"/>. So Alef Maqsurah is not included in this implementation.</remarks>
+ <remarks>Value Alef Maqsurah once exited in Unicode standard (v2.x) but it does not appear in newer versions. It seems to be replaced with <see cref="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.YehWithTail"/>. So Alef Maqsurah is not included in this implementation.</remarks>
  <seelaso cref="M:Tools.TextT.UnicodeT.UnicodeExtensions.Origin(Tools.TextT.UnicodeT.UnicodeJoiningGroup)"/>
  <version version="1.5.4">This enumeration is new in version 1.5.4</version>
 </member>
@@ -3919,6 +3934,12 @@ Tools.Text.Unicode
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.YehBarree">
  <summary>Right joining Arabic group Yeh Barree (ے)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.RohingyaYeh">
+ <summary>Right joining Arabic group Rohingya Yeh (ࢬ)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.StraightWaw">
+ <summary>Right joining Arabic group Straight Waw (ࢱ)</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.Beth">
  <summary>Dual Joining Syriac group Beth (ܒ)</summary>
@@ -4022,9 +4043,92 @@ Tools.Text.Unicode
 <member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.Alaph">
  <summary>Syraic letter Alaph (U+0710, ܐ) is right-joining character but it's glyph is subject to additional contextual shaping</summary>
 </member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanAleph">
+ <summary>Dual joining Manichaean group Aleph (𐫀)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanBeth">
+ <summary>Dual joining Manichaean group Beth (𐫁)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanGimel">
+ <summary>Dual joining Manichaean group Gimel (𐫃)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanAyin">
+ <summary>Dual joining Manichaean group Ayin (𐫙)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanDhamedh">
+ <summary>Dual joining Manichaean group Dhamedh (𐫔)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanFive">
+ <summary>Dual joining Manichaean group Five (𐫬)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanLamedh">
+ <summary>Dual joining Manichaean group Lamedh (𐫓)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanMem">
+ <summary>Dual joining Manichaean group Mem (𐫖)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanOne">
+ <summary>Dual joining Manichaean group One (𐫫)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanPe">
+ <summary>Dual joining Manichaean group Pe (𐫛)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanQoph">
+ <summary>Dual joining Manichaean group Qoph (𐫞)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanSamekh">
+ <summary>Dual joining Manichaean group Samekh (𐫘)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanTen">
+ <summary>Dual joining Manichaean group Ten 𐫭()</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanThamedh">
+ <summary>Dual joining Manichaean group Thamedh (𐫕)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanTwenty">
+ <summary>Dual joining Manichaean group Twenty (𐫮)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanDaleth">
+ <summary>Right joining Manichaean group Daleth (𐫅)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanWaw">
+ <summary>Right joining Manichaean group Waw (𐫇)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanZayin">
+ <summary>Right joining Manichaean group Zayin (𐫉)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanHundred">
+ <summary>Right joining Manichaean group Hundred (𐫯)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanKaph">
+ <summary>Right joining Manichaean group Kaph (𐫐)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanResh">
+ <summary>Right joining Manichaean group Resh (𐫡)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanSadhe">
+ <summary>Right joining Manichaean group Sadhe (𐫝)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanTaw">
+ <summary>Right joining Manichaean group Taw (𐫤)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanTeth">
+ <summary>Right joining Manichaean group Teth (𐫎)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanYodh">
+ <summary>Right joining Manichaean group Yodh (𐫏)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanHeth">
+ <summary>Left joining Manichaean group Heth (𐫍)</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroup.ManichaeanNun">
+ <summary>Left joining Manichaean group Nun (𐫗)</summary>
+</member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeJoiningGroupOrigin">
  <summary>Enumeration denotes origin of <see cref="T:Tools.TextT.UnicodeT.UnicodeJoiningGroup"/> enumeration member</summary>
- <remarks>In description of individual enum items in braces is number of table from Unicode chapter 8 where the groups are defined.</remarks>
+ <remarks>
+ In description of individual enum items in braces is number of table from Unicode chapter 8 where the groups are defined.
+ </remarks>
  <seelaso cref="M:Tools.TextT.UnicodeT.UnicodeExtensions.Origin(Tools.TextT.UnicodeT.UnicodeJoiningGroup)"/>
  <version version="1.5.4">This enumeration is new in version 1.5.4</version>
 </member>
@@ -4044,7 +4148,16 @@ Tools.Text.Unicode
  <summary>Right-Joining Syriac Characters (8-14)</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroupOrigin.SyriacOther">
- <summary>Other Syriac charactres</summary>
+ <summary>Other Syriac characters</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroupOrigin.ManichaeanDual">
+ <summary>Dual-joining Manichaean characters</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroupOrigin.ManichaeanRight">
+ <summary>Right-joining Manichaean characters</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeJoiningGroupOrigin.ManichaeanLeft">
+ <summary>Left-joining Manichaean characters</summary>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeLineBreakType">
  <summary>Indicates how character behaves in relation with line breaking</summary>
@@ -4105,7 +4218,7 @@ Tools.Text.Unicode
  <summary>Exclamation/Interrogation (EX) - Prohibits break before</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeLineBreakType.Inseparable">
- <summary>Inseparable (IN) - Allow only indirect line breaks netween pairs</summary>
+ <summary>Inseparable (IN) - Allow only indirect line breaks between pairs</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeLineBreakType.Nonstarter">
  <summary>Nonstarter (NS) - Allow only indirect line breaks before</summary>
@@ -4161,8 +4274,14 @@ Tools.Text.Unicode
 <member name="F:Tools.TextT.UnicodeT.UnicodeLineBreakType.Unknown">
  <summary>Unknown (XX) - Have as yet unknown line breaking behavior or unassigned code positions</summary>
 </member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeLineBreakType.ConditionalJapaneseStarter">
+ <summary>Conditional Japanese Starter (CJ) - From Small kana - Treat as NS or ID for strict or normal breaking.</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeLineBreakType.HebrewLetter">
+ <summary>Hebrew Letter	(HL) - From Hebrew - Do not break around a following hyphen; otherwise act as Alphabetic</summary>
+</member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeEastAsianWidth">
- <summary>Defines width of Eas Asian character</summary>
+ <summary>Defines width of East Asian character</summary>
  <version version="1.5.4">This enum is new in version 1.5.4</version>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeEastAsianWidth.Neutral">
@@ -4208,6 +4327,7 @@ Tools.Text.Unicode
 <member name="T:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak">
  <summary>Values of <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GraphemeClusterBreak"/> property</summary>
  <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+ <remarks>Details provided in http://www.unicode.org/reports/tr29/</remarks>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak.other">
  <summary>No indication</summary>
@@ -4219,7 +4339,7 @@ Tools.Text.Unicode
  <summary>Line Feed</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak.Control">
- <summary>General categoties Zl, Zp, Cc, Cf excluding characters CR, LF, ZWNJ, ZWJ</summary>
+ <summary>General categories Zl, Zp, Cc, Cf excluding characters CR, LF, ZWNJ, ZWJ</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak.Extend">
  <summary>General categories <see cref="F:System.Globalization.UnicodeCategory.NonSpacingMark"/> or <see cref="F:System.Globalization.UnicodeCategory.EnclosingMark"/>, characters <see cref="F:Tools.Chars.ZeroWidthNonJoiner"/> and <see cref="F:Tools.Chars.ZeroWidthJoiner"/> and a few spacing marks needed for canonical equivalence.</summary>
@@ -4228,7 +4348,7 @@ Tools.Text.Unicode
  <summary>Some characters which represents logical order exceptions</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak.SpacingMark">
- <summary>General category is specing mark plus few other characters</summary>
+ <summary>General category is specifying mark plus few other characters</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak.HangulL">
  <summary><see cref="F:Tools.TextT.UnicodeT.UnicodeHangulSyllableType.LeadingJamo"/></summary>
@@ -4244,6 +4364,10 @@ Tools.Text.Unicode
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak.HangulLvt">
  <summary><see cref="F:Tools.TextT.UnicodeT.UnicodeHangulSyllableType.Lvt"/></summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeGraphemeClusterBreak.RegionalIndicator">
+ <summary>The RI characters are used in pairs to denote Emoji national flag symbols corresponding to ISO country codes.</summary>
+ <remarks>Sequences of more than two RI characters should be separated by other characters, such as U+200B ZERO WIDTH SPACE (ZWSP).</remarks>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeWordBreakType">
  <summary>Specifies Unicode word-breaky types</summary>
@@ -4288,12 +4412,21 @@ Tools.Text.Unicode
 <member name="F:Tools.TextT.UnicodeT.UnicodeWordBreakType.ExtendNumSet">
  <summary><see cref="F:System.Globalization.UnicodeCategory.ConnectorPunctuation"/></summary>
 </member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeWordBreakType.DoubleQuote">
+ <summary>Quotation mark (")</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeWordBreakType.HebrewLetter">
+ <summary>Other letters of Hebrew script</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeWordBreakType.SingleQuote">
+ <summary>Apostrophe (')</summary>
+</member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeSentenceBreakType">
  <summary>Specifies sentence break types</summary>
  <version version="1.5.4">This enumeration is new in version 1.5.4</version>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.other">
- <summary>Not specifed</summary>
+ <summary>Not specified</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.Cr">
  <summary>Carriage Return (CR)</summary>
@@ -4317,7 +4450,7 @@ Tools.Text.Unicode
  <summary>Lowercase but extended graphemes</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.Upper">
- <summary>Upppercase and tilecase</summary>
+ <summary>Uppercase and tilecase</summary>
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.OLetter">
  <summary>Alphabetic neither <see cref="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.Lower"/> nor <see cref="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.Upper"/> nor <see cref="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.Extend"/> plus NBSP and U+05F3</summary>
@@ -4336,6 +4469,88 @@ Tools.Text.Unicode
 </member>
 <member name="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.Close">
  <summary><see cref="F:System.Globalization.UnicodeCategory.OpenPunctuation"/> or <see cref="F:System.Globalization.UnicodeCategory.ClosePunctuation"/> or <see cref="F:Tools.TextT.UnicodeT.UnicodeLineBreakType.Quotation"/> but U+05F3 (exluding <see cref="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.ATerm"/> and <see cref="F:Tools.TextT.UnicodeT.UnicodeSentenceBreakType.STerm"/>)</summary>
+</member>
+<member name="T:Tools.TextT.UnicodeT.UnicodeBidiPairedBracketType">
+ <summary>Types of bracket characters. Used for bracket matching</summary>
+ <version version="1.5.4">This enum is new in version 1.5.4</version>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiPairedBracketType.Unknown">
+ <summary>Pairing bracket type is not specified</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiPairedBracketType.Open">
+ <summary>The character is opening bracket</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeBidiPairedBracketType.Close">
+ <summary>The character is closing bracket</summary>
+</member>
+<member name="T:Tools.TextT.UnicodeT.UnicodeNameAliasType">
+ <summary>Types of Unicode name aliases</summary>
+ <version version="1.5.4">This enum is new in version 1.5.4</version>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeNameAliasType.Unknown">
+ <summary>The alias type is not known or was not loaded</summary>
+ <remarks>This can happen when older version of UCD NameAliases.txt is loaded</remarks>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeNameAliasType.Correction">
+ <summary>Corrections for serious problems in the character names</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeNameAliasType.Control">
+ <summary>ISO 6429 names for C0 and C1 control functions, and other commonly occurring names For control codes</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeNameAliasType.Alternate">
+ <summary>A few widely used alternate names for format characters</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeNameAliasType.Figment">
+ <summary>Several documented labels for C1 control code points which were never actually approved In any standard</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeNameAliasType.Abbreviation">
+ <summary>Commonly occurring abbreviations (or acronyms) for control codes, format characters, spaces, And variation selectors</summary>
+</member>
+<member name="T:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory">
+ <summary>Defines the placement categories for dependent vowels, viramas, combining marks, and other characters used in Indic scripts.</summary>
+ <version version="1.5.4">This enum is new in version 1.5.4</version>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.NA">
+ <summary>The value is unknown or not specified</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.Top">
+ <summary>Top position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.Right">
+ <summary>Right position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.Bottom">
+ <summary>Bottom position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.Left">
+ <summary>Left position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.BottomRight">
+ <summary>Bottom-right position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.LeftRight">
+ <summary>Left-right position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.TopBottom">
+ <summary>Top and bottom position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.TopBottomRight">
+ <summary>Top and bottom-right position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.TopLeft">
+ <summary>Top-left position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.TopLeftRight">
+ <summary>Top-left and right position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.TopRight">
+ <summary>Top-right position</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.Overstruck">
+ <summary>Over-struck</summary>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeIndicPositionalCategory.VisualOrderLeft">
+ <summary>Visually order left</summary>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeExtensions">
  <summary>Contains Unicode-related extension methods</summary>
@@ -4357,6 +4572,41 @@ Tools.Text.Unicode
  <param name="group">A Unicode joining group to get origin of</param>
  <returns>Value indicating origin of Unicode joining group <paramref name="group"/></returns>
  <exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="group"/> is not one of <see cref="T:Tools.TextT.UnicodeT.UnicodeJoiningGroup"/> values</exception>
+</member>
+<member name="T:Tools.TextT.UnicodeT.UnicodeNameAlias">
+ <summary>Represents Unicode name alias (from UCD's NameAliases.txt)</summary>
+ <version version="1.5.4">This class is new in version 1.5.4</version>
+</member>
+<member name="F:Tools.TextT.UnicodeT.UnicodeNameAlias.elementName">
+ <summary>Name of element representing this class in XML</summary>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeNameAlias.Alias">
+ <summary>Gets the alias name</summary>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeNameAlias.Type">
+ <summary>Gets alias type</summary>
+ <remarks>If name aliases were loaded form older version of UCD's NameAliases.txt this property can have value of <see cref="F:Tools.TextT.UnicodeT.UnicodeNameAliasType.Unknown"/></remarks>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeNameAlias.Element">
+ <summary>Gets XML element this instance wraps</summary>
+ <returns>An XML element this instance wraps, in case this instance has been constructed form XML element. Null otherwise.</returns>
+</member>
+<member name="M:Tools.TextT.UnicodeT.UnicodeNameAlias.#ctor(System.String,Tools.TextT.UnicodeT.UnicodeNameAliasType)">
+ <summary>CTor - creates a new instance of the <see cref="T:Tools.TextT.UnicodeT.UnicodeNameAlias"/> class</summary>
+ <param name="alias$">Alias name</param>
+ <param name="type">Alias type</param>
+ <exception cref="T:System.ArgumentNullException"><paramref name="alias"/> is null</exception>
+ <exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="type"/> is not one of pre-defined <see cref="T:Tools.TextT.UnicodeT.UnicodeNameAliasType"/> values</exception>
+</member>
+<member name="M:Tools.TextT.UnicodeT.UnicodeNameAlias.#ctor(System.Xml.Linq.XElement)">
+ <summary>CTor - creates a new instance of the <see cref="T:Tools.TextT.UnicodeT.UnicodeNameAlias"/> class</summary>
+ <param name="element">A <see cref="T:System.Xml.Linq.XElement"/> that represents this named sequence</param>
+ <exception cref="T:System.ArgumentNullException"><paramref name="element"/> is null</exception>
+ <exception cref="T:System.ArgumentException"><paramref name="element"/> is not element &lt;name-alias> in namespace http://www.unicode.org/ns/2003/ucd/1.0.</exception>
+</member>
+<member name="M:Tools.TextT.UnicodeT.UnicodeNameAlias.ToString">
+ <summary>Gets string representation of this object</summary>
+ <returns>String representation of this object in form <see cref="P:Tools.TextT.UnicodeT.UnicodeNameAlias.Alias"/>;<see cref="P:Tools.TextT.UnicodeT.UnicodeNameAlias.Type"/></returns>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnicodeNamedSequence">
  <summary>Represents a named sequence of unicode characters</summary>
@@ -4411,7 +4661,7 @@ Tools.Text.Unicode
  <summary>Gets node this instance wraps</summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeNormalizationCorrection.Version">
- <summary>Gets Unicode starndard version in which this corrrection was introduced</summary>
+ <summary>Gets Unicode standard version in which this correction was introduced</summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeNormalizationCorrection.CodePoint">
  <summary>Gets a code point this correction informs about change of normalization of</summary>
@@ -4465,6 +4715,7 @@ Tools.Text.Unicode
  <note>May boolean properties' names are prefixed with the "Is" prefix which is not used in UCD.</note>
  <note>Unihan database properties has prefix "Han" (unihan property can be also determined by use of <see cref="T:Tools.TextT.UnicodeT.UnihanPropertyCategoryAttribute"/> instead of <see cref="T:Tools.TextT.UnicodeT.UnicodePropertyCategoryAttribute"/>).</note>
  <note>XML serialization attributes used to decorate properties of this class are not intended for XML serialization, they are rather intended as machine-readable documentation where the property originates from in UCD XML.</note>
+ <para>For list of Unicode properties see http://www.unicode.org/reports/tr44/#Property_Index</para>
  </remarks>
  <version version="1.5.4">This class is new in version 1.5.4</version>
 </member>
@@ -4490,10 +4741,10 @@ Tools.Text.Unicode
  <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.Element"/>.</returns>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)">
- <summary>When overriden in derived class get value of given property (attribute with namespace specified) resolving or not resolving placeholders in property value</summary>
+ <summary>When overridden in derived class get value of given property (attribute with namespace specified) resolving or not resolving placeholders in property value</summary>
  <param name="namespace">Name of attribute XML namespace</param>
  <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
- <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overriden in derived class. This implementation never resolves placholders.</param>
+ <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overridden in derived class. This implementation never resolves placholders.</param>
  <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.Element"/>.</returns>
  <remarks>Derived class may provide fallback logic for providing property values when the property is not defined on <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.Element"/>.
  <para>
@@ -4502,11 +4753,11 @@ Tools.Text.Unicode
  </para></remarks>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.Boolean)">
- <summary>When <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> overload is overriden overriden in derived class get value of given property (attribute with no namespace) resolving or not resolving placeholders in property value</summary>
+ <summary>When <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> overload is overridden overridden in derived class get value of given property (attribute with no namespace) resolving or not resolving placeholders in property value</summary>
  <param name="name">Name of the property (attribute) to get value of. This is name of property (XML attribute) as used in Unicode Character Database XML.</param>
- <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overriden in derived class. This implementation never resolves placholders.</param>
+ <param name="allowResolving">True to allow placeholder resolving, false not to allow it. Only used if overridden in derived class. This implementation never resolves placholders.</param>
  <returns>Value of the property (attribute) as string. Null if the attribute is not present on <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.Element"/>.</returns>
- <remarks>If <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> is not overriden resolving is never performed.</remarks>
+ <remarks>If <see cref="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String,System.Boolean)"/> is not overridden resolving is never performed.</remarks>
 </member>
 <member name="M:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GetPropertyValue(System.String,System.String)">
  <summary>Gets value of given property (attribute with namespace specified)</summary>
@@ -4549,7 +4800,7 @@ Tools.Text.Unicode
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.Age">
  <summary>Gets version of Unicode in which a code point was assigned to an abstract character, or made surrogate or non-character</summary>
- <returns>Version of Unicode standard or null. Null is retuened also when underlying XML attribute has value "unassigned".</returns>
+ <returns>Version of Unicode standard or null. Null is returned also when underlying XML attribute has value "unassigned".</returns>
  <remarks>Unicode standard defines values this property can have (i.e. it cannot have any version number and typically only <see cref="P:System.Version.Major"/> and <see cref="P:System.Version.Minor"/> numbers are used.
  <para>Underlying XML attribute is @age.</para></remarks>
 </member>
@@ -4586,7 +4837,12 @@ Tools.Text.Unicode
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.CanonicalCombiningClass">
  <summary>Gets combining class of the character</summary>
  <remarks>Underlying XML attribute is @ccc.
- <para>The classes used for the Canonical Ordering Algorithm in the Unicode Standard. This property could be considered either an enumerated property or a numeric property: the principal use of the property is in terms of the numeric values.</para></remarks>
+ <para>The classes used for the Canonical Ordering Algorithm in the Unicode Standard. This property could be considered either an enumerated property or a numeric property: the principal use of the property is in terms of the numeric values.</para>
+ </remarks>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.Block">
+ <summary>Gets name of block the character belongs to</summary>
+ <remarks>Underlying XML attribute is @blk.</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.BidiCategory">
  <summary>Gets bidirectional category of the character</summary>
@@ -4616,12 +4872,19 @@ Tools.Text.Unicode
  <summary>Gets value indicating if code point is bidirectional control character</summary>
  <remarks>Underlying XML attribute is @Bidi_C</remarks>
 </member>
+<member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.BidiPairedBracket">
+ <summary>For an opening bracket gets, the code point of the matching closing bracket. For a closing bracket gets, the code point of the matching opening bracket.</summary>
+ <remarks>
+ This property is used in the implementation of parenthesis matching.
+ <para>Underlying XML attribute is @bpb</para>
+ </remarks>
+</member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.DecompositionType">
  <summary>Gets decomposition type of character</summary>
  <remarks>Underlying XML atttributes is @dt.</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.DecompositionMapping">
- <summary>Gets collection of characters that forms canonic decomposition of this charatcer</summary>
+ <summary>Gets collection of characters that forms canonic decomposition of this character</summary>
  <remarks>Underlying XML attribute is @dm.</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.CompositionExclusion">
@@ -4673,7 +4936,7 @@ Tools.Text.Unicode
  <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFKD.</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.CaseFoldingClosureExtraMappingKC">
- <summary>In case character requires extra meppings for closure under Case Folding plus Normalization Form KC this property returns it.</summary>
+ <summary>In case character requires extra mappings for closure under Case Folding plus Normalization Form KC this property returns it.</summary>
  <returns>If extra mapping is required, returns it. Otherwise returns null.</returns>
  <remarks>This property is obsolete as of Unicode 6.0<para>Underlying XML attribute is @FC_NFKC.</para></remarks>
 </member>
@@ -4755,31 +5018,31 @@ Tools.Text.Unicode
  </remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.UppercaseMappping">
- <summary>Gets uppercase mapping for this charatcer (that is one character or sequence of characters which form uppercase conterpart of current character)</summary>
+ <summary>Gets uppercase mapping for this character (that is one character or sequence of characters which form uppercase conterpart of current character)</summary>
  <remarks>Underlying XML attribute is @uc, if it does not provide value <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.SimpleUppercaseMapping"/> is used instead</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.LowercaseMappping">
- <summary>Gets lowercase mapping for this charatcer (that is one character or sequence of characters which form lowercase conterpart of current character)</summary>
+ <summary>Gets lowercase mapping for this character (that is one character or sequence of characters which form lowercase conterpart of current character)</summary>
  <remarks>Underlying XML attribute is @lc, if it does not provide value <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.SimpleLowercaseMapping"/> is used instead</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.TilecaseMappping">
- <summary>Gets uppercase mapping for this charatcer (that is one character or sequence of characters which form tilecase conterpart of current character)</summary>
+ <summary>Gets uppercase mapping for this character (that is one character or sequence of characters which form tilecase conterpart of current character)</summary>
  <remarks>Underlying XML attribute is @tc, if it does not provide value <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.SimpleTilecaseMapping"/> is used instead. If it does not provide value <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.SimpleUppercaseMapping"/> is used instead.</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.SimpleCaseFolding">
  <summary>Gets mapping from character to its case-folded forms (if the character maps to only one character).</summary>
- <remarks>Underlying XML attribute is @scf.<para>If this property does not providde value check <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.CaseFolding"/>.</para></remarks>
+ <remarks>Underlying XML attribute is @scf.<para>If this property does not provide value check <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.CaseFolding"/>.</para></remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.CaseFolding">
  <summary>Gets mapping from character to its case-folded forms.</summary>
- <remarks>Underlying XML attribute is @scf. If this attribute is not specified this propertxy returns value of <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.SimpleCaseFolding"/> as one-item collection.</remarks>
+ <remarks>Underlying XML attribute is @scf. If this attribute is not specified this property returns value of <see cref="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.SimpleCaseFolding"/> as one-item collection.</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsCaseIgnorable">
- <summary>Gets value idicating if the character is ignored for casing purposes</summary>
+ <summary>Gets value indicating if the character is ignored for casing purposes</summary>
  <remarks>Underlying XML attribute is @CI</remarks> 
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsCased">
- <summary>Gets value indicating if the character either llowercase, uppercase or tilecase character</summary>
+ <summary>Gets value indicating if the character either lowercase, uppercase or tilecase character</summary>
  <remarks>Underlying XML attribute is @Cased</remarks> 
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.ChangesWhenCasefolded">
@@ -4822,6 +5085,13 @@ Tools.Text.Unicode
  <para>Underlying XML attributes is @sc.</para>
  </remarks>
 </member>
+<member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.ScriptExtensions">
+ <summary>Indicates which characters are commonly used with more than one script, but With a limited number of scripts.</summary>
+ <remarks>
+ For each code point, there is one or more property values.  Each such value is a Script property value.
+ <para>Underlying XML attributes is @scx.</para>
+ </remarks>
+</member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsoComment">
  <summary>Gets ISO 10646 comment field.</summary>
  <remarks>Underlying XML attribute is @isc.
@@ -4843,6 +5113,10 @@ Tools.Text.Unicode
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IndicMatraCategory">
  <summary>A provisional property defining the structural categories of syllabic components in Indic scripts.</summary>
  <remarks>Underlying XML attribute is @InMC</remarks>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IndicPositionalCategory">
+ <summary>Defines the placement categories for dependent vowels, viramas, combining marks, and other characters used in Indic scripts.</summary>
+ <remarks>Underlying XML attribute is @InPC</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsIdStart">
  <summary>Gets value indicating if the character can be 1st character in name of an identifier in a programming language such as VB or C#</summary>
@@ -4869,11 +5143,11 @@ Tools.Text.Unicode
  <remarks>Underlying XML attribute is @XIDC</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsPatternSyntax">
- <summary>Gets value indicating if charatcer can be used in syntax of programming language</summary>
+ <summary>Gets value indicating if character can be used in syntax of programming language</summary>
  <remarks>Underlying XML attribute is @Pat_Syn</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsPatternWhiteSpace">
- <summary>Gets value indicating if charatcer shopuld be treated as whitespace by programming language compiler or interpreter</summary>
+ <summary>Gets value indicating if character shopuld be treated as whitespace by programming language compiler or interpreter</summary>
  <remarks>Underlying XML attribute is @Pat_WS</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsDash">
@@ -4964,7 +5238,7 @@ Tools.Text.Unicode
  <remarks>Underlying XML attribute is @OGr_Ext</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.IsGraphemeLink">
- <summary>Formerly proposed for programatic determination of grapheme cluster boundaries.</summary>
+ <summary>Formerly proposed for programmatic determination of grapheme cluster boundaries.</summary>
  <remarks>Underlying XML attribute is @Gr_Link<para>This property is deprecated as of Unicode 5.0</para></remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.GraphemeClusterBreak">
@@ -5285,7 +5559,8 @@ Tools.Text.Unicode
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.HanIrgGSource">
  <summary>The IRG “G” (China + Singapore) source mapping for this character in hex.</summary>
  <remarks>
- The IRG G source consists of data from the following national standards, publications, and lists from the People’s Republic of China and Singapore. The versions of the standards used are those provided by the PRC to the IRG and may not always reflect published versions of the standards generally available.
+ The IRG G source consists of data from the following national standards, publications, and lists from the People’s Republic of China and Singapore.
+ The versions of the standards used are those provided by the PRC to the IRG and may not always reflect published versions of the standards generally available.
  <list>
  <item>G0 GB2312-80</item>
  <item>G1 GB12345-90 with 58 Hong Kong and 92 Korean “Idu” characters</item>
@@ -5334,6 +5609,9 @@ Tools.Text.Unicode
  <item>JARIB Association of Radio Industries and Businesses (ARIB) ARIB STD-B24 Version 5.1, March 14 2007</item>
  </list>
  </remarks>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.HanIrgJASource">
+ <summary>The IRG “JA” (Unified Japanese IT Vendors Contemporary Ideographs) source mapping for this character in hex.</summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodePropertiesProvider.HanIrgKPSource">
  <summary>The IRG “KP” (North Korea) source mapping for this character in hex.</summary>
@@ -5802,6 +6080,21 @@ Tools.Text.Unicode
   Looks up a localized string similar to Bidi Mirroring Glyph.
 </summary>
 </member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_BidiPairedBracket">
+<summary>
+  Looks up a localized string similar to Bidi paired bracket.
+</summary>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_BidiPairedBracketType">
+<summary>
+  Looks up a localized string similar to Bidi paired bracket type.
+</summary>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_Block">
+<summary>
+  Looks up a localized string similar to Block.
+</summary>
+</member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_CanonicalCombiningClass">
 <summary>
   Looks up a localized string similar to Canonical Combining Class.
@@ -5945,6 +6238,11 @@ Tools.Text.Unicode
 <member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_IndicMantraCategory">
 <summary>
   Looks up a localized string similar to Indic Mantra Category.
+</summary>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_IndicPositionalCategory">
+<summary>
+  Looks up a localized string similar to Indic Positional Category.
 </summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_IndicSyllabicCategory">
@@ -6300,6 +6598,11 @@ Tools.Text.Unicode
 <member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_Script">
 <summary>
   Looks up a localized string similar to Script.
+</summary>
+</member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_ScriptExtensions">
+<summary>
+  Looks up a localized string similar to Script extensions.
 </summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_SentenceBreak">
@@ -6817,6 +7120,11 @@ Tools.Text.Unicode
   Looks up a localized string similar to Unihan Z-variant.
 </summary>
 </member>
+<member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_unihan_kJa">
+<summary>
+  Looks up a localized string similar to Unihan “JA” source.
+</summary>
+</member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeResources.d_UniversalName">
 <summary>
   Looks up a localized string similar to Friendly name.
@@ -7132,14 +7440,14 @@ Tools.Text.Unicode
  <summary>Gets node this instance wraps</summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeStandardizedVariant.Description">
- <summary>Gets description of this standartized variant</summary>
+ <summary>Gets description of this standardized variant</summary>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeStandardizedVariant.CodePoints">
- <summary>Gets codepoints that perticipate in this standartized variant</summary>
+ <summary>Gets codepoints that participate in this standardized variant</summary>
  <remarks>This collection should always contain exactly two items</remarks>
 </member>
 <member name="P:Tools.TextT.UnicodeT.UnicodeStandardizedVariant.When">
- <summary>Gets a string that indicates when this standartized variant is used</summary>
+ <summary>Gets a string that indicates when this standardized variant is used</summary>
 </member>
 <member name="T:Tools.TextT.UnicodeT.UnihanPropertyCategoryAttribute">
  <summary>When applied to a property of <see cref="T:Tools.TextT.UnicodeT.UnicodePropertiesProvider"/> indicates Unihan database category that property belongs to</summary>

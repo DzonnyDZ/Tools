@@ -26,11 +26,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Content="{Binding Character, FallbackValue='🗺'}" HorizontalAlignment="Center" VerticalAlignment="Stretch" TextBlock.TextAlignment="Center" Foreground="Yellow"
+        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Stretch" TextBlock.TextAlignment="Center" Foreground="Yellow"
+               Content="{Binding Character, FallbackValue='🗺'}" 
                FontSize="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self},
                           Converter={StaticResource MathOperationMultiConverter}, ConverterParameter='*0.75', ConverterCulture={x:Static glob:CultureInfo.InvariantCulture}
                          }"
-               FontFamily="{x:Static my:Config.CompositeFont}"/>
+               FontFamily="{x:Static my:Config.SelectedFont}"/>
         <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding UnicodeCode, FallbackValue='U+1F5FA'}" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Foreground="Yellow"/>
         <Label Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding Name, FallbackValue='WORLD MAP'}" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Foreground="Yellow"/>
         <Label Grid.Column="0" Grid.Row="2" Content="{Binding Font, FallbackValue='N/A'}" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Foreground="Yellow"/>

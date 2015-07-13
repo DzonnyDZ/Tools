@@ -2467,7 +2467,7 @@ Tools
  <summary>Rapresent anything that can be indexed by anything</summary>
  <typeparam name="TIndex">Data type of indexes</typeparam>
  <typeparam name="TItem">Datatype of items</typeparam>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="P:Tools.CollectionsT.GenericT.IIndexable`2.Item(`1)">
@@ -2481,7 +2481,7 @@ Tools
  <summary>Rapresent anything that can be indexed by anything for readonly access</summary>
  <typeparam name="TIndex">Data type of indexes</typeparam>
  <typeparam name="TItem">Datatype of items</typeparam>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="P:Tools.CollectionsT.GenericT.IReadOnlyIndexable`2.Item(`1)">
@@ -2493,13 +2493,13 @@ Tools
 <member name="T:Tools.CollectionsT.GenericT.IIndexableWithRange`2">
  <summary>Represents anythign that can be indexed by <see cref="T:System.Int64"/></summary>
  <typeparam name="TItem">Data type of items</typeparam>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.CollectionsT.GenericT.IReadOnlyIndexableWithRange`2">
  <summary>Represents anythign that can be indexed by <see cref="T:System.Int32"/> for readonly acces</summary>
  <typeparam name="TItem">Data type of items</typeparam>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="P:Tools.CollectionsT.GenericT.IReadOnlyIndexableWithRange`2.Minimum">
@@ -13155,7 +13155,7 @@ Tools
 </member>
 <member name="T:Tools.ComponentModelT.CancelMessageEventArgs">
  <summary><see cref="T:System.ComponentModel.CancelEventArgs"/> with message witn reason for cancellation</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Beta"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="F:Tools.ComponentModelT.CancelMessageEventArgs._CancelMessage">
@@ -13295,7 +13295,7 @@ Tools
 </member>
 <member name="T:Tools.ComponentModelT.FieldDisplayNameAttribute">
  <summary><see cref="T:System.ComponentModel.DisplayNameAttribute"/> that can be applied on fields</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ComponentModelT.FieldDisplayNameAttribute.#ctor">
@@ -13652,7 +13652,7 @@ Tools
 </member>
 <member name="T:Tools.ComponentModelT.KnownCategoryAttribute">
  <summary><see cref="T:System.ComponentModel.CategoryAttribute"/> which's value is one of known values</summary>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories">
@@ -13775,14 +13775,14 @@ Tools
  <summary>CTor form one of <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> values.</summary>
  <param name="KnownCategory">One of <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> values which determines string name of category. <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> values are also valid.</param>
  <exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="KnownCategory"/> is neither one of <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> nor <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> values</exception>
- <remarks><see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> are localized by .NET framework itself, <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> are localized by ĐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
+ <remarks><see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> are localized by .NET framework itself, <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> are localized by ÐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
 </member>
 <member name="M:Tools.ComponentModelT.KnownCategoryAttribute.CategoryText(Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories)">
  <summary>Gets localized text - name of given known category</summary>
  <param name="KnownCategory">One of <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> or <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> values</param>
  <returns>String representing localized name of given category</returns>
  <exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="KnownCategory"/> is neither one of <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> nor <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> values</exception>
- <remarks><see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> are localized by .NET framework itself, <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> are localized by ĐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
+ <remarks><see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> are localized by .NET framework itself, <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> are localized by ÐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
  <version version="1.5.2">Fixed: Categories <see cref="F:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories.Configurations"/>, <see cref="F:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories.Position"/>, <see cref="F:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories.Private"/>, <see cref="F:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories.PropertyChanged"/>, <see cref="F:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories.Scale"/> and <see cref="F:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories.Text"/> are not recognized and leads to <see cref="T:System.ComponentModel.InvalidEnumArgumentException"/>.</version>
 </member>
 <member name="M:Tools.ComponentModelT.KnownCategoryAttribute.CategoryText(Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories)">
@@ -13790,7 +13790,7 @@ Tools
  <param name="KnownCategory">One of <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> or <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> values</param>
  <returns>String representing localized name of given category</returns>
  <exception cref="T:System.ComponentModel.InvalidEnumArgumentException"><paramref name="KnownCategory"/> is neither one of <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> nor <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> values</exception>
- <remarks><see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> are localized by .NET framework itself, <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> are localized by ĐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
+ <remarks><see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories"/> are localized by .NET framework itself, <see cref="T:Tools.ComponentModelT.KnownCategoryAttribute.AnotherCategories"/> are localized by ÐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
 </member>
 <member name="M:Tools.ComponentModelT.KnownCategoryAttribute.KnownAttribute(Tools.ComponentModelT.KnownCategoryAttribute.KnownCategories)">
  <summary></summary>
@@ -14216,7 +14216,7 @@ Tools
 <member name="T:Tools.ComponentModelT.RestrictAttribute">
  <summary>Indicates if enum may allow values that are not member of it or not</summary>
  <remarks>Tools that use this attribute should treat enums with no <see cref="T:Tools.ComponentModelT.RestrictAttribute"/> as restricted (<see cref="P:Tools.ComponentModelT.RestrictAttribute.Restrict"/> is True)</remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="F:Tools.ComponentModelT.RestrictAttribute._Restrict">
@@ -14311,7 +14311,7 @@ Tools
  <summary>Represents base class for type-safe <see cref="T:System.ComponentModel.TypeConverter"/>'s</summary>
  <typeparam name="T">Type that is converted from and to other types</typeparam>
  <remarks>It's not enough to derive from this class to get working type-safe <see cref="T:System.ComponentModel.TypeConverter"/>. After deriving from this class you must implement one or more type converter interfaces (protected nested interfaces in this class). Those interfaces tells this class which conversions are available and provides conversion methods.</remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.ComponentModelT.TypeConverter`1.ITypeConverterFrom`1">
@@ -14563,7 +14563,7 @@ Tools
  <typeparam name="T">Main type that will be conberted to <paramref name="TOther"/> and from <paramref name="TOther"/></typeparam>
  <typeparam name="TOther">Type the <paramref name="T"/> will be converted from and to</typeparam>
  <remarks>This class provides type-safe base of <see cref="T:System.ComponentModel.TypeConverter"/> for two types. You can extend its support for another types by implementing another <see cref="T:Tools.ComponentModelT.TypeConverter`1"/> nested interfaces.</remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ComponentModelT.TypeConverter`2.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,`1)">
@@ -14619,7 +14619,7 @@ Tools
 </member>
 <member name="T:Tools.ComponentModelT.FileByteConverter">
  <summary>Simple <see cref="T:System.ComponentModel.TypeConverter"/> for <see cref="T:System.Byte"/></summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ComponentModelT.FileByteConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Byte[])">
@@ -14632,7 +14632,7 @@ Tools
 <member name="T:Tools.ComponentModelT.ExpandableObjectConverter`1">
  <summary>Provides base class for type-safe <see cref="T:System.ComponentModel.ExpandableObjectConverter"/> with support for interface based conversion as <see cref="T:Tools.ComponentModelT.TypeConverter`1"/></summary>
  <typeparam name="T">Main type conversion is provided from and to</typeparam>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ComponentModelT.ExpandableObjectConverter`1.GetPropertiesSupported(System.ComponentModel.ITypeDescriptorContext)">
@@ -14651,7 +14651,7 @@ Tools
  <summary>Provides base class for type-safe <see cref="T:System.ComponentModel.ExpandableObjectConverter"/> with direct support for conversion to/from one type as <see cref="T:Tools.ComponentModelT.TypeConverter`2"/> and interface-based type-safe converters implementation as <see cref="T:Tools.ComponentModelT.TypeConverter`1"/></summary>
  <typeparam name="T">Main type conversion is providfed from and to</typeparam>
  <typeparam name="TOther">The other type to which and from which main type <paramref name="T"/> is converted</typeparam>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ComponentModelT.ExpandableObjectConverter`2.GetPropertiesSupported(System.ComponentModel.ITypeDescriptorContext)">
@@ -14668,7 +14668,7 @@ Tools
 </member>
 <member name="T:Tools.ComponentModelT.HexaConverter">
  <summary><see cref="T:System.ComponentModel.TypeConverter"/> for <see cref="T:System.Byte"/> as hexasring</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ComponentModelT.HexaConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.String)">
@@ -14688,7 +14688,7 @@ Tools
 </member>
 <member name="T:Tools.ComponentModelT.EnumConverterWithAttributes`1">
  <summary>Implements <see cref="T:System.ComponentModel.TypeConverter"/> for enums that uses <see cref="T:System.ComponentModel.DisplayNameAttribute"/> applyed on enum items and <see cref="T:Tools.ComponentModelT.RestrictAttribute"/></summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ComponentModelT.EnumConverterWithAttributes`1.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
@@ -18100,7 +18100,7 @@ Tools
 <member name="T:Tools.GlobalizationT.ISOLanguage">
  <summary>Represents language represented by ISO 639 language code and provides list of all defined ISO 639-1 and ISO 639-2 language codes</summary>
  <completionlist cref="T:Tools.GlobalizationT.ISOLanguage"/>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Beta"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.GlobalizationT.ISOLanguage.CodeTypes">
@@ -22511,7 +22511,7 @@ Tools
 </member>
 <member name="T:Tools.NumericsT.SRational">
  <summary>Represents a signed rational number with numerator and denominator</summary>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
  <version version="1.5.2" stage="Alpha">Added <see cref="M:Tools.NumericsT.SRational.Parse(System.String)"/>, <see cref="M:Tools.NumericsT.SRational.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,Tools.NumericsT.SRational@)"/> and <see cref="T:System.IFormattable"/> implementation.</version>
  <version stage="Alpha" version="1.5.2"><see cref="T:System.ComponentModel.TypeConverterAttribute"/> added.</version>
@@ -22817,7 +22817,7 @@ Tools
 </member>
 <member name="T:Tools.NumericsT.URational">
  <summary>Represents an unsigned rational number with numerator and denominator</summary>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
  <version version="1.5.2">Added <see cref="M:Tools.NumericsT.URational.Parse(System.String)"/>, <see cref="M:Tools.NumericsT.URational.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,Tools.NumericsT.URational@)"/> and <see cref="T:System.IFormattable"/> implementation.</version>
  <version version="1.5.2"><see cref="T:System.ComponentModel.TypeConverterAttribute"/> added.</version>
@@ -29569,7 +29569,7 @@ The stub formatting method returning the String1 property value.
  <param name="Str"><see cref="T:System.String"/> to normalize</param>
  <param name="KeepType">True to keep type of whitespace (Endline, Tab, Space; first in group is used) or False to replace all whitespaces with spaces</param>
  <returns><see cref="T:System.String"/> with removed white characters at the beginning and at the end and reduced all groups of whitespaces to one white space</returns>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.TextT.TextExtensions.AppendLineFormat(System.Text.StringBuilder,System.String,System.Object[])">
@@ -30756,7 +30756,7 @@ The stub formatting method returning the String1 property value.
 </member>
 <member name="T:Tools.DataStructuresT.GenericT.Tree`1">
  <summary>Represents tree or sub-tree</summary>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.DataStructuresT.GenericT.Tree`1.#ctor">
@@ -31057,7 +31057,7 @@ The stub formatting method returning the String1 property value.
  <summary>Directions of tree enumerationg</summary>
 </member>
 <member name="F:Tools.DataStructuresT.GenericT.Tree.EnumDirections.FirstToLast">
- <summary>Frřom frist to last (left to right)</summary>
+ <summary>Frøom frist to last (left to right)</summary>
 </member>
 <member name="F:Tools.DataStructuresT.GenericT.Tree.EnumDirections.LastToFirst">
  <summary>From last to first (right to left)</summary>
@@ -31462,7 +31462,7 @@ The stub formatting method returning the String1 property value.
 </member>
 <member name="T:Tools.DrawingT.DesignT.EmbededFileEditor">
  <summary><see cref="T:System.Drawing.Design.UITypeEditor"/> of <see cref="T:System.Byte"/> capable to save bytes info file and load them from it</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.DrawingT.DesignT.EmbededFileEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
@@ -31492,7 +31492,7 @@ The stub formatting method returning the String1 property value.
 </member>
 <member name="T:Tools.DrawingT.DesignT.EmbededImageEditor">
  <summary><see cref="T:System.Drawing.Design.UITypeEditor"/> of <see cref="T:System.Byte"/> capable to save and load image</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.DrawingT.DesignT.EmbededImageEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
@@ -31526,7 +31526,7 @@ The stub formatting method returning the String1 property value.
  The <see cref="T:System.ComponentModel.DefaultValueAttribute"/> used can be applyed either on property (preffered) or on type of the property.
  See also <seealso cref="T:System.ComponentModel.InstanceCreationEditor"/>.
  </remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.DrawingT.DesignT.NewEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
@@ -31915,7 +31915,7 @@ The stub formatting method returning the String1 property value.
 </member>
 <member name="T:Tools.DrawingT.SystemColorsExtension">
  <summary>Gives access to aditional system-defined colors</summary>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="P:Tools.DrawingT.SystemColorsExtension.BrowserLink">
@@ -32370,7 +32370,7 @@ The stub formatting method returning the String1 property value.
 </member>
 <member name="T:Tools.IOt.BinaryReader">
  <summary>Extends <see cref="T:System.IO.BinaryReader"/> to be able to read numeric data in both little-endian and big-endian format</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.IOt.BinaryReader.ByteAlign">
@@ -32461,7 +32461,7 @@ The stub formatting method returning the String1 property value.
 </member>
 <member name="T:Tools.IOt.ConstrainedReadOnlyStream">
  <summary>Implements stream that reads only part of base stream</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="F:Tools.IOt.ConstrainedReadOnlyStream.Stream">
@@ -32778,7 +32778,7 @@ The stub formatting method returning the String1 property value.
  <summary>Wraps <see cref="T:System.String"/> into separet class representing path and allows operation with it</summary>
  <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise).</remarks>
  <seelaso cref="M:Tools.IOt.FileSystemTools.GetIcon(Tools.IOt.Path,System.Boolean,System.Boolean)"/>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="F:Tools.IOt.Path._Path">
@@ -33418,7 +33418,7 @@ The stub formatting method returning the String1 property value.
 </member>
 <member name="T:Tools.IOt.StreamTools">
  <summary>Tools related to IO <see cref="T:System.IO.Stream"/>s</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Nightly"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.IOt.StreamTools.InsertInto(System.IO.Stream,System.Int32,System.Int32,System.Byte[],System.Int64,System.Int64,System.Int32)">
@@ -39009,7 +39009,7 @@ The stub formatting method returning the YouShouldNotReplaceRecordsWhichServesAs
 <member name="T:Tools.ResourcesT.SystemResources">
  <summary>Wraps internal class of .NET Framework <see cref="T:System.SR"/></summary>
  <remarks>Functionality of this class strongly relays on implementation details of .NET Framework!!!</remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ResourcesT.SystemResources.#ctor">
@@ -43459,7 +43459,7 @@ The stub formatting method returning the YouShouldNotReplaceRecordsWhichServesAs
 </member>
 <member name="T:Tools.ResourcesT.SRDescriptionAttribute">
  <summary>Exposes functionality of internall (friend) .NET class System.SRDescriptionAttribute - applies <see cref="T:System.ComponentModel.DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="F:Tools.ResourcesT.SRDescriptionAttribute._ResourceKey">
@@ -43484,7 +43484,7 @@ The stub formatting method returning the YouShouldNotReplaceRecordsWhichServesAs
 </member>
 <member name="T:Tools.ResourcesT.SRCategoryAttribute">
  <summary>Exposes functionality of internall (friend) .NET class System.SRCategoryAttribute - applies <see cref="T:System.ComponentModel.DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.ResourcesT.SRCategoryAttribute.#ctor(Tools.ResourcesT.SystemResources.KnownValues)">
@@ -46886,7 +46886,7 @@ The stub formatting method returning the VarArgsAreNotCLSCompliant property valu
  <item><term>Context value</term><description>Same as context object with exception when current step is <see cref="T:Tools.XmlT.XPathT.XPathObjectNavigator.SpecialStep"/> (then it is value of pseudo-attribute)</description></item>
  </list>
  </remarks>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Alpha"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.XmlT.XPathT.XPathObjectNavigator.Step">
@@ -47969,21 +47969,21 @@ The stub formatting method returning the VarArgsAreNotCLSCompliant property valu
  <summary>Converts <see cref="T:System.Int16"/> from Little Endian to Big Endian or vice versa</summary>
  <param name="value">value to be converted</param>
  <returns><paramref name="value"/> with reversed byte order</returns>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MathT.LEBE(System.UInt16)">
  <summary>Converts <see cref="T:System.UInt16"/> from Little Endian to Big Endian or vice versa</summary>
  <param name="value">value to be converted</param>
  <returns><paramref name="value"/> with reversed byte order</returns>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MathT.LEBE(System.Int32)">
  <summary>Converts <see cref="T:System.Int32"/> from Little Endian to Big Endian or vice versa</summary>
  <param name="value">value to be converted</param>
  <returns><paramref name="value"/> with reversed byte order</returns>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
  <version version="1.5.3">Fix: Does not work correctly for negative values (<see cref="T:System.OverflowException"/> may be thrown).</version>
 </member>
@@ -47991,21 +47991,21 @@ The stub formatting method returning the VarArgsAreNotCLSCompliant property valu
  <summary>Converts <see cref="T:System.UInt32"/> from Little Endian to Big Endian or vice versa</summary>
  <param name="value">value to be converted</param>
  <returns><paramref name="value"/> with reversed byte order</returns>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MathT.LEBE(System.Int64)">
  <summary>Converts <see cref="T:System.Int64"/> from Little Endian to Big Endian or vice versa</summary>
  <param name="value">value to be converted</param>
  <returns><paramref name="value"/> with reversed byte order</returns>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="M:Tools.MathT.LEBE(System.UInt64)">
  <summary>Converts <see cref="T:System.UInt64"/> from Little Endian to Big Endian or vice versa</summary>
  <param name="value">value to be converted</param>
  <returns><paramref name="value"/> with reversed byte order</returns>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="T:Tools.Chars">
@@ -48653,7 +48653,7 @@ The stub formatting method returning the VarArgsAreNotCLSCompliant property valu
  <summary><see cref="T:System.TimeSpan"/> that implements <see cref="T:System.IFormattable"/></summary>
  <remarks>This class has plenty of formating possibilities which can be used via <see cref="T:System.String"/> or <see cref="M:Tools.TimeSpanFormattable.ToString"/>.</remarks>
  <seealso cref="T:System.TimeSpan"/>
- <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><see cref="T:Tools.InternalT.VersionAttribute"/> and <see cref="T:Tools.InternalT.AuthorAttribute"/> removed</version>
 </member>
 <member name="F:Tools.TimeSpanFormattable.Inner">

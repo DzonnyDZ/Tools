@@ -9909,7 +9909,7 @@ The stub formatting method returning the WindowStateChanged_d property value.
 </member>
 <member name="T:Tools.WindowsT.FormsT.ExtendedForm">
  <summary><see cref="T:System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="RC"><c>VersionAttribute</c> and <c>AuthorAttribute</c> removed</version>
 </member>
 <member name="T:Tools.WindowsT.FormsT.ExtendedForm.SystemMenuState">
@@ -10321,7 +10321,7 @@ The stub formatting method returning the WindowStateChanged_d property value.
 <member name="T:Tools.WindowsT.FormsT.UtilitiesT.LinkProperties">
  <summary>Gives acces of hyperlink settings of Internet Explorer</summary>
  <remarks>See also <seealso cref="T:Tools.DrawingT.SystemColorsExtension"/></remarks>
- <author www="http://dzonny.cz">Đonny</author>
+ <author www="http://dzonny.cz">Ðonny</author>
  <version version="1.5.2" stage="Release"><c>VersionAttribute</c> and <c>AuthorAttribute</c> removed</version>
 </member>
 <member name="M:Tools.WindowsT.FormsT.UtilitiesT.LinkProperties.#ctor">

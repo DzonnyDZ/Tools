@@ -2,14 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="Interval" Type="System.TimeSpan" Scope="User">
+    <Setting Name="Interval" Roaming="true" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:00:05</Value>
     </Setting>
     <Setting Name="FontName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Unicode composite font</Value>
     </Setting>
     <Setting Name="FontPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">pack://application:,,,/</Value>
     </Setting>
   </Settings>
 </SettingsFile>
