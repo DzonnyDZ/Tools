@@ -46,7 +46,7 @@ Public Class SettingsDialog
             .Title = "Select font",
             .Filter = "All fonts (*.ttf, *.oft, *.ttc, *.CompositeFont)|*.ttf;*.otf;*.ttc;*.CompositeFont|Classic fonts (*.ttf, *.otf, *.ttc)|*.ttf;*.otf;*.ttc|Composite fonts (*.CompositeFont)|*.CompositeFont|TrueType fonts (*.ttf)|*.ttf|OpenType fonts (*.otf)|*.otf|TrueType font collections (*.ttc)|*.ttc|All files (*.*)|*.*"
         }
-        If dialog.ShowDialog(Me) Then txtFontPath.Text = dialog.FileName
+        If dialog.ShowDialog(Me) Then txtFontPath.Text = dialog.FileName : My.Settings.FontPath = dialog.FileName
     End Sub
 
     Private Sub btnConvertCompositeFont_Click(sender As Object, e As RoutedEventArgs)
@@ -128,7 +128,7 @@ Public Class SettingsDialog
             Dim faces = ff.GetTypefaces
             Dim glyphFaces As New List(Of GlyphTypeface)(faces.Count)
             For Each f In faces
-                Dim gf As GlyphTypeface
+                Dim gf As GlyphTypeface = Nothing
                 If f.TryGetGlyphTypeface(gf) Then glyphFaces.Add(gf)
             Next
 
@@ -182,7 +182,9 @@ Public Class SettingsDialog
         e.Handled = True
     End Sub
     Private Sub btnFontDefault_Click(sender As Object, e As RoutedEventArgs)
-        txtFontPath.Text = "pack://application:,,,/"
-        cmbFonts.Text = "Unicode composite font"
+        txtFontPath.Text = DefaultFontPath
+        My.Settings.FontPath = DefaultFontPath
+        cmbFonts.Text = DefaultFontName
+        My.Settings.FontName = DefaultFontName
     End Sub
 End Class

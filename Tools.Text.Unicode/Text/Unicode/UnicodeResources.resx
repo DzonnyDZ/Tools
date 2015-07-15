@@ -930,7 +930,7 @@
     <value>Bidi paired bracket type</value>
   </data>
   <data name="d_IndicPositionalCategory" xml:space="preserve">
-    <value>Indic Positional Catrgory</value>
+    <value>Indic Positional Category</value>
   </data>
   <data name="d_unihan_kJa" xml:space="preserve">
     <value>Unihan “JA” source</value>

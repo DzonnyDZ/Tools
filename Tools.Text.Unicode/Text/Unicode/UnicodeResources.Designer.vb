@@ -389,7 +389,7 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Indic Positional Catrgory.
+        '''  Looks up a localized string similar to Indic Positional Category.
         '''</summary>
         Friend Shared ReadOnly Property d_IndicPositionalCategory() As String
             Get
