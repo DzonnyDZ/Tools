@@ -3651,14 +3651,15 @@ The stub formatting method returning the Progress property value.
  <remarks>The type must be class or structure with public default (parameter-less constructor). It shall be neither abstract nor interface, nor open generic type.</remarks>
 </member>
 <member name="T:Tools.WindowsT.WPF.MarkupT.StaticExExtension">
- <summary>Implements markup extension to acces static properties and fields and their members</summary>
+ <summary>Implements markup extension to access static properties and fields and their members</summary>
  <version version="1.5.3">This class is new in version 1.5.3</version>
+ <version version="1.5.4">DynamicCast now also considers type converters</version>
 </member>
 <member name="F:Tools.WindowsT.WPF.MarkupT.StaticExExtension._Member">
  <summary>Contains value of the <see cref="P:Tools.WindowsT.WPF.MarkupT.StaticExExtension.Member"/> property</summary>
 </member>
 <member name="M:Tools.WindowsT.WPF.MarkupT.StaticExExtension.#ctor">
- <summary>Default contstructor</summary>
+ <summary>Default constructor</summary>
  <remarks>This constructor is intended to be used by XAML only. Use parametrized constructor overload instead.</remarks>
 </member>
 <member name="M:Tools.WindowsT.WPF.MarkupT.StaticExExtension.#ctor(System.String)">
@@ -3676,11 +3677,11 @@ The stub formatting method returning the Progress property value.
  <summary>Gets or sets name and path of member this extension provides value of</summary>
  <value>Name and path of member this extension provides value of</value>
  <remarks>
- This property shall be set to string containg several (at least 2) dot(.)-separated substring. (No leading and terminating dots!)
- First part is interpreted as name of type and is resolved via <see cref="M:System.Windows.Markup.IXamlTypeResolver.Resolve(System.String)"/> (so it can contain XML namestace prefix).
+ This property shall be set to string containing several (at least 2) dot(.)-separated substring. (No leading and terminating dots!)
+ First part is interpreted as name of type and is resolved via <see cref="M:System.Windows.Markup.IXamlTypeResolver.Resolve(System.String)"/> (so it can contain XML namespace prefix).
  Second part must me name of public static property or field of type specified in first part.
- Thirt and all subsequent parts must be names of public instance fields of type returned by field or property from preceding part (type descriptors are not utilized).
- If any member is not found or (with exceptio of last) returns null, an exception is thrown.
+ Third and all subsequent parts must be names of public instance fields of type returned by field or property from preceding part (type descriptors are not utilized).
+ If any member is not found or (with exception of last) returns null, an exception is thrown.
  </remarks>
 </member>
 <member name="P:Tools.WindowsT.WPF.MarkupT.StaticExExtension.BindingFlags">
@@ -3707,8 +3708,9 @@ The stub formatting method returning the Progress property value.
  <exception cref="T:System.Reflection.TargetInvocationException">An error occurred while retrieving the property value. For example, an index value specified for an indexed property is out of range. The <see cref="P:System.Exception.InnerException"/> property indicates the reason for the error.</exception>
  <exception cref="T:System.NotSupportedException">A field being accessed is marked literal, but the field does not have one of the accepted literal types.</exception>
  <exception cref="T:System.FieldAccessException">The caller does not have permission to access a field.</exception>
- <exception cref="T:System.InvalidCastException"><see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type)">Dynamic cast</see> wa attempted (see return value documentation for conditions when it is attempted): No casting method from type of obj to Type was found -or- build in conversion from System.String to numeric type failed.</exception>
- <exception cref="T:System.FormatException"><see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type)">Dynamic cast</see> wa attempted (see return value documentation for conditions when it is attempted): Conversion of <see cref="T:System.String"/> to <see cref="T:System.TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+ <exception cref="T:System.InvalidCastException"><see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type)">Dynamic cast</see> was attempted (see return value documentation for conditions when it is attempted): No casting method from type of obj to Type was found -or- build in conversion from System.String to numeric type failed.</exception>
+ <exception cref="T:System.FormatException"><see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type)">Dynamic cast</see> was attempted (see return value documentation for conditions when it is attempted): Conversion of <see cref="T:System.String"/> to <see cref="T:System.TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+ <version version="1.5.4">DynamicCast now also considers type converters</version>
 </member>
 <member name="T:Tools.WindowsT.WPF.MarkupT.StaticExExtension.StaticExTypeConverter">
  <summary>Converter for type <see cref="T:System.Windows.Markup.MarkupExtension"/> and <see cref="T:System.ComponentModel.Design.Serialization.InstanceDescriptor"/></summary>

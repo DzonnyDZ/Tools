@@ -7,10 +7,16 @@
         xmlns:ti="clr-namespace:Tools.WindowsT.WPF.InputT;assembly=Tools.Windows"
         xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:my="clr-namespace:Dzonny.UnicodeScreenSaver"
+        xmlns:tm="clr-namespace:Tools.WindowsT.WPF.MarkupT;assembly=Tools.Windows"
         mc:Ignorable="d" x:ClassModifier="Friend"
         Title="USS" Height="350" Width="525" ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="None"
-        Background="Black" Foreground="Yellow"
 >
+    <Window.Background>
+        <SolidColorBrush Color="{tm:StaticEx my:MySettings.Default.BackgroundColor}"/>
+    </Window.Background>
+    <Window.Foreground>
+        <SolidColorBrush Color="{tm:StaticEx my:MySettings.Default.BackgroundColor}"/>
+    </Window.Foreground>
     <Window.Resources>
         <tc:MathOperationMultiConverter x:Key="MathOperationMultiConverter"/>
     </Window.Resources>

@@ -4,17 +4,18 @@ Imports System.Reflection, Tools.ExtensionsT
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.MarkupT
-    ''' <summary>Implements markup extension to acces static properties and fields and their members</summary>
+    ''' <summary>Implements markup extension to access static properties and fields and their members</summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
-    <MarkupExtensionReturnType(GetType(Object))> _
-    <TypeConverter(GetType(StaticExExtension.StaticExTypeConverter))> _
+    ''' <version version="1.5.4">DynamicCast now also considers type converters</version>
+    <MarkupExtensionReturnType(GetType(Object))>
+    <TypeConverter(GetType(StaticExExtension.StaticExTypeConverter))>
     Public Class StaticExExtension
         Inherits MarkupExtension
         ''' <summary>Contains value of the <see cref="Member"/> property</summary>
         Private _Member As String
-        ''' <summary>Default contstructor</summary>
+        ''' <summary>Default constructor</summary>
         ''' <remarks>This constructor is intended to be used by XAML only. Use parametrized constructor overload instead.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Sub New()
         End Sub
 
@@ -23,8 +24,8 @@ Namespace WindowsT.WPF.MarkupT
         ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null.</exception>
         Public Sub New(ByVal member As String)
             Me.New()
-            If Member Is Nothing Then Throw New ArgumentNullException("Member")
-            Me.Member = Member
+            If member Is Nothing Then Throw New ArgumentNullException("Member")
+            Me.Member = member
         End Sub
 
         ''' <summary>CTor with member and <see cref="Reflection.BindingFlags"/></summary>
@@ -38,13 +39,13 @@ Namespace WindowsT.WPF.MarkupT
         ''' <summary>Gets or sets name and path of member this extension provides value of</summary>
         ''' <value>Name and path of member this extension provides value of</value>
         ''' <remarks>
-        ''' This property shall be set to string containg several (at least 2) dot(.)-separated substring. (No leading and terminating dots!)
-        ''' First part is interpreted as name of type and is resolved via <see cref="IXamlTypeResolver.Resolve"/> (so it can contain XML namestace prefix).
+        ''' This property shall be set to string containing several (at least 2) dot(.)-separated substring. (No leading and terminating dots!)
+        ''' First part is interpreted as name of type and is resolved via <see cref="IXamlTypeResolver.Resolve"/> (so it can contain XML namespace prefix).
         ''' Second part must me name of public static property or field of type specified in first part.
-        ''' Thirt and all subsequent parts must be names of public instance fields of type returned by field or property from preceding part (type descriptors are not utilized).
-        ''' If any member is not found or (with exceptio of last) returns null, an exception is thrown.
+        ''' Third and all subsequent parts must be names of public instance fields of type returned by field or property from preceding part (type descriptors are not utilized).
+        ''' If any member is not found or (with exception of last) returns null, an exception is thrown.
         ''' </remarks>
-        <ConstructorArgument("Member")> _
+        <ConstructorArgument("Member")>
         Public Property Member() As String
             Get
                 Return _Member
@@ -86,8 +87,9 @@ Namespace WindowsT.WPF.MarkupT
         ''' <exception cref="TargetInvocationException">An error occurred while retrieving the property value. For example, an index value specified for an indexed property is out of range. The <see cref="System.Exception.InnerException"/> property indicates the reason for the error.</exception>
         ''' <exception cref="NotSupportedException">A field being accessed is marked literal, but the field does not have one of the accepted literal types.</exception>
         ''' <exception cref="FieldAccessException">The caller does not have permission to access a field.</exception>
-        ''' <exception cref="InvalidCastException"><see cref="Tools.TypeTools.DynamicCast">Dynamic cast</see> wa attempted (see return value documentation for conditions when it is attempted): No casting method from type of obj to Type was found -or- build in conversion from System.String to numeric type failed.</exception>
-        ''' <exception cref="FormatException"><see cref="Tools.TypeTools.DynamicCast">Dynamic cast</see> wa attempted (see return value documentation for conditions when it is attempted): Conversion of <see cref="System.String"/> to <see cref="System.TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+        ''' <exception cref="InvalidCastException"><see cref="Tools.TypeTools.DynamicCast">Dynamic cast</see> was attempted (see return value documentation for conditions when it is attempted): No casting method from type of obj to Type was found -or- build in conversion from System.String to numeric type failed.</exception>
+        ''' <exception cref="FormatException"><see cref="Tools.TypeTools.DynamicCast">Dynamic cast</see> was attempted (see return value documentation for conditions when it is attempted): Conversion of <see cref="System.String"/> to <see cref="System.TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+        ''' <version version="1.5.4">DynamicCast now also considers type converters</version>
         Public Overrides Function ProvideValue(ByVal serviceProvider As System.IServiceProvider) As Object
             If Member Is Nothing Then Throw New InvalidOperationException(Resources.ex_IsNull.f("Member"))
             If serviceProvider Is Nothing Then Throw New ArgumentNullException("serviceProvider")
@@ -130,9 +132,9 @@ Namespace WindowsT.WPF.MarkupT
                 End If
             Next
             If ValueTarget IsNot Nothing AndAlso ValueTarget.TargetProperty IsNot Nothing AndAlso TypeOf ValueTarget.TargetProperty Is Reflection.PropertyInfo AndAlso DirectCast(ValueTarget.TargetProperty, Reflection.PropertyInfo).PropertyType IsNot Nothing Then
-                Return Tools.TypeTools.DynamicCast(CurrVal, DirectCast(ValueTarget.TargetProperty, Reflection.PropertyInfo).PropertyType)
+                Return Tools.TypeTools.DynamicCast(CurrVal, DirectCast(ValueTarget.TargetProperty, Reflection.PropertyInfo).PropertyType, True)
             ElseIf ValueTarget IsNot Nothing AndAlso ValueTarget.TargetProperty IsNot Nothing AndAlso TypeOf ValueTarget.TargetProperty Is System.Windows.DependencyProperty AndAlso DirectCast(ValueTarget.TargetProperty, System.Windows.DependencyProperty).PropertyType IsNot Nothing Then
-                Return Tools.TypeTools.DynamicCast(CurrVal, DirectCast(ValueTarget.TargetProperty, System.Windows.DependencyProperty).PropertyType)
+                Return Tools.TypeTools.DynamicCast(CurrVal, DirectCast(ValueTarget.TargetProperty, System.Windows.DependencyProperty).PropertyType, True)
             End If
             Return CurrVal
         End Function

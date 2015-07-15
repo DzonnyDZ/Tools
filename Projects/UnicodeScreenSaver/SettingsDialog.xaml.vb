@@ -1,8 +1,9 @@
 ﻿Imports System.Globalization.CultureInfo
 Imports System.Text
+Imports System.Windows.Forms
+Imports Tools.WindowsT.InteropT
 Imports System.Xml
 Imports System.Xml.Xsl
-Imports Microsoft.Win32
 Imports Tools.TextT.UnicodeT
 Imports <xmlns:cf="http://schemas.microsoft.com/winfx/2006/xaml/composite-font">
 
@@ -42,7 +43,7 @@ Public Class SettingsDialog
     End Sub
 
     Private Sub btnFontBrowse_Click(sender As Object, e As RoutedEventArgs)
-        Dim dialog As New OpenFileDialog With {
+        Dim dialog As New Microsoft.Win32.OpenFileDialog With {
             .Title = "Select font",
             .Filter = "All fonts (*.ttf, *.oft, *.ttc, *.CompositeFont)|*.ttf;*.otf;*.ttc;*.CompositeFont|Classic fonts (*.ttf, *.otf, *.ttc)|*.ttf;*.otf;*.ttc|Composite fonts (*.CompositeFont)|*.CompositeFont|TrueType fonts (*.ttf)|*.ttf|OpenType fonts (*.otf)|*.otf|TrueType font collections (*.ttc)|*.ttc|All files (*.*)|*.*"
         }
@@ -50,8 +51,8 @@ Public Class SettingsDialog
     End Sub
 
     Private Sub btnConvertCompositeFont_Click(sender As Object, e As RoutedEventArgs)
-        Dim openDialog As New OpenFileDialog With {.Title = "Select BabelMap composite font", .Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"}
-        Dim saveDialog As New SaveFileDialog With {
+        Dim openDialog As New Microsoft.Win32.OpenFileDialog With {.Title = "Select BabelMap composite font", .Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"}
+        Dim saveDialog As New Microsoft.Win32.SaveFileDialog With {
             .Title = "Save .NET/WPF Composite font",
             .Filter = "Composite fonts (*.CompositeFont)|*.CompositeFont",
             .DefaultExt = "CompositeFont",
@@ -187,4 +188,31 @@ Public Class SettingsDialog
         cmbFonts.Text = DefaultFontName
         My.Settings.FontName = DefaultFontName
     End Sub
+
+    Private Sub lblFgColor_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs)
+        Dim color = GetColor()
+        If color.HasValue Then
+            My.Settings.ForegroundColor = color
+            lblBgColor.Foreground = New SolidColorBrush(color)
+            lblFgColor.Foreground = New SolidColorBrush(color)
+        End If
+    End Sub
+
+    Private Sub lblBgColor_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs)
+        Dim color = GetColor()
+        If color.HasValue Then
+            My.Settings.BackgroundColor = color
+            lblBgColor.Background = New SolidColorBrush(color)
+            lblFgColor.Background = New SolidColorBrush(color)
+        End If
+    End Sub
+
+    Private Function GetColor() As Color?
+        Using dlg As New ColorDialog
+            If dlg.ShowDialog(Me) Then
+                Return New Tools.WindowsT.WPF.ConvertersT.IntColorConverter().Convert(dlg.Color.ToArgb(), GetType(Color), Nothing, InvariantCulture)
+            End If
+            Return Nothing
+        End Using
+    End Function
 End Class

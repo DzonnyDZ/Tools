@@ -11,5 +11,11 @@
     <Setting Name="FontPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">pack://application:,,,/</Value>
     </Setting>
+    <Setting Name="BackgroundColor" Roaming="true" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#00000000</Value>
+    </Setting>
+    <Setting Name="ForegroundColor" Roaming="true" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFFFF00</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
