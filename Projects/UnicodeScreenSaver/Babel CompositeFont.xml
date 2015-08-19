@@ -1,252 +1,262 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CompositeFont unicode="7.0" lang="en">
-	<Block name="Basic Latin">Cambria</Block>
-	<Block name="Latin-1 Supplement">Cambria</Block>
-	<Block name="Latin Extended-A">Cambria</Block>
-	<Block name="Latin Extended-B">Cambria</Block>
-	<Block name="IPA Extensions">Cambria</Block>
-	<Block name="Spacing Modifier Letters">Cambria</Block>
-	<Block name="Combining Diacritical Marks">Cambria</Block>
-	<Block name="Greek and Coptic">Symbola</Block>
-	<Block name="Cyrillic">Times New Roman</Block>
-	<Block name="Cyrillic Supplement">Symbola</Block>
-	<Block name="Armenian">Segoe WP</Block>
-	<Block name="Hebrew">Times New Roman</Block>
-	<Block name="Arabic">Segoe WP</Block>
-	<Block name="Syriac">Estrangelo Edessa</Block>
-	<Block name="Arabic Supplement">Microsoft Uighur</Block>
-	<Block name="Thaana">MV Boli</Block>
-	<Block name="NKo">Ebrima</Block>
-	<Block name="Samaritan"></Block>
-	<Block name="Mandaic"></Block>
-	<Block name="Arabic Extended-A"></Block>
-	<Block name="Devanagari">Nirmala UI</Block>
-	<Block name="Bengali">Nirmala UI</Block>
-	<Block name="Gurmukhi">Raavi</Block>
-	<Block name="Gujarati">Shruti</Block>
-	<Block name="Oriya">Kalinga</Block>
-	<Block name="Tamil">Vijaya</Block>
-	<Block name="Telugu">Vani</Block>
-	<Block name="Kannada">Tunga</Block>
-	<Block name="Malayalam">Nirmala UI</Block>
-	<Block name="Sinhala">Iskoola Pota</Block>
-	<Block name="Thai">Angsana New</Block>
-	<Block name="Lao">Lao UI</Block>
-	<Block name="Tibetan">Microsoft Himalaya</Block>
-	<Block name="Myanmar">Code2000</Block>
-	<Block name="Georgian">Segoe WP</Block>
-	<Block name="Hangul Jamo">Microsoft NeoGothic</Block>
-	<Block name="Ethiopic">Nyala</Block>
-	<Block name="Ethiopic Supplement">Nyala</Block>
-	<Block name="Cherokee">Plantagenet Cherokee</Block>
-	<Block name="Unified Canadian Aboriginal Syllabics">Gadugi</Block>
-	<Block name="Ogham">Segoe UI Symbol</Block>
-	<Block name="Runic">Segoe UI Symbol</Block>
-	<Block name="Tagalog">Tagalog Doctrina 1593</Block>
-	<Block name="Hanunoo">Tagalog Doctrina 1593</Block>
-	<Block name="Buhid">Code2000</Block>
-	<Block name="Tagbanwa">Tagbanwa</Block>
-	<Block name="Khmer">Khmer UI</Block>
-	<Block name="Mongolian">Mongolian Baiti</Block>
-	<Block name="Unified Canadian Aboriginal Syllabics Extended">Gadugi</Block>
-	<Block name="Limbu">Code2000</Block>
-	<Block name="Tai Le">Microsoft Tai Le</Block>
-	<Block name="New Tai Lue">Microsoft New Tai Lue</Block>
-	<Block name="Khmer Symbols">Khmer UI</Block>
-	<Block name="Buginese">Code2000</Block>
-	<Block name="Tai Tham">Lanna Alif</Block>
-	<Block name="Combining Diacritical Marks Extended"></Block>
-	<Block name="Balinese">Aksara Bali</Block>
-	<Block name="Sundanese">Sundanese Unicode</Block>
-	<Block name="Batak"></Block>
-	<Block name="Lepcha"></Block>
-	<Block name="Ol Chiki">Nirmala UI</Block>
-	<Block name="Sundanese Supplement"></Block>
-	<Block name="Vedic Extensions"></Block>
-	<Block name="Phonetic Extensions">Cambria</Block>
-	<Block name="Phonetic Extensions Supplement">Cambria</Block>
-	<Block name="Combining Diacritical Marks Supplement">Times New Roman</Block>
-	<Block name="Latin Extended Additional">Code2000</Block>
-	<Block name="Greek Extended">Segoe WP</Block>
-	<Block name="General Punctuation">Symbola</Block>
-	<Block name="Superscripts and Subscripts">Symbola</Block>
-	<Block name="Currency Symbols">Symbola</Block>
-	<Block name="Combining Diacritical Marks for Symbols">Symbola</Block>
-	<Block name="Letterlike Symbols">Symbola</Block>
-	<Block name="Number Forms">Symbola</Block>
-	<Block name="Arrows">Segoe UI Symbol</Block>
-	<Block name="Mathematical Operators">Segoe UI Symbol</Block>
-	<Block name="Miscellaneous Technical">Symbola</Block>
-	<Block name="Control Pictures">Segoe UI Symbol</Block>
-	<Block name="Optical Character Recognition">Symbola</Block>
-	<Block name="Enclosed Alphanumerics">Symbola</Block>
-	<Block name="Box Drawing">Segoe UI Symbol</Block>
-	<Block name="Block Elements">Symbola</Block>
-	<Block name="Geometric Shapes">Segoe UI Symbol</Block>
-	<Block name="Miscellaneous Symbols">Symbola</Block>
-	<Block name="Dingbats">Symbola</Block>
-	<Block name="Miscellaneous Mathematical Symbols-A">Symbola</Block>
-	<Block name="Supplemental Arrows-A">Segoe UI Symbol</Block>
-	<Block name="Braille Patterns">Segoe UI Symbol</Block>
-	<Block name="Supplemental Arrows-B">Segoe UI Symbol</Block>
-	<Block name="Miscellaneous Mathematical Symbols-B">Segoe UI Symbol</Block>
-	<Block name="Supplemental Mathematical Operators">Segoe UI Symbol</Block>
-	<Block name="Miscellaneous Symbols and Arrows">Symbola</Block>
-	<Block name="Glagolitic">Segoe UI Symbol</Block>
-	<Block name="Latin Extended-C">Code2000</Block>
-	<Block name="Coptic">Code2000</Block>
-	<Block name="Georgian Supplement">Segoe WP</Block>
-	<Block name="Tifinagh">Ebrima</Block>
-	<Block name="Ethiopic Extended">Nyala</Block>
-	<Block name="Cyrillic Extended-A">Segoe WP</Block>
-	<Block name="Supplemental Punctuation">Symbola</Block>
-	<Block name="CJK Radicals Supplement">Code2000</Block>
-	<Block name="Kangxi Radicals">Meiryo</Block>
-	<Block name="Ideographic Description Characters">Microsoft YaHei UI</Block>
-	<Block name="CJK Symbols and Punctuation">Microsoft YaHei UI</Block>
-	<Block name="Hiragana">Meiryo UI</Block>
-	<Block name="Katakana">Microsoft JhengHei</Block>
-	<Block name="Bopomofo">Code2000</Block>
-	<Block name="Hangul Compatibility Jamo">Dotum</Block>
-	<Block name="Kanbun">Microsoft JhengHei</Block>
-	<Block name="Bopomofo Extended">Microsoft YaHei UI</Block>
-	<Block name="CJK Strokes">Code2000</Block>
-	<Block name="Katakana Phonetic Extensions">Meiryo UI</Block>
-	<Block name="Enclosed CJK Letters and Months">Code2000</Block>
-	<Block name="CJK Compatibility">Code2000</Block>
-	<Block name="CJK Unified Ideographs Extension A">MingLiU_HKSCS</Block>
-	<Block name="Yijing Hexagram Symbols">Symbola</Block>
-	<Block name="CJK Unified Ideographs">Code2000</Block>
-	<Block name="Yi Syllables">Microsoft Yi Baiti</Block>
-	<Block name="Yi Radicals">Microsoft Yi Baiti</Block>
-	<Block name="Lisu">Segoe WP</Block>
-	<Block name="Vai">Ebrima</Block>
-	<Block name="Cyrillic Extended-B">Segoe WP</Block>
-	<Block name="Bamum"></Block>
-	<Block name="Modifier Tone Letters">Code2000</Block>
-	<Block name="Latin Extended-D">Code2000</Block>
-	<Block name="Syloti Nagri"></Block>
-	<Block name="Common Indic Number Forms">Nirmala UI</Block>
-	<Block name="Phags-pa">Microsoft PhagsPa</Block>
-	<Block name="Saurashtra">Code2000</Block>
-	<Block name="Devanagari Extended"></Block>
-	<Block name="Kayah Li">Code2000</Block>
-	<Block name="Rejang">Code2000</Block>
-	<Block name="Hangul Jamo Extended-A"></Block>
-	<Block name="Javanese"></Block>
-	<Block name="Myanmar Extended-B"></Block>
-	<Block name="Cham">Code2000</Block>
-	<Block name="Myanmar Extended-A"></Block>
-	<Block name="Tai Viet"></Block>
-	<Block name="Meetei Mayek Extensions"></Block>
-	<Block name="Ethiopic Extended-A"></Block>
-	<Block name="Latin Extended-E"></Block>
-	<Block name="Meetei Mayek"></Block>
-	<Block name="Hangul Syllables">Dotum</Block>
-	<Block name="Hangul Jamo Extended-B"></Block>
-	<Block name="Private Use Area">MingLiU_HKSCS</Block>
-	<Block name="CJK Compatibility Ideographs">Code2000</Block>
-	<Block name="Alphabetic Presentation Forms">Code2000</Block>
-	<Block name="Arabic Presentation Forms-A">Arial Unicode MS</Block>
-	<Block name="Variation Selectors">Code2000</Block>
-	<Block name="Vertical Forms">Microsoft JhengHei</Block>
-	<Block name="Combining Half Marks">Symbola</Block>
-	<Block name="CJK Compatibility Forms">Microsoft JhengHei</Block>
-	<Block name="Small Form Variants">Microsoft YaHei UI</Block>
-	<Block name="Arabic Presentation Forms-B">Traditional Arabic</Block>
-	<Block name="Halfwidth and Fullwidth Forms">Microsoft JhengHei UI</Block>
-	<Block name="Specials">Symbola</Block>
-	<Block name="Linear B Syllabary">Code2001</Block>
-	<Block name="Linear B Ideograms">Code2001</Block>
-	<Block name="Aegean Numbers">Symbola</Block>
-	<Block name="Ancient Greek Numbers">Symbola</Block>
-	<Block name="Ancient Symbols">Symbola</Block>
-	<Block name="Phaistos Disc">Symbola</Block>
-	<Block name="Lycian"></Block>
-	<Block name="Carian"></Block>
-	<Block name="Coptic Epact Numbers">Symbola</Block>
-	<Block name="Old Italic">Segoe UI Symbol</Block>
-	<Block name="Gothic">Segoe UI Symbol</Block>
-	<Block name="Old Permic"></Block>
-	<Block name="Ugaritic">Code2001</Block>
-	<Block name="Old Persian">Code2001</Block>
-	<Block name="Deseret">Segoe UI Symbol</Block>
-	<Block name="Shavian">Code2001</Block>
-	<Block name="Osmanya">Code2001</Block>
-	<Block name="Elbasan"></Block>
-	<Block name="Caucasian Albanian"></Block>
-	<Block name="Linear A"></Block>
-	<Block name="Cypriot Syllabary">Code2001</Block>
-	<Block name="Imperial Aramaic"></Block>
-	<Block name="Palmyrene"></Block>
-	<Block name="Nabataean"></Block>
-	<Block name="Phoenician">Code2001</Block>
-	<Block name="Lydian"></Block>
-	<Block name="Meroitic Hieroglyphs"></Block>
-	<Block name="Meroitic Cursive"></Block>
-	<Block name="Kharoshthi"></Block>
-	<Block name="Old South Arabian"></Block>
-	<Block name="Old North Arabian"></Block>
-	<Block name="Manichaean"></Block>
-	<Block name="Avestan"></Block>
-	<Block name="Inscriptional Parthian"></Block>
-	<Block name="Inscriptional Pahlavi"></Block>
-	<Block name="Psalter Pahlavi"></Block>
-	<Block name="Old Turkic">Segoe UI Symbol</Block>
-	<Block name="Rumi Numeral Symbols"></Block>
-	<Block name="Brahmi"></Block>
-	<Block name="Kaithi"></Block>
-	<Block name="Sora Sompeng">Nirmala UI</Block>
-	<Block name="Chakma"></Block>
-	<Block name="Mahajani"></Block>
-	<Block name="Sharada"></Block>
-	<Block name="Sinhala Archaic Numbers"></Block>
-	<Block name="Khojki"></Block>
-	<Block name="Khudawadi"></Block>
-	<Block name="Grantha"></Block>
-	<Block name="Tirhuta"></Block>
-	<Block name="Siddham"></Block>
-	<Block name="Modi"></Block>
-	<Block name="Takri"></Block>
-	<Block name="Warang Citi"></Block>
-	<Block name="Pau Cin Hau"></Block>
-	<Block name="Cuneiform">Code2001</Block>
-	<Block name="Cuneiform Numbers and Punctuation"></Block>
-	<Block name="Egyptian Hieroglyphs"></Block>
-	<Block name="Bamum Supplement"></Block>
-	<Block name="Mro"></Block>
-	<Block name="Bassa Vah"></Block>
-	<Block name="Pahawh Hmong"></Block>
-	<Block name="Miao"></Block>
-	<Block name="Kana Supplement"></Block>
-	<Block name="Duployan"></Block>
-	<Block name="Shorthand Format Controls"></Block>
-	<Block name="Byzantine Musical Symbols">Symbola</Block>
-	<Block name="Musical Symbols">Symbola</Block>
-	<Block name="Ancient Greek Musical Notation">Symbola</Block>
-	<Block name="Tai Xuan Jing Symbols">Symbola</Block>
-	<Block name="Counting Rod Numerals">Symbola</Block>
-	<Block name="Mathematical Alphanumeric Symbols">Symbola</Block>
-	<Block name="Mende Kikakui"></Block>
-	<Block name="Arabic Mathematical Alphabetic Symbols"></Block>
-	<Block name="Mahjong Tiles">Symbola</Block>
-	<Block name="Domino Tiles">Symbola</Block>
-	<Block name="Playing Cards">Symbola</Block>
-	<Block name="Enclosed Alphanumeric Supplement">Symbola</Block>
-	<Block name="Enclosed Ideographic Supplement">Symbola</Block>
-	<Block name="Miscellaneous Symbols and Pictographs">Symbola</Block>
-	<Block name="Emoticons">Symbola</Block>
-	<Block name="Ornamental Dingbats">Symbola</Block>
-	<Block name="Transport and Map Symbols">Symbola</Block>
-	<Block name="Alchemical Symbols">Symbola</Block>
-	<Block name="Geometric Shapes Extended">Symbola</Block>
-	<Block name="Supplemental Arrows-C">Symbola</Block>
-	<Block name="CJK Unified Ideographs Extension B">MingLiU_HKSCS-ExtB</Block>
-	<Block name="CJK Unified Ideographs Extension C">Microsoft MHei</Block>
-	<Block name="CJK Unified Ideographs Extension D"></Block>
-	<Block name="CJK Compatibility Ideographs Supplement">Meiryo</Block>
-	<Block name="Tags">Code2001</Block>
-	<Block name="Variation Selectors Supplement"></Block>
-	<Block name="Supplementary Private Use Area-A">Code2001</Block>
-	<Block name="Supplementary Private Use Area-B"></Block>
+<CompositeFont unicode="8.0" lang="en">
+	<Block start="0000" end="007F" name="Basic Latin">Cambria</Block>
+	<Block start="0080" end="00FF" name="Latin-1 Supplement">Cambria</Block>
+	<Block start="0100" end="017F" name="Latin Extended-A">Cambria</Block>
+	<Block start="0180" end="024F" name="Latin Extended-B">Cambria</Block>
+	<Block start="0250" end="02AF" name="IPA Extensions">Cambria</Block>
+	<Block start="02B0" end="02FF" name="Spacing Modifier Letters">Cambria</Block>
+	<Block start="0300" end="036F" name="Combining Diacritical Marks">Cambria</Block>
+	<Block start="0370" end="03FF" name="Greek and Coptic">Cambria</Block>
+	<Block start="0400" end="04FF" name="Cyrillic">Times New Roman</Block>
+	<Block start="0500" end="052F" name="Cyrillic Supplement">Times New Roman</Block>
+	<Block start="0530" end="058F" name="Armenian">Sylfaen</Block>
+	<Block start="0590" end="05FF" name="Hebrew">Times New Roman</Block>
+	<Block start="0600" end="06FF" name="Arabic">Microsoft Uighur</Block>
+	<Block start="0700" end="074F" name="Syriac">Estrangelo Edessa</Block>
+	<Block start="0750" end="077F" name="Arabic Supplement">Microsoft Uighur</Block>
+	<Block start="0780" end="07BF" name="Thaana">MV Boli</Block>
+	<Block start="07C0" end="07FF" name="NKo">Ebrima</Block>
+	<Block start="0800" end="083F" name="Samaritan">Hebrew Samaritan</Block>
+	<Block start="0840" end="085F" name="Mandaic">Unifont</Block>
+	<Block start="08A0" end="08FF" name="Arabic Extended-A">Unifont</Block>
+	<Block start="0900" end="097F" name="Devanagari">Nirmala UI</Block>
+	<Block start="0980" end="09FF" name="Bengali">Nirmala UI</Block>
+	<Block start="0A00" end="0A7F" name="Gurmukhi">Raavi</Block>
+	<Block start="0A80" end="0AFF" name="Gujarati">Shruti</Block>
+	<Block start="0B00" end="0B7F" name="Oriya">Kalinga</Block>
+	<Block start="0B80" end="0BFF" name="Tamil">Vijaya</Block>
+	<Block start="0C00" end="0C7F" name="Telugu">Vani</Block>
+	<Block start="0C80" end="0CFF" name="Kannada">Tunga</Block>
+	<Block start="0D00" end="0D7F" name="Malayalam">Nirmala UI</Block>
+	<Block start="0D80" end="0DFF" name="Sinhala">Iskoola Pota</Block>
+	<Block start="0E00" end="0E7F" name="Thai">Angsana New</Block>
+	<Block start="0E80" end="0EFF" name="Lao">Lao UI</Block>
+	<Block start="0F00" end="0FFF" name="Tibetan">Microsoft Himalaya</Block>
+	<Block start="1000" end="109F" name="Myanmar">Code2000</Block>
+	<Block start="10A0" end="10FF" name="Georgian">Arial Unicode MS</Block>
+	<Block start="1100" end="11FF" name="Hangul Jamo">Batang</Block>
+	<Block start="1200" end="137F" name="Ethiopic">Nyala</Block>
+	<Block start="1380" end="139F" name="Ethiopic Supplement">Nyala</Block>
+	<Block start="13A0" end="13FF" name="Cherokee">Plantagenet Cherokee</Block>
+	<Block start="1400" end="167F" name="Unified Canadian Aboriginal Syllabics">Gadugi</Block>
+	<Block start="1680" end="169F" name="Ogham">Segoe UI Symbol</Block>
+	<Block start="16A0" end="16FF" name="Runic">Quivira</Block>
+	<Block start="1700" end="171F" name="Tagalog">Tagalog Doctrina 1593</Block>
+	<Block start="1720" end="173F" name="Hanunoo">MPH 2B Damase</Block>
+	<Block start="1740" end="175F" name="Buhid">Code2000</Block>
+	<Block start="1760" end="177F" name="Tagbanwa">Tagbanwa</Block>
+	<Block start="1780" end="17FF" name="Khmer">Khmer UI</Block>
+	<Block start="1800" end="18AF" name="Mongolian">Mongolian Baiti</Block>
+	<Block start="18B0" end="18FF" name="Unified Canadian Aboriginal Syllabics Extended">Gadugi</Block>
+	<Block start="1900" end="194F" name="Limbu">MPH 2B Damase</Block>
+	<Block start="1950" end="197F" name="Tai Le">Microsoft Tai Le</Block>
+	<Block start="1980" end="19DF" name="New Tai Lue">Microsoft New Tai Lue</Block>
+	<Block start="19E0" end="19FF" name="Khmer Symbols">Khmer UI</Block>
+	<Block start="1A00" end="1A1F" name="Buginese">Saweri</Block>
+	<Block start="1A20" end="1AAF" name="Tai Tham">Lanna Alif</Block>
+	<Block start="1AB0" end="1AFF" name="Combining Diacritical Marks Extended">Unifont</Block>
+	<Block start="1B00" end="1B7F" name="Balinese">Aksara Bali</Block>
+	<Block start="1B80" end="1BBF" name="Sundanese">Sundanese Unicode</Block>
+	<Block start="1BC0" end="1BFF" name="Batak">Batak-Unicode</Block>
+	<Block start="1C00" end="1C4F" name="Lepcha">Unifont</Block>
+	<Block start="1C50" end="1C7F" name="Ol Chiki">Nirmala UI</Block>
+	<Block start="1CC0" end="1CCF" name="Sundanese Supplement">Unifont</Block>
+	<Block start="1CD0" end="1CFF" name="Vedic Extensions">Siddhanta</Block>
+	<Block start="1D00" end="1D7F" name="Phonetic Extensions">Cambria</Block>
+	<Block start="1D80" end="1DBF" name="Phonetic Extensions Supplement">Cambria</Block>
+	<Block start="1DC0" end="1DFF" name="Combining Diacritical Marks Supplement">Cambria</Block>
+	<Block start="1E00" end="1EFF" name="Latin Extended Additional">Times New Roman</Block>
+	<Block start="1F00" end="1FFF" name="Greek Extended">Cambria</Block>
+	<Block start="2000" end="206F" name="General Punctuation">Segoe UI Symbol</Block>
+	<Block start="2070" end="209F" name="Superscripts and Subscripts">Quivira</Block>
+	<Block start="20A0" end="20CF" name="Currency Symbols">Segoe UI</Block>
+	<Block start="20D0" end="20FF" name="Combining Diacritical Marks for Symbols">Cambria Math</Block>
+	<Block start="2100" end="214F" name="Letterlike Symbols">Symbola</Block>
+	<Block start="2150" end="218F" name="Number Forms">Meiryo UI</Block>
+	<Block start="2190" end="21FF" name="Arrows">Segoe UI Symbol</Block>
+	<Block start="2200" end="22FF" name="Mathematical Operators">Segoe UI Symbol</Block>
+	<Block start="2300" end="23FF" name="Miscellaneous Technical">Quivira</Block>
+	<Block start="2400" end="243F" name="Control Pictures">Segoe UI Symbol</Block>
+	<Block start="2440" end="245F" name="Optical Character Recognition">Segoe UI Symbol</Block>
+	<Block start="2460" end="24FF" name="Enclosed Alphanumerics">Meiryo UI</Block>
+	<Block start="2500" end="257F" name="Box Drawing">Meiryo UI</Block>
+	<Block start="2580" end="259F" name="Block Elements">Quivira</Block>
+	<Block start="25A0" end="25FF" name="Geometric Shapes">Segoe UI Symbol</Block>
+	<Block start="2600" end="26FF" name="Miscellaneous Symbols">Symbola</Block>
+	<Block start="2700" end="27BF" name="Dingbats">Symbola</Block>
+	<Block start="27C0" end="27EF" name="Miscellaneous Mathematical Symbols-A">Symbola</Block>
+	<Block start="27F0" end="27FF" name="Supplemental Arrows-A">Segoe UI Symbol</Block>
+	<Block start="2800" end="28FF" name="Braille Patterns">Segoe UI Symbol</Block>
+	<Block start="2900" end="297F" name="Supplemental Arrows-B">Segoe UI Symbol</Block>
+	<Block start="2980" end="29FF" name="Miscellaneous Mathematical Symbols-B">Segoe UI Symbol</Block>
+	<Block start="2A00" end="2AFF" name="Supplemental Mathematical Operators">Segoe UI Symbol</Block>
+	<Block start="2B00" end="2BFF" name="Miscellaneous Symbols and Arrows">Symbola</Block>
+	<Block start="2C00" end="2C5F" name="Glagolitic">Segoe UI Symbol</Block>
+	<Block start="2C60" end="2C7F" name="Latin Extended-C">Times New Roman</Block>
+	<Block start="2C80" end="2CFF" name="Coptic">Quivira</Block>
+	<Block start="2D00" end="2D2F" name="Georgian Supplement">Quivira</Block>
+	<Block start="2D30" end="2D7F" name="Tifinagh">Ebrima</Block>
+	<Block start="2D80" end="2DDF" name="Ethiopic Extended">Nyala</Block>
+	<Block start="2DE0" end="2DFF" name="Cyrillic Extended-A">Quivira</Block>
+	<Block start="2E00" end="2E7F" name="Supplemental Punctuation">Ebrima</Block>
+	<Block start="2E80" end="2EFF" name="CJK Radicals Supplement">Meiryo UI</Block>
+	<Block start="2F00" end="2FDF" name="Kangxi Radicals">Meiryo UI</Block>
+	<Block start="2FF0" end="2FFF" name="Ideographic Description Characters">SimSun</Block>
+	<Block start="3000" end="303F" name="CJK Symbols and Punctuation">Microsoft YaHei</Block>
+	<Block start="3040" end="309F" name="Hiragana">Meiryo UI</Block>
+	<Block start="30A0" end="30FF" name="Katakana">Meiryo UI</Block>
+	<Block start="3100" end="312F" name="Bopomofo">Arial Unicode MS</Block>
+	<Block start="3130" end="318F" name="Hangul Compatibility Jamo">Batang</Block>
+	<Block start="3190" end="319F" name="Kanbun">Meiryo UI</Block>
+	<Block start="31A0" end="31BF" name="Bopomofo Extended">Microsoft JhengHei</Block>
+	<Block start="31C0" end="31EF" name="CJK Strokes">MingLiU</Block>
+	<Block start="31F0" end="31FF" name="Katakana Phonetic Extensions">Meiryo UI</Block>
+	<Block start="3200" end="32FF" name="Enclosed CJK Letters and Months">Arial Unicode MS</Block>
+	<Block start="3300" end="33FF" name="CJK Compatibility">Meiryo UI</Block>
+	<Block start="3400" end="4DBF" name="CJK Unified Ideographs Extension A">MingLiU</Block>
+	<Block start="4DC0" end="4DFF" name="Yijing Hexagram Symbols">Segoe UI Symbol</Block>
+	<Block start="4E00" end="9FFF" name="CJK Unified Ideographs">MingLiU</Block>
+	<Block start="A000" end="A48F" name="Yi Syllables">Microsoft Yi Baiti</Block>
+	<Block start="A490" end="A4CF" name="Yi Radicals">Microsoft Yi Baiti</Block>
+	<Block start="A4D0" end="A4FF" name="Lisu">Quivira</Block>
+	<Block start="A500" end="A63F" name="Vai">Ebrima</Block>
+	<Block start="A640" end="A69F" name="Cyrillic Extended-B">Cambria</Block>
+	<Block start="A6A0" end="A6FF" name="Bamum">Unifont</Block>
+	<Block start="A700" end="A71F" name="Modifier Tone Letters">Times New Roman</Block>
+	<Block start="A720" end="A7FF" name="Latin Extended-D">Times New Roman</Block>
+	<Block start="A800" end="A82F" name="Syloti Nagri">MPH 2B Damase</Block>
+	<Block start="A830" end="A83F" name="Common Indic Number Forms">Nirmala UI</Block>
+	<Block start="A840" end="A87F" name="Phags-pa">Microsoft PhagsPa</Block>
+	<Block start="A880" end="A8DF" name="Saurashtra">Unifont</Block>
+	<Block start="A8E0" end="A8FF" name="Devanagari Extended">Siddhanta</Block>
+	<Block start="A900" end="A92F" name="Kayah Li">Unifont</Block>
+	<Block start="A930" end="A95F" name="Rejang">Unifont</Block>
+	<Block start="A960" end="A97F" name="Hangul Jamo Extended-A">UnBatang</Block>
+	<Block start="A980" end="A9DF" name="Javanese">Tuladha Jejeg</Block>
+	<Block start="A9E0" end="A9FF" name="Myanmar Extended-B">Unifont</Block>
+	<Block start="AA00" end="AA5F" name="Cham">Unifont</Block>
+	<Block start="AA60" end="AA7F" name="Myanmar Extended-A">Padauk</Block>
+	<Block start="AA80" end="AADF" name="Tai Viet">Tai Heritage Pro</Block>
+	<Block start="AAE0" end="AAFF" name="Meetei Mayek Extensions">Unifont</Block>
+	<Block start="AB00" end="AB2F" name="Ethiopic Extended-A">Abyssinica SIL</Block>
+	<Block start="AB30" end="AB6F" name="Latin Extended-E">Quivira</Block>
+	<Block start="AB70" end="ABBF" name="Cherokee Supplement">Unifont</Block>
+	<Block start="ABC0" end="ABFF" name="Meetei Mayek">Eeyek Unicode</Block>
+	<Block start="AC00" end="D7AF" name="Hangul Syllables">Batang</Block>
+	<Block start="D7B0" end="D7FF" name="Hangul Jamo Extended-B">UnBatang</Block>
+	<Block start="E000" end="F8FF" name="Private Use Area">MingLiU_HKSCS</Block>
+	<Block start="F900" end="FAFF" name="CJK Compatibility Ideographs">Meiryo UI</Block>
+	<Block start="FB00" end="FB4F" name="Alphabetic Presentation Forms">Arial Unicode MS</Block>
+	<Block start="FB50" end="FDFF" name="Arabic Presentation Forms-A">Arial Unicode MS</Block>
+	<Block start="FE00" end="FE0F" name="Variation Selectors">Cambria</Block>
+	<Block start="FE10" end="FE1F" name="Vertical Forms">Microsoft JhengHei</Block>
+	<Block start="FE20" end="FE2F" name="Combining Half Marks">Times New Roman</Block>
+	<Block start="FE30" end="FE4F" name="CJK Compatibility Forms">Microsoft JhengHei</Block>
+	<Block start="FE50" end="FE6F" name="Small Form Variants">Microsoft JhengHei</Block>
+	<Block start="FE70" end="FEFF" name="Arabic Presentation Forms-B">Traditional Arabic</Block>
+	<Block start="FF00" end="FFEF" name="Halfwidth and Fullwidth Forms">Microsoft JhengHei</Block>
+	<Block start="FFF0" end="FFFF" name="Specials">Tahoma</Block>
+	<Block start="10000" end="1007F" name="Linear B Syllabary">Code2001</Block>
+	<Block start="10080" end="100FF" name="Linear B Ideograms">Code2001</Block>
+	<Block start="10100" end="1013F" name="Aegean Numbers">Quivira</Block>
+	<Block start="10140" end="1018F" name="Ancient Greek Numbers">Symbola</Block>
+	<Block start="10190" end="101CF" name="Ancient Symbols">Symbola</Block>
+	<Block start="101D0" end="101FF" name="Phaistos Disc">Symbola</Block>
+	<Block start="10280" end="1029F" name="Lycian">Quivira</Block>
+	<Block start="102A0" end="102DF" name="Carian">Quivira</Block>
+	<Block start="102E0" end="102FF" name="Coptic Epact Numbers">Symbola</Block>
+	<Block start="10300" end="1032F" name="Old Italic">HanaMinA</Block>
+	<Block start="10330" end="1034F" name="Gothic">Segoe UI Symbol</Block>
+	<Block start="10350" end="1037F" name="Old Permic">Unifont Upper CSUR</Block>
+	<Block start="10380" end="1039F" name="Ugaritic">MPH 2B Damase</Block>
+	<Block start="103A0" end="103DF" name="Old Persian">MPH 2B Damase</Block>
+	<Block start="10400" end="1044F" name="Deseret">Segoe UI Symbol</Block>
+	<Block start="10450" end="1047F" name="Shavian">MPH 2B Damase</Block>
+	<Block start="10480" end="104AF" name="Osmanya">Ebrima</Block>
+	<Block start="10500" end="1052F" name="Elbasan">Unifont Upper CSUR</Block>
+	<Block start="10530" end="1056F" name="Caucasian Albanian">Unifont Upper CSUR</Block>
+	<Block start="10600" end="1077F" name="Linear A">Unifont Upper CSUR</Block>
+	<Block start="10800" end="1083F" name="Cypriot Syllabary">MPH 2B Damase</Block>
+	<Block start="10840" end="1085F" name="Imperial Aramaic">Quivira</Block>
+	<Block start="10860" end="1087F" name="Palmyrene">Unifont Upper CSUR</Block>
+	<Block start="10880" end="108AF" name="Nabataean">Unifont Upper CSUR</Block>
+	<Block start="108E0" end="108FF" name="Hatran">Unifont Upper CSUR</Block>
+	<Block start="10900" end="1091F" name="Phoenician">Quivira</Block>
+	<Block start="10920" end="1093F" name="Lydian">Quivira</Block>
+	<Block start="10980" end="1099F" name="Meroitic Hieroglyphs">Unifont Upper CSUR</Block>
+	<Block start="109A0" end="109FF" name="Meroitic Cursive">Unifont Upper CSUR</Block>
+	<Block start="10A00" end="10A5F" name="Kharoshthi">MPH 2B Damase</Block>
+	<Block start="10A60" end="10A7F" name="Old South Arabian">Quivira</Block>
+	<Block start="10A80" end="10A9F" name="Old North Arabian">Unifont Upper CSUR</Block>
+	<Block start="10AC0" end="10AFF" name="Manichaean">Unifont Upper CSUR</Block>
+	<Block start="10B00" end="10B3F" name="Avestan">Ahuramzda</Block>
+	<Block start="10B40" end="10B5F" name="Inscriptional Parthian">ZH Mono</Block>
+	<Block start="10B60" end="10B7F" name="Inscriptional Pahlavi">ZH Mono</Block>
+	<Block start="10B80" end="10BAF" name="Psalter Pahlavi">Unifont Upper CSUR</Block>
+	<Block start="10C00" end="10C4F" name="Old Turkic">Segoe UI Symbol</Block>
+	<Block start="10C80" end="10CFF" name="Old Hungarian">Unifont Upper CSUR</Block>
+	<Block start="10E60" end="10E7F" name="Rumi Numeral Symbols">Unifont Upper CSUR</Block>
+	<Block start="11000" end="1107F" name="Brahmi">Unifont Upper CSUR</Block>
+	<Block start="11080" end="110CF" name="Kaithi">Unifont Upper CSUR</Block>
+	<Block start="110D0" end="110FF" name="Sora Sompeng">Nirmala UI</Block>
+	<Block start="11100" end="1114F" name="Chakma">Unifont Upper CSUR</Block>
+	<Block start="11150" end="1117F" name="Mahajani">Unifont Upper CSUR</Block>
+	<Block start="11180" end="111DF" name="Sharada">Unifont Upper CSUR</Block>
+	<Block start="111E0" end="111FF" name="Sinhala Archaic Numbers">Unifont Upper CSUR</Block>
+	<Block start="11200" end="1124F" name="Khojki">Unifont Upper CSUR</Block>
+	<Block start="11280" end="112AF" name="Multani"></Block>
+	<Block start="112B0" end="112FF" name="Khudawadi"></Block>
+	<Block start="11300" end="1137F" name="Grantha"></Block>
+	<Block start="11480" end="114DF" name="Tirhuta"></Block>
+	<Block start="11580" end="115FF" name="Siddham">Unifont Upper CSUR</Block>
+	<Block start="11600" end="1165F" name="Modi"></Block>
+	<Block start="11680" end="116CF" name="Takri">Unifont Upper CSUR</Block>
+	<Block start="11700" end="1173F" name="Ahom"></Block>
+	<Block start="118A0" end="118FF" name="Warang Citi"></Block>
+	<Block start="11AC0" end="11AFF" name="Pau Cin Hau"></Block>
+	<Block start="12000" end="123FF" name="Cuneiform">Akkadian</Block>
+	<Block start="12400" end="1247F" name="Cuneiform Numbers and Punctuation">Akkadian</Block>
+	<Block start="12480" end="1254F" name="Early Dynastic Cuneiform"></Block>
+	<Block start="13000" end="1342F" name="Egyptian Hieroglyphs">Aegyptus</Block>
+	<Block start="14400" end="1467F" name="Anatolian Hieroglyphs"></Block>
+	<Block start="16800" end="16A3F" name="Bamum Supplement"></Block>
+	<Block start="16A40" end="16A6F" name="Mro"></Block>
+	<Block start="16AD0" end="16AFF" name="Bassa Vah"></Block>
+	<Block start="16B00" end="16B8F" name="Pahawh Hmong">Unifont Upper CSUR</Block>
+	<Block start="16F00" end="16F9F" name="Miao">Unifont Upper CSUR</Block>
+	<Block start="1B000" end="1B0FF" name="Kana Supplement">HanaMinA</Block>
+	<Block start="1BC00" end="1BC9F" name="Duployan"></Block>
+	<Block start="1BCA0" end="1BCAF" name="Shorthand Format Controls">Unifont Upper CSUR</Block>
+	<Block start="1D000" end="1D0FF" name="Byzantine Musical Symbols">Symbola</Block>
+	<Block start="1D100" end="1D1FF" name="Musical Symbols">Symbola</Block>
+	<Block start="1D200" end="1D24F" name="Ancient Greek Musical Notation">Symbola</Block>
+	<Block start="1D300" end="1D35F" name="Tai Xuan Jing Symbols">Segoe UI Symbol</Block>
+	<Block start="1D360" end="1D37F" name="Counting Rod Numerals">Symbola</Block>
+	<Block start="1D400" end="1D7FF" name="Mathematical Alphanumeric Symbols">Cambria Math</Block>
+	<Block start="1D800" end="1DAAF" name="Sutton SignWriting"></Block>
+	<Block start="1E800" end="1E8DF" name="Mende Kikakui"></Block>
+	<Block start="1EE00" end="1EEFF" name="Arabic Mathematical Alphabetic Symbols">Unifont Upper CSUR</Block>
+	<Block start="1F000" end="1F02F" name="Mahjong Tiles">Symbola</Block>
+	<Block start="1F030" end="1F09F" name="Domino Tiles">Symbola</Block>
+	<Block start="1F0A0" end="1F0FF" name="Playing Cards">Symbola</Block>
+	<Block start="1F100" end="1F1FF" name="Enclosed Alphanumeric Supplement">Symbola</Block>
+	<Block start="1F200" end="1F2FF" name="Enclosed Ideographic Supplement">Symbola</Block>
+	<Block start="1F300" end="1F5FF" name="Miscellaneous Symbols and Pictographs">Symbola</Block>
+	<Block start="1F600" end="1F64F" name="Emoticons">Symbola</Block>
+	<Block start="1F650" end="1F67F" name="Ornamental Dingbats">Symbola</Block>
+	<Block start="1F680" end="1F6FF" name="Transport and Map Symbols">Symbola</Block>
+	<Block start="1F700" end="1F77F" name="Alchemical Symbols">Symbola</Block>
+	<Block start="1F780" end="1F7FF" name="Geometric Shapes Extended">Symbola</Block>
+	<Block start="1F800" end="1F8FF" name="Supplemental Arrows-C">Symbola</Block>
+	<Block start="1F900" end="1F9FF" name="Supplemental Symbols and Pictographs"></Block>
+	<Block start="20000" end="2A6DF" name="CJK Unified Ideographs Extension B">MingLiU-ExtB</Block>
+	<Block start="2A700" end="2B73F" name="CJK Unified Ideographs Extension C">HanaMinB</Block>
+	<Block start="2B740" end="2B81F" name="CJK Unified Ideographs Extension D">HanaMinB</Block>
+	<Block start="2B820" end="2CEAF" name="CJK Unified Ideographs Extension E">HanaMinB</Block>
+	<Block start="2F800" end="2FA1F" name="CJK Compatibility Ideographs Supplement">Meiryo UI</Block>
+	<Block start="E0000" end="E007F" name="Tags">Unifont Upper CSUR</Block>
+	<Block start="E0100" end="E01EF" name="Variation Selectors Supplement">Unifont Upper CSUR</Block>
+	<Block start="F0000" end="FFFFF" name="Supplementary Private Use Area-A"></Block>
+	<Block start="100000" end="10FFFF" name="Supplementary Private Use Area-B"></Block>
 </CompositeFont>

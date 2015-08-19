@@ -31,12 +31,23 @@
         </FontFamily>
     </xsl:template>
 
-    <xsl:template match="Block[text()]">
+    <!--Old format without @start and @end-->
+    <xsl:template match="Block[text()][not(@start)][not(@end)]">
         <xsl:variable name="block" select="@name"/>
         <FontFamilyMap xmlns="http://schemas.microsoft.com/winfx/2006/xaml/composite-font"
                        Unicode="{$UCDXML/unicode:ucd/unicode:blocks/unicode:block[@name=$block]/@first-cp}-{$UCDXML/unicode:ucd/unicode:blocks/unicode:block[@name=$block]/@last-cp}"
                        Target="{text()}" Scale="1.0"
         >
+            <xsl:comment>
+                <xsl:value-of select="@name"/>
+            </xsl:comment>
+        </FontFamilyMap>
+    </xsl:template>
+
+    <!--New format - no need for query to UCD-->
+    <xsl:template match="Block[text()][@start][@end]">
+        <xsl:variable name="block" select="@name"/>
+        <FontFamilyMap xmlns="http://schemas.microsoft.com/winfx/2006/xaml/composite-font" Unicode="{@start}-{@end}" Target="{text()}" Scale="1.0">
             <xsl:comment>
                 <xsl:value-of select="@name"/>
             </xsl:comment>

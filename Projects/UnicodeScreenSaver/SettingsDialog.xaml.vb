@@ -94,7 +94,7 @@ Public Class SettingsDialog
                     ucddoc.Load(ms)
                 End Using
                 args.AddParam("UCDXML", "", ucddoc)
-                Using sfs = IO.File.Open(saveDialog.FileName, IO.FileMode.Truncate, IO.FileAccess.Write, IO.FileShare.Read)
+                Using sfs = IO.File.Open(saveDialog.FileName, IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read)
                     transform.Transform(openDialog.FileName, args, sfs)
                 End Using
             Catch ex As Exception
