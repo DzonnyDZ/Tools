@@ -1,3 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><ItemProperties xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Properties><Property><Name>svn:externals</Name><Value>Mono.Cecil https://svn.github.com/jbevain/cecil.git
 </Value></Property><Property><Name>svn:externals</Name><Value>https://github.com/jbevain/cecil.git/trunk Mono.Cecil
+</Value></Property><Property><Name>svn:externals</Name><Value>https://github.com/jbevain/cecil Mono.Cecil
 </Value></Property></Properties></ItemProperties>
