@@ -234,12 +234,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RC|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tools.PreBuild\Tools.PreBuild.vcxproj">
-      <Project>{1fb7ee26-5af3-4031-adea-c0524f3b89c5}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

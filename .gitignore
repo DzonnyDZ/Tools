@@ -13,3 +13,4 @@ ipch
 /Tools.sdf
 /UpgradeLog.htm
 *.opensdf
+*.tmp_proj
