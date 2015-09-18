@@ -1,5 +1,5 @@
 ImageRuntimeVersion: v4.0.30319
-Assembly Tools.Hardcore, Version=1.5.4.42058, Culture=neutral, PublicKeyToken=373c02ac923768e6: 
+Assembly Tools.Hardcore, Version=1.5.4.42308, Culture=neutral, PublicKeyToken=373c02ac923768e6: 
 	hash=SHA1, flags=PublicKey
 Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None

@@ -264,6 +264,7 @@
     <Compile Include="Windows\WPF\Input\MouseWheelEventArgsEx.vb" />
     <Compile Include="Windows\WPF\Input\MouseWheelGesture.vb" />
     <Compile Include="Windows\WPF\Input\UICommands.vb" />
+    <Compile Include="Windows\WPF\Markup\EnumItemsExtension.vb" />
     <Compile Include="Windows\WPF\Markup\TypeConverterBasedValueSerializer.vb" />
     <Compile Include="Windows\WPF\Markup\MarkupExtensionBase.vb" />
     <Compile Include="Windows\WPF\Markup\NamespacesExtension.vb" />

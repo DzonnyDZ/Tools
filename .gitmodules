@@ -1,0 +1,3 @@
+[submodule "DLLs/Mono.Cecil"]
+	path = DLLs/Mono.Cecil
+	url = https://github.com/jbevain/cecil.git

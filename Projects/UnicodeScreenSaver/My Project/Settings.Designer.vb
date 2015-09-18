@@ -53,7 +53,11 @@ Partial Friend NotInheritable Class MySettings
         End Get
     End Property
     
+    '''<summary>
+    '''Interval fo changing characters on sreen
+    '''</summary>
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Interval fo changing characters on sreen"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("00:00:05"),  _
      Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
@@ -66,7 +70,11 @@ Partial Friend NotInheritable Class MySettings
         End Set
     End Property
     
+    '''<summary>
+    '''Name of for to display characters
+    '''</summary>
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Name of for to display characters"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("Unicode composite font")>  _
     Public Property FontName() As String
@@ -78,7 +86,11 @@ Partial Friend NotInheritable Class MySettings
         End Set
     End Property
     
+    '''<summary>
+    '''In case system for it not used, path to font file or composite font file
+    '''</summary>
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("In case system for it not used, path to font file or composite font file"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("pack://application:,,,/")>  _
     Public Property FontPath() As String
@@ -90,7 +102,11 @@ Partial Friend NotInheritable Class MySettings
         End Set
     End Property
     
+    '''<summary>
+    '''Screensaver background
+    '''</summary>
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Screensaver background"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("#00000000"),  _
      Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
@@ -103,7 +119,11 @@ Partial Friend NotInheritable Class MySettings
         End Set
     End Property
     
+    '''<summary>
+    '''Screensaver foreground
+    '''</summary>
     <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Screensaver foreground"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Configuration.DefaultSettingValueAttribute("#FFFFFF00"),  _
      Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
@@ -113,6 +133,87 @@ Partial Friend NotInheritable Class MySettings
         End Get
         Set
             Me("ForegroundColor") = value
+        End Set
+    End Property
+    
+    '''<summary>
+    '''Alghoritm used to select next character
+    '''</summary>
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Alghoritm used to select next character"),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("RandomCharacter"),  _
+     Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
+    Public Property SortingAlghoritm() As Global.Dzonny.UnicodeScreenSaver.SortingAlghoritm
+        Get
+            Return CType(Me("SortingAlghoritm"),Global.Dzonny.UnicodeScreenSaver.SortingAlghoritm)
+        End Get
+        Set
+            Me("SortingAlghoritm") = value
+        End Set
+    End Property
+    
+    '''<summary>
+    '''For sequential alghoritms last code point displayed, to be able to select next
+    '''</summary>
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("For sequential alghoritms last code point displayed, to be able to select next"),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+    Public Property LastCodePoint() As Integer()
+        Get
+            Return CType(Me("LastCodePoint"),Integer())
+        End Get
+        Set
+            Me("LastCodePoint") = value
+        End Set
+    End Property
+    
+    '''<summary>
+    '''Ranges of this size and bigger are considered big by SplitBigranges alghoritm
+    '''</summary>
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Ranges of this size and bigger are considered big by SplitBigranges alghoritm"),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("200")>  _
+    Public Property BigRangeTreshold() As Integer
+        Get
+            Return CType(Me("BigRangeTreshold"),Integer)
+        End Get
+        Set
+            Me("BigRangeTreshold") = value
+        End Set
+    End Property
+    
+    '''<summary>
+    '''Big ranges are split to chunks of given amount of charactres by SplitBigRanges alghoritm
+    '''</summary>
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Big ranges are split to chunks of given amount of charactres by SplitBigRanges al"& _ 
+        "ghoritm"),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+    Public Property RangeChunkSize() As Integer
+        Get
+            Return CType(Me("RangeChunkSize"),Integer)
+        End Get
+        Set
+            Me("RangeChunkSize") = value
+        End Set
+    End Property
+    
+    '''<summary>
+    '''Range size penalty coeficient for PenaltyBigRanges alghoritm
+    '''</summary>
+    <Global.System.Configuration.UserScopedSettingAttribute(),  _
+     Global.System.Configuration.SettingsDescriptionAttribute("Range size penalty coeficient for PenaltyBigRanges alghoritm"),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("0.75")>  _
+    Public Property BigRangePenaltyCoeficient() As Double
+        Get
+            Return CType(Me("BigRangePenaltyCoeficient"),Double)
+        End Get
+        Set
+            Me("BigRangePenaltyCoeficient") = value
         End Set
     End Property
 End Class

@@ -2,20 +2,35 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="Interval" Roaming="true" Type="System.TimeSpan" Scope="User">
+    <Setting Name="Interval" Description="Interval fo changing characters on sreen" Roaming="true" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:00:05</Value>
     </Setting>
-    <Setting Name="FontName" Type="System.String" Scope="User">
+    <Setting Name="FontName" Description="Name of for to display characters" Type="System.String" Scope="User">
       <Value Profile="(Default)">Unicode composite font</Value>
     </Setting>
-    <Setting Name="FontPath" Type="System.String" Scope="User">
+    <Setting Name="FontPath" Description="In case system for it not used, path to font file or composite font file" Type="System.String" Scope="User">
       <Value Profile="(Default)">pack://application:,,,/</Value>
     </Setting>
-    <Setting Name="BackgroundColor" Roaming="true" Type="System.Windows.Media.Color" Scope="User">
+    <Setting Name="BackgroundColor" Description="Screensaver background" Roaming="true" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#00000000</Value>
     </Setting>
-    <Setting Name="ForegroundColor" Roaming="true" Type="System.Windows.Media.Color" Scope="User">
+    <Setting Name="ForegroundColor" Description="Screensaver foreground" Roaming="true" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFFFFF00</Value>
+    </Setting>
+    <Setting Name="SortingAlghoritm" Description="Alghoritm used to select next character" Roaming="true" Type="Dzonny.UnicodeScreenSaver.SortingAlghoritm" Scope="User">
+      <Value Profile="(Default)">RandomCharacter</Value>
+    </Setting>
+    <Setting Name="LastCodePoint" Description="For sequential alghoritms last code point displayed, to be able to select next" Type="System.Int32[]" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="BigRangeTreshold" Description="Ranges of this size and bigger are considered big by SplitBigranges alghoritm" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="RangeChunkSize" Description="Big ranges are split to chunks of given amount of charactres by SplitBigRanges alghoritm" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="BigRangePenaltyCoeficient" Description="Range size penalty coeficient for PenaltyBigRanges alghoritm" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.75</Value>
     </Setting>
   </Settings>
 </SettingsFile>

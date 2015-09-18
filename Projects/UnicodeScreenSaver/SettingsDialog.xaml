@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:tc="clr-namespace:Tools.WindowsT.WPF.ControlsT;assembly=Tools.Windows"
-        xmlns:local="clr-namespace:Dzonny.UnicodeScreenSaver"
+        xmlns:my="clr-namespace:Dzonny.UnicodeScreenSaver"
+        xmlns:tm="clr-namespace:Tools.WindowsT.WPF.MarkupT;assembly=Tools.Windows"
         mc:Ignorable="d"
         Title="SettingsDialog" Height="300" Width="395">
     <Grid>
@@ -15,6 +15,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -57,13 +58,16 @@
             Click to change
         </Label>
 
-        <Button   Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10,3" Margin="22,0" Click="btnConvertCompositeFont_Click">
+        <Label    Grid.Row="5" Grid.Column="0"                     >Sorting alghoritm</Label>
+        <ComboBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" SelectedValue="{Binding SortingAlghoritm, FallbackValue={x:Static my:SortingAlghoritm.RandomCharacter}}" ItemsSource="{tm:EnumItems {x:Type my:SortingAlghoritm}}"/>
+
+        <Button   Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10,3" Margin="22,0" Click="btnConvertCompositeFont_Click">
             <TextBlock TextWrapping="Wrap">
                 Convert <Hyperlink NavigateUri="http://www.babelstone.co.uk/Software/BabelMap.html" Click="Hyperlink_Click">BabelMap</Hyperlink> composite font to .NET/WPF composite font...
             </TextBlock>
         </Button>
 
-        <Button   Grid.Row="6" Grid.Column="0"                     IsDefault="True" Click="OK_Click" HorizontalAlignment="Center" MinWidth="60">OK</Button>
-        <Button   Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" IsCancel="True" Click="Cancel_Click" HorizontalAlignment="Center" MinWidth="60">Cancel</Button>
+        <Button   Grid.Row="7" Grid.Column="0"                     IsDefault="True" Click="OK_Click" HorizontalAlignment="Center" MinWidth="60">OK</Button>
+        <Button   Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" IsCancel="True" Click="Cancel_Click" HorizontalAlignment="Center" MinWidth="60">Cancel</Button>
     </Grid>
 </Window>

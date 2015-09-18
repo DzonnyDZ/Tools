@@ -3473,6 +3473,30 @@ The stub formatting method returning the Progress property value.
 <member name="P:Tools.WindowsT.WPF.InputT.UICommands.ZoomOut">
  <summary>Gets a zoom out command (unmagnification)</summary>
 </member>
+<member name="T:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension">
+ <summary>A markup extension that provides array of enumeration members</summary>
+ <version version="1.5.4">This class is new in version 1.5.4</version>
+</member>
+<member name="M:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.ProvideValue(Tools.WindowsT.WPF.MarkupT.XamlServiceProvider)">
+ <summary>Returns an object that is set as the value of the target property for this markup extension - array of enum members of <see cref="P:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.Enum"/> enum in this case.</summary>
+ <param name="serviceProvider">Object that can provide services for the markup extension. This implementation never passes value null here.</param>
+ <returns>The object value to set on the property where the extension is applied - array of enum members of <see cref="P:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.Enum"/> enum in this case.</returns>
+ <exception cref="T:System.InvalidOperationException"><see cref="P:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.Enum"/> is null</exception>
+</member>
+<member name="M:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.#ctor">
+ <summary>CTor - creates a new instance uninitialized of the <see cref="T:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension"/> class</summary>
+</member>
+<member name="M:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.#ctor(System.Type)">
+ <summary>CTor - creates a new instance of the <see cref="T:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension"/> class specifying enum type</summary>
+ <param name="enum">Enum type to provide members of</param>
+ <exception cref="T:System.ArgumentNullException"><paramref name="enum"/> is null</exception>
+ <exception cref="T:System.ArgumentException"><paramref name="enum"/> is not enumeration type</exception>
+</member>
+<member name="P:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.Enum">
+ <summary>Gets or sets enumerated type to provide members of</summary>
+ <exception cref="T:System.ArgumentNullException"><see cref="P:Tools.WindowsT.WPF.MarkupT.EnumItemsExtension.Enum"/> is not null and value being set is null</exception>
+ <exception cref="T:System.ArgumentException">Value being set is not enumerated type</exception>
+</member>
 <member name="T:Tools.WindowsT.WPF.MarkupT.TypeConverterBasedValueSerializerBase">
  <summary>Base class for simple automatic <see cref="T:System.Windows.Markup.ValueSerializer">ValueSerializers</see> based on <see cref="T:System.ComponentModel.TypeConverter"/></summary>
  <version version="1.5.4">This class is new in version 1.5.4</version>
@@ -3549,7 +3573,7 @@ The stub formatting method returning the Progress property value.
  <returns>An instance of type <typeparamref name="TConverter"/></returns>
 </member>
 <member name="T:Tools.WindowsT.WPF.MarkupT.MarkupExtensionBase">
- <summary>Base class for implementations of <see cref="T:System.Windows.Markup.MarkupExtension"/> which mekes it easier to implement <see cref="T:System.Windows.Markup.MarkupExtension"/> by provideing easier access to some commonly required services.</summary>
+ <summary>Base class for implementations of <see cref="T:System.Windows.Markup.MarkupExtension"/> which makes it easier to implement <see cref="T:System.Windows.Markup.MarkupExtension"/> by providing easier access to some commonly required services.</summary>
  <seelaso cref="T:System.Windows.Markup.MarkupExtension"/><seelaso cref="T:Tools.WindowsT.WPF.MarkupT.XamlServiceProvider"/>
  <version stage="Nightly" version="1.5.3">This class is new in version 1.5.3</version>
 </member>
@@ -3560,7 +3584,7 @@ The stub formatting method returning the Progress property value.
  <remarks><note type="inheritinfo">Override overload instead.</note></remarks>
 </member>
 <member name="M:Tools.WindowsT.WPF.MarkupT.MarkupExtensionBase.ProvideValue(Tools.WindowsT.WPF.MarkupT.XamlServiceProvider)">
- <summary>When overrriden in derived class returns an object that is set as the value of the target property for this markup extension. </summary>
+ <summary>When overridden in derived class returns an object that is set as the value of the target property for this markup extension. </summary>
  <returns>The object value to set on the property where the extension is applied. </returns>
  <param name="serviceProvider">Object that can provide services for the markup extension. This implementation never passes value null here.</param>
 </member>

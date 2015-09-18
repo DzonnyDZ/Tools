@@ -133,27 +133,27 @@ Public Class SettingsDialog
                 If f.TryGetGlyphTypeface(gf) Then glyphFaces.Add(gf)
             Next
 
-            Dim ranges As New List(Of Tuple(Of UInteger, UInteger))
+            Dim ranges As New List(Of SimpleRange)
             For Each range In ParseRange(compositeMap.@Unicode)
                 Dim min As UInteger?, max As UInteger?
-                For character = range.Item1 To range.Item2
+                For character = range.First To range.Last
                     If FontFacesContainCodePoint(glyphFaces, character) Then
                         If min Is Nothing Then min = character
                         max = character
                     ElseIf min.HasValue Then
-                        ranges.Add(Tuple.Create(min.Value, max.Value))
+                        ranges.Add(New simplerange(min.Value, max.Value))
                         min = Nothing
                         max = Nothing
                     End If
                 Next
-                If min.HasValue Then ranges.Add(Tuple.Create(min.Value, max.Value))
+                If min.HasValue Then ranges.Add(New simplerange(min.Value, max.Value))
             Next
             If ranges.Count > 0 Then
                 Dim b As New StringBuilder
                 For Each range In ranges
                     If b.Length > 0 Then b.Append(",")
-                    If range.Item1 = range.Item2 Then b.Append(range.Item1.ToString("X", InvariantCulture)) _
-                    Else b.AppendFormat(InvariantCulture, "{0:X}-{1:X}", range.Item1, range.Item2)
+                    If range.First = range.Last Then b.Append(range.First.ToString("X", InvariantCulture)) _
+                    Else b.AppendFormat(InvariantCulture, "{0:X}-{1:X}", range.First, range.Last)
                 Next
                 compositeMap.@Unicode = b.ToString
             Else
