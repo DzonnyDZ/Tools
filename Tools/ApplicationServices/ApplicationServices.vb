@@ -3,9 +3,9 @@ Namespace ApplicationServicesT
     Public Module ApplicationServices
         ''' <summary>Pareses command line arguments from string array to key-values dictionary</summary>
         ''' <param name="arguments">Application arguments</param>
-        ''' <param name="ignore1st">True to indicate that 1st (index 0) arggument in <paramref name="arguments"/> contains application executable name and should be ignored by this method</param>
-        ''' <returns>Dictionary containing values in front of = from each parameter as keys aand remainders of parameters as values.</returns>
-        ''' <remarks>Each commmand line ergument is expected to have form <c>key</c> or <c>key=value</c></remarks>
+        ''' <param name="ignore1st">True to indicate that 1st (index 0) argument in <paramref name="arguments"/> contains application executable name and should be ignored by this method</param>
+        ''' <returns>Dictionary containing values in front of = from each parameter as keys and remainders of parameters as values.</returns>
+        ''' <remarks>Each command line argument is expected to have form <c>key</c> or <c>key=value</c></remarks>
         Public Function ParseParameters(ByVal arguments As IEnumerable(Of String), Optional ByVal ignore1st As Boolean = False) As Dictionary(Of String, List(Of String))
             Dim i% = 0
             Dim ret As New Dictionary(Of String, List(Of String))

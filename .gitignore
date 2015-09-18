@@ -14,3 +14,4 @@ ipch
 /UpgradeLog.htm
 *.opensdf
 *.tmp_proj
+*/NuGet/*.nupkg

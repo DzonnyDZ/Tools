@@ -47,7 +47,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\AnyCPU\</OutputPath>
     <DocumentationFile>Tools.Runtime.CompilerServices.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -90,11 +90,8 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedFiles\AssemblyStage.vb">
-      <Link>My Project\AssemblyStage.vb</Link>
-    </Compile>
-    <Compile Include="..\SharedFiles\Version.vb">
-      <Link>MyProject\Version.vb</Link>
+    <Compile Include="..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
     <Compile Include="AddResource.vb" />
     <Compile Include="ImplementsAttribute.vb" />
@@ -143,6 +140,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="NuGet\Tools.Runtime.CompilerServices.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
