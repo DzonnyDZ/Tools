@@ -2,7 +2,7 @@
 Imports System.Globalization
 Imports Tools.GlobalizationT
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for <see cref="IFormattable"/></summary>
     ''' <version version="1.5.4">This module is new in version 1.5.4</version>

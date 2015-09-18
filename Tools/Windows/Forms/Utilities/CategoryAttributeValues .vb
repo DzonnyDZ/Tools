@@ -1,4 +1,4 @@
-﻿#If Config <= Release Then
+﻿#If True
 Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Common values used for <see cref="CategoryAttribute"/></summary>
     ''' <remarks>

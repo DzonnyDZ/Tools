@@ -1,5 +1,5 @@
 ﻿Imports Tools.ExtensionsT
-#If Config <= Beta Then 'Stage: Beta
+#If True
 Namespace ComponentModelT
     ''' <summary>Spacial kind of exception intended to be thown by application when exception occured during some process and it was reported to user by the process itself, so the place exception is caught should not report it to user again.</summary>
     ''' <remarks>Intended use of this exception is as follows: Some processs is going on. Something bad happens in the process (an exception occurs). The exception is reported to user (mesage box, console, log etc.) and it needs to be rethrown but upper catch should be notified that it should not report the error to user again.</remarks>

@@ -1,4 +1,4 @@
-﻿'#If Config <= Nightly Then 'set in project file
+﻿'#If True
 Namespace WindowsT.NativeT
     Friend Class frmTestForm
         ''' <summary>CTor</summary>

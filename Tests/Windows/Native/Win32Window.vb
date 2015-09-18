@@ -1,4 +1,4 @@
-﻿'#If Config <= Nightly Then'Set in project file
+﻿'#If True
 Imports Tools.WindowsT.NativeT, System.Linq
 Namespace WindowsT.NativeT
 

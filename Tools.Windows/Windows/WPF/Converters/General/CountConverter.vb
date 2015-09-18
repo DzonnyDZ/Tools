@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, Tools.ReflectionT, System.Linq
 
 Namespace WindowsT.WPF.ConvertersT
-#If Config <= Nightly Then 'Stage:Nigtly
+#If True
     ''' <summary>Implemens <see cref="IValueConverter"/> returning count of items in collection</summary>
     Public Class CountConverter
         Implements IValueConverter

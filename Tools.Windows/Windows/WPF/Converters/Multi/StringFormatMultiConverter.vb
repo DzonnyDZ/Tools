@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Multivalue converter that converts passes given values to <see cref="String.Format"/></summary>
     ''' <version version="1.5.3" stage="Nightly">This class is new in version 1.5.3</version>

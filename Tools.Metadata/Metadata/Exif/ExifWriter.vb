@@ -1,10 +1,10 @@
 ﻿Imports Tools.MetadataT.ExifT.ExifReader, Tools.ExtensionsT.StringExtensions
 Imports Tools.NumericsT
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace MetadataT.ExifT
     ''' <summary>This class provides low-level writer of Exif matadata</summary>
-    ''' <version stage="Nightly" version="1.5.2">Class accessibility changed from Firend to Public</version>
+    ''' <version version="1.5.2">Class accessibility changed from Firend to Public</version>
     ''' <version version="1.5.2">New overloaded method <see cref="ExifWriter.Save"/> introduced.</version>
     ''' <version version="1.5.2">ASCII-type data are automatically appended with nullchar when required (missing)</version>
     Public Class ExifWriter

@@ -2,7 +2,7 @@ Imports System.Windows.Forms, System.ComponentModel
 Imports Tools.ComponentModelT
 
 Namespace WindowsT.FormsT
-#If Config <= RC Then 'Stage: RC
+#If True
     ''' <summary><see cref="System.Windows.Forms.ToolStripComboBox"/> that allows databinding</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

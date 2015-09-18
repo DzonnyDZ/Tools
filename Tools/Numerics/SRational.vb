@@ -2,7 +2,7 @@ Imports Tools.ExtensionsT
 Imports System.Runtime.InteropServices
 
 Namespace NumericsT
-#If Config <= RC Then 'Stage: RC
+#If True
 
     ''' <summary>Represents a signed rational number with numerator and denominator</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>

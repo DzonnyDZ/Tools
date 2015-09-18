@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Namespace IOt
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Contains static functions for working with Windows (Samba) shared folders</summary>
     ''' <version version="1.5.2" stage="Nightly">Module introduced</version>
     Public Module SharedFolders

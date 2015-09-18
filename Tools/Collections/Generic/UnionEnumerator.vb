@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 '#If Framework >= 3.5 Then
 Imports System.Linq
 '#End If

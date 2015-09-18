@@ -1,6 +1,6 @@
 Imports Tools.IOt
 Namespace IOt
-    '#If Config <= Nightly Then Stage conditional compilation of this file is set in Tests.vbproj
+    '#If TrueStage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="Tools.IOt.ShellLink"/></summary>
     Public Class frmShellLink
         ''' <summary>CTor</summary>

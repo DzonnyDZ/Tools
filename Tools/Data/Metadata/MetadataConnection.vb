@@ -1,4 +1,4 @@
-'#If Config <= Nightly Then 'Stage nightly
+'#If True
 'Imports System.Data, System.Data.Common, Tools.VisualBasicT
 ''Experimental: The whole Data.Metadata namespace is experimental. I'm not sure if there will be any final release version of it
 ''Seelaso: http://msdn2.microsoft.com/en-us/library/1ss96yss(VS.71).aspx

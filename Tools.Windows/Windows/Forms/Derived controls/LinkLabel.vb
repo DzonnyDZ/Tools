@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Forms, Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT
 Imports System.Drawing.Design, System.ComponentModel.Design, Tools.ComponentModelT
 Imports System.Runtime.Serialization
-'#If Config <= Release Then 
+'#If True
 'Conditional compilation directive is commented out because its presence caused compiler warning.
 'The conditionality of compilation of this file as well as of related files (which's name starts with 'LinkLabel.') is ensured by editing the Tools.vbproj file, where this file is marked as conditionally compiled.
 'To edit the Tools.vbproj right-click the Tools project and select Unload Project. Then right-click it again and select Edit Tools.vbproj.

@@ -1,4 +1,4 @@
-﻿#If Config <= Release Then
+﻿#If True
 Namespace CollectionsT.GenericT
     ''' <summary>Strongly typed read-only list that provides all applicable methods available in <see cref="List(Of T)"/></summary>
     ''' <typeparam name="T">Type of items in list</typeparam>

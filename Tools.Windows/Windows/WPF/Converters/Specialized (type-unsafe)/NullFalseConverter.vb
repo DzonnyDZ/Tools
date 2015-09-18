@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that converts null values to false and non-null values to true.</summary>
     ''' <remarks>Additionally if targetType is <see cref="System.Windows.Visibility"/> it converts null to <see cref="System.Windows.Visibility.Collapsed"/> and non-null to <see cref="System.Windows.Visibility.Visible"/>.

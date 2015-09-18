@@ -2,7 +2,7 @@ Imports System.IO
 Imports Tools.NumericsT
 
 Namespace MetadataT.ExifT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

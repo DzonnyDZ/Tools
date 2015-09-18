@@ -1,5 +1,5 @@
 ﻿Imports Tools.LinqT, System.Linq
-#If Config <= Nightly Then
+#If True
 ''' <summary>Exception thrown when value of some type is passes where the type is not acceptable</summary>
 ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
 ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

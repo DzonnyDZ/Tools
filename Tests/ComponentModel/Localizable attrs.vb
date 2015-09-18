@@ -1,6 +1,6 @@
 ﻿Imports Tools.ComponentModelT, System.ComponentModel, Tools.ResourcesT
 Namespace ComponentModelT
-    '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
+    '#If TrueStage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="LCategoryAttribute"/>, <see cref="LDescriptionAttribute"/> and <see cref="LDisplayNameAttribute"/></summary>
     Friend Class frmLocalizableAttributes : Inherits Form
         ''' <summary>CTor</summary>

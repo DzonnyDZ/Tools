@@ -1,5 +1,5 @@
 ﻿Imports Tools.IOt.StreamTools
-#If config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace IOt
     ''' <summary>Implements sream that can be used to write data into another streem where writer does not see the basë sream and it is possible to write more data the possibli fits into free space in base stream</summary>
     ''' <seealso cref="IO.Stream"/>

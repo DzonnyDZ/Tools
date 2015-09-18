@@ -2,7 +2,7 @@ Imports Microsoft.Win32
 Imports System.Security.Permissions, System.Security
 Imports System.Globalization
 Namespace WindowsT.FormsT.UtilitiesT
-#If Config <= Release Then
+#If True
     ''' <summary>Gives acces of hyperlink settings of Internet Explorer</summary>
     ''' <remarks>See also <seealso cref="Tools.DrawingT.SystemColorsExtension"/></remarks>
     ''' <author www="http://dzonny.cz">Ðonny</author>

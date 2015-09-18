@@ -1,4 +1,4 @@
-﻿#If Config <= Release Then
+﻿#If True
 ''' <summary>Type-safe <see cref="ICloneable"/> interface</summary>
 ''' <author www="http://dzonny.cz">Đonny</author>
 ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

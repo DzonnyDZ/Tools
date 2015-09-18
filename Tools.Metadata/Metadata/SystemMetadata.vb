@@ -1,7 +1,7 @@
 ﻿Imports Tools.ComponentModelT
 
 'Localize: This file is not localized
-#If Config <= Nightly Then  'Stage: Nightly
+#If True 'Stage: Nightly
 
 Imports System.Linq, Tools.ExtensionsT
 Imports DescStr = Tools.MetadataT.MetadataPropertyDescriptor(Of Tools.MetadataT.SystemMetadata, String)

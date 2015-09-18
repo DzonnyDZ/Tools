@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Base class for comparison converters</summary>

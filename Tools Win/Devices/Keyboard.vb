@@ -3,7 +3,7 @@ Imports System.ComponentModel
 Imports System.Threading
 
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace DevicesT
     ''' <summary>Contains methods for working with keyboard</summary>
     Public Class Keyboard

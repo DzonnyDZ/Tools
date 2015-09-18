@@ -1,5 +1,5 @@
 Namespace WindowsT.FormsT
-    '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
+    '#If TrueStage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Test functionality of <see cref="Tools.WindowsT.FormsT.ExtendedForm"/></summary>
     Public Class frmExtendedForm
         ''' <summary>Runs test GUI</summary>

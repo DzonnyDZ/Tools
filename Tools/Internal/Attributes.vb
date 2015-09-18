@@ -1,7 +1,7 @@
 ﻿Imports CultureInfo = System.Globalization.CultureInfo
 
 'Attributes used mainly internally by ĐTools are defined here
-#If Config <= Release Then
+#If True
 Imports System.Reflection
 Namespace InternalT
     ''' <summary>Marks person defined by instance of this attribute as author of marked part of code.</summary>

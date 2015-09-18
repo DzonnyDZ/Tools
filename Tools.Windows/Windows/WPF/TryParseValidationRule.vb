@@ -4,7 +4,7 @@ Imports System.Globalization
 Imports Tools.ExtensionsT
 
 Namespace WindowsT.WPF
-#If Config <= Nightly Then
+#If True
     'TODO: Add more types (GUID, Version, IPAddress, ...)
     ''' <summary>A <see cref="System.Windows.Controls.ValidationRule"/>-derived class for verifying if given <see cref="String"/> value represents valid values of certain type.</summary>
     ''' <remarks>With excpetion of few specific types validation is performed by appropriate <c>TryParse</c> method.</remarks>

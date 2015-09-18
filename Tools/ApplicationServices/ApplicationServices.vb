@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace ApplicationServicesT
     Public Module ApplicationServices
         ''' <summary>Pareses command line arguments from string array to key-values dictionary</summary>

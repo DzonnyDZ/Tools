@@ -2,7 +2,7 @@
 Imports System.Text.RegularExpressions
 
 Namespace DataT.SqlServerT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Contains user-defined functions for SQL server</summary>
     ''' <version version="1.5.3">Class introduced</version>
     Partial Public NotInheritable Class UserDefinedFunctions

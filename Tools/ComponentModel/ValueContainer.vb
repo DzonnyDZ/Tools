@@ -1,5 +1,5 @@
 ﻿Namespace ComponentModelT
-#If Config <= Nightly Then 'Stage = Nightly
+#If True
     ''' <summary>Implements changeable singleto with <see cref="INotifyPropertyChanged"/> support</summary>
     ''' <typeparam name="T">Type of value stored in singleton container</typeparam>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>

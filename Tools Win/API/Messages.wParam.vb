@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel, Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace API.Messages.wParam
         ''' <summary>Values used for wParam used by <see cref="WindowMessages.WM_ACTIVATE"/> message</summary>
         Public Enum WM_ACTIVATE As Integer

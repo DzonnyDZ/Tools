@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Schema
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace XmlT.LinqT
     ''' <summary>Provides extension methods related to <see cref="System.Xml.Linq"/></summary>
     ''' <version version="1.5.3" stage="Nightly">Module made public</version>

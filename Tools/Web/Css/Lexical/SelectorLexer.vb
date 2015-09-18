@@ -1,13 +1,13 @@
 ﻿'Imports System.Text, Tools.ExtensionsT
 
-'#If Config <= Nightly Then
+'#If True
 'Namespace WebT.CssT.LexicalT
 '    'CSS namespaces: http://www.w3.org/TR/css3-namespace/
 '    'CSS selectors: http://www.w3.org/TR/css3-selectors
 
 '    ''' <summary>Enumeration of CSS selectors lexical elements</summary>
 '    ''' <remarks>This enumeration represents lexical elements defined in <a href="http://www.w3.org/TR/css3-selectors/#lex">CSS Slectors Level 3 Lexical Scanner</a> plus single-character elements and plus some special elements.</remarks>
-'    ''' <version stage="nightly" version="1.5.3">This enumeration is new in version 1.5.3</version>
+'    ''' <version version="1.5.3">This enumeration is new in version 1.5.3</version>
 '    <EditorBrowsable(EditorBrowsableState.Advanced)>
 '    Public Enum SelectorLexicalElement
 '        ''' <summary>Whitespace</summary>
@@ -79,7 +79,7 @@
 '    End Enum
 
 '    ''' <summary>Performs lexical analysis of string representing CSS selector or group of CSS selectors</summary>
-'    ''' <version stage="nightly" version="1.5.3">This class is new in version 1.5.3</version>
+'    ''' <version version="1.5.3">This class is new in version 1.5.3</version>
 '    <EditorBrowsable(EditorBrowsableState.Advanced)>
 '    Public Class SelectorLexer
 '        ''' <summary>Stack for stack automaton</summary>

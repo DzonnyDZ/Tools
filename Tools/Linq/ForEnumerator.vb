@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports Tools.ExtensionsT
-#If Config <= Nightly Then
+#If True
 Namespace LinqT
 
     ''' <summary>Identifies states of for loop iteration</summary>

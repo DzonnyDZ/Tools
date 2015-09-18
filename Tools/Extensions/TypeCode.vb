@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then
+#If True
 Namespace ExtensionsT
     ''' <summary>Extension functions for <see cref="TypeCode"/></summary>
     Public Module TypeCodeExtensions

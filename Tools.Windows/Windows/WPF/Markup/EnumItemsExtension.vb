@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>A markup extension that provides array of enumeration members</summary>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>

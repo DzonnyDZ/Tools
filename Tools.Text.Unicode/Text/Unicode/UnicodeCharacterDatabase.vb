@@ -10,7 +10,7 @@ Imports System.Xml
 Imports Tools.ComponentModelT
 Imports System.Globalization.CultureInfo
 
-#If Config <= Nightly Then
+#If True
 <Module: AddResource(UnicodeCharacterDatabase.UnicodeXmlDatabaseResourceName, UnicodeCharacterDatabase.UnicodeXmlDatabaseFileName, False, False, Remove:=True)>
 
 Namespace TextT.UnicodeT

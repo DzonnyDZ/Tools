@@ -1,10 +1,10 @@
 ﻿Imports System.Runtime.InteropServices
 
-#If config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace NumericsT
     ''' <summary>8-byte union of integral data types</summary>
     ''' <remarks>You can use this union for bitwise operations</remarks>
-    ''' <version stage="Nightly" version="1.5.3">This structure is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This structure is new in version 1.5.3</version>
     <StructLayout(LayoutKind.Explicit, size:=8)>
     <DebuggerDisplay("LongUnion {long} {ulong}")>
     Public Structure LongUnion
@@ -245,7 +245,7 @@ Namespace NumericsT
 
     ''' <summary>4-byte union of integral data types</summary>
     ''' <remarks>You can use this union for bitwise operations</remarks>
-    ''' <version stage="Nightly" version="1.5.3">This structure is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This structure is new in version 1.5.3</version>
     <StructLayout(LayoutKind.Explicit, size:=4)>
     <DebuggerDisplay("IntegerUnion {integer} {uinteger}")>
     Public Structure IntegerUnion
@@ -414,7 +414,7 @@ Namespace NumericsT
 
     ''' <summary>2-byte union of integral data types</summary>
     ''' <remarks>You can use this union for bitwise operations</remarks>
-    ''' <version stage="Nightly" version="1.5.3">This structure is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This structure is new in version 1.5.3</version>
     <StructLayout(LayoutKind.Explicit, size:=2)>
     <DebuggerDisplay("ShortUnion {short} {ushort}")>
     Public Structure ShortUnion
@@ -543,7 +543,7 @@ Namespace NumericsT
 
     ''' <summary>1-byte union of integral data types</summary>
     ''' <remarks>You can use this union for bitwise operations</remarks>
-    ''' <version stage="Nightly" version="1.5.3">This structure is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This structure is new in version 1.5.3</version>
     <StructLayout(LayoutKind.Explicit, size:=1)>
     <DebuggerDisplay("ShortUnion {sbyte} {byte}")>
     Public Structure ByteUnion

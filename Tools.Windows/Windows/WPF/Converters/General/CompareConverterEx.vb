@@ -5,7 +5,7 @@ Imports Tools.ExtensionsT
 Imports Tools.ReflectionT
 Imports Tools.TypeTools
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Converter that test if value being converted relates to parameter</summary>

@@ -1,5 +1,5 @@
 Namespace ComponentModelT
-#If Config <= Beta Then 'Stage: Beta
+#If True
     ''' <summary><see cref="CancelEventArgs"/> with message witn reason for cancellation</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Beta"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

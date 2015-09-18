@@ -1,5 +1,5 @@
 ﻿Imports Severity = System.Xml.Schema.XmlSeverityType
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ComponentModelT
     ''' <summary>Event arguments carrying <see cref="Exception"/></summary>
     Public Class ExceptionEventArgs

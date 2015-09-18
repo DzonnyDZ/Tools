@@ -3,7 +3,7 @@ Imports System.Globalization
 Imports Tools.NumericsT
 Imports System.Numerics
 
-#If Config <= Alpha Then 'Stage: Aplha
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Implements <see cref="IValueConverter"/> for converting numeric values to halfs of them</summary>
     ''' <remarks>

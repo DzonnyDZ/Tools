@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter used to test if enumerated value is one of given values</summary>
     ''' <remarks>For normal enumerations checks exact value, for flags enumerations tests flass in addition.</remarks>

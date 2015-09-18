@@ -3,7 +3,7 @@ Imports Tools.CollectionsT.GenericT, System.Windows.Forms, System.Linq
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox
 Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions
 Namespace WindowsT.FormsT
-    '#If Config <= Alpha Then Set in Tools.vbproj
+    '#If TrueSet in Tools.vbproj
     'Stage: Alpha
     ''' <summary>Editor of autocomplete list and synonym groups for <see cref="KeyWordsEditor"/></summary>
     Friend NotInheritable Class ThesaurusForm

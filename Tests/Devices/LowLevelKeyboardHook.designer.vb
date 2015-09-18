@@ -1,5 +1,5 @@
 Namespace DevicesT
-    '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
+    '#If TrueStage conditional compilation of this file is set in Tests.vbproj
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmLowLevelKeyboardHook
         <System.Diagnostics.DebuggerStepThrough()> _

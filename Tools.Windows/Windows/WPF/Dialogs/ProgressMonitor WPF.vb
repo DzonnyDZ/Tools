@@ -4,7 +4,7 @@ Imports Tools.WindowsT.IndependentT
 Imports Tools.ComponentModelT
 Imports Tools.ThreadingT
 
-#If Config <= Nightly Then  'Stage: Nightly
+#If True 'Stage: Nightly
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Implements user interface for <see cref="ProgressMonitor"/></summary>
     ''' <remarks>You shuld not use this class/control directly unless you are styling it.</remarks>

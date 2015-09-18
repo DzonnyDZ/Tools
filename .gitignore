@@ -12,3 +12,4 @@ ipch
 ~$*.xlsx
 /Tools.sdf
 /UpgradeLog.htm
+*.opensdf

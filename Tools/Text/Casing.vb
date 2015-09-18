@@ -1,4 +1,4 @@
-﻿#If Config <= Release Then
+﻿#If True
 Namespace TextT
     ''' <summary>Defines character casing</summary>
     ''' <version version="1.5.2">Enumeration introduced</version>

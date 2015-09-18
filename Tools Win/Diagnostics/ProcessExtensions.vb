@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 
 Namespace DiagnosticsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Provides extension functions for working with processes</summary>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>
     Public Module ProcessExtensions

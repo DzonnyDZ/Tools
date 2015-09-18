@@ -1,5 +1,5 @@
 ﻿Imports Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace GlobalizationT.NumberingSystemsT
     ''' <summary>Implements positional numbering system such as binary, octal, decimal or hexadecimal</summary>
     ''' <remarks>This class can implement any positional numbering system including unary numbering system as long as characters are given to constructor.

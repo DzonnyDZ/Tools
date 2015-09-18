@@ -1,7 +1,7 @@
 ﻿Imports Tools.ReflectionT, System.Linq
 Imports System.Reflection
 
-#If Config <= Nightly Then
+#If True
 Namespace TestsT
     ''' <summary>This class tests if static properties of given type or types in given assembly/module/namespace returns value without throwing an exception.</summary>
     ''' <author www="http://dzonny.cz">Đonny</author>

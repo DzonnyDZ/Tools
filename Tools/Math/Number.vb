@@ -1,7 +1,7 @@
 ﻿'Imports Tools.DataStructuresT.GenericT, Tools.ExtensionsT
 ''ASAP:Comment
 ''TODO:Implement
-'#If Config <= Nightly Then
+'#If True
 'Public Structure Number
 '    Implements IConvertible, IFormattable
 '    Private ReadOnly _Value As IConvertible

@@ -1,5 +1,5 @@
 ﻿Namespace DataStructuresT.GenericT
-#If Config <= Release Then
+#If True
     ''' <summary>Type tha contains value of two distinct types</summary>
     ''' <typeparam name="T1">Type of first value</typeparam>
     ''' <typeparam name="T2">Type of second value</typeparam>
@@ -15,7 +15,7 @@
     End Interface
 #End If
 
-#If Config <= Release Then
+#If True
     ''' <summary>Implements <see cref="IPair(Of T1,T2)"/> as reference type</summary>
     ''' <typeparam name="T1">Type of Value1</typeparam>
     ''' <typeparam name="T2">Type of Value2</typeparam>

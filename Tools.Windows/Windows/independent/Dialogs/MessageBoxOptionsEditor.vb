@@ -1,7 +1,7 @@
 ﻿Imports Tools.ComponentModelT, Tools.WindowsT.FormsT
 Imports Tools.DrawingT.DesignT
 
-'#If Config <= Nightly Then 'Set in project file
+'#If True
 'Stage: Nightly
 Namespace WindowsT.IndependentT
     ''' <summary>Implements editor for <see cref="MessageBox.MessageBoxOptions"/></summary>

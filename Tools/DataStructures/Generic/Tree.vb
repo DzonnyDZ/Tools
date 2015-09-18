@@ -1,6 +1,6 @@
 Imports Tools.CollectionsT.GenericT, Tools.ComponentModelT
 Namespace DataStructuresT.GenericT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Represents tree or sub-tree</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

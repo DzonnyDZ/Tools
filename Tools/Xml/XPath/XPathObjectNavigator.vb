@@ -5,7 +5,7 @@ Imports System.Xml.XPath
 Imports System.Reflection
 Imports System.ComponentModel
 
-#If Config <= Alpha Then
+#If True
 Namespace XmlT.XPathT
     ''' <summary>Implements <see cref="XPathNavigator"/> over any object structure</summary>
     ''' <remarks>

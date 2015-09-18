@@ -1,6 +1,6 @@
 Imports Tools.InternalT
 Namespace InternalT
-#If Config <= Release Then
+#If True
     Public Class VersionAttributeTest
         Public Shared Sub Test()
             Dim cp As New Microsoft.VisualBasic.VBCodeProvider

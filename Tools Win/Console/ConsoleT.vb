@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 
-#If Config <= Beta Then 'Stage:Beta
+#If True
 ''' <summary>Contains methods for working with console</summary>
 ''' <seelaso cref="Console"/>
 Public Class ConsoleT

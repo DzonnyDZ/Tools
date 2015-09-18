@@ -1,5 +1,5 @@
 Imports System.Reflection, Tools.WindowsT.FormsT, Tools.ReflectionT
-'#If Config <= Nightly Then 'set in project file
+'#If True
 Namespace WindowsT.FormsT
     ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.ObjectBrowser"/></summary>
     Public Class frmObjectBrowser

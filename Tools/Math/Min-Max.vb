@@ -1,5 +1,5 @@
 ﻿'Minimums and maximums
-#If Config <= Release Then
+#If True
 ''' <summary>Provides constants and static methods for trigonometric, logarithmic, and other common mathematical functions.</summary>
 Partial Public Class MathT
     ''' <summary>Finds the smallest of parameters</summary>

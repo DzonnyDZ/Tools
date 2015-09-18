@@ -3,7 +3,7 @@ Imports System.ComponentModel
 Imports System.Threading
 
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace API.Hooks
 
     ''' <summary>Base class for classes used to handle Win32 hooks</summary>

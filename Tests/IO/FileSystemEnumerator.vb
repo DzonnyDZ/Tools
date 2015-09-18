@@ -1,4 +1,4 @@
-﻿'#If Config <= Nightly Then 'set in project file
+﻿'#If True
 Imports Tools.IOt
 Namespace IOt
     ''' <summary>Test for <see cref="Tools.IOt.FileSystemEnumerator"/></summary>

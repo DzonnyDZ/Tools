@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualStudio.DebuggerVisualizers
 
-'#If Config <= Nightly Then 'Stage: Nightly
+'#If True
 '<Assembly: DebuggerVisualizer(GetType(DiagnosticsT.ImageVisualizer), GetType(DiagnosticsT.ImageVisualizer.VisualizerImageSource), Description:="Image visualizer", Target:=GetType(Image))> 
 <Assembly: DebuggerVisualizer(GetType(DiagnosticsT.ImageVisualizer), Target:=GetType(Image), Description:="Image visualizer")> 
 Namespace DiagnosticsT

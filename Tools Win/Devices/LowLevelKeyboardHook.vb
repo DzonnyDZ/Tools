@@ -3,7 +3,7 @@ Imports System.ComponentModel
 Imports System.Threading
 Imports Tools.ComponentModelT
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace DevicesT
 
     ''' <summary>Allows handling system-wide low-level keyboard hooks</summary>

@@ -1,5 +1,5 @@
 ﻿
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ComponentModelT
 
     ''' <summary>Extends <see cref="PropertyChangingEventArgs"/> by adding the <see cref="P:Tools.ComponentModelT.PropertyChangingEventArgsEx.ProposedNewValue"/> property</summary>

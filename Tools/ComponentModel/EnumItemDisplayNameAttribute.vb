@@ -1,4 +1,4 @@
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace ComponentModelT
     ''' <summary><see cref="DisplayNameAttribute"/> that can be applied on fields</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

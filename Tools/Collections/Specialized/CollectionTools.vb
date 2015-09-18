@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Imports System.Runtime.CompilerServices, System.Linq
 Imports Tools.CollectionsT.GenericT
 

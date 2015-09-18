@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that gets file name part of path</summary>
     ''' <remarks>This converter is one-way.</remarks>

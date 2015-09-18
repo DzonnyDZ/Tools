@@ -3,7 +3,7 @@ Imports System.Drawing, Tools.DrawingT.ImageTools
 Imports System.Runtime.CompilerServices
 Imports System.Reflection
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ReflectionT
     ''' <summary>Provides images for graphic representation of code members</summary>
     Public Module CodeImages

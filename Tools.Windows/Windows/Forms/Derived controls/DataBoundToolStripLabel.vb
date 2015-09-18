@@ -2,7 +2,7 @@ Imports System.Windows.Forms, System.ComponentModel
 Imports Tools.ComponentModelT
 
 Namespace WindowsT.FormsT
-#If Config <= RC Then 'Stage:RC
+#If True
     ''' <summary><see cref="ToolStripLabel"/> that allows databinding</summary>
     ''' <remarks><seealso>http://forums.devx.com/archive/index.php/t-153607.html</seealso></remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

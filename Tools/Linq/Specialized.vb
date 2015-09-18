@@ -1,7 +1,7 @@
 ﻿Imports System.Linq
 Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then
+#If True
 Namespace LinqT
     ''' <summary>Type specific LINQ extensions</summary>
     Module Specialized

@@ -2,7 +2,7 @@
 Imports Tools.DataStructuresT.GenericT
 
 Namespace LinqT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Contains miscaleneous LINQ extensions</summary>
     ''' <version version="1.5.4">Fix: Module made public (it was internal before)</version>
     Public Module LinqExtensions

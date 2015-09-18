@@ -1,7 +1,7 @@
 ﻿Namespace VisualBasicT
     ''' <summary>The Interaction module contains procedures used to interact with objects, applications, and systems.</summary>
     Public Module Interaction
-#If Config <= Release Then
+#If True
         ''' <summary>Returns one of two objects, depending on the evaluation of an expression.</summary>
         ''' <param name="Expression">The expression you want to evaluate.</param>
         ''' <param name="FalsePart">Returned if <paramref name="Expression">Expression</paramref> evaluates to False.</param>
@@ -21,7 +21,7 @@
             If Expression Then Return TruePart Else Return FalsePart
         End Function
 #End If
-#If Config <= Alpha Then 'Stage:Alpha
+#If True
         ''' <summary>Returns item or ist alternative item depending on if item has meaningful value</summary>
         ''' <param name="value">Item to be returned if has meaningful value</param>
         ''' <param name="alternative">Alternative (fallback) item to be returned if <paramref name="value"/> has no meaningful value</param>
@@ -63,7 +63,7 @@
             If value Is Nothing OrElse TypeOf value Is DBNull Then Return alternative Else Return value
         End Function
 #End If
-#If Config <= Release Then
+#If True
         ''' <summary>If you like to use 'Null' instead of 'Nothing' in Visual Basic you can</summary>
         ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
         ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed. Quality changed from Nightly to Release.</version> 

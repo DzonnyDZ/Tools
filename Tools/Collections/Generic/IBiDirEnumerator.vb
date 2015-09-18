@@ -1,4 +1,4 @@
-﻿#If Config <= RC Then 'Stage: RC
+﻿#If True
 Namespace CollectionsT.GenericT
     'ASAP: Mark, WiKi, Forum
     ''' <summary>Provides interface of bidirectional type-safe enumerator</summary>

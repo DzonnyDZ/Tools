@@ -2,7 +2,7 @@
 Imports System.Text.RegularExpressions, Tools.ExtensionsT
 Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then
+#If True
 
 ''' <summary>Represents a part of version information</summary>
 ''' <version version="1.5.3">This class is new in version 1.5.3</version>

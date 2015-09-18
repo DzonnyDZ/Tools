@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Markup
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>A markup extension that can create instance of any type which has default (parameter-less constructor)</summary>
     ''' <seelaso cref="Activator.CreateInstance"/>

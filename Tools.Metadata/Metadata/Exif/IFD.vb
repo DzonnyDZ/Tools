@@ -5,10 +5,10 @@ Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.Metadat
 Imports Tools.ComponentModelT, System.Linq
 Imports Tools.NumericsT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace MetadataT.ExifT
     ''' <summary>Provides read-write access to Image File Directory of Exif data</summary>
-    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
+    ''' <version version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     ''' <version version="1.5.2">Added implementation of <see cref="ICloneable(Of T)"/>.</version>
     Public Class Ifd
         Implements IReportsChange, ICloneable(Of Ifd)
@@ -784,7 +784,7 @@ Namespace MetadataT.ExifT
 
 #Region "IFD classes"
     ''' <summary>Exif main and thumbnail IFD</summary>
-    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
+    ''' <version version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added for <see cref="IfdMain.ExifSubIFD"/> and <see cref="IfdMain.GPSSubIFD"/>.</version>
     Partial Public Class IfdMain : Inherits Ifd
         ''' <summary>CTor - empty IFD</summary>
@@ -1187,7 +1187,7 @@ Namespace MetadataT.ExifT
     End Class
 
     ''' <summary>Exif Sub IFD</summary>
-    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
+    ''' <version version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added for <see cref="IfdExif.InteropSubIFD"/>.</version>
     Partial Public Class IfdExif : Inherits SubIfd
         ''' <summary>CTor - empty IFD</summary>
@@ -1450,7 +1450,7 @@ Namespace MetadataT.ExifT
     End Class
 
     ''' <summary>Represents any Exif Sub-IFD (an IFD embdeded somewhere in IFD block and pointed by some tag from another IFD)</summary>
-    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
+    ''' <version version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     Public Class SubIfd : Inherits Ifd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()

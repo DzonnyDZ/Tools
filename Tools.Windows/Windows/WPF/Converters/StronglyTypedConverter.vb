@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Data
 Imports System.Globalization
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Common base for type-safe implementations of <see cref="IValueConverter"/></summary>
     ''' <typeparam name="TSource">Type values are converted from</typeparam>

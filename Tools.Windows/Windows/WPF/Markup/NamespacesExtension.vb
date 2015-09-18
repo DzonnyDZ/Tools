@@ -4,12 +4,12 @@ Imports System.Xaml
 Imports System.Windows.Data
 Imports System.ComponentModel.Design.Serialization
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.MarkupT
 
     ''' <summary>This markup extension provides instance of <see cref="XmlNamespaceMappingCollection"/> object containing all or some of namespace prefixes registered at place where it is used.</summary>
     ''' <remarks>Because of bug in Visual Studio (see <a href="https://connect.microsoft.com/VisualStudio/feedback/details/614411">IXamlTypeResolver is not provided in design mode</a>) this markup extension may return null in design mode.</remarks>
-    ''' <version stage="Nightly" version="1.5.3">This class is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This class is new in version 1.5.3</version>
     <ContentPropertyAttribute("Prefixes"), MarkupExtensionReturnType(GetType(XmlNamespaceMappingCollection))> _
     <TypeConverter(GetType(NamespacesExtension.NamespacesExtensionConverter))>
     Public Class NamespacesExtension : Inherits MarkupExtensionBase

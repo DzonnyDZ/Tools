@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices, System.Linq, System.Collections.Generic
-#If Config <= Nightly Then
+#If True
 Namespace LinqT
     ''' <summary>Tools for working with <see cref="IEnumerable(Of T)"/></summary>
     Public Module EnumerableT

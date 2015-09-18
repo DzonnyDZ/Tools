@@ -1,6 +1,6 @@
 Imports System.IO, Tools.IOt
 Namespace DrawingT.DrawingIOt.JPEG
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
     ''' <summary>Represernts marker (block of JPEG file)</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

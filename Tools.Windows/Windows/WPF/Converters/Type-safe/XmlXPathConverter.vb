@@ -4,7 +4,7 @@ Imports System.Xml.XPath
 Imports System.Xml.Linq
 Imports System.Xml, Tools.LinqT, System.Linq
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter which gets value and uses it as parameter of XPath query. Then returns result of that query.</summary>
     ''' <remarks>This converter is one-way.</remarks>

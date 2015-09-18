@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace ComponentModelT
     ''' <summary>Provides event arguments for events that supports marking as handled and suppressing of action event may result to.</summary>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _

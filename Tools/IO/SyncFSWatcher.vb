@@ -2,7 +2,7 @@ Imports System.ComponentModel, System.Threading
 Imports System.Drawing
 Imports Tools.ComponentModelT
 
-#If Config <= Nightly Then                    'Stage: Nightly
+#If True                   'Stage: Nightly
 Namespace IOt
     ''' <summary><see cref="IO.FileSystemWatcher"/> with synchronous events added</summary>
     ''' <seelaso cref="IO.FileSystemWatcher"/>

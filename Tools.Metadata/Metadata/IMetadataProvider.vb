@@ -1,5 +1,5 @@
 ﻿Namespace MetadataT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Provides metadata information such as image or music metadata</summary>
     ''' <remarks>Purpose of this interface is read-only metadata retrieval</remarks>
     ''' <seelaso cref="IMetadata"/>

@@ -1,4 +1,4 @@
-#If Config <= Nightly Then
+#If True
 Namespace ComponentModelT
     ''' <summary>Indicates if enum may allow values that are not member of it or not</summary>
     ''' <remarks>Tools that use this attribute should treat enums with no <see cref="RestrictAttribute"/> as restricted (<see cref="RestrictAttribute.Restrict"/> is True)</remarks>

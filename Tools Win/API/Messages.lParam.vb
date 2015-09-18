@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel, Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace API.Messages.lParam
         ''' <summary>Bit-masks used by <see cref="WindowMessages.WM_CHAR"/>, <see cref="WindowMessages.WM_DEADCHAR"/>, <see cref="WindowMessages.WM_IME_CHAR"/>, <see cref="WindowMessages.WM_IME_KEYDOWN"/>, <see cref="WindowMessages.WM_IME_KEYUP"/>, <see cref="WindowMessages.WM_KEYDOWN"/>, <see cref="WindowMessages.WM_KEYUP"/>, <see cref="WindowMessages.WM_SYSCHAR"/>, <see cref="WindowMessages.WM_SYSDEADCHAR"/>, <see cref="WindowMessages.WM_SYSKEYDOWN"/>, <see cref="WindowMessages.WM_SYSKEYUP"/> message for lParam</summary>
         ''' <remarks>And lParam with mask and to get appropriete value. You can use <see cref="CreateWM_CHAR"/> to compose value of this type</remarks>

@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Imports System.Runtime.CompilerServices, System.Linq
 Imports Tools.CollectionsT.GenericT
 
@@ -13,7 +13,7 @@ Namespace CollectionsT.SpecializedT
         ''' <param name="Collection">Collection to get last item from</param>
         ''' <returns>Last item in <paramref name="Collection"/>, null if <paramref name="Collection"/> is empty.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Collection"/> is null</exception>
-        ''' <version stage="Nightly" version="1.5.2">Moved from <see cref="CollectionsT.SpecializedT.CollectionTools"/></version>
+        ''' <version version="1.5.2">Moved from <see cref="CollectionsT.SpecializedT.CollectionTools"/></version>
         <Extension()> Function Last(ByVal Collection As System.Windows.Forms.Control.ControlCollection) As System.Windows.Forms.Control
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
             If Collection.Count = 0 Then Return Nothing
@@ -28,7 +28,7 @@ Namespace CollectionsT.SpecializedT
         ''' <exception cref="IndexOutOfRangeException"><paramref name="index"/> is less than zero of greater than <paramref name="Collection"/>.<see cref="System.Windows.Forms.Control.ControlCollection.Count">Count</see>.</exception>
         ''' <seealso cref="Replace"/>
         ''' 
-        ''' <version stage="Nightly" version="1.5.2">Moved from <see cref="CollectionsT.SpecializedT.CollectionTools"/></version>
+        ''' <version version="1.5.2">Moved from <see cref="CollectionsT.SpecializedT.CollectionTools"/></version>
         <Extension()> Sub Insert(ByVal Collection As System.Windows.Forms.Control.ControlCollection, ByVal index As Integer, ByVal Control As System.Windows.Forms.Control)
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
             If Control Is Nothing Then Throw New ArgumentNullException("Control")
@@ -56,7 +56,7 @@ Namespace CollectionsT.SpecializedT
         ''' <seealso cref="Insert"/>
         ''' <seealso cref="WindowsT.FormsT.UtilitiesT.WinFormsExtensions.ReplaceControl"/>
         ''' 
-        ''' <version stage="Nightly" version="1.5.2">Moved from <see cref="CollectionsT.SpecializedT.CollectionTools"/></version>
+        ''' <version version="1.5.2">Moved from <see cref="CollectionsT.SpecializedT.CollectionTools"/></version>
         <Extension()> Sub Replace(ByVal Collection As System.Windows.Forms.Control.ControlCollection, ByVal index As Integer, ByVal Control As System.Windows.Forms.Control)
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
             If index < 0 OrElse index >= Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection)

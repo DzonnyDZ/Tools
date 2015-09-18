@@ -1,5 +1,5 @@
 Imports System.Text, System.Math, Tools.ExtensionsT, System.Linq
-#If Config <= rc Then 'Stage:RC
+#If True
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 ''' <remarks>This class has plenty of formating possibilities which can be used via <see cref="String.Format"/> or <see cref="TimeSpanFormattable.ToString"/>.</remarks>
 ''' <seealso cref="TimeSpan"/>

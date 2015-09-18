@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace IOt
     ''' <summary>Extends <see cref="System.IO.BinaryWriter"/> to be able to read numeric data in both little-endian and big-endian format</summary>
     Public Class BinaryWriter

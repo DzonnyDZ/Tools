@@ -1,5 +1,5 @@
 ﻿Imports System.Linq
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace IOt
     ''' <summary>Implements read-only stream which reads across multiple other streams</summary>
     Public Class UnionReadOnlyStream

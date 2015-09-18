@@ -7,7 +7,7 @@ Imports System.Text
 Imports System.Globalization
 
 
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
 Namespace NumericsT
     ''' <summary>Represents angle or time (such as GPS coordinates)</summary>
     ''' <remarks>

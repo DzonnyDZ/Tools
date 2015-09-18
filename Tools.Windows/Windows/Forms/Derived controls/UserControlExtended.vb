@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms, Tools.ComponentModelT
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Provides empty base class for user controls that extends <see cref="UserControl"/> by adding several features.</summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then
+#If True
 Namespace GlobalizationT
     ''' <summary>Provides functions related to Arabic letters - especially for conversion between various Arabic presentation forms and default letters</summary>
     ''' <remarks>

@@ -1,7 +1,7 @@
 'This code was generated from SpecializedWrappers.xml at 23. zברם 2008 by TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null1.0.2701.36373
 'Do not edit, your changes will be lost!
 Imports System.ComponentModel, Tools.CollectionsT.GenericT, System.Runtime.CompilerServices
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace CollectionsT.SpecializedT
     Partial Public MustInherit Class SpecializedWrapper
 #Region "BitArray (Boolean)"

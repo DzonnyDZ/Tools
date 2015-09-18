@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Delegate that represents <see cref="IValueConverter.Convert"/> and <see cref="IValueConverter.ConvertBack"/> functions</summary>
     ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>

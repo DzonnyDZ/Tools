@@ -2,7 +2,7 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports Tools.ComponentModelT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.FormsT
     ''' <summary>Strongly-typed <see cref="PropertyGrid"/></summary>
     ''' <typeparam name="T">Type of object being edited</typeparam>

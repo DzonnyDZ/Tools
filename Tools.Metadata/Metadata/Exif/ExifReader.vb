@@ -1,6 +1,6 @@
 Imports System.IO
 Namespace MetadataT.ExifT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Provides low level access to stream of Exif data</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2">Exif data of type ASCII are required to be terminated with nullchar. The nullchar is trimmed.</version>

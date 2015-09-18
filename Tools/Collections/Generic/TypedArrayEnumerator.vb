@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace CollectionsT.GenericT
     'ASAP: Mark, WiKi, Forum
     ''' <summary>Implements type-safe <see cref="IEnumerator(Of T)"/> for 1-dimensional array of any type</summary>

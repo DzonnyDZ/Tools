@@ -1,5 +1,5 @@
 Namespace CollectionsT.GenericT
-#If Config <= Release Then
+#If True
     ''' <summary>Rapresent anything that can be indexed by anything</summary>
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>
     ''' <typeparam name="TItem">Datatype of items</typeparam>
@@ -48,7 +48,7 @@ Namespace CollectionsT.GenericT
         ReadOnly Property Maximum() As TIndex
     End Interface
 #End If
-#If Config <= Beta Then 'Stage: Beta
+#If True
     ''' <summary>Common base for indexable enumerators</summary>
     ''' <typeparam name="TItem">Type of items in collection</typeparam>
     ''' <typeparam name="TIndex">Type of index</typeparam>
@@ -188,7 +188,7 @@ Namespace CollectionsT.GenericT
     End Class
 #End If
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Represents simple type-safe interface for read-only collection</summary>
     ''' <typeparam name="T">Type of items in collections</typeparam>
     Public Interface IReadOnlyCollection(Of T) : Inherits IEnumerable(Of T)

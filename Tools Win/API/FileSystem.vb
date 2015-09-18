@@ -3,7 +3,7 @@ Imports System.ComponentModel
 Imports Microsoft.Win32.SafeHandles
 Imports System.Text
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace API
     ''' <summary>Contains API decalarations related to file system</summary>
     Module FileSystem

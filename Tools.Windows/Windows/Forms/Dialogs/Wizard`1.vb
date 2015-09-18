@@ -1,7 +1,7 @@
 ﻿'Thi is split to another file because of designer stupidity
 Imports System.ComponentModel
 Imports System.Windows.Forms
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.FormsT
     ''' <summary>Implements <see cref="Wizard"/> with specific first-step control</summary>
     ''' <typeparam name="T">Type of control of firts step</typeparam>

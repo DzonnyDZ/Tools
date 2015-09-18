@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ExtensionsT
     ''' <summary>Contains <see cref="[Delegate]"/>-related extension functions</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>

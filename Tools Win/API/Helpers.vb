@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.InteropServices, Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace API
     ''' <summary>Contains helper functions to deal with Win32 API</summary>
     ''' <version version="1.5.2" stage="Nightly">Module introduced</version>

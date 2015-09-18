@@ -1,7 +1,7 @@
 ﻿Imports System.Reflection, System.Runtime.InteropServices
 Imports System.Runtime.CompilerServices, System.Linq, Tools.LinqT
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 'ASAP
 Namespace ReflectionT
     ''' <summary>Provides interface of object that provides string representation of various reflection object</summary>

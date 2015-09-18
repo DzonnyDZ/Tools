@@ -1,7 +1,7 @@
 ﻿Imports Tools.ExtensionsT
 Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace IOt
     ''' <summary>Contains static functions for working with files and directories</summary>
     ''' <version version="1.5.2" stage="Nightly">Module introduced</version>

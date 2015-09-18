@@ -1,7 +1,7 @@
 Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If Config <= Alpha Then 'Stage: Aplha
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that converts <see cref="System.Windows.Forms.CheckState"/> to <see cref="Nullable(Of T)"/>[<see cref="Boolean"/>]</summary>
     ''' <version version="1.5.2" stage="Alpha">Class introduced</version>

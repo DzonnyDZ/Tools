@@ -1,4 +1,4 @@
-﻿#If Config <= RC Then 'Stage:RC
+﻿#If True
 ''' <summary>Contains character constants</summary>
 ''' <version version="1.5.3">Module vas mad public</version>
 Public Module Chars

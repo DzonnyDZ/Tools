@@ -5,7 +5,7 @@ Imports Tools.ComponentModelT
 Imports System.Runtime.InteropServices
 Imports Tools.API.Messages.Notifications
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Imports System.Windows.Forms
 Namespace WindowsT.NativeT
     'ASAP:  Wiki, Forum
@@ -896,7 +896,7 @@ Namespace WindowsT.NativeT
     End Class
     ''' <summary>Subclasses any native Win32 widow by replacing its window procedure</summary>
     ''' <remarks>You can derive your class from this class and override <see cref="SubclassedNativeWindow.NewWndProc"/> to subclas any win</remarks>
-    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.2">Class introduced</version>
     Public Class SubclassedNativeWindow
         Inherits Win32Window
         ''' <summary>CTor</summary>

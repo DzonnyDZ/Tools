@@ -1,7 +1,7 @@
 ﻿Imports System.Data
 Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace DataT
     ''' <summary>Contains extension methods for working with ADO.NET</summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>

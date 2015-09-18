@@ -1,6 +1,6 @@
 ﻿Imports Tools.ComponentModelT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Imports System.Linq, Tools.LinqT
 Namespace DataStructuresT.GenericT
     ''' <summary>Represents graph node</summary>

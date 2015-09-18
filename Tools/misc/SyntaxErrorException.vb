@@ -1,4 +1,4 @@
-﻿#If Config <= nightly Then
+﻿#If True
 ''' <summary>An exception thrown when there is syntax error in text</summary>
 ''' <version version="1.5.3" stage="nightly">This class is new in version 1.5.3</version>
 <Serializable()>

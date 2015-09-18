@@ -7,7 +7,7 @@ Imports Microsoft.Win32.SafeHandles
 Imports Tools.ComponentModelT
 Imports Tools.ExtensionsT
 
-#If Config <= Nightly Then 'Stage: Nighlty
+#If True
 Namespace DevicesT.RawInputT
 #Region "Device enumeration"
     ''' <summary>Re</summary>

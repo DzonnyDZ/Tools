@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Ops = Tools.ReflectionT.Operators
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 
 ''' <summary>Defines operator methods for basic CLR types</summary>
 ''' <version version="1.5.3" stage="Nightly">This module is new in version 1.5.3</version>

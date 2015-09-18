@@ -1,7 +1,7 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace ComponentModelT
     ''' <summary>Stores default value of property of enumeration type</summary>
-    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.2">Class introduced</version>
     Public Class EnumDefaultValueAttribute
         Inherits DefaultValueAttribute
         ''' <summary>CTor for <see cref="SByte"/> enumeration</summary>

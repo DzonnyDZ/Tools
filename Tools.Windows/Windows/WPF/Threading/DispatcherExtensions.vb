@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices, System.Reflection, System.Windows.Threading
 Namespace WindowsT.WPF.ThreadingT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Provides extension methods for the <see cref="Dispatcher"/> class</summary>
     ''' <seealso cref="Dispatcher"/><seealso cref="Tools.ThreadingT.IInvokeExtensions"/>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>

@@ -1,8 +1,8 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace WindowsT.InteropT
     ''' <summary>Wraps <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> as clas derived from <see cref="EventArgs"/></summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
-    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.2">Class introduced</version>
     Public Class DependencyPropertyChangedEventArgsEventArgs
         Inherits EventArgs
         Implements IEquatable(Of DependencyPropertyChangedEventArgsEventArgs), IEquatable(Of System.Windows.DependencyPropertyChangedEventArgs)

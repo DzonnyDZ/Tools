@@ -4,10 +4,10 @@ Imports System.Data.Objects
 Imports System.Data.Objects.DataClasses
 Imports Tools.ExtensionsT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace DataT.ObjectsT
     ''' <summary>Contains extension methods related to Entity Framework</summary>
-    ''' <version stage="Nightly" version="1.5.3">This module is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This module is new in version 1.5.3</version>
     Public Module EntityFrameworkExtensions
 #Region "Add/Remove"
         ''' <summary>Marks all given entities for deletion from <see cref="IObjectSet(Of TEntity)"/></summary>

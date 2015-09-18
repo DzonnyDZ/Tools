@@ -3,7 +3,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.ComponentModel
 
-#If Config <= Nightly Then 'Stage Nightly
+#If True
 Namespace IOt
     ''' <summary>Represents a *.LNK file (also called shortcut or link)</summary>
     ''' <remarks>

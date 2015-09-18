@@ -1,5 +1,5 @@
 Imports System.Linq
-'#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
+'#If TrueStage conditional compilation of this file is set in Tests.vbproj
 ''' <summary>Testing <see cref="TimeSpanFormattable"/></summary>
 Public Class frmTimeSpanFormattable
     Private Sub cmdFormat_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdFormat.Click

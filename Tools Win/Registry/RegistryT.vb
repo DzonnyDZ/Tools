@@ -2,7 +2,7 @@
 Imports Tools.DataStructuresT.GenericT
 Imports System.ComponentModel
 
-#If Config <= Nightly Then
+#If True
 Namespace RegistryT
     Public Module RegistryT
         ''' <summary>Represents <see cref="Registry.ClassesRoot"/> key</summary>

@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing.Design, System.ComponentModel, System.Drawing, System.Windows.Forms
 Imports System.Windows.Forms.Design
 
-#If Config <= Nightly Then 'Stage:Nihghtly
+#If True
 Namespace DrawingT.DesignT
     ''' <summary>Base class for type-safe <see cref="UITypeEditor">UITypeEditors</see></summary>
     ''' <typeparam name="T">Type of value being edited</typeparam>

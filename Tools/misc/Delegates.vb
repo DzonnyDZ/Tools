@@ -1,4 +1,4 @@
-#If Config <= RC Then 'Stage: RC
+#If True
 ''' <summary>Universal delegate of procedure with no argument</summary>
 <Obsolete("Use System.Action instead"), EditorBrowsable(EditorBrowsableState.Never)> _
 Public Delegate Sub dSub()

@@ -1,4 +1,4 @@
-﻿#If Config <= release Then
+﻿#If True
 Namespace CollectionsT.GenericT
     ''' <summary>Wpars type-unsafe <see cref="IEnumerable"/> as type-safe <see cref="IEnumerable(Of T)"/></summary>
     ''' <typeparam name="T">Type that each item of wrapped collection must be of or convertible to</typeparam>

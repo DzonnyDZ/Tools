@@ -2,13 +2,13 @@
 Imports System.Windows.Forms, System.Reflection
 Imports System.Drawing, System.Linq, Tools.LinqT.EnumerableT
 Imports Tools.ComponentModelT
-'#If Config <= Nightly Then 'Set in project file
+'#If True
 'Stage:Nightly
 Namespace WindowsT.FormsT
     'ASAP: Mark
     ''' <summary>Control for browsing .NET assemblies</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
-    ''' <version stage="Nightly" version="1.5.2">Fixed: Uncatchable <see cref="ArgumentNullException"/> in tvwObjects_BeforeSelect on show of object.</version>
+    ''' <version version="1.5.2">Fixed: Uncatchable <see cref="ArgumentNullException"/> in tvwObjects_BeforeSelect on show of object.</version>
     ''' <version version="1.5.2">Fixed: Resources-related errors</version>
     ''' <version version="1.5.2">Removed <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/></version>
     ''' <version version="1.5.2">Added property <see cref="ObjectBrowser.SelectedItem"/></version>

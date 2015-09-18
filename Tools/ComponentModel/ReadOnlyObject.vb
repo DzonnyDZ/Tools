@@ -1,5 +1,5 @@
 ﻿Imports System.Linq
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace ComponentModelT
     ''' <summary>Encapsulates any object and makes it read-only</summary>
     ''' <remarks>Supports both - <see cref="TypeDescriptor"/> and <see cref="ICustomTypeDescriptor"/></remarks>

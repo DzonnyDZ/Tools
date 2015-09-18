@@ -1,4 +1,4 @@
-﻿#If Config <= Release Then
+﻿#If True
 ''' <summary>This class can wrap everything to be class</summary>
 ''' <remarks>This removes limitation of <see cref="Nullable(Of T)"/> that limits wrapped object to be structure</remarks>
 ''' <author>Đonny</author>

@@ -6,7 +6,7 @@ Imports System.Net,Tools.WindowsT.InteropT
 Imports System.Windows.Data
 Imports System.Windows.Media.Imaging
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Implements <see cref="IValueConverter"/> that converts URI (path) to cached <see cref="BitmapImage"/></summary>
     ''' <remarks>Use this converter to avoid images to be locked by <see cref="System.Windows.Controls.Image"/> control.</remarks>

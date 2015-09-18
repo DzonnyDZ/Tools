@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization, Tools.LinqT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Multi value converter that gets first non-null non-empty itemm from collection</summary>
     ''' <remarks>This converter is primarily intended to seleft first non-null non-empty collection form list of collections.

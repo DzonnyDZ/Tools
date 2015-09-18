@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that converts <see cref="IEnumerable"/> to comma-seperated list (or another seperator can be chosen)</summary>
     ''' <remarks>This converter is designed as one-way, howver <see cref="IValueConverter.ConvertBack"/> is implemented.</remarks>

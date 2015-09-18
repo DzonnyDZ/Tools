@@ -1,5 +1,5 @@
 ﻿Imports Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace GlobalizationT.NumberingSystemsT
     ''' <summary>Implements numbering system used for column numbering in spreadsheet editors like Microsft Excel</summary>
     ''' <remarks>This class has no public constructor. Use <see cref="ExcelColumnNumberingSystem.[Default]"/> instead; or you can use static methods.

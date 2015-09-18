@@ -1,6 +1,6 @@
 Imports System.Drawing, System.Windows.Forms
 Namespace DrawingT
-#If Config <= Release Then
+#If True
     ''' <summary>Gives access to aditional system-defined colors</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

@@ -3,7 +3,7 @@ Imports Tools.WindowsT.NativeT
 Imports System.ComponentModel
 
 Namespace WindowsT.WPF
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Provides extension methods for Windows Presentation Foundation which provide functionality based on native Win 32 API</summary>
     ''' <seealso cref="Win32Window"/>
     ''' <version version="1.5.3" stage="Nightly">This module is new in version 1.5.3</version>

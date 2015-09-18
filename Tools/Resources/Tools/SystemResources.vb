@@ -1,5 +1,5 @@
 Imports System.Reflection
-#If Config <= Release Then
+#If True
 Namespace ResourcesT
     ''' <summary>Wraps internal class of .NET Framework <see cref="T:System.SR"/></summary>
     ''' <remarks>Functionality of this class strongly relays on implementation details of .NET Framework!!!</remarks>

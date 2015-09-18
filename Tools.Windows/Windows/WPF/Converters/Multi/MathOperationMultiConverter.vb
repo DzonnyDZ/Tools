@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization, Tools.LinqT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Converter performing given arithmetical operation on collection members</summary>

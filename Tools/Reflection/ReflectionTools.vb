@@ -3,12 +3,12 @@ Imports System.Reflection
 Imports System.Linq, Tools.LinqT
 Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace ReflectionT
     'TODO: UnitTests
     ''' <summary>Various reflection tools</summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
-    ''' <version stage="Nightly" version="1.5.2">Added overloaded functions <see cref="ReflectionTools.GetOperators"/>.</version>
+    ''' <version version="1.5.2">Added overloaded functions <see cref="ReflectionTools.GetOperators"/>.</version>
     ''' <version version="1.5.2">Added <see cref="ReflectionTools.IsMemberOf"/> overloaded methods.</version>
     Public Module ReflectionTools
 #Region "Namespaces"
@@ -706,7 +706,7 @@ Namespace ReflectionT
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <returns>Array of operators of kind <paramref name="Operator"/> specified for <paramref name="Type"/>. An empty aray when no operator was found.</returns>
         ''' <remarks>This overload looks only for public operators.</remarks>
-        ''' <version stage="Nightly" version="1.5.2">Function introduced</version>
+        ''' <version version="1.5.2">Function introduced</version>
         <Extension()> Public Function GetOperators(ByVal Type As Type, ByVal [Operator] As Operators) As MethodInfo()
             If Type Is Nothing Then Throw New ArgumentNullException("Type")
             Return Type.GetOperators([Operator], BindingFlags.Public)
@@ -717,7 +717,7 @@ Namespace ReflectionT
         ''' <param name="BindingAttr">A bitmask comprised of one or more <see cref="System.Reflection.BindingFlags"/> that specify how the search is conducted. <see cref="BindingFlags.Instance"/> is ignored.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <returns>Array of operators of kind <paramref name="Operator"/> specified for <paramref name="Type"/>. An empty aray when no operator was found.</returns>
-        ''' <version stage="Nightly" version="1.5.2">Function introduced</version>
+        ''' <version version="1.5.2">Function introduced</version>
         <Extension()>
         Public Function GetOperators(ByVal Type As Type, ByVal [Operator] As Operators, ByVal BindingAttr As BindingFlags) As MethodInfo()
             If Type Is Nothing Then Throw New ArgumentNullException("Type")
@@ -732,7 +732,7 @@ Namespace ReflectionT
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <returns>Array of operators defined by <paramref name="Type"/>. An empty array when <paramref name="Type"/> defines no operaors.</returns>
         ''' <remarks>This overload looks only for public operators.</remarks>
-        ''' <version stage="Nightly" version="1.5.2">Function introduced</version>
+        ''' <version version="1.5.2">Function introduced</version>
         <Extension()> Public Function GetOperators(ByVal Type As Type) As MethodInfo()
             If Type Is Nothing Then Throw New ArgumentNullException("Type")
             Return Type.GetOperators(BindingFlags.Public)
@@ -743,7 +743,7 @@ Namespace ReflectionT
         ''' <returns>Array of operators defined by <paramref name="Type"/>. An empty array when <paramref name="Type"/> defines no operaors.</returns>
         ''' <remarks>This overload looks only for public operators.</remarks>
         ''' <param name="BindingAttr">A bitmask comprised of one or more <see cref="System.Reflection.BindingFlags"/> that specify how the search is conducted. <see cref="BindingFlags.Instance"/> is ignored.</param>
-        ''' <version stage="Nightly" version="1.5.2">Function introduced</version>
+        ''' <version version="1.5.2">Function introduced</version>
         <Extension()> Public Function GetOperators(ByVal Type As Type, ByVal BindingAttr As BindingFlags) As MethodInfo()
             If Type Is Nothing Then Throw New ArgumentNullException("Type")
             Return (From Method In Type.GetMethods((BindingFlags.Static Or BindingAttr) And Not BindingFlags.Instance) _

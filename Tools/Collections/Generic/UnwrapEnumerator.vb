@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage=Nightly
+﻿#If True
 Namespace CollectionsT.GenericT
     ''' <summary>Enumerator that unwraps its current value form furrent value of another enumerator</summary>
     ''' <typeparam name="TEnvelope">Type of item in base enumerator</typeparam>

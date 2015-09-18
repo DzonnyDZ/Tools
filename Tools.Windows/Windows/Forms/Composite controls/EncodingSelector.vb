@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms, Tools.WindowsT.FormsT.UtilitiesT, System.Text, Tools.CollectionsT.GenericT
 Imports Tools.ComponentModelT
-'#If Config <= Beta Then
+'#If True
 'Stage: Beta
 'Conditional compilation directive is commented out because its presence caused compiler warning.
 'The conditionality of compilation of this file as well as of related files (which's name starts with 'LinkLabel.') is ensured by editing the Tools.vbproj file, where this file is marked as conditionally compiled.

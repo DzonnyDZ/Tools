@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Globalization
-#If Config <= Nightly Then   'Stage: Nightly
+#If True  'Stage: Nightly
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.String"/></summary>
     ''' <author www="http://dzonny.cz">Đonny</author>

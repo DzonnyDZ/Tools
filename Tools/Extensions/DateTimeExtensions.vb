@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ExtensionsT
     ''' <summary>Provides extension methods for working with date and time values</summary>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>

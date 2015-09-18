@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel, System.Configuration, Tools.VisualBasicT
-#If Config <= RC Then 'Stage: RC
+#If True
 Namespace ComponentModelT
     ''' <summary><see cref="DescriptionAttribute"/> that takes its value from <see cref="System.Configuration.SettingsDescriptionAttribute"/></summary>
     ''' <author www="http://dzonny.cz">Đonny</author>

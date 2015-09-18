@@ -1,7 +1,7 @@
 ﻿Imports CultureInfo = System.Globalization.CultureInfo
 Imports Tools.ExtensionsT
 
-#If Config <= Nightly Then
+#If True
 Namespace ComponentModelT
     ''' <summary>For enumeration this attribute is applied onto indicates which additional values that are not member of enumeration are valid enumeration values</summary>
     ''' <remarks>This attribute can be applied multiple times

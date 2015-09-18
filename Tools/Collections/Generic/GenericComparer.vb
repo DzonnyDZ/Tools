@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stagte: Nightly
+﻿#If True
 Namespace CollectionsT.GenericT
     ''' <summary>Delegate-backed comparer</summary>
     ''' <typeparam name="T">Tpe to campare</typeparam>

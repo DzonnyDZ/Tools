@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ExtensionsT
     ''' <summary>General extension funcions</summary>
     Public Module General

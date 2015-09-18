@@ -3,7 +3,7 @@ Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModelT
 Imports Tools.WindowsT.FormsT.UtilitiesT
-#If Config <= Release Then
+#If True
 Namespace WindowsT.FormsT
     ''' <summary>Implements <see cref="ProgressBar"/> with overlay text</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

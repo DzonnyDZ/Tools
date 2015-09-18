@@ -1,5 +1,5 @@
 Imports System.ComponentModel, System.Drawing.Design, System.Windows.Forms, System.Drawing
-#If Config <= Nightly Then
+#If True
 Namespace DrawingT.DesignT
     ''' <summary><see cref="UITypeEditor"/> capable of creating new instance either from <see cref="DefaultValueAttribute"/> (preffered if available and <see cref="DefaultValueAttribute.Value"/> is not null) or by parameterless CTor</summary>
     ''' <remarks>

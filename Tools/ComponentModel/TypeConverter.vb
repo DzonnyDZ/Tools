@@ -1,5 +1,5 @@
 Imports System.ComponentModel, System.Globalization, System.Reflection
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
 Namespace ComponentModelT
     ''' <summary>Represents base class for type-safe <see cref="ComponentModel.TypeConverter"/>'s</summary>
     ''' <typeparam name="T">Type that is converted from and to other types</typeparam>

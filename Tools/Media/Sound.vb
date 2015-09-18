@@ -8,7 +8,7 @@ Imports Tools.MediaT.Sound
 
 'TODO: Test how it behaves in PropertyGrid for MessageBox
 'TODO: Verify codedom serialization behaviour
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace MediaT
     ''' <summary>Abstract class that represents short sound to be played</summary>
     ''' <remarks>This class does not provide seeking and stoping capabilities. It is intended to be used with short sounds.

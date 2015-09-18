@@ -4,7 +4,7 @@ Imports System.Runtime.InteropServices
 Imports System.Numerics
 Imports Tools.RuntimeT.CompilerServicesT
 
-#If Config <= Nightly Then   'Stage: Nightly
+#If True  'Stage: Nightly
 Namespace ExtensionsT
 
     ''' <summary>Contains extension methods usefull for string parsing</summary>

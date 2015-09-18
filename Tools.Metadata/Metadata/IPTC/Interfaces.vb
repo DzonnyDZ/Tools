@@ -1,5 +1,5 @@
 Namespace MetadataT.IptcT
-#If Config <= Beta Then 'Stage: Beta
+#If True
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
     ''' <seealso cref="iiptcwriter"/><seealso cref="ExifT.iexifgetter"/>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

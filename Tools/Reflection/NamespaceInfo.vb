@@ -3,7 +3,7 @@ Imports System.Reflection
 Imports System.Linq, Tools.LinqT
 Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace ReflectionT
 
     ''' <summary>Represents reflection namespace</summary>

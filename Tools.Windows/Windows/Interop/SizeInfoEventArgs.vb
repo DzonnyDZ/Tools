@@ -1,10 +1,10 @@
 ﻿Imports System.Windows, Tools.ExtensionsT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.InteropT
     ''' <summary>Wraps <see cref="SizeChangedInfo"/> as clas derived from <see cref="EventArgs"/></summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
-    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.2">Class introduced</version>
     Public NotInheritable Class SizeChangedInfoEventArgs
         Inherits EventArgs
         Implements IEquatable(Of SizeChangedInfo), IEquatable(Of SizeChangedInfoEventArgs), IEquatable(Of SizeChangedEventArgs)

@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel, Tools.ExtensionsT
 Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace API.Messages
     ''' <summary>The WindowProc function is an application-defined function that processes messages sent to a window. The WNDPROC type defines a pointer to this callback function. WindowProc is a placeholder for the application-defined function name.</summary>
     ''' <param name="hWnd">Handle to the window.</param>

@@ -3,7 +3,7 @@ Imports Tools.ReflectionT, Tools.ExtensionsT
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 ''' <author www="http://dzonny.cz">Đonny</author>
 ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 Public Module TypeTools
@@ -318,7 +318,7 @@ Public Module TypeTools
     ''' <returns><see cref="Reflection.ConstructorInfo"/> refresenting default CTor of type <paramref name="Type"/>. Null if there is no default (parameter-less) CTor</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
     ''' <seealso cref="HasDefaultCTor"/>
-    ''' <version stage="Nightly" version="1.5.2">Fixed: Always returns null due to <paramref name="Attributes"/> being and-ed with <see cref="Reflection.BindingFlags.Instance"/> instead of or-ed</version>
+    ''' <version version="1.5.2">Fixed: Always returns null due to <paramref name="Attributes"/> being and-ed with <see cref="Reflection.BindingFlags.Instance"/> instead of or-ed</version>
     ''' <version version="1.5.4">Parameters renamed to camelCase</version>
     <Extension()> _
     Public Function GetDefaltCTor(ByVal type As Type, Optional ByVal attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Reflection.ConstructorInfo

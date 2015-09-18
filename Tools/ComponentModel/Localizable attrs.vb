@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-#If Config <= RC Then 'Stage: RC
+#If True
 Namespace ComponentModelT
     ''' <summary>Localizable version of <see cref="DescriptionAttribute"/>. Defines description shown in <see cref="System.Windows.Forms.PropertyGrid"/>.</summary>
     ''' <remarks>Localizable means that value can be loaded from resources or any Public Static (Shared in Visual Basic) property.

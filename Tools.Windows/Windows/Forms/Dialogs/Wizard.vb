@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Windows.Forms
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.FormsT
     ''' <summary>Wizard form</summary>
     ''' <remarks>Typically you implement wizard steps as <see cref="Control">Controls</see> which implements <see cref="IWizardControl"/>.

@@ -1,5 +1,5 @@
 ﻿Namespace MetadataT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Descripbes a metadata property</summary>
     ''' <typeparam name="TOwner">Type of <see cref="IMetadata"/> that constructed type provides metadata for</typeparam>
     ''' <remarks>This is a helper class used internally by some simplier <see cref="IMetadata"/> implementations</remarks>

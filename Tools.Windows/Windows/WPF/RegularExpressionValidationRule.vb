@@ -2,7 +2,7 @@
 Imports System.Text.RegularExpressions
 
 Namespace WindowsT.WPF
-#If Config <= Nightly Then
+#If True
     ''' <summary>A <see cref="System.Windows.Controls.ValidationRule"/>-derived class which supports the use of regular expressions for validation.</summary>
     ''' <remarks><a href="http://www.codeproject.com/KB/WPF/RegexValidationInWPF.aspx">http://www.codeproject.com/KB/WPF/RegexValidationInWPF.aspx</a></remarks>
     ''' <author www="http://www.codeproject.com/Members/Josh-Smith">Josh Smith</author>

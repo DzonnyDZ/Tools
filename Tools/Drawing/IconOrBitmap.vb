@@ -1,5 +1,5 @@
 ﻿Imports System.Drawing, Tools.DataStructuresT.GenericT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace DrawingT
     ''' <summary>Represents bitmap stored either as <see cref="Image"/> or as <see cref="Icon"/></summary>
     ''' <remarks>Each instance of <see cref="IconOrBitmap"/> can be converted to <see cref="Image"/> and <see cref="Icon"/></remarks>

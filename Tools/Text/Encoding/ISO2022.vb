@@ -4,7 +4,7 @@ Imports System.Runtime.InteropServices
 Imports Encoding = System.Text.Encoding, StringBuider = System.Text.StringBuilder
 Imports RegexOptions = System.Text.RegularExpressions.RegexOptions
 'TODO:Test
-'#If Config <= Nightly Then set in project file
+'#If Trueset in project file
 'Stage=Nightly
 Namespace TextT.EncodingT
     ''' <summary>Provides runtime access to list of text encodings registered by ISO-IR 2022 (also known as ISO/IEC 2022 or ECMA-35)</summary>

@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-#If Config <= Nightly Then
+#If True
 'ASAP: WiKi, 
 Namespace ComponentModelT
     ''' <summary>Provides abstract base class for custom type descriptors</summary>

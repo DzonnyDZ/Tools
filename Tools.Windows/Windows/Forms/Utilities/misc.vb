@@ -2,7 +2,7 @@ Imports System.Windows.Forms
 Imports System.Runtime.CompilerServices
 
 Namespace WindowsT.FormsT.UtilitiesT
-#If Config <= Nightly Then
+#If True
     'ASAP:Amrk,Forum,WiKi
     ''' <summary>Staes of controls</summary>
     Public Enum ControlState

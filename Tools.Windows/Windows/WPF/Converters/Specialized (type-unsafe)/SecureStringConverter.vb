@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary><see cref="IValueConverter"/> which performs conversion between <see cref="String"/> and <see cref="SecureString"/></summary>
     ''' <remarks>Converting <see cref="SecureString"/> to plain <see cref="String"/> causes string data to be stored plain in memory which can be security risk.</remarks>

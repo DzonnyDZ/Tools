@@ -3,7 +3,7 @@ Imports Tools.ComponentModelT
 Imports Tools.WindowsT.IndependentT
 Imports Tools.ThreadingT
 
-'#If Config <= Nightly Then Set in project file
+'#If TrueSet in project file
 'Stage: Nightly
 Namespace WindowsT.FormsT
     ''' <summary>This <see cref="Form"/> serves as predefined progress monitor with <see cref="ProgressBar"/> for <see cref="BackgroundWorker"/></summary>

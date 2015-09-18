@@ -1,6 +1,6 @@
 Imports System.Windows.Forms, System.ComponentModel, System.Text
 Imports Tools.ComponentModelT, Tools.WindowsT.FormsT.UtilitiesT
-'#If Config <= Nightly Then
+'#If True
 'Stage: Nightly
 'Conditional compilation directive is commented out because its presence caused compiler warning.
 'The conditionality of compilation of this file as well as of related files (which's name starts with 'LinkLabel.') is ensured by editing the Tools.vbproj file, where this file is marked as conditionally compiled.

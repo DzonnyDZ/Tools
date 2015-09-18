@@ -1,7 +1,7 @@
 Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If Config <= Alpha Then 'Stage: Aplha
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that can convert between <see cref="HorizontalAlignment"/> and <see cref="VerticalAlignment"/></summary>
     ''' <remarks>Conversion can be done in both was equivalently.</remarks>

@@ -1,7 +1,7 @@
 Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If Config <= Alpha Then 'Stage: Aplha
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that returns given value of it is of type of converter; otherwise returns null</summary>
     ''' <typeparam name="T">Type of value to return</typeparam>

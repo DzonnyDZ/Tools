@@ -7,7 +7,7 @@ Imports System.Xaml, Tools.ExtensionsT
 Imports System.Windows.Controls
 Imports Tools.LinqT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF
     ''' <summary>Contains varios extenstion functions related to Windows Presentation Foundation</summary>
     ''' <version version="1.5.2">Module introduced</version>
@@ -36,7 +36,7 @@ Namespace WindowsT.WPF
         ''' <returns>Nearest ancestor of <paramref name="obj"/> which of type <typeparamref name="TParent"/>; null when such ancestor cannot be found.</returns>
         ''' <remarks>This function uses <see cref="GetVisualParent"/> to get parents of investigated <see cref="DependencyObject">DependencyObjects</see>.</remarks>
         ''' <seelaso cref="GetVisualParent"/>
-        ''' <version stage="Nightly" version="1.5.3">This function is new in version 1.5.3</version> 
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version> 
         <Extension()> Public Function GetVisualAncestor(Of TParent As DependencyObject)(ByVal obj As DependencyObject) As TParent
             Dim p As DependencyObject = obj.GetVisualParent
             Do
@@ -54,7 +54,7 @@ Namespace WindowsT.WPF
         ''' <param name="Window">Window to be shown</param>
         ''' <param name="Owner">Owner <see cref="Window"/> or element in <see cref="Window"/> to show <paramref name="Window"/> modally against.</param>
         ''' <remarks>If <paramref name="Owner"/> is null or <paramref name="Owner"/> is not of type <see cref="Window"/> and function <see cref="GetVisualParent(Of Window)"/> cannot find parent <see cref="Window"/> of <paramref name="Owner"/>, <paramref name="Owner"/> is ignored and original <see cref="Window.Owner"/> is kept.</remarks>
-        ''' <version stage="Nightly" version="1.5.3">This function is new in version 1.5.3</version> 
+        ''' <version version="1.5.3">This function is new in version 1.5.3</version> 
         <Extension()> Public Function ShowDialog(ByVal Window As Window, ByVal Owner As UIElement) As Boolean?
             If Window Is Nothing Then Throw New ArgumentNullException("Window")
             If Owner IsNot Nothing Then

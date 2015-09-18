@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModelT, Tools.VisualBasicT, Tools.ExtensionsT
 Imports System.Collections.Specialized
 
-#If Config <= Release Then
+#If True
 Namespace CollectionsT.GenericT
     ''' <summary>Common non-generic base class for all instance of <see cref="ListWithEvents(Of T)"/></summary>
     ''' <remarks>This class is not intended to be inherited by anything else than <see cref="ListWithEvents(Of T)"/>.

@@ -1,5 +1,5 @@
 Namespace MetadataT.ExifT
-#If Config <= Beta Then 'Stage: Beta
+#If True
     ''' <summary>Represents provider that provides stream of Exif data</summary>
     ''' <seealso cref="IExifWriter"/><seealso cref="IptcT.iiptcgetter"/>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

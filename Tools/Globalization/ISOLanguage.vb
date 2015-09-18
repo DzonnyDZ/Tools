@@ -1,6 +1,6 @@
 Imports System.ComponentModel
 Namespace GlobalizationT
-#If Config <= Beta Then 'Stage: Beta
+#If True
     ''' <summary>Represents language represented by ISO 639 language code and provides list of all defined ISO 639-1 and ISO 639-2 language codes</summary>
     ''' <completionlist cref="ISOLanguage"/>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

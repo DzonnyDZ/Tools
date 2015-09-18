@@ -15,7 +15,7 @@ Imports CultureInfo = System.Globalization.CultureInfo
 Imports NumberStyles = System.Globalization.NumberStyles
 Imports DateTimeStyles = System.Globalization.DateTimeStyles
 
-'#If Config <= Nightly Then 'Stage of this file set in Tools.vbproj
+'#If True
 'Stage:Nightly
 Namespace CodeDomT
     ''' <summary>Contains methods for converting various elements form the http://dzonny.cz/xml/schemas/CodeDom XML namespace to objects from <see cref="CodeDom"/> namespace.</summary>

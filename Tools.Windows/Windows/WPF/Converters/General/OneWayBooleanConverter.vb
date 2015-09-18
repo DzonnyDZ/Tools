@@ -2,7 +2,7 @@
 Imports System.Globalization, System.Windows
 
 Namespace WindowsT.WPF.ConvertersT
-#If Config <= Nightly Then 'Stage:Nigtly
+#If True
     'TODO: Derive other boolean converters from this one
 
     ''' <summary>Commmon abstract base class for value one-way converters converting something to boolean</summary>

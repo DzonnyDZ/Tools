@@ -2,7 +2,7 @@
 Imports System.ComponentModel, System.ComponentModel.Design.Serialization
 Imports System.Reflection, Tools.ExtensionsT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>Implements markup extension to access static properties and fields and their members</summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>

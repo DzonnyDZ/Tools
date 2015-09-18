@@ -2,7 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports Tools.NumericsT
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with numbers of basic data types</summary>
     ''' <author www="http://dzonny.cz">Đonny</author>

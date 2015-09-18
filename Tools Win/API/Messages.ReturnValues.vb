@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel, Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace API.Messages.ReturnValues
     ''' <summary>Return values used by the <see cref="WindowMessages.WM_COMPAREITEM"/> message</summary>
     Public Enum WM_COMPAREITEM As Integer

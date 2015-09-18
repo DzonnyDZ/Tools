@@ -1,4 +1,4 @@
-#If Config <= RC Then
+#If True
 Namespace DiagnosticsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmImageVisualizer

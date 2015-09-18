@@ -1,6 +1,6 @@
 ﻿Imports System.Reflection, Tools.ExtensionsT, System.Linq, Tools.ReflectionT
 Imports RegexOptions = System.Text.RegularExpressions.RegexOptions
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace TestsT
     ''' <summary>Allows to check if varios items of compiled code are CLS compliant</summary>
     ''' <remarks><see cref="CLSComplianceChecker"/> does not check following CLS rules:

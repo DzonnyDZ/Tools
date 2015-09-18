@@ -4,7 +4,7 @@ Imports System.Security
 Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that passes value to <see cref="String.Format"/></summary>
     ''' <remarks>This is one-wy converter</remarks>

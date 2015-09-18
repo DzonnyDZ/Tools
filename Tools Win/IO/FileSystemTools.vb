@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text, System.Linq
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace IOt
     ''' <summary>Contains file system-related methods and extension methods</summary>
     ''' <version version="1.5.2">Renamed from FileTystemTools to FileSystemTools</version>

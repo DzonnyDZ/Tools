@@ -1,6 +1,6 @@
 ﻿Imports Tools.ComponentModelT, System.ComponentModel, Tools.ResourcesT
 Namespace ComponentModelT
-    '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
+    '#If TrueStage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Test form for <see cref="SettingsInheritDescriptionAttribute"/> and <see cref="SettingsInheritDefaultValueAttribute"/></summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Friend Class frmSettingsAttributes : Inherits Form

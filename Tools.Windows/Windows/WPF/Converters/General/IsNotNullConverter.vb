@@ -1,7 +1,7 @@
 Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If Config <= Alpha Then 'Stage: Aplha
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Onew-way converter that can indicate if value is not null</summary>
     ''' <remarks>Converts null to false and non-null to true</remarks>

@@ -10,7 +10,7 @@ Imports Tools.DrawingT
 Imports CultureInfo = System.Globalization.CultureInfo
 Imports NumberStyles = System.Globalization.NumberStyles
 
-#If Config <= Beta Then 'Stage Beta
+#If True
 Imports System.Windows.Forms
 
 Namespace WindowsT.IndependentT

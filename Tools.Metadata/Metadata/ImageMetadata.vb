@@ -1,7 +1,7 @@
 ﻿Imports Tools.ExtensionsT, System.Linq
 Imports Tools.ComponentModelT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 
 Imports IntDescriptor = Tools.MetadataT.MetadataPropertyDescriptor(Of Tools.MetadataT.ImageMetadata, Integer)
 Imports SngDescriptor = Tools.MetadataT.MetadataPropertyDescriptor(Of Tools.MetadataT.ImageMetadata, Single)

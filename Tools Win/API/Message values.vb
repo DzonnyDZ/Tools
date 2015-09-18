@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel, Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace API.Messages
     ''' <summary>Window messages</summary>
     ''' <version version="1.5.3">Added TCM_... (Tab control) and CCM_... (commmon control) messages</version>

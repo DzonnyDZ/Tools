@@ -1,7 +1,7 @@
 ﻿Imports Tools.ComponentModelT, System.Linq
 Imports Tools.DataStructuresT.GenericT
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace CollectionsT.GenericT
     ''' <summary>Indicates, which priority is poped first from the front</summary>
     ''' <version version="1.5.2" stage="Nightly">Enumeration introduced</version>

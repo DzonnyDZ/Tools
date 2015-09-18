@@ -1,5 +1,5 @@
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then
+#If True
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class TextBoxWithStatus
         Inherits System.Windows.Forms.UserControl

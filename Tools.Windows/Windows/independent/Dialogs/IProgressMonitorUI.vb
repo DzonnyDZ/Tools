@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.IndependentT
     ''' <summary>Represents progress monitor dialog with progress description, progress bar and cancel button</summary>
     ''' <remarks>For details how background process can report it's state see <see cref="IProgressMonitorUI.BackgroundWorker"/> property</remarks>

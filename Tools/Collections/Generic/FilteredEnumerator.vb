@@ -1,5 +1,5 @@
 ﻿Namespace CollectionsT.GenericT
-#If Config <= Nightly Then 'Stage nightly
+#If True
     'ASAP: Forum, Mark , Wiki
 
     ''' <summary>Filterg given <see cref="IEnumerator(Of T)"/> with given <see cref="Predicate(Of T)"/></summary>

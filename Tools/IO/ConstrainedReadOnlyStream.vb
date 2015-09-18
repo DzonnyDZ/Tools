@@ -1,5 +1,5 @@
 Namespace IOt
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
     ''' <summary>Implements stream that reads only part of base stream</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

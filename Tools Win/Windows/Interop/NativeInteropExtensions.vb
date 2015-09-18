@@ -3,7 +3,7 @@ Imports System.Windows.Media.Imaging
 Imports System.Windows
 
 Namespace WindowsT.InteropT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Provides extension functions for interoperability between Windows Forms and WPF. Functions provided by this module are dependend on Windows API calls and thus are not portable.</summary>
     ''' <seealso cref="T:Tools.WindowsT.InteropT.InteropExtensions"/>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>

@@ -1,6 +1,6 @@
 Imports System.IO, Tools.IOt, Tools.MetadataT
 Namespace DrawingT.DrawingIOt.JPEG
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     ''' <remarks>
     ''' This <see cref="IMetadataProvider"/> provides Exif (<see cref="ExifT.Exif"/>), IPTC (<see cref="IptcT.Iptc"/>), image (<see cref="ImageMetadata"/>) and system (<see cref="SystemMetadata"/>) metadata.

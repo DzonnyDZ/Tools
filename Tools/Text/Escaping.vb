@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Web
 
 Namespace TextT
-#If Config <= Nightly Then
+#If True
     ''' <summary>Contains various methods for string escaping</summary>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>
     ''' <version version="1.5.4">Changed namespace from <c>Text</c> to <see cref="TextT"/>.</version>

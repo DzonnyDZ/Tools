@@ -4,7 +4,7 @@ Imports System.Windows
 Imports System.Runtime.InteropServices
 Imports System.Windows.Interop
 
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
 Namespace WindowsT.InteropT
     ''' <summary>Contains extension methods for WPF - WinForms interoperability</summary>
     ''' <seealso cref="T:Tools.Tools.WindowsT.InteropT.NativeInteropExtensions"/>

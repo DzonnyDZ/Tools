@@ -6,7 +6,7 @@
     ''' because properties shouldn't be decorated with AuthorAttribute and VersionAttribute, it is not necessary to use these attribute here
     ''' </remarks>
     Public Module Resources
-#If Config <= Release Then
+#If True
         ''' <summary>Icon representing ĐTools project</summary>
         ''' <remarks>The 'Đ' letter</remarks>
         Public ReadOnly Property ToolsIcon() As System.Drawing.Icon

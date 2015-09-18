@@ -1,6 +1,6 @@
 Imports ex = Tools.MetadataT.ExifT, Tools.IOt.StreamTools
 Namespace DrawingT.DrawingIOt
-    '#If Config <= Nightly Then Stage co      nditional compilation of this file is set in Tests.vbproj
+    '#If TrueStage co      nditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="Tools.DrawingT.DrawingIOt.JPEG"/></summary>
     Public Class frmJPEG
         ''' <summary>Collors form Exif map</summary>

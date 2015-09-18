@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Forms, System.ComponentModel
 Imports Tools.ComponentModelT
 
-#If Config <= Release Then
+#If True
 Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Implements the manual sorting of items in <see cref="ListView"/> by columns.</summary>
     ''' <remarks>

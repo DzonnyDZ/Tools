@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage:Nightly
+﻿#If True
 Imports Kinds = Tools.MetadataT.ExifT.ExifReader.ReaderItemKinds
 Namespace MetadataT.ExifT
     ''' <summary>Generates map of Exif metadata in order to get known which areas can be safely overwritten without loss of unknown data (maker notes, unknown sub-ifds etc.)</summary>

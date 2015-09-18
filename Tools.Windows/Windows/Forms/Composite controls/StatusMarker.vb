@@ -1,7 +1,7 @@
 Imports System.Windows.Forms
 Imports Tools.ComponentModelT
 'Extracted
-'#If Config <= Nightly Then set in Tools.vbproj
+'#If Trueset in Tools.vbproj
 'Stage: Nightly
 Namespace WindowsT.FormsT
     ''' <summary>Marks state of data item</summary>

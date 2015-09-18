@@ -1,4 +1,4 @@
-'#If Config <= RC Then Stage is set in vbproj
+'#If TrueStage is set in vbproj
 Imports Tools.MathT
 ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.LinkLabel"/></summary>
 Friend Class frmLEBE

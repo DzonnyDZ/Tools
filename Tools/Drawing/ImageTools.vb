@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
 Namespace DrawingT
     'ASAP: Mark, WiKi, COmment, Forum
     ''' <summary>Contains extension methods for working with images</summary>

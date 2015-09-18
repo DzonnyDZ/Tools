@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace API.Public
     ''' <summary>Predefined window longs for <see cref="WindowsT.NativeT.Win32Window.WindowLong"/></summary>
     Public Enum WindowLongs As Int32

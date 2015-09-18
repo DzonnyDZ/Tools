@@ -1,7 +1,7 @@
 ﻿Imports Tools.WindowsT.WPF.ConvertersT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.InteropT
     ''' <summary>Converter that converts any value of type <see cref="System.Windows.Forms.Control"/> to <see cref="System.Windows.Visibility.Visible"/> and any other to <see cref="System.Windows.Visibility.Hidden"/></summary>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>

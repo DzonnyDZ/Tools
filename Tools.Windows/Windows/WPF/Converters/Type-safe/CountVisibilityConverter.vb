@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If Config <= Alpha Then 'Stage: Aplha
+#If True
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Converter that converts count of items to <see cref="Visibility"/>. Zero to <see cref="Visibility.Collapsed"/> anything else to <see cref="Visibility.Visible"/>.</summary>

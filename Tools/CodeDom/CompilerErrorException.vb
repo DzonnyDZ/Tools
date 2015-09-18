@@ -1,7 +1,7 @@
 ﻿Imports System.CodeDom.Compiler
 Imports System.Linq
 Imports Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace CodeDomT.CompilerT
     ''' <summary>An exception thrown when compilation error occurs</summary>
     Public Class CompilerErrorException

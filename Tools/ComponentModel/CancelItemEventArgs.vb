@@ -1,8 +1,8 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If True
 Namespace ComponentModelT
     ''' <summary>Cancelable event argumens carrying item</summary>
     ''' <typeparam name="T">Item being carried</typeparam>
-    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.2">Class introduced</version>
     Public Class CancelItemEventArgs(Of T)
         Inherits CancelEventArgs
         ''' <summary>Contains value of the <see cref="Item"/> property</summary>

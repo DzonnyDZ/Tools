@@ -1,7 +1,7 @@
 Imports Tools.API
 Imports System.ComponentModel
 Imports Tools.ComponentModelt, Tools.Windowst.Formst.Utilitiest
-#If Config <= RC Then 'Stage: RC
+#If True
 Namespace WindowsT.FormsT
     ''' <summary><see cref="System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>

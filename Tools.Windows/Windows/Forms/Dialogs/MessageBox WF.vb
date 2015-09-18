@@ -3,7 +3,7 @@ Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
 Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 Imports Tools.WindowsT.InteropT.InteropExtensions
-'#If Config <= Beta Then 'Set in project file
+'#If True
 'Stage:Beta
 Namespace WindowsT.FormsT
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>

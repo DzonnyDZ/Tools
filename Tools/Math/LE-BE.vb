@@ -1,6 +1,6 @@
 Imports Tools.ExtensionsT
 'LE-BE (endians) conversions
-#If Config <= RC Then 'Stage: RC
+#If True
 Partial Class MathT
     ''' <summary>Converts <see cref="Short"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>

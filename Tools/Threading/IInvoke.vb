@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices, System.Reflection
 Namespace ThreadingT
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
     ''' <summary>Represents an object which is tied to a thread and can invoke methods in context of that thread</summary>
     ''' <remarks>Main purpose of this interface is to provide type-safe call of <see cref="IInvoke.Invoke"/> methods using <see cref="IInvokeExtensions"/>.</remarks>
     ''' <seelaso cref="IInvokeExtensions"/>

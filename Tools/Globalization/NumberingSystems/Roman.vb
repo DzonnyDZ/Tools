@@ -1,5 +1,5 @@
 ﻿Imports Tools.ExtensionsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 Namespace GlobalizationT.NumberingSystemsT
     ''' <summary>Roman numbering system defines uppercase and lowercase roman numerals like I, X, L, C, D, M or i, x, l, c, d, m</summary>
     ''' <remarks>This roman numeral system follows rules stated at <a href="http://en.wikipedia.org/wiki/Roman_numerals#XCIX_vs._IC">Wikipedia</a> stating that shortcut numbers like IC (instead of XCIX) etc. are not allowed. This implementation neither produce such numbers nor can parse them.</remarks>

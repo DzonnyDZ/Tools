@@ -5,7 +5,7 @@ Imports System.Web
 Imports Tools.TextT
 
 Namespace ExtensionsT
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
     ''' <summary>Provides string formatting</summary>
     ''' <remarks>Formatting rules:
     ''' <para>If C#-like backslash (\) escape sequences are allowed formating combines C#-like string escaping and formatting used by <see cref="[String].Format"/>.</para>

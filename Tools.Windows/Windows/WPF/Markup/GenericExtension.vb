@@ -1,11 +1,11 @@
 ﻿Imports System.Windows, Tools.ExtensionsT
 Imports System.Windows.Markup
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>Markup extension that can create instance of generic type</summary>
     ''' <author www="http://blogs.msdn.com/mikehillberg/archive/2006/10/06/LimitedGenericsSupportInXaml.aspx">Mike Hillberg</author>
-    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.2">Class introduced</version>
     <ContentPropertyAttribute("TypeArguments"), MarkupExtensionReturnType(GetType(Object))> _
     Public Class GenericExtension : Inherits MarkupExtension
         ''' <summary>Contains value of the <see cref="TypeArguments"/> proeprty</summary>

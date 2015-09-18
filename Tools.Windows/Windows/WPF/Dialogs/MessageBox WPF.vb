@@ -4,7 +4,7 @@ Imports Tools.WindowsT.WPF.ConvertersT, Tools.WindowsT.IndependentT
 Imports Tools.ComponentModelT, Tools.ExtensionsT
 Imports System.Windows.Input
 
-#If Config <= Beta Then  'Stage: Beta
+#If True 'Stage: Beta
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Control that implements WPF <see cref="MessageBox"/></summary>
     ''' <remarks>This control is not intended to be used separately, to be placed on yopur window. This control implements WPF <see cref="MessageBox"/> and can be styled/templated.

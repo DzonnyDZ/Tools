@@ -1,7 +1,7 @@
 Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If Config <= Alpha Then 'Stage: Aplha
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>One way converter: Converts null to <see cref="System.Windows.Visibility.Collapsed"/> and non-null to <see cref="System.Windows.Visibility.Visible"/></summary>
     ''' <version stage="Alpha" version="1.5.2">Class introduced</version>

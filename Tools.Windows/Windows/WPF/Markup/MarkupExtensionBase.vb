@@ -3,11 +3,11 @@ Imports System.Windows.Markup
 Imports System.Xaml
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>Base class for implementations of <see cref="MarkupExtension"/> which makes it easier to implement <see cref="MarkupExtension"/> by providing easier access to some commonly required services.</summary>
     ''' <seelaso cref="MarkupExtension"/><seelaso cref="XamlServiceProvider"/>
-    ''' <version stage="Nightly" version="1.5.3">This class is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This class is new in version 1.5.3</version>
     Public MustInherit Class MarkupExtensionBase
         Inherits MarkupExtension
         ''' <summary>Returns an object that is set as the value of the target property for this markup extension. </summary>

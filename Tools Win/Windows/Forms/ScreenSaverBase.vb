@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 '#If Framework >= 3.5 Then
 Namespace WindowsT.FormsT
     'ASAP:  Wiki, 

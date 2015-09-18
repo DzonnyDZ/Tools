@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT
 
 Namespace WindowsT.WPF.ConvertersT
-#If Config <= Nightly Then 'Stage:Nigtly
+#If True
 
 
     ''' <summary>Converter that test if value being converter equals to parameter</summary>

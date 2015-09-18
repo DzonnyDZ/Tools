@@ -10,7 +10,7 @@ Imports System.Xml.Linq
 Imports System.Windows.Markup
 Imports Tools.WindowsT.WPF.MarkupT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Value converter which applies XPath query on binding result.</summary>
@@ -95,7 +95,7 @@ Namespace WindowsT.WPF.ConvertersT
     End Class
 
     ''' <summary>Markup extension provides an instnce of the <see cref="XPathConverter"/> value converter. Resulting converter is aware of all XML namespace registrations in context.</summary>
-    ''' <version stage="Nightly" version="1.5.3">This class is new in version 1.5.3</version>
+    ''' <version version="1.5.3">This class is new in version 1.5.3</version>
     <MarkupExtensionReturnType(GetType(XPathConverter))>
     Public Class XPathConverterExtension
         Inherits MarkupExtensionBase

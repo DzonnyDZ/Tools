@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel, Tools.ExtensionsT
 Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace API.Messages.Notifications
     ''' <summary>Contains information about a notification message.</summary>
     ''' <remarks>You can use the <see cref="WindowsT.NativeT.Win32Window.SendNotification"/> function to send a notification without dealing with structure marshaling.</remarks>

@@ -1,8 +1,8 @@
 ﻿Imports Tools.LinqT, System.Linq
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace ComponentModelT
     ''' <summary>Exception throw when multiple exceptions occured</summary>
-    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    ''' <version version="1.5.2">Class introduced</version>
     Public Class MultipleException
         Inherits Exception : Implements IEnumerable(Of Exception)
         ''' <summary>CTor</summary>

@@ -1,6 +1,6 @@
 Imports System.IO
 Namespace MetadataT.IptcT
-#If Config <= Alpha Then 'Stage: Alpha
+#If True
     ''' <summary>Provides low level access to stream of IPTC data</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

@@ -1,6 +1,6 @@
 Imports Tools.ResourcesT
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace ComponentModelT
     ''' <summary><see cref="CategoryAttribute"/> which's value is one of known values</summary>
     ''' <author www="http://dzonny.cz">Ðonny</author>

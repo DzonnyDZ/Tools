@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports CultureInfo = System.Globalization.CultureInfo
 Imports UnicodeCategory = System.Globalization.UnicodeCategory
 
-#If Config <= RC Then 'Stage: RC
+#If True
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.Char"/></summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>

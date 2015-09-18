@@ -1,4 +1,4 @@
-﻿#If Config <= RC Then 'Stage: RC
+﻿#If True
 Namespace CollectionsT.GenericT
     'HashTable(Of TKey, TValue) cancele due to being duplicate of Dictionary(Of TKey, TValue)
     '    ''' <summary>type-safe class defived from <see cref="System.Collections.Hashtable"/></summary>

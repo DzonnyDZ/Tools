@@ -1,6 +1,6 @@
 ﻿Imports Tools.WindowsT.FormsT
 Namespace WindowsT.FormsT
-    '#If Config <= Beta Then Stage conditional compilation of this file is set in Tests.vbproj
+    '#If TrueStage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Test from for <see cref="EncodingSelector"/></summary>
     Friend Class frmEncodingSelector
         ''' <summary>Show test form</summary>

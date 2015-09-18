@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then  'Stage: Nightly
+﻿#If True 'Stage: Nightly
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Window that impements WPF message box</summary>
     ''' <version version="1.5.3." stage="Nightly">Added ability to copy all text of message box using Ctrl+C</version>

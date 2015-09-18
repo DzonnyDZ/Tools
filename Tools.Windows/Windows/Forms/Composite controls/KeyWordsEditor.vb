@@ -6,7 +6,7 @@ Imports System.Xml.Linq, Tools.LinqT
 Imports Tools.DataStructuresT.GenericT
 
 Namespace WindowsT.FormsT
-    '#If Config <= Alpha Then set in tools.vbproj
+    '#If Trueset in tools.vbproj
     'Stage: Alpha
     'ASAP:Bitmap
     ''' <summary>Control that allows eas and very sophisticated editing of set of keywords</summary>

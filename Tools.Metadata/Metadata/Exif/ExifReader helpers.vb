@@ -1,5 +1,5 @@
 ﻿Imports System.IO
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace MetadataT.ExifT
     Partial Class ExifReader
         ''' <summary>Arguments of event which occures during Exif metedata reading</summary>

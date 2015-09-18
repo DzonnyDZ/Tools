@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModelT, Tools.VisualBasicT
-#If Config <= Nightly Then
+#If True
 Namespace CollectionsT.GenericT
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="TValue">Type of items to be stored in the list</typeparam>

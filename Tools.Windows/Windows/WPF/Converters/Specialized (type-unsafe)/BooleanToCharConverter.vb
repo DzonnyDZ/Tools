@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If Config <= Nightly Then 'Stage: Nightly
+#If True
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter to convert <see cref="Boolean"/> values to <see cref="Char"/>. It also supports null values instead of booleand and <see cref="String"/> isntead of <see cref="Char"/>.</summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>

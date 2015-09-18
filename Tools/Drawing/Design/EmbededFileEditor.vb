@@ -1,5 +1,5 @@
 Imports System.ComponentModel, System.Drawing.Design, System.Windows.Forms, System.Drawing
-#If Config <= Nightly Then
+#If True
 Namespace DrawingT.DesignT
     ''' <summary><see cref="UITypeEditor"/> of <see cref="Byte()"/> capable to save bytes info file and load them from it</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

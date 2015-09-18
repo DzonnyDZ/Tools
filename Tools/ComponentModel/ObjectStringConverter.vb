@@ -1,4 +1,4 @@
-﻿#If Config <= Release Then
+﻿#If True
 Namespace ComponentModelT
     ''' <summary>Allows editing <see cref="Object"/> as <see cref="String"/> in <see cref="System.Windows.Forms.PropertyGrid"/></summary>
     ''' <author www="http://dzonny.cz">Đonny</author>

@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then 'Stage: Nighly
+#If True
 Namespace GlobalizationT
     ''' <summary>Bsae class for numbering systems</summary>
     ''' <version version="1.5.2">Class introduced</version>

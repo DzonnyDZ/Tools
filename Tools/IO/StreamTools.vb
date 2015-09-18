@@ -1,7 +1,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then
+#If True
 Namespace IOt
     ''' <summary>Tools related to IO <see cref="System.IO.Stream"/>s</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
-#If Config <= Nightly Then 'Stage:Nightly
+#If True
 ''' <summary>Contains native methods used by Visual-Studio-related tools</summary>
 Public Module NativeMethods
     ''' <summary>In case HRESULT represents error throws an exception</summary>

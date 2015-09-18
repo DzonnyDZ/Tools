@@ -1,4 +1,4 @@
-﻿'#If Config <= Nightly Then 'Set in project file
+﻿'#If True
 Imports Tools.WindowsT, Tools.WindowsT.InteropT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 Imports fMsg = Tools.WindowsT.FormsT.MessageBox
