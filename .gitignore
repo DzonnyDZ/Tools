@@ -1,0 +1,14 @@
+.vs
+
+.svn
+
+*.user
+
+obj
+bin
+*.suo
+ipch
+/Tools.Hardcore/Debug
+~$*.xlsx
+/Tools.sdf
+/UpgradeLog.htm
