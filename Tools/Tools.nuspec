@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
-        <id>Tools.Runtime.CompilerServices</id>
+        <id>Tools.Main</id>
         <version>$version$</version>
-        <title>Tools.Runtime.CompilerServices</title>
+        <title>Tools</title>
         <authors>$author$</authors>
         <owners>$author$</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,6 +12,11 @@
         <iconUrl>http://download-codeplex.sec.s-msft.com/Download?ProjectName=tools&amp;DownloadId=8144&amp;Build=21031</iconUrl>
         <licenseUrl>https://raw.githubusercontent.com/DzonnyDZ/Tools/master/License.txt</licenseUrl>
         <projectUrl>https://github.com/DzonnyDZ/Tools</projectUrl>
-        <tags>postprocessing binary-rewrite rewrite attribute</tags>
+        <tags>tools XML Extension CodeDOM LINQ Math IO Globalization Numerics Formatting Cryptography Text Reflection XPath Collections</tags>
     </metadata>
+    <files>
+        <file src="$BinDir$cs\Tools.resources.dll" target="lib\net46\cs\Tools.resources.dll"/>
+        <file src="$BinDir$de\Tools.resources.dll" target="lib\net46\de\Tools.resources.dll"/>
+        <file src="$BinDir$el\Tools.resources.dll" target="lib\net46\el\Tools.resources.dll"/>
+    </files>
 </package>

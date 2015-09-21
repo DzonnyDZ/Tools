@@ -260,10 +260,6 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Tools.SqlServer", "Tools.SqlServer\Tools.SqlServer.sqlproj", "{3C35F228-14C6-46EF-B291-848404AE4ABB}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FE543F37-B717-412E-98A1-4EA3DDE2EF34} = {FE543F37-B717-412E-98A1-4EA3DDE2EF34}
-		{FAE8EBEF-6351-4699-AD8E-88D1DFF3CD92} = {FAE8EBEF-6351-4699-AD8E-88D1DFF3CD92}
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools.Data.Schema.Deploy", "Tools.Data.Schema.Deploy\Tools.Data.Schema.Deploy.vbproj", "{4FA454BC-332A-4226-A229-38D87C504F8F}"
 EndProject

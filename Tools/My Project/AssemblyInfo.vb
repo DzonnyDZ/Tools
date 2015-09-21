@@ -1,9 +1,6 @@
 ﻿Imports System.Resources
-
-Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
-Imports Tools.RuntimeT.CompilerServicesT
 Imports System.Runtime.CompilerServices
 
 ' General Information about an assembly is controlled through the following 
@@ -13,11 +10,7 @@ Imports System.Runtime.CompilerServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Tools")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("ĐTools team")> 
-<Assembly: AssemblyProduct("ĐTools")> 
-<Assembly: AssemblyCopyright("Copyright © ĐTools team 2006-15")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyDescription("Main library of ĐTools project contains various platform-independent non-GUI classes missed from .NET framework.")> 
 
 <Assembly: ComVisible(False)> 
 
