@@ -1,14 +1,20 @@
 ﻿'Extracted
+Imports System.Drawing
+Imports System.Reflection
+Imports System.Windows
+Imports System.Windows.Forms.Integration
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Tools.ResourcesT
 Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
 Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 Imports Tools.WindowsT.InteropT.InteropExtensions
-'#If True
-'Stage:Beta
+
+
 Namespace WindowsT.FormsT
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>
     ''' <remarks>
-    ''' <para>This class implements <see cref="iMsg"/> in fully dynamic way. You can change all it's properties and all properties of its controls and those change are immediatelly displayed to user.</para>
+    ''' <para>This class implements <see cref="iMsg"/> in fully dynamic way. You can change all it's properties and all properties of its controls and those change are immediately displayed to user.</para>
     ''' If you are passing some very custom implementation of <see cref="MessageBox"/> to this form, you must ensure that :
     ''' <list type="list">
     ''' <item>Argument e of the <see cref="MessageBox.ComboBox"/>.<see cref="MessageBox.MessageBoxComboBox.Items">Items</see>.<see cref="ListWithEvents.CollectionChanged"/> event has always <see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> which is member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</item>
@@ -18,7 +24,7 @@ Namespace WindowsT.FormsT
     ''' </remarks>
     ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
     ''' <version version="1.5.2"><see cref="Button.DialogResult"/> is no longer set (it caused dialog to be closed even when event was cancelled).</version>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Class MessageBoxForm : Inherits Form
         ''' <summary>Form overrides dispose to clean up the component list.</summary>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
@@ -48,37 +54,34 @@ Namespace WindowsT.FormsT
             Next
             AttachMessageBoxHandlers(False)
         End Sub
-        ''' <summary>Contains value of the <see cref="MessageBox"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _MessageBox As MessageBox
+
         ''' <summary>Gets <see cref="FormsT.MessageBox"/> this forms is GUI for</summary>
-        Public ReadOnly Property MessageBox() As MessageBox
-            <DebuggerStepThroughAttribute()> Get
-                Return _MessageBox
-            End Get
-        End Property
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public ReadOnly Property MessageBox As MessageBox
+
         ''' <summary>CTor</summary>
         ''' <param name="MessageBox"><see cref="FormsT.MessageBox"/> to initialize this form by</param>
         Public Sub New(ByVal MessageBox As MessageBox)
-            Me._MessageBox = MessageBox
+            Me.MessageBox = MessageBox
             Me.InitializeComponent()
             Initialize()
         End Sub
         ''' <summary>Applies <see cref="MessageBox"/>.<see cref="MessageBox.Options">Options</see></summary>
         Private Sub ApplyOptions()
-            Select Case MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.AlignMask
-                Case IndependentT.MessageBox.MessageBoxOptions.AlignLeft, IndependentT.MessageBox.MessageBoxOptions.AlignJustify
-                    lblPrompt.TextAlign = Drawing.ContentAlignment.TopLeft
+            Select Case MessageBox.Options And iMsg.MessageBoxOptions.AlignMask
+                Case iMsg.MessageBoxOptions.AlignLeft, iMsg.MessageBoxOptions.AlignJustify
+                    lblPrompt.TextAlign = ContentAlignment.TopLeft
                     lblPrompt.Anchor = AnchorStyles.Left Or AnchorStyles.Top
-                Case IndependentT.MessageBox.MessageBoxOptions.AlignRight
-                    lblPrompt.TextAlign = Drawing.ContentAlignment.TopRight
+                Case iMsg.MessageBoxOptions.AlignRight
+                    lblPrompt.TextAlign = ContentAlignment.TopRight
                     lblPrompt.Anchor = AnchorStyles.Right Or AnchorStyles.Top
-                Case IndependentT.MessageBox.MessageBoxOptions.AlignCenter
-                    lblPrompt.TextAlign = Drawing.ContentAlignment.TopCenter
+                Case iMsg.MessageBoxOptions.AlignCenter
+                    lblPrompt.TextAlign = ContentAlignment.TopCenter
                     lblPrompt.Anchor = AnchorStyles.Top
             End Select
-            If (MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.Rtl) = IndependentT.MessageBox.MessageBoxOptions.Rtl Then _
-                Me.RightToLeft = System.Windows.Forms.RightToLeft.Yes _
-                Else Me.RightToLeft = System.Windows.Forms.RightToLeft.No
+            If (MessageBox.Options And iMsg.MessageBoxOptions.Rtl) = iMsg.MessageBoxOptions.Rtl Then _
+                Me.RightToLeft = RightToLeft.Yes _
+                Else Me.RightToLeft = RightToLeft.No
         End Sub
         ''' <summary>Initializes tis form by <see cref="MessageBox"/>, called from CTor</summary>
         Protected Overridable Sub Initialize()
@@ -86,7 +89,7 @@ Namespace WindowsT.FormsT
             ApplyOptions()
             'Title
             If MessageBox.Title Is Nothing Then
-                Dim App As New Microsoft.VisualBasic.ApplicationServices.AssemblyInfo(System.Reflection.Assembly.GetEntryAssembly)
+                Dim App As New AssemblyInfo(Assembly.GetEntryAssembly)
                 Me.Text = App.Title
             Else
                 Me.Text = MessageBox.Title
@@ -156,7 +159,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxComboBox"/></summary>
         ''' <param name="ComboBox"><see cref="MessageBox.MessageBoxComboBox"/> to attach handlers to</param>
         ''' <param name="attach">True to attach, false so detach</param>
-        Private Sub AttachComboBoxHandlers(ByVal ComboBox As MessageBox.MessageBoxComboBox, Optional ByVal attach As Boolean = True)
+        Private Sub AttachComboBoxHandlers(ByVal ComboBox As iMsg.MessageBoxComboBox, Optional ByVal attach As Boolean = True)
             If ComboBox Is Nothing Then Exit Sub
             If attach Then
                 AddHandler ComboBox.DisplayMemberChanged, AddressOf ComboBox_DisplayMemberChanged
@@ -181,7 +184,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxCheckBox"/></summary>
         ''' <param name="CheckBox"><see cref="MessageBox.MessageBoxCheckBox"/> to attach handlers to</param>
         ''' <param name="attach">True to attach, false so detach</param>
-        Private Sub AttachCheckBoxHandlers(ByVal CheckBox As MessageBox.MessageBoxCheckBox, Optional ByVal attach As Boolean = True)
+        Private Sub AttachCheckBoxHandlers(ByVal CheckBox As iMsg.MessageBoxCheckBox, Optional ByVal attach As Boolean = True)
             If CheckBox Is Nothing Then Exit Sub
             If attach Then
                 AddHandler CheckBox.EnabledChanged, AddressOf Control_EnabledChanged
@@ -200,7 +203,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxButton"/></summary>
         ''' <param name="Button"><see cref="MessageBox.MessageBoxButton"/> to attach handlers to</param>
         ''' <param name="attach">True to attach, false so detach</param>
-        Private Sub AttachButtonHandlers(ByVal Button As MessageBox.MessageBoxButton, Optional ByVal attach As Boolean = True)
+        Private Sub AttachButtonHandlers(ByVal Button As iMsg.MessageBoxButton, Optional ByVal attach As Boolean = True)
             If Button Is Nothing Then Exit Sub
             If attach Then
                 AddHandler Button.AccessKeyChanged, AddressOf Button_AccessKeyChanged
@@ -219,7 +222,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxRadioButton"/></summary>
         ''' <param name="Radio"><see cref="MessageBox.MessageBoxRadioButton"/> to attach handlers to</param>
         ''' <param name="attach">True to attach, false so detach</param>
-        Private Sub AttachRadioHandlers(ByVal Radio As MessageBox.MessageBoxRadioButton, Optional ByVal attach As Boolean = True)
+        Private Sub AttachRadioHandlers(ByVal Radio As iMsg.MessageBoxRadioButton, Optional ByVal attach As Boolean = True)
             If Radio Is Nothing Then Exit Sub
             If attach Then
                 AddHandler Radio.EnabledChanged, AddressOf Control_EnabledChanged
@@ -292,7 +295,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Creates <see cref="CheckBox"/> from given <see cref="iMsg.MessageBoxCheckBox"/></summary>
         ''' <param name="Chk">A <see cref="iMsg.MessageBoxCheckBox"/> to create <see cref="CheckBox"/> from</param>
         ''' <returns><see cref="CheckBox"/> initiated by <paramref name="Chk"/></returns>
-        Private Function CreateCheckBox(ByVal Chk As MessageBox.MessageBoxCheckBox) As CheckBox
+        Private Function CreateCheckBox(ByVal Chk As iMsg.MessageBoxCheckBox) As CheckBox
             Dim ret As New CheckBox With {.Text = Chk.Text, .Tag = Chk, .CheckState = Chk.State, .ThreeState = Chk.ThreeState, .Enabled = Chk.Enabled, .Anchor = AnchorStyles.None, .AutoSize = True}
             If Chk.ToolTip <> "" Then totToolTip.SetToolTip(ret, Chk.ToolTip)
             Chk.Control = ret
@@ -302,10 +305,10 @@ Namespace WindowsT.FormsT
         ''' <summary>Creates <see cref="Button"/> from <see cref="MessageBox.MessageBoxButton"/></summary>
         ''' <param name="Button"><see cref="MessageBox.MessageBoxButton"/> to initialize new <see cref="Button"/> with</param>
         ''' <returns>Newly created <see cref="Button"/> with attached <see cref="Button.Click"/> event to <see cref="Button_Click"/></returns>
-        Private Function CreateButton(ByVal Button As MessageBox.MessageBoxButton) As Button
+        Private Function CreateButton(ByVal Button As iMsg.MessageBoxButton) As Button
             Dim text As String = If(Button.Text IsNot Nothing, Button.Text.Replace("&", "&&"), "")
             If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then text = text.Insert(text.IndexOf(Button.AccessKey), "&")
-            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .Tag = Button, .AutoSize = True, .AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink, .Anchor = AnchorStyles.None} '.DialogResult = Button.Result
+            Dim CmdButton As New Button With {.text = text, .Enabled = Button.Enabled, .Tag = Button, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink, .Anchor = AnchorStyles.None} '.DialogResult = Button.Result
             If Button.ToolTip <> "" Then totToolTip.SetToolTip(CmdButton, Button.ToolTip)
             Button.Control = CmdButton
             AddHandler CmdButton.Click, AddressOf Button_Click
@@ -323,17 +326,17 @@ Namespace WindowsT.FormsT
         End Function
 #Region "Handlers"
 #Region "Generic"
-        Private Sub Control_EnabledChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+        Private Sub Control_EnabledChanged(ByVal sender As iMsg.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             With DirectCast(sender.Control, Control)
                 If .Enabled <> sender.Enabled Then .Enabled = sender.Enabled
             End With
         End Sub
-        Private Sub Control_TextChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
-            If TypeOf sender Is MessageBox.MessageBoxButton Then
+        Private Sub Control_TextChanged(ByVal sender As iMsg.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            If TypeOf sender Is iMsg.MessageBoxButton Then
                 With DirectCast(sender.Control, Button)
                     If .Text <> sender.Text Then
                         Dim text As String = If(sender.Text, "").Replace("&", "&&")
-                        If DirectCast(sender, MessageBox.MessageBoxButton).AccessKey <> vbNullChar AndAlso text.IndexOf(DirectCast(sender, MessageBox.MessageBoxButton).AccessKey) >= 0 Then text = text.Insert(text.IndexOf(DirectCast(sender, MessageBox.MessageBoxButton).AccessKey), "&")
+                        If DirectCast(sender, iMsg.MessageBoxButton).AccessKey <> vbNullChar AndAlso text.IndexOf(DirectCast(sender, iMsg.MessageBoxButton).AccessKey) >= 0 Then text = text.Insert(text.IndexOf(DirectCast(sender, iMsg.MessageBoxButton).AccessKey), "&")
                         .Text = text
                     End If
                 End With
@@ -343,7 +346,7 @@ Namespace WindowsT.FormsT
                 End With
             End If
         End Sub
-        Private Sub Control_ToolTipChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+        Private Sub Control_ToolTipChanged(ByVal sender As iMsg.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             If totToolTip.GetToolTip(sender.Control) <> sender.ToolTip Then totToolTip.SetToolTip(sender.Control, sender.ToolTip)
         End Sub
 #End Region
@@ -351,7 +354,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Handles the <see cref="MessageBox.MessageBoxRadioButton.CheckedChanged">CheckedChanged</see> event of items of the <see cref="MessageBox">MessageBox</see>.<see cref="MessageBox.Radios">Radios</see> collection</summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event parameters</param>
-        Private Sub Radio_CheckedChanged(ByVal sender As MessageBox.MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+        Private Sub Radio_CheckedChanged(ByVal sender As iMsg.MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             With DirectCast(sender.Control, RadioButton)
                 If .Checked <> sender.Checked Then .Checked = sender.Checked
             End With
@@ -360,18 +363,18 @@ Namespace WindowsT.FormsT
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event parameters</param>
         Private Sub Radio_CheckedChanged(ByVal sender As RadioButton, ByVal e As EventArgs)
-            DirectCast(sender.Tag, MessageBox.MessageBoxRadioButton).Checked = sender.Checked
+            DirectCast(sender.Tag, iMsg.MessageBoxRadioButton).Checked = sender.Checked
         End Sub
 #End Region
 #Region "ComboBox"
-        Private Sub ComboBox_EditableChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+        Private Sub ComboBox_EditableChanged(ByVal sender As iMsg.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             cmbCombo.DropDownStyle = If(sender.Editable, ComboBoxStyle.DropDown, ComboBoxStyle.DropDownList)
         End Sub
-        Private Sub ComboBox_DisplayMemberChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+        Private Sub ComboBox_DisplayMemberChanged(ByVal sender As iMsg.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             cmbCombo.DisplayMember = sender.DisplayMember
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
-        Private Sub ComboBox_ItemsChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As ListWithEvents(Of Object).ListChangedEventArgs)
+        Private Sub ComboBox_ItemsChanged(ByVal sender As iMsg.MessageBoxComboBox, ByVal e As ListWithEvents(Of Object).ListChangedEventArgs)
             Select Case e.Action
                 Case CollectionsT.GenericT.CollectionChangeAction.Add
                     cmbCombo.Items.Insert(e.Index, e.NewValue)
@@ -385,10 +388,10 @@ Namespace WindowsT.FormsT
                 Case CollectionsT.GenericT.CollectionChangeAction.Replace
                     cmbCombo.Items(e.Index) = e.NewValue
                 Case Else
-                    Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.WasNotMemberOf, "Action", "CollectionChangeAction"))
+                    Throw New InvalidOperationException(String.Format(WasNotMemberOf, "Action", "CollectionChangeAction"))
             End Select
         End Sub
-        Private Sub ComboBox_SelectedIndexChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
+        Private Sub ComboBox_SelectedIndexChanged(ByVal sender As iMsg.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
             If sender.SelectedIndex <> cmbCombo.SelectedIndex Then
                 Try
                     cmbCombo.SelectedIndex = sender.SelectedIndex
@@ -398,7 +401,7 @@ Namespace WindowsT.FormsT
                 End Try
             End If
         End Sub
-        Private Sub ComboBox_selectedItemChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+        Private Sub ComboBox_selectedItemChanged(ByVal sender As iMsg.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
             If (sender.SelectedItem Is Nothing Xor cmbCombo.SelectedItem IsNot Nothing) OrElse (sender.SelectedItem IsNot Nothing AndAlso Not sender.SelectedItem.Equals(cmbCombo.SelectedItem)) Then
                 Try
                     cmbCombo.SelectedItem = sender.SelectedItem
@@ -408,40 +411,40 @@ Namespace WindowsT.FormsT
                 End Try
             End If
         End Sub
-        Private Sub cmbCombo_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCombo.SelectedIndexChanged
+        Private Sub cmbCombo_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As EventArgs) Handles cmbCombo.SelectedIndexChanged
             If MessageBox.ComboBox Is Nothing Then Exit Sub
             If MessageBox.ComboBox.SelectedIndex <> sender.SelectedIndex OrElse (sender.SelectedItem Is Nothing Xor MessageBox.ComboBox.SelectedItem Is Nothing) OrElse (sender.SelectedItem IsNot Nothing AndAlso Not sender.SelectedItem.Equals(MessageBox.ComboBox.SelectedItem)) Then
                 MessageBox.ComboBox.SelectedItem = cmbCombo.SelectedItem
                 MessageBox.ComboBox.SelectedIndex = cmbCombo.SelectedIndex
             End If
         End Sub
-        Private Sub cmbCombo_TextChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCombo.TextChanged
+        Private Sub cmbCombo_TextChanged(ByVal sender As ComboBox, ByVal e As EventArgs) Handles cmbCombo.TextChanged
             If MessageBox.ComboBox Is Nothing Then Exit Sub
             If MessageBox.ComboBox.Text <> sender.Text Then MessageBox.ComboBox.Text = sender.Text
         End Sub
 #End Region
 #Region "CheckBox"
-        Private Sub CheckBox_ThreeStateChanged(ByVal sender As MessageBox.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+        Private Sub CheckBox_ThreeStateChanged(ByVal sender As iMsg.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             CheckPlh1.ThreeState = sender.ThreeState
         End Sub
-        Private Sub CheckBox_StateChanged(ByVal sender As MessageBox.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
+        Private Sub CheckBox_StateChanged(ByVal sender As iMsg.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
             Dim chk As CheckBox = sender.Control
             If chk.CheckState <> sender.State Then chk.CheckState = sender.State
         End Sub
-        Private Sub CheckBox_CheckStateChanged(ByVal sender As CheckBox, ByVal e As System.EventArgs)
-            Dim mChk As MessageBox.MessageBoxCheckBox = sender.Tag
+        Private Sub CheckBox_CheckStateChanged(ByVal sender As CheckBox, ByVal e As EventArgs)
+            Dim mChk As iMsg.MessageBoxCheckBox = sender.Tag
             If mChk.State <> sender.CheckState Then mChk.State = sender.CheckState
         End Sub
 #End Region
 #Region "Button"
-        Private Sub Button_AccessKeyChanged(ByVal sender As MessageBox.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Char))
+        Private Sub Button_AccessKeyChanged(ByVal sender As iMsg.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Char))
             With DirectCast(sender.Control, Button)
                 Dim text As String = sender.Text.Replace("&", "&&")
                 If sender.AccessKey <> vbNullChar AndAlso text.IndexOf(sender.AccessKey) >= 0 Then text = text.Insert(text.IndexOf(sender.AccessKey), "&")
                 .Text = text
             End With
         End Sub
-        Private Sub Button_ResultChanged(ByVal sender As MessageBox.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
+        Private Sub Button_ResultChanged(ByVal sender As iMsg.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
             DirectCast(sender.Control, Button).DialogResult = sender.Result
             If e.OldValue = MessageBox.CloseResponse Xor e.NewValue = MessageBox.CloseResponse Then EnsureCancelButton()
         End Sub
@@ -486,7 +489,7 @@ Namespace WindowsT.FormsT
         Private Sub MessageBox_CloseResponseChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
             EnsureCancelButton()
         End Sub
-        Private Sub MessageBox_ComboBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxComboBox))
+        Private Sub MessageBox_ComboBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxComboBox))
             If e.OldValue IsNot e.NewValue Then
                 If e.OldValue IsNot Nothing Then AttachComboBoxHandlers(e.OldValue, False)
                 ApplyComboBox()
@@ -498,7 +501,7 @@ Namespace WindowsT.FormsT
             If e.NewValue >= 0 AndAlso e.NewValue < MessageBox.Buttons.Count Then Me.AcceptButton = MessageBox.Buttons(e.NewValue).Control
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
-        Private Sub MessageBox_CheckBoxesChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBox.MessageBoxCheckBox).ListChangedEventArgs)
+        Private Sub MessageBox_CheckBoxesChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of iMsg.MessageBoxCheckBox).ListChangedEventArgs)
             Select Case e.Action
                 Case CollectionsT.GenericT.CollectionChangeAction.Add
                     Dim NewCheck = CreateCheckBox(e.NewValue)
@@ -523,11 +526,11 @@ Namespace WindowsT.FormsT
                     Me.flpChecks.Controls.Replace(e.Index, NewCheck)
                     AttachCheckBoxHandlers(e.NewValue)
                     EnsureCancelButton()
-                Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "CheckBoxes"))
+                Case Else : Throw New InvalidOperationException(String.Format(TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "CheckBoxes"))
             End Select
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
-        Private Sub MessageBox_RadiosChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBox.MessageBoxRadioButton).ListChangedEventArgs)
+        Private Sub MessageBox_RadiosChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of iMsg.MessageBoxRadioButton).ListChangedEventArgs)
             Select Case e.Action
                 Case CollectionsT.GenericT.CollectionChangeAction.Add
                     Dim NewRadio = CreateRadio(e.NewValue)
@@ -552,11 +555,11 @@ Namespace WindowsT.FormsT
                     Me.flpRadio.Controls.Replace(e.Index, NewRadio)
                     AttachRadioHandlers(e.NewValue)
                     EnsureCancelButton()
-                Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "Radios"))
+                Case Else : Throw New InvalidOperationException(String.Format(TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "Radios"))
             End Select
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
-        Private Sub MessageBox_ButtonsChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBox.MessageBoxButton).ListChangedEventArgs)
+        Private Sub MessageBox_ButtonsChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of iMsg.MessageBoxButton).ListChangedEventArgs)
             Select Case e.Action
                 Case CollectionsT.GenericT.CollectionChangeAction.Add
                     Dim NewButton = CreateButton(e.NewValue)
@@ -566,7 +569,7 @@ Namespace WindowsT.FormsT
                     If MessageBox.DefaultButton >= e.Index Then MessageBox.DefaultButton += 1
                     EnsureCancelButton()
                 Case CollectionsT.GenericT.CollectionChangeAction.Clear
-                    Dim e2 = DirectCast(e.ChangeEventArgs, ListWithEvents(Of MessageBox.MessageBoxButton).ItemsEventArgs)
+                    Dim e2 = DirectCast(e.ChangeEventArgs, ListWithEvents(Of iMsg.MessageBoxButton).ItemsEventArgs)
                     flpButtons.Controls.Clear()
                     For Each Old In e2.Items
                         PerformButtonRemoval(Old)
@@ -592,12 +595,12 @@ Namespace WindowsT.FormsT
                     Me.flpButtons.Controls.Replace(e.Index, NewButton)
                     AttachButtonHandlers(e.NewValue)
                     EnsureCancelButton()
-                Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "Buttons"))
+                Case Else : Throw New InvalidOperationException(String.Format(TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "Buttons"))
             End Select
         End Sub
         ''' <summary>Performs actions needed when button is about to be removed. Does not remove button from <see cref="flpButtons"/>.</summary>
         ''' <param name="Button">Button to be removed</param>
-        Private Sub PerformButtonRemoval(ByVal Button As MessageBox.MessageBoxButton)
+        Private Sub PerformButtonRemoval(ByVal Button As iMsg.MessageBoxButton)
             Dim cmd As Button = Button.Control
             cmd.Tag = Nothing
             Button.Control = Nothing
@@ -632,20 +635,21 @@ Namespace WindowsT.FormsT
                 End If
             Next
         End Sub
-        Private Sub MessageBox_IconChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Drawing.Image))
+        Private Sub MessageBox_IconChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Image))
             picPicture.Image = e.NewValue
             picPicture.Visible = e.NewValue IsNot Nothing
         End Sub
-        Private Sub MessageBox_OptionsChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxOptions))
+        Private Sub MessageBox_OptionsChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxOptions))
             ApplyOptions()
         End Sub
 #End Region
 #Region "AddressOf"
         'Following delegates required because methods does not have exactly same signatures as events they are handling
+        ' ReSharper disable InconsistentNaming
         Private ReadOnly AddressOf__Button_Click As EventHandler = AddressOf Button_Click
-        Private ReadOnly AddressOf__MessageBox_BottomControlChanged As MessageBox.ControlChangedEventHandler = AddressOf MessageBox_BottomControlChanged
-        Private ReadOnly AddressOf__MessageBox_TopControlChanged As MessageBox.ControlChangedEventHandler = AddressOf MessageBox_TopControlChanged
-        Private ReadOnly AddressOf__MessageBox_MidControlChanged As MessageBox.ControlChangedEventHandler = AddressOf MessageBox_MidControlChanged
+        Private ReadOnly AddressOf__MessageBox_BottomControlChanged As iMsg.ControlChangedEventHandler = AddressOf MessageBox_BottomControlChanged
+        Private ReadOnly AddressOf__MessageBox_TopControlChanged As iMsg.ControlChangedEventHandler = AddressOf MessageBox_TopControlChanged
+        Private ReadOnly AddressOf__MessageBox_MidControlChanged As iMsg.ControlChangedEventHandler = AddressOf MessageBox_MidControlChanged
         Private ReadOnly AddressOf__MessageBox_CloseResponseChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of DialogResult)) = AddressOf MessageBox_CloseResponseChanged
         Private ReadOnly AddressOf__MessageBox_ComboBoxChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxComboBox)) = AddressOf MessageBox_ComboBoxChanged
         Private ReadOnly AddressOf__MessageBox_CountDown As EventHandler(Of iMsg, EventArgs) = AddressOf MessageBox_CountDown
@@ -656,9 +660,10 @@ Namespace WindowsT.FormsT
         Private ReadOnly AddressOf__MessageBox_ButtonsChanged As iMsg.ButtonsChangedEventHandler = AddressOf MessageBox_ButtonsChanged
         Private ReadOnly AddressOf__MessageBox_RadiosChanged As iMsg.RadiosChangedEventHandler = AddressOf MessageBox_RadiosChanged
         Private ReadOnly AddressOf__Radio_CheckedChanged As EventHandler = AddressOf New EventHandler(Of RadioButton, EventArgs)(AddressOf Radio_CheckedChanged).Invoke
-        Private ReadOnly AddressOf__MessageBox_IconChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of Drawing.Image)) = AddressOf MessageBox_IconChanged
-        Private ReadOnly AddressOf__MessageBox_OptionsChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxOptions)) = AddressOf MessageBox_OptionsChanged
+        Private ReadOnly AddressOf__MessageBox_IconChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of Image)) = AddressOf MessageBox_IconChanged
+        Private ReadOnly AddressOf__MessageBox_OptionsChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxOptions)) = AddressOf MessageBox_OptionsChanged
         Private ReadOnly AddressOf__CheckBox_CheckStateChanged As EventHandler = AddressOf CheckBox_CheckStateChanged
+        ' ReSharper restore InconsistentNaming
 #End Region
         Private Sub Button_Click(ByVal sender As Button, ByVal e As EventArgs)
             Dim button As iMsg.MessageBoxButton = sender.Tag
@@ -676,14 +681,14 @@ Namespace WindowsT.FormsT
                 MyBase.Close()
             Finally : AllowClose = False : End Try
         End Sub
-        Private Sub MessageBoxForm_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Private Sub MessageBoxForm_FormClosed(ByVal sender As Object, ByVal e As FormClosedEventArgs) Handles Me.FormClosed
             CommonDisposeActions()
             MessageBox.OnClosed(e)
         End Sub
 #End Region
         ''' <summary>When true <see cref="MessageBoxForm_FormClosing"/> allows form to be closed on whatever reason without any action (use for programatic closes)</summary>
         Private AllowClose As Boolean = False
-        Private Sub MessageBoxForm_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        Private Sub MessageBoxForm_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles Me.FormClosing
             Try
                 If AllowClose Then Exit Sub
                 Select Case e.CloseReason
@@ -707,14 +712,14 @@ Namespace WindowsT.FormsT
             End Try
         End Sub
 
-        Private Sub MessageBoxForm_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Private Sub MessageBoxForm_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
             'Me.MaximumSize = DesktopBounds.Size
         End Sub
 
-        Private Sub MessageBoxForm_Shown(ByVal sender As MessageBoxForm, ByVal e As System.EventArgs) Handles Me.Shown
+        Private Sub MessageBoxForm_Shown(ByVal sender As MessageBoxForm, ByVal e As EventArgs) Handles Me.Shown
             lblPrompt.MaximumSize = New Drawing.Size(Screen.FromControl(lblPrompt).WorkingArea.Width / 2, 0)
             MessageBox.OnShown()
-            If (MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.BringToFront) = IndependentT.MessageBox.MessageBoxOptions.BringToFront Then
+            If (MessageBox.Options And iMsg.MessageBoxOptions.BringToFront) = iMsg.MessageBoxOptions.BringToFront Then
                 Me.BringToFront()
             End If
         End Sub
@@ -731,11 +736,11 @@ Namespace WindowsT.FormsT
     ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
     ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) derived from <see cref="System.Windows.UIElement"/> are not shown.</version>
     ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) get disposed when message box is closed.</version>
-    ''' <version version="1.5.2">Fixed: When custom control (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) is replaced wne message box is shown, the change does not take effect.</version>
+    ''' <version version="1.5.2">Fixed: When custom control (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) is replaced when message box is shown, the change does not take effect.</version>
     ''' <version version="1.5.2">Fixed: Dialog closes even when button click operation is cancelled (see <see cref="iMsg.MessageBoxButton.ClickPreview"/>)</version>
     ''' <version version="1.5.3" stage="Beta">Added support for <see cref="System.Windows.Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
     ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="System.Windows.DependencyObject"/> hosted in <see cref="System.Windows.Window"/>.</version>
-    <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
+    <ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")>
     Public Class MessageBox
         Inherits iMsg
         ''' <summary>Releases all resources used by the <see cref="T:System.ComponentModel.Component" />.</summary>
@@ -749,9 +754,9 @@ Namespace WindowsT.FormsT
             End If
             MyBase.Dispose(disposing)
         End Sub
-        ''' <summary>If overriden in derived class closes the message box with given response</summary>
+        ''' <summary>If overridden in derived class closes the message box with given response</summary>
         ''' <param name="Response">Response returned by the <see cref="Show"/> function</param>
-        Public Overloads Overrides Sub Close(ByVal Response As System.Windows.Forms.DialogResult)
+        Public Overloads Overrides Sub Close(ByVal Response As DialogResult)
             Me.DialogResult = Response
             Me.ClickedButton = Nothing
             Form.Close()
@@ -760,8 +765,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Contains value of the <see cref="Form"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Form As MessageBoxForm
         ''' <summary>Gets or sets instance of <see cref="MessageBoxForm"/> that currently shows the message box</summary>
-        ''' <value>This property should be set only from overriden <see cref="PerformDialog"/> when it does not calls base class method</value>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        ''' <value>This property should be set only from overridden <see cref="PerformDialog"/> when it does not calls base class method</value>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Form() As MessageBoxForm
             Get
                 Return _Form
@@ -772,28 +777,28 @@ Namespace WindowsT.FormsT
         End Property
 
         ''' <summary>Shows the dialog</summary>
-        ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null). This implementation recognizes values of type <see cref="IWin32Window"/>, <see cref="System.Windows.Interop.IWin32Window"/>, <see cref="System.Windows.Window"/> and <see cref="System.Windows.DependencyObject"/> (if hosted in <see cref="System.Windows.Window"/>). Unrecognized owners are treated as null.</param>
+        ''' <param name="modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
+        ''' <param name="owner">Parent window of dialog (may be null). This implementation recognizes values of type <see cref="IWin32Window"/>, <see cref="System.Windows.Interop.IWin32Window"/>, <see cref="System.Windows.Window"/> and <see cref="System.Windows.DependencyObject"/> (if hosted in <see cref="System.Windows.Window"/>). Unrecognized owners are treated as null.</param>
         ''' <remarks>Note for inheritors: If you override thie method and do not call base class method, you must set value of the <see cref="Form"/> property</remarks>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/></exception>
         ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support <see cref="IWin32Window"/>, <see cref="System.Windows.Interop.IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
-        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="System.Windows.DependencyObject"/> for which <see cref="System.Windows.Window.GetWindow"/> returns non-null value.</version>
-        Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As Object)
-            If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
+        ''' <version version="1.5.3" stage="Beta">The <paramref name="owner"/> parameter acceps <see cref="System.Windows.DependencyObject"/> for which <see cref="System.Windows.Window.GetWindow"/> returns non-null value.</version>
+        Protected Overrides Sub PerformDialog(ByVal modal As Boolean, ByVal owner As Object)
+            If State <> States.Created Then Throw New InvalidOperationException(MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Form = New MessageBoxForm(Me)
-            If TypeOf Owner Is IWin32Window Then
-                If Modal Then Form.ShowDialog(DirectCast(Owner, IWin32Window)) Else Form.Show(DirectCast(Owner, IWin32Window))
-            ElseIf TypeOf Owner Is System.Windows.Interop.IWin32Window Then
-                If Modal Then Form.ShowDialog(DirectCast(Owner, System.Windows.Interop.IWin32Window)) Else Form.Show(DirectCast(Owner, System.Windows.Interop.IWin32Window))
-            ElseIf TypeOf Owner Is System.Windows.Window Then
-                If Modal Then Form.ShowDialog(DirectCast(Owner, System.Windows.Window)) Else Form.Show(DirectCast(Owner, System.Windows.Window))
-            ElseIf TypeOf Owner Is System.Windows.DependencyObject Then
-                Dim owningWindow = System.Windows.Window.GetWindow(Owner)
+            If TypeOf owner Is IWin32Window Then
+                If modal Then Form.ShowDialog(DirectCast(owner, IWin32Window)) Else Form.Show(DirectCast(owner, IWin32Window))
+            ElseIf TypeOf owner Is System.Windows.Interop.IWin32Window Then
+                If modal Then Form.ShowDialog(DirectCast(owner, System.Windows.Interop.IWin32Window)) Else Form.Show(DirectCast(owner, System.Windows.Interop.IWin32Window))
+            ElseIf TypeOf owner Is Window Then
+                If modal Then Form.ShowDialog(DirectCast(owner, Window)) Else Form.Show(DirectCast(owner, Window))
+            ElseIf TypeOf owner Is DependencyObject Then
+                Dim owningWindow = Window.GetWindow(owner)
                 If owningWindow IsNot Nothing Then
-                    If Modal Then Form.ShowDialog(owningWindow) Else Form.Show(owningWindow)
+                    If modal Then Form.ShowDialog(owningWindow) Else Form.Show(owningWindow)
                 End If
             Else
-                If Modal Then Form.ShowDialog() Else Form.Show()
+                If modal Then Form.ShowDialog() Else Form.Show()
             End If
         End Sub
         ''' <summary>Shows dialog in sync with thread ow given control modally to give control</summary>
@@ -815,7 +820,7 @@ Namespace WindowsT.FormsT
         ''' <seealso cref="GetControl"/><seealso cref="MidControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="TopControl"/>
         ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="System.Windows.UIElement"/> returns null.</version>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Friend ReadOnly Property TopControlControl() As Control
             Get
                 Return GetControl(Me.TopControl)
@@ -826,7 +831,7 @@ Namespace WindowsT.FormsT
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="MidControl"/>
         ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="System.Windows.UIElement"/> returns null.</version>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Friend ReadOnly Property MidControlControl() As Control
             Get
                 Return GetControl(Me.MidControl)
@@ -837,7 +842,7 @@ Namespace WindowsT.FormsT
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="MidControlControl"/>
         ''' <seealso cref="BottomControl"/>
         ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="System.Windows.UIElement"/> returns null.</version>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Friend ReadOnly Property BottomControlControl() As Control
             Get
                 Return GetControl(Me.BottomControl)
@@ -850,11 +855,11 @@ Namespace WindowsT.FormsT
         Protected Overridable Function GetControl(ByVal Control As Object) As Control
             If Control Is Nothing Then Return Nothing
             If TypeOf Control Is Control Then Return Control
-            If TypeOf Control Is System.Windows.UIElement Then
-                Static WPFHosts As Dictionary(Of System.Windows.FrameworkElement, System.Windows.Forms.Integration.ElementHost)
-                If WPFHosts Is Nothing Then WPFHosts = New Dictionary(Of System.Windows.FrameworkElement, System.Windows.Forms.Integration.ElementHost)
+            If TypeOf Control Is UIElement Then
+                Static WPFHosts As Dictionary(Of FrameworkElement, ElementHost)
+                If WPFHosts Is Nothing Then WPFHosts = New Dictionary(Of FrameworkElement, ElementHost)
                 If WPFHosts.ContainsKey(Control) Then Return WPFHosts(Control)
-                Dim WPFHost As New Integration.ElementHost With {.Dock = DockStyle.Fill}
+                Dim WPFHost As New ElementHost With {.Dock = DockStyle.Fill}
                 WPFHost.HostContainer.Children.Add(Control)
                 WPFHosts.Add(Control, WPFHost)
                 Return WPFHost
@@ -864,16 +869,16 @@ Namespace WindowsT.FormsT
         ''' <summary>Performs all operations needed to switch <see cref="MessageBox"/> form <see cref="State"/> <see cref="States.Closed"/> to <see cref="States.Created"/></summary>
         ''' <remarks>Called by <see cref="Recycle"/>.
         ''' <para>Note to inheritors: Always call base-class method <see cref="RecycleInternal"/>.</para></remarks>
-        ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Closed"/>. This exception never occures in this implementation because <see cref="Recycle"/> ensures that <see cref="RecycleInternal"/> is caled only when <see cref="State"/> is <see cref="States.Closed"/>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Closed"/>. This exception never occurs in this implementation because <see cref="Recycle"/> ensures that <see cref="RecycleInternal"/> is caled only when <see cref="State"/> is <see cref="States.Closed"/>.</exception>
         Protected Overrides Sub RecycleInternal()
             MyBase.RecycleInternal()
             Form = Nothing
         End Sub
 
-        ''' <summary>Gets text which contains Accesskey marker (&amp;)</summary>
-        ''' <param name="Text">Text (if it contains character used as accesskey markers they must be escaped)</param>
-        ''' <param name="AccessKey">Char representing accesskey (if char is not in <paramref name="Text"/> no accesskey marker should be inserted)</param>
-        ''' <returns><paramref name="Text"/> with accesskey denoted in it by &amp;.</returns>
+        ''' <summary>Gets text which contains access key marker (&amp;)</summary>
+        ''' <param name="Text">Text (if it contains character used as access key markers they must be escaped)</param>
+        ''' <param name="AccessKey">Char representing access key (if char is not in <paramref name="Text"/> no access key marker should be inserted)</param>
+        ''' <returns><paramref name="Text"/> with access key denoted in it by &amp;.</returns>
         ''' <version version="1.5.2">Function added</version>
         Protected Overloads Overrides Function GetTextWithAccessKey(ByVal Text As String, ByVal AccessKey As Char) As String
             Return GetTextWithAccessKey(Text, AccessKey, "&"c)

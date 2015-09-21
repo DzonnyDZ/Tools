@@ -1,15 +1,17 @@
+Imports System.Drawing
 Imports System.Windows.Forms
 Imports Tools.ComponentModelT
+Imports Tools.ResourcesT
+Imports Tools.WindowsT.FormsT.UtilitiesT
 'Extracted
-'#If Trueset in Tools.vbproj
-'Stage: Nightly
+
 Namespace WindowsT.FormsT
     ''' <summary>Marks state of data item</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     <Version(1, 0, GetType(StatusMarker), LastChange:="07/22/2007")> _
     <FirstVersion("06/22/2007")> _
-    <Drawing.ToolboxBitmap(GetType(StatusMarker), "StatusMarker.bmp")> _
-    <ComponentModelT.Prefix("stm")> _
+    <ToolboxBitmap(GetType(StatusMarker), "StatusMarker.bmp")> _
+    <Prefix("stm")> _
     <DefaultProperty("Status")> _
     <DefaultBindingProperty("Status")> _
     Public Class StatusMarker : Implements IControlWithStatus
@@ -28,7 +30,7 @@ Namespace WindowsT.FormsT
             Deleted
             ''' <summary>Data error</summary>
             [Error]
-            ''' <summary>Data status unkown</summary>
+            ''' <summary>Data status unknown</summary>
             NA
         End Enum
         ''' <summary>Contains value of the <see cref="Status"/> property</summary>
@@ -45,19 +47,20 @@ Namespace WindowsT.FormsT
             End Get
             Set(ByVal value As Statuses)
                 Select Case value
-                    Case Statuses.Deleted : cmdStatus.ImageKey = "Deleted" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Deleted)
+                    Case Statuses.Deleted : cmdStatus.ImageKey = "Deleted" : totToolTip.SetToolTip(cmdStatus, CompositeControls.Deleted)
                     Case Statuses.Error : cmdStatus.ImageKey = "Error" : totToolTip.SetToolTip(cmdStatus, My.Resources.Error_)
-                    Case Statuses.Changed : cmdStatus.ImageKey = "Changed" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Changed)
-                    Case Statuses.NA : cmdStatus.ImageKey = "N/A" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.NA)
-                    Case Statuses.[New] : cmdStatus.ImageKey = "New" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.New_)
-                    Case Statuses.Normal : cmdStatus.ImageKey = "Normal" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Normal)
-                    Case Statuses.Null : cmdStatus.ImageKey = "Null" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Null)
+                    Case Statuses.Changed : cmdStatus.ImageKey = "Changed" : totToolTip.SetToolTip(cmdStatus, CompositeControls.Changed)
+                    Case Statuses.NA : cmdStatus.ImageKey = "N/A" : totToolTip.SetToolTip(cmdStatus, CompositeControls.NA)
+                    Case Statuses.[New] : cmdStatus.ImageKey = "New" : totToolTip.SetToolTip(cmdStatus, CompositeControls.New_)
+                    Case Statuses.Normal : cmdStatus.ImageKey = "Normal" : totToolTip.SetToolTip(cmdStatus, CompositeControls.Normal)
+                    Case Statuses.Null : cmdStatus.ImageKey = "Null" : totToolTip.SetToolTip(cmdStatus, CompositeControls.Null)
                     Case Else : Throw New InvalidEnumArgumentException("value", value, GetType(Statuses))
                 End Select
                 _Status = value
                 OnStatusChanged(EventArgs.Empty)
             End Set
         End Property
+
         ''' <summary>Raised after <see cref="Status"/> changes</summary>
         <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
         <LDescription(GetType(CompositeControls), "StatusChanged_d")> _
@@ -69,63 +72,63 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Gets or set state of <see cref="tmiDelete"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
+        <DefaultValue(GetType(ControlState), "Enabled")> _
         <LDescription(GetType(CompositeControls), "DeleteMenuState_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        Public Property DeleteMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.DeleteMenustate
+        Public Property DeleteMenuState() As ControlState Implements IControlWithStatus.DeleteMenustate
             Get
                 Return MenuState(tmiDelete)
             End Get
-            Set(ByVal value As UtilitiesT.ControlState)
+            Set(ByVal value As ControlState)
                 MenuState(tmiDelete) = value
             End Set
         End Property
         ''' <summary>Gets or set state of <see cref="tmiMarkAsChanged"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
+        <DefaultValue(GetType(ControlState), "Hidden")> _
         <LDescription(GetType(CompositeControls), "MarkAsChangedMenuState_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        Public Property MarkAsChangedMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.MarkAsChangedMenuState
+        Public Property MarkAsChangedMenuState() As ControlState Implements IControlWithStatus.MarkAsChangedMenuState
             Get
                 Return MenuState(tmiMarkAsChanged)
             End Get
-            Set(ByVal value As UtilitiesT.ControlState)
+            Set(ByVal value As ControlState)
                 MenuState(tmiMarkAsChanged) = value
             End Set
         End Property
         ''' <summary>Gets or set state of <see cref="tmiReset"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
+        <DefaultValue(GetType(ControlState), "Enabled")> _
         <LDescription(GetType(CompositeControls), "ResetMenuState_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        Public Property ResetMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.ResetMenuState
+        Public Property ResetMenuState() As ControlState Implements IControlWithStatus.ResetMenuState
             Get
                 Return MenuState(tmiReset)
             End Get
-            Set(ByVal value As UtilitiesT.ControlState)
+            Set(ByVal value As ControlState)
                 MenuState(tmiReset) = value
             End Set
         End Property
         ''' <summary>Gets or sets state of menu item</summary>
         ''' <param name="Menu">Menu item to get or set state for</param>
-        Protected Property MenuState(ByVal Menu As System.Windows.Forms.ToolStripMenuItem) As UtilitiesT.ControlState
+        Protected Property MenuState(ByVal Menu As ToolStripMenuItem) As ControlState
             Get
                 Return Menu.Tag
             End Get
-            Set(ByVal value As UtilitiesT.ControlState)
+            Set(ByVal value As ControlState)
                 With Menu
                     Select Case value
-                        Case UtilitiesT.ControlState.Disabled
+                        Case ControlState.Disabled
                             .Visible = True
                             .Enabled = False
-                        Case UtilitiesT.ControlState.Enabled
+                        Case ControlState.Enabled
                             .Visible = True
                             .Enabled = True
-                        Case UtilitiesT.ControlState.Hidden
+                        Case ControlState.Hidden
                             .Enabled = False
                             .Visible = False
                         Case Else
-                            Throw New InvalidEnumArgumentException("value", value, GetType(UtilitiesT.ControlState))
+                            Throw New InvalidEnumArgumentException("value", value, GetType(ControlState))
                     End Select
                     .Tag = value
                 End With
@@ -133,20 +136,20 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or set state of <see cref="tmiAdd"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
+        <DefaultValue(GetType(ControlState), "Hidden")> _
         <LDescription(GetType(CompositeControls), "AddMenuState_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        Public Property AddMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.AddMenuState
+        Public Property AddMenuState() As ControlState Implements IControlWithStatus.AddMenuState
             Get
                 Return MenuState(tmiAdd)
             End Get
-            Set(ByVal value As UtilitiesT.ControlState)
+            Set(ByVal value As ControlState)
                 MenuState(tmiAdd) = value
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="AutoChanged"/> property</summary>
         <EditorBrowsableAttribute(EditorBrowsableState.Never)> _
-        Private _AutoChanged As Boolean
+        Private _autoChanged As Boolean
 
         ''' <summary>Gets or sets value indicating if <see cref="Status"/> automatically changes to <see cref="Statuses.Changed"/> when <see cref="tmiMarkAsChanged"/> is clicked</summary>
         <DefaultValue(True)> _
@@ -160,18 +163,18 @@ Namespace WindowsT.FormsT
                 _AutoChanged = value
             End Set
         End Property
-        Private Sub tmiAdd_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmiAdd.Click
+        Private Sub tmiAdd_Click(ByVal sender As Object, ByVal e As EventArgs) Handles tmiAdd.Click
             OnAdd(e)
         End Sub
 
-        Private Sub tmiDelete_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmiDelete.Click
+        Private Sub tmiDelete_Click(ByVal sender As Object, ByVal e As EventArgs) Handles tmiDelete.Click
             OnDelete(e)
         End Sub
 
-        Private Sub tmiReset_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmiReset.Click
+        Private Sub tmiReset_Click(ByVal sender As Object, ByVal e As EventArgs) Handles tmiReset.Click
             OnReset(e)
         End Sub
-        Private Sub tmiMarkAsChanged_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiMarkAsChanged.Click
+        Private Sub tmiMarkAsChanged_Click(ByVal sender As Object, ByVal e As EventArgs) Handles tmiMarkAsChanged.Click
             OnMarkAsChanged(e)
         End Sub
         ''' <summary>Raised after <see cref="tmiAdd"/> is clicked</summary>
@@ -212,7 +215,7 @@ Namespace WindowsT.FormsT
             RaiseEvent Delete(Me, e)
         End Sub
 
-        Private Sub cmdStatus_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdStatus.Click
+        Private Sub cmdStatus_Click(ByVal sender As Object, ByVal e As EventArgs) Handles cmdStatus.Click
             OnButtonClick()
         End Sub
         ''' <summary>Shows <see cref="cmsStatus"/></summary>
@@ -333,7 +336,7 @@ Namespace WindowsT.FormsT
             ElseIf TypeOf Component Is ToolStripMenuItem Then
                 RemoveHandler DirectCast(Component, ToolStripMenuItem).CheckedChanged, AddressOf Handler
             Else
-                Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.Type0IsNotSupportedAsValueOfStatusedControlProperty, Component.GetType.FullName))
+                Throw New NotSupportedException(String.Format(Type0IsNotSupportedAsValueOfStatusedControlProperty, Component.GetType.FullName))
             End If
         End Sub
         ''' <summary>Adds method <see cref="Handler"/> as handler of appropriate event of given component</summary>
@@ -393,7 +396,7 @@ Namespace WindowsT.FormsT
             ElseIf TypeOf Component Is ToolStripMenuItem Then
                 AddHandler DirectCast(Component, ToolStripMenuItem).CheckedChanged, AddressOf Handler
             Else
-                Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.Type0IsNotSupportedAsValueOfStatusedControlProperty, Component.GetType.FullName))
+                Throw New NotSupportedException(String.Format(Type0IsNotSupportedAsValueOfStatusedControlProperty, Component.GetType.FullName))
             End If
         End Sub
         ''' <summary>Handles change of value of monitored control</summary>
@@ -414,13 +417,13 @@ Namespace WindowsT.FormsT
         ''' <summary>Current status of control</summary>
         Property Status() As StatusMarker.Statuses
         ''' <summary>State of delete menu item</summary>
-        Property DeleteMenustate() As UtilitiesT.ControlState
+        Property DeleteMenustate() As ControlState
         ''' <summary>State of mar-as-changed menu item</summary>
-        Property MarkAsChangedMenuState() As UtilitiesT.ControlState
+        Property MarkAsChangedMenuState() As ControlState
         ''' <summary>state of reset menu item</summary>
-        Property ResetMenuState() As UtilitiesT.ControlState
+        Property ResetMenuState() As ControlState
         ''' <summary>state of add menu item</summary>
-        Property AddMenuState() As UtilitiesT.ControlState
+        Property AddMenuState() As ControlState
         ''' <summary>Indicates if <see cref="Status"/> automatically chnages to <see cref="StatusMarker.Statuses.Changed"/> and <see cref="StatusMarker.Statuses.[New]"/> if user takes appropriate action</summary>
         Property AutoChanged() As Boolean
         ''' <summary>Raised after add menu item is clicked</summary>

@@ -1,5 +1,5 @@
-Imports System.ComponentModel, System.Drawing.Design, System.Windows.Forms, System.Drawing
-#If True
+Imports System.Drawing.Design, System.Windows.Forms, System.Drawing
+
 Namespace DrawingT.DesignT
     ''' <summary><see cref="UITypeEditor"/> capable of creating new instance either from <see cref="DefaultValueAttribute"/> (preffered if available and <see cref="DefaultValueAttribute.Value"/> is not null) or by parameterless CTor</summary>
     ''' <remarks>
@@ -15,6 +15,7 @@ Namespace DrawingT.DesignT
         Public Overrides Function GetEditStyle(ByVal context As System.ComponentModel.ITypeDescriptorContext) As System.Drawing.Design.UITypeEditorEditStyle
             Return UITypeEditorEditStyle.DropDown
         End Function
+
         ''' <summary>Edits the specified object's value using the editor style indicated by the <see cref="System.Drawing.Design.UITypeEditor.GetEditStyle"/> method.</summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that can be used to gain additional context information.</param>
         ''' <param name="value">The object to edit.</param>
@@ -27,34 +28,35 @@ Namespace DrawingT.DesignT
                 Lbl.Text = ResourcesT.Components.[New___]
                 Lbl.Tag = context
                 AddHandler Lbl.Click, AddressOf Lbl_Click
-                Me.Context = context
-                Service = provider.GetService(GetType(System.Windows.Forms.Design.IWindowsFormsEditorService))
-                Service.DropDownControl(Lbl)
+                Me.context = context
+                service = provider.GetService(GetType(System.Windows.Forms.Design.IWindowsFormsEditorService))
+                service.DropDownControl(Lbl)
                 If Lbl.Tag Is Nothing Then Return value Else Return Lbl.Tag
             End Using
         End Function
+
         ''' <summary>The context parameter of <see cref="EditValue"/> used by <see cref="Lbl_Click"/></summary>
-        Private Context As ITypeDescriptorContext
+        Private context As ITypeDescriptorContext
         ''' <summary>service obtained from provider parameter of <see cref="EditValue"/> used by <see cref="Lbl_Click"/></summary>
-        Private Service As System.Windows.Forms.Design.IWindowsFormsEditorService
+        Private service As System.Windows.Forms.Design.IWindowsFormsEditorService
+
         ''' <summary>Handles <see cref="Label.Click"/> event of label used to provide drop-down UI</summary>
         ''' <param name="sender">The <see cref="Label"/></param>
         ''' <param name="e">Event params</param>
         Private Sub Lbl_Click(ByVal sender As Object, ByVal e As [EventArgs])
             With DirectCast(sender, Label)
                 Try
-                    Dim DVA As DefaultValueAttribute = Context.PropertyDescriptor.Attributes(GetType(DefaultValueAttribute))
-                    If DVA Is Nothing Then Try : DVA = Context.PropertyDescriptor.PropertyType.GetCustomAttributes(GetType(DefaultValueAttribute), True)(0) : Catch : End Try
-                    If DVA IsNot Nothing AndAlso DVA.Value IsNot Nothing Then
-                        .Tag = DVA.Value
+                    Dim dva As DefaultValueAttribute = context.PropertyDescriptor.Attributes(GetType(DefaultValueAttribute))
+                    If dva Is Nothing Then Try : dva = context.PropertyDescriptor.PropertyType.GetCustomAttributes(GetType(DefaultValueAttribute), True)(0) : Catch : End Try
+                    If dva IsNot Nothing AndAlso dva.Value IsNot Nothing Then
+                        .Tag = dva.Value
                     Else
-                        .Tag = Activator.CreateInstance(Context.PropertyDescriptor.PropertyType)
+                        .Tag = Activator.CreateInstance(context.PropertyDescriptor.PropertyType)
                     End If
                 Finally
-                    Service.CloseDropDown()
+                    service.CloseDropDown()
                 End Try
             End With
         End Sub
     End Class
 End Namespace
-#End If
