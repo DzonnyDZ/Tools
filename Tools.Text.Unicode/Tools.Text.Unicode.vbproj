@@ -95,8 +95,8 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedFiles\Version.vb">
-      <Link>My Project\Version.vb</Link>
+    <Compile Include="..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -148,6 +148,7 @@
       <LastGenOutput>UnicodeResources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>TextT.UnicodeT</CustomToolNamespace>
     </EmbeddedResource>
+    <None Include="Tools.Text.Unicode.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\SharedFiles\Tools.snk">
@@ -227,7 +228,7 @@
       <Name>Tools.Hardcore</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
-      <Project>{97E0DD39-AA48-4288-82AD-3753C178C70A}</Project>
+      <Project>{97e0dd39-aa48-4288-82ad-3753c178c70a}</Project>
       <Name>Tools.Runtime.CompilerServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
@@ -310,30 +311,31 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent>
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\CSUR.xml.gz" "$(ProjectDir)Text\Unicode" -sg CSUR.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\NamesList.txt.gz" "$(ProjectDir)Text\Unicode" -sg NamesList.txt
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.all.grouped.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\CSUR.xml.gz" "$(ProjectDir)Text\Unicode" -sg CSUR.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\NamesList.txt.gz" "$(ProjectDir)Text\Unicode" -sg NamesList.txt
 
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.cs.gz" "$(ProjectDir)Text\Unicode" -sg ucd.cs.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.da.gz" "$(ProjectDir)Text\Unicode" -sg ucd.da.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.de.gz" "$(ProjectDir)Text\Unicode" -sg ucd.de.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.el.gz" "$(ProjectDir)Text\Unicode" -sg ucd.el.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.en.gz" "$(ProjectDir)Text\Unicode" -sg ucd.en.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.es.gz" "$(ProjectDir)Text\Unicode" -sg ucd.es.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.fr.gz" "$(ProjectDir)Text\Unicode" -sg ucd.fr.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.pl.gz" "$(ProjectDir)Text\Unicode" -sg ucd.pl.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.pt.gz" "$(ProjectDir)Text\Unicode" -sg ucd.pt.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.ru.gz" "$(ProjectDir)Text\Unicode" -sg ucd.ru.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.tr.gz" "$(ProjectDir)Text\Unicode" -sg ucd.tr.xml
-            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\Debug\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.zh.gz" "$(ProjectDir)Text\Unicode" -sg ucd.zh.xml
-        </PreBuildEvent>
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.gz" "$(ProjectDir)Text\Unicode" -sg ucd.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.cs.gz" "$(ProjectDir)Text\Unicode" -sg ucd.cs.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.da.gz" "$(ProjectDir)Text\Unicode" -sg ucd.da.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.de.gz" "$(ProjectDir)Text\Unicode" -sg ucd.de.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.el.gz" "$(ProjectDir)Text\Unicode" -sg ucd.el.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.en.gz" "$(ProjectDir)Text\Unicode" -sg ucd.en.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.es.gz" "$(ProjectDir)Text\Unicode" -sg ucd.es.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.fr.gz" "$(ProjectDir)Text\Unicode" -sg ucd.fr.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.pl.gz" "$(ProjectDir)Text\Unicode" -sg ucd.pl.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.pt.gz" "$(ProjectDir)Text\Unicode" -sg ucd.pt.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.ru.gz" "$(ProjectDir)Text\Unicode" -sg ucd.ru.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.tr.gz" "$(ProjectDir)Text\Unicode" -sg ucd.tr.xml
+            "$(ProjectDir)..\DevelopmentTools\PseudoZip\bin\$(ConfigurationName)\AnyCPU\PseudoZip.exe" a "$(ProjectDir)Text\Unicode\ucd.xml.zh.gz" "$(ProjectDir)Text\Unicode" -sg ucd.zh.xml
+</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
-            "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
+            "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\$(ConfigurationName)\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
             copy "$(ProjectDir)Text\Unicode\ucd.all.grouped.xml.gz" "$(TargetDir)ucd.all.grouped.xml.gz" /Y
-        </PostBuildEvent>
+
+"$(SolutionDir)DevelopmentTools\nuget.exe" pack "$(ProjectPath)" -OutputDirectory "$(TargetDir)\" -Properties Configuration=$(ConfigurationName) -Properties "BinDir=$(TargetDir)\" -IncludeReferencedProjects</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,18 +3,8 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
-' General Information about an assembly is controlled through the following 
-' set of attributes. Change these attribute values to modify the information
-' associated with an assembly.
-
-' Review the values of the assembly attributes
-
 <Assembly: AssemblyTitle("Tools.Text.Unicode")> 
-
-<Assembly: AssemblyCompany("Đonny")> 
-<Assembly: AssemblyProduct("Tools.Text.Unicode")> 
-<Assembly: AssemblyCopyright("Copyright © Đonny 2011")> 
-
+<Assembly:AssemblyDescription("Strongly-typed complete binding to Unicode Character Database (UCD)")>
 <Assembly: CLSCompliant(True)> 
 <Assembly: ComVisible(False)> 
 
