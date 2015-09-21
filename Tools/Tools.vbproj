@@ -68,7 +68,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\AnyCPU\</OutputPath>
     <DocumentationFile>Tools.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
@@ -134,11 +134,8 @@
     <Import Include="Tools.InternalT" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedFiles\AssemblyStage.vb">
-      <Link>AssemblyStage.vb</Link>
-    </Compile>
-    <Compile Include="..\SharedFiles\Version.vb">
-      <Link>Version.vb</Link>
+    <Compile Include="..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
     <Compile Include="ApplicationServices\ApplicationServices.vb" />
     <Compile Include="CodeDom\CodeDom.vb">
@@ -329,6 +326,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="Tools.nuspec" />
     <None Include="Web\Css\Lexical\SelectorsFSA.vsd" />
   </ItemGroup>
   <ItemGroup>
@@ -590,6 +588,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>REM "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>REM "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
+
+"$(SolutionDir)DevelopmentTools\nuget.exe" pack "$(ProjectPath)" -OutputDirectory "$(TargetDir)\" -Properties Configuration=$(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>
 </Project>
