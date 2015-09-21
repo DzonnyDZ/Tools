@@ -114,7 +114,7 @@ cli::array<T>^ EnumCore::GetFlags(T value){
         else if(et->Equals(UInt32::typeid)) flags = GetFlags((UInt32)value);
         else if(et->Equals(Int64::typeid))  flags = GetFlags((Int64)value);
         else if(et->Equals(UInt64::typeid)) flags = GetFlags((UInt64)value);
-        else throw gcnew NotSupportedException(String::Format("Underlying type {1} of enumeration {0} is not supported.", et->Name, T::typeid->FullName));
+        else throw gcnew NotSupportedException(String::Format("Underlying type {1} of enumeration {0} is not supported.", et->Name, T::typeid->FullName)); //TODO: Extract to resources
 
     cli::array<T>^ ret = gcnew cli::array<T>(flags->Length);
     for(int i = 0; i < ret->Length; i++)

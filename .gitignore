@@ -15,3 +15,5 @@ ipch
 *.opensdf
 *.tmp_proj
 */NuGet/*.nupkg
+/Tools.Hardcore/Debug
+/Tools.Hardcore/Release

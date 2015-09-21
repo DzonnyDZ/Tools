@@ -35,4 +35,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="Tools.Hardcore.nuspec">
+      <Filter>Header Files</Filter>
+    </Xsd>
+  </ItemGroup>
 </Project>
