@@ -6,7 +6,6 @@ Imports Tools.MetadataT.IptcT.Iptc
 Imports Tools.ExtensionsT
 
 Namespace MetadataT.IptcT.IptcDataTypes
-#If Congig <= Nightly Then 'Stage: Nightly
 
     ''' <summary>IPTC Subject Reference (IPTC type <see cref="IPTCTypes.SubjectReference"/>)</summary>
     Public Class IptcSubjectReference : Inherits WithIpr
@@ -1208,11 +1207,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
 #End Region
         ''' <summary>String representation in the HHMMSS±HHMM format</summary>
         Public Overrides Function ToString() As String
-            '#If Framework >= 3.5 Then
             Return String.Format(InvariantCulture, "{0:00}{1:00}{2:00}{3}{4:00}{5:00}", Hours, Minutes, Seconds, If(Time < TimeSpan.Zero, "-"c, "+"c), OffsetHourAbs, OffsetMinuteAbs)
-            '#Else
-            '                Return String.Format(InvariantCulture, "{0:00}{1:00}{2:00}{3}{4:00}{5:00}", Hours, Minutes, Seconds, iif(Time < TimeSpan.Zero, "-"c, "+"c), OffsetHourAbs, OffsetMinuteAbs)
-            '#End If
         End Function
 #Region "CTors"
         ''' <summary>CTor</summary>
@@ -1446,11 +1441,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             ''' <returns>Representation of <paramref name="value"/> in <see cref="String"/></returns>
             Public Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Time) As String
                 With value
-                    '#If Framework >= 3.5 Then
                     Return String.Format(InvariantCulture, "{0:0}:{1:00}:{2:00}{3}{4:0}:{5:00}", .Hours, .Minutes, .Seconds, If(.NegativeOffset, "-"c, "+"c), .OffsetHourAbs, .OffsetMinuteAbs)
-                    '#Else
-                    '                        Return String.Format(InvariantCulture, "{0:0}:{1:00}:{2:00}{3}{4:0}:{5:00}", .Hours, .Minutes, .Seconds, VisualBasicT.iif(.NegativeOffset, "-"c, "+"c), .OffsetHourAbs, .OffsetMinuteAbs)
-                    '#End If
                 End With
             End Function
         End Class
@@ -2439,5 +2430,4 @@ Namespace MetadataT.IptcT.IptcDataTypes
         Visualize = 13
     End Enum
 #End Region
-#End If
 End Namespace

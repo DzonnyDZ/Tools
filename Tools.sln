@@ -54,17 +54,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cz", "cz", "{97FEC59D-58AC-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{B1BD67A4-BEC2-442D-8F70-DAEB27735602}"
 	ProjectSection(SolutionItems) = preProject
-		SharedFiles\AssemblyStage.cs = SharedFiles\AssemblyStage.cs
-		SharedFiles\AssemblyStage.vb = SharedFiles\AssemblyStage.vb
 		SharedFiles\FixXmlComments.xslt = SharedFiles\FixXmlComments.xslt
 		SharedFiles\GlobalAssemblyInfo.cpp = SharedFiles\GlobalAssemblyInfo.cpp
 		SharedFiles\GlobalAssemblyInfo.vb = SharedFiles\GlobalAssemblyInfo.vb
 		SharedFiles\Tools.snk = SharedFiles\Tools.snk
-		SharedFiles\Version.cpp = SharedFiles\Version.cpp
-		SharedFiles\Version.cs = SharedFiles\Version.cs
-		SharedFiles\Version.il = SharedFiles\Version.il
-		SharedFiles\Version.txt = SharedFiles\Version.txt
-		SharedFiles\Version.vb = SharedFiles\Version.vb
 		SharedFiles\VersionHistory.xsd = SharedFiles\VersionHistory.xsd
 	EndProjectSection
 EndProject

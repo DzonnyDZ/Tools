@@ -32,7 +32,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:value-of select="$namespace"/>
             <xsl:call-template name="nl"/>
         </xsl:if>
-        <xsl:text>#If Congig &lt;= </xsl:text>
         <xsl:value-of select="I:Root/@Stage"/>
         <xsl:if test="I:Root/@Stage!='Release'">
             <xsl:text> 'Stage: </xsl:text>
@@ -40,7 +39,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         </xsl:if>
         <xsl:call-template name="nl"/>
         <xsl:call-template name="code-gen"/>
-        <xsl:text>#End If&#xD;&#xA;</xsl:text>
         <xsl:if test="$namespace!=''">
             <xsl:text>End Namespace</xsl:text>
             <xsl:call-template name="nl"/>

@@ -1,18 +1,18 @@
 Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT, Tools.ComponentModelT
 Imports Tools.MetadataT.IptcT.IptcDataTypes
 Imports System.Linq
+Imports Tools.TextT.EncodingT
 
 Namespace MetadataT.IptcT
-#If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class Iptc
         ''' <summary>Contains value of the <see cref="Encoding"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Encoding As System.Text.Encoding
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Private _encoding As System.Text.Encoding
         ''' <summary>Indicates whether value of the <see cref="Encoding"/> property was set externally or not</summary>
         Private encodingSetExternally As Boolean
         ''' <summary>Encoding used for encoding and decoding some texts (applies only to records 2 - 6 and 8 (see remarks))</summary>
         ''' <value>
-        ''' By setting this property to null encoding is reset to default (either <see cref="System.Text.Encoding.[Default]"/> or autodetect from <see cref="CodedCharacterSet"/>) and <see cref="CodedCharacterSet"/> tracing is turned on.
+        ''' By setting this property to null encoding is reset to default (either <see cref="System.Text.Encoding.[Default]"/> or auto detect from <see cref="CodedCharacterSet"/>) and <see cref="CodedCharacterSet"/> tracing is turned on.
         ''' By setting this property to non-null value <see cref="CodedCharacterSet"/> change-tracking is turned of.
         ''' </value>
         ''' <returns>Current encoding used for decoding string values stored in records 2-6.</returns>
@@ -41,26 +41,26 @@ Namespace MetadataT.IptcT
         ''' </para>
         ''' </remarks>
         ''' <seelaso cref="CodedCharacterSet"/><seelaso cref="Tools.TextT.EncodingT.ISO2022.DetectEncoding"/>
-        ''' <version version="1.5.3">Support to detect UTF-8 encodings (numbers 190, 191, 192 and 196 according to ISO 2022) from <see cref="CodedCharacterSet"/> addded.</version>
+        ''' <version version="1.5.3">Support to detect UTF-8 encodings (numbers 190, 191, 192 and 196 according to ISO 2022) from <see cref="CodedCharacterSet"/> added.</version>
         ''' <version version="1.5.3"><see cref="DebuggerStepThroughAttribute"/> removed from getter.</version>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Encoding() As System.Text.Encoding
             Get
-                If _Encoding Is Nothing Then
+                If _encoding Is Nothing Then
                     If CodedCharacterSet IsNot Nothing AndAlso CodedCharacterSet.Length > 0 Then
-                        Dim enc = TextT.EncodingT.ISO2022.DefaultInstance.DetectEncoding(CodedCharacterSet)
+                        Dim enc = ISO2022.DefaultInstance.DetectEncoding(CodedCharacterSet)
                         Select Case If(enc Is Nothing, -1, enc.Number)
-                            Case 190, 191, 192, 196 : _Encoding = New System.Text.UTF8Encoding(False)
-                            Case Else : _Encoding = System.Text.Encoding.Default
+                            Case 190, 191, 192, 196 : _encoding = New System.Text.UTF8Encoding(False)
+                            Case Else : _encoding = System.Text.Encoding.Default
                         End Select
                     Else
-                        _Encoding = System.Text.Encoding.Default
+                        _encoding = System.Text.Encoding.Default
                     End If
                 End If
-                Return _Encoding
+                Return _encoding
             End Get
             Set(ByVal value As System.Text.Encoding)
-                _Encoding = value
+                _encoding = value
                 encodingSetExternally = True
             End Set
         End Property
@@ -68,9 +68,9 @@ Namespace MetadataT.IptcT
 #Region "Readers and writers"
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.UnsignedBinaryNumber"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
+        ''' <exception cref="ArgumentException">Value stored in IPTC stream has length neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
-        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property UnsignedBinaryNumber_Value(ByVal Key As DataSetIdentification) As List(Of ULong)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -104,11 +104,12 @@ Namespace MetadataT.IptcT
                 Tag(Key) = values
             End Set
         End Property
+
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Boolean_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="Bytes">Number of bytes per one boolean item (ignored in Getter)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Boolean_Binary_Value(ByVal Key As DataSetIdentification, Optional ByVal Bytes As Byte = 1) As List(Of Boolean)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -138,11 +139,12 @@ Namespace MetadataT.IptcT
                 Tag(Key) = values
             End Set
         End Property
+
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Byte_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Byte_Binary_Value(ByVal Key As DataSetIdentification) As List(Of Byte)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -165,11 +167,12 @@ Namespace MetadataT.IptcT
                 Tag(Key) = values
             End Set
         End Property
+
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.UShort_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
-        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property UShort_Binary_Value(ByVal Key As DataSetIdentification) As List(Of UShort)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -197,7 +200,7 @@ Namespace MetadataT.IptcT
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
-        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property UInt_Binary_Value(ByVal Key As DataSetIdentification) As List(Of UInt32)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -233,7 +236,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.3">Fix: <paramref name="Len"/> is not enforced in setter.</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property NumericChar_Value(ByVal key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of Decimal)
             Get
                 Dim values As List(Of Byte()) = Tag(key)
@@ -279,8 +282,8 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
                 If Encoding Is Nothing Then
                     Select Case Key.RecordNumber
@@ -334,7 +337,7 @@ Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdent
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property TextWithSpaces_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
                 If Encoding Is Nothing Then
@@ -390,8 +393,8 @@ Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdent
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
                 If Encoding Is Nothing Then
                     Select Case Key.RecordNumber
@@ -444,8 +447,8 @@ Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Op
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
             Get
                 If Cache.ContainsKey(Key) Then Return Cache(Key)
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -461,13 +464,7 @@ Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, O
                         For j As Integer = i To i + BW460_460 - 1
                             Dim x As Integer = j - i
                             Dim y As Integer = bmp.Height - i / BW460_460 - 1
-                            '#If Framework >= 3.5 Then
                             bmp.SetPixel(x, y, If((item(j \ 8) And CByte(2 ^ (7 - j Mod 8))) <> 0, Drawing.Color.Black, Drawing.Color.White))
-                            '#Else
-                            '                            bmp.SetPixel(x, y, VisualBasicT.iif((item(j \ 8) And CByte(2 ^ (7 - j Mod 8))) <> 0, Drawing.Color.Black, Drawing.Color.White))
-                            '#End If
-                            'g.FillRectangle(New Drawing.SolidBrush(VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White)), x, y, 1, 1)
-                            'g.FillRectangle(New Drawing.SolidBrush(VisualBasicT.iif((item(j \ 8) And CByte(2 ^ (j Mod 8)) <> 0), Drawing.Color.Black, Drawing.Color.White)), x, y, 1, 1)
                         Next j
                     Next i
                     'g.Flush(Drawing.Drawing2D.FlushIntention.Flush)
@@ -508,11 +505,7 @@ Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, O
         Private Function Ba2Bytes(ByVal ba As BitArray) As Byte() 'TODO:Extract as separate tool
             Dim bytes(Math.Ceiling(ba.Length / 8 - 1)) As Byte
             For i As Integer = 0 To ba.Length - 1
-                '#If Framework >= 3.5 Then
                 bytes(i \ 8) = bytes(i \ 8) Or If(ba(i), CByte(1), CByte(0)) << (7 - i Mod 8)
-                '#Else
-                '                bytes(i \ 8) = bytes(i \ 8) Or VisualBasicT.iif(ba(i), CByte(1), CByte(0)) << (7 - i Mod 8)
-                '#End If
             Next i
             Return bytes
         End Function
@@ -526,7 +519,7 @@ Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, O
         ''' <exception cref="InvalidEnumArgumentException">Enum is restricted and value being set is not member of <paramref name="Type"/></exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <exception cref="MissingMethodException">Failed to create instance of given enumeration (in Getter; sohold not occure if norma enumeration is passed to <paramref name="Type"/>)</exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Enum_Binary_Value(ByVal Key As DataSetIdentification, ByVal Type As Type) As List(Of [Enum])
             Get
                 If Type Is Nothing Then Throw New ArgumentNullException("Type")
@@ -592,8 +585,8 @@ Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, O
         ''' <version version="1.5.3">Fix: <paramref name="Len"/> is not enforced in setter.</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of [Enum])
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of [Enum])
             Get
                 If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -634,7 +627,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <exception cref="ArgumentException">Stored date has lenght different from 8 (in Getter)</exception>
         ''' <exception cref="InvalidCastException">Stored date contains non-number (in Getter)</exception>
         ''' <exception cref="ArgumentOutOfRangeException">Stored date's value of month or day is invalid (i.e. 0 or 13 or more months or 0 or more than valid in month days) (in Getter)</exception>
-        <EditorBrowsableAttribute(EditorBrowsableState.Advanced)> _
+        <EditorBrowsableAttribute(EditorBrowsableState.Advanced)>
         Protected Overridable Property CCYYMMDD_Value(ByVal Key As DataSetIdentification) As List(Of Date)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -669,7 +662,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' Date being set is invalid (day is invalid in month context) (in Setter) -or-
         ''' Month or year is ommited when day is not ommited or year is ommited when month or day is not ommited (in Setter)
         ''' </exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property CCYYMMDDOmmitable_Value(ByVal Key As DataSetIdentification) As List(Of OmmitableDate)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -709,7 +702,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <seelaso cref="Tag"/><seelaso cref="HHMMSS_Value"/>
         ''' <version version="1.5.3">In getter: When stored time lenght is 6 <see cref="HHMMSS_Value"/> is returned instead (with zero offset; previously <see cref="ArgumentException"/> used to be thrown).</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property HHMMSS_HHMM_Value(ByVal Key As DataSetIdentification) As List(Of Time)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -720,7 +713,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
 
                     If ItemStr.Length = 6 Then
-                        Return (From iitem In HHMMSS_Value(Key) Select New Time(iitem)).tolist
+                        Return (From iitem In HHMMSS_Value(Key) Select New Time(iitem)).ToList
                     End If
 
                     If ItemStr.Length <> 11 Then Throw New ArgumentException(ResourcesT.Exceptions.LengthOfDataStoredUnderThisTagIsDifferentThen11WhichIsNecessaryForDatatypeHHMMSSHHMM)
@@ -748,7 +741,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter)</exception>
         ''' <exception cref="LengthConstraintViolationException">Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        <EditorBrowsable(EditorBrowsableState.Always)> _
+        <EditorBrowsable(EditorBrowsableState.Always)>
         Protected Overridable Property ByteArray_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Byte())
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -772,7 +765,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <exception cref="ArgumentException">UCD component of stored value is to short or contains invalid date (in Getter)</exception>
         ''' <exception cref="InvalidCastException">UCD component odf stored value contains non-numeric character (in Getter)</exception>
         ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="iptcUNO.ODE"/> for more information. (in Getter)</exception>
-        <EditorBrowsable(EditorBrowsableState.Always)> _
+        <EditorBrowsable(EditorBrowsableState.Always)>
         Protected Overridable Property UNO_Value(ByVal Key As DataSetIdentification) As List(Of IptcUno)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -803,7 +796,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <seelaso cref="Encoding"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Num2_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr2)
             Get
                 If Encoding Is Nothing Then
@@ -857,7 +850,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <seelaso cref="Encoding"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Num3_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr3)
             Get
                 If Encoding Is Nothing Then
@@ -910,7 +903,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <exception cref="InvalidOperationException">Setting value which's part(s) serializes into byte array of bad lengths (allowed lenghts are 1÷32 for <see cref="iptcSubjectReference.IPR"/>, 8 for <see cref="iptcSubjectReference.SubjectReferenceNumber"/> and 0÷64 for names) (in setter)</exception>
         ''' <seelaso cref="Encoding"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property SubjectReference_Value(ByVal Key As DataSetIdentification, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of IptcSubjectReference)
             Get
                 If Encoding Is Nothing Then
@@ -950,7 +943,7 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentException">In getter: Value of dataset does not have exactly 15 octets</exception>
         ''' <version version="1.5.4">This property is new in version 1.5.4</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property PictureNumber_Value(ByVal Key As DataSetIdentification) As List(Of IptcPictureNumber)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -986,8 +979,8 @@ Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentifica
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
-Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
+        Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
                 If Encoding Is Nothing Then
                     Select Case Key.RecordNumber
@@ -1042,7 +1035,7 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
         ''' <exception cref="LengthConstraintViolationException">Value violates length constaraint after serialization (in Setter, not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false)</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Property StringEnum_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of StringEnum)
             Get
                 If Type Is Nothing Then Throw New ArgumentNullException("Type")
@@ -1091,7 +1084,7 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
         ''' Stored value has length different than 2B (in Getter) -or-
         ''' 2nd byte of stored value cannot be interpreted as <see cref="ImageTypeContents"/> (in Getter)
         ''' </exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Property ImageType_Value(ByVal Key As DataSetIdentification) As List(Of IptcImageType)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -1126,7 +1119,7 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
         ''' 2nd byte of stored value cannot be interpreted as <see cref="AudioDataType"/> (in Getter) -or-
         ''' Setting value which's serializatazion produes more or less than 2 bytes
         ''' </exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of IptcAudioType)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -1160,7 +1153,7 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
         ''' <exception cref="ArgumentException">Stored item's length differs from 6 (in Getter)</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><see cref="TimeSpan"/> to be stored is less than <see cref="TimeSpan.Zero"/> or it's <see cref="TimeSpan.TotalDays"/> is greater than or equal to 1 (in setter)</exception>
         ''' <exception cref="InvalidCastException">Stored item contains non-numeric character (in Getter)</exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Property HHMMSS_Value(ByVal Key As DataSetIdentification) As List(Of TimeSpan)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -1244,7 +1237,7 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
         Private Shared Function ConvertEnumList(Of TEnum As {IConvertible, Structure})(ByVal From As List(Of StringEnum)) As List(Of StringEnum(Of TEnum))
             If From Is Nothing Then Return Nothing
             Dim ret As New List(Of StringEnum(Of TEnum))(From.Count)
-            For Each item As stringenum In From
+            For Each item As StringEnum In From
                 ret.Add(item)
             Next item
             Return ret
@@ -1277,7 +1270,7 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
         ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
         ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
         Public Sub New(ByVal PropertyName$, ByVal MaximalLength%, Optional ByVal Fixed As Boolean = False)
-            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
+            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, MetadataT.IptcT.IptcResources.StringValueOfTheProperty0MustBe1BytesLong, MetadataT.IptcT.IptcResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
             _PropertyName = PropertyName
             _MaximalLength = MaximalLength
             _Fixed = Fixed
@@ -1287,10 +1280,10 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
         ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
         ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
         Public Sub New(ByVal [Property] As DataSetIdentification, ByVal MaximalLength%, Optional ByVal fixed As Boolean = False)
-            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format( _
-                       If(fixed, _
-                          IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, _
-                          IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), _
+            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(
+                       If(fixed,
+                          IptcResources.StringValueOfTheProperty0MustBe1BytesLong,
+                          IptcResources.StringValueOfTheProperty0CanBeMaximally1BytesLong),
                         [Property].DisplayName & "(" & CInt([Property].RecordNumber) & ":" & [Property].DatasetNumber, MaximalLength))
             _PropertyName = [Property].PropertyName
             _MaximalLength = MaximalLength
@@ -1321,5 +1314,4 @@ Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, O
             End Get
         End Property
     End Class
-#End If
 End Namespace

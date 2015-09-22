@@ -10,7 +10,6 @@
 ' By:BiggerBook\Honza
 '
 'Localize: This auto-generated file was skipped during localization
-#If Config <= Nightly 'Stage: Nightly
 #Region "Generated code"
 Imports Tools.ComponentModelT
 Imports Tools.NumericsT
@@ -3630,4 +3629,3 @@ Namespace MetadataT.ExifT
 		End Class
 End Namespace
 #End Region
-#End If

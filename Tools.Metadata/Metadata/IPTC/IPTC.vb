@@ -1,7 +1,6 @@
 Imports Tools.CollectionsT.GenericT, Tools.ExtensionsT, System.Linq, Tools.ReflectionT
 Imports Tools.DataStructuresT.GenericT
 Namespace MetadataT.IptcT
-#If Congig <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides high-level access to IPTC metadata</summary>
     ''' <remarks>Value key format for this <see cref="IMetadata"/> is "RecordNumber:DatasetNumber".</remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
@@ -988,6 +987,4 @@ Namespace MetadataT.IptcT
             End Set
         End Property
     End Class
-
-#End If
 End Namespace

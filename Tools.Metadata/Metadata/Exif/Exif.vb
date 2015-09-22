@@ -10,7 +10,6 @@ Imports Tools.NumericsT
 Imports Tools.GlobalizationT
 
 Namespace MetadataT.ExifT
-#If True
     ''' <summary>Provides high-level acces to Exif metadata</summary>
     ''' <remarks>This <see cref="IMetadata"/> supports metadata keys in format "X:RecordNumber" where X is either number of main IFD or E for Exif sub-IFD, G for GPS sub-IFD or I for interop sub-IFD.</remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
@@ -1088,5 +1087,4 @@ Namespace MetadataT.ExifT
         Public Event Changed As IReportsChange.ChangedEventHandler Implements IReportsChange.Changed
 
     End Class
-#End If
 End Namespace

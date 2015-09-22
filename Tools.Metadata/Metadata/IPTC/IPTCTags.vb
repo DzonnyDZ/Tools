@@ -19,7 +19,6 @@ Imports Tools.DrawingT.DesignT
 Imports Tools.MetadataT.IptcT.IptcDataTypes
 Imports Tools.MetadataT.IptcT.Iptc
 Namespace MetadataT.IptcT
-#If Congig <= Nightly 'Stage: Nightly
 #Region "Tag Enums"
 		''' <summary>Numbers of IPTC records (groups of tags)</summary>
 		Public Enum RecordNumbers As Byte
@@ -6101,5 +6100,4 @@ Namespace MetadataT.IptcT
 		End Function
 	End Class
 #End Region
-#End If
 End Namespace

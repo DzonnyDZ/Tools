@@ -3,7 +3,6 @@ Imports Tools.VisualBasicT.Interaction, Tools.ComponentModelT, Tools.DrawingT.De
 Imports System.Drawing.Design, System.Windows.Forms, System.Drawing
 Imports Tools.MetadataT.IptcT.IptcDataTypes
 Namespace MetadataT.IptcT
-#If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class Iptc
         'TODO: Tune IPTC's behavior in PropertyGrid
 
@@ -338,5 +337,4 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.4">This enumeration member is new in version 1.5.4</version>
         PictureNumber
     End Enum
-#End If
 End Namespace

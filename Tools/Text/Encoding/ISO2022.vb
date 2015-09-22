@@ -4,8 +4,7 @@ Imports System.Runtime.InteropServices
 Imports Encoding = System.Text.Encoding, StringBuider = System.Text.StringBuilder
 Imports RegexOptions = System.Text.RegularExpressions.RegexOptions
 'TODO:Test
-'#If Trueset in project file
-'Stage=Nightly
+
 Namespace TextT.EncodingT
     ''' <summary>Provides runtime access to list of text encodings registered by ISO-IR 2022 (also known as ISO/IEC 2022 or ECMA-35)</summary>
     ''' <remarks>This class provides access to information about such encodings and possibly gives their names as registered by IANA and possibly gives instances of the <see cref="System.Text.Encoding"/> class to manipulate with text stored in this encoding. Not all ISO-2022 encodings are registered with IANA and not all ISO-2022 encodings are supported by .NET framework. This class does not provide more implementations of the <see cref="System.Text.Encoding"/> class to deal with all ISO-2022 registered encodings neither this class provides generic ISO-2022 reader/writer. The aim of this class is to provide possibility of identifiying ISO 2022 encoding by its escape sequence, not to deal with it.
@@ -16,10 +15,10 @@ Namespace TextT.EncodingT
         ''' <summary>represents ASCII Escape character often used with ISO-2022 encodings</summary>
         Public Const AsciiEscape As Byte = &H1B
         ''' <summary>Contains value of the <see cref="DefaultInstance"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private Shared _DefaultInstance As ISO2022
         ''' <summary>Gets default instance of the <see cref="ISO2022"/> class initialized with default values.</summary>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Shared ReadOnly Property DefaultInstance() As ISO2022
             Get
                 If _DefaultInstance Is Nothing Then _DefaultInstance = New ISO2022
@@ -36,7 +35,7 @@ Namespace TextT.EncodingT
         ''' <exception cref="System.Xml.XmlException">Given <paramref name="EncodingDefinitions"/> does not validate to XML-Schema</exception>
         ''' <exception cref="ArgumentException">Root element of <paramref name="EncodingDefinitions"/> is not http://codeplex.com/DTools/IS2022:encodings</exception>
         ''' <remarks>The XML-Schema for the http://codeplex.com/DTools/IS2022 namespace is specified in file Text/Encoding/IOS2022.xsd which is included in source code of the Tools project. Actual schema can be also obtained by reading embdeded resource Tools.TextT.EncodingT.ISO2022Schema from this assembly.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Sub New(ByVal EncodingDefinitions As XDocument)
             If EncodingDefinitions Is Nothing Then Throw New ArgumentNullException("EncodingDefinitions")
             Dim ss As New XmlSchemaSet
@@ -47,7 +46,7 @@ Namespace TextT.EncodingT
             root = EncodingDefinitions.Root
         End Sub
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
-        ''' <returns>True if <paramref name="obj"/> is <see cref="ISO2022"/> and was initialized with the same xml element.</returns>
+        ''' <returns>True if <paramref name="obj"/> is <see cref="ISO2022"/> and was initialized with the same XML element.</returns>
         ''' <exception cref="T:System.NullReferenceException">The 
         ''' <paramref name="obj" /> parameter is null.</exception>
         ''' <filterpriority>2</filterpriority>
@@ -69,10 +68,11 @@ Namespace TextT.EncodingT
         ''' <summary>Gets all encodings recognized by ISO-2022 and registered by IPSJ/ITSCJ</summary>
         ''' <remarks>Array of <see cref="ISO2022Encoding"/> to represent all the encodings</remarks>
         Public Function GetEncodings() As ISO2022Encoding()
-            Static encodings As ISO2022Encoding() = _
+            Static encodings As ISO2022Encoding() =
                 (From encoding In root.<e:encoding> Select New ISO2022Encoding(encoding)).ToArray
             Return encodings.Clone
         End Function
+
         ''' <summary>Attempts to detect ISO-2022 encoding of <see cref="io.Stream"/></summary>
         ''' <param name="stream">Stream to detect encoding of. Current position of stream must be at place where the encoding escape sequence starts, where encoding should be detected.</param>
         ''' <param name="WorkingSet">Specifies current working set of stream - it defines which set of escape sequences will be used. If you are at the beginning of an unknown stream leave default value <see cref="ISO20200Sets.G0"/></param>
@@ -86,25 +86,25 @@ Namespace TextT.EncodingT
         Public Function DetectEncoding(ByVal stream As IO.Stream, Optional ByVal WorkingSet As ISO20200Sets = ISO20200Sets.G0, <Out()> Optional ByRef BytesRead As Byte() = Nothing) As ISO2022Encoding
             If stream Is Nothing Then Throw New ArgumentNullException("stream")
             If Not stream.CanRead Then Throw New ArgumentException(ResourcesT.Exceptions.GivenStreamDoesNotSupportReading)
-            Dim Encodings = (From enc In GetEncodings() Select Encoding = enc, Escape = enc.EscapeSequence(WorkingSet) Where Escape IsNot Nothing AndAlso Escape.Length > 0).ToList
+            Dim encodings = (From enc In GetEncodings() Select encoding = enc, escape = enc.EscapeSequence(WorkingSet) Where escape IsNot Nothing AndAlso escape.Length > 0).ToList
             Dim i As Integer = 0
             Dim bytes As New List(Of Byte)
             Try
-                Do While Encodings.Count > 0
+                Do While encodings.Count > 0
                     Dim b = stream.ReadByte
                     If b = -1 Then
-                        If i > 0 AndAlso Encodings.Count = 1 AndAlso Encodings.First.Escape.Length = i Then Return Encodings.First.Encoding
+                        If i > 0 AndAlso encodings.Count = 1 AndAlso encodings.First.escape.Length = i Then Return encodings.First.encoding
                         Return Nothing
                     End If
                     bytes.Add(b)
-                    Dim ByteMatch = (From enc In Encodings Where enc.Escape.Length > i AndAlso enc.Escape(i) = b Select enc).ToList
-                    Dim TooShort = (From enc In Encodings Where enc.Escape.Length <= i Select enc).ToList
-                    If ByteMatch.Count = 0 Then
+                    Dim byteMatch = (From enc In encodings Where enc.escape.Length > i AndAlso enc.escape(i) = b Select enc).ToList
+                    Dim tooShort = (From enc In encodings Where enc.escape.Length <= i Select enc).ToList
+                    If byteMatch.Count = 0 Then
                         If i = 0 Then Return Nothing
-                        If TooShort.Count = 1 Then Return TooShort.First.Encoding
+                        If tooShort.Count = 1 Then Return tooShort.First.encoding
                         Return Nothing
                     End If
-                    Encodings = ByteMatch
+                    encodings = byteMatch
                     i += 1
                 Loop
                 Return Nothing
@@ -142,7 +142,7 @@ Namespace TextT.EncodingT
             ''' <summary>G3 set</summary>
             G3
         End Enum
-        ''' <summary>Parses Escape sequence as stored in Xml to array of bytes</summary>
+        ''' <summary>Parses Escape sequence as stored in XML to array of bytes</summary>
         ''' <param name="XmlEscapeSequence">String to be parsed</param>
         ''' <remarks>Byte array representation of <paramref name="XmlEscapeSequence"/></remarks>
         ''' <exception cref="FormatException"><paramref name="XmlEscapeSequence"/> contains invalid byte. Each byte is specified as either "ESC" string or two numbers from range 0÷127 separated by "/". Leading zeros are allowd. Bytes are separated, preceded and succeded by any number of whitespaces.</exception>
@@ -157,9 +157,9 @@ Namespace TextT.EncodingT
                 If m.Groups!ESC.Success Then
                     ret.Add(AsciiEscape)
                 Else
-                    Dim High = Byte.Parse(m.Groups!High.Value, Globalization.CultureInfo.InvariantCulture)
-                    Dim Low = Byte.Parse(m.Groups!Low.Value, Globalization.CultureInfo.InvariantCulture)
-                    ret.Add(High << 4 Or Low)
+                    Dim high = Byte.Parse(m.Groups!High.Value, Globalization.CultureInfo.InvariantCulture)
+                    Dim low = Byte.Parse(m.Groups!Low.Value, Globalization.CultureInfo.InvariantCulture)
+                    ret.Add(high << 4 Or low)
                 End If
             Next
             Return ret.ToArray
@@ -170,7 +170,7 @@ Namespace TextT.EncodingT
     ''' <seealso cref="ISO2022"/>
     Public NotInheritable Class ISO2022Encoding : Implements IEquatable(Of ISO2022Encoding)
         ''' <summary><see cref="XElement"/> encoding info is stored in</summary>
-        Private element As XElement
+        Private ReadOnly element As XElement
         ''' <summary>Creates new instance of the <see cref="ISO2022Encoding"/> class from its definition in <see cref="XElement"/></summary>
         ''' <param name="encoding"><see cref="XElement"/> encoding is stored in</param>
         ''' <exception cref="ArgumentNullException"><paramref name="encoding"/> is null</exception>
@@ -202,7 +202,7 @@ Namespace TextT.EncodingT
             End Get
         End Property
         ''' <summary>Gets number under which the encoding is registered by IPSJ/ITSCJ</summary>
-        ''' <returns>Number as string in same form it was stored in xml element which initialized this instance. It means no assumptions about leading and trailing whitespaces can be done, as well as about leading zeros. Some numbers may contain hyphen.</returns>
+        ''' <returns>Number as string in same form it was stored in XML element which initialized this instance. It means no assumptions about leading and trailing whitespaces can be done, as well as about leading zeros. Some numbers may contain hyphen.</returns>
         ''' <seealso cref="Number"/>
         Public ReadOnly Property NumberOriginal() As String
             Get
@@ -211,7 +211,7 @@ Namespace TextT.EncodingT
         End Property
         ''' <summary>Gets type of this encoding</summary>
         ''' <returns>If called repeatedly for the same instance returns the same instance of the <see cref="ISO2022EncodingType"/>, but it is not the same instance (in terms of <see cref="System.Object.ReferenceEquals"/>) as one of those obtained by <see cref="ISO2022.[GetEncodingTypes]"/>.</returns>
-        ''' <remarks>Type of this encoding assording to IPSJ/ITSCJ registr</remarks>
+        ''' <remarks>Type of this encoding according to IPSJ/ITSCJ registry</remarks>
         Public ReadOnly Property Type() As ISO2022EncodingType
             Get
                 Static iType As ISO2022EncodingType = New ISO2022EncodingType((From t In element.Parent.<e:type> Where t.@name = element.@type)(0))
@@ -219,8 +219,8 @@ Namespace TextT.EncodingT
             End Get
         End Property
         ''' <summary>Gets name of encoding as registered by IANA (if exists).</summary>
-        ''' <returns>Primary (preffered) name of encoding as registered by IANA. Or null if this encoding is not registered by IANA.</returns>
-        ''' <remarks>IANA organisation maintains list of encoding names registered for use on the Internet. Such encoding names are used eg. in XML encoding specification or in HTTP headers. Also <see cref="System.Text.EncodingInfo.Name"/> and <see cref="Encoding.WebName"/> uses IANA registred names. For more information see <a href="http://www.iana.org">www.iana.org</a> or <a href="http://www.iana.org/assignments/character-sets">character sets registry</a>.</remarks>
+        ''' <returns>Primary (proffered) name of encoding as registered by IANA. Or null if this encoding is not registered by IANA.</returns>
+        ''' <remarks>IANA organization maintains list of encoding names registered for use on the Internet. Such encoding names are used e.g. in XML encoding specification or in HTTP headers. Also <see cref="System.Text.EncodingInfo.Name"/> and <see cref="Encoding.WebName"/> uses IANA registred names. For more information see <a href="http://www.iana.org">www.iana.org</a> or <a href="http://www.iana.org/assignments/character-sets">character sets registry</a>.</remarks>
         ''' <seealso cref="Encoding.WebName"/><seealso cref="System.Text.EncodingInfo.Name"/>
         ''' <seealso cref="IanaAlias"/>
         Public ReadOnly Property IanaName$()
@@ -323,28 +323,28 @@ Namespace TextT.EncodingT
                 Return EscapeSequence(ISO2022.ISO20200Sets.G3)
             End Get
         End Property
-        ''' <summary>Gets value idicating if this <see cref="EscapeSequence"/> for this encoding starts wit same prefix sa <see cref="EscapeSequence"/> of all other encodings of same type that use common prefix too.</summary>
+        ''' <summary>Gets value idicating if this <see cref="EscapeSequence"/> for this encoding starts wit same prefix as <see cref="EscapeSequence"/> of all other encodings of same type that use common prefix too.</summary>
         ''' <returns>True if <see cref="EscapeSequence"/> of this encoding starts with <see cref="Type"/>.<see cref="ISO2022EncodingType.EscapeSequencePrefix">EscapeSequencePrefix</see> for all working sets.</returns>
         ''' <remarks>This is only hint property and is not mentioned in the ISO-2022 standard.</remarks>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public ReadOnly Property UsesCommonPrefix() As Boolean
             Get
                 Return element.<e:extended-escape>.Count = 0
             End Get
         End Property
         ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
-        ''' <returns>true if <paramref name="other"/> was initialized with the same xml elemet as current instance</returns>
+        ''' <returns>true if <paramref name="other"/> was initialized with the same XML element as current instance</returns>
         ''' <param name="other">An object to compare with this object.</param>
         Public Overloads Function Equals(ByVal other As ISO2022Encoding) As Boolean Implements System.IEquatable(Of ISO2022Encoding).Equals
             Return other.element Is Me.element
         End Function
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />. </summary>
-        ''' <returns>true if the specified <see cref="T:System.Object" /> is <see cref="ISO2022Encoding"/> and it was initialized by the same xml element.</returns>
+        ''' <returns>true if the specified <see cref="T:System.Object" /> is <see cref="ISO2022Encoding"/> and it was initialized by the same XML element.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.</param>
         ''' <exception cref="T:System.NullReferenceException">The <paramref name="obj" /> parameter is null.</exception>
         ''' <filterpriority>2</filterpriority>
         ''' <remarks>Use type-safe overload <see cref="M:Tools.TextT.EncodingT.ISO2022EncodingType.Equals(Tools.TextT.EncodingT.ISO2022EncodingType)"/> instead</remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
             If TypeOf obj Is ISO2022EncodingType Then Return DirectCast(obj, ISO2022Encoding).element Is Me.element
             Return MyBase.Equals(obj)
@@ -479,22 +479,21 @@ Namespace TextT.EncodingT
         End Property
 
         ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
-        ''' <returns>true if <paramref name="other"/> was initialized with the same xml elemet as current instance</returns>
+        ''' <returns>true if <paramref name="other"/> was initialized with the same XML element as current instance</returns>
         ''' <param name="other">An object to compare with this object.</param>
         Public Overloads Function Equals(ByVal other As ISO2022EncodingType) As Boolean Implements System.IEquatable(Of ISO2022EncodingType).Equals
             Return other.element Is Me.element
         End Function
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />. </summary>
-        ''' <returns>true if the specified <see cref="T:System.Object" /> is <see cref="ISO2022EncodingType"/> and it was initialized by the same xml element.</returns>
+        ''' <returns>true if the specified <see cref="T:System.Object" /> is <see cref="ISO2022EncodingType"/> and it was initialized by the same XML element.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.</param>
         ''' <exception cref="T:System.NullReferenceException">The <paramref name="obj" /> parameter is null.</exception>
         ''' <filterpriority>2</filterpriority>
         ''' <remarks>Use type-safe overload <see cref="M:Tools.TextT.EncodingT.ISO2022EncodingType.Equals(Tools.TextT.EncodingT.ISO2022EncodingType)"/> instead</remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
             If TypeOf obj Is ISO2022EncodingType Then Return DirectCast(obj, ISO2022EncodingType).element Is Me.element
             Return MyBase.Equals(obj)
         End Function
     End Class
 End Namespace
-'#End If

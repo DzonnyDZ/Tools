@@ -13,11 +13,10 @@
     <xsl:param name="namespace"></xsl:param>
     <xsl:param name="classname"></xsl:param>
 
-    <!--Generates file envelop (#If and #Region)-->
+    <!--Generates file envelop (#Region)-->
     <xsl:template match="/">
         <xsl:call-template name="header-comment"/>
         <xsl:text>'Localize: This auto-generated file was skipped during localization&#xD;&#xA;</xsl:text>
-        <xsl:text>#If Config &lt;= </xsl:text>
         <xsl:value-of select="et:Root/@Stage"/>
         <xsl:if test="et:Root/@Stage!='Release'">
             <xsl:text> 'Stage: </xsl:text>
@@ -36,7 +35,7 @@
         <xsl:if test="$namespace!=''">
             <xsl:text>End Namespace&#xD;&#xA;</xsl:text>
         </xsl:if>
-        <xsl:text>#End Region&#xD;&#xA;#End If</xsl:text>
+        <xsl:text>#End Region</xsl:text>
     </xsl:template>
     <!--Generates end of line-->
     <xsl:template name="nl">

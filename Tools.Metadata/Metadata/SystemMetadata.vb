@@ -1,7 +1,6 @@
 ﻿Imports Tools.ComponentModelT
 
 'Localize: This file is not localized
-#If True 'Stage: Nightly
 
 Imports System.Linq, Tools.ExtensionsT
 Imports DescStr = Tools.MetadataT.MetadataPropertyDescriptor(Of Tools.MetadataT.SystemMetadata, String)
@@ -415,4 +414,3 @@ Namespace MetadataT
 
     End Class
 End Namespace
-#End If

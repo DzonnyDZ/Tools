@@ -1,6 +1,5 @@
 Imports System.IO, Tools.IOt, Tools.MetadataT
 Namespace DrawingT.DrawingIOt.JPEG
-#If True
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     ''' <remarks>
     ''' This <see cref="IMetadataProvider"/> provides Exif (<see cref="ExifT.Exif"/>), IPTC (<see cref="IptcT.Iptc"/>), image (<see cref="ImageMetadata"/>) and system (<see cref="SystemMetadata"/>) metadata.
@@ -43,11 +42,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' </exception>
         ''' <remarks>When using this contructor system (<see cref="SystemMetadata"/>) and image (<see cref="ImageMetadata"/>) will be available.</remarks>
         Public Sub New(ByVal Path As String, Optional ByVal Write As Boolean = False)
-            '#If VBC_VER >= 9 Then
             Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, If(Write, System.IO.FileAccess.ReadWrite, System.IO.FileAccess.Read), System.IO.FileShare.Read)
-            '#Else
-            '            Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, VisualBasicT.iif(Write, System.IO.FileAccess.ReadWrite, System.IO.FileAccess.Read), System.IO.FileShare.Read)
-            '#End If
             CloseStreamOnDispose = True
             Parse()
         End Sub
@@ -400,11 +395,7 @@ Namespace DrawingT.DrawingIOt.JPEG
                     Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, 4)
 
                     Dim CurrIPTCStreamLen As Long = Me.GetIPTCStream.Length
-                    '#If Framework >= 3.5 Then
                     Dim Pad As Byte = If((CurrIPTCStreamLen) Mod 2 = 0, 0, 1)
-                    '#Else
-                    '                    Dim Pad As Byte = VisualBasicT.iif((CurrIPTCStreamLen) Mod 2 = 0, 0, 1)
-                    '#End If
                     Overwrite.Add(APP14SizePos, Me.Markers(Me.PhotoshopMarkerIndex).Length + (IPTCData.Length - (CurrIPTCStreamLen + Pad))) 'New length of APP14
                     LenghtToReplace = 4 + CurrIPTCStreamLen + Pad
                 Else
@@ -713,5 +704,4 @@ Namespace DrawingT.DrawingIOt.JPEG
             End Get
         End Property
     End Class
-#End If
 End Namespace

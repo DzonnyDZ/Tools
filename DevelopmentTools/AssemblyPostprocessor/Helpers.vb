@@ -12,7 +12,7 @@ Public Module CecilHelpers
     ''' <exception cref="IO.FileNotFoundException">Cannot find assembly for type -or- type requires a dependent assembly that could not be found</exception>
     ''' <exception cref="IO.FileLoadException">An assembly file (or dependent assembly file) that was found could not be loaded.</exception>
     ''' <exception cref="BadImageFormatException">Attempt to load an invalid assembly -or- Version 2.0 or later of the common language runtime is currently loaded and the assembly was compiled with a later version.</exception>
-    ''' <exception cref="NotSupportedException"><paramref name="type"/> is generic parameter defined on somethiong else than type (e.g. method) - this is not supported yet.</exception>
+    ''' <exception cref="NotSupportedException"><paramref name="type"/> is generic parameter defined on something else than type (e.g. method) - this is not supported yet.</exception>
     Public Function [GetType](type As TypeReference) As Type
         If type Is Nothing Then Throw New ArgumentNullException("type")
         Dim resolvedType = type.Resolve
