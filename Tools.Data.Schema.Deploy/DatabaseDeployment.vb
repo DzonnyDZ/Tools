@@ -153,7 +153,7 @@ Public Class DatabaseDeployment
     ''' <exception cref="InvalidOperationException">This instance has already been used to attempt to deploy a database schema -or-
     ''' <see cref="ManifestPath"/> does not exist -or-
     ''' A property from the <see cref="Properties"/> dictionary was not recognized</exception>
-    ''' <exception cref="DeploymentFailedException">An error ocuured while deploying schema to database</exception>
+    ''' <exception cref="DeploymentFailedException">An error occurred while deploying schema to database</exception>
     ''' <remarks>The <see cref="Deploy"/> method can be called only once for each instance of the <see cref="DatabaseDeployment"/> class</remarks>
     Public Sub Deploy()
         If Deployed Then Throw New InvalidOperationException(My.Resources.err_UsedInstanceUsedAgain)
@@ -308,7 +308,7 @@ Public Class DatabaseDeployment
         Return project
     End Function
 
-    ''' <summary>Gets VSDBCMD services from extention manager</summary>
+    ''' <summary>Gets VSDBCMD services from extension manager</summary>
     ''' <param name="em">An extension manager</param>
     ''' <param name="connectionString">Connection string to database</param>
     ''' <remarks>VSDBCMD services obtained from <paramref name="em"/></remarks>
@@ -321,7 +321,7 @@ Public Class DatabaseDeployment
         Return cmdServices
     End Function
 
-    ''' <summary>Gets VSDBCMD services from extention manager</summary>
+    ''' <summary>Gets VSDBCMD services from extension manager</summary>
     ''' <param name="em">An extension manager</param>
     ''' <remarks>VSDBCMD services obtained from <paramref name="em"/></remarks>
     Private Shared Function GetCmdServices(ByVal em As ExtensionManager) As VSDBCmdServices
