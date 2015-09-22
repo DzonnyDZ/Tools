@@ -151,7 +151,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="Tools.Windows.nuspec" />
+    <None Include="Tools.VisualStudio.Debugger.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\db.png" />
