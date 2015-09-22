@@ -8,7 +8,7 @@
     <ProjectGuid>{855B4F94-9AD7-49A5-A75D-6FC8B1892A58}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tools</RootNamespace>
-    <AssemblyName>ReportingEngine Lite</AssemblyName>
+    <AssemblyName>Tools.ReportingEngineLite</AssemblyName>
     <MyType>Windows</MyType>
     <SccProjectName>
     </SccProjectName>
@@ -52,16 +52,26 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
-    <DocumentationFile>ReportingEngine Lite.xml</DocumentationFile>
+    <DocumentationFile>Tools.ReportingEngineLite.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\AnyCPU\</OutputPath>
+    <DocumentationFile>Tools.ReportingEngineLite.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Excel-DNA.Interop.14.0.1\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Vbe.Interop, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Excel-DNA.Interop.14.0.1\lib\Microsoft.Vbe.Interop.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Excel-DNA.Interop.14.0.1\lib\Office.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
@@ -88,12 +98,6 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedFiles\AssemblyStage.vb">
-      <Link>My Project\AssemblyStage.vb</Link>
-    </Compile>
-    <Compile Include="..\SharedFiles\Version.vb">
-      <Link>My Project\Version.vb</Link>
-    </Compile>
     <Compile Include="SingleTypeDescriptionProvider.vb" />
     <Compile Include="WrapPropertyDescriptor.vb" />
     <None Include="..\SharedFiles\Tools.snk">
@@ -147,6 +151,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="ReportingEngineLite.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -178,6 +183,7 @@
       <Generator>XsdCodeGen</Generator>
       <LastGenOutput>CsvTemplateSettings.vb</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Reporting\Csv\CsvTemplateSettings.xsx">
       <DependentUpon>CsvTemplateSettings.xsd</DependentUpon>
     </None>
@@ -234,6 +240,9 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
+    </Compile>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
@@ -257,5 +266,8 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)DevelopmentTools\nuget.exe" pack "$(ProjectPath)" -OutputDirectory "$(TargetDir)\" -Properties Configuration=$(ConfigurationName) -Properties "BinDir=$(TargetDir)\" -IncludeReferencedProjects</PostBuildEvent>
   </PropertyGroup>
 </Project>
