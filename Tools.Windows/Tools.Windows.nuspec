@@ -14,4 +14,7 @@
         <projectUrl>https://github.com/DzonnyDZ/Tools</projectUrl>
         <tags>WinForms WPF XAML Interop Theme Control Dialog VisualStyle Converter MessageBox MarkupExtension Binding KeywordsEditor</tags>
     </metadata>
+    <files>
+        <file src="$BinDir$cs\Tools.Windows.resources.dll" target="lib\net46\cs\Tools.Windows.resources.dll"/>
+    </files>
 </package>

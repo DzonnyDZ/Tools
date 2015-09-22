@@ -17,3 +17,4 @@ ipch
 */NuGet/*.nupkg
 /Tools.Hardcore/Debug
 /Tools.Hardcore/Release
+/packages

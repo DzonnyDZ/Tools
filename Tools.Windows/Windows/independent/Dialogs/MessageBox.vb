@@ -8,6 +8,7 @@ Imports System.Windows.Forms
 Imports Tools.ComponentModelT
 Imports Tools.DrawingT
 Imports Tools.DrawingT.DesignT
+Imports Tools.ResourcesT
 Imports CultureInfo = System.Globalization.CultureInfo
 
 Namespace WindowsT.IndependentT
@@ -57,11 +58,11 @@ Namespace WindowsT.IndependentT
         ''' <value>Sets application-wide default implementation of message box</value>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
         ''' <exception cref="ArgumentException">Value being set represents type that either does not derive from <see cref="MessageBox"/>, is abstract, is generic non-closed or hasn't parameter-less contructor.</exception>
-        ''' <remarks>Default implementation used is <see cref="WindowsT.FormsT.MessageBox"/> which uses WinForms technology.
+        ''' <remarks>Default implementation used is <see cref="FormsT.MessageBox"/> which uses WinForms technology.
         ''' You can use this static property to change implementation of messagebox that is globally used in your application. This property does not involve direct calls to derived classes, only calls of static methods on <see cref="MessageBox"/>.</remarks>
         Public Shared Property DefaultImplementation() As Type
             <DebuggerStepThrough()> Get
-                Return _DefaultImplementation
+                Return _defaultImplementation
             End Get
             Set(ByVal value As Type)
                 If value Is Nothing Then Throw New ArgumentNullException("value")
@@ -69,63 +70,64 @@ Namespace WindowsT.IndependentT
                 If value.IsAbstract Then Throw New ArgumentException(ResourcesT.Exceptions.DefaultMessageBoxImplementationCannotBeAbstractType)
                 If value.IsGenericTypeDefinition Then Throw New ArgumentException(ResourcesT.Exceptions.DefaultMessageBoxImplementationCannotBeGenericTypeDefinition)
                 If value.GetConstructor(Type.EmptyTypes) Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.ClassThatRepresentsDefaultMessageBoxImplementationMustHaveParameterLessConstructor)
-                _DefaultImplementation = value
+                _defaultImplementation = value
             End Set
         End Property
 #End Region
 #Region "MessageBox Definition fields"
         ''' <summary>Contains value of the <see cref="Buttons"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Buttons As New ListWithEvents(Of MessageBoxButton)(False, True) With {.Owner = Me}
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _buttons As New ListWithEvents(Of MessageBoxButton)(False, True) With {.Owner = Me}
         ''' <summary>Contains value of the <see cref="DefaultButton"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _DefaultButton As Integer = 0
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _defaultButton As Integer = 0
         ''' <summary>Contains value of the <see cref="CloseResponse"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _CloseResponse As DialogResult = DialogResult.None
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _closeResponse As DialogResult = DialogResult.None
         ''' <summary>Contains value of the <see cref="Prompt"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Prompt As String
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _prompt As String
         ''' <summary>Contains value of the <see cref="Title"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Title As String
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _title As String
         ''' <summary>Contains value of the <see cref="Icon"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Icon As Drawing.Image
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _icon As Drawing.Image
         ''' <summary>Contains value of the <see cref="Options"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Options As MessageBoxOptions
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _options As MessageBoxOptions
         ''' <summary>Contains value of the <see cref="CheckBoxes"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _CheckBoxes As New ListWithEvents(Of MessageBoxCheckBox)(False, True) With {.Owner = Me}
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _checkBoxes As New ListWithEvents(Of MessageBoxCheckBox)(False, True) With {.Owner = Me}
         ''' <summary>Contains value of the <see cref="ComboBox"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _ComboBox As MessageBoxComboBox
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _comboBox As MessageBoxComboBox
         ''' <summary>Contains value of the <see cref="Radios"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Radios As New ListWithEvents(Of MessageBoxRadioButton)(False, True) With {.Owner = Me}
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _radios As New ListWithEvents(Of MessageBoxRadioButton)(False, True) With {.Owner = Me}
         ''' <summary>Contains value of the <see cref="TopControl"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _TopControl As Object
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _topControl As Object
         ''' <summary>Contains value of the <see cref="MidControl"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _MidControl As Object
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _midControl As Object
         ''' <summary>Contains value of the <see cref="BottomControl"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _BottomControl As Object
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _bottomControl As Object
         ''' <summary>Contains value of the <see cref="Timer"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _Timer As TimeSpan = TimeSpan.Zero
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _timer As TimeSpan = TimeSpan.Zero
         ''' <summary>Contains value of the <see cref="TimeButton"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _TimeButton As Integer = -1
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _timeButton As Integer = -1
         ''' <summary>Contains value of the <see cref="AllowClose"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _AllowClose As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _allowClose As Boolean = True
         ''' <summary>Contains value of the <see cref="PlayOnShow"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _PlayOnShow As MediaT.Sound
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _playOnShow As MediaT.Sound
 #End Region
 #Region "Properties"
         ''' <summary>Gets or sets value indicating if dialog can be closed without clicking any of buttons</summary>
-        ''' <remarks>This does not affect possibility to close message box programmatically using the <see cref="Close()"/> method.</remarks>
+        ''' <remarks>This does not affect possibility to close message box programmatically using the <see cref="VisualStyles.VisualStyleElement.ToolTip.Close"/> method.</remarks>
         <DefaultValue(True)>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         <LDescription(GetType(ResourcesT.Components), "AllowClose_d")>
         Public Property AllowClose() As Boolean
             Get
-                Return _AllowClose
+                Return _allowClose
             End Get
             Set(ByVal value As Boolean)
                 If AllowClose <> value Then
-                    _AllowClose = value
+                    _allowClose = value
                     OnAllowCloseChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(Not value, value, "AllowClose"))
                 End If
             End Set
         End Property
+
         ''' <summary>Defines buttons displayed on message box</summary>
         ''' <remarks>This collection reports event. You can use them to track changed of the collection either via events of the collection itself or via the <see cref="ButtonsChanged"/> event.
         ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
@@ -134,19 +136,22 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "Buttons_d")>
         Public ReadOnly Property Buttons() As ListWithEvents(Of MessageBoxButton)
             <DebuggerStepThrough()> Get
-                Return _Buttons
+                Return _buttons
             End Get
         End Property
+
         ''' <summary>Gets value indicating if value of the <see cref="Buttons"/> property have been changed and should it should be serialized</summary>
         ''' <returns>True if <see cref="Buttons"/> should be serialized, false if it has its default value</returns>
         Private Function ShouldSerializeButtons() As Boolean
             Return Buttons.Count <> 1 OrElse (Buttons.Count = 1 AndAlso Buttons(0).Result <> DialogResult.OK OrElse Buttons(0).HasChanged)
         End Function
+
         ''' <summary>Resets the <see cref="Buttons"/> to its initial value</summary>
         Private Sub ResetButtons()
             Buttons.Clear()
             Buttons.Add(MessageBoxButton.OK)
         End Sub
+
         ''' <summary>Indicates 0-based index of button that has focus when message box is shown and that is default button for message box</summary>
         ''' <remarks>Default button is treated as being clicked when user presses Enter. If value is set outside of range of <see cref="Buttons"/> (i.e. -1), message box has no default button.
         ''' <para>If messagebox implementation supports changes of <see cref="Buttons"/> collection when displayed, this property is changed on button insert/removal and it points still to the same physical button.</para>
@@ -158,40 +163,44 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "DefaultButton_d")>
         Public Property DefaultButton() As Integer
             <DebuggerStepThrough()> Get
-                Return _DefaultButton
+                Return _defaultButton
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Integer)
                 Dim old = DefaultButton
-                _DefaultButton = value
+                _defaultButton = value
                 If old <> value Then OnDefaultButtonChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "DefaultButton"))
             End Set
         End Property
+
         ''' <summary>Gets or sets value returned by <see cref="Show"/> function when user closes the message box by closing window or by pressing escape</summary>
         ''' <remarks>Values that are not members of the <see cref="DialogResult"/> enumeration can be safely used.
-        ''' <para>If <see cref="AllowClose"/> is false this property ahs effect only when mapped to one of buttons (has same value as <see cref="MessageBoxButton.Result"/> of one buttons) and user presses escape.</para></remarks>
+        ''' <para>If <see cref="AllowClose"/> is false this property has effect only when mapped to one of buttons (has same value as <see cref="MessageBoxButton.Result"/> of one buttons) and user presses escape.</para></remarks>
         ''' <seealso cref="DialogResult"/><seealso cref="Show"/>
         <DefaultValue(GetType(DialogResult), "None")>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         <LDescription(GetType(ResourcesT.Components), "CloseResponse_d")>
         Public Property CloseResponse() As DialogResult
             <DebuggerStepThrough()> Get
-                Return _CloseResponse
+                Return _closeResponse
             End Get
             <DebuggerStepThrough()> Set(ByVal value As DialogResult)
                 Dim old = CloseResponse
-                _CloseResponse = value
+                _closeResponse = value
                 If old <> value Then OnCloseResponseChanged(New IReportsChange.ValueChangedEventArgs(Of DialogResult)(old, value, "CloseResponse"))
             End Set
         End Property
+
         ''' <summary>gets value indicating if the <see cref="CloseResponse"/> property should be serialized</summary>
         ''' <returns>True when <see cref="CloseResponse"/> differs from <see cref="GetDefaultCloseResponse"/></returns>
         Private Function ShouldSerializeCloseResponse() As Boolean
             Return CloseResponse <> GetDefaultCloseResponse()
         End Function
+
         ''' <summary>Resets value of the <see cref="CloseResponse"/> property to <see cref="GetDefaultCloseResponse"/></summary>
         Private Sub ResetCloseResponse()
             CloseResponse = GetDefaultCloseResponse()
         End Sub
+
         ''' <summary>Gets value indicating if the <see cref="CloseResponse"/> property has its default value</summary>
         ''' <returns>True when <see cref="CloseResponse"/> equals to <see cref="GetDefaultCloseResponse"/>; false otherwise</returns>
         ''' <value>Setting value of the property to true causes resetting value of the <see cref="CloseResponse"/> to its default value (<see cref="GetDefaultCloseResponse"/>). Setting the property to false is ignored.</value>
@@ -204,6 +213,7 @@ Namespace WindowsT.IndependentT
                 If value = True Then CloseResponse = GetDefaultCloseResponse()
             End Set
         End Property
+
         ''' <summary>Gets default value for the <see cref="CloseResponse"/> property. The value depends on current content of <see cref="Buttons"/> collection.</summary>
         ''' <returns>Default value for the <see cref="CloseResponse"/> property</returns>
         ''' <remarks>Following rules apply in given order:
@@ -241,11 +251,11 @@ Namespace WindowsT.IndependentT
         <Localizable(True), Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(UITypeEditor))>
         Public Property Prompt() As String
             <DebuggerStepThrough()> Get
-                Return _Prompt
+                Return _prompt
             End Get
             <DebuggerStepThrough()> Set(ByVal value As String)
                 Dim old = Prompt
-                _Prompt = value
+                _prompt = value
                 If old <> value Then OnPromptChanged(New IReportsChange.ValueChangedEventArgs(Of String)(old, value, NameOf(Prompt)))
             End Set
         End Property
@@ -258,11 +268,11 @@ Namespace WindowsT.IndependentT
         <Localizable(True)>
         Public Property Title() As String
             <DebuggerStepThrough()> Get
-                Return _Title
+                Return _title
             End Get
             <DebuggerStepThrough()> Set(ByVal value As String)
                 Dim old = Title
-                _Title = value
+                _title = value
                 If old <> value Then OnTitleChanged(New IReportsChange.ValueChangedEventArgs(Of String)(old, value, NameOf(Title)))
             End Set
         End Property
@@ -275,11 +285,11 @@ Namespace WindowsT.IndependentT
         <Localizable(True)>
         Public Property Icon() As Drawing.Image
             <DebuggerStepThrough()> Get
-                Return _Icon
+                Return _icon
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Drawing.Image)
                 Dim old = Icon
-                _Icon = value
+                _icon = value
                 If old IsNot value Then OnIconChanged(New IReportsChange.ValueChangedEventArgs(Of Drawing.Image)(old, value, NameOf(Icon)))
             End Set
         End Property
@@ -293,11 +303,11 @@ Namespace WindowsT.IndependentT
         <Localizable(True)>
         Public Property Options() As MessageBoxOptions
             <DebuggerStepThrough()> Get
-                Return _Options
+                Return _options
             End Get
             <DebuggerStepThrough()> Set(ByVal value As MessageBoxOptions)
                 Dim old = Options
-                _Options = value
+                _options = value
                 If old <> value Then OnOptionsChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions)(old, value, NameOf(Options)))
             End Set
         End Property
@@ -310,7 +320,7 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "CheckBoxes_d")>
         Public ReadOnly Property CheckBoxes() As ListWithEvents(Of MessageBoxCheckBox)
             <DebuggerStepThrough()> Get
-                Return _CheckBoxes
+                Return _checkBoxes
             End Get
         End Property
 
@@ -333,11 +343,11 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "ComboBox_d")>
         Public Property ComboBox() As MessageBoxComboBox
             <DebuggerStepThrough()> Get
-                Return _ComboBox
+                Return _comboBox
             End Get
             <DebuggerStepThrough()> Set(ByVal value As MessageBoxComboBox)
                 Dim old = ComboBox
-                _ComboBox = value
+                _comboBox = value
                 If old IsNot value Then OnComboBoxChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBoxComboBox)(old, value, NameOf(ComboBox)))
             End Set
         End Property
@@ -350,7 +360,7 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "Radios_d")>
         Public ReadOnly Property Radios() As ListWithEvents(Of MessageBoxRadioButton)
             <DebuggerStepThrough()> Get
-                Return _Radios
+                Return _radios
             End Get
         End Property
 
@@ -370,11 +380,11 @@ Namespace WindowsT.IndependentT
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property TopControl() As Object
             <DebuggerStepThrough()> Get
-                Return _TopControl
+                Return _topControl
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Object)
                 Dim old = TopControl
-                _TopControl = value
+                _topControl = value
                 If old IsNot value Then OnTopControlChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "TopControl"))
             End Set
         End Property
@@ -385,11 +395,11 @@ Namespace WindowsT.IndependentT
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property MidControl() As Object
             <DebuggerStepThrough()> Get
-                Return _MidControl
+                Return _midControl
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Object)
                 Dim old = MidControl
-                _MidControl = value
+                _midControl = value
                 If old IsNot value Then OnMidControlChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "MidControl"))
             End Set
         End Property
@@ -400,11 +410,11 @@ Namespace WindowsT.IndependentT
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property BottomControl() As Object
             <DebuggerStepThrough()> Get
-                Return _BottomControl
+                Return _bottomControl
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Object)
                 Dim old = BottomControl
-                _BottomControl = value
+                _bottomControl = value
                 If old IsNot value Then OnBottomControlChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "BottomControl"))
             End Set
         End Property
@@ -415,14 +425,15 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "Timer_d")>
         Public Property Timer() As TimeSpan
             <DebuggerStepThrough()> Get
-                Return _Timer
+                Return _timer
             End Get
             <DebuggerStepThrough()> Set(ByVal value As TimeSpan)
                 Dim old = Timer
-                _Timer = value
+                _timer = value
                 If old <> value Then OnTimerChanged(New IReportsChange.ValueChangedEventArgs(Of TimeSpan)(old, value, "Timer"))
             End Set
         End Property
+
         ''' <summary>Gets or sets value indicating 0-based index of button when count-down time is displayed</summary>
         ''' <remarks>Following values has special meaning:
         ''' <list type="table"><listheader><term>value</term><description>effect</description></listheader>
@@ -436,11 +447,11 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "TimeButton_d")>
         Public Property TimeButton() As Integer
             <DebuggerStepThrough()> Get
-                Return _TimeButton
+                Return _timeButton
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Integer)
                 Dim old = TimeButton
-                _TimeButton = value
+                _timeButton = value
                 If old <> value Then OnTimeButtonChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "TimeButton"))
             End Set
         End Property
@@ -453,13 +464,14 @@ Namespace WindowsT.IndependentT
         <LDescription(GetType(ResourcesT.Components), "PlayOnShow_d")>
         Public Property PlayOnShow() As MediaT.Sound
             Get
-                Return _PlayOnShow
+                Return _playOnShow
             End Get
             Set(ByVal value As MediaT.Sound)
-                _PlayOnShow = value
+                _playOnShow = value
             End Set
         End Property
 #End Region
+
 #Region "CTors"
         ''' <summary>Adds event handlers to collections</summary>
         ''' <version version="1.5.2">Access changed from private to protected, made virtual</version>
@@ -478,6 +490,7 @@ Namespace WindowsT.IndependentT
             Radios.AllowAddCancelableEventsHandlers = False
             Buttons.AllowAddCancelableEventsHandlers = False
         End Sub
+
         ''' <summary>Default CTor - creates messagebox with just one button <see cref="MessageBoxButton.OK"/></summary>
         Public Sub New()
             AddHandlers()
@@ -488,12 +501,14 @@ Namespace WindowsT.IndependentT
         ''' <summary>Raised when value of the <see cref="AllowClose"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event AllowCloseChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Boolean))
+
         ''' <summary>Raises the <see cref="AllowCloseChanged"/> event. Calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnAllowCloseChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             RaiseEvent AllowCloseChanged(Me, e)
             OnChanged(e)
         End Sub
+
         ''' <summary>Raised when value of member changes</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event information. For changes of <see cref="Buttons"/>, <see cref="CheckBoxes"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents.CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents.Changed"/>.</param>
@@ -505,6 +520,7 @@ Namespace WindowsT.IndependentT
         Protected Overridable Sub OnChanged(ByVal e As EventArgs)
             RaiseEvent Changed(Me, e)
         End Sub
+
         ''' <summary>Raised when value of the <see cref="DefaultButton"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event DefaultButtonChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Integer))
@@ -514,7 +530,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent DefaultButtonChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="CloseResponse"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="CloseResponse"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event CloseResponseChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of DialogResult))
         ''' <summary>Raises the <see cref="OnCloseResponseChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -523,7 +540,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent CloseResponseChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="Prompt"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="Prompt"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event PromptChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of String))
         ''' <summary>Raises the <see cref="PromptChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -532,7 +550,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent PromptChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="Title"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="Title"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TitleChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of String))
         ''' <summary>Raises the <see cref="TitleChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -541,7 +560,7 @@ Namespace WindowsT.IndependentT
             RaiseEvent TitleChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="Icon"/> property changes</summary>
+        ''' <summary>Raised when value of the <see cref="Icon"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event IconChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Drawing.Image))
         ''' <summary>Raises the <see cref="IconChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -550,7 +569,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent IconChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="Options"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="Options"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event OptionsChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions))
         ''' <summary>Raises the <see cref="OptionsChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -559,20 +579,22 @@ Namespace WindowsT.IndependentT
             RaiseEvent OptionsChanged(Me, e)
             OnChanged(e)
         End Sub
+
         ''' <summary>Raised when content of the <see cref="CheckBoxes"/> collection changes</summary>
         ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
         ''' <param name="e">Event arguments. Argument e of <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxCheckBox).CollectionChanged"/> is passed directly here.</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event CheckBoxesChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxCheckBox).ListChangedEventArgs)
         ''' <summary>Raises the <see cref="CheckBoxesChanged"/> event. Handles <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
-        ''' <param name="sender">Source ot the event - <see cref="Radios"/></param>
-        ''' <param name="e">Event arguments. Those arguemnts are directly passed to <see cref="RadiosChanged"/> and <see cref="OnChanged"/></param>
+        ''' <param name="sender">Source of the event - <see cref="Radios"/></param>
+        ''' <param name="e">Event arguments. Those arguments are directly passed to <see cref="RadiosChanged"/> and <see cref="OnChanged"/></param>
         Protected Overridable Sub OnCheckBoxesChanged(ByVal sender As ListWithEvents(Of MessageBoxCheckBox), ByVal e As ListWithEvents(Of MessageBoxCheckBox).ListChangedEventArgs)
             RaiseEvent CheckBoxesChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="ComboBox"/> property changes</summary>
-        ''' <remarks>This event tracks only changes of value of the <see cref="ComboBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
+
+        ''' <summary>Raised when value of the <see cref="ComboBox"/> property changes</summary>
+        ''' <remarks>This event tracks only changes of value of the <see cref="ComboBox"/> property itself. It does not track changes of values of its inner properties.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event ComboBoxChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxComboBox))
         ''' <summary>Raises the <see cref="ComboBoxChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -581,7 +603,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent ComboBoxChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="TopControl"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="TopControl"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TopControlChanged As ControlChangedEventHandler
         ''' <summary>Raises the <see cref="TopControlChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -590,7 +613,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent TopControlChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="MidControl"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="MidControl"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event MidControlChanged As ControlChangedEventHandler
         ''' <summary>Raises the <see cref="MidControlChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -599,7 +623,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent TopControlChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="BottomControl"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="BottomControl"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event BottomControlChanged As ControlChangedEventHandler
         ''' <summary>Delegate for events <see cref="BottomControlChanged"/>, <see cref="TopControlChanged"/> and <see cref="MidControlChanged"/></summary>
@@ -613,7 +638,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent BottomControlChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="Timer"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="Timer"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TimerChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of TimeSpan))
         ''' <summary>Raises the <see cref="TimerChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -622,7 +648,8 @@ Namespace WindowsT.IndependentT
             RaiseEvent TimerChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="TimeButton"/> property changes</summary>
+
+        ''' <summary>Raised when value of the <see cref="TimeButton"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event TimeButtonChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Integer))
         ''' <summary>Raises the <see cref="TimeButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -631,26 +658,28 @@ Namespace WindowsT.IndependentT
             RaiseEvent TimeButtonChanged(Me, e)
             OnChanged(e)
         End Sub
+
         ''' <summary>Raised when content of the <see cref="Radios"/> collection changes</summary>
         ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
         ''' <param name="e">Event arguments. Argument e of <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged"/> is passed directly here.</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event RadiosChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxRadioButton).ListChangedEventArgs)
         ''' <summary>Raises the <see cref="RadiosChanged"/> event. Handles <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
-        ''' <param name="sender">Source ot the event - <see cref="Radios"/></param>
-        ''' <param name="e">Event arguments. Those arguemnts are directly passed to <see cref="RadiosChanged"/> and <see cref="OnChanged"/></param>
+        ''' <param name="sender">Source of the event - <see cref="Radios"/></param>
+        ''' <param name="e">Event arguments. Those arguments are directly passed to <see cref="RadiosChanged"/> and <see cref="OnChanged"/></param>
         Protected Overridable Sub OnRadiosChanged(ByVal sender As ListWithEvents(Of MessageBoxRadioButton), ByVal e As ListWithEvents(Of MessageBoxRadioButton).ListChangedEventArgs)
             RaiseEvent RadiosChanged(Me, e)
             OnChanged(e)
         End Sub
+
         ''' <summary>Raised when content of the <see cref="Buttons"/> collection changes</summary>
         ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
         ''' <param name="e">Event arguments. Argument e of <see cref="Buttons">Radios</see>.<see cref="ListWithEvents(Of MessageBoxButton).CollectionChanged"/> is passed directly here.</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
         Public Event ButtonsChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxButton).ListChangedEventArgs)
         ''' <summary>Raises the <see cref="ButtonsChanged"/> event. Handles <see cref="Buttons">Radios</see>.<see cref="ListWithEvents(Of MessageBoxButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
-        ''' <param name="sender">Source ot the event - <see cref="Buttons"/></param>
-        ''' <param name="e">Event arguments. Those arguemnts are directly passed to <see cref="ButtonsChanged"/> and <see cref="OnChanged"/></param>
+        ''' <param name="sender">Source of the event - <see cref="Buttons"/></param>
+        ''' <param name="e">Event arguments. Those arguments are directly passed to <see cref="ButtonsChanged"/> and <see cref="OnChanged"/></param>
         Protected Overridable Sub OnButtonsChanged(ByVal sender As ListWithEvents(Of MessageBoxButton), ByVal e As ListWithEvents(Of MessageBoxButton).ListChangedEventArgs)
             RaiseEvent ButtonsChanged(Me, e)
             OnChanged(e)
@@ -663,11 +692,11 @@ Namespace WindowsT.IndependentT
         <DefaultProperty("Text"), DefaultEvent("Changed")>
         Public MustInherit Class MessageBoxControl : Implements IReportsChange, INotifyPropertyChanged, CollectionsT.GenericT.ICollectionCancelItem
             ''' <summary>Contains value of the <see cref="Text"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Text As String
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _text As String
             ''' <summary>Contains value of the <see cref="ToolTip"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _ToolTip As String
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _toolTip As String
             ''' <summary>Contains value of the <see cref="Enabled"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Enabled As Boolean = True
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _enabled As Boolean = True
             ''' <summary>Raised when value of the <see cref="Text"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
@@ -681,68 +710,74 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event EnabledChanged(ByVal sender As MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+
             ''' <summary>Gets or sets text displayed on control</summary>
             <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
             <LDescription(GetType(ResourcesT.Components), "MessageBoxButton_Text_d")>
             <Localizable(True)>
             Public Property Text() As String
                 <DebuggerStepThrough()> Get
-                    Return _Text
+                    Return _text
                 End Get
                 Set(ByVal value As String)
                     If value <> Text Then
                         Dim old = Text
-                        _Text = value
+                        _text = value
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of String)(old, value, "Text")
                         OnTextChanged(e)
                     End If
                 End Set
             End Property
+
             ''' <summary>Gets or sets tool tip text for the button</summary>
             <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
             <LDescription(GetType(ResourcesT.Components), "ToolTip_d")>
             <Localizable(True)>
             Public Property ToolTip() As String
                 <DebuggerStepThrough()> Get
-                    Return _ToolTip
+                    Return _toolTip
                 End Get
                 Set(ByVal value As String)
                     If value <> ToolTip Then
                         Dim old = ToolTip
-                        _ToolTip = value
+                        _toolTip = value
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of String)(old, value, "ToolTip")
                         OnToolTipChanged(e)
                     End If
                 End Set
             End Property
+
             ''' <summary>Gets or sets value indicating if button is enabled (accessible) or not</summary>
             <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
             <LDescription(GetType(ResourcesT.Components), "Enabled_d")>
             Public Property Enabled() As Boolean
                 <DebuggerStepThrough()> Get
-                    Return _Enabled
+                    Return _enabled
                 End Get
                 Set(ByVal value As Boolean)
                     If value <> Enabled Then
                         Dim old = Enabled
-                        _Enabled = value
+                        _enabled = value
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Enabled")
                         OnEnabledChanged(e)
                     End If
                 End Set
             End Property
+
             ''' <summary>Raises the <see cref="TextChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnTextChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
                 RaiseEvent TextChanged(Me, e)
                 OnChanged(e)
             End Sub
+
             ''' <summary>Raises the <see cref="EnabledChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnEnabledChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
                 RaiseEvent EnabledChanged(Me, e)
                 OnChanged(e)
             End Sub
+
             ''' <summary>Raises the <see cref="ToolTipChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnToolTipChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
@@ -754,7 +789,7 @@ Namespace WindowsT.IndependentT
             ''' <summary>Raised when value of member changes</summary>
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Event information</param>
-            ''' <remarks><paramref name="e"/>Additionla information - is <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> or <see cref="CollectionChangeEventArgs(Of T)"/></remarks>
+            ''' <remarks><paramref name="e"/>Additional information - is <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> or <see cref="CollectionChangeEventArgs(Of T)"/></remarks>
             Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
             ''' <summary>Raises the <see cref="Changed"/> event (and <see cref="PropertyChanged"/> when <paramref name="e"/> is <see cref="PropertyChangedEventArgs"/>)</summary>
             ''' <param name="e">Event parameters - should be <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> or <see cref="CollectionChangeEventArgs(Of T)"/></param>
@@ -763,6 +798,7 @@ Namespace WindowsT.IndependentT
                 RaiseEvent Changed(Me, e)
                 If TypeOf e Is PropertyChangedEventArgs Then OnPropertyChanged(e)
             End Sub
+
             ''' <summary>Raises the <see cref="PropertyChanged"/> event</summary>
             ''' <param name="e">Event arguments</param>
             ''' <version version="1.5.2">Method added</version>
@@ -770,36 +806,28 @@ Namespace WindowsT.IndependentT
                 RaiseEvent PropertyChanged(Me, e)
             End Sub
 
-            ''' <summary>Contains value of the <see cref="Control"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Control As Object
             ''' <summary>Gets or sets physical control that currently implements this control</summary>
             ''' <remarks>
             ''' This property is intended to be used by GUI implementation to store instance of for example <see cref="Button"/> that currently represents the control.
             ''' Its up to implementation how and if it will use this property. Caller should not rely on content of the property.
             ''' </remarks>
             <EditorBrowsable(EditorBrowsableState.Advanced), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
-            Public Property Control() As Object
-                <DebuggerStepThrough()> Get
-                    Return _Control
-                End Get
-                <DebuggerStepThrough()> Protected Friend Set(ByVal value As Object)
-                    _Control = value
-                End Set
-            End Property
+            Public Property Control As Object
 
             ''' <summary>Occurs when a property value changes.</summary>
             ''' <version version="1.5.2">Event introduced</version>
             <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)>
             <LDescription(GetType(WindowsT.FormsT.Dialogs), "PropertyChanged_d")>
             Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
 #Region "ICollectionCancelItem"
             ''' <summary>Called before item is placed into collection</summary>
-            ''' <param name="Collection">Collection item is aboutto be placed into</param>
+            ''' <param name="collection">Collection item is aboutto be placed into</param>
             ''' <param name="index">Index item is being to be placed onto; null when collection does not support indexing.</param>
             ''' <param name="Replace">True when item at index <paramref name="index"/> will be replaced by this instance; false if this instance will be inserted at <paramref name="index"/> and all subsequent items will be moved to nex index.</param>
             ''' <exception cref="InvalidOperationException">This control was already added to collection owned by <see cref="MessageBox"/> and now attempt to add it to another such collection is done.</exception>
-            Private Sub OnBeingAddedToCollection(ByVal Collection As System.Collections.ICollection, ByVal index As Integer?, ByVal Replace As Boolean) Implements CollectionsT.GenericT.ICollectionCancelItem.OnAdding
-                If _Collection IsNot Nothing AndAlso TypeOf Collection Is ListWithEventsBase AndAlso TypeOf DirectCast(Collection, ListWithEventsBase).Owner Is MessageBox Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisControlIsAlreadyUsedByMessageBoxItCannotBeUsedTwice)
+            Private Sub OnBeingAddedToCollection(ByVal collection As System.Collections.ICollection, ByVal index As Integer?, ByVal Replace As Boolean) Implements CollectionsT.GenericT.ICollectionCancelItem.OnAdding
+                If _collection IsNot Nothing AndAlso TypeOf collection Is ListWithEventsBase AndAlso TypeOf DirectCast(collection, ListWithEventsBase).Owner Is MessageBox Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisControlIsAlreadyUsedByMessageBoxItCannotBeUsedTwice)
             End Sub
             ''' <summary>Called before all items are removed from collection by clearing it</summary>
             ''' <param name="Collection">Collection item is about to be removed from</param>
@@ -810,29 +838,31 @@ Namespace WindowsT.IndependentT
             ''' <param name="index">Index item is currently placed on; null when collection does not support indexing.</param>
             Private Sub OnBeingRemovedFromCollection(ByVal Collection As System.Collections.ICollection, ByVal index As Integer?) Implements CollectionsT.GenericT.ICollectionCancelItem.OnRemoving
             End Sub
+
             ''' <summary>Contains value of the <see cref="Collections"/> property</summary>
-            Private _Collections As New List(Of ICollection)
+            Private ReadOnly _collections As New List(Of ICollection)
             ''' <summary>If supported by collection item gets all the collections item is in</summary>
             ''' <returns>All the collections item is placed in; null when not supported by item class.</returns>
             ''' <remarks><para>If item is placed multiple times in the same collection, this property contains this collection multiple times.</para></remarks>
-            Private ReadOnly Property CollectionsThisControlIsIn() As System.Collections.Generic.IEnumerable(Of System.Collections.ICollection) Implements CollectionsT.GenericT.ICollectionNotifyItem.Collections
+            Private ReadOnly Property CollectionsThisControlIsIn() As IEnumerable(Of ICollection) Implements ICollectionNotifyItem.Collections
                 Get
-                    Return _Collections
+                    Return _collections
                 End Get
             End Property
+
             ''' <summary>Collection which's owner owns this control</summary>
-            Private WithEvents _Collection As ListWithEventsBase
+            Private WithEvents _collection As ListWithEventsBase
             ''' <summary>Gets collection which's owner owns this control</summary>
             ''' <returns>Collection which's <see cref="ListWithEventsBase.Owner"/> owns this control</returns>
             ''' <version version="1.5.2">Property added</version>
             Protected Property Collection() As ListWithEventsBase
                 Get
-                    Return _Collection
+                    Return _collection
                 End Get
                 Private Set(ByVal value As ListWithEventsBase)
-                    Dim OldOwner = OwnerMessageBox
-                    _Collection = value
-                    OnOwnerChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBox)(OldOwner, If(value Is Nothing, Nothing, value.Owner), "OwnerMessageBox"))
+                    Dim oldOwner = OwnerMessageBox
+                    _collection = value
+                    OnOwnerChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBox)(oldOwner, If(value Is Nothing, Nothing, value.Owner), "OwnerMessageBox"))
                 End Set
             End Property
 
@@ -848,24 +878,26 @@ Namespace WindowsT.IndependentT
 
             ''' <summary>Called after item is added to collection</summary>
             ''' <param name="Collection">Collection item was added into</param>
-            ''' <param name="index">Index at which the item was added. Note: Index may change later without notice (i.e. when collection gets sorted). Ic collection does not support indexing value is null.</param>
+            ''' <param name="index">Index at which the item was added. Note: Index may change later without notice (i.e. when collection gets sorted). If collection does not support indexing value is null.</param>
             ''' <version version="1.5.2">Method added</version>
-            Protected Overridable Sub OnAddedToCollection(ByVal Collection As System.Collections.ICollection, ByVal index As Integer?) Implements CollectionsT.GenericT.ICollectionNotifyItem.OnAdded
-                _Collections.Add(Collection)
-                If TypeOf Collection Is ListWithEventsBase AndAlso TypeOf DirectCast(Collection, ListWithEventsBase).Owner Is MessageBox Then _
-                    Me.Collection = Collection
+            ''' <version version="1.5.4">Parameter <c>Collection</c> renamed to <c>collection</c></version>
+            Protected Overridable Sub OnAddedToCollection(ByVal collection As ICollection, ByVal index As Integer?) Implements CollectionsT.GenericT.ICollectionNotifyItem.OnAdded
+                _collections.Add(collection)
+                If TypeOf collection Is ListWithEventsBase AndAlso TypeOf DirectCast(collection, ListWithEventsBase).Owner Is MessageBox Then _
+                    Me.Collection = collection
             End Sub
 
             ''' <summary>Called after item is removed from collection (or after collection was cleared)</summary>
             ''' <param name="Collection">Collection item was removed from</param>
             ''' <version version="1.5.2">Method added</version>
-            Protected Overridable Sub OnRemovedFromCollection(ByVal Collection As System.Collections.ICollection) Implements CollectionsT.GenericT.ICollectionNotifyItem.OnRemoved
-                _Collections.Remove(Collection)
-                If Me.Collection Is Collection Then Me.Collection = Nothing
+            ''' <version version="1.5.4">Parameter <c>Collection</c> renamed to <c>collection</c></version>
+            Protected Overridable Sub OnRemovedFromCollection(ByVal collection As System.Collections.ICollection) Implements CollectionsT.GenericT.ICollectionNotifyItem.OnRemoved
+                _collections.Remove(collection)
+                If Me.Collection Is collection Then Me.Collection = Nothing
             End Sub
 #End Region
 
-            Private Sub Collection_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles _Collection.Changed
+            Private Sub Collection_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles _collection.Changed
                 If TypeOf e Is IReportsChange.ValueChangedEventArgs(Of Object) AndAlso DirectCast(e, IReportsChange.ValueChangedEventArgs(Of Object)).ValueName = "Owner" Then
                     With DirectCast(e, IReportsChange.ValueChangedEventArgs(Of Object))
                         If Not TypeOf .NewValue Is MessageBox Then Collection = Nothing _
@@ -890,22 +922,23 @@ Namespace WindowsT.IndependentT
         Public Class MessageBoxButton : Inherits MessageBoxControl
 #Region "Backing fields"
             ''' <summary>Contains value of the <see cref="Result"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Result As DialogResult = DialogResult.None
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _result As DialogResult = DialogResult.None
             ''' <summary>Contains value of the <see cref="Button"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Button As Object
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _button As Object
             ''' <summary>Contains value of the <see cref="AccessKey"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _AccessKey As Char = vbNullChar
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _accessKey As Char = vbNullChar
             ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _HasChanged As Boolean
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _hasChanged As Boolean
 #End Region
             ''' <summary>Raised when button is clicked, before action associated with the button is taken. This event can be canceled.</summary>
-            ''' <param name="e">Event arguments. Can be used to cancel the event. <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> false means tha message box will be closed; false means the message box will remain open.</param>
+            ''' <param name="e">Event arguments. Can be used to cancel the event. <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> false means that message box will be closed; false means the message box will remain open.</param>
             ''' <param name="sender">Instance of <see cref="MessageBoxButton"/> that have raised the event</param>
             ''' <remarks>If <see cref="Result"/> is <see cref="HelpDialogResult"/> <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> is pre-set to true. That means that if it is not set to false, message box is not closed when help button is clicked.</remarks>
-            ''' <version version="1.5.2">Fixed: Using <see cref="WindowsT.FormsT.MessageBox"/> dialog closes even when event is cancelled.</version>
+            ''' <version version="1.5.2">Fixed: Using <see cref="WindowsT.FormsT.MessageBox"/> dialog closes even when event is canceled.</version>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
             <LDescription(GetType(ResourcesT.Components), "ClickPreview_d")>
             Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs)
+
 #Region "Change events"
             ''' <summary>Raised when value of the <see cref="Result"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
@@ -916,10 +949,11 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Information about old and new value</param>
             <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event AccessKeyChanged(ByVal sender As MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Char))
 #End Region
+
 #Region "Properties"
             ''' <summary>Gets or sets result produced by this button</summary>
-            ''' <remarks>In case you need to define your own buttons you can use this property and set it to value thet is not member of the <see cref="DialogResult"/> enumeration.
-            ''' <para>Special result value <see cref="HelpDialogResult"/> defines help button. The <see cref="MessageBox"/> class does not pefrom any help-providing actions for that button, only, by default, thius button does not cause the messagebox to be closed.</para>
+            ''' <remarks>In case you need to define your own buttons you can use this property and set it to value that is not member of the <see cref="DialogResult"/> enumeration.
+            ''' <para>Special result value <see cref="HelpDialogResult"/> defines help button. The <see cref="MessageBox"/> class does not perform any help-providing actions for that button, only, by default, thius button does not cause the messagebox to be closed.</para>
             ''' </remarks>
             ''' <seealso cref="MessageBoxButton.Help"/>
             <DefaultValue(GetType(DialogResult), "None")>
@@ -927,23 +961,25 @@ Namespace WindowsT.IndependentT
             <LDescription(GetType(ResourcesT.Components), "Result_d")>
             Public Property Result() As DialogResult
                 <DebuggerStepThrough()> Get
-                    Return _Result
+                    Return _result
                 End Get
                 Set(ByVal value As DialogResult)
                     If value <> Result Then
                         Dim old = Result
-                        _Result = value
+                        _result = value
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of DialogResult)(old, value, "Result")
                         RaiseEvent ResultChanged(Me, e)
                         OnChanged(e)
                     End If
                 End Set
+
             End Property
             ''' <summary>Gets or sets access key (access character for the button)</summary>
-            ''' <value>Should be one of letters contained in <see cref="Text"/>, otherwise it is not guaranted that accesskey will work.</value>
+            ''' <value>Should be one of letters contained in <see cref="Text"/>, otherwise it is not guaranteed that access key will work.</value>
             ''' <remarks>
-            ''' As <see cref="MessageBox"/> is underlaying-technology independent, mnemonics for accesskeys (such as &amp; in WinForms and _ in WPF) should not be used. You should rather use this property.
-            ''' When you do not want to use accesskey for your button, set his property to 0 (null char, <see cref="vbNullChar"/>).
+            ''' As <see cref="MessageBox"/> is underlaying-technology independent, mnemonics for access keys (such as &amp; in WinForms and _ in WPF) should not be used.
+            ''' You should rather use this property.
+            ''' When you do not want to use access key for your button, set his property to 0 (null char, <see cref="vbNullChar"/>).
             ''' </remarks>
             <DefaultValue(CChar(vbNullChar))>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
@@ -951,12 +987,12 @@ Namespace WindowsT.IndependentT
             <Localizable(True)>
             Public Property AccessKey() As Char
                 <DebuggerStepThrough()> Get
-                    Return _AccessKey
+                    Return _accessKey
                 End Get
                 Set(ByVal value As Char)
                     If value <> AccessKey Then
                         Dim old = AccessKey
-                        _AccessKey = value
+                        _accessKey = value
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of Char)(old, value, "AccessKey")
                         OnAccessKeyChanged(e)
                     End If
@@ -975,65 +1011,71 @@ Namespace WindowsT.IndependentT
             ''' <remarks>Changing this property does not cause the <see cref="Changed"/> event to be raised</remarks>
             Friend Property HasChanged() As Boolean
                 <DebuggerStepThrough()> Get
-                    Return _HasChanged
+                    Return _hasChanged
                 End Get
                 <DebuggerStepThrough()> Private Set(ByVal value As Boolean)
-                    _HasChanged = value
+                    _hasChanged = value
                 End Set
             End Property
 #End Region
 
 #Region "CTors"
-            ''' <summary>Ture indicates that this instance is currently being constructed</summary>
-            Private ReadOnly IsConstructing As Boolean = True
+            ''' <summary>True indicates that this instance is currently being constructed</summary>
+            Private ReadOnly isConstructing As Boolean = True
             ''' <summary>CTor - creates new instance of the <see cref="MessageBoxButton"/> class</summary>
             Public Sub New()
-                IsConstructing = False
+                isConstructing = False
             End Sub
             ''' <summary>CTor from button text</summary>
-            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
-            Public Sub New(ByVal Text$)
+            ''' <param name="text">Button's text (see <see cref="Text"/>)</param>
+            ''' <version version="1.5.4">Parameter <c>Text</c> renamed to <c>text</c></version>
+            Public Sub New(ByVal text$)
                 Me.New()
-                IsConstructing = True
-                Me.Text = Text
-                IsConstructing = False
+                isConstructing = True
+                Me.Text = text
+                isConstructing = False
             End Sub
             ''' <summary>CTor from button text and access key</summary>
-            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
-            ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
-            Public Sub New(ByVal Text$, ByVal AccessKey As Char)
-                Me.New(Text)
-                IsConstructing = True
-                Me.AccessKey = AccessKey
-                IsConstructing = False
+            ''' <param name="text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="accessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
+            ''' <version version="1.5.4">Parameter <c>Text</c> renamed to <c>text</c> and <c>AccessKey</c> to <c>accessKey</c></version>
+            Public Sub New(ByVal text$, ByVal accessKey As Char)
+                Me.New(text)
+                isConstructing = True
+                Me.AccessKey = accessKey
+                isConstructing = False
             End Sub
             ''' <summary>CTor from text and tool tip text</summary>
-            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
-            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
-            Public Sub New(ByVal Text$, ByVal ToolTip$)
+            ''' <param name="text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="toolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
+            ''' <version version="1.5.4">Parameter <c>Text</c> renamed to <c>text</c> and <c>ToolTip</c> to <c>toolTip</c></version>
+            Public Sub New(ByVal text$, ByVal toolTip$)
                 Me.New(Text)
-                IsConstructing = True
+                isConstructing = True
                 Me.ToolTip = ToolTip
-                IsConstructing = False
+                isConstructing = False
             End Sub
+
             ''' <summary>CTor from text, tool tip text and access key</summary>
-            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
-            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
-            ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
-            Public Sub New(ByVal Text$, ByVal ToolTip$, ByVal AccessKey As Char)
+            ''' <param name="text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="toolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
+            ''' <param name="accessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
+            ''' <version version="1.5.4">Parameter <c>Text</c> renamed to <c>text</c>, <c>ToolTip</c> to <c>toolTip</c> and <c>AccessKey</c> to <c>accessKey</c></version>
+            Public Sub New(ByVal text$, ByVal toolTip$, ByVal accessKey As Char)
                 Me.New(Text, ToolTip)
-                IsConstructing = True
+                isConstructing = True
                 Me.AccessKey = AccessKey
-                IsConstructing = False
+                isConstructing = False
             End Sub
+
             ''' <summary>CTor from text and dialog result</summary>
             ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
             ''' <param name="Result">Result returned by <see cref="Show"/> function when the button is clicked (see <see cref="Result"/>)</param>
             Public Sub New(ByVal Text$, ByVal Result As DialogResult)
                 Me.New(Text)
-                IsConstructing = True
+                isConstructing = True
                 Me.Result = Result
-                IsConstructing = False
+                isConstructing = False
             End Sub
             ''' <summary>CTor from text, dialog result and access key</summary>
             ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
@@ -1041,9 +1083,9 @@ Namespace WindowsT.IndependentT
             ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal Result As DialogResult, ByVal AccessKey As Char)
                 Me.New(Text, Result)
-                IsConstructing = True
+                isConstructing = True
                 Me.AccessKey = AccessKey
-                IsConstructing = False
+                isConstructing = False
             End Sub
             ''' <summary>CTor from text, tool tip text and dialog result</summary>
             ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
@@ -1051,9 +1093,9 @@ Namespace WindowsT.IndependentT
             ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
             Public Sub New(ByVal Text$, ByVal ToolTip$, ByVal Result As DialogResult)
                 Me.New(Text, ToolTip)
-                IsConstructing = True
+                isConstructing = True
                 Me.Result = Result
-                IsConstructing = False
+                isConstructing = False
             End Sub
             ''' <summary>CTor from <see cref="DialogResult"/></summary>
             ''' <param name="Result">Result of this button. Also determines text.</param>
@@ -1134,18 +1176,18 @@ Namespace WindowsT.IndependentT
             ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal ToolTip$, ByVal Result As DialogResult, ByVal AccessKey As Char)
                 Me.New(Text, ToolTip, Result)
-                IsConstructing = True
+                isConstructing = True
                 Me.AccessKey = AccessKey
-                IsConstructing = False
+                isConstructing = False
             End Sub
             ''' <summary>CTor from text and enabled value</summary>
             ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
             ''' <param name="Enabled">Initial value of the <see cref="Enabled"/> property</param>
             Public Sub New(ByVal Text$, ByVal Enabled As Boolean)
                 Me.New(Text)
-                IsConstructing = True
+                isConstructing = True
                 Me.Enabled = Enabled
-                IsConstructing = False
+                isConstructing = False
             End Sub
             ''' <summary>CTor from text, dialog result, tool tip text and enabled value</summary>
             ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
@@ -1165,10 +1207,10 @@ Namespace WindowsT.IndependentT
             ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal ClickPreview As ClickPreviewEventHandler, Optional ByVal ToolTip$ = Nothing, Optional ByVal Result As DialogResult = DialogResult.None, Optional ByVal Enabled As Boolean = True, Optional ByVal AccessKey As Char = CChar(vbNullChar))
                 Me.New(Text, Result, Enabled, ToolTip)
-                IsConstructing = True
+                isConstructing = True
                 Me.AccessKey = AccessKey
                 AddHandler Me.ClickPreview, ClickPreview
-                IsConstructing = False
+                isConstructing = False
             End Sub
 #End Region
             ''' <summary>Called by owner window when appropriate button is clicked. Raises the <see cref="ClickPreview"/> event</summary>
@@ -1329,7 +1371,7 @@ Namespace WindowsT.IndependentT
             End Enum
 #End Region
             Private Sub MessageBoxButton_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles Me.Changed
-                If Not IsConstructing Then HasChanged = True
+                If Not isConstructing Then HasChanged = True
             End Sub
 #Region "IsDefault / IsCancel / IsTimer"
             ''' <summary>Gets value indication if this button is default of message box</summary>
@@ -1417,7 +1459,7 @@ Namespace WindowsT.IndependentT
                 OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKey"))
                 OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKeyAndTimer"))
             End Sub
-            ''' <summary>Gets text of button with platform-specific accesskey indication</summary>
+            ''' <summary>Gets text of button with platform-specific access key indication</summary>
             ''' <returns>If <see cref="OwnerMessageBox"/> is not set returns <see cref="Text"/>; if it is set uses <see cref="GetTextWithAccessKey"/>.</returns>
             ''' <remarks>Change of this property is notified via <see cref="INotifyPropertyChanged"/>.</remarks>
             ''' <version version="1.5.2">Property added</version>
@@ -1446,7 +1488,7 @@ Namespace WindowsT.IndependentT
                     Return Text & " (" & OwnerMessageBox.CurrentTimer.ToString(TimerFormat) & ")"
                 End Get
             End Property
-            ''' <summary>Gets text of button with possible time text and platform-specific accesskey indication</summary>
+            ''' <summary>Gets text of button with possible time text and platform-specific access key indication</summary>
             ''' <returns>If <see cref="OwnerMessageBox"/> is not set return <see cref="Text"/>; if this button is not time button or owning messagebox is not counting douw, returns <see cref="TextIncludingAccessKey"/>; otherwise returns <see cref="TextIncludingAccessKey"/>  appedned by <see cref="TimerFormat"/>-formatted <see cref="OwnerMessageBox"/>.<see cref="CurrentTimer">CurrentTimer</see> enclosed in braces (()).</returns>
             ''' <remarks>Change of this property is notofied via <see cref="INotifyPropertyChanged"/>. In order this to work correctly button must be stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>.</remarks>
             ''' <version version="1.5.2">Property added</version>
@@ -1756,11 +1798,11 @@ Namespace WindowsT.IndependentT
             <LDescription(GetType(ResourcesT.Components), "Checked_d")>
             Public Property Checked() As Boolean
                 <DebuggerStepThrough()> Get
-                    Return _Checked
+                    Return _checked
                 End Get
                 Set(ByVal value As Boolean)
                     Dim old = Checked
-                    _Checked = value
+                    _checked = value
                     If old <> value Then
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Checked")
                         OnCheckedChanged(e)
@@ -2180,9 +2222,9 @@ Namespace WindowsT.IndependentT
         ''' <seelaso cref="DisplayTemplate"/>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public NotInheritable Class FakeBox : Inherits MessageBox
-            ''' <summary>Gets text which contains Accesskey marker (like &amp; in WinForms or _ in WPF)</summary>
-            ''' <param name="Text">Text (if it contains character used as accesskey markers they must be escaped)</param>
-            ''' <param name="AccessKey">Char representing accesskey (if char is not in <paramref name="Text"/> no accesskey marker should be inserted)</param>
+            ''' <summary>Gets text which contains Access key marker (like &amp; in WinForms or _ in WPF)</summary>
+            ''' <param name="Text">Text (if it contains character used as access key markers they must be escaped)</param>
+            ''' <param name="AccessKey">Char representing access key (if char is not in <paramref name="Text"/> no access key marker should be inserted)</param>
             ''' <returns><paramref name="Text"/></returns>
             Protected Overrides Function GetTextWithAccessKey(ByVal Text As String, ByVal AccessKey As Char) As String
                 Return Text
@@ -2196,7 +2238,7 @@ Namespace WindowsT.IndependentT
             ''' <summary>If overridden in derived class shows the dialog</summary>
             ''' <param name="modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
             ''' <param name="owner">Parent window of dialog (may be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
-            ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
+            ''' <exception cref="InvalidOperationException"><see cref="AxHost.State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
             ''' <exception cref="NotImplementedException">Always</exception>
             ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="IWin32Window"/> to <see cref="Object"/> to support both - <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
             Protected Overrides Sub PerformDialog(ByVal modal As Boolean, ByVal owner As Object)
@@ -2205,9 +2247,9 @@ Namespace WindowsT.IndependentT
             ''' <summary>Default CTor</summary>
             Public Sub New()
             End Sub
-            ''' <summary>CTor from buttons specified as OR-ed mask of <see cref="MessageBoxButton.Buttons"/> values</summary>
-            ''' <param name="Buttons">OR-ed values from <see cref="MessageBoxButton.Buttons"/></param>
-            ''' <seelaso cref="MessageBoxButton.GetButtons"/>
+            ''' <summary>CTor from buttons specified as OR-ed mask of <see cref="MessageBox.MessageBoxButton.Buttons"/> values</summary>
+            ''' <param name="Buttons">OR-ed values from <see cref="MessageBox.MessageBoxButton.Buttons"/></param>
+            ''' <seelaso cref="Windows.MessageBoxButton.GetButtons"/>
             Public Sub New(ByVal Buttons As MessageBoxButton.Buttons)
                 Me.New()
                 Me.Buttons.Clear()
@@ -2304,7 +2346,7 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">Owner window (can be null). Typical values are <see cref="IWin32Window"/> and <see cref="System.Windows.Window"/> If implementation does not recognize type of owner it ignores it.</param>
         ''' <returns>Message box result</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="InitializeFrom"/> is null</exception>
-        ''' <exception cref="TargetInvocationException">Ther was an error obtaining default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
+        ''' <exception cref="TargetInvocationException">There was an error obtaining default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to cloning live message boxes</remarks>
         ''' <param name="Prompt">If not null sets different prompt then <paramref name="InitializeFrom"/></param>
         ''' <param name="Title">Is not null sets different title then <paramref name="InitializeFrom"/></param>
@@ -2513,7 +2555,7 @@ Namespace WindowsT.IndependentT
         End Class
         ''' <summary>Gets value indicating if given value is valid <see cref="System.Windows.MessageBoxButton"/></summary>
         ''' <param name="value">Value to test</param>
-        ''' <returns>Ture if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxButton"/></returns>
+        ''' <returns>True if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxButton"/></returns>
         Private Shared Function IsValidMessageBoxButton(ByVal value As System.Windows.MessageBoxButton) As Boolean
             If (((value <> System.Windows.MessageBoxButton.OK) AndAlso (value <> System.Windows.MessageBoxButton.OKCancel)) AndAlso (value <> System.Windows.MessageBoxButton.YesNo)) Then
                 Return (value = System.Windows.MessageBoxButton.YesNoCancel)
@@ -2523,7 +2565,7 @@ Namespace WindowsT.IndependentT
 
         ''' <summary>Gets value indicating if given value is valid <see cref="System.Windows.MessageBoxImage"/></summary>
         ''' <param name="value">Value to test</param>
-        ''' <returns>Ture if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxImage"/></returns>
+        ''' <returns>True if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxImage"/></returns>
         Private Shared Function IsValidMessageBoxImage(ByVal value As System.Windows.MessageBoxImage) As Boolean
             If ((((value <> System.Windows.MessageBoxImage.Asterisk) AndAlso (value <> System.Windows.MessageBoxImage.Hand)) AndAlso ((value <> System.Windows.MessageBoxImage.Exclamation) AndAlso (value <> System.Windows.MessageBoxImage.Hand))) AndAlso (((value <> System.Windows.MessageBoxImage.Asterisk) AndAlso (value <> System.Windows.MessageBoxImage.None)) AndAlso ((value <> System.Windows.MessageBoxImage.Question) AndAlso (value <> System.Windows.MessageBoxImage.Hand)))) Then
                 Return (value = System.Windows.MessageBoxImage.Exclamation)
@@ -2532,13 +2574,13 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Gets value indicating if given value is valid <see cref="System.Windows.MessageBoxOptions"/></summary>
         ''' <param name="value">Value to test</param>
-        ''' <returns>Ture if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxOptions"/></returns>
+        ''' <returns>True if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxOptions"/></returns>
         Private Shared Function IsValidMessageBoxOptions(ByVal value As System.Windows.MessageBoxOptions) As Boolean
             Return ((value And -3801089) = System.Windows.MessageBoxOptions.None)
         End Function
         ''' <summary>Gets value indicating if given value is valid <see cref="System.Windows.MessageBoxResult"/></summary>
         ''' <param name="value">Value to test</param>
-        ''' <returns>Ture if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxResult"/></returns>
+        ''' <returns>True if <paramref name="value"/> is valid <see cref="System.Windows.MessageBoxResult"/></returns>
         Private Shared Function IsValidMessageBoxResult(ByVal value As System.Windows.MessageBoxResult) As Boolean
             If (((value <> System.Windows.MessageBoxResult.Cancel) AndAlso (value <> System.Windows.MessageBoxResult.No)) AndAlso ((value <> System.Windows.MessageBoxResult.None) AndAlso (value <> System.Windows.MessageBoxResult.OK))) Then
                 Return (value = System.Windows.MessageBoxResult.Yes)
@@ -4025,16 +4067,16 @@ Namespace WindowsT.IndependentT
             Me.Buttons.Clear()
             Me.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
         End Sub
-        ''' <summary>When overriden in derived class gets text which contains Accesskey marker (like &amp; in WinForms or _ in WPF)</summary>
-        ''' <param name="Text">Text (if it contains character used as accesskey markers they must be escaped)</param>
-        ''' <param name="AccessKey">Char representing accesskey (if char is not in <paramref name="Text"/> no accesskey marker should be inserted)</param>
-        ''' <returns><paramref name="Text"/> with accesskey denoted in it; or <paramref name="Text"/> if platfrom derived class implements messagebox for does not indicate accesskey in text.</returns>
+        ''' <summary>When overriden in derived class gets text which contains Access key marker (like &amp; in WinForms or _ in WPF)</summary>
+        ''' <param name="Text">Text (if it contains character used as access key markers they must be escaped)</param>
+        ''' <param name="AccessKey">Char representing access key (if char is not in <paramref name="Text"/> no access key marker should be inserted)</param>
+        ''' <returns><paramref name="Text"/> with access key denoted in it; or <paramref name="Text"/> if platfrom derived class implements messagebox for does not indicate access key in text.</returns>
         ''' <version version="1.5.2">Function added</version>
         Protected MustOverride Function GetTextWithAccessKey(ByVal Text$, ByVal AccessKey As Char) As String
 
-        ''' <summary>Creates accesskey text by prepending given char before accesskey character</summary>
+        ''' <summary>Creates access key text by prepending given char before access key character</summary>
         ''' <param name="Text">Text of control</param>
-        ''' <param name="AccessKey">Accesskey to prepend char in front of</param>
+        ''' <param name="AccessKey">Access key to prepend char in front of</param>
         ''' <param name="PrependChar">Char to be prepended</param>
         ''' <returns><paramref name="Text"/> with first occurence of <paramref name="AccessKey"/> replaced with <paramref name="PrependChar"/> and <paramref name="AccessKey"/>.</returns>
         ''' <remarks><paramref name="AccessKey"/> is escaped by duplication</remarks>

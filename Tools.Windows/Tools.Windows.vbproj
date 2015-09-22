@@ -60,7 +60,8 @@
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
     <Config>1</Config>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -68,12 +69,13 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\AnyCPU\</OutputPath>
     <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
     <Config>5</Config>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -238,7 +240,7 @@
     <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.Designer.vb">
       <DependentUpon>ProgressMonitor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb" Condition="$(Config)&lt;=$(Nightly)">
+    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb" >
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
@@ -247,7 +249,7 @@
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
+    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" >
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
@@ -264,14 +266,14 @@
     <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb" Condition="$(Config)&lt;=$(Nightly)">
+    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb" >
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.Designer.vb">
       <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.vb" >
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
@@ -281,18 +283,18 @@
     <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.Designer.vb">
       <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.vb" Condition="$(Config)&lt;=$(Alpha)">
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.vb" >
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb" Condition="$(Config)&lt;=$(Alpha)">
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb" >
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\StatusMarker.Designer.vb">
       <DependentUpon>StatusMarker.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb" Condition="$(Config)&lt;=$(Nightly)">
+    <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb" >
       <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
@@ -302,15 +304,15 @@
     <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\Dialogs\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
+    <Compile Include="Windows\Forms\Dialogs\EncodingDialog.vb" >
       <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
+    <Compile Include="Windows\Forms\Composite controls\EncodingSelector.vb" >
       <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\Derived controls\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
+    <Compile Include="Windows\Forms\Derived controls\LinkLabel.vb" >
       <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>Component</SubType>
     </Compile>
@@ -332,7 +334,7 @@
     <Compile Include="Windows\Forms\Dialogs\MessageBox WF.Designer.vb">
       <DependentUpon>MessageBox WF.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Dialogs\MessageBox WF.vb" Condition="$(Config)&lt;=$(Nightly)">
+    <Compile Include="Windows\Forms\Dialogs\MessageBox WF.vb" >
       <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
@@ -448,7 +450,7 @@
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
-    <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="0==1">
+    <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx">
       <Link>Resources\Exceptions.resx</Link>
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
