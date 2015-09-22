@@ -8,7 +8,6 @@ using System.Security.Permissions;
 [assembly: AssemblyTitle("ResXFileCodeGeneratorEx")]
 [assembly: AssemblyDescription("Extended Strongly Typed Resource Generator with <LogicalName> support")]
 
-[assembly: AssemblyCompany("Đonny")]
 [assembly: AssemblyProduct("Extended Strongly Typed Resource Generator")]
 [assembly: AssemblyCopyright("Copyright © DMK Software 2006-2008; <LogicalName> by © Đonny 2008/10")]
 

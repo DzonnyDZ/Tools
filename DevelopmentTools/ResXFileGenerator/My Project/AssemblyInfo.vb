@@ -10,10 +10,7 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("ResXFileGenerator")> 
 <Assembly: AssemblyDescription("Command line ResX File generator")> 
-<Assembly: AssemblyCompany("ĐTools team")> 
 <Assembly: AssemblyProduct("ResXFileGenerator")> 
-<Assembly: AssemblyCopyright("Copyright © Đonny 2009")> 
-<Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 

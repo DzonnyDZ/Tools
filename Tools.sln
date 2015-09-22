@@ -75,7 +75,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{8129B61A-3
 		DLLs\VJSharpCodeProvider64.DLL = DLLs\VJSharpCodeProvider64.DLL
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools.TotalCommander", "Tools.TotalCommander", "{708C9420-4676-4314-B690-7A887F8CC992}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Total Commander", "Total Commander", "{708C9420-4676-4314-B690-7A887F8CC992}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{F797B3BC-7A54-4E75-9BCB-2E52A82C9E93}"
 	ProjectSection(SolutionItems) = preProject
