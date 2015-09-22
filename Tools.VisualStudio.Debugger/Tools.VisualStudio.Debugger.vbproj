@@ -74,7 +74,10 @@
     <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\VSSDK.DebuggerVisualizers.12.0.4\lib\net20\Microsoft.VisualStudio.DebuggerVisualizers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -89,6 +92,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
+    </Compile>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
@@ -99,9 +105,6 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedFiles\Version.vb">
-      <Link>My Project\Version.vb</Link>
-    </Compile>
     <Compile Include="Diagnostics\DbCommandProxies.vb" />
     <Compile Include="Diagnostics\DbCommandVisualizer.xaml.vb">
       <DependentUpon>DbCommandVisualizer.xaml</DependentUpon>
@@ -147,6 +150,8 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
+    <None Include="Tools.Windows.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\db.png" />
@@ -180,6 +185,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)DevelopmentTools\nuget.exe" pack "$(ProjectPath)" -OutputDirectory "$(TargetDir)\" -Properties Configuration=$(ConfigurationName) -Properties "BinDir=$(TargetDir)\" -IncludeReferencedProjects</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
