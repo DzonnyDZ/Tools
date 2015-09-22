@@ -104,13 +104,13 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedFiles\Version.vb">
-      <Link>Version.vb</Link>
-    </Compile>
     <Compile Include="Data.SqlServer\RegexMatch.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
+    </Compile>
     <Content Include="Test_log.LDF">
       <DependentUpon>Test.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -124,6 +124,7 @@
   <ItemGroup>
     <Folder Include="Data.SqlServer\" />
     <Folder Include="Properties\" />
+    <Folder Include="My Project\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
