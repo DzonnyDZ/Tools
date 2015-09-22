@@ -39,7 +39,8 @@
     <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
     <DocumentationFile>Tools.Runtime.CompilerServices.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -50,7 +51,8 @@
     <OutputPath>..\bin\Release\AnyCPU\</OutputPath>
     <DocumentationFile>Tools.Runtime.CompilerServices.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>

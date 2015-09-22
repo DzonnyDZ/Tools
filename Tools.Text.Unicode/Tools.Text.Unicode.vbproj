@@ -40,7 +40,8 @@
     <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -52,7 +53,8 @@
     <DocumentationFile>Tools.Text.Unicode.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
