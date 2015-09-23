@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <id>Tools.TotalCommander</id>
+        <version>1.5.4.50001</version>
+        <title>Tools.TotalCommander</title>
+        <authors>Đonny</authors>
+        <owners>Đonny</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>
+            Classes for interaction with Total Commander from managed code. Contains base classes for Total Commander plugins.
+            This package is just reference library, it does not contain tools for building the plugins.
+            Currently the package is x86 (32bit) only.
+        </description>
+        <copyright>Copyright © Jan Záruba (Đonny) 2006-15</copyright>
+        <iconUrl>http://download-codeplex.sec.s-msft.com/Download?ProjectName=tools&amp;DownloadId=8144&amp;Build=21031</iconUrl>
+        <licenseUrl>https://raw.githubusercontent.com/DzonnyDZ/Tools/master/License.txt</licenseUrl>
+        <projectUrl>https://github.com/DzonnyDZ/Tools</projectUrl>
+        <tags>TotalCommander plugin interop</tags>
+        <dependencies>
+            <dependency id="Tools.Main" version="1.5.4.50000"/>
+            <dependency id="Tools.Runtime.CompilerServices" version="1.5.4.50000"/>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="$BinDir$Tools.TotalCommander.dll" target="lib\net46\Tools.TotalCommander.dll"/>
+        <file src="$BinDir$Tools.TotalCommander.xml" target="lib\net46\Tools.TotalCommander.xml"/>
+        <file src="$BinDir$cs\Tools.TotalCommander.resources.dll" target="lib\net46\cs\Tools.TotalCommander.resources.dll"/>
+    </files>
+</package>
