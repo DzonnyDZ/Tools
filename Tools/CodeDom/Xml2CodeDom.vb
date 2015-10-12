@@ -3,8 +3,6 @@ Imports System.Linq
 Imports System.Reflection
 Imports System.Xml.Linq
 Imports System.Xml.Schema
-Imports CultureInfo = System.CultureInfo
-Imports NumberStyles = System.NumberStyles
 Imports Tools.CollectionsT.SpecializedT.AsTypeSafe
 Imports Tools.ExtensionsT
 Imports Tools.LinqT
@@ -30,7 +28,7 @@ Namespace CodeDomT
         ''' <summary>Gets XML-Schema for the http://dzonny.cz/xml/schemas/CodeDom namespace.</summary>
         ''' <returns>Xml schema for the http://dzonny.cz/xml/schemas/CodeDom namespace</returns>
         ''' <remarks>This schema is used by the <see cref="Xml2CodeDom"/> class for validation XML documents being converted to <see cref="CodeDom"/> objects.
-        ''' The schema can be obtained from embdeded resource Tools.CodeDomT.CodeDom.xsd or from source code of ĐTools library.</remarks>
+        ''' The schema can be obtained from embedded resource Tools.CodeDomT.CodeDom.xsd or from source code of ĐTools library.</remarks>
         Public Shared Function GetXmlSchema() As Xml.Schema.XmlSchema
             Dim veh As ValidationEventHandler = AddressOf ValidationHandler
             Return XmlSchema.Read(GetType(Xml2CodeDom).Assembly.GetManifestResourceStream("Tools.CodeDomT.CodeDom.xsd"), veh)

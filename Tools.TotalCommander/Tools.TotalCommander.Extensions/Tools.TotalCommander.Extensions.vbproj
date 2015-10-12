@@ -109,13 +109,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SharedFiles\AssemblyStage.vb">
-      <Link>My Project\AssemblyStage.vb</Link>
+    <Compile Include="..\..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
-    <Compile Include="..\..\SharedFiles\Version.vb">
-      <Link>My Project\Version.vb</Link>
+    <Compile Include="ListerPluginUIWinForms.vb">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ListerPluginUIWinForms.vb" />
     <Compile Include="ListerPluginWinForms.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -154,6 +153,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="Tools.TotalCommander.Extensions.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj">
@@ -196,6 +196,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)DevelopmentTools\nuget.exe" pack "$(ProjectPath)" -OutputDirectory "$(TargetDir)\" -Properties Configuration=$(ConfigurationName) -Properties "BinDir=$(TargetDir)\" -Properties "Platform=$(PlatformName)" -IncludeReferencedProjects</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
