@@ -1,3 +1,4 @@
+//#include "stdafx.h"
 #include "Attributes.h"
 
 #include "Exceptions.h"

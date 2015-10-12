@@ -36,8 +36,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Xsd Include="Tools.Hardcore.nuspec">
-      <Filter>Header Files</Filter>
-    </Xsd>
+    <Xsd Include="Tools.Hardcore.nuspec" />
   </ItemGroup>
 </Project>

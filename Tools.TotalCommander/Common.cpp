@@ -1,4 +1,4 @@
-//#include "Stdafx.h"
+//#include "stdafx.h"
 #include "Common.h"
 #include <vcclr.h>
 #include "Exceptions.h"

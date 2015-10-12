@@ -1,221 +1,236 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <ProjectGUID>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</ProjectGUID>
-    <RootNamespace>Tools.TotalCommanderT</RootNamespace>
-    <SccProjectName>
-    </SccProjectName>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccProvider>
-    </SccProvider>
-    <Keyword>ManagedCProj</Keyword>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <CLRSupport>true</CLRSupport>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <CLRSupport>Pure</CLRSupport>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <!--$(VCTargetsPath)\Microsoft.Cpp.Default.props-->
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets">
-    <Import Project="$(LocalAppData)\Microsoft\VisualStudio\10.0\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(LocalAppData)\Microsoft\VisualStudio\10.0\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutinDir)bin\$(ConfigurationName);$(ReferencePath)</ReferencePath>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\$(Configuration)\x86\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutinDir)bin\$(ConfigurationName);$(ReferencePath)</ReferencePath>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</LinkIncremental>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <PreBuildEvent>
-      <Command>"$(SolutionDir)DevelopmentTools\ResXFileGenerator\bin\Debug\x86\ResXFileGenerator.exe" /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name Tools.TotalCommanderT.Exceptions /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</Command>
-    </PreBuildEvent>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;FSPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-      <PreprocessToFile>false</PreprocessToFile>
-      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-      <PreprocessKeepComments>false</PreprocessKeepComments>
-      <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>
-      </BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>User32.lib</AdditionalDependencies>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AssemblyDebug>true</AssemblyDebug>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
-      <TargetMachine>MachineX86</TargetMachine>
-      <KeyFile>..\SharedFiles\Tools.snk</KeyFile>
-      <ModuleDefinitionFile>
-      </ModuleDefinitionFile>
-    </Link>
-    <PostBuildEvent>
-      <Command>ECHO "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
-"$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
-sn -R "$(TargetPath)" "$(SolutionDir)SharedFiles\Tools.snk"
-IF ERRORLEVEL 0 (
-    ECHO "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
-    "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
-)
-IF ERRORLEVEL 0 (
-    ECHO move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
-    move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
-)</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;FSPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
-      <TargetMachine>MachineX86</TargetMachine>
-      <ModuleDefinitionFile>exxports.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Attributes.h" />
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="ContentFieldSpecification.h" />
-    <ClInclude Include="ContentFunctions.h" />
-    <ClInclude Include="ContentPluginBase.h" />
-    <ClInclude Include="Date.h" />
-    <ClInclude Include="DefaultParams.h" />
-    <ClInclude Include="Exceptions.h" />
-    <ClInclude Include="GlobalFunctions.h">
-      <FileType>CppHeader</FileType>
-    </ClInclude>
-    <ClInclude Include="PluginBase.h" />
-    <ClInclude Include="PluginMethodAttribute.h" />
-    <ClInclude Include="Plugin\contplug.h" />
-    <ClInclude Include="Plugin\fsplugin.h" />
-    <ClInclude Include="Plugin\listplug.h" />
-    <ClInclude Include="Plugin\plug_common.h" />
-    <ClInclude Include="WFX\FileSystemPlugin.h" />
-    <ClInclude Include="WFX\FindData.h" />
-    <ClInclude Include="WFX\RemoteInfo.h" />
-    <ClInclude Include="WFX\ViewDefinition.h" />
-    <ClInclude Include="WFX\WFX Callback Wrappers.h" />
-    <ClInclude Include="WFX\WFX common.h" />
-    <ClInclude Include="WFX\WFX Enums.h" />
-    <ClInclude Include="WFX\WfxFunctions.h" />
-    <ClInclude Include="WLX\IListerUI.h" />
-    <ClInclude Include="WLX\IListerUIInfo.h" />
-    <ClInclude Include="WLX\ListerPlugin.h" />
-    <ClInclude Include="WLX\ListerPluginBase.h" />
-    <ClInclude Include="WLX\WLX common.h" />
-    <ClInclude Include="WLX\WLX Enums.h" />
-    <ClInclude Include="WLX\WLX EventArgs.h" />
-    <ClInclude Include="WLX\WlxFunctions.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Doc\Content.wdx.hlp" />
-    <None Include="Doc\FileSystem.wfx.hlp" />
-    <None Include="Doc\Lister.wlx.hlp" />
-    <None Include="Doc\Packer.wcx.hlp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Exceptions.cs.resx" />
-    <EmbeddedResource Include="Exceptions.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="Attributes.cpp" />
-    <ClCompile Include="Common.cpp" />
-    <ClCompile Include="ContentFieldSpecification.cpp" />
-    <ClCompile Include="ContentPluginBase.cpp" />
-    <ClCompile Include="Date.cpp" />
-    <ClCompile Include="DefaultParams.cpp" />
-    <ClCompile Include="Exceptions.cpp" />
-    <ClCompile Include="GlobalFunctions.cpp" />
-    <ClCompile Include="PluginBase.cpp" />
-    <ClCompile Include="PluginMethodAttribute.cpp" />
-    <ClCompile Include="WFX\FileSystemPlugin.cpp" />
-    <ClCompile Include="WFX\FindData.cpp" />
-    <ClCompile Include="WFX\RemoteInfo.cpp" />
-    <ClCompile Include="WFX\ViewDefinition.cpp" />
-    <ClCompile Include="WFX\WFX Callback Wrappers.cpp" />
-    <ClCompile Include="WFX\WFX common.cpp" />
-    <ClCompile Include="WFX\WFX Enums.cpp" />
-    <ClCompile Include="WLX\ListerPlugin.cpp" />
-    <ClCompile Include="WLX\ListerPluginBase.cpp" />
-    <ClCompile Include="WLX\WLX EventArgs.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System">
-      <RequiredTargetFramework>v3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <RequiredTargetFramework>v3.5</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
-      <Project>{97e0dd39-aa48-4288-82ad-3753c178c70a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.vbproj">
-      <Project>{fcf346ac-d1c3-42db-9026-9144240fb766}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+    <ItemGroup Label="ProjectConfigurations">
+        <ProjectConfiguration Include="Debug|Win32">
+            <Configuration>Debug</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Release|Win32">
+            <Configuration>Release</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+    </ItemGroup>
+    <PropertyGroup Label="Globals">
+        <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+        <ProjectGUID>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</ProjectGUID>
+        <RootNamespace>Tools.TotalCommanderT</RootNamespace>
+        <SccProjectName>
+        </SccProjectName>
+        <SccAuxPath>
+        </SccAuxPath>
+        <SccLocalPath>
+        </SccLocalPath>
+        <SccProvider>
+        </SccProvider>
+        <Keyword>ManagedCProj</Keyword>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+        <ConfigurationType>DynamicLibrary</ConfigurationType>
+        <CharacterSet>Unicode</CharacterSet>
+        <CLRSupport>true</CLRSupport>
+        <WholeProgramOptimization>true</WholeProgramOptimization>
+        <PlatformToolset>v140</PlatformToolset>
+    </PropertyGroup>
+    <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <ConfigurationType>DynamicLibrary</ConfigurationType>
+        <CharacterSet>Unicode</CharacterSet>
+        <CLRSupport>Pure</CLRSupport>
+        <PlatformToolset>v140</PlatformToolset>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+    <!--$(VCTargetsPath)\Microsoft.Cpp.Default.props-->
+    <ImportGroup Label="ExtensionSettings">
+    </ImportGroup>
+    <ImportGroup Label="PropertySheets">
+        <Import Project="$(LocalAppData)\Microsoft\VisualStudio\10.0\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(LocalAppData)\Microsoft\VisualStudio\10.0\Microsoft.Cpp.$(Platform).user.props')" />
+    </ImportGroup>
+    <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+        <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+        <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutinDir)bin\$(ConfigurationName);$(ReferencePath)</ReferencePath>
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\$(Configuration)\x86\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\$(Configuration)\</IntDir>
+        <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+        <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutinDir)bin\$(ConfigurationName);$(ReferencePath)</ReferencePath>
+        <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)bin\$(Configuration)\</OutDir>
+        <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\$(Configuration)\</IntDir>
+        <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</LinkIncremental>
+        <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+        <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+        <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+        <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    </PropertyGroup>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <PreBuildEvent>
+            <Command>"$(SolutionDir)DevelopmentTools\ResXFileGenerator\bin\Debug\x86\ResXFileGenerator.exe" /in "$(ProjectDir)Exceptions.resx" /out "$(ProjectDir)Exceptions.h" /out2 "$(ProjectDir)Exceptions.cpp" /name Tools.TotalCommanderT.Exceptions /l b 1 "#include ""Exceptions.h""" /ns Tools.TotalCommanderT.ResourcesT /spliton "\r\nnamespace Tools {\r\n    namespace TotalCommanderT {\r\n        namespace ResourcesT {\r\n    \r\n    \r\n    inline Exceptions::Exceptions()" /internal</Command>
+        </PreBuildEvent>
+        <ClCompile>
+            <Optimization>Disabled</Optimization>
+            <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;FSPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+            <PreprocessToFile>false</PreprocessToFile>
+            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+            <PreprocessKeepComments>false</PreprocessKeepComments>
+            <MinimalRebuild>false</MinimalRebuild>
+            <BasicRuntimeChecks>
+            </BasicRuntimeChecks>
+            <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+            <PrecompiledHeader>
+            </PrecompiledHeader>
+            <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
+            <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+            <WarningLevel>Level3</WarningLevel>
+            <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+        </ClCompile>
+        <Link>
+            <AdditionalDependencies>User32.lib</AdditionalDependencies>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+            <AssemblyDebug>true</AssemblyDebug>
+            <RandomizedBaseAddress>false</RandomizedBaseAddress>
+            <DataExecutionPrevention>
+            </DataExecutionPrevention>
+            <TargetMachine>MachineX86</TargetMachine>
+            <KeyFile>..\SharedFiles\Tools.snk</KeyFile>
+            <ModuleDefinitionFile>
+            </ModuleDefinitionFile>
+        </Link>
+    </ItemDefinitionGroup>
+    
+    <ItemDefinitionGroup>
+        <PostBuildEvent>
+            <Command>
+                <![CDATA[
+              ECHO Post processing assembly ...
+              "$(SolutionDir)DevelopmentTools\AssemblyPostprocessor\bin\Debug\AssemblyPostprocessor.exe" /snk "$(SolutionDir)SharedFiles\Tools.snk" "$(TargetPath)"
+              ECHO Re-signing assembly
+              sn -R "$(TargetPath)" "$(SolutionDir)SharedFiles\Tools.snk"
+              IF ERRORLEVEL 0 (
+                  ECHO Fixing XML documentation ...
+                  "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
+              )
+              IF ERRORLEVEL 0 (
+                  ECHO Moving XML documentation to target ...
+                  move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
+              )
+
+              ECHO Generating NuGet package ...
+              "$(SolutionDir)DevelopmentTools\nuget.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -OutputDirectory "$(TargetDir)\" -Properties Configuration=$(ConfigurationName) -Properties "BinDir=$(TargetDir)\"
+          ]]>
+            </Command>
+        </PostBuildEvent>
+    </ItemDefinitionGroup>
+    
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <ClCompile>
+            <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;FSPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+            <PrecompiledHeader>NotUsing</PrecompiledHeader>
+            <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+            <WarningLevel>Level3</WarningLevel>
+            <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+        </ClCompile>
+        <Link>
+            <AdditionalDependencies>
+            </AdditionalDependencies>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+            <RandomizedBaseAddress>false</RandomizedBaseAddress>
+            <DataExecutionPrevention>
+            </DataExecutionPrevention>
+            <TargetMachine>MachineX86</TargetMachine>
+            <!--<ModuleDefinitionFile>exports.def</ModuleDefinitionFile>-->
+        </Link>
+    </ItemDefinitionGroup>
+    <ItemGroup>
+        <ClInclude Include="Attributes.h" />
+        <ClInclude Include="Common.h" />
+        <ClInclude Include="ContentFieldSpecification.h" />
+        <ClInclude Include="ContentFunctions.h" />
+        <ClInclude Include="ContentPluginBase.h" />
+        <ClInclude Include="Date.h" />
+        <ClInclude Include="DefaultParams.h" />
+        <ClInclude Include="Exceptions.h" />
+        <ClInclude Include="GlobalFunctions.h">
+            <FileType>CppHeader</FileType>
+        </ClInclude>
+        <ClInclude Include="PluginBase.h" />
+        <ClInclude Include="PluginMethodAttribute.h" />
+        <ClInclude Include="Plugin\contplug.h" />
+        <ClInclude Include="Plugin\fsplugin.h" />
+        <ClInclude Include="Plugin\listplug.h" />
+        <ClInclude Include="Plugin\plug_common.h" />
+        <ClInclude Include="WFX\FileSystemPlugin.h" />
+        <ClInclude Include="WFX\FindData.h" />
+        <ClInclude Include="WFX\RemoteInfo.h" />
+        <ClInclude Include="WFX\ViewDefinition.h" />
+        <ClInclude Include="WFX\WFX Callback Wrappers.h" />
+        <ClInclude Include="WFX\WFX common.h" />
+        <ClInclude Include="WFX\WFX Enums.h" />
+        <ClInclude Include="WFX\WfxFunctions.h" />
+        <ClInclude Include="WLX\IListerUI.h" />
+        <ClInclude Include="WLX\IListerUIInfo.h" />
+        <ClInclude Include="WLX\ListerPlugin.h" />
+        <ClInclude Include="WLX\ListerPluginBase.h" />
+        <ClInclude Include="WLX\WLX common.h" />
+        <ClInclude Include="WLX\WLX Enums.h" />
+        <ClInclude Include="WLX\WLX EventArgs.h" />
+        <ClInclude Include="WLX\WlxFunctions.h" />
+    </ItemGroup>
+    <ItemGroup>
+        <Xsd Include="Tools.TotalCommander.nuspec">
+            <ExcludedFromBuild >true</ExcludedFromBuild>
+        </Xsd>
+        <None Include="Doc\Content.wdx.hlp" />
+        <None Include="Doc\FileSystem.wfx.hlp" />
+        <None Include="Doc\Lister.wlx.hlp" />
+        <None Include="Doc\Packer.wcx.hlp" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Exceptions.cs.resx" />
+        <EmbeddedResource Include="Exceptions.resx" />
+    </ItemGroup>
+    <ItemGroup>
+        <ClCompile Include="AssemblyInfo.cpp" />
+        <ClCompile Include="Attributes.cpp" />
+        <ClCompile Include="Common.cpp" />
+        <ClCompile Include="ContentFieldSpecification.cpp" />
+        <ClCompile Include="ContentPluginBase.cpp" />
+        <ClCompile Include="Date.cpp" />
+        <ClCompile Include="DefaultParams.cpp" />
+        <ClCompile Include="Exceptions.cpp" />
+        <ClCompile Include="GlobalFunctions.cpp" />
+        <ClCompile Include="PluginBase.cpp" />
+        <ClCompile Include="PluginMethodAttribute.cpp" />
+        <ClCompile Include="WFX\FileSystemPlugin.cpp" />
+        <ClCompile Include="WFX\FindData.cpp" />
+        <ClCompile Include="WFX\RemoteInfo.cpp" />
+        <ClCompile Include="WFX\ViewDefinition.cpp" />
+        <ClCompile Include="WFX\WFX Callback Wrappers.cpp" />
+        <ClCompile Include="WFX\WFX common.cpp" />
+        <ClCompile Include="WFX\WFX Enums.cpp" />
+        <ClCompile Include="WLX\ListerPlugin.cpp" />
+        <ClCompile Include="WLX\ListerPluginBase.cpp" />
+        <ClCompile Include="WLX\WLX EventArgs.cpp" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System">
+            <RequiredTargetFramework>v3.5</RequiredTargetFramework>
+        </Reference>
+        <Reference Include="System.Drawing">
+            <RequiredTargetFramework>v3.5</RequiredTargetFramework>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tools.Runtime.CompilerServices\Tools.Runtime.CompilerServices.vbproj">
+            <Project>{97e0dd39-aa48-4288-82ad-3753c178c70a}</Project>
+        </ProjectReference>
+        <ProjectReference Include="..\Tools\Tools.vbproj">
+            <Project>{fcf346ac-d1c3-42db-9026-9144240fb766}</Project>
+        </ProjectReference>
+    </ItemGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+    <ImportGroup Label="ExtensionTargets">
+    </ImportGroup>
 </Project>

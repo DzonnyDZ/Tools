@@ -207,4 +207,5 @@
     <EmbeddedResource Include="Exceptions.cs.resx" />
     <EmbeddedResource Include="Exceptions.resx" />
   </ItemGroup>
+
 </Project>
