@@ -70,6 +70,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -86,6 +87,7 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>4</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -98,11 +100,8 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SharedFiles\AssemblyStage.vb">
-      <Link>AssemblyStage.vb</Link>
-    </Compile>
-    <Compile Include="..\..\SharedFiles\Version.vb">
-      <Link>Version.vb</Link>
+    <Compile Include="..\..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
     <Compile Include="AddFavoriteItemDialog.Designer.vb">
       <DependentUpon>AddFavoriteItemDialog.vb</DependentUpon>
