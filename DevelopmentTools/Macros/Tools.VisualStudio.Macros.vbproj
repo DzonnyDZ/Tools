@@ -104,8 +104,8 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SharedFiles\Version.vb">
-      <Link>Version.vb</Link>
+    <Compile Include="..\..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
     <Compile Include="ClassMemberProvider.vb" />
     <Compile Include="ClassProvider.vb" />

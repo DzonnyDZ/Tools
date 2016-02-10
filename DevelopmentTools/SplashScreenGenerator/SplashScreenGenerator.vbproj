@@ -174,8 +174,8 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <Compile Include="..\..\SharedFiles\Version.vb">
-      <Link>My Project\Version.vb</Link>
+    <Compile Include="..\..\SharedFiles\GlobalAssemblyInfo.vb">
+      <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

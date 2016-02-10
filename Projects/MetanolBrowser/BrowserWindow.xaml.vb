@@ -6,7 +6,7 @@ Imports Tools.DrawingT.DrawingIOt.JPEG
 Imports MessageBoxButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 
 ''' <summary>A windows used for browsing pictures</summary>
-Class BrowserWindow
+Class BrowserWindow : Inherits Window
     Private Const JpegMask As String = "*.jpg;*.jpeg;*.jfif"
     ''' <summary>CTor - creates a new instance of the <see cref="BrowserWindow"/> class</summary>
     Public Sub New()
@@ -58,7 +58,7 @@ Class BrowserWindow
         Me.SetValue(DisplayIndexPropertyKey, Index + 1)
         Try
             Title = String.Format(My.Resources.txt_WindowTitle, My.Application.Info.Title, My.Application.Info.Version, IO.Path.GetFileName(Directory(Index)))
-        Catch :End Try
+        Catch : End Try
     End Sub
 
     ''' <summary>Gets 1-based index of current file in directory</summary>

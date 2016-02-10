@@ -1,14 +1,14 @@
-namespace Tools.VisualStudioT.GeneratorsT {
-    using System;
-    using System.IO;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Xml;
-    using System.Xml.XPath;
-    using System.Xml.Xsl;
-    using System.Xml.Linq;
-    using Tools.VisualStudioT.GeneratorsT;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using System.Xml.Xsl;
 
+namespace Tools.VisualStudioT.GeneratorsT
+{     
     /// <summary>
     /// This is a Code DOM XSLT custom tool for Visual Studio. It performs XSL transform as custom tool in Visual Studio and interprets its result as XML-serialized CodeDOM.
     /// </summary>
@@ -21,7 +21,8 @@ namespace Tools.VisualStudioT.GeneratorsT {
     /// <version version="1.5.4">One more parameter is passed to XSL Template - <c>language</c>.</version>
     [Guid("88185642-6CBD-45a6-9447-3D6C19AAE4B6")]
     [CustomTool("CodeDomXsltCustomTool", "Code DOM XSLT custom tool")]
-    public class CodeDomXsltCustomTool : CustomToolBase {
+    public class CodeDomXsltCustomTool : CustomToolBase
+    {
 
         /// <summary>CTor - creates a new instance of the <see cref="CodeDomXsltCustomTool"/> class.</summary>
         public CodeDomXsltCustomTool() { }
@@ -32,12 +33,13 @@ namespace Tools.VisualStudioT.GeneratorsT {
         /// <returns>File converted</returns>
         /// <version version="1.5.4">Script and document() function are now enabled in XSL transformations.</version>
         /// <version version="1.5.4">One more parameter is passed to XSL Template - <c>language</c>.</version>
-        public override string DoGenerateCode(string inputFileName, string inputFileContent) {
+        public override string DoGenerateCode(string inputFileName, string inputFileContent)
+        {
 
             string xmlFileName = Tools.ResourcesT.TransforCodeGeneratorResources.NOTFOUND;
             StringWriter outputWriter = new StringWriter();
-            try {
-
+            try
+            {     
                 FileInfo inputFileInfo = new FileInfo(inputFileName);
 
                 // get the XML document for XSLT file
@@ -48,11 +50,13 @@ namespace Tools.VisualStudioT.GeneratorsT {
                 var inputPIs = XsltDocument.SelectNodes("/processing-instruction('input')");
                 if (inputPIs.Count > 0) xmlFileName = inputPIs[0].Value;
 
-                if (!File.Exists(xmlFileName) && !System.IO.Path.IsPathRooted(xmlFileName)) {
+                if (!File.Exists(xmlFileName) && !System.IO.Path.IsPathRooted(xmlFileName))
+                {
                     // try in the same dir as the file
                     xmlFileName = Path.Combine(inputFileInfo.DirectoryName, xmlFileName);
 
-                    if (!File.Exists(xmlFileName)) {
+                    if (!File.Exists(xmlFileName))
+                    {
                         // try in the dir where this dll lives
                         FileInfo assemblyFileInfo = new FileInfo(Assembly.GetExecutingAssembly().Location);
                         xmlFileName = Path.Combine(assemblyFileInfo.DirectoryName, xmlFileName);
@@ -94,15 +98,19 @@ namespace Tools.VisualStudioT.GeneratorsT {
                 outputWriter = new StringWriter();
                 base.CodeProvider.GenerateCodeFromCompileUnit(x2d.Xml2CompileUnit(result), outputWriter, new System.CodeDom.Compiler.CodeGeneratorOptions());
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 string bCommentStart;
                 string bCommentEnd;
                 string lCommentStart;
-                if (this.GetDefaultExtension().ToLower() == ".vb") {
+                if (this.GetDefaultExtension().ToLower() == ".vb")
+                {
                     bCommentStart = "'";
                     bCommentEnd = "'";
                     lCommentStart = "'";
-                } else {
+                }
+                else {
                     bCommentStart = "/*";
                     bCommentEnd = "*/";
                     lCommentStart = "";
@@ -121,23 +129,27 @@ namespace Tools.VisualStudioT.GeneratorsT {
 
         }
 
-        /// <summary>Called when assembly is registeered with COM</summary>
+        /// <summary>Called when assembly is registered with COM</summary>
         /// <param name="t">Type to be registered</param>
         [ComRegisterFunction]
-        private static void ComRegister(Type t) {
-            if (t.Equals(typeof(CodeDomXsltCustomTool))) {
+        private static void ComRegister(Type t)
+        {
+            if (t.Equals(typeof(CodeDomXsltCustomTool)))
+            {
                 RegisterCustomTool(t, true);
                 Console.WriteLine("Custom tool {0} registered.", t.FullName);
             }
         }
-        /// <summary>Called when assembly is un-registeered with COM</summary>
+        /// <summary>Called when assembly is un-registered with COM</summary>
         /// <param name="t">Type to be un-registered</param>
         [ComUnregisterFunction]
-        private static void ComUnRegister(Type t) {
-            if (t.Equals(typeof(CodeDomXsltCustomTool))) {
+        private static void ComUnRegister(Type t)
+        {
+            if (t.Equals(typeof(CodeDomXsltCustomTool)))
+            {
                 RegisterCustomTool(t, false);
                 Console.WriteLine("Custom tool {0} un-registered.", t.FullName);
             }
         }
     }
-}
+}        

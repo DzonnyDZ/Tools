@@ -54,7 +54,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SharedFiles\Version.vb">
+    <Compile Include="..\..\SharedFiles\GlobalAssemblyInfo.vb">
       <Link>Version.vb</Link>
     </Compile>
     <Compile Include="CommentsMerge.vb" />

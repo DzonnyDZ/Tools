@@ -1,5 +1,5 @@
-﻿Imports MBox = Tools.WindowsT.IndependentT.MessageBox
-Imports Tools.VisualStudioT.GeneratorsT
+﻿Imports Tools.VisualStudioT.GeneratorsT
+Imports MBox = Tools.WindowsT.IndependentT.MessageBox
 
 Namespace GeneratorsT
     Public Class frmCustomToolBase

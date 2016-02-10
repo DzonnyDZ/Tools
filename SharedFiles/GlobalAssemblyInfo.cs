@@ -5,7 +5,7 @@ using System.Reflection;
 [assembly: AssemblyProduct("ÐTools")]
 #endif
 #if !NO_COPYRIGHT
-[assembly: AssemblyCopyright("Copyright © Jan Záruba (Ðonny) 2006-15")]
+[assembly: AssemblyCopyright("Copyright © Jan Záruba (Ðonny) 2006-16")]
 #endif
-[assembly: AssemblyVersion("1.5.4.50001")]
-[assembly: AssemblyFileVersion("1.5.4.50001")]
+[assembly: AssemblyVersion("1.5.5.0")]
+[assembly: AssemblyFileVersion("1.5.5.0")]
