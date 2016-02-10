@@ -340,7 +340,7 @@ Namespace ReflectionT
                 Case Else : Return True
             End Select
         End Function
-        ''' <summary>Gets value indicating if member should be considered final (it cannot be overriden or inherited)</summary>
+        ''' <summary>Gets value indicating if member should be considered final (it cannot be overridden or inherited)</summary>
         ''' <param name="Member">Member to check</param>
         ''' <returns>True if memberis final</returns>
         ''' <remarks>For <see cref="FieldInfo"/> always returns true. For <see cref="EventInfo"/> and <see cref="PropertyInfo"/> all non-other members must be final to return true.</remarks>
@@ -1473,7 +1473,7 @@ Namespace ReflectionT
         ''' <summary>Gets method that overrides given method in given type</summary>
         ''' <param name="Method">Method to get overriding method for</param>
         ''' <param name="DerivedType">Type derived from <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> to get method of (or base of)</param>
-        ''' <returns><paramref name="Method"/> when <paramref name="Method"/> is not overriden in <paramref name=" DerivedType"/> or one of its base classed between <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> and <paramref name="DerivedType"/>;
+        ''' <returns><paramref name="Method"/> when <paramref name="Method"/> is not overridden in <paramref name=" DerivedType"/> or one of its base classed between <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> and <paramref name="DerivedType"/>;
         ''' Overriding method of <paramref name="DerivedType"/> or one of its base types (between <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> and <paramref name="DerivedType"/> otherwise.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Method"/> or <paramref name="DerivedType"/> is null</exception>
         ''' <exception cref="ArgumentException"><paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is null (it is global method) -or-

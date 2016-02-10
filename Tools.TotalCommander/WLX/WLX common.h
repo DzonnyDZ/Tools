@@ -5,5 +5,7 @@
 #include "IListerUIInfo.h"
 #include "IListerUI.h"
 
-namespace Tools{namespace TotalCommanderT{
-}}
+namespace Tools {
+    namespace TotalCommanderT {
+    }
+}

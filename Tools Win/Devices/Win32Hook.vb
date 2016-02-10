@@ -75,7 +75,7 @@ Namespace API.Hooks
         End Function
         ''' <summary>Delegate to <see cref="HookProcInternal"/></summary>
         Private dHookProcInternal As API.Hooks.HookProc = AddressOf HookProcInternal
-        ''' <summary>If overriden in derived class gets type of hook represented by derived class</summary>
+        ''' <summary>If overridden in derived class gets type of hook represented by derived class</summary>
         ''' <returns>One of values accepted for SetWindowsHookEx idHook parameter</returns>
         Protected MustOverride ReadOnly Property HandledHookType() As HookType
         ''' <summary>Hook handler procedure. Caled when hook event occures</summary>

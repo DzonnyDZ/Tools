@@ -18,7 +18,7 @@ Namespace TextT.UnicodeT
     Public MustInherit Class UcdCollection
         Implements IXElementWrapper, IEnumerable(Of IXElementWrapper)
 
-        ''' <summary>When overriden in derived class gets XML element this instance wraps</summary>
+        ''' <summary>When overridden in derived class gets XML element this instance wraps</summary>
         Public MustOverride ReadOnly Property Element As System.Xml.Linq.XElement Implements ComponentModelT.IXElementWrapper.Element
 
         ''' <summary>Gets node this instance wraps</summary>
@@ -28,7 +28,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>When overriden in derived class returns an enumerator that iterates through the collection of <see cref="IXElementWrapper"/>s.</summary>
+        ''' <summary>When overridden in derived class returns an enumerator that iterates through the collection of <see cref="IXElementWrapper"/>s.</summary>
         ''' <returns>A <see cref="IEnumerator(Of T)" />[<see cref="IXElementWrapper"/>] that can be used to iterate through the collection.</returns>
         Public MustOverride Function GetXElementWrapperEnumerator() As System.Collections.Generic.IEnumerator(Of ComponentModelT.IXElementWrapper) Implements System.Collections.Generic.IEnumerable(Of ComponentModelT.IXElementWrapper).GetEnumerator
 

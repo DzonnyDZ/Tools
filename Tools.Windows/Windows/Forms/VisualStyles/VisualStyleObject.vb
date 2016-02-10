@@ -10,7 +10,7 @@ Namespace WindowsT.FormsT.VisualStylesT
     '    ''' <remarks>This class is intended as simplified encapsulation of <see cref="VisualStyleRenderer"/>, which can be replaced by another derived class.
     '    ''' <see cref="VisualStyleRenderer"/> is encapsulated by <see cref="UxThemeObject"/> class.</remarks>
     '    Public MustInherit Class VisualStyleObject
-    '        ''' <summary>When overriden in derived class, draws portion of element background</summary>
+    '        ''' <summary>When overridden in derived class, draws portion of element background</summary>
     '        ''' <param name="g">raphics to draw element background on</param>
     '        ''' <param name="rect">Rectangle identifiing position and size of visual style element object</param>
     '        ''' <param name="clip">Postion of <paramref name="g"/> that was invalidated and must be redrawn</param>
@@ -70,7 +70,7 @@ Namespace WindowsT.FormsT.VisualStylesT
     '        Public Function GetPadding(ByVal g As Graphics, ByVal x%, ByVal y%, ByVal Width%, ByVal Height%) As Padding
     '            Return GetPadding(g, New Rectangle(x, x, Width, Height))
     '        End Function
-    '        ''' <summary>When overriden in derived class, returns the value of the specified size property of the current visual style part using the specified drawing bounds.</summary>
+    '        ''' <summary>When overridden in derived class, returns the value of the specified size property of the current visual style part using the specified drawing bounds.</summary>
     '        ''' <param name="g">The <see cref="System.Drawing.Graphics" /> this operation will use.</param>
     '        ''' <param name="Rect">A <see cref="System.Drawing.Rectangle" /> that contains the area in which the part will be drawn.</param>
     '        ''' <param name="type">One of the <see cref="System.Windows.Forms.VisualStyles.ThemeSizeType" /> values that specifies which size value to retrieve for the part.</param>
@@ -663,7 +663,7 @@ Namespace WindowsT.FormsT.VisualStylesT
     ''' <summary>Base class for themed and non-themed object rendereres</summary>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     Public MustInherit Class ObjectRenderer
-        ''' <summary>When overriden in derived class draws element background</summary>
+        ''' <summary>When overridden in derived class draws element background</summary>
         ''' <param name="g">rahics to draw onto</param>
         ''' <param name="BackgroundRectangle">Rectangle of element area</param>
         ''' <param name="ClipRectangle">Rectangle that was invalidate and needs to be repainted</param>
@@ -880,7 +880,7 @@ Namespace WindowsT.FormsT.VisualStylesT
                 _State = value
             End Set
         End Property
-        ''' <summary>When overriden in derived class gets lis of possible values of <see cref="State"/> property</summary>
+        ''' <summary>When overridden in derived class gets lis of possible values of <see cref="State"/> property</summary>
         ''' <remarks>All values of the <see cref="State"/> property. USage of another value may leed to fallback.</remarks>
         Protected MustOverride Function GetStates() As IEnumerable(Of Integer)
 
@@ -898,17 +898,17 @@ Namespace WindowsT.FormsT.VisualStylesT
                 Return VisualStyleRenderer.IsSupported AndAlso VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement(ClassName, Part, State))
             End Get
         End Property
-        '''' <summary>When overriden in derived class gets default state for goven state</summary>
+        '''' <summary>When overridden in derived class gets default state for goven state</summary>
         '''' <param name="State">State to get default state of</param>
         '''' <returns>Default state for state <paramref name="State"/></returns>
         'Protected MustOverride Function GetDefaultState(ByVal State As Integer) As Integer
-        ''' <summary>When overriden in derived class gets 1st chance fallback state for current state identified by <see cref="VisualStyleElement"/> object</summary>
+        ''' <summary>When overridden in derived class gets 1st chance fallback state for current state identified by <see cref="VisualStyleElement"/> object</summary>
         ''' <returns>1st change fallback state identified by <see cref="VisualStyleElement"/>. <see cref="VisualStyleElement.ClassName"/> must be same as <see cref="ClassName"/>. When no 1st chance fallback is defined returns current state.</returns>
         Protected MustOverride Function GetFallback1() As VisualStyleElement
-        ''' <summary>When overriden in derived class gets 2nd chance fallback state for current state identified by <see cref="VisualStyleElement"/> object</summary>
+        ''' <summary>When overridden in derived class gets 2nd chance fallback state for current state identified by <see cref="VisualStyleElement"/> object</summary>
         ''' <returns>2nd change fallback state identified by <see cref="VisualStyleElement"/>. <see cref="VisualStyleElement.ClassName"/> must be same as <see cref="ClassName"/>. When no 2nd chance fallback is defined returns <see cref="GetFallback1"/>.</returns>
         Protected MustOverride Function GetFallBack2() As VisualStyleElement
-        ''' <summary>When overriden in derived class gets 3rd chance fallback state for current state identified by <see cref="VisualStyleElement"/> object</summary>
+        ''' <summary>When overridden in derived class gets 3rd chance fallback state for current state identified by <see cref="VisualStyleElement"/> object</summary>
         ''' <returns>3rd change fallback state identified by <see cref="VisualStyleElement"/>. <see cref="VisualStyleElement.ClassName"/> must be same as <see cref="ClassName"/>. When no 3rd chance fallback is defined returns <see cref="GetFallback2"/>.</returns>
         Protected MustOverride Function GetFallBack3() As VisualStyleElement
         ''' <summary>Draws element background using <see cref="State"/> or default state if current state is not supported</summary>
@@ -1717,7 +1717,7 @@ Namespace WindowsT.FormsT.VisualStylesT
         'End Function
         ''' <summary>Gets 1st chance fallback state for current state</summary>
         ''' <returns>Fallback state inside current group</returns>
-        ''' <remarks>This function cannot be overriden. Override <see cref="GetFallBackState"/> instead.</remarks>
+        ''' <remarks>This function cannot be overridden. Override <see cref="GetFallBackState"/> instead.</remarks>
         Protected NotOverridable Overrides Function GetFallback1() As System.Windows.Forms.VisualStyles.VisualStyleElement
             Return VisualStyleElement.CreateElement(ClassName, Part, GroupMap(StateGroup)(GetFallBackState))
         End Function
@@ -1737,7 +1737,7 @@ Namespace WindowsT.FormsT.VisualStylesT
         End Function
         ''' <summary>Gets 2nd chance fallback state for current state</summary>
         ''' <returns>Same state (if exists; fallback otherwise) in fallback group for this group</returns>
-        ''' <remarks>This function cannot be overriden, override <see cref="GetFallBackGroup"/> instead</remarks>
+        ''' <remarks>This function cannot be overridden, override <see cref="GetFallBackGroup"/> instead</remarks>
         Protected NotOverridable Overrides Function GetFallBack2() As System.Windows.Forms.VisualStyles.VisualStyleElement
             Dim fbgCode As Object = GetFallBackGroup()
             Dim fbg = GroupMap(fbgCode)
@@ -1762,7 +1762,7 @@ Namespace WindowsT.FormsT.VisualStylesT
         End Function
         ''' <summary>Gets 3rd fallback state for current state</summary>
         ''' <returns>Default state in default group of current group</returns>
-        ''' <remarks>This method cannot be overriden. Override <see cref="GetFallBackGroup"/> and <see cref="GetFallBackState"/> instead</remarks>
+        ''' <remarks>This method cannot be overridden. Override <see cref="GetFallBackGroup"/> and <see cref="GetFallBackState"/> instead</remarks>
         Protected NotOverridable Overrides Function GetFallBack3() As System.Windows.Forms.VisualStyles.VisualStyleElement
             Dim Group As Integer = GetFallBackGroup()
             Dim state = GetFallBackState(Group, Me.State)
@@ -1772,7 +1772,7 @@ Namespace WindowsT.FormsT.VisualStylesT
         End Function
 #End Region
 
-        '''' <summary>When overriden in derived class gets default group fro given group</summary>
+        '''' <summary>When overridden in derived class gets default group fro given group</summary>
         '''' <param name="Group">Logical group code (as in <see cref="StateGroup"/>)</param>
         '''' <returns>Logical group code (as in <see cref="StateGroup"/>) for given <paramref name="Group"/>. <paramref name="Group"/> when no defualt group is defined for given group.</returns>
         '''' <remarks>This implementation always returns <paramref name="Group"/>.</remarks>

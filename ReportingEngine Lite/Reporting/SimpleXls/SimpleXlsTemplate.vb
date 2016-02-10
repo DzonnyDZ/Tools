@@ -509,7 +509,7 @@ Namespace ReportingT.ReportingEngineLite
             End Try
             FinishList(count, worksheet, context, Col1, Coln, Row1, Rown, FilledColumns, True)
         End Sub
-        ''' <summary>Thius method is called before a row is written to a list - in case it's overriden in derived class  it allows to perform various actionsrùzné akce before a row is written</summary>
+        ''' <summary>Thius method is called before a row is written to a list - in case it's overridden in derived class  it allows to perform various actionsrùzné akce before a row is written</summary>
         ''' <param name="reader">A datasource pointing to current column</param>
         ''' <param name="worksheet">Current list (worksheet), when function returns it can change the list</param>
         ''' <param name="context">Context</param>
@@ -797,7 +797,7 @@ Namespace ReportingT.ReportingEngineLite
                 MyBase.Settings = value
             End Set
         End Property
-        ''' <summary>Thius method is called before a row is written to a list - in case it's overriden in derived class  it allows to perform various actionsrùzné akce before a row is written</summary>
+        ''' <summary>Thius method is called before a row is written to a list - in case it's overridden in derived class  it allows to perform various actionsrùzné akce before a row is written</summary>
         ''' <param name="reader">A datasource pointing to current column</param>
         ''' <param name="worksheet">Current list (worksheet), when function returns it can change the list</param>
         ''' <param name="context">Context</param>

@@ -2,12 +2,12 @@
 using namespace System;
 using namespace System::Runtime::CompilerServices;
 
-namespace Tools{
+namespace Tools {
     /// <summary>Contains basic extension methods for working with delegates</summary>
     /// <version version="1.5.3">This class is new in version 1.5.3</version>
     [Extension]
-    public ref class DelegateCore{
-    private: 
+    public ref class DelegateCore {
+    private:
         /// <summary>Private CTor - this is static class</summary>
         DelegateCore(void);
     public:
@@ -22,7 +22,7 @@ namespace Tools{
         /// <exception cref="ArgumentException"><typeparamref name="T"/> is some kind of base class (such as <see cref="Delegate"/> or <see cref="MulticastDelegate"/>) not actual delegate type and both - <paramref name="a"/> and <paramref name="b"/> are non-null and they are not of same delegate type.</exception>
         /// <seealso cref="Delegate::Combine(Delegate^,Delegate^)"/>
         generic<class T> where T:Delegate
-        [Extension]
+            [Extension]
         static T CombineWith(T a, T b);
 
         /// <summary>Concatenates the invocation lists of a delegate and an array of delegates.</summary>
@@ -37,7 +37,7 @@ namespace Tools{
         /// <exception cref="ArgumentException"><typeparamref name="T"/> is some kind of base class (such as <see cref="Delegate"/> or <see cref="MulticastDelegate"/>) not actual delegate type and not all non-null items in the <paramref name="delegates"/> array and <paramref name="a"/> (if not null) are of same delegate type.</exception>
         /// <seealso cref2="M:System.Delegate.Combine(System.Delegate[])"/>
         generic <class T> where T:Delegate
-        [Extension]
+            [Extension]
         static T CombineWith(T a, ... array<T>^ delegates);
 
         /// <summary>Removes the last occurrence of the invocation list of a delegate from the invocation list of another delegate.</summary>
@@ -54,7 +54,7 @@ namespace Tools{
         /// <exception cref="ArgumentException"><typeparamref name="T"/> is some kind of base class (such as <see cref="Delegate"/> or <see cref="MulticastDelegate"/>) not actual delegate type and delegate type of <paramref name="source"/> and <paramref name="value"/> don't match.</exception>
         /// <seealso cref="Delegate::Remove(Delegate,Delegate)"/>
         generic <class T> where T:Delegate
-        [Extension]
+            [Extension]
         static T Remove(T source, T value);
 
         /// <summary>Removes all occurrences of the invocation list of a delegate from the invocation list of another delegate.</summary>
@@ -73,7 +73,7 @@ namespace Tools{
         /// <exception cref="ArgumentException"><typeparamref name="T"/> is some kind of base class (such as <see cref="Delegate"/> or <see cref="MulticastDelegate"/>) not actual delegate type and delegate type of <paramref name="source"/> and <paramref name="value"/> don't match.</exception>
         /// <seealso cref="Delegate::RemoveAll(Delegate,Delegate)"/>
         generic <class T> where T:Delegate
-        [Extension]
+            [Extension]
         static T RemoveAll(T source, T value);
 
         /// <summary>Returns the invocation list of the delegate (type-safe).</summary>
@@ -83,7 +83,7 @@ namespace Tools{
         /// <exception cref="ArgumentNullException"><paramref name="delegate"/> is null</exception>
         /// <seealso cref="Delegate::GetInvocationList"/>
         generic <class T> where T:Delegate
-        [Extension]
+            [Extension]
         static array<T>^ InvocationList(T delegate);
     };
 }

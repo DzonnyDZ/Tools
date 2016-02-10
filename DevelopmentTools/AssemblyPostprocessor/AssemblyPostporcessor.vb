@@ -439,7 +439,7 @@ Namespace RuntimeT.CompilerServicesT
         ''' <summary>Gets or sets instance of <see cref="MessageReceiver"/>-derived class to pass messages to</summary>
         ''' <remarks>Can be null.
         ''' <para>Messages must be passes in a for in which they can pass application domain boundary.</para></remarks>
-        ''' <exception cref="ArgumentException">When overriden in derived class derived class implementation can throw this exception in it does not accept receiver being set.</exception>
+        ''' <exception cref="ArgumentException">When overridden in derived class derived class implementation can throw this exception in it does not accept receiver being set.</exception>
         Public Overridable Property Receiver As MessageReceiver
 
 

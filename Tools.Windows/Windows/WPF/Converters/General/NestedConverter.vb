@@ -144,7 +144,7 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <value>Rule to be used by <see cref="Convert"/> and <see cref="ConvertBack"/> to determine which converter(s) pass converter parameter to. Default value is <see cref="ParameterRules.Both"/></value>
         ''' <returns>RUle currently used by <see cref="Convert"/> and <see cref="ConvertBack"/> to determine which converter(s) pass converter parameter to.</returns>
         ''' <remarks>Converter which is exluded by the rule from receiving converter parameter to its <see cref="IValueConverter.Convert">Convert</see> or <see cref="IValueConverter.ConvertBack">ConvertBack</see> receives null insted.
-        ''' <para>This rule can be overriden by setting converter parameter value directly using <see cref="InnerParam"/> and <see cref="OuterParam"/> properties.</para></remarks>
+        ''' <para>This rule can be overridden by setting converter parameter value directly using <see cref="InnerParam"/> and <see cref="OuterParam"/> properties.</para></remarks>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not one of <see cref="ParameterRules"/> values.</exception>
         Public Property ParameterRule() As ParameterRules
             <DebuggerStepThrough()> Get

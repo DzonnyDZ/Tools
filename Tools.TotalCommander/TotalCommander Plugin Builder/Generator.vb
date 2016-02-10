@@ -19,8 +19,8 @@ Imports Microsoft.Build.Utilities
 ''' <list type="bullet">
 ''' <item>Plugin class must be non-abstract, must have defualt (parameter-less) constructor and must not be open generic type. When class that looks like plugin class is found, but does not meet these requirements it is ignored.</item>
 ''' <item>Plugin class must derive from one of plugin types like <see cref="FileSystemPlugin"/>.</item>
-''' <item>Plugin class overrides its's base class methods to define plugin functionality. A few methods must be overriden. Majority of methods is optional.</item>
-''' <item>When non-compulsory method is overriden in derived class, wrapped generator examines it. When it is decorated with <see cref="MethodNotSupportedAttribute"/> it is NOT generated for the plugin; otherwise it is.</item>
+''' <item>Plugin class overrides its's base class methods to define plugin functionality. A few methods must be overridden. Majority of methods is optional.</item>
+''' <item>When non-compulsory method is overridden in derived class, wrapped generator examines it. When it is decorated with <see cref="MethodNotSupportedAttribute"/> it is NOT generated for the plugin; otherwise it is.</item>
 ''' <item>Plugin class can, of course, define as many as you want additional methods, but those methods are not part of plugin contract. When a new version of Total Commander is issued that defines more plugin API functions, those functions are not automatically supported by the generator. A new version of generator must be issued as well.</item>
 ''' <item>When plugin class is decorated with <see cref="NotAPluginAttribute"/>, it is skipped from plugin generation.</item>
 ''' <item>Optionaly plugin class can be decorated with <see cref="TotalCommanderPluginAttribute"/> to precise plugin generation.</item>

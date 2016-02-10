@@ -280,7 +280,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
                 If value.ContainsEnum Then ListedIPR = value.EnumValue Else IPR = value.StringValue
             End Set
         End Property
-        ''' <summary>When overriden in derived class gets actual lenght limit for <see cref="IPR"/></summary>
+        ''' <summary>When overridden in derived class gets actual lenght limit for <see cref="IPR"/></summary>
         Protected MustOverride ReadOnly Property IPRLengthLimit() As Byte
     End Class
 
@@ -622,7 +622,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Number As Integer
         ''' <summary>Contains value of the <see cref="[String]"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _String As String
-        ''' <summary>If overriden in derived class returns number of digits in number. Should not be zero.</summary>            
+        ''' <summary>If overridden in derived class returns number of digits in number. Should not be zero.</summary>            
         Protected MustOverride ReadOnly Property NumberDigits() As Byte
         ''' <summary>Number in this <see cref="NumStr"/></summary>            
         ''' <exception cref="ArgumentException">Number being set converted to string is longer than <see cref="NumberDigits"/></exception>
@@ -2205,7 +2205,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             Public Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As StringEnum
                 Return New StringEnum(Of TEnum)(value)
             End Function
-            ''' <summary>If overriden in derived class performs conversion form null to type <see cref="T:StringEnum"/></summary>
+            ''' <summary>If overridden in derived class performs conversion form null to type <see cref="T:StringEnum"/></summary>
             ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <returns>Null value converted to type <see cref="T:StringEnum"/></returns>
@@ -2248,7 +2248,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="value">Value to test validity</param>
             ''' <returns>true if the specified value is valid for this type <see cref="T:StringEnum"/>; otherwise, false.</returns>
-            ''' <remarks>If not overriden in derived class thi method calls <see cref="ConvertFrom"/> and checks if it throws an exception or not.</remarks>
+            ''' <remarks>If not overridden in derived class thi method calls <see cref="ConvertFrom"/> and checks if it throws an exception or not.</remarks>
             Public Overrides Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As String) As Boolean
                 If context Is Nothing Then context = GetPropertyDescriptor()
                 Return MyBase.IsValid(context, value)

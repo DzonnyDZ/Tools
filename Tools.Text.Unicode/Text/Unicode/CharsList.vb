@@ -16,15 +16,15 @@ Namespace TextT.UnicodeT
         Implements IList(Of UInteger), IReadOnlyIndexableCollection(Of UInteger, Integer)
 
 #Region "Abstract"
-        ''' <summary>When overriden in derived class gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
+        ''' <summary>When overridden in derived class gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
         ''' <returns>The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1" />.</returns>
         Public MustOverride ReadOnly Property Count As Integer Implements System.Collections.Generic.ICollection(Of UInteger).Count, IReadOnlyCollection(Of UInteger).Count
-        ''' <summary>When overriden in derived class gets the element at the specified index.</summary>
+        ''' <summary>When overridden in derived class gets the element at the specified index.</summary>
         ''' <returns>The element at the specified index.</returns>
         ''' <param name="index">The zero-based index of the element to get or set.</param>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</exception>
         Default Public MustOverride ReadOnly Property Item(index As Integer) As UInteger Implements IReadOnlyIndexable(Of UInteger, Integer).Item
-        ''' <summary>When overriden in derived class gets value indicating if this collection is guaranteed to contain only characters that folllow one each other without any gaps</summary>
+        ''' <summary>When overridden in derived class gets value indicating if this collection is guaranteed to contain only characters that folllow one each other without any gaps</summary>
         Public MustOverride ReadOnly Property Continuous As Boolean
 #End Region
 
@@ -99,19 +99,19 @@ Namespace TextT.UnicodeT
 #End Region
 
 #Region "NotSupported"
-        ''' <summary>When overriden in derived class adds an item to the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
+        ''' <summary>When overridden in derived class adds an item to the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
         ''' <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
         ''' <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only (this implementation always throws this exception).</exception>
         Protected Overridable Sub Add(item As UInteger) Implements System.Collections.Generic.ICollection(Of UInteger).Add
             Throw New NotSupportedException
         End Sub
 
-        ''' <summary>When overriden in derived class removes all items from the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
+        ''' <summary>When overridden in derived class removes all items from the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
         ''' <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only (this implementation always throws this exception).</exception>
         Protected Overridable Sub Clear() Implements System.Collections.Generic.ICollection(Of UInteger).Clear
             Throw New NotSupportedException
         End Sub
-        ''' <summary>When overriden in derived class removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
+        ''' <summary>When overridden in derived class removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
         ''' <returns>true if 
         ''' <paramref name="item" /> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false. This method also returns false if 
         ''' <paramref name="item" /> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1" />.</returns>
@@ -120,7 +120,7 @@ Namespace TextT.UnicodeT
         Protected Overridable Function Remove(item As UInteger) As Boolean Implements System.Collections.Generic.ICollection(Of UInteger).Remove
             Throw New NotSupportedException
         End Function
-        ''' <summary>When overriden in derived class removes the <see cref="T:System.Collections.Generic.IList`1" /> item at the specified index.</summary>
+        ''' <summary>When overridden in derived class removes the <see cref="T:System.Collections.Generic.IList`1" /> item at the specified index.</summary>
         ''' <param name="index">The zero-based index of the item to remove.</param>
         ''' <exception cref="T:System.ArgumentOutOfRangeException">
         ''' <paramref name="index" /> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</exception>
@@ -128,7 +128,7 @@ Namespace TextT.UnicodeT
         Protected Overridable Sub RemoveAt(index As Integer) Implements System.Collections.Generic.IList(Of UInteger).RemoveAt
             Throw New NotSupportedException
         End Sub
-        ''' <summary>When overriden in derived class inserts an item to the <see cref="T:System.Collections.Generic.IList`1" /> at the specified index.</summary>
+        ''' <summary>When overridden in derived class inserts an item to the <see cref="T:System.Collections.Generic.IList`1" /> at the specified index.</summary>
         ''' <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
         ''' <param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1" />.</param>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</exception>
@@ -136,7 +136,7 @@ Namespace TextT.UnicodeT
         Protected Sub Insert(index As Integer, item As UInteger) Implements System.Collections.Generic.IList(Of UInteger).Insert
             Throw New NotSupportedException
         End Sub
-        ''' <summary>Gets or, when overriden in derived class, sets the element at the specified index.</summary>
+        ''' <summary>Gets or, when overridden in derived class, sets the element at the specified index.</summary>
         ''' <returns>The element at the specified index.</returns>
         ''' <param name="index">The zero-based index of the element to get or set.</param>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</exception>

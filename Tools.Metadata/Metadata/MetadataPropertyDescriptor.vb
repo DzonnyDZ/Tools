@@ -18,13 +18,13 @@
                 SetValueGetterImpl(value)
             End Set
         End Property
-        ''' <summary>When overriden in derived class validates that delegate passed to setter of the <see cref="ValueGetter"/> property is acceptable by derived class.</summary>
+        ''' <summary>When overridden in derived class validates that delegate passed to setter of the <see cref="ValueGetter"/> property is acceptable by derived class.</summary>
         ''' <param name="value">Proposed new value of the <see cref="ValueGetter"/> property</param>
         ''' <remarks>
         ''' If validation fails throw an exception. If validation succeeds call base class method.
         ''' <para>This implementation does no validation. It accepts any value and just stores it in backing field for the <see cref="ValueGetter"/> property</para>
         ''' </remarks>
-        ''' <exception cref="Exception">When overriden by derived class: <paramref name="value"/> is regected by derived class</exception>
+        ''' <exception cref="Exception">When overridden by derived class: <paramref name="value"/> is regected by derived class</exception>
         Protected Overridable Sub SetValueGetterImpl(value As Func(Of TOwner, Object))
             _valueGetter = value
         End Sub

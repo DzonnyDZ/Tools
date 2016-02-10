@@ -6,7 +6,7 @@
 using namespace System;
 
 namespace Tools{namespace TotalCommanderT{
-    /// <summary>Contains information about current plugin interface version and ini location</summary>
+    /// <summary>Contains information about current plugin interface version and INI location</summary>
     /// <seelaso cref="FileSystemPlugin::FsSetDefaultParams"/>
     public value class DefaultParams{
     private:
@@ -22,9 +22,9 @@ namespace Tools{namespace TotalCommanderT{
         DefaultParams(ListDefaultParamStruct& from);
     public:
         /// <summary>Gets the plugin interface version</summary>
-        /// <returns>Version of plugin intercase consisifting of Major.Minor.0.0</returns>
+        /// <returns>Version of plugin intercase consisting of Major.Minor.0.0</returns>
         property System::Version^ Version{System::Version^ get();}
-        /// <summary>Suggested location+name of the ini file where the plugin could store its data.</summary>
+        /// <summary>Suggested location+name of the INI file where the plugin could store its data.</summary>
         /// <returns>A fully qualified path+file name, in the same directory as the wincmd.ini. It's recommended to store the plugin data in this file or at least in this directory, because the plugin directory or the Windows directory may not be writable!</returns>
         /// <remarks>Since <see cref="FileSystemPlugin::FsSetDefaultParams"/> is ANSI-only function this string always contains only ANSI characters (i.e. those defined in <see cref="System::Text::Encoding::Default"/>)</remarks>
         property String^ DefaultIniName{String^ get();}

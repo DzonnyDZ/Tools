@@ -287,7 +287,7 @@ Public Module CecilHelpers
 
     ''' <summary>Adds explicit override to method</summary>
     ''' <param name="derivedClassMethod">A method to add override to</param>
-    ''' <param name="baseClassMethod">A method which is overriden by <paramref name="derivedClassMethod"/></param>
+    ''' <param name="baseClassMethod">A method which is overridden by <paramref name="derivedClassMethod"/></param>
     ''' <param name="baseClassGenericArguments">
     ''' If <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> <see cref="TypeDefinition.HasGenericParameters">has generic parameters</see> you can pass actual types for the parameters here.
     ''' Ignored if null, empty or if <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> does not have generic arguments.
@@ -307,7 +307,7 @@ Public Module CecilHelpers
 
     ''' <summary>Adds explicit override to method</summary>
     ''' <param name="derivedClassMethod">A method to add override to</param>
-    ''' <param name="baseClassMethod">A method which is overriden by <paramref name="derivedClassMethod"/></param>
+    ''' <param name="baseClassMethod">A method which is overridden by <paramref name="derivedClassMethod"/></param>
     ''' <param name="baseClassGenericArgumentsSource">
     ''' If <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> <see cref="TypeDefinition.HasGenericParameters">has generic parameters</see> this type serves as source of generic parameter types.
     ''' Ignored if null or if <paramref name="baseClassMethod"/>.<see cref="MethodDefinition.DeclaringType">DeclaringType</see> does not have generic arguments.

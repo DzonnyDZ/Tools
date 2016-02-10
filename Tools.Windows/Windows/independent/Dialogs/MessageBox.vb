@@ -2146,7 +2146,7 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "Recycle"
         ''' <summary>Switches <see cref="MessageBox"/> from <see cref="States.Closed"/> to <see cref="States.Created"/> <see cref="State"/></summary>
-        ''' <remarks>This method cannot be overriden. Override <see cref="RecycleInternal"/> instead which is called only when necessary.
+        ''' <remarks>This method cannot be overridden. Override <see cref="RecycleInternal"/> instead which is called only when necessary.
         ''' <para>Calling this method has no effect when <see  cref="State"/> is <see cref="States.Created"/> and causes <see cref="InvalidOperationException"/> when <see cref="State"/> is <see cref="States.Shown"/>.</para>
         ''' <para><see cref="Show"/> and <see cref="DisplayTemplate"/> instance methods call <see cref="Recycle"/> if necessary.</para>
         ''' <para>When re-cycling message boxex, you should keep in mind that youre can change state of it (check boxes, radio buttons, combo boxes, custom controls)</para></remarks>
@@ -4067,7 +4067,7 @@ Namespace WindowsT.IndependentT
             Me.Buttons.Clear()
             Me.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
         End Sub
-        ''' <summary>When overriden in derived class gets text which contains Access key marker (like &amp; in WinForms or _ in WPF)</summary>
+        ''' <summary>When overridden in derived class gets text which contains Access key marker (like &amp; in WinForms or _ in WPF)</summary>
         ''' <param name="Text">Text (if it contains character used as access key markers they must be escaped)</param>
         ''' <param name="AccessKey">Char representing access key (if char is not in <paramref name="Text"/> no access key marker should be inserted)</param>
         ''' <returns><paramref name="Text"/> with access key denoted in it; or <paramref name="Text"/> if platfrom derived class implements messagebox for does not indicate access key in text.</returns>

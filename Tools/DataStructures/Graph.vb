@@ -379,7 +379,7 @@ Namespace DataStructuresT.GenericT
             Handlers(e.Item, True)
             OnNodeAdded(e)
         End Sub
-        ''' <summary>When overriden in derived class takes additional actions when node is added</summary>
+        ''' <summary>When overridden in derived class takes additional actions when node is added</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>This implementation does nothing</remarks>
         Protected Overridable Sub OnNodeAdded(ByVal e As CollectionsT.GenericT.ListWithEvents(Of GraphNode).ItemIndexEventArgs)
@@ -404,7 +404,7 @@ Namespace DataStructuresT.GenericT
             Next
             OnNodesCleared(e)
         End Sub
-        ''' <summary>When overriden in derived class takes additional actions when the <see cref="Nodes"/> collection is cleared</summary>
+        ''' <summary>When overridden in derived class takes additional actions when the <see cref="Nodes"/> collection is cleared</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>This implementation does nothing</remarks>
         Protected Overridable Sub OnNodesCleared(ByVal e As CollectionsT.GenericT.ListWithEvents(Of GraphNode).ItemsEventArgs)
@@ -431,7 +431,7 @@ Namespace DataStructuresT.GenericT
             End If
         End Sub
 
-        ''' <summary>When overriden in derived class takes additional actions when item in the <see cref="Nodes"/> collection is replaced</summary>
+        ''' <summary>When overridden in derived class takes additional actions when item in the <see cref="Nodes"/> collection is replaced</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>This implementation does nothing</remarks>
         Protected Overridable Sub OnNodeChanged(ByVal e As CollectionsT.GenericT.ListWithEvents(Of GraphNode).OldNewItemEventArgs)
@@ -457,7 +457,7 @@ Namespace DataStructuresT.GenericT
             e.Item.Graph = Nothing
             OnNodeRemoved(e)
         End Sub
-        ''' <summary>When overriden in derived class takes additional actions when item is added to the <see cref="Nodes"/> collection</summary>
+        ''' <summary>When overridden in derived class takes additional actions when item is added to the <see cref="Nodes"/> collection</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>This implementation does nothing</remarks>
         Protected Overridable Sub OnNodeRemoved(ByVal e As CollectionsT.GenericT.ListWithEvents(Of GraphNode).ItemIndexEventArgs)

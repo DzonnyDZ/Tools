@@ -83,17 +83,17 @@ Namespace WindowsT.WPF.ConvertersT
             Return DynamicCast(value, targetType)
         End Function
 
-        ''' <summary>When overriden in derived class converts a value of type <see cref="Single"/>.</summary>
+        ''' <summary>When overridden in derived class converts a value of type <see cref="Single"/>.</summary>
         ''' <param name="value">Value to be converted</param>
         ''' <param name="parameter">Conversion parameter. Number of decimal places if derived class supports the parameter; ignored otherwise.</param>
         ''' <remarks>A converted value</remarks>
         Protected MustOverride Function Convert(ByVal value As Single, ByVal parameter As Integer) As Single
-        ''' <summary>When overriden in derived class converts a value of type <see cref="Double"/>.</summary>
+        ''' <summary>When overridden in derived class converts a value of type <see cref="Double"/>.</summary>
         ''' <param name="value">Value to be converted</param>
         ''' <param name="parameter">Conversion parameter. Number of decimal places if derived class supports the parameter; ignored otherwise.</param>
         ''' <remarks>A converted value</remarks>
         Protected MustOverride Function Convert(ByVal value As Double, ByVal parameter As Integer) As Double
-        ''' <summary>When overriden in derived class converts a value of type <see cref="Decimal"/>.</summary>
+        ''' <summary>When overridden in derived class converts a value of type <see cref="Decimal"/>.</summary>
         ''' <param name="value">Value to be converted</param>
         ''' <param name="parameter">Conversion parameter. Number of decimal places if derived class supports the parameter; ignored otherwise.</param>
         ''' <remarks>A converted value</remarks>

@@ -25,7 +25,7 @@ Public Interface IReportsChange
         End Property
         ''' <summary>Gets the name of the property that changed.</summary>
         ''' <returns>The name of the property that changed.</returns>
-        ''' <remarks>This property cannot be overriden, but you can override the <see cref="ValueName"/> property, this property gets value from.</remarks>
+        ''' <remarks>This property cannot be overridden, but you can override the <see cref="ValueName"/> property, this property gets value from.</remarks>
         ''' <version version="1.5.2">Property added</version>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Public NotOverridable Overrides ReadOnly Property PropertyName() As String

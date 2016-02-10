@@ -179,7 +179,7 @@ Namespace ComponentModelT
                 Return Conv.Invoke(context, culture, value)
             End If
         End Function
-        ''' <summary>If overriden in derived class performs conversion form null to type <typeparamref name="T"/></summary>
+        ''' <summary>If overridden in derived class performs conversion form null to type <typeparamref name="T"/></summary>
         ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <returns>Null value converted to type <typeparamref name="T"/></returns>
@@ -228,7 +228,7 @@ Namespace ComponentModelT
         End Function
         ''' <summary>Re-creates instance of <typeparamref name="T"/> given a set of property values for it.</summary>
         ''' <param name="propertyValues">An <see cref="System.Collections.IDictionary"/> that represents a dictionary of new property values.</param>
-        ''' <returns>Instance of <typeparamref name="T"/> representing the given <see cref="System.Collections.IDictionary"/>, or null if the object cannot be created. This method calls <see cref="ComponentModel.TypeConverter.CreateInstance"/> unless it is overriden in derived class.</returns>
+        ''' <returns>Instance of <typeparamref name="T"/> representing the given <see cref="System.Collections.IDictionary"/>, or null if the object cannot be created. This method calls <see cref="ComponentModel.TypeConverter.CreateInstance"/> unless it is overridden in derived class.</returns>
         Public Overridable Overloads Function CreateInstance(ByVal propertyValues As System.Collections.IDictionary, ByVal context As System.ComponentModel.ITypeDescriptorContext) As T
             Return MyBase.CreateInstance(context, propertyValues)
         End Function
@@ -431,7 +431,7 @@ Namespace ComponentModelT
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <param name="value">Value to test validity</param>
         ''' <returns>true if the specified value is valid for this type <typeparamref name="T"/>; otherwise, false.</returns>
-        ''' <remarks>If not overriden in derived class thi method calls <see cref="ConvertFrom"/> and checks if it throws an exception or not.</remarks>
+        ''' <remarks>If not overridden in derived class thi method calls <see cref="ConvertFrom"/> and checks if it throws an exception or not.</remarks>
         Public Overridable Shadows Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As TOther) As Boolean Implements ITypeConverterWithValidation(Of TOther).IsValid
             Try
                 ConvertFrom(context, Threading.Thread.CurrentThread.CurrentCulture, value)

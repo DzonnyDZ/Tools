@@ -11,35 +11,37 @@ using namespace Tools::ExtensionsT;
 using namespace Tools::ReflectionT;
 using namespace System::Reflection;
 
-namespace Tools{namespace TotalCommanderT{
+namespace Tools {
+    namespace TotalCommanderT {
 
-    ref class FileSystemPlugin;
+        ref class FileSystemPlugin;
 
-    inline PluginBase::PluginBase(){/*Do nothing*/}
+        inline PluginBase::PluginBase() {/*Do nothing*/ }
 
-     generic <class T> where T:Enum, gcnew()
-     T PluginBase::GetSupportedFunctions(){
-         int ret = 0;
-         for each(FieldInfo^ constant in T::typeid->GetFields(BindingFlags::Public | BindingFlags::Static)){
-            auto attr = TypeTools::GetAttribute<PluginMethodAttribute^>(constant, false);
-            if(attr == nullptr) continue;
-            if(attr->ImplementedBy == nullptr){
-                ret |= ((IConvertible^)constant->GetValue(nullptr))->ToInt32(nullptr);
-                continue;
+        generic <class T> where T:Enum, gcnew()
+            T PluginBase::GetSupportedFunctions() {
+            int ret = 0;
+            for each(FieldInfo^ constant in T::typeid->GetFields(BindingFlags::Public | BindingFlags::Static)) {
+                auto attr = TypeTools::GetAttribute<PluginMethodAttribute^>(constant, false);
+                if (attr == nullptr) continue;
+                if (attr->ImplementedBy == nullptr) {
+                    ret |= ((IConvertible^)constant->GetValue(nullptr))->ToInt32(nullptr);
+                    continue;
+                }
+                const Reflection::BindingFlags flags = Reflection::BindingFlags::Instance | Reflection::BindingFlags::Public | Reflection::BindingFlags::NonPublic;
+                bool implemented = MethodNotSupportedAttribute::Supported(ReflectionTools::GetOverridingMethod(this->PluginBaseClass->GetMethod(attr->ImplementedBy, flags), this->GetType()));
+                if (implemented) ret |= ((IConvertible^)constant->GetValue(nullptr))->ToInt32(nullptr);
             }
-            const Reflection::BindingFlags flags = Reflection::BindingFlags::Instance | Reflection::BindingFlags::Public | Reflection::BindingFlags::NonPublic;
-            bool implemented = MethodNotSupportedAttribute::Supported(ReflectionTools::GetOverridingMethod(this->PluginBaseClass->GetMethod(attr->ImplementedBy, flags), this->GetType()));
-            if(implemented) ret |= ((IConvertible^)constant->GetValue(nullptr))->ToInt32(nullptr);
-         }
-         return (T)Enum::ToObject(T::typeid, ret);
-     }
+            return (T)Enum::ToObject(T::typeid, ret);
+        }
 
-     inline void PluginBase::OnInit(){/*do nothing*/}
+        inline void PluginBase::OnInit() {/*do nothing*/ }
 
-     inline Nullable<DefaultParams> PluginBase::PluginParams::get(){return this->pluginParams;}
+        inline Nullable<DefaultParams> PluginBase::PluginParams::get() { return this->pluginParams; }
 
-     void PluginBase::SetDefaultParams(DefaultParams dps){
-        if(this->PluginParams.HasValue) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PropertyWasInitializedFormat("PluginParams"));
-        this->pluginParams = dps;
+        void PluginBase::SetDefaultParams(DefaultParams dps) {
+            if (this->PluginParams.HasValue) throw gcnew InvalidOperationException(ResourcesT::Exceptions::PropertyWasInitializedFormat("PluginParams"));
+            this->pluginParams = dps;
+        }
     }
-}}
+}

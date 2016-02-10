@@ -86,9 +86,9 @@ Namespace MetadataT.ExifT
         Public Sub New(ByVal Reader As ExifIfdReader)
             Me.New(Reader, False)
         End Sub
-        ''' <summary>If overriden in derived class reads known subIFDs nested within this IFD.</summary>
+        ''' <summary>If overridden in derived class reads known subIFDs nested within this IFD.</summary>
         ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD.</param>
-        ''' <exception cref="ArgumentNullException">Can be thrown by overriden method when <paramref name="Reader"/> is null.</exception>
+        ''' <exception cref="ArgumentNullException">Can be thrown by overridden method when <paramref name="Reader"/> is null.</exception>
         ''' <remarks>This implementation does nothing.
         ''' <para>Note for inheritors: This method is called by CTor if the <see cref="IFD"/> class after all records have been initialized. This method is not intended to be called directly from user code.</para></remarks>
         Protected Overridable Sub ReadStandardSubIFDs(ByVal Reader As ExifIfdReader)
@@ -519,7 +519,7 @@ Namespace MetadataT.ExifT
                 OnExifChanged()
             End Set
         End Property
-        ''' <summary>If overriden in derived class performs derived class-specific tasks related to change of the <see cref="Exif"/> property</summary>
+        ''' <summary>If overridden in derived class performs derived class-specific tasks related to change of the <see cref="Exif"/> property</summary>
         ''' <remarks>Note for inheritors: You do not have to call base class method. <para>This implementation does nothing.</para></remarks>
         Protected Overridable Sub OnExifChanged()
         End Sub
@@ -650,7 +650,7 @@ Namespace MetadataT.ExifT
         End Sub
         ''' <summary>Performs additional verification of value being passed to the <see cref="Following"/> prooperty</summary>
         ''' <param name="Following">Value to verify</param>
-        ''' <exception cref="Exception">Overriden method can throw any exception when it refuses to accept given value ias new value of the <see cref="Following"/> property</exception>
+        ''' <exception cref="Exception">overridden method can throw any exception when it refuses to accept given value ias new value of the <see cref="Following"/> property</exception>
         ''' <exception cref="TypeMismatchException">This implementation throws <see cref="TypeMismatchException"/> when <see cref="Exif"/> is not null and this instance is <see cref="Exif">Exif</see>.<see cref="MetadataT.ExifT.Exif.IFD0">IFD0</see> and <paramref name="Following"/> is not of type <see cref="IFDMain"/> (so it is not necessary to perform this verification in <see cref="IFDMain"/> derived class).</exception>
         Protected Overridable Sub VerifyFollowing(ByVal Following As Ifd)
             If Me.Exif IsNot Nothing AndAlso Me Is Me.Exif.IFD0 AndAlso Not TypeOf Following Is IfdMain Then _
@@ -771,7 +771,7 @@ Namespace MetadataT.ExifT
         End Sub
 #End Region
 
-        ''' <summary>When overriden in derived class gets format for tag specified</summary>
+        ''' <summary>When overridden in derived class gets format for tag specified</summary>
         ''' <param name="Tag">Tag record number in current IFD</param>
         ''' <returns>If <paramref name="tag"/> is known by current implementation returns its typical description. Null if tag is not known.</returns>
         ''' <version version="1.5.4">This property is new in version 1.5.4</version>

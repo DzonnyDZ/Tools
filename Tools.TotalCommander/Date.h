@@ -1,11 +1,11 @@
 #pragma once
 #include "Plugin\plug_common.h"
-namespace Tools{
+namespace Tools {
     using namespace System;
 
-    /// <summary>Represents date value with only date precission (without time)</summary>
+    /// <summary>Represents date value with only date precision (without time)</summary>
     /// <version version="1.5.3">This structure is new in version 1.5.3</version>
-    [Serializable] 
+    [Serializable]
     value class Date
         : IComparable, IFormattable, IComparable<Date>, IEquatable<Date>, IEquatable<DateTime>, IComparable<DateTime>
     {
@@ -14,10 +14,10 @@ namespace Tools{
         DateTime date;
     public:
         /// <summary>CTor from <see cref="DateTime"/></summary>
-        /// <param name="value"><see cref="DateTime"/> to initialize new instace with</param>
+        /// <param name="value"><see cref="DateTime"/> to initialize new instance with</param>
         Date(DateTime value);
         /// <summary>CTor from year, month and day</summary>
-        /// <param name="Year">Year numbe in range 1÷9999</param>
+        /// <param name="Year">Year number in range 1÷9999</param>
         /// <param name="Month">Month in range 1÷12</param>
         /// <param name="Day">Day in range 1 ÷ number of days in month <paramref name="Month"/></param>
         /// <exception cref="ArgumentOutOfRangeException"><see cref="Year"/> is less than 1 or greater than 9999.-or- <see cref="Month"/> is less than 1 or greater than 12.-or- <see cref="Day"/> is less than 1 or greater than the number of days in month. </exception>
@@ -29,25 +29,25 @@ namespace Tools{
         static initonly Date MaxValue = Date(DateTime::MaxValue);
         /// <summary>Gets value of this instance as <see cref="DateTime"/></summary>
         /// <returns><see cref="DateTime"/> with sub-day part set to zero</returns>
-        property DateTime Value{DateTime get();}
+        property DateTime Value {DateTime get(); }
         /// <summary>Gets the year component of the date represented by this instance.</summary>
         /// <returns>The year, between 1 and 9999.</returns>
-        property int Year{int get();}
+        property int Year {int get(); }
         /// <summary>Gets the month component of the date represented by this instance.</summary>
         /// <returns>The month component, expressed as a value between 1 and 12.</returns>
-        property int Month{int get();}
+        property int Month {int get(); }
         /// <summary>Gets the day of the month represented by this instance.</summary>
         /// <returns>The day component, expressed as a value between 1 and 31.</returns>
-        property int Day{int get();}
+        property int Day {int get(); }
         /// <summary>Gets the day of the week represented by this instance.</summary>
         /// <returns>A <see cref="System::DayOfWeek"/> enumerated constant that indicates the day of the week. This property value ranges from zero, indicating Sunday, to six, indicating Saturday.</returns>
-        property System::DayOfWeek DayOfWeek{System::DayOfWeek get();}
+        property System::DayOfWeek DayOfWeek {System::DayOfWeek get(); }
         /// <summary>Gets the day of the year represented by this instance.</summary>
         /// <returns>The day of the year, expressed as a value between 1 and 366.</returns>
-        property int DayOfYear{int get();}
+        property int DayOfYear {int get(); }
         /// <summary>Gets the current date.</summary>
         /// <returns>A <see cref="Date"/> set to today's date</returns>
-        property Date Today{Date get();}
+        property Date Today {Date get(); }
 #pragma region "Operators"
         /// <summary>Adds a specified time interval to a specified date, yielding a new date and time.</summary>
         /// <param name="a">A <see cref="Date"/></param>

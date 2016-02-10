@@ -3,15 +3,15 @@
 Public MustInherit Class SaverBase
     Inherits UserControl
 
-    ''' <summary>When overriden in derived class loads settings of this component form an XML element</summary>
+    ''' <summary>When overridden in derived class loads settings of this component form an XML element</summary>
     ''' <param name="settings">An XML element to load settings from</param>
     MustOverride Sub LoadSettings(settings As XElement)
 
-    ''' <summary>When overriden in derived class saves current settings off a component as XML element</summary>
+    ''' <summary>When overridden in derived class saves current settings off a component as XML element</summary>
     ''' <returns>An XML element containing saved serttings of the component</returns>
     MustOverride Function GetSettings() As XElement
 
-    ''' <summary>When overriden in derived class shows settings dialog for user.</summary>
+    ''' <summary>When overridden in derived class shows settings dialog for user.</summary>
     ''' <remarks>Use <see cref="SSaverContext"/>.<see cref="IUnisaveContext.ShowDialog">ShowDialog</see> to display settings <see cref="Window"/>.</remarks>
     MustOverride Sub ShowSettings()
 

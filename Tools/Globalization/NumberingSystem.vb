@@ -35,7 +35,7 @@ Namespace GlobalizationT
                 Return False
             End Get
         End Property
-        ''' <summary>When overriden in derived class attempts to parse string representation of number in current numbering system to integer</summary>
+        ''' <summary>When overridden in derived class attempts to parse string representation of number in current numbering system to integer</summary>
         ''' <param name="value">String representation of number to parse</param>
         ''' <param name="result">When function exists with success contains parsed value representing <paramref name="value"/> as number</param>
         ''' <returns>When parsing is successfull returns null; otherwise returns exception (<see cref="FormatException"/> is preffered) describing the error.

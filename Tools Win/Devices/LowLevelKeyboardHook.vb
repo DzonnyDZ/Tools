@@ -63,7 +63,7 @@ Namespace DevicesT
             End If
         End Function
 #End Region
-        ''' <summary>If overriden in derived class gets type of hook represented by derived class</summary>
+        ''' <summary>If overridden in derived class gets type of hook represented by derived class</summary>
         ''' <returns>One of values accepted for SetWindowsHookEx idHook parameter</returns>
         Protected Overrides ReadOnly Property HandledHookType() As API.Hooks.Win32Hook.HookType
             Get

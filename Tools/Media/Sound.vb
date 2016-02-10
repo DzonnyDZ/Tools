@@ -19,7 +19,7 @@ Namespace MediaT
     <TypeConverter(GetType(Sound.SoundTypeConverter))>
     <Editor(GetType(Tools.DrawingT.DesignT.DropDownControlEditor(Of Sound, SoundDropDownList)), GetType(UITypeEditor))>
     Public MustInherit Class Sound
-        ''' <summary>When overriden in derived class plays sound. Returns when sound is finished</summary>
+        ''' <summary>When overridden in derived class plays sound. Returns when sound is finished</summary>
         ''' <remarks>Note for inheritors: If you do not override <see cref="PlayOnBackground"/> function this function is called when <see cref="PlayOnBackground"/> is invoked. In such case this function is called in another thread that object was created in.</remarks>
         Public MustOverride Sub Play()
         ''' <summary>Plays shound given number of times. Returns after all plays are finished.</summary>
@@ -421,7 +421,6 @@ Namespace MediaT
             Return stream
         End Function
         ''' <summary>Gets <see cref="SoundPlayer"/> wrapped by this instance</summary>
-        ''' <returns>Sound player this instance wraps.</returns>
         Public ReadOnly Property Player() As SoundPlayer
             Get
                 Return _Player

@@ -17,7 +17,7 @@ Namespace TextT.UnicodeT
             MyBase.New(element)
         End Sub
 
-        ''' <summary>When overriden in derived class gets type of this code point</summary>
+        ''' <summary>When overridden in derived class gets type of this code point</summary>
         <LCategory(GetType(UnicodeResources), "propcat_other_Infrastructure", "Infrastructure"), LDisplayName(GetType(UnicodeResources), "d_other_Type")>
         Public MustOverride ReadOnly Property Type As UnicodeCodePointType
 

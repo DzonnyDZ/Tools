@@ -5,17 +5,17 @@
 Public MustInherit Class CharComparer
     Implements IComparer(Of Char), IEqualityComparer(Of Char)
 
-    ''' <summary>When overriden in derived class compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.</summary>
+    ''' <summary>When overridden in derived class compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.</summary>
     ''' <returns>A signed integer that indicates the relative values of <paramref name="x" /> and <paramref name="y" />, as shown in the following table.Value Meaning Less than zero <paramref name="x" /> is less than  <paramref name="y" />.Zero <paramref name="x" /> equals  <paramref name="y" />.Greater than zero <paramref name="x" /> is greater than  <paramref name="y" />.</returns>
     ''' <param name="x">The first object to compare.</param>
     ''' <param name="y">The second object to compare.</param>
     Public MustOverride Function Compare(x As Char, y As Char) As Integer Implements System.Collections.Generic.IComparer(Of Char).Compare
-    ''' <summary>When overriden in derivced class determines whether the specified objects are equal.</summary>
+    ''' <summary>When overridden in derivced class determines whether the specified objects are equal.</summary>
     ''' <returns>true if the specified objects are equal; otherwise, false.</returns>
     ''' <param name="x">The first object of type <paramref name="T" /> to compare.</param>
     ''' <param name="y">The second object of type <paramref name="T" /> to compare.</param>
     Public MustOverride Overloads Function Equals(x As Char, y As Char) As Boolean Implements System.Collections.Generic.IEqualityComparer(Of Char).Equals
-    ''' <summary>When overriden in derived class returns a hash code for the specified object.</summary>
+    ''' <summary>When overridden in derived class returns a hash code for the specified object.</summary>
     ''' <returns>A hash code for the specified object.</returns>
     ''' <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
     ''' <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>

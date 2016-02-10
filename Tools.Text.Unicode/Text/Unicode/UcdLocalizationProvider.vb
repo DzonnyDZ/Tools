@@ -28,12 +28,12 @@ Namespace TextT.UnicodeT
         ''' <summary>Name of default resource that contains localized character names for UCD</summary>
         Private Const ResourceName$ = "Tools.TextT.UnicodeT.ucd.xml.gz"
 
-        ''' <summary>When overriden in derived class gets value indivating if localized document for given culture exists</summary>
+        ''' <summary>When overridden in derived class gets value indivating if localized document for given culture exists</summary>
         ''' <param name="culture">Name of culture to check</param>
         ''' <returns>True if document for given culture exists, false if it does not exist. Only exact culture given in <paramref name="culture"/> is tested. No parent cultureds are considered.</returns>
         Public MustOverride Function DocumentExists(culture$) As Boolean
 
-        ''' <summary>When overriden in derived class gets an XML document in UCD localization format that contains localized values for given culture</summary>
+        ''' <summary>When overridden in derived class gets an XML document in UCD localization format that contains localized values for given culture</summary>
         ''' <param name="culture">Culture to get document for</param>
         ''' <returns>An XML document in UCD XML localization format that contains localization data for given culture. Null if localization data for given culture do not exist. No parent cultures are considered. Only data for exactly requested culture are returned (if available).</returns>
         ''' <remarks>
@@ -66,7 +66,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         Public MustOverride Function GetDocument(culture$) As XDocument
 
-        ''' <summary>When overriden in derived class gets array of cultures available</summary>
+        ''' <summary>When overridden in derived class gets array of cultures available</summary>
         ''' <returns>Arra of names of cultures available for localization.</returns>
         ''' <remarks><note>Localization of particular culture can be just partial. In extreme case it can be empty or contain just few code-points or blocks.</note></remarks>
         Public MustOverride Function GetCulturesSupported() As String()
@@ -351,7 +351,7 @@ Namespace TextT.UnicodeT
             Return ret.ToArray
         End Function
 
-        ''' <summary>When overriden in derived class gets an XML document in UCD localization format that contains localized values for given culture</summary>
+        ''' <summary>When overridden in derived class gets an XML document in UCD localization format that contains localized values for given culture</summary>
         ''' <param name="culture">Culture to get document for</param>
         ''' <returns>An XML document in UCD XML localization format that contains localization data for given culture. Null if localization data for given culture do not exist. No parent cultures are considered. Only data for exactly requested culture are returned (if available).</returns>
         Public Overrides Function GetDocument(culture As String) As System.Xml.Linq.XDocument

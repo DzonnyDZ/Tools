@@ -7,12 +7,12 @@ Namespace WindowsT.WPF.MarkupT
     <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public MustInherit Class TypeConverterBasedValueSerializerBase
         Inherits ValueSerializer
-        ''' <summary>When overriden in derived class gets a <see cref="TypeConverter"/> to perform type conversion</summary>
+        ''' <summary>When overridden in derived class gets a <see cref="TypeConverter"/> to perform type conversion</summary>
         ''' <returns>A <see cref="TypeConverter"/>, null if conversion is not supported in current situation</returns>
         ''' <remarks>The converter should be capable of converting objects of type this serializer is used for from and to <see cref="String"/></remarks>
         Public MustOverride ReadOnly Property Converter As TypeConverter
 
-        ''' <summary>When overriden in derived class gets a <see cref="TypeConverter"/> for specific object to be serialized</summary>
+        ''' <summary>When overridden in derived class gets a <see cref="TypeConverter"/> for specific object to be serialized</summary>
         ''' <param name="component">A component to serialize</param>
         ''' <returns>
         ''' An instance of <see cref="TypeConverter"/> to use to convert <paramref name="component"/> to <see cref="String"/>.

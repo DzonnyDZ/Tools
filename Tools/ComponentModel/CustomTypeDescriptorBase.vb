@@ -55,7 +55,7 @@ Namespace ComponentModelT
         Public MustOverride Overrides Function GetPropertyOwner(ByVal pd As System.ComponentModel.PropertyDescriptor) As Object
     End Class
     ''' <summary>Provides base class for "top-level" custom type descriptors</summary>
-    ''' <remarks>All method in this class, if not overriden in derived class, uses <see cref="TypeDescriptor"/> to obtain information about instance.</remarks>
+    ''' <remarks>All method in this class, if not overridden in derived class, uses <see cref="TypeDescriptor"/> to obtain information about instance.</remarks>
     ''' <typeparam name="T">Type the descriptor is implemented for. Use <see cref="System.Object"/> to create univarsal one.</typeparam>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>

@@ -94,7 +94,7 @@ Namespace XmlT.XPathT
             ''' <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="[Step]"/>.</summary>
             ''' <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="[Step]"/>.</param>
             ''' <returns>true if the specified <see cref="System.Object"/> is equal to the current <see cref="[Step]"/>; otherwise, false. This function always returns false when type of <paramref name="obj"/> is not <see cref="[Step]"/> and is not same as type of current instance.</returns>
-            ''' <remarks>This function cannot be overriden. Override overloaded function instead.</remarks>
+            ''' <remarks>This function cannot be overridden. Override overloaded function instead.</remarks>
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
                 If TypeOf obj Is [Step] Then
                     If Me.GetType.Equals(obj.GetType) Then

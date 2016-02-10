@@ -188,7 +188,7 @@ Namespace DevicesT.RawInputT
         ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="InputDevice" />; otherwise, false.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="InputDevice" />.</param>
         ''' <remarks>Comparison is done by overloaded type-safe <see cref="Equals"/> function. Use that function instead.
-        ''' <para>Note for inheritors: Type-safe overload of this method can be overriden.</para> </remarks>
+        ''' <para>Note for inheritors: Type-safe overload of this method can be overridden.</para> </remarks>
         <Obsolete("Use type-safe overload instead"), EditorBrowsable(EditorBrowsableState.Never)> _
         Public NotOverridable Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
             Return TypeOf obj Is InputDevice AndAlso Me.Equals(DirectCast(obj, InputDevice))
@@ -335,49 +335,49 @@ Namespace DevicesT.RawInputT
     ''' <summary>Base class for <see cref="ButtonCapabilities"/> and <see cref="ValueCapabilities"/></summary>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public MustInherit Class DeviceCapabilitiesBase
-        ''' <summary>When overriden in derived class gets the data fields (one or two bytes) associated with an input, output, or feature main item.</summary>
+        ''' <summary>When overridden in derived class gets the data fields (one or two bytes) associated with an input, output, or feature main item.</summary>
         Public MustOverride ReadOnly Property BitField() As Short
-        ''' <summary>When overriden in derived class specifies, if TRUE, that the button usage or usage range provides absolute data. Otherwise, if <see cref="IsAbsolute"/> is FALSE, the button data is the change in state from the previous value.</summary>
+        ''' <summary>When overridden in derived class specifies, if TRUE, that the button usage or usage range provides absolute data. Otherwise, if <see cref="IsAbsolute"/> is FALSE, the button data is the change in state from the previous value.</summary>
         Public MustOverride ReadOnly Property IsAbsolute() As Boolean
-        ''' <summary>When overriden in derived class indicates, if TRUE, that a button has a set of aliased usages. Otherwise, if <see cref="IsAlias"/> is FALSE, the button has only one usage.</summary>
+        ''' <summary>When overridden in derived class indicates, if TRUE, that a button has a set of aliased usages. Otherwise, if <see cref="IsAlias"/> is FALSE, the button has only one usage.</summary>
         Public MustOverride ReadOnly Property IsAlias() As Boolean
-        ''' <summary>When overriden in derived class specifies, if TRUE, that the usage or usage range has a set of designators. Otherwise, if <see cref="IsDesignatorRange"/> is FALSE, the usage or usage range has zero or one designator.</summary>
+        ''' <summary>When overridden in derived class specifies, if TRUE, that the usage or usage range has a set of designators. Otherwise, if <see cref="IsDesignatorRange"/> is FALSE, the usage or usage range has zero or one designator.</summary>
         Public MustOverride ReadOnly Property IsDesignatorRange() As Boolean
-        ''' <summary>When overriden in derived class specifies, if TRUE, that the structure describes a usage range. Otherwise, if <see cref="IsRange"/> is FALSE, the structure describes a single usage.</summary>
+        ''' <summary>When overridden in derived class specifies, if TRUE, that the structure describes a usage range. Otherwise, if <see cref="IsRange"/> is FALSE, the structure describes a single usage.</summary>
         Public MustOverride ReadOnly Property IsRange() As Boolean
-        ''' <summary>When overriden in derived class specifies, if TRUE, that the usage or usage range has a set of string descriptors. Otherwise, if <see cref="IsStringRange"/> is FALSE, the usage or usage range has zero or one string descriptor.</summary>
+        ''' <summary>When overridden in derived class specifies, if TRUE, that the usage or usage range has a set of string descriptors. Otherwise, if <see cref="IsStringRange"/> is FALSE, the usage or usage range has zero or one string descriptor.</summary>
         Public MustOverride ReadOnly Property IsStringRange() As Boolean
-        ''' <summary>When overriden in derived class specifies the index of the link collection in a top-level collection's link collection array that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, the usage or usage range is contained in the top-level collection.</summary>
+        ''' <summary>When overridden in derived class specifies the index of the link collection in a top-level collection's link collection array that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, the usage or usage range is contained in the top-level collection.</summary>
         Public MustOverride ReadOnly Property LinkCollection() As Short
-        ''' <summary>When overriden in derived class specifies the usage page of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsagePage"/> specifies the usage page of the top-level collection.</summary>
+        ''' <summary>When overridden in derived class specifies the usage page of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsagePage"/> specifies the usage page of the top-level collection.</summary>
         Public MustOverride ReadOnly Property LinkUsagePage() As UsagePages
-        ''' <summary>When overriden in derived class specifies the usage of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsage"/> specifies the usage of the top-level collection.</summary>
+        ''' <summary>When overridden in derived class specifies the usage of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsage"/> specifies the usage of the top-level collection.</summary>
         Public MustOverride ReadOnly Property LinkUsage() As Integer
-        ''' <summary>When overriden in derived class specifies the usage page for a usage or usage range.</summary>
+        ''' <summary>When overridden in derived class specifies the usage page for a usage or usage range.</summary>
         Public MustOverride ReadOnly Property UsagePage() As UsagePages
 #Region "Range / NotRange"
-        ''' <summary>When overriden in derived class indicates the inclusive lower bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive lower bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
         Public MustOverride ReadOnly Property DataIndexMin() As Short
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
-        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive upper bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
         Public MustOverride ReadOnly Property DataIndexMax() As Short
-        ''' <summary>When overriden in derived class indicates the inclusive lower bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive upper bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive lower bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive upper bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
         Public MustOverride ReadOnly Property DesignatorIndexMin() As Short
-        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive lower bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive upper bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive lower bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
         Public MustOverride ReadOnly Property DesignatorIndexMax() As Short
-        ''' <summary>When overriden in derived class indicates the inclusive lower bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive upper bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive lower bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive upper bound is indicated by <see cref="StringIndexMax"/>.</summary>
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
         Public MustOverride ReadOnly Property StringIndexMin() As Short
-        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive lower bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive upper bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive lower bound is indicated by <see cref="StringIndexMax"/>.</summary>
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
         Public MustOverride ReadOnly Property StringIndexMax() As Short
-        ''' <summary>When overriden in derived class indicates the inclusive lower bound of usage range whose inclusive upper bound is specified by <see cref="UsageMax"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive lower bound of usage range whose inclusive upper bound is specified by <see cref="UsageMax"/>.</summary>
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
         Public MustOverride ReadOnly Property UsageMin() As Integer
-        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a usage range whose inclusive lower bound is indicated by <see cref="UsageMin"/>.</summary>
+        ''' <summary>When overridden in derived class indicates the inclusive upper bound of a usage range whose inclusive lower bound is indicated by <see cref="UsageMin"/>.</summary>
         ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
         Public MustOverride ReadOnly Property UsageMax() As Integer
 #End Region
@@ -851,7 +851,7 @@ Namespace DevicesT.RawInputT
         ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="RawDeviceName" />; otherwise, false.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="RawDeviceName" />.</param>
         ''' <remarks>Use type-safe overload instead
-        ''' <para>Note for inheritors: Type safe overload chan be overriden.</para></remarks>
+        ''' <para>Note for inheritors: Type safe overload chan be overridden.</para></remarks>
         <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type-safe overload instead")> _
         Public NotOverridable Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
             If obj Is Nothing OrElse Not TypeOf obj Is RawDeviceName Then Return False
@@ -1002,10 +1002,10 @@ Namespace DevicesT.RawInputT
         Public Function GetDeviceDescription() As String
             Return GetDeviceName.GetDeviceDescription
         End Function
-        ''' <summary>If overriden in derived class gets top-level collection Usage Page for the device. </summary>
+        ''' <summary>If overridden in derived class gets top-level collection Usage Page for the device. </summary>
         ''' <returns>Top-level collection Usage Page for the device.</returns>
         Public MustOverride ReadOnly Property UsagePage() As UsagePages
-        ''' <summary>If overriden in derived class gets top-level collection Usage for the device. </summary>
+        ''' <summary>If overridden in derived class gets top-level collection Usage for the device. </summary>
         ''' <returns>Top-level collection Usage for the device.</returns>
         Public MustOverride ReadOnly Property Usage() As Integer
         ''' <summary>Gets value of the <see cref="Usage"/> property as value of appropriate enumeration according to <see cref="UsagePage"/></summary>

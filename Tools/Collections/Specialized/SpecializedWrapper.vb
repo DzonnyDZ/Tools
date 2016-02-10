@@ -260,7 +260,7 @@ Namespace CollectionsT.SpecializedT
         '            MyBase.New(Collection)
         '        End Sub
         '#Region "Interface Implementation"
-        '        ''' <summary>When overriden in derived class gets or sets value on specified index (type-unsafe)</summary>
+        '        ''' <summary>When overridden in derived class gets or sets value on specified index (type-unsafe)</summary>
         '        ''' <param name="index">Index to set or obtain value</param>
         '        ''' <returns>value lying on specified <paramref name="index"/></returns>
         '        ''' <value>New value to be stored at specified index</value>
@@ -350,11 +350,11 @@ Namespace CollectionsT.SpecializedT
             MyBase.New(Collection)
         End Sub
 
-        ''' <summary>When overriden in derived class adds an item to the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
+        ''' <summary>When overridden in derived class adds an item to the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
         ''' <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
         Public MustOverride Sub Add(ByVal item As T) Implements ICollection(Of T).Add, IAddable(Of T).Add
 
-        ''' <summary>When overriden in derived class removes all items from the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
+        ''' <summary>When overridden in derived class removes all items from the <see cref="T:System.Collections.Generic.ICollection`1" />.</summary>
         Public MustOverride Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear
 
         ''' <summary>Determines whether the <see cref="T:System.Collections.Generic.ICollection`1" /> contains a specific value.</summary>
@@ -477,7 +477,7 @@ Namespace CollectionsT.SpecializedT
         ''' <param name="index">Index to obtain value</param>
         ''' <returns>value lying on specified <paramref name="index"/></returns>
         ''' <exception cref="ArgumentException">Specified <paramref name="index"/> is invalid</exception>
-        ''' <remarks>This property cannot be overriden, override <see cref="ItemRO"/> instead</remarks>
+        ''' <remarks>This property cannot be overridden, override <see cref="ItemRO"/> instead</remarks>
         Default Public ReadOnly Property Item(ByVal index As Integer) As T Implements GenericT.IReadOnlyIndexable(Of T, Integer).Item
             <DebuggerStepThrough()> Get
                 Return ItemRO(index)

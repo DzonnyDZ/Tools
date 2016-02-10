@@ -9,9 +9,11 @@ using namespace Tools::ExtensionsT;
 using namespace Microsoft::VisualBasic;
 using namespace System::ComponentModel;
 
-namespace Tools{namespace TotalCommanderT{
-    BitmapHandling& operator += (BitmapHandling& a, const BitmapHandling& b){
-        (&a)[0] = (BitmapHandling)((int)a + (int)b);
-        return a;
+namespace Tools {
+    namespace TotalCommanderT {
+        BitmapHandling& operator += (BitmapHandling& a, const BitmapHandling& b) {
+            (&a)[0] = (BitmapHandling)((int)a + (int)b);
+            return a;
+        }
     }
-}}
+}

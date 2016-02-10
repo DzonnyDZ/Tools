@@ -204,8 +204,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Exceptions.cs.resx" />
     <EmbeddedResource Include="Exceptions.resx" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Xsd Include="Tools.TotalCommander.nuspec" />
+  </ItemGroup>
 </Project>

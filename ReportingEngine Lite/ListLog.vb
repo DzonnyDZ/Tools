@@ -49,7 +49,7 @@ Namespace ReportingT.ReportingEngineLite
             Add(String.Format(message, args))
         End Sub
 
-        ''' <summary>When overriden in derived class adds a message with given severity</summary>
+        ''' <summary>When overridden in derived class adds a message with given severity</summary>
         ''' <param name="message">Message text</param>
         ''' <param name="severity">Severity level</param>
         Public MustOverride Sub Add(message As String, severity As LogSeverity) Implements ILogger.Add

@@ -57,7 +57,7 @@ Namespace WindowsT.FormsT
         '''' <returns>Form for each screen</returns>
         '''' <remarks>
         '''' As many forms as computer has displays.
-        '''' This method cannot be overriden, but you can override methods called by this one.
+        '''' This method cannot be overridden, but you can override methods called by this one.
         '''' <see cref="GetScreenForm"/>, <see cref="FormatScreenForm"/> and <see cref="HookFormEvents"/>
         '''' Methods are called in following order:
         '''' <see cref="GetScreenForm"/>,
@@ -88,7 +88,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Perform screen-independent setup of form.  Called by default implementation of <see cref="RunScreenSaver"/> as 2nd method.</summary>
         ''' <param name="Form">Form to setup.</param>
         ''' <remarks>
-        ''' If you override <see cref="GetScreenForm"/> you can perform such setup also there. In this case this method should be overriden with do-nothing method.
+        ''' If you override <see cref="GetScreenForm"/> you can perform such setup also there. In this case this method should be overridden with do-nothing method.
         ''' Default implementation sets <see cref="Form.BackColor"/> to <see cref="Color.Black"/>,
         ''' <see cref="Form.FormBorderStyle"/> to <see cref="FormBorderStyle.None"/>,
         ''' <see cref="Form.TopMost"/> to <c>True</c> and 

@@ -68,7 +68,7 @@ Namespace WindowsT.WPF.ConvertersT
             End Select
             Return Nothing
         End Function
-        ''' <summary>When overriden in derived class gets comparison implemented by derived class</summary>
+        ''' <summary>When overridden in derived class gets comparison implemented by derived class</summary>
         Public MustOverride ReadOnly Property Operation As ComparisonOperation
     End Class
 
@@ -131,7 +131,7 @@ Namespace WindowsT.WPF.ConvertersT
     ''' <version version="1.5.3" stage="Nightly">This class is new in version 1.5.3</version>
     Public NotInheritable Class LessThanConverter
         Inherits ComapreConverterBase
-        ''' <summary>When overriden in derived class gets comparison implemented by derived class</summary>
+        ''' <summary>When overridden in derived class gets comparison implemented by derived class</summary>
         ''' <returns><see cref="ComparisonOperation.Less"/></returns>
         Public Overrides ReadOnly Property Operation As ComparisonOperation
             Get
@@ -144,7 +144,7 @@ Namespace WindowsT.WPF.ConvertersT
     ''' <version version="1.5.3" stage="Nightly">This class is new in version 1.5.3</version>
     Public NotInheritable Class GreaterThanConverter
         Inherits ComapreConverterBase
-        ''' <summary>When overriden in derived class gets comparison implemented by derived class</summary>
+        ''' <summary>When overridden in derived class gets comparison implemented by derived class</summary>
         ''' <returns><see cref="ComparisonOperation.Greater"/></returns>
         Public Overrides ReadOnly Property Operation As ComparisonOperation
             Get
