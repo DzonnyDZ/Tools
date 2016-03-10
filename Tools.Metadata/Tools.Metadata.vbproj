@@ -221,11 +221,11 @@
     <None Include="Metadata\Exif\ExifTags.html">
       <DependentUpon>ExifTags.xml</DependentUpon>
     </None>
-    <Content Include="Metadata\IPTC\IPTCTags.xml">
+    <None Include="Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
       <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
-    </Content>
+    </None>
     <None Include="Resources\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
