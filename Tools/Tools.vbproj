@@ -357,20 +357,20 @@
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
     </None>
     <None Include="Globalization\ISOLanguages.xslt" />
-    <Content Include="CodeDom\AddDoc.xslt">
+    <None Include="CodeDom\AddDoc.xslt">
       <DependentUpon>CodeDom.xsd</DependentUpon>
-    </Content>
-    <Content Include="CodeDom\XmlNames.xslt">
+    </None>
+    <None Include="CodeDom\XmlNames.xslt">
       <DependentUpon>CodeDom.xsd</DependentUpon>
-    </Content>
+    </None>
     <None Include="Collections\Specialized\SpecializedWrappers.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>
       <CustomToolNamespace>CollectionsT.SpecializedT</CustomToolNamespace>
     </None>
-    <Content Include="Collections\Specialized\SpecializedWrappers.xslt">
+    <None Include="Collections\Specialized\SpecializedWrappers.xslt">
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
-    </Content>
+    </None>
     <None Include="Data\Metadata\MetaData Query language proposal.xml" />
     <None Include="Reflection\MemberNumbers.xls" />
     <None Include="Reflection\Resources\Assembly.png" />
