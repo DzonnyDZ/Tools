@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ProjectGUID>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</ProjectGUID>
     <RootNamespace>Tools.TotalCommanderT</RootNamespace>
     <SccProjectName>
