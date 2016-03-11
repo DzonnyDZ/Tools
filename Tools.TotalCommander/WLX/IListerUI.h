@@ -22,14 +22,14 @@ namespace Tools {
             property IntPtr Handle {IntPtr get() = IListerUIInfo::PluginWindowHandle::get; }
             /// <summmary>Called by Total Commander plugin implementation when user wants to load different file to the same plugin instance</summary>
             /// <param name="e">Event arguments describe conditions of loading new file</param>
-            /// <returns>True when the file was successfully loaded, false when this implementation cannot load it. Returning false is equivalent of throwing anny exception but <see cref="NotSupportedException"/>.</returns>
-            /// <exception cref="Exception">Any axception but <see cref="NotSupportedException"/> and exceptions that are not caught by .NET framework by default can be thrown from implementing method to indicate that the file cannot be loaded. It's equivalent to returning false from this method.</exception>
+            /// <returns>True when the file was successfully loaded, false when this implementation cannot load it. Returning false is equivalent of throwing any exception but <see cref="NotSupportedException"/>.</returns>
+            /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions that are not caught by .NET framework by default can be thrown from implementing method to indicate that the file cannot be loaded. It's equivalent to returning false from this method.</exception>
             bool LoadNext(ListerPluginReInitEventArgs^ e);
             /// <summary>Called just before the lister UI is unloaded</summary>
             /// <remarks>There is no way to prevent unload! Just do any necessary cleanup in this method because the control/window/UI is gonna be destroyed using <c>DestroyWindow</c>.</remarks>
             void OnBeforeClose();
             /// <summary>Called when the user tries to find text in the plugin.</summary>
-            /// <param name="e">Event argumnets</param>
+            /// <param name="e">Event arguments</param>
             /// <returns>True if search succeeded, false if it failed (nothing was found). Returning false is equivalent to throwing  any exception but <see cref="NotSupportedException"/>.</returns>
             /// <exception cref="Exception">Any exception but <see cref="NotSupportedException"/> and exceptions usually not caught in .NET framework (such as <see cref="StackOverflowException"/>) can be thrown by implementation of this method to indicate search failure.</exception>
             /// <remarks>
