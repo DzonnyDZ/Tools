@@ -83,7 +83,7 @@ Namespace ComponentModelT
         End Sub
         ''' <summary>CTor from value represented as instance of <see cref="WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Value"/></summary>
         ''' <param name="KnownCategory">Instance of <see cref="WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Value"/></param>
-        ''' <remarks>Thsi CTor is hint for intellisense only. However it is fully functional you will probably never use it.</remarks>
+        ''' <remarks>Thsi CTor is hint for IntelliSense only. However it is fully functional you will probably never use it.</remarks>
         Public Sub New(ByVal KnownCategory As WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Value)
             Me.New(KnownCategory.Value)
         End Sub
@@ -91,7 +91,7 @@ Namespace ComponentModelT
         ''' <param name="AnyCategory">Category to be passed to CTor of <see cref="CategoryAttribute"/></param>
         ''' <remarks>
         ''' This CTor allows you to pass any <see cref="String"/> to this class. This is CTor that is used instead of that one that takes <see cref="WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Value"/>. This is done becose of it is the way how you can tell intellisense to list values for you.
-        ''' This ctor should be used with constants that are members of <see cref="WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/> (but there is no chceck).
+        ''' This CTor should be used with constants that are members of <see cref="WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/> (but there is no check).
         ''' </remarks>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Public Sub New(ByVal AnyCategory As String)
@@ -131,6 +131,7 @@ Namespace ComponentModelT
             End Select
             Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.MustBeOneOf1Or2Values, "KnownCategory", "KnownCategories", "AnotherCategories"))
         End Function
+
         ''' <summary>Gets localized text - name of given known category</summary>
         ''' <param name="KnownCategory">One of <see cref="KnownCategories"/> or <see cref="AnotherCategories"/> values</param>
         ''' <returns>String representing localized name of given category</returns>

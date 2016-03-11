@@ -461,42 +461,30 @@ Namespace DataStructuresT.GenericT
         End Function
         ''' <summary>Enumerates through <see cref="Tree(Of T)"/> (or its sub-tree) in given order</summary>
         Public Class TreeEnumerator : Implements IEnumerator(Of T), IEnumerable(Of T), IEnumerator(Of Tree(Of T)), IEnumerable(Of Tree(Of T))
-            ''' <summary>Contains value of the <see cref="Direction"/> property</summary>
-            Private _Direction As Tree.EnumDirections
-            ''' <summary>Contains value of the <see cref="Order"/> property</summary>
-            Private _Order As Tree.EnumOrders
-            ''' <summary>Contains value of the <see cref="Root"/> property</summary>
-            Private _Root As Tree(Of T)
+
             ''' <summary>Contains value of the <see cref="CurrentNode"/> property or null when the enumerator is before start or after end of the collection</summary>
-            Private Current As Tree(Of T)
+            Private current As Tree(Of T)
+
             ''' <summary>If <see cref="Current"/> is null distinguishes between position before start (True) and after end (False) of the collection</summary>
-            Private Before As Boolean = True
+            Private before As Boolean = True
+
             ''' <summary>Direction of enumerating</summary>
-            Public ReadOnly Property Direction() As Tree.EnumDirections
-                Get
-                    Return _Direction
-                End Get
-            End Property
+            Public ReadOnly Property Direction As Tree.EnumDirections
+
             ''' <summary>Order of enumerating</summary>
-            Public ReadOnly Property Order() As Tree.EnumOrders
-                Get
-                    Return _Order
-                End Get
-            End Property
+            Public ReadOnly Property Order As Tree.EnumOrders
+
             ''' <summary>The node that is root for this enumerator</summary>
-            Public ReadOnly Property Root() As Tree(Of T)
-                Get
-                    Return _Root
-                End Get
-            End Property
+            Public ReadOnly Property Root As Tree(Of T)
+
             ''' <summary>CTor</summary>
             ''' <param name="Root">The node to start and end enumeration with</param>
             ''' <param name="Order">Order of enumerating</param>
             ''' <param name="Direction">Direction of enumerating</param>
             Public Sub New(ByVal Root As Tree(Of T), ByVal Order As Tree.EnumOrders, ByVal Direction As Tree.EnumDirections)
-                _Direction = Direction
-                _Order = Order
-                _Root = Root
+                Me.Direction = Direction
+                Me.Order = Order
+                Me.Root = Root
             End Sub
 
             ''' <summary>Returns an enumerator that iterates through the collection.</summary>
@@ -508,18 +496,21 @@ Namespace DataStructuresT.GenericT
                     Return New TreeEnumerator(Me.Root, Me.Order, Me.Direction)
                 End If
             End Function
+
             ''' <summary>Returns an enumerator that iterates through the collection.</summary>
             ''' <returns>If this enumerator was not initialized or disposed, returns itself. If it was returns clone of itself.</returns>
             Public Function GetNodeEnumerator() As System.Collections.Generic.IEnumerator(Of Tree(Of T)) Implements System.Collections.Generic.IEnumerable(Of Tree(Of T)).GetEnumerator
                 Return GetValueEnumerator()
             End Function
+
             ''' <summary>Returns an enumerator that iterates through a collection.</summary>
             ''' <returns><see cref="GetValueEnumerator"/></returns>
             ''' <remarks>Use type-safe <see cref="GetValueEnumerator"/> or <see cref="GetNodeEnumerator"/> instead</remarks>
-            <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type-safe GetEnumerator instead")> _
+            <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type-safe GetEnumerator instead")>
             Private Function GetEnumerator1() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
                 Return GetValueEnumerator()
             End Function
+
             ''' <summary>Gets value of the node in the tree at the current position of the enumerator.</summary>
             ''' <returns>Value of the node in the collection at the current position of the enumerator</returns>
             Public ReadOnly Property CurrentValue() As T Implements System.Collections.Generic.IEnumerator(Of T).Current
@@ -527,6 +518,7 @@ Namespace DataStructuresT.GenericT
                     Return Current.Value
                 End Get
             End Property
+
             ''' <summary>Gets or sets current position of the enumerator</summary>
             ''' <returns>The node in the collection at the current position of the enumerator</returns>
             ''' <value>New position of the enumerator. New posotion must be in sub-tree of <see cref="Parent"/> or can be null which has same efect as <see cref="Reset"/></value>
@@ -541,6 +533,7 @@ Namespace DataStructuresT.GenericT
                     Before = value Is Nothing
                 End Set
             End Property
+
             ''' <summary>Gets the node in the tree at the current position of the enumerator.</summary>
             ''' <returns>The node in the collection at the current position of the enumerator</returns>
             Private ReadOnly Property CurrentNode1() As Tree(Of T) Implements System.Collections.Generic.IEnumerator(Of Tree(Of T)).Current
@@ -548,14 +541,16 @@ Namespace DataStructuresT.GenericT
                     Return CurrentNode
                 End Get
             End Property
+
             ''' <summary>Returns <see cref="CurrentValue"/></summary>
             ''' <remarks>Use type-safe <see cref="CurrentNode"/> and <see cref="CurrentValue"/> instead</remarks>
-            <Obsolete("Use type-safe CurrentValue and CurrentNode instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+            <Obsolete("Use type-safe CurrentValue and CurrentNode instead"), EditorBrowsable(EditorBrowsableState.Never)>
             Private ReadOnly Property CurrentValue1() As Object Implements IEnumerator(Of T).Current
                 Get
                     Return CurrentValue
                 End Get
             End Property
+
             ''' <summary>Advances the enumerator to the next element of the collection.</summary>
             ''' <returns>true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.</returns>
             Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
@@ -634,14 +629,18 @@ Namespace DataStructuresT.GenericT
                     Return Current IsNot Nothing
                 End If
             End Function
+
             ''' <summary>Sets the enumerator to its initial position, which is before the first element in the collection.</summary>
             Public Sub Reset() Implements System.Collections.IEnumerator.Reset
                 Current = Nothing
                 Before = True
             End Sub
+
 #Region " IDisposable Support "
+
             ''' <summary>To detect redundant calls</summary>
             Private disposedValue As Boolean = False
+
             ''' <summary>IDisposable</summary>
             Protected Overridable Sub Dispose(ByVal disposing As Boolean)
                 If Not Me.disposedValue Then
@@ -658,8 +657,8 @@ Namespace DataStructuresT.GenericT
                 Dispose(True)
                 GC.SuppressFinalize(Me)
             End Sub
-#End Region
 
+#End Region
         End Class
     End Class
 
