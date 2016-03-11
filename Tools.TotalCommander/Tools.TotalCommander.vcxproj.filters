@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Exceptions.resx" />
+    <EmbeddedResource Include="Exceptions.cs.resx" />
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="Tools.TotalCommander.nuspec" />
