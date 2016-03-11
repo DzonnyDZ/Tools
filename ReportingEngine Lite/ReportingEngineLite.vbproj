@@ -51,14 +51,14 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\bin\Debug\AnyCPU\.NET 4.5</OutputPath>
+    <OutputPath>..\bin\Debug\AnyCPU\net45</OutputPath>
     <DocumentationFile>Tools.ReportingEngineLite.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\bin\Release\AnyCPU\.NET 4.5</OutputPath>
+    <OutputPath>..\bin\Release\AnyCPU\net45</OutputPath>
     <DocumentationFile>Tools.ReportingEngineLite.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
