@@ -55,7 +55,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\bin\Debug\AnyCPU\.NET 4.5\</OutputPath>
+    <OutputPath>..\bin\Debug\AnyCPU\.NET 4.5</OutputPath>
     <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
@@ -69,7 +69,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release\AnyCPU\.NET 4.5\</OutputPath>
+    <OutputPath>..\bin\Release\AnyCPU\.NET 4.5</OutputPath>
     <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>

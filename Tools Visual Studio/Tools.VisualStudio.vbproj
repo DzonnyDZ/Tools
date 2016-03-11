@@ -55,7 +55,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\x86\.NET 4.5\</OutputPath>
+    <OutputPath>bin\Debug\x86\.NET 4.5</OutputPath>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
     <DocumentationFile>Tools.VisualStudio.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
@@ -74,7 +74,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Release\x86\.NET 4.5\</OutputPath>
+    <OutputPath>bin\Release\x86\.NET 4.5</OutputPath>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 4</DefineConstants>
     <DocumentationFile>Tools.VisualStudio.xml</DocumentationFile>
     <Optimize>true</Optimize>
