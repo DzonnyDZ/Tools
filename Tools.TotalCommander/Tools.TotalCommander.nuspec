@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
         <id>Tools.TotalCommander</id>
-        <version>1.5.4.50001</version>
+        <version>1.5.6</version>
         <title>Tools.TotalCommander</title>
         <authors>Đonny</authors>
         <owners>Đonny</owners>
@@ -12,14 +12,14 @@
             This package is just reference library, it does not contain tools for building the plugins.
             Currently the package is x86 (32bit) only.
         </description>
-        <copyright>Copyright © Jan Záruba (Đonny) 2006-15</copyright>
+        <copyright>Copyright © Jan Záruba (Đonny) 2006-16</copyright>
         <iconUrl>http://download-codeplex.sec.s-msft.com/Download?ProjectName=tools&amp;DownloadId=8144&amp;Build=21031</iconUrl>
         <licenseUrl>https://raw.githubusercontent.com/DzonnyDZ/Tools/master/License.txt</licenseUrl>
         <projectUrl>https://github.com/DzonnyDZ/Tools</projectUrl>
         <tags>TotalCommander plugin interop</tags>
         <dependencies>
-            <dependency id="Tools.Main" version="1.5.4.50000"/>
-            <dependency id="Tools.Runtime.CompilerServices" version="1.5.4.50000"/>
+            <dependency id="Tools.Main" version="1.5.6"/>
+            <dependency id="Tools.Runtime.CompilerServices" version="1.5.6"/>
         </dependencies>
     </metadata>
     <files>

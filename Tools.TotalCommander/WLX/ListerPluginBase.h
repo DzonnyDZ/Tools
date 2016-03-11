@@ -199,14 +199,14 @@ namespace Tools {
             void ListCloseWindow(HWND listWin);
 
             /// <summary>Called to unload lister UI window</summary>
-            /// <param name="listerUI">An instance of lister UI previously created in <see cref="OnInit"/>. It may be null in rare (impossible?) cases when Total Commmander calls <see cref="ListCloseWindow"/> for handle that is not known to managed plugin framework.</param>
+            /// <param name="listerUI">An instance of lister UI previously created in <see cref="OnInit"/>. It may be null in rare (impossible?) cases when Total Commander calls <see cref="ListCloseWindow"/> for handle that is not known to managed plugin framework.</param>
             /// <param name="listerUIHandle">Handle of <paramref name="listerUI"/></param>
             /// <exception cref="NotSupportedException"><see cref="OnInit"/> is not implemented</exception>
             /// <remarks>
             /// <para>This function is automatically implemented always when <see cref="OnInit"/> is implemented.</para>
             /// <note type="inheritinfo">
             /// You may override this function but you should always call base class method.
-            /// <para>Default implementation contains logic for cleaning up internal register of opened winodws and for destroing the window (using unmanaged <c>DestroyWindow</c>).
+            /// <para>Default implementation contains logic for cleaning up internal register of opened windows and for destroying the window (using unmanaged <c>DestroyWindow</c>).
             /// For event dispatching it calls <see cref="DispatchCloseWindow"/>.</para>
             /// <para>If you override this method and do not call base class method you should:</para>
             /// <list type="number">

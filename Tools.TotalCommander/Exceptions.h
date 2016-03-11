@@ -20,7 +20,7 @@ namespace Tools {
     // To add or remove a member, edit your .ResX file then rerun the InternalResXFileCodeGeneratorEx custom tool or rebuild your VS.NET project.
     // Copyright © Dmytro Kryvko 2006-8 (http://dmytro.kryvko.googlepages.com/); Đonny 2008-2016 (http://tools.codeplex.com)
     [System::CodeDom::Compiler::GeneratedCodeAttribute(L"Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.StronglyTypedResourceBuilderEx", 
-    L"1.5.5.0"), 
+    L"1.5.6.0"), 
     System::Diagnostics::DebuggerNonUserCodeAttribute, 
     System::Diagnostics::CodeAnalysis::SuppressMessageAttribute(L"Microsoft.Naming", L"CA1724:TypeNamesShouldNotMatchNamespaces")]
     ref class Exceptions {

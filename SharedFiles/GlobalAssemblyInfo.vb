@@ -8,5 +8,5 @@ Imports System.Reflection
 <Assembly: AssemblyCopyright("Copyright © Jan Záruba (Ðonny) 2006-16")>
 #End If
 
-<Assembly: AssemblyVersion("1.5.5.0")>
-<Assembly: AssemblyFileVersion("1.5.5.0")>
+<Assembly: AssemblyVersion("1.5.6.0")>
+<Assembly: AssemblyFileVersion("1.5.6.0")>
