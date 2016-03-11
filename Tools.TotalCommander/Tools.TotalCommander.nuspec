@@ -23,8 +23,8 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="$BinDir$Tools.TotalCommander.dll" target="lib\net46\Tools.TotalCommander.dll"/>
-        <file src="$BinDir$Tools.TotalCommander.xml" target="lib\net46\Tools.TotalCommander.xml"/>
-        <file src="$BinDir$cs\Tools.TotalCommander.resources.dll" target="lib\net46\cs\Tools.TotalCommander.resources.dll"/>
+        <file src="$BinDir$Tools.TotalCommander.dll" target="lib\net45\Tools.TotalCommander.dll"/>
+        <file src="$BinDir$Tools.TotalCommander.xml" target="lib\net45\Tools.TotalCommander.xml"/>
+        <file src="$BinDir$cs\Tools.TotalCommander.resources.dll" target="lib\net45\cs\Tools.TotalCommander.resources.dll"/>
     </files>
 </package>

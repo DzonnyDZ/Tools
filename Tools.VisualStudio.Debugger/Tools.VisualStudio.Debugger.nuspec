@@ -15,6 +15,6 @@
         <tags>VisualStudio Debug DebuggerVisualizer DbCommand</tags>
     </metadata>
     <files>
-        <file src="$BinDir$cs\Tools.VisualStudio.Debugger.resources.dll" target="lib\net46\cs\Tools.VisualStudio.Debugger.resources.dll"/>
+        <file src="$BinDir$cs\Tools.VisualStudio.Debugger.resources.dll" target="lib\net45\cs\Tools.VisualStudio.Debugger.resources.dll"/>
     </files>
 </package>

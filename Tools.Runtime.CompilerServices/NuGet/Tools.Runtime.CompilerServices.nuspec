@@ -11,8 +11,8 @@
         <copyright>Copyright © Jan Záruba (Đonny) team 2006-15</copyright>
     </metadata>
     <files>
-        <file src="..\..\bin\Release\AnyCPU\Tools.Runtime.CompilerServices.dll" target="lib\net46\Tools.Runtime.CompilerServices.dll" />
-        <file src="..\..\bin\Release\AnyCPU\Tools.Runtime.CompilerServices.pdb" target="lib\net46\Tools.Runtime.CompilerServices.pdb" />
-        <file src="..\..\bin\Release\AnyCPU\Tools.Runtime.CompilerServices.xml" target="lib\net46\Tools.Runtime.CompilerServices.xml" />
+        <file src="..\..\bin\Release\AnyCPU\Tools.Runtime.CompilerServices.dll" target="lib\net45\Tools.Runtime.CompilerServices.dll" />
+        <file src="..\..\bin\Release\AnyCPU\Tools.Runtime.CompilerServices.pdb" target="lib\net45\Tools.Runtime.CompilerServices.pdb" />
+        <file src="..\..\bin\Release\AnyCPU\Tools.Runtime.CompilerServices.xml" target="lib\net45\Tools.Runtime.CompilerServices.xml" />
     </files>
 </package>

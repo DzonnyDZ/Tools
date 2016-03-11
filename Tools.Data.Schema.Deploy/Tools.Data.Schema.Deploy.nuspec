@@ -15,6 +15,6 @@
         <tags>DataSchema Deploy wrapper SQL deployment</tags>
     </metadata>
     <files>
-        <file src="$BinDir$cs\Tools.Data.Schema.Deploy.resources.dll" target="lib\net46\cs\Tools.Data.Schema.Deploy.resources.dll"/>
+        <file src="$BinDir$cs\Tools.Data.Schema.Deploy.resources.dll" target="lib\net45\cs\Tools.Data.Schema.Deploy.resources.dll"/>
     </files>
 </package>

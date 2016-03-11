@@ -15,18 +15,18 @@
         <tags>UCD Unicode UniHan CUSR</tags>
     </metadata>
     <files>
-        <file src="$BinDir$ucd.all.grouped.xml.gz" target="lib\net46\ucd.all.grouped.xml.gz"/>
-        <file src="$BinDir$cs\Tools.Text.Unicode.resources.dll" target="lib\net46\cs\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$da\Tools.Text.Unicode.resources.dll" target="lib\net46\da\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$de\Tools.Text.Unicode.resources.dll" target="lib\net46\de\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$el\Tools.Text.Unicode.resources.dll" target="lib\net46\el\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$en\Tools.Text.Unicode.resources.dll" target="lib\net46\en\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$es\Tools.Text.Unicode.resources.dll" target="lib\net46\es\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$fr\Tools.Text.Unicode.resources.dll" target="lib\net46\fr\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$pl\Tools.Text.Unicode.resources.dll" target="lib\net46\pl\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$pt\Tools.Text.Unicode.resources.dll" target="lib\net46\pt\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$ru\Tools.Text.Unicode.resources.dll" target="lib\net46\ru\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$tr\Tools.Text.Unicode.resources.dll" target="lib\net46\tr\Tools.Text.Unicode.resources.dll"/>
-        <file src="$BinDir$zh\Tools.Text.Unicode.resources.dll" target="lib\net46\zh\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$ucd.all.grouped.xml.gz" target="lib\net45\ucd.all.grouped.xml.gz"/>
+        <file src="$BinDir$cs\Tools.Text.Unicode.resources.dll" target="lib\net45\cs\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$da\Tools.Text.Unicode.resources.dll" target="lib\net45\da\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$de\Tools.Text.Unicode.resources.dll" target="lib\net45\de\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$el\Tools.Text.Unicode.resources.dll" target="lib\net45\el\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$en\Tools.Text.Unicode.resources.dll" target="lib\net45\en\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$es\Tools.Text.Unicode.resources.dll" target="lib\net45\es\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$fr\Tools.Text.Unicode.resources.dll" target="lib\net45\fr\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$pl\Tools.Text.Unicode.resources.dll" target="lib\net45\pl\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$pt\Tools.Text.Unicode.resources.dll" target="lib\net45\pt\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$ru\Tools.Text.Unicode.resources.dll" target="lib\net45\ru\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$tr\Tools.Text.Unicode.resources.dll" target="lib\net45\tr\Tools.Text.Unicode.resources.dll"/>
+        <file src="$BinDir$zh\Tools.Text.Unicode.resources.dll" target="lib\net45\zh\Tools.Text.Unicode.resources.dll"/>
     </files>
 </package>

@@ -15,6 +15,6 @@
         <tags>Metadata Exif IPTC JPEG image bitmap</tags>
     </metadata>
     <files>
-        <file src="$BinDir$cs\Tools.Metadata.resources.dll" target="lib\net46\cs\Tools.Metadata.resources.dll"/>
+        <file src="$BinDir$cs\Tools.Metadata.resources.dll" target="lib\net45\cs\Tools.Metadata.resources.dll"/>
     </files>
 </package>

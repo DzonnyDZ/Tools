@@ -15,7 +15,7 @@
         <tags>Extension Delegate Enum</tags>
     </metadata>
     <files>
-        <file src="$BinDir$Tools.Hardcore.dll" target="lib\net46\Tools.Hardcore.dll"/>
-        <file src="$BinDir$Tools.Hardcore.xml" target="lib\net46\Tools.Hardcore.xml"/>
+        <file src="$BinDir$Tools.Hardcore.dll" target="lib\net45\Tools.Hardcore.dll"/>
+        <file src="$BinDir$Tools.Hardcore.xml" target="lib\net45\Tools.Hardcore.xml"/>
     </files>
 </package>

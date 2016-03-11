@@ -15,6 +15,6 @@
         <tags>WinForms WPF XAML Interop Win32 COM API Console Device Input Keyboard IO Registry Native wrapper</tags>
     </metadata>
     <files>
-        <file src="$BinDir$cs\Tools.Windows.resources.dll" target="lib\net46\cs\Tools.Windows.resources.dll"/>
+        <file src="$BinDir$cs\Tools.Windows.resources.dll" target="lib\net45\cs\Tools.Windows.resources.dll"/>
     </files>
 </package>

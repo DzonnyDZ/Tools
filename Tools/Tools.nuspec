@@ -15,8 +15,8 @@
         <tags>tools XML Extension CodeDOM LINQ Math IO Globalization Numerics Formatting Cryptography Text Reflection XPath Collections</tags>
     </metadata>
     <files>
-        <file src="$BinDir$cs\Tools.resources.dll" target="lib\net46\cs\Tools.resources.dll"/>
-        <file src="$BinDir$de\Tools.resources.dll" target="lib\net46\de\Tools.resources.dll"/>
-        <file src="$BinDir$el\Tools.resources.dll" target="lib\net46\el\Tools.resources.dll"/>
+        <file src="$BinDir$cs\Tools.resources.dll" target="lib\net45\cs\Tools.resources.dll"/>
+        <file src="$BinDir$de\Tools.resources.dll" target="lib\net45\de\Tools.resources.dll"/>
+        <file src="$BinDir$el\Tools.resources.dll" target="lib\net45\el\Tools.resources.dll"/>
     </files>
 </package>
