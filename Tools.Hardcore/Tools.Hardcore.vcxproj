@@ -74,11 +74,11 @@
       <TargetMachine />
     </Link>
     <PostBuildEvent>
-      <Command>
-                sn -q -Ra "$(TargetPath)" ..\SharedFiles\Tools.snk
-                "$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
-                move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
-            </Command>
+      <Command>sn -q -Ra "$(TargetPath)" ..\SharedFiles\Tools.snk
+"$(SolutionDir)DevelopmentTools\msxsl.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)\SharedFiles\FixXmlComments.xslt" -o "$(TargetDir)$(TargetName).2.xml"
+move /Y "$(TargetDir)$(TargetName).2.xml" "$(TargetDir)$(TargetName).xml"
+            
+"$(SolutionDir)DevelopmentTools\nuget.exe" pack "$(ProjectDir)$(ProjectName).nuspec" -OutputDirectory "$(TargetDir)\" -Properties Configuration=$(ConfigurationName) -Properties "BinDir=$(TargetDir)\"</Command>
     </PostBuildEvent>
     <Manifest>
       <UpdateFileHashes>false</UpdateFileHashes>
