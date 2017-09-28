@@ -22,7 +22,7 @@ Namespace ExtensionsUT
         Public Sub CEscapeU()
             Assert.AreEqual("Tes\st", "Tes\\st".CEscape)
             Assert.AreEqual("Hello" & vbCrLf & "world", "Hello\r\nworld".CEscape)
-            '\a</term><description>Allert 0x7</description></item>
+            '\a</term><description>Alert 0x7</description></item>
             Assert.AreEqual("Hello" & ChrW(&H7) & "world", "Hello\aworld".CEscape)
             '\b</term><description>Backspace 0x8</description></item>
             Assert.AreEqual("Hello" & ChrW(&H8) & "world", "Hello\bworld".CEscape)
@@ -83,7 +83,7 @@ Namespace ExtensionsUT
         Public Sub CReplaceEscapingU()
             Assert.AreEqual("Tes\st", "Tes\\st".CReplace(EmptyArray.Object))
             Assert.AreEqual("Hello" & vbCrLf & "world", "Hello\r\nworld".CReplace(EmptyArray.Object))
-            '\a</term><description>Allert 0x7</description></item>
+            '\a</term><description>Alert 0x7</description></item>
             Assert.AreEqual("Hello" & ChrW(&H7) & "world", "Hello\aworld".CReplace(EmptyArray.Object))
             '\b</term><description>Backspace 0x8</description></item>
             Assert.AreEqual("Hello" & ChrW(&H8) & "world", "Hello\bworld".CReplace(EmptyArray.Object))

@@ -170,15 +170,6 @@
   <ItemGroup>
     <Resource Include="Ω.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Collections\Specialized\SpecializedWrappers.xslt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="CodeDom\XmlNames.xslt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="CodeDom\AddDoc.xslt" />
-  </ItemGroup>
   <Target Name="PostBuild">
     <Copy SourceFiles="$(TargetDir)$(TargetName)$(TargetExt)" DestinationFiles="$(TargetDir)$(TargetName).scr" />
     <Copy SourceFiles="$(TargetDir)$(TargetName)$(TargetExt).config" DestinationFiles="$(TargetDir)$(TargetName).scr.config" />

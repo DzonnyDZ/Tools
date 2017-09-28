@@ -3,9 +3,10 @@ Imports CultureInfo = System.Globalization.CultureInfo
 Imports System.Text
 Imports System.Web
 Imports Tools.TextT
+Imports System.Text.RegularExpressions
 
 Namespace ExtensionsT
-#If True
+#If True Then
     ''' <summary>Provides string formatting</summary>
     ''' <remarks>Formatting rules:
     ''' <para>If C#-like backslash (\) escape sequences are allowed formating combines C#-like string escaping and formatting used by <see cref="[String].Format"/>.</para>
@@ -483,31 +484,57 @@ SelectCase:     Select Case state
             TransformationPipe
         End Enum
 
+        ''' <summary>Delegate ofr appending of character (used after \)</summary>
+        ''' <param name="toAppend">Character(s) to append</param>
+        ''' <param name="state">Current FSA state (will be updated)</param>
+        ''' <returns>True if <paramref name="toAppend"/> has been accepted, false otherwise"</returns>
+        Private Delegate Function AppendAndChangeState(toAppend$, ByRef state As ReplaceFSA) As Boolean
+
         ''' <summary>Replaces placeholders with formatting in given string</summary>
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="getValue">A function that provides values of placeholders. Names of placeholders are passed here and values are expected to be returned.</param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="getValue"/> is null</exception>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.</remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
-        Friend Function ReplaceInternal(pattern As String, getValue As Func(Of String, Object), cEscapes As Boolean, provider As IFormatProvider) As String
+        ''' <verion version="1.5.6">Parameter <paramref name="identifierPattern"/> is new in 1.5.6</verion>
+        Friend Function ReplaceInternal(pattern As String, getValue As Func(Of String, Object), cEscapes As Boolean, provider As IFormatProvider, identifierPattern As Regex) As String
             If getValue Is Nothing Then Throw New ArgumentNullException("getValue")
             If pattern Is Nothing Then Return Nothing
 
             Dim ret As New StringBuilder
-            Dim state As ReplaceFSA = ReplaceFSA.String
-            Dim name As StringBuilder = Nothing
+            Dim state = ReplaceFSA.String
+            Dim name As PlaceholderNameBuilder = Nothing
             Dim format As StringBuilder = Nothing
             Dim align = 0
             Dim code = 0
             Dim oldChar As Char = Chars.NullChar
             Dim trans As New List(Of StringBuilder)
 
-            Dim backslashAppendTo As StringBuilder = Nothing
-            Dim backslashReturnTo As ReplaceFSA = ReplaceFSA.String
+            Dim backslashAppendTo As AppendAndChangeState = Nothing
+            Dim backslashReturnTo = ReplaceFSA.String
+            Dim backslashStandardTarget As StringBuilder = Nothing
+            Dim backslashNameTarget As PlaceholderNameBuilder = Nothing
+
+            Dim standardBackslashAppendTo As AppendAndChangeState = Function(a, ByRef st)
+                                                                        backslashStandardTarget.Append(a)
+                                                                        st = backslashReturnTo
+                                                                        Return True
+                                                                    End Function
+            Dim nameBackslashAppendTo As AppendAndChangeState = Function(a, ByRef st)
+                                                                    If backslashNameTarget.AppendX(a) Then
+                                                                        st = backslashReturnTo
+                                                                        Return True
+                                                                    Else
+                                                                        ret.Append("{" & name.ToString() & a)
+                                                                        st = ReplaceFSA.String
+                                                                        Return False
+                                                                    End If
+                                                                End Function
 
             For Each ch In pattern
 DoItAgain:
@@ -530,17 +557,28 @@ DoItAgain:
                         Select Case ch
                             Case "{"c : ret.Append("{") : state = ReplaceFSA.String
                             Case "\"c
-                                name = New StringBuilder
+                                name = New PlaceholderNameBuilder(identifierPattern)
                                 If cEscapes Then
                                     state = ReplaceFSA.NameBackSlash
                                 Else
-                                    state = ReplaceFSA.Name
-                                    name.Append("\"c)
+                                    If Not name.AppendX("\"c) Then
+                                        ret.Append("{" & name.ToString & "\")
+                                        state = ReplaceFSA.String
+                                    Else
+                                        state = ReplaceFSA.Name
+                                    End If
                                 End If
-                            Case ":"c : name = New StringBuilder : state = ReplaceFSA.NameColon
-                            Case ","c : name = New StringBuilder : state = ReplaceFSA.NameComma
+                            Case ":"c : name = New PlaceholderNameBuilder(identifierPattern) : state = ReplaceFSA.NameColon
+                            Case ","c : name = New PlaceholderNameBuilder(identifierPattern) : state = ReplaceFSA.NameComma
                             Case "}"c : state = ReplaceFSA.OpenClose
-                            Case Else : name = New StringBuilder : name.Append(ch) : state = ReplaceFSA.Name
+                            Case Else
+                                name = New PlaceholderNameBuilder(identifierPattern)
+                                If Not name.AppendX(ch) Then
+                                    ret.Append("{" & ch)
+                                    state = ReplaceFSA.String
+                                Else
+                                    state = ReplaceFSA.Name
+                                End If
                         End Select
                     Case ReplaceFSA.CloseOpen '}{ (end placeholder followed by {
                         Select Case ch
@@ -554,24 +592,57 @@ DoItAgain:
                                     state = ReplaceFSA.String
                                     ret.Append("\"c)
                                 End If
-                            Case ":"c : name = New StringBuilder : state = ReplaceFSA.NameColon
-                            Case ","c : name = New StringBuilder : state = ReplaceFSA.NameComma
-                            Case Else : name = New StringBuilder : name.Append(ch) : state = ReplaceFSA.Name
+                            Case ":"c : name = New PlaceholderNameBuilder(identifierPattern) : state = ReplaceFSA.NameColon
+                            Case ","c : name = New PlaceholderNameBuilder(identifierPattern) : state = ReplaceFSA.NameComma
+                            Case Else
+                                name = New PlaceholderNameBuilder(identifierPattern)
+                                If name.AppendX(ch) Then
+                                    state = ReplaceFSA.Name
+                                Else
+                                    ret.Append("{" & ch)
+                                    state = ReplaceFSA.String
+                                End If
                         End Select
                     Case ReplaceFSA.OpenClose '{}
                         Select Case ch
-                            Case "{"c : name = New StringBuilder : state = ReplaceFSA.NameOpen
-                            Case "}"c : name = New StringBuilder : name.Append("}"c) : state = ReplaceFSA.Name
-                            Case "\"c
-                                name = New StringBuilder
-                                name.Append("}"c)
-                                If cEscapes Then
-                                    state = ReplaceFSA.NameBackSlash
-                                Else
+                            Case "{"c : name = New PlaceholderNameBuilder(identifierPattern) : state = ReplaceFSA.NameOpen
+                            Case "}"c : name = New PlaceholderNameBuilder(identifierPattern)
+                                If name.AppendX("}"c) Then
                                     state = ReplaceFSA.Name
-                                    ret.Append("\"c)
+                                Else
+                                    ret.Append("{" & name.ToString() & "{")
+                                    state = ReplaceFSA.String
                                 End If
-                            Case Else : name = New StringBuilder : name.Append("}"c) : state = ReplaceFSA.Name
+                            Case "\"c
+                                name = New PlaceholderNameBuilder(identifierPattern)
+                                If name.AppendX("}"c) Then
+                                    If cEscapes Then
+                                        state = ReplaceFSA.NameBackSlash
+                                    Else
+                                        If name.AppendX("\"c) Then
+                                            state = ReplaceFSA.Name
+                                        Else
+                                            state = ReplaceFSA.String
+                                            ret.Append("{\")
+                                        End If
+                                    End If
+                                Else
+                                    ret.Append("}")
+                                    If cEscapes Then
+                                        state = ReplaceFSA.BackSlash
+                                    Else
+                                        state = ReplaceFSA.String
+                                        ret.Append("\"c)
+                                    End If
+                                End If
+                            Case Else
+                                name = New PlaceholderNameBuilder(identifierPattern)
+                                If name.AppendX("}"c) Then
+                                    state = ReplaceFSA.Name
+                                Else
+                                    ret.Append("{}")
+                                    state = ReplaceFSA.String
+                                End If
                         End Select
                     Case ReplaceFSA.Name 'Name of placeholder after {
                         Select Case ch
@@ -581,16 +652,32 @@ DoItAgain:
                             Case "}"c : state = ReplaceFSA.NameClose
                             Case "{"c : state = ReplaceFSA.NameOpen
                             Case "|"c : state = ReplaceFSA.NamePipe
-                            Case Else : name.Append(ch)
+                            Case Else
+                                If Not name.AppendX(ch) Then
+                                    ret.Append("{" & name.ToString & ch)
+                                    state = ReplaceFSA.String
+                                End If
                         End Select
                     Case ReplaceFSA.NamePipe
                         Select Case ch
-                            Case "|"c : name.Append("|"c) : state = ReplaceFSA.Name
+                            Case "|"c
+                                If name.AppendX("|"c) Then
+                                    state = ReplaceFSA.Name
+                                Else
+                                    ret.Append("{" & name.ToString & "||")
+                                    state = ReplaceFSA.String
+                                End If
                             Case Else : state = ReplaceFSA.Transformation : trans.Clear() : trans.Add(New StringBuilder(CStr(ch))) : format = New StringBuilder
                         End Select
                     Case ReplaceFSA.NameClose '} in name of placeholder
                         Select Case ch
-                            Case "}"c : name.Append("}"c) : state = ReplaceFSA.Name
+                            Case "}"c
+                                If name.AppendX("}"c) Then
+                                    state = ReplaceFSA.Name
+                                Else
+                                    ret.Append("{" & name.ToString & "}}")
+                                    state = ReplaceFSA.String
+                                End If
                             Case "{"c
                                 ret.Append(FormatInternal$(name.ToString, Nothing, 0, getValue, provider))
                                 state = ReplaceFSA.CloseOpen
@@ -604,7 +691,13 @@ DoItAgain:
                         End Select
                     Case ReplaceFSA.NameComma ', in name of placeholder
                         Select Case ch
-                            Case ","c : name.Append(","c) : state = ReplaceFSA.Name
+                            Case ","c
+                                If name.AppendX(","c) Then
+                                    state = ReplaceFSA.Name
+                                Else
+                                    ret.Append("{" & name.ToString & ",,")
+                                    state = ReplaceFSA.String
+                                End If
                             Case "+"c : state = ReplaceFSA.AlignPlus
                             Case "-"c : state = ReplaceFSA.AlignMinus
                             Case "0"c To "9"c : align = ch.NumericValue : state = ReplaceFSA.Align
@@ -640,7 +733,13 @@ DoItAgain:
                         End Select
                     Case ReplaceFSA.NameColon ': in name
                         Select Case ch
-                            Case ":"c : name.Append(":"c) : state = ReplaceFSA.Name
+                            Case ":"c
+                                If name.AppendX(":"c) Then
+                                    state = ReplaceFSA.Name
+                                Else
+                                    ret.Append("{" & name.ToString() & "::")
+                                    state = ReplaceFSA.String
+                                End If
                             Case "}"c : format = New StringBuilder : state = ReplaceFSA.FormatClose : align = 0
                             Case "{"c : format = New StringBuilder : state = ReplaceFSA.FormatOpen : align = 0
                             Case "\"c
@@ -684,56 +783,59 @@ DoItAgain:
                                 state = ReplaceFSA.String
                         End Select
                     Case ReplaceFSA.StringBackSlash '\ in string
-                        backslashAppendTo = ret
+                        backslashStandardTarget = ret
+                        backslashAppendTo = standardBackslashAppendTo
                         backslashReturnTo = ReplaceFSA.String
                         state = ReplaceFSA.BackSlash
                         GoTo DoItAgain
                     Case ReplaceFSA.NameBackSlash '\ in name
-                        backslashAppendTo = name
+                        backslashNameTarget = name
+                        backslashAppendTo = nameBackslashAppendTo
                         backslashReturnTo = ReplaceFSA.Name
                         state = ReplaceFSA.BackSlash
                         GoTo DoItAgain
                     Case ReplaceFSA.FormatBackSlash '\ in format
-                        backslashAppendTo = format
+                        backslashStandardTarget = format
+                        backslashAppendTo = standardBackslashAppendTo
                         backslashReturnTo = ReplaceFSA.Name
                         state = ReplaceFSA.BackSlash
                         GoTo DoItAgain
                     Case ReplaceFSA.TransformationBackSlash '\ in transformation
-                        backslashAppendTo = format
+                        backslashStandardTarget = format
+                        backslashAppendTo = standardBackslashAppendTo
                         backslashReturnTo = ReplaceFSA.Transformation
                         state = ReplaceFSA.BackSlash
                         GoTo DoItAgain
                     Case ReplaceFSA.BackSlash 'General \ processing
                         Select Case ch
-                            Case "a"c : backslashAppendTo.Append(Chars.Alert) : state = backslashReturnTo
-                            Case "b"c : backslashAppendTo.Append(Chars.Back) : state = backslashReturnTo
-                            Case "f"c : backslashAppendTo.Append(Chars.FormFeed) : state = backslashReturnTo
-                            Case "n"c : backslashAppendTo.Append(Chars.Lf) : state = backslashReturnTo
-                            Case "r"c : backslashAppendTo.Append(Chars.Cr) : state = backslashReturnTo
-                            Case "t"c : backslashAppendTo.Append(Chars.Tab) : state = backslashReturnTo
-                            Case "v"c : backslashAppendTo.Append(Chars.VerticalTab) : state = backslashReturnTo
+                            Case "a"c : backslashAppendTo(Chars.Alert, state)
+                            Case "b"c : backslashAppendTo(Chars.Back, state)
+                            Case "f"c : backslashAppendTo(Chars.FormFeed, state)
+                            Case "n"c : backslashAppendTo(Chars.Lf, state)
+                            Case "r"c : backslashAppendTo(Chars.Cr, state)
+                            Case "t"c : backslashAppendTo(Chars.Tab, state)
+                            Case "v"c : backslashAppendTo(Chars.VerticalTab, state)
                             Case "."c : state = backslashReturnTo
                             Case "U"c, "u"c, "x"c, "X"c : state = ReplaceFSA.BackSlashHex1 : oldChar = ch
                             Case "0"c To "9"c : code = ch.NumericValue : state = ReplaceFSA.BackSlashDec
-                            Case Else : backslashAppendTo.Append(ch) : state = backslashReturnTo
+                            Case Else : backslashAppendTo(ch, state)
                         End Select
                     Case ReplaceFSA.BackSlashHex1 '\u, \U, \x, \X
                         Select Case ch
                             Case "0"c To "9"c : code = ch.NumericValue : state = ReplaceFSA.BackSlashHex
                             Case "a"c, "b"c, "c"c, "d"c, "e"c, "f"c : code = AscW(ch) - AscW("a"c) + 10 : state = ReplaceFSA.BackSlashHex
                             Case "A"c, "B"c, "C"c, "D"c, "E"c, "F"c : code = AscW(ch) - AscW("A"c) + 10 : state = ReplaceFSA.BackSlashHex
-                            Case Else : backslashAppendTo.Append(oldChar) : state = backslashReturnTo : GoTo DoItAgain
+                            Case Else : backslashAppendTo(oldChar, state) : GoTo DoItAgain
                         End Select
                     Case ReplaceFSA.BackSlashDec '\[0-9]
                         Select Case ch
                             Case "0"c To "9"c : code = code * 10 + ch.NumericValue
                             Case Else
                                 Try
-                                    backslashAppendTo.Append(Char.ConvertFromUtf32(code))
+                                    backslashAppendTo(Char.ConvertFromUtf32(code), state)
                                 Catch ex As ArgumentOutOfRangeException
                                     Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0D, code), ex)
                                 End Try
-                                state = backslashReturnTo
                                 GoTo DoItAgain
                         End Select
                     Case ReplaceFSA.BackSlashHex '\[uUxX][0-9a-fA-F]
@@ -743,24 +845,38 @@ DoItAgain:
                             Case "A"c, "B"c, "C"c, "D"c, "E"c, "F"c : code = code * 16 + (AscW(ch) - AscW("A"c) + 10)
                             Case Else
                                 Try
-                                    backslashAppendTo.Append(Char.ConvertFromUtf32(code))
+                                    backslashAppendTo(Char.ConvertFromUtf32(code), state)
                                 Catch ex As ArgumentOutOfRangeException
                                     Throw New FormatException(String.Format(ResourcesT.Exceptions.InvalidFormatStringInvalidUnicodeCodePoint0D, code), ex)
                                 End Try
-                                state = backslashReturnTo
                                 GoTo DoItAgain
                         End Select
                     Case ReplaceFSA.NameOpen '{ in name
-                        name.Append("{"c)
-                        Select Case ch
-                            Case "\"c : If cEscapes Then state = ReplaceFSA.NameBackSlash Else ret.Append("\c")
-                            Case ":"c : state = ReplaceFSA.NameColon
-                            Case ","c : state = ReplaceFSA.NameComma
-                            Case "}"c : state = ReplaceFSA.NameClose
-                            Case "{"c : state = ReplaceFSA.Name
-                            Case "|"c : state = ReplaceFSA.NamePipe
-                            Case Else : name.Append(ch) : state = ReplaceFSA.Name
-                        End Select
+                        If name.AppendX("{"c) Then
+                            Select Case ch
+                                Case "\"c : If cEscapes Then
+                                        state = ReplaceFSA.NameBackSlash
+                                    ElseIf Not name.AppendX("\c") Then
+                                        ret.Append("{" & name.ToString & "{\")
+                                        state = ReplaceFSA.String
+                                    End If
+                                Case ":"c : state = ReplaceFSA.NameColon
+                                Case ","c : state = ReplaceFSA.NameComma
+                                Case "}"c : state = ReplaceFSA.NameClose
+                                Case "{"c : state = ReplaceFSA.Name
+                                Case "|"c : state = ReplaceFSA.NamePipe
+                                Case Else
+                                    If name.AppendX(ch) Then
+                                        state = ReplaceFSA.Name
+                                    Else
+                                        ret.Append("{" & name.ToString & "{" & ch)
+                                        state = ReplaceFSA.String
+                                    End If
+                            End Select
+                        Else
+                            ret.Append("{" & name.ToString & "{{")
+                            state = ReplaceFSA.String
+                        End If
                     Case ReplaceFSA.FormatOpen '{ in format
                         format.Append("{"c)
                         Select Case ch
@@ -936,8 +1052,27 @@ DoItAgain:
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function Replace(pattern As String, getValue As Func(Of String, Object), Optional provider As IFormatProvider = Nothing) As String
-            Return ReplaceInternal(pattern, getValue, False, provider)
+            Return ReplaceInternal(pattern, getValue, False, provider, Nothing)
         End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="getValue">A function that provides values of placeholders. Names of placeholders are passed here and values are expected to be returned.</param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="getValue"/> is null</exception>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' If <paramref name="getValue"/> throws an exception for particular name null is used as value for that placeholder.
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function Replace(pattern As String, getValue As Func(Of String, Object), identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, getValue, False, provider, identifierPattern)
+        End Function
+
         ''' <summary>Replaces placeholders with formatting in given string and also replaces C#-style backslash (\) espace sequences</summary>
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="getValue">A function that provides values of placeholders. Names of placeholders are passed here and values are expected to be returned.</param>
@@ -952,7 +1087,25 @@ DoItAgain:
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function CReplace(pattern As String, getValue As Func(Of String, Object), Optional provider As IFormatProvider = Nothing) As String
-            Return ReplaceInternal(pattern, getValue, True, provider)
+            Return ReplaceInternal(pattern, getValue, True, provider, Nothing)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string and also replaces C#-style backslash (\) espace sequences</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="getValue">A function that provides values of placeholders. Names of placeholders are passed here and values are expected to be returned.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="getValue"/> is null</exception>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' If <paramref name="getValue"/> throws an exception for particular name null is used as value for that placeholder.
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function CReplace(pattern As String, getValue As Func(Of String, Object), identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, getValue, True, provider, identifierPattern)
         End Function
 
 #Region "IDictionary"
@@ -969,6 +1122,23 @@ DoItAgain:
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         Friend Function ReplaceInternal(pattern As String, values As IDictionary(Of String, Object), cEscapes As Boolean, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, values, cEscapes, Nothing, provider)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string using values dictionary</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="values">Dictionary of values to be replaced. Key are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
+        ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>Null is supplied as value for nonexistent keys.</para>
+        ''' </remarks>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        Friend Function ReplaceInternal(pattern As String, values As IDictionary(Of String, Object), cEscapes As Boolean, identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
             Return ReplaceInternal(pattern,
                                    Function(name)
                                        If values Is Nothing Then Return Nothing
@@ -976,7 +1146,7 @@ DoItAgain:
                                        If values.TryGetValue(name, ret) Then Return ret
                                        Return Nothing
                                    End Function,
-                                   cEscapes, provider
+                                   cEscapes, provider, identifierPattern
                                   )
         End Function
 
@@ -1019,6 +1189,7 @@ DoItAgain:
         ''' <param name="values">Collection of values to be replaced. Indices are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
@@ -1026,8 +1197,9 @@ DoItAgain:
         ''' <para>If indexer of <paramref name="values"/> throws an exception null value is supplied for that placeholder.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
-        Friend Function ReplaceInternal(pattern As String, values As IIndexable(Of String, Object), cEscapes As Boolean, provider As IFormatProvider) As String
-            Return ReplaceInternal(pattern, Function(name) If(values Is Nothing, Nothing, values(name)), cEscapes, provider)
+        ''' <version version="1.5.6">Parameter <paramref name="identifierPattern"/> is new in version 1.5.6</version>
+        Friend Function ReplaceInternal(pattern As String, values As IIndexable(Of String, Object), cEscapes As Boolean, provider As IFormatProvider, identifierPattern As Regex) As String
+            Return ReplaceInternal(pattern, Function(name) If(values Is Nothing, Nothing, values(name)), cEscapes, provider, identifierPattern)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using values collection</summary>
@@ -1043,7 +1215,24 @@ DoItAgain:
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function Replace(pattern As String, values As IIndexable(Of String, Object), Optional provider As IFormatProvider = Nothing) As String
-            Return ReplaceInternal(pattern, values, False, provider)
+            Return ReplaceInternal(pattern, values, False, provider, Nothing)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string using values collection</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="values">Collection of values to be replaced. Indices are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>If indexer of <paramref name="values"/> throws an exception null value is supplied for that placeholder.</para>
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function Replace(pattern As String, values As IIndexable(Of String, Object), identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, values, False, provider, identifierPattern)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using values collection and also replaces C#-style backslash (\) character escape sequences</summary>
@@ -1059,7 +1248,23 @@ DoItAgain:
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function CReplace(pattern As String, values As IIndexable(Of String, Object), Optional provider As IFormatProvider = Nothing) As String
-            Return ReplaceInternal(pattern, values, True, provider)
+            Return ReplaceInternal(pattern, values, True, provider, Nothing)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string using values collection and also replaces C#-style backslash (\) character escape sequences</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="values">Collection of values to be replaced. Indices are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>If indexer of <paramref name="values"/> throws an exception null value is supplied for that placeholder.</para>
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function CReplace(pattern As String, values As IIndexable(Of String, Object), identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, values, True, provider, identifierPattern)
         End Function
 #End Region
 
@@ -1080,15 +1285,16 @@ DoItAgain:
         ''' </param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
-        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
-        Friend Function ReplaceInternal(pattern As String, values As Object(), cEscapes As Boolean, provider As IFormatProvider) As String
-            If values Is Nothing Then Return ReplaceInternal(pattern, Function(a) Nothing, cEscapes, provider)
+        ''' <version version="1.5.6">This parameter <paramref name="identifierPattern"/> is new in version 1.5.6</version>
+        Friend Function ReplaceInternal(pattern As String, values As Object(), cEscapes As Boolean, provider As IFormatProvider, identifierPattern As Regex) As String
+            If values Is Nothing Then Return ReplaceInternal(pattern, Function(a) Nothing, cEscapes, provider, identifierPattern)
             Dim dic As New Dictionary(Of String, Object)
             For i = 0 To values.Length - 1 Step 2
                 If values(i) Is Nothing Then Continue For
@@ -1107,7 +1313,7 @@ DoItAgain:
                     dic.Add(key, values(i + 1))
                 End If
             Next
-            Return ReplaceInternal(pattern, dic, cEscapes, provider)
+            Return ReplaceInternal(pattern, dic, cEscapes, identifierPattern, provider)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using vcombined keys-values array.</summary>
@@ -1129,12 +1335,40 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function Replace(pattern As String, provider As IFormatProvider, ParamArray values As Object()) As String
-            Return ReplaceInternal(pattern, values, False, provider)
+            Return ReplaceInternal(pattern, values, False, provider, Nothing)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string using vcombined keys-values array.</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="values">
+        ''' Array that contains names and values of items for replacement.
+        ''' Names are at even indices (0, 2, 4, etc.). Values are at odd indices (1, 3, 5, etc.). If length of array is odd last value for last item is assumed to be null.
+        ''' <para>Items at odd indices (names) are expected to be strings. If they are not they are converted to string:</para>
+        ''' <list type="number">
+        ''' <item>Null names are skipped.</item>
+        ''' <item>If name is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used (null as format string, actual name as value and <paramref name="provider"/> as format provider)</item>
+        ''' <item>If name is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used (passing null as format and <paramref name="provider"/> as format provider)</item>
+        ''' <item>Otherwise <see cref="System.Object.ToString"/> is used.</item>
+        ''' </list>
+        ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
+        ''' </param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function Replace(pattern As String, provider As IFormatProvider, identifierPattern As Regex, ParamArray values As Object()) As String
+            Return ReplaceInternal(pattern, values, False, provider, identifierPattern)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using combined keys-values array and also replaces C#-style backslash (\) character escape sequences.</summary>
@@ -1156,12 +1390,40 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function CReplace(pattern As String, provider As IFormatProvider, ParamArray values As Object()) As String
-            Return ReplaceInternal(pattern, values, True, provider)
+            Return ReplaceInternal(pattern, values, True, provider, Nothing)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string using combined keys-values array and also replaces C#-style backslash (\) character escape sequences.</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="values">
+        ''' Array that contains names and values of items for replacement.
+        ''' Names are at even indices (0, 2, 4, etc.). Values are at odd indices (1, 3, 5, etc.). If length of array is odd last value for last item is assumed to be null.
+        ''' <para>Items at odd indices (names) are expected to be strings. If they are not they are converted to string:</para>
+        ''' <list type="number">
+        ''' <item>Null names are skipped.</item>
+        ''' <item>If name is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used (null as format string, actual name as value and <paramref name="provider"/> as format provider)</item>
+        ''' <item>If name is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used (passing null as format and <paramref name="provider"/> as format provider)</item>
+        ''' <item>Otherwise <see cref="System.Object.ToString"/> is used.</item>
+        ''' </list>
+        ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
+        ''' </param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function CReplace(pattern As String, provider As IFormatProvider, identifierPattern As Regex, ParamArray values As Object()) As String
+            Return ReplaceInternal(pattern, values, True, provider, identifierPattern)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using combined keys-values array. Uses current culture.</summary>
@@ -1182,7 +1444,7 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
@@ -1208,7 +1470,7 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
@@ -1234,15 +1496,17 @@ DoItAgain:
         ''' </param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
-        Friend Function ReplaceInternal(pattern As String, values As Object(,), cEscapes As Boolean, provider As IFormatProvider) As String
-            If values Is Nothing Then Return ReplaceInternal(pattern, Function(a) Nothing, cEscapes, provider)
+        ''' <version version="1.6.4">Parameter <paramref name="identifierPattern"/> is in version 1.5.4</version>
+        Friend Function ReplaceInternal(pattern As String, values As Object(,), cEscapes As Boolean, provider As IFormatProvider, identifierPattern As Regex) As String
+            If values Is Nothing Then Return ReplaceInternal(pattern, Function(a) Nothing, cEscapes, provider, identifierPattern)
             Dim dic As New Dictionary(Of String, Object)
             If values.GetLength(1) >= 2 Then
                 For i = 0 To values.GetLength(0) - 1
@@ -1259,7 +1523,7 @@ DoItAgain:
                     dic.Add(key, values(i, 1))
                 Next
             End If
-            Return ReplaceInternal(pattern, dic, cEscapes, provider)
+            Return ReplaceInternal(pattern, dic, cEscapes, identifierPattern, provider)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using two dimensional array.</summary>
@@ -1281,12 +1545,40 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function Replace(pattern As String, values As Object(,), Optional provider As IFormatProvider = Nothing) As String
-            Return ReplaceInternal(pattern, values, False, provider)
+            Return ReplaceInternal(pattern, values, False, provider, Nothing)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string using two dimensional array.</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="values">
+        ''' Array that contains names and values of items for replacement.
+        ''' Names are at index (i, 0). Values are are at index (i, 1). (Other indices are ignored. So, the array normally has rank 2 in 2nd dimension. If it does not have rank at least 2 in 2nd dimmension all values are treated as null.)
+        ''' <para>Items in 1st dimension (names) are expected to be strings. If they are not they are converted to string:</para>
+        ''' <list type="number">
+        ''' <item>Null names are skipped.</item>
+        ''' <item>If name is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used (null as format string, actual name as value and <paramref name="provider"/> as format provider)</item>
+        ''' <item>If name is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used (passing null as format and <paramref name="provider"/> as format provider)</item>
+        ''' <item>Otherwise <see cref="System.Object.ToString"/> is used.</item>
+        ''' </list>
+        ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
+        ''' </param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function Replace(pattern As String, values As Object(,), identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, values, False, provider, identifierPattern)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using two dimensional array. Also replaces C#-style backslash (\) character escape sequences.</summary>
@@ -1308,12 +1600,40 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function CReplace(pattern As String, values As Object(,), Optional provider As IFormatProvider = Nothing) As String
-            Return ReplaceInternal(pattern, values, False, provider)
+            Return ReplaceInternal(pattern, values, False, provider, Nothing)
+        End Function
+
+        ''' <summary>Replaces placeholders with formatting in given string using two dimensional array. Also replaces C#-style backslash (\) character escape sequences.</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="values">
+        ''' Array that contains names and values of items for replacement.
+        ''' Names are at index (i, 0). Values are are at index (i, 1). (Other indices are ignored. So, the array normally has rank 2 in 2nd dimension. If it does not have rank at least 2 in 2nd dimmension all values are treated as null.)
+        ''' <para>Items in 1st dimension (names) are expected to be strings. If they are not they are converted to string:</para>
+        ''' <list type="number">
+        ''' <item>Null names are skipped.</item>
+        ''' <item>If name is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used (null as format string, actual name as value and <paramref name="provider"/> as format provider)</item>
+        ''' <item>If name is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used (passing null as format and <paramref name="provider"/> as format provider)</item>
+        ''' <item>Otherwise <see cref="System.Object.ToString"/> is used.</item>
+        ''' </list>
+        ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
+        ''' </param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' </remarks>
+        ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        <Extension>
+        Public Function CReplace(pattern As String, values As Object(,), identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, values, False, provider, identifierPattern)
         End Function
 #End Region
 
@@ -1338,11 +1658,11 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         Friend Function ReplaceInternal(pattern As String, values As Object()(), cEscapes As Boolean, provider As IFormatProvider) As String
-            If values Is Nothing Then Return ReplaceInternal(pattern, Function(a) Nothing, cEscapes, provider)
+            If values Is Nothing Then Return ReplaceInternal(pattern, Function(a) Nothing, cEscapes, provider, Nothing)
             Dim dic As New Dictionary(Of String, Object)
             If values.GetLength(1) >= 2 Then
                 For Each array In values
@@ -1385,7 +1705,7 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
@@ -1412,7 +1732,7 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
@@ -1438,7 +1758,7 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
@@ -1464,7 +1784,7 @@ DoItAgain:
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
         ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
-        ''' <para>Values of nonexistend names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
+        ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
@@ -1485,7 +1805,7 @@ DoItAgain:
             {"JS", New SimpleTransformation(AddressOf Escaping.EscapeJavaScript)},
             {"String.Format", New SimpleTransformation(AddressOf Escaping.EscapeStringFormat)},
             {"MySql", New SimpleTransformation(AddressOf Escaping.EscapeMySql)},
-            {"PostrgreSql", New SimpleTransformation(Function(str) Escaping.EscapePostgreSql(Str, Mode.Native))},
+            {"PostrgreSql", New SimpleTransformation(Function(str) Escaping.EscapePostgreSql(str, Mode.Native))},
             {"SqlLike", New SimpleTransformation(AddressOf Escaping.EscapeSqlLike)},
             {"C#", New SimpleTransformation(AddressOf Escaping.EscapeCSharp)},
             {"C", New SimpleTransformation(AddressOf Escaping.EscapeC)},
