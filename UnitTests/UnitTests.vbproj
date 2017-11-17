@@ -184,10 +184,6 @@
     <Compile Include="Text\Unicode\UnicodeNativeTest.vb" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj">
-      <Project>{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}</Project>
-      <Name>Tools.VisualStudio.Macros</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj">
       <Project>{43599321-d767-4bf7-a725-34850d057b4e}</Project>
       <Name>TransformCodeGenerator</Name>
