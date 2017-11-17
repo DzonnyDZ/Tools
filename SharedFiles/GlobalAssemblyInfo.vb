@@ -5,7 +5,7 @@ Imports System.Reflection
 <Assembly: AssemblyProduct("ÐTools")>
 #End If
 #If Not NO_COPYRIGHT Then
-<Assembly: AssemblyCopyright("Copyright © Jan Záruba (Ðonny) 2006-16")>
+<Assembly: AssemblyCopyright("Copyright © Jan Záruba (Ðonny) 2006-17")>
 #End If
 
 <Assembly: AssemblyVersion("1.5.6.0")>

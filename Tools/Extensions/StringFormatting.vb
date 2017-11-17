@@ -495,7 +495,7 @@ SelectCase:     Select Case state
         ''' <param name="getValue">A function that provides values of placeholders. Names of placeholders are passed here and values are expected to be returned.</param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="getValue"/> is null</exception>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
@@ -1059,7 +1059,7 @@ DoItAgain:
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="getValue">A function that provides values of placeholders. Names of placeholders are passed here and values are expected to be returned.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="getValue"/> is null</exception>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
@@ -1093,7 +1093,7 @@ DoItAgain:
         ''' <summary>Replaces placeholders with formatting in given string and also replaces C#-style backslash (\) espace sequences</summary>
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="getValue">A function that provides values of placeholders. Names of placeholders are passed here and values are expected to be returned.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="getValue"/> is null</exception>
@@ -1129,7 +1129,7 @@ DoItAgain:
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">Dictionary of values to be replaced. Key are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
@@ -1166,6 +1166,23 @@ DoItAgain:
             Return ReplaceInternal(pattern, values, False, provider)
         End Function
 
+        ''' <summary>Replaces placeholders with formatting in given string using values dictionary</summary>
+        ''' <param name="pattern">A string that contains placeholders to be replaced</param>
+        ''' <param name="values">Dictionary of values to be replaced. Key are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
+        ''' <param name="provider">Formatting provider. When null current culture is used.</param>
+        ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
+        ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
+        ''' <remarks>
+        ''' Specify placeholders in format {name[,align][:format]}. See <see cref="StringFormatting"/> for details.
+        ''' <para>Null is supplied as value for nonexistent keys.</para>
+        ''' </remarks>
+        ''' <version version="1.5.6">This overload is new in version 1.5.6</version>
+        <Extension>
+        Public Function Replace(pattern As String, values As IDictionary(Of String, Object), identifierPattern As Regex, Optional provider As IFormatProvider = Nothing) As String
+            Return ReplaceInternal(pattern, values, False, identifierPattern, provider)
+        End Function
+
         ''' <summary>Replaces placeholders with formatting in given string using values dictionary and also replaces C#-style backslash (\) character espace sequences</summary>
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">Dictionary of values to be replaced. Key are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
@@ -1189,7 +1206,7 @@ DoItAgain:
         ''' <param name="values">Collection of values to be replaced. Indices are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
@@ -1221,7 +1238,7 @@ DoItAgain:
         ''' <summary>Replaces placeholders with formatting in given string using values collection</summary>
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">Collection of values to be replaced. Indices are names of placeholders specified in <paramref name="pattern"/>. If null all values are treated as null.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
@@ -1285,7 +1302,7 @@ DoItAgain:
         ''' </param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
@@ -1358,7 +1375,7 @@ DoItAgain:
         ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
         ''' </param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
@@ -1401,7 +1418,7 @@ DoItAgain:
         ''' <summary>Replaces placeholders with formatting in given string using combined keys-values array and also replaces C#-style backslash (\) character escape sequences.</summary>
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <param name="values">
         ''' Array that contains names and values of items for replacement.
         ''' Names are at even indices (0, 2, 4, etc.). Values are at odd indices (1, 3, 5, etc.). If length of array is odd last value for last item is assumed to be null.
@@ -1475,7 +1492,7 @@ DoItAgain:
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
         <Extension>
         Public Function CReplace(pattern As String, ParamArray values As Object()) As String
-            Return ReplaceInternal(pattern, values, True, Nothing)
+            Return ReplaceInternal(pattern, values, True, Nothing, Nothing)
         End Function
 #End Region
 
@@ -1496,7 +1513,7 @@ DoItAgain:
         ''' </param>
         ''' <param name="cEscapes">True to allow C#-style backslash (\) escaping. False not to allow it.</param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
@@ -1568,7 +1585,7 @@ DoItAgain:
         ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
         ''' </param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>
         ''' <remarks>
@@ -1622,7 +1639,7 @@ DoItAgain:
         ''' </list>
         ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
         ''' </param>
-        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null.</param>
+        ''' <param name="identifierPattern">Optional regular expression which placeholder name must always satisfy. Any substring starting at beginning of placeholder name must always satisfy this regex. Ignored if null. <note>Most probably you want the regular expression to stzart with <c>^</c> and end with <c>$</c>.</note></param>
         ''' <param name="provider">Formatting provider. When null current culture is used.</param>
         ''' <returns><paramref name="pattern"/> with placeholders replaced with their values.</returns>
         ''' <exception cref="FormatException">Composite format string is invalid -or- Individual format specified for placeholder is invalid.</exception>

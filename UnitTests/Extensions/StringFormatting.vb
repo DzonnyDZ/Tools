@@ -1,7 +1,9 @@
-﻿Imports Globalization = System.Globalization
+﻿Imports System.Collections.Generic
+Imports Globalization = System.Globalization
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Tools.ExtensionsT
 Imports System.Globalization.CultureInfo
+Imports System.Text.RegularExpressions
 
 Namespace ExtensionsUT
     <TestClass()> _
@@ -213,6 +215,13 @@ Namespace ExtensionsUT
             Assert.AreEqual("xopen", "{a{{}".CReplace(getter, InvariantCulture))
             Assert.AreEqual("xclose", "{a}}}".CReplace(getter, InvariantCulture))
             Assert.AreEqual("xclose", "{a\}}".CReplace(getter, InvariantCulture))
+        End Sub
+
+        <TestMethod>
+        Public Sub ReplaceWithRegex()
+            Assert.AreEqual("before AA after BB", "before {a} after {b}".Replace(New Dictionary(Of String, Object) From {{"a", "AA"}, {"b", "BB"}}, New Regex("^[A-Za-z]+$")))
+            Assert.AreEqual("before AA after {b-b}", "before {a} after {b-b}".Replace(New Dictionary(Of String, Object) From {{"a", "AA"}, {"b-b", "BB"}}, New Regex("^[A-Za-z]+$")))
+            Assert.AreEqual("before 179.0 after {b-b}", "before {a:0.0} after {b-b}".Replace(New Dictionary(Of String, Object) From {{"a", 178.9997}, {"b-b", "BB"}}, New Regex("^[A-Za-z]+$"), InvariantCulture))
         End Sub
 #End Region
     End Class

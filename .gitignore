@@ -19,3 +19,4 @@ ipch
 /Tools.Hardcore/Release
 /packages
 *.opendb
+/TestResults
