@@ -1,11 +1,11 @@
 Imports System.Text, System.Math, Tools.ExtensionsT, System.Linq
-#If True
+#If True Then
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 ''' <remarks>This class has plenty of formating possibilities which can be used via <see cref="String.Format"/> or <see cref="TimeSpanFormattable.ToString"/>.</remarks>
 ''' <seealso cref="TimeSpan"/>
 ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
 ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
-<DebuggerDisplay("{ToString}")> _
+<DebuggerDisplay("{ToString}")>
 Public Structure TimeSpanFormattable
     Implements IComparable(Of TimeSpanFormattable), IEquatable(Of TimeSpanFormattable)
     Implements IFormattable
@@ -511,13 +511,14 @@ Public Structure TimeSpanFormattable
     Public Overloads Function ToString(ByVal format As String, ByVal formatProvider As System.IFormatProvider) As String Implements System.IFormattable.ToString
         Return TimeSpanFormattable.Format(Me, format, formatProvider)
     End Function
+
     ''' <summary>Formats the value of the current instance using the specified format, numeric format information is obtained from current locale setting of the operating system. If you want to use custom <see cref="IFormatProvider"/> use overloaded <see cref="ToString"/> function.</summary>
     ''' <param name="format">The <see cref="System.String"/> specifying the format to use.-or- null to use the default format defined for the type of the <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>A <see cref="System.String"/> containing the value of the current instance in the specified format.</returns>
     ''' <remarks>
     ''' <para><see cref="TimeSpanFormattable"/> provides large pallete of formats that can be used to represent current instance as <see cref="String"/>. Predefined and custom formats can be used.</para>
     ''' <list type="table">
-    '''     <listheader>Predefined fromat strings</listheader>
+    '''     <listheader>Predefined format strings</listheader>
     '''     <listheader><term>Predefined format string</term><description>Treated as this custom format string</description></listheader>
     '''     <item><term>g (short with full hours)</term><description>-h(00):mm</description></item>
     '''     <item><term>G (long with full hours)</term><description>-h(00):mm:ss (This is default format used when no format string is specified)</description></item>
@@ -531,20 +532,32 @@ Public Structure TimeSpanFormattable
     ''' <list type="table">
     '''     <listheader>Custom format strings</listheader>
     '''     <listheader><term>Format string</term><description>Description</description></listheader>
+    '''     <item><term>am</term>
+    '''         <description>First character of AM/PM designator (same as t for <see cref="DateTime.ToString(String)"/>). See <see cref="IsAm"/>. Same as <c>pm</c>.</description>
+    '''     </item>
+    '''     <item><term>AM</term>
+    '''         <description>AM/PM designator (same as tt for <see cref="DateTime.ToString(String)"/>). See <see cref="IsAm"/>. Same as <c>PM</c></description>
+    '''     </item>
     '''     <item><term>d, dd, ddd, ...</term>
     '''         <description>Any number of lowercase ds represents days (value of <see cref="Days"/>). Number of ds determines minimal number of digits that will represent number of days.</description>
     '''     </item>
     '''     <item><term>d(), dd()</term>
-    '''         <description>Custom-formated days. Integral part of <see cref="TotalDays"/> which equals to <see cref="Days"/> fromated by format specified in braces. For more information about formats in braces see below.</description>
+    '''         <description>Custom-formated days. Integral part of <see cref="TotalDays"/> which equals to <see cref="Days"/> formated by format specified in braces. For more information about formats in braces see below.</description>
     '''     </item>
     '''     <item><term>D()</term>
-    '''         <description>Custom-formated fractional days. Value of <see cref="TotalDays"/> fromated with format specified in braces. For more information about formats in braces see below.</description>
+    '''         <description>Custom-formated fractional days. Value of <see cref="TotalDays"/> formated with format specified in braces. For more information about formats in braces see below.</description>
     '''     </item>
     '''     <item><term>[d], [dd], [ddd], ... or [d()] or [D()]</term>
     '''         <description>Optional days. Same formats as described above but output is ommited when number of whole days (<see cref="Days"/>) is zero.</description>
     '''     </item>
     '''     <item><term>h</term>
     '''         <description>Short hours. Value of <see cref="Hours"/> in 24 hour format from range 0÷23 as 1 or 2 digits.</description>
+    '''     </item>
+    '''     <item><term>h12</term>
+    '''         <description>12-based part of <see cref="TotalHours"/>. Returns number 1-12 as one or two digits.</description>
+    '''     </item>
+    '''     <item><term>h24</term>
+    '''         <description>24-based part of <see cref="TotalHours"/>. Returns number 0-23 as one or two digits.</description>
     '''     </item>
     '''     <item><term>hh</term>
     '''         <description>Long hours. Value of <see cref="Hours"/> in 24 hour format from range 0÷23 always as 2 digits.</description>
@@ -554,6 +567,12 @@ Public Structure TimeSpanFormattable
     '''     </item>
     '''     <item><term>hh()</term>
     '''         <description>Custom-formated hours part. <see cref="Hours"/> formated with format specified in braces. For more information about formats in braces see below.</description>
+    '''     </item>
+    '''     <item><term>hh12</term>
+    '''         <description>12-based part of <see cref="TotalHours"/>. Returns number 01-12 as two digits.</description>
+    '''     </item>
+    '''     <item><term>hh24</term>
+    '''         <description>24-based part of <see cref="TotalHours"/>. Returns number 00-23 as two digits.</description>
     '''     </item>
     '''     <item><term>H()</term>
     '''         <description>Custom-formated fractional hours. Value of <see cref="TotalHours"/> formated with format specified in braces. For more information about formats in braces see below.</description>
@@ -576,6 +595,12 @@ Public Structure TimeSpanFormattable
     '''     <item><term>M()</term>
     '''         <description>Custom-formated fractional minutes. Value of <see cref="TotalMinutes"/> formated with formate specified in braces. For more information about formats in braces see below.</description>
     '''     </item>
+    '''     <item><term>pm</term>
+    '''         <description>First character of AM/PM designator (same as t for <see cref="DateTime.ToString(String)"/>). See <see cref="IsAm"/>. Same as <c>am</c>.</description>
+    '''     </item>
+    '''     <item><term>PM</term>
+    '''         <description>AM/PM designator (same as tt for <see cref="DateTime.ToString(String)"/>). See <see cref="IsAm"/>. Same as <c>AM</c></description>
+    '''     </item>
     '''     <item><term>s</term>
     '''         <description>Short seconds. Value of <see cref="Seconds"/> from range 0÷59 as 1 or 2 digits.</description>
     '''     </item>
@@ -589,7 +614,7 @@ Public Structure TimeSpanFormattable
     '''         <description>Custom-formated whole seconds. <see cref="Seconds"/> formated with format specified in braces. For more information about formats in braces see below.</description>
     '''     </item>
     '''     <item><term>S()</term>
-    '''         <description>Custom-formated fractional seconds. Value of <see cref="TotalSeconds"/> fromated with format specified in braces. For more information about formats in braces see below.</description>
+    '''         <description>Custom-formated fractional seconds. Value of <see cref="TotalSeconds"/> formated with format specified in braces. For more information about formats in braces see below.</description>
     '''     </item>
     '''     <item><term>l</term>
     '''         <description>Short milliseconds. Value of <see cref="Milliseconds"/> from range 0÷999 as 1, 2 or 3 digits.</description>
@@ -710,15 +735,17 @@ Public Structure TimeSpanFormattable
     ''' <exception cref="FormatException">Unknown predefined format -or- syntax error in format string</exception>
     ''' <exception cref="ArgumentOutOfRangeException">The 'T()' patter is used on negative <see cref="TimeSpanFormattable"/> or value of current <see cref="TimeSpanFormattable"/> added to <see cref="DateTime.MinValue"/> causes <see cref="DateTime.MaxValue"/> to be exceeded.</exception>
     ''' <version version="1.5.3">Added new formating options capital H without braces, HH, HHH, ...</version>
+    ''' <version version="1.5.8">Added new formatting options AM, PM, am, pm, h12, h24, hh12, hh24</version>
     Public Overloads Function ToString(ByVal format As String) As String
         Return ToString(format, Nothing)
     End Function
+
     ''' <summary>Formats given <see cref="TimeSpanFormattable"/> using given format string</summary>
     ''' <param name="TS">A <see cref="TimeSpanFormattable"/> to be formated</param>
     ''' <param name="formatStr">A format string (Can be predefined or custom)</param>
     ''' <param name="formatProvider">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system.
-    ''' <para>If null is pased then <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used. This argument is used to obtain decimal separators, positive and negative signs and time separators in custom format and is also passed to custom subformats in braces. In order this parameter to work it's <see cref="IFormatProvider.GetFormat">GetFormat</see> method must return non-null value for <see cref="System.Globalization.NumberFormatInfo"/> and/or <see cref="System.Globalization.DateTimeFormatInfo"/>. If one of returned values is null <see cref="System.Globalization.NumberFormatInfo.CurrentInfo"/> resp. <see cref="System.Globalization.DateTimeFormatInfo.CurrentInfo"/> is used.</para></param>
-    ''' <returns><paramref name="TS"/> fromated using <paramref name="formatStr"/></returns>
+    ''' <para>If null is passed then <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used. This argument is used to obtain decimal separators, positive and negative signs and time separators in custom format and is also passed to custom subformats in braces. In order this parameter to work it's <see cref="IFormatProvider.GetFormat">GetFormat</see> method must return non-null value for <see cref="System.Globalization.NumberFormatInfo"/> and/or <see cref="System.Globalization.DateTimeFormatInfo"/>. If one of returned values is null <see cref="System.Globalization.NumberFormatInfo.CurrentInfo"/> resp. <see cref="System.Globalization.DateTimeFormatInfo.CurrentInfo"/> is used.</para></param>
+    ''' <returns><paramref name="TS"/> formated using <paramref name="formatStr"/></returns>
     ''' <exception cref="FormatException">Unknown predefined format -or- syntax error in format string</exception>
     ''' <exception cref="ArgumentOutOfRangeException">The 'T()' patter is used on negative <see cref="TimeSpanFormattable"/> or value of current <see cref="TimeSpanFormattable"/> added to <see cref="DateTime.MinValue"/> causes <see cref="DateTime.MaxValue"/> to be exceeded.</exception>
     ''' <remarks>For more information about formating <see cref="TimeSpanFormattable"/> see <seealso cref="ToString"/></remarks>
@@ -755,68 +782,68 @@ Public Structure TimeSpanFormattable
     End Function
     ''' <summary>Short code of predefined format g - short with full hours</summary>
     ''' <seealso cref="efShort"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfShort As Char = "g"c
     ''' <summary>Short code of predefined format G - long with full hours</summary>
     ''' <seealso cref="efLong"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfLong As Char = "G"c
     ''' <summary>Short code of predefined format t - short time pattern</summary>
     ''' <seealso cref="efShortTime"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfShortTime As Char = "t"c
     ''' <summary>Short code of predefined format T - long time patern</summary>
     ''' <seealso cref="efLongTime"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfLongTime As Char = "T"c
     ''' <summary>Short code of predefined format l - shortest possible from hours to milliseconds</summary>
     ''' <seealso cref="efShortest_hl"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfShortest_hl As Char = "l"c
     ''' <summary>Short code of predefined format L - shortest possible from days to milliseconds</summary>
     ''' <seealso cref="efShortest_dl"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfShortest_dl As Char = "L"c
     ''' <summary>Short code of predefined format L - shortest possible hours days to seconds</summary>
     ''' <seealso cref="efShortest_hs"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfShortest_hs As Char = "s"c
     ''' <summary>Short code of predefined format L - shortest possible from days to seconds</summary>
     ''' <seealso cref="efShortest_ds"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const pfShortest_ds As Char = "S"c
 
     ''' <summary>Expanded pattern of predefined format g - short with full hours</summary>
     ''' <seealso cref="pfShort"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efShort$ = "-h(00):mm"
     ''' <summary>Expanded pattern of predefined format G - long with full hours</summary>
     ''' <seealso cref="pfLong"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efLong$ = "-h(00):mm:ss"
     ''' <summary>Expanded pattern of predefined format t - short time pattern</summary>
     ''' <seealso cref="pfShortTime"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efShortTime$ = "-hh:mm"
     ''' <summary>Expanded pattern of predefined format T - long time patern</summary>
     ''' <seealso cref="pfLongTime"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efLongTime$ = "-hh:mm:ss"
     ''' <summary>Expanded pattern of predefined format l - shortest possible from hours to milliseconds</summary>
     ''' <seealso cref="pfShortest_hl"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efShortest_hl$ = "-((h<>0)h(0):mm:ss|(m<>0)m(0):ss|s(0))((ll<>0).lll)"
     ''' <summary>Expanded pattern of predefined format L - shortest possible from days to milliseconds</summary>
     ''' <seealso cref="pfShortest_dl"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efShortest_dl$ = "-((d<>0)d.)((h<>0)hh:mm:ss|(m<>0)m(0):ss|s(0))((ll<>0).lll)"
     ''' <summary>Expanded pattern of predefined format L - shortest possible hours days to seconds</summary>
     ''' <seealso cref="pfShortest_hs"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efShortest_hs$ = "-((h<>0)h(0):mm:ss|(m<>0)m(0):ss|s(0))"
     ''' <summary>Expanded pattern of predefined format L - shortest possible from days to seconds</summary>
     ''' <seealso cref="pfShortest_ds"/>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
     Public Const efShortest_ds$ = "-((d<>0)d.)((h<>0)hh:mm:ss|(m<>0)m(0):ss|s(0))"
     ''' <summary>Gets dictionary of all predefined formats. Keys contain short codes, values contain expanded patterns.</summary>
     ''' <returns>New instance of <see cref="Dictionary(Of Char, String)"/> that contains all the predefined formats</returns>
@@ -897,6 +924,14 @@ Public Structure TimeSpanFormattable
         h2Formatb
         ''' <summary>After HH</summary>
         H2_
+        ''' <summary>h1</summary>
+        h_1
+        ''' <summary>h2</summary>
+        h_2
+        ''' <summary>hh1</summary>
+        h2_1
+        ''' <summary>hh2</summary>
+        h2_2
 #End Region
 #Region "m"
         ''' <summary>After m</summary>
@@ -984,6 +1019,16 @@ Public Structure TimeSpanFormattable
         doubleQb
         ''' <summary>After \</summary>
         Back
+#Region "AM/PM"
+        ''' <summary>A</summary>
+        AU
+        ''' <summary>P</summary>
+        PU
+        ''' <summary>a</summary>
+        al
+        ''' <summary>p</summary>
+        pl
+#End Region
 #Region "Conditions"
         ''' <summary>After (</summary>
         Open
@@ -1062,8 +1107,6 @@ Public Structure TimeSpanFormattable
 #End Region
     End Enum
 
-
-
     ''' <summary>Handles backslash in nested format in braces. Extracted repeatedly used part of <see cref="FormatCustomized"/>.</summary>
     ''' <param name="format">Format string</param>
     ''' <param name="InFormat">Nested format string being produced.</param>
@@ -1076,6 +1119,7 @@ Public Structure TimeSpanFormattable
                 InFormat &= "\"c & format(i)
         End Select
     End Sub
+
     ''' <summary>Realizes Finite Deterministic State Automaton that parses format string and produces resulting output string</summary>
     ''' <param name="TS">A <see cref="TimeSpanFormattable"/> to be formated</param>
     ''' <param name="format">Format string</param>
@@ -1130,23 +1174,27 @@ Public Structure TimeSpanFormattable
                         Case "L"c : state = FormatAutomatState.L_
                         Case "t"c : state = FormatAutomatState.t1 : StartIndex = i
                         Case "T"c : state = FormatAutomatState.T_
-                        Case ":"c : Append.Invoke(TProvider.TimeSeparator)
+                        Case ":"c : Append(TProvider.TimeSeparator)
                         Case """"c : state = FormatAutomatState.doubleQ : StartIndex = i
                         Case "'"c : state = FormatAutomatState.singleQ : StartIndex = i
                         Case "\"c : state = FormatAutomatState.Back
-                        Case "."c : Append.Invoke(NProvider.NumberDecimalSeparator)
-                        Case "-"c : If TS.TotalMilliseconds < 0 Then Append.Invoke(NProvider.NegativeSign)
+                        Case "."c : Append(NProvider.NumberDecimalSeparator)
+                        Case "-"c : If TS.TotalMilliseconds < 0 Then Append(NProvider.NegativeSign)
+                        Case "A"c : state = FormatAutomatState.AU
+                        Case "P"c : state = FormatAutomatState.PU
+                        Case "a"c : state = FormatAutomatState.al
+                        Case "p"c : state = FormatAutomatState.pl
                         Case "+"c
                             If TS.TotalMilliseconds < 0 Then
-                                Append.Invoke(NProvider.NegativeSign)
+                                Append(NProvider.NegativeSign)
                             ElseIf TS.TotalMilliseconds > 0 Then
-                                Append.Invoke(NProvider.PositiveSign)
+                                Append(NProvider.PositiveSign)
                             End If
                         Case NullChar : Exit For
                         Case "("c : state = FormatAutomatState.Open
-                        Case ")"c : If Conditions.Count > 1 Then Conditions.Pop() : PreviousConditions.Pop() Else Append.Invoke(format(i))
-                        Case "|"c : If Conditions.Count > 1 Then state = FormatAutomatState.Pipe Else Append.Invoke(format(i))
-                        Case Else : Append.Invoke(format(i))
+                        Case ")"c : If Conditions.Count > 1 Then Conditions.Pop() : PreviousConditions.Pop() Else Append(format(i))
+                        Case "|"c : If Conditions.Count > 1 Then state = FormatAutomatState.Pipe Else Append(format(i))
+                        Case Else : Append(format(i))
                     End Select
                 Case FormatAutomatState.d1 'd
                     Select Case format(i)
@@ -1154,7 +1202,7 @@ Public Structure TimeSpanFormattable
                         Case "("c : state = FormatAutomatState.dFormat : InFormat = ""
                         Case Else
                             i -= 1
-                            Append.Invoke(Abs(TS.Days).ToString("0", prov))
+                            Append(Abs(TS.Days).ToString("0", prov))
                             state = FormatAutomatState.nth
                     End Select
                 Case FormatAutomatState.d2 'dd
@@ -1162,14 +1210,14 @@ Public Structure TimeSpanFormattable
                         Case "d"c : state = FormatAutomatState.d3
                         Case "("c : state = FormatAutomatState.dFormat : InFormat = ""
                         Case Else : i -= 1
-                            Append.Invoke(Abs(TS.Days).ToString(New String("0"c, i - StartIndex + 1), prov))
+                            Append(Abs(TS.Days).ToString(New String("0"c, i - StartIndex + 1), prov))
                             state = FormatAutomatState.nth
                     End Select
                 Case FormatAutomatState.d3 'ddd...
                     Select Case format(i)
                         Case "d"c 'Do nothing
                         Case Else : i -= 1
-                            Append.Invoke(Abs(TS.Days).ToString(New String("0"c, i - StartIndex + 1), prov))
+                            Append(Abs(TS.Days).ToString(New String("0"c, i - StartIndex + 1), prov))
                             state = FormatAutomatState.nth
                     End Select
                 Case FormatAutomatState.dFormat 'd(
@@ -1177,7 +1225,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.dFormatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Abs(TS.Days).ToString(InFormat, prov))
+                            Append(Abs(TS.Days).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1193,7 +1241,7 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "\"c : state = FormatAutomatState.D_Formatb
                         Case ")"c : state = FormatAutomatState.nth
-                            Append.Invoke(Abs(TS.TotalDays).ToString(InFormat, prov))
+                            Append(Abs(TS.TotalDays).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1212,7 +1260,7 @@ Public Structure TimeSpanFormattable
                         Case "("c : state = FormatAutomatState.leftBdFormat : InFormat = ""
                         Case Else
                             i -= 1
-                            If TS.Days <> 0 Then Append.Invoke(Abs(TS.Days).ToString("0", prov))
+                            If TS.Days <> 0 Then Append(Abs(TS.Days).ToString("0", prov))
                             state = FormatAutomatState.leftBEnd
                     End Select
                 Case FormatAutomatState.leftBd2 '[dd
@@ -1221,7 +1269,7 @@ Public Structure TimeSpanFormattable
                         Case Else
                             i -= 1
                             If TS.Days <> 0 Then _
-                                Append.Invoke(Abs(TS.Days).ToString(New String("0"c, i - StartIndex + 1), prov))
+                                Append(Abs(TS.Days).ToString(New String("0"c, i - StartIndex + 1), prov))
                             state = FormatAutomatState.leftBEnd
                     End Select
                 Case FormatAutomatState.leftBdFormat '[d(
@@ -1230,7 +1278,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.leftBEnd
                             If TS.Days <> 0 Then _
-                                Append.Invoke(Abs(TS.Days).ToString(InFormat, prov))
+                                Append(Abs(TS.Days).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1247,7 +1295,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.leftBD_Formatb
                         Case ")"c : state = FormatAutomatState.leftBEnd
                             If TS.Days <> 0 Then _
-                                Append.Invoke(Abs(TS.TotalDays).ToString(InFormat, prov))
+                                Append(Abs(TS.TotalDays).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1264,25 +1312,29 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.h1 'h
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.hFormat : InFormat = ""
-                        Case "h" : state = FormatAutomatState.h2
-                        Case Else : Append.Invoke(Abs(TS.Hours).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case "h"c : state = FormatAutomatState.h2
+                        Case "1"c : state = FormatAutomatState.h_1
+                        Case "2"c : state = FormatAutomatState.h_2
+                        Case Else : Append(Abs(TS.Hours).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.h2 'hh
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.h2Format : InFormat = ""
-                        Case Else : Append.Invoke(Abs(TS.Hours).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case "1"c : state = FormatAutomatState.h2_1
+                        Case "2"c : state = FormatAutomatState.h2_2
+                        Case Else : Append(Abs(TS.Hours).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.H_ 'H
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.H_Format : InFormat = ""
                         Case "H"c : state = FormatAutomatState.H2_
-                        Case Else : Append.Invoke(Abs(CInt(Math.Floor(TS.TotalHours))).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append(Abs(CInt(Math.Floor(TS.TotalHours))).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.H2_ 'HH..
                     Select Case format(i)
                         Case "H"c
                         Case Else : i -= 1
-                            Append.Invoke(Abs(TS.TotalHours).ToString(New String("0"c, i - StartIndex + 1), prov))
+                            Append(Abs(TS.TotalHours).ToString(New String("0"c, i - StartIndex + 1), prov))
                             state = FormatAutomatState.nth
                     End Select
                 Case FormatAutomatState.hFormat 'h(
@@ -1290,7 +1342,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.hFormatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.TotalHours)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.TotalHours)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1302,7 +1354,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.h2Formatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.Hours)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.Hours)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1313,23 +1365,43 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "\"c : state = FormatAutomatState.H_Formatb
                         Case ")"c : state = FormatAutomatState.nth
-                            Append.Invoke(Abs(TS.TotalHours).ToString(InFormat, prov))
+                            Append(Abs(TS.TotalHours).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.H_Formatb 'H(\
                     PartCustomFormatBS(format, InFormat, i)
                     state = FormatAutomatState.H_Format
+                Case FormatAutomatState.h_1 'h1
+                    Select Case format(i)
+                        Case "2"c : Append(Get12HoursFormat(TS).ToString("0")) : state = FormatAutomatState.nth
+                        Case Else : Append(Abs(TS.Hours).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 2
+                    End Select
+                Case FormatAutomatState.h_2 'h2
+                    Select Case format(i)
+                        Case "4"c : Append(Get24HoursFormat(TS).ToString("0")) : state = FormatAutomatState.nth
+                        Case Else : Append(Abs(TS.Hours).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 2
+                    End Select
+                Case FormatAutomatState.h2_1 'hh1
+                    Select Case format(i)
+                        Case "2"c : Append(Get12HoursFormat(TS).ToString("00")) : state = FormatAutomatState.nth
+                        Case Else : Append(Abs(TS.Hours).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 2
+                    End Select
+                Case FormatAutomatState.h2_2 'hh2
+                    Select Case format(i)
+                        Case "4"c : Append(Get24HoursFormat(TS).ToString("00")) : state = FormatAutomatState.nth
+                        Case Else : Append(Abs(TS.Hours).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 2
+                    End Select
                 Case FormatAutomatState.m1 'm
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.mFormat : InFormat = ""
                         Case "m" : state = FormatAutomatState.m2
-                        Case Else : Append.Invoke(Abs(TS.Minutes).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append(Abs(TS.Minutes).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.m2 'mm
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.m2Format : InFormat = ""
-                        Case Else : Append.Invoke(Abs(TS.Minutes).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append(Abs(TS.Minutes).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.M_ 'M
                     Select Case format(i)
@@ -1341,7 +1413,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.mFormatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.TotalMinutes)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.TotalMinutes)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1353,7 +1425,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.m2Formatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.Minutes)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.Minutes)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1364,7 +1436,7 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "\"c : state = FormatAutomatState.M_Formatb
                         Case ")"c : state = FormatAutomatState.nth
-                            Append.Invoke(Abs(TS.TotalMinutes).ToString(InFormat, prov))
+                            Append(Abs(TS.TotalMinutes).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1375,12 +1447,12 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.sFormat : InFormat = ""
                         Case "s" : state = FormatAutomatState.s2
-                        Case Else : Append.Invoke(Abs(TS.Seconds).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append(Abs(TS.Seconds).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.s2 'ss
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.s2Format : InFormat = ""
-                        Case Else : Append.Invoke(Abs(TS.Seconds).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append(Abs(TS.Seconds).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.S_ 'S
                     Select Case format(i)
@@ -1392,7 +1464,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.sFormatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.TotalSeconds)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.TotalSeconds)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1404,7 +1476,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.s2Formatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.Seconds)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.Seconds)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1415,7 +1487,7 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "\"c : state = FormatAutomatState.M_Formatb
                         Case ")"c : state = FormatAutomatState.nth
-                            Append.Invoke(Abs(TS.TotalSeconds).ToString(InFormat, prov))
+                            Append(Abs(TS.TotalSeconds).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1426,13 +1498,13 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.sFormat : InFormat = ""
                         Case "l" : state = FormatAutomatState.l2
-                        Case Else : Append.Invoke(Abs(TS.Milliseconds).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append(Abs(TS.Milliseconds).ToString("0", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.l2 'll
                     Select Case format(i)
-                        Case "l" : Append.Invoke(Abs(TS.Milliseconds).ToString("000", prov)) : state = FormatAutomatState.nth
+                        Case "l" : Append(Abs(TS.Milliseconds).ToString("000", prov)) : state = FormatAutomatState.nth
                         Case "("c : state = FormatAutomatState.l2Format : InFormat = ""
-                        Case Else : Append.Invoke(Abs(TS.Milliseconds).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append(Abs(TS.Milliseconds).ToString("00", prov)) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.L_ 'L
                     Select Case format(i)
@@ -1444,7 +1516,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.lFormatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.TotalMilliseconds)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.TotalMilliseconds)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1456,7 +1528,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.l2Formatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Truncate(Abs(TS.Milliseconds)).ToString(InFormat, prov))
+                            Append(Truncate(Abs(TS.Milliseconds)).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1467,7 +1539,7 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "\"c : state = FormatAutomatState.L_Formatb
                         Case ")"c : state = FormatAutomatState.nth
-                            Append.Invoke(Abs(TS.TotalMilliseconds).ToString(InFormat, prov))
+                            Append(Abs(TS.TotalMilliseconds).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1480,7 +1552,7 @@ Public Structure TimeSpanFormattable
                         Case "("c : state = FormatAutomatState.tFormat : InFormat = ""
                         Case Else
                             i -= 1
-                            Append.Invoke(Abs(TS.Ticks).ToString("0", prov))
+                            Append(Abs(TS.Ticks).ToString("0", prov))
                             state = FormatAutomatState.nth
                     End Select
                 Case FormatAutomatState.t2 'tt
@@ -1488,7 +1560,7 @@ Public Structure TimeSpanFormattable
                         Case "t"c
                         Case Else
                             i -= 1
-                            Append.Invoke(Abs(TS.Ticks).ToString(New String("0"c, i - StartIndex + 1), prov))
+                            Append(Abs(TS.Ticks).ToString(New String("0"c, i - StartIndex + 1), prov))
                             state = FormatAutomatState.nth
                     End Select
                 Case FormatAutomatState.T_ 'T
@@ -1501,7 +1573,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.tFormatb
                         Case ")"c
                             state = FormatAutomatState.nth
-                            Append.Invoke(Abs(TS.Ticks).ToString(InFormat, prov))
+                            Append(Abs(TS.Ticks).ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1516,7 +1588,7 @@ Public Structure TimeSpanFormattable
                             Dim used As TimeSpan = TS
                             If used.TotalMilliseconds < 0 Then used = -used
                             Dim used2 As Date = Date.MinValue + used
-                            Append.Invoke(used2.ToString(InFormat, prov))
+                            Append(used2.ToString(InFormat, prov))
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
@@ -1528,28 +1600,28 @@ Public Structure TimeSpanFormattable
                         Case "\" : state = FormatAutomatState.singleQb
                         Case "'"c : state = FormatAutomatState.nth
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0, i + 1))
-                        Case Else : Append.Invoke(format(i))
+                        Case Else : Append(format(i))
                     End Select
                 Case FormatAutomatState.singleQb ''\
-                    Append.Invoke(format(i))
+                    Append(format(i))
                     state = FormatAutomatState.singleQ
                 Case FormatAutomatState.doubleQ '"
                     Select Case format(i)
                         Case "\" : state = FormatAutomatState.singleQb
                         Case """"c : state = FormatAutomatState.nth
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0, i + 1))
-                        Case Else : Append.Invoke(format(i))
+                        Case Else : Append(format(i))
                     End Select
                 Case FormatAutomatState.doubleQb '"\
-                    Append.Invoke(format(i))
+                    Append(format(i))
                     state = FormatAutomatState.doubleQ
                 Case FormatAutomatState.Back   '\
-                    Append.Invoke(format(i))
+                    Append(format(i))
                     state = FormatAutomatState.nth
                 Case FormatAutomatState.Open '(
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.Open2 : PreviousConditions.Push(New List(Of Boolean))
-                        Case Else : Append.Invoke("("c) : state = FormatAutomatState.nth : i -= 1
+                        Case Else : Append("("c) : state = FormatAutomatState.nth : i -= 1
                     End Select
                 Case FormatAutomatState.Pipe '|
                     PreviousConditions.Peek.Add(Conditions.Pop)
@@ -1843,18 +1915,90 @@ Public Structure TimeSpanFormattable
                         Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
                         Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
+                Case FormatAutomatState.AU 'A
+                    Select Case format(i)
+                        Case "M"c
+                            Append(If(IsAm(TS), TProvider.AMDesignator, TProvider.PMDesignator))
+                            state = FormatAutomatState.nth
+                        Case Else
+                            i -= 1
+                            Append("A")
+                            state = FormatAutomatState.nth
+                    End Select
+                Case FormatAutomatState.PU 'P
+                    Select Case format(i)
+                        Case "M"c
+                            Append(If(IsAm(TS), TProvider.AMDesignator, TProvider.PMDesignator))
+                            state = FormatAutomatState.nth
+                        Case Else
+                            i -= 1
+                            Append("P")
+                            state = FormatAutomatState.nth
+                    End Select
+                Case FormatAutomatState.al 'a
+                    Select Case format(i)
+                        Case "m"c
+                            Append(If(IsAm(TS), TProvider.AMDesignator(0), TProvider.PMDesignator(0)))
+                            state = FormatAutomatState.nth
+                        Case Else
+                            i -= 1
+                            Append("a")
+                            state = FormatAutomatState.nth
+                    End Select
+                Case FormatAutomatState.pl 'p
+                    Select Case format(i)
+                        Case "m"c
+                            Append(If(IsAm(TS), TProvider.AMDesignator(0), TProvider.PMDesignator(0)))
+                            state = FormatAutomatState.nth
+                        Case Else
+                            i -= 1
+                            Append("a")
+                            state = FormatAutomatState.nth
+                    End Select
                 Case Else : Stop 'This must not happen!
             End Select
         Next i
         If Conditions.Count > 1 Then Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFomatStringAt0ExpectedForCondition, format.Length))
         Return ret.ToString
     End Function
+
+    ''' <summary>Gets value indicating if given <see cref="TimeSpan"/> value is before noon (AM)</summary>
+    ''' <param name="ts">The <see cref="TimeSpan"/> to check</param>
+    ''' <returns>True if reminder of division of total number of hours of <paramref name="ts"/> by 24 is less than 12</returns>
+    ''' <version version="1.5.8">This function is new in 1.5.8</version>
+    Public Shared Function IsAm(ts As TimeSpan) As Boolean
+        Return ts.TotalHours Mod 24 < 12
+    End Function
+
+    ''' <summary>Gets value indicating if given <see cref="TimeSpan"/> value is after noon (PM)</summary>
+    ''' <param name="ts">The <see cref="TimeSpan"/> to check</param>
+    ''' <returns>True if reminder of division of total number of hours of <paramref name="ts"/> by 24 is greater than or equal to 12</returns>
+     ''' <version version="1.5.8">This function is new in 1.5.8</version>
+    Public Shared Function IsPm(ts As TimeSpan) As Boolean
+        Return ts.TotalHours Mod 24 >= 12
+    End Function
+
+    ''' <summary>Gets 24-hours based part of timespan hours</summary>
+    ''' <param name="ts">The timespan</param>
+    ''' <returns><paramref name="ts"/>.<see cref="TimeSpan.TotalHours">TotalHours</see> modulo 24</returns>
+    private Shared Function Get24HoursFormat(ts As TimeSpan ) As Byte 
+        Return ts.TotalHours Mod 24
+    End Function
+
+    ''' <summary>Gets 12-hours based part of timespan hours</summary>
+    ''' <param name="ts">The timespan</param>
+    ''' <returns><paramref name="ts"/>.<see cref="TimeSpan.TotalHours">TotalHours</see> modulo 12. But if the value would be 0 returns 12 instead.</returns>
+    private Shared Function Get12HoursFormat(ts As TimeSpan ) As Byte 
+        dim ret = ts.TotalHours Mod 12
+        If ret = 0 Then Return 12 Else Return ret
+    End Function
+
     ''' <summary>Creates boolean condition for <see cref="TimeSpan"/></summary>
     ''' <param name="v">Value to be compared at left side</param>
     ''' <param name="CompareTo">Value to be compared at right side</param>
-    ''' <param name="op">Comparizon operator</param>
-    ''' <returns>Result of comparison <paramref name="Value"/> <paramref name="op"/> <paramref name="CompareTo"/></returns>
-    ''' <exception cref="InvalidEnumArgumentException"><paramref name="op"/> is not memebr of <see cref="ComparisonOperators"/></exception>
+    ''' <param name="op">Comparison operator</param>
+    ''' <returns>Result of comparison <paramref name="v"/> <paramref name="op"/> <paramref name="CompareTo"/></returns>
+    ''' <exception cref="InvalidEnumArgumentException"><paramref name="op"/> is not member of <see cref="ComparisonOperators"/></exception>
     Private Shared Function GetCondition(ByVal v As TimeSpan, ByVal compareto As TimeSpan, ByVal op As ComparisonOperators) As Boolean
         Select Case op
             Case ComparisonOperators.Equal : Return v = compareto
@@ -1863,64 +2007,67 @@ Public Structure TimeSpanFormattable
             Case ComparisonOperators.Less : Return v < compareto
             Case ComparisonOperators.LessEqual : Return v < compareto
             Case ComparisonOperators.NotEqual : Return v <> compareto
-            Case Else : Throw New InvalidEnumArgumentException("op", op, op.GetType)
+            Case Else : Throw New InvalidEnumArgumentException(nameof(op), op, op.GetType)
         End Select
     End Function
+
     ''' <summary>Creates boolean condition for number</summary>
-    ''' <param name="Value">Value to be compared at left side</param>
+    ''' <param name="v">Value to be compared at left side</param>
     ''' <param name="CompareTo">Value to be compared at right side</param>
-    ''' <param name="op">Comparizon operator</param>
-    ''' <returns>Result of comparison <paramref name="Value"/> <paramref name="op"/> <paramref name="CompareTo"/></returns>
-    ''' <exception cref="InvalidEnumArgumentException"><paramref name="op"/> is not memebr of <see cref="ComparisonOperators"/></exception>
-    ''' <exception cref="ArgumentException"><paramref name="Value"/> is not of one of following types: <see cref="Integer"/>, <see cref="Long"/>, <see cref="Single"/>, <see cref="Double"/></exception>
-    Private Shared Function GetCondition(ByVal Value As IConvertible, ByVal CompareTo As Double, ByVal op As ComparisonOperators) As Boolean
-        If TypeOf Value Is Integer Then
-            Dim v As Integer = Value
+    ''' <param name="op">Comparison operator</param>
+    ''' <returns>Result of comparison <paramref name="v"/> <paramref name="op"/> <paramref name="CompareTo"/></returns>
+    ''' <exception cref="InvalidEnumArgumentException"><paramref name="op"/> is not member of <see cref="ComparisonOperators"/></exception>
+    ''' <exception cref="ArgumentException"><paramref name="v"/> is not of one of following types: <see cref="Integer"/>, <see cref="Long"/>, <see cref="Single"/>, <see cref="Double"/></exception>
+    ''' <version version="1.5.8">Parameter <c>Value</c> renamed to <c>v</c></version>
+    Private Shared Function GetCondition(ByVal v As IConvertible, ByVal CompareTo As Double, ByVal op As ComparisonOperators) As Boolean
+        If TypeOf v Is Integer Then
+            Dim v2 As Integer = v2
             Select Case op
-                Case ComparisonOperators.Equal : Return v = CompareTo
-                Case ComparisonOperators.Greater : Return v > CompareTo
-                Case ComparisonOperators.GreaterEqual : Return v >= CompareTo
-                Case ComparisonOperators.Less : Return v < CompareTo
-                Case ComparisonOperators.LessEqual : Return v < CompareTo
-                Case ComparisonOperators.NotEqual : Return v <> CompareTo
+                Case ComparisonOperators.Equal : Return v2 = CompareTo
+                Case ComparisonOperators.Greater : Return v2 > CompareTo
+                Case ComparisonOperators.GreaterEqual : Return v2 >= CompareTo
+                Case ComparisonOperators.Less : Return v2 < CompareTo
+                Case ComparisonOperators.LessEqual : Return v2 < CompareTo
+                Case ComparisonOperators.NotEqual : Return v2 <> CompareTo
                 Case Else : Throw New InvalidEnumArgumentException("op", op, op.GetType)
             End Select
-        ElseIf TypeOf Value Is Long Then
-            Dim v As Long = Value
+        ElseIf TypeOf v Is Long Then
+            Dim v2 As Long = v2
             Select Case op
-                Case ComparisonOperators.Equal : Return v = CompareTo
-                Case ComparisonOperators.Greater : Return v > CompareTo
-                Case ComparisonOperators.GreaterEqual : Return v >= CompareTo
-                Case ComparisonOperators.Less : Return v < CompareTo
-                Case ComparisonOperators.LessEqual : Return v < CompareTo
-                Case ComparisonOperators.NotEqual : Return v <> CompareTo
+                Case ComparisonOperators.Equal : Return v2 = CompareTo
+                Case ComparisonOperators.Greater : Return v2 > CompareTo
+                Case ComparisonOperators.GreaterEqual : Return v2 >= CompareTo
+                Case ComparisonOperators.Less : Return v2 < CompareTo
+                Case ComparisonOperators.LessEqual : Return v2 < CompareTo
+                Case ComparisonOperators.NotEqual : Return v2 <> CompareTo
                 Case Else : Throw New InvalidEnumArgumentException("op", op, op.GetType)
             End Select
-        ElseIf TypeOf Value Is Single Then
-            Dim v As Single = Value
+        ElseIf TypeOf v Is Single Then
+            Dim v2 As Single = v2
             Select Case op
-                Case ComparisonOperators.Equal : Return v = CompareTo
-                Case ComparisonOperators.Greater : Return v > CompareTo
-                Case ComparisonOperators.GreaterEqual : Return v >= CompareTo
-                Case ComparisonOperators.Less : Return v < CompareTo
-                Case ComparisonOperators.LessEqual : Return v < CompareTo
-                Case ComparisonOperators.NotEqual : Return v <> CompareTo
+                Case ComparisonOperators.Equal : Return v2 = CompareTo
+                Case ComparisonOperators.Greater : Return v2 > CompareTo
+                Case ComparisonOperators.GreaterEqual : Return v2 >= CompareTo
+                Case ComparisonOperators.Less : Return v2 < CompareTo
+                Case ComparisonOperators.LessEqual : Return v2 < CompareTo
+                Case ComparisonOperators.NotEqual : Return v2 <> CompareTo
                 Case Else : Throw New InvalidEnumArgumentException("op", op, op.GetType)
             End Select
-        ElseIf TypeOf Value Is Double Then
-            Dim v As Double = Value
+        ElseIf TypeOf v Is Double Then
+            Dim v2 As Double = v2
             Select Case op
-                Case ComparisonOperators.Equal : Return v = CompareTo
-                Case ComparisonOperators.Greater : Return v > CompareTo
-                Case ComparisonOperators.GreaterEqual : Return v >= CompareTo
-                Case ComparisonOperators.Less : Return v < CompareTo
-                Case ComparisonOperators.LessEqual : Return v < CompareTo
-                Case ComparisonOperators.NotEqual : Return v <> CompareTo
+                Case ComparisonOperators.Equal : Return v2 = CompareTo
+                Case ComparisonOperators.Greater : Return v2 > CompareTo
+                Case ComparisonOperators.GreaterEqual : Return v2 >= CompareTo
+                Case ComparisonOperators.Less : Return v2 < CompareTo
+                Case ComparisonOperators.LessEqual : Return v2 < CompareTo
+                Case ComparisonOperators.NotEqual : Return v2 <> CompareTo
                 Case Else : Throw New InvalidEnumArgumentException("op", op, op.GetType)
             End Select
-        Else : Throw New ArgumentException(String.Format(ResourcesT.Exceptions.UnsupportedTypeForComparison0, Value.GetType.Name), "Value")
+        Else : Throw New ArgumentException(String.Format(ResourcesT.Exceptions.UnsupportedTypeForComparison0, v.GetType.Name), NameOf(v))
         End If
     End Function
+
     ''' <summary>Comparison operators for format string conditions</summary>
     Private Enum ComparisonOperators
         ''' <summary>Less than (&lt;)</summary>

@@ -1464,9 +1464,10 @@ DoItAgain:
         ''' <para>Values of nonexistent names are treated as null. In case of duplicate names in <paramref name="values"/> 1st wins.</para>
         ''' </remarks>
         ''' <version version="1.5.4">This function is new in version 1.5.4</version>
+        ''' <version version="1.5.7">Fixed bug - invalid cast from object array to array of arrays of objects.</version>
         <Extension>
         Public Function Replace(pattern As String, ParamArray values As Object()) As String
-            Return ReplaceInternal(pattern, values, False, Nothing)
+            Return ReplaceInternal(pattern, values, False, Nothing, Nothing)
         End Function
 
         ''' <summary>Replaces placeholders with formatting in given string using combined keys-values array and also replaces C#-style backslash (\) character escape sequences. Uses current culture.</summary>
