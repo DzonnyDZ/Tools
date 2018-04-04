@@ -736,6 +736,7 @@ Public Structure TimeSpanFormattable
     ''' <exception cref="ArgumentOutOfRangeException">The 'T()' patter is used on negative <see cref="TimeSpanFormattable"/> or value of current <see cref="TimeSpanFormattable"/> added to <see cref="DateTime.MinValue"/> causes <see cref="DateTime.MaxValue"/> to be exceeded.</exception>
     ''' <version version="1.5.3">Added new formating options capital H without braces, HH, HHH, ...</version>
     ''' <version version="1.5.8">Added new formatting options AM, PM, am, pm, h12, h24, hh12, hh24</version>
+    ''' <version version="1.5.9.">Fixed bug in implementation of h12 and hh12 specifiers that it could return higher number.</version>
     Public Overloads Function ToString(ByVal format As String) As String
         Return ToString(format, Nothing)
     End Function
@@ -1124,7 +1125,7 @@ Public Structure TimeSpanFormattable
     ''' <param name="TS">A <see cref="TimeSpanFormattable"/> to be formated</param>
     ''' <param name="format">Format string</param>
     ''' <param name="prov">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system.
-    ''' <para>If null is pased then <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used. This argument is used to obtain decimal separators, positive and negative signs and time separators in custom format and is also passed to custom subformats in braces. In order this parameter to work it's <see cref="IFormatProvider.GetFormat">GetFormat</see> method must return non-null value for <see cref="System.Globalization.NumberFormatInfo"/> and/or <see cref="System.Globalization.DateTimeFormatInfo"/>. If one of returned values is null <see cref="System.Globalization.NumberFormatInfo.CurrentInfo"/> resp. <see cref="System.Globalization.DateTimeFormatInfo.CurrentInfo"/> is used.</para>
+    ''' <para>If null is passed then <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used. This argument is used to obtain decimal separators, positive and negative signs and time separators in custom format and is also passed to custom subformats in braces. In order this parameter to work it's <see cref="IFormatProvider.GetFormat">GetFormat</see> method must return non-null value for <see cref="System.Globalization.NumberFormatInfo"/> and/or <see cref="System.Globalization.DateTimeFormatInfo"/>. If one of returned values is null <see cref="System.Globalization.NumberFormatInfo.CurrentInfo"/> resp. <see cref="System.Globalization.DateTimeFormatInfo.CurrentInfo"/> is used.</para>
     ''' </param>
     ''' <returns><paramref name="TS"/> formated using <paramref name="format"/></returns>
     ''' <remarks>For more information about formating <see cref="TimeSpanFormattable"/> see <seealso cref="ToString"/></remarks>
@@ -1973,7 +1974,7 @@ Public Structure TimeSpanFormattable
     ''' <summary>Gets value indicating if given <see cref="TimeSpan"/> value is after noon (PM)</summary>
     ''' <param name="ts">The <see cref="TimeSpan"/> to check</param>
     ''' <returns>True if reminder of division of total number of hours of <paramref name="ts"/> by 24 is greater than or equal to 12</returns>
-     ''' <version version="1.5.8">This function is new in 1.5.8</version>
+    ''' <version version="1.5.8">This function is new in 1.5.8</version>
     Public Shared Function IsPm(ts As TimeSpan) As Boolean
         Return ts.TotalHours Mod 24 >= 12
     End Function
@@ -1981,15 +1982,15 @@ Public Structure TimeSpanFormattable
     ''' <summary>Gets 24-hours based part of timespan hours</summary>
     ''' <param name="ts">The timespan</param>
     ''' <returns><paramref name="ts"/>.<see cref="TimeSpan.TotalHours">TotalHours</see> modulo 24</returns>
-    private Shared Function Get24HoursFormat(ts As TimeSpan ) As Byte 
-        Return ts.TotalHours Mod 24
+    Private Shared Function Get24HoursFormat(ts As TimeSpan) As Byte
+        Return Floor(ts.TotalHours) Mod 24
     End Function
 
     ''' <summary>Gets 12-hours based part of timespan hours</summary>
     ''' <param name="ts">The timespan</param>
     ''' <returns><paramref name="ts"/>.<see cref="TimeSpan.TotalHours">TotalHours</see> modulo 12. But if the value would be 0 returns 12 instead.</returns>
-    private Shared Function Get12HoursFormat(ts As TimeSpan ) As Byte 
-        dim ret = ts.TotalHours Mod 12
+    Private Shared Function Get12HoursFormat(ts As TimeSpan) As Byte
+        Dim ret As Byte = Floor(ts.TotalHours) Mod 12
         If ret = 0 Then Return 12 Else Return ret
     End Function
 
@@ -2007,7 +2008,7 @@ Public Structure TimeSpanFormattable
             Case ComparisonOperators.Less : Return v < compareto
             Case ComparisonOperators.LessEqual : Return v < compareto
             Case ComparisonOperators.NotEqual : Return v <> compareto
-            Case Else : Throw New InvalidEnumArgumentException(nameof(op), op, op.GetType)
+            Case Else : Throw New InvalidEnumArgumentException(NameOf(op), op, op.GetType)
         End Select
     End Function
 

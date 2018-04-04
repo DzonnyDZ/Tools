@@ -7,5 +7,5 @@ using System.Reflection;
 #if !NO_COPYRIGHT
 [assembly: AssemblyCopyright("Copyright © Jan Záruba (Ðonny) 2006-18")]
 #endif
-[assembly: AssemblyVersion("1.5.8.0")]
-[assembly: AssemblyFileVersion("1.5.8.0")]
+[assembly: AssemblyVersion("1.5.9.0")]
+[assembly: AssemblyFileVersion("1.5.9.0")]
