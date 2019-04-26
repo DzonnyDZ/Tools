@@ -12,7 +12,7 @@
             This package is just reference library, it does not contain tools for building the plugins.
             Currently the package is x86 (32bit) only.
         </description>
-        <copyright>Copyright © Jan Záruba (Đonny) 2006-16</copyright>
+        <copyright>Copyright © Jan Záruba (Đonny) 2006-19</copyright>
         <iconUrl>http://download-codeplex.sec.s-msft.com/Download?ProjectName=tools&amp;DownloadId=8144&amp;Build=21031</iconUrl>
         <licenseUrl>https://raw.githubusercontent.com/DzonnyDZ/Tools/master/License.txt</licenseUrl>
         <projectUrl>https://github.com/DzonnyDZ/Tools</projectUrl>
