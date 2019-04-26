@@ -190,6 +190,63 @@ Namespace TextT.UnicodeT
 #End Region
 
 #Region "Properties"
+#Region "TODO New properties" '9.0-12.0
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @PCM</remarks>
+        <XmlAttribute("PCM")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @kRSTUnicode</remarks>
+        <XmlAttribute("kRSTUnicode")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @kTGT_MergedSrc</remarks>
+        <XmlAttribute("kTGT_MergedSrc")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @vo</remarks>
+        <XmlAttribute("vo")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @RI</remarks>
+        <XmlAttribute("RI")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @EqUIdeo</remarks>
+        <XmlAttribute("EqUIdeo")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @kJinmeiyoKanji</remarks>
+        <XmlAttribute("kJinmeiyoKanji")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @kJoyoKanji</remarks>
+        <XmlAttribute("kJoyoKanji")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @kKoreanEducationHanja</remarks>
+        <XmlAttribute("kKoreanEducationHanja")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @kKoreanName</remarks>
+        <XmlAttribute("kKoreanName")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+        ''' <summary></summary>
+        ''' <returns></returns>
+        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <remarks>Underlying XML attribute is @kTGH</remarks>
+        <XmlAttribute("kTGH")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
+#End Region
 #Region "General"
         ''' <summary>Gets version of Unicode in which a code point was assigned to an abstract character, or made surrogate or non-character</summary>
         ''' <returns>Version of Unicode standard or null. Null is returned also when underlying XML attribute has value "unassigned".</returns>
@@ -844,6 +901,26 @@ Namespace TextT.UnicodeT
                     Case "Yudh_He" : Return UnicodeJoiningGroup.YudhHe
                     Case "Zain" : Return UnicodeJoiningGroup.Zain
                     Case "Zhain" : Return UnicodeJoiningGroup.SogdianZhain
+
+                        '9.0
+                    Case "African_Feh" : Return UnicodeJoiningGroup.AfricanFeh
+                    Case "African_Noon" : Return UnicodeJoiningGroup.AfricanNoon
+                    Case "African_Qaf" : Return UnicodeJoiningGroup.AfricanQaf
+                            '10.0
+                    Case "Malayalam_Nga" : Return UnicodeJoiningGroup.MalayalamNga
+                    Case "Malayalam_Ja" : Return UnicodeJoiningGroup.MalayalamJa
+                    Case "Malayalam_Nya" : Return UnicodeJoiningGroup.MalayalamNya
+                    Case "Malayalam_Tta" : Return UnicodeJoiningGroup.MalayalamTta
+                    Case "Malayalam_Nna" : Return UnicodeJoiningGroup.MalayalamNna
+                    Case "Malayalam_Nnna" : Return UnicodeJoiningGroup.MalayalamNnna
+                    Case "Malayalam_Bha" : Return UnicodeJoiningGroup.MalayalamBha
+                    Case "Malayalam_Ra" : Return UnicodeJoiningGroup.MalayalamRa
+                    Case "Malayalam_Lla" : Return UnicodeJoiningGroup.MalayalamLla
+                    Case "Malayalam_Llla" : Return UnicodeJoiningGroup.MalayalamLlla
+                    Case "Malayalam_Ssa" : Return UnicodeJoiningGroup.MalayalamSsa
+                        '11.0
+                    Case "Hanifi_Rohingya_Kinna_Ya" : Return UnicodeJoiningGroup.HanifiRohingyaKinnaYa
+                    Case "Hanifi_Rohingya_Pa" : Return UnicodeJoiningGroup.HanifiRohingyaPa
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -862,8 +939,8 @@ Namespace TextT.UnicodeT
 #End Region
 
 #Region "Line-break"
-        ''' <summary>Gets value indicating how the character behaves when libe breaking is concerned</summary>
-        ''' <exception cref="InvalidOperationException">Value of underlyicng XML attribute is not one of expected values</exception>
+        ''' <summary>Gets value indicating how the character behaves when line breaking is concerned</summary>
+        ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
         ''' <remarks>Underlying XML attribute is @lb</remarks>
         <XmlAttribute("lb"), DefaultValue(UnicodeLineBreakType.Unknown)>
         <UcdProperty("Line_Break", "LineBreak.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
@@ -912,6 +989,10 @@ Namespace TextT.UnicodeT
                     Case "XX" : Return UnicodeLineBreakType.Unknown
                     Case "HL" : Return UnicodeLineBreakType.HebrewLetter
                     Case "CJ" : Return UnicodeLineBreakType.ConditionalJapaneseStarter
+                        '9.0
+                    Case "EB" : Return UnicodeLineBreakType.XXX
+                    Case "EM" : Return UnicodeLineBreakType.XXX
+                    Case "ZWJ" : Return UnicodeLineBreakType.XXX
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1333,6 +1414,8 @@ Namespace TextT.UnicodeT
                     Case "Top_And_Left_And_Right" : Return UnicodeIndicPositionalCategory.TopLeftRight
                     Case "Top_And_Right" : Return UnicodeIndicPositionalCategory.TopRight
                     Case "Visual_Order_Left" : Return UnicodeIndicPositionalCategory.VisualOrderLeft
+                        '10.0
+                    Case "Bottom_And_Left" : Return UnicodeIndicPositionalCategory.BottomAndLeft
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1701,6 +1784,12 @@ Namespace TextT.UnicodeT
                     Case "V" : Return UnicodeGraphemeClusterBreak.HangulV
                     Case "XX" : Return UnicodeGraphemeClusterBreak.other
                     Case "RI" : Return UnicodeGraphemeClusterBreak.RegionalIndicator
+                        '9.0
+                    Case "EB" : Return UnicodeGraphemeClusterBreak.XXX
+                    Case "EBG" : Return UnicodeGraphemeClusterBreak.XXX
+                    Case "EM" : Return UnicodeGraphemeClusterBreak.XXX
+                    Case "GAZ" : Return UnicodeGraphemeClusterBreak.XXX
+                    Case "ZWJ" : Return UnicodeGraphemeClusterBreak.XXX
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1733,6 +1822,15 @@ Namespace TextT.UnicodeT
                     Case "DQ" : Return UnicodeWordBreakType.DoubleQuote
                     Case "HL" : Return UnicodeWordBreakType.HebrewLetter
                     Case "SQ" : Return UnicodeWordBreakType.SingleQuote
+                        '9.0
+                    Case "EB" : Return UnicodeWordBreakType.XXX
+                    Case "EBG" : Return UnicodeWordBreakType.XXX
+                    Case "EM" : Return UnicodeWordBreakType.XXX
+                    Case "GAZ" : Return UnicodeWordBreakType.XXX
+                    Case "ZWJ" : Return UnicodeWordBreakType.XXX
+                            '11.0
+                    Case "WSegSpace" : Return UnicodeWordBreakType.XXX
+
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -2170,6 +2268,7 @@ Namespace TextT.UnicodeT
         <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanFennIndex")>
         Public ReadOnly Property HanFennIndex As Decimal()
             Get
+                TODOveryfyPattern
                 Return GetDecimalArray("kFennIndex")
             End Get
         End Property
@@ -2975,6 +3074,7 @@ Namespace TextT.UnicodeT
         <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSKangXi")>
         Public ReadOnly Property HanRSKangXi As RadicalStrokeCount()
             Get
+                TODOveryfyPattern
                 Return GetRadicalStrokeCountArray("kRSKangXi")
             End Get
         End Property
@@ -3008,6 +3108,7 @@ Namespace TextT.UnicodeT
         <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSUnicode")>
         Public ReadOnly Property HanRSUnicode As RadicalStrokeCount()
             Get
+                TODOveryfyPattern
                 Return GetRadicalStrokeCountArray("kRSUnicode")
             End Get
         End Property

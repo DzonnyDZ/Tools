@@ -258,223 +258,294 @@ Namespace TextT.UnicodeT
         Transparent
     End Enum
 
+    ''' <summary>Decorates field with <see cref="UnicodeJoiningType"/> value</summary>
+    ''' <version version="1.5.10">This class is new in version 1.5.10</version>
+    <AttributeUsage(AttributeTargets.Field)>
+    Public Class UnicodeJoiningTypeAttribute
+        Inherits Attribute
+        ''' <summary>CTor - creates a new instance of the <see cref="UnicodeJoiningTypeAttribute"/> class</summary>
+        ''' <param name="value">The <see cref="UnicodeJoiningType"/> value</param>
+        Public Sub New(value As UnicodeJoiningType)
+            JoiningType = value
+        End Sub
+
+        ''' <summary>Gets the <see cref="UnicodeJoiningType"/> value</summary>
+        Public ReadOnly Property JoiningType As UnicodeJoiningType
+    End Class
+
     ''' <summary>Defines Unicode joining groups for Arabic and other Middle-Eastern scripts</summary>
     ''' <remarks>Value Alef Maqsurah once exited in Unicode standard (v2.x) but it does not appear in newer versions. It seems to be replaced with <see cref="UnicodeJoiningGroup.YehWithTail"/>. So Alef Maqsurah is not included in this implementation.</remarks>
     ''' <seelaso cref="UnicodeExtensions.Origin"/>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
+    ''' <version version="1.5.10"><see cref="XmlElementAttribute"/> on members replaced with <see cref="XmlEnumAttribute"/></version>
     Public Enum UnicodeJoiningGroup
         ''' <summary>No joining group</summary>
         <XmlIgnore> none
+
 #Region "Arabic"
 #Region "Dual Arabic"
         ''' <summary>Dual joining Arabic group Beh (ب)</summary>
-        <XmlElement("Beh")> Beh
+        <XmlEnum("Beh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Beh
         ''' <summary>Dual joining Arabic group Noon (ن)</summary>
-        <XmlElement("Noon")> Noon
+        <XmlEnum("Noon"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Noon
         ''' <summary>Dual joining Arabic group Nya (ڽ)</summary>
-        <XmlElement("Nya")> Nya
+        <XmlEnum("Nya"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Nya
         ''' <summary>Dual joining Arabic group Yeh (ي)</summary>
-        <XmlElement("Yeh")> Yeh
+        <XmlEnum("Yeh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Yeh
         ''' <summary>Dual joining Arabic group Farsi Yeh (ی)</summary>
-        <XmlElement("Farsi_Yeh")> FarsiYeh
+        <XmlEnum("Farsi_Yeh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> FarsiYeh
         ''' <summary>Dual joining Arabic group Burushaski Yeh Barree</summary>
-        <XmlElement("Burushaski_Yeh_Barree")> BurushaskiYehBarree
+        <XmlEnum("Burushaski_Yeh_Barree"), UnicodeJoiningType(UnicodeJoiningType.Dual)> BurushaskiYehBarree
         ''' <summary>Dual joining Arabic group Hah (ح)</summary>
-        <XmlElement("Hah")> Hah
+        <XmlEnum("Hah"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Hah
         ''' <summary>Dual joining Arabic group Seen (س)</summary>
-        <XmlElement("Seen")> Seen
+        <XmlEnum("Seen"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Seen
         ''' <summary>Dual joining Arabic group Sad (ص)</summary>
-        <XmlElement("Sad")> Sad
+        <XmlEnum("Sad"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Sad
         ''' <summary>Dual joining Arabic group Tah (ط)</summary>
-        <XmlElement("Tah")> Tah
+        <XmlEnum("Tah"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Tah
         ''' <summary>Dual joining Arabic group Ain (ع)</summary>
-        <XmlElement("Ain")> Ain
+        <XmlEnum("Ain"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Ain
         ''' <summary>Dual joining Arabic group Feh (ف)</summary>
-        <XmlElement("Feh")> Feh
+        <XmlEnum("Feh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Feh
         ''' <summary>Dual joining Arabic group Qaf (ق)</summary>
-        <XmlElement("Qaf")> Qaf
+        <XmlEnum("Qaf"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Qaf
         ''' <summary>Dual joining Arabic group Meem (م)</summary>
-        <XmlElement("Meem")> Meem
+        <XmlEnum("Meem"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Meem
         ''' <summary>Dual joining Arabic group Heh (ه)</summary>
-        <XmlElement("Heh")> Heh
+        <XmlEnum("Heh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Heh
         ''' <summary>Dual joining Arabic group knotted Heh</summary>
-        <XmlElement("Knotted_Heh")> KnottedHeh
+        <XmlEnum("Knotted_Heh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> KnottedHeh
         ''' <summary>Dual joining Arabic group Heh goal</summary>
-        <XmlElement("Heh_Goal")> HehGoal
+        <XmlEnum("Heh_Goal"), UnicodeJoiningType(UnicodeJoiningType.Dual)> HehGoal
         ''' <summary>Dual joining Arabic group Kaf (ك)</summary>
-        <XmlElement("Kaf")> Kaf
+        <XmlEnum("Kaf"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Kaf
         ''' <summary>Dual joining Arabic group Swash Kaf (ڪ)</summary>
-        <XmlElement("Swash_Kaf")> SwashKaf
+        <XmlEnum("Swash_Kaf"), UnicodeJoiningType(UnicodeJoiningType.Dual)> SwashKaf
         ''' <summary>Dual joining Arabic group Gaf (گ)</summary>
-        <XmlElement("Gaf")> Gaf
+        <XmlEnum("Gaf"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Gaf
         ''' <summary>Dual joining Arabic group Lam (ل)</summary>
-        <XmlElement("Lam")> Lam
+        <XmlEnum("Lam"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Lam
+        ''' <summary>Dual joining group African Feh (ࢻ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("African_Feh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> AfricanFeh
+        ''' <summary>Dual joining group African Noon (ࢽ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("African_Noon"), UnicodeJoiningType(UnicodeJoiningType.Dual)> AfricanNoon
+        ''' <summary>Dual joining group African Qaf (ࢼ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("African_Qaf"), UnicodeJoiningType(UnicodeJoiningType.Dual)> AfricanQaf
 #End Region
 #Region "Right Arabic"
         ''' <summary>Right joining Arabic group Alef (ا)</summary>
-        <XmlElement("Alef")> Alef
+        <XmlEnum("Alef"), UnicodeJoiningType(UnicodeJoiningType.Right)> Alef
         ''' <summary>Right joining Arabic group Waw (و)</summary>
-        <XmlElement("Waw")> Waw
+        <XmlEnum("Waw"), UnicodeJoiningType(UnicodeJoiningType.Right)> Waw
         ''' <summary>Right joining Arabic group Dal (د)</summary>
-        <XmlElement("Dal")> Dal
+        <XmlEnum("Dal"), UnicodeJoiningType(UnicodeJoiningType.Right)> Dal
         ''' <summary>Right joining Arabic group Reh (ر)</summary>
-        <XmlElement("Reh")> Reh
+        <XmlEnum("Reh"), UnicodeJoiningType(UnicodeJoiningType.Right)> Reh
         ''' <summary>Right joining Arabic group Teh Marbuta (ة)</summary>
-        <XmlElement("Teh_Marbuta")> TehMarbuta
+        <XmlEnum("Teh_Marbuta"), UnicodeJoiningType(UnicodeJoiningType.Right)> TehMarbuta
         ''' <summary>Right joining Arabic group Teh Marbuta goal (ۃ)</summary>
-        <XmlElement("Teh_Marbuta_Goal")> TehMarbutaGoal
+        <XmlEnum("Teh_Marbuta_Goal"), UnicodeJoiningType(UnicodeJoiningType.Right)> TehMarbutaGoal
         ''' <summary>This is legacy is alias of <see cref="TehMarbutaGoal"/>.</summary>
         ''' <remarks>This value property no longer apply on U+06C2 (Heh goal with Hamza above, &#x06C2;), it applies only to U+06C3 (Teh Marbuta goal, &#x06C3;), so new property alias <see cref="TehMarbutaGoal"/> was added to Unicode which makes more sense.</remarks>
-        <XmlElement("Hamza_On_Heh_Goal")> HamzaOnHehGoal = TehMarbutaGoal
+        <XmlEnum("Hamza_On_Heh_Goal"), UnicodeJoiningType(UnicodeJoiningType.Right)> HamzaOnHehGoal = TehMarbutaGoal
         ''' <summary>Right joining Arabic group Yeh with tail (ۍ)</summary>
-        <XmlElement("Yeh_With_Tail")> YehWithTail
+        <XmlEnum("Yeh_With_Tail"), UnicodeJoiningType(UnicodeJoiningType.Right)> YehWithTail
         ''' <summary>Right joining Arabic group Yeh Barree (ے)</summary>
-        <XmlElement("Yeh_Barree")> YehBarree
+        <XmlEnum("Yeh_Barree"), UnicodeJoiningType(UnicodeJoiningType.Right)> YehBarree
         ''' <summary>Right joining Arabic group Rohingya Yeh (ࢬ)</summary>
-        <XmlElement("Tohingya_Yeh")> RohingyaYeh
+        <XmlEnum("Tohingya_Yeh"), UnicodeJoiningType(UnicodeJoiningType.Right)> RohingyaYeh
         ''' <summary>Right joining Arabic group Straight Waw (ࢱ)</summary>
-        <XmlElement("Straight_Waw")> StraightWaw
+        <XmlEnum("Straight_Waw"), UnicodeJoiningType(UnicodeJoiningType.Right)> StraightWaw
 #End Region
 #End Region
 
 #Region "Syriac"
 #Region "Dual Syriac"
         ''' <summary>Dual Joining Syriac group Beth (ܒ)</summary>
-        <XmlElement("Beth")> Beth
+        <XmlEnum("Beth")> Beth
         ''' <summary>Dual Joining Syriac group Persian Bheth (ܭ)</summary>
-        <XmlElement("Persian_Beth")> PersianBheth
+        <XmlEnum("Persian_Beth")> PersianBheth
         ''' <summary>Dual Joining Syriac group Gamal (ܓ)</summary>
-        <XmlElement("Gamal")> Gamal
+        <XmlEnum("Gamal")> Gamal
         ''' <summary>Dual Joining Syriac group Gamal Garshuni (ܔ)</summary>
-        <XmlElement("Gamal_Garshuni")> GamalGarshuni
+        <XmlEnum("Gamal_Garshuni")> GamalGarshuni
         ''' <summary>Dual Joining Syriac group Persian Ghamal (ܮ)</summary>
-        <XmlElement("Persian_Ghamal")> PersianGhamal
+        <XmlEnum("Persian_Ghamal")> PersianGhamal
         ''' <summary>Dual Joining Syriac group Heth (ܚ)</summary>
-        <XmlElement("Heth")> Heth
+        <XmlEnum("Heth")> Heth
         ''' <summary>Dual Joining Syriac group Teth (ܛ)</summary>
-        <XmlElement("Teth")> Teth
+        <XmlEnum("Teth")> Teth
         ''' <summary>Dual Joining Syriac group Teth Garshuni (ܜ)</summary>
-        <XmlElement("Teth_Garshuni")> TethGarshuni
+        <XmlEnum("Teth_Garshuni")> TethGarshuni
         ''' <summary>Dual Joining Syriac group Yudh (ܝ)</summary>
-        <XmlElement("Yudh")> Yudh
+        <XmlEnum("Yudh")> Yudh
         ''' <summary>Dual Joining Syriac group Kaph (ܟ)</summary>
-        <XmlElement("Kaph")> Kaph
+        <XmlEnum("Kaph")> Kaph
         ''' <summary>Dual Joining Syriac group Sogdian Khaph (ݎ)</summary>
-        <XmlElement("Sogdian_Kaph")> SogdianKhaph
+        <XmlEnum("Sogdian_Kaph")> SogdianKhaph
         ''' <summary>Dual Joining Syriac group Lamadh (ܠ)</summary>
-        <XmlElement("Lamadh")> Lamadh
+        <XmlEnum("Lamadh")> Lamadh
         ''' <summary>Dual Joining Syriac group Mim (ܡ)</summary>
-        <XmlElement("Mim")> Mim
+        <XmlEnum("Mim")> Mim
         ''' <summary>Dual Joining Syriac group Nun (ܢ)</summary>
-        <XmlElement("Nun")> Nun
+        <XmlEnum("Nun")> Nun
         ''' <summary>Dual Joining Syriac group Semkath (ܣ)</summary>
-        <XmlElement("Semkath")> Semkath
+        <XmlEnum("Semkath")> Semkath
         ''' <summary>Dual Joining Syriac group Semkath final (ܤ)</summary>
-        <XmlElement("Semkath_Final")> SemkathFinal
+        <XmlEnum("Semkath_Final")> SemkathFinal
         ''' <summary>Dual Joining Syriac group E (ܥ)</summary>
-        <XmlElement("E")> E
+        <XmlEnum("E")> E
         ''' <summary>Dual Joining Syriac group Pe (ܦ)</summary>
-        <XmlElement("Pe")> Pe
+        <XmlEnum("Pe")> Pe
         ''' <summary>Dual Joining Syriac group reversed Pe (ܧ)</summary>
-        <XmlElement("Reversed_Pe")> ReversedPe
+        <XmlEnum("Reversed_Pe")> ReversedPe
         ''' <summary>Dual Joining Syriac group Sogdian Fe (ݏ)</summary>
-        <XmlElement("Sogdian_Fe")> SogdianFe
+        <XmlEnum("Sogdian_Fe")> SogdianFe
         ''' <summary>Dual Joining Syriac group Qaph (ܩ)</summary>
-        <XmlElement("Qaph")> Qaph
+        <XmlEnum("Qaph")> Qaph
         ''' <summary>Dual Joining Syriac group Shin (ܫ)</summary>
-        <XmlElement("Shin")> Shin
+        <XmlEnum("Shin")> Shin
 #End Region
 #Region "Right Syraic"
         ''' <summary>Right Joining Syriac group Dalath (ܕ)</summary>
-        <XmlElement("Dalath")> Dalath
+        <XmlEnum("Dalath"), UnicodeJoiningType(UnicodeJoiningType.Right)> Dalath
         ''' <summary>Right Joining Syriac group dotless Dalath Rish (ܖ)</summary>
-        <XmlElement("Dotless_Dalat_Rish")> DotlessDalathRish
+        <XmlEnum("Dotless_Dalat_Rish"), UnicodeJoiningType(UnicodeJoiningType.Right)> DotlessDalathRish
         ''' <summary>Right Joining Syriac group Persian Dhalath (ܯ)</summary>
-        <XmlElement("Persian_Dalath")> PersianDhalath
+        <XmlEnum("Persian_Dalath"), UnicodeJoiningType(UnicodeJoiningType.Right)> PersianDhalath
         ''' <summary>Right Joining Syriac group He (ܗ)</summary>
-        <XmlElement("He")> He
+        <XmlEnum("He"), UnicodeJoiningType(UnicodeJoiningType.Right)> He
         ''' <summary>Right Joining Syriac group Waw (ܘ)</summary>
-        <XmlElement("Syriac_Waw")> WawSyraic
+        <XmlEnum("Syriac_Waw"), UnicodeJoiningType(UnicodeJoiningType.Right)> WawSyraic
         ''' <summary>Right Joining Syriac group Zain (ܙ)</summary>
-        <XmlElement("Zain")> Zain
+        <XmlEnum("Zain"), UnicodeJoiningType(UnicodeJoiningType.Right)> Zain
         ''' <summary>Right Joining Syriac group Sogdian Zhain (ݍ)</summary>
-        <XmlElement("Sogdian_Zhain")> SogdianZhain
+        <XmlEnum("Sogdian_Zhain"), UnicodeJoiningType(UnicodeJoiningType.Right)> SogdianZhain
         ''' <summary>Right Joining Syriac group Yudh He (ܞ)</summary>
-        <XmlElement("Yudh_He")> YudhHe
+        <XmlEnum("Yudh_He"), UnicodeJoiningType(UnicodeJoiningType.Right)> YudhHe
         ''' <summary>Right Joining Syriac group Sadhe (ܨ)</summary>
-        <XmlElement("Sadhe")> Sadhe
+        <XmlEnum("Sadhe"), UnicodeJoiningType(UnicodeJoiningType.Right)> Sadhe
         ''' <summary>Right Joining Syriac group Rish (ܪ)</summary>
-        <XmlElement("Rish")> Rish
+        <XmlEnum("Rish"), UnicodeJoiningType(UnicodeJoiningType.Right)> Rish
         ''' <summary>Right Joining Syriac group Taw (ܬ)</summary>
-        <XmlElement("Taw")> Taw
+        <XmlEnum("Taw"), UnicodeJoiningType(UnicodeJoiningType.Right)> Taw
 #End Region
 #Region "Other Syraic"
         ''' <summary>Syraic letter Alaph (U+0710, ܐ) is right-joining character but it's glyph is subject to additional contextual shaping</summary>
-        <XmlElement("Alaph")> Alaph
+        <XmlEnum("Alaph"), UnicodeJoiningType(UnicodeJoiningType.Right)> Alaph
 #End Region
 #End Region
 
 #Region "Manichaean"
 #Region "Dual Manichaean"
         ''' <summary>Dual joining Manichaean group Aleph (𐫀)</summary>
-        <XmlEnum("Manichaean_Aleph")> ManichaeanAleph
+        <XmlEnum("Manichaean_Aleph"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanAleph
         ''' <summary>Dual joining Manichaean group Beth (𐫁)</summary>
-        <XmlEnum("Manichaean_Beth")> ManichaeanBeth
+        <XmlEnum("Manichaean_Beth"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanBeth
         ''' <summary>Dual joining Manichaean group Gimel (𐫃)</summary>
-        <XmlEnum("Manichaean_Gimel")> ManichaeanGimel
+        <XmlEnum("Manichaean_Gimel"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanGimel
         ''' <summary>Dual joining Manichaean group Ayin (𐫙)</summary>
-        <XmlEnum("Manichaean_Ayin")> ManichaeanAyin
+        <XmlEnum("Manichaean_Ayin"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanAyin
         ''' <summary>Dual joining Manichaean group Dhamedh (𐫔)</summary>
-        <XmlEnum("Manichaean_Dhamedh")> ManichaeanDhamedh
+        <XmlEnum("Manichaean_Dhamedh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanDhamedh
         ''' <summary>Dual joining Manichaean group Five (𐫬)</summary>
-        <XmlEnum("Manichaean_Five")> ManichaeanFive
+        <XmlEnum("Manichaean_Five"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanFive
         ''' <summary>Dual joining Manichaean group Lamedh (𐫓)</summary>
-        <XmlEnum("Manichaean_Lamedh")> ManichaeanLamedh
+        <XmlEnum("Manichaean_Lamedh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanLamedh
         ''' <summary>Dual joining Manichaean group Mem (𐫖)</summary>
-        <XmlEnum("Manichaean_Mem")> ManichaeanMem
+        <XmlEnum("Manichaean_Mem"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanMem
         ''' <summary>Dual joining Manichaean group One (𐫫)</summary>
-        <XmlEnum("Manichaean_One")> ManichaeanOne
+        <XmlEnum("Manichaean_One"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanOne
         ''' <summary>Dual joining Manichaean group Pe (𐫛)</summary>
-        <XmlEnum("Manichaean_Pe")> ManichaeanPe
+        <XmlEnum("Manichaean_Pe"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanPe
         ''' <summary>Dual joining Manichaean group Qoph (𐫞)</summary>
-        <XmlEnum("Manichaean_Qoph")> ManichaeanQoph
+        <XmlEnum("Manichaean_Qoph"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanQoph
         ''' <summary>Dual joining Manichaean group Samekh (𐫘)</summary>
-        <XmlEnum("Manichaean_Samekh")> ManichaeanSamekh
+        <XmlEnum("Manichaean_Samekh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanSamekh
         ''' <summary>Dual joining Manichaean group Ten 𐫭()</summary>
-        <XmlEnum("Manichaean_Ten")> ManichaeanTen
+        <XmlEnum("Manichaean_Ten"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanTen
         ''' <summary>Dual joining Manichaean group Thamedh (𐫕)</summary>
-        <XmlEnum("Manichaean_Thamedh")> ManichaeanThamedh
+        <XmlEnum("Manichaean_Thamedh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanThamedh
         ''' <summary>Dual joining Manichaean group Twenty (𐫮)</summary>
-        <XmlEnum("Manichaean_Twenty")> ManichaeanTwenty
+        <XmlEnum("Manichaean_Twenty"), UnicodeJoiningType(UnicodeJoiningType.Dual)> ManichaeanTwenty
 #End Region
 #Region "Right Manichaean"
         ''' <summary>Right joining Manichaean group Daleth (𐫅)</summary>
-        <XmlEnum("Manichaean_Daleth")> ManichaeanDaleth
+        <XmlEnum("Manichaean_Daleth"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanDaleth
         ''' <summary>Right joining Manichaean group Waw (𐫇)</summary>
-        <XmlEnum("Manichaean_Waw")> ManichaeanWaw
+        <XmlEnum("Manichaean_Waw"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanWaw
         ''' <summary>Right joining Manichaean group Zayin (𐫉)</summary>
-        <XmlEnum("Manichaean_Zayin")> ManichaeanZayin
+        <XmlEnum("Manichaean_Zayin"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanZayin
         ''' <summary>Right joining Manichaean group Hundred (𐫯)</summary>
-        <XmlEnum("Manichaean_Hundred")> ManichaeanHundred
+        <XmlEnum("Manichaean_Hundred"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanHundred
         ''' <summary>Right joining Manichaean group Kaph (𐫐)</summary>
-        <XmlEnum("Manichaean_Kaph")> ManichaeanKaph
+        <XmlEnum("Manichaean_Kaph"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanKaph
         ''' <summary>Right joining Manichaean group Resh (𐫡)</summary>
-        <XmlEnum("Manichaean_Resh")> ManichaeanResh
+        <XmlEnum("Manichaean_Resh"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanResh
         ''' <summary>Right joining Manichaean group Sadhe (𐫝)</summary>
-        <XmlEnum("Manichaean_Sadhe")> ManichaeanSadhe
+        <XmlEnum("Manichaean_Sadhe"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanSadhe
         ''' <summary>Right joining Manichaean group Taw (𐫤)</summary>
-        <XmlEnum("Manichaean_Taw")> ManichaeanTaw
+        <XmlEnum("Manichaean_Taw"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanTaw
         ''' <summary>Right joining Manichaean group Teth (𐫎)</summary>
-        <XmlEnum("Manichaean_Teth")> ManichaeanTeth
+        <XmlEnum("Manichaean_Teth"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanTeth
         ''' <summary>Right joining Manichaean group Yodh (𐫏)</summary>
-        <XmlEnum("Manichaean_Yodh")> ManichaeanYodh
+        <XmlEnum("Manichaean_Yodh"), UnicodeJoiningType(UnicodeJoiningType.Right)> ManichaeanYodh
 #End Region
 #Region "Left Manichaean"
         ''' <summary>Left joining Manichaean group Heth (𐫍)</summary>
-        <XmlEnum("Manichaean_Heth")> ManichaeanHeth
+        <XmlEnum("Manichaean_Heth"), UnicodeJoiningType(UnicodeJoiningType.Left)> ManichaeanHeth
         ''' <summary>Left joining Manichaean group Nun (𐫗)</summary>
-        <XmlEnum("Manichaean_Nun")> ManichaeanNun
+        <XmlEnum("Manichaean_Nun"), UnicodeJoiningType(UnicodeJoiningType.Left)> ManichaeanNun
 #End Region
+#End Region
+
+#Region "Malayalam"
+        ''' <summary>Dual joining group Malayalam Nga (ࡠ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Nga"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNga
+        ''' <summary>Non-joining group Malayalam Ja (ࡡ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Ja"), UnicodeJoiningType(UnicodeJoiningType.NonJoining)> MalayalamJa
+        ''' <summary>Dual joining group Malayalam Nya (ࡢ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Nya"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNya
+        ''' <summary>Dual joining group Malayalam Tta (ࡣ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Tta"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamTta
+        ''' <summary>Dual joining group Malayalam Nna (ࡤ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Nna"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNna
+        ''' <summary>Dual joining group Malayalam Nnna (ࡥ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Nnna"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNnna
+        ''' <summary>Non-joining group Malayalam Bha (ࡦ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Bha"), UnicodeJoiningType(UnicodeJoiningType.NonJoining)> MalayalamBha
+        ''' <summary>Right joining group Malayalam Ra (ࡧ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Ra"), UnicodeJoiningType(UnicodeJoiningType.Right)> MalayalamRa
+        ''' <summary>Dual joining group Malayalam Lla (ࡨ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Lla"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamLla
+        ''' <summary>Right joining group Malayalam Llla (ࡩ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Llla"), UnicodeJoiningType(UnicodeJoiningType.Right)> MalayalamLlla
+        ''' <summary>Right joining group Malayalam Ssa (ࡪ)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Malayalam_Ssa"), UnicodeJoiningType(UnicodeJoiningType.Right)> MalayalamSsa
+#End Region
+
+#Region "Hanifi Rohingya"
+        ''' <summary>Dual joining group Hanifi Rohingya Kinna Ya (𐴙)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Hanifi_Rohingya_Kinna_Ya"), UnicodeJoiningType(UnicodeJoiningType.Dual)> HanifiRohingyaKinnaYa
+        ''' <summary>Dual joining group Hanifi Rohingya Pa (𐴂)</summary>
+        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        <XmlEnum("Hanifi_Rohingya_Pa"), UnicodeJoiningType(UnicodeJoiningType.Dual)> HanifiRohingyaPa
 #End Region
     End Enum
 
