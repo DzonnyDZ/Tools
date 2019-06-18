@@ -3,53 +3,61 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text, System.Linq
 
-#If True
+#If True Then
 Namespace IOt
     ''' <summary>Contains file system-related methods and extension methods</summary>
     ''' <version version="1.5.2">Renamed from FileTystemTools to FileSystemTools</version>
     Public Module FileSystemTools
         ''' <summary>Gets icon for given file or folder (including drive and UNC share or server)</summary>
-        ''' <param name="PathP">Provides path to get icon for</param>
-        ''' <param name="Large">True to get large icon (false to get small icon)</param>
+        ''' <param name="pathProvider">Provides path to get icon for</param>
+        ''' <param name="large">True to get large icon (false to get small icon)</param>
         ''' <returns>Icon that represents given file or folder in operating system. Null if icon obtainment failed.</returns>
-        ''' <param name="Overlays">True to add all applicable overlay icons</param>
+        ''' <param name="overlays">True to add all applicable overlay icons</param>
         ''' <seelaso cref="Drawing.Icon.ExtractAssociatedIcon"/>
-        ''' <exception cref="IO.FileNotFoundException">File or folder <paramref name="Path"/> does not exists.</exception>
-        ''' <exception cref="ArgumentNullException"><paramref name="Path"/> is null</exception>
+        ''' <exception cref="IO.FileNotFoundException">File or folder <paramref name="pathProvider"/> does not exists.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="pathProvider"/> is null</exception>
         ''' <version version="1.5.2">Can get icon for empty removable drive (like CD-ROM without CD in it) and for UNC computer in format \\servername)</version>
-        <Extension()> _
-        Public Function GetIcon(ByVal PathP As IPathProvider, Optional ByVal Large As Boolean = False, Optional ByVal Overlays As Boolean = True) As Drawing.Icon
-            If PathP Is Nothing Then Throw New ArgumentNullException("PathP")
-            Dim Path = New Path(PathP.Path.TrimEnd("\"))
-            If Not (PathP.Path.StartsWith("\\") AndAlso PathP.Path.Length > 2 AndAlso PathP.Path.IndexOf("\"c, 2) < 0 AndAlso (From ch In PathP.Path.Substring(2) Where IO.Path.GetInvalidFileNameChars.Contains(ch)).Count = 0) AndAlso _
-                Not Path.Exists AndAlso (From di In My.Computer.FileSystem.Drives Where di.Name = PathP.Path Select di.Name).FirstOrDefault Is Nothing _
+        ''' <version version="1.5.10">Parameter <c>PathP</c> renamed to <c>pathProvider</c></version>
+        ''' <version version="1.5.10">Parameter <c>Large</c> renamed to <c>large</c></version>
+        ''' <version version="1.5.10">Parameter <c>Overlays</c> renamed to <c>overlays</c></version>
+        <Extension()>
+        Public Function GetIcon(pathProvider As IPathProvider, Optional large As Boolean = False, Optional overlays As Boolean = True) As Drawing.Icon
+            If pathProvider Is Nothing Then Throw New ArgumentNullException("PathP")
+            Dim Path = New Path(pathProvider.Path.TrimEnd("\"))
+            If Not (pathProvider.Path.StartsWith("\\") AndAlso pathProvider.Path.Length > 2 AndAlso pathProvider.Path.IndexOf("\"c, 2) < 0 AndAlso (From ch In pathProvider.Path.Substring(2) Where IO.Path.GetInvalidFileNameChars.Contains(ch)).Count = 0) AndAlso
+                Not Path.Exists AndAlso (From di In My.Computer.FileSystem.Drives Where di.Name = pathProvider.Path Select di.Name).FirstOrDefault Is Nothing _
                 Then Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.Path0DoesNotExist, Path))
             Dim shInfo As New SHFILEINFO
-            Dim ret = SHGetFileInfo(Path, 0, shInfo, Marshal.SizeOf(shInfo), _
-                FileInformationFlags.SHGFI_ICON Or If(Large, FileInformationFlags.SHGFI_LARGEICON, FileInformationFlags.SHGFI_SMALLICON) Or If(Overlays, FileInformationFlags.SHGFI_ADDOVERLAYS, CType(0, FileInformationFlags)))
+            Dim ret = SHGetFileInfo(Path, 0, shInfo, Marshal.SizeOf(shInfo),
+                FileInformationFlags.SHGFI_ICON Or If(large, FileInformationFlags.SHGFI_LARGEICON, FileInformationFlags.SHGFI_SMALLICON) Or If(overlays, FileInformationFlags.SHGFI_ADDOVERLAYS, CType(0, FileInformationFlags)))
             If shInfo.hIcon = IntPtr.Zero Then Return Nothing
             Dim icon = Drawing.Icon.FromHandle(shInfo.hIcon)
             Return icon
         End Function
+
         ''' <summary>Gets icon for given file or folder</summary>
         ''' <param name="Path">Path to get icon for</param>
-        ''' <param name="Large">True to get large icon (false to get small icon)</param>
+        ''' <param name="large">True to get large icon (false to get small icon)</param>
         ''' <returns>Icon that represents given file or folder in operating system</returns>
         ''' <param name="Overlays">True to add all applicable overlay icons</param>
         ''' <seelaso cref="Drawing.Icon.ExtractAssociatedIcon"/>
         ''' <exception cref="IO.FileNotFoundException">File <paramref name="Path"/> does not exists.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Path"/> is null</exception>
-        Public Function GetIcon(ByVal Path As String, Optional ByVal Large As Boolean = False, Optional ByVal Overlays As Boolean = True) As Drawing.Icon
+        ''' <version version="1.5.10">Parameter <c>Large</c> renamed to <c>large</c></version>
+        ''' <version version="1.5.10">Parameter <c>Overlays</c> renamed to <c>overlays</c></version>
+        ''' <version version="1.5.10">Fix: Parameter <c>overlays</c> was ignored.</version>
+        Public Function GetIcon(Path As String, Optional large As Boolean = False, Optional overlays As Boolean = True) As Drawing.Icon
             If Path Is Nothing Then Throw New ArgumentNullException("Path")
-            Return GetIcon(DirectCast(New Path(Path), IPathProvider), Large)
+            Return GetIcon(DirectCast(New Path(Path), IPathProvider), large, overlays)
         End Function
+
         '''' <summary>Gets localized name for file or folder</summary>
         '''' <param name="Path">Path to get loclized name of</param>
         '''' <returns>Localized name of given path; or file name part of path if localized name is not available</returns>
         '''' <remarks>Localized name is available at Windows Vista and later. On systems before Vista <see cref="Path.FileName"/> is always returned.</remarks>
         '''' <exception cref="ArgumentNullException"><paramref name="Path"/> is null</exception>
         '<Extension()> _
-        'Public Function GetLocalizedName(ByVal Path As Path) As String
+        'Public Function GetLocalizedName(Path As Path) As String
         '    If Path Is Nothing Then Throw New ArgumentNullException("Path")
         '    Dim dExists As New API.FileSystem.dSHGetLocalizedName(AddressOf API.FileSystem.SHGetLocalizedName)
         '    If Not API.Helpers.IsFunctionExported(dExists) Then _
@@ -61,32 +69,36 @@ Namespace IOt
         '    'Dim Name = Marshal.PtrToStringBSTR(pszResModule)
         '    'Marshal.FreeBSTR(pszResModule)
         '    Return pszResModule.ToString
-        'End Function
+        'End Function 
         'TODO: GetLocalizedName (reliable!)
+
         ''' <summary>Shows system file properties dialog for given file or directory</summary>
-        ''' <param name="Path">Path to file or directory to show dialog for</param>
-        ''' <param name="Owner">Owning window. May be null.</param>
-        ''' <param name="WaitForClose">Wait for property dialog to be closed. Note: DIalog is not displayed modally.</param>
-        ''' <exception cref="IO.FileNotFoundException">File or directory specified by <paramref name="Path"/> cannot be found</exception>
-        ''' <exception cref="IO.DirectoryNotFoundException">Part of path of file or directory specified by <paramref name="Path"/> cannot be found</exception>
-        ''' <exception cref="UnauthorizedAccessException">Assecc to file or directory specified by <paramref name="Path"/> is denied</exception>
-        ''' <exception cref="API.Win32APIException">Another Win32 error occured</exception>
+        ''' <param name="path">Path to file or directory to show dialog for</param>
+        ''' <param name="owner">Owning window. May be null.</param>
+        ''' <param name="waitForClose">Wait for property dialog to be closed. Note: DIalog is not displayed modally.</param>
+        ''' <exception cref="IO.FileNotFoundException">File or directory specified by <paramref name="path"/> cannot be found</exception>
+        ''' <exception cref="IO.DirectoryNotFoundException">Part of path of file or directory specified by <paramref name="path"/> cannot be found</exception>
+        ''' <exception cref="UnauthorizedAccessException">Access to file or directory specified by <paramref name="path"/> is denied</exception>
+        ''' <exception cref="API.Win32APIException">Another Win32 error occurred</exception>
         ''' <version version="1.5.2">Method added</version>
-        <Extension()> _
-        Public Sub ShowProperties(ByVal Path As Path, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal WaitForClose As Boolean = False)
+        ''' <version version="1.5.10">Parameter <c>Path</c> renamed to <c>path</c></version>
+        ''' <version version="1.5.10">Parameter <c>Owner</c> renamed to <c>owner</c></version>
+        ''' <version version="1.5.10">Parameter <c>WaitForClose</c> renamed to <c>waitForClose</c></version>
+        <Extension()>
+        Public Sub ShowProperties(path As Path, Optional owner As IWin32Window = Nothing, Optional waitForClose As Boolean = False)
             Dim SEI As New SHELLEXECUTEINFO
             With SEI
                 .cbSize = Marshal.SizeOf(SEI)
                 .fMask = ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST Or ShellExecuteInfoFlags.SEE_MASK_FLAG_NO_UI Or ShellExecuteInfoFlags.SEE_MASK_UNICODE
-                If WaitForClose Then .fMask = .fMask Or ShellExecuteInfoFlags.SEE_MASK_NOCLOSEPROCESS Or ShellExecuteInfoFlags.SEE_MASK_NOASYNC
+                If waitForClose Then .fMask = .fMask Or ShellExecuteInfoFlags.SEE_MASK_NOCLOSEPROCESS Or ShellExecuteInfoFlags.SEE_MASK_NOASYNC
                 .lpVerb = "properties"
-                .lpFile = Path.Path
+                .lpFile = path.Path
                 .lpParameters = vbNullString
                 .lpDirectory = vbNullString
                 .nShow = 0
                 .hInstApp = 0
                 .lpIDList = 0
-                If Owner IsNot Nothing Then .hwnd = Owner.Handle.ToInt32
+                If owner IsNot Nothing Then .hwnd = owner.Handle.ToInt32
             End With
             If ShellExecuteEx(SEI) = 0 Then
                 Dim LastWin32 = New Win32APIException
@@ -113,7 +125,7 @@ Namespace IOt
         ''' <exception cref="System.NotSupportedException">path is in an invalid format.</exception>
         ''' <remarks>Use this method instead of <see cref="IO.File.Open"/> when you need file-like access to something different than file (e.g. NTFS alternate stream or port)</remarks>
         ''' <version version="1.5.3">This function is new in version 1.5.3</version>
-        Public Function OpenFile(ByVal path As String, ByVal mode As IO.FileMode, ByVal access As IO.FileAccess, Optional ByVal share As IO.FileShare = IO.FileShare.Read) As IO.FileStream
+        Public Function OpenFile(path As String, mode As IO.FileMode, access As IO.FileAccess, Optional share As IO.FileShare = IO.FileShare.Read) As IO.FileStream
             If path Is Nothing Then Throw New ArgumentException("path")
             If path = "" Then Throw New ArgumentNullException(ResourcesT.Exceptions.CannotBeAnEmptyString.f(ResourcesT.Exceptions.Path), "path")
             Dim apiAccess As FileSystem.GenericFileAccess = If(access.HasFlag(IO.FileAccess.Read), GenericFileAccess.GENERIC_READ, GenericFileAccess.None) Or
@@ -132,11 +144,12 @@ Namespace IOt
             If mode.HasFlag(IO.FileMode.Append) Then ret.Seek(ret.Length, IO.SeekOrigin.Begin)
             Return ret
         End Function
+
         ''' <summary>Tests if file, stream, device or something other file-like exists</summary>
         ''' <param name="path">Path to file, device etc. to test</param>
         ''' <returns>True if given device or file exists, false otherwise</returns>
         ''' <remarks>Use this instead of <see cref="IO.File.Exists"/> when you are working with something different than file (e.g. NTFS alternate stream or port)</remarks>
-        Public Function TestFileExists(ByVal path$) As Boolean
+        Public Function TestFileExists(path$) As Boolean
             Dim attrs = API.GetFileAttributes(path)
             If attrs = INVALID_FILE_ATTRIBUTES Then Return False
             Return True
@@ -150,12 +163,12 @@ Namespace IOt
         ''' False if <paramref name="linkTarget"/> represents file.
         ''' Null to detect (in this case <paramref name="linkTarget"/> must exist).
         ''' </param>
-        ''' <remarks>This operation may require administrator privilegies.</remarks>
+        ''' <remarks>This operation may require administrator privileges.</remarks>
         ''' <exception cref="IO.FileNotFoundException"><paramref name="isDirectory"/> is null and <paramref name="linkTarget"/> does not exist.</exception>
         ''' <exception cref="IO.IOException">Failed to create symbolic link</exception>
         ''' <exception cref="ArgumentNullException">
         ''' <paramref name="linkTarget"/> or <paramref name="linkPath"/> is null. -or-
-        ''' <paramref name="linkTarget"/> is root-relative (\something) or current-working-directoty-relative (X:something) and <paramref name="isDirectory"/> is null. 
+        ''' <paramref name="linkTarget"/> is root-relative (\something) or current-working-directory-relative (X:something) and <paramref name="isDirectory"/> is null. 
         ''' </exception>
         ''' <exception cref="ArgumentException"><paramref name="linkTarget"/> or <paramref name="linkPath"/> is an empty string.</exception>
         ''' <version version="1.5.4">This method is new in version 1.5.4</version>
@@ -194,7 +207,7 @@ Namespace IOt
         ''' <summary>Creates a hard-link</summary>
         ''' <param name="existingFile">File to point hardlink to</param>
         ''' <param name="newFile">Path to store hardlink into</param>
-        ''' <remarks>This operation may require administrator privilegies.</remarks>
+        ''' <remarks>This operation may require administrator privileges.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="existingFile"/> or <paramref name="newFile"/> is null</exception>
         ''' <exception cref="ArgumentException"><paramref name="existingFile"/> or <paramref name="newFile"/> is an empty string</exception>
         ''' <exception cref="IO.IOException">Hard link creation failed.</exception>
@@ -313,6 +326,45 @@ Namespace IOt
             ''' <summary>Junction (folder link)</summary>
             JunctionPoint = 3
         End Enum
+
+#Region "Junctions"
+        'From https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET
+        ''' <summary>Creates a junction point from the specified directory to the specified target directory.</summary>
+        ''' <param name="junctionPoint">The junction point path</param>
+        ''' <param name="targetDir">The target directory</param>
+        ''' <param name="overwrite">If true overwrites an existing reparse point or empty directory</param>
+        ''' <exception cref="IO.IOException">Thrown when the junction point could not be created or when an existing directory was found And <paramref name="overwrite" /> if false</exception>
+        ''' <version version="1.5.10">This method is new in version 1.5.10</version>
+        Public Sub CreateJunction(junctionPoint As String, targetDir As String, overwrite As Boolean)
+            API.JunctionPoint.Create(junctionPoint, targetDir, overwrite)
+        End Sub
+
+        ''' <summary>Deletes a junction point at the specified source directory along with the directory itself.</summary>
+        ''' <remarks>Does nothing if the junction point does Not exist.</remarks>
+        ''' <param name="junctionPoint">The junction point path</param>
+        ''' <version version="1.5.10">This method is new in version 1.5.10</version>
+        Public Sub DeleteJunction(junctionPoint As String)
+            API.JunctionPoint.Delete(junctionPoint)
+        End Sub
+
+        ''' <summary>Determines whether the specified path exists and refers to a junction point.</summary>
+        ''' <param name="path">The junction point path</param>
+        ''' <returns>True if the specified path represents a junction point</returns>
+        ''' <exception cref="IO.IOException">Thrown if the specified path is invalid or some other error occurs</exception>
+        ''' <version version="1.5.10">This method is new in version 1.5.10</version>
+        Public Function JunctionExists(path$) As Boolean
+            Return API.JunctionPoint.Exists(path)
+        End Function
+
+        ''' <summary>Gets the target of the specified junction point.</summary>
+        ''' <param name="junctionPoint">The junction point path</param>
+        ''' <returns>The target of the junction point</returns>
+        ''' <exception cref="IO.IOException">Thrown when the specified path does not exist, is invalid, is not a junction point, or some other error occurs</exception>
+        ''' <version version="1.5.10">This method is new in version 1.5.10</version>
+        Public Function ResolveJunction(junctionPoint As String) As String
+            Return API.JunctionPoint.GetTarget(junctionPoint)
+        End Function
+#End Region
     End Module
 
 End Namespace

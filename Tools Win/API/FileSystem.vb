@@ -5,7 +5,7 @@ Imports System.Text
 
 #If True
 Namespace API
-    ''' <summary>Contains API decalarations related to file system</summary>
+    ''' <summary>Contains API declarations related to file system</summary>
     Module FileSystem
 #Region "Structures"
         ''' <summary>Contains information about a file object.</summary>
