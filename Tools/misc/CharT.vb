@@ -7,7 +7,7 @@ Public Module Chars
     Public Const Cr As Char = vbCr
     ''' <summary>Line feed (LF) character (\n, code 10 = 0xA)</summary>
     ''' <seealso cref="vbLf"/>
-    ''' <version version="1.5.10">Fixed typo in XML comment</version>
+    ''' <version version="1.6.0">Fixed typo in XML comment</version>
     Public Const Lf As Char = vbLf
     ''' <summary>Null character (code 0)</summary>
     ''' <seeaso cref="vbNullChar"/>
@@ -142,38 +142,38 @@ Public Module Chars
     ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
     Public Const RightToLeftMark As Char = ChrW(&H200F)
     ''' <summary>Unicode character Arabic Letter Mark (ALM, 0x061C)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const ArabicLetterMark As Char = ChrW(&H61C)
     ''' <summary>Unicode character Left-To-Right Isolate (LRI, 0x2066)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const LeftToRightIsolate As Char = ChrW(&H2066)
     ''' <summary>Unicode character Right-To-Left Isolate (RLI, 0x2067)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const RightToLeftIsolate As Char = ChrW(&H2067)
     ''' <summary>Unicode character First Strong Isolate (FSI, 0x2068)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const FirstStrongIsolateIsolate As Char = ChrW(&H2068)
     ''' <summary>Unicode character Pop Directional Isolate (PDI, 0x2069)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const PopDirectionalIsolate As Char = ChrW(&H2069)
 
     ''' <summary>Unicode character  Inhibit Symmetric Swapping(0x206A)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const InhibitSymmetricSwapping As Char = ChrW(&H206A)
     ''' <summary>Unicode character Activate Symmetric Swapping (0x206B)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const ActivateSymmetricSwapping As Char = ChrW(&H206B)
     ''' <summary>Unicode character Inhibit Arabic Form Shaping (0x206C)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const InhibitArabicFormShaping As Char = ChrW(&H206C)
     ''' <summary>Unicode character Activate Arabic Form Shaping (0x206D)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const ActivateArabicFormShaping As Char = ChrW(&H206D)
     ''' <summary>Unicode character National Digit Shapes (0x206E)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const NationalDigitShapes As Char = ChrW(&H206E)
     ''' <summary>Unicode character NominalDigitShapes (0x206F)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const NominalDigitShapes As Char = ChrW(&H206F)
 
     ''' <summary>Unicode character Zero Width Non-Joiner (ZWNJ, 0x200C)</summary>
@@ -186,7 +186,7 @@ Public Module Chars
     ''' <version version="1.5.4">This constant is new in version 1.5.4</version>
     Public Const WordJoiner As Char = ChrW(&H2060)
     ''' <summary>Unicode character Narrow No-Break Space (NNBSP, 0x202F)</summary>
-    ''' <version version="1.5.10">This constant is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This constant is new in version 1.6.0</version>
     Public Const NarrowNoBreakSpace As Char = ChrW(&H202F)
 End Module
 #End If

@@ -259,7 +259,7 @@ Namespace TextT.UnicodeT
     End Enum
 
     ''' <summary>Decorates field with <see cref="UnicodeJoiningType"/> value</summary>
-    ''' <version version="1.5.10">This class is new in version 1.5.10</version>
+    ''' <version version="1.6.0">This class is new in version 1.6.0</version>
     <AttributeUsage(AttributeTargets.Field)>
     Public Class UnicodeJoiningTypeAttribute
         Inherits Attribute
@@ -277,7 +277,7 @@ Namespace TextT.UnicodeT
     ''' <remarks>Value Alef Maqsurah once exited in Unicode standard (v2.x) but it does not appear in newer versions. It seems to be replaced with <see cref="UnicodeJoiningGroup.YehWithTail"/>. So Alef Maqsurah is not included in this implementation.</remarks>
     ''' <seelaso cref="UnicodeExtensions.Origin"/>
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
-    ''' <version version="1.5.10"><see cref="XmlElementAttribute"/> on members replaced with <see cref="XmlEnumAttribute"/></version>
+    ''' <version version="1.6.0"><see cref="XmlElementAttribute"/> on members replaced with <see cref="XmlEnumAttribute"/></version>
     Public Enum UnicodeJoiningGroup
         ''' <summary>No joining group</summary>
         <XmlIgnore> none
@@ -327,13 +327,13 @@ Namespace TextT.UnicodeT
         ''' <summary>Dual joining Arabic group Lam (ل)</summary>
         <XmlEnum("Lam"), UnicodeJoiningType(UnicodeJoiningType.Dual)> Lam
         ''' <summary>Dual joining group African Feh (ࢻ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("African_Feh"), UnicodeJoiningType(UnicodeJoiningType.Dual)> AfricanFeh
         ''' <summary>Dual joining group African Noon (ࢽ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("African_Noon"), UnicodeJoiningType(UnicodeJoiningType.Dual)> AfricanNoon
         ''' <summary>Dual joining group African Qaf (ࢼ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("African_Qaf"), UnicodeJoiningType(UnicodeJoiningType.Dual)> AfricanQaf
 #End Region
 #Region "Right Arabic"
@@ -505,46 +505,46 @@ Namespace TextT.UnicodeT
 
 #Region "Malayalam"
         ''' <summary>Dual joining group Malayalam Nga (ࡠ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Nga"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNga
         ''' <summary>Non-joining group Malayalam Ja (ࡡ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Ja"), UnicodeJoiningType(UnicodeJoiningType.NonJoining)> MalayalamJa
         ''' <summary>Dual joining group Malayalam Nya (ࡢ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Nya"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNya
         ''' <summary>Dual joining group Malayalam Tta (ࡣ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Tta"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamTta
         ''' <summary>Dual joining group Malayalam Nna (ࡤ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Nna"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNna
         ''' <summary>Dual joining group Malayalam Nnna (ࡥ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Nnna"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamNnna
         ''' <summary>Non-joining group Malayalam Bha (ࡦ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Bha"), UnicodeJoiningType(UnicodeJoiningType.NonJoining)> MalayalamBha
         ''' <summary>Right joining group Malayalam Ra (ࡧ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Ra"), UnicodeJoiningType(UnicodeJoiningType.Right)> MalayalamRa
         ''' <summary>Dual joining group Malayalam Lla (ࡨ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Lla"), UnicodeJoiningType(UnicodeJoiningType.Dual)> MalayalamLla
         ''' <summary>Right joining group Malayalam Llla (ࡩ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Llla"), UnicodeJoiningType(UnicodeJoiningType.Right)> MalayalamLlla
         ''' <summary>Right joining group Malayalam Ssa (ࡪ)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Malayalam_Ssa"), UnicodeJoiningType(UnicodeJoiningType.Right)> MalayalamSsa
 #End Region
 
 #Region "Hanifi Rohingya"
         ''' <summary>Dual joining group Hanifi Rohingya Kinna Ya (𐴙)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Hanifi_Rohingya_Kinna_Ya"), UnicodeJoiningType(UnicodeJoiningType.Dual)> HanifiRohingyaKinnaYa
         ''' <summary>Dual joining group Hanifi Rohingya Pa (𐴂)</summary>
-        ''' <version version="1.5.10">This member is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This member is new in version 1.6.0</version>
         <XmlEnum("Hanifi_Rohingya_Pa"), UnicodeJoiningType(UnicodeJoiningType.Dual)> HanifiRohingyaPa
 #End Region
     End Enum

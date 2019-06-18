@@ -193,57 +193,57 @@ Namespace TextT.UnicodeT
 #Region "TODO New properties" '9.0-12.0
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @PCM</remarks>
         <XmlAttribute("PCM")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kRSTUnicode</remarks>
         <XmlAttribute("kRSTUnicode")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kTGT_MergedSrc</remarks>
         <XmlAttribute("kTGT_MergedSrc")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @vo</remarks>
         <XmlAttribute("vo")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @RI</remarks>
         <XmlAttribute("RI")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @EqUIdeo</remarks>
         <XmlAttribute("EqUIdeo")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kJinmeiyoKanji</remarks>
         <XmlAttribute("kJinmeiyoKanji")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kJoyoKanji</remarks>
         <XmlAttribute("kJoyoKanji")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kKoreanEducationHanja</remarks>
         <XmlAttribute("kKoreanEducationHanja")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kKoreanName</remarks>
         <XmlAttribute("kKoreanName")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
         ''' <summary></summary>
         ''' <returns></returns>
-        ''' <version version="1.5.10">This property is new in version 1.5.10</version>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kTGH</remarks>
         <XmlAttribute("kTGH")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
 #End Region
