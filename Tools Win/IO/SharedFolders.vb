@@ -6,8 +6,8 @@ Namespace IOt
     Public Module SharedFolders
         ''' <summary>Gets list of names of shared folders of given server</summary>
         ''' <param name="server">Name of server (or IP address; excluding leading \\)</param>
-        ''' <returns>List of names of folders shared by server. List contains only folder names. To use, each nam must be preppended by \\<paramref name="server"/>\</returns>
-        ''' <exception cref="API.Win32APIException">An error occured</exception>
+        ''' <returns>List of names of folders shared by server. List contains only folder names. To use, each name must be preppended by \\<paramref name="server"/>\</returns>
+        ''' <exception cref="API.Win32APIException">An error occurred</exception>
         Public Function GetSharedFolders(ByVal server As String) As String()
             Dim dataptr As IntPtr
             Dim num%, total%, hresume%

@@ -1,4 +1,5 @@
 ﻿Imports System, System.Diagnostics, System.Windows.Forms, System.Runtime.InteropServices
+
 Namespace API.Hooks
     ''' <summary>Contains API declarations related to Win32 hooks</summary>
     Friend Module Win32Hooks

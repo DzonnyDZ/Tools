@@ -105,6 +105,7 @@
     <Compile Include="..\SharedFiles\GlobalAssemblyInfo.vb">
       <Link>My Project\GlobalAssemblyInfo.vb</Link>
     </Compile>
+    <Compile Include="API\JunctionPoint.vb" />
     <Compile Include="API\Messages.lParam.vb" />
     <Compile Include="API\Messages.ReturnValues.vb" />
     <Compile Include="API\Message values.vb" />
