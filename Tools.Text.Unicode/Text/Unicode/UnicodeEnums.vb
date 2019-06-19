@@ -599,7 +599,18 @@ Namespace TextT.UnicodeT
         ''' <summary>Non-breaking ("Glue") - Prohibit line breaks before and after</summary>
         <XmlEnum("GL")> NonBreakingGlue = 9
         ''' <summary>Space (SP) - Enable indirect line breaks</summary>
-        <XmlEnum("SP")> SPace = 10
+        ''' <version version="1.6.0">Renamed from <c>SPace</c> to <c>Space</c></version>
+        <XmlEnum("SP")> Space = 10
+        '9.0
+        ''' <summary>Zero-width joiner (ZWJ) - Prohibit line breaks within joiner sequences</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0</version>
+        <XmlEnum("ZWJ")> ZeroWidthJoiner = 11
+        ''' <summary>Emoji Base (EB) - Do not break from following Emoji Modifier</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0</version>
+        <XmlEnum("EB")> EmojiBase = 12
+        ''' <summary>Emoji Modifier (EM) - Do not break from preceding Emoji Base</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0</version>
+        <XmlEnum("EM")> EmojiModifier = 13
 #End Region
 #Region "Break Opportunities"
         ''' <summary>Break Opportunity Before and After (B2) - Provide a line break opportunity before and after the character</summary>
@@ -734,6 +745,22 @@ Namespace TextT.UnicodeT
         ''' <summary>The RI characters are used in pairs to denote Emoji national flag symbols corresponding to ISO country codes.</summary>
         ''' <remarks>Sequences of more than two RI characters should be separated by other characters, such as U+200B ZERO WIDTH SPACE (ZWSP).</remarks>
         <XmlEnum("RI")> RegionalIndicator
+        '9.0
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("E_Base"), Obsolete("This value is obsolete and unused.")> EBase
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("E_Base_GAZ"), Obsolete("This value is obsolete and unused.")> EBaseGlueAfterZeroWidthJoiner
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("E_Modifier"), Obsolete("This value is obsolete and unused.")> EModifier
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("Glue_After_Zwj"), Obsolete("This value is obsolete and unused.")> GlueAfterZeroWidthJoiner
+        ''' <summary>Zero width joiner (U+200D)</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0</version>
+        <XmlEnum("ZWJ")> ZeroWidthJoiner
     End Enum
 
     ''' <summary>Specifies Unicode word-breaky types</summary>
@@ -771,6 +798,26 @@ Namespace TextT.UnicodeT
         <XmlEnum("HL")> HebrewLetter
         ''' <summary>Apostrophe (')</summary>
         <XmlEnum("SQ")> SingleQuote
+        '9.0
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version versin="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("EB"), Obsolete("This value is obsolete and unused.")> EBase
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version versin="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("EBG"), Obsolete("This value is obsolete and unused.")> EBaseGlueAfterZeroWidthJoiner
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version versin="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("EM"), Obsolete("This value is obsolete and unused.")> EModifier
+        ''' <summary>This value is obsolete and unused</summary>
+        ''' <version versin="1.6.0">This enum member is new in version 1.6.0 and immediately obsolete</version>
+        <XmlEnum("GAZ"), Obsolete("This value is obsolete and unused.")> GlueAfterZeroWidthJoiner
+        ''' <summary>Zero width joiner (ZWJ, U+200D)</summary>
+        ''' <version versin="1.6.0">This enum member is new in version 1.6.0</version>
+        <XmlEnum("ZWJ")> ZeroWidthJoiner
+        '11.0
+        ''' <summary><see cref="Globalization.UnicodeCategory.SpaceSeparator"/> and not <see cref="UnicodeLineBreakType.NonBreakingGlue"/></summary>
+        ''' <version versin="1.6.0">This enum member is new in version 1.6.0</version>
+        <XmlEnum("WSegSpace")> WSegSpace
     End Enum
 
     ''' <summary>Specifies sentence break types</summary>
@@ -861,12 +908,28 @@ Namespace TextT.UnicodeT
         ''' <summary>Top-left position</summary>
         <XmlEnum("Top_And_Left")> TopLeft = Top Or Left
         ''' <summary>Top-left and right position</summary>
-        <XmlEnum("Top_And_Left_And_Right")> TopLeftRight = Top Or UnicodeIndicPositionalCategory.Left Or Right
+        <XmlEnum("Top_And_Left_And_Right")> TopLeftRight = Top Or Left Or Right
         ''' <summary>Top-right position</summary>
         <XmlEnum("Top_And_Right")> TopRight = Top Or Right
         ''' <summary>Over-struck</summary>
         <XmlEnum("Overstruck")> Overstruck = 8
         ''' <summary>Visually order left</summary>
         <XmlEnum("Visual_Order_Left")> VisualOrderLeft = 9
+        ''' <summary>Bottom-left position</summary>
+        ''' <version version="1.6.0">This enum member is new in version 1.6.0</version>
+        <XmlEnum("Bottom_And_Left")> BottomAndLeft = Bottom Or Left
+    End Enum
+
+    ''' <summary>Character vertical orientations used to establish a default for the correct orientation of characters when used in vertical text layout</summary>
+    ''' <version version="1.5.6">This enum is new in version 1.5.6</version>
+    Public Enum UnicodeVerticalOrientation
+        ''' <summary>Upright, the same orientation As In the code charts</summary>
+        <XmlEnum("U")> Upright
+        ''' <summary>Rotated 90 degrees clockwise compared To the code charts</summary>
+        <XmlEnum("R")> Rotated
+        ''' <summary>Transformed typographically, With fallback To Upright</summary>
+        <XmlEnum("Tu")> TransformedUprightFallback
+        ''' <summary>Transformed typographically, With fallback To Rotated</summary>
+        <XmlEnum("Tr")> TransformedRotatedFallback
     End Enum
 End Namespace

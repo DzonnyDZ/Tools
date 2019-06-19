@@ -22,7 +22,7 @@ Namespace TextT.UnicodeT
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class UnicodeResources
@@ -304,6 +304,15 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property d_EastAsianWidth() As String
             Get
                 Return ResourceManager.GetString("d_EastAsianWidth", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Equivalent Unified Ideograph.
+        '''</summary>
+        Friend Shared ReadOnly Property d_EquivalentUnifiedIdeograph() As String
+            Get
+                Return ResourceManager.GetString("d_EquivalentUnifiedIdeograph", resourceCulture)
             End Get
         End Property
         
@@ -830,6 +839,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Jinmei-yō Kanji.
+        '''</summary>
+        Friend Shared ReadOnly Property d_JinmeiyoKanji() As String
+            Get
+                Return ResourceManager.GetString("d_JinmeiyoKanji", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Join Control.
         '''</summary>
         Friend Shared ReadOnly Property d_JoinControl() As String
@@ -853,6 +871,33 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property d_JoiningType() As String
             Get
                 Return ResourceManager.GetString("d_JoiningType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Jōyō Kanji.
+        '''</summary>
+        Friend Shared ReadOnly Property d_JoyoKanji() As String
+            Get
+                Return ResourceManager.GetString("d_JoyoKanji", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Korean Education Hanja.
+        '''</summary>
+        Friend Shared ReadOnly Property d_KoreanEducationHanja() As String
+            Get
+                Return ResourceManager.GetString("d_KoreanEducationHanja", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Korean Name.
+        '''</summary>
+        Friend Shared ReadOnly Property d_KoreanName() As String
+            Get
+                Return ResourceManager.GetString("d_KoreanName", resourceCulture)
             End Get
         End Property
         
@@ -1028,6 +1073,33 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Prepended Concatenation Mark.
+        '''</summary>
+        Friend Shared ReadOnly Property d_PrependedConcatenationMark() As String
+            Get
+                Return ResourceManager.GetString("d_PrependedConcatenationMark", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Radical Stroke Indexes.
+        '''</summary>
+        Friend Shared ReadOnly Property d_RadicalStrokeIndexes() As String
+            Get
+                Return ResourceManager.GetString("d_RadicalStrokeIndexes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Regional Indicator.
+        '''</summary>
+        Friend Shared ReadOnly Property d_RegionalIndicator() As String
+            Get
+                Return ResourceManager.GetString("d_RegionalIndicator", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Script.
         '''</summary>
         Friend Shared ReadOnly Property d_Script() As String
@@ -1091,11 +1163,29 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Tangut Merged source.
+        '''</summary>
+        Friend Shared ReadOnly Property d_TangutMergedSource() As String
+            Get
+                Return ResourceManager.GetString("d_TangutMergedSource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Tilecase Mapping.
         '''</summary>
         Friend Shared ReadOnly Property d_TilecaseMapping() As String
             Get
                 Return ResourceManager.GetString("d_TilecaseMapping", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tōngyòng Guīfàn Hànzìbiǎo.
+        '''</summary>
+        Friend Shared ReadOnly Property d_TongyongGuifanHanzibiao() As String
+            Get
+                Return ResourceManager.GetString("d_TongyongGuifanHanzibiao", resourceCulture)
             End Get
         End Property
         
@@ -2000,6 +2090,15 @@ Namespace TextT.UnicodeT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Vertical Orientation.
+        '''</summary>
+        Friend Shared ReadOnly Property d_VerticalOrientation() As String
+            Get
+                Return ResourceManager.GetString("d_VerticalOrientation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Word Break.
         '''</summary>
         Friend Shared ReadOnly Property d_WordBreak() As String
@@ -2185,6 +2284,15 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property ex_UnsuppportedGeneralCategory() As String
             Get
                 Return ResourceManager.GetString("ex_UnsuppportedGeneralCategory", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unsuported vertical orientation: &apos;{0}&apos;.
+        '''</summary>
+        Friend Shared ReadOnly Property ex_UnsuppportedVerticalOrientation() As String
+            Get
+                Return ResourceManager.GetString("ex_UnsuppportedVerticalOrientation", resourceCulture)
             End Get
         End Property
         
@@ -2419,6 +2527,15 @@ Namespace TextT.UnicodeT
         Friend Shared ReadOnly Property propcat_unihan_Variants() As String
             Get
                 Return ResourceManager.GetString("propcat_unihan_Variants", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unlisted.
+        '''</summary>
+        Friend Shared ReadOnly Property propcat_Unlisted() As String
+            Get
+                Return ResourceManager.GetString("propcat_Unlisted", resourceCulture)
             End Get
         End Property
         

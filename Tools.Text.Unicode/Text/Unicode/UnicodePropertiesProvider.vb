@@ -6,10 +6,13 @@ Imports System.Globalization.CultureInfo
 Imports Tools.NumericsT
 Imports System.Xml.Serialization
 Imports Tools.LinqT
+Imports System.Globalization
 
 'List of all properties http://www.unicode.org/reports/tr44/#Properties
 'XML format specification http://www.unicode.org/reports/tr42/
 'Property value aliases http://www.unicode.org/Public/6.0.0/ucd/PropertyValueAliases.txt
+
+'TODO: List of files as constants
 
 Namespace TextT.UnicodeT
     ''' <summary>Common base class for Unicode code points and groups. This class holds character properties</summary>
@@ -190,63 +193,6 @@ Namespace TextT.UnicodeT
 #End Region
 
 #Region "Properties"
-#Region "TODO New properties" '9.0-12.0
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @PCM</remarks>
-        <XmlAttribute("PCM")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @kRSTUnicode</remarks>
-        <XmlAttribute("kRSTUnicode")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @kTGT_MergedSrc</remarks>
-        <XmlAttribute("kTGT_MergedSrc")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @vo</remarks>
-        <XmlAttribute("vo")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @RI</remarks>
-        <XmlAttribute("RI")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @EqUIdeo</remarks>
-        <XmlAttribute("EqUIdeo")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @kJinmeiyoKanji</remarks>
-        <XmlAttribute("kJinmeiyoKanji")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @kJoyoKanji</remarks>
-        <XmlAttribute("kJoyoKanji")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @kKoreanEducationHanja</remarks>
-        <XmlAttribute("kKoreanEducationHanja")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @kKoreanName</remarks>
-        <XmlAttribute("kKoreanName")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-        ''' <summary></summary>
-        ''' <returns></returns>
-        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
-        ''' <remarks>Underlying XML attribute is @kTGH</remarks>
-        <XmlAttribute("kTGH")> <UcdProperty(), UcdCategory()> <LDisplayName()> Public ReadOnly Property XXX
-#End Region
 #Region "General"
         ''' <summary>Gets version of Unicode in which a code point was assigned to an abstract character, or made surrogate or non-character</summary>
         ''' <returns>Version of Unicode standard or null. Null is returned also when underlying XML attribute has value "unassigned".</returns>
@@ -990,9 +936,9 @@ Namespace TextT.UnicodeT
                     Case "HL" : Return UnicodeLineBreakType.HebrewLetter
                     Case "CJ" : Return UnicodeLineBreakType.ConditionalJapaneseStarter
                         '9.0
-                    Case "EB" : Return UnicodeLineBreakType.XXX
-                    Case "EM" : Return UnicodeLineBreakType.XXX
-                    Case "ZWJ" : Return UnicodeLineBreakType.XXX
+                    Case "EB" : Return UnicodeLineBreakType.EmojiBase
+                    Case "EM" : Return UnicodeLineBreakType.EmojiModifier
+                    Case "ZWJ" : Return UnicodeLineBreakType.ZwroWidthJoiner
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1785,11 +1731,13 @@ Namespace TextT.UnicodeT
                     Case "XX" : Return UnicodeGraphemeClusterBreak.other
                     Case "RI" : Return UnicodeGraphemeClusterBreak.RegionalIndicator
                         '9.0
-                    Case "EB" : Return UnicodeGraphemeClusterBreak.XXX
-                    Case "EBG" : Return UnicodeGraphemeClusterBreak.XXX
-                    Case "EM" : Return UnicodeGraphemeClusterBreak.XXX
-                    Case "GAZ" : Return UnicodeGraphemeClusterBreak.XXX
-                    Case "ZWJ" : Return UnicodeGraphemeClusterBreak.XXX
+#Disable Warning BC40000
+                    Case "EB" : Return UnicodeGraphemeClusterBreak.EBase
+                    Case "EBG" : Return UnicodeGraphemeClusterBreak.EBaseGlueAfterZeroWidthJoiner
+                    Case "EM" : Return UnicodeGraphemeClusterBreak.EModifier
+                    Case "GAZ" : Return UnicodeGraphemeClusterBreak.GlueAfterZeroWidthJoiner
+#Enable Warning BC40000
+                    Case "ZWJ" : Return UnicodeGraphemeClusterBreak.ZeroWidthJoiner
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1823,13 +1771,13 @@ Namespace TextT.UnicodeT
                     Case "HL" : Return UnicodeWordBreakType.HebrewLetter
                     Case "SQ" : Return UnicodeWordBreakType.SingleQuote
                         '9.0
-                    Case "EB" : Return UnicodeWordBreakType.XXX
-                    Case "EBG" : Return UnicodeWordBreakType.XXX
-                    Case "EM" : Return UnicodeWordBreakType.XXX
-                    Case "GAZ" : Return UnicodeWordBreakType.XXX
-                    Case "ZWJ" : Return UnicodeWordBreakType.XXX
+                    Case "EB" : Return UnicodeWordBreakType.EBase
+                    Case "EBG" : Return UnicodeWordBreakType.EBaseGlueAfterZeroWidthJoiner
+                    Case "EM" : Return UnicodeWordBreakType.EModifier
+                    Case "GAZ" : Return UnicodeWordBreakType.GlueAfterZeroWidthJoiner
+                    Case "ZWJ" : Return UnicodeWordBreakType.ZeroWidthJoiner
                             '11.0
-                    Case "WSegSpace" : Return UnicodeWordBreakType.XXX
+                    Case "WSegSpace" : Return UnicodeWordBreakType.WSegSpace
 
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
@@ -3294,6 +3242,163 @@ Namespace TextT.UnicodeT
 
 #End Region
 
+#Region "New properties 9.0-12.0"
+        ''' <summary>Gets value indicating if character belongs to Prepended Concatenation Mark category</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>
+        ''' A small class of visible format controls, which precede and then span a sequence of other characters, usually digits. These have also been known as "subtending marks", because most of them take a form which visually extends underneath the sequence of following digits.
+        ''' <para>Underlying XML attribute is @PCM</para>
+        ''' </remarks>
+        <XmlAttribute("PCM")>
+        <UcdProperty("Prepended_Concatenation_Mark", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_PrependedConcatenationMark")>
+        Public ReadOnly Property PrependedConcatenationMark As Boolean
+            Get
+                Return GetPropertyValue("PCM") = "Y"
+            End Get
+        End Property
+
+        ''' <summary>Gets radial-stroke value used in the preparation of the code charts for the Tangut blocks</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @kRSTUnicode</remarks>
+        <XmlAttribute("kRSTUnicode")>
+        <UcdProperty("kRSTUnicodes", "TangutSources.txt", UnicodePropertyType.Numeric, UnicodePropertyStatus.Informative)>
+        <UcdCategory(UnicodePropertyCategory.Unlisted), LDisplayName(GetType(UnicodeResources), "d_RadicalStrokeIndexes")>
+        Public ReadOnly Property RadicalStrokeIndexes As Decimal?
+            Get
+                Dim strValue = GetPropertyValue("kRSTUnicode")
+                If String.IsNullOrEmpty(strValue) Then Return Decimal.Parse(strValue, InvariantCulture)
+                Return Nothing
+            End Get
+        End Property
+
+        ''' <summary>Gets value specifying mapping for Tangut ideographs and components</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @kTGT_MergedSrc</remarks>
+        <XmlAttribute("kTGT_MergedSrc")>
+        <UcdProperty("kTGT_MergedSrc", "TangutSources.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative)>
+        <UcdCategory(UnicodePropertyCategory.Unlisted), LDisplayName(GetType(UnicodeResources), "d_TangutMergedSource")>
+        Public ReadOnly Property TangutMergedSource As String
+            Get
+                Return GetPropertyValue("kTGT_MergedSrc")
+            End Get
+        End Property
+
+        ''' <summary>Gets value used to establish a default for the correct orientation of characters when used in vertical text layout,</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>
+        ''' As specified in Unicode Standard Annex #50, "Unicode Vertical Text Layout"
+        ''' the property may default to <see cref="UnicodeVerticalOrientation.Rotated"/> or <see cref="UnicodeVerticalOrientation.Upright"/>, depends.
+        ''' That's why this property returns null when unassigned and the caller must determine proper default value.
+        ''' <para>Underlying XML attribute is @vo</para>
+        ''' </remarks>
+        ''' <exception cref="InvalidOperationException">Underlying XML attribute has unsupported value</exception>
+        <XmlAttribute("vo")>
+        <UcdProperty("Vertical_Orientation", "VerticalOrientation.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_VerticalOrientation")>
+        Public ReadOnly Property VerticalOrientation As UnicodeVerticalOrientation?
+            Get
+                Dim value = GetPropertyValue("vo")
+                If value = "" Then Return Nothing
+                Select Case value
+                    Case "U" : Return UnicodeVerticalOrientation.Upright
+                    Case "R" : Return UnicodeVerticalOrientation.Rotated
+                    Case "Tu" : Return UnicodeVerticalOrientation.TransformedUprightFallback
+                    Case "Tr" : Return UnicodeVerticalOrientation.TransformedRotatedFallback
+                    Case Else : Throw New InvalidOperationException(UnicodeResources.ex_UnsuppportedVerticalOrientation.f(value))
+                End Select
+            End Get
+        End Property
+
+        ''' <summary>Gets value indicating if a character is a regional indicator</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @RI</remarks>
+        <XmlAttribute("RI")>
+        <UcdProperty("Regional_Indicator", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_RegionalIndicator")>
+        Public ReadOnly Property RegionalIndicator As Boolean
+            Get
+                Return GetPropertyValue("RI") = "Y"
+            End Get
+        End Property
+
+        ''' <summary>Gets reasonably equivalent CJK unified ideographs in that they it's visually identical or near-identical</summary>
+        ''' <value>The value is code point</value>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @EqUIdeo</remarks>
+        <XmlAttribute("EqUIdeo")>
+        <UcdProperty("Equivalent_Unified_Ideograph", "EquivalentUnifiedIdeograph.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
+        <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_EquivalentUnifiedIdeograph")>
+        Public ReadOnly Property EquivalentUnifiedIdeograph As Integer?
+            Get
+                Dim value = GetPropertyValue("EqUIdeo")
+                If value = "" Then Return Nothing
+                Return Integer.Parse(value, NumberStyles.Any, InvariantCulture)
+            End Get
+        End Property
+
+        ''' <summary>Gets the year that corresponds to the Jinmei-yō Kanji (人名用漢字) list in which the ideograph appears, and followed by a colon and the code point of its standard form if it is considered a variant.</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @kJinmeiyoKanji</remarks>
+        <XmlAttribute("kJinmeiyoKanji")>
+        <UcdProperty("kJinmeiyoKanji", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_JinmeiyoKanji")>
+        Public ReadOnly Property JinmeiyoKanji As String
+            Get
+                Return GetPropertyValue("kJinmeiyoKanji")
+            End Get
+        End Property
+
+        ''' <summary>Gets the year that corresponds to the Jōyō Kanji (常用漢字) list in which the ideograph appears, or the code point of the JIS X 0208 variant for ideographs that are specific to the JIS X 0213 standard and allowed for compatibility with implementations that support only JIS X 0208.</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @kJoyoKanji</remarks>
+        <XmlAttribute("kJoyoKanji")>
+        <UcdProperty("kJoyoKanji", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_JoyoKanji")>
+        Public ReadOnly Property JoyoKanji$
+            Get
+                Return GetPropertyValue("kJoyoKanji")
+            End Get
+        End Property
+
+        ''' <summary>Gets the year that corresponds to the 한문 교육용 기초 한자 (漢文敎育用基礎漢字) list of 1,800 ideographs for general use in which the ideograph appears.</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @kKoreanEducationHanja</remarks>
+        <XmlAttribute("kKoreanEducationHanja")>
+        <UcdProperty("kKoreanEducationHanja", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_KoreanEducationHanja")>
+        Public ReadOnly Property KoreanEducationHanja As Short?
+            Get
+                Dim val = GetPropertyValue("kKoreanEducationHanja")
+                If val = "" Then Return Nothing
+                Return Short.Parse(val, NumberStyles.Any, InvariantCulture)
+            End Get
+        End Property
+
+        ''' <summary>The year that corresponds to the 인명용 한자 (人名用漢字) list in which the ideograph appears, and followed by a colon and the code point(s) of its standard form(s) if it is considered a variant.</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @kKoreanName</remarks>
+        <XmlAttribute("kKoreanName")>
+        <UcdProperty("kKoreanName", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_KoreanName")>
+        Public ReadOnly Property KoreanName$
+            Get
+                Return GetPropertyValue("kKoreanName")
+            End Get
+        End Property
+
+        ''' <summary>Gets the year that corresponds to the Tōngyòng Guīfàn Hànzìbiǎo (通用规范汉字表) list in which the ideograph appears, followed by a colon and its one- to four- digit index number in that list.</summary>
+        ''' <version version="1.6.0">This property is new in version 1.6.0</version>
+        ''' <remarks>Underlying XML attribute is @kTGH</remarks>
+        <XmlAttribute("kTGH")>
+        <UcdProperty("kTGH", UnihanPropertyCategory.OtherMappings, UnicodePropertyStatus.Provisional)>
+        <UcdCategoryUnihan(UnihanPropertyCategory.OtherMappings), LDisplayName(GetType(UnicodeResources), "d_TongyongGuifanHanzibiao")>
+        Public ReadOnly Property TongyongGuifanHanzibiao$
+            Get
+                Return GetPropertyValue("kTGH")
+            End Get
+        End Property
+#End Region
 #End Region
 
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>

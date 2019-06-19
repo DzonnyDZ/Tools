@@ -117,5 +117,8 @@ Namespace TextT.UnicodeT
         ''' <summary>Numeric-related properties</summary>
         <LDisplayName(GetType(UnicodeResources), "propcat_Numeric")>
         Numeric
+        ''' <summary>Properties not listed in TR44 Table 7 of Unicode standard (only listed in table 5)</summary>
+        <LDisplayName(GetType(UnicodeResources), "propcat_Unlisted")>
+        Unlisted
     End Enum
 End Namespace

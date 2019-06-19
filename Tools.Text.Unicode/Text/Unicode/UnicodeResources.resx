@@ -935,4 +935,43 @@
   <data name="d_unihan_kJa" xml:space="preserve">
     <value>Unihan “JA” source</value>
   </data>
+  <data name="d_EquivalentUnifiedIdeograph" xml:space="preserve">
+    <value>Equivalent Unified Ideograph</value>
+  </data>
+  <data name="d_JinmeiyoKanji" xml:space="preserve">
+    <value>Jinmei-yō Kanji</value>
+  </data>
+  <data name="d_JoyoKanji" xml:space="preserve">
+    <value>Jōyō Kanji</value>
+  </data>
+  <data name="d_KoreanEducationHanja" xml:space="preserve">
+    <value>Korean Education Hanja</value>
+  </data>
+  <data name="d_KoreanName" xml:space="preserve">
+    <value>Korean Name</value>
+  </data>
+  <data name="d_PrependedConcatenationMark" xml:space="preserve">
+    <value>Prepended Concatenation Mark</value>
+  </data>
+  <data name="d_RadicalStrokeIndexes" xml:space="preserve">
+    <value>Radical Stroke Indexes</value>
+  </data>
+  <data name="d_RegionalIndicator" xml:space="preserve">
+    <value>Regional Indicator</value>
+  </data>
+  <data name="d_TangutMergedSource" xml:space="preserve">
+    <value>Tangut Merged source</value>
+  </data>
+  <data name="d_TongyongGuifanHanzibiao" xml:space="preserve">
+    <value>Tōngyòng Guīfàn Hànzìbiǎo</value>
+  </data>
+  <data name="d_VerticalOrientation" xml:space="preserve">
+    <value>Vertical Orientation</value>
+  </data>
+  <data name="ex_UnsuppportedVerticalOrientation" xml:space="preserve">
+    <value>Unsuported vertical orientation: '{0}'</value>
+  </data>
+  <data name="propcat_Unlisted" xml:space="preserve">
+    <value>Unlisted</value>
+  </data>
 </root>
