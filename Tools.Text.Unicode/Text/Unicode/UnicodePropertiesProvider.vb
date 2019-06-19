@@ -905,7 +905,7 @@ Namespace TextT.UnicodeT
                     Case "WJ" : Return UnicodeLineBreakType.WordJoiner
                     Case "ZW" : Return UnicodeLineBreakType.ZeroWidthSpace
                     Case "GL" : Return UnicodeLineBreakType.NonBreakingGlue
-                    Case "SP" : Return UnicodeLineBreakType.SPace
+                    Case "SP" : Return UnicodeLineBreakType.Space
                     Case "B2" : Return UnicodeLineBreakType.BreakOpportunityBeforeAndAfter
                     Case "BA" : Return UnicodeLineBreakType.BreakAfter
                     Case "BB" : Return UnicodeLineBreakType.BreakBefore
@@ -938,7 +938,7 @@ Namespace TextT.UnicodeT
                         '9.0
                     Case "EB" : Return UnicodeLineBreakType.EmojiBase
                     Case "EM" : Return UnicodeLineBreakType.EmojiModifier
-                    Case "ZWJ" : Return UnicodeLineBreakType.ZwroWidthJoiner
+                    Case "ZWJ" : Return UnicodeLineBreakType.ZeroWidthJoiner
                     Case Else : Throw New InvalidOperationException(ResourcesT.Exceptions.UnexpedtedValue0.f(value))
                 End Select
             End Get
@@ -1771,10 +1771,12 @@ Namespace TextT.UnicodeT
                     Case "HL" : Return UnicodeWordBreakType.HebrewLetter
                     Case "SQ" : Return UnicodeWordBreakType.SingleQuote
                         '9.0
+#Disable Warning BC40000
                     Case "EB" : Return UnicodeWordBreakType.EBase
                     Case "EBG" : Return UnicodeWordBreakType.EBaseGlueAfterZeroWidthJoiner
                     Case "EM" : Return UnicodeWordBreakType.EModifier
                     Case "GAZ" : Return UnicodeWordBreakType.GlueAfterZeroWidthJoiner
+#Enable Warning BC40000
                     Case "ZWJ" : Return UnicodeWordBreakType.ZeroWidthJoiner
                             '11.0
                     Case "WSegSpace" : Return UnicodeWordBreakType.WSegSpace
@@ -2216,7 +2218,6 @@ Namespace TextT.UnicodeT
         <UcdCategoryUnihan(UnihanPropertyCategory.DictionaryIndices), LDisplayName(GetType(UnicodeResources), "d_unihan_HanFennIndex")>
         Public ReadOnly Property HanFennIndex As Decimal()
             Get
-                TODOveryfyPattern
                 Return GetDecimalArray("kFennIndex")
             End Get
         End Property
@@ -3022,7 +3023,6 @@ Namespace TextT.UnicodeT
         <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSKangXi")>
         Public ReadOnly Property HanRSKangXi As RadicalStrokeCount()
             Get
-                TODOveryfyPattern
                 Return GetRadicalStrokeCountArray("kRSKangXi")
             End Get
         End Property
@@ -3056,7 +3056,6 @@ Namespace TextT.UnicodeT
         <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSUnicode")>
         Public ReadOnly Property HanRSUnicode As RadicalStrokeCount()
             Get
-                TODOveryfyPattern
                 Return GetRadicalStrokeCountArray("kRSUnicode")
             End Get
         End Property
