@@ -12,8 +12,6 @@ Imports System.Globalization
 'XML format specification http://www.unicode.org/reports/tr42/
 'Property value aliases http://www.unicode.org/Public/6.0.0/ucd/PropertyValueAliases.txt
 
-'TODO: List of files as constants
-
 Namespace TextT.UnicodeT
     ''' <summary>Common base class for Unicode code points and groups. This class holds character properties</summary>
     ''' <remarks>
@@ -61,6 +59,34 @@ Namespace TextT.UnicodeT
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public MustInherit Class UnicodePropertiesProvider : Implements IXElementWrapper
+
+        Private Const DerivedAgeTxt As String = "DerivedAge.txt"
+        Private Const UnicodeDataTxt As String = "UnicodeData.txt"
+        Private Const BlockTxt As String = "Block.txt"
+        Private Const BidiMirroringTxt As String = "BidiMirroring.txt"
+        Private Const PropListTxt As String = "PropList.txt"
+        Private Const BidiBracketsTxt As String = "BidiBrackets.txt"
+        Private Const CompositionExclusionsTxt As String = "CompositionExclusions.txt"
+        Private Const DerivedNormalizationPropsTxt As String = "DerivedNormalizationProps.txt"
+        Private Const ArabicShapingTxt As String = "ArabicShaping.txt"
+        Private Const LineBreakTxt As String = "LineBreak.txt"
+        Private Const EastAsianWidtTxt As String = "EastAsianWidth.txt"
+        Private Const DerivedCorePropertiesTxt As String = "DerivedCoreProperties.txt"
+        Private Const SpacialCasingTxt As String = "SpecialCasing.txt"
+        Private Const CaseFoldingTxt As String = "CaseFolding.txt"
+        Private Const ScriptsTxt As String = "Scripts.txt"
+        Private Const ScriptExtensionsTxt As String = "ScriptExtensions.txt"
+        Private Const HangulSyllableTypeTxt As String = "HangulSyllableType.txt"
+        Private Const JamoTxt As String = "Jamo.txt"
+        Private Const IndicSyllabicCategoryTxt As String = "IndicSyllabicCategory.txt"
+        Private Const IndicMantraCategoryTxt As String = "IndicMatraCategory.txt"
+        Private Const IndicPositionalCategoryTxt As String = "IndicPositionalCategory.txt"
+        Private Const GraphemeBreakPropertyTxt As String = "GraphemeBreakProperty.txt"
+        Private Const WordBreakPropertyTxt As String = "WordBreakProperty.txt"
+        Private Const SentenceBreakPropertyTxt As String = "SentenceBreakProperty.txt"
+        Private Const TangutSourcesTxt As String = "TangutSources.txt"
+        Private Const VerticalOrientationTxt As String = "VerticalOrientation.txt"
+        Private Const EquivalentUnifiedIdeographTxt As String = "EquivalentUnifiedIdeograph.txt"
 #Region "Infrastructure"
         Private _element As XElement
         ''' <summary>CTor - creates a new instance of the <see cref="UnicodePropertiesProvider"/> class</summary>
@@ -199,7 +225,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Unicode standard defines values this property can have (i.e. it cannot have any version number and typically only <see cref="Version.Major"/> and <see cref="Version.Minor"/> numbers are used.
         ''' <para>Underlying XML attribute is @age.</para></remarks>
         <XmlAttribute("age")>
-        <UcdProperty("Age", "DerivedAge.txt", UnicodePropertyType.Catalog, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
+        <UcdProperty("Age", DerivedAgeTxt, UnicodePropertyType.Catalog, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
         <LDisplayName(GetType(UnicodeResources), "d_Age")>
         Public ReadOnly Property Age As Version
             Get
@@ -217,7 +243,7 @@ Namespace TextT.UnicodeT
         ''' <para>These names match exactly the names published in the code charts of the Unicode Standard.</para>
         ''' </remarks>
         <XmlAttribute("na")>
-        <UcdProperty("Name", "UnicodeData.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
+        <UcdProperty("Name", UnicodeDataTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
         <LDisplayName(GetType(UnicodeResources), "d_Name")>
         Public Overridable ReadOnly Property Name As String
             Get
@@ -233,7 +259,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         <XmlAttribute("na1")>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        <UcdProperty("Unicode_1_Name", "UnicodeData.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Unicode_1_Name", UnicodeDataTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_Name1")>
         Public Overridable ReadOnly Property Name1 As String
             Get
@@ -249,7 +275,7 @@ Namespace TextT.UnicodeT
         ''' <seelaso cref="System.Char.GetUnicodeCategory"/>
         <XmlAttribute("gc")>
         <DefaultValue(Globalization.UnicodeCategory.OtherNotAssigned)>
-        <UcdProperty("General_Category", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
+        <UcdProperty("General_Category", UnicodeDataTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
         <LDisplayName(GetType(UnicodeResources), "d_GeneralCategory")>
         Public ReadOnly Property GeneralCategory As Globalization.UnicodeCategory
             Get
@@ -315,7 +341,7 @@ Namespace TextT.UnicodeT
         ''' <para>The classes used for the Canonical Ordering Algorithm in the Unicode Standard. This property could be considered either an enumerated property or a numeric property: the principal use of the property is in terms of the numeric values.</para>
         ''' </remarks>
         <XmlAttribute("ccc")>
-        <UcdProperty("Canonical_Combining_Class", "UnicodeData.txt", UnicodePropertyType.Numeric, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.Normalization)>
+        <UcdProperty("Canonical_Combining_Class", UnicodeDataTxt, UnicodePropertyType.Numeric, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.Normalization)>
         <LDisplayName(GetType(UnicodeResources), "d_CanonicalCombiningClass")>
         Public ReadOnly Property CanonicalCombiningClass As UnicodeCombiningClass
             Get
@@ -328,7 +354,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets name of block the character belongs to</summary>
         ''' <remarks>Underlying XML attribute is @blk.</remarks>
         <XmlAttribute("blk")>
-        <UcdProperty("Block", "Block.txt", UnicodePropertyType.Catalog, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
+        <UcdProperty("Block", BlockTxt, UnicodePropertyType.Catalog, UnicodePropertyStatus.Normative), UcdCategory(UnicodePropertyCategory.General)>
         <LDisplayName(GetType(UnicodeResources), "d_Block")>
         Public ReadOnly Property Block As String
             Get
@@ -343,7 +369,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attributes is @bc</remarks>
         ''' <exception cref="InvalidOperationException">Underlying XML attribute value cannot be mapped to <see cref="UnicodeBidiCategory"/> value</exception>
         <XmlAttribute("bc")>
-        <UcdProperty("Bidi_Class", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Bidi_Class", UnicodeDataTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
         <LDisplayName(GetType(UnicodeResources), "d_BidiClass")>
         Public ReadOnly Property BidiCategory As UnicodeBidiCategory?
@@ -405,7 +431,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Note that for some characters the mirroring is not exact mirroring but e.g. mirroring only of part of a glyph.
         ''' <para>Underlying XML attributes is @Bidi_M.</para></remarks>
         <XmlAttribute("Bidi_M")>
-        <UcdProperty("Bidi_Mirrored", "UnicodeData.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Bidi_Mirrored", UnicodeDataTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
         <LDisplayName(GetType(UnicodeResources), "d_BidiMirrored")>
         Public ReadOnly Property IsMirrored As Boolean
@@ -417,7 +443,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets a code point of glyph that is typically mirrored version of this glyph when used in right-to-left text</summary>
         ''' <remarks>Underlying XML attribute is @bmg.</remarks>
         <XmlAttribute("bmg")>
-        <UcdProperty("Bidi_Mirroring_Glyph", "BidiMirroring.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Bidi_Mirroring_Glyph", BidiMirroringTxt, UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
         <LDisplayName(GetType(UnicodeResources), "d_BidiMirroringGlyph")>
         Public ReadOnly Property BidiMirroringGlyph As CodePointInfo
@@ -431,7 +457,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if code point is bidirectional control character</summary>
         ''' <remarks>Underlying XML attribute is @Bidi_C</remarks>
         <XmlAttribute("Bidi_C")>
-        <UcdProperty("Bidi_Control", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Bidi_Control", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
         <LDisplayName(GetType(UnicodeResources), "d_IsBidiControl")>
         Public ReadOnly Property IsBidiControl As Boolean?
@@ -455,7 +481,7 @@ Namespace TextT.UnicodeT
         ''' <para>Underlying XML attribute is @bpt</para>
         ''' </remarks>
         <XmlAttribute("bpt")>
-        <UcdProperty("Bidi_Paired_Bracket_Type", "BidiBrackets.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Bidi_Paired_Bracket_Type", BidiBracketsTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
         <LDisplayName(GetType(UnicodeResources), "d_BidiPairedBracketType")>
         Public ReadOnly Property BidiPairedBracketType As UnicodeBidiPairedBracketType
@@ -477,7 +503,7 @@ Namespace TextT.UnicodeT
         ''' <para>Underlying XML attribute is @bpb</para>
         ''' </remarks>
         <XmlAttribute("bpb")>
-        <UcdProperty("Bidi_Paired_Bracket", "BidiBrackets.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Bidi_Paired_Bracket", BidiBracketsTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Bidirectional)>
         <LDisplayName(GetType(UnicodeResources), "d_BidiPairedBracket")>
         Public ReadOnly Property BidiPairedBracket As CodePointInfo
@@ -494,7 +520,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets decomposition type of character</summary>
         ''' <remarks>Underlying XML atttributes is @dt.</remarks>
         <XmlAttribute("dt"), DefaultValue(UnicodeDecompositionType.none)>
-        <UcdProperty("Decomposition_Type", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Decomposition_Type", UnicodeDataTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization)>
         <LDisplayName(GetType(UnicodeResources), "d_DecompositionType")>
         Public ReadOnly Property DecompositionType As UnicodeDecompositionType?
@@ -528,7 +554,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets collection of characters that forms canonic decomposition of this character</summary>
         ''' <remarks>Underlying XML attribute is @dm.</remarks>
         <XmlAttribute("dm")>
-        <UcdProperty("Decomposition_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Decomposition_Mapping", UnicodeDataTxt, UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_DecompositionMapping")>
         Public Overridable ReadOnly Property DecompositionMapping As CodePointInfoCollection
             Get
@@ -542,11 +568,11 @@ Namespace TextT.UnicodeT
         ''' <remarks>
         ''' Underlying XML attributes is @CE.
         ''' <para>See <a href="http://www.unicode.org/reports/tr15/#Primary_Exclusion_List_Table">UAX #15</a> for details.</para>
-        ''' <para>There are more reasons for character to be excluded from composition than just CompositionExclusions.txt. All the posibilities are recorded in <see cref="FullCompositionExclusion"/>.</para>
+        ''' <para>There are more reasons for character to be excluded from composition than just CompositionExclusions.txt. All the possibilities are recorded in <see cref="FullCompositionExclusion"/>.</para>
         ''' </remarks>
         ''' <seelaso cref="FullCompositionExclusion"/>
         <XmlAttribute("CE")>
-        <UcdProperty("Composition_Exclusion", "CompositionExclusions.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Composition_Exclusion", CompositionExclusionsTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_CompositionExclusion")>
         Public ReadOnly Property CompositionExclusion As Boolean
             Get
@@ -558,7 +584,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attributes is @Comp_Ex. <para>If you are looking only for explicit composition exclusions see <see cref="CompositionExclusion"/>.</para></remarks>
         ''' <seelaso cref="CompositionExclusion"/>
         <XmlAttribute("Comp_Ex")>
-        <UcdProperty("Full_Composition_Exclusion", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Full_Composition_Exclusion", DerivedNormalizationPropsTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_FullCompositionExclusion")>
         Public ReadOnly Property FullCompositionExclusion As Boolean
             Get
@@ -571,7 +597,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is newither N nor M nor Y.</exception>
         ''' <remarks>Underlying XML attribute is @NFC_QC</remarks>
         <XmlAttribute("NFC_QC"), DefaultValue(True)>
-        <UcdProperty("NFC_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("NFC_Quick_Check", DerivedNormalizationPropsTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormCQuickCheck")>
         Public ReadOnly Property NormalizationFormCQuickCheck As Boolean?
             Get
@@ -587,7 +613,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character always (true) or never(false) occurs in normalization from D</summary>
         ''' <remarks>Underlying XML attribute is @NFC_QD.</remarks>
         <XmlAttribute("NFD_QC"), DefaultValue(True)>
-        <UcdProperty("NFD_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("NFD_Quick_Check", DerivedNormalizationPropsTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormDQuickCheck")>
         Public ReadOnly Property NormalizationFormDQuickCheck As Boolean
             Get
@@ -598,7 +624,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is newither N nor M nor Y.</exception>
         ''' <remarks>Underlying XML attribute is @NFKC_QC.</remarks>
         <XmlAttribute("NFKC_QC"), DefaultValue(True)>
-        <UcdProperty("NFKC_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("NFKC_Quick_Check", DerivedNormalizationPropsTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormKCQuickCheck")>
         Public ReadOnly Property NormalizationFormKCQuickCheck As Boolean?
             Get
@@ -613,7 +639,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character always (true) or never(false) occurs in normalization from KD</summary>
         ''' <remarks>Underlying XML attribute is @NFKD_QC.</remarks>
         <XmlAttribute("NFKD_QC"), DefaultValue(True)>
-        <UcdProperty("NFKD_Quick_Check", "DerivedNormalizationProps.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("NFKD_Quick_Check", DerivedNormalizationPropsTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NormalizationFormKDQuickCheck")>
         Public ReadOnly Property NormalizationFormKDQuickCheck As Boolean
             Get
@@ -625,7 +651,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character expands to more than one character on normalization form C</summary>
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFC.</remarks>
         <XmlAttribute("XO_NFC"), Obsolete("Property Expands_On_NFC is deprecated as of Unicode 6.0.0")>
-        <UcdProperty("Expands_On_NFC", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Expands_On_NFC", DerivedNormalizationPropsTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnC")>
         Public ReadOnly Property ExpandOnC As Boolean
             Get
@@ -635,7 +661,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character expands to more than one character on normalization form D</summary>
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFD.</remarks>
         <XmlAttribute("XO_NFD"), Obsolete("Property Expands_On_NFD is deprecated as of Unicode 6.0.0")>
-        <UcdProperty("Expands_On_NFD", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Expands_On_NFD", DerivedNormalizationPropsTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnD")>
         Public ReadOnly Property ExpandOnD As Boolean
             Get
@@ -645,7 +671,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character expands to more than one character on normalization form KC</summary>
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFKC.</remarks>
         <XmlAttribute("XO_NFKC"), Obsolete("Property Expands_On_NFKC is deprecated as of Unicode 6.0.0")>
-        <UcdProperty("Expands_On_NFKC", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Expands_On_NFKC", DerivedNormalizationPropsTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnKC")>
         Public ReadOnly Property ExpandOnKC As Boolean
             Get
@@ -655,7 +681,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character expands to more than one character on normalization form KD</summary>
         ''' <remarks><para>This property is deprecated as of Unicode 6.0</para>Underlying XML attribute is @XO_NFKD.</remarks>
         <XmlAttribute("XO_NFKD"), Obsolete("Property Expands_On_NFKD is deprecated as of Unicode 6.0.0")>
-        <UcdProperty("Expands_On_NFKD", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Expands_On_NFKD", DerivedNormalizationPropsTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ExpandsOnKD")>
         Public ReadOnly Property ExpandOnKD As Boolean
             Get
@@ -668,7 +694,7 @@ Namespace TextT.UnicodeT
         ''' <returns>If extra mapping is required, returns it. Otherwise returns null.</returns>
         ''' <remarks>This property is obsolete as of Unicode 6.0<para>Underlying XML attribute is @FC_NFKC.</para></remarks>
         <XmlAttribute("FC_NFKC"), Obsolete("The FC_NFKC_Closure is deprecated as of Unicode 6.0.0")>
-        <UcdProperty("FC_NFKC_Closure", "DerivedNormalizationProps.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
+        <UcdProperty("FC_NFKC_Closure", DerivedNormalizationPropsTxt, UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_CaseFoldingClosureMappingKC")>
         Public ReadOnly Property CaseFoldingClosureExtraMappingKC As CodePointInfoCollection
             Get
@@ -684,7 +710,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Underlying XML attribute value is neither None, De, Di nor Nu.</exception>
         ''' <remarks>Underlying XML attribute is @nt.</remarks>
         <XmlAttribute("nt"), DefaultValue(UnicodeCharacterNumericType.None)>
-        <UcdProperty("Numeric_Type", "UnicodeData.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Numeric_Type", UnicodeDataTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_NumericType")>
         Public ReadOnly Property NumericType As UnicodeCharacterNumericType
             Get
@@ -703,7 +729,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets numeric value assigned to a character (if any)</summary>
         ''' <remarks>Underlying XML attributes id @nv.</remarks>
         <XmlAttribute("nv")>
-        <UcdProperty("Numeric_Value", "UnicodeData.txt", UnicodePropertyType.Numeric, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Numeric_Value", UnicodeDataTxt, UnicodePropertyType.Numeric, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_NumericValue")>
         Public ReadOnly Property NumericValue As SRational?
             Get
@@ -721,7 +747,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribue is neither of: R, L, D, C, U, T</exception>
         ''' <remarks>Underlying XML attribute is @jt.</remarks>
         <XmlAttribute("jt")>
-        <UcdProperty("Joining_Type", "ArabicShaping.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Joining_Type", ArabicShapingTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_JoiningType")>
         Public ReadOnly Property JoiningType As UnicodeJoiningType
             Get
@@ -750,7 +776,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @jg.
         ''' <note>XML attribute value <c>Alef_Maqsurah</c> (which seems not to be used after Unicode 2.x) silently maps to <see cref="UnicodeJoiningGroup.YehWithTail"/>.</note></remarks>
         <DefaultValue(UnicodeJoiningGroup.none), XmlAttribute("jg")>
-        <UcdProperty("Joining_Group", "ArabicShaping.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Joining_Group", ArabicShapingTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_JoiningGroup")>
         Public ReadOnly Property JoiningGroup As UnicodeJoiningGroup
             Get
@@ -875,7 +901,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this is format control character which has specific functions for control of cursive joining and ligation</summary>
         ''' <remarks>Underlaying XML attribute is @Join_C.</remarks>
         <XmlAttribute("Join_C")>
-        <UcdProperty("Join_Control", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Join_Control", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_JoinControl")>
         Public ReadOnly Property IsJoinControl As Boolean
             Get
@@ -889,7 +915,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
         ''' <remarks>Underlying XML attribute is @lb</remarks>
         <XmlAttribute("lb"), DefaultValue(UnicodeLineBreakType.Unknown)>
-        <UcdProperty("Line_Break", "LineBreak.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Line_Break", LineBreakTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_LineBreak")>
         Public ReadOnly Property LineBreak As UnicodeLineBreakType
             Get
@@ -950,7 +976,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is neither of: A, F, H, N, Na, W</exception>
         ''' <remarks>Underlying XML attribute is @ea</remarks>
         <XmlAttribute("ea"), DefaultValue(UnicodeEastAsianWidth.Neutral)>
-        <UcdProperty("East_Asian_Width", "EastAsianWidth.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdProperty("East_Asian_Width", EastAsianWidtTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_EastAsianWidth")>
         Public ReadOnly Property EastAsianWidth As UnicodeEastAsianWidth
             Get
@@ -973,7 +999,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character is uppercase</summary>
         ''' <remarks>Underlying XML attribute is @Upper</remarks>
         <XmlAttribute("Upper")>
-        <UcdProperty("Uppercase", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Uppercase", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsUppercase")>
         Public ReadOnly Property IsUppercase As Boolean
             Get
@@ -983,7 +1009,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character is lowercase</summary>
         ''' <remarks>Underlying XML attribute is @Lower</remarks>
         <XmlAttribute("Lower")>
-        <UcdProperty("Lowercase", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Lowercase", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsLowercase")>
         Public ReadOnly Property IsLowercase As Boolean
             Get
@@ -995,7 +1021,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @OUpper
         ''' <para>Used in deriving the <see cref="IsLowercase"/> property.</para></remarks>
         <XmlAttribute("OUpper"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
-        <UcdProperty("Other_Uppercase", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_Uppercase", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherUppercase")>
         Public ReadOnly Property IsOtherUppercase As Boolean
             Get
@@ -1007,7 +1033,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @OLower
         ''' <para>Used in deriving the <see cref="IsUppercase"/> property.</para></remarks>
         <XmlAttribute("OLower"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
-        <UcdProperty("Other_Lowercase", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_Lowercase", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherLowercase")>
         Public ReadOnly Property IsOtherLowercase As Boolean
             Get
@@ -1022,7 +1048,7 @@ Namespace TextT.UnicodeT
         ''' <para>Many characters in Unicode maps to themselves.</para>
         ''' </remarks>
         <XmlAttribute("suc")>
-        <UcdProperty("Simple_Uppercase_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Simple_Uppercase_Mapping", UnicodeDataTxt, UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleUppercaseMapping")>
         Public ReadOnly Property SimpleUppercaseMapping As CodePointInfo
             Get
@@ -1037,7 +1063,7 @@ Namespace TextT.UnicodeT
         ''' <para>Many characters in Unicode maps to themselves.</para>
         ''' </remarks>
         <XmlAttribute("slc")>
-        <UcdProperty("Simple_Lowercase_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Simple_Lowercase_Mapping", UnicodeDataTxt, UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleLowercaseMapping")>
         Public ReadOnly Property SimpleLowercaseMapping As CodePointInfo
             Get
@@ -1052,7 +1078,7 @@ Namespace TextT.UnicodeT
         ''' <para>Many characters in Unicode maps to themselves.</para>
         ''' </remarks>
         <XmlAttribute("stc")>
-        <UcdProperty("Simple_Titlecase_Mapping", "UnicodeData.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Simple_Titlecase_Mapping", UnicodeDataTxt, UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleTilecaseMapping")>
         Public ReadOnly Property SimpleTilecaseMapping As CodePointInfo
             Get
@@ -1065,7 +1091,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets uppercase mapping for this character (that is one character or sequence of characters which form uppercase conterpart of current character)</summary>
         ''' <remarks>Underlying XML attribute is @uc, if it does not provide value <see cref="SimpleUppercaseMapping"/> is used instead</remarks>
         <XmlAttribute("uc")>
-        <UcdProperty("Uppercase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Uppercase_Mapping", SpacialCasingTxt, UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_UppercaseMapping")>
         Public ReadOnly Property UppercaseMappping As CodePointInfoCollection
             Get
@@ -1078,7 +1104,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets lowercase mapping for this character (that is one character or sequence of characters which form lowercase conterpart of current character)</summary>
         ''' <remarks>Underlying XML attribute is @lc, if it does not provide value <see cref="SimpleLowercaseMapping"/> is used instead</remarks>
         <XmlAttribute("lc")>
-        <UcdProperty("Lowercase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Lowercase_Mapping", SpacialCasingTxt, UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_LowercaseMapping")>
         Public ReadOnly Property LowercaseMappping As CodePointInfoCollection
             Get
@@ -1091,7 +1117,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets uppercase mapping for this character (that is one character or sequence of characters which form tilecase conterpart of current character)</summary>
         ''' <remarks>Underlying XML attribute is @tc, if it does not provide value <see cref="SimpleTilecaseMapping"/> is used instead. If it does not provide value <see cref="SimpleUppercaseMapping"/> is used instead.</remarks>
         <XmlAttribute("tc")>
-        <UcdProperty("Titlecase_Mapping", "SpecialCasing.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Titlecase_Mapping", SpacialCasingTxt, UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_TilecaseMapping")>
         Public ReadOnly Property TilecaseMappping As CodePointInfoCollection
             Get
@@ -1105,7 +1131,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets mapping from character to its case-folded forms (if the character maps to only one character).</summary>
         ''' <remarks>Underlying XML attribute is @scf.<para>If this property does not provide value check <see cref="CaseFolding"/>.</para></remarks>
         <XmlAttribute("scf")>
-        <UcdProperty("Simple_Case_Folding", "CaseFolding.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Simple_Case_Folding", CaseFoldingTxt, UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_SimpleCaseFolding")>
         Public ReadOnly Property SimpleCaseFolding As CodePointInfo
             Get
@@ -1118,7 +1144,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets mapping from character to its case-folded forms.</summary>
         ''' <remarks>Underlying XML attribute is @scf. If this attribute is not specified this property returns value of <see cref="SimpleCaseFolding"/> as one-item collection.</remarks>
         <XmlAttribute("cf")>
-        <UcdProperty("Case_Folding", "CaseFolding.txt", UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Case_Folding", CaseFoldingTxt, UnicodePropertyType.String, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_CaseFolding")>
         Public ReadOnly Property CaseFolding As CodePointInfoCollection
             Get
@@ -1132,7 +1158,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character is ignored for casing purposes</summary>
         ''' <remarks>Underlying XML attribute is @CI</remarks> 
         <XmlAttribute("CI")>
-        <UcdProperty("Case_Ignorable", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Case_Ignorable", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsCaseIgnorable")>
         Public ReadOnly Property IsCaseIgnorable As Boolean
             Get
@@ -1143,7 +1169,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character either lowercase, uppercase or tilecase character</summary>
         ''' <remarks>Underlying XML attribute is @Cased</remarks> 
         <XmlAttribute("Cased")>
-        <UcdProperty("Cased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Cased", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsCased")>
         Public ReadOnly Property IsCased As Boolean
             Get
@@ -1155,7 +1181,7 @@ Namespace TextT.UnicodeT
         ''' <returns>True if character's normalized forms are not stable under case folding.</returns>
         ''' <remarks>Underlying XML attribute is @CWCF</remarks> 
         <XmlAttribute("CWCF")>
-        <UcdProperty("Changes_When_Casefolded", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Changes_When_Casefolded", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenCasefolded")>
         Public ReadOnly Property ChangesWhenCasefolded As Boolean
             Get
@@ -1166,7 +1192,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character may change when it undergoes case mapping</summary>
         ''' <remarks>Underlying XML attribute is @CWCM</remarks> 
         <XmlAttribute("CWCM")>
-        <UcdProperty("Changes_When_Casemapped", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Changes_When_Casemapped", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenCasemapped")>
         Public ReadOnly Property ChangesWhenCasemapped As Boolean
             Get
@@ -1178,7 +1204,7 @@ Namespace TextT.UnicodeT
         ''' <returns>True if character's normalized froms are not stable under to-lowercase mapping</returns>
         ''' <remarks>Underlying XML attribute is @CWL</remarks> 
         <XmlAttribute("CWL")>
-        <UcdProperty("Changes_When_Lowercased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Changes_When_Lowercased", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenLoweracsed")>
         Public ReadOnly Property ChangesWhenLowercased As Boolean
             Get
@@ -1190,7 +1216,7 @@ Namespace TextT.UnicodeT
         ''' <returns>True if character's normalized froms are not stable under to-uppercase mapping</returns>
         ''' <remarks>Underlying XML attribute is @CWL</remarks> 
         <XmlAttribute("CWU")>
-        <UcdProperty("Changes_When_Uppercased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Changes_When_Uppercased", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), DisplayName("Changes when Uppercased")>
         Public ReadOnly Property ChangesWhenUppercased As Boolean
             Get
@@ -1202,7 +1228,7 @@ Namespace TextT.UnicodeT
         ''' <returns>True if character's normalized froms are not stable under to-tilecase mapping</returns>
         ''' <remarks>Underlying XML attribute is @CWL</remarks> 
         <XmlAttribute("CWT")>
-        <UcdProperty("Changes_When_Titlecased", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Changes_When_Titlecased", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenTilecased")>
         Public ReadOnly Property ChangesWhenTilecased As Boolean
             Get
@@ -1214,7 +1240,7 @@ Namespace TextT.UnicodeT
         ''' <returns>True if character is not identical to its Normalization Form KC casefold mapping.</returns>
         ''' <remarks>Underlying XML attribute is @CWKCF</remarks> 
         <XmlAttribute("CWKCF")>
-        <UcdProperty("Changes_When_NFKC_Casefolded", "DerivedNormalizationProps.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Changes_When_NFKC_Casefolded", DerivedNormalizationPropsTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_ChangesWhenNfKCCasefold")>
         Public ReadOnly Property ChangesWhenNfKCCasefold As Boolean
             Get
@@ -1225,7 +1251,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets a mapping designed for best behavior when doing caseless matching of strings interpreted as identifiers</summary>
         ''' <remarks>Underlying XML attribute is @NFKC_CF</remarks>
         <XmlAttribute("NFKC_CF")>
-        <UcdProperty("NFKC_Casefold", "DerivedNormalizationProps.txt", UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
+        <UcdProperty("NFKC_Casefold", DerivedNormalizationPropsTxt, UnicodePropertyType.String, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Normalization), LDisplayName(GetType(UnicodeResources), "d_NfKCCasefold")>
         Public ReadOnly Property NfKCCasefold As CodePointInfoCollection
             Get
@@ -1241,7 +1267,7 @@ Namespace TextT.UnicodeT
         ''' <para>Underlying XML attributes is @sc.</para>
         ''' </remarks>
         <XmlAttribute("sc")>
-        <UcdProperty("Script", "Scripts.txt", UnicodePropertyType.Catalog, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Script", ScriptsTxt, UnicodePropertyType.Catalog, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_Script")>
         Public ReadOnly Property Script$
             Get
@@ -1255,7 +1281,7 @@ Namespace TextT.UnicodeT
         ''' <para>Underlying XML attributes is @scx.</para>
         ''' </remarks>
         <XmlAttribute("scx")>
-        <UcdProperty("Script_Extensions", "ScriptExtensions.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Script_Extensions", ScriptExtensionsTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_ScriptExtensions")>
         Public ReadOnly Property ScriptExtensions As String()
             Get
@@ -1269,7 +1295,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @isc.
         ''' <para>This property is deprecated: As of Unicode 5.2.0, this field no longer contains any non-null values.</para></remarks>
         <XmlAttribute("isc"), EditorBrowsable(EditorBrowsableState.Advanced), Obsolete("As of Unicode 5.2.0, this field no longer contains any non-null values.")>
-        <UcdProperty("ISO_Comment", "UnicodeData.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
+        <UcdProperty("ISO_Comment", UnicodeDataTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsoComment")>
         Public ReadOnly Property IsoComment$
             Get
@@ -1283,7 +1309,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Underlying XML attribute value is neither of NA, L, V, LV, LVT, T</exception>
         ''' <remarks>Underlying XML attribute is @hst</remarks>
         <XmlAttribute("hst")>
-        <UcdProperty("Hangul_Syllable_Type", "HangulSyllableType.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Hangul_Syllable_Type", HangulSyllableTypeTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_HangulSyllableType")>
         Public ReadOnly Property HangulSyllableType As UnicodeHangulSyllableType
             Get
@@ -1304,7 +1330,7 @@ Namespace TextT.UnicodeT
         ''' <summary>For Hangul syllables gets Jamo Short Name</summary>
         ''' <remarks>Underlying XML attribute is @JSN</remarks>
         <XmlAttribute("JSN")>
-        <UcdProperty("Jamo_Short_Name", "Jamo.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Jamo_Short_Name", JamoTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_JamoShortName")>
         Public ReadOnly Property JamoShortName$
             Get
@@ -1317,7 +1343,7 @@ Namespace TextT.UnicodeT
         ''' <summary>A provisional property defining the placement categories for dependent vowels in Indic scripts.</summary>
         ''' <remarks>Underlying XML attribute is @InSC</remarks>
         <XmlAttribute("InSC")>
-        <UcdProperty("Indic_Syllabic_Category", "IndicSyllabicCategory.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Provisional)>
+        <UcdProperty("Indic_Syllabic_Category", IndicSyllabicCategoryTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Provisional)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IndicSyllabicCategory")>
         Public ReadOnly Property IndicSyllabicCategory$
             Get
@@ -1328,7 +1354,7 @@ Namespace TextT.UnicodeT
         ''' <summary>A provisional property defining the structural categories of syllabic components in Indic scripts.</summary>
         ''' <remarks>Underlying XML attribute is @InMC</remarks>
         <XmlAttribute("InMC")>
-        <UcdProperty("Indic_Matra_Category", "IndicMatraCategory.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Provisional)>
+        <UcdProperty("Indic_Matra_Category", IndicMantraCategoryTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Provisional)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IndicMantraCategory")>
         Public ReadOnly Property IndicMatraCategory$
             Get
@@ -1339,7 +1365,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Defines the placement categories for dependent vowels, viramas, combining marks, and other characters used in Indic scripts.</summary>
         ''' <remarks>Underlying XML attribute is @InPC</remarks>
         <XmlAttribute("InPC")>
-        <UcdProperty("Indic_Positional_Category", "IndicPositionalCategory.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Indic_Positional_Category", IndicPositionalCategoryTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IndicPositionalCategory")>
         Public ReadOnly Property IndicPositionalCategory As UnicodeIndicPositionalCategory
             Get
@@ -1372,7 +1398,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character can be 1st character in name of an identifier in a programming language such as VB or C#</summary>
         ''' <remarks>Underlying XML attribute is @IDS</remarks>
         <XmlAttribute("IDS")>
-        <UcdProperty("ID_Start", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("ID_Start", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdStart")>
         Public ReadOnly Property IsIdStart As Boolean
             Get
@@ -1383,7 +1409,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Used for backward compatibility of <see cref="IsIdStart"/></summary>
         ''' <remarks>Underlying XML attribute is @OIDS</remarks>
         <XmlAttribute("OIDS"), EditorBrowsable(EditorBrowsableState.Advanced)>
-        <UcdProperty("Other_ID_Start", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_ID_Start", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherIdStart")>
         Public ReadOnly Property IsOtherIdStart As Boolean
             Get
@@ -1394,7 +1420,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character can be 1st character in name of an identifier in a programming language such as VB or C# (improved version)</summary>
         ''' <remarks>Underlying XML attribute is @XIDS</remarks>
         <XmlAttribute("XIDS")>
-        <UcdProperty("XID_Start", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("XID_Start", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdStartEx")>
         Public ReadOnly Property IsIdStartEx As Boolean
             Get
@@ -1405,7 +1431,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character can be non-1st character in name of an identifier in a programming language such as VB or C#</summary>
         ''' <remarks>Underlying XML attribute is @IDC</remarks>
         <XmlAttribute("IDC")>
-        <UcdProperty("ID_Continue", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("ID_Continue", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdContinue")>
         Public ReadOnly Property IsIdContinue As Boolean
             Get
@@ -1416,7 +1442,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Used for backward compatibility of <see cref="IsIdContinue"/></summary>
         ''' <remarks>Underlying XML attribute is @OIDC</remarks>
         <XmlAttribute("OIDC"), EditorBrowsable(EditorBrowsableState.Advanced)>
-        <UcdProperty("Other_ID_Continue", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_ID_Continue", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherIdContinue")>
         Public ReadOnly Property IsOtherIdContinue As Boolean
             Get
@@ -1427,7 +1453,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character can be non-1st character in name of an identifier in a programming language such as VB or C# (improved version)</summary>
         ''' <remarks>Underlying XML attribute is @XIDC</remarks>
         <XmlAttribute("XIDC")>
-        <UcdProperty("XID_Continue", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("XID_Continue", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsIdContinueEx")>
         Public ReadOnly Property IsIdContinueEx As Boolean
             Get
@@ -1438,7 +1464,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character can be used in syntax of programming language</summary>
         ''' <remarks>Underlying XML attribute is @Pat_Syn</remarks>
         <XmlAttribute("Pat_Syn")>
-        <UcdProperty("Pattern_Syntax", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Pattern_Syntax", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsPatternSyntax")>
         Public ReadOnly Property IsPatternSyntax As Boolean
             Get
@@ -1449,7 +1475,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character shopuld be treated as whitespace by programming language compiler or interpreter</summary>
         ''' <remarks>Underlying XML attribute is @Pat_WS</remarks>
         <XmlAttribute("Pat_WS")>
-        <UcdProperty("Pattern_White_Space", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Pattern_White_Space", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Identifiers), LDisplayName(GetType(UnicodeResources), "d_IsPatternWhiteSpace")>
         Public ReadOnly Property IsPatternWhiteSpace As Boolean
             Get
@@ -1462,7 +1488,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character represents a dash</summary>
         ''' <remarks>Underlying XML attribute is @Dash</remarks>
         <XmlAttribute("Dash")>
-        <UcdProperty("Dash", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Dash", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsDash")>
         Public ReadOnly Property IsDash As Boolean
             Get
@@ -1474,7 +1500,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Hyphen
         ''' <para>This property is deprecated as of Unicode 6.0</para></remarks>
         <XmlAttribute("Hyphen"), Obsolete("This property is deprecated as of Unicode 6.0")>
-        <UcdProperty("Hyphen", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Hyphen", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsHyphen")>
         Public ReadOnly Property IsHyphen As Boolean
             Get
@@ -1485,7 +1511,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is a punctuation that functions as quotation mark</summary>
         ''' <remarks>Underlying XML attribute is @QMark</remarks>
         <XmlAttribute("QMark")>
-        <UcdProperty("Quotation_Mark", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Quotation_Mark", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsQuotationMark")>
         Public ReadOnly Property IsQuotationMark As Boolean
             Get
@@ -1496,7 +1522,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is a punctuation that generally marks the end of textual units.</summary>
         ''' <remarks>Underlying XML attribute is @Term</remarks>
         <XmlAttribute("Term")>
-        <UcdProperty("Terminal_Punctuation", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Terminal_Punctuation", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsTerminalPunctuation")>
         Public ReadOnly Property IsTerminalPunctuation As Boolean
             Get
@@ -1507,7 +1533,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is sentence terminal</summary>
         ''' <remarks>Underlying XML attribute is @STerm</remarks>
         <XmlAttribute("STerm")>
-        <UcdProperty("STerm", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("STerm", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsSentenceTerminal")>
         Public ReadOnly Property IsSentenceTerminal As Boolean
             Get
@@ -1519,7 +1545,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @Dia
         ''' <para>Note: Some diacritics are not combining characters and some combining characters are not diacritics.</para></remarks>
         <XmlAttribute("Dia")>
-        <UcdProperty("Diacritic", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Diacritic", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsDiacritic")>
         Public ReadOnly Property IsDiacritic As Boolean
             Get
@@ -1530,7 +1556,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is an extender (its principal function is to extend value or shape of a preceding alphabetic character)</summary>
         ''' <remarks>Underlying XML attribute is @Ext</remarks>
         <XmlAttribute("Ext")>
-        <UcdProperty("Extender", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Extender", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsExtender")>
         Public ReadOnly Property IsExtender As Boolean
             Get
@@ -1542,7 +1568,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>Underlying XML attribute is @SD
         ''' <para>An accent placed on this character causes the dot to disappear. Explicit dot above can be added if required.</para></remarks>
         <XmlAttribute("SD")>
-        <UcdProperty("Soft_Dotted", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Soft_Dotted", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Case), LDisplayName(GetType(UnicodeResources), "d_IsSoftDotted")>
         Public ReadOnly Property IsSoftDotted As Boolean
             Get
@@ -1553,7 +1579,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is alphabetic</summary>
         ''' <remarks>Underlying XML attribute is @Alpha</remarks>
         <XmlAttribute("Alpha")>
-        <UcdProperty("Alphabetic", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Alphabetic", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsAlphabetic")>
         Public ReadOnly Property IsAlphabetic As Boolean
             Get
@@ -1564,7 +1590,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Used in deriving <see cref="IsAlphabetic"/> property.</summary>
         ''' <remarks>Underlying XML attribute is @OAlpha</remarks>
         <XmlAttribute("OAlpha"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
-        <UcdProperty("Other_Alphabetic", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_Alphabetic", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherAlphabetic")>
         Public ReadOnly Property IsOtherAlphabetic As Boolean
             Get
@@ -1575,7 +1601,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this is math character</summary>
         ''' <remarks>Underlying XML attribute is @Math</remarks>
         <XmlAttribute("Math")>
-        <UcdProperty("Math", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Math", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsMath")>
         Public ReadOnly Property IsMath As Boolean
             Get
@@ -1586,7 +1612,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Used in deriving <see cref="IsMath"/> property</summary>
         ''' <remarks>Underlying XML attribute is @OMath</remarks>
         <XmlAttribute("OMath"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
-        <UcdProperty("Other_Math", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_Math", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherMath")>
         Public ReadOnly Property IsOtherMath As Boolean
             Get
@@ -1597,7 +1623,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is commonly used to represent hexadigit</summary>
         ''' <remarks>Underlying XML attribute is @Hex</remarks>
         <XmlAttribute("Hex")>
-        <UcdProperty("Hex_Digit", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Hex_Digit", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_IsHexaDigit")>
         Public ReadOnly Property IsHexaDigit As Boolean
             Get
@@ -1608,7 +1634,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is an ASCII character used commonly to represent hexadigit</summary>
         ''' <remarks>Underlying XML attribute is @AHex</remarks>
         <XmlAttribute("AHex")>
-        <UcdProperty("ASCII_Hex_Digit", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("ASCII_Hex_Digit", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Numeric), LDisplayName(GetType(UnicodeResources), "d_IsAsciiHex")>
         Public ReadOnly Property IsAsciiHex As Boolean
             Get
@@ -1619,7 +1645,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this is default ignorable code point - this is it should be ignored in renderign unless explicitly supported.</summary>
         ''' <remarks>Underlying XML attribute is @DI</remarks>
         <XmlAttribute("DI")>
-        <UcdProperty("Default_Ignorable_Code_Point", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Default_Ignorable_Code_Point", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsDefaultIgnorable")>
         Public ReadOnly Property IsDefaultIgnorable As Boolean
             Get
@@ -1630,7 +1656,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Used in deriving <see cref="IsDefaultIgnorable"/> property</summary>
         ''' <remarks>Underlying XML attribute is @ODI</remarks>
         <XmlAttribute("ODI"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
-        <UcdProperty("Other_Default_Ignorable_Code_Point", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_Default_Ignorable_Code_Point", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherDefaultIgnorable")>
         Public ReadOnly Property IsOtherDefaultIgnorable As Boolean
             Get
@@ -1641,7 +1667,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character represents a lexical order exception</summary>
         ''' <remarks>Underlying XML attribute is @LOE<para>A small number of spacing vowel letters occurring in certain Southeast Asian scripts such as Thai and Lao, which use a visual order display model. These letters are stored in text ahead of syllable-initial consonants, and require special handling for processes such as searching and sorting.</para></remarks>
         <XmlAttribute("LOE")>
-        <UcdProperty("Logical_Order_Exception", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Logical_Order_Exception", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsLogicalOrderException")>
         Public ReadOnly Property IsLogicalOrderException As Boolean
             Get
@@ -1652,7 +1678,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is whitespace.</summary>
         ''' <remarks>Underlying XML attribute is @WSpace</remarks>
         <XmlAttribute("WSpace")>
-        <UcdProperty("White_Space", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("White_Space", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsWhitespace")>
         Public ReadOnly Property IsWhitespace As Boolean
             Get
@@ -1665,7 +1691,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is grapheme base.</summary>
         ''' <remarks>Underlying XML attribute is @Gr_Base</remarks>
         <XmlAttribute("Gr_Base")>
-        <UcdProperty("Grapheme_Base", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Grapheme_Base", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsGraphemeBase")>
         Public ReadOnly Property IsGraphemeBase As Boolean
             Get
@@ -1676,7 +1702,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if this character is grapheme extend.</summary>
         ''' <remarks>Underlying XML attribute is @Gr_Ext</remarks>
         <XmlAttribute("Gr_Ext")>
-        <UcdProperty("Grapheme_Extend", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Grapheme_Extend", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsGraphemeExtend")>
         Public ReadOnly Property IsGraphemeExtend As Boolean
             Get
@@ -1687,7 +1713,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Used in deriving the <see cref="IsGraphemeExtend"/> property.</summary>
         ''' <remarks>Underlying XML attribute is @OGr_Ext</remarks>
         <XmlAttribute("OGr_Ext"), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)>
-        <UcdProperty("Other_Grapheme_Extend", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
+        <UcdProperty("Other_Grapheme_Extend", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Contributory)>
         <UcdCategory(UnicodePropertyCategory.Contributory), LDisplayName(GetType(UnicodeResources), "d_IsOtherGraphemeExtend")>
         Public ReadOnly Property IsOtherGraphemeExtend As Boolean
             Get
@@ -1698,7 +1724,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Formerly proposed for programmatic determination of grapheme cluster boundaries.</summary>
         ''' <remarks>Underlying XML attribute is @Gr_Link<para>This property is deprecated as of Unicode 5.0</para></remarks>
         <XmlAttribute("Gr_Link"), Obsolete("Deprecated as of Unicode 5.0")>
-        <UcdProperty("Grapheme_Link ", "DerivedCoreProperties.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Grapheme_Link ", DerivedCorePropertiesTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_IsGraphemeLink")>
         Public ReadOnly Property IsGraphemeLink As Boolean
             Get
@@ -1710,7 +1736,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
         ''' <remarks>Underlying XML attribute is @GCB</remarks>
         <XmlAttribute("GCB"), DefaultValue(UnicodeGraphemeClusterBreak.other)>
-        <UcdProperty("Grapheme_Cluster_Break", "GraphemeBreakProperty.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Grapheme_Cluster_Break", GraphemeBreakPropertyTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_GraphemeClusterBreak")>
         Public ReadOnly Property GraphemeClusterBreak As UnicodeGraphemeClusterBreak
             Get
@@ -1747,7 +1773,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
         ''' <remarks>Underlying XML attribute is @WB</remarks>
         <XmlAttribute("WB"), DefaultValue(UnicodeWordBreakType.other)>
-        <UcdProperty("Word_Break", "WordBreakProperty.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Word_Break", WordBreakPropertyTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_WordBreak")>
         Public ReadOnly Property WordBreak As UnicodeWordBreakType
             Get
@@ -1790,7 +1816,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of expected values</exception>
         ''' <remarks>Underlying XML attribute is @SB</remarks>
         <XmlAttribute("SB")>
-        <UcdProperty("Sentence_Break", "SentenceBreakProperty.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Sentence_Break", SentenceBreakPropertyTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_SentenceBreak")>
         Public ReadOnly Property SentenceBreak As UnicodeSentenceBreakType
             Get
@@ -1822,7 +1848,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character is CKJV ideograph</summary>
         ''' <remarks>Underlying XML attribute is @Ideo</remarks>
         <XmlAttribute("Ideo")>
-        <UcdProperty("Ideographic", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Ideographic", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsIdeograph")>
         Public ReadOnly Property IsIdeograph As Boolean
             Get
@@ -1833,7 +1859,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character is unified CJK ideograph</summary>
         ''' <remarks>Underlying XML attribute is @UIdeo</remarks>
         <XmlAttribute("UIdeo")>
-        <UcdProperty("Unified_Ideograph", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Unified_Ideograph", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsUnifiedIdeograph")>
         Public ReadOnly Property IsUnifiedIdeograph As Boolean
             Get
@@ -1844,7 +1870,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character is ideographic descriptionsequence binary operator</summary>
         ''' <remarks>Underlying XML attribute is @ISDB</remarks>
         <XmlAttribute("ISDB")>
-        <UcdProperty("IDS_Binary_Operator", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("IDS_Binary_Operator", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsIdsBinaryOperator")>
         Public ReadOnly Property IsIdsBinaryOperator As Boolean
             Get
@@ -1855,7 +1881,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character is ideographic description sequence trinary operator</summary>
         ''' <remarks>Underlying XML attribute is @ISDT</remarks>
         <XmlAttribute("ISDT")>
-        <UcdProperty("IDS_Trinary_Operator", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("IDS_Trinary_Operator", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsIdsTrinaryOperator")>
         Public ReadOnly Property IsIdsTrinaryOperator As Boolean
             Get
@@ -1866,7 +1892,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if character is radical (for ideographic description sequences)</summary>
         ''' <remarks>Underlying XML attribute is @Radical</remarks>
         <XmlAttribute("Radical")>
-        <UcdProperty("Radical", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Radical", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_IsRadical")>
         Public ReadOnly Property IsRadical As Boolean
             Get
@@ -1879,7 +1905,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character is deprecated</summary>
         ''' <remarks>Underlying XML attribute is @Dep</remarks>
         <XmlAttribute("Dep")>
-        <UcdProperty("Deprecated", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Deprecated", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsDeprecated")>
         Public ReadOnly Property IsDeprecated As Boolean
             Get
@@ -1890,7 +1916,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if the character is Variation Selector</summary>
         ''' <remarks>Underlying XML attribute is @VS</remarks>
         <XmlAttribute("VS")>
-        <UcdProperty("Variation_Selector", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Variation_Selector", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsVariationSelector")>
         Public ReadOnly Property IsVariationSelector As Boolean
             Get
@@ -1901,7 +1927,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets value indicating if a code point is permanent non-character (i.e. the code point is permanently reserved ofr internal use)</summary>
         ''' <remarks>Underlying XML attribute is @NChar</remarks>
         <XmlAttribute("NChar")>
-        <UcdProperty("Noncharacter_Code_Point", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Noncharacter_Code_Point", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.General), LDisplayName(GetType(UnicodeResources), "d_IsNonCharacter")>
         Public ReadOnly Property IsNonCharacter As Boolean
             Get
@@ -3249,7 +3275,7 @@ Namespace TextT.UnicodeT
         ''' <para>Underlying XML attribute is @PCM</para>
         ''' </remarks>
         <XmlAttribute("PCM")>
-        <UcdProperty("Prepended_Concatenation_Mark", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Prepended_Concatenation_Mark", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_PrependedConcatenationMark")>
         Public ReadOnly Property PrependedConcatenationMark As Boolean
             Get
@@ -3261,7 +3287,7 @@ Namespace TextT.UnicodeT
         ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kRSTUnicode</remarks>
         <XmlAttribute("kRSTUnicode")>
-        <UcdProperty("kRSTUnicodes", "TangutSources.txt", UnicodePropertyType.Numeric, UnicodePropertyStatus.Informative)>
+        <UcdProperty("kRSTUnicodes", TangutSourcesTxt, UnicodePropertyType.Numeric, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Unlisted), LDisplayName(GetType(UnicodeResources), "d_RadicalStrokeIndexes")>
         Public ReadOnly Property RadicalStrokeIndexes As Decimal?
             Get
@@ -3275,7 +3301,7 @@ Namespace TextT.UnicodeT
         ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @kTGT_MergedSrc</remarks>
         <XmlAttribute("kTGT_MergedSrc")>
-        <UcdProperty("kTGT_MergedSrc", "TangutSources.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative)>
+        <UcdProperty("kTGT_MergedSrc", TangutSourcesTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Unlisted), LDisplayName(GetType(UnicodeResources), "d_TangutMergedSource")>
         Public ReadOnly Property TangutMergedSource As String
             Get
@@ -3293,7 +3319,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         ''' <exception cref="InvalidOperationException">Underlying XML attribute has unsupported value</exception>
         <XmlAttribute("vo")>
-        <UcdProperty("Vertical_Orientation", "VerticalOrientation.txt", UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Vertical_Orientation", VerticalOrientationTxt, UnicodePropertyType.Enumeration, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.ShapingAndRendering), LDisplayName(GetType(UnicodeResources), "d_VerticalOrientation")>
         Public ReadOnly Property VerticalOrientation As UnicodeVerticalOrientation?
             Get
@@ -3313,7 +3339,7 @@ Namespace TextT.UnicodeT
         ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @RI</remarks>
         <XmlAttribute("RI")>
-        <UcdProperty("Regional_Indicator", "PropList.txt", UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
+        <UcdProperty("Regional_Indicator", PropListTxt, UnicodePropertyType.Binary, UnicodePropertyStatus.Normative)>
         <UcdCategory(UnicodePropertyCategory.Miscellaneous), LDisplayName(GetType(UnicodeResources), "d_RegionalIndicator")>
         Public ReadOnly Property RegionalIndicator As Boolean
             Get
@@ -3326,7 +3352,7 @@ Namespace TextT.UnicodeT
         ''' <version version="1.6.0">This property is new in version 1.6.0</version>
         ''' <remarks>Underlying XML attribute is @EqUIdeo</remarks>
         <XmlAttribute("EqUIdeo")>
-        <UcdProperty("Equivalent_Unified_Ideograph", "EquivalentUnifiedIdeograph.txt", UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
+        <UcdProperty("Equivalent_Unified_Ideograph", EquivalentUnifiedIdeographTxt, UnicodePropertyType.Miscellaneous, UnicodePropertyStatus.Informative)>
         <UcdCategory(UnicodePropertyCategory.Cjk), LDisplayName(GetType(UnicodeResources), "d_EquivalentUnifiedIdeograph")>
         Public ReadOnly Property EquivalentUnifiedIdeograph As Integer?
             Get
