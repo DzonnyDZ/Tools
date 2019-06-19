@@ -23,30 +23,20 @@ Namespace TextT.UnicodeT
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Sub New(csurPropertySource As UnicodePropertiesProvider, mainUcdDocument As XDocument)
             If csurPropertySource Is Nothing Then Throw New ArgumentNullException("csurPropertySource")
-            _propertySource = csurPropertySource
-            Me._mainUcdDocument = mainUcdDocument
+            Me.PropertySource = csurPropertySource
+            Me.MainUcdDocument = mainUcdDocument
         End Sub
 
 #Region "Helper properties"
-        Private ReadOnly _mainUcdDocument As XDocument
         ''' <summary>Gets an XML document that defines main UCD XML (not CSUR XML)</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         <XmlIgnore(), Browsable(False)>
         Public ReadOnly Property MainUcdDocument As XDocument
-            Get
-                Return _mainUcdDocument
-            End Get
-        End Property
 
-        Private ReadOnly _propertySource As UnicodePropertiesProvider
         ''' <summary>Gets instance of <see cref="UnicodePropertiesProvider"/> that is used to retrieve CSUR properties' values</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         <XmlIgnore(), Browsable(False)>
         Public ReadOnly Property PropertySource As UnicodePropertiesProvider
-            Get
-                Return _propertySource
-            End Get
-        End Property
 
         ''' <summary>Gets a XML document that provides values of CSUR properties</summary>
         <XmlIgnore(), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
@@ -63,7 +53,7 @@ Namespace TextT.UnicodeT
 #Region "XmlAttribute-backed"
         ''' <summary>Gets name of CSUR-registered script this character belongs to.</summary>
         ''' <remarks>This is human-readable name of the script. It's not ISO script code.</remarks>
-        <XmlElement("script", namespace:=CsurExtensions.XmlNamespace)>
+        <XmlElement("script", Namespace:=CsurExtensions.XmlNamespace)>
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_Script"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property Script As String
             Get
@@ -74,7 +64,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets status of the code-point in CSUR</summary>
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of <see cref="CsurStatus"/> values.</exception>
         ''' <remarks>If the character belongs to a script and block the status is usually shared across whole block and script.</remarks>
-        <XmlElement("status", namespace:=CsurExtensions.XmlNamespace)>
+        <XmlElement("status", Namespace:=CsurExtensions.XmlNamespace)>
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_Status"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property Status As CsurStatus
             Get
@@ -91,7 +81,7 @@ Namespace TextT.UnicodeT
         ''' <summary>In case <see cref="Status"/> is <see cref="CsurStatus.Reserved"/> gets value indicating purpose for which the code point is reserved in CSUR</summary>
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of <see cref="CsurReservedFor"/> values.</exception>
         ''' <remarks>This property retuns non-<see cref="CsurReservedFor.notReserved"/> values only for some code-points from BMP private-use area. Thos are codepoints not used by CSUR and given by CSUR for complete private use.</remarks>
-        <XmlElement("reserved-for", namespace:=CsurExtensions.XmlNamespace)>
+        <XmlElement("reserved-for", Namespace:=CsurExtensions.XmlNamespace)>
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_ReservedFor"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property ReservedFor As CsurReservedFor
             Get
@@ -106,9 +96,9 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Gets date of last revision of script in CSUR</summary>
-        ''' <exception cref="InvalidOperationException">Value of underlying XML attribute cannot be parsed as date value in XML fomat (yyyy-MM-dd).</exception>
-        ''' <remarks>Value of this property is typically shared acrosss whole CSUR script and block.</remarks>
-        <XmlElement("last-revision", namespace:=CsurExtensions.XmlNamespace)>
+        ''' <exception cref="InvalidOperationException">Value of underlying XML attribute cannot be parsed as date value in XML format (yyyy-MM-dd).</exception>
+        ''' <remarks>Value of this property is typically shared across whole CSUR script and block.</remarks>
+        <XmlElement("last-revision", Namespace:=CsurExtensions.XmlNamespace)>
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_LastRevision"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property LastRevision As Date?
             Get
@@ -128,7 +118,7 @@ Namespace TextT.UnicodeT
         ''' <para>Underlying XML attribute can use # placeholder as in <see cref="UnicodePropertiesProvider.Name"/>.</para>
         ''' </remarks>
         ''' <seelaso cref="UnicodePropertiesProvider.Name"/>
-        <XmlElement("name", namespace:=CsurExtensions.XmlNamespace)>
+        <XmlElement("name", Namespace:=CsurExtensions.XmlNamespace)>
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_Name"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property Name As String
             Get
@@ -140,7 +130,7 @@ Namespace TextT.UnicodeT
         ''' <remarks>CSUR does not provide bidi categories in a normative way. Thus this property is provided only for some code-poits, especially those specifically said to be RtL.</remarks>
         ''' <exception cref="InvalidOperationException">Value of underlying XML attribute is not one of <see cref="UnicodeBidiCategory"/> values.</exception>
         ''' <seelaso cref="UnicodePropertiesProvider.BidiCategory"/>
-        <XmlElement("bc", namespace:=CsurExtensions.XmlNamespace)>
+        <XmlElement("bc", Namespace:=CsurExtensions.XmlNamespace)>
         <LDisplayName(GetType(UnicodeResources), "d_CSUR_BidiCategory"), LCategory(GetType(UnicodeResources), "propcat_CSUR_CSUR", "CSUR")>
         Public ReadOnly Property BidiCategory As UnicodeBidiCategory?
             Get

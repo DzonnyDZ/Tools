@@ -18,7 +18,7 @@ Namespace TextT.UnicodeT
         ''' </remarks>
         ''' <seelaso cref="UnicodeCharacterDatabase.Extensions"/>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public ReadOnly Property [DefaultCsurDatabase] As UnicodeCharacterDatabase
+        Public ReadOnly Property DefaultCsurDatabase As UnicodeCharacterDatabase
             Get
                 If _default Is Nothing Then
                     SyncLock defaultLock

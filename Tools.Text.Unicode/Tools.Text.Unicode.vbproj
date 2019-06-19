@@ -117,6 +117,7 @@
     <Compile Include="Text\Unicode\ICharNameProvider.vb" />
     <Compile Include="Text\Unicode\NamesListParser.vb" />
     <Compile Include="Text\Unicode\RadicalStrokeCount.vb" />
+    <Compile Include="Text\Unicode\UcdFiles.vb" />
     <Compile Include="Text\Unicode\UcdLocalizationProvider.vb" />
     <Compile Include="Text\Unicode\UcdRepertoire.vb" />
     <Compile Include="Text\Unicode\UnicodeBlock.vb" />

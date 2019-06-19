@@ -7,6 +7,7 @@ Imports Tools.NumericsT
 Imports System.Xml.Serialization
 Imports Tools.LinqT
 Imports System.Globalization
+Imports Tools.TextT.UnicodeT.UcdFiles
 
 'List of all properties http://www.unicode.org/reports/tr44/#Properties
 'XML format specification http://www.unicode.org/reports/tr42/
@@ -59,51 +60,19 @@ Namespace TextT.UnicodeT
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
     Public MustInherit Class UnicodePropertiesProvider : Implements IXElementWrapper
-
-        Private Const DerivedAgeTxt As String = "DerivedAge.txt"
-        Private Const UnicodeDataTxt As String = "UnicodeData.txt"
-        Private Const BlockTxt As String = "Block.txt"
-        Private Const BidiMirroringTxt As String = "BidiMirroring.txt"
-        Private Const PropListTxt As String = "PropList.txt"
-        Private Const BidiBracketsTxt As String = "BidiBrackets.txt"
-        Private Const CompositionExclusionsTxt As String = "CompositionExclusions.txt"
-        Private Const DerivedNormalizationPropsTxt As String = "DerivedNormalizationProps.txt"
-        Private Const ArabicShapingTxt As String = "ArabicShaping.txt"
-        Private Const LineBreakTxt As String = "LineBreak.txt"
-        Private Const EastAsianWidtTxt As String = "EastAsianWidth.txt"
-        Private Const DerivedCorePropertiesTxt As String = "DerivedCoreProperties.txt"
-        Private Const SpacialCasingTxt As String = "SpecialCasing.txt"
-        Private Const CaseFoldingTxt As String = "CaseFolding.txt"
-        Private Const ScriptsTxt As String = "Scripts.txt"
-        Private Const ScriptExtensionsTxt As String = "ScriptExtensions.txt"
-        Private Const HangulSyllableTypeTxt As String = "HangulSyllableType.txt"
-        Private Const JamoTxt As String = "Jamo.txt"
-        Private Const IndicSyllabicCategoryTxt As String = "IndicSyllabicCategory.txt"
-        Private Const IndicMantraCategoryTxt As String = "IndicMatraCategory.txt"
-        Private Const IndicPositionalCategoryTxt As String = "IndicPositionalCategory.txt"
-        Private Const GraphemeBreakPropertyTxt As String = "GraphemeBreakProperty.txt"
-        Private Const WordBreakPropertyTxt As String = "WordBreakProperty.txt"
-        Private Const SentenceBreakPropertyTxt As String = "SentenceBreakProperty.txt"
-        Private Const TangutSourcesTxt As String = "TangutSources.txt"
-        Private Const VerticalOrientationTxt As String = "VerticalOrientation.txt"
-        Private Const EquivalentUnifiedIdeographTxt As String = "EquivalentUnifiedIdeograph.txt"
 #Region "Infrastructure"
-        Private _element As XElement
         ''' <summary>CTor - creates a new instance of the <see cref="UnicodePropertiesProvider"/> class</summary>
         ''' <param name="element">A XML element which stores the properties</param>
         ''' <exception cref="ArgumentNullException"><paramref name="element"/> is null.</exception>
         Protected Sub New(element As XElement)
             If element Is Nothing Then Throw New ArgumentNullException("element")
-            _element = element
+            Me.Element = element
         End Sub
 
         ''' <summary>Gets XML element this instance wraps</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), XmlIgnore(), Browsable(False)>
         Public ReadOnly Property Element As XElement Implements IXElementWrapper.Element
-            Get
-                Return _element
-            End Get
-        End Property
+
 
         ''' <summary>Gets node this instance wraps</summary>
         <XmlIgnore(), Browsable(False)>
@@ -167,7 +136,7 @@ Namespace TextT.UnicodeT
         End Function
 
         ''' <summary>Gets an instance of <see cref="UnicodeCharacterDatabase"/> that provides property values defined in UCD extensions model identified by a namespace name</summary>
-        ''' <param name="namespace">Name of nbamespace to get extensions UCD for. <note>Null and empty string value are always ignored and this method returns null.</note></param>
+        ''' <param name="namespace">Name of namespace to get extensions UCD for. <note>Null and empty string value are always ignored and this method returns null.</note></param>
         ''' <returns>
         ''' An instance of <see cref="UnicodeCharacterDatabase"/> that provides values of UCD extension properties
         ''' (i.e. properties that are not part of Unicode standard and come from other source).
@@ -197,7 +166,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets all registered textual extensions for <see cref="Element"/>.<see cref="XElement.Document">Document</see></summary>
         ''' <returns>All registered textual extensions for <see cref="Element"/>.<see cref="XElement.Document">Document</see>. Null if no extensions are registered.</returns>
         ''' <remarks>
-        ''' Extensions are registered in dictionray which is stored in document annotation of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="String"/>, <see cref="Object"/>].
+        ''' Extensions are registered in dictionary which is stored in document annotation of type <see cref="IDictionary(Of TKey, TValue)"/>[<see cref="String"/>, <see cref="Object"/>].
         ''' Actual type of extension depends on its type. Primary way of accessing extensions if the <see cref="UnicodeCharacterDatabase.TextualExtensions"/> property.
         ''' </remarks>
         ''' <seelaso cref="UnicodeCharacterDatabase.TextualExtensions"/>
@@ -206,8 +175,8 @@ Namespace TextT.UnicodeT
             Return Element.Document.Annotation(Of IDictionary(Of String, Object))()
         End Function
 
-        ''' <summary>Gets one oextension from textual extensions registered for <see cref="Element"/>.<see cref="XElement.Document">Document</see>.</summary>
-        ''' <returns>An object represneting the extension registered under name <paramref name="name"/>. Null if either the extension is not registered or no extensions are registered.</returns>
+        ''' <summary>Gets one extension from textual extensions registered for <see cref="Element"/>.<see cref="XElement.Document">Document</see>.</summary>
+        ''' <returns>An object representing the extension registered under name <paramref name="name"/>. Null if either the extension is not registered or no extensions are registered.</returns>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Function GetTextualExtension(name$) As Object
             Dim extDic = GetTextualExtensions()
@@ -323,7 +292,7 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets generalized unicode category of code point</summary>
+        ''' <summary>Gets generalized Unicode category of code point</summary>
         ''' <value>Default value if <see cref="GeneralCategory"/> is not assigned in Unicode Character Database is <see cref="UnicodeGeneralCategoryClass.Other"/>.</value>
         ''' <seelaso cref="UnicodeExtensions.GetClass"/>
         <XmlIgnore()>
