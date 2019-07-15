@@ -1,16 +1,8 @@
 ' Author:       Mattias Sjögren (mattias@mvps.org)
 '               http://www.msjogren.net/dotnet/
 ' Copyright ©2001-2002, Mattias Sjögren
-Imports System
-Imports System.Text
 Imports System.Runtime.InteropServices
-Imports System.Diagnostics
-Imports System.Drawing
-Imports System.IO
-Imports System.Windows.Forms
-Imports Tools.COM.ShellLink
-Imports Tools.API.FileSystem
-Imports System.ComponentModel
+Imports System.Text
 
 Namespace COM.ShellLink
 

@@ -24,13 +24,13 @@ Namespace IOt
             Me.path = Path
         End Sub
         ''' <summary>Gets COM object that represents the link</summary>
-        ''' <returns>The object which im plements <see cref="IPersistFile"/> and <see cref="IShellLinkW"/> interfaces</returns>
+        ''' <returns>The object which implements <see cref="IPersistFile"/> and <see cref="IShellLinkW"/> interfaces</returns>
         Protected ReadOnly Property IShellLinkObject() As Object
             Get
                 Return link
             End Get
         End Property
-        ''' <summary>Creates new instace of the <see cref="ShellLink"/> class</summary>
+        ''' <summary>Creates new instance of the <see cref="ShellLink"/> class</summary>
         ''' <param name="existingLink">Path of existing *.LNK file</param>
         ''' <exception cref="IO.FileNotFoundException">File <paramref name="ExistingLink"/> does not exist</exception>
         ''' <exception cref="ArgumentException">Link cannot be opened</exception>
@@ -303,7 +303,7 @@ Namespace IOt
         ''' <remarks>You must use this method to confir changes made to shortcut. The Save method uses the information in the shortcut object's FullName property to determine where to save the shortcut object on a disk. You can only create shortcuts to system objects. This includes files, directories, and drives (but does not include printer links or scheduled tasks).</remarks>
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
         ''' <exception cref="IO.FileNotFoundException">File <see cref="FullName"/> was not found</exception>
-        ''' <exception cref="IO.IOException">Exception ocured while writing to file <see cref="FullName"/></exception>
+        ''' <exception cref="IO.IOException">Exception occurred while writing to file <see cref="FullName"/></exception>
         Public Sub Save()
             If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
             Dim pf As IPersistFile = CType(link, IPersistFile)
@@ -318,9 +318,9 @@ Namespace IOt
 
         ''' <summary>Saves a shortcut object to disk on different place then where it is saved now</summary>
         ''' <param name="Path">Path to be saved</param>
-        ''' <remarks>Invoking this method cnages value of the <see cref="FullName"/> property</remarks>
+        ''' <remarks>Invoking this method changes value of the <see cref="FullName"/> property</remarks>
         ''' <exception cref="IO.FileNotFoundException">File <paramref name="Path"/> was not found</exception>
-        ''' <exception cref="IO.IOException">Exception ocured while writing to file <paramref name="Path"/></exception>
+        ''' <exception cref="IO.IOException">Exception occurred while writing to file <paramref name="Path"/></exception>
         ''' <version version="1.5.4">Parameter <c>Path</c> renamed to <c>path</c></version>
         Public Sub SaveAs(ByVal path As String)
             If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
@@ -507,13 +507,13 @@ Namespace IOt
     ''' <version version="1.5.4">This enumeration is new in version 1.5.4</version>
     <Flags>
     Public Enum LinkResolveOptions As Short
-        ''' <summary>No special optiosn are set</summary>
+        ''' <summary>No special options are set</summary>
         none = 0
         ''' <summary>Do not display a dialog box if the link cannot be resolved.</summary>
         NoUi = SLR_FLAGS.SLR_NO_UI
         ''' <summary>Do not execute the search heuristics.</summary>
         NoSearch = SLR_FLAGS.SLR_NOSEARCH
-        ''' <summary> Do not use distributed link tracking.</summary>
+        ''' <summary>Do not use distributed link tracking.</summary>
         NoDistributedTracking = SLR_FLAGS.SLR_NOTRACK
         ''' <summary>Do not use distributed link tracking and do not track links to UNC paths whose drive letter has changed.</summary>
         NoTrackingAtAll = SLR_FLAGS.SLR_NOLINKINFO
