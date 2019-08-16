@@ -65,11 +65,7 @@ Namespace IOt
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
                 If value Is Nothing Then Throw New ArgumentNullException("value")
                 If value = "" Then Throw New ArgumentException(ResourcesT.Exceptions.ValueCannotBeEmptyString, "value")
-                'If IO.Path.IsPathRooted(value) Then
                 link.SetPath(value)
-                'Else
-                'link.SetRelativePath(value, 0)
-                'End If
             End Set
         End Property
 
@@ -300,7 +296,7 @@ Namespace IOt
         End Function
 
         ''' <summary>Saves a shortcut object to disk.</summary>
-        ''' <remarks>You must use this method to confir changes made to shortcut. The Save method uses the information in the shortcut object's FullName property to determine where to save the shortcut object on a disk. You can only create shortcuts to system objects. This includes files, directories, and drives (but does not include printer links or scheduled tasks).</remarks>
+        ''' <remarks>You must use this method to confirm changes made to shortcut. The Save method uses the information in the shortcut object's FullName property to determine where to save the shortcut object on a disk. You can only create shortcuts to system objects. This includes files, directories, and drives (but does not include printer links or scheduled tasks).</remarks>
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
         ''' <exception cref="IO.FileNotFoundException">File <see cref="FullName"/> was not found</exception>
         ''' <exception cref="IO.IOException">Exception occurred while writing to file <see cref="FullName"/></exception>
