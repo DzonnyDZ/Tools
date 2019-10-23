@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Multi-value converter that performs a boolean operation on values</summary>
@@ -150,4 +150,3 @@ Namespace WindowsT.WPF.ConvertersT
         [False]
     End Enum
 End Namespace
-#End If

@@ -280,7 +280,7 @@ Namespace TextT.UnicodeT
         ''' <exception cref="InvalidOperationException">The data in UCD XML are invalid - see <see cref="Exception.InnerException"/> for details. See <see cref="M:Tools.TextT.UnicodeT.UnicodeCharacterDatabase.FindBlock(System.Collections.Generic.IEnumerable`1[System.Xml.Linq.XElement],System.UInt32,System.Boolean)"/> for detailed explanation of <see cref="Exception.InnerException"/>.</exception>
         ''' <seelaso cref="UnicodeCharacterDatabase.FindBlock"/>
         <Browsable(False), XmlIgnore()>
-        Public ReadOnly Property Block As UnicodeBlock
+        Public Overloads ReadOnly Property Block As UnicodeBlock
             Get
                 If CodePoint.HasValue Then
                     Dim bel As XElement

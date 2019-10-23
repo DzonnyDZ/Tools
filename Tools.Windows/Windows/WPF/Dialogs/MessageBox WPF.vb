@@ -4,7 +4,7 @@ Imports Tools.WindowsT.WPF.ConvertersT, Tools.WindowsT.IndependentT
 Imports Tools.ComponentModelT, Tools.ExtensionsT
 Imports System.Windows.Input
 
-#If True 'Stage: Beta
+'Stage: Beta
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Control that implements WPF <see cref="MessageBox"/></summary>
     ''' <remarks>This control is not intended to be used separately, to be placed on yopur window. This control implements WPF <see cref="MessageBox"/> and can be styled/templated.
@@ -13,12 +13,12 @@ Namespace WindowsT.WPF.DialogsT
     ''' <para>Due to WPF limitations message box always displays an ugly icon. If you want to hide the icon set <see cref="P:Tools.WindowsT.WPF.NativeExtensions.GloballyHideNullIconsOfWindows"/> to true.</para></remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     ''' <version version="1.5.3." stage="Beta">Added ability to copy all text of message box using Ctrl+C</version>
-    <EditorBrowsable(EditorBrowsableState.Advanced)> _
-    <TemplatePart(Name:=MessageBoxImplementationControl.PART_TopControlPlaceholder, Type:=GetType(Controls.Panel))> _
-    <TemplatePart(Name:=MessageBoxImplementationControl.PART_MiddleControlPlaceholder, Type:=GetType(Controls.Panel))> _
-    <TemplatePart(Name:=MessageBoxImplementationControl.PART_BottomControlPlaceholder, Type:=GetType(Controls.Panel))> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)>
+    <TemplatePart(Name:=MessageBoxImplementationControl.PART_TopControlPlaceholder, Type:=GetType(Controls.Panel))>
+    <TemplatePart(Name:=MessageBoxImplementationControl.PART_MiddleControlPlaceholder, Type:=GetType(Controls.Panel))>
+    <TemplatePart(Name:=MessageBoxImplementationControl.PART_BottomControlPlaceholder, Type:=GetType(Controls.Panel))>
     Public Class MessageBoxImplementationControl
-        Inherits System.Windows.Controls.Control
+        Inherits Controls.Control
         Implements IDisposable
         ''' <summary>Identifies placeholder panel for additional control on top of message box window</summary>
         Protected Friend Const PART_TopControlPlaceholder As String = "PART_TopControlPlaceholder"
@@ -28,9 +28,9 @@ Namespace WindowsT.WPF.DialogsT
         Protected Friend Const PART_BottomControlPlaceholder As String = "PART_BottomControlPlaceholder"
         ''' <summary>Contains value of the <see cref="MessageBox"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private WithEvents _MessageBox As MessageBox
-        ''' <summary>Gest or sets instance of <see cref="WindowsT.WPF.DialogsT.MessageBox"/> this instance is user interface for</summary>
-        ''' <returns>Instance of <see cref="WindowsT.WPF.DialogsT.MessageBox"/> this instance is user interface for</returns>
-        ''' <value>Set value to associate <see cref="MessageBoxImplementationControl"/> and <see cref="WindowsT.WPF.DialogsT.MessageBox"/></value>
+        ''' <summary>Gest or sets instance of <see cref="DialogsT.MessageBox"/> this instance is user interface for</summary>
+        ''' <returns>Instance of <see cref="DialogsT.MessageBox"/> this instance is user interface for</returns>
+        ''' <value>Set value to associate <see cref="MessageBoxImplementationControl"/> and <see cref="DialogsT.MessageBox"/></value>
         ''' <exception cref="ArgumentException">Value being set has not <see cref="MessageBox.Control"/> property set to this instance.</exception>
         Public Property MessageBox() As MessageBox
             <DebuggerStepThrough()> Get
@@ -48,16 +48,16 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Initializer</summary>
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(MessageBoxImplementationControl), New FrameworkPropertyMetadata(GetType(MessageBoxImplementationControl)))
-            FlowDirectionProperty.OverrideMetadata(GetType(MessageBoxImplementationControl), New FrameworkPropertyMetadata(PropertyChangedCallback:=AddressOf OnFlowDirectionChanged))
+            FlowDirectionProperty.OverrideMetadata(GetType(MessageBoxImplementationControl), New FrameworkPropertyMetadata(propertyChangedCallback:=AddressOf OnFlowDirectionChanged))
             InitializeCommands()
         End Sub
         ''' <summary>Raises the <see cref="RenderSizeChanged"/> event</summary>
-        Protected Overrides Sub OnRenderSizeChanged(ByVal sizeInfo As System.Windows.SizeChangedInfo)
+        Protected Overrides Sub OnRenderSizeChanged(ByVal sizeInfo As SizeChangedInfo)
             MyBase.OnRenderSizeChanged(sizeInfo)
             RaiseEvent RenderSizeChanged(Me, sizeInfo)
         End Sub
         ''' <summary>Raised when value of <see cref="ActualHeight"/> or <see cref="ActualWidth"/> property changes</summary>
-        Public Event RenderSizeChanged As EventHandler(Of InteropT.SizeChangedInfoEventArgs)
+        Public Event RenderSizeChanged As EventHandler(Of SizeChangedInfoEventArgs)
 #Region "FlowDirection"
         ''' <summary>Callback called when the <see cref="FlowDirection"/> property is changed</summary>
         Private Shared Sub OnFlowDirectionChanged(ByVal d As DependencyObject, ByVal e As DependencyPropertyChangedEventArgs)
@@ -65,11 +65,11 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
         ''' <summary>Raises the <see cref="FlowDirectionChanged"/> event. Caled when value of the <see cref="FlowDirection"/> property changes.</summary>
         ''' <param name="e">Event arguments</param>
-        Protected Overridable Sub OnFlowDirectionChanged(ByVal e As InteropT.DependencyPropertyChangedEventArgsEventArgs)
+        Protected Overridable Sub OnFlowDirectionChanged(ByVal e As DependencyPropertyChangedEventArgsEventArgs)
             RaiseEvent FlowDirectionChanged(Me, e)
         End Sub
         ''' <summary>Raised when the value of the <see cref="FlowDirection"/> property changes</summary>
-        Public Event FlowDirectionChanged As EventHandler(Of InteropT.DependencyPropertyChangedEventArgsEventArgs)
+        Public Event FlowDirectionChanged As EventHandler(Of DependencyPropertyChangedEventArgsEventArgs)
 #End Region
 #Region "Title"
         ''' <summary>Gets or sets string indicating title of window this control is laced on</summary>
@@ -86,9 +86,9 @@ Namespace WindowsT.WPF.DialogsT
             End Set
         End Property
         ''' <summary>Identifies the <see cref="Title"/> property</summary>
-        Public Shared ReadOnly TitleProperty As DependencyProperty = _
-                               DependencyProperty.Register("Title", _
-                               GetType(String), GetType(MessageBoxImplementationControl), _
+        Public Shared ReadOnly TitleProperty As DependencyProperty =
+                               DependencyProperty.Register("Title",
+                               GetType(String), GetType(MessageBoxImplementationControl),
                                New FrameworkPropertyMetadata("MessageBox", New PropertyChangedCallback(AddressOf OnTitleChanged)))
         ''' <summary>Callback called wehn the <see cref="TitleProperty"/> is changed</summary>
         Private Shared Sub OnTitleChanged(ByVal d As DependencyObject, ByVal e As DependencyPropertyChangedEventArgs)
@@ -96,11 +96,11 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
         ''' <summary>Raises the <see cref="TitleChanged"/> event. Called when value of the <see cref="TitleProperty"/> changes</summary>
         ''' <param name="e">Event arguments</param>
-        Protected Overridable Sub OnTitleChanged(ByVal e As InteropT.DependencyPropertyChangedEventArgsEventArgs)
+        Protected Overridable Sub OnTitleChanged(ByVal e As DependencyPropertyChangedEventArgsEventArgs)
             RaiseEvent TitleChanged(Me, e)
         End Sub
         ''' <summary>Raised when value of the <see cref="Title"/> property changes</summary>
-        Public Event TitleChanged As EventHandler(Of InteropT.DependencyPropertyChangedEventArgsEventArgs)
+        Public Event TitleChanged As EventHandler(Of DependencyPropertyChangedEventArgsEventArgs)
 #End Region
 #Region "Commands"
         ''' <summary>Gets command to be executed when button is clicked.</summary>
@@ -217,15 +217,15 @@ Namespace WindowsT.WPF.DialogsT
             End Set
         End Property
 
-        Private Sub MessageBox_BottomControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.BottomControlChanged
+        Private Sub MessageBox_BottomControlChanged(ByVal sender As iMsg, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.BottomControlChanged
             BottomControl = MessageBox.BottomControlControl
         End Sub
 
-        Private Sub MessageBox_MidControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.MidControlChanged
+        Private Sub MessageBox_MidControlChanged(ByVal sender As iMsg, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.MidControlChanged
             MidControl = MessageBox.TopControlControl
         End Sub
 
-        Private Sub MessageBox_TopControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.TopControlChanged
+        Private Sub MessageBox_TopControlChanged(ByVal sender As iMsg, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.TopControlChanged
             TopControl = MessageBox.TopControlControl
         End Sub
         Private Sub Window_Closed(ByVal sender As Object, ByVal e As EventArgs)
@@ -235,7 +235,7 @@ Namespace WindowsT.WPF.DialogsT
         Protected Overridable Sub OnWindowClosed()
             Dispose()
         End Sub
-        Private Sub MessageBox_WindowChanged(ByVal sender As Object, ByVal e As IReportsChange.ValueChangedEventArgs(Of System.Windows.Window)) Handles _MessageBox.WindowChanged
+        Private Sub MessageBox_WindowChanged(ByVal sender As Object, ByVal e As IReportsChange.ValueChangedEventArgs(Of Window)) Handles _MessageBox.WindowChanged
             OnWindowChanged(e)
         End Sub
         ''' <summary>Called when window associated with <see cref="MessageBox"/> changes</summary>
@@ -279,7 +279,7 @@ Namespace WindowsT.WPF.DialogsT
             GC.SuppressFinalize(Me)
         End Sub
         ''' <summary>Raised when this control is disposed</summary>
-        <Browsable(False)> _
+        <Browsable(False)>
         Public Event Disposed As EventHandler
         ''' <summary>Allows an <see cref="T:System.Object" /> to attempt to free resources and perform other cleanup operations before the <see cref="T:System.Object" /> is reclaimed by garbage collection.</summary>
         ''' <remarks>This method cannot be overridn, override <see cref="Dispose"/> instead.</remarks>
@@ -293,10 +293,10 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns>Textual representation of messagesbox including <see cref="MessageBox.Title"/>, <see cref="MessageBox.Prompt"/>, <see cref="MessageBox.ComboBox"/>, <see cref="MessageBox.CheckBoxes"/>, <see cref="MessageBox.Radios"/> and <see cref="MessageBox.Buttons"/></returns>
         ''' <remarks>Custom controls - <see cref="MessageBox.TopControl"/>, <see cref="MessageBox.MidControl"/> and <see cref="MessageBox.BottomControl"/> are not included in text</remarks>
         ''' <vertion version="1.5.3" stage="Nightly">This function is new in version 1.5.3</vertion>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Overridable Function GetCopyText() As String
             If Me.IsDisposed Then Throw New ObjectDisposedException(Me.Name)
-            Dim text As New System.Text.StringBuilder
+            Dim text As New Text.StringBuilder
             If MessageBox.Title = "" Then
                 text.AppendLine("========================================")
             Else
@@ -357,16 +357,16 @@ Namespace WindowsT.WPF.DialogsT
     ''' <remarks>Message box user interface is implemented by <see cref="MessageBoxImplementationControl"/>. To change style or template of message box, use that control.</remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     ''' <version version="1.5.3" stage="Beta">Added support for <see cref="Window"/> as message box owner required by changes in <see cref="iMsg"/></version>
-    ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="System.Windows.DependencyObject"/> hosted in <see cref="System.Windows.Window"/>.</version>
+    ''' <version version="1.5.3" stage="Beta">Owner of dialog now can be any <see cref="DependencyObject"/> hosted in <see cref="Windows.Window"/>.</version>
     ''' <version version="1.5.3">Messages are now centered to thair owner (if some conditions are met).
     ''' The conditions are: Owner is specified and - Owner is <see cref="Window"/> or it's <see cref="DependencyObject"/> for which a <see cref="Window"/> can be determined using <see cref="Window.GetWindow"/> -or- 
     ''' Owner is <see cref="Forms.Control"/> -or-
-    ''' Owner is either <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> and it's handle represents <see cref="System.Windows.Controls"/> -or-
+    ''' Owner is either <see cref="Forms.IWin32Window"/> or <see cref="System.Windows.Interop.IWin32Window"/> and it's handle represents <see cref="Controls"/> -or-
     ''' <para>
     ''' If owner is <see cref="Forms.Control"/> dialog is centered to control's parent <see cref="Forms.Form"/> (if it can be determined using <see cref="Forms.Control.FindForm"/>). If <see cref="Forms.Form"/> cannot be determined the dialog is centered to control itself.
     ''' If owner is <see cref="DependencyObject"/> dialog is centered to parent <see cref="Window"/> of the <see cref="DependencyObject"/>. If parent <see cref="Window"/> cannot be found (using <see cref="Window.GetWindow"/>) the dialog is not centered at all.
     ''' </para>
-    ''' <para>If owner is either <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> and no corresponding <see cref="Forms.Control"/> can be found (using <see cref="Forms.Control.FromHandle"/>) the dialog is not centered. (This is considered a limitation which may be fixed in one of next versions.)</para></version>
+    ''' <para>If owner is either <see cref="Forms.IWin32Window"/> or <see cref="System.Windows.Interop.IWin32Window"/> and no corresponding <see cref="Forms.Control"/> can be found (using <see cref="Forms.Control.FromHandle"/>) the dialog is not centered. (This is considered a limitation which may be fixed in one of next versions.)</para></version>
     Public Class MessageBox : Inherits iMsg
         Implements INotifyPropertyChanged
         ''' <summary>Format of title with timer</summary>
@@ -374,23 +374,23 @@ Namespace WindowsT.WPF.DialogsT
 
         ''' <summary>Closes message box with <see cref="CloseResponse"/></summary>
         ''' <param name="Response">Response to close window with</param>
-        Public Overloads Overrides Sub Close(ByVal Response As System.Windows.Forms.DialogResult)
+        Public Overloads Overrides Sub Close(ByVal Response As Forms.DialogResult)
             Window.Close()
             Control.Dispose()
         End Sub
         ''' <summary>Contains value of the <see cref="Window"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private WithEvents _Window As Window
+        <EditorBrowsable(EditorBrowsableState.Never)> Private WithEvents _window As Window
         ''' <summary>Gets or sets window representing message box usre interface</summary>
         ''' <returns>Window representing message box user interface</returns>
         ''' <value>Window to represent message box user interface</value>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Window() As Window
             Get
-                Return _Window
+                Return _window
             End Get
             Protected Set(ByVal value As Window)
-                Dim old = _Window
-                _Window = value
+                Dim old = _window
+                _window = value
                 If old IsNot value Then OnWindowClosed(New IReportsChange.ValueChangedEventArgs(Of Window)(old, value, "Window"))
             End Set
         End Property
@@ -402,8 +402,8 @@ Namespace WindowsT.WPF.DialogsT
             OnPropertyChanged(e)
         End Sub
         ''' <summary>Raised when value of the <see cref="Window"/> property changes</summary>
-        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
-        <LDescription(GetType(WindowsT.FormsT.Dialogs), "WindowChanged_d")> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)>
+        <LDescription(GetType(FormsT.Dialogs), "WindowChanged_d")>
         Public Event WindowChanged As EventHandler(Of IReportsChange.ValueChangedEventArgs(Of Window))
 
         ''' <summary>Gets or sets value of the <see cref="Control"/> property</summary>
@@ -411,7 +411,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Gets or sets control implementing message box user interface</summary>
         ''' <returns>Control implementing message box user interface</returns>
         ''' <value>Control to represent message box user interface</value>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Control() As MessageBoxImplementationControl
             Get
                 Return _Control
@@ -423,12 +423,12 @@ Namespace WindowsT.WPF.DialogsT
 
         ''' <summary>Shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Owner">Parent window of dialog (may be null).  This implementation recognizes values of type <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/>, <see cref="System.Windows.Window"/> and <see cref="System.Windows.DependencyObject"/> (if hosted in <see cref="System.Windows.Window"/>). Unrecognized owners are treated as null.</param>
+        ''' <param name="Owner">Parent window of dialog (may be null).  This implementation recognizes values of type <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/>, <see cref="Windows.Window"/> and <see cref="DependencyObject"/> (if hosted in <see cref="Windows.Window"/>). Unrecognized owners are treated as null.</param>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
-        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="Forms.IWin32Window"/> to <see cref="Object"/> to support <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="System.Windows.Window"/>.</version>
-        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="System.Windows.DependencyObject"/> for which <see cref="System.Windows.Window.GetWindow"/> returns non-null value.</version>
+        ''' <version version="1.5.3" stage="Beta">Type of parameter <paramref name="owner"/> changed from <see cref="Forms.IWin32Window"/> to <see cref="Object"/> to support <see cref="Forms.IWin32Window"/>, <see cref="Interop.IWin32Window"/> and <see cref="Windows.Window"/>.</version>
+        ''' <version version="1.5.3" stage="Beta">The <paramref name="Owner"/> parameter acceps <see cref="DependencyObject"/> for which <see cref="Window.GetWindow"/> returns non-null value.</version>
         ''' <version version="1.5.3">Parameters renamed: <c>Modal</c> to <c>modal</c>; <c>Owner</c> to <c>owner</c></version>
-        ''' <version version="1.5.3">Changed so that message box is now centered to it's parent (as long as the parent is <see cref="Forms.Control"/>, <see cref="System.Windows.Window"/> (or <see cref="DependencyObject"/> from a <see cref="Window"/>) or <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> representing <see cref="Forms.Control"/>). See class documentation for details.</version>
+        ''' <version version="1.5.3">Changed so that message box is now centered to it's parent (as long as the parent is <see cref="Forms.Control"/>, <see cref="Windows.Window"/> (or <see cref="DependencyObject"/> from a <see cref="Window"/>) or <see cref="Forms.IWin32Window"/> or <see cref="Interop.IWin32Window"/> representing <see cref="Forms.Control"/>). See class documentation for details.</version>
         Protected Overrides Sub PerformDialog(ByVal modal As Boolean, ByVal owner As Object)
             If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Window = New MessageBoxWindow()
@@ -465,7 +465,7 @@ Namespace WindowsT.WPF.DialogsT
             ElseIf TypeOf owner Is DependencyObject Then
                 Dim window As Window
                 If TypeOf owner Is Window Then window = owner _
-                Else window = window.GetWindow(owner)
+                Else window = Window.GetWindow(owner)
                 If window IsNot Nothing Then
                     ownerRect = New Drawing.Rectangle(window.Left, window.Top, window.ActualWidth, window.ActualHeight)
                 End If
@@ -489,7 +489,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Raises the <see cref="Changed"/> event</summary>
         ''' <param name="e">Event parameters</param>
         ''' <remarks><note type="ineritinfo">This implementtion calls itself with another value of <paramref name="e"/> when specific propeties changed causing <see cref="IReportsChange"/> and <see cref="INotifyPropertyChanged"/> to work for properties introduced by this implementation. Call bas class method in order this implemntation to work.</note></remarks>
-        Protected Overrides Sub OnChanged(ByVal e As System.EventArgs)
+        Protected Overrides Sub OnChanged(ByVal e As EventArgs)
             MyBase.OnChanged(e)
             If TypeOf e Is IReportsChange.ValueChangedEventArgsBase Then
                 OnPropertyChanged(e)
@@ -502,7 +502,7 @@ Namespace WindowsT.WPF.DialogsT
                             OnChanged(e2)
                         End With
                     Case "Options"
-                        With DirectCast(e, IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxOptions))
+                        With DirectCast(e, IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions))
                             If (.OldValue And MessageBoxOptions.AlignMask) <> (.NewValue And MessageBoxOptions.AlignMask) Then
                                 OnChanged(New IReportsChange.ValueChangedEventArgs(Of HorizontalAlignment)(OptionsToHorizontalAlignment(.OldValue), OptionsToHorizontalAlignment(.NewValue), "PromptAlign"))
                             End If
@@ -528,24 +528,24 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Raises the <see cref="CountDown"/> event</summary>
         ''' <param name="e">Event argument</param>
         ''' <remarks>Derived class should override this method in order to catch change of count down remaining time and call base class method.</remarks>
-        Protected Overrides Sub OnCountDown(ByVal e As System.EventArgs)
+        Protected Overrides Sub OnCountDown(ByVal e As EventArgs)
             MyBase.OnCountDown(e)
             If TimeButton = -1 AndAlso IsCountDown Then OnPropertyChanged(New PropertyChangedEventArgs("TitleWithTimer"))
         End Sub
         ''' <summary>Gets window title including any possible timer (wehn appropriate)</summary>
         ''' <returns><see cref="Title"/>, with <see cref="CurrentTimer"/> appended when <see cref="TimeButton"/> is -1 and <see cref="IsCountDown"/> is true</returns>
         ''' <remarks>Chage of value of this property is reportyed only via <see cref="INotifyPropertyChanged"/>, not via <see cref="IReportsChange"/>.</remarks>
-        <Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Public ReadOnly Property TitleWithTimer$()
             Get
                 If TimeButton = -1 AndAlso IsCountDown Then Return String.Format(TitleFormatWithTimer, Title, CurrentTimer)
                 Return Title
             End Get
         End Property
-        ''' <summary>Converts <see cref="iMsg.MessageBoxOptions"/> to <see cref="HorizontalAlignment"/></summary>
-        ''' <param name="Options">An <see cref="iMsg.MessageBoxOptions"/></param>
+        ''' <summary>Converts <see cref="MessageBoxOptions"/> to <see cref="HorizontalAlignment"/></summary>
+        ''' <param name="Options">An <see cref="MessageBoxOptions"/></param>
         ''' <returns>Extracted alignment from <paramref name="Options"/> converted to <see cref="HorizontalAlignment"/>. Fallback value is <see cref="HorizontalAlignment.Left"/>.</returns>
-        Protected Shared Function OptionsToHorizontalAlignment(ByVal Options As iMsg.MessageBoxOptions) As HorizontalAlignment
+        Protected Shared Function OptionsToHorizontalAlignment(ByVal Options As MessageBoxOptions) As HorizontalAlignment
             Select Case Options And MessageBoxOptions.AlignMask
                 Case MessageBoxOptions.AlignCenter : Return HorizontalAlignment.Center
                 Case MessageBoxOptions.AlignRight : Return HorizontalAlignment.Right
@@ -555,13 +555,13 @@ Namespace WindowsT.WPF.DialogsT
         End Function
         ''' <summary>Gets or sets value of alignment stored in <see cref="Options"/></summary>
         ''' <returns>Extracted value of alignent stored in <see cref="Options"/> converted to <see cref="HorizontalAlignment"/>. Never returns <see cref="HorizontalAlignment.Stretch"/>.</returns>
-        ''' <value>New valuef alignment to store in <see cref="Options"/>. Any unknown value is converted to <see cref="iMsg.MessageBoxOptions.AlignLeft"/>.</value>
+        ''' <value>New valuef alignment to store in <see cref="Options"/>. Any unknown value is converted to <see cref="MessageBoxOptions.AlignLeft"/>.</value>
         ''' <remarks>When setting value of this property any alignment-unrelated bits remains untouched.
         ''' <para>Change of this property is reported via <see cref="IReportsChange"/> and <see cref="INotifyPropertyChanged"/>.</para></remarks>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <LDescription(GetType(WindowsT.FormsT.Dialogs), "TextAlignmentOfPrompt")> _
-        <EnumDefaultValue(HorizontalAlignment.Left, GetType(HorizontalAlignment))> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+        <LDescription(GetType(FormsT.Dialogs), "TextAlignmentOfPrompt")>
+        <EnumDefaultValue(HorizontalAlignment.Left, GetType(HorizontalAlignment))>
         Public Property PromptAlign() As HorizontalAlignment
             Get
                 Return OptionsToHorizontalAlignment(Me.Options)
@@ -575,23 +575,23 @@ Namespace WindowsT.WPF.DialogsT
                 End Select
             End Set
         End Property
-        ''' <summary>Converts <see cref="iMsg.MessageBoxOptions"/> to <see cref="FlowDirection"/></summary>
-        ''' <param name="Options">An <see cref="iMsg.MessageBoxOptions"/></param>
-        ''' <returns><see cref="FlowDirection.RightToLeft"/> when <paramref name="Options"/> has <see cref="iMsg.MessageBoxOptions.Rtl"/> bit set; <see cref="FlowDirection.LeftToRight"/> otherwise.</returns>
-        Protected Shared Function OptionsToFlowDirection(ByVal Options As iMsg.MessageBoxOptions) As FlowDirection
+        ''' <summary>Converts <see cref="MessageBoxOptions"/> to <see cref="FlowDirection"/></summary>
+        ''' <param name="Options">An <see cref="MessageBoxOptions"/></param>
+        ''' <returns><see cref="FlowDirection.RightToLeft"/> when <paramref name="Options"/> has <see cref="MessageBoxOptions.Rtl"/> bit set; <see cref="FlowDirection.LeftToRight"/> otherwise.</returns>
+        Protected Shared Function OptionsToFlowDirection(ByVal Options As MessageBoxOptions) As FlowDirection
             Select Case Options And MessageBoxOptions.Rtl
                 Case MessageBoxOptions.Rtl : Return System.Windows.FlowDirection.RightToLeft
                 Case Else : Return System.Windows.FlowDirection.LeftToRight
             End Select
         End Function
         ''' <summary>gets or set value indicating bidirectionl flow direction stored in <see cref="Options"/></summary>
-        ''' <returns><see cref="FlowDirection.RightToLeft"/> when <see cref="Options"/> has <see cref="iMsg.MessageBoxOptions.Rtl"/> bit set; <see cref="FlowDirection.LeftToRight"/> otherwise.</returns>
-        ''' <value>If value being set is <see cref="FlowDirection.RightToLeft"/> then the <see cref="iMsg.MessageBoxOptions.Rtl"/> bit of <see cref="Options"/> is set;+ otherwise it is unset.</value>
+        ''' <returns><see cref="FlowDirection.RightToLeft"/> when <see cref="Options"/> has <see cref="MessageBoxOptions.Rtl"/> bit set; <see cref="FlowDirection.LeftToRight"/> otherwise.</returns>
+        ''' <value>If value being set is <see cref="FlowDirection.RightToLeft"/> then the <see cref="MessageBoxOptions.Rtl"/> bit of <see cref="Options"/> is set;+ otherwise it is unset.</value>
         ''' <remarks>Change of this property is reported via <see cref="IReportsChange"/> and <see cref="INotifyPropertyChanged"/>.</remarks>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <LDescription(GetType(WindowsT.FormsT.Dialogs), "ValueIndicatingBidirectionlFlowDirection")> _
-        <EnumDefaultValue(FlowDirection.LeftToRight, GetType(FlowDirection))> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)>
+        <LDescription(GetType(FormsT.Dialogs), "ValueIndicatingBidirectionlFlowDirection")>
+        <EnumDefaultValue(FlowDirection.LeftToRight, GetType(FlowDirection))>
         Public Property FlowDirection() As FlowDirection
             Get
                 Return OptionsToFlowDirection(Options)
@@ -608,7 +608,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <value>Sets value of the <see cref="Icon"/> property</value>
         ''' <remarks>Value of this property is internaly stored as <see cref="Drawing.Image"/> inside the <see cref="Icon"/> property.
         ''' <para>Change of this property is reported via <see cref="IReportsChange"/> and <see cref="INotifyPropertyChanged"/> interfaces</para></remarks>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property IconImage() As Media.Imaging.BitmapSource
             Get
                 If Icon Is Nothing Then Return Nothing
@@ -628,15 +628,15 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
 
         ''' <summary>Occurs when a property value changes.</summary>
-        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
-        <LDescription(GetType(WindowsT.FormsT.Dialogs), "PropertyChanged_d")> _
-        Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)>
+        <LDescription(GetType(FormsT.Dialogs), "PropertyChanged_d")>
+        Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
-        Private Sub Window_Closed(ByVal sender As Object, ByVal e As System.EventArgs) Handles _Window.Closed
+        Private Sub Window_Closed(ByVal sender As Object, ByVal e As EventArgs) Handles _window.Closed
             OnClosed(e)
         End Sub
 
-        Private Sub Window_Loaded(ByVal sender As Object, ByVal e As System.Windows.RoutedEventArgs) Handles _Window.Loaded
+        Private Sub Window_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs) Handles _window.Loaded
             OnShown()
         End Sub
 
@@ -653,7 +653,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns><see cref="UIelement"/> which represents <see cref="TopControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="MidControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="TopControl"/>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Friend ReadOnly Property TopControlControl() As UIElement
             Get
                 Return GetControl(Me.TopControl)
@@ -663,7 +663,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns><see cref="UIelement"/> which represents <see cref="MidControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="MidControl"/>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Friend ReadOnly Property MidControlControl() As UIElement
             Get
                 Return GetControl(Me.MidControl)
@@ -673,14 +673,14 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns><see cref="UIelement"/> which represents <see cref="BottomControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="MidControlControl"/>
         ''' <seealso cref="BottomControl"/>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Friend ReadOnly Property BottomControlControl() As UIElement
             Get
                 Return GetControl(Me.BottomControl)
             End Get
         End Property
         ''' <summary>Gets control from object</summary>
-        ''' <param name="Control">Object that represents a control. It can be <see cref="System.Windows.Forms.Control"/>, <see cref="System.Windows.UIElement"/></param>
+        ''' <param name="Control">Object that represents a control. It can be <see cref="Forms.Control"/>, <see cref="UIElement"/></param>
         ''' <returns><see cref="UIelement"/> which represents <paramref name="Control"/>. For same <paramref name="Control"/> returns same <see cref="Control"/>. Returns null if <paramref name="Control"/> is null or it is of unsupported type.</returns>
         Protected Overridable Function GetControl(ByVal Control As Object) As UIElement
             If Control Is Nothing Then Return Nothing
@@ -700,4 +700,3 @@ Namespace WindowsT.WPF.DialogsT
 
     End Class
 End Namespace
-#End If

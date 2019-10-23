@@ -1,11 +1,10 @@
 Namespace WindowsT.FormsT
-#If True
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-        Partial Class ThesaurusForm
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+    Partial Class ThesaurusForm
         Inherits System.Windows.Forms.Form
 
         'Form overrides dispose to clean up the component list.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -22,7 +21,7 @@ Namespace WindowsT.FormsT
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ThesaurusForm))
@@ -480,5 +479,4 @@ Namespace WindowsT.FormsT
         Friend WithEvents ofdLoad As System.Windows.Forms.OpenFileDialog
         Friend WithEvents kweCache As Tools.WindowsT.FormsT.KeyWordsEditor
     End Class
-#End If
 End Namespace

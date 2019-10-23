@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Data
 Imports System.Globalization
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Common base for type-safe implementations of <see cref="IValueConverter"/></summary>
     ''' <typeparam name="TSource">Type values are converted from</typeparam>
@@ -17,7 +17,7 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <param name="parameter">The converter parameter to use.</param>
         ''' <param name="culture">The culture to use in the converter.</param>
         ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>
-        ''' <exception cref="ArgumentException">Value is not of type <typeparamref name="TSource"/> (or <see langword="null"/> when <typeparamref name="TSource"/> is not value type or is <see cref="Nullable(Of T)"/>) -or- <paramref name="targetType"/> cannot be assigned by value of type <see cref="TTarget"/></exception>
+        ''' <exception cref="ArgumentException">Value is not of type <typeparamref name="TSource"/> (or <see langword="null"/> when <typeparamref name="TSource"/> is not value type or is <see cref="Nullable(Of T)"/>) -or- <paramref name="targetType"/> cannot be assigned by value of type <typeparamref name="TTarget"/></exception>
         ''' <version version="1.5.2"><paramref name="value"/> can be <see langword="null"/> for <typeparamref name="TSource"/> not being value type or being <see cref="Nullable(Of T)"/>.</version>
         ''' <version version="1.5.2"><paramref name="value"/> can be of underlying type of <typeparamref name="TSource"/> when <typeparamref name="TSource"/> is <see cref="Nullable(Of T)"/>.</version>
         Private Function Convert(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
@@ -43,8 +43,8 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <param name="parameter">The converter parameter to use.</param>
         ''' <param name="culture">The culture to use in the converter.</param>
         ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>
-        ''' <exception cref="ArgumentException">Value is not of type <see cref="TTarget"/> (or <see langword="null"/> when <typeparamref name="TTarget"/> is not value type or is <see cref="Nullable(Of T)"/>) -or- <paramref name="targetType"/> cannot be assigned by value of type <see cref="TSource"/></exception>
-        ''' <version version="1.5.2"><paramref name="value"/> can be <see langword="null"/> for <typeparamref name="TTarget"/> not being vakue type or being <see cref="Nullable(Of T)"/>.</version>
+        ''' <exception cref="ArgumentException">Value is not of type <typeparamref name="TTarget"/> (or <see langword="null"/> when <typeparamref name="TTarget"/> is not value type or is <see cref="Nullable(Of T)"/>) -or- <paramref name="targetType"/> cannot be assigned by value of type <typeparamref name="TSource"/></exception>
+        ''' <version version="1.5.2"><paramref name="value"/> can be <see langword="null"/> for <typeparamref name="TTarget"/> not being value type or being <see cref="Nullable(Of T)"/>.</version>
         ''' <version version="1.5.2"><paramref name="value"/> can be of underlying type of <typeparamref name="TTarget"/> when <typeparamref name="TTarget"/> is <see cref="Nullable(Of T)"/>.</version>
         Private Function ConvertBack(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.ConvertBack
             If value Is Nothing AndAlso GetType(TTarget).IsNullable Then
@@ -65,4 +65,3 @@ Namespace WindowsT.WPF.ConvertersT
         Public MustOverride Function ConvertBack(ByVal value As TTarget, ByVal parameter As Object, ByVal culture As CultureInfo) As TSource
     End Class
 End Namespace
-#End If

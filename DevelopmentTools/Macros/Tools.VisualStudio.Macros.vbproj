@@ -1,214 +1,97 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30424</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <StartupObject>
-    </StartupObject>
-    <AssemblyName>Tools.VisualStudio.Macros</AssemblyName>
-    <OptionStrict>Off</OptionStrict>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <IncrementalBuild>true</IncrementalBuild>
-    <OutputPath>bin\</OutputPath>
-    <DocumentationFile>Tools.VisualStudio.Macros.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42032,42036</NoWarn>
-    <DefineConstants>AddIn=True</DefineConstants>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <IncrementalBuild>false</IncrementalBuild>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DocumentationFile>Tools.VisualStudio.Macros.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42032,42036</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RootNamespace>Tools.VisualStudio.Macros</RootNamespace>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="EnvDTE1001">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\PublicAssemblies\EnvDTE100.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="EnvDTE901">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\PublicAssemblies\EnvDTE90.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="EnvDTE90a, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\PrivateAssemblies\Microsoft.VisualStudio.Shell.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="Microsoft.Vsa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Core">
-      <Name>System.Core</Name>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <Name>System.Windows.Forms</Name>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="VsMacroHierarchyLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\SharedFiles\GlobalAssemblyInfo.vb">
-      <Link>My Project\GlobalAssemblyInfo.vb</Link>
-    </Compile>
-    <Compile Include="ClassMemberProvider.vb" />
-    <Compile Include="ClassProvider.vb" />
-    <Compile Include="Addin.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DteHelper.vb" />
-    <Compile Include="InteractionHelpers.VB" />
-    <Compile Include="ItemProperties.VB" />
-    <Compile Include="Misc.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="Properties.VB" />
-    <Compile Include="Utilities.vb" />
-    <Compile Include="VisualBasic.vb" />
-    <Compile Include="XMLDoc.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="EnvDTE">
-      <Guid>{80CC9F66-E7D8-4DDD-85B6-D9E6CD0E93E2}</Guid>
-      <VersionMajor>8</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="EnvDTE100">
-      <Guid>{26AD1324-4B7C-44BC-84F8-B86AED45729F}</Guid>
-      <VersionMajor>10</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="EnvDTE80">
-      <Guid>{1A31287A-4D7D-413E-8E32-3B374931BD89}</Guid>
-      <VersionMajor>8</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="EnvDTE90">
-      <Guid>{2CE2370E-D744-4936-A090-3FFFE667B0E1}</Guid>
-      <VersionMajor>9</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.VisualStudio.CommandBars">
-      <Guid>{1CBA492E-7263-47BB-87FE-639000619B15}</Guid>
-      <VersionMajor>8</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="stdole">
-      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1.bmp" />
-    <Content Include="Tools.VisualStudio.Macros.AddIn" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resource1.resx">
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.Targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>REM MD "%25UserProfile%25\Documents\Visual Studio 2010\Addins"
-REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\Tools.VisualStudio.Macros.AddIn"
-REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetFileName)"
-REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetName).pdb"
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        
+        <TargetFramework>net48</TargetFramework>
+        <NoWarn>41999,42016,42017,42018,42019,42032,42036</NoWarn>
+        <PreBuildEvent />
+        <PostBuildEvent>
+            REM MD "%25UserProfile%25\Documents\Visual Studio 2010\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetName).pdb"
 
-REM MD "%25UserProfile%25\Documents\Visual Studio 11\Addins"
-REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 11\Addins\Tools.VisualStudio.Macros.AddIn"
-REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetFileName)"
-REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetName).pdb"</PostBuildEvent>
-  </PropertyGroup>
-  <ProjectExtensions />
+            REM MD "%25UserProfile%25\Documents\Visual Studio 11\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 11\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetName).pdb"
+        </PostBuildEvent>
+        <PreBuildEvent />
+        <PostBuildEvent>
+            REM MD "%25UserProfile%25\Documents\Visual Studio 2010\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetName).pdb"
+
+            REM MD "%25UserProfile%25\Documents\Visual Studio 11\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 11\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetName).pdb"
+        </PostBuildEvent>
+        <PreBuildEvent />
+        <PostBuildEvent>
+            REM MD "%25UserProfile%25\Documents\Visual Studio 2010\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetName).pdb"
+
+            REM MD "%25UserProfile%25\Documents\Visual Studio 11\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 11\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetName).pdb"
+        </PostBuildEvent>
+        <DefineConstants>AddIn=True</DefineConstants>
+        <PostBuildEvent>
+            REM MD "%25UserProfile%25\Documents\Visual Studio 2010\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 2010\Addins\$(TargetName).pdb"
+
+            REM MD "%25UserProfile%25\Documents\Visual Studio 11\Addins"
+            REM COPY "$(ProjectDir)Tools.VisualStudio.Macros.AddIn" "%25UserProfile%25\Documents\Visual Studio 11\Addins\Tools.VisualStudio.Macros.AddIn"
+            REM COPY "$(TargetPath)" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetFileName)"
+            REM COPY "$(TargetDir)$(TargetName).pdb" "%25UserProfile%25\Documents\Visual Studio 11\Addins\$(TargetName).pdb"
+        </PostBuildEvent>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="Extensibility">
+          <HintPath>C:\Program Files (x86)\Common Files\Microsoft Shared\MSEnv\PublicAssemblies\extensibility.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Windows.Forms" />
+    </ItemGroup>
+    <ItemGroup>
+        <Import Include="Microsoft.VisualBasic" />
+        <Import Include="System" />
+        <Import Include="System.Collections" />
+        <Import Include="System.Data" />
+        <Import Include="System.Diagnostics" />
+        <Import Include="System.Windows.Forms" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Resources\1.bmp" />
+        <Content Include="Tools.VisualStudio.Macros.AddIn" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="EnvDTE" Version="8.0.2" />
+      <PackageReference Include="EnvDTE100" Version="10.0.3" />
+      <PackageReference Include="EnvDTE80" Version="8.0.3" />
+      <PackageReference Include="EnvDTE90" Version="9.0.3" />
+      <PackageReference Include="EnvDTE90a" Version="9.0.3" />
+      <PackageReference Include="Microsoft.Build" Version="16.3.0" />
+      <PackageReference Include="Microsoft.Build.Framework" Version="16.3.0" />
+      <PackageReference Include="Microsoft.VisualStudio.OLE.Interop" Version="7.10.6071" />
+      <PackageReference Include="Microsoft.VisualStudio.Shell.15.0" Version="16.3.29318.209" />
+      <PackageReference Include="Microsoft.VisualStudio.Shell.Interop" Version="7.10.6072" />
+      <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.8.0" Version="8.0.50728" />
+      <PackageReference Include="VSLangProj2" Version="7.0.5001" />
+      <PackageReference Include="VSSDK.DTE" Version="7.0.4" />
+      <PackageReference Include="VSSDK.DTE.10" Version="10.0.4" />
+      <PackageReference Include="VSSDK.DTE.8" Version="8.0.4" />
+      <PackageReference Include="VSSDK.DTE.9" Version="9.0.4" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Resource1.resx">
+            <CustomToolNamespace>My.Resources</CustomToolNamespace>
+            <SubType>Designer</SubType>
+        </EmbeddedResource>
+    </ItemGroup>
 </Project>

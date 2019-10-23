@@ -56,7 +56,7 @@
         Property contains2() As Boolean
         ''' <summary>Identifies whether this instance contains value of specified type</summary>
         ''' <param name="T">Type to be contained</param>
-        ''' <returns>True if this instance contais value of type <paramref name="T"/> otherwise False</returns>
+        ''' <returns>True if this instance contains value of type <typeparamref name="T"/> otherwise False</returns>
         ReadOnly Property contains(ByVal T As Type) As Boolean
         ''' <summary>Determines whether instance contains value of neither type <see cref="T1"/> nor type <typeparamref name="T2"/></summary>
         ''' <returns>True when both values are not present. False if one of values is present (even if it contains null)</returns>
@@ -64,7 +64,7 @@
     End Interface
 #End If
 
-#If True
+#If True Then
     ''' <summary>Implements type that can contain either value of type T1 ore value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>
@@ -73,15 +73,15 @@
     ''' </remarks>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
-    <DebuggerDisplay("{ToString}")> _
+    <DebuggerDisplay("{ToString}")>
     Public Class T1orT2(Of T1, T2)
         Inherits Cloenable(Of IT1orT2(Of T1, T2))
         Implements IT1orT2(Of T1, T2)
         ''' <summary>Contains value of the <see cref="value1"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _value1 As Box(Of T1) = Nothing
         ''' <summary>Contains value of the <see cref="value2"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _value2 As Box(Of T2) = Nothing
         ''' <summary>CTor - initializes new instance of <see cref="T1orT2(Of T1, T2)"/> with value of type <see cref="T1"/></summary>
         ''' <param name="value">Value to be contained in new instance</param>
@@ -239,15 +239,16 @@
             End If
         End Operator
         ''' <summary>Identifies whether this instance contains value of specified type</summary>
-        ''' <param name="T">Type to be contained</param>
-        ''' <returns>True if this instance contais value of type <paramref name="T"/> otherwise False</returns>
-        Public Overridable ReadOnly Property contains(ByVal T As Type) As Boolean Implements IT1orT2(Of T1, T2).contains
+        ''' <param name="t">Type to be contained</param>
+        ''' <returns>True if this instance contains value of type <paramref name="t"/> otherwise False</returns>
+        ''' <version version="1.6.0">Parameter <c>T</c> renamed to <c>t</c></version>
+        Public Overridable ReadOnly Property contains(ByVal t As Type) As Boolean Implements IT1orT2(Of T1, T2).contains
             Get
-                Return (GetType(T1) Is T AndAlso contains1) OrElse (GetType(T2) Is T AndAlso contains2)
+                Return (GetType(T1) Is t AndAlso contains1) OrElse (GetType(T2) Is t AndAlso contains2)
             End Get
         End Property
         ''' <summary>Return new instance of <see cref="T1orT2(Of T2, T1)"/> initialized by value of this instance</summary>
-        ''' <returns>Instance of type with swapped types <see cref="T1"/> and <typeparamref name="T2"/></returns>
+        ''' <returns>Instance of type with swapped types <typeparamref name="T1"/> and <typeparamref name="T2"/></returns>
         Public Overridable Function Swap() As T1orT2(Of T2, T1)
             Dim ret As New T1orT2(Of T2, T1)
             If contains1 Then
@@ -266,15 +267,15 @@
             Return Swap()
         End Function
 
-        ''' <summary>Returns new instance of <see cref="T1orT2(Of T1, T2)"/> inicialized by value of current instance</summary>
+        ''' <summary>Returns new instance of <see cref="T1orT2(Of T1, T2)"/> initialized by value of current instance</summary>
         Public Overrides Function Clone() As IT1orT2(Of T1, T2)
             Return value
         End Function
         ''' <summary>Get or sets stored value in type-unsafe way</summary>
         ''' <value>New value to be stored in this instance</value>
         ''' <returns>Value stored in this instance</returns>
-        ''' <exception cref="NullReferenceException">When trying to obtain value from instance that contains value of type neither <see cref="T1"/> nor <typeparamref name="T2"/></exception>
-        ''' <exception cref="ArgumentException">When trying to set value of type other than <see cref="T1"/> or <typeparamref name="T2"/></exception>
+        ''' <exception cref="NullReferenceException">When trying to obtain value from instance that contains value of type neither <typeparamref name="T1"/> name="T1"/ nor <typeparamref name="T2"/></exception>
+        ''' <exception cref="ArgumentException">When trying to set value of type other than <typeraramref name="T1"/> or <typeparamref name="T2"/></exception>
         Public Overridable Property objValue() As Object Implements IT1orT2(Of T1, T2).objValue
             Get
                 If contains1 Then

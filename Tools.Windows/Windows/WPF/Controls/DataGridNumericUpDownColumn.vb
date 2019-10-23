@@ -6,7 +6,6 @@ Imports Tools.ComponentModelT
 Imports System.Windows.Input
 Imports Tools.WindowsT.WPF.ConvertersT
 
-#If Stage <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.ControlsT
 
     ''' <summary>A column for WPF <see cref="DataGrid"/> for entering numbers using <see cref="NumericUpDown"/>.</summary>
@@ -163,7 +162,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <summary>Gets or sets minimum allowed value.</summary>
         ''' <returns>Minimum allowed value.</returns>
         ''' <value>Minimum allowed value.</value>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property Minimum() As Decimal
             Get
                 Return CDec(GetValue(MinimumProperty))
@@ -196,7 +195,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <summary>Gets or sets maximum allowed value.</summary>
         ''' <returns>Maximum allowed value</returns>
         ''' <value>Maximum allowed value</value>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property Maximum() As Decimal
             Get
                 Return CDec(GetValue(MaximumProperty))
@@ -223,7 +222,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <summary>Gets or sets value indicating step value changes when user increnets/decrements the value</summary>
         ''' <returns>Value of incerement/decrement step</returns>
         ''' <value>Value of increment/decrement step</value>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property Change() As Decimal
             Get
                 Return CDec(GetValue(ChangeProperty))
@@ -285,7 +284,7 @@ Namespace WindowsT.WPF.ControlsT
         ''' <summary>Gets or sets value indication decimal place precision of number</summary>
         ''' <remarks>Drecimal-places pecision of number</remarks>
         ''' <value>Number of decimal places to be entered</value>
-        <KnownCategoryAttribute(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <KnownCategoryAttribute(KnownCategoryAttribute.KnownCategories.Appearance)>
         Public Property DecimalPlaces() As Integer
             Get
                 Return CInt(GetValue(DecimalPlacesProperty))
@@ -375,4 +374,3 @@ Namespace WindowsT.WPF.ControlsT
         End Property
     End Class
 End Namespace
-#End If

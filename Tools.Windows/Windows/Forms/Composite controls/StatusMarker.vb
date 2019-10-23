@@ -8,12 +8,10 @@ Imports Tools.WindowsT.FormsT.UtilitiesT
 Namespace WindowsT.FormsT
     ''' <summary>Marks state of data item</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
-    <Version(1, 0, GetType(StatusMarker), LastChange:="07/22/2007")> _
-    <FirstVersion("06/22/2007")> _
-    <ToolboxBitmap(GetType(StatusMarker), "StatusMarker.bmp")> _
-    <Prefix("stm")> _
-    <DefaultProperty("Status")> _
-    <DefaultBindingProperty("Status")> _
+    <ToolboxBitmap(GetType(StatusMarker), "StatusMarker.bmp")>
+    <Prefix("stm")>
+    <DefaultProperty("Status")>
+    <DefaultBindingProperty("Status")>
     Public Class StatusMarker : Implements IControlWithStatus
         'TODO: Event attributes
         ''' <summary>Supported states of <see cref="StatusMarker"/></summary>
@@ -37,10 +35,10 @@ Namespace WindowsT.FormsT
         Private _Status As Statuses = Statuses.Normal
         ''' <summary>Gets or sets shown status of the control</summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="Statuses"/></exception>
-        <DefaultValue(GetType(Statuses), "Normal")> _
-        <LDescription(GetType(CompositeControls), "StatusMarkerStatus_d")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-        <Bindable(True)> _
+        <DefaultValue(GetType(Statuses), "Normal")>
+        <LDescription(GetType(CompositeControls), "StatusMarkerStatus_d")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)>
+        <Bindable(True)>
         Public Overridable Property Status() As Statuses Implements IControlWithStatus.Status
             Get
                 Return _Status
@@ -62,8 +60,8 @@ Namespace WindowsT.FormsT
         End Property
 
         ''' <summary>Raised after <see cref="Status"/> changes</summary>
-        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
-        <LDescription(GetType(CompositeControls), "StatusChanged_d")> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)>
+        <LDescription(GetType(CompositeControls), "StatusChanged_d")>
         Public Event StatusChanged As EventHandler Implements IControlWithStatus.StatusChanged
         ''' <summary>Raises the <see cref="StatusChanged"/> event</summary>
         ''' <param name="e">Event parameters (<see cref="EventArgs.Empty"/>)</param>
@@ -72,9 +70,9 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Gets or set state of <see cref="tmiDelete"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(ControlState), "Enabled")> _
-        <LDescription(GetType(CompositeControls), "DeleteMenuState_d")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(GetType(ControlState), "Enabled")>
+        <LDescription(GetType(CompositeControls), "DeleteMenuState_d")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property DeleteMenuState() As ControlState Implements IControlWithStatus.DeleteMenustate
             Get
                 Return MenuState(tmiDelete)
@@ -85,9 +83,9 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or set state of <see cref="tmiMarkAsChanged"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(ControlState), "Hidden")> _
-        <LDescription(GetType(CompositeControls), "MarkAsChangedMenuState_d")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(GetType(ControlState), "Hidden")>
+        <LDescription(GetType(CompositeControls), "MarkAsChangedMenuState_d")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property MarkAsChangedMenuState() As ControlState Implements IControlWithStatus.MarkAsChangedMenuState
             Get
                 Return MenuState(tmiMarkAsChanged)
@@ -98,9 +96,9 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or set state of <see cref="tmiReset"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(ControlState), "Enabled")> _
-        <LDescription(GetType(CompositeControls), "ResetMenuState_d")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(GetType(ControlState), "Enabled")>
+        <LDescription(GetType(CompositeControls), "ResetMenuState_d")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property ResetMenuState() As ControlState Implements IControlWithStatus.ResetMenuState
             Get
                 Return MenuState(tmiReset)
@@ -136,9 +134,9 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or set state of <see cref="tmiAdd"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <DefaultValue(GetType(ControlState), "Hidden")> _
-        <LDescription(GetType(CompositeControls), "AddMenuState_d")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(GetType(ControlState), "Hidden")>
+        <LDescription(GetType(CompositeControls), "AddMenuState_d")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property AddMenuState() As ControlState Implements IControlWithStatus.AddMenuState
             Get
                 Return MenuState(tmiAdd)
@@ -148,19 +146,19 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="AutoChanged"/> property</summary>
-        <EditorBrowsableAttribute(EditorBrowsableState.Never)> _
+        <EditorBrowsableAttribute(EditorBrowsableState.Never)>
         Private _autoChanged As Boolean
 
         ''' <summary>Gets or sets value indicating if <see cref="Status"/> automatically changes to <see cref="Statuses.Changed"/> when <see cref="tmiMarkAsChanged"/> is clicked</summary>
-        <DefaultValue(True)> _
-        <LDescription(GetType(CompositeControls), "AutoChanged_d")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(True)>
+        <LDescription(GetType(CompositeControls), "AutoChanged_d")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
         Public Property AutoChanged() As Boolean Implements IControlWithStatus.AutoChanged
             Get
-                Return _AutoChanged
+                Return _autoChanged
             End Get
             Set(ByVal value As Boolean)
-                _AutoChanged = value
+                _autoChanged = value
             End Set
         End Property
         Private Sub tmiAdd_Click(ByVal sender As Object, ByVal e As EventArgs) Handles tmiAdd.Click
@@ -178,8 +176,8 @@ Namespace WindowsT.FormsT
             OnMarkAsChanged(e)
         End Sub
         ''' <summary>Raised after <see cref="tmiAdd"/> is clicked</summary>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <LDescription(GetType(CompositeControls), "Add_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+        <LDescription(GetType(CompositeControls), "Add_d")>
         Public Event Add As EventHandler Implements IControlWithStatus.Add
         ''' <summary>Raises the <see cref="Add"/> event</summary>
         ''' <param name="e">Event parameters</param>
@@ -187,8 +185,8 @@ Namespace WindowsT.FormsT
             RaiseEvent Add(Me, e)
         End Sub
         ''' <summary>Raised after <see cref="tmiMarkAsChanged"/> is clicked</summary>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <LDescription(GetType(CompositeControls), "MarkAsChanged_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+        <LDescription(GetType(CompositeControls), "MarkAsChanged_d")>
         Public Event MarkAsChanged As EventHandler Implements IControlWithStatus.MarkAsChanged
         ''' <summary>Raises the <see cref="MarkAsChanged"/> event</summary>
         ''' <param name="e">Event parameters</param>
@@ -197,8 +195,8 @@ Namespace WindowsT.FormsT
             RaiseEvent MarkAsChanged(Me, e)
         End Sub
         ''' <summary>Raised after <see cref="tmiReset"/> is clicked</summary>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <LDescription(GetType(CompositeControls), "Reset_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+        <LDescription(GetType(CompositeControls), "Reset_d")>
         Public Event Reset As EventHandler Implements IControlWithStatus.Reset
         ''' <summary>Raises the <see cref="Reset"/> event</summary>
         ''' <param name="e">Event parameters</param>
@@ -206,8 +204,8 @@ Namespace WindowsT.FormsT
             RaiseEvent Reset(Me, e)
         End Sub
         ''' <summary>Raised after <see cref="tmiDelete"/> is clicked</summary>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <LDescription(GetType(CompositeControls), "Delete_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)>
+        <LDescription(GetType(CompositeControls), "Delete_d")>
         Public Event Delete As EventHandler Implements IControlWithStatus.Delete
         ''' <summary>Raises the <see cref="Delete"/> event</summary>
         ''' <param name="e">Event parameters</param>
@@ -223,7 +221,7 @@ Namespace WindowsT.FormsT
             cmsStatus.Show(cmdStatus, 0, cmdStatus.Height)
         End Sub
         ''' <summary>Gets or sets if this control automatically sizes by its content</summary>
-        <DefaultValue(True), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <DefaultValue(True), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Overrides Property AutoSize() As Boolean
             Get
                 Return MyBase.AutoSize
@@ -412,7 +410,7 @@ Namespace WindowsT.FormsT
     End Class
     ''' <summary>Provides common interface for controls that exposes its status</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
-   ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IControlWithStatus
         ''' <summary>Current status of control</summary>
         Property Status() As StatusMarker.Statuses

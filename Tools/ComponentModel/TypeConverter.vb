@@ -9,7 +9,7 @@ Namespace ComponentModelT
     Public MustInherit Class TypeConverter(Of T) : Inherits TypeConverter
 #Region "Interfaces"
         ''' <summary>Interface for type-safe <see cref="ComponentModel.TypeConverter"/>s (read-only conversion)</summary>
-        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <paramref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
+        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <typeparamref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
         ''' <remarks>By implementing this interface you tells to your base class (<see cref="TypeConverter(Of T)"/>) that you are able to convert from type <paramref name="TOther"/></remarks>
         Protected Interface ITypeConverterFrom(Of TOther)
             ''' <summary>Performs conversion from type <typeparamref name="TOther"/> to type <typeparamref name="T"/></summary>
@@ -26,7 +26,7 @@ Namespace ComponentModelT
             Delegate Function dConvertFrom(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As TOther) As T
         End Interface
         ''' <summary>Interface for type-safe <see cref="ComponentModel.TypeConverter"/>s (write-only conversion)</summary>
-        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <paramref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
+        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <typeparamref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
         ''' <remarks>By implementing this interface you tells to your base class (<see cref="TypeConverter(Of T)"/>) that you are able to convert to type <paramref name="TOther"/></remarks>
         Protected Interface ITypeConverterTo(Of TOther)
             ''' <summary>Performs conversion from type <typeparamref name="T"/> to type <typeparamref name="TOther"/></summary>
@@ -43,13 +43,13 @@ Namespace ComponentModelT
             Delegate Function dConvertTo(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As T) As TOther
         End Interface
         ''' <summary>Interface for type-safe <see cref="ComponentModel.TypeConverter"/>s (read-write conversion)</summary>
-        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <paramref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
+        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <typeparamref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
         ''' <remarks>By implementing this interface you tells to your base class (<see cref="TypeConverter(Of T)"/>) that you are able to convert to and from type <paramref name="TOther"/></remarks>
         Protected Interface ITypeConverter(Of TOther)
             Inherits ITypeConverterFrom(Of TOther), ITypeConverterTo(Of TOther)
         End Interface
         ''' <summary>Interface for type-safe <see cref="ComponentModel.TypeConverter"/>s (read-write conversion with validation)</summary>
-        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <paramref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
+        ''' <typeparam name="TOther">Other type (e.g. <see cref="String"/> - most common). Value of <typeparamref name="T"/> are mostly converted to this type in order to be show to user and are converted from this type in mostly in order to get user input</typeparam>
         ''' <remarks>By implementing this interface you tells to your base class (<see cref="TypeConverter(Of T)"/>) that you are able to convert to and from type <paramref name="TOther"/></remarks>
         Protected Interface ITypeConverterWithValidation(Of TOther)
             Inherits ITypeConverter(Of TOther)
@@ -405,7 +405,7 @@ Namespace ComponentModelT
     End Class
     ''' <summary>Fully type-safe <see cref="ComponentModel.TypeConverter"/></summary>
     ''' <typeparam name="T">Main type that will be conberted to <paramref name="TOther"/> and from <paramref name="TOther"/></typeparam>
-    ''' <typeparam name="TOther">Type the <paramref name="T"/> will be converted from and to</typeparam>
+    ''' <typeparam name="TOther">Type the <typeparamref name="T"/> will be converted from and to</typeparam>
     ''' <remarks>This class provides type-safe base of <see cref="ComponentModel.TypeConverter"/> for two types. You can extend its support for another types by implementing another <see cref="TypeConverter(Of T)"/> nested interfaces.</remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
@@ -521,7 +521,7 @@ Namespace ComponentModelT
     End Class
     ''' <summary>Provides base class for type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with direct support for conversion to/from one type as <see cref="TypeConverter(Of T, TOther)"/> and interface-based type-safe converters implementation as <see cref="TypeConverter(Of T)"/></summary>
     ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
-    ''' <typeparam name="TOther">The other type to which and from which main type <paramref name="T"/> is converted</typeparam>
+    ''' <typeparam name="TOther">The other type to which and from which main type <typeparamref name="T"/> is converted</typeparam>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public MustInherit Class ExpandableObjectConverter(Of T, TOther) : Inherits TypeConverter(Of T, TOther)

@@ -46,7 +46,7 @@ Namespace TestsT
         ''' <remarks>This implementation simply calls <see cref="TestModule"/> for each module in <paramref name="asm"/>.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="asm"/> is null</exception>
         Protected Overridable Sub TestAssembly(ByVal asm As Assembly)
-            If asm Is Nothing Then Throw New ArgumentNullException("asm")
+            If asm Is Nothing Then Throw New ArgumentNullException(NameOf(asm))
             For Each [mod] In asm.GetModules
                 TestModule([mod])
             Next
@@ -56,7 +56,7 @@ Namespace TestsT
         ''' <remarks>This implementation takes all typef from module, verifies if type should be tested using <see cref="ShouldTestType"/> and if so, calls <see cref="TestType"/>.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="mod"/> is null</exception>
         Protected Overridable Sub TestModule(ByVal [mod] As [Module])
-            If [mod] Is Nothing Then Throw New ArgumentNullException("mod")
+            If [mod] Is Nothing Then Throw New ArgumentNullException(NameOf([mod]))
             For Each t In [mod].GetTypes
                 If Not ShouldTestType(t) Then Continue For
                 TestType(t)
@@ -64,22 +64,22 @@ Namespace TestsT
         End Sub
         ''' <summary>Tests types from namespace</summary>
         ''' <param name="ns">Namespace to test types from</param>
-        ''' <remarks>This implementation takes all typef from namespace, verifies if type should be tested using <see cref="ShouldTestType"/> and if so, calls <see cref="TestType"/>.</remarks>
+        ''' <remarks>This implementation takes all types from namespace, verifies if type should be tested using <see cref="ShouldTestType"/> and if so, calls <see cref="TestType"/>.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="ns"/> is null</exception>
         Protected Overridable Sub TestNamespce(ByVal ns As NamespaceInfo)
-            If ns Is Nothing Then Throw New ArgumentNullException("ns")
+            If ns Is Nothing Then Throw New ArgumentNullException(NameOf(ns))
             For Each t In ns.GetTypes(True)
                 If Not ShouldTestType(t) Then Continue For
                 TestType(t)
             Next
         End Sub
         ''' <summary>Determines if given type should be tested</summary>
-        ''' <param name="t">Type to determiny if it should be tested</param>
-        ''' <returns>True when type shoudl be tested; false when it shoudl not be tested; For <see cref="Type.IsGenericTypeDefinition">generit type definitions</see> returns always false.</returns>
+        ''' <param name="t">Type to determine if it should be tested</param>
+        ''' <returns>True when type should be tested; false when it should not be tested; For <see cref="Type.IsGenericTypeDefinition">generit type definitions</see> returns always false.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="t"/> is null</exception>
-        ''' <remarks>This implementation utlizes <see cref="TypeFlags"/></remarks>
+        ''' <remarks>This implementation utilizes <see cref="TypeFlags"/></remarks>
         Protected Overridable Function ShouldTestType(ByVal t As Type) As Boolean
-            If t Is Nothing Then Throw New ArgumentNullException("t")
+            If t Is Nothing Then Throw New ArgumentNullException(NameOf(t))
             If t.IsGenericTypeDefinition Then Return False
             Dim ShouldTest As Boolean = False
             ShouldTest = (TypeFlags And TypeBindingAttributes.AllVisibilty) = TypeBindingAttributes.none _
@@ -107,7 +107,7 @@ Namespace TestsT
         End Function
         ''' <summary>Specified flags for filtering <see cref="Type"/> by its <see cref="Type.Attributes"/></summary>
         ''' <remarks>There are 4 major groups of flags masked by <see cref="TypeBindingAttributes.AllVisibilty"/>, <see cref="TypeBindingAttributes.VirtualAll"/>, <see cref="TypeBindingAttributes.AllClassTypes"/>, <see cref="TypeBindingAttributes.AllNameTypes"/>. Setting all flags in group to true has same effect as setting them to zero.</remarks>
-        <Flags()> _
+        <Flags()>
         Public Enum TypeBindingAttributes
             ''' <summary>Specifies no filter. If specific group (masked by <see cref="AllVisibilty"/>, <see cref="VirtualAll"/>, <see cref="AllClassTypes"/>, <see cref="AllNameTypes"/>)
             ''' AND-ed with actual value is <see cref="none"/> (zero), it is ignored when detrmining filter.</summary>
@@ -198,7 +198,7 @@ Namespace TestsT
         ''' <exception cref="ArgumentNullException"><paramref name="t"/> is null</exception>
         ''' <remarks>This implementation gets properties of type utilizing <see cref="PropertyBindingFlags"/> and passes then to <see cref="TestProperty"/>.</remarks>
         Protected Overridable Sub TestType(ByVal t As Type)
-            If t Is Nothing Then Throw New ArgumentNullException("t")
+            If t Is Nothing Then Throw New ArgumentNullException(NameOf(t))
             For Each prp In t.GetProperties(PropertyBindingFlags Or BindingFlags.Static)
                 TestProperty(prp)
             Next
@@ -207,7 +207,7 @@ Namespace TestsT
         ''' <param name="prp">Property to be tested</param>
         ''' <exception cref="ArgumentNullException"><paramref name="prp"/> is null</exception>
         Protected Overridable Sub TestProperty(ByVal prp As PropertyInfo)
-            If prp Is Nothing Then Throw New ArgumentNullException("prp")
+            If prp Is Nothing Then Throw New ArgumentNullException(NameOf(prp))
             Dim getter As MethodInfo
             Try
                 getter = prp.GetGetMethod(PropertyBindingFlags And BindingFlags.NonPublic)

@@ -3,7 +3,7 @@ Imports System.Windows.Markup
 Imports System.Xaml
 Imports System.Windows.Data
 
-#If True
+
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>Base class for implementations of <see cref="MarkupExtension"/> which makes it easier to implement <see cref="MarkupExtension"/> by providing easier access to some commonly required services.</summary>
     ''' <seelaso cref="MarkupExtension"/><seelaso cref="XamlServiceProvider"/>
@@ -23,4 +23,3 @@ Namespace WindowsT.WPF.MarkupT
         Protected MustOverride Overloads Function ProvideValue(ByVal serviceProvider As XamlServiceProvider) As Object
     End Class
 End Namespace
-#End If

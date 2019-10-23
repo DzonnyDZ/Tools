@@ -2,7 +2,6 @@
 Imports System.ComponentModel, System.ComponentModel.Design.Serialization
 Imports System.Reflection, Tools.ExtensionsT
 
-#If True
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>Implements markup extension to access static properties and fields and their members</summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
@@ -155,7 +154,7 @@ Namespace WindowsT.WPF.MarkupT
             ''' <param name="culture">A <see cref="T:System.Globalization.CultureInfo" />. If null is passed, the current culture is assumed.</param>
             ''' <param name="value">The <see cref="T:System.Object" /> to convert.</param>
             ''' <param name="destinationType">The <see cref="T:System.Type" /> to convert the <paramref name="value" /> parameter to.</param>
-            ''' <exception cref="T:System.ArgumentNullException">The <paramref name="destinationType" /> parameter is null.</exception>
+            ''' <exception cref="ArgumentNullException">The <paramref name="destinationType" /> parameter is null.</exception>
             ''' <exception cref="T:System.NotSupportedException">The conversion cannot be performed.</exception>
             ''' <remarks>This implementation performs conversion from <see cref="StaticExExtension"/> to <see cref="InstanceDescriptor"/>; otherwise calls <see cref="TypeConverter.ConvertTo"/>.</remarks>
             Public Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Object, ByVal destinationType As System.Type) As Object
@@ -171,4 +170,3 @@ Namespace WindowsT.WPF.MarkupT
         End Class
     End Class
 End Namespace
-#End If

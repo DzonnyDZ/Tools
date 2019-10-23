@@ -6,7 +6,7 @@ Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 Imports System.Windows.Media
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converts value of type <see cref="Int32"/> to <see cref="Color"/></summary>
     ''' <version version="1.5.3">This class is new in version 1.5.3</version>
@@ -82,4 +82,3 @@ Namespace WindowsT.WPF.ConvertersT
 
     End Class
 End Namespace
-#End If

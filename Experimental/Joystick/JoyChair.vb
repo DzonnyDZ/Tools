@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports Microsoft.DirectX.DirectInput
 Imports System.Windows.Forms
+
 Namespace DevicesT.JoystickT
     ''' <summary>Křeslo napojené na joystick</summary>
     Public Class JoyChair : Inherits UserControl : Implements IChair
@@ -366,7 +367,7 @@ Namespace DevicesT.JoystickT
             POV.Text = "POV " & POV.Text
             Return POV
         End Function
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _Joystick As Device
         ''' <summary>Currently selected joystick</summary>
         Protected Property Joystick() As Device
@@ -391,7 +392,7 @@ Namespace DevicesT.JoystickT
         ''' <summary>Obsahuje hodnotu vlastnosti <see cref="ID"/></summary>
         Private _ID As ULong = (New Random().Next(Integer.MinValue, Integer.MaxValue) + CULng(-CLng(Integer.MinValue))) * (New Random().Next(Integer.MinValue, Integer.MaxValue) + CULng(-CLng(Integer.MinValue)))
         ''' <summary>ID křesla v rámci serveru</summary>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)>
         Public Property ID() As ULong
             Get
                 Return _ID

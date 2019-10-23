@@ -1,11 +1,10 @@
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class NumericUpDownWithStatus
         Inherits System.Windows.Forms.UserControl
 
         'UserControl overrides dispose to clean up the component list.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -22,7 +21,7 @@ Namespace WindowsT.FormsT
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
             Me.stmStatus = New Tools.WindowsT.FormsT.StatusMarker
@@ -91,5 +90,4 @@ Namespace WindowsT.FormsT
         Friend WithEvents stmStatus As Tools.WindowsT.FormsT.StatusMarker
         Friend WithEvents nudNumber As System.Windows.Forms.NumericUpDown
     End Class
-#End If
 End Namespace

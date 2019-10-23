@@ -4,7 +4,7 @@ Imports System.Xaml
 Imports System.Windows.Data
 Imports System.ComponentModel.Design.Serialization
 
-#If True
+
 Namespace WindowsT.WPF.MarkupT
 
     ''' <summary>This markup extension provides instance of <see cref="XmlNamespaceMappingCollection"/> object containing all or some of namespace prefixes registered at place where it is used.</summary>
@@ -76,7 +76,7 @@ Namespace WindowsT.WPF.MarkupT
             ''' <param name="culture">A <see cref="T:System.Globalization.CultureInfo" />. If null is passed, the current culture is assumed. </param>
             ''' <param name="value">The <see cref="T:System.Object" /> to convert. </param>
             ''' <param name="destinationType">The <see cref="T:System.Type" /> to convert the  <paramref name="value" /> parameter to. </param>
-            ''' <exception cref="T:System.ArgumentNullException">The  <paramref name="destinationType" /> parameter is null. </exception>
+            ''' <exception cref="ArgumentNullException">The  <paramref name="destinationType" /> parameter is null. </exception>
             ''' <exception cref="T:System.NotSupportedException">The conversion cannot be performed. </exception>
             ''' <exception cref="TypeMismatchException"><paramref name="value"/> is neither null nor <see cref="NamespacesExtension"/>.</exception>
             Public Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Object, ByVal destinationType As System.Type) As Object
@@ -92,4 +92,3 @@ Namespace WindowsT.WPF.MarkupT
     End Class
 
 End Namespace
-#End If

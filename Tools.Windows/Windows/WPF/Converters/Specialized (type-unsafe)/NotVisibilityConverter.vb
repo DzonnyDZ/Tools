@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Comnverter of type <see cref="System.Windows.Visibility"/> that converts is to oposite value</summary>
     ''' <remarks>Both, <see cref="IValueConverter.Convert"/> and <see cref="IValueConverter.ConvertBack"/> functions are implemented by the same <see cref="NotVisibilityConverter.Convert"/> function</remarks>
@@ -47,4 +47,3 @@ Namespace WindowsT.WPF.ConvertersT
 
     End Class
 End Namespace
-#End If

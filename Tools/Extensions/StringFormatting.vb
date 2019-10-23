@@ -1,9 +1,9 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports CultureInfo = System.Globalization.CultureInfo
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Tools.TextT
-Imports System.Text.RegularExpressions
+Imports CultureInfo = System.Globalization.CultureInfo
 
 Namespace ExtensionsT
 #If True Then
@@ -1660,7 +1660,7 @@ DoItAgain:
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">
         ''' Array that contains names and values of items for replacement.
-        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normaly has length 2. If it does not have lenght at least 2 all values are treated as null.)
+        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normally has length 2. If it does not have length at least 2 all values are treated as null.)
         ''' <para>Items at index 0 of nested array are expected to be strings. If they are not they are converted to string:</para>
         ''' <list type="number">
         ''' <item>Null names are skipped.</item>
@@ -1708,7 +1708,7 @@ DoItAgain:
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">
         ''' Array that contains names and values of items for replacement.
-        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normaly has length 2. If it does not have lenght at least 2 all values are treated as null.)
+        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normally has length 2. If it does not have length at least 2 all values are treated as null.)
         ''' <para>Items at index 0 of nested array are expected to be strings. If they are not they are converted to string:</para>
         ''' <list type="number">
         ''' <item>Null names are skipped.</item>
@@ -1735,7 +1735,7 @@ DoItAgain:
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">
         ''' Array that contains names and values of items for replacement.
-        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normaly has length 2. If it does not have lenght at least 2 all values are treated as null.)
+        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normally has length 2. If it does not have length at least 2 all values are treated as null.)
         ''' <para>Items at index 0 of nested array are expected to be strings. If they are not they are converted to string:</para>
         ''' <list type="number">
         ''' <item>Null names are skipped.</item>
@@ -1762,7 +1762,7 @@ DoItAgain:
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">
         ''' Array that contains names and values of items for replacement.
-        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normaly has length 2. If it does not have lenght at least 2 all values are treated as null.)
+        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normally has length 2. If it does not have length at least 2 all values are treated as null.)
         ''' <para>Items at index 0 of nested array are expected to be strings. If they are not they are converted to string:</para>
         ''' <list type="number">
         ''' <item>Null names are skipped.</item>
@@ -1788,12 +1788,12 @@ DoItAgain:
         ''' <param name="pattern">A string that contains placeholders to be replaced</param>
         ''' <param name="values">
         ''' Array that contains names and values of items for replacement.
-        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normaly has length 2. If it does not have lenght at least 2 all values are treated as null.)
+        ''' Names are at index (i)(0). Values are are at index (i)(1). (Other indices at 2nd level are ignored. So, the nested array normally has length 2. If it does not have length at least 2 all values are treated as null.)
         ''' <para>Items at index 0 of nested array are expected to be strings. If they are not they are converted to string:</para>
         ''' <list type="number">
         ''' <item>Null names are skipped.</item>
-        ''' <item>If name is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used (null as format string, actual name as value and <paramref name="provider"/> as format provider)</item>
-        ''' <item>If name is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used (passing null as format and <paramref name="provider"/> as format provider)</item>
+        ''' <item>If name is <see cref="ICustomFormatter"/> <see cref="ICustomFormatter.Format"/> is used (null as format string, actual name as value and current culture as format provider)</item>
+        ''' <item>If name is <see cref="IFormattable"/> <see cref="IFormattable.ToString"/> is used (passing null as format and current culture as format provider)</item>
         ''' <item>Otherwise <see cref="System.Object.ToString"/> is used.</item>
         ''' </list>
         ''' <para>If <paramref name="values"/> is null all values are treated as null.</para>
@@ -2011,7 +2011,7 @@ DoItAgain:
 
         ''' <summary>Returns an object that provides formatting services for the specified type.</summary>
         ''' <returns>An instance of the object specified by 
-        ''' <paramref name="formatType" />, if the <see cref="T:System.IFormatProvider" /> implementation can supply that type of object; otherwise, null.</returns>
+        ''' <paramref name="formatType" />, if the <see cref="IFormatProvider" /> implementation can supply that type of object; otherwise, null.</returns>
         ''' <param name="formatType">An object that specifies the type of format object to return. </param>
         ''' <filterpriority>1</filterpriority>
         Public Function GetFormat(formatType As Type) As Object Implements IFormatProvider.GetFormat

@@ -173,7 +173,7 @@ Namespace RuntimeT.CompilerServicesT
                 Dim member As IMemberDefinition = item
 
                 Dim baseResolved As TypeDefinition = baseType.Resolve
-                If baseResolved.IsInterface AndAlso Not (From iface In member.DeclaringType.Interfaces Where iface.TypeEquals(baseType)).Any Then
+                If baseResolved.IsInterface AndAlso Not (From iface In member.DeclaringType.Interfaces Where iface.InterfaceType.TypeEquals(baseType)).Any Then
                     Throw New InvalidOperationException(String.Format(My.Resources.ex_TypeDoesNotImplement, member.DeclaringType.FullName, baseType.FullName))
                 ElseIf Not baseResolved.IsInterface AndAlso baseType.TypeEquals(member.DeclaringType) Then
                     Throw New InvalidOperationException(String.Format(My.Resources.ex_TypeDoesNotInherit, member.DeclaringType.FullName, baseType.FullName))
@@ -336,7 +336,7 @@ Namespace RuntimeT.CompilerServicesT
                 If attr.Member IsNot Nothing Then Throw New ArgumentException(String.Format(My.Resources.Resources.ShouldNotBeSpecifiedWhenIsAppliedOnType, "Member", GetType(ImplementsAttribute).Name))
                 Dim type As TypeDefinition = item
                 If attr.Base.IsInterface Then
-                    type.Interfaces.Add(baseType)
+                    type.Interfaces.Add(New InterfaceImplementation(baseType))
                 Else
                     type.BaseType = baseType
                 End If

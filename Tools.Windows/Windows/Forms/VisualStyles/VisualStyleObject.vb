@@ -3,7 +3,7 @@ Imports Tools.DrawingT, Tools.ExtensionsT
 Imports System.Runtime.CompilerServices, ps = System.Windows.Forms.VisualStyles.PushButtonState
 Imports Tools.ResourcesT, System.Linq, Tools.LinqT
 
-#If True
+
 Namespace WindowsT.FormsT.VisualStylesT
     '#Region "V1"
     '    ''' <summary>Abstract base class for visual style object renderers</summary>
@@ -1960,4 +1960,3 @@ Namespace WindowsT.FormsT.VisualStylesT
 #End Region
 #End Region
 End Namespace
-#End If

@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Base class for comparison converters</summary>
@@ -154,4 +154,3 @@ Namespace WindowsT.WPF.ConvertersT
     End Class
 
 End Namespace
-#End If

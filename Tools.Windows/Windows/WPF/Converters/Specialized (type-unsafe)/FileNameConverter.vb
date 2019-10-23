@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that gets file name part of path</summary>
     ''' <remarks>This converter is one-way.</remarks>
@@ -41,4 +41,3 @@ Namespace WindowsT.WPF.ConvertersT
 
     End Class
 End Namespace
-#End If

@@ -1,8 +1,6 @@
-﻿#If True
-Imports System.Runtime.CompilerServices, System.Linq
+﻿Imports System.Runtime.CompilerServices, System.Linq
 Imports Tools.CollectionsT.GenericT
 
-'#If Framework >= 3.5 Then
 Namespace CollectionsT.SpecializedT
     'ASAP: Mark,  Wiki, Forum
     ''' <summary>Extension methods for working with specialized collections related to Windows Forms</summary>
@@ -66,5 +64,3 @@ Namespace CollectionsT.SpecializedT
         End Sub
     End Module
 End Namespace
-'#End If
-#End If

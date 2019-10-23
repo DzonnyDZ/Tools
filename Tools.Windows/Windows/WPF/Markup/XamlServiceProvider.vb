@@ -3,7 +3,6 @@ Imports System.Windows.Markup
 Imports System.Xaml
 Imports System.Windows.Data
 
-#If True
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>Wraps any <see cref="IServiceProvider"/> and provides properties for easy retrieval of XAML-related services</summary>
     ''' <seelaso cref="Tools.WindowsT.WPF.WpfExtensions.GetXamlService"/>
@@ -97,4 +96,3 @@ Namespace WindowsT.WPF.MarkupT
 #End Region
     End Class
 End Namespace
-#End If

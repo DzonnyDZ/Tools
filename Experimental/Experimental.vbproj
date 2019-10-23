@@ -1,425 +1,157 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{088CB10C-E5D3-4537-979F-F5BED401DB25}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Tools.Experimental</RootNamespace>
-    <AssemblyName>Tools Experimental</AssemblyName>
-    <MyType>Windows</MyType>
-    <Nightly>1</Nightly>
-    <Alpha>2</Alpha>
-    <Beta>3</Beta>
-    <RC>4</RC>
-    <Release>5</Release>
-    <Config>1</Config>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>4.0</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <OptionInfer>On</OptionInfer>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>..\bin\Debug\AnyCPU\</OutputPath>
-    <DocumentationFile>Tools Experimental.xml</DocumentationFile>
-    <NoWarn>41999,42016</NoWarn>
-    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 4</DefineConstants>
-    <Config>1</Config>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Accessibility" />
-    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="PresentationCore">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="PresentationFramework">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.OracleClient" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.RegularExpressions" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UIAutomationTypes">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsFormsIntegration">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.ComponentModel" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="Tools.CollectionsT.GenericT" />
-    <Import Include="Tools.CollectionsT.SpecializedT" />
-    <Import Include="Tools.InternalT" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\SharedFiles\AssemblyStage.vb">
-      <Link>AssemblyStage.vb</Link>
-    </Compile>
-    <Compile Include="..\SharedFiles\Version.vb">
-      <Link>Version.vb</Link>
-    </Compile>
-    <Compile Include="Work\CSV\FileDialogWithEncoding.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\CSV\ToolStripCheckBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\DayView\BlackHoleQueue.vb" />
-    <Compile Include="Work\CM-EDL\OrderByEditor.designer.vb">
-      <DependentUpon>OrderByEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\CM-EDL\OrderByEditor.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\DayView\DayView - DataBinding support.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\DayView\DayView - DataBinding.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\DayView\DayView.designer.vb">
-      <DependentUpon>DayView.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\DayView\DayView.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\DayView\DayViewItem.vb" />
-    <Compile Include="Work\DayView\DayViewRow.vb" />
-    <Compile Include="Work\DayView\EventArgs.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\DayView\IDayViewDataItem.vb" />
-    <Compile Include="Work\DayView\ItemToolStrip.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\DayView\Misc.vb" />
-    <Compile Include="Work\DayView\ToolStripLabelLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Fawn\clog.vb" />
-    <Compile Include="Work\Fawn\cSQLString.vb" />
-    <Compile Include="Work\Lookup\DiTextBox.Designer.vb">
-      <DependentUpon>DiTextBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Lookup\DiTextBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\Lookup\MultiControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\Lookup\MultiControlBase.Designer.vb">
-      <DependentUpon>MultiControlBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Lookup\MultiControlBase.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\Lookup\MultiDiTextBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\Lookup\MultiTexBoxAndComboBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\Lookup\MultiTextBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\Lookup\TextBoxAndComboBox.Designer.vb">
-      <DependentUpon>TextBoxAndComboBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Lookup\TextBoxAndComboBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\Classes\cCSV.vb" />
-    <Compile Include="Work\Tools\Classes\NaturalComparer.vb" />
-    <Compile Include="Work\Tools\Classes\PropertyChangingEventArgs.vb" />
-    <Compile Include="Work\Tools\ComponentModel\SingleTypeDescriptionProvider.vb" />
-    <Compile Include="Work\Tools\ComponentModel\TypeDescriptor.vb" />
-    <Compile Include="Work\Tools\CSV.vb" />
-    <Compile Include="Work\Tools\DateTools.vb" />
-    <Compile Include="Work\Tools\Deploy\ClickOnceUninstall.vb" />
-    <Compile Include="Work\Tools\GUI\CloseButton.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\CustomizableProfessionalRenderereColorTable.vb" />
-    <Compile Include="Work\Tools\GUI\ExtendedForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\GUI%28module%29.vb" />
-    <Compile Include="Work\Tools\GUI\LinkProperties.vb" />
-    <Compile Include="Work\Tools\GUI\ListBoxWithDisabledItems.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\Misc.vb" />
-    <Compile Include="Work\Tools\GUI\NullableDateTimePicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\OverflowProgressBar.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\ProgressMonitor.Designer.vb">
-      <DependentUpon>ProgressMonitor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\ProgressMonitor.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\PropertyGridEditor.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\SelectEncodingDialog.Designer.vb">
-      <DependentUpon>SelectEncodingDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\SelectEncodingDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\TabControlEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\ToolStripCheckBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\ToolStripComboBox.vb" />
-    <Compile Include="Work\Tools\GUI\ToolStripLabelLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\ToolStripNumericUpDown.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\TransMenuLib.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\VersionHistory.Designer.vb">
-      <DependentUpon>VersionHistory.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\VersionHistory.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\WinTrayButton.vb" />
-    <Compile Include="Work\Tools\GUI\Wizard.Designer.vb">
-      <DependentUpon>Wizard.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Tools\GUI\Wizard.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\Login\ActiveDirectory\ADHelpers.vb" />
-    <Compile Include="Work\Tools\Login\ActiveDirectory\ADUser.vb" />
-    <Compile Include="Work\Tools\Login\ActiveDirectory\frmGroupOverride.Designer.vb">
-      <DependentUpon>frmGroupOverride.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Tools\Login\ActiveDirectory\frmGroupOverride.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\Login\IUser.vb" />
-    <Compile Include="Work\Tools\Login\Old\frmLogin.Designer.vb">
-      <DependentUpon>frmLogin.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Work\Tools\Login\Old\frmLogin.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\Login\Old\LoginDialog.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Work\Tools\Login\Old\User.vb" />
-    <Compile Include="Joystick\IChair.vb" />
-    <Compile Include="Joystick\JoyAxe.Designer.vb">
-      <DependentUpon>JoyAxe.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Joystick\JoyAxe.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Joystick\JoyChair.Designer.vb">
-      <DependentUpon>JoyChair.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Joystick\JoyChair.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Physics\Unit.vb" />
-    <Compile Include="TWAIN\TWAIN constants.vb" />
-    <Compile Include="TWAIN\TWAIN functions.vb" />
-    <Compile Include="TWAIN\TWAIN structures.vb" />
-    <Compile Include="Web\Numberings.vb" />
-    <Compile Include="Web\Pager.vb" />
-    <Compile Include="Work\Tools\Math.vb" />
-    <Compile Include="Work\Tools\Resources\SystemResources.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Work\CM-EDL\OrderByEditor.resx">
-      <DependentUpon>OrderByEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\DayView\DayView.resx">
-      <DependentUpon>DayView.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Lookup\DiTextBox.resx">
-      <DependentUpon>DiTextBox.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Lookup\MultiControlBase.resx">
-      <DependentUpon>MultiControlBase.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Lookup\TextBoxAndComboBox.resx">
-      <DependentUpon>TextBoxAndComboBox.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\ExtendedForm.resx">
-      <DependentUpon>ExtendedForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\ProgressMonitor.en.resx">
-      <DependentUpon>ProgressMonitor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\ProgressMonitor.resx">
-      <DependentUpon>ProgressMonitor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\PropertyGridEditor.resx">
-      <DependentUpon>PropertyGridEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\SelectEncodingDialog.resx">
-      <DependentUpon>SelectEncodingDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\TransMenuLib.resx">
-      <DependentUpon>TransMenuLib.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\VersionHistory.resx">
-      <DependentUpon>VersionHistory.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\WinTrayButton.resx">
-      <DependentUpon>WinTrayButton.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\GUI\Wizard.resx">
-      <DependentUpon>Wizard.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\Login\ActiveDirectory\frmGroupOverride.resx">
-      <DependentUpon>frmGroupOverride.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Work\Tools\Login\Old\frmLogin.resx">
-      <DependentUpon>frmLogin.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Joystick\JoyAxe.resx">
-      <DependentUpon>JoyAxe.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Joystick\JoyChair.cs-CZ.resx">
-      <DependentUpon>JoyChair.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Joystick\JoyChair.resx">
-      <DependentUpon>JoyChair.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
-      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
-      <Name>Tools.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.vbproj">
-      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\SharedFiles\VersionHistory.xsd">
-      <Link>Resources\VersionHistory.xsd</Link>
-    </None>
-    <None Include="Resources\DeleteHS.png" />
-    <None Include="TWAIN\GdiPlusLib.cs" />
-    <None Include="TWAIN\TwainDefs.cs" />
-    <None Include="TWAIN\TwainLib.cs" />
-    <None Include="Work\Tools\GUI\CustomizableProfessionalRenderereColorTable.xso" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\SharedFiles\VersionHistory.xslt">
-      <Link>Resources\VersionHistory.xslt</Link>
-    </Content>
-    <Content Include="Resources\error.ico" />
-    <Content Include="Resources\RefreshDocViewHS.png" />
-    <Content Include="Web\Pager.bmp" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <RootNamespace>Tools.Experimental</RootNamespace>
+        <AssemblyName>Tools Experimental</AssemblyName>
+        <MyType>Windows</MyType>
+        <TargetFramework>net48</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="Accessibility" />
+        <Reference Include="Microsoft.VisualC" />
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
+        <Reference Include="System.Configuration" />
+        <Reference Include="System.Data.OracleClient" />
+        <Reference Include="System.Deployment" />
+        <Reference Include="System.Design" />
+        <Reference Include="System.DirectoryServices" />
+        <Reference Include="System.Drawing.Design" />
+        <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+        <Reference Include="System.Security" />
+        <Reference Include="System.Web" />
+        <Reference Include="System.Web.RegularExpressions" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="UIAutomationProvider" />
+        <Reference Include="UIAutomationTypes" />
+        <Reference Include="WindowsBase" />
+        <Reference Include="WindowsFormsIntegration" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj" />
+        <ProjectReference Include="..\Tools\Tools.vbproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Unofficial.Microsoft.DirectX.DirectInput" Version="5.4.0.2904" />
+    </ItemGroup>
+    <ItemGroup>
+        <Import Include="Microsoft.VisualBasic" />
+        <Import Include="System" />
+        <Import Include="System.Collections" />
+        <Import Include="System.Collections.Generic" />
+        <Import Include="System.ComponentModel" />
+        <Import Include="System.Diagnostics" />
+        <Import Include="Tools.CollectionsT.GenericT" />
+        <Import Include="Tools.CollectionsT.SpecializedT" />
+        <Import Include="Tools.InternalT" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Work\Lookup\DiTextBox.Designer.vb">
+            <DependentUpon>DiTextBox.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Lookup\MultiControlBase.Designer.vb">
+            <DependentUpon>MultiControlBase.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Lookup\TextBoxAndComboBox.Designer.vb">
+            <DependentUpon>TextBoxAndComboBox.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Tools\GUI\ProgressMonitor.Designer.vb">
+            <DependentUpon>ProgressMonitor.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Tools\GUI\SelectEncodingDialog.Designer.vb">
+            <DependentUpon>SelectEncodingDialog.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Tools\GUI\VersionHistory.Designer.vb">
+            <DependentUpon>VersionHistory.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Tools\GUI\Wizard.Designer.vb">
+            <DependentUpon>Wizard.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Tools\Login\ActiveDirectory\frmGroupOverride.Designer.vb">
+            <DependentUpon>frmGroupOverride.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Work\Tools\Login\Old\frmLogin.Designer.vb">
+            <DependentUpon>frmLogin.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Joystick\JoyAxe.Designer.vb">
+            <DependentUpon>JoyAxe.vb</DependentUpon>
+        </Compile>
+        <Compile Update="Joystick\JoyChair.Designer.vb">
+            <DependentUpon>JoyChair.vb</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Work\CM-EDL\OrderByEditor.resx">
+            <DependentUpon>OrderByEditor.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\DayView\DayView.resx">
+            <DependentUpon>DayView.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Lookup\DiTextBox.resx">
+            <DependentUpon>DiTextBox.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Lookup\MultiControlBase.resx">
+            <DependentUpon>MultiControlBase.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Lookup\TextBoxAndComboBox.resx">
+            <DependentUpon>TextBoxAndComboBox.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\ExtendedForm.resx">
+            <DependentUpon>ExtendedForm.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\ProgressMonitor.en.resx">
+            <DependentUpon>ProgressMonitor.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\ProgressMonitor.resx">
+            <DependentUpon>ProgressMonitor.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\PropertyGridEditor.resx">
+            <DependentUpon>PropertyGridEditor.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\SelectEncodingDialog.resx">
+            <DependentUpon>SelectEncodingDialog.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\TransMenuLib.resx">
+            <DependentUpon>TransMenuLib.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\VersionHistory.resx">
+            <DependentUpon>VersionHistory.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\WinTrayButton.resx">
+            <DependentUpon>WinTrayButton.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\GUI\Wizard.resx">
+            <DependentUpon>Wizard.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\Login\ActiveDirectory\frmGroupOverride.resx">
+            <DependentUpon>frmGroupOverride.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Work\Tools\Login\Old\frmLogin.resx">
+            <DependentUpon>frmLogin.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Joystick\JoyAxe.resx">
+            <DependentUpon>JoyAxe.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Joystick\JoyChair.cs-CZ.resx">
+            <DependentUpon>JoyChair.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Joystick\JoyChair.resx">
+            <DependentUpon>JoyChair.vb</DependentUpon>
+        </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\SharedFiles\VersionHistory.xsd">
+            <Link>Resources\VersionHistory.xsd</Link>
+        </None>
+        <None Include="Resources\DeleteHS.png" />
+        <None Include="TWAIN\GdiPlusLib.cs" />
+        <None Include="TWAIN\TwainDefs.cs" />
+        <None Include="TWAIN\TwainLib.cs" />
+        <None Include="Work\Tools\GUI\CustomizableProfessionalRenderereColorTable.xso" />
+        <Content Include="..\SharedFiles\VersionHistory.xslt">
+            <Link>Resources\VersionHistory.xslt</Link>
+        </Content>
+        <Content Include="Resources\error.ico" />
+        <Content Include="Resources\RefreshDocViewHS.png" />
+        <Content Include="Web\Pager.bmp" />
+    </ItemGroup>
 </Project>

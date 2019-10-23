@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter used to test if enumerated value is one of given values</summary>
     ''' <remarks>For normal enumerations checks exact value, for flags enumerations tests flass in addition.</remarks>
@@ -69,4 +69,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
-#End If

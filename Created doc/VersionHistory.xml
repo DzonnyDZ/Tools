@@ -139,4 +139,9 @@
         <vh:i>Fixes in several assemblies: Czech (cs) localizations are not used.</vh:i>
         <vh:i>Updated to .NET 4.6 and Visual Studio 2015</vh:i>
     </vh:Version>
+
+    <vh:Version Major="1" Minor="6" Build="0">
+        <vh:i>Switched to .NET Framework 4.8</vh:i>
+        <vh:i>Added bindings for Unicode 12</vh:i>
+    </vh:Version>
 </vh:VersionHistory>

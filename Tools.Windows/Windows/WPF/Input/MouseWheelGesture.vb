@@ -233,7 +233,7 @@ Namespace WindowsT.WPF.InputT
         ''' <param name="value">The <see cref="T:System.Object" /> to convert. </param>
         ''' <param name="destinationType">The <see cref="T:System.Type" /> to convert the <paramref name="value" /> parameter to. </param>
         ''' <returns>An <see cref="T:System.Object" /> that represents the converted value.</returns>
-        ''' <exception cref="T:System.ArgumentNullException">The <paramref name="destinationType" /> parameter is null. </exception>
+        ''' <exception cref="ArgumentNullException">The <paramref name="destinationType" /> parameter is null. </exception>
         ''' <exception cref="T:System.NotSupportedException">The conversion cannot be performed. </exception>
         Public Overrides Function ConvertTo(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As Object, ByVal destinationType As Type) As Object
             If (destinationType Is Nothing) Then

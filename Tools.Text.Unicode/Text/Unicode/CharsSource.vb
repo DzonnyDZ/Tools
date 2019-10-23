@@ -71,9 +71,9 @@ Namespace TextT.UnicodeT
             End Get
         End Property
 
-        ''' <summary>Gets index to the <see cref="Chars"/> collection that points to firts character in first line</summary>
+        ''' <summary>Gets index to the <see cref="Chars"/> collection that points to first character in first line</summary>
         ''' <remarks>
-        ''' If <see cref="Continuous"/> is true the index cann be negative, in this case first -<see cref="VirtualFirstIndex"/> characters in first group are ignored (null).
+        ''' If <see cref="Continuous"/> is true the index can be negative, in this case first -<see cref="VirtualFirstIndex"/> characters in first group are ignored (null).
         ''' This is to property align the characters in a grid.
         ''' </remarks>
         Protected Friend ReadOnly Property VirtualFirstIndex As Long
@@ -86,7 +86,7 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Gets index to the <see cref="Chars"/> collection that points to last character in last line</summary>
         ''' <remarks>
-        ''' If <see cref="Continuous"/> is true the index cann be greater than or eaqual to <see cref="Chars"/>.<see cref="CharsList.Count">Count</see>, in this case last  <see cref="VirtualLastIndex"/> - <see cref="Chars"/>.<see cref="CharList.Count">Count</see> + 1 characters in last group are ignored (null).
+        ''' If <see cref="Continuous"/> is true the index can be greater than or equal to <see cref="Chars"/>.<see cref="CharsList.Count">Count</see>, in this case last  <see cref="VirtualLastIndex"/> - <see cref="Chars"/>.<see cref="CharsList.Count">Count</see> + 1 characters in last group are ignored (null).
         ''' This is to property align the characters in a grid.
         ''' </remarks>
         Protected Friend ReadOnly Property VirtualLastIndex As Long
@@ -101,7 +101,7 @@ Namespace TextT.UnicodeT
         End Property
 
 
-        ''' <summary>Gets value indicating if all characters in the collection are guaranteeed to for a continuous (uninterrupted, incremental) range</summary>
+        ''' <summary>Gets value indicating if all characters in the collection are guaranteed to for a continuous (uninterrupted, incremental) range</summary>
         ''' <seelaso cref="CharsList.Continuous"/>
         Public ReadOnly Property Continuous As Boolean
             Get
@@ -113,7 +113,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Gets the element at the specified index.</summary>
         ''' <returns>The element at the specified index.</returns>
         ''' <param name="index">The zero-based index of the element to get or set.</param>
-        ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is not a valid index in the <see cref="T:IList`1" />.</exception>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="index" /> is not a valid index in the <see cref="IList(Of T)" />.</exception>
         Default Public Overloads ReadOnly Property Item(index As Integer) As CharsLine Implements CollectionsT.GenericT.IReadOnlyIndexable(Of CharsLine, Integer).Item
             Get
                 If index < 0 OrElse index >= Count Then Throw New ArgumentOutOfRangeException("index")
@@ -122,7 +122,7 @@ Namespace TextT.UnicodeT
         End Property
 
         ''' <summary>Returns an enumerator that iterates through the collection.</summary>
-        ''' <returns>A <see cref="T:IEnumerator`1" /> that can be used to iterate through the collection.</returns>
+        ''' <returns>A <see cref="IEnumerator(Of T)" /> that can be used to iterate through the collection.</returns>
         ''' <filterpriority>1</filterpriority>
         Public Function GetEnumerator() As IEnumerator(Of CharsLine) Implements IEnumerable(Of CharsLine).GetEnumerator
             Return New IndexableEnumerator(Of Integer, CharsLine)(New ForLoopCollection(Of Integer)(0, Count - 1, Function(i) i), Me)
@@ -164,18 +164,14 @@ Namespace TextT.UnicodeT
 
         ''' <summary>Copies the elements of the <see cref="T:ICollection`1" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.</summary>
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:ICollection`1" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
-        ''' <param name="arrayIndex">The zero-based index in 
-        ''' <paramref name="array" /> at which copying begins.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
-        ''' <paramref name="array" /> is null.</exception>
-        ''' <exception cref="T:System.ArgumentOutOfRangeException">
-        ''' <paramref name="arrayIndex" /> is less than 0.</exception>
-        ''' <exception cref="T:System.ArgumentException">
-        ''' <paramref name="array" /> is multidimensional.-or-The number of elements in the source <see cref="T:ICollection`1" /> is greater than the available space from 
-        ''' <paramref name="arrayIndex" /> to the end of the destination 
-        ''' <paramref name="array" />.-or-Type 
-        ''' <paramref name="T" /> cannot be cast automatically to the type of the destination 
-        ''' <paramref name="array" />.</exception>
+        ''' <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="array" /> is null.</exception>
+        ''' <exception cref="System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than 0.</exception>
+        ''' <exception cref="System.ArgumentException">
+        ''' <paramref name="array" /> is multidimensional. -or-
+        ''' The number of elements in the source <see cref="CharsLine" /> is greater than the available space from <paramref name="arrayIndex" /> to the end of the destination <paramref name="array" />. -or-
+        ''' Type <see cref="CharsLine"/> cannot be cast automatically to the type of the destination <paramref name="array" />.
+        ''' </exception>
         Private Sub CopyTo(array() As CharsLine, arrayIndex As Integer) Implements ICollection(Of CharsLine).CopyTo, IReadOnlyCollection(Of CharsLine).CopyTo
             If array Is Nothing Then Throw New ArgumentNullException("array")
             If arrayIndex < array.GetLowerBound(0) OrElse arrayIndex > array.GetUpperBound(0) Then Throw New ArgumentOutOfRangeException("arrayIndex")
@@ -197,7 +193,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Copies the elements of the <see cref="T:ICollection" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.</summary>
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:ICollection" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
         ''' <param name="index">The zero-based index in <paramref name="array" /> at which copying begins. </param>
-        ''' <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null. </exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="array" /> is null. </exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index" /> is less than zero. </exception>
         ''' <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="T:ICollection" /> is greater than the available space from <paramref name="index" /> to the end of the destination <paramref name="array" />. </exception>
         ''' <exception cref="T:System.ArgumentException">Type <see cref="CharsLine"/> cannot be cast automatically to the type of the destination <paramref name="array" />. </exception>

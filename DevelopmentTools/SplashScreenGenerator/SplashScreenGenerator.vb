@@ -6,6 +6,7 @@ Imports System.CodeDom.Compiler
 Imports System.Reflection
 Imports Tools.CodeDomT.CompilerT
 Imports Tools.ExtensionsT
+Imports System.Configuration
 
 ''' <summary>Provides functions for Splash Screen generation</summary>
 ''' <remarks>
@@ -157,7 +158,7 @@ args:                   Select Case arg.ToLowerInvariant
     ''' There was a problem loading bitmap from <paramref name="infile"/>, see <see cref="Exception.InnerException"/> for details. -or-
     ''' Image loaded from <paramref name="infile"/> has an indexed pixel format or its format is undefined, see <see cref="Exception.InnerException"/> for details.
     ''' </exception>
-    ''' <exception cref="Configuration.ConfigurationErrorsException">Language identified by extension of path given in <paramref name="assemblyInfos"/> does not have a configured provider on this computer.</exception>
+    ''' <exception cref="ConfigurationErrorsException">Language identified by extension of path given in <paramref name="assemblyInfos"/> does not have a configured provider on this computer.</exception>
     ''' <exception cref="Security.SecurityException">The caller does not have the required permission (when creating <see cref="CodeDomProvider"/>).</exception>
     ''' <exception cref="CompilerErrorException">There was an / were error(s) during compilation of assembly info file(s)</exception>
     ''' <exception cref="FormatException">Item in <paramref name="items"/> has property <see cref="InfoItem.Format"/> which represents invalid format for <see cref="System.String.Format"/> or contains placeholder other than {0}.</exception>
@@ -186,7 +187,7 @@ args:                   Select Case arg.ToLowerInvariant
     ''' There was a problem loading bitmap from <paramref name="infile"/>, see <see cref="Exception.InnerException"/> for details. -or-
     ''' Image loaded from <paramref name="infile"/> has an indexed pixel format or its format is undefined, see <see cref="Exception.InnerException"/> for details.
     ''' </exception>
-    ''' <exception cref="Configuration.ConfigurationErrorsException">Language identified by extension of path given in <paramref name="assemblyInfos"/> does not have a configured provider on this computer.</exception>
+    ''' <exception cref="ConfigurationErrorsException">Language identified by extension of path given in <paramref name="assemblyInfo"/> does not have a configured provider on this computer.</exception>
     ''' <exception cref="Security.SecurityException">The caller does not have the required permission (when creating <see cref="CodeDomProvider"/>).</exception>
     ''' <exception cref="CompilerErrorException">There was an / were error(s) during compilation of assembly info file(s)</exception>
     ''' <exception cref="FormatException">Item in <paramref name="items"/> has property <see cref="InfoItem.Format"/> which represents invalid format for <see cref="System.String.Format"/> or contains placeholder other than {0}.</exception>
@@ -206,7 +207,7 @@ args:                   Select Case arg.ToLowerInvariant
     ''' <remarks>Compilation defines preprocessor directive <c>ASSEMBLYINFO</c> (if compiler supports <c>/define:</c> parameter.</remarks>
     ''' <exception cref="ArgumentNullException"><paramref name="assemblyInfos"/> is null</exception>
     ''' <exception cref="ArgumentException"><paramref name="assemblyInfos"/> is an empty collection or contains paths with different extensions (case-insensitive)</exception>
-    ''' <exception cref="Configuration.ConfigurationErrorsException">Language identified by extension of path given in <paramref name="assemblyInfos"/> does not have a configured provider on this computer.</exception>
+    ''' <exception cref="ConfigurationErrorsException">Language identified by extension of path given in <paramref name="assemblyInfos"/> does not have a configured provider on this computer.</exception>
     ''' <exception cref="Security.SecurityException">The caller does not have the required permission (when creating <see cref="CodeDomProvider"/>).</exception>
     ''' <exception cref="CompilerErrorException">There was an / were error(s) during compilation of assembly info file(s)</exception>
     <EditorBrowsable(EditorBrowsableState.Advanced)>
@@ -294,7 +295,7 @@ args:                   Select Case arg.ToLowerInvariant
     ''' <param name="assemblyInfo">An <see cref="AssemblyInfo"/> object providing assembly information</param>
     ''' <param name="items">Identifies items to render to image</param>
     ''' <exception cref="ArgumentNullException">Any parameter is null -or- an item in <paramref name="items"/> collection is null.</exception>
-    ''' <exception cref="ArgumentException">Image loaded from <paramref name="infile"/> has an indexed pixel format or its format is undefined, see <see cref="Exception.InnerException"/> for details.</exception>
+    ''' <exception cref="ArgumentException">Image loaded from <paramref name="image"/> has an indexed pixel format or its format is undefined, see <see cref="Exception.InnerException"/> for details.</exception>
     ''' <exception cref="FormatException">Item in <paramref name="items"/> has property <see cref="InfoItem.Format"/> which represents invalid format for <see cref="System.String.Format"/> or contains placeholder other than {0}.</exception>
     Public Shared Sub GenerateSplashScreen(image As Image, items As IEnumerable(Of InfoItem), assemblyInfo As AssemblyInfo)
         If assemblyInfo Is Nothing Then Throw New ArgumentNullException("assemblyInfo")
@@ -315,10 +316,10 @@ args:                   Select Case arg.ToLowerInvariant
 
     ''' <summary>Generates a splash screen image from given splash screen image file and saves it to another splash screen image file obtaining assembly information form given <see cref="Assembly"/></summary>
     ''' <param name="image">Image to render information to</param>
-    ''' <param name="assembly">An assembly to read infromation from</param>
+    ''' <param name="assembly">An assembly to read information from</param>
     ''' <param name="items">Identifies items to render to image</param>
     ''' <exception cref="ArgumentNullException">Any parameter is null -or- an item in <paramref name="items"/> collection is null.</exception>
-    ''' <exception cref="ArgumentException">Image loaded from <paramref name="infile"/> has an indexed pixel format or its format is undefined, see <see cref="Exception.InnerException"/> for details.</exception>
+    ''' <exception cref="ArgumentException">Image loaded from <paramref name="image"/> has an indexed pixel format or its format is undefined, see <see cref="Exception.InnerException"/> for details.</exception>
     ''' <exception cref="FormatException">Item in <paramref name="items"/> has property <see cref="InfoItem.Format"/> which represents invalid format for <see cref="System.String.Format"/> or contains placeholder other than {0}.</exception>
     Public Shared Sub GenerateSplashScreen(image As Image, items As IEnumerable(Of InfoItem), assembly As Assembly)
         If assembly Is Nothing Then Throw New ArgumentNullException("assembly")

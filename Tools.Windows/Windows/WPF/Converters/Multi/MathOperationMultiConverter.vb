@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization, Tools.LinqT
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Converter performing given arithmetical operation on collection members</summary>
@@ -63,6 +63,7 @@ Namespace WindowsT.WPF.ConvertersT
                     ret = item
                 Else
                     Select Case op  'Note: Late binding is not mistake
+#Disable Warning BC42019 ' Operands of type Object used for operator
                         Case "+"c : ret += item
                         Case "-"c : ret -= item
                         Case "*"c : ret *= item
@@ -71,6 +72,7 @@ Namespace WindowsT.WPF.ConvertersT
                         Case "\"c : ret \= item
                         Case "&"c : ret &= item
                         Case "%"c : ret = ret Mod item
+#Enable Warning BC42019 ' Operands of type Object used for operator
                         Case Else : Throw New ArgumentException(WindowsT.WPF.ConvertersT.ConverterResources.ex_UnsupportedOperation.f(op))
                     End Select
                 End If
@@ -145,4 +147,3 @@ Namespace WindowsT.WPF.ConvertersT
     End Class
 
 End Namespace
-#End If

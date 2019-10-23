@@ -6,7 +6,7 @@ Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 Imports System.Windows.Media
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that converts color to color negative to given color</summary>
     ''' <remarks>This converter does not change alpha cannel of color.
@@ -53,4 +53,3 @@ Namespace WindowsT.WPF.ConvertersT
 
     End Class
 End Namespace
-#End If

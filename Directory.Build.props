@@ -1,0 +1,64 @@
+<Project>
+    <PropertyGroup>
+        <AssemblyOriginatorKeyFile>$(SolutionDir)SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <Product>ĐTools</Product>
+        <Company>Đonny</Company>
+        <Copyright>Copyright © Jan Záruba (Đonny) 2006-19</Copyright>
+        <Version>1.6.0</Version>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Visual Basic" Condition="'$(Language)' == 'VB'">
+        <NoWarn>41999,42016</NoWarn>
+        <OptionExplicit>On</OptionExplicit>
+        <OptionCompare>Binary</OptionCompare>
+        <OptionStrict>Off</OptionStrict>
+        <OptionInfer>On</OptionInfer>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="$(SolutionDir)SharedFiles\Tools.snk">
+            <Link>Tools.snk</Link>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup Label="Visual Basic" Condition="'$(Language)' == 'VB'">
+        <Compile Include="$(SolutionDir)SharedFiles/GlobalAssemblyInfo.vb">
+            <Link>My Project/GlobalAssemblyInfo.vb</Link>
+        </Compile>
+        <EmbeddedResource Update="My Project\Resources.resx">
+            <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+            <CustomToolNamespace>My.Resources</CustomToolNamespace>
+        </EmbeddedResource>
+        <EmbeddedResource Update="My Project/Resources.*.resx">
+            <DependentUpon>Resources.resx</DependentUpon>
+        </EmbeddedResource>
+
+        <Compile Update="My Project/Resources.vb">
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+
+        <Compile Update="My Project\Application.Designer.vb">
+            <DependentUpon>Application.myapp</DependentUpon>
+        </Compile>
+
+        <Compile Update="My Project\Settings.Designer.vb">
+            <DependentUpon>Settings.settings</DependentUpon>
+        </Compile>
+
+        <None Include="My Project\Application.myapp" Condition="Exists('My Project\Application.myapp')">
+            <Generator>MyApplicationCodeGenerator</Generator>
+        </None>
+        <None Include="My Project\Settings.settings" Condition="Exists('My Project\Settings.settings')">
+            <Generator>SettingsSingleFileGenerator</Generator>
+            <CustomToolNamespace>My</CustomToolNamespace>
+        </None>
+    </ItemGroup>
+    <ItemGroup Label="C#" Condition="'$(Language)' == 'C#'">
+        <Compile Include="$(SolutionDir)SharedFiles/GlobalAssemblyInfo.cs">
+            <Link>Properties/GlobalAssemblyInfo.cs</Link>
+        </Compile>
+    </ItemGroup>
+</Project>

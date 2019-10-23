@@ -1,6 +1,6 @@
 ﻿Imports System.Windows, Tools.ExtensionsT
 
-#If True
+
 Namespace WindowsT.InteropT
     ''' <summary>Wraps <see cref="SizeChangedInfo"/> as clas derived from <see cref="EventArgs"/></summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
@@ -157,4 +157,3 @@ Namespace WindowsT.InteropT
 #End Region
     End Class
 End Namespace
-#End If

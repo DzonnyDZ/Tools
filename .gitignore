@@ -20,3 +20,4 @@ ipch
 /packages
 *.opendb
 /TestResults
+*.jfm

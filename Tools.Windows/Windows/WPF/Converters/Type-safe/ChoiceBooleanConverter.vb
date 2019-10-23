@@ -2,7 +2,7 @@
 Imports System.Globalization, System.Globalization.CultureInfo
 Imports System.Runtime.InteropServices
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter which converts a boolean value to one of given string values</summary>
     ''' <remarks>Values are passed to parameter as two pipe(|)-separated strings or as an array of strings with two elements in order TrueValue|FalseValue.</remarks>
@@ -123,4 +123,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Sub
     End Class
 End Namespace
-#End If

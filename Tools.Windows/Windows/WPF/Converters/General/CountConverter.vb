@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, Tools.ReflectionT, System.Linq
 
 Namespace WindowsT.WPF.ConvertersT
-#If True
+
     ''' <summary>Implemens <see cref="IValueConverter"/> returning count of items in collection</summary>
     Public Class CountConverter
         Implements IValueConverter
@@ -51,5 +51,4 @@ Namespace WindowsT.WPF.ConvertersT
             Throw New NotSupportedException(WindowsT.WPF.ConvertersT.ConverterResources.ex_CannotConvertBack)
         End Function
     End Class
-#End If
 End Namespace

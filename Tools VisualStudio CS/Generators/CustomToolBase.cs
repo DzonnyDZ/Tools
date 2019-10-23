@@ -7,7 +7,7 @@ using Tools.VisualStudioT.GeneratorsT;
 using Tools.ReflectionT;
 using System.Linq;
 
-#if Nightly || Alpha || Beta || RC || Release
+
 /*
  * Copyright (C) 2006 Chris Stefano
  *       cnjs@mweb.co.za
@@ -411,4 +411,3 @@ namespace Tools.VisualStudioT.GeneratorsT
         }
     }
 }
-#endif

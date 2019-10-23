@@ -1,7 +1,6 @@
 ﻿Imports System.Windows.Forms, Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT
 Imports System.Drawing.Design, System.ComponentModel.Design, Tools.ComponentModelT
 Imports System.Runtime.Serialization
-'#If True
 'Conditional compilation directive is commented out because its presence caused compiler warning.
 'The conditionality of compilation of this file as well as of related files (which's name starts with 'LinkLabel.') is ensured by editing the Tools.vbproj file, where this file is marked as conditionally compiled.
 'To edit the Tools.vbproj right-click the Tools project and select Unload Project. Then right-click it again and select Edit Tools.vbproj.
@@ -605,8 +604,22 @@ Namespace WindowsT.FormsT
             ''' <summary>CTor</summary>
             ''' <param name="Text">Text to display</param>
             ''' <param name="LinkPath">Path of target of new link</param>
-            ''' <exception cref="System.ArgumentNullException"><paramref name="value"/> is null -and- type of <paramref name="value"/> is <see cref="String"/></exception>
-            ''' <exception cref="System.UriFormatException">Type of <paramref name="value"/> is <see cref="String"/> -and- <paramref name="value"/> is empty.-or- The scheme specified in <paramref name="value"/> is not correctly formed. See <see cref="System.Uri.CheckSchemeName"/>.-or- <paramref name="value"/> contains too many slashes.-or- The password specified in <paramref name="value"/> is not valid.-or- The host name specified in <paramref name="value"/> is not valid.-or- The file name specified in <paramref name="value"/> is not valid. -or- The user name specified in <paramref name="value"/> is not valid.-or- The host or authority name specified in <paramref name="value"/> cannot be terminated by backslashes.-or- The port number specified in <paramref name="value"/> is not valid or cannot be parsed.-or- The length of <paramref name="value"/> exceeds 65534 characters.-or- The length of the scheme specified in <paramref name="value"/> exceeds 1023 characters.-or- There is an invalid character sequence in <paramref name="value"/>.-or- The MS-DOS path specified in <paramref name="value"/> must start with c:\\.</exception>
+            ''' <exception cref="System.ArgumentNullException">value being set is null and type of value being set is <see cref="String"/></exception>
+            ''' <exception cref="System.UriFormatException">
+            ''' Type of value being set is <see cref="String"/> and value being set is empty. -or-
+            ''' The scheme specified in value being set is not correctly formed. See <see cref="System.Uri.CheckSchemeName"/>. -or-
+            ''' value being set contains too many slashes. -or-
+            ''' The password specified in value being set is not valid. -or-
+            ''' The host name specified in value being set is not valid. -or-
+            ''' The file name specified in value being set is not valid.  -or-
+            ''' The user name specified in value being set is not valid. -or-
+            ''' The host or authority name specified in value being set cannot be terminated by backslashes. -or-
+            ''' The port number specified in value being set is not valid or cannot be parsed. -or-
+            ''' The length of value being set exceeds 65534 characters. -or-
+            ''' The length of the scheme specified in value being set exceeds 1023 characters. -or-
+            ''' There is an invalid character sequence in value being set. -or-
+            ''' The MS-DOS path specified in value being set must start with c:\\.
+            ''' </exception>
             Public Sub New(ByVal Text As String, ByVal LinkPath As String)
                 Me.Text = Text
                 Me.LinkPath = LinkPath
@@ -633,9 +646,23 @@ Namespace WindowsT.FormsT
             ''' <summary>Data associated with the link</summary>
             ''' <value>New associated data (NOTE: value must be of type <see cref="Uri"/> or of type <see cref="String"/> that cab be used as parameter of <see cref="Uri"/>'s CTor)</value>
             ''' <returns>Data associated with the link</returns>
-            ''' <exception cref="System.ArgumentNullException"><paramref name="value"/> is null -and- type of <paramref name="value"/> is <see cref="String"/></exception>
-            ''' <exception cref="System.UriFormatException">Type of <paramref name="value"/> is <see cref="String"/> -and- <paramref name="value"/> is empty.-or- The scheme specified in <paramref name="value"/> is not correctly formed. See <see cref="System.Uri.CheckSchemeName"/>.-or- <paramref name="value"/> contains too many slashes.-or- The password specified in <paramref name="value"/> is not valid.-or- The host name specified in <paramref name="value"/> is not valid.-or- The file name specified in <paramref name="value"/> is not valid. -or- The user name specified in <paramref name="value"/> is not valid.-or- The host or authority name specified in <paramref name="value"/> cannot be terminated by backslashes.-or- The port number specified in <paramref name="value"/> is not valid or cannot be parsed.-or- The length of <paramref name="value"/> exceeds 65534 characters.-or- The length of the scheme specified in <paramref name="value"/> exceeds 1023 characters.-or- There is an invalid character sequence in <paramref name="value"/>.-or- The MS-DOS path specified in <paramref name="value"/> must start with c:\\.</exception>
-            ''' <exception cref="InvalidCastException">Type of <paramref name="value"/> is neither <see cref="Uri"/> nor <see cref="String"/></exception>
+            ''' <exception cref="System.ArgumentNullException">Value being set is null and type of value being set is <see cref="String"/></exception>
+            ''' <exception cref="System.UriFormatException">
+            ''' Type of value being set is <see cref="String"/> and value being set is empty. -or-
+            ''' The scheme specified in value being set is not correctly formed. See <see cref="System.Uri.CheckSchemeName"/>. -or-
+            ''' Value being set contains too many slashes. -or-
+            ''' The password specified in value being set is not valid. -or-
+            ''' The host name specified in value being set is not valid. -or-
+            ''' The file name specified in value being set is not valid. -or-
+            ''' The user name specified in value being set is not valid. -or-
+            ''' The host or authority name specified in value being set cannot be terminated by backslashes. -or-
+            ''' The port number specified in value being set is not valid or cannot be parsed. -or-
+            ''' The length of value being set exceeds 65534 characters. -or-
+            ''' The length of the scheme specified in value being set exceeds 1023 characters. -or-
+            ''' There is an invalid character sequence in value being set. -or-
+            ''' The MS-DOS path specified in value being set must start with c:\\.
+            ''' </exception>
+            ''' <exception cref="InvalidCastException">Type of value being set is neither <see cref="Uri"/> nor <see cref="String"/></exception>
             <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type safe variant (LinkURI or LinkPath) instead")> _
             <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             <System.ComponentModel.DefaultValue(GetType(Object), "null pointer")> _
@@ -656,14 +683,14 @@ Namespace WindowsT.FormsT
                 End Set
             End Property
             ''' <summary>Gets or sets URI to navigate to</summary>
-            ''' <value>Actuall URI or target of the link</value>
+            ''' <value>Actual URI or target of the link</value>
             ''' <returns>New URI of target of the link</returns>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after value is changed (unless calling base class setter <see cref="LinkURI"/>)</remarks>
-            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls), "LinkURI_d")> _
-            <DefaultValue(GetType(Uri), "null pointer")> _
-            <TypeConverter(GetType(UriTypeConverter))> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls), "LinkURI_d")>
+            <DefaultValue(GetType(Uri), "null pointer")>
+            <TypeConverter(GetType(UriTypeConverter))>
             Public Overridable Property LinkURI() As Uri
-                <DebuggerStepThrough()> _
+                <DebuggerStepThrough()>
                 Get
                     Return _LinkURI
                 End Get
@@ -675,9 +702,23 @@ Namespace WindowsT.FormsT
                 End Set
             End Property
             ''' <summary>Gets or sets URI (in form of path string) to navigate to</summary>
-            ''' <returns>Actuall path of target of the link</returns>
+            ''' <returns>Actual path of target of the link</returns>
             ''' <value>New path of target of the link</value>
-            ''' <exception cref="System.UriFormatException"><paramref name="value"/> is empty.-or- The scheme specified in <paramref name="value"/> is not correctly formed. See <see cref="System.Uri.CheckSchemeName"/>.-or- <paramref name="value"/> contains too many slashes.-or- The password specified in <paramref name="value"/> is not valid.-or- The host name specified in <paramref name="value"/> is not valid.-or- The file name specified in <paramref name="value"/> is not valid. -or- The user name specified in <paramref name="value"/> is not valid.-or- The host or authority name specified in <paramref name="value"/> cannot be terminated by backslashes.-or- The port number specified in <paramref name="value"/> is not valid or cannot be parsed.-or- The length of <paramref name="value"/> exceeds 65534 characters.-or- The length of the scheme specified in <paramref name="value"/> exceeds 1023 characters.-or- There is an invalid character sequence in <paramref name="value"/>.-or- The MS-DOS path specified in <paramref name="value"/> must start with c:\\.</exception>
+            ''' <exception cref="System.UriFormatException">
+            ''' Value  being set is empty. -or-
+            ''' The scheme specified in value being set is not correctly formed. See <see cref="System.Uri.CheckSchemeName"/>. -or-
+            ''' Value being set contains too many slashes. -or-
+            ''' The password specified in value being set is not valid. -or-
+            ''' The host name specified in value being set is not valid. -or-
+            ''' The file name specified in value being set is not valid. -or-
+            ''' The user name specified in value being set is not valid. -or-
+            ''' The host or authority name specified in value being set cannot be terminated by backslashes. -or-
+            ''' The port number specified in value being set is not valid or cannot be parsed. -or-
+            ''' The length of value being set exceeds 65534 characters. -or-
+            ''' The length of the scheme specified in value being set exceeds 1023 characters. -or-
+            ''' There is an invalid character sequence in value being set. -or-
+            ''' The MS-DOS path specified in value being set must start with c:\\.
+            ''' </exception>
             ''' <remarks>
             ''' <para>Exceptions thrown by <see cref="Uri"/>'s CTor</para>
             ''' <para>Note for inheritors: Call <see cref="OnChanged"/> (unless calling base class setter <see cref="LinkPath"/> or <see cref="LinkURI"/></para>
@@ -1406,4 +1447,3 @@ Namespace WindowsT.FormsT
 #End Region
     End Class
 End Namespace
-'#End If 'See note at the beginning of this file

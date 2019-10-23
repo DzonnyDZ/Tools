@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModelT, Tools.VisualBasicT
-#If True
+#If True Then
 Namespace CollectionsT.GenericT
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="TValue">Type of items to be stored in the list</typeparam>
@@ -14,8 +14,8 @@ Namespace CollectionsT.GenericT
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2"><see cref="IEnumerable(Of T)"/>[<typeparamref name="TValue"/>] implemented</version>
-    <DebuggerDisplay("Count = {Count}")> _
-        Public Class DictionaryWithEvents(Of TKey, TValue)
+    <DebuggerDisplay("Count = {Count}")>
+    Public Class DictionaryWithEvents(Of TKey, TValue)
         Implements IDictionary, IDictionary(Of TKey, TValue), IEnumerable(Of TValue)
         Implements IReportsChange
 #Region "CTors"
@@ -91,10 +91,10 @@ Namespace CollectionsT.GenericT
         Private Dict As Dictionary(Of TKey, TValue)
 #Region "Settings"
         ''' <summary>Contains value of the <see cref="AddingReadOnly"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private ReadOnly _AddingReadOnly As Boolean = False
         ''' <summary>Determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</summary>
-        <Browsable(False)> _
+        <Browsable(False)>
         Public ReadOnly Property AddingReadOnly() As Boolean
             <DebuggerStepThrough()> Get
                 Return _AddingReadOnly
@@ -102,10 +102,10 @@ Namespace CollectionsT.GenericT
         End Property
 
         ''' <summary>Contains value of the <see cref="CancelError"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private ReadOnly _CancelError As Boolean = False
         ''' <summary>Gets value indicating if an <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</summary>
-        <Browsable(False)> _
+        <Browsable(False)>
         Public ReadOnly Property CancelError() As Boolean
             <DebuggerStepThrough()> Get
                 Return _CancelError
@@ -126,7 +126,7 @@ Namespace CollectionsT.GenericT
         ''' <item><see cref="ItemChanging"/></item>
         ''' </list>
         ''' </remarks>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property AllowAddCancelableEventsHandlers() As Boolean
             <DebuggerStepThrough()> Get
                 Return _AllowAddCancelableEventsHandlers
@@ -140,7 +140,7 @@ Namespace CollectionsT.GenericT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="Locked"/></summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _Locked As Boolean = False
         ''' <summary>Determines if the <see cref="DictionaryWithEvents(Of TKey,TValue)"/> isn locked (being locked prevents if from being edited)</summary>
         ''' <remarks><para>
@@ -152,7 +152,7 @@ Namespace CollectionsT.GenericT
         ''' <item><see cref="Clear"/></item>
         ''' <item><see cref="Item"/> (only setter)</item>
         ''' </list></remarks>
-        <Browsable(False)> _
+        <Browsable(False)>
         Public ReadOnly Property Locked() As Boolean
             <DebuggerStepThrough()> Get
                 Return _Locked
@@ -190,7 +190,7 @@ Namespace CollectionsT.GenericT
                     Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheAddingEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
-            <DebuggerStepThrough()> _
+            <DebuggerStepThrough()>
             RemoveHandler(ByVal value As ItemCancelEventHandler)
                 AddingEventHandlerList.Remove(value)
             End RemoveHandler
@@ -309,7 +309,7 @@ Namespace CollectionsT.GenericT
                     Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheClearigEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
-            <DebuggerStepThrough()> _
+            <DebuggerStepThrough()>
             RemoveHandler(ByVal value As ClearingEventHandler)
                 ClearingEventHandlerList.Remove(value)
             End RemoveHandler
@@ -413,7 +413,7 @@ Namespace CollectionsT.GenericT
                     Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheRemovingEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
-            <DebuggerStepThrough()> _
+            <DebuggerStepThrough()>
             RemoveHandler(ByVal value As ItemCancelEventHandler)
                 RemovingEventHandlerList.Remove(value)
             End RemoveHandler
@@ -594,7 +594,7 @@ Namespace CollectionsT.GenericT
                     Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheItemChangingEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
-            <DebuggerStepThrough()> _
+            <DebuggerStepThrough()>
             RemoveHandler(ByVal value As ItemCancelEventHandler)
                 ItemChangingEventHandlerList.Remove(value)
             End RemoveHandler
@@ -666,7 +666,7 @@ Namespace CollectionsT.GenericT
         End Property
 #End Region
         ''' <summary>Gives access to underlying <see cref="Dictionary(Of TKey,TValue)"/></summary>
-        <Browsable(False)> _
+        <Browsable(False)>
         Protected ReadOnly Property InternalDict() As Dictionary(Of TKey, TValue)
             <DebuggerStepThrough()> Get
                 Return Dict
@@ -741,35 +741,38 @@ Namespace CollectionsT.GenericT
         Public Class DictionaryChangedEventArgs : Inherits CollectionChangeEventArgs(Of KeyValuePair(Of TKey, TValue))
 #Region "CTors"
             ''' <summary>CTor</summary>
-            ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
-            ''' <param name="Collection">Collection that was changed</param>
-            ''' <param name="Action">Action which occured on collection</param>
+            ''' <param name="changeEventArgs">Arguments of event that caused the collection to change</param>
+            ''' <param name="collection">Collection that was changed</param>
+            ''' <param name="action">Action which occurred on collection</param>
             ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
-            Public Sub New(ByVal Collection As DictionaryWithEvents(Of TKey, TValue), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
-                MyBase.new(Collection, ChangeEventArgs, Action)
+            ''' <version version="1.6.0">Parameters renamed: <c>Collection</c> to <c>collection</c>, <c>ChangeEventArgs</c> to <c>changeEventArgs</c> and <c>Action</c> to <c>action</c></version>
+            Public Sub New(ByVal collection As DictionaryWithEvents(Of TKey, TValue), ByVal changeEventArgs As EventArgs, ByVal action As CollectionChangeAction)
+                MyBase.New(collection, changeEventArgs, action)
             End Sub
             ''' <summary>CTor with index</summary>
-            ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
-            ''' <param name="Collection">Collection that was changed</param>
-            ''' <param name="Action">Action which occured on collection</param>
-            ''' <param name="key">Key at which the change has occured</param>
-            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
-            Public Sub New(ByVal Collection As DictionaryWithEvents(Of TKey, TValue), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction, ByVal key As TKey)
-                Me.new(Collection, ChangeEventArgs, Action)
+            ''' <param name="changeEventArgs">Arguments of event that caused the collection to change</param>
+            ''' <param name="collection">Collection that was changed</param>
+            ''' <param name="action">Action which occurred on collection</param>
+            ''' <param name="key">Key at which the change has occurred</param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="action"/> is not member of <see cref="CollectionChangeAction"/></exception>
+            ''' <version version="1.6.0">Parameters renamed: <c>Collection</c> to <c>collection</c>, <c>ChangeEventArgs</c> to <c>changeEventArgs</c> and <c>Action</c> to <c>action</c></version>
+            Public Sub New(ByVal collection As DictionaryWithEvents(Of TKey, TValue), ByVal changeEventArgs As EventArgs, ByVal action As CollectionChangeAction, ByVal key As TKey)
+                Me.New(collection, changeEventArgs, action)
                 _Key = key
             End Sub
             ''' <summary>CTor with index and old and new value</summary>
-            ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
-            ''' <param name="Collection">Collection that was changed</param>
-            ''' <param name="Action">Action which occured on collection</param>
-            ''' <param name="key">Key at which the change has occured</param>
-            ''' <param name="OldValue">Old value at index <paramref name="index"/></param>
-            ''' <param name="NewValue">New value at index <paramref name="index"/></param>
+            ''' <param name="changeEventArgs">Arguments of event that caused the collection to change</param>
+            ''' <param name="collection">Collection that was changed</param>
+            ''' <param name="action">Action which occurred on collection</param>
+            ''' <param name="key">Key at which the change has occurred</param>
+            ''' <param name="oldValue">Old value at index <paramref name="key"/></param>
+            ''' <param name="newValue">New value at index <paramref name="key"/></param>
             ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
-            Public Sub New(ByVal Collection As DictionaryWithEvents(Of TKey, TValue), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction, ByVal key As TKey, ByVal OldValue As TValue, ByVal NewValue As TValue)
-                Me.new(Collection, ChangeEventArgs, Action, key)
-                _OldValue = OldValue
-                _NewValue = NewValue
+            ''' <version version="1.6.0">Parameters renamed: <c>Collection</c> to <c>collection</c>, <c>ChangeEventArgs</c> to <c>changeEventArgs</c>, <c>Action</c> to <c>action</c>, <c>OldValue</c> to <c>oldValue</c> and <c>NewValue</c> to <c>newValue</c></version>
+            Public Sub New(ByVal collection As DictionaryWithEvents(Of TKey, TValue), ByVal changeEventArgs As EventArgs, ByVal action As CollectionChangeAction, ByVal key As TKey, ByVal oldValue As TValue, ByVal newValue As TValue)
+                Me.New(collection, changeEventArgs, action, key)
+                _OldValue = oldValue
+                _NewValue = newValue
             End Sub
 #End Region
             ''' <summary>Collection which was changed</summary>
@@ -784,7 +787,7 @@ Namespace CollectionsT.GenericT
             <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _OldValue As TValue = Nothing
             ''' <summary>Contains value of the <see cref="NewValue"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _NewValue As TValue = Nothing
-            ''' <summary>Gets key at which change occured (if applicable)</summary>
+            ''' <summary>Gets key at which change occurred (if applicable)</summary>
             ''' <returns>Original key where the change has ocured. If not applicable returns null (fo refrence types) or type default value (for <see cref="ValueType">value types</see>)</returns>
             Public ReadOnly Property Key() As TKey
                 <DebuggerStepThrough()> Get
@@ -799,7 +802,7 @@ Namespace CollectionsT.GenericT
                 End Get
             End Property
             ''' <summary>Gets value with key <see cref="Key"/> after change (if applicable)</summary>
-            ''' <returns>Valu at index <see cref="Key"/> after changed. If not applicable returns null (for reference types) or type default value (for <see cref="ValueType">value types</see>)</returns>
+            ''' <returns>Value at index <see cref="Key"/> after changed. If not applicable returns null (for reference types) or type default value (for <see cref="ValueType">value types</see>)</returns>
             Public ReadOnly Property NewValue() As TValue
                 <DebuggerStepThrough()> Get
                     Return _NewValue
@@ -834,7 +837,7 @@ Namespace CollectionsT.GenericT
                 Newkey = key
             End Sub
             ''' <summary>Key of newly added item</summary>
-            ''' <remarks>The key may be invalid when collecion-manipulation is done between raising <see cref="Adding"/> event and using this instance.</remarks>
+            ''' <remarks>The key may be invalid when collection-manipulation is done between raising <see cref="Adding"/> event and using this instance.</remarks>
             Public ReadOnly Newkey As TKey
         End Class
 
@@ -852,7 +855,7 @@ Namespace CollectionsT.GenericT
         End Class
         ''' <summary>Parameter of the <see cref="ItemChanged"/> event</summary>
         Public Class OldNewValueEventArgs : Inherits KeyValueEventArgs
-            ''' <summary>Old value previosly on <see cref="Key"/></summary>
+            ''' <summary>Old value previously on <see cref="Key"/></summary>
             Public ReadOnly OldValue As TValue
             ''' <summary>CTor</summary>
             ''' <param name="OldValue">Old value present at key</param>
@@ -1007,7 +1010,7 @@ Namespace CollectionsT.GenericT
         '        ''' <param name="context">The source (see <see cref="System.Runtime.Serialization.StreamingContext"/>) of this deserialization.</param>
         '        ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
         '        ''' <exception cref="InvalidCastException">Serialized value was found but cannot be converted to type of corresponding property</exception>
-        '        ''' <exception cref="Runtime.Serialization.SerializationException">An exception occured during deserialization</exception>
+        '        ''' <exception cref="Runtime.Serialization.SerializationException">An exception occurred during deserialization</exception>
         '        ''' <remarks>
         '        ''' Only items (see <see cref="Item"/>) are deserialized.
         '        ''' Note for inheritors: Call this base class CTor in order to deserialize items. Another way is to deserialize them into local variable and then use <see cref="List(Of T).Add"/> or <see cref="List(Of T).AddRange"/>.
@@ -1064,7 +1067,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="Action">Action taken on collection</param>
         ''' <param name="OldValue">Old value at index <paramref name="index"/> prior to change. Pass null (default value for value types) if not applicable.</param>
         ''' <param name="NewValue">New value at index <paramref name="index"/> after change. pass null (default value for value types) if not applicable</param>
-        ''' <param name="Key">Index at which change has occured. Pass -1 if not applicable</param>
+        ''' <param name="Key">Index at which change has occurred. Pass -1 if not applicable</param>
         ''' <remarks>You should call one of overloaded <see cref="OnChanged"/> methods after all calls of <see cref="OnChanged"/>.</remarks>
         ''' <filterpriority>1</filterpriority>
         Protected Sub OnCollectionChanged(ByVal e As EventArgs, ByVal Action As CollectionChangeAction, ByVal key As TKey, ByVal OldValue As TValue, ByVal NewValue As TValue)
@@ -1110,7 +1113,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Determines whether the <see cref="T:System.Collections.Generic.IDictionary`2" /> contains an element with the specified key.</summary>
         ''' <returns>true if the <see cref="T:System.Collections.Generic.IDictionary`2" /> contains an element with the key; otherwise, false.</returns>
         ''' <param name="key">The key to locate in the <see cref="T:System.Collections.Generic.IDictionary`2" />.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null.</exception>
         Public Function ContainsKey(ByVal key As TKey) As Boolean Implements System.Collections.Generic.IDictionary(Of TKey, TValue).ContainsKey
             Return InternalDict.ContainsKey(key)
@@ -1131,7 +1134,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="key">The key whose value to get.</param>
         ''' <param name="value">When this method returns, the value associated with the specified key, if the key is found; otherwise, the default value for the type of the 
         ''' <paramref name="value" /> parameter. This parameter is passed uninitialized.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null.</exception>
         Public Function TryGetValue(ByVal key As TKey, ByRef value As TValue) As Boolean Implements System.Collections.Generic.IDictionary(Of TKey, TValue).TryGetValue
             Return InternalDict.TryGetValue(key, value)
@@ -1162,13 +1165,13 @@ Namespace CollectionsT.GenericT
         ''' <summary>Adds an element with the provided key and value to the <see cref="T:System.Collections.IDictionary" /> object.</summary>
         ''' <param name="key">The <see cref="T:System.Object" /> to use as the key of the element to add. </param>
         ''' <param name="value">The <see cref="T:System.Object" /> to use as the value of the element to add. </param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null. </exception>
         ''' <exception cref="T:System.ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.IDictionary" /> object. </exception>
         ''' <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.IDictionary" /> is read-only.-or- The <see cref="T:System.Collections.IDictionary" /> has a fixed size. </exception>
         ''' <exception cref="TypeMismatchException"><paramref name="key"/> is not of type <typeparamref name="TKey"/> -or- <paramref name="value"/> value is not of type <typeparamref name="TValue"/></exception>
         ''' <filterpriority>2</filterpriority>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private Sub Add(ByVal key As Object, ByVal value As Object) Implements System.Collections.IDictionary.Add
             If Not TypeOf key Is TKey Then Throw New TypeMismatchException("key", key, GetType(TKey))
             If Not TypeOf value Is TValue Then Throw New TypeMismatchException("value", value, GetType(TValue))
@@ -1178,10 +1181,10 @@ Namespace CollectionsT.GenericT
         ''' <summary>Determines whether the <see cref="T:System.Collections.IDictionary" /> object contains an element with the specified key.</summary>
         ''' <returns>true if the <see cref="T:System.Collections.IDictionary" /> contains an element with the key; otherwise, false.</returns>
         ''' <param name="key">The key to locate in the <see cref="T:System.Collections.IDictionary" /> object.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null. </exception>
         ''' <filterpriority>2</filterpriority>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private Function Contains(ByVal key As Object) As Boolean Implements System.Collections.IDictionary.Contains
             If TypeOf key Is TKey Then Return Contains(DirectCast(key, TKey)) Else Return False
         End Function
@@ -1189,7 +1192,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Returns an <see cref="T:System.Collections.IDictionaryEnumerator" /> object for the <see cref="T:System.Collections.IDictionary" /> object.</summary>
         ''' <returns>An <see cref="T:System.Collections.IDictionaryEnumerator" /> object for the <see cref="T:System.Collections.IDictionary" /> object.</returns>
         ''' <filterpriority>2</filterpriority>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private Function IDictionary_GetEnumerator() As System.Collections.IDictionaryEnumerator Implements System.Collections.IDictionary.GetEnumerator
             Return UnsafeInternalDictionary.GetEnumerator
         End Function
@@ -1215,12 +1218,12 @@ Namespace CollectionsT.GenericT
         ''' <summary>Gets or sets the element with the specified key.</summary>
         ''' <returns>The element with the specified key.</returns>
         ''' <param name="key">The key of the element to get or set. </param>
-        ''' <exception cref="T:System.ArgumentNullException"><paramref name="key" /> is null. </exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="key" /> is null. </exception>
         ''' <exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.IDictionary" /> object is read-only.-or- The property is set, <paramref name="key" /> does not exist in the collection, and the <see cref="T:System.Collections.IDictionary" /> has a fixed size. </exception>
         ''' <exception cref="KeyNotFoundException">Value is being get and <paramref name="key"/> is not of type <typeparamref name="TKey"/></exception>
         ''' <exception cref="TypeMismatchException">Value is being set and <paramref name="key"/> is not of type <typeparamref name="TKey"/> -or- Value is being set and value being set is not of type <typeparamref name="TValue"/>.</exception>
         ''' <filterpriority>2</filterpriority>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private Property IDictionary_Item(ByVal key As Object) As Object Implements System.Collections.IDictionary.Item
             Get
                 If key Is Nothing Then Throw New ArgumentException("key")
@@ -1238,7 +1241,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Gets an <see cref="T:System.Collections.ICollection" /> object containing the keys of the <see cref="T:System.Collections.IDictionary" /> object.</summary>
         ''' <returns>An <see cref="T:System.Collections.ICollection" /> object containing the keys of the <see cref="T:System.Collections.IDictionary" /> object.</returns>
         ''' <filterpriority>2</filterpriority>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private ReadOnly Property IDIctionary_Keys() As System.Collections.ICollection Implements System.Collections.IDictionary.Keys
             Get
                 Return UnsafeInternalDictionary.Keys
@@ -1247,11 +1250,11 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Removes the element with the specified key from the <see cref="T:System.Collections.IDictionary" /> object.</summary>
         ''' <param name="key">The key of the element to remove. </param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null. </exception>
         ''' <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.IDictionary" /> object is read-only.-or- The <see cref="T:System.Collections.IDictionary" /> has a fixed size. </exception>
         ''' <filterpriority>2</filterpriority>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private Sub Remove(ByVal key As Object) Implements System.Collections.IDictionary.Remove
             If TypeOf key Is TKey Then Remove(DirectCast(key, TKey))
         End Sub
@@ -1259,7 +1262,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Gets an <see cref="T:System.Collections.ICollection" /> object containing the values in the <see cref="T:System.Collections.IDictionary" /> object.</summary>
         ''' <returns>An <see cref="T:System.Collections.ICollection" /> object containing the values in the <see cref="T:System.Collections.IDictionary" /> object.</returns>
         ''' <filterpriority>2</filterpriority>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private ReadOnly Property IDictionary_Values() As System.Collections.ICollection Implements System.Collections.IDictionary.Values
             Get
                 Return UnsafeInternalDictionary.Values
@@ -1286,7 +1289,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
         ''' <param name="index">The zero-based index in 
         ''' <paramref name="array" /> at which copying begins. </param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="array" /> is null. </exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException">
         ''' <paramref name="index" /> is less than zero. </exception>
@@ -1323,7 +1326,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Returns an enumerator that iterates through a collection.</summary>
         ''' <returns>An <see cref="System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         ''' <remarks>Use type-safe <see cref="GetEnumerator"/></remarks>
-        <Obsolete("Use type-safe GetEnumerator")> _
+        <Obsolete("Use type-safe GetEnumerator")>
         Private Function IEnumerable_GetEnumerator() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
             Return GetEnumerator()
         End Function
@@ -1361,16 +1364,16 @@ Namespace CollectionsT.GenericT
     '    ''' <summary>Contains value of the <see cref="Action"/> property</summary>
     '    Private ReadOnly _Action As CollectionChangeAction
     '    ''' <summary>CTor</summary>
-    '    ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+    '    ''' <param name="ChangeEventArgs">Arguments of event that caused the collection to change</param>
     '    ''' <param name="Collection">Collection that was changed</param>
     '    ''' <remarks><see cref="Action"/> is set to <see cref="CollectionChangeAction.Other"/></remarks>
     '    Protected Sub New(ByVal Collection As IEnumerable, ByVal ChangeEventArgs As EventArgs)
     '        Me.New(Collection, ChangeEventArgs, CollectionChangeAction.Other)
     '    End Sub
     '    ''' <summary>CTor</summary>
-    '    ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+    '    ''' <param name="ChangeEventArgs">Arguments of event that caused the collection to change</param>
     '    ''' <param name="Collection">Collection that was changed</param>
-    '    ''' <param name="Action">Action which occured on collection</param>
+    '    ''' <param name="Action">Action which occurred on collection</param>
     '    ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
     '    Protected Sub New(ByVal Collection As IEnumerable, ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
     '        MyBase.New(ConvertAction(Action), Collection)
@@ -1421,16 +1424,16 @@ Namespace CollectionsT.GenericT
     'Public Class CollectionChangeEventArgs(Of TItem)
     '    Inherits CollectionChangedEventArgsBase
     '    ''' <summary>CTor</summary>
-    '    ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+    '    ''' <param name="ChangeEventArgs">Arguments of event that caused the collection to change</param>
     '    ''' <param name="Collection">Collection that was changed</param>
     '    ''' <remarks><see cref="Action"/> is set to <see cref="CollectionChangeAction.Other"/></remarks>
     '    Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs)
     '        MyBase.new(Collection, ChangeEventArgs)
     '    End Sub
     '    ''' <summary>CTor</summary>
-    '    ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+    '    ''' <param name="ChangeEventArgs">Arguments of event that caused the collection to change</param>
     '    ''' <param name="Collection">Collection that was changed</param>
-    '    ''' <param name="Action">Action which occured on collection</param>
+    '    ''' <param name="Action">Action which occurred on collection</param>
     '    ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
     '    Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
     '        MyBase.new(Collection, ChangeEventArgs, Action)
@@ -1515,7 +1518,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Gets or sets the element with the specified key.</summary>
         ''' <returns>The element with the specified key.</returns>
         ''' <param name="key">The key of the element to get or set.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null.</exception>
         ''' <exception cref="T:System.Collections.Generic.KeyNotFoundException">The property is retrieved and 
         ''' <paramref name="key" /> is not found.</exception>
@@ -1550,7 +1553,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
         ''' <param name="arrayIndex">The zero-based index in 
         ''' <paramref name="array" /> at which copying begins.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="array" /> is null.</exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException">
         ''' <paramref name="arrayIndex" /> is less than 0.</exception>
@@ -1560,7 +1563,7 @@ Namespace CollectionsT.GenericT
         ''' <paramref name="array" />.-or-The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1" /> is greater than the available space from 
         ''' <paramref name="arrayIndex" /> to the end of the destination 
         ''' <paramref name="array" />.-or-Type 
-        ''' <paramref name="T" /> cannot be cast automatically to the type of the destination 
+        ''' <typeparamref name="T" /> cannot be cast automatically to the type of the destination 
         ''' <paramref name="array" />.</exception>
         Private Sub CopyTo(ByVal array() As System.Collections.Generic.KeyValuePair(Of TKey, TValue), ByVal arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).CopyTo
             DictionaryCollection.CopyTo(array, arrayIndex)
@@ -1576,7 +1579,7 @@ Namespace CollectionsT.GenericT
         ''' <returns>A <see cref="T:System.Collections.IEnumerator" /> that can be used to iterate through the collection.</returns>
         ''' <filterpriority>1</filterpriority>
         ''' <remarks>Use type-safe <see cref="GetEnumerator"/> instead</remarks>
-        <Obsolete("Use type-safe GetEnumerator instead")> _
+        <Obsolete("Use type-safe GetEnumerator instead")>
         Private Function IEnumerable_GetEnumerator() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
             Return Dictionary.GetEnumerator
         End Function
@@ -1592,7 +1595,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Determines whether the <see cref="T:System.Collections.Generic.IDictionary`2" /> contains an element with the specified key.</summary>
         ''' <returns>true if the <see cref="T:System.Collections.Generic.IDictionary`2" /> contains an element with the key; otherwise, false.</returns>
         ''' <param name="key">The key to locate in the <see cref="T:System.Collections.Generic.IDictionary`2" />.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null.</exception>
         Public Function ContainsKey(ByVal key As TKey) As Boolean Implements System.Collections.Generic.IDictionary(Of TKey, TValue).ContainsKey
             Return Dictionary.ContainsKey(key)
@@ -1600,7 +1603,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Gets or sets the element with the specified key.</summary>
         ''' <returns>The element with the specified key.</returns>
         ''' <param name="key">The key of the element to get or set.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null.</exception>
         ''' <exception cref="T:System.Collections.Generic.KeyNotFoundException">The property is retrieved and 
         ''' <paramref name="key" /> is not found.</exception>
@@ -1624,7 +1627,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="key">The key whose value to get.</param>
         ''' <param name="value">When this method returns, the value associated with the specified key, if the key is found; otherwise, the default value for the type of the 
         ''' <paramref name="value" /> parameter. This parameter is passed uninitialized.</param>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="key" /> is null.</exception>
         Public Function TryGetValue(ByVal key As TKey, ByRef value As TValue) As Boolean Implements System.Collections.Generic.IDictionary(Of TKey, TValue).TryGetValue
             Return Dictionary.TryGetValue(key, value)
@@ -1656,11 +1659,11 @@ Namespace CollectionsT.GenericT
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1" />. The <see cref="T:System.Array" /> must have zero-based indexing.                </param>
         ''' <param name="index">The zero-based index in 
         ''' <paramref name="array" /> at which copying begins.</param>
-        ''' <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="array" /> is null.</exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than 0.</exception>
         ''' <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional. -or-
         ''' <paramref name="arrayIndex" /> is equal to or greater than the length of <paramref name="array" />. -or- The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1" /> is greater than the available space from<paramref name="arrayIndex" /> to the end of the destination  <paramref name="array" />. -or-
-        ''' Type  <paramref name="T" /> cannot be cast automatically to the type of the destination  <paramref name="array" />. </exception>
+        ''' Type  <typeparamref name="T" /> cannot be cast automatically to the type of the destination  <paramref name="array" />. </exception>
         Public Sub CopyTo(ByVal array() As TValue, ByVal index As Integer) Implements IReadOnlyCollection(Of TValue).CopyTo
             Me.Values.CopyTo(array, index)
         End Sub
@@ -1669,7 +1672,7 @@ Namespace CollectionsT.GenericT
     ''' <typeparam name="TIndex">Type of index</typeparam>
     ''' <typeparam name="TValue">Type of value</typeparam>
     Public Class IndexableEnumerator(Of TIndex, TValue)
-        Implements IEnumerator(Of Tvalue)
+        Implements IEnumerator(Of TValue)
         ''' <summary>Outside-supplied indexes</summary>
         Private keys As IEnumerator(Of TIndex)
         ''' <summary>Instance to be indexed</summary>
@@ -1681,21 +1684,21 @@ Namespace CollectionsT.GenericT
         ''' <version version="1.5.4">Parameters renamed: <c>KeysEnumerator</c> to <c>keysEnumrator</c>, <c>Instance</c> to <c>instance</c></version>
         ''' <version version="1.5.4">Fix: <see cref="InvalidCastException"/> when <paramref name="instance"/> is not <see cref="IIndexable(Of TIndex, TKey)"/>, now <see cref="IReadOnlyIndexable(Of TValue, TIndex)"/> is enough.</version>
         Public Sub New(ByVal keysEnumerator As IEnumerator(Of TIndex), ByVal instance As IReadOnlyIndexable(Of TValue, TIndex))
-            If KeysEnumerator Is [Nothing] Then Throw New ArgumentNullException("KeysEnumerator")
-            If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
-            Me.Keys = KeysEnumerator
-            Me.Instance = Instance
+            If keysEnumerator Is [Nothing] Then Throw New ArgumentNullException("KeysEnumerator")
+            If instance Is Nothing Then Throw New ArgumentNullException("Instance")
+            Me.keys = keysEnumerator
+            Me.instance = instance
         End Sub
         ''' <summary>Gets the element in the collection at the current position of the enumerator.</summary>
         ''' <returns>The element in the collection at the current position of the enumerator.</returns>
         Public ReadOnly Property Current() As TValue Implements System.Collections.Generic.IEnumerator(Of TValue).Current
             Get
-                Return Instance(Keys.Current)
+                Return instance(keys.Current)
             End Get
         End Property
         ''' <summary>Gets the element in the collection at the current position of the enumerator.                </summary>
         ''' <returns>The element in the collection at the current position of the enumerator.                </returns>
-        <Obsolete("Use type-safe Current instead")> _
+        <Obsolete("Use type-safe Current instead")>
         Private ReadOnly Property Current1() As Object Implements System.Collections.IEnumerator.Current
             Get
                 Return Current
@@ -1707,20 +1710,20 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.                 </exception>
         ''' <filterpriority>2</filterpriority>
         Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
-            Return Keys.MoveNext
+            Return keys.MoveNext
         End Function
 
         ''' <summary>Sets the enumerator to its initial position, which is before the first element in the collection.                </summary>
         ''' <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.                 </exception>
         ''' <filterpriority>2</filterpriority>
         Public Sub Reset() Implements System.Collections.IEnumerator.Reset
-            Keys.Reset()
+            keys.Reset()
         End Sub
 
         ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.                </summary>
         ''' <filterpriority>2</filterpriority>
         Public Sub Dispose() Implements IDisposable.Dispose
-            Keys.Dispose()
+            keys.Dispose()
         End Sub
 
     End Class

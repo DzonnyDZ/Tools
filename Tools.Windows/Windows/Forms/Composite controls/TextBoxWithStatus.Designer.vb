@@ -1,5 +1,5 @@
 Namespace WindowsT.FormsT
-#If True
+
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class TextBoxWithStatus
         Inherits System.Windows.Forms.UserControl
@@ -89,5 +89,5 @@ Namespace WindowsT.FormsT
         Friend WithEvents txtText As System.Windows.Forms.TextBox
         Friend WithEvents stmStatus As Tools.WindowsT.FormsT.StatusMarker
     End Class
-#End If
+
 End Namespace

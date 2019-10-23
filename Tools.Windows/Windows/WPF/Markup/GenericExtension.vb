@@ -1,7 +1,7 @@
 ﻿Imports System.Windows, Tools.ExtensionsT
 Imports System.Windows.Markup
 
-#If True
+
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>Markup extension that can create instance of generic type</summary>
     ''' <author www="http://blogs.msdn.com/mikehillberg/archive/2006/10/06/LimitedGenericsSupportInXaml.aspx">Mike Hillberg</author>
@@ -65,4 +65,3 @@ Namespace WindowsT.WPF.MarkupT
 
 
 End Namespace
-#End If

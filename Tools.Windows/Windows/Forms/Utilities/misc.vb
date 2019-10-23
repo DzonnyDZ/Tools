@@ -2,7 +2,7 @@ Imports System.Windows.Forms
 Imports System.Runtime.CompilerServices
 
 Namespace WindowsT.FormsT.UtilitiesT
-#If True
+
     'ASAP:Amrk,Forum,WiKi
     ''' <summary>Staes of controls</summary>
     Public Enum ControlState
@@ -143,7 +143,6 @@ Namespace WindowsT.FormsT.UtilitiesT
         End Function
 #End Region
     End Module
-#End If
 End Namespace
 
 

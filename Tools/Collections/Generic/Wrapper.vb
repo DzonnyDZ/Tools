@@ -154,7 +154,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1"></see>. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
         ''' <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex"/> is less than 0.</exception>
-        ''' <exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
         ''' <exception cref="T:System.ArgumentException"><paramref name="array"/> is multidimensional.-or-arrayIndex is equal to or greater than the length of <paramref name="array"/>.-or-The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1"></see> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination array.</exception>
         ''' <exception cref="InvalidCastException"><see cref="List"/> contains item that cannot be automatically cast to <typeparamref name="T"/></exception>
         Public Sub CopyTo(ByVal array() As T, ByVal arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of T).CopyTo
@@ -230,7 +230,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Copies the elements of the <see cref="T:System.Collections.ICollection"></see> to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.</summary>
         ''' <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection"></see>. The <see cref="T:System.Array"></see> must have zero-based indexing. </param>
         ''' <param name="index">The zero-based index in array at which copying begins. </param>
-        ''' <exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null. </exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="array"/> is null. </exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is less than zero. </exception>
         ''' <exception cref="T:System.ArgumentException"><paramref name="array"/> is multidimensional.-or- <paramref name="index"/> is equal to or greater than the length of <paramref name="array"/>.-or- The number of elements in the source <see cref="T:System.Collections.ICollection"></see> is greater than the available space from <paramref name="index"/> to the end of the destination <paramref name="array"/>. </exception>
         ''' <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.ICollection"></see> cannot be cast automatically to the type of the destination <paramref name="array"/>. </exception>

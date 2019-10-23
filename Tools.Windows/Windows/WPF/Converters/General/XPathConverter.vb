@@ -10,7 +10,7 @@ Imports System.Xml.Linq
 Imports System.Windows.Markup
 Imports Tools.WindowsT.WPF.MarkupT
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Value converter which applies XPath query on binding result.</summary>
@@ -118,4 +118,3 @@ Namespace WindowsT.WPF.ConvertersT
     End Class
 
 End Namespace
-#End If

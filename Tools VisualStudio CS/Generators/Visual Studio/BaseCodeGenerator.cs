@@ -1,4 +1,3 @@
-#if Nightly || Alpha || Beta || RC || Release
 namespace Tools.VisualStudioT.GeneratorsT {
 
     using System;
@@ -43,4 +42,3 @@ namespace Tools.VisualStudioT.GeneratorsT {
         }
     }
 }
-#endif

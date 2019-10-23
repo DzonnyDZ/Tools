@@ -71,16 +71,16 @@ Namespace InternalT
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Major As Integer = 0
         ''' <summary>Contains value of the <see cref="Minor"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Minor As Integer = 0
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Private _minor As Integer = 0
         ''' <summary>Contains value of the <see cref="Build"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Build As Integer = 0
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Private _build As Integer = 0
         ''' <summary>Contains value of the <see cref="Revision"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Revision As Integer = 0
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Private _revision As Integer = 0
         ''' <summary>Contains value of the <see cref="Note"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _Note As String
 #Region "CTors"
         ''' <summary>CTor - initializes version as <paramref name="Major"/>.<paramref name="MajorRevision"/>.<paramref name="Minor"/>.<paramref name="MinorRevision"/></summary>
@@ -226,7 +226,7 @@ Namespace InternalT
 #End Region
         ''' <summary>First part of version number</summary>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is less than zero</exception>
-        <DefaultValue(0I)> _
+        <DefaultValue(0I)>
         Public Property Major() As Integer
             Get
                 Return _Major
@@ -237,39 +237,39 @@ Namespace InternalT
             End Set
         End Property
         ''' <summary>Second part of version number</summary>
-        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is less than zero</exception>
-        <DefaultValue(0I)> _
+        ''' <exception cref="ArgumentOutOfRangeException">value being set is less than zero</exception>
+        <DefaultValue(0I)>
         Public Property Minor() As Integer
             Get
-                Return _Minor
+                Return _minor
             End Get
             Set(ByVal value As Integer)
                 If value < 0 Then Throw New ArgumentOutOfRangeException("value", ResourcesT.Exceptions.VersionComponentMustBeGreaterThanOrEqualToZero)
-                _Minor = value
+                _minor = value
             End Set
         End Property
         ''' <summary>Third part of version number</summary>
-        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is less than zero</exception>
-        <DefaultValue(0I)> _
+        ''' <exception cref="ArgumentOutOfRangeException">value being set is less than zero</exception>
+        <DefaultValue(0I)>
         Public Property Build() As Integer
             Get
-                Return _Build
+                Return _build
             End Get
             Set(ByVal value As Integer)
                 If value < 0 Then Throw New ArgumentOutOfRangeException("value", ResourcesT.Exceptions.VersionComponentMustBeGreaterThanOrEqualToZero)
-                _Build = value
+                _build = value
             End Set
         End Property
         ''' <summary>Fourth part of version number</summary>
-        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is less than zero</exception>
-        <DefaultValue(0I)> _
+        ''' <exception cref="ArgumentOutOfRangeException">value being set is less than zero</exception>
+        <DefaultValue(0I)>
         Public Property Revision() As Integer
             Get
-                Return _Revision
+                Return _revision
             End Get
             Set(ByVal value As Integer)
                 If value < 0 Then Throw New ArgumentOutOfRangeException("value", ResourcesT.Exceptions.VersionComponentMustBeGreaterThanOrEqualToZero)
-                _Revision = value
+                _revision = value
             End Set
         End Property
         ''' <summary>Version-related note</summary>

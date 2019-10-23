@@ -7,7 +7,7 @@ Namespace TextT.UnicodeT
 
     ''' <summary>An abstract base class for sources of characters</summary>
     ''' <remarks>
-    ''' This class implements <see cref="IList(Of T)"/> - but only it's readonly part (though derived class may support read-write access).
+    ''' This class implements <see cref="IList(Of T)"/> - but only it's read-only part (though derived class may support read-write access).
     ''' <note type="inheritinfo">If derived class implements also write access for the collection, consider implementing <see cref="INotifyCollectionChanged"/>.</note>
     ''' </remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
@@ -44,7 +44,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.</summary>
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
         ''' <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins.</param>
-        ''' <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="array" /> is null.</exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than 0 or greater than or equal to length of <paramref name="array"/>.</exception>
         ''' <exception cref="T:System.ArgumentException">The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1" /> is greater than the available space from <paramref name="arrayIndex" /> to the end of the destination <paramref name="array" />.</exception>
         Public Overridable Sub CopyTo(array() As UInteger, arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of UInteger).CopyTo, IReadOnlyCollection(Of UInteger).CopyTo
@@ -221,7 +221,7 @@ Namespace TextT.UnicodeT
         ''' <summary>Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.</summary>
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
         ''' <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins.</param>
-        ''' <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="array" /> is null.</exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than 0 or greater than or equal to length of <paramref name="array"/>.</exception>
         ''' <exception cref="T:System.ArgumentException">The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1" /> is greater than the available space from <paramref name="arrayIndex" /> to the end of the destination <paramref name="array" />.</exception>
         Public Overrides Sub CopyTo(array() As UInteger, arrayIndex As Integer)

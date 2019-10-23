@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converts relative path to absolute</summary>
     ''' <remarks>This converter is one way</remarks>
@@ -48,4 +48,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
-#End If

@@ -728,10 +728,10 @@ Namespace ExtensionsT
         End Function
         ''' <summary>Converts the string representation of a time interval to its <see cref="TimeSpan" /> equivalent by using the specified format and culture-specific format information, and returns a value that indicates whether the conversion succeeded. The format of the string representation must match the specified format exactly.</summary>
         ''' <param name="s">A string that specifies the time interval to convert.</param>
-        ''' <param name="format">A standard or custom format string that defines the required format of <paramref name="input"/>.</param>
+        ''' <param name="format">A standard or custom format string that defines the required format of <paramref name="s"/>.</param>
         ''' <param name="formatProvider">An object that supplies culture-specific formatting information.</param>
-        ''' <param name="result">When this method returns, contains an object that represents the time interval specified by <paramref name="input"/>, or <see cref="TimeSpan.Zero" /> if the conversion failed. This parameter is passed uninitialized.</param>
-        ''' <returns>true if <paramref name="input"/> was converted successfully; otherwise, false.</returns>
+        ''' <param name="result">When this method returns, contains an object that represents the time interval specified by <paramref name="s"/>, or <see cref="TimeSpan.Zero" /> if the conversion failed. This parameter is passed uninitialized.</param>
+        ''' <returns>true if <paramref name="s"/> was converted successfully; otherwise, false.</returns>
         <Extension()>
         Public Function TryParseExact(s$, format$, <Out()> ByRef result As TimeSpan, Optional formatProvider As IFormatProvider = Nothing) As Boolean
             If formatProvider Is Nothing Then formatProvider = CultureInfo.CurrentCulture
@@ -742,7 +742,7 @@ Namespace ExtensionsT
         ''' <param name="formats">A array of standard or custom format strings that define the acceptable formats of <paramref name="input"/>.</param>
         ''' <param name="formatProvider">An object that provides culture-specific formatting information.</param>
         ''' <param name="result">When this method returns, contains an object that represents the time interval specified by <paramref name="input"/>, or <see cref="TimeSpan.Zero" /> if the conversion failed. This parameter is passed uninitialized.</param>
-        ''' <returns>true if <paramref name="input"/> was converted successfully; otherwise, false.</returns>
+        ''' <returns>true if <paramref name="s"/> was converted successfully; otherwise, false.</returns>
         <Extension()>
         Public Function TryParseExact(s$, formats$(), <Out()> ByRef result As TimeSpan, Optional formatProvider As IFormatProvider = Nothing) As Boolean
             If formatProvider Is Nothing Then formatProvider = CultureInfo.CurrentCulture
@@ -750,11 +750,11 @@ Namespace ExtensionsT
         End Function
         ''' <summary>Converts the string representation of a time interval to its <see cref="TimeSpan" /> equivalent by using the specified format, culture-specific format information, and styles, and returns a value that indicates whether the conversion succeeded. The format of the string representation must match the specified format exactly.</summary>
         ''' <param name="s">A string that specifies the time interval to convert.</param>
-        ''' <param name="format">A standard or custom format string that defines the required format of <paramref name="input"/>.</param>
+        ''' <param name="format">A standard or custom format string that defines the required format of <paramref name="s"/>.</param>
         ''' <param name="formatProvider">An object that provides culture-specific formatting information.</param>
-        ''' <param name="styles">One or more enumeration values that indicate the style of <paramref name="input"/>.</param>
-        ''' <param name="result">When this method returns, contains an object that represents the time interval specified by <paramref name="input"/>, or <see cref="TimeSpan.Zero" /> if the conversion failed. This parameter is passed uninitialized.</param>
-        ''' <returns>true if <paramref name="input"/> was converted successfully; otherwise, false.</returns>     
+        ''' <param name="styles">One or more enumeration values that indicate the style of <paramref name="s"/>.</param>
+        ''' <param name="result">When this method returns, contains an object that represents the time interval specified by <paramref name="s"/>, or <see cref="TimeSpan.Zero" /> if the conversion failed. This parameter is passed uninitialized.</param>
+        ''' <returns>true if <paramref name="s"/> was converted successfully; otherwise, false.</returns>
         <Extension()>
         Public Function TryParseExact(s$, format$, styles As TimeSpanStyles, <Out()> ByRef result As TimeSpan, Optional formatProvider As IFormatProvider = Nothing) As Boolean
             If formatProvider Is Nothing Then formatProvider = CultureInfo.CurrentCulture
@@ -762,11 +762,11 @@ Namespace ExtensionsT
         End Function
         ''' <summary>Converts the specified string representation of a time interval to its <see cref="TimeSpan" /> equivalent by using the specified formats, culture-specific format information, and styles, and returns a value that indicates whether the conversion succeeded. The format of the string representation must match one of the specified formats exactly.</summary>
         ''' <param name="s">A string that specifies the time interval to convert.</param>
-        ''' <param name="formats">A array of standard or custom format strings that define the acceptable formats of <paramref name="input"/>.</param>
+        ''' <param name="formats">A array of standard or custom format strings that define the acceptable formats of <paramref name="s"/>.</param>
         ''' <param name="formatProvider">An object that supplies culture-specific formatting information.</param>
-        ''' <param name="styles">One or more enumeration values that indicate the style of <paramref name="input"/>.</param>
-        ''' <param name="result">When this method returns, contains an object that represents the time interval specified by <paramref name="input"/>, or <see cref="TimeSpan.Zero" /> if the conversion failed. This parameter is passed uninitialized.</param>
-        ''' <returns>true if <paramref name="input"/> was converted successfully; otherwise, false.</returns>
+        ''' <param name="styles">One or more enumeration values that indicate the style of <paramref name="s"/>.</param>
+        ''' <param name="result">When this method returns, contains an object that represents the time interval specified by <paramref name="s"/>, or <see cref="TimeSpan.Zero" /> if the conversion failed. This parameter is passed uninitialized.</param>
+        ''' <returns>true if <paramref name="s"/> was converted successfully; otherwise, false.</returns>
         <Extension()>
         Public Function TryParseExact(s$, formats$(), styles As TimeSpanStyles, <Out()> ByRef result As TimeSpan, Optional formatProvider As IFormatProvider = Nothing) As Boolean
             If formatProvider Is Nothing Then formatProvider = CultureInfo.CurrentCulture

@@ -6,7 +6,7 @@ Public Module misc_
     ''' <param name="obj">Object to return</param>
     ''' <typeparam name="T">Type of <paramref name="obj"/></typeparam>
     ''' <returns><paramref name="obj"/></returns>
-    ''' <remarks>Somebody can think taht function that returns object itsekf in nonsense. But it is usefull with languages as VB which have <c>With</c> construct. Using this function, you can objein object itself via <c>.self</c> inside <c>With</c> conetc</remarks>
+    ''' <remarks>Somebody can think that function that returns object itself in nonsense. But it is useful with languages as VB which have <c>With</c> construct. Using this function, you can objein object itself via <c>.self</c> inside <c>With</c> conetc</remarks>
     <Extension()> Public Function self(Of T)(ByVal obj As T) As T
         Return obj
     End Function
@@ -100,11 +100,12 @@ Public Module misc_
     ''' <param name="c2">Condition 2</param>
     ''' <param name="r1">Result 1 (returned when <paramref name="c1"/> is true)</param>
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"/> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"/> items and return value</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"/> evaluates to true and <paramref name="ThrowOnError"/> is true.</exception>
-    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal c2 As Boolean, ByVal r1 As T, ByVal r2 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T)(New Boolean() {c1, c2}, New T() {r1, r2}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"/> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal c2 As Boolean, ByVal r1 As T, ByVal r2 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T)(New Boolean() {c1, c2}, New T() {r1, r2}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on boolean conditions (3 conditions condition-condition-result-result order of parameters)</summary>
     ''' <param name="c1">Condition 1</param>
@@ -113,11 +114,11 @@ Public Module misc_
     ''' <param name="r1">Result 1 (returned when <paramref name="c1"/> is true)</param>
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"/> is true)</param>
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"/> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"/> items and return value</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"/> evaluates to true and <paramref name="ThrowOnError"/> is true.</exception>
-    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal c2 As Boolean, ByVal c3 As Boolean, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T)(New Boolean() {c1, c2, c3}, New T() {r1, r2, r3}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"/> is true.</exception>
+    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal c2 As Boolean, ByVal c3 As Boolean, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T)(New Boolean() {c1, c2, c3}, New T() {r1, r2, r3}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on boolean conditions (4 conditions condition-condition-result-result order of parameters)</summary>
     ''' <param name="c1">Condition 1</param>
@@ -128,11 +129,12 @@ Public Module misc_
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"/> is true)</param>
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"/> is true)</param>
     ''' <param name="r4">Result 4 (returned when <paramref name="c4"/> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"/> items and return value</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"/> evaluates to true and <paramref name="ThrowOnError"/> is true.</exception>
-    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal c2 As Boolean, ByVal c3 As Boolean, ByVal c4 As Boolean, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, ByVal r4 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T)(New Boolean() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"/> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal c2 As Boolean, ByVal c3 As Boolean, ByVal c4 As Boolean, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, ByVal r4 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T)(New Boolean() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, throwOnError)
     End Function
 #End Region
 #Region "c1, r1, c2, r2, ..."
@@ -141,11 +143,12 @@ Public Module misc_
     ''' <param name="r1">Result 1 (returned when <paramref name="c1"></paramref> is true)</param>
     ''' <param name="c2">Condition 2</param>
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"></paramref> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"></paramref> items and return value</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"></paramref> evaluates to true and <paramref name="ThrowOnError"></paramref> is true.</exception>
-    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal r1 As T, ByVal c2 As Boolean, ByVal r2 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T)(New Boolean() {c1, c2}, New T() {r1, r2}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"></paramref> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal r1 As T, ByVal c2 As Boolean, ByVal r2 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T)(New Boolean() {c1, c2}, New T() {r1, r2}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on boolean conditions (3 conditions condition-result-condition-resul order of parameters)</summary>
     ''' <param name="c1">Condition 1</param>
@@ -154,11 +157,12 @@ Public Module misc_
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"></paramref> is true)</param>
     ''' <param name="c3">Condition 3</param>
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"></paramref> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"></paramref> items and return value</typeparam>
+    ''' <typeparam name="T">Type of results items and return value</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"></paramref> evaluates to true and <paramref name="ThrowOnError"></paramref> is true.</exception>
-    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal r1 As T, ByVal c2 As Boolean, ByVal r2 As T, ByVal c3 As Boolean, ByVal r3 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T)(New Boolean() {c1, c2, c3}, New T() {r1, r2, r3}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"></paramref> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal r1 As T, ByVal c2 As Boolean, ByVal r2 As T, ByVal c3 As Boolean, ByVal r3 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T)(New Boolean() {c1, c2, c3}, New T() {r1, r2, r3}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on boolean conditions (4 conditions condition-result-condition-resul order of parameters)</summary>
     ''' <param name="c1">Condition 1</param>
@@ -169,11 +173,12 @@ Public Module misc_
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"></paramref> is true)</param>
     ''' <param name="c4">Condition 4</param>
     ''' <param name="r4">Result 4 (returned when <paramref name="c4"></paramref> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"></paramref> items and return value</typeparam>
+    ''' <typeparam name="T">Type of result parameters and return value</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"></paramref> evaluates to true and <paramref name="ThrowOnError"></paramref> is true.</exception>
-    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal r1 As T, ByVal c2 As Boolean, ByVal r2 As T, ByVal c3 As Boolean, ByVal r3 As T, ByVal c4 As Boolean, ByVal r4 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T)(New Boolean() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"></paramref> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T)(ByVal c1 As Boolean, ByVal r1 As T, ByVal c2 As Boolean, ByVal r2 As T, ByVal c3 As Boolean, ByVal r3 As T, ByVal c4 As Boolean, ByVal r4 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T)(New Boolean() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, throwOnError)
     End Function
 #End Region
 
@@ -183,11 +188,12 @@ Public Module misc_
     ''' <param name="c2">Condition 2</param>
     ''' <param name="r1">Result 1 (returned when <paramref name="c1"/> is true)</param>
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"/> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"/> items and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"/> evaluates to true and <paramref name="ThrowOnError"/> is true.</exception>
-    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal c2 As TC, ByVal r1 As T, ByVal r2 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T, TC)(value, New TC() {c1, c2}, New T() {r1, r2}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"/> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal c2 As TC, ByVal r1 As T, ByVal r2 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T, TC)(value, New TC() {c1, c2}, New T() {r1, r2}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on condition compared to given values (3 conditions condition-condition-result-result order of parameters)</summary>
     ''' <param name="c1">Condition 1</param><param name="value">Value to compare conditions with</param>
@@ -196,11 +202,12 @@ Public Module misc_
     ''' <param name="r1">Result 1 (returned when <paramref name="c1"/> is true)</param>
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"/> is true)</param>
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"/> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"/> items and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"/> evaluates to true and <paramref name="ThrowOnError"/> is true.</exception>
-    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal c2 As TC, ByVal c3 As TC, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3}, New T() {r1, r2, r3}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"/> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal c2 As TC, ByVal c3 As TC, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3}, New T() {r1, r2, r3}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on condition compared to given values (4 conditions condition-condition-result-result order of parameters)</summary>
     ''' <param name="c1">Condition 1</param><param name="value">Value to compare conditions with</param>
@@ -211,11 +218,12 @@ Public Module misc_
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"/> is true)</param>
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"/> is true)</param>
     ''' <param name="r4">Result 4 (returned when <paramref name="c4"/> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"/> items and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
+    ''' <typeparam name="T">Type of results items and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"/> evaluates to true and <paramref name="ThrowOnError"/> is true.</exception>
-    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal c2 As TC, ByVal c3 As TC, ByVal c4 As TC, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, ByVal r4 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"/> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal c2 As TC, ByVal c3 As TC, ByVal c4 As TC, ByVal r1 As T, ByVal r2 As T, ByVal r3 As T, ByVal r4 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, throwOnError)
     End Function
 #End Region
 #Region "c1, r1, c2, r2, ..."
@@ -224,11 +232,12 @@ Public Module misc_
     ''' <param name="r1">Result 1 (returned when <paramref name="c1"></paramref> is true)</param>
     ''' <param name="c2">Condition 2</param>
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"></paramref> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"></paramref> items and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"></paramref> evaluates to true and <paramref name="ThrowOnError"></paramref> is true.</exception>
-    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal r1 As T, ByVal c2 As TC, ByVal r2 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T, TC)(value, New TC() {c1, c2}, New T() {r1, r2}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"></paramref> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal r1 As T, ByVal c2 As TC, ByVal r2 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T, TC)(value, New TC() {c1, c2}, New T() {r1, r2}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on condition compared to given values (3 conditions condition-result-condition-resul order of parameters)</summary>
     ''' <param name="c1">Condition 1</param><param name="value">Value to compare conditions with</param>
@@ -237,11 +246,12 @@ Public Module misc_
     ''' <param name="r2">Result 2 (returned when <paramref name="c2"></paramref> is true)</param>
     ''' <param name="c3">Condition 3</param>
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"></paramref> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"></paramref> items and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"></paramref> evaluates to true and <paramref name="ThrowOnError"></paramref> is true.</exception>
-    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal r1 As T, ByVal c2 As TC, ByVal r2 As T, ByVal c3 As TC, ByVal r3 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3}, New T() {r1, r2, r3}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"></paramref> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal r1 As T, ByVal c2 As TC, ByVal r2 As T, ByVal c3 As TC, ByVal r3 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3}, New T() {r1, r2, r3}, throwOnError)
     End Function
     ''' <summary>Returns one of results depending on condition compared to given values (4 conditions condition-result-condition-resul order of parameters)</summary>
     ''' <param name="c1">Condition 1</param><param name="value">Value to compare conditions with</param>
@@ -252,11 +262,12 @@ Public Module misc_
     ''' <param name="r3">Result 3 (returned when <paramref name="c3"></paramref> is true)</param>
     ''' <param name="c4">Condition 4</param>
     ''' <param name="r4">Result 4 (returned when <paramref name="c4"></paramref> is true)</param>
-    ''' <typeparam name="T">Type of <paramref name="results"></paramref> items and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
+    ''' <typeparam name="T">Type of results and return value</typeparam><typeparam name="TC">Type of condition</typeparam>
     ''' <returns>The one of results with number of first condition which is true</returns>
-    ''' <exception cref="ArgumentException">None of <paramref name="conditions"></paramref> evaluates to true and <paramref name="ThrowOnError"></paramref> is true.</exception>
-    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal r1 As T, ByVal c2 As TC, ByVal r2 As T, ByVal c3 As TC, ByVal r3 As T, ByVal c4 As TC, ByVal r4 As T, Optional ByVal ThrowOnError As Boolean = True) As T
-        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, ThrowOnError)
+    ''' <exception cref="ArgumentException">None of conditions evaluates to true and <paramref name="throwOnError"></paramref> is true.</exception>
+    ''' <version version="1.6.0">Parameter <c>ThrowOnError</c> renamed to <c>throwOnError</c></version>
+    Public Function Switch(Of T, TC)(ByVal value As TC, ByVal c1 As TC, ByVal r1 As T, ByVal c2 As TC, ByVal r2 As T, ByVal c3 As TC, ByVal r3 As T, ByVal c4 As TC, ByVal r4 As T, Optional ByVal throwOnError As Boolean = True) As T
+        Return Switch(Of T, TC)(value, New TC() {c1, c2, c3, c4}, New T() {r1, r2, r3, r4}, throwOnError)
     End Function
 #End Region
 #End Region
@@ -265,7 +276,7 @@ Public Module misc_
     ''' <param name="items">Array to be returned</param>
     ''' <typeparam name="T">Type of items in array</typeparam>
     ''' <returns><paramref name="items"/></returns>
-    ''' <remarks>The aim of this function is to provide syntactically the shortets way of obtaining arrays of given type. For example in visual basic you can obtain array this way:
+    ''' <remarks>The aim of this function is to provide syntactically the shortest way of obtaining arrays of given type. For example in visual basic you can obtain array this way:
     ''' <example>Dim arr = New T() {Itme1, Item2, Item3}</example>
     ''' This function shorten this to:
     ''' <example>Dim arr = arr(Item1, Item2, Item3)</example>
@@ -277,7 +288,7 @@ Public Module misc_
     ''' <param name="items">Array to be returned</param>
     ''' <typeparam name="T">Type of items in array</typeparam>
     ''' <returns><paramref name="items"/></returns>
-    ''' <remarks>The aim of this function is to provide syntactically the shortets way of obtaining <see cref="IEnumerable(Of T)"/>. For example in visual basic you can obtain <see cref="IEnumerable(Of T)"/> this way:
+    ''' <remarks>The aim of this function is to provide syntactically the shortest way of obtaining <see cref="IEnumerable(Of T)"/>. For example in visual basic you can obtain <see cref="IEnumerable(Of T)"/> this way:
     ''' <example>Dim arr = DIrectCast(New T() {Itme1, Item2, Item3}, IEnumerable)</example>
     ''' This function shorten this to:
     ''' <example>Dim arr = enm(Item1, Item2, Item3)</example>

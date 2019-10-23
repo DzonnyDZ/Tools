@@ -1,213 +1,60 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C3B940DA-5325-43D8-94E1-CF87255DA471}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Tools.TotalCommanderT.WfxSample</RootNamespace>
-    <AssemblyName>wfx sample</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <OptionExplicit>On</OptionExplicit>
-    <OptionCompare>Binary</OptionCompare>
-    <OptionStrict>Off</OptionStrict>
-    <OptionInfer>On</OptionInfer>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>4.0</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>wfx sample.xml</DocumentationFile>
-    <NoWarn>41999,42016</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Debug\wfx sample.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>wfx sample.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>41999,42016</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\wfx sample.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\SharedFiles\GlobalAssemblyInfo.vb">
-      <Link>My Project\GlobalAssemblyInfo.vb</Link>
-    </Compile>
-    <Compile Include="AddFavoriteItemDialog.Designer.vb">
-      <DependentUpon>AddFavoriteItemDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="AddFavoriteItemDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CryptTestForm.Designer.vb">
-      <DependentUpon>CryptTestForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="CryptTestForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SampleFileSystemPlugin.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="CryptTestForm.resx">
-      <DependentUpon>CryptTestForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\SharedFiles\Tools.snk">
-      <Link>Tools.snk</Link>
-    </None>
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="WfxSampleSettings.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj">
-      <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
-      <Name>Tools.Win</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcxproj">
-      <Project>{7f278f32-47b4-4f4e-85b2-baeaa406951b}</Project>
-      <Name>Tools.TotalCommander</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj">
-      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
-      <Name>Tools.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools\Tools.vbproj">
-      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AddFavoriteItemDialog.resx">
-      <DependentUpon>AddFavoriteItemDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\VisualBasic.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Favorites.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\openHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DocumentHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\computer.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\CryptTestIcon.ico" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup>
-    <PostBuildEvent>ECHO "$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"
-
-"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)" /keepint /pdb /key "$(SolutionDir)SharedFiles\Tools.snk" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"</PostBuildEvent>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <RootNamespace>Tools.TotalCommanderT.WfxSample</RootNamespace>
+        <MyType>Windows</MyType>
+        <TargetFramework>net48</TargetFramework>
+        <PostBuildEvent>
+            ECHO "$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)" /keepint /pdb /key "$(AssemblyOriginatorKeyFile)" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"
+            "$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\x86\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)" /keepint /pdb /key "$(AssemblyOriginatorKeyFile)" /cou "{TOTALCMD}\plugins\wfx\$(ProjectName)\$(ConfigurationName)"
+        </PostBuildEvent>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="System.Xaml" />
+        <Reference Include="System.Data.DataSetExtensions" />
+        <Reference Include="WindowsBase" />
+    </ItemGroup>
+    <ItemGroup>
+        <Import Include="Microsoft.VisualBasic" />
+        <Import Include="System" />
+        <Import Include="System.Collections" />
+        <Import Include="System.Collections.Generic" />
+        <Import Include="System.Data" />
+        <Import Include="System.Diagnostics" />
+        <Import Include="System.Linq" />
+        <Import Include="System.Xml.Linq" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="AddFavoriteItemDialog.Designer.vb">
+            <DependentUpon>AddFavoriteItemDialog.vb</DependentUpon>
+        </Compile>
+        <Compile Update="CryptTestForm.Designer.vb">
+            <DependentUpon>CryptTestForm.vb</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="CryptTestForm.resx">
+            <DependentUpon>CryptTestForm.vb</DependentUpon>
+        </EmbeddedResource>
+        <None Include="WfxSampleSettings.xsd" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj" />
+        <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcxproj" />
+        <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj" />
+        <ProjectReference Include="..\..\Tools\Tools.vbproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="AddFavoriteItemDialog.resx">
+            <DependentUpon>AddFavoriteItemDialog.vb</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\VisualBasic.ico" />
+        <None Include="Resources\Favorites.ico" />
+        <None Include="Resources\openHS.png" />
+        <None Include="Resources\DocumentHS.png" />
+        <None Include="Resources\computer.ico" />
+        <Content Include="Resources\CryptTestIcon.ico" />
+    </ItemGroup>
 </Project>

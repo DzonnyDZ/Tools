@@ -1,7 +1,7 @@
 Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Onew-way converter that can indicate if value is not null</summary>
     ''' <remarks>Converts null to false and non-null to true</remarks>
@@ -30,4 +30,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
-#End If

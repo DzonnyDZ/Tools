@@ -1,423 +1,103 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DC459772-7889-47B1-9471-7F9ABA3C3FC4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>Tools.Metanol.My.MyApplication</StartupObject>
-    <RootNamespace>Tools.Metanol</RootNamespace>
-    <AssemblyName>Metanol</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <OptionExplicit>On</OptionExplicit>
-    <OptionCompare>Binary</OptionCompare>
-    <OptionStrict>Off</OptionStrict>
-    <OptionInfer>On</OptionInfer>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <ApplicationIcon>Resources\Metanol.ico</ApplicationIcon>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>4.0</OldToolsVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\AnyCPU\</OutputPath>
-    <DocumentationFile>Metanol.xml</DocumentationFile>
-    <NoWarn>41999,42016</NoWarn>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Metanol.xml</DocumentationFile>
-    <NoWarn>41999,42016</NoWarn>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Metanol, Version=2.0.5.34506, Culture=neutral, PublicKeyToken=373c02ac923768e6, processorArchitecture=MSIL">
-      <ExecutableExtension>.exe</ExecutableExtension>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.Linq">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>4</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Drawing" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Windows.Forms" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\MetanolCommonAssemblyInfo.vb">
-      <Link>My Project\MetanolCommonAssemblyInfo.vb</Link>
-    </Compile>
-    <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Controls\CsvFormatConfigurator.Designer.vb">
-      <DependentUpon>CsvFormatConfigurator.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CsvFormatConfigurator.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\IExportFormatConfigurator.vb" />
-    <Compile Include="Controls\Rating.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Database\DatabaseAccess.designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseAccess.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Database\DatabaseTools.vb" />
-    <Compile Include="Database\Synchronization\1 - SelectDatabase.Designer.vb">
-      <DependentUpon>1 - SelectDatabase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Synchronization\1 - SelectDatabase.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Database\Synchronization\2 - Select folders.Designer.vb">
-      <DependentUpon>2 - Select folders.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Synchronization\2 - Select folders.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Database\Synchronization\3 - SynchronizeStep.Designer.vb">
-      <DependentUpon>3 - SynchronizeStep.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Synchronization\3 - SynchronizeStep.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Database\Synchronization\ConnectionStringEditor.Designer.vb">
-      <DependentUpon>ConnectionStringEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Synchronization\ConnectionStringEditor.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExifInternal.vb" />
-    <Compile Include="FolderDialog.Designer.vb">
-      <DependentUpon>FolderDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="FolderDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmExport.Designer.vb">
-      <DependentUpon>frmExport.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmExport.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmLarge.Designer.vb">
-      <DependentUpon>frmLarge.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmLarge.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMain.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMain.Designer.vb">
-      <DependentUpon>frmMain.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmSettings.Designer.vb">
-      <DependentUpon>frmSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmSplash.Designer.vb">
-      <DependentUpon>frmSplash.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmSplash.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="IPTCInternal.vb">
-    </Compile>
-    <Compile Include="MetadataItem.vb">
-    </Compile>
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="TotalCommanderListView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Database\DatabaseAccess.dbml.layout">
-      <DependentUpon>DatabaseAccess.dbml</DependentUpon>
-    </None>
-    <EmbeddedResource Include="Controls\CsvFormatConfigurator.cs.resx">
-      <DependentUpon>CsvFormatConfigurator.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\CsvFormatConfigurator.resx">
-      <DependentUpon>CsvFormatConfigurator.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\1 - SelectDatabase.cs.resx">
-      <DependentUpon>1 - SelectDatabase.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\1 - SelectDatabase.resx">
-      <DependentUpon>1 - SelectDatabase.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\2 - Select folders.cs.resx">
-      <DependentUpon>2 - Select folders.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\2 - Select folders.resx">
-      <DependentUpon>2 - Select folders.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\3 - SynchronizeStep.cs.resx">
-      <DependentUpon>3 - SynchronizeStep.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\3 - SynchronizeStep.resx">
-      <DependentUpon>3 - SynchronizeStep.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\ConnectionStringEditor.cs.resx">
-      <DependentUpon>ConnectionStringEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Database\Synchronization\ConnectionStringEditor.resx">
-      <DependentUpon>ConnectionStringEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FolderDialog.cs.resx">
-      <DependentUpon>FolderDialog.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FolderDialog.resx">
-      <DependentUpon>FolderDialog.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmExport.cs.resx">
-      <DependentUpon>frmExport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmExport.resx">
-      <DependentUpon>frmExport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmLarge.cs.resx">
-      <DependentUpon>frmLarge.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmLarge.resx">
-      <DependentUpon>frmLarge.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.cs.resx">
-      <DependentUpon>frmMain.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSettings.cs.resx">
-      <DependentUpon>frmSettings.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSettings.resx">
-      <DependentUpon>frmSettings.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSplash.cs.resx">
-      <DependentUpon>frmSplash.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSplash.resx">
-      <DependentUpon>frmSplash.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.cs.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Metanol.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Resources\GoLtrHS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\SharedFiles\Tools.snk">
-      <Link>Tools.snk</Link>
-    </None>
-    <None Include="Database\DatabaseAccess.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DatabaseAccess.designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-      <CustomToolNamespace>Data</CustomToolNamespace>
-    </None>
-    <None Include="Resources\NavBack.png" />
-    <None Include="Resources\NavForward.png" />
-    <None Include="Resources\Net 31.ico" />
-    <None Include="Resources\Symbol-Delete.png" />
-    <None Include="Resources\SaveAllHS.png" />
-    <None Include="Resources\RightArrowHS.png" />
-    <None Include="Resources\LeftArrowHS.png" />
-    <None Include="Resources\FullScreen.png" />
-    <None Include="Resources\RotateLeft.png" />
-    <None Include="Resources\RotateRight.png" />
-    <None Include="Resources\Files\VersionHistory_3.htm" />
-    <None Include="Resources\Files\VersionHistory_2.htm" />
-    <None Include="Resources\Files\VersionHistory_1.htm" />
-    <Content Include="Database\Metanol.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database\Metanol_log.LDF">
-      <DependentUpon>Metanol.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Resources\Files\VersionHistoryEnvelope.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_1.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_2.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_3.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_5.htm" />
-    <None Include="Resources\Files\VersionHistory_5.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_4.htm" />
-    <None Include="Resources\Files\VersionHistory_4.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_6.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_6.htm" />
-    <None Include="Resources\Files\VersionHistory_7.cs.htm" />
-    <None Include="Resources\Files\VersionHistory_7.htm" />
-    <None Include="Resources\GoogleMaps.ico" />
-    <None Include="Resources\GoogleEarth.ico" />
-    <None Include="Resources\GeoHack.png" />
-    <Content Include="Resources\MetanolBig.png" />
-    <None Include="Resources\OpenStreetMap.ico" />
-    <Content Include="Resources\Up.png" />
-    <Content Include="Shortcuts.txt" />
-    <Content Include="TODO.txt" />
-    <None Include="Resources\Files\VersionHistoryEnvelope.htm" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.4.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 4 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj">
-      <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
-      <Name>Tools.Win</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools.Metadata\Tools.Metadata.vbproj">
-      <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>
-      <Name>Tools.Metadata</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj">
-      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
-      <Name>Tools.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools\Tools.vbproj">
-      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <PropertyGroup>
+        <ProductVersion>10.0.20506</ProductVersion>
+        <ProjectGuid>{DC459772-7889-47B1-9471-7F9ABA3C3FC4}</ProjectGuid>
+        <OutputType>WinExe</OutputType>
+        <StartupObject>Tools.Metanol.My.MyApplication</StartupObject>
+        <RootNamespace>Tools.Metanol</RootNamespace>
+        <AssemblyName>Metanol</AssemblyName>
+        <MyType>WindowsForms</MyType>
+        <TargetFramework>net48</TargetFramework>
+        <ApplicationIcon>Resources\Metanol.ico</ApplicationIcon>
+        <UseWindowsForms>true</UseWindowsForms>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
+        <Reference Include="System.Data.Linq" />
+        <Reference Include="System.Deployment" />
+        <Reference Include="System.Web" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="System.Data.DataSetExtensions" />
+        <Reference Include="WindowsBase" />
+    </ItemGroup>
+    <ItemGroup>
+        <Import Include="Microsoft.VisualBasic" />
+        <Import Include="System" />
+        <Import Include="System.Collections" />
+        <Import Include="System.Collections.Generic" />
+        <Import Include="System.Data" />
+        <Import Include="System.Drawing" />
+        <Import Include="System.Diagnostics" />
+        <Import Include="System.Windows.Forms" />
+        <Import Include="System.Linq" />
+        <Import Include="System.Xml.Linq" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="..\MetanolCommonAssemblyInfo.vb" Link="My Project\MetanolCommonAssemblyInfo.vb" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Database\DatabaseAccess.dbml.layout">
+            <DependentUpon>DatabaseAccess.dbml</DependentUpon>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Resources\Metanol.ico" />
+        <None Include="Resources\GoLtrHS.png" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Database\DatabaseAccess.dbml">
+            <Generator>MSLinqToSQLGenerator</Generator>
+            <LastGenOutput>DatabaseAccess.designer.vb</LastGenOutput>
+            <SubType>Designer</SubType>
+            <CustomToolNamespace>Data</CustomToolNamespace>
+        </None>
+        <None Include="Resources\NavBack.png" />
+        <None Include="Resources\NavForward.png" />
+        <None Include="Resources\Net 31.ico" />
+        <None Include="Resources\Symbol-Delete.png" />
+        <None Include="Resources\SaveAllHS.png" />
+        <None Include="Resources\RightArrowHS.png" />
+        <None Include="Resources\LeftArrowHS.png" />
+        <None Include="Resources\FullScreen.png" />
+        <None Include="Resources\RotateLeft.png" />
+        <None Include="Resources\RotateRight.png" />
+        <None Include="Resources\Files\VersionHistory_3.htm" />
+        <None Include="Resources\Files\VersionHistory_2.htm" />
+        <None Include="Resources\Files\VersionHistory_1.htm" />
+        <Content Include="Database\Metanol.mdf">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Database\Metanol_log.LDF">
+            <DependentUpon>Metanol.mdf</DependentUpon>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Include="Resources\Files\VersionHistoryEnvelope.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_1.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_2.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_3.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_5.htm" />
+        <None Include="Resources\Files\VersionHistory_5.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_4.htm" />
+        <None Include="Resources\Files\VersionHistory_4.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_6.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_6.htm" />
+        <None Include="Resources\Files\VersionHistory_7.cs.htm" />
+        <None Include="Resources\Files\VersionHistory_7.htm" />
+        <None Include="Resources\GoogleMaps.ico" />
+        <None Include="Resources\GoogleEarth.ico" />
+        <None Include="Resources\GeoHack.png" />
+        <Content Include="Resources\MetanolBig.png" />
+        <None Include="Resources\OpenStreetMap.ico" />
+        <Content Include="Resources\Up.png" />
+        <Content Include="Shortcuts.txt" />
+        <Content Include="TODO.txt" />
+        <None Include="Resources\Files\VersionHistoryEnvelope.htm" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj" />
+        <ProjectReference Include="..\..\Tools.Metadata\Tools.Metadata.vbproj" />
+        <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj" />
+        <ProjectReference Include="..\..\Tools\Tools.vbproj" />
+    </ItemGroup>
 </Project>

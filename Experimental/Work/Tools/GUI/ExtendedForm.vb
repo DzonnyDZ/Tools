@@ -6,31 +6,31 @@ Imports System.Windows.Forms
 
 'From ÐTools http://codeplex.com/DTools
 Namespace GUI
-    ''' <summary><see cref="System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
-    Public Class ExtendedForm : Inherits System.Windows.Forms.Form
+    ''' <summary><see cref="Form"/> with additional functionality based on Win32 API</summary>
+    Public Class ExtendedForm : Inherits Form
 #Region "CloseBox"
         ''' <summary>Possible states of system menu</summary>
         Public Enum SystemMenuState
             ''' <summary>Indicates that the menu item is disabled, but not grayed, so it cannot be selected, but visually seems like it can be selected. Button in title bar is greyed.
-            ''' Note: User CANNOT press Alt+F4 (or use another method exluding force methods (kill)) to close window if used by instance member (not static (shared)) <see cref="ExtendedForm.CloseBoxEnabled"/>; if used with static (shared) <see cref="CloseBoxEnabled"/> user CAN use Alt+F4 (or other 'soft' methods) to close window.</summary>
+            ''' Note: User CANNOT press Alt+F4 (or use another method excluding force methods (kill)) to close window if used by instance member (not static (shared)) <see cref="ExtendedForm.CloseBoxEnabled"/>; if used with static (shared) <see cref="CloseBoxEnabled"/> user CAN use Alt+F4 (or other 'soft' methods) to close window.</summary>
             Disabled = enmEnableMenuItemStatus.MF_DISABLED
             ''' <summary>Indicates that the menu item is enabled and restored from a grayed state so that it can be selected.</summary>
             Enabled = enmEnableMenuItemStatus.MF_ENABLED
             ''' <summary>Indicates that the menu item is disabled and grayed so that it cannot be selected. Button in title bar is greyed.
-            ''' Note: User CANNOT press Alt+F4 (or use another method exluding force methods (kill)) to close window if used by instance member (not static (shared)) <see cref="ExtendedForm.CloseBoxEnabled"/>; if used with static (shared) <see cref="CloseBoxEnabled"/> user CAN use Alt+F4 (or other 'soft' methods) to close window.</summary>
+            ''' Note: User CANNOT press Alt+F4 (or use another method excluding force methods (kill)) to close window if used by instance member (not static (shared)) <see cref="ExtendedForm.CloseBoxEnabled"/>; if used with static (shared) <see cref="CloseBoxEnabled"/> user CAN use Alt+F4 (or other 'soft' methods) to close window.</summary>
             Grayed = enmEnableMenuItemStatus.MF_GRAYED
         End Enum
 
         ''' <summary>Gets or sets state of selected item of system menu of window represented by <paramref name="WindowHandle"/></summary>
         ''' <param name="MenuItem">Item of system menu (NOTE: Only <see cref="SystemMenuItems.SC_CLOSE"/> works)</param>
-        ''' <param name="WindowHandle">Handle to window which's menu should be queryed or altered</param>
+        ''' <param name="WindowHandle">Handle to window which's menu should be queried or altered</param>
         ''' <value>New state of menu item</value>
         ''' <returns>Curent state of menu item</returns>
         ''' <remarks>Getter is little bit destructive - it sets menu state to <see cref="enmEnableMenuItemStatus.MF_ENABLED"/> in order to get its state and then renew its state to just got value</remarks>
-        ''' <exception cref="ArgumentException">Given <paramref name="MenuItem"/> doesnt exists</exception> 
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        <Browsable(False)> _
-        Private Shared Property SystemMenuItemEnabled(ByVal WindowHandle As Int32, ByVal MenuItem As API.SystemMenuItems) As SystemMenuState
+        ''' <exception cref="ArgumentException">Given <paramref name="MenuItem"/> doesn't exists</exception> 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+        <Browsable(False)>
+        Private Shared Property SystemMenuItemEnabled(ByVal WindowHandle As Int32, ByVal MenuItem As SystemMenuItems) As SystemMenuState
             Get
                 Dim Prev As enmPreviousMenuItemStatus = EnableMenuItem(GetSystemMenu(WindowHandle, 0), MenuItem, enmEnableMenuItemStatus.MF_BYCOMMAND Or enmEnableMenuItemStatus.MF_ENABLED)
                 If Prev = enmPreviousMenuItemStatus.DoesNotExist Then Throw New ArgumentException("Menu item doesn't exist", "MenuItem")
@@ -46,14 +46,14 @@ Namespace GUI
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="CloseBoxEnabled"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _CloseBoxEnabled As SystemMenuState = SystemMenuState.Enabled
         ''' <summary>Gets or sets state of the close button ('X') of current <see cref="ExtendedForm"/></summary>
         ''' <value>New state of button</value>
         ''' <returns>Curent state of button</returns>
         ''' <remarks>Status of menu is not re-set after changing <see cref="MinimizeBox"/> or <see cref="MaximizeBox"/> property. You have to refresh user-visible status of this property manually!</remarks>
         ''' <exception cref="ArgumentException">Error while accessing system menu status (may be caused by no close item in system menu - e.g. because <see cref="CloseBox"/> is false)</exception>
-        <Category("Window Style"), Description("Gets or sets state of the close button ('X') of current form. Cannot be chaged when CloseBox is False.")> _
+        <Category("Window Style"), Description("Gets or sets state of the close button ('X') of current form. Cannot be chaged when CloseBox is False.")>
         Public Property CloseBoxEnabled() As SystemMenuState
             Get
                 Return _CloseBoxEnabled
@@ -76,13 +76,13 @@ Namespace GUI
                 _CloseBoxEnabled = SystemMenuState.Enabled
             End Try
         End Sub
-        ''' <summary>Gets or sets state of the close button ('X') of given <see cref="System.Windows.Forms.IWin32Window"/></summary>
+        ''' <summary>Gets or sets state of the close button ('X') of given <see cref="IWin32Window"/></summary>
         ''' <param name="Window">Window (form) to get or set state of close button</param>
         ''' <value>New state of button</value>
         ''' <returns>Curent state of button</returns>
         ''' <remarks>Value set via static (shared) property may be lost when window if minimized, maximized or restored</remarks>
         ''' <exception cref="ArgumentException">Error while accessing system menu status (may be caused by no close item in system menu)</exception>
-        Public Shared Property CloseBoxEnabled(ByVal Window As System.Windows.Forms.IWin32Window) As SystemMenuState
+        Public Shared Property CloseBoxEnabled(ByVal Window As IWin32Window) As SystemMenuState
             Get
                 Return CloseBoxEnabled(Window.Handle)
             End Get
@@ -105,13 +105,13 @@ Namespace GUI
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="CloseBox"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _CloseBox As Boolean = True
         ''' <summary>Determines if form has close box in upper-right corner in its caption bar</summary>
         ''' <remarks>Setting this property to false causes mennuitem "Close" disappearing and the X button being grayed. User CANNOT use Alt+F4 or other 'non-killing' method to close the window. Property <see cref="CloseBoxEnabled"/> cannot be changed while <see cref="CloseBox"/> is False.
         ''' You'd better use <see cref="CloseBoxEnabled"/>
         ''' Windows Vista: The close (X) button is NOT grayed but does nothing when user click it.</remarks>
-        <DefaultValue(True), Category("Window Style"), Description("Determines if form has close box in upper-right corner in its caption bar. Note: The X button doesn't disappear, its only grayed (even not grayed on Vista). So, use rather CloseBoxEnabled.")> _
+        <DefaultValue(True), Category("Window Style"), Description("Determines if form has close box in upper-right corner in its caption bar. Note: The X button doesn't disappear, its only grayed (even not grayed on Vista). So, use rather CloseBoxEnabled.")>
         Public Property CloseBox() As Boolean
             Get
                 Return _CloseBox
@@ -143,8 +143,8 @@ Namespace GUI
         ''' <summary>Raised after the <see cref="WindowState"/> property is changed</summary>
         ''' <param name="sender">source of the event</param>
         ''' <param name="e">Event params (always <see cref="EventArgs.Empty"/>)</param>
-        <Description("Raised after the WindowState property is changed")> _
-        <Category("Action")> _
+        <Description("Raised after the WindowState property is changed")>
+        <Category("Action")>
         Public Event WindowStateChanged(ByVal sender As Object, ByVal e As EventArgs)
         ''' <summary>Raises the <see cref="WindowStateChanged"/> event</summary>
         ''' <param name="e">Event arguments (always <see cref="EventArgs.Empty"/>)</param>
@@ -158,8 +158,8 @@ Namespace GUI
         ''' <summary>Processes Windows messages.</summary>
         ''' <param name="m">The Windows <see cref="Message"/> to process. </param>
         ''' <remarks>Note for inheritors: Always call base class's method <see cref="WndProc"/> unless you should block certain base class's functionality</remarks>
-        <DebuggerStepThrough()> _
-        Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
+        <DebuggerStepThrough()>
+        Protected Overrides Sub WndProc(ByRef m As Message)
             'Pre process
             Select Case m.Msg
                 Case Messages.WM_SYSCOMMAND
@@ -202,7 +202,7 @@ Namespace GUI
 
         Private Declare Function FlashWindowEx Lib "user32.dll" (ByRef pwfi As FLASHWINFO) As Int32
 
-        <StructLayout(LayoutKind.Sequential)> _
+        <StructLayout(LayoutKind.Sequential)>
         Public Structure FLASHWINFO
             Public Sub New(ByVal hwnd As IntPtr, ByVal dwFlags As dwFlags, ByVal uCount As UInt32, ByVal dwTimeout As Int32)
                 Me.hwnd = hwnd
@@ -217,7 +217,7 @@ Namespace GUI
             Public uCount As UInt32
             Public dwTimeout As Int32
         End Structure
-        <Flags()> _
+        <Flags()>
         Public Enum dwFlags As Int32
             ''' <summary>stop flashing</summary>
             FLASHW_STOP = 0
@@ -236,7 +236,7 @@ Namespace GUI
 #Region "HelpButton"
         Private WithEvents CustomHelpButton As WinTrayButton
         Private Sub ProcessMessageForTitleButton(ByRef m As Message)
-            If Me.FormBorderStyle <> Windows.Forms.FormBorderStyle.None AndAlso Me.HelpButton AndAlso Me.ControlBox AndAlso ((Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedToolWindow OrElse Me.FormBorderStyle = Windows.Forms.FormBorderStyle.SizableToolWindow) OrElse _
+            If Me.FormBorderStyle <> Windows.Forms.FormBorderStyle.None AndAlso Me.HelpButton AndAlso Me.ControlBox AndAlso ((Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedToolWindow OrElse Me.FormBorderStyle = Windows.Forms.FormBorderStyle.SizableToolWindow) OrElse
                 (Me.MinimizeBox OrElse Me.MaximizeBox)) Then
                 If CustomHelpButton Is Nothing Then
                     CustomHelpButton = New WinTrayButton(Me)
@@ -281,7 +281,7 @@ Namespace GUI
                 info.wID += 1
             End While
             If API.GUI.InsertMenuItem(systemMenuHandle, Index, True, info) = 0 Then
-                Throw New API.Win32APIException
+                Throw New Win32APIException
             End If
             AddedMenuItems.Add(info.wID, Item)
             API.GUI.DrawMenuBar(Me.Handle)

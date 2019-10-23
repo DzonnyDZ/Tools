@@ -167,7 +167,7 @@ Namespace MetadataT
         ''' <param name="key">Key to get name for</param>
         ''' <returns>One of predefined names to use instead of <paramref name="key"/>; null when given key has no corresponding name.</returns>
         ''' <exception cref="ArgumentException"><paramref name="key"/> has invalid format</exception>
-        ''' <remarks>This implementation either returns <paramref name="Name"/> or throws <see cref="ArgumentException"/></remarks>
+        ''' <remarks>This implementation either returns <paramref name="key"/> or throws <see cref="ArgumentException"/></remarks>
         ''' <version version="1.5.4">Parameter name <c>Key</c> changed to <c>key</c>.</version>
         Private Function GetNameOfKey(ByVal key As String) As String Implements IMetadata.GetNameOfKey
             If properties.ContainsKey(key) Then Return key

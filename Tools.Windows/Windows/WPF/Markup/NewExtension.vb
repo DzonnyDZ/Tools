@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Markup
 
-#If True
+
 Namespace WindowsT.WPF.MarkupT
     ''' <summary>A markup extension that can create instance of any type which has default (parameter-less constructor)</summary>
     ''' <seelaso cref="Activator.CreateInstance"/>
@@ -42,4 +42,3 @@ Namespace WindowsT.WPF.MarkupT
         Public Property Type As Type
     End Class
 End Namespace
-#End If

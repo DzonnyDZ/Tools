@@ -5,7 +5,7 @@ Imports System.Numerics
 Imports System.Net, Tools.WindowsT.InteropT
 Imports System.Windows.Data, System.Globalization.CultureInfo
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Base class for rounding converters</summary>
@@ -228,4 +228,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
-#End If

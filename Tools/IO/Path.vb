@@ -1,7 +1,7 @@
 Imports Tools.VisualBasicT, System.IO, System.Linq, Tools.LinqT
 #If True
 Namespace IOt
-    ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
+    ''' <summary>Wraps <see cref="String"/> into separate class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise).</remarks>
     ''' <seelaso cref="M:Tools.IOt.FileSystemTools.GetIcon(Tools.IOt.Path,System.Boolean,System.Boolean)"/>
     ''' <author www="http://dzonny.cz">Ðonny</author>
@@ -11,10 +11,10 @@ Namespace IOt
         Implements IEnumerable(Of Path), IPathProvider
 #Region "Basic behavior"
         ''' <summary>Contains value of the <see cref="Path"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Path As String
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Private _path As String
         ''' <summary>CTor from String</summary>
-        ''' <param name="Path">Addres in file system from which create the path</param>
+        ''' <param name="Path">Address in file system from which create the path</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Path"/> is null</exception>
         ''' <exception cref="ArgumentException">
         ''' <paramref name="Path"/> is an empty string or consists only of whitespace characters
@@ -29,16 +29,16 @@ Namespace IOt
         Public Sub New(ByVal a As Path)
             Path = a.Path
         End Sub
-        ''' <summary>String representaion of path</summary>
-        ''' <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
+        ''' <summary>String representation of path</summary>
+        ''' <exception cref="ArgumentNullException">Value being set is null</exception>
         ''' <exception cref="ArgumentException">
-        ''' <paramref name="value"/> is an empty string or consists only of whitespace characters
+        ''' Value being set is an empty string or consists only of whitespace characters
         ''' -or-
-        ''' <paramref name="value"/> contains invalid character as defined in <see cref="System.IO.Path.GetInvalidPathChars"/>
+        ''' Value being set contains invalid character as defined in <see cref="System.IO.Path.GetInvalidPathChars"/>
         ''' </exception>
         Public Property Path() As String
             <DebuggerStepThrough()> Get
-                Return _Path
+                Return _path
             End Get
             Set(ByVal value As String)
                 If value Is Nothing Then Throw New ArgumentNullException("value", ResourcesT.Exceptions.PathCannotBeBasedOnNullString)
@@ -46,10 +46,10 @@ Namespace IOt
                 For Each ch As Char In System.IO.Path.GetInvalidPathChars()
                     If value.Contains(ch) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.PathStringContainsInvalidCharacter0, ch))
                 Next ch
-                _Path = value
+                _path = value
             End Set
         End Property
-        ''' <summary>String representaion of path</summary>
+        ''' <summary>String representation of path</summary>
         Private ReadOnly Property IPathProvider_Path() As String Implements IPathProvider.Path
             <DebuggerStepThrough()> Get
                 Return Path

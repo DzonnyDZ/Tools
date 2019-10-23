@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <ProjectGUID>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</ProjectGUID>
     <RootNamespace>Tools.TotalCommanderT</RootNamespace>
     <SccProjectName>
@@ -154,6 +154,7 @@ IF EXIST "$(TargetDir)$(TargetName).pdb" del /F "$(TargetDir)$(TargetName).pdb"<
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(VCInstallDir)..\SDK\ScopeCppSDK\VC\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <!--<ModuleDefinitionFile>exports.def</ModuleDefinitionFile>-->
     </Link>
   </ItemDefinitionGroup>

@@ -3,17 +3,17 @@ Imports Tools.ReflectionT, Tools.ExtensionsT
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
-#If True
+#If True Then
 ''' <author www="http://dzonny.cz">Đonny</author>
 ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 Public Module TypeTools
     ''' <summary>Checks if specified value is member of an enumeration</summary>
-    ''' <param name="value">Value to be chcked</param>
-    ''' <returns>True if <paramref name="value"/> is member of <paramref name="T"/></returns>
+    ''' <param name="value">Value to be checked</param>
+    ''' <returns>True if <paramref name="value"/> is member of <typeparamref name="T"/></returns>
     ''' <typeparam name="T">Enumeration to be tested</typeparam>
-    ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/></exception>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not <see cref="[Enum]"/></exception>
     ''' <seelaso cref="IsDefined"/>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function InEnum(Of T As {IConvertible, Structure})(ByVal value As T) As Boolean
         Return Array.IndexOf([Enum].GetValues(GetType(T)), value) >= 0
     End Function
@@ -37,11 +37,11 @@ Public Module TypeTools
 
     ''' <summary>Gets <see cref="Reflection.FieldInfo"/> that represent given constant within an enum</summary>
     ''' <param name="value">Constant to be found</param>
-    ''' <returns><see cref="Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <paramref name="T"/></returns>
+    ''' <returns><see cref="Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <typeparamref name="T"/></returns>
     ''' <typeparam name="T"><see cref="[Enum]"/> to found constant within</typeparam>
-    ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/></exception>
-    ''' <exception cref="ArgumentNullException"><paramref name="value"/> is not member of <paramref name="T"/></exception>
-    <CLSCompliant(False)> _
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not <see cref="[Enum]"/></exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="value"/> is not member of <typeparamref name="T"/></exception>
+    <CLSCompliant(False)>
     Public Function GetConstant(Of T As {IConvertible, Structure})(ByVal value As T) As Reflection.FieldInfo
         Return GetType(T).GetField([Enum].GetName(GetType(T), value))
     End Function
@@ -51,7 +51,7 @@ Public Module TypeTools
     ''' <returns>First attribute returned by <see cref="Reflection.ICustomAttributeProvider.GetCustomAttributes"/> or null if no attribute is returned</returns>
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
     ''' <version version="1.5.4">Parameter renamed: <c>From</c> to <c>from</c>, <c>Inherit</c> to <c>inherit</c></version>
-    <Extension()> _
+    <Extension()>
     Public Function GetAttribute(Of T As Attribute)(ByVal from As Reflection.ICustomAttributeProvider, Optional ByVal inherit As Boolean = True) As T
         Dim attrs As Object() = from.GetCustomAttributes(GetType(T), inherit)
         If attrs Is Nothing OrElse attrs.Length = 0 Then Return Nothing Else Return attrs(0)
@@ -64,7 +64,7 @@ Public Module TypeTools
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
     ''' <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
     ''' <version version="1.5.4">Parameter renamed: <c>From</c> to <c>from</c>, <c>Inherit</c> to <c>inherit</c></version>
-    <Extension()> _
+    <Extension()>
     Public Function GetAttributes(Of T As Attribute)(ByVal from As Reflection.ICustomAttributeProvider, Optional ByVal inherit As Boolean = True) As T()
         Dim attrs As Object() = from.GetCustomAttributes(GetType(T), inherit)
         If attrs Is Nothing Then Return Nothing
@@ -73,8 +73,8 @@ Public Module TypeTools
     ''' <summary>Converts specified value to underlying type of specified enumeration (type-safe)</summary>
     ''' <param name="value"><see cref="IConvertible"/> to be converted using invariant culture</param>
     ''' <typeparam name="T">Type of enumeration (must derive from <see cref="System.Enum"/>)</typeparam>
-    ''' <exception cref="System.ArgumentException"><paramref name="T"/> is not an <see cref="System.Enum"/> -or- Underlying type of <paramref name="Type"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
-    <CLSCompliant(False)> _
+    ''' <exception cref="System.ArgumentException"><typeparamref name="T"/> is not an <see cref="System.Enum"/> -or- Underlying type of <typeparamref name="T"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
+    <CLSCompliant(False)>
     Public Function GetValueInEnumBaseType(Of T As {IConvertible, Structure})(ByVal value As IConvertible) As IConvertible
         Return GetValueInEnumBaseType(GetType(T), value)
     End Function
@@ -84,7 +84,7 @@ Public Module TypeTools
     ''' <exception cref="System.ArgumentNullException"><paramref name="Type"/> is null.</exception>
     ''' <exception cref="System.ArgumentException"><paramref name="Type"/> is not an <see cref="System.Enum"/> -or- Underlying type of <paramref name="Type"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function GetValueInEnumBaseType(ByVal type As Type, ByVal Value As IConvertible) As IConvertible
         Dim EType As Type = [Enum].GetUnderlyingType(type)
         If GetType(Byte).Equals(EType) Then : Return Value.ToByte(System.Globalization.CultureInfo.InvariantCulture)
@@ -128,20 +128,20 @@ Public Module TypeTools
     ''' <summary>Gets <see cref="Reflection.FieldInfo"/> representing constant of given name from an enumeration</summary>
     ''' <param name="name">Name of constant to get</param>
     ''' <typeparam name="T">Type of enumeration</typeparam>
-    ''' <returns><see cref="Reflection.FieldInfo"/> that represents constant enum member of type <paramref name="EnumType"/> with name <paramref name="name"/>. Null if such constant doesnot exists.</returns>
+    ''' <returns><see cref="Reflection.FieldInfo"/> that represents constant enum member of type <typeparamref name="T"/> with name <paramref name="name"/>. Null if such constant doesnot exists.</returns>
     ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration</exception>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function GetConstant(Of T As {Structure, IConvertible})(ByVal name$) As Reflection.FieldInfo
         Return GetConstant(name, GetType(T))
     End Function
-    ''' <summary>Gets value of enum in its unedlying type</summary>
+    ''' <summary>Gets value of enum in its underlying type</summary>
     ''' <param name="value">Enumeration value</param>
     ''' <returns>Value of enum in its underlying type (so it no longer derives from <see cref="System.[Enum]"/>)</returns>
     <Extension(), CLSCompliant(False)> Public Function GetValue(ByVal value As [Enum]) As IConvertible
         Return GetValueInEnumBaseType(value.GetType, value)
     End Function
     ''' <summary>Gets value of enum member</summary>
-    ''' <param name="name">Name of enumeration memebr</param>
+    ''' <param name="name">Name of enumeration member</param>
     ''' <param name="EnumType">Type of enumeration</param>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= Constant with name <paramref name="name"/> does not exist in enumeration <paramref name="EnumType"/>.</exception>
     ''' <returns>Value of constant with name <paramref name="name"/> in type <paramref name="EnumType"/></returns>
@@ -152,20 +152,20 @@ Public Module TypeTools
         Return cns.GetValue(Nothing)
     End Function
     ''' <summary>Gets value of enum member</summary>
-    ''' <param name="name">Name of enumeration memebr</param>
+    ''' <param name="name">Name of enumeration member</param>
     ''' <typeparam name="T">Type of enumeration</typeparam>
     ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= Constant with name <paramref name="name"/> does not exist in enumeration <typeparamref name="T"/>.</exception>
     ''' <returns>Value of constant with name <paramref name="name"/> in type <typeparamref name="T"/></returns>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function GetValue(Of T As {IConvertible, Structure})(ByVal name As String) As T
         Return GetValue(name, GetType(T)).GetValue
     End Function
     ''' <summary>Converts specified <see cref="IConvertible"/> to specified <see cref="[Enum]"/> (type-safe)</summary>
     ''' <param name="value"><see cref="IConvertible"/> to be converted using invariant culture</param>
     ''' <typeparam name="T">Type of enumeration (must derive from <see cref="System.Enum"/>)</typeparam>
-    ''' <exception cref="System.ArgumentException"><paramref name="T"/> is not an <see cref="System.Enum"/> -or- Underlying type of <paramref name="Type"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
+    ''' <exception cref="System.ArgumentException"><typeparamref name="T"/> is not an <see cref="System.Enum"/> -or- Underlying type of <typeparamref name="T"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Value</c> to <c>value</c></version>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function GetEnumValue(Of T As {IConvertible, Structure})(ByVal value As IConvertible) As T
         Return CObj(GetEnumValue(GetType(T), value))
     End Function
@@ -175,7 +175,7 @@ Public Module TypeTools
     ''' <exception cref="System.ArgumentNullException"><paramref name="Type"/> is null.</exception>
     ''' <exception cref="System.ArgumentException"><paramref name="Type"/> is not an <see cref="System.Enum"/> -or- Underlying type of <paramref name="Type"/> is neither <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/> nor <see cref="ULong"/></exception>
     ''' <version version="1.5.4">Parameters renamed: <c>Type</c> to <c>type</c>, <c>Value</c> to <c>value</c></version>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function GetEnumValue(ByVal type As Type, ByVal value As IConvertible) As [Enum]
         Return [Enum].ToObject(type, GetValueInEnumBaseType(type, value))
     End Function
@@ -189,7 +189,7 @@ Public Module TypeTools
 
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <param name="EnumType">Type fo parse flags into</param>
+    ''' <param name="EnumType">Type to parse flags into</param>
     ''' <param name="Separator">Separator of flags</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
@@ -214,19 +214,19 @@ Public Module TypeTools
         End If
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
-    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <param name="EnumType">Type fo parse flags into</param>
-    ''' <param name="Culture">Culture to obtain separator from</param>
-    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
-    ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <param name="flags">Flags to parse. Each flag can be name or number</param>
+    ''' <param name="enumType">Type to parse flags into</param>
+    ''' <param name="culture">Culture to obtain separator from</param>
+    ''' <returns>Returns value of type <paramref name="enumType"/></returns>
+    ''' <exception cref="ArgumentException"><paramref name="enumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>EnumType</c> to <c>enumType</c>, <c>Culture</c> to <c>culture</c></version>
     Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal culture As Globalization.CultureInfo) As [Enum]
         Return FlagsFromString(flags, enumType, culture.TextInfo)
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
-    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <param name="EnumType">Type fo parse flags into</param>
-    ''' <param name="TextInfo"><see cref="Globalization.TextInfo"/> to obtain separator from</param>
+    ''' <param name="flags">Flags to parse. Each flag can be name or number</param>
+    ''' <param name="enumType">Type to parse flags into</param>
+    ''' <param name="textInfo"><see cref="Globalization.TextInfo"/> to obtain separator from</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     Public Function FlagsFromString(ByVal flags As String, ByVal enumType As Type, ByVal textInfo As Globalization.TextInfo) As [Enum]
@@ -234,7 +234,7 @@ Public Module TypeTools
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <param name="EnumType">Type fo parse flags into</param>
+    ''' <param name="EnumType">Type to parse flags into</param>
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     ''' <remarks>Obtains separator from current culture</remarks>
@@ -245,57 +245,57 @@ Public Module TypeTools
 
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
     ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <typeparam name="T">Type fo parse flags into</typeparam>
+    ''' <typeparam name="T">Type to parse flags into</typeparam>
     ''' <param name="Separator">Separator of flags</param>
-    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
-    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <returns>Returns value of type <typeparamref name="T"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <typeparamref name="T"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>Separator</c> to <c>separator</c></version>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal separator As String) As T
         Return CObj(FlagsFromString(flags, GetType(T), separator))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
-    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <typeparam name="T">Type fo parse flags into</typeparam>
-    ''' <param name="Culture">Culture to obtain separator from</param>
-    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
-    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <param name="flags">Flags to parse. Each flag can be name or number</param>
+    ''' <typeparam name="T">Type to parse flags into</typeparam>
+    ''' <param name="culture">Culture to obtain separator from</param>
+    ''' <returns>Returns value of type <typeparamref name="T"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <typeparamref name="T"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>Culture</c> to <c>culture</c></version>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal culture As Globalization.CultureInfo) As T
         Return CObj(FlagsFromString(flags, GetType(T), culture.TextInfo))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
-    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <typeparam name="T">Type fo parse flags into</typeparam>
+    ''' <param name="flags">Flags to parse. Each flag can be name or number</param>
+    ''' <typeparam name="T">Type to parse flags into</typeparam>
     ''' <param name="TextInfo"><see cref="Globalization.TextInfo"/> to obtain separator from</param>
-    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
-    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <returns>Returns value of type <typeparamref name="T"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <typeparamref name="T"/></exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c>, <c>TextInfo</c> to <c>textInfo</c></version>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String, ByVal textInfo As Globalization.TextInfo) As T
         Return CObj(FlagsFromString(flags, GetType(T), textInfo.ListSeparator))
     End Function
     ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
-    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
-    ''' <typeparam name="T">Type fo parse flags into</typeparam>
-    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
-    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <param name="flags">Flags to parse. Each flag can be name or number</param>
+    ''' <typeparam name="T">Type to parse flags into</typeparam>
+    ''' <returns>Returns value of type <typeparamref name="T"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <typeparamref name="T"/></exception>
     ''' <remarks>Obtains separator from current culture</remarks>
     ''' <version version="1.5.4">Parameter renamed: <c>Flags</c> to <c>flags</c></version>
-    <CLSCompliant(False)> _
+    <CLSCompliant(False)>
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal flags As String) As T
         Return CObj(FlagsFromString(flags, GetType(T), Globalization.CultureInfo.CurrentCulture))
     End Function
-    ''' <summary>Gets toolbox bitmap assciated with given <see cref="Type"/></summary>
+    ''' <summary>Gets toolbox bitmap associated with given <see cref="Type"/></summary>
     ''' <param name="Type">Type to get toolbox bitmap for</param>
     ''' <param name="Large">True to obtain large bitmap (32×32), false to obtain small one (16×16))</param>
     ''' <param name="Inherit">True to allow inheriting of toolbox bitmap from base type of <paramref name="Type"/></param>
-    ''' <returns>Bitmap assciated with <see cref="Type"/> if any</returns>
+    ''' <returns>Bitmap associated with <see cref="Type"/> if any</returns>
     ''' <remarks>If <paramref name="Type"/> is decorated with <see cref="Drawing.ToolboxBitmapAttribute"/> then it is used. If not static method <see cref="Drawing.ToolboxBitmapAttribute.GetImageFromResource"/> is used with <see cref="Type.Name"/> of <paramref name="Type"/>.</remarks>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
     ''' <version version="1.5.4">Parameters renamed to camelCase</version>
-    <Extension()> _
+    <Extension()>
     Public Function GetToolBoxBitmap(ByVal type As Type, Optional ByVal large As Boolean = False, Optional ByVal inherit As Boolean = False) As Drawing.Image
         If type Is Nothing Then Throw New ArgumentException("Type")
         Dim attr = type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(False)
@@ -314,36 +314,36 @@ Public Module TypeTools
     End Function
     ''' <summary>Gets default CTor for given type</summary>
     ''' <param name="Type"><see cref="Type"/> to get default CTor for</param>
-    ''' <param name="Attributes">Optionaly specifies aaccesibility attributes for default constructor. Default is <see cref="Reflection.BindingFlags.[Public]"/>.</param>
-    ''' <returns><see cref="Reflection.ConstructorInfo"/> refresenting default CTor of type <paramref name="Type"/>. Null if there is no default (parameter-less) CTor</returns>
+    ''' <param name="Attributes">Optionally specifies accessibility attributes for default constructor. Default is <see cref="Reflection.BindingFlags.[Public]"/>.</param>
+    ''' <returns><see cref="Reflection.ConstructorInfo"/> representing default CTor of type <paramref name="Type"/>. Null if there is no default (parameter-less) CTor</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
     ''' <seealso cref="HasDefaultCTor"/>
     ''' <version version="1.5.2">Fixed: Always returns null due to <paramref name="Attributes"/> being and-ed with <see cref="Reflection.BindingFlags.Instance"/> instead of or-ed</version>
     ''' <version version="1.5.4">Parameters renamed to camelCase</version>
-    <Extension()> _
+    <Extension()>
     Public Function GetDefaltCTor(ByVal type As Type, Optional ByVal attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Reflection.ConstructorInfo
         If type Is Nothing Then Throw New ArgumentException("Type")
-        Return type.GetConstructor(attributes Or Reflection.BindingFlags.Instance, Nothing, type.EmptyTypes, Nothing)
+        Return type.GetConstructor(attributes Or Reflection.BindingFlags.Instance, Nothing, Type.EmptyTypes, Nothing)
     End Function
-    ''' <summary>Gets value indicationg if given <see cref="Type"/> has default constructor</summary>
+    ''' <summary>Gets value indicating if given <see cref="Type"/> has default constructor</summary>
     ''' <param name="Type"><see cref="Type"/> to check</param>
-    ''' <param name="Attributes">Optionaly specifies aaccesibility attributes for default constructor. Default is <see cref="Reflection.BindingFlags.[Public]"/>.</param>
-    ''' <remarks>True if type has default (parameterless) CTor, fale otherwise.</remarks>
+    ''' <param name="Attributes">Optionally specifies accessibility attributes for default constructor. Default is <see cref="Reflection.BindingFlags.[Public]"/>.</param>
+    ''' <remarks>True if type has default (parameterless) CTor, false otherwise.</remarks>
     ''' <seealso cref="GetDefaltCTor"/>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
     ''' <version version="1.5.4">Parameters renamed to camelCase</version>
-    <Extension()> _
+    <Extension()>
     Public Function HasDefaultCTor(ByVal type As Type, Optional ByVal attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Boolean
         If type Is Nothing Then Throw New ArgumentException("Type")
         Return type.GetDefaltCTor(attributes) IsNot Nothing
     End Function
-    ''' <summary>Gets value indicating if instance of geven type can be easily created using default CTor</summary>
+    ''' <summary>Gets value indicating if instance of given type can be easily created using default CTor</summary>
     ''' <param name="Type"><see cref="Type"/> to check</param>
-    ''' <returns>False if type is either interface, abstract or open; true if type has default contructor or is value type</returns>
+    ''' <returns>False if type is either interface, abstract or open; true if type has default constructor or is value type</returns>
     ''' <seealso cref="HasDefaultCTor"/>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
     ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
-    <Extension()> _
+    <Extension()>
     Public Function CanAutomaticallyCreateInstance(ByVal type As Type) As Boolean
         If type Is Nothing Then Throw New ArgumentException("Type")
         If type.IsInterface Then Return False
@@ -375,13 +375,13 @@ Public Module TypeTools
     ''' <param name="considerTypeConverter">True to try use <see cref="TypeConverter"/> is all other ways of conversion failed</param>
     ''' <typeparam name="T">TYpe to cast <paramref name="obj"/> to</typeparam>
     ''' <returns>Value of <paramref name="obj"/> casted to type <typeparamref name="T"/>. Method uses several ways of casting.</returns>
-    ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <paramref name="Type"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
+    ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <typeparamref name="T"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
     ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
-    ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
-    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+    ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <tzpeparamref name="T"/> -or- Called cast operator have thrown this exception.</exception>
+    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being called has thrown this exception.</exception>
     ''' <exception cref="NotSupportedException"><paramref name="considerTypeConverter"/> is true, <see cref="TypeConverter"/> was used and it couldn't perform the conversion requested.</exception>
-    ''' <remarks>See <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/> non-generic method fro details on how casting is done.</remarks>
-    ''' <seealso cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/>
+    ''' <remarks>See <see cref="DynamicCast(Object, Type, Boolean)"/> non-generic method fro details on how casting is done.</remarks>
+    ''' <seealso cref="DynamicCast(Object, Type, Boolean)"/>
     ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
     Public Function DynamicCast(Of T)(ByVal obj As Object, considerTypeConverter As Boolean) As T
         Return DynamicCast(obj, GetType(T), considerTypeConverter)
@@ -390,19 +390,19 @@ Public Module TypeTools
     ''' <param name="obj">Object to cast</param>
     ''' <typeparam name="T">TYpe to cast <paramref name="obj"/> to</typeparam>
     ''' <returns>Value of <paramref name="obj"/> casted to type <typeparamref name="T"/>. Method uses several ways of casting.</returns>
-    ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <paramref name="Type"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
+    ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <typeparamref name="T"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
     ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
-    ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
-    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
-    ''' <remarks>See <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/> non-generic method fro details on how casting is done.</remarks>
-    ''' <seealso cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type)"/>
+    ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <typeparamref name="T"/> -or- Called cast operator have thrown this exception.</exception>
+    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being called has thrown this exception.</exception>
+    ''' <remarks>See <see cref="DynamicCast(Object, Type, Boolean)"/> non-generic method fro details on how casting is done.</remarks>
+    ''' <seealso cref="DynamicCast(Object, Type)"/>
     ''' <version version="1.5.2">Function introduced</version>
-    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longe extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
-    ''' <version version="1.5.4">This function is now backed by call to a new extended overload <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)">DynamicCast(obj, type, false)</see></version>
+    ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longer extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
+    ''' <version version="1.5.4">This function is now backed by call to a new extended overload <see cref="DynamicCast(Object, Type, Boolean)"/></version>
     Public Function DynamicCast(Of T)(ByVal obj As Object) As T
         Return DynamicCast(obj, GetType(T), False)
     End Function
-    ''' <summary>Attempts to cast given tobject to given type</summary>
+    ''' <summary>Attempts to cast given object to given type</summary>
     ''' <param name="obj">Object to cast</param>
     ''' <param name="Type">Type to cast <paramref name="obj"/> to</param>
     ''' <returns>Value of <paramref name="obj"/> casted to type <paramref name="Type"/>. Method uses several ways of casting.</returns>
@@ -410,17 +410,17 @@ Public Module TypeTools
     ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <paramref name="Type"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
     ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
     ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
-    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
-    ''' <remarks>For details of how the conversion is performed see <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)"/></remarks>
-    ''' <seealso cref="M:Tools.TypeTools.DynamicCast`1(System.Object)"/>
+    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being called has thrown this exception.</exception>
+    ''' <remarks>For details of how the conversion is performed see <see cref="DynamicCast(Object, Type, Boolean)"/></remarks>
+    ''' <seealso cref="DynamicCast(Of T)(Object)"/>
     ''' <version version="1.5.2">Function introduced</version>
     ''' <version version="1.5.3">The <see cref="ExtensionAttribute"/> attribute removed. This method is no longer extension method. This change was done because .NET languages does not support extension methods on <see cref="Object"/>.</version>
     ''' <version version="1.5.4">Parameter renamed: <c>Type</c> to <c>type</c></version>
-    ''' <version version="1.5.4">This function is now backed by call to a new extended overload <see cref="M:Tools.TypeTools.DynamicCast(System.Object,System.Type,System.Boolean)">DynamicCast(obj, type, false)</see></version>
+    ''' <version version="1.5.4">This function is now backed by call to a new extended overload <see cref="DynamicCast(Object, Type, Boolean)">DynamicCast(obj, type, false)</see></version>
     Public Function DynamicCast(ByVal obj As Object, ByVal type As Type) As Object
         Return DynamicCast(obj, type, False)
     End Function
-    ''' <summary>Attempts to cast given tobject to given type</summary>
+    ''' <summary>Attempts to cast given object to given type</summary>
     ''' <param name="obj">Object to cast</param>
     ''' <param name="Type">Type to cast <paramref name="obj"/> to</param>
     ''' <param name="considerTypeConverter">True to try use <see cref="TypeConverter"/> is all other ways of conversion failed</param>
@@ -429,14 +429,14 @@ Public Module TypeTools
     ''' <exception cref="InvalidCastException">No casting method from type of <paramref name="obj"/> to <paramref name="Type"/> was found -or- build in conversion from <see cref="String"/> to numeric type failed.</exception>
     ''' <exception cref="AmbiguousMatchException">Cast operators were found, but no one is most specific.</exception>
     ''' <exception cref="OverflowException">Build in conversion to numeric value (or <see cref="String"/> to <see cref="TimeSpan"/>) failed because <paramref name="obj"/> cannot be represented in <paramref name="Type"/> -or- Called cast operator have thrown this exception.</exception>
-    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being caled has thrown this exception.</exception>
+    ''' <exception cref="FormatException">Conversion of <see cref="String"/> to <see cref="TimeSpan"/> failed because string has bad format. -or- Operator being called has thrown this exception.</exception>
     ''' <exception cref="NotSupportedException"><paramref name="considerTypeConverter"/> is true, <see cref="TypeConverter"/> was used and it couldn't perform the conversion requested.</exception>
     ''' <remarks>Following ways of casting are attempted in given order
     ''' <list type="numbered">
     ''' <item>When <paramref name="obj"/> is null, null is returned (default value for value types)</item>
     ''' <item>When <paramref name="Type"/> <see cref="Type.IsAssignableFrom">is assignable from</see> <paramref name="obj"/>, <paramref name="obj"/> is returned.</item>
     ''' <item>Attempt to find cast operator using <see cref="FindBestFitCastOperator"/> is done. If operator is found, it is used.
-    ''' <note>Operator being called can throw an eyception.</note></item>
+    ''' <note>Operator being called can throw an exception.</note></item>
     ''' <item>If <paramref name="obj"/> is enumeration, has value which is defined for its enumeration type and <paramref name="Type"/> <see cref="Type.IsAssignableFrom">is assignable from</see> <see cref="String"/>, result of <see cref="[Enum].ToString"/> is used.</item>
     ''' <item>If <paramref name="Type"/> is enumeration type and <paramref name="obj"/> is string and <paramref name="obj"/> has same value as is one of names of members of <paramref name="Type"/> enumeration, result of <see cref="[Enum].Parse"/> is returned.</item>
     ''' <item>If <paramref name="obj"/> is enumeration and <paramref name="Type"/> <see cref="Type.IsAssignableFrom">is assignable from</see> its underlying type, value of <paramref name="obj"/> in enumeration underlying type is returned.</item>
@@ -446,21 +446,21 @@ Public Module TypeTools
     ''' <para>For numeric types, simple interpretation of numeric value in different type, is attempted, with possible loss of precision and <see cref="OverflowException"/>. Visual Basic C* operators are used. They round x.5 to neares even integer.</para>
     ''' <para>For conversion from numeric type to <see cref="Char"/> <see cref="ChrW"/> is used, for conversion from <see cref="Char"/> to numeric type <see cref="AscW"/> is used. <see cref="OverflowException"/> may occur.</para>
     ''' <para>For conversion from numeric type to <see cref="String"/> and from <see cref="String"/> to numeric type, such conversion is culture-sensitive. When string cannot be interpreted as number, <see cref="InvalidCastException"/> is thrown.</para>
-    ''' <para>When <see cref="String"/> is converted to <see cref="Char"/>, only firts character is converted, empty string is converted to <see cref="vbNullChar"/>. <see cref="Char"/> to <see cref="String"/> is converted as single-character string.</para>
+    ''' <para>When <see cref="String"/> is converted to <see cref="Char"/>, only first character is converted, empty string is converted to <see cref="vbNullChar"/>. <see cref="Char"/> to <see cref="String"/> is converted as single-character string.</para>
     ''' <para><see cref="Boolean"/> to string is converted as either "True" or "False" (culture-independent). </para>
-    ''' <para>Any non-zero number to <see cref="boolean"/> is converted as true, zero as false. <see cref="Boolean"/> to numeric values are converted to -1 for signed (including <see cref="Double"/> and <see cref="Single"/>) and as max value to unsigned.</para>
+    ''' <para>Any non-zero number to <see cref="Boolean"/> is converted as true, zero as false. <see cref="Boolean"/> to numeric values are converted to -1 for signed (including <see cref="Double"/> and <see cref="Single"/>) and as max value to unsigned.</para>
     ''' <para><see cref="Char"/> to <see cref="Boolean"/> is converted in same was as numbers (numeric code of character is used), <see cref="Boolean"/> to <see cref="Char"/> as well.</para></item>
-    ''' <item>Special build-in conversions are attempted. Those conversions are difined between <see cref="String"/> and any of following types: <see cref="Decimal"/>, <see cref="Date"/>, <see cref="TimeSpan"/>.
+    ''' <item>Special build-in conversions are attempted. Those conversions are defined between <see cref="String"/> and any of following types: <see cref="Decimal"/>, <see cref="Date"/>, <see cref="TimeSpan"/>.
     ''' <para>Values are converted from this type to <see cref="String"/> if <paramref name="Type"/> equals to <see cref="String"/> using default format in culture-sensitive way.</para>
     ''' <para>If <paramref name="obj"/> is <see cref="String"/> it is converted to one of these types when <paramref name="Type"/> <see cref="Type.IsAssignableFrom">is assignable from it</see> using culture-sensitive parsing in following order without error recovery: <see cref="Date"/>, <see cref="TimeSpan"/>, <see cref="Decimal"/>.</para></item>
     ''' <item>Special conversion between <see cref="Boolean"/> and <see cref="Decimal"/> is attempted using same rules for <see cref="Boolean"/> ↔ numeric conversions above.</item>
-    ''' <item>(Only when <paramref name="considerTypeConverter"/> is true) <see cref="TypeConverter"/> that can convert <paramref name="obj"/> is obtained using <see cref="M:System.ComponentModel.TypeDescriptor.GetConverter(System.Object)"/>. If it <see cref="TypeConverter.CanConvertTo">can convert to</see> <paramref name="Type"/> <see cref="TypeConverter.ConvertTo"/> is called.</item>
-    ''' <item>(Only when <paramref name="considerTypeConverter"/> is true) <see cref="TypeConverter"/> for <paramref name="Type"/> is obtained using <see cref="M:System.ComponentModel.TypeDescriptor.GetConverter(System.Type)"/>. If it <see cref="TypeConverter.CanConvertFrom">can convert from</see> object of type of <paramref name="obj"/> <see cref="TypeConverter.ConvertFrom"/> is called.</item>
+    ''' <item>(Only when <paramref name="considerTypeConverter"/> is true) <see cref="TypeConverter"/> that can convert <paramref name="obj"/> is obtained using <see cref="TypeDescriptor.GetConverter(Object)"/>. If it <see cref="TypeConverter.CanConvertTo">can convert to</see> <paramref name="Type"/> <see cref="TypeConverter.ConvertTo"/> is called.</item>
+    ''' <item>(Only when <paramref name="considerTypeConverter"/> is true) <see cref="TypeConverter"/> for <paramref name="Type"/> is obtained using <see cref="TypeDescriptor.GetConverter(Type)"/>. If it <see cref="TypeConverter.CanConvertFrom">can convert from</see> object of type of <paramref name="obj"/> <see cref="TypeConverter.ConvertFrom"/> is called.</item>
     ''' </list>
     ''' <para>Note that following conversion are not defined: <see cref="Date"/>↔<see cref="Boolean"/>, <see cref="Date"/>↔<see cref="TimeSpan"/>, <see cref="Date"/>↔<see cref="Char"/>.
     ''' <see cref="TimeSpanFormattable"/> is treated as any other types using its operators.
     ''' There is no specific support for <see cref="Nullable(Of T)"/></para></remarks>
-    ''' <seealso cref="M:Tools.TypeTools.DynamicCast`1(System.Object)"/>
+    ''' <seealso cref="DynamicCast(Of T)(Object)"/>
     ''' <version version="1.5.4">This overload is new in version 1.5.4</version>
     Public Function DynamicCast(ByVal obj As Object, ByVal type As Type, considerTypeConverter As Boolean) As Object
         If obj Is Nothing Then

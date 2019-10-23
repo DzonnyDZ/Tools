@@ -5,7 +5,7 @@ Imports Tools.ExtensionsT
 Imports Tools.ReflectionT
 Imports Tools.TypeTools
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Converter that test if value being converted relates to parameter</summary>
@@ -244,4 +244,3 @@ castEx:
         End Function
     End Class
 End Namespace
-#End If

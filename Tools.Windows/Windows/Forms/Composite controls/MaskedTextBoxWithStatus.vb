@@ -1,6 +1,5 @@
 Imports System.Windows.Forms, Tools.ResourcesT, Tools.ComponentModelT, System.Drawing.Design
 Namespace WindowsT.FormsT
-    '#If Config <= Nightly Then set in Tools.vbproj
     'Stage:Nightly
     'ASAP: Remove
     'xASAP: Comment,Attributes, Expose everything
@@ -9,7 +8,7 @@ Namespace WindowsT.FormsT
     <Obsolete("This control will be removed and replaced wit attachable StatusMarker")> _
     <DefaultProperty("Text")> _
     <DefaultEvent("TextChanged")> _
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Author("Äonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(MaskedTextBoxWithStatus), LastChange:="07/22/2007")> _
     <FirstVersion("06/22/2007")> _
     <Drawing.ToolboxBitmap(GetType(StatusMarker), "MaskedTextBoxWithStatus.bmp")> _
@@ -408,4 +407,58 @@ Namespace WindowsT.FormsT
             Get
                 Return mtbText.TextMaskFormat
             End Get
-            Set(ByVal value As MaskForm                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+            Set(ByVal value As MaskFormat)
+                mtbText.TextMaskFormat = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets a value indicating whether the operating system-supplied password character should be used.</summary>
+        ''' <returns>true if the system password should be used as the prompt character; otherwise, false. The default is false.</returns>
+        ''' <exception cref="T:System.InvalidOperationException">The password character specified is the same as the current prompt character, <see cref="P:System.Windows.Forms.MaskedTextBox.PromptChar"></see>. The two are required to be different.</exception>
+        <DefaultValue(False), SRCategory("CatBehavior"), SRDescription("MaskedTextBoxUseSystemPasswordCharDescr"), RefreshProperties(RefreshProperties.Repaint)> _
+        Public Property UseSystemPasswordChar() As Boolean
+            Get
+                Return TextBox.UseSystemPasswordChar
+            End Get
+            Set(ByVal value As Boolean)
+                TextBox.UseSystemPasswordChar = False
+            End Set
+        End Property
+        ''' <summary>Gets or sets the data type used to verify the data input by the user. </summary>
+        ''' <returns>A <see cref="T:System.Type"></see> representing the data type used in validation. The default is null.</returns>
+        <DefaultValue(CStr(Nothing)), Browsable(False)> _
+                Public Property ValidatingType() As Type
+            Get
+                Return TextBox.ValidatingType
+            End Get
+            Set(ByVal value As Type)
+                TextBox.ValidatingType = value
+            End Set
+        End Property
+
+
+
+
+
+#End Region
+        Private Sub txtText_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles mtbText.TextChanged
+            OnTextChanged(e)
+        End Sub
+        ''' <summary>Raises the <see cref="TextChanged"/> event</summary>
+        Protected Overrides Sub OnTextChanged(ByVal e As System.EventArgs)
+            ApplyAutoCahnge()
+            MyBase.OnTextChanged(e)
+        End Sub
+        ''' <summary>Applies <see cref="AutoChanged"/> property after change of <see cref="Text"/></summary>
+        ''' <remarks>If <see cref="Status"/> is <see cref="StatusMarker.Statuses.Deleted"/> or <see cref="StatusMarker.Statuses.Error"/> or <see cref="StatusMarker.Statuses.NA"/> or <see cref="StatusMarker.Statuses.Normal"/> than it changes to <see cref="StatusMarker.Statuses.Changed"/>, if it is <see cref="StatusMarker.Statuses.Null"/> then it changes to <see cref="StatusMarker.Statuses.New"/></remarks>
+        Private Sub ApplyAutoCahnge()
+            If AutoChanged Then
+                Select Case stmStatus.Status
+                    Case StatusMarker.Statuses.Deleted, StatusMarker.Statuses.Error, StatusMarker.Statuses.NA, StatusMarker.Statuses.Normal
+                        stmStatus.Status = StatusMarker.Statuses.Changed
+                    Case StatusMarker.Statuses.Null
+                        stmStatus.Status = StatusMarker.Statuses.[New]
+                End Select
+            End If
+        End Sub
+    End Class
+End Namespace

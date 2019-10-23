@@ -109,18 +109,18 @@ namespace Tools {
         public:
             /// <summary>CTor - creates new instance of the <see cref="ContentFieldSpecification"/> class</summary>
             /// <param name="fieldIndex">Index of the field within array of fields. This must be set to the same value as is 0-base index in array this instance is returned in from <see2 cref2="P:Tools.TotalCommanderT.ContentPluginBase.SupportedFields"/>.</param>
-            /// <param name="fieldType">Type of vaue of field. Shall not be <see2 cref2="F:Tools.TotalCommanderT.NoMoreFields"/>.
+            /// <param name="fieldType">Type of value of field. Shall not be <see2 cref2="F:Tools.TotalCommanderT.NoMoreFields"/>.
             /// <note>When array returned by <see2 cref2="P:Tools.TotalCommanderT.ContentPluginBase.SupportedFields"/> contains item of type <see2 cref2="F:Tools.TotalCommanderT.FullText"/>, it shal not contain any item of non-<see2 cref2="F:Tools.TotalCommanderT.Fulltext"/> type at higner index. This is requited by Total Commander by the way it handle full text fields.</note></param>
             /// <param name="fieldName">Name of the field. It shall contain neither dot (.), pipe (|), colon (:) nor nullchar. Its length shall not break limit set up by <see2 cref2="P:Tools.TotalCommanderT.ContentPluginBase.FileNameMaxLen"/>.</param>
             /// <param name="flags">Filed flags to precise field behavior. <note>Only one of Subst*/<see2 cref2="F:Tools.TotalCommanderT.FieldFlags.PassThroughSize"/> flags should be set.</note></param>
             /// <param name="units">Unit[s] used by the field. Field (column) may support multiple units of its value like bytes, kilobytes and megabytes for size. Name of unit shall not contain dot (.), pipe (|), colon (:) or nullchar. Sum of lengts of unit names plus number of units minus 1 shall not break limit set up by <see2 cref2="P:Tools.TotalCommanderT.ContentPluginBase.FileNameMaxLen"/>.
-            /// <para>When <paramref name="FieldType"/> is <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/> this parameter contails list of possible enumerated values instead of list of units (enumes don't support units, it supports list of values). Same restrictions apply.</para>
+            /// <para>When <paramref name="fieldType"/> is <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/> this parameter contains list of possible enumerated values instead of list of units (enumes don't support units, it supports list of values). Same restrictions apply.</para>
             /// Value of this parameter may be null or an empty array.</param>
             /// <exception cref="InvalidEnumArgumentException"><paramref name="fieldType"/> is not member of <see cref="ContentFieldType"/></exception>
             /// <exception cref="ArgumentNullException"><paramref name="fieldName"/> is null</exception>
             /// <exception cref="ArgumentOutOfRangeException"><paramref name="fieldIndex"/> is less than zero</exception>
-            /// <exception cref="ArgumentException"><paramref name="fieldName"/> or <paramref name="Units"/> contains dot (.), pipe (|), colon (:) or nullchar. -or- <paramref name="FieldType"/> is <see2 cref2="F:Tools.TotalCommanderT.NoMoreFields"/>.</exception>
-            /// <remarks>More and uncatchable exceptions can be thrown when newly created instance is passed to Total Commander nd it violates another restrictions as restriction of length of <paramref name="FieldName"/> or accumulated length of <paramref name="Units"/>.
+            /// <exception cref="ArgumentException"><paramref name="fieldName"/> or <paramref name="units"/> contains dot (.), pipe (|), colon (:) or nullchar. -or- <paramref name="FieldType"/> is <see2 cref2="F:Tools.TotalCommanderT.NoMoreFields"/>.</exception>
+            /// <remarks>More and uncatchable exceptions can be thrown when newly created instance is passed to Total Commander and it violates another restrictions as restriction of length of <paramref name="FieldName"/> or accumulated length of <paramref name="Units"/>.
             /// <note type="warning">Dues to Total Commander plugin interface limitations <paramref name="filedName"/> and <paramref name="units"/> should be ANSI strings (i.e. contain only characters from <see cref="System::Text::Encoding::Default"/>).</note></remarks>
             /// <version version="1.5.4">Parameter names converted to camelCase</version>
             ContentFieldSpecification(int fieldIndex, ContentFieldType fieldType, String^ fieldName, FieldFlags flags, ... cli::array<String^>^ units);
@@ -135,7 +135,7 @@ namespace Tools {
             /// <returns>Name of the field (column). It does not contain dot (.), pipe (|), colon (:) or nullchar.</returns>
             property String^ FieldName {String^ get(); }
             /// <summary>Gets array of units supported by this column</summary>
-            /// <returns>Array of units supported by this colum. When <see cref="FieldType"/> is <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/> this property retuns list of possible values instead of list of units.</returns>
+            /// <returns>Array of units supported by this column. When <see cref="FieldType"/> is <see2 cref2="F:Tools.TotalCommanderT.ContentFieldType.Enum"/> this property returns list of possible values instead of list of units.</returns>
             /// <remarks>Changing item of array returned by this property does NOT change appropriate column name in Total Commander. When changin vlaue of array item of instance that will be retiurned from <see2 cref2="P:Tools.TotalCommanderT.ContentPluginBase.SupportedFields"/>, keep in kid that sum of lengths of array items plus number of items minus one must not exceed <see2 cref2="P:Tools.TotalCommanderT.ContentPluginBase.FileNameMaxLen"/>. Also do not set values if array items to strings containing dots (.), pipes (|), colons (:) or nullchars - it may leed to uncatchable exception thrown by caller.</remarks>
             property cli::array<String^>^ Units {cli::array<String^>^ get(); }
             /// <summary>Gets flags to precise field behavior</summary>
@@ -145,7 +145,7 @@ namespace Tools {
         };
 
 
-        /// <summary>Defines varios information for custom field (column) value being set</summary>
+        /// <summary>Defines various information for custom field (column) value being set</summary>
         /// <version version="1.5.3">This enumeration is new in version 1.5.3</version>
         [Flags]
         public enum class SetValueFlags : Int32 {

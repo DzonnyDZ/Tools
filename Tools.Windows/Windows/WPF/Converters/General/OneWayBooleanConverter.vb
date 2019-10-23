@@ -2,7 +2,7 @@
 Imports System.Globalization, System.Windows
 
 Namespace WindowsT.WPF.ConvertersT
-#If True
+
     'TODO: Derive other boolean converters from this one
 
     ''' <summary>Commmon abstract base class for value one-way converters converting something to boolean</summary>
@@ -77,5 +77,4 @@ Namespace WindowsT.WPF.ConvertersT
             Throw New NotSupportedException(WindowsT.WPF.ConvertersT.ConverterResources.ex_CannotConvertBack.f(Me.GetType().Name))
         End Function
     End Class
-#End If
 End Namespace

@@ -400,13 +400,13 @@ Namespace NumericsT
 #End Region
         ''' <summary>Bitwise converts value of type <see cref="UInteger"/> to <see cref="Integer"/></summary>
         ''' <param name="unsigned">An <see cref="Integer"/></param>
-        ''' <returns>Signed value with same bitwise representation as <paramref name="a"/></returns>
+        ''' <returns>Signed value with same bitwise representation as <paramref name=unsigneda"/></returns>
         <CLSCompliant(False)> Public Shared Function BitwiseSame(ByVal unsigned As UInteger) As Integer
             Return New IntegerUnion(unsigned).integer
         End Function
         ''' <summary>Bitwise converts value of type <see cref="Integer"/> to <see cref="UInteger"/></summary>
         ''' <param name="signed">A <see cref="UInteger"/></param>
-        ''' <returns>Unsigned value with same bitwise representation as <paramref name="a"/></returns>
+        ''' <returns>Unsigned value with same bitwise representation as <paramref name="signed"/></returns>
         <CLSCompliant(False)> Public Shared Function BitwiseSame(ByVal signed As Integer) As UInteger
             Return New IntegerUnion(signed).uinteger
         End Function

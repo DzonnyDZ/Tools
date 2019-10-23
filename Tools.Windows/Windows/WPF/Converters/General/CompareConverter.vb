@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT
 
 Namespace WindowsT.WPF.ConvertersT
-#If True
+
 
 
     ''' <summary>Converter that test if value being converter equals to parameter</summary>
@@ -32,12 +32,10 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <param name="parameter">Value this converter compares values to</param>
         ''' <param name="culture">ignored</param>
         ''' <exception cref="NotSupportedException"><paramref name="value"/> is not true</exception>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)>
         Public Function ConvertBack(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.ConvertBack
             If TypeOf value Is Boolean AndAlso DirectCast(value, Boolean) Then Return parameter
             Throw New NotSupportedException(Resources.ex_CannotConvertBack.f(Me.GetType.Name))
         End Function
     End Class
-
-#End If
 End Namespace

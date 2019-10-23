@@ -1,0 +1,6 @@
+<Project>
+    <Import Project="$(SolutionDir)Directory.Build.props"/>
+    <PropertyGroup>
+        <DefineConstants>NO_VERSION</DefineConstants>
+    </PropertyGroup>
+</Project>

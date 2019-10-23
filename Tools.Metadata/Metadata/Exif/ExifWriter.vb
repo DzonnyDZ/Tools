@@ -69,7 +69,7 @@ Namespace MetadataT.ExifT
         ''' <remarks>This constructor creates instance of writer that cannot preserve unknown metadata from originals stream (like maker notes)</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="Stream"/> is null</exception>
         ''' <exception cref="ArgumentException"><paramref name="Stream"/> does not support reading, seeking and writing</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Align"/> is not member of <see cref="iot.BinaryReader.ByteAlign"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="ByteAlign"/> is not member of <see cref="iot.BinaryReader.ByteAlign"/></exception>
         Public Sub New(ByVal Stream As IO.Stream, Optional ByVal ByteAlign As IOt.BinaryReader.ByteAlign = IOt.BinaryReader.ByteAlign.LittleEndian)
             If Stream Is Nothing Then Throw New ArgumentNullException("Stream")
             If Not Stream.CanRead OrElse Not Stream.CanSeek OrElse Not Stream.CanWrite Then Throw New ArgumentException(ResourcesT.Exceptions.StreamToWriteExifMedatadaToMustSupportReadingWritingAndSeeking)

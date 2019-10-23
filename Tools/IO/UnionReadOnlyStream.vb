@@ -106,7 +106,7 @@ Namespace IOt
         ''' <paramref name="buffer" /> at which to begin storing the data read from the current stream.</param>
         ''' <param name="count">The maximum number of bytes to be read from the current stream.</param>
         ''' <exception cref="T:System.ArgumentException">The sum of <paramref name="offset" /> and <paramref name="count" /> is larger than the buffer length.</exception>
-        ''' <exception cref="T:System.ArgumentNullException">
+        ''' <exception cref="ArgumentNullException">
         ''' <paramref name="buffer" /> is null.</exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> is negative.</exception>
         ''' <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>

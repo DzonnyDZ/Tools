@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data, Tools.ExtensionsT, Tools.TextT, Tools.LinqT
 Imports System.Windows, System.Globalization.CultureInfo
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Converter which combines multiple collection to one <see cref="CompositeCollection"/>. It's possible to decide which collections to be included and which not.</summary>
@@ -120,4 +120,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
-#End If

@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms, Tools.ComponentModelT
 Namespace WindowsT.FormsT
-#If True
+
     ''' <summary>Provides empty base class for user controls that extends <see cref="UserControl"/> by adding several features.</summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
@@ -15,7 +15,7 @@ Namespace WindowsT.FormsT
         '    Return MyBase.PreProcessMessage(msg)
         'End Function
         ''' <summary>Contains value of the <see cref="KeyPreview"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)>
         Private _KeyPreview As Boolean
         ''' <summary>Gets or sets a value indicating whether the user control will receive key events before the event is passed to the control that has focus.</summary>
         ''' <value>true if the user control will receive all key events; false if the currently selected user control on the control receives key events. The default is false.</value>
@@ -28,8 +28,8 @@ Namespace WindowsT.FormsT
         ''' <para>When you are using derived control that inherits <see cref="UserControlExtended"/> and has nativelly set this property to true, but this behavior interfers with functionality of your form, you can set this property to false (if it is not restricted by creator of derived control) to avoid such interference but with risk that some keyboard-driven functions of the controll will not work.</para>
         ''' <para>Note for inheritors: You do not need to override this property (even you cannot) in order to change its design-time default value. You can simply set value of <see cref="KeyPreviewDefaultValue"/> in CTor. You must also set same default value to <see cref="KeyPreview"/> in CTor.</para>
         ''' </remarks>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "KeyPreview_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "KeyPreview_d")>
         Public Overridable Property KeyPreview() As Boolean
             Get
                 Return _KeyPreview
@@ -43,9 +43,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Contains default value of <see cref="KeyPreview"/> property</summary>
         ''' <remarks>This default value is used by various tools (like Visual Studion WinForms designer) to indicate if value of property have been changed and thus must be serialized.
         ''' You can change value of this in CTor of derived class in order to change design-time behaviour of your derived control</remarks>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <DefaultValue(False)> _
-        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "KeyPreviewDefaultValue_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)>
+        <DefaultValue(False)>
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "KeyPreviewDefaultValue_d")>
         Protected Property KeyPreviewDefaultValue() As Boolean
             Get
                 Return _KeyPreviewDefaultValue
@@ -70,5 +70,4 @@ Namespace WindowsT.FormsT
             Return ((KeyPreview AndAlso Me.ProcessKeyEventArgs(m)) OrElse MyBase.ProcessKeyPreview(m))
         End Function
     End Class
-#End If
 End Namespace

@@ -7,7 +7,6 @@ Imports System.Xaml, Tools.ExtensionsT
 Imports System.Windows.Controls
 Imports Tools.LinqT
 
-#If True
 Namespace WindowsT.WPF
     ''' <summary>Contains varios extenstion functions related to Windows Presentation Foundation</summary>
     ''' <version version="1.5.2">Module introduced</version>
@@ -381,4 +380,3 @@ Namespace WindowsT.WPF
         XamlNamespaceResolver
     End Enum
 End Namespace
-#End If

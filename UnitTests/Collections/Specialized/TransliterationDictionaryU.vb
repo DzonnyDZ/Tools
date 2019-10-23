@@ -9,7 +9,7 @@ Namespace CollectionsUT.GenericUT
     '''This is a test class for TransliterationDictionaryTest and is intended
     '''to contain all TransliterationDictionaryTest Unit Tests
     '''</summary>
-    <TestClass()> _
+    <TestClass()>
     Public Class TransliterationDictionaryTest
 
 
@@ -32,73 +32,73 @@ Namespace CollectionsUT.GenericUT
         ''' <summary>
         '''A test for IsNameCharacter
         '''</summary>
-        <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
+        <TestMethod()>
+        <DeploymentItem("RFERL.Core.dll")>
         Public Sub IsNameCharacterTest()
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter(":"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("A"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("Z"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("a"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("z"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("_"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("Ø"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("‌"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("⁰"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("�"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameCharacter("\"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("ˇ"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameCharacter("*"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameCharacter("["c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter(":"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("A"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("Z"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("a"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("z"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("_"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("Ø"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("‌"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("⁰"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("�"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameCharacter("\"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("ˇ"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameCharacter("*"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameCharacter("["c))
 
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("-"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("."c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("0"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("5"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("·"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("́"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameCharacter("⁀"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("-"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("."c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("0"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("5"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("·"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("́"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameCharacter("⁀"c))
         End Sub
 
         ''' <summary>
         '''A test for IsNameStartCharacter
         '''</summary>
-        <TestMethod()> _
-        <DeploymentItem("RFERL.Core.dll")> _
+        <TestMethod()>
+        <DeploymentItem("RFERL.Core.dll")>
         Public Sub IsNameStartCharacterTest()
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter(":"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("A"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("Z"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("a"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("z"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("_"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("Ø"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("‌"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("⁰"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("�"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("\"c))
-            Assert.IsTrue(TransliterationDictionary_Accessor.IsNameStartCharacter("ˇ"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("*"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("["c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter(":"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("A"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("Z"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("a"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("z"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("_"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("Ø"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("‌"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("⁰"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("�"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("\"c))
+            Assert.IsTrue(TransliterationDictionary.IsNameStartCharacter("ˇ"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("*"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("["c))
 
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("-"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("."c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("0"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("5"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("·"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("́"c))
-            Assert.IsFalse(TransliterationDictionary_Accessor.IsNameStartCharacter("⁀"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("-"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("."c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("0"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("5"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("·"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("́"c))
+            Assert.IsFalse(TransliterationDictionary.IsNameStartCharacter("⁀"c))
         End Sub
 
         Private sampleText As String = "Lorem ipsum dolor sit amet, consectetur adipisicing elit" & vbCr & vbLf & "<a href='http://www.lipsum.com/'>Lorem ipsum</a>, <a--a> <a__a> <_ffFфгοδ:Γσdň /> <ĀՏՋేమ갿/> <a attr='aaa'/> <a attr=""bbb""/> <abc attr='adfad' >" & vbCr & vbLf & "<?pi:pi?> <?pi pi?> <!--comment--> <!----> <?pi a?a??> <!-----> <!--a-a--a--a----b---------> <![CDATA[]]> <![CDATA <abra**> <abra a=*> <<<a> <abra c=78> <button disabled />" & vbCr & vbLf & "<![CDATA[text in CData]]> <![CDATA[ aa ]] aa ]] aa ]]]]]]> život chleba ščot qido hugo jugoslavie <!-"
         Private sampleTextTranslit As String = "Лорэм ипсум долор сит амэт, цонсэцтэтур адиписицинг элит" & vbCr & vbLf & "<a href='http://www.lipsum.com/'>Лорэм ипсум</a>, <a--a> <a__a> <_ffFфгοδ:Γσdň /> <ĀՏՋేమ갿/> <a attr='aaa'/> <a attr=""bbb""/> <abc attr='adfad' >" & vbCr & vbLf & "<?pi:pi?> <?pi pi?> <!--comment--> <!----> <?pi a?a??> <!-----> <!--a-a--a--a----b---------> <![CDATA[]]> <![ЦДАТА <абра**> <абра а=*> <<<a> <абра ц=78> <буттон дисаблэд />" & vbCr & vbLf & "<![CDATA[тэкст ин ЦДата]]> <![CDATA[ аа ]] аа ]] аа ]]]]]]> живот хлэба щот квидо гуго югославиэ <!-"
 
-        <TestMethod()> _
+        <TestMethod()>
         Public Sub Transliterate_NoChangeNoXml()
             Dim dic = New TransliterationDictionary(New KeyValuePair(Of String, String)() {})
             Assert.AreEqual(sampleText, dic.Transliterate(sampleText, False))
         End Sub
 
-        <TestMethod()> _
+        <TestMethod()>
         Public Sub Transliterate_NoChageXml()
             Dim dic = New TransliterationDictionary(New KeyValuePair(Of String, String)() {})
 
@@ -136,91 +136,91 @@ Namespace CollectionsUT.GenericUT
             Assert.AreEqual("a &#xD", dic.Transliterate("a &#xD", True))
         End Sub
 
-        <TestMethod()> _
+        <TestMethod()>
         Public Sub Transliterate_SimpleCyrillicXml()
-            Dim dic = New TransliterationDictionary(New Dictionary(Of String, String)() { _
-                {"a", "а"}, _
-                {"A", "А"}, _
-                {"b", "б"}, _
-                {"B", "Б"}, _
-                {"c", "ц"}, _
-                {"C", "Ц"}, _
-                {"č", "ч"}, _
-                {"Č", "Ч"}, _
-                {"d", "д"}, _
-                {"D", "Д"}, _
-                {"e", "э"}, _
-                {"E", "Э"}, _
-                {"ě", "е"}, _
-                {"Ě", "Е"}, _
-                {"f", "ф"}, _
-                {"F", "Ф"}, _
-                {"g", "г"}, _
-                {"G", "Г"}, _
-                {"h", "г"}, _
-                {"H", "Г"}, _
-                {"i", "и"}, _
-                {"I", "И"}, _
-                {"j", "й"}, _
-                {"J", "Й"}, _
-                {"k", "к"}, _
-                {"K", "К"}, _
-                {"l", "л"}, _
-                {"L", "Л"}, _
-                {"ľ", "љ"}, _
-                {"Ľ", "Љ"}, _
-                {"lj", "љ"}, _
-                {"Lj", "Љ"}, _
-                {"LJ", "Љ"}, _
-                {"m", "м"}, _
-                {"M", "М"}, _
-                {"n", "н"}, _
-                {"N", "Н"}, _
-                {"ň", "њ"}, _
-                {"Ň", "Њ"}, _
-                {"nj", "њ"}, _
-                {"Nj", "Њ"}, _
-                {"NJ", "Њ"}, _
-                {"o", "о"}, _
-                {"O", "О"}, _
-                {"p", "п"}, _
-                {"P", "П"}, _
-                {"q", "кв"}, _
-                {"Q", "Кв"}, _
-                {"r", "р"}, _
-                {"R", "Р"}, _
-                {"s", "с"}, _
-                {"S", "С"}, _
-                {"š", "ш"}, _
-                {"Š", "Ш"}, _
-                {"šč", "щ"}, _
-                {"Šč", "Щ"}, _
-                {"ŠČ", "Щ"}, _
-                {"t", "т"}, _
-                {"T", "Т"}, _
-                {"u", "у"}, _
-                {"U", "У"}, _
-                {"v", "в"}, _
-                {"V", "В"}, _
-                {"w", "в"}, _
-                {"W", "В"}, _
-                {"x", "кс"}, _
-                {"X", "Кс"}, _
-                {"y", "ы"}, _
-                {"Y", "Ы"}, _
-                {"z", "з"}, _
-                {"Z", "З"}, _
-                {"ž", "ж"}, _
-                {"Ž", "Ж"}, _
-                {"ch", "х"}, _
-                {"Ch", "Х"}, _
-                {"CH", "Х"}, _
-                {"ju", "ю"}, _
-                {"Ju", "Ю"}, _
-                {"JU", "Ю"}, _
-                {"ja", "я"}, _
-                {"Ja", "Я"}, _
-                {"JA", "Я"} _
+            Dim dic = New TransliterationDictionary(New Dictionary(Of String, String)() From {
+                {"a", "а"},
+                {"A", "А"},
+                {"b", "б"},
+                {"B", "Б"},
+                {"c", "ц"},
+                {"C", "Ц"},
+                {"č", "ч"},
+                {"Č", "Ч"},
+                {"d", "д"},
+                {"D", "Д"},
+                {"e", "э"},
+                {"E", "Э"},
+                {"ě", "е"},
+                {"Ě", "Е"},
+                {"f", "ф"},
+                {"F", "Ф"},
+                {"g", "г"},
+                {"G", "Г"},
+                {"h", "г"},
+                {"H", "Г"},
+                {"i", "и"},
+                {"I", "И"},
+                {"j", "й"},
+                {"J", "Й"},
+                {"k", "к"},
+                {"K", "К"},
+                {"l", "л"},
+                {"L", "Л"},
+                {"ľ", "љ"},
+                {"Ľ", "Љ"},
+                {"lj", "љ"},
+                {"Lj", "Љ"},
+                {"LJ", "Љ"},
+                {"m", "м"},
+                {"M", "М"},
+                {"n", "н"},
+                {"N", "Н"},
+                {"ň", "њ"},
+                {"Ň", "Њ"},
+                {"nj", "њ"},
+                {"Nj", "Њ"},
+                {"NJ", "Њ"},
+                {"o", "о"},
+                {"O", "О"},
+                {"p", "п"},
+                {"P", "П"},
+                {"q", "кв"},
+                {"Q", "Кв"},
+                {"r", "р"},
+                {"R", "Р"},
+                {"s", "с"},
+                {"S", "С"},
+                {"š", "ш"},
+                {"Š", "Ш"},
+                {"šč", "щ"},
+                {"Šč", "Щ"},
+                {"ŠČ", "Щ"},
+                {"t", "т"},
+                {"T", "Т"},
+                {"u", "у"},
+                {"U", "У"},
+                {"v", "в"},
+                {"V", "В"},
+                {"w", "в"},
+                {"W", "В"},
+                {"x", "кс"},
+                {"X", "Кс"},
+                {"y", "ы"},
+                {"Y", "Ы"},
+                {"z", "з"},
+                {"Z", "З"},
+                {"ž", "ж"},
+                {"Ž", "Ж"},
+                {"ch", "х"},
+                {"Ch", "Х"},
+                {"CH", "Х"},
+                {"ju", "ю"},
+                {"Ju", "Ю"},
+                {"JU", "Ю"},
+                {"ja", "я"},
+                {"Ja", "Я"},
+                {"JA", "Я"}
             })
             Assert.AreEqual("абракадабрака", dic.Transliterate("abrakadabraka", True))
             Assert.AreEqual("АБРАКАДАБРАКА", dic.Transliterate("ABRAKADABRAKA", True))
@@ -261,23 +261,23 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         ''' <summary>A test for <see cref="TransliterationDictionary.GetAllStartingWith"/><summary>
-        <TestMethod()> _
+        <TestMethod()>
         Public Sub GetAllStartingWithTest()
-            Dim dic As New TransliterationDictionary(New Dictionary(Of String, String)() { _
-                {"j", "й"}, _
-                {"ja", "я"}, _
-                {"ju", "ю"}, _
-                {"je", "е"}, _
-                {"jukos", "юкос"}, _
-                {"k", "K"}, _
-                {"kus", "KUS"}, _
-                {"kl", "KL"}, _
-                {"krk", "KRK"}, _
-                {"krkovice", "KRKOVICE"}, _
-                {"kretén", "KRETÉN"}, _
-                {"kráva", "KRÁVA"}, _
-                {"ž", "ж"}, _
-                {"a", "а"} _
+            Dim dic As New TransliterationDictionary(New Dictionary(Of String, String)() From {
+                {"j", "й"},
+                {"ja", "я"},
+                {"ju", "ю"},
+                {"je", "е"},
+                {"jukos", "юкос"},
+                {"k", "K"},
+                {"kus", "KUS"},
+                {"kl", "KL"},
+                {"krk", "KRK"},
+                {"krkovice", "KRKOVICE"},
+                {"kretén", "KRETÉN"},
+                {"kráva", "KRÁVA"},
+                {"ž", "ж"},
+                {"a", "а"}
             })
             Dim js = dic.GetAllStartingWith("j")
             Assert.AreEqual(5, js.Length)
@@ -304,23 +304,23 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         ''' <summary>A test for <see cref="TransliterationDictionary.FirstIndexOfPrefix"/></summary>
-        <TestMethod()> _
+        <TestMethod()>
         Public Sub FirstIndexOfPrefixTest()
-            Dim dic As New TransliterationDictionary(New Dictionary(Of String, String)() { _
-                {"j", "й"}, _
-                {"ja", "я"}, _
-                {"ju", "ю"}, _
-                {"je", "е"}, _
-                {"jukos", "юкос"}, _
-                {"k", "K"}, _
-                {"kus", "KUS"}, _
-                {"kl", "KL"}, _
-                {"krk", "KRK"}, _
-                {"krkovice", "KRKOVICE"}, _
-                {"kretén", "KRETÉN"}, _
-                {"kráva", "KRÁVA"}, _
-                {"ž", "ж"}, _
-                {"a", "а"} _
+            Dim dic As New TransliterationDictionary(New Dictionary(Of String, String)() From {
+                {"j", "й"},
+                {"ja", "я"},
+                {"ju", "ю"},
+                {"je", "е"},
+                {"jukos", "юкос"},
+                {"k", "K"},
+                {"kus", "KUS"},
+                {"kl", "KL"},
+                {"krk", "KRK"},
+                {"krkovice", "KRKOVICE"},
+                {"kretén", "KRETÉN"},
+                {"kráva", "KRÁVA"},
+                {"ž", "ж"},
+                {"a", "а"}
             })
             Assert.AreEqual(dic.FirstIndexOf("j"), dic.FirstIndexOfPrefix("j"))
             Assert.AreEqual(dic.FirstIndexOf("k"), dic.FirstIndexOfPrefix("k"))
@@ -329,23 +329,23 @@ Namespace CollectionsUT.GenericUT
         End Sub
 
         ''' <summary>A test for <see cref="TransliterationDictionary.LastIndexOfPrefix"/><summary>
-        <TestMethod()> _
+        <TestMethod()>
         Public Sub LastIndexOfPrefixTest()
-            Dim dic As New TransliterationDictionary(New Dictionary(Of String, String)() { _
-                {"j", "й"}, _
-                {"ja", "я"}, _
-                {"ju", "ю"}, _
-                {"je", "е"}, _
-                {"jukos", "юкос"}, _
-                {"k", "K"}, _
-                {"kus", "KUS"}, _
-                {"kl", "KL"}, _
-                {"krk", "KRK"}, _
-                {"krkovice", "KRKOVICE"}, _
-                {"kretén", "KRETÉN"}, _
-                {"kráva", "KRÁVA"}, _
-                {"ž", "ж"}, _
-                {"a", "а"} _
+            Dim dic As New TransliterationDictionary(New Dictionary(Of String, String)() From {
+                {"j", "й"},
+                {"ja", "я"},
+                {"ju", "ю"},
+                {"je", "е"},
+                {"jukos", "юкос"},
+                {"k", "K"},
+                {"kus", "KUS"},
+                {"kl", "KL"},
+                {"krk", "KRK"},
+                {"krkovice", "KRKOVICE"},
+                {"kretén", "KRETÉN"},
+                {"kráva", "KRÁVA"},
+                {"ž", "ж"},
+                {"a", "а"}
             })
             Assert.AreEqual(dic.FirstIndexOf("jukos"), dic.LastIndexOfPrefix("j"))
             Assert.AreEqual(dic.FirstIndexOf("kus"), dic.LastIndexOfPrefix("k"))

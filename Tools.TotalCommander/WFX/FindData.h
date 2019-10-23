@@ -42,17 +42,17 @@ namespace Tools {
         public:
             /// <summary>Ceates new instance of <see cref="FindData"/> from <see cref="WIN32_FIND_DATAW"/></summary>
             /// <param name="original"><see cref="WIN32_FIND_DATAW"/> to initialize new instnce with</param>
-            /// <version version="1.5.4">Accessiblity changed from <see langword="friend"/> to <see langword="public"/>.<version>
+            /// <version version="1.5.4">Accessibility changed from <see langword="friend"/> to <see langword="public"/>.<version>
             [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
             FindData(const WIN32_FIND_DATAW& original);
             /// <summary>Converts <see cref="FindData"/> to <see cref="WIN32_FIND_DATA"/></summary>
             /// <returns><see cref="WIN32_FIND_DATAW"/> created from this instance</returns>
-            /// <version version="1.5.4">Accessiblity changed from <see langword="friend"/> to <see langword="public"/>.<version>
+            /// <version version="1.5.4">Accessibility changed from <see langword="friend"/> to <see langword="public"/>.<version>
             [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
             WIN32_FIND_DATAW ToFindData();
             /// <summary>Populates given <see cref="WIN32_FIND_DATAW"/> with data stored in current instance</summary>
             /// <param name="target">A <see cref="WIN32_FIND_DATAW"/> to be populated</param>
-            /// <version version="1.5.4">Accessiblity changed from <see langword="friend"/> to <see langword="public"/>.<version>
+            /// <version version="1.5.4">Accessibility changed from <see langword="friend"/> to <see langword="public"/>.<version>
             [CLSCompliant(false), EditorBrowsable(EditorBrowsableState::Advanced)]
             void Populate(WIN32_FIND_DATAW& target);
 

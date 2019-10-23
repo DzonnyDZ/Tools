@@ -1,6 +1,5 @@
 Imports System.Windows.Forms
 Namespace WindowsT.FormsT
-    '#If Config <= Nightly Then set in Tools.vbproj
     'Stage:Nightly
     'xASAP: Comment,Attributes,Expose everything, inherit ControlWithStatus, Conditional file
     'ASAP: Remove
@@ -108,4 +107,3 @@ Namespace WindowsT.FormsT
         End Property
     End Class
 End Namespace
-

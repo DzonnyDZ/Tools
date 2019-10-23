@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices, System.Reflection, System.Windows.Threading
 Namespace WindowsT.WPF.ThreadingT
-#If True
     ''' <summary>Provides extension methods for the <see cref="Dispatcher"/> class</summary>
     ''' <seealso cref="Dispatcher"/><seealso cref="Tools.ThreadingT.IInvokeExtensions"/>
     ''' <version version="1.5.3">This module is new in version 1.5.3</version>
@@ -946,4 +945,3 @@ Namespace WindowsT.WPF.ThreadingT
 #End Region
     End Module
 End Namespace
-#End If

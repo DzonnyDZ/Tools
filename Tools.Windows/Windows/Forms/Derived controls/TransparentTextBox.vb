@@ -3,7 +3,7 @@ Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModelT
 Imports System.Reflection
-#If True
+
 Namespace WindowsT.FormsT
     ''' <summary><see cref="RichTextBox"/> with transparent background</summary>
     ''' <remarks>This control is 100% transaprent and cannot have any other than transparent <see cref="TransparentTextBox.BackColor"/>. To make it semi-transparent, put it onto semitransparent panel.</remarks>
@@ -158,7 +158,6 @@ Namespace WindowsT.FormsT
 #End Region
     End Class
 End Namespace
-#End If
 
 
 

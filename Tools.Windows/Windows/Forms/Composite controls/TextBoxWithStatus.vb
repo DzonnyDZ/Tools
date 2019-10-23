@@ -1,6 +1,5 @@
 Imports System.Windows.Forms
 Namespace WindowsT.FormsT
-    '#If Trueset in Tools.vbproj
     'Stage:Nightly
     'xASAP: Comment,Attributes,  Expose everything, inherit ControlWithStatus, conditional file
     'ASAP: Remove

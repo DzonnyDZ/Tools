@@ -2,16 +2,16 @@ Imports System.Windows.Forms
 Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModelT
-#If True
+
 Namespace WindowsT.FormsT
     ''' <summary><see cref="Label"/> which's background *really* transparent</summary>
     ''' <remarks>To make this contro, transparent or semi-transparent se background color to color with alpha chanel</remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
-    <Prefix("tlb")> _
-    <DefaultProperty("Text"), DefaultEvent("Click")> _
-    <DefaultBindingProperty("Text")> _
-    <ToolboxBitmap(GetType(TransparentLabel), "TransparentLabel.bmp")> _
+    <Prefix("tlb")>
+    <DefaultProperty("Text"), DefaultEvent("Click")>
+    <DefaultBindingProperty("Text")>
+    <ToolboxBitmap(GetType(TransparentLabel), "TransparentLabel.bmp")>
     Public Class TransparentLabel : Inherits Label
 #Region "CTors"
         ''' <summary>CTor</summary>
@@ -77,10 +77,10 @@ Namespace WindowsT.FormsT
 #Region "Properties"
         ''' <summary>Gets or sets a value indicating whether the control is automatically resized to display its entire contents.</summary>
         ''' <returns>true if the control adjusts its width to closely fit its contents; otherwise, false. The default is false.</returns>
-        <DefaultValue(True), EditorBrowsable(EditorBrowsableState.Always)> _
-        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "AutoSize_d")> _
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Layout), RefreshProperties(RefreshProperties.All), Localizable(True)> _
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible), Browsable(True)> _
+        <DefaultValue(True), EditorBrowsable(EditorBrowsableState.Always)>
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "AutoSize_d")>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Layout), RefreshProperties(RefreshProperties.All), Localizable(True)>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible), Browsable(True)>
         Public Overrides Property AutoSize() As Boolean
             Get
                 Return MyBase.AutoSize
@@ -91,7 +91,7 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or sets the background color for the control.</summary>
         ''' <returns>A <see cref="System.Drawing.Color"/> that represents the background color of the control.</returns>
-        <DefaultValue(GetType(Color), "Transparent")> _
+        <DefaultValue(GetType(Color), "Transparent")>
         Public Overrides Property BackColor() As System.Drawing.Color
             Get
                 Return MyBase.BackColor
@@ -112,4 +112,3 @@ Namespace WindowsT.FormsT
 #End Region
     End Class
 End Namespace
-#End If

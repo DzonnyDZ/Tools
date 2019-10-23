@@ -142,7 +142,7 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Byte_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
+        ''' <exception cref="ArgumentException">Value stored in IPTC stream has length neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Byte_Binary_Value(ByVal Key As DataSetIdentification) As List(Of Byte)
@@ -170,7 +170,7 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.UShort_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
+        ''' <exception cref="ArgumentException">Value stored in IPTC stream has length neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property UShort_Binary_Value(ByVal Key As DataSetIdentification) As List(Of UShort)
@@ -198,7 +198,7 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.UInt_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <exception cref="ArgumentException">Value stored in IPTC stream has lenght neither 1, 2, 4 nor 8 (in Getter)</exception>
+        ''' <exception cref="ArgumentException">Value stored in IPTC stream has length neither 1, 2, 4 nor 8 (in Getter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property UInt_Binary_Value(ByVal Key As DataSetIdentification) As List(Of UInt32)
@@ -226,8 +226,8 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.NumericChar"/></summary>
         ''' <param name="key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed length of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> determines fixed length (ignored in Getter)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <exception cref="InvalidCastException">Cannot convert stored bytes into number (in Getter)</exception>
         ''' <exception cref="ArgumentException">
@@ -235,7 +235,7 @@ Namespace MetadataT.IptcT
         ''' <exception cref="LengthConstraintViolationException">Number cannot be stored in given number of bytes (if <paramref name="Len"/> is non-zero and <see cref="IgnoreLenghtConstraints"/> is false, in Setter)</exception>
         ''' <version version="1.5.3">Fix: <paramref name="Len"/> is not enforced in setter.</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when length constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property NumericChar_Value(ByVal key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of Decimal)
             Get
@@ -271,9 +271,9 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.GraphicCharacters"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
+        ''' <param name="Len">Maximal or fixed length of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> determines fixed length instead of maximal if True (ignored in Getter)</param>
+        ''' <param name="Encoding">Encoding to be used. Is omitted or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
         ''' <exception cref="ArgumentException"><paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or-  One of values being set contains non-graphic character (in setter)</exception>
         ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true).</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
@@ -281,7 +281,7 @@ Namespace MetadataT.IptcT
         ''' <seelaso cref="Encoding"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when length constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
@@ -326,9 +326,9 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.TextWithSpaces"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
+        ''' <param name="Len">Maximal or fixed length of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> determines fixed length instead of maximal if True (ignored in Getter)</param>
+        ''' <param name="Encoding">Encoding to be used. Is omitted or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
         ''' <exception cref="ArgumentException">
         ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or-  One of values being set contains non-graphic-non-space character (in setter) -or- <paramref name="Len"/> is negative (in setter)</exception>
         ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true.</exception>
@@ -336,7 +336,7 @@ Namespace MetadataT.IptcT
         ''' <seelaso cref="Tag"/><seelaso cref="Encoding"/><seelaso cref="Text_Value"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when length constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property TextWithSpaces_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
@@ -382,9 +382,9 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.TextWithSpaces"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
+        ''' <param name="Len">Maximal or fixed length of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> determines fixed length instead of maximal if True (ignored in Getter)</param>
+        ''' <param name="Encoding">Encoding to be used. Is omitted or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
         ''' <exception cref="ArgumentException"><paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- One of values being set contains non-graphic-non-space-non-cr-non-lf character (in setter)</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
         ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true.</exception>
@@ -392,7 +392,7 @@ Namespace MetadataT.IptcT
         ''' <seelaso cref="Tag"/><seelaso cref="Encoding"/><seelaso cref="TextWithSpaces_Value"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when length constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
@@ -439,14 +439,14 @@ Namespace MetadataT.IptcT
         Private Const BW460_460 As Integer = 460
         ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.BW460"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of serialized bitmap (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> represents fixed lenght of serialized bitmap (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed length of serialized bitmap (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> represents fixed length of serialized bitmap (ignored in Getter)</param>
         ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter) -or- Bitmap being set has width different form 460 (in Setter)</exception>
-        ''' <exception cref="LengthConstraintViolationException">Bitmap violates lenght constraint after serialization (in Setter; not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false)</exception>
+        ''' <exception cref="LengthConstraintViolationException">Bitmap violates length constraint after serialization (in Setter; not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false)</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when length constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
             Get
@@ -511,7 +511,7 @@ Namespace MetadataT.IptcT
         End Function
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Enum_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Type">Type of neumeration </param>
+        ''' <param name="Type">Type of enumeration </param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <exception cref="ArgumentException">
         ''' Underlying type of enumeration is neither <see cref="Byte"/>, <see cref="UShort"/>, <see cref="UInteger"/>, <see cref="ULong"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="Integer"/> nor <see cref="Long"/> (in Setter) -or-
@@ -572,19 +572,19 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Enum_NumChar"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Type">Type of neumeration </param>
-        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Type">Type of enumeration </param>
+        ''' <param name="Len">Maximal or fixed length of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <exception cref="ArgumentException">
         ''' <paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 -or-
         ''' <paramref name="Type"/> is not <see cref="System.Enum"/> (in Setter)</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Restrict"/> is True and value being set is not member of <paramref name="Type"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><see cref="RestrictAttribute.Restrict"/> is True and value being set is not member of <paramref name="Type"/></exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <exception cref="MissingMethodException">Failed to create instance of given enumeration (in Getter; sohold not occure if norma enumeration is passed to <paramref name="Type"/>)</exception>
-        ''' <exception cref="LengthConstraintViolationException">Encoded length of string violates lenght constraint (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
+        ''' <exception cref="LengthConstraintViolationException">Encoded length of string violates length constraint (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
         ''' <version version="1.5.3">Fix: <paramref name="Len"/> is not enforced in setter.</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when length constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of [Enum])
             Get
@@ -624,7 +624,7 @@ Namespace MetadataT.IptcT
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.CCYYMMDD"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
-        ''' <exception cref="ArgumentException">Stored date has lenght different from 8 (in Getter)</exception>
+        ''' <exception cref="ArgumentException">Stored date has length different from 8 (in Getter)</exception>
         ''' <exception cref="InvalidCastException">Stored date contains non-number (in Getter)</exception>
         ''' <exception cref="ArgumentOutOfRangeException">Stored date's value of month or day is invalid (i.e. 0 or 13 or more months or 0 or more than valid in month days) (in Getter)</exception>
         <EditorBrowsableAttribute(EditorBrowsableState.Advanced)>
@@ -655,12 +655,12 @@ Namespace MetadataT.IptcT
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.CCYYMMDDOmmitable"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
-        ''' <exception cref="ArgumentException">Stored date ha lenght different from 8 (in Getter)</exception>
+        ''' <exception cref="ArgumentException">Stored date ha length different from 8 (in Getter)</exception>
         ''' <exception cref="InvalidCastException">Stored date contains non-number (in Getter)</exception>
         ''' <exception cref="ArgumentOutOfRangeException">
         ''' Stored date's value of month or day is invalid (i.e. 13 or more months or more than 31 days) (in Getter) -or-
         ''' Date being set is invalid (day is invalid in month context) (in Setter) -or-
-        ''' Month or year is ommited when day is not ommited or year is ommited when month or day is not ommited (in Setter)
+        ''' Month or year is omitted when day is not omitted or year is omitted when month or day is not omitted (in Setter)
         ''' </exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property CCYYMMDDOmmitable_Value(ByVal Key As DataSetIdentification) As List(Of OmmitableDate)
@@ -684,7 +684,7 @@ Namespace MetadataT.IptcT
                         If item.Year <> 0 AndAlso item.Month <> 0 AndAlso item.Day <> 0 Then
                             Dim dt As New Date(item.Year, item.Month, item.Day)
                         End If
-                        If (item.Day <> 0 AndAlso (item.Month = 0 OrElse item.Year = 0)) OrElse (item.Month <> 0 AndAlso item.Year = 0) Then Throw New ArgumentException("If year is ommited also month must be ommited, if month is ommited also day must be ommited")
+                        If (item.Day <> 0 AndAlso (item.Month = 0 OrElse item.Year = 0)) OrElse (item.Month <> 0 AndAlso item.Year = 0) Then Throw New ArgumentException("If year is omitted also month must be omitted, if month is omitted also day must be omitted")
                         values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
                     Next item
                 End If
@@ -701,7 +701,7 @@ Namespace MetadataT.IptcT
         ''' <exception cref="ArgumentOutOfRangeException">Stored time is out of range of possible values (see <seealso cref="Time"/> for details; <see cref="M:MetadataT.IptcT.IptcDataTypes.Time.#ctor(System.TimeSpan)"/> when length of stored time is 6)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <seelaso cref="Tag"/><seelaso cref="HHMMSS_Value"/>
-        ''' <version version="1.5.3">In getter: When stored time lenght is 6 <see cref="HHMMSS_Value"/> is returned instead (with zero offset; previously <see cref="ArgumentException"/> used to be thrown).</version>
+        ''' <version version="1.5.3">In getter: When stored time length is 6 <see cref="HHMMSS_Value"/> is returned instead (with zero offset; previously <see cref="ArgumentException"/> used to be thrown).</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property HHMMSS_HHMM_Value(ByVal Key As DataSetIdentification) As List(Of Time)
             Get
@@ -736,10 +736,10 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Byte_Binary"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed data lenght (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Len">Maximal or fixed data length (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
         ''' <param name="Fixed"><paramref name="Len"/> is fixed length (ignored in Getter)</param>
         ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter)</exception>
-        ''' <exception cref="LengthConstraintViolationException">Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
+        ''' <exception cref="LengthConstraintViolationException">Length of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
         <EditorBrowsable(EditorBrowsableState.Always)>
         Protected Overridable Property ByteArray_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Byte())
@@ -760,7 +760,7 @@ Namespace MetadataT.IptcT
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.UNO"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentNullException">Stored value is null or empty (in Getter)</exception>
-        ''' <exception cref="ArgumentException">IPR or OVI part of stored value is invalid: contains unallowed charactes (white space, *, :, /, ?), is empty or violates lenght constraint. See <seealso cref="iptcUNO.OVI"/> and <seealso cref="iptcUNO.IPR"/> for more information (in Getter)</exception>
+        ''' <exception cref="ArgumentException">IPR or OVI part of stored value is invalid: contains unallowed charactes (white space, *, :, /, ?), is empty or violates length constraint. See <seealso cref="iptcUNO.OVI"/> and <seealso cref="iptcUNO.IPR"/> for more information (in Getter)</exception>
         ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in stored value (in Getter)</exception>
         ''' <exception cref="ArgumentException">UCD component of stored value is to short or contains invalid date (in Getter)</exception>
         ''' <exception cref="InvalidCastException">UCD component odf stored value contains non-numeric character (in Getter)</exception>
@@ -790,9 +790,9 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Num2_Str"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="MaxLenght">Maximal lenght of serialized byte array (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Encoding">Encoding for string part (numeric should always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> or default is used.</param>
-        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 2 bytes (not thrown for entire lenght when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception> 
+        ''' <param name="MaxLenght">Maximal length of serialized byte array (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Encoding">Encoding for string part (numeric should always uses <see cref="System.Text.Encoding.ASCII"/>). If omitted or null then <see cref="Encoding"/> or default is used.</param>
+        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of length 2 bytes (not thrown for entire length when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception> 
         ''' <seelaso cref="Encoding"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies.</version>
@@ -844,9 +844,9 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Num2_Str"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="MaxLenght">Maximal lenght of serialized byte array (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Encoding">Encoding for string patr (numeric should always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> or default is used.</param>
-        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 3 bytes (not thrown for entire length when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception> 
+        ''' <param name="MaxLenght">Maximal length of serialized byte array (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Encoding">Encoding for string part (numeric should always uses <see cref="System.Text.Encoding.ASCII"/>). If omitted or null then <see cref="Encoding"/> or default is used.</param>
+        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of length 3 bytes (not thrown for entire length when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception> 
         ''' <seelaso cref="Encoding"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies.</version>
@@ -897,7 +897,7 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.SubjectReference"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Encoding">Encoding used to encode and decode names. If ommited <see cref="Encoding"/> or default is used.</param>
+        ''' <param name="Encoding">Encoding used to encode and decode names. If omitted <see cref="Encoding"/> or default is used.</param>
         ''' <exception cref="IndexOutOfRangeException">Stored value have more than 5 :-separated parts (in Getter)</exception>
         ''' <exception cref="ArgumentException">Stored value have less then 5 :-separated parts (in Getter)</exception>
         ''' <exception cref="InvalidOperationException">Setting value which's part(s) serializes into byte array of bad lengths (allowed lenghts are 1÷32 for <see cref="iptcSubjectReference.IPR"/>, 8 for <see cref="iptcSubjectReference.SubjectReferenceNumber"/> and 0÷64 for names) (in setter)</exception>
@@ -969,16 +969,16 @@ Namespace MetadataT.IptcT
 
         ''' <summary>Gets or sets values(s) of type <see cref="IPTCTypes.Alpha"/></summary>
         ''' <param name="Key">Record and dataset number</param>
-        ''' <param name="Len">Maximal or fixed lenght of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <param name="Encoding">Encoding to be used. Is ommited or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
+        ''' <param name="Len">Maximal or fixed length of string (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> determines fixed length instead of maximal if True (ignored in Getter)</param>
+        ''' <param name="Encoding">Encoding to be used. Is omitted or nothing then <see cref="IPTC.Encoding"/> or default is used</param>
         ''' <exception cref="ArgumentException"><paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- One of values being set contains non-alpha character (in setter)</exception>
         ''' <exception cref="LengthConstraintViolationException">One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded (not thrown when <paramref name="Fixed"/> is true and <see cref="IgnoreLenghtConstraints"/> is false).</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <seelaso cref="Encoding"/>
         ''' <version version="1.5.3">When <paramref name="Encoding"/> is null <see cref="Encoding"/> is used for records 2 - 6 and 8, otherwise <see cref="System.Text.Encoding.ASCII"/> (equal to ISO 646 IRV) is used. (Previous behavior was use <see cref="Encoding"/> whenever <paramref name="Encoding"/> is null. Also note that <see cref="Encoding"/> behavior is changed in 1.5.3.)</version>
         ''' <version version="1.5.3"><see cref="IgnoreLenghtConstraints"/> applies when <paramref name="Fixed"/> is false.</version>
-        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when lenght constraint is violated.</see></version>
+        ''' <version version="1.5.3"><see cref="LengthConstraintViolationException">Is thrown instead of <see cref="ArgumentException"/> when length constraint is violated.</see></version>
         <EditorBrowsable(EditorBrowsableState.Advanced)>
         Protected Overridable Property Alpha_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
@@ -1023,8 +1023,8 @@ Namespace MetadataT.IptcT
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.StringEnum"/> type</summary>
         ''' <param name="Key">Record or dataset number</param>
         ''' <param name="Type">Type of enum in value</param>
-        ''' <param name="Len">Maximal or fixed lenght of string after encoding (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
-        ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
+        ''' <param name="Len">Maximal or fixed length of string after encoding (ignored in Getter, and in setter when <paramref name="Fixed"/> is false and <see cref="IgnoreLenghtConstraints"/> is true; 0 for no limit)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> determines fixed length instead of maximal if True (ignored in Getter)</param>
         ''' <exception cref="InvalidEnumArgumentException"><see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> set to true and value is not member of <see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> (in Setter)</exception>
         ''' <exception cref="ArrayTypeMismatchException"><see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> differs from <paramref name="Type"/> (in setter)</exception>
         ''' <exception cref="ArgumentException">
@@ -1257,28 +1257,28 @@ Namespace MetadataT.IptcT
 #End Region
 
 
-        ''' <summary>Gets or sets value indicating wheather this instance of <see cref="Iptc"/> allows to save limited variable-length values when value being set exceeds maximum allowed lenght of the property.</summary>
-        ''' <value>True to allow saving variable-lenght values with lenght exceeding lenght constraint; false to throw <see cref="LengthConstraintViolationException"/>.</value>
-        ''' <remarks>It's always possible to read values violating lenght constraints.</remarks>
+        ''' <summary>Gets or sets value indicating wheather this instance of <see cref="Iptc"/> allows to save limited variable-length values when value being set exceeds maximum allowed length of the property.</summary>
+        ''' <value>True to allow saving variable-length values with length exceeding length constraint; false to throw <see cref="LengthConstraintViolationException"/>.</value>
+        ''' <remarks>It's always possible to read values violating length constraints.</remarks>
         ''' <version version="1.5.3">This property is new in version 1.5.3</version>
         Public Property IgnoreLenghtConstraints As Boolean
     End Class
     ''' <summary>Exception thrown when length constraint of string- or byte-oriented IPTC property is violated (and such violation is not allowed)</summary>
     Public Class LengthConstraintViolationException : Inherits ArgumentException
-        ''' <summary>CTor from property name, maximal allowed lenght (in bytes) and fixed indicator</summary>
+        ''' <summary>CTor from property name, maximal allowed length (in bytes) and fixed indicator</summary>
         ''' <param name="PropertyName">Name of property setting of which caused the exception (see <see cref="PropertyName"/>)</param>
         ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
-        ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
+        ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed length) (see <see cref="Fixed"/>)</param>
         Public Sub New(ByVal PropertyName$, ByVal MaximalLength%, Optional ByVal Fixed As Boolean = False)
             MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, MetadataT.IptcT.IptcResources.StringValueOfTheProperty0MustBe1BytesLong, MetadataT.IptcT.IptcResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
             _PropertyName = PropertyName
             _MaximalLength = MaximalLength
             _Fixed = Fixed
         End Sub
-        ''' <summary>CTor from <see cref="DataSetIdentification"/>, maximal allowed lenght (in bytes) and fixed indicator</summary>
+        ''' <summary>CTor from <see cref="DataSetIdentification"/>, maximal allowed length (in bytes) and fixed indicator</summary>
         ''' <param name="Property">DataSet (IPTC property) which caused the exception (see <see cref="PropertyName"/>)</param>
         ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
-        ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
+        ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed length) (see <see cref="Fixed"/>)</param>
         Public Sub New(ByVal [Property] As DataSetIdentification, ByVal MaximalLength%, Optional ByVal fixed As Boolean = False)
             MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(
                        If(fixed,
@@ -1307,7 +1307,7 @@ Namespace MetadataT.IptcT
                 Return _MaximalLength
             End Get
         End Property
-        ''' <summary>True when <see cref="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght)</summary>
+        ''' <summary>True when <see cref="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed length)</summary>
         Public ReadOnly Property Fixed() As Boolean
             <DebuggerStepThrough()> Get
                 Return _Fixed

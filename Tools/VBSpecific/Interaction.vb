@@ -56,7 +56,7 @@
         ''' <param name="value">Item to be returned if has meaningful value</param>
         ''' <param name="alternative">Alternative (fallback) item to be returned if <paramref name="value"/> has no meaningful value</param>
         ''' <returns><paramref name="value"/> if it is not nothing and is not <see cref="DBNull"/>, <paramref name="alternative"/> otherwise</returns>
-        ''' <exception cref="InvalidCastException">Casting from <paramref name="value"/> to <paramref name="T"/> failed</exception>
+        ''' <exception cref="InvalidCastException">Casting from <paramref name="value"/> to <typeparamref name="T"/> failed</exception>
         ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
         ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
         Public Function IfNull(Of T)(ByVal value As Object, ByVal alternative As T) As T

@@ -3,7 +3,7 @@ Imports System.Globalization, System.Globalization.CultureInfo
 Imports System.Xml
 Imports System.Xml.Linq
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
 
     ''' <summary>Type converter between <see cref="String"/> and <see cref="Boolean"/> which converts XML (XSD) string representation of bootlan to <see cref="Boolean"/> and vice-versa</summary>
@@ -101,4 +101,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
-#End If

@@ -15,8 +15,8 @@ Namespace TextT.UnicodeT
         ''' <param name="name">Unlocalized name of the property as used in Unicode standard (UCD)</param>
         ''' <param name="source">Name of file from Unicode Character Database values of this property are defined in</param>
         ''' <param name="type">Type of the property</param>
-        ''' <param name="status">Status of the proeprty</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="type"/> is not one of <see cref="UnicodePropertyType"/> values -or- <paramref name="status"/> is not one of <see cref="UnicodeProeprtyStatus"/> values.</exception>
+        ''' <param name="status">Status of the property</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="type"/> is not one of <see cref="UnicodePropertyType"/> values -or- <paramref name="status"/> is not one of <see cref="UnicodePropertyStatus"/> values.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="name"/> is null</exception>
         Friend Sub New(name$, source$, type As UnicodePropertyType, status As UnicodePropertyStatus)
             If name Is Nothing Then Throw New ArgumentNullException("name")
@@ -62,15 +62,15 @@ Namespace TextT.UnicodeT
     ''' <summary>Implements <see cref="UnicodePropertyAttribute"/> that actually can be applied on properties.</summary>
     ''' <remarks>Only purpose of this class is to provide public constructors that are defined as internal in <see cref="UnicodePropertyAttribute"/>.</remarks>
     ''' <version version="1.5.4">This class is new in version 1.5.4</version>
-    <AttributeUsage(AttributeTargets.Property, allowmultiple:=False, inherited:=True)>
+    <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Friend NotInheritable Class UcdPropertyAttribute
         Inherits UnicodePropertyAttribute
         ''' <summary>CTor - creates a new instance of the <see cref="UcdPropertyAttribute"/> class</summary>
         ''' <param name="name">Unlocalized name of the property as used in Unicode standard (UCD)</param>
         ''' <param name="source">Name of file from Unicode Character Database values of this property are defined in</param>
         ''' <param name="type">Type of the property</param>
-        ''' <param name="status">Status of the proeprty</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="type"/> is not one of <see cref="UnicodePropertyType"/> values -or- <paramref name="status"/> is not one of <see cref="UnicodeProeprtyStatus"/> values.</exception>
+        ''' <param name="status">Status of the property</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="type"/> is not one of <see cref="UnicodePropertyType"/> values -or- <paramref name="status"/> is not one of <see cref="UnicodePropertyStatus"/> values.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="name"/> is null</exception>
         Public Sub New(name$, source$, type As UnicodePropertyType, status As UnicodePropertyStatus)
             MyBase.New(name, source, type, status)

@@ -353,7 +353,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <summary>CTor from byte array</summary>
         ''' <param name="Bytes">Bytes to initialize new instance by</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Bytes"/> is null or empty</exception>
-        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed charactes (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
+        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed characters (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
         ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Bytes"/></exception>
         ''' <exception cref="InvalidCastException">UCD component contains non-numeric character</exception>
         ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="ODE"/> for more information.</exception>
@@ -366,8 +366,8 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <summary>Pseudo-CTor from string</summary>
         ''' <param name="Text"><see cref="String"/> to initialize instance with</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Text"/> is null or empty</exception>
-        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed charactes (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
-        ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Bytes"/></exception>
+        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed characters (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
+        ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Text"/></exception>
         ''' <exception cref="InvalidCastException">UCD component contains non-numeric character</exception>
         ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="ODE"/> for more information.</exception>
         Private Sub Init(ByVal Text As String)
@@ -393,8 +393,8 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <param name="Text"><see cref="String"/> to create <see cref="iptcUNO"/> from</param>
         ''' <returns>New instance of <see cref="iptcUNO"/> initialized by <paramref name="Text"/></returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Text"/> is null or empty</exception>
-        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed charactes (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
-        ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Bytes"/></exception>
+        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed characters (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
+        ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Text"/></exception>
         ''' <exception cref="InvalidCastException">UCD component contains non-numeric character</exception>
         ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="ODE"/> for more information.</exception>
         Public Shared Narrowing Operator CType(ByVal Text As String) As IptcUno
@@ -403,8 +403,8 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <summary>CTor from string</summary>
         ''' <param name="Text"><see cref="String"/> to create instance from</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Text"/> is null or empty</exception>
-        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed charactes (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
-        ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Bytes"/></exception>
+        ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed characters (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information -or- UCD component is to short or contains invalid date</exception>
+        ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Text"/></exception>
         ''' <exception cref="InvalidCastException">UCD component contains non-numeric character</exception>
         ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="ODE"/> for more information.</exception>
         Public Sub New(ByVal Text As String)
@@ -1704,7 +1704,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
         ''' <summary>Gets type of enumeration derived class contains</summary>
         Public MustOverride ReadOnly Property EnumType() As Type
         ''' <summary>Gets value indicating if this instance contains value of specified type</summary>
-        ''' <returns>True oif derived class's <see cref="contains"/> returns true for <paramref name="T"/> or if <paramref name="T"/> is <see cref="Decimal"/> and derived class's <see cref="contains"/> returns true for <see cref="EnumType"/></returns>
+        ''' <returns>True oif derived class's <see cref="contains"/> returns true for <typeparamref name="T"/> or if <typeparamref name="T"/> is <see cref="Decimal"/> and derived class's <see cref="contains"/> returns true for <see cref="EnumType"/></returns>
         Private ReadOnly Property containsImpl(ByVal T As System.Type) As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of Decimal, String).contains
             Get
                 Return (T.Equals(GetType(Decimal)) AndAlso contains(EnumType)) OrElse contains(T)
@@ -1919,7 +1919,7 @@ Namespace MetadataT.IptcT.IptcDataTypes
 
         ''' <summary>Identifies whether this instance contains value of specified type</summary>
         ''' <param name="T">Type to be contained</param>
-        ''' <returns>True if this instance contais value of type <paramref name="T"/> otherwise False</returns>
+        ''' <returns>True if this instance contais value of type <typeparamref name="T"/> otherwise False</returns>
         Public Overrides ReadOnly Property contains(ByVal T As System.Type) As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of TEnum, String).contains
             Get
                 Return T.Equals(GetType(TEnum)) AndAlso ContainsEnum OrElse T.Equals(GetType(String))

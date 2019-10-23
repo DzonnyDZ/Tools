@@ -10,15 +10,15 @@ Public MustInherit Class CharComparer
     ''' <param name="x">The first object to compare.</param>
     ''' <param name="y">The second object to compare.</param>
     Public MustOverride Function Compare(x As Char, y As Char) As Integer Implements System.Collections.Generic.IComparer(Of Char).Compare
-    ''' <summary>When overridden in derivced class determines whether the specified objects are equal.</summary>
+    ''' <summary>When overridden in derived class determines whether the specified objects are equal.</summary>
     ''' <returns>true if the specified objects are equal; otherwise, false.</returns>
-    ''' <param name="x">The first object of type <paramref name="T" /> to compare.</param>
-    ''' <param name="y">The second object of type <paramref name="T" /> to compare.</param>
+    ''' <param name="x">The first <see cref="Char"/> to compare.</param>
+    ''' <param name="y">The second <see cref="Char"/> to compare.</param>
     Public MustOverride Overloads Function Equals(x As Char, y As Char) As Boolean Implements System.Collections.Generic.IEqualityComparer(Of Char).Equals
     ''' <summary>When overridden in derived class returns a hash code for the specified object.</summary>
     ''' <returns>A hash code for the specified object.</returns>
-    ''' <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
-    ''' <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
+    ''' <param name="obj">The <see cref="Object" /> for which a hash code is to be returned.</param>
+    ''' <exception cref="ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
     Public MustOverride Overloads Function GetHashCode(obj As Char) As Integer Implements System.Collections.Generic.IEqualityComparer(Of Char).GetHashCode
 
 #Region "Shared properties"
@@ -88,7 +88,7 @@ Public MustInherit Class CharComparer
     End Function
 End Class
 
-''' <summary>Implements <see cref="CharComparer"/> thet compares character code points</summary>
+''' <summary>Implements <see cref="CharComparer"/> that compares character code points</summary>
 ''' <remarks>This is singleton class</remarks>
 ''' <version version="1.5.4">This class is new in version 1.5.4</version>
 Friend NotInheritable Class CodePointCharComparer
@@ -115,8 +115,8 @@ Friend NotInheritable Class CodePointCharComparer
 
     ''' <summary>Determines whether the specified objects are equal.</summary>
     ''' <returns>true if the specified objects are equal; otherwise, false.</returns>
-    ''' <param name="x">The first object of type <paramref name="T" /> to compare.</param>
-    ''' <param name="y">The second object of type <paramref name="T" /> to compare.</param>
+    ''' <param name="x">The first object of type <typeparamref name="T" /> to compare.</param>
+    ''' <param name="y">The second object of type <typeparamref name="T" /> to compare.</param>
     Public Overloads Overrides Function Equals(x As Char, y As Char) As Boolean
         Return AscW(x) = AscW(y)
     End Function
@@ -124,7 +124,7 @@ Friend NotInheritable Class CodePointCharComparer
     ''' <summary>Returns a hash code for the specified object.</summary>
     ''' <returns>A hash code for the specified object.</returns>
     ''' <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
-    ''' <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
+    ''' <exception cref="ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
     Public Overloads Overrides Function GetHashCode(obj As Char) As Integer
         Return AscW(obj)
     End Function
@@ -158,8 +158,8 @@ Public NotInheritable Class StringComparerBasedCharComparer
 
     ''' <summary>Determines whether the specified objects are equal.</summary>
     ''' <returns>true if the specified objects are equal; otherwise, false.</returns>
-    ''' <param name="x">The first object of type <paramref name="T" /> to compare.</param>
-    ''' <param name="y">The second object of type <paramref name="T" /> to compare.</param>
+    ''' <param name="x">The first object of type <typeparamref name="T" /> to compare.</param>
+    ''' <param name="y">The second object of type <typeparamref name="T" /> to compare.</param>
     Public Overloads Overrides Function Equals(x As Char, y As Char) As Boolean
         Return internal.Equals(x, y)
     End Function
@@ -167,7 +167,7 @@ Public NotInheritable Class StringComparerBasedCharComparer
     ''' <summary>Returns a hash code for the specified object.</summary>
     ''' <returns>A hash code for the specified object.</returns>
     ''' <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
-    ''' <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
+    ''' <exception cref="ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
     Public Overloads Overrides Function GetHashCode(obj As Char) As Integer
         Return internal.GetHashCode(obj)
     End Function
@@ -182,8 +182,8 @@ Public NotInheritable Class StringComparerBasedCharComparer
 
     ''' <summary>Determines whether the specified objects are equal.</summary>
     ''' <returns>true if the specified objects are equal; otherwise, false.</returns>
-    ''' <param name="x">The first object of type <paramref name="T" /> to compare.</param>
-    ''' <param name="y">The second object of type <paramref name="T" /> to compare.</param>
+    ''' <param name="x">The first object of type <typeparamref name="T" /> to compare.</param>
+    ''' <param name="y">The second object of type <typeparamref name="T" /> to compare.</param>
     Private Overloads Function Equals(x As String, y As String) As Boolean Implements System.Collections.Generic.IEqualityComparer(Of String).Equals
         Return internal.Equals(x, y)
     End Function
@@ -191,7 +191,7 @@ Public NotInheritable Class StringComparerBasedCharComparer
     ''' <summary>Returns a hash code for the specified object.</summary>
     ''' <returns>A hash code for the specified object.</returns>
     ''' <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
-    ''' <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
+    ''' <exception cref="ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
     Private Overloads Function GetHashCode(obj As String) As Integer Implements System.Collections.Generic.IEqualityComparer(Of String).GetHashCode
         Return internal.GetHashCode(obj)
     End Function
@@ -324,7 +324,7 @@ Public Class InterfacesBasedStringComparer
     ''' <summary>When overridden in a derived class, gets the hash code for the specified object.</summary>
     ''' <param name="obj">An object.</param>
     ''' <returns>A 32-bit signed hash code calculated from the value of the <paramref name="obj" /> parameter.</returns>
-    ''' <exception cref="T:System.ArgumentNullException"><paramref name="obj" /> is null.</exception>
+    ''' <exception cref="ArgumentNullException"><paramref name="obj" /> is null.</exception>
     ''' <filterpriority>2</filterpriority>
     Public Overloads Overrides Function GetHashCode(obj As String) As Integer
         Return equalityComparer.GetHashCode(obj)
@@ -376,8 +376,8 @@ Public Class DelegateBasedComparer(Of T)
 
     ''' <summary>Determines whether the specified objects are equal.</summary>
     ''' <returns>true if the specified objects are equal; otherwise, false.</returns>
-    ''' <param name="x">The first object of type <paramref name="T" /> to compare.</param>
-    ''' <param name="y">The second object of type <paramref name="T" /> to compare.</param>
+    ''' <param name="x">The first object of type <typeparamref name="T" /> to compare.</param>
+    ''' <param name="y">The second object of type <typeparamref name="T" /> to compare.</param>
     Public Overloads Function Equals(x As T, y As T) As Boolean Implements System.Collections.Generic.IEqualityComparer(Of T).Equals
         If _equals Is Nothing Then Return Compare(x, y) = 0
         Return _equals(x, y)
@@ -386,7 +386,7 @@ Public Class DelegateBasedComparer(Of T)
     ''' <summary>Returns a hash code for the specified object.</summary>
     ''' <returns>A hash code for the specified object.</returns>
     ''' <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
-    ''' <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null (depends on if underlying delegate throws it).</exception>
+    ''' <exception cref="ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null (depends on if underlying delegate throws it).</exception>
     Public Overloads Function GetHashCode(obj As T) As Integer Implements System.Collections.Generic.IEqualityComparer(Of T).GetHashCode
         Return _getHashCode(obj)
     End Function

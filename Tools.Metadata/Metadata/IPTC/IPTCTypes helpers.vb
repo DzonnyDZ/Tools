@@ -96,8 +96,8 @@ Namespace MetadataT.IptcT
         '        ''' <summary>Verifies if given value belongs to specific enumeration.</summary>
         '        ''' <param name="verify">Value to be verified</param>
         '        ''' <typeparam name="T">Type of enum to verify <paramref name="verify"/> in</typeparam>
-        '        ''' <exception cref="InvalidEnumArgumentException"><paramref name="verify"/> is not member of <paramref name="T"/> and <paramref name="T"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> se to false.</exception>
-        '        ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/> and <paramref name="T"/> has <see cref="RestrictAttribute"/> set to True or it has no <see cref="RestrictAttribute"/></exception>
+        '        ''' <exception cref="InvalidEnumArgumentException"><paramref name="verify"/> is not member of <typeparamref name="T"/> and <typeparamref name="T"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> se to false.</exception>
+        '        ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not <see cref="[Enum]"/> and <typeparamref name="T"/> has <see cref="RestrictAttribute"/> set to True or it has no <see cref="RestrictAttribute"/></exception>
         '        <CLSCompliant(False)> _
         '        Public Sub VerifyNumericEnum(Of T As {IConvertible, Structure})(ByVal verify As T)
         '            Dim Attrs As Object() = GetType(T).GetCustomAttributes(GetType(RestrictAttribute), False)
@@ -109,8 +109,8 @@ Namespace MetadataT.IptcT
         '        ''' <param name="Len">Maximal lenght of string</param>
         '        ''' <param name="Fixed">Is <paramref name="Len"/> fixed lenght</param>
         '        ''' <typeparam name="T">Type of enumeration</typeparam>
-        '        ''' <exception cref="ArgumentException"><paramref name="T"/> is not enumeration -or- string value violates lenght constraint -or- string value contains invalid (non-aplha) character</exception>
-        '        ''' <exception cref="InvalidEnumArgumentException">Enum value is not member of <paramref name="T"/></exception>
+        '        ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration -or- string value violates lenght constraint -or- string value contains invalid (non-aplha) character</exception>
+        '        ''' <exception cref="InvalidEnumArgumentException">Enum value is not member of <typeparamref name="T"/></exception>
         '        <CLSCompliant(False)> _
         '        Public Sub VerifyStringEnumNR(Of T As {IConvertible, Structure})(ByVal verify As T1orT2(Of T, String), ByVal Len As Byte, ByVal Fixed As Boolean)
         '            If verify.contains1 Then

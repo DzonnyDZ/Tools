@@ -199,7 +199,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Copies the elements of the <see cref="IReadOnlyCollection(Of T)"></see> to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.</summary>
         ''' <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from <see cref="IReadOnlyCollection(Of T)"></see>. The <see cref="T:System.Array"></see> must have zero-based indexing. </param>
         ''' <param name="index">The zero-based index in array at which copying begins. </param>
-        ''' <exception cref="T:System.ArgumentNullException">array is null. </exception>
+        ''' <exception cref="ArgumentNullException">array is null. </exception>
         ''' <exception cref="T:System.ArgumentOutOfRangeException">index is less than zero. </exception>
         ''' <exception cref="T:System.ArgumentException">array is multidimensional.-or- index is equal to or greater than the length of array.-or- The number of elements in the source <see cref="T:System.Collections.ICollection"></see> is greater than the available space from index to the end of the destination array. </exception>
         ''' <exception cref="T:System.InvalidCastException">The type of the source <see cref="IReadOnlyCollection(Of T)"></see> cannot be cast automatically to the type of the destination array. </exception>

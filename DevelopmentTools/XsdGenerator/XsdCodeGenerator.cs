@@ -29,7 +29,7 @@ using Microsoft.Win32;  // Registry
 
 namespace Tools.VisualStudioT.GeneratorsT.XsdGenerator {
     /// <summary>Uses the XsdGeneratorLibrary to process XSD files and generate the corresponding classes.</summary>
-    /// <version version="1.5.3">Added support fopr Visual Sudio 2010</version>
+    /// <version version="1.5.3">Added support for Visual Studio 2010</version>
     [Guid(XsdCodeGenerator._customToolGuid)]
     [ComVisible(true)]
     public class XsdCodeGenerator : BaseCodeGeneratorWithSite {

@@ -2,7 +2,7 @@ Imports System.Windows.Forms, System.ComponentModel
 Imports Tools.ComponentModelT
 
 Namespace WindowsT.FormsT
-#If True
+
     ''' <summary><see cref="System.Windows.Forms.ToolStripComboBox"/> that allows databinding</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
@@ -125,5 +125,5 @@ Namespace WindowsT.FormsT
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), Description("Fired when BindingContextChanged of internal ComboBox occurs")> _
         Public Event BindingContextChanged(ByVal sender As Object, ByVal e As EventArgs)
     End Class
-#End If
+
 End Namespace

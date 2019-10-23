@@ -2,7 +2,6 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports Tools.ComponentModelT
 
-#If True
 Namespace WindowsT.FormsT
     ''' <summary>Strongly-typed <see cref="PropertyGrid"/></summary>
     ''' <typeparam name="T">Type of object being edited</typeparam>
@@ -146,4 +145,3 @@ Namespace WindowsT.FormsT
         End Sub
     End Class
 End Namespace
-#End If

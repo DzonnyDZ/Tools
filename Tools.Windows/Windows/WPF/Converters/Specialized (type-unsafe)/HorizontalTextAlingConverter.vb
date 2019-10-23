@@ -1,7 +1,7 @@
 Imports System.Windows.Data, Tools.ExtensionsT, System.Windows
 Imports System.Globalization
 
-#If True
+
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Converter that can convert between <see cref="HorizontalAlignment"/> and <see cref="VerticalAlignment"/></summary>
     ''' <remarks>Conversion can be done in both was equivalently.</remarks>
@@ -53,4 +53,3 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
-#End If

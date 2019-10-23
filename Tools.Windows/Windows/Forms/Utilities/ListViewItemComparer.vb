@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Forms, System.ComponentModel
 Imports Tools.ComponentModelT
 
-#If True
+
 Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Implements the manual sorting of items in <see cref="ListView"/> by columns.</summary>
     ''' <remarks>
@@ -207,4 +207,3 @@ Namespace WindowsT.FormsT.UtilitiesT
         Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
     End Class
 End Namespace
-#End If

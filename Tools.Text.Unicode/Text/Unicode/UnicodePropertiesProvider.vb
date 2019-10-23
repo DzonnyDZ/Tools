@@ -1,13 +1,10 @@
-﻿Imports Tools.ComponentModelT
-Imports System.Linq
-Imports Tools.ExtensionsT
-Imports System.Xml.Linq
+﻿Imports System.Globalization
 Imports System.Globalization.CultureInfo
-Imports Tools.NumericsT
 Imports System.Xml.Serialization
+Imports Tools.ComponentModelT
+Imports Tools.ExtensionsT
 Imports Tools.LinqT
-Imports System.Globalization
-Imports Tools.TextT.UnicodeT.UcdFiles
+Imports Tools.NumericsT
 
 'List of all properties http://www.unicode.org/reports/tr44/#Properties
 'XML format specification http://www.unicode.org/reports/tr42/
@@ -441,10 +438,10 @@ Namespace TextT.UnicodeT
         ''' <remarks>
         ''' This property is used in the implementation of parenthesis matching.
         ''' <para>
-        ''' The Unicode property value stability policy guarantees that characters which have <see cref="BidiPairedBracketType"/> = <see cref=UnicodeBidiPairedBracketType.Open"/> or
-        ''' <see cref="BidiPairedBracketType"/> = <see cref=UnicodeBidiPairedBracketType.Close"/> also have <see cref="BidiCategory"/> = <see cref="UnicodeBidiCategory.OtherNeutrals"/>
+        ''' The Unicode property value stability policy guarantees that characters which have <see cref="BidiPairedBracketType"/> = <see cref="UnicodeBidiPairedBracketType.Open"/> or
+        ''' <see cref="BidiPairedBracketType"/> = <see cref="UnicodeBidiPairedBracketType.Close"/> also have <see cref="BidiCategory"/> = <see cref="UnicodeBidiCategory.OtherNeutrals"/>
         ''' and <see cref="IsMirrored"/> = true. As a result, an implementation can optimize the lookup of the <see cref="BidiPairedBracketType"/> property values
-        ''' <see cref=UnicodeBidiPairedBracketType.Open">Open</see> and <see cref=UnicodeBidiPairedBracketType.Close">Close</see> by restricting the processing to characters with
+        ''' <see cref="UnicodeBidiPairedBracketType.Open">Open</see> and <see cref="UnicodeBidiPairedBracketType.Close">Close</see> by restricting the processing to characters with
         ''' <see cref="BidiCategory"/> = <see cref="UnicodeBidiCategory.OtherNeutrals"/>.
         ''' </para>
         ''' <para>Underlying XML attribute is @bpt</para>
@@ -2001,11 +1998,10 @@ Namespace TextT.UnicodeT
         ''' <param name="attributeName">Name of the XML attribute to parse value of</param>
         ''' <returns>Array of <see cref="RadicalStrokeCount"/> values obtained from attribute value. An empty array if the attribute is either not present or empty.</returns>
         ''' <remarks>For supported version parsings see <see cref="RadicalStrokeCount.Parse"/>.</remarks>
-        ''' <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
-        ''' <exception cref="FormatException"><paramref name="value"/> does not contain 2 dot(.)-separated parts -or- AdditionalStrokes part of <paramref name="value"/> cannot be parsed as <see cref="Integer"/></exception>
-        ''' <exception cref="ArgumentException">Radical part of <paramref name="value"/> does not represent a value that can be converted to <see cref="CjkRadical"/> value using the <see cref="LookupRadical"/> function.</exception>
-        ''' <exception cref="ArgumentOutOfRangeException">AdditionalStrokes part of <paramref name="value"/> represents negative number</exception>
-        ''' <exception cref="OverflowException">AdditionalStrokes part of <paramref name="value"/> is too big or too small for datatype <see cref="Integer"/>.</exception>
+        ''' <exception cref="FormatException">The property value does not contain 2 dot(.)-separated parts -or- AdditionalStrokes part of the property value cannot be parsed as <see cref="Integer"/></exception>
+        ''' <exception cref="ArgumentException">Radical part of property value does not represent a value that can be converted to <see cref="CjkRadical"/> value using the <see cref="RadicalStrokeCount.LookupRadical"/> function.</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">AdditionalStrokes part of the property value represents negative number</exception>
+        ''' <exception cref="OverflowException">AdditionalStrokes part of the property value is too big or too small for data-type <see cref="Integer"/>.</exception>
         ''' <seelaso cref="RadicalStrokeCount.Parse"/>
         Protected Function GetRadicalStrokeCountArray(attributeName$) As RadicalStrokeCount()
             Dim value As String = GetPropertyValue(attributeName)
@@ -2992,7 +2988,9 @@ Namespace TextT.UnicodeT
         ''' <summary>Information on the glyphs in Adobe-Japan1-6 as contributed by Adobe.</summary>
         ''' <remarks> The value consists of a number of space-separated entries. Each entry consists of three pieces of information separated by a plus sign:
         ''' <list type="number">
-        ''' <item>C or V. “C” indicates that the Unicode code point maps directly to the Adobe-Japan1-6 CID that appears after it, and “V” indicates that it is considered a variant form, and thus not directly encoded.</item></remarks>
+        ''' <item>C or V. “C” indicates that the Unicode code point maps directly to the Adobe-Japan1-6 CID that appears after it, and “V” indicates that it is considered a variant form, and thus not directly encoded.</item>
+        ''' </list>
+        ''' </remarks>
         <XmlAttribute("kRSAdobe_Japan1_6")>
         <UcdProperty("kRSAdobe_Japan1_6", UnihanPropertyCategory.RadicalStrokeCounts, UnicodePropertyStatus.Provisional)>
         <UcdCategoryUnihan(UnihanPropertyCategory.RadicalStrokeCounts), LDisplayName(GetType(UnicodeResources), "d_unihan_HanRSAdobeJapan")>

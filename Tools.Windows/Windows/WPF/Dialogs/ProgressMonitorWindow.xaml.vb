@@ -1,4 +1,4 @@
-﻿#If True 'Stage: Nightly
+﻿ 'Stage: Nightly
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Implements window which shows <see cref="ProgressMonitor"/></summary>
     Partial Friend NotInheritable Class ProgressMonitorWindow
@@ -47,4 +47,3 @@ Namespace WindowsT.WPF.DialogsT
 
     End Class
 End Namespace
-#End If

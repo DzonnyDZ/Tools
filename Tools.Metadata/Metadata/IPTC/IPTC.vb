@@ -875,9 +875,9 @@ Namespace MetadataT.IptcT
         End Property
         ''' <summary>Returns value indicating if givel value if member of enumeration</summary>
         ''' <param name="value">Value to be checked</param>
-        ''' <returns>True if <paramref name="value"/> is member of <paramref name="T"/></returns>
+        ''' <returns>True if <paramref name="value"/> is member of <typeparamref name="T"/></returns>
         ''' <typeparam name="T">Type of enumeration to be searched</typeparam>
-        ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/></exception>
+        ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not <see cref="[Enum]"/></exception>
         Private Shared Function IsEnumMember(Of T As {IComparable, Structure})(ByVal value As T) As Boolean
             Return Array.IndexOf(System.[Enum].GetValues(GetType(T)), value) >= 0
         End Function

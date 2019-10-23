@@ -676,13 +676,13 @@ Case_State_NoChange:        'End of XML parsing
         ''' <summary>Verifies if character can appear at start of XML name</summary>
         ''' <param name="character">A character to verify</param>
         ''' <returns>True when character can appear as first character of XML name; false otherwise</returns>
-        Private Shared Function IsNameStartCharacter(ByVal character As Char) As Boolean
+        Friend Shared Function IsNameStartCharacter(ByVal character As Char) As Boolean
             Return NameStartRegEx.IsMatch(character.ToString())
         End Function
         ''' <summary>Verifies if character can appear inside XML name</summary>
         ''' <param name="character">A character to verify</param>
         ''' <returns>True when character can appear as part of XML name; false otherwise</returns>
-        Private Shared Function IsNameCharacter(ByVal character As Char) As Boolean
+        Friend Shared Function IsNameCharacter(ByVal character As Char) As Boolean
             Return NameRegEx.IsMatch(character.ToString())
         End Function
 #End Region

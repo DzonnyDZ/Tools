@@ -1,0 +1,5 @@
+<Project>
+    <Target BeforeTargets="Build" Name="Messages">
+        <Message Importance="high" Text="Project $(ProjectName), Language $(Language)"/>
+    </Target>
+</Project>

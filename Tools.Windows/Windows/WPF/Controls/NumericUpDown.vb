@@ -1,7 +1,6 @@
 ﻿Imports Tools.ComponentModelT
 Imports System.Windows
 
-#If Stage <= Beta Then 'Stage: Beta
 Imports System.Windows.Controls
 Imports System.Windows.Input
 Imports System.Windows.Automation.Peers
@@ -801,4 +800,3 @@ Namespace WindowsT.WPF.ControlsT
     End Class
     '</SnippetClose>
 End Namespace
-#End If
